@@ -443,26 +443,27 @@ class _ManageCardsPageState extends State<ManageCardsPage> {
                                         trailing: Row(
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
-                                            // Dashboard Toggle Switch
-                                            Tooltip(
-                                              message: context.t(
-                                                'filter_on_dashboard',
+                                            // Dashboard Toggle Switch (Only for subjects NOT owned by me)
+                                            if (!isMine)
+                                              Tooltip(
+                                                message: context.t(
+                                                  'filter_on_dashboard',
+                                                ),
+                                                child: Switch(
+                                                  value: s.isOnDashboard,
+                                                  onChanged: (val) async {
+                                                    await _cardService
+                                                        .toggleSubjectOnDashboard(
+                                                          s.id,
+                                                          val,
+                                                        );
+                                                    setState(() {
+                                                      s.isOnDashboard = val;
+                                                      _applyFilters();
+                                                    });
+                                                  },
+                                                ),
                                               ),
-                                              child: Switch(
-                                                value: s.isOnDashboard,
-                                                onChanged: (val) async {
-                                                  await _cardService
-                                                      .toggleSubjectOnDashboard(
-                                                        s.id,
-                                                        val,
-                                                      );
-                                                  setState(() {
-                                                    s.isOnDashboard = val;
-                                                    _applyFilters();
-                                                  });
-                                                },
-                                              ),
-                                            ),
                                             if (isMine) ...[
                                               IconButton(
                                                 icon: const Icon(Icons.add),
