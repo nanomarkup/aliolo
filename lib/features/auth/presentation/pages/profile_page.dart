@@ -42,7 +42,7 @@ class _ProfilePageState extends State<ProfilePage> {
       source: ImageSource.gallery,
     );
     if (image != null) {
-      await _authService.updateAvatarPath(image.path);
+      await _authService.updateAvatarPath(image);
       if (mounted) setState(() {});
     }
   }
@@ -484,7 +484,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     backgroundColor: currentSessionColor.withValues(alpha: 0.1),
                     backgroundImage:
                         user.avatarPath != null
-                            ? (user.avatarPath!.startsWith('http')
+                            ? (user.avatarPath!.startsWith('http') || kIsWeb
                                     ? NetworkImage(user.avatarPath!)
                                     : FileImage(File(user.avatarPath!)))
                                 as ImageProvider

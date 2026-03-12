@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:path/path.dart' as p;
 import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:aliolo/data/models/user_model.dart';
 import 'translation_service.dart';
 import 'theme_service.dart';
@@ -248,23 +250,36 @@ class AuthService extends ChangeNotifier {
     }
   }
 
-  Future<void> updateAvatarPath(String localPath) async {
+  Future<void> updateAvatarPath(XFile xFile) async {
     if (_currentUser == null || !_isSupabaseInitialized) return;
     try {
-      final file = File(localPath);
-      if (!await file.exists()) return;
-
-      final ext = p.extension(localPath);
+      final ext = p.extension(xFile.path);
       final fileName = 'avatar$ext';
       final storagePath = '${_currentUser!.serverId}/$fileName';
 
-      await _supabase!.storage
-          .from('avatars')
-          .upload(
-            storagePath,
-            file,
-            fileOptions: const FileOptions(upsert: true),
-          );
+      if (kIsWeb) {
+        final bytes = await xFile.readAsBytes();
+        await _supabase!.storage
+            .from('avatars')
+            .uploadBinary(
+              storagePath,
+              bytes,
+              fileOptions: FileOptions(
+                upsert: true,
+                contentType: xFile.mimeType,
+              ),
+            );
+      } else {
+        final file = File(xFile.path);
+        if (!await file.exists()) return;
+        await _supabase!.storage
+            .from('avatars')
+            .upload(
+              storagePath,
+              file,
+              fileOptions: const FileOptions(upsert: true),
+            );
+      }
 
       final String publicUrl = _supabase!.storage
           .from('avatars')
