@@ -240,7 +240,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 24),
                 child: Column(
                   children: [
-                    const SizedBox(height: 100),
+                    const SizedBox(height: 80),
                     Expanded(
                       child: ListView(
                         children: [

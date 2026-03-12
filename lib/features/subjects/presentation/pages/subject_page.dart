@@ -228,7 +228,7 @@ class _SubjectPageState extends State<SubjectPage> {
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Column(
                     children: [
-                      const SizedBox(height: 100),
+                      const SizedBox(height: 80),
                       Expanded(
                         child:
                             _isLoading
@@ -503,7 +503,7 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Column(
                 children: [
-                  const SizedBox(height: 100),
+                  const SizedBox(height: 80),
                   Expanded(
                     child:
                         filteredSubjects.isEmpty

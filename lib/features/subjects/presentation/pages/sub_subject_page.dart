@@ -176,7 +176,7 @@ class _SubSubjectPageState extends State<SubSubjectPage> {
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Column(
                     children: [
-                      const SizedBox(height: 100),
+                      const SizedBox(height: 80),
                       if (widget.subject.description != null &&
                           widget.subject.description!.isNotEmpty)
                         Padding(

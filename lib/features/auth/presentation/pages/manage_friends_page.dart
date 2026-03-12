@@ -168,7 +168,7 @@ class _ManageFriendsPageState extends State<ManageFriendsPage> {
                     constraints: const BoxConstraints(maxWidth: 700),
                     child: Column(
                       children: [
-                        const SizedBox(height: 100),
+                        const SizedBox(height: 80),
                         Expanded(
                           child:
                               _friendships.isEmpty
