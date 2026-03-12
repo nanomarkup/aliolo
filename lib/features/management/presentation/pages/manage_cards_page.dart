@@ -463,25 +463,25 @@ class _ManageCardsPageState extends State<ManageCardsPage> {
                                                 },
                                               ),
                                             ),
-                                            IconButton(
-                                              icon: const Icon(Icons.add),
-                                              onPressed:
-                                                  () => Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                      builder:
-                                                          (
-                                                            context,
-                                                          ) => AddCardPage(
-                                                            initialSubjectId:
-                                                                s.id,
-                                                            pillarId:
-                                                                s.pillarId,
-                                                          ),
-                                                    ),
-                                                  ),
-                                            ),
                                             if (isMine) ...[
+                                              IconButton(
+                                                icon: const Icon(Icons.add),
+                                                onPressed:
+                                                    () => Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder:
+                                                            (
+                                                              context,
+                                                            ) => AddCardPage(
+                                                              initialSubjectId:
+                                                                  s.id,
+                                                              pillarId:
+                                                                  s.pillarId,
+                                                            ),
+                                                      ),
+                                                    ),
+                                              ),
                                               IconButton(
                                                 icon: const Icon(Icons.edit),
                                                 onPressed:
