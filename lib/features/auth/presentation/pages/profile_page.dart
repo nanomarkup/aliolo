@@ -220,7 +220,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             body: Center(
               child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 700),
+                constraints: const BoxConstraints(maxWidth: 640),
                 child: Column(
                   children: [
                     const SizedBox(height: 100),

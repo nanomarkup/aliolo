@@ -236,7 +236,7 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
             body: Center(
               child: Container(
-                constraints: const BoxConstraints(maxWidth: 700),
+                constraints: const BoxConstraints(maxWidth: 640),
                 padding: const EdgeInsets.symmetric(horizontal: 24),
                 child: Column(
                   children: [

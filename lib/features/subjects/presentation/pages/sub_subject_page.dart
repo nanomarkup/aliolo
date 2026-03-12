@@ -171,7 +171,7 @@ class _SubSubjectPageState extends State<SubSubjectPage> {
             ),
             body: Center(
               child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 700),
+                constraints: const BoxConstraints(maxWidth: 640),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Column(
