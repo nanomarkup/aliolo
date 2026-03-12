@@ -1,0 +1,8 @@
+Gdk-Message: 14:48:11.618: Unable to load  from the cursor theme
+embedder.cc (2519): 'FlutterEngineRemoveView' returned 'kInvalidArguments'. Remove view info was invalid. The implicit view cannot be removed.
+
+** (com.aliolo.app:2033): WARNING **: 14:48:19.301: Attempted to set message handler on an FlBinaryMessenger without an engine
+
+** (com.aliolo.app:2033): WARNING **: 14:48:19.301: Attempted to set message handler on an FlBinaryMessenger without an engine
+
+** (com.aliolo.app:2033): WARNING **: 14:48:19.301: Attempted to set message handler on an FlBinaryMessenger without an engine
