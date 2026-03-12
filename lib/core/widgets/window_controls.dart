@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:window_manager/window_manager.dart';
 
-class WindowControls extends StatelessWidget {
+class WindowControls extends StatefulWidget {
   final bool onlyClose;
   final bool showSeparator;
   final Color? color;
@@ -19,12 +19,50 @@ class WindowControls extends StatelessWidget {
   });
 
   @override
+  State<WindowControls> createState() => _WindowControlsState();
+}
+
+class _WindowControlsState extends State<WindowControls> with WindowListener {
+  bool _isMaximized = false;
+
+  @override
+  void initState() {
+    super.initState();
+    if (!kIsWeb) {
+      windowManager.addListener(this);
+      _checkMaximized();
+    }
+  }
+
+  @override
+  void dispose() {
+    if (!kIsWeb) {
+      windowManager.removeListener(this);
+    }
+    super.dispose();
+  }
+
+  Future<void> _checkMaximized() async {
+    final isMax = await windowManager.isMaximized();
+    if (mounted) setState(() => _isMaximized = isMax);
+  }
+
+  @override
+  void onWindowMaximize() => setState(() => _isMaximized = true);
+
+  @override
+  void onWindowUnmaximize() => setState(() => _isMaximized = false);
+
+  @override
+  void onWindowRestore() => setState(() => _isMaximized = false);
+
+  @override
   Widget build(BuildContext context) {
     if (kIsWeb) return const SizedBox.shrink();
 
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final defaultColor =
-        color ?? (isDark ? Colors.grey.shade400 : Colors.grey.shade600);
+        widget.color ?? (isDark ? Colors.grey.shade400 : Colors.grey.shade600);
     final effectiveColor = defaultColor;
 
     final content = GestureDetector(
@@ -36,21 +74,21 @@ class WindowControls extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          if (showSeparator && !onlyClose)
+          if (widget.showSeparator && !widget.onlyClose)
             Container(
-              height: iconSize + 4,
+              height: widget.iconSize + 4,
               width: 2,
-              color: effectiveColor.withOpacity(0.5),
+              color: effectiveColor.withValues(alpha: 0.5),
               margin: const EdgeInsets.symmetric(horizontal: 12),
             ),
-          if (!onlyClose) ...[
+          if (!widget.onlyClose) ...[
             IconButton(
               padding: EdgeInsets.zero,
               constraints: const BoxConstraints(),
               icon: Text(
                 ' _',
                 style: TextStyle(
-                  fontSize: iconSize,
+                  fontSize: widget.iconSize,
                   fontWeight: FontWeight.bold,
                   color: effectiveColor,
                 ),
@@ -64,13 +102,16 @@ class WindowControls extends StatelessWidget {
               padding: EdgeInsets.zero,
               constraints: const BoxConstraints(),
               icon: Icon(
-                Icons.crop_square,
-                size: iconSize,
+                _isMaximized ? Icons.filter_none : Icons.crop_square,
+                size:
+                    widget.iconSize *
+                    (_isMaximized
+                        ? 0.8
+                        : 1.0), // filter_none looks slightly larger
                 color: effectiveColor,
               ),
               onPressed: () async {
-                bool isMaximized = await windowManager.isMaximized();
-                if (isMaximized) {
+                if (_isMaximized) {
                   await windowManager.unmaximize();
                 } else {
                   await windowManager.maximize();
@@ -82,7 +123,11 @@ class WindowControls extends StatelessWidget {
           IconButton(
             padding: EdgeInsets.zero,
             constraints: const BoxConstraints(),
-            icon: Icon(Icons.close, size: iconSize, color: effectiveColor),
+            icon: Icon(
+              Icons.close,
+              size: widget.iconSize,
+              color: effectiveColor,
+            ),
             onPressed: () async {
               await windowManager.close();
             },
@@ -91,7 +136,7 @@ class WindowControls extends StatelessWidget {
       ),
     );
 
-    if (padding) {
+    if (widget.padding) {
       return Padding(
         padding: const EdgeInsets.only(right: 16.0),
         child: content,

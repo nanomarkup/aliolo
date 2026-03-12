@@ -166,138 +166,160 @@ class _LeaderboardPageState extends State<LeaderboardPage>
             ),
           ],
         ),
-        body:
-            _isLoading
-                ? const Center(child: CircularProgressIndicator())
-                : Center(
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 700),
-                    child: Column(
-                      children: [
-                        Expanded(
-                          child: TabBarView(
-                            controller: _tabController,
-                            physics: const NeverScrollableScrollPhysics(),
+        body: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 700),
+            child: Column(
+              children: [
+                const SizedBox(height: 100),
+                Expanded(
+                  child:
+                      _isLoading
+                          ? const Center(child: CircularProgressIndicator())
+                          : Column(
                             children: [
-                              _buildList(_globalUsers, isGlobal: true),
-                              _buildList(_friendUsers, isGlobal: false),
+                              Expanded(
+                                child: TabBarView(
+                                  controller: _tabController,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  children: [
+                                    _buildList(_globalUsers, isGlobal: true),
+                                    _buildList(_friendUsers, isGlobal: false),
+                                  ],
+                                ),
+                              ),
+                              // Shared Bottom Panel
+                              Container(
+                                padding: const EdgeInsets.all(16),
+                                decoration: BoxDecoration(
+                                  color:
+                                      isDark ? Colors.grey[900] : Colors.white,
+                                  border: Border(
+                                    top: BorderSide(
+                                      color: Theme.of(
+                                        context,
+                                      ).dividerColor.withValues(alpha: 0.1),
+                                    ),
+                                  ),
+                                ),
+                                child: ListenableBuilder(
+                                  listenable: _tabController,
+                                  builder: (context, _) {
+                                    final isGlobalTab =
+                                        _tabController.index == 0;
+                                    final currentPage =
+                                        isGlobalTab
+                                            ? _currentGlobalPage
+                                            : _currentFriendsPage;
+                                    final list =
+                                        isGlobalTab
+                                            ? _globalUsers
+                                            : _friendUsers;
+
+                                    return Row(
+                                      children: [
+                                        // Left: Pagination
+                                        Expanded(
+                                          flex: 2,
+                                          child: Row(
+                                            children: [
+                                              IconButton(
+                                                icon: const Icon(
+                                                  Icons.chevron_left,
+                                                ),
+                                                onPressed:
+                                                    currentPage > 0
+                                                        ? _prevPage
+                                                        : null,
+                                              ),
+                                              Text(
+                                                '${context.t('page')} ${currentPage + 1}',
+                                                style: const TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              IconButton(
+                                                icon: const Icon(
+                                                  Icons.chevron_right,
+                                                ),
+                                                onPressed:
+                                                    list.length == _pageSize
+                                                        ? _nextPage
+                                                        : null,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        // Center: Tab Selection
+                                        Expanded(
+                                          flex: 1,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              IconButton(
+                                                icon: Icon(
+                                                  Icons.public,
+                                                  color:
+                                                      isGlobalTab
+                                                          ? currentSessionColor
+                                                          : Colors.grey,
+                                                ),
+                                                onPressed:
+                                                    () => _tabController
+                                                        .animateTo(0),
+                                              ),
+                                              IconButton(
+                                                icon: Icon(
+                                                  Icons.people,
+                                                  color:
+                                                      !isGlobalTab
+                                                          ? currentSessionColor
+                                                          : Colors.grey,
+                                                ),
+                                                onPressed:
+                                                    () => _tabController
+                                                        .animateTo(1),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        // Right: My Position
+                                        Expanded(
+                                          flex: 2,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            children: [
+                                              ElevatedButton.icon(
+                                                onPressed: _jumpToMe,
+                                                icon: const Icon(
+                                                  Icons.my_location,
+                                                ),
+                                                label: Text(
+                                                  context.t('my_position'),
+                                                ),
+                                                style: ElevatedButton.styleFrom(
+                                                  backgroundColor:
+                                                      currentSessionColor,
+                                                  foregroundColor: Colors.white,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                ),
+                              ),
                             ],
                           ),
-                        ),
-                        // Shared Bottom Panel
-                        Container(
-                          padding: const EdgeInsets.all(16),
-                          decoration: BoxDecoration(
-                            color: isDark ? Colors.grey[900] : Colors.white,
-                            border: Border(
-                              top: BorderSide(
-                                color: Theme.of(
-                                  context,
-                                ).dividerColor.withValues(alpha: 0.1),
-                              ),
-                            ),
-                          ),
-                          child: ListenableBuilder(
-                            listenable: _tabController,
-                            builder: (context, _) {
-                              final isGlobalTab = _tabController.index == 0;
-                              final currentPage =
-                                  isGlobalTab
-                                      ? _currentGlobalPage
-                                      : _currentFriendsPage;
-                              final list =
-                                  isGlobalTab ? _globalUsers : _friendUsers;
-
-                              return Row(
-                                children: [
-                                  // Left: Pagination
-                                  Expanded(
-                                    flex: 2,
-                                    child: Row(
-                                      children: [
-                                        IconButton(
-                                          icon: const Icon(Icons.chevron_left),
-                                          onPressed:
-                                              currentPage > 0
-                                                  ? _prevPage
-                                                  : null,
-                                        ),
-                                        Text(
-                                          '${context.t('page')} ${currentPage + 1}',
-                                          style: const TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                        IconButton(
-                                          icon: const Icon(Icons.chevron_right),
-                                          onPressed:
-                                              list.length == _pageSize
-                                                  ? _nextPage
-                                                  : null,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  // Center: Tab Selection
-                                  Expanded(
-                                    flex: 1,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        IconButton(
-                                          icon: Icon(
-                                            Icons.public,
-                                            color:
-                                                isGlobalTab
-                                                    ? currentSessionColor
-                                                    : Colors.grey,
-                                          ),
-                                          onPressed:
-                                              () => _tabController.animateTo(0),
-                                        ),
-                                        IconButton(
-                                          icon: Icon(
-                                            Icons.people,
-                                            color:
-                                                !isGlobalTab
-                                                    ? currentSessionColor
-                                                    : Colors.grey,
-                                          ),
-                                          onPressed:
-                                              () => _tabController.animateTo(1),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  // Right: My Position
-                                  Expanded(
-                                    flex: 2,
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        ElevatedButton.icon(
-                                          onPressed: _jumpToMe,
-                                          icon: const Icon(Icons.my_location),
-                                          label: Text(context.t('my_position')),
-                                          style: ElevatedButton.styleFrom(
-                                            backgroundColor:
-                                                currentSessionColor,
-                                            foregroundColor: Colors.white,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              );
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
                 ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }

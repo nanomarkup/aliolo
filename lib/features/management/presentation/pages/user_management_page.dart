@@ -126,43 +126,53 @@ class _UserManagementPageState extends State<UserManagementPage> {
                 _isLoading
                     ? const Center(child: CircularProgressIndicator())
                     : Center(
-                      child: Container(
+                      child: ConstrainedBox(
                         constraints: const BoxConstraints(maxWidth: 800),
-                        padding: const EdgeInsets.all(24),
-                        child: Card(
-                          elevation: 2,
-                          child: ListView.separated(
-                            itemCount: _users.length,
-                            separatorBuilder:
-                                (context, index) => const Divider(height: 1),
-                            itemBuilder: (context, index) {
-                              final user = _users[index];
-                              final isMe =
-                                  user.serverId ==
-                                  _authService.currentUser?.serverId;
+                        child: Column(
+                          children: [
+                            const SizedBox(height: 100),
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.all(24),
+                                child: Card(
+                                  elevation: 2,
+                                  child: ListView.separated(
+                                    itemCount: _users.length,
+                                    separatorBuilder:
+                                        (context, index) =>
+                                            const Divider(height: 1),
+                                    itemBuilder: (context, index) {
+                                      final user = _users[index];
+                                      final isMe =
+                                          user.serverId ==
+                                          _authService.currentUser?.serverId;
 
-                              return ListTile(
-                                leading: CircleAvatar(
-                                  backgroundColor: currentSessionColor
-                                      .withValues(alpha: 0.1),
-                                  child: Icon(
-                                    Icons.person,
-                                    color: currentSessionColor,
+                                      return ListTile(
+                                        leading: CircleAvatar(
+                                          backgroundColor: currentSessionColor
+                                              .withValues(alpha: 0.1),
+                                          child: Icon(
+                                            Icons.person,
+                                            color: currentSessionColor,
+                                          ),
+                                        ),
+                                        title: Text(
+                                          user.username +
+                                              (isMe
+                                                  ? ' (${context.t('you_rank', args: {'rank': ''}).replaceAll(' #', '')})'
+                                                  : ''),
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        subtitle: Text(user.email),
+                                      );
+                                    },
                                   ),
                                 ),
-                                title: Text(
-                                  user.username +
-                                      (isMe
-                                          ? ' (${context.t('you_rank', args: {'rank': ''}).replaceAll(' #', '')})'
-                                          : ''),
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                subtitle: Text(user.email),
-                              );
-                            },
-                          ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),

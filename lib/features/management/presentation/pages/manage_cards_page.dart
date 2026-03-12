@@ -73,11 +73,9 @@ class _ManageCardsPageState extends State<ManageCardsPage> {
     setState(() {
       _filteredSubjects =
           _allSubjects.where((s) {
-            // Search filter
             final matchesSearch = s.name.toLowerCase().contains(query);
             if (!matchesSearch) return false;
 
-            // Category filter
             switch (_currentFilter) {
               case LibraryFilter.all:
                 return true;
@@ -112,7 +110,6 @@ class _ManageCardsPageState extends State<ManageCardsPage> {
       if (res != null && mounted) {
         final updated = SubjectModel.fromJson(res);
 
-        // Fetch current dashboard status for this specific subject
         final dashRes =
             await Supabase.instance.client
                 .from('user_subjects')
@@ -396,203 +393,233 @@ class _ManageCardsPageState extends State<ManageCardsPage> {
                 constraints: const BoxConstraints(maxWidth: 700),
                 child: Column(
                   children: [
-                    Container(
-                      padding: const EdgeInsets.all(24),
-                      decoration: BoxDecoration(
-                        color: Colors.grey.withValues(alpha: 0.05),
-                        border: Border(
-                          bottom: BorderSide(
-                            color: Colors.grey.withValues(alpha: 0.1),
-                          ),
-                        ),
-                      ),
+                    const SizedBox(height: 100),
+                    Expanded(
                       child: Column(
                         children: [
-                          Row(
-                            children: [
-                              Expanded(
-                                child: TextField(
-                                  controller: _searchController,
-                                  decoration: InputDecoration(
-                                    hintText: context.t('search_subjects'),
-                                    prefixIcon: const Icon(Icons.search),
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    filled: true,
-                                    fillColor: Colors.white,
-                                  ),
-                                  onChanged: (_) => _applyFilters(),
+                          Container(
+                            padding: const EdgeInsets.all(24),
+                            decoration: BoxDecoration(
+                              color: Colors.grey.withValues(alpha: 0.05),
+                              border: Border(
+                                bottom: BorderSide(
+                                  color: Colors.grey.withValues(alpha: 0.1),
                                 ),
                               ),
-                              const SizedBox(width: 16),
-                              ElevatedButton.icon(
-                                onPressed: () => _showSubjectDialog(),
-                                icon: const Icon(Icons.post_add),
-                                label: Text(context.t('add_subject')),
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: currentSessionColor,
-                                  foregroundColor: Colors.white,
-                                  minimumSize: const Size(180, 56),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 16),
-                          SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Row(
+                            ),
+                            child: Column(
                               children: [
-                                _buildFilterChip(
-                                  LibraryFilter.all,
-                                  context.t('filter_all'),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: TextField(
+                                        controller: _searchController,
+                                        decoration: InputDecoration(
+                                          hintText: context.t(
+                                            'search_subjects',
+                                          ),
+                                          prefixIcon: const Icon(Icons.search),
+                                          border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(
+                                              12,
+                                            ),
+                                          ),
+                                          filled: true,
+                                          fillColor: Colors.white,
+                                        ),
+                                        onChanged: (_) => _applyFilters(),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 16),
+                                    ElevatedButton.icon(
+                                      onPressed: () => _showSubjectDialog(),
+                                      icon: const Icon(Icons.post_add),
+                                      label: Text(context.t('add_subject')),
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: currentSessionColor,
+                                        foregroundColor: Colors.white,
+                                        minimumSize: const Size(180, 56),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                            12,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                const SizedBox(width: 8),
-                                _buildFilterChip(
-                                  LibraryFilter.myLibrary,
-                                  context.t('filter_my_subjects'),
-                                ),
-                                const SizedBox(width: 8),
-                                _buildFilterChip(
-                                  LibraryFilter.public,
-                                  context.t('filter_public'),
-                                ),
-                                const SizedBox(width: 8),
-                                _buildFilterChip(
-                                  LibraryFilter.onDashboard,
-                                  context.t('filter_on_dashboard'),
+                                const SizedBox(height: 16),
+                                SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                    children: [
+                                      _buildFilterChip(
+                                        LibraryFilter.all,
+                                        context.t('filter_all'),
+                                      ),
+                                      const SizedBox(width: 8),
+                                      _buildFilterChip(
+                                        LibraryFilter.myLibrary,
+                                        context.t('filter_my_subjects'),
+                                      ),
+                                      const SizedBox(width: 8),
+                                      _buildFilterChip(
+                                        LibraryFilter.public,
+                                        context.t('filter_public'),
+                                      ),
+                                      const SizedBox(width: 8),
+                                      _buildFilterChip(
+                                        LibraryFilter.onDashboard,
+                                        context.t('filter_on_dashboard'),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
                           ),
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      child:
-                          _isLoading
-                              ? const Center(child: CircularProgressIndicator())
-                              : _filteredSubjects.isEmpty
-                              ? Center(
-                                child: Text(context.t('no_subjects_found')),
-                              )
-                              : ListView.builder(
-                                padding: const EdgeInsets.all(24),
-                                itemCount: _filteredSubjects.length,
-                                itemBuilder: (context, index) {
-                                  final s = _filteredSubjects[index];
-                                  final isOwn = s.ownerId == myId;
-                                  final pillar = pillars.firstWhere(
-                                    (p) => p.id == s.pillarId,
-                                    orElse: () => pillars.first,
-                                  );
+                          Expanded(
+                            child:
+                                _isLoading
+                                    ? const Center(
+                                      child: CircularProgressIndicator(),
+                                    )
+                                    : _filteredSubjects.isEmpty
+                                    ? Center(
+                                      child: Text(
+                                        context.t('no_subjects_found'),
+                                      ),
+                                    )
+                                    : ListView.builder(
+                                      padding: const EdgeInsets.all(24),
+                                      itemCount: _filteredSubjects.length,
+                                      itemBuilder: (context, index) {
+                                        final s = _filteredSubjects[index];
+                                        final isOwn = s.ownerId == myId;
+                                        final pillar = pillars.firstWhere(
+                                          (p) => p.id == s.pillarId,
+                                          orElse: () => pillars.first,
+                                        );
 
-                                  return Card(
-                                    margin: const EdgeInsets.only(bottom: 16),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(16),
-                                    ),
-                                    elevation: 2,
-                                    child: ListTile(
-                                      onTap: () async {
-                                        await Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder:
-                                                (context) =>
-                                                    SubjectCardsManagementPage(
-                                                      subject: s,
-                                                      pillar: pillar,
+                                        return Card(
+                                          margin: const EdgeInsets.only(
+                                            bottom: 16,
+                                          ),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
+                                              16,
+                                            ),
+                                          ),
+                                          elevation: 2,
+                                          child: ListTile(
+                                            onTap: () async {
+                                              await Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder:
+                                                      (context) =>
+                                                          SubjectCardsManagementPage(
+                                                            subject: s,
+                                                            pillar: pillar,
+                                                          ),
+                                                ),
+                                              );
+                                              _refreshSubject(s.id);
+                                            },
+                                            contentPadding:
+                                                const EdgeInsets.symmetric(
+                                                  horizontal: 20,
+                                                  vertical: 8,
+                                                ),
+                                            leading: Icon(
+                                              pillar.getIconData(),
+                                              color: pillar.getColor(),
+                                              size: 32,
+                                            ),
+                                            title: Text(
+                                              s.name,
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 18,
+                                              ),
+                                            ),
+                                            subtitle: Text(
+                                              '${s.cardCount} ${context.t('cards_label')} • ${isOwn ? context.t('private') : (s.ownerName ?? '...')}',
+                                            ),
+                                            trailing: Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                if (isOwn) ...[
+                                                  IconButton(
+                                                    icon: const Icon(
+                                                      Icons.edit_note,
                                                     ),
+                                                    onPressed:
+                                                        () =>
+                                                            _showSubjectDialog(
+                                                              s,
+                                                            ),
+                                                  ),
+                                                  IconButton(
+                                                    icon: const Icon(
+                                                      Icons.delete_outline,
+                                                      color: Colors.red,
+                                                    ),
+                                                    onPressed:
+                                                        () =>
+                                                            _confirmDeleteSubject(
+                                                              s,
+                                                            ),
+                                                  ),
+                                                ] else ...[
+                                                  if (!s.isOnDashboard)
+                                                    IconButton(
+                                                      icon: const Icon(
+                                                        Icons.post_add,
+                                                        color: Colors.green,
+                                                      ),
+                                                      onPressed: () async {
+                                                        await _cardService
+                                                            .toggleSubjectOnDashboard(
+                                                              s.id,
+                                                              true,
+                                                            );
+                                                        setState(() {
+                                                          s.isOnDashboard =
+                                                              true;
+                                                          _applyFilters();
+                                                        });
+                                                      },
+                                                    )
+                                                  else
+                                                    IconButton(
+                                                      icon: const Icon(
+                                                        Icons.delete_outline,
+                                                        color: Colors.red,
+                                                      ),
+                                                      onPressed: () async {
+                                                        await _cardService
+                                                            .toggleSubjectOnDashboard(
+                                                              s.id,
+                                                              false,
+                                                            );
+                                                        setState(() {
+                                                          s.isOnDashboard =
+                                                              false;
+                                                          _applyFilters();
+                                                        });
+                                                      },
+                                                    ),
+                                                ],
+                                              ],
+                                            ),
                                           ),
                                         );
-                                        _refreshSubject(s.id);
                                       },
-                                      contentPadding:
-                                          const EdgeInsets.symmetric(
-                                            horizontal: 20,
-                                            vertical: 8,
-                                          ),
-                                      leading: Icon(
-                                        pillar.getIconData(),
-                                        color: pillar.getColor(),
-                                        size: 32,
-                                      ),
-                                      title: Text(
-                                        s.name,
-                                        style: const TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 18,
-                                        ),
-                                      ),
-                                      subtitle: Text(
-                                        '${s.cardCount} ${context.t('cards_label')} • ${isOwn ? context.t('private') : (s.ownerName ?? '...')}',
-                                      ),
-                                      trailing: Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          if (isOwn) ...[
-                                            IconButton(
-                                              icon: const Icon(Icons.edit_note),
-                                              onPressed:
-                                                  () => _showSubjectDialog(s),
-                                            ),
-                                            IconButton(
-                                              icon: const Icon(
-                                                Icons.delete_outline,
-                                                color: Colors.red,
-                                              ),
-                                              onPressed:
-                                                  () =>
-                                                      _confirmDeleteSubject(s),
-                                            ),
-                                          ] else ...[
-                                            if (!s.isOnDashboard)
-                                              IconButton(
-                                                icon: const Icon(
-                                                  Icons.post_add,
-                                                  color: Colors.green,
-                                                ),
-                                                onPressed: () async {
-                                                  await _cardService
-                                                      .toggleSubjectOnDashboard(
-                                                        s.id,
-                                                        true,
-                                                      );
-                                                  setState(() {
-                                                    s.isOnDashboard = true;
-                                                    _applyFilters();
-                                                  });
-                                                },
-                                              )
-                                            else
-                                              IconButton(
-                                                icon: const Icon(
-                                                  Icons.delete_outline,
-                                                  color: Colors.red,
-                                                ),
-                                                onPressed: () async {
-                                                  await _cardService
-                                                      .toggleSubjectOnDashboard(
-                                                        s.id,
-                                                        false,
-                                                      );
-                                                  setState(() {
-                                                    s.isOnDashboard = false;
-                                                    _applyFilters();
-                                                  });
-                                                },
-                                              ),
-                                          ],
-                                        ],
-                                      ),
                                     ),
-                                  );
-                                },
-                              ),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -686,7 +713,8 @@ class _SubjectCardsManagementPageState
       builder: (context, _) {
         return ResizeWrapper(
           child: Scaffold(
-            appBar: AppBar(
+            extendBodyBehindAppBar: true,
+            appBar: AlioloAppBar(
               title: DragToMoveArea(
                 child: SizedBox(
                   width: double.infinity,
@@ -737,100 +765,119 @@ class _SubjectCardsManagementPageState
                 constraints: const BoxConstraints(maxWidth: 700),
                 child: Column(
                   children: [
-                    if (widget.subject.description != null &&
-                        widget.subject.description!.isNotEmpty)
-                      Container(
-                        width: double.infinity,
-                        padding: const EdgeInsets.all(24),
-                        color: currentSessionColor.withValues(alpha: 0.05),
-                        child: Text(
-                          widget.subject.description!,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ),
+                    const SizedBox(height: 100),
                     Expanded(
-                      child:
-                          _isLoading
-                              ? const Center(child: CircularProgressIndicator())
-                              : _cards.isEmpty
-                              ? Center(child: Text(context.t('no_cards')))
-                              : GridView.builder(
-                                padding: const EdgeInsets.all(24),
-                                gridDelegate:
-                                    const SliverGridDelegateWithMaxCrossAxisExtent(
-                                      maxCrossAxisExtent: 250,
-                                      mainAxisSpacing: 20,
-                                      crossAxisSpacing: 20,
-                                      childAspectRatio: 0.75,
-                                    ),
-                                itemCount: _cards.length,
-                                itemBuilder: (context, index) {
-                                  final card = _cards[index];
-                                  return Card(
-                                    clipBehavior: Clip.antiAlias,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    elevation: 2,
-                                    child: InkWell(
-                                      onTap: () async {
-                                        final result = await Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder:
-                                                (context) => AddCardPage(
-                                                  existingCard: card,
-                                                  pillarId: widget.pillar.id,
-                                                  isReadOnly: !isOwn,
-                                                ),
+                      child: Column(
+                        children: [
+                          if (widget.subject.description != null &&
+                              widget.subject.description!.isNotEmpty)
+                            Container(
+                              width: double.infinity,
+                              padding: const EdgeInsets.all(24),
+                              color: currentSessionColor.withValues(
+                                alpha: 0.05,
+                              ),
+                              child: Text(
+                                widget.subject.description!,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ),
+                          Expanded(
+                            child:
+                                _isLoading
+                                    ? const Center(
+                                      child: CircularProgressIndicator(),
+                                    )
+                                    : _cards.isEmpty
+                                    ? Center(child: Text(context.t('no_cards')))
+                                    : GridView.builder(
+                                      padding: const EdgeInsets.all(24),
+                                      gridDelegate:
+                                          const SliverGridDelegateWithMaxCrossAxisExtent(
+                                            maxCrossAxisExtent: 250,
+                                            mainAxisSpacing: 20,
+                                            crossAxisSpacing: 20,
+                                            childAspectRatio: 0.75,
+                                          ),
+                                      itemCount: _cards.length,
+                                      itemBuilder: (context, index) {
+                                        final card = _cards[index];
+                                        return Card(
+                                          clipBehavior: Clip.antiAlias,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
+                                              12,
+                                            ),
+                                          ),
+                                          elevation: 2,
+                                          child: InkWell(
+                                            onTap: () async {
+                                              final result =
+                                                  await Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder:
+                                                          (
+                                                            context,
+                                                          ) => AddCardPage(
+                                                            existingCard: card,
+                                                            pillarId:
+                                                                widget
+                                                                    .pillar
+                                                                    .id,
+                                                            isReadOnly: !isOwn,
+                                                          ),
+                                                    ),
+                                                  );
+                                              if (result == true && isOwn)
+                                                _loadCards();
+                                            },
+                                            child: Builder(
+                                              builder: (context) {
+                                                final path = card.imageUrl;
+                                                if (path == null ||
+                                                    path.isEmpty) {
+                                                  return Container(
+                                                    color: Colors.grey
+                                                        .withValues(alpha: 0.1),
+                                                    child: const Icon(
+                                                      Icons.image,
+                                                      size: 48,
+                                                      color: Colors.grey,
+                                                    ),
+                                                  );
+                                                }
+                                                if (kIsWeb ||
+                                                    path.startsWith('http')) {
+                                                  return Image.network(
+                                                    path,
+                                                    fit: BoxFit.cover,
+                                                  );
+                                                } else if (path.startsWith(
+                                                  'assets/',
+                                                )) {
+                                                  return Image.asset(
+                                                    path,
+                                                    fit: BoxFit.cover,
+                                                  );
+                                                } else {
+                                                  return Image.file(
+                                                    File(path),
+                                                    fit: BoxFit.cover,
+                                                  );
+                                                }
+                                              },
+                                            ),
                                           ),
                                         );
-                                        if (result == true && isOwn)
-                                          _loadCards();
                                       },
-                                      child: Builder(
-                                        builder: (context) {
-                                          final path = card.imageUrl;
-                                          if (path == null || path.isEmpty) {
-                                            return Container(
-                                              color: Colors.grey.withValues(
-                                                alpha: 0.1,
-                                              ),
-                                              child: const Icon(
-                                                Icons.image,
-                                                size: 48,
-                                                color: Colors.grey,
-                                              ),
-                                            );
-                                          }
-                                          if (kIsWeb ||
-                                              path.startsWith('http')) {
-                                            return Image.network(
-                                              path,
-                                              fit: BoxFit.cover,
-                                            );
-                                          } else if (path.startsWith(
-                                            'assets/',
-                                          )) {
-                                            return Image.asset(
-                                              path,
-                                              fit: BoxFit.cover,
-                                            );
-                                          } else {
-                                            return Image.file(
-                                              File(path),
-                                              fit: BoxFit.cover,
-                                            );
-                                          }
-                                        },
-                                      ),
                                     ),
-                                  );
-                                },
-                              ),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),

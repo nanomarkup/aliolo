@@ -117,7 +117,6 @@ class _SubjectPageState extends State<SubjectPage> {
         getIt<LearningLanguageService>().activeLanguageCodes
             .map((l) => l.toLowerCase())
             .toSet();
-    // Ensure current language is always in the list to prevent Flutter's DropdownButton assertion error
     final List<String> activeLangs = rawActiveLangs.toList()..sort();
     if (!activeLangs.contains(_currentLearningLang.toLowerCase())) {
       activeLangs.add(_currentLearningLang.toLowerCase());
@@ -224,204 +223,197 @@ class _SubjectPageState extends State<SubjectPage> {
                 ),
               ],
             ),
-            body:
-                _isLoading
-                    ? const Center(child: CircularProgressIndicator())
-                    : Center(
-                      child: ConstrainedBox(
-                        constraints: const BoxConstraints(maxWidth: 700),
-                        child:
-                            activePillars.isEmpty
-                                ? Center(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      const Icon(
-                                        Icons.dashboard_customize,
-                                        size: 80,
-                                        color: Colors.grey,
+            body: Center(
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 700),
+                child: Column(
+                  children: [
+                    const SizedBox(height: 100),
+                    Expanded(
+                      child:
+                          _isLoading
+                              ? const Center(child: CircularProgressIndicator())
+                              : activePillars.isEmpty
+                              ? Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Icon(
+                                      Icons.dashboard_customize,
+                                      size: 80,
+                                      color: Colors.grey,
+                                    ),
+                                    const SizedBox(height: 16),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 32,
                                       ),
-                                      const SizedBox(height: 16),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 32,
-                                        ),
-                                        child: Text(
-                                          context.t('empty_dashboard'),
-                                          textAlign: TextAlign.center,
-                                          style: const TextStyle(
-                                            fontSize: 18,
-                                            color: Colors.grey,
-                                          ),
-                                        ),
-                                      ),
-                                      const SizedBox(height: 24),
-                                      ElevatedButton.icon(
-                                        onPressed: () async {
-                                          await Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder:
-                                                  (context) =>
-                                                      const ManageCardsPage(),
-                                            ),
-                                          );
-                                          _loadDashboard();
-                                        },
-                                        icon: const Icon(
-                                          Icons.collections_bookmark,
-                                        ),
-                                        label: Text(
-                                          context.t('manage_subjects'),
+                                      child: Text(
+                                        context.t('empty_dashboard'),
+                                        textAlign: TextAlign.center,
+                                        style: const TextStyle(
+                                          fontSize: 18,
+                                          color: Colors.grey,
                                         ),
                                       ),
-                                    ],
-                                  ),
-                                )
-                                : GridView.builder(
-                                  padding: const EdgeInsets.all(32),
-                                  gridDelegate:
-                                      const SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 2,
-                                        crossAxisSpacing: 24,
-                                        mainAxisSpacing: 24,
-                                        childAspectRatio: 1.5,
-                                      ),
-                                  itemCount: activePillars.length,
-                                  itemBuilder: (context, index) {
-                                    final pillar = activePillars[index];
-                                    final pillarSubjects =
-                                        _dashboardSubjects
-                                            .where(
-                                              (s) => s.pillarId == pillar.id,
-                                            )
-                                            .toList();
-                                    final count =
-                                        pillarSubjects
-                                            .where(
-                                              (s) =>
-                                                  s.getCardCountForLanguage(
-                                                    _currentLearningLang,
-                                                  ) >
-                                                  0,
-                                            )
-                                            .length;
-                                    final pillarColor = pillar.getColor();
-                                    final pillarIcon = pillar.getIconData();
-
-                                    return InkWell(
-                                      onTap: () {
-                                        ThemeService().setSessionColor(
-                                          pillarColor,
-                                        );
-                                        Navigator.push(
+                                    ),
+                                    const SizedBox(height: 24),
+                                    ElevatedButton.icon(
+                                      onPressed: () async {
+                                        await Navigator.push(
                                           context,
                                           MaterialPageRoute(
                                             builder:
-                                                (context) => PillarSubjectsPage(
-                                                  pillar: pillar,
-                                                  subjects: pillarSubjects,
-                                                  languageCode:
-                                                      _currentLearningLang,
-                                                ),
+                                                (context) =>
+                                                    const ManageCardsPage(),
                                           ),
                                         );
+                                        _loadDashboard();
                                       },
-                                      borderRadius: BorderRadius.circular(24),
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          gradient: LinearGradient(
-                                            colors: [
-                                              pillarColor,
-                                              pillarColor.withValues(
-                                                alpha: 0.7,
-                                              ),
-                                            ],
-                                            begin: Alignment.topLeft,
-                                            end: Alignment.bottomRight,
-                                          ),
-                                          borderRadius: BorderRadius.circular(
-                                            24,
-                                          ),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: pillarColor.withValues(
-                                                alpha: 0.3,
-                                              ),
-                                              blurRadius: 12,
-                                              offset: const Offset(0, 6),
-                                            ),
-                                          ],
-                                        ),
-                                        child: Stack(
-                                          children: [
-                                            Positioned(
-                                              right: -20,
-                                              bottom: -20,
-                                              child: Icon(
-                                                pillarIcon,
-                                                size: 120,
-                                                color: Colors.white.withValues(
-                                                  alpha: 0.2,
-                                                ),
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: const EdgeInsets.all(
-                                                24.0,
-                                              ),
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Icon(
-                                                    pillarIcon,
-                                                    color: Colors.white,
-                                                    size: 40,
-                                                  ),
-                                                  const Spacer(),
-                                                  FutureBuilder<String>(
-                                                    future: TranslationService()
-                                                        .translateForLanguage(
-                                                          'pillar_${pillar.name}',
-                                                          _currentLearningLang,
-                                                        ),
-                                                    builder: (
-                                                      context,
-                                                      snapshot,
-                                                    ) {
-                                                      return Text(
-                                                        snapshot.data ??
-                                                            pillar.getTranslatedName(
-                                                              _currentLearningLang,
-                                                            ),
-                                                        style: const TextStyle(
-                                                          color: Colors.white,
-                                                          fontSize: 24,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                        ),
-                                                      );
-                                                    },
-                                                  ),
-                                                  Text(
-                                                    '$count ${context.t('subjects')}',
-                                                    style: const TextStyle(
-                                                      color: Colors.white70,
-                                                      fontSize: 14,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
+                                      icon: const Icon(
+                                        Icons.collections_bookmark,
                                       ),
-                                    );
-                                  },
+                                      label: Text(context.t('manage_subjects')),
+                                    ),
+                                  ],
                                 ),
-                      ),
+                              )
+                              : GridView.builder(
+                                padding: const EdgeInsets.all(32),
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2,
+                                      crossAxisSpacing: 24,
+                                      mainAxisSpacing: 24,
+                                      childAspectRatio: 1.5,
+                                    ),
+                                itemCount: activePillars.length,
+                                itemBuilder: (context, index) {
+                                  final pillar = activePillars[index];
+                                  final pillarSubjects =
+                                      _dashboardSubjects
+                                          .where((s) => s.pillarId == pillar.id)
+                                          .toList();
+                                  final count =
+                                      pillarSubjects
+                                          .where(
+                                            (s) =>
+                                                s.getCardCountForLanguage(
+                                                  _currentLearningLang,
+                                                ) >
+                                                0,
+                                          )
+                                          .length;
+                                  final pillarColor = pillar.getColor();
+                                  final pillarIcon = pillar.getIconData();
+
+                                  return InkWell(
+                                    onTap: () {
+                                      ThemeService().setSessionColor(
+                                        pillarColor,
+                                      );
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder:
+                                              (context) => PillarSubjectsPage(
+                                                pillar: pillar,
+                                                subjects: pillarSubjects,
+                                                languageCode:
+                                                    _currentLearningLang,
+                                              ),
+                                        ),
+                                      );
+                                    },
+                                    borderRadius: BorderRadius.circular(24),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        gradient: LinearGradient(
+                                          colors: [
+                                            pillarColor,
+                                            pillarColor.withValues(alpha: 0.7),
+                                          ],
+                                          begin: Alignment.topLeft,
+                                          end: Alignment.bottomRight,
+                                        ),
+                                        borderRadius: BorderRadius.circular(24),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: pillarColor.withValues(
+                                              alpha: 0.3,
+                                            ),
+                                            blurRadius: 12,
+                                            offset: const Offset(0, 6),
+                                          ),
+                                        ],
+                                      ),
+                                      child: Stack(
+                                        children: [
+                                          Positioned(
+                                            right: -20,
+                                            bottom: -20,
+                                            child: Icon(
+                                              pillarIcon,
+                                              size: 120,
+                                              color: Colors.white.withValues(
+                                                alpha: 0.2,
+                                              ),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(24.0),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Icon(
+                                                  pillarIcon,
+                                                  color: Colors.white,
+                                                  size: 40,
+                                                ),
+                                                const Spacer(),
+                                                FutureBuilder<String>(
+                                                  future: TranslationService()
+                                                      .translateForLanguage(
+                                                        'pillar_${pillar.name}',
+                                                        _currentLearningLang,
+                                                      ),
+                                                  builder: (context, snapshot) {
+                                                    return Text(
+                                                      snapshot.data ??
+                                                          pillar.getTranslatedName(
+                                                            _currentLearningLang,
+                                                          ),
+                                                      style: const TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 24,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    );
+                                                  },
+                                                ),
+                                                Text(
+                                                  '$count ${context.t('subjects')}',
+                                                  style: const TextStyle(
+                                                    color: Colors.white70,
+                                                    fontSize: 14,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
                     ),
+                  ],
+                ),
+              ),
+            ),
           ),
         );
       },
@@ -458,7 +450,8 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
 
     return ResizeWrapper(
       child: Scaffold(
-        appBar: AppBar(
+        extendBodyBehindAppBar: true,
+        appBar: AlioloAppBar(
           title: DragToMoveArea(
             child: SizedBox(
               width: double.infinity,
@@ -488,17 +481,24 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
             const WindowControls(color: appBarColor, iconSize: 24),
           ],
         ),
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
-          child: Center(
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 700),
-              child:
-                  filteredSubjects.isEmpty
-                      ? Center(child: Text(context.t('no_subjects_found')))
-                      : Column(
-                        children:
-                            filteredSubjects.map((subject) {
+        body: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 700),
+            child: Column(
+              children: [
+                const SizedBox(height: 100),
+                Expanded(
+                  child:
+                      filteredSubjects.isEmpty
+                          ? Center(child: Text(context.t('no_subjects_found')))
+                          : ListView.builder(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 24,
+                              vertical: 32,
+                            ),
+                            itemCount: filteredSubjects.length,
+                            itemBuilder: (context, index) {
+                              final subject = filteredSubjects[index];
                               final cardCount = subject.getCardCountForLanguage(
                                 widget.languageCode,
                               );
@@ -637,8 +637,10 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
                                   ),
                                 ),
                               );
-                            }).toList(),
-                      ),
+                            },
+                          ),
+                ),
+              ],
             ),
           ),
         ),
