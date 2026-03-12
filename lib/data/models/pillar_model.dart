@@ -21,16 +21,29 @@ class Pillar {
 
   IconData getIconData() {
     switch (icon) {
-      case 'engineering': return Icons.engineering;
-      case 'accessibility': return Icons.accessibility;
-      case 'menu_book': return Icons.menu_book;
-      case 'sports_esports': return Icons.sports_esports;
-      case 'eco': return Icons.eco;
-      case 'science': return Icons.science;
-      case 'public': return Icons.public;
-      case 'translate': return Icons.translate;
-      default: return Icons.category;
+      case 'engineering':
+        return Icons.engineering;
+      case 'accessibility':
+        return Icons.accessibility;
+      case 'menu_book':
+        return Icons.menu_book;
+      case 'sports_esports':
+        return Icons.sports_esports;
+      case 'eco':
+        return Icons.eco;
+      case 'science':
+        return Icons.science;
+      case 'public':
+        return Icons.public;
+      case 'translate':
+        return Icons.translate;
+      default:
+        return Icons.category;
     }
+  }
+
+  String getTranslatedName(String langCode) {
+    return translations[langCode.toLowerCase()] ?? translations['en'] ?? name;
   }
 }
 

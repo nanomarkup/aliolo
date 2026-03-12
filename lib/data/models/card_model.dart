@@ -1,9 +1,9 @@
 class CardModel {
   final String id; // Renamed from cardId
-  final String subjectId; 
+  final String subjectId;
   final int level;
-  final Map<String, String> prompts; 
-  final Map<String, String> answers; 
+  final Map<String, String> prompts;
+  final Map<String, String> answers;
   final String? videoUrl;
   final String? imageUrl;
   final List<String> imageUrls;
@@ -50,9 +50,18 @@ class CardModel {
     );
   }
 
-  CardModel.empty() : 
-    id = '', subjectId = '', level = 1, 
-    prompts = {}, answers = {}, ownerId = '', isPublic = false,
-    isDeleted = false, createdAt = DateTime.now(), updatedAt = DateTime.now(),
-    videoUrl = null, imageUrl = null, imageUrls = const [];
+  CardModel.empty()
+    : id = '',
+      subjectId = '',
+      level = 1,
+      prompts = {},
+      answers = {},
+      ownerId = '',
+      isPublic = false,
+      isDeleted = false,
+      createdAt = DateTime.now(),
+      updatedAt = DateTime.now(),
+      videoUrl = null,
+      imageUrl = null,
+      imageUrls = const [];
 }

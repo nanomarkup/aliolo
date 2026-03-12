@@ -37,7 +37,9 @@ class _UserManagementPageState extends State<UserManagementPage> {
 
   Future<void> _loadUsers() async {
     final users = await _authService.getAllUsers();
-    users.sort((a, b) => a.username.toLowerCase().compareTo(b.username.toLowerCase()));
+    users.sort(
+      (a, b) => a.username.toLowerCase().compareTo(b.username.toLowerCase()),
+    );
     setState(() {
       _users = users;
       _isLoading = false;
@@ -47,7 +49,7 @@ class _UserManagementPageState extends State<UserManagementPage> {
   @override
   Widget build(BuildContext context) {
     const appBarColor = Colors.white;
-    const currentSessionColor = ThemeService.mainColor;
+    const Color currentSessionColor = ThemeService.mainColor;
 
     return ListenableBuilder(
       listenable: TranslationService(),
@@ -58,7 +60,10 @@ class _UserManagementPageState extends State<UserManagementPage> {
               title: DragToMoveArea(
                 child: SizedBox(
                   width: double.infinity,
-                  child: Text(context.t('manage_users'), style: const TextStyle(color: appBarColor)),
+                  child: Text(
+                    context.t('manage_users'),
+                    style: const TextStyle(color: appBarColor),
+                  ),
                 ),
               ),
               backgroundColor: currentSessionColor,
@@ -67,58 +72,102 @@ class _UserManagementPageState extends State<UserManagementPage> {
               actions: [
                 IconButton(
                   icon: const Icon(Icons.school, color: appBarColor),
-                  onPressed: () => Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const SubjectPage()), (route) => false),
+                  onPressed:
+                      () => Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const SubjectPage(),
+                        ),
+                        (route) => false,
+                      ),
                 ),
                 IconButton(
                   icon: const Icon(Icons.emoji_events, color: appBarColor),
-                  onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const LeaderboardPage())),
+                  onPressed:
+                      () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const LeaderboardPage(),
+                        ),
+                      ),
                 ),
                 IconButton(
                   icon: const Icon(Icons.style, color: appBarColor),
-                  onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const ManageCardsPage())),
+                  onPressed:
+                      () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ManageCardsPage(),
+                        ),
+                      ),
                 ),
                 IconButton(
                   icon: const Icon(Icons.person, color: appBarColor),
-                  onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfilePage())),
+                  onPressed:
+                      () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ProfilePage(),
+                        ),
+                      ),
                 ),
                 IconButton(
                   icon: const Icon(Icons.settings, color: appBarColor),
-                  onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const SettingsPage())),
+                  onPressed:
+                      () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const SettingsPage(),
+                        ),
+                      ),
                 ),
                 const WindowControls(color: appBarColor, iconSize: 24),
               ],
             ),
-            body: _isLoading
-                ? const Center(child: CircularProgressIndicator())
-                : Center(
-                    child: Container(
-                      constraints: const BoxConstraints(maxWidth: 800),
-                      padding: const EdgeInsets.all(24),
-                      child: Card(
-                        elevation: 2,
-                        child: ListView.separated(
-                          itemCount: _users.length,
-                          separatorBuilder: (context, index) => const Divider(height: 1),
-                          itemBuilder: (context, index) {
-                            final user = _users[index];
-                            final isMe = user.serverId == _authService.currentUser?.serverId;
+            body:
+                _isLoading
+                    ? const Center(child: CircularProgressIndicator())
+                    : Center(
+                      child: Container(
+                        constraints: const BoxConstraints(maxWidth: 800),
+                        padding: const EdgeInsets.all(24),
+                        child: Card(
+                          elevation: 2,
+                          child: ListView.separated(
+                            itemCount: _users.length,
+                            separatorBuilder:
+                                (context, index) => const Divider(height: 1),
+                            itemBuilder: (context, index) {
+                              final user = _users[index];
+                              final isMe =
+                                  user.serverId ==
+                                  _authService.currentUser?.serverId;
 
-                            return ListTile(
-                              leading: CircleAvatar(
-                                backgroundColor: currentSessionColor.withValues(alpha: 0.1),
-                                child: Icon(Icons.person, color: currentSessionColor),
-                              ),
-                              title: Text(
-                                user.username + (isMe ? ' (${context.t('you_rank', args: {'rank': ''}).replaceAll(' #', '')})' : ''),
-                                style: const TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              subtitle: Text(user.email),
-                            );
-                          },
+                              return ListTile(
+                                leading: CircleAvatar(
+                                  backgroundColor: currentSessionColor
+                                      .withValues(alpha: 0.1),
+                                  child: Icon(
+                                    Icons.person,
+                                    color: currentSessionColor,
+                                  ),
+                                ),
+                                title: Text(
+                                  user.username +
+                                      (isMe
+                                          ? ' (${context.t('you_rank', args: {'rank': ''}).replaceAll(' #', '')})'
+                                          : ''),
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                subtitle: Text(user.email),
+                              );
+                            },
+                          ),
                         ),
                       ),
                     ),
-                  ),
           ),
         );
       },

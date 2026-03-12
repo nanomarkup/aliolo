@@ -8,10 +8,10 @@ class WindowControls extends StatelessWidget {
   final Color? color;
   final bool padding;
   final double iconSize;
-  
+
   const WindowControls({
-    super.key, 
-    this.onlyClose = false, 
+    super.key,
+    this.onlyClose = false,
     this.showSeparator = true,
     this.color,
     this.padding = true,
@@ -23,7 +23,8 @@ class WindowControls extends StatelessWidget {
     if (kIsWeb) return const SizedBox.shrink();
 
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final defaultColor = color ?? (isDark ? Colors.grey.shade400 : Colors.grey.shade600);
+    final defaultColor =
+        color ?? (isDark ? Colors.grey.shade400 : Colors.grey.shade600);
     final effectiveColor = defaultColor;
 
     final content = GestureDetector(
@@ -46,7 +47,14 @@ class WindowControls extends StatelessWidget {
             IconButton(
               padding: EdgeInsets.zero,
               constraints: const BoxConstraints(),
-              icon: Text(' _', style: TextStyle(fontSize: iconSize, fontWeight: FontWeight.bold, color: effectiveColor)),
+              icon: Text(
+                ' _',
+                style: TextStyle(
+                  fontSize: iconSize,
+                  fontWeight: FontWeight.bold,
+                  color: effectiveColor,
+                ),
+              ),
               onPressed: () async {
                 await windowManager.minimize();
               },
@@ -55,7 +63,11 @@ class WindowControls extends StatelessWidget {
             IconButton(
               padding: EdgeInsets.zero,
               constraints: const BoxConstraints(),
-              icon: Icon(Icons.crop_square, size: iconSize, color: effectiveColor),
+              icon: Icon(
+                Icons.crop_square,
+                size: iconSize,
+                color: effectiveColor,
+              ),
               onPressed: () async {
                 bool isMaximized = await windowManager.isMaximized();
                 if (isMaximized) {

@@ -5,7 +5,9 @@ class ThemeService extends ChangeNotifier {
   factory ThemeService() => _instance;
   ThemeService._internal();
 
-  final ValueNotifier<ThemeMode> themeNotifier = ValueNotifier(ThemeMode.system);
+  final ValueNotifier<ThemeMode> themeNotifier = ValueNotifier(
+    ThemeMode.system,
+  );
   static const Color mainColor = Colors.orange;
   final ValueNotifier<Color> sessionColorNotifier = ValueNotifier(mainColor);
 

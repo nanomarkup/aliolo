@@ -27,7 +27,8 @@ class SoundService {
 
   Future<void> playCorrect() async {
     if (kIsWeb) return;
-    if ((_authService.currentUser?.soundEnabled ?? true) && _correctPath != null) {
+    if ((_authService.currentUser?.soundEnabled ?? true) &&
+        _correctPath != null) {
       if (await File(_correctPath!).exists()) {
         await _player.stop();
         await _player.play(DeviceFileSource(_correctPath!));
@@ -37,7 +38,8 @@ class SoundService {
 
   Future<void> playWrong() async {
     if (kIsWeb) return;
-    if ((_authService.currentUser?.soundEnabled ?? true) && _wrongPath != null) {
+    if ((_authService.currentUser?.soundEnabled ?? true) &&
+        _wrongPath != null) {
       if (await File(_wrongPath!).exists()) {
         await _player.stop();
         await _player.play(DeviceFileSource(_wrongPath!));
@@ -47,7 +49,8 @@ class SoundService {
 
   Future<void> playCompleted() async {
     if (kIsWeb) return;
-    if ((_authService.currentUser?.soundEnabled ?? true) && _completedPath != null) {
+    if ((_authService.currentUser?.soundEnabled ?? true) &&
+        _completedPath != null) {
       if (await File(_completedPath!).exists()) {
         await _player.stop();
         await _player.play(DeviceFileSource(_completedPath!));

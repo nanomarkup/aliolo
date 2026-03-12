@@ -43,8 +43,13 @@ class AuthService extends ChangeNotifier {
 
   Future<void> _fetchAndSyncUser(User remoteUser) async {
     try {
-      final remoteData = await _supabase!.from('profiles').select().eq('id', remoteUser.id).maybeSingle();
-      
+      final remoteData =
+          await _supabase!
+              .from('profiles')
+              .select()
+              .eq('id', remoteUser.id)
+              .maybeSingle();
+
       if (remoteData != null) {
         _currentUser = UserModel.fromJson(remoteData);
         // Ensure email is consistent from remoteUser if missing or different
@@ -52,7 +57,9 @@ class AuthService extends ChangeNotifier {
         ThemeService().setThemeFromString(_currentUser!.themeMode);
       } else {
         _currentUser = UserModel(
-          username: remoteUser.userMetadata?['username'] ?? remoteUser.email!.split('@')[0],
+          username:
+              remoteUser.userMetadata?['username'] ??
+              remoteUser.email!.split('@')[0],
           email: remoteUser.email!.toLowerCase(),
           serverId: remoteUser.id,
           uiLanguage: TranslationService().currentLocale.languageCode,
@@ -65,13 +72,18 @@ class AuthService extends ChangeNotifier {
     }
   }
 
-  Future<void> createUser(String username, String email, String password) async {
+  Future<void> createUser(
+    String username,
+    String email,
+    String password,
+  ) async {
     _lastErrorMessage = null;
     final cleanEmail = email.trim().toLowerCase();
     try {
       final res = await _supabase!.auth.signUp(
-        email: cleanEmail, password: password, 
-        data: {'username': username}
+        email: cleanEmail,
+        password: password,
+        data: {'username': username},
       );
       if (res.user != null) {
         await _fetchAndSyncUser(res.user!);
@@ -89,7 +101,10 @@ class AuthService extends ChangeNotifier {
     _lastErrorMessage = null;
     final String email = identifier.trim().toLowerCase();
     try {
-      final res = await _supabase!.auth.signInWithPassword(email: email, password: password);
+      final res = await _supabase!.auth.signInWithPassword(
+        email: email,
+        password: password,
+      );
       if (res.user != null) {
         await _fetchAndSyncUser(res.user!);
         return true;
@@ -121,13 +136,17 @@ class AuthService extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool isValidEmail(String e) => RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(e);
-  
+  bool isValidEmail(String e) =>
+      RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(e);
+
   // Everyone is treated equally in terms of edit permissions now
-  bool get canEditLibrary => true; 
+  bool get canEditLibrary => true;
   bool get canManageUsers => false; // Or remove if not used
 
-  Future<List<UserModel>> getLeaderboardData({int page = 0, int pageSize = 20}) async {
+  Future<List<UserModel>> getLeaderboardData({
+    int page = 0,
+    int pageSize = 20,
+  }) async {
     try {
       final from = page * pageSize;
       final to = from + pageSize - 1;
@@ -138,7 +157,7 @@ class AuthService extends ChangeNotifier {
           .eq('show_on_leaderboard', true)
           .order('total_xp', ascending: false)
           .range(from, to);
-      
+
       return data.map((p) => UserModel.fromJson(p)).toList();
     } catch (e) {
       print('Error fetching leaderboard: $e');
@@ -155,7 +174,7 @@ class AuthService extends ChangeNotifier {
           .select('id')
           .eq('show_on_leaderboard', true)
           .gt('total_xp', _currentUser!.totalXp);
-      
+
       // PostgrestResponse returns a list, the count is the length if we select 'id'
       // Or use the count property if available in the result
       final List<dynamic> data = res as List<dynamic>;
@@ -166,41 +185,118 @@ class AuthService extends ChangeNotifier {
     }
   }
 
-  Future<void> updateUsername(String n) async { if (_currentUser!=null) { _currentUser!.username = n; await updateUser(_currentUser!); } }
-  Future<void> updateEmail(String e) async { if (_currentUser!=null) { _currentUser!.email = e.toLowerCase(); await updateUser(_currentUser!); } }
-  Future<void> updateDailyGoal(int c) async { if (_currentUser != null) { _currentUser!.dailyGoalCount = c; await updateUser(_currentUser!); } }
-  Future<void> updateUiLanguagePreference(String l) async { if (_currentUser != null) { _currentUser!.uiLanguage = l; await updateUser(_currentUser!); } }
-  Future<void> updateThemePreference(String m) async { if (_currentUser!=null) { _currentUser!.themeMode = m; await updateUser(_currentUser!); } }
-  Future<void> updateDefaultLanguage(String l) async { if (_currentUser!=null) { _currentUser!.defaultLanguage = l; await updateUser(_currentUser!); } }
-  Future<void> updateSidebarPreference(bool v) async { if (_currentUser!=null) { _currentUser!.sidebarLeft = v; await updateUser(_currentUser!); } }
-  Future<void> updateSoundPreference(bool v) async { if (_currentUser!=null) { _currentUser!.soundEnabled = v; await updateUser(_currentUser!); } }
-  Future<void> updateLeaderboardPreference(bool v) async { if (_currentUser!=null) { _currentUser!.showOnLeaderboard = v; await updateUser(_currentUser!); } }
+  Future<void> updateUsername(String n) async {
+    if (_currentUser != null) {
+      _currentUser!.username = n;
+      await updateUser(_currentUser!);
+    }
+  }
+
+  Future<void> updateEmail(String e) async {
+    if (_currentUser != null) {
+      _currentUser!.email = e.toLowerCase();
+      await updateUser(_currentUser!);
+    }
+  }
+
+  Future<void> updateDailyGoal(int c) async {
+    if (_currentUser != null) {
+      _currentUser!.dailyGoalCount = c;
+      await updateUser(_currentUser!);
+    }
+  }
+
+  Future<void> updateUiLanguagePreference(String l) async {
+    if (_currentUser != null) {
+      _currentUser!.uiLanguage = l;
+      await updateUser(_currentUser!);
+    }
+  }
+
+  Future<void> updateThemePreference(String m) async {
+    if (_currentUser != null) {
+      _currentUser!.themeMode = m;
+      await updateUser(_currentUser!);
+    }
+  }
+
+  Future<void> updateDefaultLanguage(String l) async {
+    if (_currentUser != null) {
+      _currentUser!.defaultLanguage = l;
+      await updateUser(_currentUser!);
+    }
+  }
+
+  Future<void> updateSidebarPreference(bool v) async {
+    if (_currentUser != null) {
+      _currentUser!.sidebarLeft = v;
+      await updateUser(_currentUser!);
+    }
+  }
+
+  Future<void> updateSoundPreference(bool v) async {
+    if (_currentUser != null) {
+      _currentUser!.soundEnabled = v;
+      await updateUser(_currentUser!);
+    }
+  }
+
+  Future<void> updateLeaderboardPreference(bool v) async {
+    if (_currentUser != null) {
+      _currentUser!.showOnLeaderboard = v;
+      await updateUser(_currentUser!);
+    }
+  }
+
   Future<void> updateAvatarPath(String localPath) async {
     if (_currentUser == null || !_isSupabaseInitialized) return;
     try {
       final file = File(localPath);
       if (!await file.exists()) return;
-      
+
       final ext = p.extension(localPath);
       final fileName = 'avatar$ext';
       final storagePath = '${_currentUser!.serverId}/$fileName';
 
-      await _supabase!.storage.from('avatars').upload(
-        storagePath,
-        file,
-        fileOptions: const FileOptions(upsert: true),
-      );
+      await _supabase!.storage
+          .from('avatars')
+          .upload(
+            storagePath,
+            file,
+            fileOptions: const FileOptions(upsert: true),
+          );
 
-      final String publicUrl = _supabase!.storage.from('avatars').getPublicUrl(storagePath);
+      final String publicUrl = _supabase!.storage
+          .from('avatars')
+          .getPublicUrl(storagePath);
       _currentUser!.avatarPath = publicUrl;
       await updateUser(_currentUser!);
     } catch (e) {
       print('Error uploading avatar: $e');
     }
   }
-  Future<void> updateShortcuts(int p, int n) async { if (_currentUser!=null) { _currentUser!.shortcutPrevKey = p; _currentUser!.shortcutNextKey = n; await updateUser(_currentUser!); } }
-  Future<void> updateSessionSize(int size) async { if (_currentUser != null) { _currentUser!.sessionSize = size; await updateUser(_currentUser!); } }
-  Future<void> updateOptionsCount(int count) async { if (_currentUser != null) { _currentUser!.optionsCount = count; await updateUser(_currentUser!); } }
+
+  Future<void> updateShortcuts(int p, int n) async {
+    if (_currentUser != null) {
+      _currentUser!.shortcutPrevKey = p;
+      _currentUser!.shortcutNextKey = n;
+      await updateUser(_currentUser!);
+    }
+  }
+
+  Future<void> updateSessionSize(int size) async {
+    if (_currentUser != null) {
+      _currentUser!.sessionSize = size;
+      await updateUser(_currentUser!);
+    }
+  }
+
+  Future<void> updateOptionsCount(int count) async {
+    if (_currentUser != null) {
+      _currentUser!.optionsCount = count;
+      await updateUser(_currentUser!);
+    }
+  }
 
   Future<String?> sendResetCode(String email) async {
     try {
@@ -211,12 +307,16 @@ class AuthService extends ChangeNotifier {
     }
   }
 
-  bool verifyResetCode(String u, String c) => true; // Supabase handles this via link
+  bool verifyResetCode(String u, String c) =>
+      true; // Supabase handles this via link
   Future<void> finalizePasswordReset(String email, String newPassword) async {
     await _supabase!.auth.updateUser(UserAttributes(password: newPassword));
   }
 
-  Future<bool> updatePassword(String o, String n) async { return true; }
+  Future<bool> updatePassword(String o, String n) async {
+    return true;
+  }
+
   Future<bool> deleteAccount(String password) async {
     if (_currentUser == null || !_isSupabaseInitialized) return false;
     try {
@@ -225,7 +325,7 @@ class AuthService extends ChangeNotifier {
         email: _currentUser!.email,
         password: password,
       );
-      
+
       if (res.user == null) return false;
 
       // 2. Call RPC to delete all user-related data (profiles, progress, etc.)
@@ -241,5 +341,8 @@ class AuthService extends ChangeNotifier {
       return false;
     }
   }
-  Future<List<UserModel>> getAllUsers() async { return []; }
+
+  Future<List<UserModel>> getAllUsers() async {
+    return [];
+  }
 }

@@ -23,8 +23,8 @@ class AddCardPage extends StatefulWidget {
   final bool isReadOnly;
 
   const AddCardPage({
-    super.key, 
-    this.existingCard, 
+    super.key,
+    this.existingCard,
     this.pillarId,
     this.initialSubjectId,
     this.isReadOnly = false,
@@ -39,14 +39,14 @@ class _AddCardPageState extends State<AddCardPage> {
   final _cardService = getIt<CardService>();
   final _authService = getIt<AuthService>();
   final _imagePicker = ImagePicker();
-  
+
   late TextEditingController _videoUrlController;
   late TextEditingController _levelController;
   String? _selectedSubjectId;
   int? _selectedPillar;
   bool _showAllLangs = false;
   bool _isSaving = false;
-  
+
   final Map<String, TextEditingController> _promptControllers = {};
   final Map<String, TextEditingController> _answerControllers = {};
 
@@ -55,16 +55,24 @@ class _AddCardPageState extends State<AddCardPage> {
 
   // Image management
   List<String> _existingImageUrls = [];
-  final List<File?> _newImageFiles = []; // Use nullable to track placeholder slots during replacement
+  final List<XFile?> _newImageFiles =
+      []; // Store XFile for better cross-platform support
 
   @override
   void initState() {
     super.initState();
-    _videoUrlController = TextEditingController(text: widget.existingCard?.videoUrl ?? '');
-    _levelController = TextEditingController(text: widget.existingCard?.level.toString() ?? '1');
+    _videoUrlController = TextEditingController(
+      text: widget.existingCard?.videoUrl ?? '',
+    );
+    _levelController = TextEditingController(
+      text: widget.existingCard?.level.toString() ?? '1',
+    );
     _selectedPillar = widget.pillarId ?? pillars.first.id;
-    _selectedSubjectId = widget.initialSubjectId ?? widget.existingCard?.subjectId;
-    _existingImageUrls = List<String>.from(widget.existingCard?.imageUrls ?? []);
+    _selectedSubjectId =
+        widget.initialSubjectId ?? widget.existingCard?.subjectId;
+    _existingImageUrls = List<String>.from(
+      widget.existingCard?.imageUrls ?? [],
+    );
 
     _initLanguageControllers();
     _loadSubjects();
@@ -76,8 +84,12 @@ class _AddCardPageState extends State<AddCardPage> {
 
     for (var lang in allLangs) {
       final code = lang.toLowerCase();
-      _promptControllers[lang] = TextEditingController(text: card?.prompts[code] ?? '');
-      _answerControllers[lang] = TextEditingController(text: card?.answers[code] ?? '');
+      _promptControllers[lang] = TextEditingController(
+        text: card?.prompts[code] ?? '',
+      );
+      _answerControllers[lang] = TextEditingController(
+        text: card?.answers[code] ?? '',
+      );
     }
   }
 
@@ -86,10 +98,14 @@ class _AddCardPageState extends State<AddCardPage> {
     setState(() {
       _mySubjects = subjects;
       if (_selectedSubjectId != null) {
-        final subject = _mySubjects.firstWhere((s) => s.id == _selectedSubjectId, orElse: () => _mySubjects.first);
+        final subject = _mySubjects.firstWhere(
+          (s) => s.id == _selectedSubjectId,
+          orElse: () => _mySubjects.first,
+        );
         _selectedPillar = subject.pillarId;
       } else if (_mySubjects.isNotEmpty) {
-        final inPillar = _mySubjects.where((s) => s.pillarId == _selectedPillar).toList();
+        final inPillar =
+            _mySubjects.where((s) => s.pillarId == _selectedPillar).toList();
         if (inPillar.isNotEmpty) {
           _selectedSubjectId = inPillar.first.id;
         } else {
@@ -102,19 +118,21 @@ class _AddCardPageState extends State<AddCardPage> {
   }
 
   Future<void> _pickImage({int? replaceIndex, bool isExisting = false}) async {
-    final XFile? image = await _imagePicker.pickImage(source: ImageSource.gallery);
+    final XFile? image = await _imagePicker.pickImage(
+      source: ImageSource.gallery,
+    );
     if (image == null) return;
 
     setState(() {
       if (replaceIndex != null) {
         if (isExisting) {
           _existingImageUrls.removeAt(replaceIndex);
-          _newImageFiles.add(File(image.path));
+          _newImageFiles.add(image);
         } else {
-          _newImageFiles[replaceIndex] = File(image.path);
+          _newImageFiles[replaceIndex] = image;
         }
       } else {
-        _newImageFiles.add(File(image.path));
+        _newImageFiles.add(image);
       }
     });
   }
@@ -147,7 +165,9 @@ class _AddCardPageState extends State<AddCardPage> {
       });
 
       if (answers.isEmpty) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(context.t('provide_at_least_one_answer'))));
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(context.t('provide_at_least_one_answer'))),
+        );
         setState(() => _isSaving = false);
         return;
       }
@@ -158,7 +178,7 @@ class _AddCardPageState extends State<AddCardPage> {
       // Upload new images
       for (var file in _newImageFiles) {
         if (file == null) continue;
-        final url = await _cardService.uploadCardImage(cardId, file);
+        final url = await _cardService.uploadCardImageXFile(cardId, file);
         if (url != null) finalImageUrls.add(url);
       }
 
@@ -169,7 +189,8 @@ class _AddCardPageState extends State<AddCardPage> {
         level: int.tryParse(_levelController.text) ?? 1,
         prompts: prompts,
         answers: answers,
-        videoUrl: _videoUrlController.text.isEmpty ? null : _videoUrlController.text,
+        videoUrl:
+            _videoUrlController.text.isEmpty ? null : _videoUrlController.text,
         imageUrl: finalImageUrls.isNotEmpty ? finalImageUrls.first : null,
         imageUrls: finalImageUrls,
         ownerId: _authService.currentUser!.serverId!,
@@ -183,7 +204,9 @@ class _AddCardPageState extends State<AddCardPage> {
     } catch (e) {
       AppLogger.log('Error saving card: $e');
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error saving card: $e')));
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Error saving card: $e')));
         setState(() => _isSaving = false);
       }
     }
@@ -191,14 +214,34 @@ class _AddCardPageState extends State<AddCardPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (_isLoading) return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    if (_isLoading)
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
 
     const appBarColor = Colors.white;
-    final pillar = pillars.firstWhere((p) => p.id == _selectedPillar, orElse: () => pillars.first);
+    final pillar = pillars.firstWhere(
+      (p) => p.id == _selectedPillar,
+      orElse: () => pillars.first,
+    );
     final currentSessionColor = pillar.getColor();
-    final subject = _mySubjects.firstWhere((s) => s.id == _selectedSubjectId, orElse: () => _mySubjects.isNotEmpty ? _mySubjects.first : SubjectModel(id: '', name: '...', pillarId: 1, ownerId: '', isPublic: false, createdAt: DateTime.now(), updatedAt: DateTime.now()));
+    final subject = _mySubjects.firstWhere(
+      (s) => s.id == _selectedSubjectId,
+      orElse:
+          () =>
+              _mySubjects.isNotEmpty
+                  ? _mySubjects.first
+                  : SubjectModel(
+                    id: '',
+                    name: '...',
+                    pillarId: 1,
+                    ownerId: '',
+                    isPublic: false,
+                    createdAt: DateTime.now(),
+                    updatedAt: DateTime.now(),
+                  ),
+    );
 
-    final bool isSelectionLocked = widget.existingCard != null || widget.initialSubjectId != null;
+    final bool isSelectionLocked =
+        widget.existingCard != null || widget.initialSubjectId != null;
 
     return ResizeWrapper(
       child: Scaffold(
@@ -206,7 +249,10 @@ class _AddCardPageState extends State<AddCardPage> {
           title: DragToMoveArea(
             child: SizedBox(
               width: double.infinity,
-              child: Text(widget.isReadOnly ? context.t('card_details') : (widget.existingCard == null ? context.t('add_card') : context.t('edit_card')), style: const TextStyle(color: appBarColor)),
+              child: Text(
+                "${subject.name}: ${widget.isReadOnly ? context.t('card_details') : (widget.existingCard == null ? context.t('add_card') : context.t('edit_card'))}",
+                style: const TextStyle(color: appBarColor),
+              ),
             ),
           ),
           backgroundColor: currentSessionColor,
@@ -217,6 +263,35 @@ class _AddCardPageState extends State<AddCardPage> {
               icon: const Icon(Icons.arrow_back, color: appBarColor),
               onPressed: () => Navigator.pop(context),
             ),
+            if (widget.existingCard != null && !widget.isReadOnly)
+              IconButton(
+                icon: const Icon(Icons.delete, color: appBarColor),
+                onPressed: () async {
+                  final confirmed = await showDialog<bool>(
+                    context: context,
+                    builder:
+                        (context) => AlertDialog(
+                          title: Text(context.t('delete')),
+                          content: Text(context.t('delete_card_confirm')),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.pop(context, false),
+                              child: Text(context.t('cancel')),
+                            ),
+                            TextButton(
+                              onPressed: () => Navigator.pop(context, true),
+                              child: Text(context.t('confirm')),
+                            ),
+                          ],
+                        ),
+                  );
+
+                  if (confirmed == true && mounted) {
+                    await _cardService.deleteCard(widget.existingCard!);
+                    if (mounted) Navigator.pop(context, true);
+                  }
+                },
+              ),
             const WindowControls(color: appBarColor, iconSize: 24),
           ],
         ),
@@ -228,88 +303,133 @@ class _AddCardPageState extends State<AddCardPage> {
               child: Form(
                 key: _formKey,
                 child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(child: _buildInfoBlock(context.t('pillar').toUpperCase(), pillar.translations[TranslationService().currentLocale.languageCode] ?? pillar.name, currentSessionColor, icon: pillar.getIconData())),
-                    const SizedBox(width: 16),
-                    Expanded(child: _buildInfoBlock(context.t('subject').toUpperCase(), subject.name, currentSessionColor, icon: Icons.folder_open)),
+                    _buildSectionCaption(context.t('video')),
+                    const SizedBox(height: 8),
+                    TextFormField(
+                      controller: _videoUrlController,
+                      decoration: InputDecoration(
+                        labelText: context.t('video_url_optional'),
+                        border: const OutlineInputBorder(),
+                      ),
+                      enabled: !widget.isReadOnly,
+                    ),
+                    const SizedBox(height: 24),
+
+                    _buildImageSection(currentSessionColor),
+                    const SizedBox(height: 24),
+
+                    _buildSectionCaption(context.t('prompts_answers')),
+                    const SizedBox(height: 12),
+
+                    ..._promptControllers.keys
+                        .where(
+                          (lang) =>
+                              _showAllLangs ||
+                              lang == 'en' ||
+                              _promptControllers[lang]!.text.isNotEmpty,
+                        )
+                        .map((lang) {
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 16),
+                            child: Row(
+                              children: [
+                                Tooltip(
+                                  message: TranslationService().getLanguageName(
+                                    lang,
+                                  ),
+                                  child: SizedBox(
+                                    width: 40,
+                                    child: Text(
+                                      lang.toUpperCase(),
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: TextFormField(
+                                    controller: _promptControllers[lang],
+                                    decoration: InputDecoration(
+                                      labelText: context.t('prompt_label'),
+                                    ),
+                                    enabled: !widget.isReadOnly,
+                                  ),
+                                ),
+                                const SizedBox(width: 16),
+                                Expanded(
+                                  child: TextFormField(
+                                    controller: _answerControllers[lang],
+                                    decoration: InputDecoration(
+                                      labelText: context.t('answer'),
+                                    ),
+                                    enabled: !widget.isReadOnly,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        }),
+
+                    TextButton(
+                      onPressed:
+                          () => setState(() => _showAllLangs = !_showAllLangs),
+                      child: Text(
+                        _showAllLangs
+                            ? context.t('show_less_languages')
+                            : context.t('show_all_languages'),
+                      ),
+                    ),
+
+                    const SizedBox(height: 32),
+                    if (!widget.isReadOnly)
+                      ElevatedButton(
+                        onPressed: _isSaving ? null : _save,
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(double.infinity, 60),
+                          backgroundColor: currentSessionColor,
+                          foregroundColor: Colors.white,
+                        ),
+                        child:
+                            _isSaving
+                                ? const CircularProgressIndicator(
+                                  color: Colors.white,
+                                )
+                                : Text(
+                                  context.t('save_card'),
+                                  style: const TextStyle(fontSize: 18),
+                                ),
+                      ),
                   ],
                 ),
-                const SizedBox(height: 24),
-                
-                if (!isSelectionLocked) ...[
-                  DropdownButtonFormField<String>(
-                    value: _selectedSubjectId,
-                    decoration: InputDecoration(labelText: context.t('subject'), border: const OutlineInputBorder()),
-                    items: _mySubjects.map((s) => DropdownMenuItem(value: s.id, child: Text(s.name))).toList(),
-                    onChanged: widget.isReadOnly ? null : (val) {
-                      if (val != null) {
-                        setState(() {
-                          _selectedSubjectId = val;
-                          final selectedSubject = _mySubjects.firstWhere((s) => s.id == val);
-                          _selectedPillar = selectedSubject.pillarId;
-                        });
-                      }
-                    },
-                  ),
-                  const SizedBox(height: 16),
-                ],
-
-                _buildImageSection(currentSessionColor),
-                const SizedBox(height: 24),
-                
-                TextFormField(
-                  controller: _videoUrlController, 
-                  decoration: InputDecoration(labelText: context.t('video_url_optional'), border: const OutlineInputBorder()),
-                  enabled: !widget.isReadOnly,
-                ),
-                const SizedBox(height: 24),
-                
-                ..._promptControllers.keys.where((lang) => _showAllLangs || lang == 'en' || _promptControllers[lang]!.text.isNotEmpty).map((lang) {
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 16),
-                    child: Row(
-                      children: [
-                        SizedBox(width: 40, child: Text(lang.toUpperCase(), style: const TextStyle(fontWeight: FontWeight.bold))),
-                        Expanded(child: TextFormField(controller: _promptControllers[lang], decoration: InputDecoration(labelText: context.t('prompt_label')), enabled: !widget.isReadOnly)),
-                        const SizedBox(width: 16),
-                        Expanded(child: TextFormField(controller: _answerControllers[lang], decoration: InputDecoration(labelText: context.t('answer')), enabled: !widget.isReadOnly)),
-                      ],
-                    ),
-                  );
-                }),
-                
-                TextButton(
-                  onPressed: () => setState(() => _showAllLangs = !_showAllLangs),
-                  child: Text(_showAllLangs ? context.t('show_less_languages') : context.t('show_all_languages')),
-                ),
-                
-                const SizedBox(height: 32),
-                if (!widget.isReadOnly)
-                  ElevatedButton(
-                    onPressed: _isSaving ? null : _save,
-                    style: ElevatedButton.styleFrom(minimumSize: const Size(double.infinity, 60), backgroundColor: currentSessionColor, foregroundColor: Colors.white),
-                    child: _isSaving 
-                      ? const CircularProgressIndicator(color: Colors.white)
-                      : Text(context.t('save_card'), style: const TextStyle(fontSize: 18)),
-                  ),
-              ],
+              ),
             ),
           ),
         ),
       ),
-    ),
-  ),
-);
-}
+    );
+  }
 
-  Widget _buildInfoBlock(String label, String value, Color themeColor, {IconData? icon}) {
+  Widget _buildInfoBlock(
+    String label,
+    String value,
+    Color themeColor, {
+    IconData? icon,
+  }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.grey, letterSpacing: 1.2)),
+        Text(
+          label,
+          style: const TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.bold,
+            color: Colors.grey,
+            letterSpacing: 1.2,
+          ),
+        ),
         const SizedBox(height: 8),
         Container(
           width: double.infinity,
@@ -328,7 +448,11 @@ class _AddCardPageState extends State<AddCardPage> {
               Expanded(
                 child: Text(
                   value,
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: themeColor),
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: themeColor,
+                  ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -340,6 +464,18 @@ class _AddCardPageState extends State<AddCardPage> {
     );
   }
 
+  Widget _buildSectionCaption(String label) {
+    return Text(
+      label.toUpperCase(),
+      style: const TextStyle(
+        fontSize: 12,
+        fontWeight: FontWeight.bold,
+        color: Colors.grey,
+        letterSpacing: 1.2,
+      ),
+    );
+  }
+
   Widget _buildImageSection(Color themeColor) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -347,7 +483,7 @@ class _AddCardPageState extends State<AddCardPage> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(context.t('images').toUpperCase(), style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.grey, letterSpacing: 1.2)),
+            _buildSectionCaption(context.t('images')),
             if (!widget.isReadOnly)
               IconButton(
                 icon: Icon(Icons.add_a_photo, color: themeColor),
@@ -364,7 +500,12 @@ class _AddCardPageState extends State<AddCardPage> {
               border: Border.all(color: Colors.grey.withValues(alpha: 0.3)),
               borderRadius: BorderRadius.circular(12),
             ),
-            child: const Center(child: Text('No images added', style: TextStyle(color: Colors.grey))),
+            child: const Center(
+              child: Text(
+                'No images added',
+                style: TextStyle(color: Colors.grey),
+              ),
+            ),
           )
         else
           SizedBox(
@@ -372,16 +513,28 @@ class _AddCardPageState extends State<AddCardPage> {
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: [
-                ..._existingImageUrls.asMap().entries.map((entry) => _buildImageThumbnail(
-                  imageUrl: entry.value,
-                  onRemove: () => _removeExistingImage(entry.key),
-                  onReplace: () => _pickImage(replaceIndex: entry.key, isExisting: true),
-                )),
-                ..._newImageFiles.asMap().entries.map((entry) => _buildImageThumbnail(
-                  file: entry.value,
-                  onRemove: () => _removeNewImage(entry.key),
-                  onReplace: () => _pickImage(replaceIndex: entry.key, isExisting: false),
-                )),
+                ..._existingImageUrls.asMap().entries.map(
+                  (entry) => _buildImageThumbnail(
+                    imageUrl: entry.value,
+                    onRemove: () => _removeExistingImage(entry.key),
+                    onReplace:
+                        () => _pickImage(
+                          replaceIndex: entry.key,
+                          isExisting: true,
+                        ),
+                  ),
+                ),
+                ..._newImageFiles.asMap().entries.map(
+                  (entry) => _buildImageThumbnail(
+                    file: entry.value,
+                    onRemove: () => _removeNewImage(entry.key),
+                    onReplace:
+                        () => _pickImage(
+                          replaceIndex: entry.key,
+                          isExisting: false,
+                        ),
+                  ),
+                ),
               ],
             ),
           ),
@@ -389,7 +542,12 @@ class _AddCardPageState extends State<AddCardPage> {
     );
   }
 
-  Widget _buildImageThumbnail({String? imageUrl, File? file, required VoidCallback onRemove, required VoidCallback onReplace}) {
+  Widget _buildImageThumbnail({
+    String? imageUrl,
+    XFile? file,
+    required VoidCallback onRemove,
+    required VoidCallback onReplace,
+  }) {
     if (file == null && imageUrl == null) return const SizedBox.shrink();
 
     return Container(
@@ -406,18 +564,28 @@ class _AddCardPageState extends State<AddCardPage> {
           if (imageUrl != null)
             Image.network(imageUrl, fit: BoxFit.cover)
           else if (file != null)
-            Image.file(file, fit: BoxFit.cover),
+            kIsWeb
+                ? Image.network(file.path, fit: BoxFit.cover)
+                : Image.file(File(file.path), fit: BoxFit.cover),
           if (!widget.isReadOnly)
             Positioned(
-              top: 4, right: 4,
+              top: 4,
+              right: 4,
               child: Column(
                 children: [
                   GestureDetector(
                     onTap: onRemove,
                     child: Container(
                       padding: const EdgeInsets.all(4),
-                      decoration: const BoxDecoration(color: Colors.black54, shape: BoxShape.circle),
-                      child: const Icon(Icons.close, color: Colors.white, size: 16),
+                      decoration: const BoxDecoration(
+                        color: Colors.black54,
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(
+                        Icons.close,
+                        color: Colors.white,
+                        size: 16,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 4),
@@ -425,8 +593,15 @@ class _AddCardPageState extends State<AddCardPage> {
                     onTap: onReplace,
                     child: Container(
                       padding: const EdgeInsets.all(4),
-                      decoration: const BoxDecoration(color: Colors.black54, shape: BoxShape.circle),
-                      child: const Icon(Icons.edit, color: Colors.white, size: 16),
+                      decoration: const BoxDecoration(
+                        color: Colors.black54,
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(
+                        Icons.edit,
+                        color: Colors.white,
+                        size: 16,
+                      ),
                     ),
                   ),
                 ],

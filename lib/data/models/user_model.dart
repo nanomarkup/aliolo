@@ -1,14 +1,14 @@
 class UserModel {
-  int id = 0; 
+  int id = 0;
   late String username;
   late String email;
-  String? serverId; 
+  String? serverId;
   DateTime? createdAt;
   DateTime? updatedAt;
   bool isDeleted = false;
 
   late bool sidebarLeft;
-  late String themeMode; 
+  late String themeMode;
   late String uiLanguage;
   late bool soundEnabled;
 
@@ -68,7 +68,8 @@ class UserModel {
       showOnLeaderboard: json['show_on_leaderboard'] ?? true,
       sessionSize: json['session_size'] ?? 10,
       optionsCount: json['options_count'] ?? 6,
-      defaultLanguage: (json['default_language'] ?? 'en').toString().toLowerCase(),
+      defaultLanguage:
+          (json['default_language'] ?? 'en').toString().toLowerCase(),
       shortcutPrevKey: (json['shortcut_prev_key'] as num?)?.toInt() ?? 1067,
       shortcutNextKey: (json['shortcut_next_key'] as num?)?.toInt() ?? 1066,
       avatarPath: json['avatar_url'],
@@ -138,7 +139,8 @@ class ProgressRecord {
       easeFactor: (json['ease_factor'] ?? 2.5).toDouble(),
       interval: json['interval'] ?? 0,
       repetitionCount: json['repetition_count'] ?? 0,
-      nextReview: DateTime.tryParse(json['next_review'] ?? '') ?? DateTime.now(),
+      nextReview:
+          DateTime.tryParse(json['next_review'] ?? '') ?? DateTime.now(),
       createdAt: DateTime.tryParse(json['created_at'] ?? '') ?? DateTime.now(),
       updatedAt: DateTime.tryParse(json['updated_at'] ?? '') ?? DateTime.now(),
     );

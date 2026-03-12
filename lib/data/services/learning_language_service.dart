@@ -10,17 +10,26 @@ class LearningLanguage {
   final String name;
   final String nativeName;
 
-  const LearningLanguage({required this.code, required this.name, required this.nativeName});
+  const LearningLanguage({
+    required this.code,
+    required this.name,
+    required this.nativeName,
+  });
 }
 
 class LearningLanguageService extends ChangeNotifier {
-  static final LearningLanguageService _instance = LearningLanguageService._internal();
+  static final LearningLanguageService _instance =
+      LearningLanguageService._internal();
   factory LearningLanguageService() => _instance;
   LearningLanguageService._internal();
 
   // Sorted alphabetically by nativeName string values
   final List<LearningLanguage> allLanguages = const [
-    LearningLanguage(code: 'id', name: 'Indonesian', nativeName: 'Bahasa Indonesia'),
+    LearningLanguage(
+      code: 'id',
+      name: 'Indonesian',
+      nativeName: 'Bahasa Indonesia',
+    ),
     LearningLanguage(code: 'de', name: 'German', nativeName: 'Deutsch'),
     LearningLanguage(code: 'en', name: 'English', nativeName: 'English'),
     LearningLanguage(code: 'es', name: 'Spanish', nativeName: 'Español'),
@@ -60,9 +69,9 @@ class LearningLanguageService extends ChangeNotifier {
     final dir = await getApplicationDocumentsDirectory();
     final alioloDir = Directory(p.join(dir.path, '.aliolo'));
     if (!await alioloDir.exists()) await alioloDir.create(recursive: true);
-    
+
     _settingsFile = File(p.join(alioloDir.path, 'content_langs.json'));
-    
+
     if (await _settingsFile.exists()) {
       try {
         final content = await _settingsFile.readAsString();
@@ -101,7 +110,9 @@ class LearningLanguageService extends ChangeNotifier {
 
   String getLanguageName(String code) {
     try {
-      return allLanguages.firstWhere((l) => l.code == code.toLowerCase()).nativeName;
+      return allLanguages
+          .firstWhere((l) => l.code == code.toLowerCase())
+          .nativeName;
     } catch (_) {
       return code.toUpperCase();
     }

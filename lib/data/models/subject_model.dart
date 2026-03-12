@@ -10,7 +10,7 @@ class SubjectModel {
   final int cardCount;
   final List<Map<String, dynamic>>? rawCards;
   final String? ownerName;
-  
+
   bool isOnDashboard;
 
   SubjectModel({
@@ -34,8 +34,8 @@ class SubjectModel {
     return rawCards!.where((c) {
       final prompts = c['prompts'] as Map<String, dynamic>?;
       final answers = c['answers'] as Map<String, dynamic>?;
-      return (prompts != null && prompts.containsKey(lang)) || 
-             (answers != null && answers.containsKey(lang));
+      return (prompts != null && prompts.containsKey(lang)) ||
+          (answers != null && answers.containsKey(lang));
     }).length;
   }
 
@@ -53,10 +53,12 @@ class SubjectModel {
   }
 
   factory SubjectModel.fromJson(Map<String, dynamic> json) {
-    final List<dynamic>? allCards = json['cards'] is List ? json['cards'] : null;
+    final List<dynamic>? allCards =
+        json['cards'] is List ? json['cards'] : null;
     // Filter out deleted cards
-    final List<dynamic>? activeCards = allCards?.where((c) => c['is_deleted'] != true).toList();
-    
+    final List<dynamic>? activeCards =
+        allCards?.where((c) => c['is_deleted'] != true).toList();
+
     final Map<String, dynamic>? profile = json['profiles'];
     return SubjectModel(
       id: json['id'],
@@ -68,8 +70,12 @@ class SubjectModel {
       isPublic: json['is_public'] ?? false,
       createdAt: DateTime.tryParse(json['created_at'] ?? '') ?? DateTime.now(),
       updatedAt: DateTime.tryParse(json['updated_at'] ?? '') ?? DateTime.now(),
-      cardCount: activeCards != null ? activeCards.length : (json['card_count'] ?? 0),
-      rawCards: activeCards != null ? List<Map<String, dynamic>>.from(activeCards) : null,
+      cardCount:
+          activeCards != null ? activeCards.length : (json['card_count'] ?? 0),
+      rawCards:
+          activeCards != null
+              ? List<Map<String, dynamic>>.from(activeCards)
+              : null,
     );
   }
 }

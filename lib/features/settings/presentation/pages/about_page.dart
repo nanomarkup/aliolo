@@ -33,7 +33,8 @@ class _AboutPageState extends State<AboutPage> {
 
   bool _handleGlobalKeyEvent(KeyEvent event) {
     if (!ModalRoute.of(context)!.isCurrent) return false;
-    if (event is KeyDownEvent && event.logicalKey == LogicalKeyboardKey.escape) {
+    if (event is KeyDownEvent &&
+        event.logicalKey == LogicalKeyboardKey.escape) {
       if (mounted) Navigator.pop(context);
       return true;
     }
@@ -47,7 +48,12 @@ class _AboutPageState extends State<AboutPage> {
     });
   }
 
-  Widget _buildFeatureRow(BuildContext context, IconData icon, String title, String description) {
+  Widget _buildFeatureRow(
+    BuildContext context,
+    IconData icon,
+    String title,
+    String description,
+  ) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16.0),
       child: Row(
@@ -59,16 +65,23 @@ class _AboutPageState extends State<AboutPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                Text(
+                  title,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
                 const SizedBox(height: 4),
                 Text(
-                  description, 
+                  description,
                   style: TextStyle(
-                    fontSize: 14, 
-                    color: Theme.of(context).brightness == Brightness.dark 
-                        ? Colors.grey.shade400 
-                        : Colors.grey.shade600
-                  )
+                    fontSize: 14,
+                    color:
+                        Theme.of(context).brightness == Brightness.dark
+                            ? Colors.grey.shade400
+                            : Colors.grey.shade600,
+                  ),
                 ),
               ],
             ),
@@ -87,7 +100,10 @@ class _AboutPageState extends State<AboutPage> {
       body: Stack(
         children: [
           const Positioned(
-            top: 0, left: 0, right: 0, height: 60,
+            top: 0,
+            left: 0,
+            right: 0,
+            height: 60,
             child: DragToMoveArea(child: SizedBox.expand()),
           ),
           SingleChildScrollView(
@@ -98,7 +114,11 @@ class _AboutPageState extends State<AboutPage> {
                 child: Column(
                   children: [
                     const SizedBox(height: 80),
-                    const Icon(Icons.account_circle, size: 80, color: ThemeService.mainColor),
+                    const Icon(
+                      Icons.account_circle,
+                      size: 80,
+                      color: ThemeService.mainColor,
+                    ),
                     const SizedBox(height: 12),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -106,13 +126,20 @@ class _AboutPageState extends State<AboutPage> {
                       children: [
                         const Text(
                           'Aliolo',
-                          style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: ThemeService.mainColor),
+                          style: TextStyle(
+                            fontSize: 32,
+                            fontWeight: FontWeight.bold,
+                            color: ThemeService.mainColor,
+                          ),
                         ),
                         const SizedBox(width: 12),
                         Padding(
                           padding: const EdgeInsets.only(top: 4.0),
                           child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 10,
+                              vertical: 4,
+                            ),
                             decoration: BoxDecoration(
                               color: Colors.amber,
                               borderRadius: BorderRadius.circular(8),
@@ -120,10 +147,10 @@ class _AboutPageState extends State<AboutPage> {
                             child: Text(
                               context.t('pro_label'),
                               style: const TextStyle(
-                                fontSize: 16, 
-                                fontWeight: FontWeight.bold, 
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
                                 color: Colors.black,
-                                letterSpacing: 1.1
+                                letterSpacing: 1.1,
                               ),
                             ),
                           ),
@@ -140,20 +167,23 @@ class _AboutPageState extends State<AboutPage> {
                       context.t('about_tagline'),
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 18, 
-                        color: Theme.of(context).brightness == Brightness.dark 
-                            ? Colors.grey.shade400 
-                            : Colors.grey.shade600, 
-                        fontWeight: FontWeight.w500
+                        fontSize: 18,
+                        color:
+                            Theme.of(context).brightness == Brightness.dark
+                                ? Colors.grey.shade400
+                                : Colors.grey.shade600,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                     const SizedBox(height: 32),
-                    
+
                     Container(
                       width: double.infinity,
                       padding: const EdgeInsets.all(24),
                       decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.primaryContainer.withValues(alpha: 0.3),
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.primaryContainer.withValues(alpha: 0.3),
                         borderRadius: BorderRadius.circular(16),
                       ),
                       child: Column(
@@ -161,27 +191,50 @@ class _AboutPageState extends State<AboutPage> {
                         children: [
                           Text(
                             context.t('algorithm_title'),
-                            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, letterSpacing: 1.2),
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 1.2,
+                            ),
                           ),
                           const SizedBox(height: 20),
-                          _buildFeatureRow(context, Icons.history_edu, context.t('feat_spacing_title'), 
-                            context.t('feat_spacing_desc')),
-                          _buildFeatureRow(context, Icons.speed, context.t('feat_adaptive_title'), 
-                            context.t('feat_adaptive_desc')),
-                          _buildFeatureRow(context, Icons.visibility, context.t('feat_recognition_title'), 
-                            context.t('feat_recognition_desc')),
-                          _buildFeatureRow(context, Icons.workspace_premium, context.t('feat_mastery_title'), 
-                            context.t('feat_mastery_desc')),
+                          _buildFeatureRow(
+                            context,
+                            Icons.history_edu,
+                            context.t('feat_spacing_title'),
+                            context.t('feat_spacing_desc'),
+                          ),
+                          _buildFeatureRow(
+                            context,
+                            Icons.speed,
+                            context.t('feat_adaptive_title'),
+                            context.t('feat_adaptive_desc'),
+                          ),
+                          _buildFeatureRow(
+                            context,
+                            Icons.visibility,
+                            context.t('feat_recognition_title'),
+                            context.t('feat_recognition_desc'),
+                          ),
+                          _buildFeatureRow(
+                            context,
+                            Icons.workspace_premium,
+                            context.t('feat_mastery_title'),
+                            context.t('feat_mastery_desc'),
+                          ),
                         ],
                       ),
                     ),
-                    
+
                     const SizedBox(height: 24),
                     OutlinedButton.icon(
-                      onPressed: () => Navigator.push(
-                        context, 
-                        MaterialPageRoute(builder: (context) => const CustomLicensesPage())
-                      ),
+                      onPressed:
+                          () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const CustomLicensesPage(),
+                            ),
+                          ),
                       icon: const Icon(Icons.description_outlined),
                       label: Text(context.t('licenses')),
                       style: OutlinedButton.styleFrom(
@@ -191,7 +244,10 @@ class _AboutPageState extends State<AboutPage> {
                     const SizedBox(height: 60),
                     Text(
                       context.t('master_visual_ease'),
-                      style: const TextStyle(fontStyle: FontStyle.italic, color: Colors.grey),
+                      style: const TextStyle(
+                        fontStyle: FontStyle.italic,
+                        color: Colors.grey,
+                      ),
                     ),
                     const SizedBox(height: 8),
                     Text(
@@ -205,7 +261,8 @@ class _AboutPageState extends State<AboutPage> {
             ),
           ),
           Positioned(
-            top: 12, right: 12,
+            top: 12,
+            right: 12,
             child: Row(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -213,11 +270,20 @@ class _AboutPageState extends State<AboutPage> {
                 IconButton(
                   padding: EdgeInsets.zero,
                   constraints: const BoxConstraints(),
-                  icon: const Icon(Icons.arrow_back, color: Colors.orange, size: 28),
+                  icon: const Icon(
+                    Icons.arrow_back,
+                    color: Colors.orange,
+                    size: 28,
+                  ),
                   onPressed: () => Navigator.pop(context),
                 ),
                 if (!kIsWeb) ...[
-                  const WindowControls(color: Colors.orange, padding: false, iconSize: 28, showSeparator: true),
+                  const WindowControls(
+                    color: Colors.orange,
+                    padding: false,
+                    iconSize: 28,
+                    showSeparator: true,
+                  ),
                 ],
               ],
             ),

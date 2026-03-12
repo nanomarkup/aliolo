@@ -14,7 +14,8 @@ class ManageLearningLangsPage extends StatefulWidget {
   const ManageLearningLangsPage({super.key});
 
   @override
-  State<ManageLearningLangsPage> createState() => _ManageLearningLangsPageState();
+  State<ManageLearningLangsPage> createState() =>
+      _ManageLearningLangsPageState();
 }
 
 class _ManageLearningLangsPageState extends State<ManageLearningLangsPage> {
@@ -23,7 +24,7 @@ class _ManageLearningLangsPageState extends State<ManageLearningLangsPage> {
   @override
   Widget build(BuildContext context) {
     const appBarColor = Colors.white;
-    const currentSessionColor = ThemeService.mainColor;
+    const Color currentSessionColor = ThemeService.mainColor;
 
     return ListenableBuilder(
       listenable: Listenable.merge([TranslationService(), _langService]),
@@ -34,7 +35,10 @@ class _ManageLearningLangsPageState extends State<ManageLearningLangsPage> {
               title: DragToMoveArea(
                 child: SizedBox(
                   width: double.infinity,
-                  child: Text(context.t('manage_learning_langs'), style: const TextStyle(color: appBarColor)),
+                  child: Text(
+                    context.t('manage_learning_langs'),
+                    style: const TextStyle(color: appBarColor),
+                  ),
                 ),
               ),
               backgroundColor: currentSessionColor,
@@ -43,19 +47,44 @@ class _ManageLearningLangsPageState extends State<ManageLearningLangsPage> {
               actions: [
                 IconButton(
                   icon: const Icon(Icons.school, color: appBarColor),
-                  onPressed: () => Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const SubjectPage()), (route) => false),
+                  onPressed:
+                      () => Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const SubjectPage(),
+                        ),
+                        (route) => false,
+                      ),
                 ),
                 IconButton(
                   icon: const Icon(Icons.emoji_events, color: appBarColor),
-                  onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const LeaderboardPage())),
+                  onPressed:
+                      () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const LeaderboardPage(),
+                        ),
+                      ),
                 ),
                 IconButton(
                   icon: const Icon(Icons.person, color: appBarColor),
-                  onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfilePage())),
+                  onPressed:
+                      () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ProfilePage(),
+                        ),
+                      ),
                 ),
                 IconButton(
                   icon: const Icon(Icons.settings, color: appBarColor),
-                  onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const SettingsPage())),
+                  onPressed:
+                      () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const SettingsPage(),
+                        ),
+                      ),
                 ),
                 const WindowControls(color: appBarColor, iconSize: 24),
               ],
@@ -68,7 +97,9 @@ class _ManageLearningLangsPageState extends State<ManageLearningLangsPage> {
                   itemCount: _langService.allLanguages.length,
                   itemBuilder: (context, index) {
                     final lang = _langService.allLanguages[index];
-                    final isActive = _langService.activeLanguageCodes.contains(lang.code);
+                    final isActive = _langService.activeLanguageCodes.contains(
+                      lang.code,
+                    );
                     return SwitchListTile(
                       title: Text(lang.nativeName),
                       subtitle: Text(lang.name),

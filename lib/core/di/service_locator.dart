@@ -22,19 +22,29 @@ Future<void> setupLocator() async {
 
     // 2. Initialize critical services in order
     print('Initializing CardService...');
-    await getIt<CardService>().init().catchError((e) => print('CardService init error: $e'));
-    
+    await getIt<CardService>().init().catchError(
+      (e) => print('CardService init error: $e'),
+    );
+
     print('Initializing AuthService...');
-    await getIt<AuthService>().init().catchError((e) => print('AuthService init error: $e'));
-    
+    await getIt<AuthService>().init().catchError(
+      (e) => print('AuthService init error: $e'),
+    );
+
     print('Initializing TranslationService...');
-    await getIt<TranslationService>().init().catchError((e) => print('TranslationService init error: $e'));
-    
+    await getIt<TranslationService>().init().catchError(
+      (e) => print('TranslationService init error: $e'),
+    );
+
     print('Initializing LearningLanguageService...');
-    await getIt<LearningLanguageService>().init().catchError((e) => print('LearningLanguageService init error: $e'));
-    
+    await getIt<LearningLanguageService>().init().catchError(
+      (e) => print('LearningLanguageService init error: $e'),
+    );
+
     print('Initializing SoundService...');
-    await getIt<SoundService>().init().catchError((e) => print('SoundService init error: $e'));
+    await getIt<SoundService>().init().catchError(
+      (e) => print('SoundService init error: $e'),
+    );
 
     // 3. Register remaining services
     getIt.registerLazySingleton<ThemeService>(() => ThemeService());

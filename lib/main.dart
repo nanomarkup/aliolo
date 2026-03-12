@@ -21,14 +21,17 @@ void main() async {
 
     if (!kIsWeb) {
       await windowManager.ensureInitialized();
-      windowManager.waitUntilReadyToShow(const WindowOptions(
-        size: Size(1024, 1024),
-        center: true,
-        title: 'Aliolo',
-      ), () async {
-        await windowManager.show();
-        await windowManager.focus();
-      });
+      windowManager.waitUntilReadyToShow(
+        const WindowOptions(
+          size: Size(1024, 1024),
+          center: true,
+          title: 'Aliolo',
+        ),
+        () async {
+          await windowManager.show();
+          await windowManager.focus();
+        },
+      );
     }
 
     runApp(const AlioloApp());
@@ -74,23 +77,43 @@ class _AlioloAppState extends State<AlioloApp> {
             debugShowCheckedModeBanner: false,
             home: Scaffold(
               backgroundColor: Colors.red[900],
-              body: Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(32.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(Icons.error_outline, size: 80, color: Colors.white),
-                      const SizedBox(height: 24),
-                      Text(context.t('fatal_startup_error'), style: const TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold)),
-                      const SizedBox(height: 16),
-                      Text(snapshot.error.toString(), style: const TextStyle(color: Colors.white70), textAlign: TextAlign.center),
-                      const SizedBox(height: 24),
-                      ElevatedButton(
-                        onPressed: () => setState(() { _initFuture = _doInit(); }),
-                        child: Text(context.t('retry')),
-                      ),
-                    ],
+              body: SelectionArea(
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(32.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(
+                          Icons.error_outline,
+                          size: 80,
+                          color: Colors.white,
+                        ),
+                        const SizedBox(height: 24),
+                        Text(
+                          context.t('fatal_startup_error'),
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        Text(
+                          snapshot.error.toString(),
+                          style: const TextStyle(color: Colors.white70),
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(height: 24),
+                        ElevatedButton(
+                          onPressed:
+                              () => setState(() {
+                                _initFuture = _doInit();
+                              }),
+                          child: Text(context.t('retry')),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -111,7 +134,10 @@ class _AlioloAppState extends State<AlioloApp> {
                     const SizedBox(height: 24),
                     const CircularProgressIndicator(color: Colors.orange),
                     const SizedBox(height: 16),
-                    Text(context.t('initializing_aliolo'), style: const TextStyle(color: Colors.grey)),
+                    Text(
+                      context.t('initializing_aliolo'),
+                      style: const TextStyle(color: Colors.grey),
+                    ),
                   ],
                 ),
               ),
@@ -123,7 +149,9 @@ class _AlioloAppState extends State<AlioloApp> {
           providers: [
             ChangeNotifierProvider.value(value: getIt<AuthService>()),
             ChangeNotifierProvider.value(value: getIt<TranslationService>()),
-            ChangeNotifierProvider.value(value: getIt<LearningLanguageService>()),
+            ChangeNotifierProvider.value(
+              value: getIt<LearningLanguageService>(),
+            ),
             ListenableProvider.value(value: getIt<ThemeService>()),
           ],
           child: const AlioloMainApp(),
@@ -157,11 +185,16 @@ class AlioloMainApp extends StatelessWidget {
             fontFamily: 'Roboto',
           ),
           darkTheme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange, brightness: Brightness.dark),
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: Colors.orange,
+              brightness: Brightness.dark,
+            ),
             useMaterial3: true,
             fontFamily: 'Roboto',
           ),
-          home: user == null ? const LoginPage() : const SubjectPage(),
+          home: SelectionArea(
+            child: user == null ? const LoginPage() : const SubjectPage(),
+          ),
         );
       },
     );

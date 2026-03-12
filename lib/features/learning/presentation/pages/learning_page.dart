@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:math';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart';
@@ -9,6 +10,7 @@ import 'package:media_kit_video/media_kit_video.dart';
 import 'package:aliolo/data/models/card_model.dart';
 import 'package:aliolo/data/models/user_model.dart';
 import 'package:aliolo/data/models/pillar_model.dart';
+import 'package:aliolo/data/models/subject_model.dart';
 import 'package:aliolo/data/services/card_service.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/sound_service.dart';
@@ -24,12 +26,17 @@ import 'package:aliolo/features/management/presentation/pages/user_management_pa
 import 'package:aliolo/features/auth/presentation/pages/profile_page.dart';
 import 'package:aliolo/features/settings/presentation/pages/settings_page.dart';
 import 'package:aliolo/features/subjects/presentation/pages/subject_page.dart';
+import 'package:aliolo/core/utils/logger.dart';
 
 class LearningPage extends StatefulWidget {
   final CardModel card;
   final String languageCode;
 
-  const LearningPage({super.key, required this.card, required this.languageCode});
+  const LearningPage({
+    super.key,
+    required this.card,
+    required this.languageCode,
+  });
 
   @override
   State<LearningPage> createState() => _LearningPageState();
@@ -37,7 +44,9 @@ class LearningPage extends StatefulWidget {
 
 class _LearningPageState extends State<LearningPage> {
   late CardModel _currentCard;
-  
+  SubjectModel? _subject;
+  String _translatedSubjectName = '';
+
   // MCQ State
   List<String> _options = [];
   int _selectedIndex = -1;
@@ -77,10 +86,20 @@ class _LearningPageState extends State<LearningPage> {
     final user = _authService.currentUser;
     if (user == null) return;
 
+    if (_currentCard.subjectId != 'Math') {
+      _subject = await CardService().getSubjectById(_currentCard.subjectId);
+      if (_subject != null) {
+        _translatedSubjectName = await TranslationService()
+            .translateForLanguage(_subject!.name, widget.languageCode);
+      }
+    } else {
+      _translatedSubjectName = 'Math';
+    }
+
     if (_currentCard.subjectId == 'Math') {
       final List<CardModel> sessionCards = [];
       final int mathLevel = widget.card.level;
-      
+
       for (int i = 0; i < (user.sessionSize); i++) {
         final problem = MathService().generateProblem(mathLevel);
         final card = MathService().createVirtualCard(problem, mathLevel);
@@ -96,16 +115,23 @@ class _LearningPageState extends State<LearningPage> {
       return;
     }
 
-    final allCards = await CardService().getCardsBySubject(_currentCard.subjectId);
+    final allCards = await CardService().getCardsBySubject(
+      _currentCard.subjectId,
+    );
     if (allCards.isEmpty) return;
 
     final lang = widget.languageCode.toLowerCase();
-    final langFiltered = allCards.where((c) => c.answers.containsKey(lang) || c.answers.containsKey('en')).toList();
+    final langFiltered =
+        allCards
+            .where(
+              (c) => c.answers.containsKey(lang) || c.answers.containsKey('en'),
+            )
+            .toList();
     langFiltered.shuffle();
 
     final size = user.sessionSize;
     final List<CardModel> sessionCards = langFiltered.take(size).toList();
-    
+
     if (sessionCards.isNotEmpty) {
       setState(() {
         _sessionQueue = sessionCards;
@@ -117,20 +143,31 @@ class _LearningPageState extends State<LearningPage> {
     }
   }
 
-  void _loadVideo() {
-  }
+  void _loadVideo() {}
 
   String _getDisplayPrompt(CardModel card) {
     final lang = widget.languageCode.toLowerCase();
-    return card.prompts[lang] ?? card.prompts['en'] ?? card.prompts.values.firstOrNull ?? '';
+    return card.prompts[lang] ??
+        card.prompts['en'] ??
+        card.prompts.values.firstOrNull ??
+        '';
   }
 
   String _getDisplayAnswer(CardModel card) {
     final lang = widget.languageCode.toLowerCase();
-    final ans = card.answers[lang] ?? card.answers['en'] ?? card.answers.values.firstOrNull ?? '';
+    final ans =
+        card.answers[lang] ??
+        card.answers['en'] ??
+        card.answers.values.firstOrNull ??
+        '';
 
     if (ans.contains(';')) {
-      final parts = ans.split(';').map((e) => e.trim()).where((e) => e.isNotEmpty).toList();
+      final parts =
+          ans
+              .split(';')
+              .map((e) => e.trim())
+              .where((e) => e.isNotEmpty)
+              .toList();
       return parts.isNotEmpty ? parts[Random().nextInt(parts.length)] : ans;
     }
     return ans;
@@ -147,17 +184,23 @@ class _LearningPageState extends State<LearningPage> {
         options = List.from(_currentCard.mathOptions!);
       }
     } else {
-      final allInSubject = await CardService().getCardsBySubject(_currentCard.subjectId);
+      final allInSubject = await CardService().getCardsBySubject(
+        _currentCard.subjectId,
+      );
       final lang = widget.languageCode.toLowerCase();
-      final validOptions = allInSubject
-          .where((c) => c.id != _currentCard.id)
-          .where((c) => c.answers.containsKey(lang) || c.answers.containsKey('en'))
-          .map((c) => _getDisplayAnswer(c))
-          .toSet()
-          .toList();
+      final validOptions =
+          allInSubject
+              .where((c) => c.id != _currentCard.id)
+              .where(
+                (c) =>
+                    c.answers.containsKey(lang) || c.answers.containsKey('en'),
+              )
+              .map((c) => _getDisplayAnswer(c))
+              .toSet()
+              .toList();
       validOptions.removeWhere((opt) => opt == _correctAnswerText);
       validOptions.shuffle();
-      
+
       final optCount = user?.optionsCount ?? 6;
       options = validOptions.take(optCount - 1).toList();
       options.add(_correctAnswerText);
@@ -169,15 +212,20 @@ class _LearningPageState extends State<LearningPage> {
       _selectedIndex = -1;
       _isAnswered = false;
       _isCorrect = false;
-      
+
       _currentImages = [
-        if (_currentCard.imageUrl != null && _currentCard.imageUrl!.isNotEmpty) _currentCard.imageUrl!,
+        if (_currentCard.imageUrl != null && _currentCard.imageUrl!.isNotEmpty)
+          _currentCard.imageUrl!,
         ..._currentCard.imageUrls.where((u) => u != _currentCard.imageUrl),
       ];
       _currentImageIndex = 0;
-      _showingVideo = _currentImages.isEmpty && (_currentCard.videoUrl?.isNotEmpty ?? false);
+      _showingVideo =
+          _currentImages.isEmpty &&
+          (_currentCard.videoUrl?.isNotEmpty ?? false);
+
+      AppLogger.log('DEBUG: LearningPage Card images: $_currentImages');
     });
-    
+
     if (_showingVideo && _currentCard.videoUrl != null) {
       player.open(Media(_currentCard.videoUrl!));
       player.play();
@@ -199,7 +247,7 @@ class _LearningPageState extends State<LearningPage> {
     if (correct) {
       _soundService.playCorrect();
       _progressService.recordCorrectAnswer(
-        _currentCard.id, 
+        _currentCard.id,
         _currentCard.subjectId,
         quality: 5,
         cardLevel: _currentCard.level,
@@ -207,7 +255,7 @@ class _LearningPageState extends State<LearningPage> {
     } else {
       _soundService.playWrong();
       _progressService.recordCorrectAnswer(
-        _currentCard.id, 
+        _currentCard.id,
         _currentCard.subjectId,
         quality: 0,
         cardLevel: _currentCard.level,
@@ -236,36 +284,98 @@ class _LearningPageState extends State<LearningPage> {
       showDialog(
         context: context,
         barrierDismissible: false,
-        builder: (context) => AlertDialog(
-          title: Text(context.t('session_complete')),
-          content: Text(context.t('finished_session', args: {'count': _totalInSession.toString()})),
-          actions: [
-            TextButton(
-              focusNode: FocusNode(canRequestFocus: true)..requestFocus(),
-              onPressed: () {
-                Navigator.pop(context);
-                Navigator.pop(context);
-              }, 
-              child: Text(context.t('back_to_subjects'))
+        builder:
+            (context) => AlertDialog(
+              title: Text(context.t('session_complete')),
+              content: Text(
+                context.t(
+                  'finished_session',
+                  args: {'count': _totalInSession.toString()},
+                ),
+              ),
+              actions: [
+                TextButton(
+                  focusNode: FocusNode(canRequestFocus: true)..requestFocus(),
+                  onPressed: () {
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                  },
+                  child: Text(context.t('back_to_subjects')),
+                ),
+              ],
             ),
-          ],
-        ),
       );
     }
+  }
+
+  void _showInfoDialog() {
+    final p = pillars.firstWhere(
+      (p) => p.id == _subject?.pillarId,
+      orElse: () => pillars.first,
+    );
+    final pillarName = p.name;
+    final subjectName = _subject?.name ?? 'Math';
+    final cardId = _currentCard.id;
+
+    final fullInfo =
+        'Pillar: $pillarName\nSubject: $subjectName\nCard ID: $cardId';
+
+    showDialog(
+      context: context,
+      builder:
+          (context) => AlertDialog(
+            title: Text(context.t('card_details')),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SelectableText('Pillar: $pillarName'),
+                SelectableText('Subject: $subjectName'),
+                SelectableText('Card ID: $cardId'),
+              ],
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Clipboard.setData(ClipboardData(text: fullInfo));
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text(context.t('info_copied'))),
+                  );
+                },
+                child: Text(context.t('copy_all')),
+              ),
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text(context.t('close')),
+              ),
+            ],
+          ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     bool isLeft = _authService.currentUser?.sidebarLeft ?? false;
     const appBarColor = Colors.white;
-    const currentSessionColor = ThemeService.mainColor;
+    final currentSessionColor = ThemeService().sessionColorNotifier.value;
+
+    // Use pillar color if available
+    Color headerColor = currentSessionColor;
+    if (_subject != null) {
+      final p = pillars.firstWhere(
+        (p) => p.id == _subject!.pillarId,
+        orElse: () => pillars.first,
+      );
+      headerColor = p.getColor();
+    }
 
     return ListenableBuilder(
       listenable: TranslationService(),
       builder: (context, _) {
         Color masteryColor = Colors.grey[400]!;
         String masteryLabel = context.t('new');
-        double progressValue = _totalInSession > 0 ? _completedInSession / _totalInSession : 0.0;
+        double progressValue =
+            _totalInSession > 0 ? _completedInSession / _totalInSession : 0.0;
 
         Widget sidebar = Container(
           width: 450,
@@ -280,83 +390,149 @@ class _LearningPageState extends State<LearningPage> {
                   value: progressValue,
                   minHeight: 12,
                   backgroundColor: Colors.grey[200],
-                  valueColor: AlwaysStoppedAnimation<Color>(currentSessionColor),
+                  valueColor: AlwaysStoppedAnimation<Color>(headerColor),
                 ),
               ),
-              
-              // Centered prompt and answers
+
+              // Scrollable prompt and answers
               Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                child: Center(
+                  child: SingleChildScrollView(
+                    padding: const EdgeInsets.symmetric(vertical: 24),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
                       children: [
-                        Flexible(
-                          child: Text(
-                            _getDisplayPrompt(_currentCard).isNotEmpty ? _getDisplayPrompt(_currentCard) : context.t('select_an_answer'), 
-                            style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: currentSessionColor),
-                            textAlign: TextAlign.center,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Flexible(
+                              child: Text(
+                                _getDisplayPrompt(_currentCard).isNotEmpty
+                                    ? _getDisplayPrompt(_currentCard)
+                                    : context.t('select_an_answer'),
+                                style: TextStyle(
+                                  fontSize: 28,
+                                  fontWeight: FontWeight.bold,
+                                  color: headerColor,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 48),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 32),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: List.generate(_options.length, (index) {
+                              final option = _options[index];
+                              final isSelected = _selectedIndex == index;
+                              final correctValue = _correctAnswerText;
+
+                              Color? tileColor;
+                              if (_isAnswered) {
+                                if (option == correctValue)
+                                  tileColor = Colors.green.withValues(
+                                    alpha: 0.2,
+                                  );
+                                else if (isSelected && !_isCorrect)
+                                  tileColor = Colors.red.withValues(alpha: 0.2);
+                              } else if (isSelected) {
+                                tileColor = headerColor.withValues(alpha: 0.1);
+                              }
+
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 16),
+                                child: InkWell(
+                                  onTap: () => _selectOption(index),
+                                  borderRadius: BorderRadius.circular(12),
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 24,
+                                      vertical: 20,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color:
+                                            _isAnswered &&
+                                                    option == correctValue
+                                                ? Colors.green
+                                                : (isSelected
+                                                    ? headerColor
+                                                    : Colors.grey[300]!),
+                                        width: 2.5,
+                                      ),
+                                      borderRadius: BorderRadius.circular(16),
+                                      color: tileColor,
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          width: 36,
+                                          height: 36,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color:
+                                                isSelected
+                                                    ? headerColor
+                                                    : Colors.grey[200],
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                              '${index + 1}',
+                                              style: TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold,
+                                                color:
+                                                    isSelected
+                                                        ? Colors.white
+                                                        : Colors.black,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(width: 20),
+                                        Expanded(
+                                          child: Text(
+                                            option,
+                                            style: const TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ),
+                                        if (_isAnswered &&
+                                            option == correctValue)
+                                          const Icon(
+                                            Icons.check_circle,
+                                            color: Colors.green,
+                                            size: 28,
+                                          ),
+                                        if (_isAnswered &&
+                                            isSelected &&
+                                            !_isCorrect)
+                                          const Icon(
+                                            Icons.cancel,
+                                            color: Colors.red,
+                                            size: 28,
+                                          ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }),
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 48),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 32),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: List.generate(_options.length, (index) {
-                          final option = _options[index];
-                          final isSelected = _selectedIndex == index;
-                          final correctValue = _correctAnswerText;
-                          
-                          Color? tileColor;
-                          if (_isAnswered) {
-                            if (option == correctValue) tileColor = Colors.green.withValues(alpha: 0.2);
-                            else if (isSelected && !_isCorrect) tileColor = Colors.red.withValues(alpha: 0.2);
-                          } else if (isSelected) {
-                            tileColor = currentSessionColor.withValues(alpha: 0.1);
-                          }
-
-                          return Padding(
-                            padding: const EdgeInsets.only(bottom: 16),
-                            child: InkWell(
-                              onTap: () => _selectOption(index),
-                              borderRadius: BorderRadius.circular(12),
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: _isAnswered && option == correctValue ? Colors.green : (isSelected ? currentSessionColor : Colors.grey[300]!),
-                                    width: 2.5,
-                                  ),
-                                  borderRadius: BorderRadius.circular(16),
-                                  color: tileColor,
-                                ),
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      width: 36, height: 36,
-                                      decoration: BoxDecoration(shape: BoxShape.circle, color: isSelected ? currentSessionColor : Colors.grey[200]),
-                                      child: Center(child: Text('${index + 1}', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: isSelected ? Colors.white : Colors.black))),
-                                    ),
-                                    const SizedBox(width: 20),
-                                    Expanded(child: Text(option, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500))),
-                                    if (_isAnswered && option == correctValue) const Icon(Icons.check_circle, color: Colors.green, size: 28),
-                                    if (_isAnswered && isSelected && !_isCorrect) const Icon(Icons.cancel, color: Colors.red, size: 28),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          );
-                        }),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ),
-              
+
+              const SizedBox(height: 16),
+
               // Next button at the bottom
               SizedBox(
                 width: double.infinity,
@@ -364,11 +540,22 @@ class _LearningPageState extends State<LearningPage> {
                 child: ElevatedButton.icon(
                   onPressed: _isAnswered ? _nextCard : null,
                   icon: const Icon(Icons.arrow_forward),
-                  label: Text(context.t('next'), style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                  label: Text(
+                    context.t('next'),
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: _isAnswered ? (_isCorrect ? Colors.green : Colors.blueGrey) : currentSessionColor,
+                    backgroundColor:
+                        _isAnswered
+                            ? (_isCorrect ? Colors.green : Colors.blueGrey)
+                            : headerColor,
                     foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
                     disabledBackgroundColor: Colors.grey[300],
                     disabledForegroundColor: Colors.grey[500],
                   ),
@@ -391,7 +578,9 @@ class _LearningPageState extends State<LearningPage> {
                     Expanded(
                       child: Card(
                         elevation: 10,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
                         clipBehavior: Clip.antiAlias,
                         child: Video(controller: controller),
                       ),
@@ -404,24 +593,74 @@ class _LearningPageState extends State<LearningPage> {
                           SizedBox.expand(
                             child: Card(
                               elevation: 10,
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
                               clipBehavior: Clip.antiAlias,
-                              child: _currentCard.subjectId == 'Math'
-                                ? Container(
-                                    color: Colors.white,
-                                    width: double.infinity,
-                                    child: Center(
-                                      child: Text(
-                                        _currentCard.mathQuestion ?? '',
-                                        style: const TextStyle(fontSize: 80, fontWeight: FontWeight.bold, color: Colors.blueGrey),
-                                      ),
-                                    ),
-                                  )
-                                : (_currentImages.isNotEmpty 
-                                    ? (kIsWeb || _currentImages[_currentImageIndex].startsWith('http') 
-                                        ? Image.network(_currentImages[_currentImageIndex], fit: BoxFit.contain)
-                                        : Image.file(File(_currentImages[_currentImageIndex]), fit: BoxFit.contain))
-                                    : const Icon(Icons.image_not_supported, size: 100, color: Colors.grey)),
+                              child:
+                                  _currentCard.subjectId == 'Math'
+                                      ? Container(
+                                        color: Colors.white,
+                                        width: double.infinity,
+                                        child: Center(
+                                          child: Text(
+                                            _currentCard.mathQuestion ?? '',
+                                            style: const TextStyle(
+                                              fontSize: 80,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.blueGrey,
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                      : (_currentImages.isNotEmpty
+                                          ? Builder(
+                                            builder: (context) {
+                                              final path =
+                                                  _currentImages[_currentImageIndex];
+                                              AppLogger.log(
+                                                'DEBUG: LearningPage rendering image index $_currentImageIndex path: $path',
+                                              );
+                                              if (kIsWeb ||
+                                                  path.startsWith('http')) {
+                                                return Image.network(
+                                                  path,
+                                                  fit: BoxFit.contain,
+                                                  errorBuilder: (
+                                                    context,
+                                                    error,
+                                                    stackTrace,
+                                                  ) {
+                                                    AppLogger.log(
+                                                      'DEBUG: Image.network error: $error',
+                                                    );
+                                                    return const Icon(
+                                                      Icons.broken_image,
+                                                      size: 100,
+                                                      color: Colors.red,
+                                                    );
+                                                  },
+                                                );
+                                              } else if (path.startsWith(
+                                                'assets/',
+                                              )) {
+                                                return Image.asset(
+                                                  path,
+                                                  fit: BoxFit.contain,
+                                                );
+                                              } else {
+                                                return Image.file(
+                                                  File(path),
+                                                  fit: BoxFit.contain,
+                                                );
+                                              }
+                                            },
+                                          )
+                                          : const Icon(
+                                            Icons.image_not_supported,
+                                            size: 100,
+                                            color: Colors.grey,
+                                          )),
                             ),
                           ),
                           if (_currentImages.length > 1) ...[
@@ -431,8 +670,20 @@ class _LearningPageState extends State<LearningPage> {
                                 radius: 25,
                                 backgroundColor: Colors.black45,
                                 child: IconButton(
-                                  icon: const Icon(Icons.chevron_left, color: Colors.white, size: 30),
-                                  onPressed: () => setState(() => _currentImageIndex = (_currentImageIndex - 1 + _currentImages.length) % _currentImages.length),
+                                  icon: const Icon(
+                                    Icons.chevron_left,
+                                    color: Colors.white,
+                                    size: 30,
+                                  ),
+                                  onPressed:
+                                      () => setState(
+                                        () =>
+                                            _currentImageIndex =
+                                                (_currentImageIndex -
+                                                    1 +
+                                                    _currentImages.length) %
+                                                _currentImages.length,
+                                      ),
                                 ),
                               ),
                             ),
@@ -442,8 +693,18 @@ class _LearningPageState extends State<LearningPage> {
                                 radius: 25,
                                 backgroundColor: Colors.black45,
                                 child: IconButton(
-                                  icon: const Icon(Icons.chevron_right, color: Colors.white, size: 30),
-                                  onPressed: () => setState(() => _currentImageIndex = (_currentImageIndex + 1) % _currentImages.length),
+                                  icon: const Icon(
+                                    Icons.chevron_right,
+                                    color: Colors.white,
+                                    size: 30,
+                                  ),
+                                  onPressed:
+                                      () => setState(
+                                        () =>
+                                            _currentImageIndex =
+                                                (_currentImageIndex + 1) %
+                                                _currentImages.length,
+                                      ),
                                 ),
                               ),
                             ),
@@ -451,38 +712,61 @@ class _LearningPageState extends State<LearningPage> {
                         ],
                       ),
                     ),
-                  
+
                   const SizedBox(height: 20),
-                  
+
                   if (_currentImages.length > 1)
                     SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: _currentImages.asMap().entries.map((entry) {
-                          int idx = entry.key;
-                          String path = entry.value;
-                          bool isSelected = idx == _currentImageIndex && !_showingVideo;
-                          return GestureDetector(
-                            onTap: () => setState(() { _currentImageIndex = idx; _showingVideo = false; player.stop(); }),
-                            child: Container(
-                              margin: const EdgeInsets.symmetric(horizontal: 4),
-                              width: 60, height: 60,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                border: Border.all(color: isSelected ? currentSessionColor : Colors.transparent, width: 3),
-                                image: DecorationImage(
-                                  image: (kIsWeb || path.startsWith('http') ? NetworkImage(path) : FileImage(File(path))) as ImageProvider, 
-                                  fit: BoxFit.cover
+                        children:
+                            _currentImages.asMap().entries.map((entry) {
+                              int idx = entry.key;
+                              String path = entry.value;
+                              bool isSelected =
+                                  idx == _currentImageIndex && !_showingVideo;
+                              return GestureDetector(
+                                onTap:
+                                    () => setState(() {
+                                      _currentImageIndex = idx;
+                                      _showingVideo = false;
+                                      player.stop();
+                                    }),
+                                child: Container(
+                                  margin: const EdgeInsets.symmetric(
+                                    horizontal: 4,
+                                  ),
+                                  width: 60,
+                                  height: 60,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    border: Border.all(
+                                      color:
+                                          isSelected
+                                              ? headerColor
+                                              : Colors.transparent,
+                                      width: 3,
+                                    ),
+                                    image: DecorationImage(
+                                      image:
+                                          (kIsWeb || path.startsWith('http')
+                                                  ? NetworkImage(path)
+                                                  : (path.startsWith('assets/')
+                                                      ? AssetImage(path)
+                                                      : FileImage(File(path))))
+                                              as ImageProvider,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                          );
-                        }).toList(),
+                              );
+                            }).toList(),
                       ),
                     ),
 
-                  if (_currentCard.videoUrl != null && _currentCard.videoUrl!.isNotEmpty) ...[
+                  if (_currentCard.videoUrl != null &&
+                      _currentCard.videoUrl!.isNotEmpty) ...[
                     const SizedBox(height: 16),
                     Center(
                       child: ElevatedButton.icon(
@@ -490,7 +774,9 @@ class _LearningPageState extends State<LearningPage> {
                           final wasShowing = _showingVideo;
                           setState(() => _showingVideo = !wasShowing);
                           if (!wasShowing) {
-                            if (player.state.playlist.medias.isEmpty || player.state.playlist.medias.first.uri != _currentCard.videoUrl) {
+                            if (player.state.playlist.medias.isEmpty ||
+                                player.state.playlist.medias.first.uri !=
+                                    _currentCard.videoUrl) {
                               await player.open(Media(_currentCard.videoUrl!));
                             }
                             player.play();
@@ -498,15 +784,29 @@ class _LearningPageState extends State<LearningPage> {
                             player.pause();
                           }
                         },
-                        icon: Icon(_showingVideo ? Icons.image : Icons.videocam),
-                        label: Text(_showingVideo 
-                          ? (context.t('picture') == 'picture' ? 'Picture' : context.t('picture')) 
-                          : (context.t('video') == 'video' ? 'Video' : context.t('video'))),
+                        icon: Icon(
+                          _showingVideo ? Icons.image : Icons.videocam,
+                        ),
+                        label: Text(
+                          _showingVideo
+                              ? (context.t('picture') == 'picture'
+                                  ? 'Picture'
+                                  : context.t('picture'))
+                              : (context.t('video') == 'video'
+                                  ? 'Video'
+                                  : context.t('video')),
+                        ),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: _showingVideo ? Colors.orange : Colors.blue,
+                          backgroundColor:
+                              _showingVideo ? Colors.orange : Colors.blue,
                           foregroundColor: Colors.white,
-                          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 30,
+                            vertical: 15,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
                         ),
                       ),
                     ),
@@ -519,15 +819,27 @@ class _LearningPageState extends State<LearningPage> {
 
         return CallbackShortcuts(
           bindings: {
-            const SingleActivator(LogicalKeyboardKey.digit1): () => _selectOption(0),
-            const SingleActivator(LogicalKeyboardKey.digit2): () => _selectOption(1),
-            const SingleActivator(LogicalKeyboardKey.digit3): () => _selectOption(2),
-            const SingleActivator(LogicalKeyboardKey.digit4): () => _selectOption(3),
-            const SingleActivator(LogicalKeyboardKey.digit5): () => _selectOption(4),
-            const SingleActivator(LogicalKeyboardKey.digit6): () => _selectOption(5),
-            const SingleActivator(LogicalKeyboardKey.enter): () { if (_isAnswered) _nextCard(); },
-            const SingleActivator(LogicalKeyboardKey.numpadEnter): () { if (_isAnswered) _nextCard(); },
-            const SingleActivator(LogicalKeyboardKey.space): () { if (_isAnswered) _nextCard(); },
+            const SingleActivator(LogicalKeyboardKey.digit1):
+                () => _selectOption(0),
+            const SingleActivator(LogicalKeyboardKey.digit2):
+                () => _selectOption(1),
+            const SingleActivator(LogicalKeyboardKey.digit3):
+                () => _selectOption(2),
+            const SingleActivator(LogicalKeyboardKey.digit4):
+                () => _selectOption(3),
+            const SingleActivator(LogicalKeyboardKey.digit5):
+                () => _selectOption(4),
+            const SingleActivator(LogicalKeyboardKey.digit6):
+                () => _selectOption(5),
+            const SingleActivator(LogicalKeyboardKey.enter): () {
+              if (_isAnswered) _nextCard();
+            },
+            const SingleActivator(LogicalKeyboardKey.numpadEnter): () {
+              if (_isAnswered) _nextCard();
+            },
+            const SingleActivator(LogicalKeyboardKey.space): () {
+              if (_isAnswered) _nextCard();
+            },
           },
           child: Focus(
             autofocus: true,
@@ -537,40 +849,40 @@ class _LearningPageState extends State<LearningPage> {
                   title: DragToMoveArea(
                     child: SizedBox(
                       width: double.infinity,
-                      child: Text('${context.t('learning')}: ${TranslationService().getLanguageName(widget.languageCode)} (${_currentCard.subjectId})', style: const TextStyle(color: appBarColor)),
+                      child: Text(
+                        _translatedSubjectName,
+                        style: const TextStyle(color: appBarColor),
+                      ),
                     ),
                   ),
-                  backgroundColor: currentSessionColor,
+                  backgroundColor: headerColor,
                   foregroundColor: appBarColor,
                   automaticallyImplyLeading: false,
                   actions: [
                     IconButton(
-                      icon: const Icon(Icons.school, color: appBarColor),
-                      onPressed: () => Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const SubjectPage()), (route) => false),
+                      icon: const Icon(Icons.arrow_back, color: appBarColor),
+                      onPressed: () => Navigator.pop(context),
                     ),
                     IconButton(
-                      icon: const Icon(Icons.emoji_events, color: appBarColor),
-                      onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const LeaderboardPage())),
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.style, color: appBarColor),
-                      onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const ManageCardsPage())),
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.person, color: appBarColor),
-                      onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfilePage())),
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.settings, color: appBarColor),
-                      onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const SettingsPage())),
+                      icon: const Icon(Icons.info_outline, color: appBarColor),
+                      onPressed: _showInfoDialog,
                     ),
                     const WindowControls(color: appBarColor, iconSize: 24),
                   ],
                 ),
                 body: Row(
-                  children: isLeft 
-                    ? [sidebar, const VerticalDivider(width: 1), mainContent]
-                    : [mainContent, const VerticalDivider(width: 1), sidebar],
+                  children:
+                      isLeft
+                          ? [
+                            sidebar,
+                            const VerticalDivider(width: 1),
+                            mainContent,
+                          ]
+                          : [
+                            mainContent,
+                            const VerticalDivider(width: 1),
+                            sidebar,
+                          ],
                 ),
               ),
             ),
@@ -582,7 +894,8 @@ class _LearningPageState extends State<LearningPage> {
 
   @override
   void dispose() {
-    player.stop(); player.dispose();
+    player.stop();
+    player.dispose();
     _keyboardFocus.dispose();
     super.dispose();
   }

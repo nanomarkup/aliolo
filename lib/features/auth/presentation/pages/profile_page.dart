@@ -37,7 +37,9 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   void _pickImage() async {
-    final XFile? image = await _imagePicker.pickImage(source: ImageSource.gallery);
+    final XFile? image = await _imagePicker.pickImage(
+      source: ImageSource.gallery,
+    );
     if (image != null) {
       await _authService.updateAvatarPath(image.path);
       if (mounted) setState(() {});
@@ -48,38 +50,41 @@ class _ProfilePageState extends State<ProfilePage> {
     final nameController = TextEditingController(text: currentName);
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text(context.t('edit_name')),
-        content: TextField(
-          controller: nameController,
-          autofocus: true,
-          decoration: InputDecoration(
-            hintText: context.t('enter_new_name'),
+      builder:
+          (context) => AlertDialog(
+            title: Text(context.t('edit_name')),
+            content: TextField(
+              controller: nameController,
+              autofocus: true,
+              decoration: InputDecoration(
+                hintText: context.t('enter_new_name'),
+              ),
+              onSubmitted: (val) async {
+                if (val.trim().isNotEmpty) {
+                  await _authService.updateUsername(val.trim());
+                  if (mounted) Navigator.pop(context);
+                }
+              },
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text(context.t('cancel')),
+              ),
+              TextButton(
+                onPressed: () async {
+                  final newName = nameController.text.trim();
+                  if (newName.isNotEmpty) {
+                    await _authService.updateUsername(newName);
+                    if (mounted) Navigator.pop(context);
+                  }
+                },
+                child: Text(context.t('save')),
+              ),
+            ],
           ),
-          onSubmitted: (val) async {
-            if (val.trim().isNotEmpty) {
-              await _authService.updateUsername(val.trim());
-              if (mounted) Navigator.pop(context);
-            }
-          },
-        ),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: Text(context.t('cancel'))),
-          TextButton(
-            onPressed: () async {
-              final newName = nameController.text.trim();
-              if (newName.isNotEmpty) {
-                await _authService.updateUsername(newName);
-                if (mounted) Navigator.pop(context);
-              }
-            },
-            child: Text(context.t('save')),
-          ),
-        ],
-      ),
     );
   }
-
 
   void _showValuePicker({
     required String title,
@@ -99,21 +104,31 @@ class _ProfilePageState extends State<ProfilePage> {
               return Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(tempValue.toString(), style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold)),
+                  Text(
+                    tempValue.toString(),
+                    style: const TextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                   Slider(
                     value: tempValue.toDouble(),
                     min: min.toDouble(),
                     max: max.toDouble(),
                     divisions: max - min,
                     activeColor: ThemeService.mainColor,
-                    onChanged: (val) => setDialogState(() => tempValue = val.round()),
+                    onChanged:
+                        (val) => setDialogState(() => tempValue = val.round()),
                   ),
                 ],
               );
             },
           ),
           actions: [
-            TextButton(onPressed: () => Navigator.pop(context), child: Text(context.t('cancel'))),
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text(context.t('cancel')),
+            ),
             TextButton(
               onPressed: () {
                 onSelected(tempValue);
@@ -136,7 +151,10 @@ class _ProfilePageState extends State<ProfilePage> {
       listenable: Listenable.merge([TranslationService(), _authService]),
       builder: (context, _) {
         final user = _authService.currentUser;
-        if (user == null) return const Scaffold(body: Center(child: CircularProgressIndicator()));
+        if (user == null)
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
 
         return ResizeWrapper(
           child: Scaffold(
@@ -144,7 +162,10 @@ class _ProfilePageState extends State<ProfilePage> {
               title: DragToMoveArea(
                 child: SizedBox(
                   width: double.infinity,
-                  child: Text(context.t('profile'), style: const TextStyle(color: appBarColor)),
+                  child: Text(
+                    context.t('profile'),
+                    style: const TextStyle(color: appBarColor),
+                  ),
                 ),
               ),
               backgroundColor: currentSessionColor,
@@ -153,15 +174,37 @@ class _ProfilePageState extends State<ProfilePage> {
               actions: [
                 IconButton(
                   icon: const Icon(Icons.school, color: appBarColor),
-                  onPressed: () => Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const SubjectPage()), (route) => false),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.style, color: appBarColor),
-                  onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const ManageCardsPage())),
+                  onPressed:
+                      () => Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const SubjectPage(),
+                        ),
+                        (route) => false,
+                      ),
                 ),
                 IconButton(
                   icon: const Icon(Icons.emoji_events, color: appBarColor),
-                  onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const LeaderboardPage())),
+                  onPressed:
+                      () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const LeaderboardPage(),
+                        ),
+                      ),
+                ),
+                IconButton(
+                  icon: const Icon(
+                    Icons.collections_bookmark,
+                    color: appBarColor,
+                  ),
+                  onPressed:
+                      () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ManageCardsPage(),
+                        ),
+                      ),
                 ),
                 IconButton(
                   icon: const Icon(Icons.person, color: appBarColor),
@@ -169,7 +212,13 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
                 IconButton(
                   icon: const Icon(Icons.settings, color: appBarColor),
-                  onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const SettingsPage())),
+                  onPressed:
+                      () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const SettingsPage(),
+                        ),
+                      ),
                 ),
                 const WindowControls(color: appBarColor, iconSize: 24),
               ],
@@ -183,7 +232,9 @@ class _ProfilePageState extends State<ProfilePage> {
                     children: [
                       Card(
                         elevation: 4,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(24),
+                        ),
                         child: Padding(
                           padding: const EdgeInsets.all(32),
                           child: Row(
@@ -194,18 +245,41 @@ class _ProfilePageState extends State<ProfilePage> {
                                   children: [
                                     CircleAvatar(
                                       radius: 60,
-                                      backgroundColor: currentSessionColor.withValues(alpha: 0.1),
-                                      backgroundImage: user.avatarPath != null 
-                                        ? (user.avatarPath!.startsWith('http') ? NetworkImage(user.avatarPath!) : FileImage(File(user.avatarPath!))) as ImageProvider
-                                        : null,
-                                      child: user.avatarPath == null ? Icon(Icons.person, size: 60, color: currentSessionColor) : null,
+                                      backgroundColor: currentSessionColor
+                                          .withValues(alpha: 0.1),
+                                      backgroundImage:
+                                          user.avatarPath != null
+                                              ? (user.avatarPath!.startsWith(
+                                                        'http',
+                                                      )
+                                                      ? NetworkImage(
+                                                        user.avatarPath!,
+                                                      )
+                                                      : FileImage(
+                                                        File(user.avatarPath!),
+                                                      ))
+                                                  as ImageProvider
+                                              : null,
+                                      child:
+                                          user.avatarPath == null
+                                              ? Icon(
+                                                Icons.person,
+                                                size: 60,
+                                                color: currentSessionColor,
+                                              )
+                                              : null,
                                     ),
                                     Positioned(
-                                      bottom: 0, right: 0,
+                                      bottom: 0,
+                                      right: 0,
                                       child: CircleAvatar(
                                         radius: 18,
                                         backgroundColor: currentSessionColor,
-                                        child: const Icon(Icons.camera_alt, size: 18, color: Colors.white),
+                                        child: const Icon(
+                                          Icons.camera_alt,
+                                          size: 18,
+                                          color: Colors.white,
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -218,23 +292,53 @@ class _ProfilePageState extends State<ProfilePage> {
                                   children: [
                                     Row(
                                       children: [
-                                        Text(user.username, style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold)),
+                                        Text(
+                                          user.username,
+                                          style: const TextStyle(
+                                            fontSize: 32,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
                                         const SizedBox(width: 8),
                                         IconButton(
-                                          icon: const Icon(Icons.edit, size: 20),
-                                          onPressed: () => _showEditUsernameDialog(user.username),
-                                          tooltip: context.t('edit_name'),
+                                          icon: const Icon(
+                                            Icons.edit,
+                                            size: 20,
+                                          ),
+                                          onPressed:
+                                              () => _showEditUsernameDialog(
+                                                user.username,
+                                              ),
                                         ),
                                       ],
                                     ),
-                                    Text(user.email, style: TextStyle(fontSize: 18, color: Colors.grey[600])),
+                                    Text(
+                                      user.email,
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.grey[600],
+                                      ),
+                                    ),
                                     const SizedBox(height: 16),
                                     Wrap(
-                                      spacing: 24, runSpacing: 12,
+                                      spacing: 24,
+                                      runSpacing: 12,
                                       children: [
-                                        _buildStat(context, '${user.totalXp}', context.t('xp')),
-                                        _buildStat(context, '${user.currentStreak}', context.t('streak')),
-                                        _buildStat(context, '${user.maxStreak}', context.t('max_streak')),
+                                        _buildStat(
+                                          context,
+                                          '${user.totalXp}',
+                                          context.t('xp'),
+                                        ),
+                                        _buildStat(
+                                          context,
+                                          '${user.currentStreak}',
+                                          context.t('streak'),
+                                        ),
+                                        _buildStat(
+                                          context,
+                                          '${user.maxStreak}',
+                                          context.t('max_streak'),
+                                        ),
                                       ],
                                     ),
                                   ],
@@ -245,18 +349,36 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                       ),
                       const SizedBox(height: 32),
-                      _buildSectionTitle(context, context.t('social'), currentSessionColor),
+                      _buildSectionTitle(
+                        context,
+                        context.t('social'),
+                        currentSessionColor,
+                      ),
                       Card(
                         child: ListTile(
-                          leading: Icon(Icons.people, color: currentSessionColor),
+                          leading: Icon(
+                            Icons.people,
+                            color: currentSessionColor,
+                          ),
                           title: Text(context.t('manage_friends')),
                           subtitle: Text(context.t('manage_friends_desc')),
                           trailing: const Icon(Icons.chevron_right),
-                          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const ManageFriendsPage())),
+                          onTap:
+                              () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder:
+                                      (context) => const ManageFriendsPage(),
+                                ),
+                              ),
                         ),
                       ),
                       const SizedBox(height: 32),
-                      _buildSectionTitle(context, context.t('learning_section'), currentSessionColor),
+                      _buildSectionTitle(
+                        context,
+                        context.t('learning_section'),
+                        currentSessionColor,
+                      ),
                       _buildSettingsCard(context, currentSessionColor, user),
                       const SizedBox(height: 48),
 
@@ -268,91 +390,111 @@ class _ProfilePageState extends State<ProfilePage> {
                               await _authService.logout();
                               if (mounted) {
                                 Navigator.pushAndRemoveUntil(
-                                  context, 
-                                  MaterialPageRoute(builder: (context) => const LoginPage()), 
-                                  (route) => false
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const LoginPage(),
+                                  ),
+                                  (route) => false,
                                 );
                               }
                             },
                             icon: const Icon(Icons.logout),
                             label: Text(context.t('logout')),
-                            style: ElevatedButton.styleFrom(backgroundColor: Colors.red[50], foregroundColor: Colors.red, minimumSize: const Size(160, 50)),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.red[50],
+                              foregroundColor: Colors.red,
+                              minimumSize: const Size(160, 50),
+                            ),
                           ),
                           const SizedBox(width: 16),
                           OutlinedButton.icon(
                             onPressed: _showDeleteAccountDialog,
                             icon: const Icon(Icons.delete_forever),
                             label: Text(context.t('delete_account')),
-                            style: OutlinedButton.styleFrom(foregroundColor: Colors.red, side: const BorderSide(color: Colors.red), minimumSize: const Size(160, 50)),
+                            style: OutlinedButton.styleFrom(
+                              foregroundColor: Colors.red,
+                              side: const BorderSide(color: Colors.red),
+                              minimumSize: const Size(160, 50),
+                            ),
                           ),
                         ],
                       ),
-                      ],
-                      ),
-                      ),
-                      ),
-                      ),
-                      ),
-                      );
-                      },
-                      );
-                      }
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
 
   void _showDeleteAccountDialog() {
     final passwordController = TextEditingController();
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text(context.t('delete_account')),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(context.t('delete_account_confirm')),
-            const SizedBox(height: 16),
-            TextField(
-              controller: passwordController,
-              obscureText: true,
-              autofocus: true,
-              decoration: InputDecoration(
-                labelText: context.t('password'),
-                hintText: context.t('password_required'),
-              ),
-              onSubmitted: (val) => _handleDeleteConfirm(val),
+      builder:
+          (context) => AlertDialog(
+            title: Text(context.t('delete_account')),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(context.t('delete_account_confirm')),
+                const SizedBox(height: 16),
+                TextField(
+                  controller: passwordController,
+                  obscureText: true,
+                  autofocus: true,
+                  decoration: InputDecoration(
+                    labelText: context.t('password'),
+                    hintText: context.t('password_required'),
+                  ),
+                  onSubmitted: (val) => _handleDeleteConfirm(val),
+                ),
+              ],
             ),
-          ],
-        ),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: Text(context.t('cancel'))),
-          TextButton(
-            onPressed: () => _handleDeleteConfirm(passwordController.text),
-            child: Text(context.t('delete_account'), style: const TextStyle(color: Colors.red)),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text(context.t('cancel')),
+              ),
+              TextButton(
+                onPressed: () => _handleDeleteConfirm(passwordController.text),
+                child: Text(
+                  context.t('delete_account'),
+                  style: const TextStyle(color: Colors.red),
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
     );
   }
 
   void _handleDeleteConfirm(String password) async {
     final pass = password.trim();
     if (pass.isEmpty) return;
-    
+
     final success = await _authService.deleteAccount(pass);
     if (mounted) {
       if (Navigator.canPop(context)) Navigator.pop(context); // Close dialog
-      
+
       if (success) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(context.t('account_deleted'))));
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(context.t('account_deleted'))));
         Navigator.pushAndRemoveUntil(
-          context, 
-          MaterialPageRoute(builder: (context) => const LoginPage()), 
-          (route) => false
+          context,
+          MaterialPageRoute(builder: (context) => const LoginPage()),
+          (route) => false,
         );
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(context.t('invalid_password_delete'))));
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(context.t('invalid_password_delete'))),
+        );
       }
     }
   }
-
 
   Widget _buildSectionTitle(BuildContext context, String title, Color color) {
     return Padding(
@@ -361,7 +503,12 @@ class _ProfilePageState extends State<ProfilePage> {
         alignment: Alignment.centerLeft,
         child: Text(
           title.toUpperCase(),
-          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w900, color: color, letterSpacing: 1.5),
+          style: TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w900,
+            color: color,
+            letterSpacing: 1.5,
+          ),
         ),
       ),
     );
@@ -371,7 +518,10 @@ class _ProfilePageState extends State<ProfilePage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(value, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+        Text(
+          value,
+          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        ),
         Text(label, style: const TextStyle(fontSize: 14, color: Colors.grey)),
       ],
     );
@@ -387,36 +537,42 @@ class _ProfilePageState extends State<ProfilePage> {
             leading: Icon(Icons.adjust, color: color),
             title: Text(context.t('daily_goal')),
             trailing: Text('${user.dailyGoalCount} ${context.t('cards')}'),
-            onTap: () => _showValuePicker(
-              title: context.t('daily_goal'),
-              initialValue: user.dailyGoalCount,
-              min: 5, max: 100,
-              onSelected: (val) => _authService.updateDailyGoal(val),
-            ),
+            onTap:
+                () => _showValuePicker(
+                  title: context.t('daily_goal'),
+                  initialValue: user.dailyGoalCount,
+                  min: 5,
+                  max: 100,
+                  onSelected: (val) => _authService.updateDailyGoal(val),
+                ),
           ),
           const Divider(height: 1),
           ListTile(
             leading: Icon(Icons.view_agenda, color: color),
             title: Text(context.t('session_size')),
             trailing: Text('${user.sessionSize} ${context.t('cards')}'),
-            onTap: () => _showValuePicker(
-              title: context.t('session_size'),
-              initialValue: user.sessionSize,
-              min: 5, max: 50,
-              onSelected: (val) => _authService.updateSessionSize(val),
-            ),
+            onTap:
+                () => _showValuePicker(
+                  title: context.t('session_size'),
+                  initialValue: user.sessionSize,
+                  min: 5,
+                  max: 50,
+                  onSelected: (val) => _authService.updateSessionSize(val),
+                ),
           ),
           const Divider(height: 1),
           ListTile(
             leading: Icon(Icons.quiz, color: color),
             title: Text(context.t('options_count')),
             trailing: Text('${user.optionsCount}'),
-            onTap: () => _showValuePicker(
-              title: context.t('options_count'),
-              initialValue: user.optionsCount,
-              min: 2, max: 6,
-              onSelected: (val) => _authService.updateOptionsCount(val),
-            ),
+            onTap:
+                () => _showValuePicker(
+                  title: context.t('options_count'),
+                  initialValue: user.optionsCount,
+                  min: 2,
+                  max: 6,
+                  onSelected: (val) => _authService.updateOptionsCount(val),
+                ),
           ),
         ],
       ),

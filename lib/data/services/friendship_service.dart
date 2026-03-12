@@ -13,21 +13,39 @@ class FriendshipService {
 
   Future<String> sendFriendRequest(String email) async {
     final currentUser = _authService.currentUser;
-    if (currentUser == null || currentUser.serverId == null) return 'Not logged in';
-    if (email.toLowerCase() == currentUser.email.toLowerCase()) return 'Cannot add yourself';
+    if (currentUser == null || currentUser.serverId == null)
+      return 'Not logged in';
+    if (email.toLowerCase() == currentUser.email.toLowerCase())
+      return 'Cannot add yourself';
 
     try {
       // 1. Find user by email
-      final targetUserRes = await _supabase
-          .from('profiles')
-          .select('id')
-          .eq('email', email.toLowerCase())
-          .maybeSingle();
+      final targetUserRes =
+          await _supabase
+              .from('profiles')
+              .select('id')
+              .eq('email', email.toLowerCase())
+              .maybeSingle();
 
       if (targetUserRes == null) return 'User not found';
       final String targetId = targetUserRes['id'];
 
-      // 2. Send request
+      // 2. Check if friendship already exists (any direction)
+      final existing =
+          await _supabase
+              .from('user_friendships')
+              .select()
+              .or(
+                'and(sender_id.eq.${currentUser.serverId},receiver_id.eq.$targetId),and(sender_id.eq.$targetId,receiver_id.eq.${currentUser.serverId})',
+              )
+              .maybeSingle();
+
+      if (existing != null) {
+        if (existing['status'] == 'accepted') return 'You are already friends';
+        return 'Request already pending';
+      }
+
+      // 3. Send request
       await _supabase.from('user_friendships').insert({
         'sender_id': currentUser.serverId,
         'receiver_id': targetId,
@@ -36,7 +54,8 @@ class FriendshipService {
 
       return 'success';
     } on PostgrestException catch (e) {
-      if (e.message.contains('unique_friendship')) return 'Request already exists';
+      if (e.message.contains('unique_friendship'))
+        return 'Request already exists';
       return e.message;
     } catch (e) {
       return e.toString();
@@ -61,7 +80,9 @@ class FriendshipService {
     try {
       final res = await _supabase
           .from('user_friendships')
-          .select('*, sender:profiles!sender_id(*), receiver:profiles!receiver_id(*)')
+          .select(
+            '*, sender:profiles!sender_id(*), receiver:profiles!receiver_id(*)',
+          )
           .or('sender_id.eq.${user.serverId},receiver_id.eq.${user.serverId}');
 
       return List<Map<String, dynamic>>.from(res);
@@ -71,35 +92,49 @@ class FriendshipService {
     }
   }
 
-  Future<List<UserModel>> getFriendsLeaderboard() async {
+  Future<List<UserModel>> getFriendsLeaderboard({
+    int page = 0,
+    int pageSize = 20,
+  }) async {
     final user = _authService.currentUser;
     if (user == null || user.serverId == null) return [];
 
-    final friendships = await _supabase
-        .from('user_friendships')
-        .select('sender_id, receiver_id')
-        .eq('status', 'accepted')
-        .or('sender_id.eq.${user.serverId},receiver_id.eq.${user.serverId}');
+    try {
+      final friendships = await _supabase
+          .from('user_friendships')
+          .select('sender_id, receiver_id')
+          .eq('status', 'accepted')
+          .or('sender_id.eq.${user.serverId},receiver_id.eq.${user.serverId}');
 
-    final Set<String> friendIds = {user.serverId!};
-    for (var f in friendships) {
-      friendIds.add(f['sender_id']);
-      friendIds.add(f['receiver_id']);
+      final Set<String> friendIds = {user.serverId!};
+      for (var f in friendships) {
+        friendIds.add(f['sender_id']);
+        friendIds.add(f['receiver_id']);
+      }
+
+      final profilesRes = await _supabase
+          .from('profiles')
+          .select()
+          .inFilter('id', friendIds.toList())
+          .order('total_xp', ascending: false)
+          .range(page * pageSize, (page + 1) * pageSize - 1);
+
+      return List<dynamic>.from(profilesRes)
+          .map(
+            (p) => UserModel(
+              username: p['username'] ?? 'Learner',
+              email: p['email'] ?? '',
+              serverId: p['id'],
+              totalXp: p['total_xp'] ?? 0,
+              currentStreak: p['current_streak'] ?? 0,
+              maxStreak: p['max_streak'] ?? 0,
+              avatarPath: p['avatar_url'],
+            ),
+          )
+          .toList();
+    } catch (e) {
+      print('Error fetching friends leaderboard: $e');
+      return [];
     }
-
-    final profilesRes = await _supabase
-        .from('profiles')
-        .select()
-        .inFilter('id', friendIds.toList())
-        .order('total_xp', ascending: false);
-
-    return List<dynamic>.from(profilesRes).map((p) => UserModel(
-      username: p['username'] ?? 'Learner',
-      email: p['email'] ?? '',
-      serverId: p['id'],
-      totalXp: p['total_xp'] ?? 0,
-      currentStreak: p['current_streak'] ?? 0,
-      maxStreak: p['max_streak'] ?? 0,
-    )).toList();
   }
 }
