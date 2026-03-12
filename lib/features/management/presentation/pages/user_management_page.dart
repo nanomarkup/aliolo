@@ -130,7 +130,7 @@ class _UserManagementPageState extends State<UserManagementPage> {
                         constraints: const BoxConstraints(maxWidth: 800),
                         child: Column(
                           children: [
-                            const SizedBox(height: 80),
+                            const SizedBox(height: 100),
                             Expanded(
                               child: Padding(
                                 padding: const EdgeInsets.all(24),

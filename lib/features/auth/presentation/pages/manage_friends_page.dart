@@ -170,7 +170,7 @@ class _ManageFriendsPageState extends State<ManageFriendsPage> {
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: Column(
                         children: [
-                          const SizedBox(height: 80),
+                          const SizedBox(height: 100),
                           Expanded(
                             child:
                                 _friendships.isEmpty

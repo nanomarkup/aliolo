@@ -325,7 +325,7 @@ class _ManageCardsPageState extends State<ManageCardsPage> {
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Column(
                     children: [
-                      const SizedBox(height: 80),
+                      const SizedBox(height: 100),
                       Column(
                         children: [
                           const SizedBox(height: 16),

@@ -223,7 +223,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 constraints: const BoxConstraints(maxWidth: 700),
                 child: Column(
                   children: [
-                    const SizedBox(height: 80),
+                    const SizedBox(height: 100),
                     Expanded(
                       child: ListView(
                         padding: const EdgeInsets.all(32),

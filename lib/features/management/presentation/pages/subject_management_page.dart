@@ -167,7 +167,7 @@ class _SubjectManagementPageState extends State<SubjectManagementPage> {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Column(
                 children: [
-                  const SizedBox(height: 80),
+                  const SizedBox(height: 100),
                   Expanded(
                     child: Column(
                       children: [
