@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import 'package:aliolo/core/widgets/floating_app_bar.dart';
+import 'package:aliolo/core/widgets/aliolo_page.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:aliolo/core/di/service_locator.dart';
@@ -158,165 +158,130 @@ class _ProfilePageState extends State<ProfilePage> {
           );
         }
 
-        return ResizeWrapper(
-          child: Scaffold(
-            extendBodyBehindAppBar: true,
-            appBar: AlioloAppBar(
-              title: Text(
-                context.t('profile'),
-                style: const TextStyle(color: appBarColor),
-              ),
-              backgroundColor: currentSessionColor,
-              foregroundColor: appBarColor,
-              actions: [
-                IconButton(
-                  icon: const Icon(Icons.school, color: appBarColor),
-                  onPressed:
-                      () => Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const SubjectPage(),
-                        ),
-                        (route) => false,
-                      ),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.emoji_events, color: appBarColor),
-                  onPressed:
-                      () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const LeaderboardPage(),
-                        ),
-                      ),
-                ),
-                IconButton(
-                  icon: const Icon(
-                    Icons.collections_bookmark,
-                    color: appBarColor,
+        return AlioloPage(
+          title: Text(
+            context.t('profile'),
+            style: const TextStyle(color: appBarColor),
+          ),
+          appBarColor: currentSessionColor,
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.school, color: appBarColor),
+              onPressed:
+                  () => Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const SubjectPage(),
+                    ),
+                    (route) => false,
                   ),
-                  onPressed:
-                      () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const ManageCardsPage(),
-                        ),
-                      ),
+            ),
+            IconButton(
+              icon: const Icon(Icons.emoji_events, color: appBarColor),
+              onPressed:
+                  () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const LeaderboardPage(),
+                    ),
+                  ),
+            ),
+            IconButton(
+              icon: const Icon(Icons.collections_bookmark, color: appBarColor),
+              onPressed:
+                  () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ManageCardsPage(),
+                    ),
+                  ),
+            ),
+            IconButton(
+              icon: const Icon(Icons.person, color: appBarColor),
+              onPressed: () => setState(() {}),
+            ),
+            IconButton(
+              icon: const Icon(Icons.settings, color: appBarColor),
+              onPressed:
+                  () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const SettingsPage(),
+                    ),
+                  ),
+            ),
+          ],
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                _buildProfileHeader(user, currentSessionColor),
+                const SizedBox(height: 32),
+                _buildSectionTitle(
+                  context,
+                  context.t('social'),
+                  currentSessionColor,
                 ),
-                IconButton(
-                  icon: const Icon(Icons.person, color: appBarColor),
-                  onPressed: () => setState(() {}),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.settings, color: appBarColor),
-                  onPressed:
-                      () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const SettingsPage(),
+                Card(
+                  child: ListTile(
+                    leading: Icon(Icons.people, color: currentSessionColor),
+                    title: Text(context.t('manage_friends')),
+                    subtitle: Text(context.t('manage_friends_desc')),
+                    trailing: const Icon(Icons.chevron_right),
+                    onTap:
+                        () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ManageFriendsPage(),
+                          ),
                         ),
+                  ),
+                ),
+                const SizedBox(height: 32),
+                _buildSectionTitle(
+                  context,
+                  context.t('learning_section'),
+                  currentSessionColor,
+                ),
+                _buildSettingsCard(context, currentSessionColor, user),
+                const SizedBox(height: 48),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton.icon(
+                      onPressed: () async {
+                        await _authService.logout();
+                        if (mounted) {
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const LoginPage(),
+                            ),
+                            (route) => false,
+                          );
+                        }
+                      },
+                      icon: const Icon(Icons.logout),
+                      label: Text(context.t('logout')),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red[50],
+                        foregroundColor: Colors.red,
+                        minimumSize: const Size(160, 50),
                       ),
+                    ),
+                    const SizedBox(width: 16),
+                    OutlinedButton.icon(
+                      onPressed: _showDeleteAccountDialog,
+                      icon: const Icon(Icons.delete_forever),
+                      label: Text(context.t('delete_account')),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: Colors.red,
+                        side: const BorderSide(color: Colors.red),
+                        minimumSize: const Size(160, 50),
+                      ),
+                    ),
+                  ],
                 ),
               ],
-            ),
-            body: Center(
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 640),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 80),
-                      Expanded(
-                        child: ListView(
-                          padding: const EdgeInsets.symmetric(vertical: 16),
-                          children: [
-                            _buildProfileHeader(user, currentSessionColor),
-                            const SizedBox(height: 32),
-                            _buildSectionTitle(
-                              context,
-                              context.t('social'),
-                              currentSessionColor,
-                            ),
-                            Card(
-                              child: ListTile(
-                                leading: Icon(
-                                  Icons.people,
-                                  color: currentSessionColor,
-                                ),
-                                title: Text(context.t('manage_friends')),
-                                subtitle: Text(
-                                  context.t('manage_friends_desc'),
-                                ),
-                                trailing: const Icon(Icons.chevron_right),
-                                onTap:
-                                    () => Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder:
-                                            (context) =>
-                                                const ManageFriendsPage(),
-                                      ),
-                                    ),
-                              ),
-                            ),
-                            const SizedBox(height: 32),
-                            _buildSectionTitle(
-                              context,
-                              context.t('learning_section'),
-                              currentSessionColor,
-                            ),
-                            _buildSettingsCard(
-                              context,
-                              currentSessionColor,
-                              user,
-                            ),
-                            const SizedBox(height: 48),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                ElevatedButton.icon(
-                                  onPressed: () async {
-                                    await _authService.logout();
-                                    if (mounted) {
-                                      Navigator.pushAndRemoveUntil(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder:
-                                              (context) => const LoginPage(),
-                                        ),
-                                        (route) => false,
-                                      );
-                                    }
-                                  },
-                                  icon: const Icon(Icons.logout),
-                                  label: Text(context.t('logout')),
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.red[50],
-                                    foregroundColor: Colors.red,
-                                    minimumSize: const Size(160, 50),
-                                  ),
-                                ),
-                                const SizedBox(width: 16),
-                                OutlinedButton.icon(
-                                  onPressed: _showDeleteAccountDialog,
-                                  icon: const Icon(Icons.delete_forever),
-                                  label: Text(context.t('delete_account')),
-                                  style: OutlinedButton.styleFrom(
-                                    foregroundColor: Colors.red,
-                                    side: const BorderSide(color: Colors.red),
-                                    minimumSize: const Size(160, 50),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
             ),
           ),
         );

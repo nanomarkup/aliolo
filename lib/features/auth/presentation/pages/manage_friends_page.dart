@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import 'package:aliolo/core/widgets/floating_app_bar.dart';
+import 'package:aliolo/core/widgets/aliolo_scrollable_page.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:aliolo/data/services/friendship_service.dart';
 import 'package:aliolo/data/services/auth_service.dart';
@@ -139,169 +139,104 @@ class _ManageFriendsPageState extends State<ManageFriendsPage> {
     const currentSessionColor = ThemeService.mainColor;
     const appBarColor = Colors.white;
 
-    return ResizeWrapper(
-      child: Scaffold(
-        extendBodyBehindAppBar: true,
-        appBar: AlioloAppBar(
-          title: Text(
-            context.t('manage_friends'),
-            style: const TextStyle(color: appBarColor),
-          ),
-          backgroundColor: currentSessionColor,
-          foregroundColor: appBarColor,
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.arrow_back, color: appBarColor),
-              onPressed: () => Navigator.pop(context),
-            ),
-            IconButton(
-              icon: const Icon(Icons.person_add, color: appBarColor),
-              onPressed: _showAddFriendDialog,
-            ),
-          ],
+    return AlioloScrollablePage(
+      title: Text(
+        context.t('manage_friends'),
+        style: const TextStyle(color: appBarColor),
+      ),
+      appBarColor: currentSessionColor,
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.arrow_back, color: appBarColor),
+          onPressed: () => Navigator.pop(context),
         ),
-        body:
-            _isLoading
-                ? const Center(child: CircularProgressIndicator())
-                : Center(
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 640),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Column(
-                        children: [
-                          const SizedBox(height: 100),
-                          Expanded(
-                            child:
-                                _friendships.isEmpty
-                                    ? Center(
-                                      child: Text(
-                                        context.t('no_friends_found'),
-                                      ),
-                                    )
-                                    : ListView.builder(
-                                      padding: const EdgeInsets.symmetric(
-                                        vertical: 16,
-                                      ),
-                                      itemCount: _friendships.length,
-                                      itemBuilder: (context, index) {
-                                        final f = _friendships[index];
-                                        final isSender =
-                                            f['sender_id'] ==
-                                            _authService.currentUser?.serverId;
-                                        final otherUser =
-                                            isSender
-                                                ? f['receiver']
-                                                : f['sender'];
-                                        final status = f['status'];
-                                        final id = f['id'];
-                                        final avatarUrl =
-                                            otherUser['avatar_url'] as String?;
-                                        final email = otherUser['email'] ?? '';
+        IconButton(
+          icon: const Icon(Icons.person_add, color: appBarColor),
+          onPressed: _showAddFriendDialog,
+        ),
+      ],
+      slivers: [
+        if (_isLoading)
+          const SliverFillRemaining(
+            child: Center(child: CircularProgressIndicator()),
+          )
+        else if (_friendships.isEmpty)
+          SliverFillRemaining(
+            child: Center(child: Text(context.t('no_friends_found'))),
+          )
+        else
+          SliverList(
+            delegate: SliverChildBuilderDelegate((context, index) {
+              final f = _friendships[index];
+              final isSender =
+                  f['sender_id'] == _authService.currentUser?.serverId;
+              final otherUser = isSender ? f['receiver'] : f['sender'];
+              final status = f['status'];
+              final id = f['id'];
+              final avatarUrl = otherUser['avatar_url'] as String?;
+              final email = otherUser['email'] ?? '';
 
-                                        return Card(
-                                          margin: const EdgeInsets.only(
-                                            bottom: 12,
-                                          ),
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(
-                                              12,
-                                            ),
-                                          ),
-                                          child: ListTile(
-                                            leading: CircleAvatar(
-                                              radius: 24,
-                                              backgroundImage:
-                                                  avatarUrl != null
-                                                      ? (avatarUrl.startsWith(
-                                                                'http',
-                                                              )
-                                                              ? NetworkImage(
-                                                                avatarUrl,
-                                                              )
-                                                              : FileImage(
-                                                                File(avatarUrl),
-                                                              ))
-                                                          as ImageProvider
-                                                      : null,
-                                              child:
-                                                  avatarUrl == null
-                                                      ? const Icon(Icons.person)
-                                                      : null,
-                                            ),
-                                            title: Text(
-                                              otherUser['username'] ?? 'User',
-                                              style: const TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                            subtitle: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                if (email.isNotEmpty)
-                                                  Text(
-                                                    email,
-                                                    style: const TextStyle(
-                                                      fontSize: 12,
-                                                    ),
-                                                  ),
-                                                if (status == 'pending')
-                                                  Text(
-                                                    isSender
-                                                        ? context.t(
-                                                          'request_sent_waiting',
-                                                        )
-                                                        : context.t(
-                                                          'wants_to_be_friend',
-                                                        ),
-                                                  ),
-                                              ],
-                                            ),
-                                            trailing: Row(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: [
-                                                if (status == 'pending' &&
-                                                    !isSender)
-                                                  IconButton(
-                                                    icon: const Icon(
-                                                      Icons.check,
-                                                      color: Colors.green,
-                                                    ),
-                                                    onPressed: () async {
-                                                      await _friendshipService
-                                                          .acceptFriendRequest(
-                                                            id,
-                                                          );
-                                                      _loadFriendships();
-                                                    },
-                                                  ),
-                                                IconButton(
-                                                  icon: const Icon(
-                                                    Icons.close,
-                                                    color: Colors.red,
-                                                  ),
-                                                  onPressed:
-                                                      () => _confirmCancelFriendship(
-                                                        id,
-                                                        otherUser['username'] ??
-                                                            'User',
-                                                        status,
-                                                      ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                    ),
-                          ),
-                        ],
+              return Card(
+                margin: const EdgeInsets.only(bottom: 12),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: ListTile(
+                  leading: CircleAvatar(
+                    radius: 24,
+                    backgroundImage:
+                        avatarUrl != null
+                            ? (avatarUrl.startsWith('http')
+                                    ? NetworkImage(avatarUrl)
+                                    : FileImage(File(avatarUrl)))
+                                as ImageProvider
+                            : null,
+                    child: avatarUrl == null ? const Icon(Icons.person) : null,
+                  ),
+                  title: Text(
+                    otherUser['username'] ?? 'User',
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if (email.isNotEmpty)
+                        Text(email, style: const TextStyle(fontSize: 12)),
+                      if (status == 'pending')
+                        Text(
+                          isSender
+                              ? context.t('request_sent_waiting')
+                              : context.t('wants_to_be_friend'),
+                        ),
+                    ],
+                  ),
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (status == 'pending' && !isSender)
+                        IconButton(
+                          icon: const Icon(Icons.check, color: Colors.green),
+                          onPressed: () async {
+                            await _friendshipService.acceptFriendRequest(id);
+                            _loadFriendships();
+                          },
+                        ),
+                      IconButton(
+                        icon: const Icon(Icons.close, color: Colors.red),
+                        onPressed:
+                            () => _confirmCancelFriendship(
+                              id,
+                              otherUser['username'] ?? 'User',
+                              status,
+                            ),
                       ),
-                    ),
+                    ],
                   ),
                 ),
-      ),
+              );
+            }, childCount: _friendships.length),
+          ),
+      ],
     );
   }
 }

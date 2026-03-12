@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import 'package:aliolo/core/widgets/floating_app_bar.dart';
+import 'package:aliolo/core/widgets/aliolo_page.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:aliolo/data/models/subject_model.dart';
 import 'package:aliolo/data/models/card_model.dart';
@@ -257,75 +257,64 @@ class _ManageCardsPageState extends State<ManageCardsPage> {
     return ListenableBuilder(
       listenable: TranslationService(),
       builder: (context, _) {
-        return ResizeWrapper(
-          child: Scaffold(
-            extendBodyBehindAppBar: true,
-            appBar: AlioloAppBar(
-              title: Text(
-                context.t('manage_subjects'),
-                style: const TextStyle(color: appBarColor),
-              ),
-              backgroundColor: currentSessionColor,
-              foregroundColor: appBarColor,
-              actions: [
-                IconButton(
-                  icon: const Icon(Icons.school, color: appBarColor),
-                  onPressed:
-                      () => Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const SubjectPage(),
-                        ),
-                        (route) => false,
-                      ),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.emoji_events, color: appBarColor),
-                  onPressed:
-                      () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const LeaderboardPage(),
-                        ),
-                      ),
-                ),
-                IconButton(
-                  icon: const Icon(
-                    Icons.collections_bookmark,
-                    color: appBarColor,
+        return AlioloPage(
+          title: Text(
+            context.t('manage_subjects'),
+            style: const TextStyle(color: appBarColor),
+          ),
+          appBarColor: currentSessionColor,
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.school, color: appBarColor),
+              onPressed:
+                  () => Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const SubjectPage(),
+                    ),
+                    (route) => false,
                   ),
-                  onPressed: () => _loadData(),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.person, color: appBarColor),
-                  onPressed:
-                      () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const ProfilePage(),
-                        ),
-                      ),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.settings, color: appBarColor),
-                  onPressed:
-                      () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const SettingsPage(),
-                        ),
-                      ),
-                ),
-              ],
             ),
-            body: Center(
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 640),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Column(
+            IconButton(
+              icon: const Icon(Icons.emoji_events, color: appBarColor),
+              onPressed:
+                  () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const LeaderboardPage(),
+                    ),
+                  ),
+            ),
+            IconButton(
+              icon: const Icon(Icons.collections_bookmark, color: appBarColor),
+              onPressed: () => _loadData(),
+            ),
+            IconButton(
+              icon: const Icon(Icons.person, color: appBarColor),
+              onPressed:
+                  () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ProfilePage(),
+                    ),
+                  ),
+            ),
+            IconButton(
+              icon: const Icon(Icons.settings, color: appBarColor),
+              onPressed:
+                  () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const SettingsPage(),
+                    ),
+                  ),
+            ),
+          ],
+          body:
+              _isLoading
+                  ? const Center(child: CircularProgressIndicator())
+                  : Column(
                     children: [
-                      const SizedBox(height: 100),
                       Column(
                         children: [
                           const SizedBox(height: 16),
@@ -389,11 +378,7 @@ class _ManageCardsPageState extends State<ManageCardsPage> {
                       ),
                       Expanded(
                         child:
-                            _isLoading
-                                ? const Center(
-                                  child: CircularProgressIndicator(),
-                                )
-                                : _filteredSubjects.isEmpty
+                            _filteredSubjects.isEmpty
                                 ? Center(
                                   child: Text(context.t('no_subjects_found')),
                                 )
@@ -443,7 +428,6 @@ class _ManageCardsPageState extends State<ManageCardsPage> {
                                         trailing: Row(
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
-                                            // Dashboard Toggle Switch (Only for subjects NOT owned by me)
                                             if (!isMine)
                                               Tooltip(
                                                 message: context.t(
@@ -507,10 +491,6 @@ class _ManageCardsPageState extends State<ManageCardsPage> {
                       ),
                     ],
                   ),
-                ),
-              ),
-            ),
-          ),
         );
       },
     );
