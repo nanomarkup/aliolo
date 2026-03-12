@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:aliolo/core/widgets/floating_app_bar.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:aliolo/data/models/subject_model.dart';
@@ -14,6 +15,7 @@ import 'package:aliolo/features/subjects/presentation/pages/subject_page.dart';
 import 'package:aliolo/features/leaderboard/presentation/pages/leaderboard_page.dart';
 import 'package:aliolo/features/auth/presentation/pages/profile_page.dart';
 import 'package:aliolo/features/settings/presentation/pages/settings_page.dart';
+import 'package:aliolo/features/subjects/presentation/pages/sub_subject_page.dart';
 
 class ManageCardsPage extends StatefulWidget {
   const ManageCardsPage({super.key});
@@ -36,7 +38,9 @@ class _ManageCardsPageState extends State<ManageCardsPage> {
   @override
   void initState() {
     super.initState();
-    windowManager.setResizable(true);
+    if (!kIsWeb) {
+      windowManager.setResizable(true);
+    }
     _loadData();
   }
 
@@ -75,7 +79,6 @@ class _ManageCardsPageState extends State<ManageCardsPage> {
             return true;
           }).toList();
 
-      // Sort by Pillar ID first, then by Name
       _filteredSubjects.sort((a, b) {
         if (a.pillarId != b.pillarId) {
           return a.pillarId.compareTo(b.pillarId);
@@ -413,6 +416,17 @@ class _ManageCardsPageState extends State<ManageCardsPage> {
                                         borderRadius: BorderRadius.circular(12),
                                       ),
                                       child: ListTile(
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder:
+                                                  (context) => SubSubjectPage(
+                                                    subject: s,
+                                                  ),
+                                            ),
+                                          );
+                                        },
                                         leading: Icon(
                                           p.getIconData(),
                                           color: p.getColor(),
@@ -424,11 +438,31 @@ class _ManageCardsPageState extends State<ManageCardsPage> {
                                           ),
                                         ),
                                         subtitle: Text(
-                                          '${s.cardCount} cards • ${p.translations[TranslationService().currentLocale.languageCode] ?? p.name}',
+                                          '${s.cardCount} cards • ${p.translations[TranslationService().currentLocale.languageCode] ?? p.name}${!isMine ? ' • ${s.ownerName ?? '... '}' : ''}',
                                         ),
                                         trailing: Row(
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
+                                            // Dashboard Toggle Switch
+                                            Tooltip(
+                                              message: context.t(
+                                                'filter_on_dashboard',
+                                              ),
+                                              child: Switch(
+                                                value: s.isOnDashboard,
+                                                onChanged: (val) async {
+                                                  await _cardService
+                                                      .toggleSubjectOnDashboard(
+                                                        s.id,
+                                                        val,
+                                                      );
+                                                  setState(() {
+                                                    s.isOnDashboard = val;
+                                                    _applyFilters();
+                                                  });
+                                                },
+                                              ),
+                                            ),
                                             IconButton(
                                               icon: const Icon(Icons.add),
                                               onPressed:
