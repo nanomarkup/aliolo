@@ -180,7 +180,9 @@ class _ManageFriendsPageState extends State<ManageFriendsPage> {
                                       ),
                                     )
                                     : ListView.builder(
-                                      padding: const EdgeInsets.all(16),
+                                      padding: const EdgeInsets.symmetric(
+                                        vertical: 16,
+                                      ),
                                       itemCount: _friendships.length,
                                       itemBuilder: (context, index) {
                                         final f = _friendships[index];

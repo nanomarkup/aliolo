@@ -152,10 +152,11 @@ class _ProfilePageState extends State<ProfilePage> {
       listenable: Listenable.merge([TranslationService(), _authService]),
       builder: (context, _) {
         final user = _authService.currentUser;
-        if (user == null)
+        if (user == null) {
           return const Scaffold(
             body: Center(child: CircularProgressIndicator()),
           );
+        }
 
         return ResizeWrapper(
           child: Scaffold(
@@ -221,94 +222,99 @@ class _ProfilePageState extends State<ProfilePage> {
             body: Center(
               child: ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 640),
-                child: Column(
-                  children: [
-                    const SizedBox(height: 100),
-                    Expanded(
-                      child: ListView(
-                        padding: const EdgeInsets.all(32),
-                        children: [
-                          _buildProfileHeader(user, currentSessionColor),
-                          const SizedBox(height: 32),
-                          _buildSectionTitle(
-                            context,
-                            context.t('social'),
-                            currentSessionColor,
-                          ),
-                          Card(
-                            child: ListTile(
-                              leading: Icon(
-                                Icons.people,
-                                color: currentSessionColor,
-                              ),
-                              title: Text(context.t('manage_friends')),
-                              subtitle: Text(context.t('manage_friends_desc')),
-                              trailing: const Icon(Icons.chevron_right),
-                              onTap:
-                                  () => Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder:
-                                          (context) =>
-                                              const ManageFriendsPage(),
-                                    ),
-                                  ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 80),
+                      Expanded(
+                        child: ListView(
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          children: [
+                            _buildProfileHeader(user, currentSessionColor),
+                            const SizedBox(height: 32),
+                            _buildSectionTitle(
+                              context,
+                              context.t('social'),
+                              currentSessionColor,
                             ),
-                          ),
-                          const SizedBox(height: 32),
-                          _buildSectionTitle(
-                            context,
-                            context.t('learning_section'),
-                            currentSessionColor,
-                          ),
-                          _buildSettingsCard(
-                            context,
-                            currentSessionColor,
-                            user,
-                          ),
-                          const SizedBox(height: 48),
-
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              ElevatedButton.icon(
-                                onPressed: () async {
-                                  await _authService.logout();
-                                  if (mounted) {
-                                    Navigator.pushAndRemoveUntil(
+                            Card(
+                              child: ListTile(
+                                leading: Icon(
+                                  Icons.people,
+                                  color: currentSessionColor,
+                                ),
+                                title: Text(context.t('manage_friends')),
+                                subtitle: Text(
+                                  context.t('manage_friends_desc'),
+                                ),
+                                trailing: const Icon(Icons.chevron_right),
+                                onTap:
+                                    () => Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => const LoginPage(),
+                                        builder:
+                                            (context) =>
+                                                const ManageFriendsPage(),
                                       ),
-                                      (route) => false,
-                                    );
-                                  }
-                                },
-                                icon: const Icon(Icons.logout),
-                                label: Text(context.t('logout')),
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.red[50],
-                                  foregroundColor: Colors.red,
-                                  minimumSize: const Size(160, 50),
-                                ),
+                                    ),
                               ),
-                              const SizedBox(width: 16),
-                              OutlinedButton.icon(
-                                onPressed: _showDeleteAccountDialog,
-                                icon: const Icon(Icons.delete_forever),
-                                label: Text(context.t('delete_account')),
-                                style: OutlinedButton.styleFrom(
-                                  foregroundColor: Colors.red,
-                                  side: const BorderSide(color: Colors.red),
-                                  minimumSize: const Size(160, 50),
+                            ),
+                            const SizedBox(height: 32),
+                            _buildSectionTitle(
+                              context,
+                              context.t('learning_section'),
+                              currentSessionColor,
+                            ),
+                            _buildSettingsCard(
+                              context,
+                              currentSessionColor,
+                              user,
+                            ),
+                            const SizedBox(height: 48),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                ElevatedButton.icon(
+                                  onPressed: () async {
+                                    await _authService.logout();
+                                    if (mounted) {
+                                      Navigator.pushAndRemoveUntil(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder:
+                                              (context) => const LoginPage(),
+                                        ),
+                                        (route) => false,
+                                      );
+                                    }
+                                  },
+                                  icon: const Icon(Icons.logout),
+                                  label: Text(context.t('logout')),
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.red[50],
+                                    foregroundColor: Colors.red,
+                                    minimumSize: const Size(160, 50),
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        ],
+                                const SizedBox(width: 16),
+                                OutlinedButton.icon(
+                                  onPressed: _showDeleteAccountDialog,
+                                  icon: const Icon(Icons.delete_forever),
+                                  label: Text(context.t('delete_account')),
+                                  style: OutlinedButton.styleFrom(
+                                    foregroundColor: Colors.red,
+                                    side: const BorderSide(color: Colors.red),
+                                    minimumSize: const Size(160, 50),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

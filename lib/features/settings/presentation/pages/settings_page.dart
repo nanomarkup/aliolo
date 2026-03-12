@@ -235,291 +235,308 @@ class _SettingsPageState extends State<SettingsPage> {
               ],
             ),
             body: Center(
-              child: Container(
+              child: ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 640),
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: Column(
-                  children: [
-                    const SizedBox(height: 80),
-                    Expanded(
-                      child: ListView(
-                        children: [
-                          _buildSectionTitle(
-                            context.t('general_preferences'),
-                            currentSessionColor,
-                          ),
-                          Card(
-                            child: Column(
-                              children: [
-                                SwitchListTile(
-                                  title: Text(context.t('sidebar_left')),
-                                  subtitle: Text(
-                                    context.t('sidebar_left_desc'),
-                                  ),
-                                  secondary: Icon(
-                                    Icons.vertical_split,
-                                    color: currentSessionColor,
-                                  ),
-                                  value: _sidebarLeft,
-                                  onChanged: _toggleSidebar,
-                                ),
-                                const Divider(height: 1),
-                                SwitchListTile(
-                                  title: Text(context.t('sound_effects')),
-                                  subtitle: Text(
-                                    context.t('sound_effects_desc'),
-                                  ),
-                                  secondary: Icon(
-                                    Icons.volume_up,
-                                    color: currentSessionColor,
-                                  ),
-                                  value: _soundEnabled,
-                                  onChanged: _toggleSound,
-                                ),
-                                const Divider(height: 1),
-                                SwitchListTile(
-                                  title: Text(context.t('public_profile')),
-                                  subtitle: Text(
-                                    context.t('public_profile_desc'),
-                                  ),
-                                  secondary: Icon(
-                                    Icons.emoji_events,
-                                    color: currentSessionColor,
-                                  ),
-                                  value: _showOnLeaderboard,
-                                  onChanged: _toggleLeaderboard,
-                                ),
-                                const Divider(height: 1),
-                                ListTile(
-                                  title: Text(context.t('ui_language')),
-                                  leading: Icon(
-                                    Icons.translate,
-                                    color: currentSessionColor,
-                                  ),
-                                  trailing: SizedBox(
-                                    width: 150,
-                                    child: DropdownButton<String>(
-                                      value:
-                                          TranslationService()
-                                              .currentLocale
-                                              .languageCode,
-                                      underline: const SizedBox(),
-                                      isExpanded: true,
-                                      alignment: AlignmentDirectional.centerEnd,
-                                      items:
-                                          TranslationService()
-                                              .availableUILanguages
-                                              .map(
-                                                (code) => DropdownMenuItem(
-                                                  value: code,
-                                                  alignment:
-                                                      AlignmentDirectional
-                                                          .centerEnd,
-                                                  child: Text(
-                                                    TranslationService()
-                                                        .getLanguageName(code),
-                                                  ),
-                                                ),
-                                              )
-                                              .toList(),
-                                      onChanged: (val) {
-                                        if (val != null) {
-                                          TranslationService().setLocale(
-                                            Locale(val),
-                                          );
-                                          _authService
-                                              .updateUiLanguagePreference(val);
-                                        }
-                                      },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 80),
+                      Expanded(
+                        child: ListView(
+                          children: [
+                            _buildSectionTitle(
+                              context.t('general_preferences'),
+                              currentSessionColor,
+                            ),
+                            Card(
+                              child: Column(
+                                children: [
+                                  SwitchListTile(
+                                    title: Text(context.t('sidebar_left')),
+                                    subtitle: Text(
+                                      context.t('sidebar_left_desc'),
                                     ),
+                                    secondary: Icon(
+                                      Icons.vertical_split,
+                                      color: currentSessionColor,
+                                    ),
+                                    value: _sidebarLeft,
+                                    onChanged: _toggleSidebar,
                                   ),
-                                ),
-                                const Divider(height: 1),
-                                ListTile(
-                                  title: Text(
-                                    context.t('default_learning_language'),
+                                  const Divider(height: 1),
+                                  SwitchListTile(
+                                    title: Text(context.t('sound_effects')),
+                                    subtitle: Text(
+                                      context.t('sound_effects_desc'),
+                                    ),
+                                    secondary: Icon(
+                                      Icons.volume_up,
+                                      color: currentSessionColor,
+                                    ),
+                                    value: _soundEnabled,
+                                    onChanged: _toggleSound,
                                   ),
-                                  subtitle: Text(
-                                    context.t('default_learning_language_desc'),
+                                  const Divider(height: 1),
+                                  SwitchListTile(
+                                    title: Text(context.t('public_profile')),
+                                    subtitle: Text(
+                                      context.t('public_profile_desc'),
+                                    ),
+                                    secondary: Icon(
+                                      Icons.emoji_events,
+                                      color: currentSessionColor,
+                                    ),
+                                    value: _showOnLeaderboard,
+                                    onChanged: _toggleLeaderboard,
                                   ),
-                                  leading: Icon(
-                                    Icons.language,
-                                    color: currentSessionColor,
-                                  ),
-                                  trailing: SizedBox(
-                                    width: 150,
-                                    child: ListenableBuilder(
-                                      listenable: LearningLanguageService(),
-                                      builder: (context, _) {
-                                        final rawActiveLangs =
-                                            LearningLanguageService()
-                                                .activeLanguageCodes
-                                                .map((c) => c.toLowerCase())
-                                                .toSet();
-                                        if (!rawActiveLangs.contains(
-                                          _defaultLanguage.toLowerCase(),
-                                        )) {
-                                          rawActiveLangs.add(
-                                            _defaultLanguage.toLowerCase(),
-                                          );
-                                        }
-                                        final activeLangs =
-                                            rawActiveLangs.toList()..sort();
-
-                                        return DropdownButton<String>(
-                                          value: _defaultLanguage.toLowerCase(),
-                                          underline: const SizedBox(),
-                                          isExpanded: true,
-                                          alignment:
-                                              AlignmentDirectional.centerEnd,
-                                          items:
-                                              activeLangs
-                                                  .map(
-                                                    (l) => DropdownMenuItem(
-                                                      value: l,
-                                                      alignment:
-                                                          AlignmentDirectional
-                                                              .centerEnd,
-                                                      child: Text(
-                                                        LearningLanguageService()
-                                                            .getLanguageName(l),
-                                                      ),
+                                  const Divider(height: 1),
+                                  ListTile(
+                                    title: Text(context.t('ui_language')),
+                                    leading: Icon(
+                                      Icons.translate,
+                                      color: currentSessionColor,
+                                    ),
+                                    trailing: SizedBox(
+                                      width: 150,
+                                      child: DropdownButton<String>(
+                                        value:
+                                            TranslationService()
+                                                .currentLocale
+                                                .languageCode,
+                                        underline: const SizedBox(),
+                                        isExpanded: true,
+                                        alignment:
+                                            AlignmentDirectional.centerEnd,
+                                        items:
+                                            TranslationService()
+                                                .availableUILanguages
+                                                .map(
+                                                  (code) => DropdownMenuItem(
+                                                    value: code,
+                                                    alignment:
+                                                        AlignmentDirectional
+                                                            .centerEnd,
+                                                    child: Text(
+                                                      TranslationService()
+                                                          .getLanguageName(
+                                                            code,
+                                                          ),
                                                     ),
-                                                  )
-                                                  .toList(),
-                                          onChanged: (val) {
-                                            if (val != null)
-                                              _updateDefaultLanguage(val);
-                                          },
-                                        );
-                                      },
+                                                  ),
+                                                )
+                                                .toList(),
+                                        onChanged: (val) {
+                                          if (val != null) {
+                                            TranslationService().setLocale(
+                                              Locale(val),
+                                            );
+                                            _authService
+                                                .updateUiLanguagePreference(
+                                                  val,
+                                                );
+                                          }
+                                        },
+                                      ),
                                     ),
                                   ),
-                                ),
-                                const Divider(height: 1),
-                                Padding(
-                                  padding: const EdgeInsets.all(16.0),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.brightness_medium,
-                                            color: currentSessionColor,
-                                          ),
-                                          const SizedBox(width: 16),
-                                          Text(
-                                            context.t('theme_mode'),
-                                            style: const TextStyle(
-                                              fontSize: 16,
-                                            ),
-                                          ),
-                                        ],
+                                  const Divider(height: 1),
+                                  ListTile(
+                                    title: Text(
+                                      context.t('default_learning_language'),
+                                    ),
+                                    subtitle: Text(
+                                      context.t(
+                                        'default_learning_language_desc',
                                       ),
-                                      const SizedBox(height: 12),
-                                      Center(
-                                        child: SegmentedButton<String>(
-                                          segments: [
-                                            ButtonSegment(
-                                              value: 'system',
-                                              label: Text(context.t('system')),
-                                              icon: const Icon(
-                                                Icons.brightness_auto,
-                                              ),
+                                    ),
+                                    leading: Icon(
+                                      Icons.language,
+                                      color: currentSessionColor,
+                                    ),
+                                    trailing: SizedBox(
+                                      width: 150,
+                                      child: ListenableBuilder(
+                                        listenable: LearningLanguageService(),
+                                        builder: (context, _) {
+                                          final rawActiveLangs =
+                                              LearningLanguageService()
+                                                  .activeLanguageCodes
+                                                  .map((c) => c.toLowerCase())
+                                                  .toSet();
+                                          if (!rawActiveLangs.contains(
+                                            _defaultLanguage.toLowerCase(),
+                                          )) {
+                                            rawActiveLangs.add(
+                                              _defaultLanguage.toLowerCase(),
+                                            );
+                                          }
+                                          final activeLangs =
+                                              rawActiveLangs.toList()..sort();
+
+                                          return DropdownButton<String>(
+                                            value:
+                                                _defaultLanguage.toLowerCase(),
+                                            underline: const SizedBox(),
+                                            isExpanded: true,
+                                            alignment:
+                                                AlignmentDirectional.centerEnd,
+                                            items:
+                                                activeLangs
+                                                    .map(
+                                                      (l) => DropdownMenuItem(
+                                                        value: l,
+                                                        alignment:
+                                                            AlignmentDirectional
+                                                                .centerEnd,
+                                                        child: Text(
+                                                          LearningLanguageService()
+                                                              .getLanguageName(
+                                                                l,
+                                                              ),
+                                                        ),
+                                                      ),
+                                                    )
+                                                    .toList(),
+                                            onChanged: (val) {
+                                              if (val != null)
+                                                _updateDefaultLanguage(val);
+                                            },
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                  const Divider(height: 1),
+                                  Padding(
+                                    padding: const EdgeInsets.all(16.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Icon(
+                                              Icons.brightness_medium,
+                                              color: currentSessionColor,
                                             ),
-                                            ButtonSegment(
-                                              value: 'light',
-                                              label: Text(context.t('light')),
-                                              icon: const Icon(
-                                                Icons.light_mode,
+                                            const SizedBox(width: 16),
+                                            Text(
+                                              context.t('theme_mode'),
+                                              style: const TextStyle(
+                                                fontSize: 16,
                                               ),
-                                            ),
-                                            ButtonSegment(
-                                              value: 'dark',
-                                              label: Text(context.t('dark')),
-                                              icon: const Icon(Icons.dark_mode),
                                             ),
                                           ],
-                                          selected: {_themeMode},
-                                          onSelectionChanged: (
-                                            Set<String> newSelection,
-                                          ) {
-                                            _updateTheme(newSelection.first);
-                                          },
                                         ),
-                                      ),
-                                    ],
+                                        const SizedBox(height: 12),
+                                        Center(
+                                          child: SegmentedButton<String>(
+                                            segments: [
+                                              ButtonSegment(
+                                                value: 'system',
+                                                label: Text(
+                                                  context.t('system'),
+                                                ),
+                                                icon: const Icon(
+                                                  Icons.brightness_auto,
+                                                ),
+                                              ),
+                                              ButtonSegment(
+                                                value: 'light',
+                                                label: Text(context.t('light')),
+                                                icon: const Icon(
+                                                  Icons.light_mode,
+                                                ),
+                                              ),
+                                              ButtonSegment(
+                                                value: 'dark',
+                                                label: Text(context.t('dark')),
+                                                icon: const Icon(
+                                                  Icons.dark_mode,
+                                                ),
+                                              ),
+                                            ],
+                                            selected: {_themeMode},
+                                            onSelectionChanged: (
+                                              Set<String> newSelection,
+                                            ) {
+                                              _updateTheme(newSelection.first);
+                                            },
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
-
-                          const SizedBox(height: 32),
-                          _buildSectionTitle(
-                            context.t('keyboard_shortcuts'),
-                            currentSessionColor,
-                          ),
-                          Card(
-                            child: Column(
-                              children: [
-                                ListTile(
-                                  title: Text(context.t('previous_card')),
-                                  subtitle: Text(
-                                    "Ctrl + ${_getKeyName(context, _shortcutPrev)}",
-                                  ),
-                                  leading: Icon(
-                                    Icons.keyboard,
-                                    color: currentSessionColor,
-                                  ),
-                                  trailing: const Icon(Icons.edit, size: 18),
-                                  onTap: () => _listenForKey(true),
-                                ),
-                                const Divider(height: 1),
-                                ListTile(
-                                  title: Text(context.t('next_card')),
-                                  subtitle: Text(
-                                    "Ctrl + ${_getKeyName(context, _shortcutNext)}",
-                                  ),
-                                  leading: Icon(
-                                    Icons.keyboard,
-                                    color: currentSessionColor,
-                                  ),
-                                  trailing: const Icon(Icons.edit, size: 18),
-                                  onTap: () => _listenForKey(false),
-                                ),
-                              ],
+                            const SizedBox(height: 32),
+                            _buildSectionTitle(
+                              context.t('keyboard_shortcuts'),
+                              currentSessionColor,
                             ),
-                          ),
-                        ],
+                            Card(
+                              child: Column(
+                                children: [
+                                  ListTile(
+                                    title: Text(context.t('previous_card')),
+                                    subtitle: Text(
+                                      "Ctrl + ${_getKeyName(context, _shortcutPrev)}",
+                                    ),
+                                    leading: Icon(
+                                      Icons.keyboard,
+                                      color: currentSessionColor,
+                                    ),
+                                    trailing: const Icon(Icons.edit, size: 18),
+                                    onTap: () => _listenForKey(true),
+                                  ),
+                                  const Divider(height: 1),
+                                  ListTile(
+                                    title: Text(context.t('next_card')),
+                                    subtitle: Text(
+                                      "Ctrl + ${_getKeyName(context, _shortcutNext)}",
+                                    ),
+                                    leading: Icon(
+                                      Icons.keyboard,
+                                      color: currentSessionColor,
+                                    ),
+                                    trailing: const Icon(Icons.edit, size: 18),
+                                    onTap: () => _listenForKey(false),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 24),
-                      child: Column(
-                        children: [
-                          Text(
-                            'Aliolo Pro',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: currentSessionColor.withValues(alpha: 0.8),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 24),
+                        child: Column(
+                          children: [
+                            Text(
+                              'Aliolo Pro',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: currentSessionColor.withValues(
+                                  alpha: 0.8,
+                                ),
+                              ),
                             ),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            '${context.t('version')} $_version',
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.grey[500],
+                            const SizedBox(height: 4),
+                            Text(
+                              '${context.t('version')} $_version',
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.grey[500],
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

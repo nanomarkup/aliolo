@@ -338,7 +338,7 @@ class _LeaderboardPageState extends State<LeaderboardPage>
     final currentPage = isGlobal ? _currentGlobalPage : _currentFriendsPage;
 
     return ListView.builder(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.symmetric(vertical: 8),
       itemCount: users.length,
       itemBuilder: (context, index) {
         final user = users[index];

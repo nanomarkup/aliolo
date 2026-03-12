@@ -127,52 +127,57 @@ class _UserManagementPageState extends State<UserManagementPage> {
                     ? const Center(child: CircularProgressIndicator())
                     : Center(
                       child: ConstrainedBox(
-                        constraints: const BoxConstraints(maxWidth: 640),
-                        child: Column(
-                          children: [
-                            const SizedBox(height: 100),
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.all(24),
-                                child: Card(
-                                  elevation: 2,
-                                  child: ListView.separated(
-                                    itemCount: _users.length,
-                                    separatorBuilder:
-                                        (context, index) =>
-                                            const Divider(height: 1),
-                                    itemBuilder: (context, index) {
-                                      final user = _users[index];
-                                      final isMe =
-                                          user.serverId ==
-                                          _authService.currentUser?.serverId;
+                        constraints: const BoxConstraints(maxWidth: 740),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Column(
+                            children: [
+                              const SizedBox(height: 80),
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 16,
+                                  ),
+                                  child: Card(
+                                    elevation: 2,
+                                    child: ListView.separated(
+                                      itemCount: _users.length,
+                                      separatorBuilder:
+                                          (context, index) =>
+                                              const Divider(height: 1),
+                                      itemBuilder: (context, index) {
+                                        final user = _users[index];
+                                        final isMe =
+                                            user.serverId ==
+                                            _authService.currentUser?.serverId;
 
-                                      return ListTile(
-                                        leading: CircleAvatar(
-                                          backgroundColor: currentSessionColor
-                                              .withValues(alpha: 0.1),
-                                          child: Icon(
-                                            Icons.person,
-                                            color: currentSessionColor,
+                                        return ListTile(
+                                          leading: CircleAvatar(
+                                            backgroundColor: currentSessionColor
+                                                .withValues(alpha: 0.1),
+                                            child: Icon(
+                                              Icons.person,
+                                              color: currentSessionColor,
+                                            ),
                                           ),
-                                        ),
-                                        title: Text(
-                                          user.username +
-                                              (isMe
-                                                  ? ' (${context.t('you_rank', args: {'rank': ''}).replaceAll(' #', '')})'
-                                                  : ''),
-                                          style: const TextStyle(
-                                            fontWeight: FontWeight.bold,
+                                          title: Text(
+                                            user.username +
+                                                (isMe
+                                                    ? ' (${context.t('you_rank', args: {'rank': ''}).replaceAll(' #', '')})'
+                                                    : ''),
+                                            style: const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                           ),
-                                        ),
-                                        subtitle: Text(user.email),
-                                      );
-                                    },
+                                          subtitle: Text(user.email),
+                                        );
+                                      },
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),
