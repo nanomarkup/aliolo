@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:aliolo/core/widgets/floating_app_bar.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:aliolo/data/models/card_model.dart';
 import 'package:aliolo/data/models/subject_model.dart';
@@ -71,78 +72,69 @@ class _SubSubjectPageState extends State<SubSubjectPage> {
 
         return ResizeWrapper(
           child: Scaffold(
-            appBar: AppBar(
-              title: DragToMoveArea(
-                child: SizedBox(
-                  width: double.infinity,
-                  child: Row(
-                    children: [
-                      Text(
-                        widget.subject.name,
-                        style: const TextStyle(color: appBarColor),
-                      ),
-                      const SizedBox(width: 24),
-                      Theme(
-                        data: Theme.of(
-                          context,
-                        ).copyWith(canvasColor: currentSessionColor),
-                        child: DropdownButton<String>(
-                          value: _selectedLanguage.toLowerCase(),
-                          underline: const SizedBox(),
-                          icon: const Icon(
-                            Icons.language,
-                            color: appBarColor,
-                            size: 22,
-                          ),
-                          style: const TextStyle(
-                            color: appBarColor,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                          ),
-                          onChanged: (val) {
-                            if (val != null) {
-                              setState(
-                                () => _selectedLanguage = val.toLowerCase(),
-                              );
-                              _authService.updateDefaultLanguage(
-                                val.toLowerCase(),
-                              );
-                            }
-                          },
-                          items:
-                              (() {
-                                final rawLangs =
-                                    LearningLanguageService()
-                                        .activeLanguageCodes
-                                        .map((l) => l.toLowerCase())
-                                        .toSet();
-                                if (!rawLangs.contains(
-                                  _selectedLanguage.toLowerCase(),
-                                )) {
-                                  rawLangs.add(_selectedLanguage.toLowerCase());
-                                }
-                                final list = rawLangs.toList()..sort();
-                                return list
-                                    .map(
-                                      (l) => DropdownMenuItem(
-                                        value: l,
-                                        child: Text(
-                                          LearningLanguageService()
-                                              .getLanguageName(l),
-                                        ),
-                                      ),
-                                    )
-                                    .toList();
-                              })(),
-                        ),
-                      ),
-                    ],
+            extendBodyBehindAppBar: true,
+            appBar: AlioloAppBar(
+              title: Row(
+                children: [
+                  Text(
+                    widget.subject.name,
+                    style: const TextStyle(color: appBarColor),
                   ),
-                ),
+                  const SizedBox(width: 24),
+                  Theme(
+                    data: Theme.of(
+                      context,
+                    ).copyWith(canvasColor: currentSessionColor),
+                    child: DropdownButton<String>(
+                      value: _selectedLanguage.toLowerCase(),
+                      underline: const SizedBox(),
+                      icon: const Icon(
+                        Icons.language,
+                        color: appBarColor,
+                        size: 22,
+                      ),
+                      style: const TextStyle(
+                        color: appBarColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
+                      onChanged: (val) {
+                        if (val != null) {
+                          setState(() => _selectedLanguage = val.toLowerCase());
+                          _authService.updateDefaultLanguage(val.toLowerCase());
+                        }
+                      },
+                      items:
+                          (() {
+                            final rawLangs =
+                                LearningLanguageService().activeLanguageCodes
+                                    .map((l) => l.toLowerCase())
+                                    .toSet();
+                            if (!rawLangs.contains(
+                              _selectedLanguage.toLowerCase(),
+                            )) {
+                              rawLangs.add(_selectedLanguage.toLowerCase());
+                            }
+                            final list = rawLangs.toList()..sort();
+                            return list
+                                .map(
+                                  (l) => DropdownMenuItem(
+                                    value: l,
+                                    child: Text(
+                                      LearningLanguageService().getLanguageName(
+                                        l,
+                                      ),
+                                    ),
+                                  ),
+                                )
+                                .toList();
+                          })(),
+                    ),
+                  ),
+                ],
               ),
               backgroundColor: currentSessionColor,
               foregroundColor: appBarColor,
-              automaticallyImplyLeading: false,
               actions: [
                 IconButton(
                   icon: const Icon(Icons.school, color: appBarColor),
@@ -175,65 +167,99 @@ class _SubSubjectPageState extends State<SubSubjectPage> {
                         ),
                       ),
                 ),
-                const WindowControls(color: appBarColor, iconSize: 24),
               ],
             ),
-            body:
-                _isLoading
-                    ? const Center(child: CircularProgressIndicator())
-                    : filteredCards.isEmpty
-                    ? Center(child: Text(context.t('no_cards_available_lang')))
-                    : ListView.builder(
-                      padding: const EdgeInsets.all(16),
-                      itemCount: filteredCards.length,
-                      itemBuilder: (context, index) {
-                        final card = filteredCards[index];
-                        final pillar = pillars.firstWhere(
-                          (p) => p.id == widget.subject.pillarId,
-                          orElse: () => pillars.first,
-                        );
-                        return Card(
-                          margin: const EdgeInsets.only(bottom: 12),
-                          child: ListTile(
-                            leading:
-                                card.imageUrl != null
-                                    ? Image.network(
-                                      card.imageUrl!,
-                                      width: 50,
-                                      height: 50,
-                                      fit: BoxFit.cover,
-                                    )
-                                    : Icon(
-                                      Icons.image,
-                                      color: pillar.getColor(),
-                                    ),
-                            title: Text(
-                              card.prompts[lang] ??
-                                  card.prompts['en'] ??
-                                  card.prompts.values.firstOrNull ??
-                                  'No Prompt',
+            body: Center(
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 700),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 100),
+                      if (widget.subject.description != null &&
+                          widget.subject.description!.isNotEmpty)
+                        Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Text(
+                            widget.subject.description!,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              fontSize: 16,
+                              color: Colors.grey,
                             ),
-                            subtitle: Text(
-                              '${context.t('level')} ${card.level}',
-                            ),
-                            trailing: const Icon(Icons.play_arrow),
-                            onTap: () async {
-                              await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder:
-                                      (context) => LearningPage(
-                                        card: card,
-                                        languageCode: _selectedLanguage,
-                                      ),
-                                ),
-                              );
-                              _loadCards();
-                            },
                           ),
-                        );
-                      },
-                    ),
+                        ),
+                      Expanded(
+                        child:
+                            _isLoading
+                                ? const Center(
+                                  child: CircularProgressIndicator(),
+                                )
+                                : filteredCards.isEmpty
+                                ? Center(
+                                  child: Text(
+                                    context.t('no_cards_available_lang'),
+                                  ),
+                                )
+                                : ListView.builder(
+                                  padding: const EdgeInsets.only(bottom: 32),
+                                  itemCount: filteredCards.length,
+                                  itemBuilder: (context, index) {
+                                    final card = filteredCards[index];
+                                    final pillar = pillars.firstWhere(
+                                      (p) => p.id == widget.subject.pillarId,
+                                      orElse: () => pillars.first,
+                                    );
+                                    return Card(
+                                      margin: const EdgeInsets.only(bottom: 12),
+                                      child: ListTile(
+                                        leading:
+                                            card.imageUrl != null
+                                                ? Image.network(
+                                                  card.imageUrl!,
+                                                  width: 50,
+                                                  height: 50,
+                                                  fit: BoxFit.cover,
+                                                )
+                                                : Icon(
+                                                  Icons.image,
+                                                  color: pillar.getColor(),
+                                                ),
+                                        title: Text(
+                                          card.prompts[lang] ??
+                                              card.prompts['en'] ??
+                                              card.prompts.values.firstOrNull ??
+                                              'No Prompt',
+                                        ),
+                                        subtitle: Text(
+                                          '${context.t('level')} ${card.level}',
+                                        ),
+                                        trailing: const Icon(Icons.play_arrow),
+                                        onTap: () async {
+                                          await Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder:
+                                                  (context) => LearningPage(
+                                                    card: card,
+                                                    languageCode:
+                                                        _selectedLanguage,
+                                                  ),
+                                            ),
+                                          );
+                                          _loadCards();
+                                        },
+                                      ),
+                                    );
+                                  },
+                                ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
           ),
         );
       },

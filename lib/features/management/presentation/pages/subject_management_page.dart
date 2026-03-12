@@ -163,124 +163,123 @@ class _SubjectManagementPageState extends State<SubjectManagementPage> {
         body: Center(
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 700),
-            child: Column(
-              children: [
-                const SizedBox(height: 100),
-                Expanded(
-                  child: Column(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(24),
-                        decoration: BoxDecoration(
-                          color: Colors.grey.withValues(alpha: 0.05),
-                          border: Border(
-                            bottom: BorderSide(
-                              color: Colors.grey.withValues(alpha: 0.1),
-                            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
+                children: [
+                  const SizedBox(height: 100),
+                  Expanded(
+                    child: Column(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(24),
+                          child: Column(
+                            children: [
+                              TextField(
+                                controller: _searchController,
+                                decoration: InputDecoration(
+                                  hintText: context.t('search_subjects'),
+                                  prefixIcon: const Icon(Icons.search),
+                                  suffixIcon:
+                                      _searchController.text.isNotEmpty
+                                          ? IconButton(
+                                            icon: const Icon(Icons.clear),
+                                            onPressed: () {
+                                              _searchController.clear();
+                                              _applyFilters();
+                                            },
+                                          )
+                                          : null,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  filled: true,
+                                  fillColor: Theme.of(
+                                    context,
+                                  ).cardColor.withValues(alpha: 0.5),
+                                ),
+                                onChanged: (_) => _applyFilters(),
+                              ),
+                              const SizedBox(height: 16),
+                              SwitchListTile(
+                                title: Text(context.t('filter_on_dashboard')),
+                                value: _filterOnDashboardOnly,
+                                onChanged: (val) {
+                                  setState(() {
+                                    _filterOnDashboardOnly = val;
+                                    _applyFilters();
+                                  });
+                                },
+                              ),
+                            ],
                           ),
                         ),
-                        child: Column(
-                          children: [
-                            TextField(
-                              controller: _searchController,
-                              decoration: InputDecoration(
-                                hintText: context.t('search_subjects'),
-                                prefixIcon: const Icon(Icons.search),
-                                suffixIcon:
-                                    _searchController.text.isNotEmpty
-                                        ? IconButton(
-                                          icon: const Icon(Icons.clear),
-                                          onPressed: () {
-                                            _searchController.clear();
-                                            _applyFilters();
-                                          },
-                                        )
-                                        : null,
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                filled: true,
-                                fillColor: Theme.of(
-                                  context,
-                                ).cardColor.withValues(alpha: 0.5),
-                              ),
-                              onChanged: (_) => _applyFilters(),
-                            ),
-                            const SizedBox(height: 16),
-                            SwitchListTile(
-                              title: Text(context.t('filter_on_dashboard')),
-                              value: _filterOnDashboardOnly,
-                              onChanged: (val) {
-                                setState(() {
-                                  _filterOnDashboardOnly = val;
-                                  _applyFilters();
-                                });
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                      Expanded(
-                        child:
-                            _isLoading
-                                ? const Center(
-                                  child: CircularProgressIndicator(),
-                                )
-                                : _filteredSubjects.isEmpty
-                                ? Center(
-                                  child: Text(context.t('no_subjects_found')),
-                                )
-                                : ListView.builder(
-                                  padding: const EdgeInsets.all(16),
-                                  itemCount: _filteredSubjects.length,
-                                  itemBuilder: (context, index) {
-                                    final s = _filteredSubjects[index];
-                                    final p = pillars.firstWhere(
-                                      (item) => item.id == s.pillarId,
-                                      orElse: () => pillars.first,
-                                    );
-                                    return Card(
-                                      margin: const EdgeInsets.only(bottom: 12),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                      child: ListTile(
-                                        leading: Icon(
-                                          p.getIconData(),
-                                          color: p.getColor(),
+                        Expanded(
+                          child:
+                              _isLoading
+                                  ? const Center(
+                                    child: CircularProgressIndicator(),
+                                  )
+                                  : _filteredSubjects.isEmpty
+                                  ? Center(
+                                    child: Text(context.t('no_subjects_found')),
+                                  )
+                                  : ListView.builder(
+                                    padding: const EdgeInsets.only(bottom: 32),
+                                    itemCount: _filteredSubjects.length,
+                                    itemBuilder: (context, index) {
+                                      final s = _filteredSubjects[index];
+                                      final p = pillars.firstWhere(
+                                        (item) => item.id == s.pillarId,
+                                        orElse: () => pillars.first,
+                                      );
+                                      return Card(
+                                        margin: const EdgeInsets.only(
+                                          bottom: 12,
                                         ),
-                                        title: Text(
-                                          s.name,
-                                          style: const TextStyle(
-                                            fontWeight: FontWeight.bold,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                            12,
                                           ),
                                         ),
-                                        subtitle: Text(
-                                          '${s.cardCount} cards • ${p.translations[TranslationService().currentLocale.languageCode] ?? p.name}',
+                                        child: ListTile(
+                                          leading: Icon(
+                                            p.getIconData(),
+                                            color: p.getColor(),
+                                          ),
+                                          title: Text(
+                                            s.name,
+                                            style: const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          subtitle: Text(
+                                            '${s.cardCount} cards • ${p.translations[TranslationService().currentLocale.languageCode] ?? p.name}',
+                                          ),
+                                          trailing: Switch(
+                                            value: s.isOnDashboard,
+                                            onChanged: (val) async {
+                                              await _cardService
+                                                  .toggleSubjectDashboard(
+                                                    s.id,
+                                                    val,
+                                                  );
+                                              setState(() {
+                                                s.isOnDashboard = val;
+                                                _applyFilters();
+                                              });
+                                            },
+                                          ),
                                         ),
-                                        trailing: Switch(
-                                          value: s.isOnDashboard,
-                                          onChanged: (val) async {
-                                            await _cardService
-                                                .toggleSubjectDashboard(
-                                                  s.id,
-                                                  val,
-                                                );
-                                            setState(() {
-                                              s.isOnDashboard = val;
-                                              _applyFilters();
-                                            });
-                                          },
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                ),
-                      ),
-                    ],
+                                      );
+                                    },
+                                  ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

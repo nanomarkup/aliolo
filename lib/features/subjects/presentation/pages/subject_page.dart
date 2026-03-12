@@ -49,17 +49,15 @@ class _SubjectPageState extends State<SubjectPage> {
     final prefs = await SharedPreferences.getInstance();
     final savedLang = prefs.getString('last_learning_lang');
 
-    if (savedLang != null) {
-      if (mounted) {
+    if (mounted) {
+      if (savedLang != null) {
         setState(() {
           _currentLearningLang = savedLang;
           _isLangInitialized = true;
         });
-      }
-    } else {
-      final user = getIt<AuthService>().currentUser;
-      if (user != null) {
-        if (mounted) {
+      } else {
+        final user = getIt<AuthService>().currentUser;
+        if (user != null) {
           setState(() {
             _currentLearningLang = user.defaultLanguage.toLowerCase();
             _isLangInitialized = true;
@@ -226,191 +224,209 @@ class _SubjectPageState extends State<SubjectPage> {
             body: Center(
               child: ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 700),
-                child: Column(
-                  children: [
-                    const SizedBox(height: 100),
-                    Expanded(
-                      child:
-                          _isLoading
-                              ? const Center(child: CircularProgressIndicator())
-                              : activePillars.isEmpty
-                              ? Center(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    const Icon(
-                                      Icons.dashboard_customize,
-                                      size: 80,
-                                      color: Colors.grey,
-                                    ),
-                                    const SizedBox(height: 16),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 32,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 100),
+                      Expanded(
+                        child:
+                            _isLoading
+                                ? const Center(
+                                  child: CircularProgressIndicator(),
+                                )
+                                : activePillars.isEmpty
+                                ? Center(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const Icon(
+                                        Icons.dashboard_customize,
+                                        size: 80,
+                                        color: Colors.grey,
                                       ),
-                                      child: Text(
-                                        context.t('empty_dashboard'),
-                                        textAlign: TextAlign.center,
-                                        style: const TextStyle(
-                                          fontSize: 18,
-                                          color: Colors.grey,
+                                      const SizedBox(height: 16),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 32,
+                                        ),
+                                        child: Text(
+                                          context.t('empty_dashboard'),
+                                          textAlign: TextAlign.center,
+                                          style: const TextStyle(
+                                            fontSize: 18,
+                                            color: Colors.grey,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    const SizedBox(height: 24),
-                                    ElevatedButton.icon(
-                                      onPressed: () async {
-                                        await Navigator.push(
+                                      const SizedBox(height: 24),
+                                      ElevatedButton.icon(
+                                        onPressed: () async {
+                                          await Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder:
+                                                  (context) =>
+                                                      const ManageCardsPage(),
+                                            ),
+                                          );
+                                          _loadDashboard();
+                                        },
+                                        icon: const Icon(
+                                          Icons.collections_bookmark,
+                                        ),
+                                        label: Text(
+                                          context.t('manage_subjects'),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                                : GridView.builder(
+                                  padding: const EdgeInsets.only(bottom: 32),
+                                  gridDelegate:
+                                      const SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 2,
+                                        crossAxisSpacing: 24,
+                                        mainAxisSpacing: 24,
+                                        childAspectRatio: 1.5,
+                                      ),
+                                  itemCount: activePillars.length,
+                                  itemBuilder: (context, index) {
+                                    final pillar = activePillars[index];
+                                    final pillarSubjects =
+                                        _dashboardSubjects
+                                            .where(
+                                              (s) => s.pillarId == pillar.id,
+                                            )
+                                            .toList();
+                                    final count =
+                                        pillarSubjects
+                                            .where(
+                                              (s) =>
+                                                  s.getCardCountForLanguage(
+                                                    _currentLearningLang,
+                                                  ) >
+                                                  0,
+                                            )
+                                            .length;
+                                    final pillarColor = pillar.getColor();
+                                    final pillarIcon = pillar.getIconData();
+
+                                    return InkWell(
+                                      onTap: () {
+                                        ThemeService().setSessionColor(
+                                          pillarColor,
+                                        );
+                                        Navigator.push(
                                           context,
                                           MaterialPageRoute(
                                             builder:
-                                                (context) =>
-                                                    const ManageCardsPage(),
+                                                (context) => PillarSubjectsPage(
+                                                  pillar: pillar,
+                                                  subjects: pillarSubjects,
+                                                  languageCode:
+                                                      _currentLearningLang,
+                                                ),
                                           ),
                                         );
-                                        _loadDashboard();
                                       },
-                                      icon: const Icon(
-                                        Icons.collections_bookmark,
-                                      ),
-                                      label: Text(context.t('manage_subjects')),
-                                    ),
-                                  ],
-                                ),
-                              )
-                              : GridView.builder(
-                                padding: const EdgeInsets.all(32),
-                                gridDelegate:
-                                    const SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 2,
-                                      crossAxisSpacing: 24,
-                                      mainAxisSpacing: 24,
-                                      childAspectRatio: 1.5,
-                                    ),
-                                itemCount: activePillars.length,
-                                itemBuilder: (context, index) {
-                                  final pillar = activePillars[index];
-                                  final pillarSubjects =
-                                      _dashboardSubjects
-                                          .where((s) => s.pillarId == pillar.id)
-                                          .toList();
-                                  final count =
-                                      pillarSubjects
-                                          .where(
-                                            (s) =>
-                                                s.getCardCountForLanguage(
-                                                  _currentLearningLang,
-                                                ) >
-                                                0,
-                                          )
-                                          .length;
-                                  final pillarColor = pillar.getColor();
-                                  final pillarIcon = pillar.getIconData();
-
-                                  return InkWell(
-                                    onTap: () {
-                                      ThemeService().setSessionColor(
-                                        pillarColor,
-                                      );
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder:
-                                              (context) => PillarSubjectsPage(
-                                                pillar: pillar,
-                                                subjects: pillarSubjects,
-                                                languageCode:
-                                                    _currentLearningLang,
+                                      borderRadius: BorderRadius.circular(24),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          gradient: LinearGradient(
+                                            colors: [
+                                              pillarColor,
+                                              pillarColor.withValues(
+                                                alpha: 0.7,
                                               ),
-                                        ),
-                                      );
-                                    },
-                                    borderRadius: BorderRadius.circular(24),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        gradient: LinearGradient(
-                                          colors: [
-                                            pillarColor,
-                                            pillarColor.withValues(alpha: 0.7),
+                                            ],
+                                            begin: Alignment.topLeft,
+                                            end: Alignment.bottomRight,
+                                          ),
+                                          borderRadius: BorderRadius.circular(
+                                            24,
+                                          ),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: pillarColor.withValues(
+                                                alpha: 0.3,
+                                              ),
+                                              blurRadius: 12,
+                                              offset: const Offset(0, 6),
+                                            ),
                                           ],
-                                          begin: Alignment.topLeft,
-                                          end: Alignment.bottomRight,
                                         ),
-                                        borderRadius: BorderRadius.circular(24),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: pillarColor.withValues(
-                                              alpha: 0.3,
-                                            ),
-                                            blurRadius: 12,
-                                            offset: const Offset(0, 6),
-                                          ),
-                                        ],
-                                      ),
-                                      child: Stack(
-                                        children: [
-                                          Positioned(
-                                            right: -20,
-                                            bottom: -20,
-                                            child: Icon(
-                                              pillarIcon,
-                                              size: 120,
-                                              color: Colors.white.withValues(
-                                                alpha: 0.2,
+                                        child: Stack(
+                                          children: [
+                                            Positioned(
+                                              right: -20,
+                                              bottom: -20,
+                                              child: Icon(
+                                                pillarIcon,
+                                                size: 120,
+                                                color: Colors.white.withValues(
+                                                  alpha: 0.2,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.all(24.0),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Icon(
-                                                  pillarIcon,
-                                                  color: Colors.white,
-                                                  size: 40,
-                                                ),
-                                                const Spacer(),
-                                                FutureBuilder<String>(
-                                                  future: TranslationService()
-                                                      .translateForLanguage(
-                                                        'pillar_${pillar.name}',
-                                                        _currentLearningLang,
-                                                      ),
-                                                  builder: (context, snapshot) {
-                                                    return Text(
-                                                      snapshot.data ??
-                                                          pillar.getTranslatedName(
-                                                            _currentLearningLang,
-                                                          ),
-                                                      style: const TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: 24,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
-                                                    );
-                                                  },
-                                                ),
-                                                Text(
-                                                  '$count ${context.t('subjects')}',
-                                                  style: const TextStyle(
-                                                    color: Colors.white70,
-                                                    fontSize: 14,
+                                            Padding(
+                                              padding: const EdgeInsets.all(
+                                                24.0,
+                                              ),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Icon(
+                                                    pillarIcon,
+                                                    color: Colors.white,
+                                                    size: 40,
                                                   ),
-                                                ),
-                                              ],
+                                                  const Spacer(),
+                                                  FutureBuilder<String>(
+                                                    future: TranslationService()
+                                                        .translateForLanguage(
+                                                          'pillar_${pillar.name}',
+                                                          _currentLearningLang,
+                                                        ),
+                                                    builder: (
+                                                      context,
+                                                      snapshot,
+                                                    ) {
+                                                      return Text(
+                                                        snapshot.data ??
+                                                            pillar.getTranslatedName(
+                                                              _currentLearningLang,
+                                                            ),
+                                                        style: const TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 24,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                      );
+                                                    },
+                                                  ),
+                                                  Text(
+                                                    '$count ${context.t('subjects')}',
+                                                    style: const TextStyle(
+                                                      color: Colors.white70,
+                                                      fontSize: 14,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  );
-                                },
-                              ),
-                    ),
-                  ],
+                                    );
+                                  },
+                                ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -478,169 +494,180 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
               icon: const Icon(Icons.arrow_back, color: appBarColor),
               onPressed: () => Navigator.pop(context),
             ),
-            const WindowControls(color: appBarColor, iconSize: 24),
           ],
         ),
         body: Center(
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 700),
-            child: Column(
-              children: [
-                const SizedBox(height: 100),
-                Expanded(
-                  child:
-                      filteredSubjects.isEmpty
-                          ? Center(child: Text(context.t('no_subjects_found')))
-                          : ListView.builder(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 24,
-                              vertical: 32,
-                            ),
-                            itemCount: filteredSubjects.length,
-                            itemBuilder: (context, index) {
-                              final subject = filteredSubjects[index];
-                              final cardCount = subject.getCardCountForLanguage(
-                                widget.languageCode,
-                              );
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
+                children: [
+                  const SizedBox(height: 100),
+                  Expanded(
+                    child:
+                        filteredSubjects.isEmpty
+                            ? Center(
+                              child: Text(context.t('no_subjects_found')),
+                            )
+                            : ListView.builder(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8,
+                                vertical: 32,
+                              ),
+                              itemCount: filteredSubjects.length,
+                              itemBuilder: (context, index) {
+                                final subject = filteredSubjects[index];
+                                final cardCount = subject
+                                    .getCardCountForLanguage(
+                                      widget.languageCode,
+                                    );
 
-                              return Padding(
-                                padding: const EdgeInsets.only(bottom: 16),
-                                child: InkWell(
-                                  onTap: () async {
-                                    final cards = await CardService()
-                                        .getCardsBySubject(subject.id);
-                                    if (cards.isNotEmpty && context.mounted) {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder:
-                                              (context) => LearningPage(
-                                                card: cards.first,
-                                                languageCode:
-                                                    widget.languageCode,
-                                              ),
-                                        ),
-                                      );
-                                    } else if (context.mounted) {
-                                      ScaffoldMessenger.of(
-                                        context,
-                                      ).showSnackBar(
-                                        SnackBar(
-                                          content: Text(
-                                            context.t('no_cards_found'),
-                                          ),
-                                        ),
-                                      );
-                                    }
-                                  },
-                                  borderRadius: BorderRadius.circular(16),
-                                  child: Container(
-                                    padding: const EdgeInsets.all(20),
-                                    decoration: BoxDecoration(
-                                      color: Theme.of(context).cardColor,
-                                      borderRadius: BorderRadius.circular(16),
-                                      border: Border.all(
-                                        color: pillarColor.withValues(
-                                          alpha: 0.2,
-                                        ),
-                                        width: 1.5,
-                                      ),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.black.withValues(
-                                            alpha: 0.05,
-                                          ),
-                                          blurRadius: 8,
-                                          offset: const Offset(0, 4),
-                                        ),
-                                      ],
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        Expanded(
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              FutureBuilder<String>(
-                                                future: TranslationService()
-                                                    .translateForLanguage(
-                                                      subject.name,
+                                return Padding(
+                                  padding: const EdgeInsets.only(bottom: 16),
+                                  child: InkWell(
+                                    onTap: () async {
+                                      final cards = await CardService()
+                                          .getCardsBySubject(subject.id);
+                                      if (cards.isNotEmpty && context.mounted) {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder:
+                                                (context) => LearningPage(
+                                                  card: cards.first,
+                                                  languageCode:
                                                       widget.languageCode,
-                                                    ),
-                                                builder: (context, snapshot) {
-                                                  return Text(
-                                                    snapshot.data ??
-                                                        subject.name,
-                                                    style: const TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 20,
-                                                    ),
-                                                  );
-                                                },
-                                              ),
-                                              if (subject.description != null &&
-                                                  subject
-                                                      .description!
-                                                      .isNotEmpty) ...[
-                                                const SizedBox(height: 4),
+                                                ),
+                                          ),
+                                        );
+                                      } else if (context.mounted) {
+                                        ScaffoldMessenger.of(
+                                          context,
+                                        ).showSnackBar(
+                                          SnackBar(
+                                            content: Text(
+                                              context.t('no_cards_found'),
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                    },
+                                    borderRadius: BorderRadius.circular(16),
+                                    child: Container(
+                                      padding: const EdgeInsets.all(20),
+                                      decoration: BoxDecoration(
+                                        color: Theme.of(context).cardColor,
+                                        borderRadius: BorderRadius.circular(16),
+                                        border: Border.all(
+                                          color: pillarColor.withValues(
+                                            alpha: 0.2,
+                                          ),
+                                          width: 1.5,
+                                        ),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.black.withValues(
+                                              alpha: 0.05,
+                                            ),
+                                            blurRadius: 8,
+                                            offset: const Offset(0, 4),
+                                          ),
+                                        ],
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
                                                 FutureBuilder<String>(
                                                   future: TranslationService()
                                                       .translateForLanguage(
-                                                        subject.description!,
+                                                        subject.name,
                                                         widget.languageCode,
                                                       ),
                                                   builder: (context, snapshot) {
                                                     return Text(
                                                       snapshot.data ??
-                                                          subject.description!,
-                                                      style: TextStyle(
-                                                        color: Colors.grey[600],
-                                                        fontSize: 14,
+                                                          subject.name,
+                                                      style: const TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 20,
                                                       ),
-                                                      maxLines: 2,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
                                                     );
                                                   },
                                                 ),
+                                                if (subject.description !=
+                                                        null &&
+                                                    subject
+                                                        .description!
+                                                        .isNotEmpty) ...[
+                                                  const SizedBox(height: 4),
+                                                  FutureBuilder<String>(
+                                                    future: TranslationService()
+                                                        .translateForLanguage(
+                                                          subject.description!,
+                                                          widget.languageCode,
+                                                        ),
+                                                    builder: (
+                                                      context,
+                                                      snapshot,
+                                                    ) {
+                                                      return Text(
+                                                        snapshot.data ??
+                                                            subject
+                                                                .description!,
+                                                        style: TextStyle(
+                                                          color:
+                                                              Colors.grey[600],
+                                                          fontSize: 14,
+                                                        ),
+                                                        maxLines: 2,
+                                                        overflow:
+                                                            TextOverflow
+                                                                .ellipsis,
+                                                      );
+                                                    },
+                                                  ),
+                                                ],
                                               ],
-                                            ],
-                                          ),
-                                        ),
-                                        const SizedBox(width: 16),
-                                        Container(
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: 12,
-                                            vertical: 6,
-                                          ),
-                                          decoration: BoxDecoration(
-                                            color: pillarColor.withValues(
-                                              alpha: 0.1,
-                                            ),
-                                            borderRadius: BorderRadius.circular(
-                                              20,
                                             ),
                                           ),
-                                          child: Text(
-                                            '$cardCount ${context.t('cards_label')}',
-                                            style: TextStyle(
-                                              color: pillarColor,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 14,
+                                          const SizedBox(width: 16),
+                                          Container(
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 12,
+                                              vertical: 6,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              color: pillarColor.withValues(
+                                                alpha: 0.1,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                            ),
+                                            child: Text(
+                                              '$cardCount ${context.t('cards_label')}',
+                                              style: TextStyle(
+                                                color: pillarColor,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 14,
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                ),
-                              );
-                            },
-                          ),
-                ),
-              ],
+                                );
+                              },
+                            ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

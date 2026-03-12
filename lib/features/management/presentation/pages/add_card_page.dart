@@ -287,115 +287,120 @@ class _AddCardPageState extends State<AddCardPage> {
           ],
         ),
         body: SingleChildScrollView(
-          padding: const EdgeInsets.all(24),
           child: Center(
             child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 700),
-              child: Column(
-                children: [
-                  const SizedBox(height: 100),
-                  Form(
-                    key: _formKey,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        _buildSectionCaption(context.t('video')),
-                        const SizedBox(height: 8),
-                        TextFormField(
-                          controller: _videoUrlController,
-                          decoration: InputDecoration(
-                            labelText: context.t('video_url_optional'),
-                            border: const OutlineInputBorder(),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Column(
+                  children: [
+                    const SizedBox(height: 100),
+                    Form(
+                      key: _formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _buildSectionCaption(context.t('video')),
+                          const SizedBox(height: 8),
+                          TextFormField(
+                            controller: _videoUrlController,
+                            decoration: InputDecoration(
+                              labelText: context.t('video_url_optional'),
+                              border: const OutlineInputBorder(),
+                            ),
+                            enabled: !widget.isReadOnly,
                           ),
-                          enabled: !widget.isReadOnly,
-                        ),
-                        const SizedBox(height: 24),
-                        _buildImageSection(currentSessionColor),
-                        const SizedBox(height: 24),
-                        _buildSectionCaption(context.t('prompts_answers')),
-                        const SizedBox(height: 12),
-                        ..._promptControllers.keys
-                            .where(
-                              (lang) =>
-                                  _showAllLangs ||
-                                  lang == 'en' ||
-                                  _promptControllers[lang]!.text.isNotEmpty,
-                            )
-                            .map(
-                              (lang) => Padding(
-                                padding: const EdgeInsets.only(bottom: 16),
-                                child: Row(
-                                  children: [
-                                    Tooltip(
-                                      message: TranslationService()
-                                          .getLanguageName(lang),
-                                      child: SizedBox(
-                                        width: 40,
-                                        child: Text(
-                                          lang.toUpperCase(),
-                                          style: const TextStyle(
-                                            fontWeight: FontWeight.bold,
+                          const SizedBox(height: 24),
+                          _buildImageSection(currentSessionColor),
+                          const SizedBox(height: 24),
+                          _buildSectionCaption(context.t('prompts_answers')),
+                          const SizedBox(height: 12),
+                          ..._promptControllers.keys
+                              .where(
+                                (lang) =>
+                                    _showAllLangs ||
+                                    lang == 'en' ||
+                                    _promptControllers[lang]!.text.isNotEmpty,
+                              )
+                              .map(
+                                (lang) => Padding(
+                                  padding: const EdgeInsets.only(bottom: 16),
+                                  child: Row(
+                                    children: [
+                                      Tooltip(
+                                        message: TranslationService()
+                                            .getLanguageName(lang),
+                                        child: SizedBox(
+                                          width: 40,
+                                          child: Text(
+                                            lang.toUpperCase(),
+                                            style: const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    Expanded(
-                                      child: TextFormField(
-                                        controller: _promptControllers[lang],
-                                        decoration: InputDecoration(
-                                          labelText: context.t('prompt_label'),
+                                      Expanded(
+                                        child: TextFormField(
+                                          controller: _promptControllers[lang],
+                                          decoration: InputDecoration(
+                                            labelText: context.t(
+                                              'prompt_label',
+                                            ),
+                                          ),
+                                          enabled: !widget.isReadOnly,
                                         ),
-                                        enabled: !widget.isReadOnly,
                                       ),
-                                    ),
-                                    const SizedBox(width: 16),
-                                    Expanded(
-                                      child: TextFormField(
-                                        controller: _answerControllers[lang],
-                                        decoration: InputDecoration(
-                                          labelText: context.t('answer'),
+                                      const SizedBox(width: 16),
+                                      Expanded(
+                                        child: TextFormField(
+                                          controller: _answerControllers[lang],
+                                          decoration: InputDecoration(
+                                            labelText: context.t('answer'),
+                                          ),
+                                          enabled: !widget.isReadOnly,
                                         ),
-                                        enabled: !widget.isReadOnly,
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
+                          TextButton(
+                            onPressed:
+                                () => setState(
+                                  () => _showAllLangs = !_showAllLangs,
+                                ),
+                            child: Text(
+                              _showAllLangs
+                                  ? context.t('show_less_languages')
+                                  : context.t('show_all_languages'),
                             ),
-                        TextButton(
-                          onPressed:
-                              () => setState(
-                                () => _showAllLangs = !_showAllLangs,
+                          ),
+                          const SizedBox(height: 32),
+                          if (!widget.isReadOnly)
+                            ElevatedButton(
+                              onPressed: _isSaving ? null : _save,
+                              style: ElevatedButton.styleFrom(
+                                minimumSize: const Size(double.infinity, 60),
+                                backgroundColor: currentSessionColor,
+                                foregroundColor: Colors.white,
                               ),
-                          child: Text(
-                            _showAllLangs
-                                ? context.t('show_less_languages')
-                                : context.t('show_all_languages'),
-                          ),
-                        ),
-                        const SizedBox(height: 32),
-                        if (!widget.isReadOnly)
-                          ElevatedButton(
-                            onPressed: _isSaving ? null : _save,
-                            style: ElevatedButton.styleFrom(
-                              minimumSize: const Size(double.infinity, 60),
-                              backgroundColor: currentSessionColor,
-                              foregroundColor: Colors.white,
+                              child:
+                                  _isSaving
+                                      ? const CircularProgressIndicator(
+                                        color: Colors.white,
+                                      )
+                                      : Text(
+                                        context.t('save_card'),
+                                        style: const TextStyle(fontSize: 18),
+                                      ),
                             ),
-                            child:
-                                _isSaving
-                                    ? const CircularProgressIndicator(
-                                      color: Colors.white,
-                                    )
-                                    : Text(
-                                      context.t('save_card'),
-                                      style: const TextStyle(fontSize: 18),
-                                    ),
-                          ),
-                      ],
+                          const SizedBox(height: 48),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

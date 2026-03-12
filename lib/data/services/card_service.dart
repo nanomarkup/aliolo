@@ -361,6 +361,24 @@ class CardService {
     }
   }
 
+  Future<void> saveSubject(SubjectModel subject) async {
+    try {
+      await _supabase.from('subjects').upsert({
+        'id': subject.id.isEmpty ? generateId() : subject.id,
+        'name': subject.name,
+        'pillar_id': subject.pillarId,
+        'description': subject.description,
+        'owner_id': subject.ownerId,
+        'is_public': subject.isPublic,
+        'updated_at': DateTime.now().toIso8601String(),
+        'created_at': subject.createdAt.toIso8601String(),
+      });
+    } catch (e) {
+      print('Error saving subject: $e');
+      rethrow;
+    }
+  }
+
   Future<void> deleteSubjectById(String subjectId) async {
     try {
       await _supabase.from('subjects').delete().eq('id', subjectId);
