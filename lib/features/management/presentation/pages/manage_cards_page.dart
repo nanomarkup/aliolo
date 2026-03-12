@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:aliolo/core/widgets/floating_app_bar.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:aliolo/core/di/service_locator.dart';
@@ -331,19 +332,14 @@ class _ManageCardsPageState extends State<ManageCardsPage> {
       builder: (context, _) {
         return ResizeWrapper(
           child: Scaffold(
-            appBar: AppBar(
-              title: DragToMoveArea(
-                child: SizedBox(
-                  width: double.infinity,
-                  child: Text(
-                    context.t('manage_subjects'),
-                    style: const TextStyle(color: appBarColor),
-                  ),
-                ),
+            extendBodyBehindAppBar: true,
+            appBar: AlioloAppBar(
+              title: Text(
+                context.t('manage_subjects'),
+                style: const TextStyle(color: appBarColor),
               ),
               backgroundColor: currentSessionColor,
               foregroundColor: appBarColor,
-              automaticallyImplyLeading: false,
               actions: [
                 IconButton(
                   icon: const Icon(Icons.school, color: appBarColor),
@@ -393,7 +389,6 @@ class _ManageCardsPageState extends State<ManageCardsPage> {
                         ),
                       ),
                 ),
-                const WindowControls(color: appBarColor, iconSize: 24),
               ],
             ),
             body: Center(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:aliolo/core/widgets/floating_app_bar.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:aliolo/core/di/service_locator.dart';
@@ -135,56 +136,40 @@ class _SubjectPageState extends State<SubjectPage> {
       builder: (context, _) {
         return ResizeWrapper(
           child: Scaffold(
-            appBar: AppBar(
-              title: DragToMoveArea(
-                child: SizedBox(
-                  width: double.infinity,
-                  child: Row(
-                    children: [
-                      DropdownButton<String>(
-                        value: _currentLearningLang.toLowerCase(),
-                        dropdownColor: currentSessionColor,
-                        style: const TextStyle(
-                          color: appBarColor,
-                          fontSize: 22,
-                        ),
-                        underline: const SizedBox(),
-                        icon: const Icon(
-                          Icons.arrow_drop_down,
-                          color: appBarColor,
-                        ),
-                        items:
-                            activeLangs
-                                .map(
-                                  (l) => DropdownMenuItem(
-                                    value: l.toLowerCase(),
-                                    child: Text(
-                                      getIt<LearningLanguageService>()
-                                          .getLanguageName(l),
-                                    ),
-                                  ),
-                                )
-                                .toList(),
-                        onChanged: (val) async {
-                          if (val != null) {
-                            setState(
-                              () => _currentLearningLang = val.toLowerCase(),
-                            );
-                            final prefs = await SharedPreferences.getInstance();
-                            await prefs.setString(
-                              'last_learning_lang',
-                              val.toLowerCase(),
-                            );
-                          }
-                        },
-                      ),
-                    ],
-                  ),
-                ),
+            extendBodyBehindAppBar: true,
+            appBar: AlioloAppBar(
+              title: DropdownButton<String>(
+                value: _currentLearningLang.toLowerCase(),
+                dropdownColor: currentSessionColor,
+                style: const TextStyle(color: appBarColor, fontSize: 22),
+                underline: const SizedBox(),
+                icon: const Icon(Icons.arrow_drop_down, color: appBarColor),
+                items:
+                    activeLangs
+                        .map(
+                          (l) => DropdownMenuItem(
+                            value: l.toLowerCase(),
+                            child: Text(
+                              getIt<LearningLanguageService>().getLanguageName(
+                                l,
+                              ),
+                            ),
+                          ),
+                        )
+                        .toList(),
+                onChanged: (val) async {
+                  if (val != null) {
+                    setState(() => _currentLearningLang = val.toLowerCase());
+                    final prefs = await SharedPreferences.getInstance();
+                    await prefs.setString(
+                      'last_learning_lang',
+                      val.toLowerCase(),
+                    );
+                  }
+                },
               ),
               backgroundColor: currentSessionColor,
               foregroundColor: appBarColor,
-              automaticallyImplyLeading: false,
               actions: [
                 IconButton(
                   icon: const Icon(Icons.school, color: appBarColor),
@@ -237,7 +222,6 @@ class _SubjectPageState extends State<SubjectPage> {
                         ),
                       ),
                 ),
-                const WindowControls(color: appBarColor, iconSize: 24),
               ],
             ),
             body:

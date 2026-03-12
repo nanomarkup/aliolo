@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:aliolo/core/widgets/floating_app_bar.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:aliolo/data/models/user_model.dart';
 import 'package:aliolo/data/services/auth_service.dart';
@@ -56,19 +57,14 @@ class _UserManagementPageState extends State<UserManagementPage> {
       builder: (context, _) {
         return ResizeWrapper(
           child: Scaffold(
-            appBar: AppBar(
-              title: DragToMoveArea(
-                child: SizedBox(
-                  width: double.infinity,
-                  child: Text(
-                    context.t('manage_users'),
-                    style: const TextStyle(color: appBarColor),
-                  ),
-                ),
+            extendBodyBehindAppBar: true,
+            appBar: AlioloAppBar(
+              title: Text(
+                context.t('manage_users'),
+                style: const TextStyle(color: appBarColor),
               ),
               backgroundColor: currentSessionColor,
               foregroundColor: appBarColor,
-              automaticallyImplyLeading: false,
               actions: [
                 IconButton(
                   icon: const Icon(Icons.school, color: appBarColor),
@@ -92,7 +88,10 @@ class _UserManagementPageState extends State<UserManagementPage> {
                       ),
                 ),
                 IconButton(
-                  icon: const Icon(Icons.style, color: appBarColor),
+                  icon: const Icon(
+                    Icons.collections_bookmark,
+                    color: appBarColor,
+                  ),
                   onPressed:
                       () => Navigator.push(
                         context,
@@ -121,7 +120,6 @@ class _UserManagementPageState extends State<UserManagementPage> {
                         ),
                       ),
                 ),
-                const WindowControls(color: appBarColor, iconSize: 24),
               ],
             ),
             body:

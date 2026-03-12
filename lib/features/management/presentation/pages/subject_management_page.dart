@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:aliolo/core/widgets/floating_app_bar.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/data/models/subject_model.dart';
@@ -93,19 +94,14 @@ class _SubjectManagementPageState extends State<SubjectManagementPage> {
 
     return ResizeWrapper(
       child: Scaffold(
-        appBar: AppBar(
-          title: DragToMoveArea(
-            child: SizedBox(
-              width: double.infinity,
-              child: Text(
-                context.t('manage_subjects'),
-                style: const TextStyle(color: appBarColor),
-              ),
-            ),
+        extendBodyBehindAppBar: true,
+        appBar: AlioloAppBar(
+          title: Text(
+            context.t('manage_subjects'),
+            style: const TextStyle(color: appBarColor),
           ),
           backgroundColor: currentSessionColor,
           foregroundColor: appBarColor,
-          automaticallyImplyLeading: false,
           actions: [
             IconButton(
               icon: const Icon(Icons.school, color: appBarColor),
@@ -133,7 +129,7 @@ class _SubjectManagementPageState extends State<SubjectManagementPage> {
                   ),
             ),
             IconButton(
-              icon: const Icon(Icons.style, color: appBarColor),
+              icon: const Icon(Icons.collections_bookmark, color: appBarColor),
               onPressed:
                   () => Navigator.push(
                     context,
@@ -162,7 +158,6 @@ class _SubjectManagementPageState extends State<SubjectManagementPage> {
                     ),
                   ),
             ),
-            const WindowControls(color: appBarColor, iconSize: 24),
           ],
         ),
         body: Column(

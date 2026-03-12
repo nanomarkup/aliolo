@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:window_manager/window_manager.dart';
+import 'package:aliolo/core/widgets/floating_app_bar.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/card_service.dart';
@@ -174,19 +175,14 @@ class _SettingsPageState extends State<SettingsPage> {
       builder: (context, _) {
         return ResizeWrapper(
           child: Scaffold(
-            appBar: AppBar(
-              title: DragToMoveArea(
-                child: SizedBox(
-                  width: double.infinity,
-                  child: Text(
-                    context.t('settings'),
-                    style: const TextStyle(color: appBarColor),
-                  ),
-                ),
+            extendBodyBehindAppBar: true,
+            appBar: AlioloAppBar(
+              title: Text(
+                context.t('settings'),
+                style: const TextStyle(color: appBarColor),
               ),
               backgroundColor: currentSessionColor,
               foregroundColor: appBarColor,
-              automaticallyImplyLeading: false,
               actions: [
                 IconButton(
                   icon: const Icon(Icons.school, color: appBarColor),
@@ -236,7 +232,6 @@ class _SettingsPageState extends State<SettingsPage> {
                   icon: const Icon(Icons.settings, color: appBarColor),
                   onPressed: () => setState(() {}),
                 ),
-                const WindowControls(color: appBarColor, iconSize: 24),
               ],
             ),
             body: Center(

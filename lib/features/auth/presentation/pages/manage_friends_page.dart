@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:aliolo/core/widgets/floating_app_bar.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:aliolo/data/services/friendship_service.dart';
 import 'package:aliolo/data/services/auth_service.dart';
@@ -140,19 +141,14 @@ class _ManageFriendsPageState extends State<ManageFriendsPage> {
 
     return ResizeWrapper(
       child: Scaffold(
-        appBar: AppBar(
-          title: DragToMoveArea(
-            child: SizedBox(
-              width: double.infinity,
-              child: Text(
-                context.t('manage_friends'),
-                style: const TextStyle(color: appBarColor),
-              ),
-            ),
+        extendBodyBehindAppBar: true,
+        appBar: AlioloAppBar(
+          title: Text(
+            context.t('manage_friends'),
+            style: const TextStyle(color: appBarColor),
           ),
           backgroundColor: currentSessionColor,
           foregroundColor: appBarColor,
-          automaticallyImplyLeading: false,
           actions: [
             IconButton(
               icon: const Icon(Icons.arrow_back, color: appBarColor),
@@ -162,7 +158,6 @@ class _ManageFriendsPageState extends State<ManageFriendsPage> {
               icon: const Icon(Icons.person_add, color: appBarColor),
               onPressed: _showAddFriendDialog,
             ),
-            const WindowControls(color: appBarColor, iconSize: 24),
           ],
         ),
         body:
