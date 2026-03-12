@@ -127,7 +127,7 @@ class _UserManagementPageState extends State<UserManagementPage> {
                     ? const Center(child: CircularProgressIndicator())
                     : Center(
                       child: ConstrainedBox(
-                        constraints: const BoxConstraints(maxWidth: 740),
+                        constraints: const BoxConstraints(maxWidth: 640),
                         child: Column(
                           children: [
                             const SizedBox(height: 100),
