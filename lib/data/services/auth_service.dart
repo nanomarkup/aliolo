@@ -33,6 +33,7 @@ class AuthService extends ChangeNotifier {
   }
 
   Future<void> _fetchAndSyncUser(User remoteUser) async {
+    if (_supabase == null) return;
     try {
       final remoteData =
           await _supabase!
@@ -72,6 +73,10 @@ class AuthService extends ChangeNotifier {
     String password,
   ) async {
     _lastErrorMessage = null;
+    if (_supabase == null) {
+      _lastErrorMessage = "Supabase not initialized";
+      return;
+    }
     final cleanEmail = email.trim().toLowerCase();
     try {
       final res = await _supabase!.auth.signUp(
@@ -93,6 +98,10 @@ class AuthService extends ChangeNotifier {
 
   Future<bool> login(String identifier, String password) async {
     _lastErrorMessage = null;
+    if (_supabase == null) {
+      _lastErrorMessage = "Supabase not initialized";
+      return false;
+    }
     final String email = identifier.trim().toLowerCase();
     try {
       final res = await _supabase!.auth.signInWithPassword(
@@ -120,6 +129,7 @@ class AuthService extends ChangeNotifier {
   }
 
   Future<void> updateUser(UserModel user) async {
+    if (_supabase == null) return;
     _currentUser = user;
     user.updatedAt = DateTime.now();
     try {
@@ -131,7 +141,7 @@ class AuthService extends ChangeNotifier {
   }
 
   Future<void> updateMainColor(String hexColor) async {
-    if (_currentUser == null) return;
+    if (_currentUser == null || _currentUser!.serverId == null || _supabase == null) return;
     try {
       await _supabase!.from('profiles').update({'main_color': hexColor}).eq(
         'id',
