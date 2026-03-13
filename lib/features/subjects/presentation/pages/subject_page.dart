@@ -538,7 +538,7 @@ class _SubjectPageState extends State<SubjectPage> {
                                       fontWeight: FontWeight.w500,
                                       height: 1.3,
                                     ),
-                                    maxLines: 2,
+                                    maxLines: 3,
                                     overflow: TextOverflow.ellipsis,
                                   ),
                                   const Spacer(),
