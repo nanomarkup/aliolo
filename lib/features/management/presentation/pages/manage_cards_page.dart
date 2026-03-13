@@ -95,7 +95,7 @@ class _ManageCardsPageState extends State<ManageCardsPage> {
 
   @override
   Widget build(BuildContext context) {
-    const currentSessionColor = ThemeService.mainColor;
+    final currentSessionColor = ThemeService().primaryColor;
     const appBarColor = Colors.white;
     final uiLang = TranslationService().currentLocale.languageCode;
 
@@ -194,7 +194,7 @@ class _ManageCardsPageState extends State<ManageCardsPage> {
                               ),
                               const SizedBox(width: 12),
                               IconButton(
-                                icon: const Icon(
+                                icon: Icon(
                                   Icons.add_circle,
                                   color: currentSessionColor,
                                   size: 40,
@@ -328,7 +328,7 @@ class _ManageCardsPageState extends State<ManageCardsPage> {
 
   Widget _buildFilterChip(String value, String label) {
     final isSelected = _filter == value;
-    final color = ThemeService.mainColor;
+    final color = ThemeService().primaryColor;
 
     return ChoiceChip(
       label: Text(label),

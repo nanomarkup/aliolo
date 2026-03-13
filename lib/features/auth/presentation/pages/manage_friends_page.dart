@@ -136,7 +136,7 @@ class _ManageFriendsPageState extends State<ManageFriendsPage> {
 
   @override
   Widget build(BuildContext context) {
-    const currentSessionColor = ThemeService.mainColor;
+    final currentSessionColor = ThemeService().primaryColor;
     const appBarColor = Colors.white;
 
     return AlioloScrollablePage(

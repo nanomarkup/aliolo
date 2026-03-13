@@ -105,7 +105,7 @@ class _LeaderboardPageState extends State<LeaderboardPage>
 
   @override
   Widget build(BuildContext context) {
-    const Color currentSessionColor = ThemeService.mainColor;
+    final currentSessionColor = ThemeService().primaryColor;
     const appBarColor = Colors.white;
 
     return ListenableBuilder(
@@ -278,7 +278,7 @@ class _LeaderboardPageState extends State<LeaderboardPage>
             borderRadius: BorderRadius.circular(12),
             side:
                 isMe
-                    ? const BorderSide(color: ThemeService.mainColor, width: 2)
+                    ? BorderSide(color: ThemeService().primaryColor, width: 2)
                     : BorderSide.none,
           ),
           child: ListTile(
@@ -292,7 +292,7 @@ class _LeaderboardPageState extends State<LeaderboardPage>
                     style: TextStyle(
                       fontWeight:
                           rank < 3 ? FontWeight.bold : FontWeight.normal,
-                      color: rank < 3 ? ThemeService.mainColor : Colors.grey,
+                      color: rank < 3 ? ThemeService().primaryColor : Colors.grey,
                     ),
                   ),
                 ),

@@ -249,6 +249,9 @@ base_en = {
     "subject_plural": "Subjects",
     "card_plural": "Cards",
     "day_plural": "Days"
+,
+    "theme_color": "App Theme Color",
+    "theme_color_desc": "Customize the primary color used for buttons and highlights."
 }
 
 # Key translations for Spanish (es)
@@ -2599,6 +2602,9 @@ ko = {
     "subject_plural": "Предмети",
     "card_plural": "Картки",
     "day_plural": "Дні"
+,
+    "theme_color": "Колір теми",
+    "theme_color_desc": "Налаштуйте основний колір для кнопок та елементів інтерфейсу."
 }
 # Helper to merge with English for missing keys
 def write_lang(code, data):

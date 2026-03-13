@@ -115,7 +115,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     min: min.toDouble(),
                     max: max.toDouble(),
                     divisions: max - min,
-                    activeColor: ThemeService.mainColor,
+                    activeColor: ThemeService().primaryColor,
                     onChanged:
                         (val) => setDialogState(() => tempValue = val.round()),
                   ),
@@ -144,7 +144,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     const appBarColor = Colors.white;
-    const currentSessionColor = ThemeService.mainColor;
+    final currentSessionColor = ThemeService().primaryColor;
 
     return ListenableBuilder(
       listenable: Listenable.merge([TranslationService(), _authService]),

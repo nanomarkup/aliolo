@@ -38,7 +38,7 @@ class _SubjectPageState extends State<SubjectPage> {
   @override
   void initState() {
     super.initState();
-    ThemeService().setSessionColor(ThemeService.mainColor);
+    ThemeService().setSessionColor(ThemeService().primaryColor);
     if (!kIsWeb) {
       windowManager.setResizable(true);
     }
@@ -474,7 +474,7 @@ class _SubjectPageState extends State<SubjectPage> {
                                 ),
                           ),
                         ).then((_) {
-                          ThemeService().setSessionColor(ThemeService.mainColor);
+                          ThemeService().setSessionColor(ThemeService().primaryColor);
                         });
                       },
                       borderRadius: BorderRadius.circular(24),

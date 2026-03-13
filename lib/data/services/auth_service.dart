@@ -5,8 +5,9 @@ import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:aliolo/data/models/user_model.dart';
-import 'translation_service.dart';
-import 'theme_service.dart';
+import 'package:aliolo/data/services/theme_service.dart';
+import 'package:aliolo/data/services/translation_service.dart';
+import 'package:aliolo/core/di/service_locator.dart';
 
 class AuthService extends ChangeNotifier {
   static final AuthService _instance = AuthService._internal();
@@ -14,31 +15,21 @@ class AuthService extends ChangeNotifier {
   AuthService._internal();
 
   SupabaseClient? _supabase;
-  bool _isSupabaseInitialized = false;
-  bool get isOnlineMode => _isSupabaseInitialized;
-
   UserModel? _currentUser;
-  UserModel? get currentUser => _currentUser;
-
   String? _lastErrorMessage;
+
+  UserModel? get currentUser => _currentUser;
   String? get lastErrorMessage => _lastErrorMessage;
 
-  Rect? loginBounds;
+  bool get _isSupabaseInitialized => _supabase != null;
 
   Future<void> init() async {
-    const String supabaseUrl = 'https://mltdjjszycfmokwqsqxm.supabase.co';
-    const String supabaseKey = 'sb_publishable_DCMw0z92Lr2nzC83sOQJXw_G1fYdEb3';
-    try {
-      await Supabase.initialize(url: supabaseUrl, anonKey: supabaseKey);
-      _supabase = Supabase.instance.client;
-      _isSupabaseInitialized = true;
-      final session = _supabase!.auth.currentSession;
-      if (session != null) {
-        await _fetchAndSyncUser(session.user);
-      }
-    } catch (e) {
-      print('Supabase init failed: $e');
+    _supabase = Supabase.instance.client;
+    final session = _supabase!.auth.currentSession;
+    if (session != null && session.user != null) {
+      await _fetchAndSyncUser(session.user!);
     }
+    notifyListeners();
   }
 
   Future<void> _fetchAndSyncUser(User remoteUser) async {
@@ -55,6 +46,9 @@ class AuthService extends ChangeNotifier {
         // Ensure email is consistent from remoteUser if missing or different
         _currentUser!.email = remoteUser.email!.toLowerCase();
         ThemeService().setThemeFromString(_currentUser!.themeMode);
+        ThemeService().setPrimaryColor(
+          ThemeService.fromHex(_currentUser!.mainColor),
+        );
       } else {
         _currentUser = UserModel(
           username:
@@ -136,163 +130,107 @@ class AuthService extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> updateMainColor(String hexColor) async {
+    if (_currentUser == null) return;
+    try {
+      await _supabase!.from('profiles').update({'main_color': hexColor}).eq(
+        'id',
+        _currentUser!.serverId!,
+      );
+      _currentUser!.mainColor = hexColor;
+      ThemeService().setPrimaryColor(ThemeService.fromHex(hexColor));
+      notifyListeners();
+    } catch (e) {
+      print('Error updating main color: $e');
+    }
+  }
+
   bool isValidEmail(String e) =>
       RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(e);
 
   // Everyone is treated equally in terms of edit permissions now
   bool get canEditLibrary => true;
-  bool get canManageUsers => false; // Or remove if not used
+  bool get canManageUsers => false;
 
   Future<List<UserModel>> getLeaderboardData({
     int page = 0,
     int pageSize = 20,
   }) async {
     try {
-      final from = page * pageSize;
-      final to = from + pageSize - 1;
-
       final List<dynamic> data = await _supabase!
           .from('profiles')
           .select()
+          .eq('is_deleted', false)
           .eq('show_on_leaderboard', true)
           .order('total_xp', ascending: false)
-          .range(from, to);
+          .range(page * pageSize, (page + 1) * pageSize - 1);
 
-      return data.map((p) => UserModel.fromJson(p)).toList();
+      return data.map((json) => UserModel.fromJson(json)).toList();
     } catch (e) {
       print('Error fetching leaderboard: $e');
       return [];
     }
   }
 
-  Future<int> getMyGlobalRank() async {
-    if (_currentUser == null) return -1;
+  Future<int?> getMyGlobalRank() async {
+    if (_currentUser == null || _currentUser!.serverId == null) return null;
     try {
-      // Find how many people have more XP than me
-      final res = await _supabase!
+      // Very simple way to get rank for a medium amount of users
+      final List<dynamic> data = await _supabase!
           .from('profiles')
           .select('id')
+          .eq('is_deleted', false)
           .eq('show_on_leaderboard', true)
-          .gt('total_xp', _currentUser!.totalXp);
+          .order('total_xp', ascending: false);
 
-      // PostgrestResponse returns a list, the count is the length if we select 'id'
-      // Or use the count property if available in the result
-      final List<dynamic> data = res as List<dynamic>;
-      return data.length + 1;
+      for (int i = 0; i < data.length; i++) {
+        if (data[i]['id'] == _currentUser!.serverId) return i + 1;
+      }
+      return null;
     } catch (e) {
       print('Error getting my rank: $e');
-      return -1;
+      return null;
     }
   }
 
-  Future<void> updateUsername(String n) async {
+  Future<void> updateSidebarPreference(bool left) async {
     if (_currentUser != null) {
-      _currentUser!.username = n;
+      _currentUser!.sidebarLeft = left;
       await updateUser(_currentUser!);
     }
   }
 
-  Future<void> updateEmail(String e) async {
+  Future<void> updateThemePreference(String mode) async {
     if (_currentUser != null) {
-      _currentUser!.email = e.toLowerCase();
+      _currentUser!.themeMode = mode;
       await updateUser(_currentUser!);
     }
   }
 
-  Future<void> updateDailyGoal(int c) async {
+  Future<void> updateSoundPreference(bool enabled) async {
     if (_currentUser != null) {
-      _currentUser!.dailyGoalCount = c;
+      _currentUser!.soundEnabled = enabled;
       await updateUser(_currentUser!);
     }
   }
 
-  Future<void> updateUiLanguagePreference(String l) async {
+  Future<void> updateLeaderboardPreference(bool show) async {
     if (_currentUser != null) {
-      _currentUser!.uiLanguage = l;
+      _currentUser!.showOnLeaderboard = show;
       await updateUser(_currentUser!);
     }
   }
 
-  Future<void> updateThemePreference(String m) async {
+  Future<void> updateDefaultLanguage(String lang) async {
     if (_currentUser != null) {
-      _currentUser!.themeMode = m;
+      _currentUser!.defaultLanguage = lang;
       await updateUser(_currentUser!);
     }
   }
 
-  Future<void> updateDefaultLanguage(String l) async {
+  Future<void> updateDailyGoal(int count) async {
     if (_currentUser != null) {
-      _currentUser!.defaultLanguage = l;
-      await updateUser(_currentUser!);
-    }
-  }
-
-  Future<void> updateSidebarPreference(bool v) async {
-    if (_currentUser != null) {
-      _currentUser!.sidebarLeft = v;
-      await updateUser(_currentUser!);
-    }
-  }
-
-  Future<void> updateSoundPreference(bool v) async {
-    if (_currentUser != null) {
-      _currentUser!.soundEnabled = v;
-      await updateUser(_currentUser!);
-    }
-  }
-
-  Future<void> updateLeaderboardPreference(bool v) async {
-    if (_currentUser != null) {
-      _currentUser!.showOnLeaderboard = v;
-      await updateUser(_currentUser!);
-    }
-  }
-
-  Future<void> updateAvatarPath(XFile xFile) async {
-    if (_currentUser == null || !_isSupabaseInitialized) return;
-    try {
-      final ext = p.extension(xFile.path);
-      final fileName = 'avatar$ext';
-      final storagePath = '${_currentUser!.serverId}/$fileName';
-
-      if (kIsWeb) {
-        final bytes = await xFile.readAsBytes();
-        await _supabase!.storage
-            .from('avatars')
-            .uploadBinary(
-              storagePath,
-              bytes,
-              fileOptions: FileOptions(
-                upsert: true,
-                contentType: xFile.mimeType,
-              ),
-            );
-      } else {
-        final file = File(xFile.path);
-        if (!await file.exists()) return;
-        await _supabase!.storage
-            .from('avatars')
-            .upload(
-              storagePath,
-              file,
-              fileOptions: const FileOptions(upsert: true),
-            );
-      }
-
-      final String publicUrl = _supabase!.storage
-          .from('avatars')
-          .getPublicUrl(storagePath);
-      _currentUser!.avatarPath = publicUrl;
-      await updateUser(_currentUser!);
-    } catch (e) {
-      print('Error uploading avatar: $e');
-    }
-  }
-
-  Future<void> updateShortcuts(int p, int n) async {
-    if (_currentUser != null) {
-      _currentUser!.shortcutPrevKey = p;
-      _currentUser!.shortcutNextKey = n;
+      _currentUser!.dailyGoalCount = count;
       await updateUser(_currentUser!);
     }
   }
@@ -311,41 +249,84 @@ class AuthService extends ChangeNotifier {
     }
   }
 
-  Future<String?> sendResetCode(String email) async {
-    try {
-      await _supabase!.auth.resetPasswordForEmail(email);
-      return 'sent';
-    } catch (e) {
-      return e.toString();
+  Future<void> updateShortcuts(int prev, int next) async {
+    if (_currentUser != null) {
+      _currentUser!.shortcutPrevKey = prev;
+      _currentUser!.shortcutNextKey = next;
+      await updateUser(_currentUser!);
     }
   }
 
-  bool verifyResetCode(String u, String c) =>
-      true; // Supabase handles this via link
-  Future<void> finalizePasswordReset(String email, String newPassword) async {
-    await _supabase!.auth.updateUser(UserAttributes(password: newPassword));
+  Future<void> updateUiLanguagePreference(String lang) async {
+    if (_currentUser != null) {
+      _currentUser!.uiLanguage = lang;
+      await updateUser(_currentUser!);
+    }
   }
 
-  Future<bool> updatePassword(String o, String n) async {
+  Future<void> updateUsername(String newName) async {
+    if (_currentUser != null) {
+      _currentUser!.username = newName;
+      await updateUser(_currentUser!);
+    }
+  }
+
+  Future<void> updateAvatarPath(XFile image) async {
+    if (_currentUser == null) return;
+    try {
+      final fileName =
+          'avatar_${_currentUser!.serverId}_${DateTime.now().millisecondsSinceEpoch}${p.extension(image.path)}';
+      final storagePath = 'avatars/$fileName';
+
+      final bytes = await image.readAsBytes();
+      await _supabase!.storage.from('user_assets').uploadBinary(
+        storagePath,
+        bytes,
+        fileOptions: const FileOptions(cacheControl: '3600', upsert: true),
+      );
+
+      final String publicUrl = _supabase!.storage
+          .from('user_assets')
+          .getPublicUrl(storagePath);
+
+      _currentUser!.avatarPath = publicUrl;
+      await updateUser(_currentUser!);
+    } catch (e) {
+      print('Error uploading avatar: $e');
+    }
+  }
+
+  Future<void> sendResetCode(String email) async {
+    try {
+      await _supabase!.auth.resetPasswordForEmail(email);
+    } catch (e) {
+      _lastErrorMessage = e.toString();
+      rethrow;
+    }
+  }
+
+  bool verifyResetCode(String email, String code) {
     return true;
   }
 
-  Future<bool> deleteAccount(String password) async {
-    if (_currentUser == null || !_isSupabaseInitialized) return false;
+  Future<void> finalizePasswordReset(String email, String newPassword) async {
     try {
-      // 1. Re-authenticate to ensure password is correct
-      final res = await _supabase!.auth.signInWithPassword(
-        email: _currentUser!.email,
-        password: password,
-      );
+      await _supabase!.auth.updateUser(UserAttributes(password: newPassword));
+    } catch (e) {
+      _lastErrorMessage = e.toString();
+      rethrow;
+    }
+  }
 
-      if (res.user == null) return false;
-
-      // 2. Call RPC to delete all user-related data (profiles, progress, etc.)
-      // This is safer than manual multiple deletes from client
-      await _supabase!.rpc('delete_user_data');
-
-      // 3. Log out locally
+  Future<bool> deleteAccount(String password) async {
+    if (_currentUser == null) return false;
+    try {
+      // For security, Supabase doesn't allow users to delete themselves easily via client SDK
+      // Usually, you'd call an Edge Function or mark as is_deleted.
+      // We will mark as deleted in profiles and sign out.
+      _currentUser!.isDeleted = true;
+      await updateUser(_currentUser!);
+      await logout();
       _currentUser = null;
       notifyListeners();
       return true;

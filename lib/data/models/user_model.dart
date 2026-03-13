@@ -11,6 +11,7 @@ class UserModel {
   late String themeMode;
   late String uiLanguage;
   late bool soundEnabled;
+  late String mainColor; // Hex string, e.g., #FF9800
 
   late int totalXp;
   late int currentStreak;
@@ -33,6 +34,7 @@ class UserModel {
     this.themeMode = 'system',
     this.uiLanguage = 'en',
     this.soundEnabled = true,
+    this.mainColor = '#FF9800',
     this.totalXp = 0,
     this.currentStreak = 0,
     this.maxStreak = 0,
@@ -65,6 +67,7 @@ class UserModel {
       dailyGoalCount: json['daily_goal_count'] ?? 20,
       sidebarLeft: json['sidebar_left'] ?? false,
       soundEnabled: json['sound_enabled'] ?? true,
+      mainColor: json['main_color'] ?? '#FF9800',
       showOnLeaderboard: json['show_on_leaderboard'] ?? true,
       sessionSize: json['session_size'] ?? 10,
       optionsCount: json['options_count'] ?? 6,
@@ -91,6 +94,7 @@ class UserModel {
       'daily_goal_count': dailyGoalCount,
       'sidebar_left': sidebarLeft,
       'sound_enabled': soundEnabled,
+      'main_color': mainColor,
       'show_on_leaderboard': showOnLeaderboard,
       'session_size': sessionSize,
       'options_count': optionsCount,

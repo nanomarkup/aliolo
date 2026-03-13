@@ -8,6 +8,8 @@ import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/data/services/learning_language_service.dart';
+import 'package:aliolo/core/di/service_locator.dart';
+import 'package:aliolo/data/models/pillar_model.dart';
 
 import 'package:aliolo/features/leaderboard/presentation/pages/leaderboard_page.dart';
 import 'package:aliolo/features/management/presentation/pages/manage_cards_page.dart';
@@ -23,7 +25,7 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  final _authService = AuthService();
+  final _authService = getIt<AuthService>();
   late bool _sidebarLeft;
   late String _themeMode;
   late bool _soundEnabled;
@@ -151,17 +153,18 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     const appBarColor = Colors.white;
-    const Color currentSessionColor = ThemeService.mainColor;
+    final currentSessionColor = ThemeService().primaryColor;
 
     return ListenableBuilder(
-      listenable: TranslationService(),
+      listenable: Listenable.merge([TranslationService(), ThemeService()]),
       builder: (context, _) {
+        final currentPrimaryColor = ThemeService().primaryColor;
         return AlioloScrollablePage(
           title: Text(
             context.t('settings'),
             style: const TextStyle(color: appBarColor),
           ),
-          appBarColor: currentSessionColor,
+          appBarColor: currentPrimaryColor,
           actions: [
             IconButton(
               icon: const Icon(Icons.school, color: appBarColor),
@@ -213,17 +216,59 @@ class _SettingsPageState extends State<SettingsPage> {
             children: [
               _buildSectionTitle(
                 context.t('general_preferences'),
-                currentSessionColor,
+                currentPrimaryColor,
               ),
               Card(
                 child: Column(
                   children: [
+                    ListTile(
+                      title: Text(context.t('theme_color')),
+                      subtitle: Text(context.t('theme_color_desc')),
+                      leading: Icon(Icons.palette, color: currentPrimaryColor),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                      child: Wrap(
+                        spacing: 12,
+                        runSpacing: 12,
+                        alignment: WrapAlignment.center,
+                        children: pillars.map((p) {
+                          final color = p.getColor();
+                          final isSelected = ThemeService.toHexStatic(color) == ThemeService.toHexStatic(ThemeService().primaryColor);
+                          
+                          return GestureDetector(
+                            onTap: () => _authService.updateMainColor(ThemeService.toHexStatic(color)),
+                            child: Container(
+                              width: 44,
+                              height: 44,
+                              decoration: BoxDecoration(
+                                color: color,
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: isSelected ? Colors.white : Colors.transparent,
+                                  width: 3,
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withValues(alpha: 0.2),
+                                    blurRadius: 4,
+                                    offset: const Offset(0, 2),
+                                  ),
+                                ],
+                              ),
+                              child: isSelected ? const Icon(Icons.check, color: Colors.white) : null,
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                    const Divider(height: 1),
                     SwitchListTile(
                       title: Text(context.t('sidebar_left')),
                       subtitle: Text(context.t('sidebar_left_desc')),
                       secondary: Icon(
                         Icons.vertical_split,
-                        color: currentSessionColor,
+                        color: currentPrimaryColor,
                       ),
                       value: _sidebarLeft,
                       onChanged: _toggleSidebar,
@@ -234,7 +279,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       subtitle: Text(context.t('sound_effects_desc')),
                       secondary: Icon(
                         Icons.volume_up,
-                        color: currentSessionColor,
+                        color: currentPrimaryColor,
                       ),
                       value: _soundEnabled,
                       onChanged: _toggleSound,
@@ -245,7 +290,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       subtitle: Text(context.t('public_profile_desc')),
                       secondary: Icon(
                         Icons.emoji_events,
-                        color: currentSessionColor,
+                        color: currentPrimaryColor,
                       ),
                       value: _showOnLeaderboard,
                       onChanged: _toggleLeaderboard,
@@ -255,7 +300,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       title: Text(context.t('ui_language')),
                       leading: Icon(
                         Icons.translate,
-                        color: currentSessionColor,
+                        color: currentPrimaryColor,
                       ),
                       trailing: SizedBox(
                         width: 150,
@@ -294,7 +339,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       subtitle: Text(
                         context.t('default_learning_language_desc'),
                       ),
-                      leading: Icon(Icons.language, color: currentSessionColor),
+                      leading: Icon(Icons.language, color: currentPrimaryColor),
                       trailing: SizedBox(
                         width: 150,
                         child: ListenableBuilder(
@@ -347,7 +392,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             children: [
                               Icon(
                                 Icons.brightness_medium,
-                                color: currentSessionColor,
+                                color: currentPrimaryColor,
                               ),
                               const SizedBox(width: 16),
                               Text(
@@ -366,8 +411,8 @@ class _SettingsPageState extends State<SettingsPage> {
                                   icon: const Icon(Icons.brightness_auto),
                                 ),
                                 ButtonSegment(
-                                  value: 'light',
                                   label: Text(context.t('light')),
+                                  value: 'light',
                                   icon: const Icon(Icons.light_mode),
                                 ),
                                 ButtonSegment(
@@ -391,7 +436,7 @@ class _SettingsPageState extends State<SettingsPage> {
               const SizedBox(height: 32),
               _buildSectionTitle(
                 context.t('keyboard_shortcuts'),
-                currentSessionColor,
+                currentPrimaryColor,
               ),
               Card(
                 child: Column(
@@ -401,7 +446,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       subtitle: Text(
                         "Ctrl + ${_getKeyName(context, _shortcutPrev)}",
                       ),
-                      leading: Icon(Icons.keyboard, color: currentSessionColor),
+                      leading: Icon(Icons.keyboard, color: currentPrimaryColor),
                       trailing: const Icon(Icons.edit, size: 18),
                       onTap: () => _listenForKey(true),
                     ),
@@ -411,7 +456,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       subtitle: Text(
                         "Ctrl + ${_getKeyName(context, _shortcutNext)}",
                       ),
-                      leading: Icon(Icons.keyboard, color: currentSessionColor),
+                      leading: Icon(Icons.keyboard, color: currentPrimaryColor),
                       trailing: const Icon(Icons.edit, size: 18),
                       onTap: () => _listenForKey(false),
                     ),
@@ -426,7 +471,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
-                      color: currentSessionColor.withValues(alpha: 0.8),
+                      color: currentPrimaryColor.withValues(alpha: 0.8),
                     ),
                   ),
                   const SizedBox(height: 4),

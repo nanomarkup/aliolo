@@ -181,7 +181,7 @@ class AlioloMainApp extends StatelessWidget {
           themeMode: currentMode,
           theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(
-              seedColor: Colors.orange,
+              seedColor: themeService.primaryColor,
               surface: Colors.white,
               surfaceContainerHighest: const Color(0xFFF5F7FA),
             ),
@@ -196,7 +196,7 @@ class AlioloMainApp extends StatelessWidget {
           ),
           darkTheme: ThemeData(
             colorScheme: ColorScheme.fromSeed(
-              seedColor: Colors.orange,
+              seedColor: themeService.primaryColor,
               brightness: Brightness.dark,
               surface: const Color(0xFF1A1C1E),
               surfaceContainerHighest: const Color(0xFF0F1113),

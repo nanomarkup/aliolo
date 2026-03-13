@@ -238,5 +238,7 @@
   "day_label": "День",
   "subject_plural": "Предмети",
   "card_plural": "Картки",
-  "day_plural": "Дні"
+  "day_plural": "Дні",
+  "theme_color": "Колір теми",
+  "theme_color_desc": "Налаштуйте основний колір для кнопок та елементів інтерфейсу."
 }

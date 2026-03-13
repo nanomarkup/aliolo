@@ -114,24 +114,25 @@ class _AboutPageState extends State<AboutPage> {
                 child: Column(
                   children: [
                     const SizedBox(height: 80),
-                    const Icon(
+                    Icon(
                       Icons.account_circle,
                       size: 80,
-                      color: ThemeService.mainColor,
+                      color: ThemeService().primaryColor,
                     ),
                     const SizedBox(height: 12),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        const Text(
+                        Text(
                           'Aliolo',
                           style: TextStyle(
                             fontSize: 32,
                             fontWeight: FontWeight.bold,
-                            color: ThemeService.mainColor,
+                            color: ThemeService().primaryColor,
                           ),
                         ),
+
                         const SizedBox(width: 12),
                         Padding(
                           padding: const EdgeInsets.only(top: 4.0),
