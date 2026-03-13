@@ -487,10 +487,21 @@ class _SubjectPageState extends State<SubjectPage> {
                                     },
                                   ),
                                   Text(
-                                    '$count ${context.t('subjects')}',
+                                    pillar.getTranslatedDescription(_currentLearningLang),
                                     style: const TextStyle(
                                       color: Colors.white70,
+                                      fontSize: 12,
+                                    ),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    '$count ${context.t('subjects')}',
+                                    style: const TextStyle(
+                                      color: Colors.white,
                                       fontSize: 14,
+                                      fontWeight: FontWeight.w500,
                                     ),
                                   ),
                                 ],
@@ -559,18 +570,32 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
     final pillarColor = widget.pillar.getColor();
 
     return AlioloScrollablePage(
-      title: FutureBuilder<String>(
-        future: TranslationService().translateForLanguage(
-          'pillar_${widget.pillar.name}',
-          widget.languageCode,
-        ),
-        builder: (context, snapshot) {
-          return Text(
-            snapshot.data ??
-                widget.pillar.getTranslatedName(widget.languageCode),
-            style: const TextStyle(color: appBarColor),
-          );
-        },
+      title: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          FutureBuilder<String>(
+            future: TranslationService().translateForLanguage(
+              'pillar_${widget.pillar.name}',
+              widget.languageCode,
+            ),
+            builder: (context, snapshot) {
+              return Text(
+                snapshot.data ??
+                    widget.pillar.getTranslatedName(widget.languageCode),
+                style: const TextStyle(color: appBarColor, fontSize: 20),
+              );
+            },
+          ),
+          Text(
+            widget.pillar.getTranslatedDescription(widget.languageCode),
+            style: const TextStyle(
+              color: Colors.white70,
+              fontSize: 12,
+              fontWeight: FontWeight.normal,
+            ),
+          ),
+        ],
       ),
       appBarColor: pillarColor,
       actions: [
