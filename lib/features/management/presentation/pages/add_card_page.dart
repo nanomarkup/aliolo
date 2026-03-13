@@ -228,9 +228,14 @@ class _AddCardPageState extends State<AddCardPage> {
     final currentSessionColor = pillar.getColor();
     const appBarColor = Colors.white;
 
+    String titleKey = 'add_card';
+    if (widget.existingCard != null) {
+      titleKey = widget.isReadOnly ? 'view_card' : 'edit_card';
+    }
+
     return AlioloScrollablePage(
       title: Text(
-        widget.existingCard == null ? context.t('add_card') : context.t('edit_card'),
+        context.t(titleKey),
         style: const TextStyle(color: appBarColor),
       ),
       appBarColor: currentSessionColor,

@@ -208,6 +208,7 @@ base_en = {
     "show_all_languages": "Show all languages",
     "show_less_languages": "Show less languages",
     "add_card": "Add Card",
+    "view_card": "View Card",
     "images": "Images",
     "video": "Video",
     "prompts_answers": "Prompts & Answers"
