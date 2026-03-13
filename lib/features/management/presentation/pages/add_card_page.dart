@@ -1,5 +1,7 @@
 import 'dart:io';
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart';
 import 'package:aliolo/core/widgets/aliolo_scrollable_page.dart';
 import 'package:aliolo/core/di/service_locator.dart';
@@ -102,6 +104,143 @@ class _AddCardPageState extends State<AddCardPage> {
       c.dispose();
     }
     super.dispose();
+  }
+
+  void _showJsonDialog() {
+    final allLangs = TranslationService().availableUILanguages;
+    final Map<String, String> schemaPrompts = {};
+    final Map<String, String> schemaAnswers = {};
+
+    for (var lang in allLangs) {
+      final code = lang.toLowerCase();
+      schemaPrompts[code] = _promptControllers[lang]?.text ?? '';
+      schemaAnswers[code] = _answerControllers[lang]?.text ?? '';
+    }
+
+    final Map<String, dynamic> data = {
+      'videoUrl': _videoUrlController.text,
+      'prompts': schemaPrompts,
+      'answers': schemaAnswers,
+    };
+
+    final encoder = const JsonEncoder.withIndent('  ');
+    final String jsonTemplate = encoder.convert(data);
+    final textController = TextEditingController(text: jsonTemplate);
+
+    showDialog(
+      context: context,
+      builder:
+          (context) => AlertDialog(
+            title: const Text('JSON Data'),
+            content: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 700, maxHeight: 500),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Expanded(
+                    child: TextField(
+                      controller: textController,
+                      maxLines: null,
+                      expands: true,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        contentPadding: EdgeInsets.all(12),
+                      ),
+                      style: const TextStyle(
+                        fontFamily: 'monospace',
+                        fontSize: 13,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            actionsPadding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 8,
+            ),
+            actions: [
+              Row(
+                children: [
+                  TextButton.icon(
+                    onPressed: () {
+                      Clipboard.setData(
+                        ClipboardData(text: textController.text),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Copied to clipboard')),
+                      );
+                    },
+                    icon: const Icon(Icons.copy, size: 18),
+                    label: const Text('COPY'),
+                  ),
+                  const SizedBox(width: 8),
+                  TextButton.icon(
+                    onPressed: () async {
+                      final data = await Clipboard.getData(Clipboard.kTextPlain);
+                      if (data?.text != null) {
+                        textController.text = data!.text!;
+                      }
+                    },
+                    icon: const Icon(Icons.paste, size: 18),
+                    label: const Text('PASTE'),
+                  ),
+                  const Spacer(),
+                  TextButton.icon(
+                    onPressed: () {
+                      try {
+                        final Map<String, dynamic> parsed = jsonDecode(
+                          textController.text,
+                        );
+                        setState(() {
+                          if (parsed['videoUrl'] != null) {
+                            _videoUrlController.text =
+                                parsed['videoUrl'].toString();
+                          }
+                          if (parsed['prompts'] is Map) {
+                            final p = parsed['prompts'] as Map;
+                            p.forEach((lang, val) {
+                              final l = lang.toString().toUpperCase();
+                              if (_promptControllers.containsKey(l)) {
+                                _promptControllers[l]!.text = val.toString();
+                              } else if (_promptControllers.containsKey(lang)) {
+                                _promptControllers[lang]!.text = val.toString();
+                              }
+                            });
+                          }
+                          if (parsed['answers'] is Map) {
+                            final a = parsed['answers'] as Map;
+                            a.forEach((lang, val) {
+                              final l = lang.toString().toUpperCase();
+                              if (_answerControllers.containsKey(l)) {
+                                _answerControllers[l]!.text = val.toString();
+                              } else if (_answerControllers.containsKey(lang)) {
+                                _answerControllers[lang]!.text = val.toString();
+                              }
+                            });
+                          }
+                        });
+                        Navigator.pop(context);
+                      } catch (e) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Invalid JSON: $e')),
+                        );
+                      }
+                    },
+                    icon: const Icon(Icons.refresh, size: 18),
+                    label: const Text('UPDATE'),
+                  ),
+                  const SizedBox(width: 8),
+                  TextButton.icon(
+                    onPressed: () => Navigator.pop(context),
+                    icon: const Icon(Icons.close, size: 18),
+                    label: Text(context.t('cancel').toUpperCase()),
+                  ),
+                ],
+              ),
+            ],
+          ),
+    );
   }
 
   Future<void> _pickImage({int? replaceIndex, bool? isExisting}) async {
@@ -243,6 +382,19 @@ class _AddCardPageState extends State<AddCardPage> {
         IconButton(
           icon: const Icon(Icons.arrow_back, color: appBarColor),
           onPressed: () => Navigator.pop(context),
+        ),
+        IconButton(
+          icon: const Text(
+            '{}',
+            style: TextStyle(
+              color: appBarColor,
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'monospace',
+            ),
+          ),
+          tooltip: 'JSON Data',
+          onPressed: _showJsonDialog,
         ),
         if (widget.existingCard != null && !widget.isReadOnly)
           IconButton(
