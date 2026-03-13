@@ -314,7 +314,6 @@ class _LeaderboardPageState extends State<LeaderboardPage>
         return Card(
           elevation: isMe ? 4 : 1,
           margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-          color: isMe ? ThemeService.mainColor.withValues(alpha: 0.1) : null,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
             side:

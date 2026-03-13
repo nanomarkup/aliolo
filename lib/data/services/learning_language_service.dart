@@ -65,7 +65,10 @@ class LearningLanguageService extends ChangeNotifier {
   late File _settingsFile;
 
   Future<void> init() async {
-    if (kIsWeb) return;
+    if (kIsWeb) {
+      // On web, we start with default but addActiveLanguages will work in-memory
+      return;
+    }
     final dir = await getApplicationDocumentsDirectory();
     final alioloDir = Directory(p.join(dir.path, '.aliolo'));
     if (!await alioloDir.exists()) await alioloDir.create(recursive: true);
@@ -95,6 +98,25 @@ class LearningLanguageService extends ChangeNotifier {
     }
     await _save();
     notifyListeners();
+  }
+
+  Future<void> setActiveLanguages(List<String> codes) async {
+    final cleanCodes = codes.map((c) => c.toLowerCase()).toSet().toList();
+    if (cleanCodes.isEmpty) return;
+
+    _activeLanguageCodes = cleanCodes;
+    await _save();
+    notifyListeners();
+  }
+
+  void addActiveLanguages(List<String> codes) {
+    final newSet = Set<String>.from(_activeLanguageCodes);
+    newSet.addAll(codes.map((c) => c.toLowerCase()));
+    if (newSet.length != _activeLanguageCodes.length) {
+      _activeLanguageCodes = newSet.toList();
+      _save();
+      notifyListeners();
+    }
   }
 
   Future<void> _save() async {

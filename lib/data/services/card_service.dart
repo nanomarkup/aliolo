@@ -35,7 +35,9 @@ class CardService {
       // 1. Always get ALL owned subjects
       final List<dynamic> ownedData = await _supabase
           .from('subjects')
-          .select('*, cards(id, is_deleted, prompts, answers)')
+          .select(
+            '*, profiles(username), cards(id, is_deleted, prompts, answers)',
+          )
           .eq('owner_id', user.serverId!);
 
       for (var json in ownedData) {
@@ -60,7 +62,9 @@ class CardService {
       if (addedIds.isNotEmpty) {
         final List<dynamic> addedData = await _supabase
             .from('subjects')
-            .select('*, cards(id, is_deleted, prompts, answers)')
+            .select(
+              '*, profiles(username), cards(id, is_deleted, prompts, answers)',
+            )
             .inFilter('id', addedIds);
 
         for (var json in addedData) {
@@ -118,13 +122,13 @@ class CardService {
         for (var p in profilesData) p['id'] as String: p['username'] as String,
       };
 
-      final results =
+      final List<SubjectModel> results =
           allSubjects.map((s) {
             return SubjectModel(
               id: s.id,
-              name: s.name,
+              names: s.names,
               pillarId: s.pillarId,
-              description: s.description,
+              descriptions: s.descriptions,
               ownerId: s.ownerId,
               ownerName: namesMap[s.ownerId],
               isPublic: s.isPublic,
@@ -306,57 +310,39 @@ class CardService {
   }
 
   Future<SubjectModel?> createSubject(
-    String name,
+    Map<String, String> names,
     int pillarId, {
-    String? description,
+    Map<String, String>? descriptions,
     bool isPublic = false,
   }) async {
     final user = _authService.currentUser;
-    AppLogger.log(
-      'DEBUG: createSubject called. user: ${user?.serverId}, name: $name, pillar: $pillarId',
-    );
     if (user == null || user.serverId == null) {
-      AppLogger.log('DEBUG: Aborting createSubject - user or serverId is null');
       return null;
     }
     try {
       final payload = {
-        'name': name,
+        'names': names,
         'pillar_id': pillarId,
-        'description': description,
+        'descriptions': descriptions ?? {},
         'owner_id': user.serverId,
         'is_public': isPublic,
       };
-      AppLogger.log('DEBUG: Sending insert payload: $payload');
 
       final List<dynamic> res =
           await _supabase.from('subjects').insert(payload).select();
-      AppLogger.log('DEBUG: createSubject DB success response: $res');
 
       if (res.isEmpty) {
-        AppLogger.log('DEBUG: Insert succeeded but returned no data.');
         return null;
       }
 
       final subject = SubjectModel.fromJson(res.first);
-      AppLogger.log(
-        'DEBUG: SubjectModel created from response ID: ${subject.id}',
-      );
 
       // Automatically add to user_subjects for dashboard visibility
       await addSubjectToDashboard(subject.id);
-      AppLogger.log(
-        'DEBUG: addSubjectToDashboard called for ID: ${subject.id}',
-      );
 
       return subject;
     } catch (e) {
-      AppLogger.log('DEBUG: FATAL Error creating subject: $e');
-      if (e is PostgrestException) {
-        AppLogger.log(
-          'DEBUG: Postgrest Details: ${e.message}, Code: ${e.code}, Hint: ${e.hint}',
-        );
-      }
+      print('Error creating subject: $e');
       return null;
     }
   }
@@ -365,9 +351,9 @@ class CardService {
     try {
       await _supabase.from('subjects').upsert({
         'id': subject.id.isEmpty ? generateId() : subject.id,
-        'name': subject.name,
+        'names': subject.names,
         'pillar_id': subject.pillarId,
-        'description': subject.description,
+        'descriptions': subject.descriptions,
         'owner_id': subject.ownerId,
         'is_public': subject.isPublic,
         'updated_at': DateTime.now().toIso8601String(),

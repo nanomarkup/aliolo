@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import 'package:aliolo/core/widgets/aliolo_page.dart';
+import 'package:aliolo/core/widgets/aliolo_scrollable_page.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:aliolo/core/di/service_locator.dart';
@@ -9,8 +9,6 @@ import 'package:aliolo/data/models/user_model.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
-import 'package:aliolo/core/widgets/window_controls.dart';
-import 'package:aliolo/core/widgets/resize_wrapper.dart';
 import 'package:aliolo/features/auth/presentation/pages/login_page.dart';
 import 'package:aliolo/features/subjects/presentation/pages/subject_page.dart';
 import 'package:aliolo/features/leaderboard/presentation/pages/leaderboard_page.dart';
@@ -158,7 +156,7 @@ class _ProfilePageState extends State<ProfilePage> {
           );
         }
 
-        return AlioloPage(
+        return AlioloScrollablePage(
           title: Text(
             context.t('profile'),
             style: const TextStyle(color: appBarColor),
@@ -211,78 +209,78 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
             ),
           ],
-          body: SingleChildScrollView(
-            child: Column(
-              children: [
-                _buildProfileHeader(user, currentSessionColor),
-                const SizedBox(height: 32),
-                _buildSectionTitle(
-                  context,
-                  context.t('social'),
-                  currentSessionColor,
+          body: Column(
+            children: [
+              const SizedBox(height: 24),
+              _buildProfileHeader(user, currentSessionColor),
+              const SizedBox(height: 32),
+              _buildSectionTitle(
+                context,
+                context.t('social'),
+                currentSessionColor,
+              ),
+              Card(
+                child: ListTile(
+                  leading: Icon(Icons.people, color: currentSessionColor),
+                  title: Text(context.t('manage_friends')),
+                  subtitle: Text(context.t('manage_friends_desc')),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap:
+                      () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ManageFriendsPage(),
+                        ),
+                      ),
                 ),
-                Card(
-                  child: ListTile(
-                    leading: Icon(Icons.people, color: currentSessionColor),
-                    title: Text(context.t('manage_friends')),
-                    subtitle: Text(context.t('manage_friends_desc')),
-                    trailing: const Icon(Icons.chevron_right),
-                    onTap:
-                        () => Navigator.push(
+              ),
+              const SizedBox(height: 32),
+              _buildSectionTitle(
+                context,
+                context.t('learning_section'),
+                currentSessionColor,
+              ),
+              _buildSettingsCard(context, currentSessionColor, user),
+              const SizedBox(height: 48),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton.icon(
+                    onPressed: () async {
+                      await _authService.logout();
+                      if (mounted) {
+                        Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const ManageFriendsPage(),
+                            builder: (context) => const LoginPage(),
                           ),
-                        ),
+                          (route) => false,
+                        );
+                      }
+                    },
+                    icon: const Icon(Icons.logout),
+                    label: Text(context.t('logout')),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.red[50],
+                      foregroundColor: Colors.red,
+                      minimumSize: const Size(160, 50),
+                    ),
                   ),
-                ),
-                const SizedBox(height: 32),
-                _buildSectionTitle(
-                  context,
-                  context.t('learning_section'),
-                  currentSessionColor,
-                ),
-                _buildSettingsCard(context, currentSessionColor, user),
-                const SizedBox(height: 48),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ElevatedButton.icon(
-                      onPressed: () async {
-                        await _authService.logout();
-                        if (mounted) {
-                          Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const LoginPage(),
-                            ),
-                            (route) => false,
-                          );
-                        }
-                      },
-                      icon: const Icon(Icons.logout),
-                      label: Text(context.t('logout')),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.red[50],
-                        foregroundColor: Colors.red,
-                        minimumSize: const Size(160, 50),
-                      ),
+                  const SizedBox(width: 16),
+                  OutlinedButton.icon(
+                    onPressed: _showDeleteAccountDialog,
+                    icon: const Icon(Icons.delete_forever),
+                    label: Text(context.t('delete_account')),
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: Colors.red,
+                      side: const BorderSide(color: Colors.red),
+                      minimumSize: const Size(160, 50),
                     ),
-                    const SizedBox(width: 16),
-                    OutlinedButton.icon(
-                      onPressed: _showDeleteAccountDialog,
-                      icon: const Icon(Icons.delete_forever),
-                      label: Text(context.t('delete_account')),
-                      style: OutlinedButton.styleFrom(
-                        foregroundColor: Colors.red,
-                        side: const BorderSide(color: Colors.red),
-                        minimumSize: const Size(160, 50),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 48),
+            ],
           ),
         );
       },

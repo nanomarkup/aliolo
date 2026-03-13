@@ -3,7 +3,6 @@ import 'package:aliolo/data/services/card_service.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
-import 'package:aliolo/data/services/subject_service.dart';
 import 'package:aliolo/data/services/learning_language_service.dart';
 import 'package:aliolo/data/services/sound_service.dart';
 import 'package:aliolo/data/services/math_service.dart';
@@ -48,7 +47,6 @@ Future<void> setupLocator() async {
 
     // 3. Register remaining services
     getIt.registerLazySingleton<ThemeService>(() => ThemeService());
-    getIt.registerLazySingleton<SubjectService>(() => SubjectService());
     getIt.registerLazySingleton<MathService>(() => MathService());
     getIt.registerLazySingleton<ProgressService>(() => ProgressService());
 

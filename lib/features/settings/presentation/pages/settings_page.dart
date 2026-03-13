@@ -1,21 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/foundation.dart';
 import 'package:aliolo/core/widgets/aliolo_scrollable_page.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:aliolo/data/services/auth_service.dart';
-import 'package:aliolo/data/services/card_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/data/services/learning_language_service.dart';
-import 'package:aliolo/core/widgets/window_controls.dart';
-import 'package:aliolo/core/widgets/resize_wrapper.dart';
 
-import 'package:aliolo/features/settings/presentation/pages/about_page.dart';
 import 'package:aliolo/features/leaderboard/presentation/pages/leaderboard_page.dart';
 import 'package:aliolo/features/management/presentation/pages/manage_cards_page.dart';
 import 'package:aliolo/features/auth/presentation/pages/profile_page.dart';
-import 'package:aliolo/features/management/presentation/pages/user_management_page.dart';
 
 import 'package:aliolo/features/subjects/presentation/pages/subject_page.dart';
 
@@ -28,7 +24,6 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
   final _authService = AuthService();
-  final _cardService = CardService();
   late bool _sidebarLeft;
   late String _themeMode;
   late bool _soundEnabled;
@@ -36,14 +31,15 @@ class _SettingsPageState extends State<SettingsPage> {
   late int _shortcutPrev;
   late int _shortcutNext;
   late String _defaultLanguage;
-  List<String> _availableLanguages = ['EN'];
 
   String _version = '1.0.0';
 
   @override
   void initState() {
     super.initState();
-    windowManager.setResizable(true);
+    if (!kIsWeb) {
+      windowManager.setResizable(true);
+    }
     final user = _authService.currentUser;
     _sidebarLeft = user?.sidebarLeft ?? false;
     _themeMode = user?.themeMode ?? 'system';
@@ -53,19 +49,6 @@ class _SettingsPageState extends State<SettingsPage> {
     _shortcutNext = user?.shortcutNextKey ?? 0x0000000042a;
     _defaultLanguage = user?.defaultLanguage ?? 'EN';
     _loadPackageInfo();
-    _loadLanguages();
-  }
-
-  Future<void> _loadLanguages() async {
-    final langs = await _cardService.getAvailableLanguages();
-    if (mounted) {
-      setState(() {
-        _availableLanguages = langs;
-        if (!_availableLanguages.contains(_defaultLanguage)) {
-          _defaultLanguage = 'EN';
-        }
-      });
-    }
   }
 
   Future<void> _loadPackageInfo() async {
@@ -317,17 +300,15 @@ class _SettingsPageState extends State<SettingsPage> {
                         child: ListenableBuilder(
                           listenable: LearningLanguageService(),
                           builder: (context, _) {
+                            final langService = LearningLanguageService();
                             final rawActiveLangs =
-                                LearningLanguageService().activeLanguageCodes
+                                langService.activeLanguageCodes
                                     .map((c) => c.toLowerCase())
                                     .toSet();
-                            if (!rawActiveLangs.contains(
-                              _defaultLanguage.toLowerCase(),
-                            )) {
-                              rawActiveLangs.add(
-                                _defaultLanguage.toLowerCase(),
-                              );
-                            }
+
+                            // Ensure current default is always in the list even if not in active (safety)
+                            rawActiveLangs.add(_defaultLanguage.toLowerCase());
+
                             final activeLangs = rawActiveLangs.toList()..sort();
 
                             return DropdownButton<String>(
@@ -343,8 +324,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                           alignment:
                                               AlignmentDirectional.centerEnd,
                                           child: Text(
-                                            LearningLanguageService()
-                                                .getLanguageName(l),
+                                            langService.getLanguageName(l),
                                           ),
                                         ),
                                       )

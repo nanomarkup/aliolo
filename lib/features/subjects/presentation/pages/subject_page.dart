@@ -11,14 +11,12 @@ import 'package:aliolo/data/services/card_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/data/services/learning_language_service.dart';
-import 'package:aliolo/core/widgets/window_controls.dart';
 import 'package:aliolo/core/widgets/resize_wrapper.dart';
 import 'package:aliolo/features/auth/presentation/pages/profile_page.dart';
 import 'package:aliolo/features/settings/presentation/pages/settings_page.dart';
 import 'package:aliolo/features/leaderboard/presentation/pages/leaderboard_page.dart';
 import 'package:aliolo/features/management/presentation/pages/manage_cards_page.dart';
 import 'package:aliolo/features/learning/presentation/pages/learning_page.dart';
-import 'package:aliolo/features/subjects/presentation/pages/sub_subject_page.dart';
 
 class SubjectPage extends StatefulWidget {
   const SubjectPage({super.key});
@@ -29,10 +27,12 @@ class SubjectPage extends StatefulWidget {
 
 class _SubjectPageState extends State<SubjectPage> {
   final _cardService = getIt<CardService>();
+  final _searchController = TextEditingController();
   late String _currentLearningLang = 'en';
   bool _isLangInitialized = false;
 
-  List<SubjectModel> _dashboardSubjects = [];
+  List<SubjectModel> _allDashboardSubjects = [];
+  List<SubjectModel> _filteredSubjects = [];
   bool _isLoading = true;
 
   @override
@@ -72,6 +72,7 @@ class _SubjectPageState extends State<SubjectPage> {
   @override
   void dispose() {
     getIt<AuthService>().removeListener(_onAuthChanged);
+    _searchController.dispose();
     super.dispose();
   }
 
@@ -101,11 +102,44 @@ class _SubjectPageState extends State<SubjectPage> {
     setState(() => _isLoading = true);
     final subjects = await _cardService.getDashboardSubjects();
     if (mounted) {
+      // Extract all unique languages from cards
+      final Set<String> detectedLangs = {};
+      for (var s in subjects) {
+        if (s.rawCards != null) {
+          for (var c in s.rawCards!) {
+            final prompts = c['prompts'] as Map?;
+            final answers = c['answers'] as Map?;
+            if (prompts != null) {
+              detectedLangs.addAll(prompts.keys.map((k) => k.toString().toLowerCase()));
+            }
+            if (answers != null) {
+              detectedLangs.addAll(answers.keys.map((k) => k.toString().toLowerCase()));
+            }
+          }
+        }
+      }
+
+      if (detectedLangs.isNotEmpty) {
+        getIt<LearningLanguageService>().addActiveLanguages(detectedLangs.toList());
+      }
+
       setState(() {
-        _dashboardSubjects = subjects;
+        _allDashboardSubjects = subjects;
+        _applySearch();
         _isLoading = false;
       });
     }
+  }
+
+  void _applySearch() {
+    final query = _searchController.text.toLowerCase();
+    setState(() {
+      _filteredSubjects = _allDashboardSubjects.where((s) {
+        final matchesName = s.getName(_currentLearningLang).toLowerCase().contains(query);
+        final hasCards = s.getCardCountForLanguage(_currentLearningLang) > 0;
+        return matchesName && hasCards;
+      }).toList();
+    });
   }
 
   @override
@@ -122,9 +156,9 @@ class _SubjectPageState extends State<SubjectPage> {
       activeLangs.sort();
     }
 
-    final activePillarIds = _dashboardSubjects.map((s) => s.pillarId).toSet();
-    final activePillars =
-        pillars.where((p) => activePillarIds.contains(p.id)).toList();
+    final isSearching = _searchController.text.isNotEmpty;
+    final activePillarIds = _filteredSubjects.map((s) => s.pillarId).toSet();
+    final activePillars = pillars.where((p) => activePillarIds.contains(p.id)).toList();
 
     return ListenableBuilder(
       listenable: Listenable.merge([
@@ -155,6 +189,7 @@ class _SubjectPageState extends State<SubjectPage> {
                 setState(() => _currentLearningLang = val.toLowerCase());
                 final prefs = await SharedPreferences.getInstance();
                 await prefs.setString('last_learning_lang', val.toLowerCase());
+                _applySearch();
               }
             },
           ),
@@ -212,32 +247,32 @@ class _SubjectPageState extends State<SubjectPage> {
               const SliverFillRemaining(
                 child: Center(child: CircularProgressIndicator()),
               )
-            else if (activePillars.isEmpty)
+            else if (_allDashboardSubjects.isEmpty)
               SliverFillRemaining(
                 hasScrollBody: false,
                 child: Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Icon(
-                        Icons.dashboard_customize,
-                        size: 80,
-                        color: Colors.grey,
-                      ),
-                      const SizedBox(height: 16),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 32),
-                        child: Text(
-                          context.t('empty_dashboard'),
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            fontSize: 18,
-                            color: Colors.grey,
-                          ),
+                      InkWell(
+                        onTap: () async {
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ManageCardsPage(),
+                            ),
+                          );
+                          _loadDashboard();
+                        },
+                        borderRadius: BorderRadius.circular(40),
+                        child: const Icon(
+                          Icons.dashboard_customize,
+                          size: 120,
+                          color: Colors.grey,
                         ),
                       ),
                       const SizedBox(height: 24),
-                      ElevatedButton.icon(
+                      ElevatedButton(
                         onPressed: () async {
                           await Navigator.push(
                             context,
@@ -247,129 +282,227 @@ class _SubjectPageState extends State<SubjectPage> {
                           );
                           _loadDashboard();
                         },
-                        icon: const Icon(Icons.collections_bookmark),
-                        label: Text(context.t('manage_subjects')),
+                        child: Text(context.t('manage_subjects')),
                       ),
                     ],
                   ),
                 ),
               )
-            else
-              SliverGrid(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 24,
-                  mainAxisSpacing: 24,
-                  childAspectRatio: 1.5,
-                ),
-                delegate: SliverChildBuilderDelegate((context, index) {
-                  final pillar = activePillars[index];
-                  final pillarSubjects =
-                      _dashboardSubjects
-                          .where((s) => s.pillarId == pillar.id)
-                          .toList();
-                  final count =
-                      pillarSubjects
-                          .where(
-                            (s) =>
-                                s.getCardCountForLanguage(
-                                  _currentLearningLang,
-                                ) >
-                                0,
-                          )
-                          .length;
-                  final pillarColor = pillar.getColor();
-                  final pillarIcon = pillar.getIconData();
-
-                  return InkWell(
-                    onTap: () {
-                      ThemeService().setSessionColor(pillarColor);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder:
-                              (context) => PillarSubjectsPage(
-                                pillar: pillar,
-                                subjects: pillarSubjects,
-                                languageCode: _currentLearningLang,
-                              ),
-                        ),
-                      );
-                    },
-                    borderRadius: BorderRadius.circular(24),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            pillarColor,
-                            pillarColor.withValues(alpha: 0.7),
-                          ],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
-                        borderRadius: BorderRadius.circular(24),
-                        boxShadow: [
-                          BoxShadow(
-                            color: pillarColor.withValues(alpha: 0.3),
-                            blurRadius: 12,
-                            offset: const Offset(0, 6),
-                          ),
-                        ],
+            else ...[
+              SliverToBoxAdapter(
+                child: Container(
+                  padding: const EdgeInsets.symmetric(vertical: 24),
+                  child: TextField(
+                    controller: _searchController,
+                    decoration: InputDecoration(
+                      hintText: context.t('search_subjects'),
+                      prefixIcon: const Icon(Icons.search),
+                      suffixIcon:
+                          _searchController.text.isNotEmpty
+                              ? IconButton(
+                                icon: const Icon(Icons.clear),
+                                onPressed: () {
+                                  _searchController.clear();
+                                  _applySearch();
+                                },
+                              )
+                              : null,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
                       ),
-                      child: Stack(
-                        children: [
-                          Positioned(
-                            right: -20,
-                            bottom: -20,
-                            child: Icon(
-                              pillarIcon,
-                              size: 120,
-                              color: Colors.white.withValues(alpha: 0.2),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(24.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Icon(pillarIcon, color: Colors.white, size: 40),
-                                const Spacer(),
-                                FutureBuilder<String>(
-                                  future: TranslationService()
-                                      .translateForLanguage(
-                                        'pillar_${pillar.name}',
-                                        _currentLearningLang,
-                                      ),
-                                  builder: (context, snapshot) {
-                                    return Text(
-                                      snapshot.data ??
-                                          pillar.getTranslatedName(
-                                            _currentLearningLang,
-                                          ),
-                                      style: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 24,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    );
-                                  },
-                                ),
-                                Text(
-                                  '$count ${context.t('subjects')}',
-                                  style: const TextStyle(
-                                    color: Colors.white70,
-                                    fontSize: 14,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
+                      filled: true,
+                      fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
                     ),
-                  );
-                }, childCount: activePillars.length),
+                    onChanged: (_) => _applySearch(),
+                  ),
+                ),
               ),
+              if (isSearching)
+                SliverList(
+                  delegate: SliverChildBuilderDelegate((context, index) {
+                    final subject = _filteredSubjects[index];
+                    final pillar = pillars.firstWhere((p) => p.id == subject.pillarId);
+                    final pillarColor = pillar.getColor();
+                    final cardCount = subject.getCardCountForLanguage(_currentLearningLang);
+
+                    final isMine = subject.ownerId == getIt<AuthService>().currentUser?.serverId;
+                    final authorLabel = isMine ? context.t('you') : (subject.ownerName ?? '...');
+                    final privacyLabel = (isMine && !subject.isPublic) ? ' • 🔒 ${context.t('private')}' : '';
+
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 16),
+                      child: InkWell(
+                        onTap: () async {
+                          final cards = await CardService().getCardsBySubject(subject.id);
+                          if (cards.isNotEmpty && context.mounted) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => LearningPage(
+                                  card: cards.first,
+                                  languageCode: _currentLearningLang,
+                                ),
+                              ),
+                            );
+                          }
+                        },
+                        borderRadius: BorderRadius.circular(16),
+                        child: Container(
+                          padding: const EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).cardColor,
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(
+                              color: pillarColor.withValues(alpha: 0.2),
+                              width: 1.5,
+                            ),
+                          ),
+                          child: Row(
+                            children: [
+                              Icon(pillar.getIconData(), color: pillarColor),
+                              const SizedBox(width: 16),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      subject.getName(_currentLearningLang),
+                                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                                    ),
+                                    Text(
+                                      '${pillar.getTranslatedName(_currentLearningLang)} • $cardCount cards • $authorLabel$privacyLabel',
+                                      style: TextStyle(color: Colors.grey[600], fontSize: 14),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const Icon(Icons.chevron_right, color: Colors.grey),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  }, childCount: _filteredSubjects.length),
+                )
+              else
+                SliverGrid(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 24,
+                    mainAxisSpacing: 24,
+                    childAspectRatio: 1.5,
+                  ),
+                  delegate: SliverChildBuilderDelegate((context, index) {
+                    final pillar = activePillars[index];
+                    final pillarSubjects =
+                        _allDashboardSubjects
+                            .where((s) => s.pillarId == pillar.id)
+                            .toList();
+                    final count =
+                        pillarSubjects
+                            .where(
+                              (s) =>
+                                  s.getCardCountForLanguage(
+                                    _currentLearningLang,
+                                  ) >
+                                  0,
+                            )
+                            .length;
+                    final pillarColor = pillar.getColor();
+                    final pillarIcon = pillar.getIconData();
+
+                    return InkWell(
+                      onTap: () {
+                        ThemeService().setSessionColor(pillarColor);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder:
+                                (context) => PillarSubjectsPage(
+                                  pillar: pillar,
+                                  subjects: pillarSubjects,
+                                  languageCode: _currentLearningLang,
+                                ),
+                          ),
+                        ).then((_) {
+                          ThemeService().setSessionColor(ThemeService.mainColor);
+                        });
+                      },
+                      borderRadius: BorderRadius.circular(24),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              pillarColor,
+                              pillarColor.withValues(alpha: 0.7),
+                            ],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                          borderRadius: BorderRadius.circular(24),
+                          boxShadow: [
+                            BoxShadow(
+                              color: pillarColor.withValues(alpha: 0.3),
+                              blurRadius: 12,
+                              offset: const Offset(0, 6),
+                            ),
+                          ],
+                        ),
+                        child: Stack(
+                          children: [
+                            Positioned(
+                              right: -20,
+                              bottom: -20,
+                              child: Icon(
+                                pillarIcon,
+                                size: 120,
+                                color: Colors.white.withValues(alpha: 0.2),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(24.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Icon(pillarIcon, color: Colors.white, size: 40),
+                                  const Spacer(),
+                                  FutureBuilder<String>(
+                                    future: TranslationService()
+                                        .translateForLanguage(
+                                          'pillar_${pillar.name}',
+                                          _currentLearningLang,
+                                        ),
+                                    builder: (context, snapshot) {
+                                      return Text(
+                                        snapshot.data ??
+                                            pillar.getTranslatedName(
+                                              _currentLearningLang,
+                                            ),
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                  Text(
+                                    '$count ${context.t('subjects')}',
+                                    style: const TextStyle(
+                                      color: Colors.white70,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  }, childCount: activePillars.length),
+                ),
+            ],
           ],
         );
       },
@@ -394,15 +527,36 @@ class PillarSubjectsPage extends StatefulWidget {
 }
 
 class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
+  final _searchController = TextEditingController();
+  List<SubjectModel> _filteredSubjects = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _applySearch();
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  void _applySearch() {
+    final query = _searchController.text.toLowerCase();
+    setState(() {
+      _filteredSubjects = widget.subjects.where((s) {
+        final matchesName = s.getName(widget.languageCode).toLowerCase().contains(query);
+        final hasCards = s.getCardCountForLanguage(widget.languageCode) > 0;
+        return matchesName && hasCards;
+      }).toList();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     const appBarColor = Colors.white;
     final pillarColor = widget.pillar.getColor();
-
-    final filteredSubjects =
-        widget.subjects
-            .where((s) => s.getCardCountForLanguage(widget.languageCode) > 0)
-            .toList();
 
     return AlioloScrollablePage(
       title: FutureBuilder<String>(
@@ -426,21 +580,49 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
         ),
       ],
       slivers: [
-        if (filteredSubjects.isEmpty)
-          SliverFillRemaining(
-            child: Center(child: Text(context.t('no_subjects_found'))),
+        SliverToBoxAdapter(
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 24),
+            child: TextField(
+              controller: _searchController,
+              decoration: InputDecoration(
+                hintText: context.t('search_subjects'),
+                prefixIcon: const Icon(Icons.search),
+                suffixIcon:
+                    _searchController.text.isNotEmpty
+                        ? IconButton(
+                          icon: const Icon(Icons.clear),
+                          onPressed: () {
+                            _searchController.clear();
+                            _applySearch();
+                          },
+                        )
+                        : null,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                filled: true,
+                fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
+              ),
+              onChanged: (_) => _applySearch(),
+            ),
+          ),
+        ),
+        if (_filteredSubjects.isEmpty)
+          const SliverFillRemaining(
+            child: Center(child: Text('No subjects found')),
           )
         else
           SliverPadding(
-            padding: const EdgeInsets.symmetric(vertical: 32),
+            padding: const EdgeInsets.only(bottom: 32),
             sliver: SliverList(
               delegate: SliverChildBuilderDelegate((context, index) {
-                final subject = filteredSubjects[index];
+                final subject = _filteredSubjects[index];
                 final cardCount = subject.getCardCountForLanguage(
                   widget.languageCode,
                 );
 
-                return Padding(
+                  return Padding(
                   padding: const EdgeInsets.only(bottom: 16),
                   child: InkWell(
                     onTap: () async {
@@ -488,42 +670,53 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                FutureBuilder<String>(
-                                  future: TranslationService()
-                                      .translateForLanguage(
-                                        subject.name,
-                                        widget.languageCode,
-                                      ),
-                                  builder: (context, snapshot) {
-                                    return Text(
-                                      snapshot.data ?? subject.name,
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20,
-                                      ),
-                                    );
-                                  },
+                                Text(
+                                  subject.getName(widget.languageCode),
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                  ),
                                 ),
-                                if (subject.description != null &&
-                                    subject.description!.isNotEmpty) ...[
-                                  const SizedBox(height: 4),
-                                  FutureBuilder<String>(
-                                    future: TranslationService()
-                                        .translateForLanguage(
-                                          subject.description!,
-                                          widget.languageCode,
-                                        ),
-                                    builder: (context, snapshot) {
-                                      return Text(
-                                        snapshot.data ?? subject.description!,
+                                (() {
+                                  final isMine = subject.ownerId == getIt<AuthService>().currentUser?.serverId;
+                                  final label = isMine ? context.t('you') : (subject.ownerName ?? '...');
+                                  final isPrivate = isMine && !subject.isPublic;
+
+                                  return Row(
+                                    children: [
+                                      Text(
+                                        '${context.t('author')}: $label',
                                         style: TextStyle(
-                                          color: Colors.grey[600],
-                                          fontSize: 14,
+                                          color: pillarColor,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500,
                                         ),
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                      );
-                                    },
+                                      ),
+                                      if (isPrivate) ...[
+                                        const SizedBox(width: 8),
+                                        const Icon(Icons.lock, size: 12, color: Colors.grey),
+                                        const SizedBox(width: 2),
+                                        Text(
+                                          context.t('private'),
+                                          style: const TextStyle(
+                                            color: Colors.grey,
+                                            fontSize: 12,
+                                          ),
+                                        ),
+                                      ],
+                                    ],
+                                  );
+                                })(),
+                                if (subject.getDescription(widget.languageCode).isNotEmpty) ...[
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    subject.getDescription(widget.languageCode),
+                                    style: TextStyle(
+                                      color: Colors.grey[600],
+                                      fontSize: 14,
+                                    ),
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
                                   ),
                                 ],
                               ],
@@ -553,7 +746,7 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
                     ),
                   ),
                 );
-              }, childCount: filteredSubjects.length),
+              }, childCount: _filteredSubjects.length),
             ),
           ),
       ],

@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'dart:math';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart';
@@ -8,7 +7,6 @@ import 'package:window_manager/window_manager.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:media_kit_video/media_kit_video.dart';
 import 'package:aliolo/data/models/card_model.dart';
-import 'package:aliolo/data/models/user_model.dart';
 import 'package:aliolo/data/models/pillar_model.dart';
 import 'package:aliolo/data/models/subject_model.dart';
 import 'package:aliolo/data/services/card_service.dart';
@@ -20,12 +18,6 @@ import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/data/services/math_service.dart';
 import 'package:aliolo/core/widgets/window_controls.dart';
 import 'package:aliolo/core/widgets/resize_wrapper.dart';
-import 'package:aliolo/features/leaderboard/presentation/pages/leaderboard_page.dart';
-import 'package:aliolo/features/management/presentation/pages/manage_cards_page.dart';
-import 'package:aliolo/features/management/presentation/pages/user_management_page.dart';
-import 'package:aliolo/features/auth/presentation/pages/profile_page.dart';
-import 'package:aliolo/features/settings/presentation/pages/settings_page.dart';
-import 'package:aliolo/features/subjects/presentation/pages/subject_page.dart';
 import 'package:aliolo/core/utils/logger.dart';
 
 class LearningPage extends StatefulWidget {
@@ -64,7 +56,6 @@ class _LearningPageState extends State<LearningPage> {
   int _completedInSession = 0;
   int _totalInSession = 0;
 
-  final FocusNode _keyboardFocus = FocusNode();
   final _authService = AuthService();
   final _soundService = SoundService();
   final _progressService = ProgressService();
@@ -89,8 +80,7 @@ class _LearningPageState extends State<LearningPage> {
     if (_currentCard.subjectId != 'Math') {
       _subject = await CardService().getSubjectById(_currentCard.subjectId);
       if (_subject != null) {
-        _translatedSubjectName = await TranslationService()
-            .translateForLanguage(_subject!.name, widget.languageCode);
+        _translatedSubjectName = _subject!.getName(widget.languageCode);
       }
     } else {
       _translatedSubjectName = 'Math';
@@ -314,7 +304,7 @@ class _LearningPageState extends State<LearningPage> {
       orElse: () => pillars.first,
     );
     final pillarName = p.name;
-    final subjectName = _subject?.name ?? 'Math';
+    final subjectName = _subject?.getName(widget.languageCode) ?? 'Math';
     final cardId = _currentCard.id;
 
     final fullInfo =
@@ -357,10 +347,9 @@ class _LearningPageState extends State<LearningPage> {
   Widget build(BuildContext context) {
     bool isLeft = _authService.currentUser?.sidebarLeft ?? false;
     const appBarColor = Colors.white;
-    final currentSessionColor = ThemeService().sessionColorNotifier.value;
 
     // Use pillar color if available
-    Color headerColor = currentSessionColor;
+    Color headerColor = ThemeService().sessionColorNotifier.value;
     if (_subject != null) {
       final p = pillars.firstWhere(
         (p) => p.id == _subject!.pillarId,
@@ -372,8 +361,6 @@ class _LearningPageState extends State<LearningPage> {
     return ListenableBuilder(
       listenable: TranslationService(),
       builder: (context, _) {
-        Color masteryColor = Colors.grey[400]!;
-        String masteryLabel = context.t('new');
         double progressValue =
             _totalInSession > 0 ? _completedInSession / _totalInSession : 0.0;
 
@@ -432,12 +419,13 @@ class _LearningPageState extends State<LearningPage> {
 
                               Color? tileColor;
                               if (_isAnswered) {
-                                if (option == correctValue)
+                                if (option == correctValue) {
                                   tileColor = Colors.green.withValues(
                                     alpha: 0.2,
                                   );
-                                else if (isSelected && !_isCorrect)
+                                } else if (isSelected && !_isCorrect) {
                                   tileColor = Colors.red.withValues(alpha: 0.2);
+                                }
                               } else if (isSelected) {
                                 tileColor = headerColor.withValues(alpha: 0.1);
                               }
@@ -896,7 +884,6 @@ class _LearningPageState extends State<LearningPage> {
   void dispose() {
     player.stop();
     player.dispose();
-    _keyboardFocus.dispose();
     super.dispose();
   }
 }
