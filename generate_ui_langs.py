@@ -459,6 +459,7 @@ es = {
     "show_all_languages": "Mostrar todos los idiomas",
     "show_less_languages": "Mostrar menos idiomas",
     "add_card": "Agregar tarjeta",
+    "view_card": "Ver tarjeta",
     "images": "Imágenes",
     "video": "Video",
     "prompts_answers": "Preguntas y Respuestas"
@@ -699,6 +700,7 @@ fr = {
     "show_all_languages": "Afficher toutes les langues",
     "show_less_languages": "Afficher moins de langues",
     "add_card": "Ajouter une carte",
+    "view_card": "Voir la carte",
     "images": "Images",
     "video": "Vidéo",
     "prompts_answers": "Questions et Réponses"
@@ -928,6 +930,7 @@ de = {
     "show_all_languages": "Alle Sprachen anzeigen",
     "show_less_languages": "Weniger Sprachen anzeigen",
     "add_card": "Karte hinzufügen",
+    "view_card": "Karte anzeigen",
     "images": "Bilder",
     "video": "Video",
     "prompts_answers": "Fragen & Antworten"
@@ -1168,6 +1171,7 @@ uk = {
     "show_all_languages": "Показати всі мови",
     "show_less_languages": "Приховати додаткові мови",
     "add_card": "Додати картку",
+    "view_card": "Переглянути картку",
     "images": "Зображення",
     "video": "Відео",
     "prompts_answers": "Запитання та відповіді"
@@ -1399,6 +1403,7 @@ it = {
     "show_all_languages": "Mostra tutte le lingue",
     "show_less_languages": "Mostra meno lingue",
     "add_card": "Aggiungi carta",
+    "view_card": "Visualizza carta",
     "images": "Immagini",
     "video": "Video",
     "prompts_answers": "Domande e Risposte"
@@ -1630,6 +1635,7 @@ pt = {
     "show_all_languages": "Mostrar todos os idiomas",
     "show_less_languages": "Mostrar menos idiomas",
     "add_card": "Adicionar cartão",
+    "view_card": "Ver cartão",
     "images": "Imagens",
     "video": "Vídeo",
     "prompts_answers": "Perguntas e Respostas"
@@ -1861,6 +1867,7 @@ zh = {
     "show_all_languages": "显示所有语言",
     "show_less_languages": "显示较少语言",
     "add_card": "添加卡片",
+    "view_card": "查看卡片",
     "images": "图片",
     "video": "视频",
     "prompts_answers": "问题与答案"
@@ -2092,6 +2099,7 @@ pl = {
     "show_all_languages": "Pokaż wszystkie języki",
     "show_less_languages": "Pokaż mniej języków",
     "add_card": "Dodaj kartę",
+    "view_card": "Zobacz kartę",
     "images": "Zdjęcia",
     "video": "Wideo",
     "prompts_answers": "Pytania i Odpowiedzi"
@@ -2327,6 +2335,7 @@ ja = {
     "show_all_languages": "すべての言語を表示",
     "show_less_languages": "表示する言語を減らす",
     "add_card": "カードを追加",
+    "view_card": "カードを表示",
     "images": "画像",
     "video": "動画",
     "prompts_answers": "問題と回答"
@@ -2562,6 +2571,7 @@ ko = {
     "show_all_languages": "모든 언어 표시",
     "show_less_languages": "일부 언어만 표시",
     "add_card": "카드 추가",
+    "view_card": "카드 보기",
     "images": "이미지",
     "video": "비디오",
     "prompts_answers": "질문 및 답변"
