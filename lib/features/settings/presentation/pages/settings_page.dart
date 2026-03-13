@@ -188,7 +188,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   ),
             ),
             IconButton(
-              icon: const Icon(Icons.collections_bookmark, color: appBarColor),
+              icon: const Icon(Icons.edit, color: appBarColor),
               onPressed:
                   () => Navigator.push(
                     context,

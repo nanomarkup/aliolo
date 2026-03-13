@@ -89,7 +89,7 @@ class _UserManagementPageState extends State<UserManagementPage> {
                 ),
                 IconButton(
                   icon: const Icon(
-                    Icons.collections_bookmark,
+                    Icons.edit,
                     color: appBarColor,
                   ),
                   onPressed:

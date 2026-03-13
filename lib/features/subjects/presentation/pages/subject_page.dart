@@ -236,7 +236,7 @@ class _SubjectPageState extends State<SubjectPage> {
                   ),
             ),
             IconButton(
-              icon: const Icon(Icons.collections_bookmark, color: appBarColor),
+              icon: const Icon(Icons.edit, color: appBarColor),
               onPressed: () async {
                 await Navigator.push(
                   context,

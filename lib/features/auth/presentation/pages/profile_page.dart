@@ -185,7 +185,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
             ),
             IconButton(
-              icon: const Icon(Icons.collections_bookmark, color: appBarColor),
+              icon: const Icon(Icons.edit, color: appBarColor),
               onPressed:
                   () => Navigator.push(
                     context,
