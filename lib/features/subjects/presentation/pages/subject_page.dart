@@ -100,6 +100,8 @@ class _SubjectPageState extends State<SubjectPage> {
 
   Future<void> _loadDashboard() async {
     setState(() => _isLoading = true);
+    // Ensure pillars are loaded first
+    await _cardService.getPillars();
     final subjects = await _cardService.getDashboardSubjects();
     if (mounted) {
       // Extract all unique languages from cards

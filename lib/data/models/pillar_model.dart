@@ -17,6 +17,17 @@ class Pillar {
     required this.color,
   });
 
+  factory Pillar.fromJson(Map<String, dynamic> json) {
+    return Pillar(
+      id: (json['id'] as num).toInt(),
+      name: json['name'] ?? '',
+      translations: Map<String, String>.from(json['translations'] ?? {}),
+      descriptions: Map<String, String>.from(json['descriptions'] ?? {}),
+      icon: json['icon'] ?? 'category',
+      color: json['color'] ?? '#9E9E9E',
+    );
+  }
+
   Color getColor() {
     return Color(int.parse(color.replaceFirst('#', '0xFF')));
   }
@@ -53,7 +64,8 @@ class Pillar {
   }
 }
 
-const List<Pillar> pillars = [
+// Hard-coded fallback list in case DB is offline during startup
+const List<Pillar> fallbackPillars = [
   Pillar(
     id: 1,
     name: 'engineering',
@@ -143,3 +155,6 @@ const List<Pillar> pillars = [
     icon: 'category',
   ),
 ];
+
+// Global list that will be populated from DB
+List<Pillar> pillars = List.from(fallbackPillars);

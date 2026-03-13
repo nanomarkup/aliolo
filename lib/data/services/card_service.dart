@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:uuid/uuid.dart';
 import 'package:aliolo/data/models/card_model.dart';
 import 'package:aliolo/data/models/subject_model.dart';
+import 'package:aliolo/data/models/pillar_model.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/core/utils/logger.dart';
 
@@ -23,7 +24,25 @@ class CardService {
 
   bool get hasLocalDb => false;
 
-  Future<void> init() async {}
+  Future<void> init() async {
+    await getPillars();
+  }
+
+  Future<List<Pillar>> getPillars() async {
+    try {
+      final List<dynamic> data =
+          await _supabase.from('pillars').select().order('id', ascending: true);
+
+      final dbPillars = data.map((json) => Pillar.fromJson(json)).toList();
+      if (dbPillars.isNotEmpty) {
+        pillars = dbPillars;
+      }
+      return pillars;
+    } catch (e) {
+      print('Error fetching pillars: $e');
+      return pillars; // Return fallback
+    }
+  }
 
   Future<List<SubjectModel>> getDashboardSubjects() async {
     final user = _authService.currentUser;
