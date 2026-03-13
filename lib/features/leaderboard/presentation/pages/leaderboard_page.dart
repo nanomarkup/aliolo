@@ -140,6 +140,10 @@ class _LeaderboardPageState extends State<LeaderboardPage>
                   ),
             ),
             IconButton(
+              icon: const Icon(Icons.emoji_events, color: appBarColor),
+              onPressed: () => _loadData(),
+            ),
+            IconButton(
               icon: const Icon(Icons.collections_bookmark, color: appBarColor),
               onPressed:
                   () => Navigator.push(

@@ -165,7 +165,7 @@
   "enter_subject_name": "Enter subject name",
   "delete_subject_confirm": "Delete subject '{subject}' and all {count} cards inside?",
   "learning_section": "Learning Settings",
-  "manage_friends": "Manage Friends",
+  "manage_friends": "Friends",
   "manage_friends_desc": "View and manage your friend requests",
   "search_subjects": "Search Subjects",
   "max_streak": "Max Streak",

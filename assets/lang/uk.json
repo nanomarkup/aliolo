@@ -165,7 +165,7 @@
   "enter_subject_name": "Введіть назву предмета",
   "delete_subject_confirm": "Видалити предмет '{subject}' та всі {count} карток всередині?",
   "learning_section": "Налаштування навчання",
-  "manage_friends": "Керування друзями",
+  "manage_friends": "Друзі",
   "manage_friends_desc": "Перегляд та керування запитами в друзі",
   "search_subjects": "Пошук предметів",
   "max_streak": "Найкраща серія",
