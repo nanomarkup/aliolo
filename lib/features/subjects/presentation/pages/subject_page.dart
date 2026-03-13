@@ -528,9 +528,10 @@ class _SubjectPageState extends State<SubjectPage> {
                                           ),
                                           style: const TextStyle(
                                             color: Colors.white,
-                                            fontSize: 20,
+                                            fontSize: 24,
                                             fontWeight: FontWeight.bold,
                                           ),
+
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
                                         ),
