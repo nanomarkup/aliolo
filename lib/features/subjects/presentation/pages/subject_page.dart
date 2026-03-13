@@ -516,13 +516,10 @@ class _SubjectPageState extends State<SubjectPage> {
                                   Row(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Padding(
-                                        padding: const EdgeInsets.only(top: 4),
-                                        child: Icon(
-                                          pillarIcon,
-                                          color: Colors.white,
-                                          size: 28,
-                                        ),
+                                      Icon(
+                                        pillarIcon,
+                                        color: Colors.white,
+                                        size: 28,
                                       ),
                                       const SizedBox(width: 12),
                                       Expanded(
@@ -534,7 +531,7 @@ class _SubjectPageState extends State<SubjectPage> {
                                             color: Colors.white,
                                             fontSize: 24,
                                             fontWeight: FontWeight.bold,
-                                            height: 1.1,
+                                            height: 1.0,
                                           ),
                                           maxLines: 2,
                                           overflow: TextOverflow.ellipsis,
