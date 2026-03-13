@@ -203,15 +203,21 @@ class _AddCardPageState extends State<AddCardPage> {
                           if (pMap != null && aMap != null) {
                             // Only update languages that already exist in our controllers
                             for (var lang in _promptControllers.keys) {
-                              final jsonPrompt = pMap[lang];
-                              final jsonAnswer = aMap[lang];
+                              final jsonPrompt = pMap[lang]?.toString() ?? '';
+                              final jsonAnswer = aMap[lang]?.toString() ?? '';
 
-                              // Only update if BOTH are provided in the JSON for this language
-                              if (jsonPrompt != null && jsonAnswer != null) {
-                                _promptControllers[lang]!.text =
-                                    jsonPrompt.toString();
-                                _answerControllers[lang]!.text =
-                                    jsonAnswer.toString();
+                              final bool isPromptEmpty =
+                                  jsonPrompt.trim().isEmpty;
+                              final bool isAnswerEmpty =
+                                  jsonAnswer.trim().isEmpty;
+
+                              // Requirement:
+                              // 1. If both empty -> update (effectively clear/delete)
+                              // 2. If both non-empty -> update
+                              // 3. If one is missing/empty and other is not -> ignore
+                              if (isPromptEmpty == isAnswerEmpty) {
+                                _promptControllers[lang]!.text = jsonPrompt;
+                                _answerControllers[lang]!.text = jsonAnswer;
                               }
                             }
                           }
