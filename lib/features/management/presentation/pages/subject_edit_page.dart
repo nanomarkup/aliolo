@@ -92,7 +92,7 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
       context: context,
       builder:
           (context) => AlertDialog(
-            title: const Text('JSON Schema & Import'),
+            title: const Text('JSON Data'),
             content: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 700, maxHeight: 500),
               child: Column(
@@ -124,17 +124,6 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
               Row(
                 children: [
                   TextButton.icon(
-                    onPressed: () async {
-                      final data = await Clipboard.getData(Clipboard.kTextPlain);
-                      if (data?.text != null) {
-                        textController.text = data!.text!;
-                      }
-                    },
-                    icon: const Icon(Icons.paste, size: 18),
-                    label: const Text('PASTE'),
-                  ),
-                  const SizedBox(width: 8),
-                  TextButton.icon(
                     onPressed: () {
                       Clipboard.setData(
                         ClipboardData(text: textController.text),
@@ -146,12 +135,19 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
                     icon: const Icon(Icons.copy, size: 18),
                     label: const Text('COPY'),
                   ),
-                  const Spacer(),
-                  TextButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: Text(context.t('cancel')),
+                  const SizedBox(width: 8),
+                  TextButton.icon(
+                    onPressed: () async {
+                      final data = await Clipboard.getData(Clipboard.kTextPlain);
+                      if (data?.text != null) {
+                        textController.text = data!.text!;
+                      }
+                    },
+                    icon: const Icon(Icons.paste, size: 18),
+                    label: const Text('PASTE'),
                   ),
-                  ElevatedButton.icon(
+                  const Spacer(),
+                  TextButton.icon(
                     onPressed: () {
                       try {
                         final Map<String, dynamic> parsed = jsonDecode(
@@ -198,8 +194,14 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
                         );
                       }
                     },
-                    icon: const Icon(Icons.refresh),
+                    icon: const Icon(Icons.refresh, size: 18),
                     label: const Text('UPDATE'),
+                  ),
+                  const SizedBox(width: 8),
+                  TextButton.icon(
+                    onPressed: () => Navigator.pop(context),
+                    icon: const Icon(Icons.close, size: 18),
+                    label: Text(context.t('cancel').toUpperCase()),
                   ),
                 ],
               ),
