@@ -512,27 +512,17 @@ class _SubjectPageState extends State<SubjectPage> {
                                       ),
                                       const SizedBox(width: 12),
                                       Expanded(
-                                        child: FutureBuilder<String>(
-                                          future: TranslationService()
-                                              .translateForLanguage(
-                                                'pillar_${pillar.name}',
-                                                _currentLearningLang,
-                                              ),
-                                          builder: (context, snapshot) {
-                                            return Text(
-                                              snapshot.data ??
-                                                  pillar.getTranslatedName(
-                                                    _currentLearningLang,
-                                                  ),
-                                              style: const TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                            );
-                                          },
+                                        child: Text(
+                                          pillar.getTranslatedName(
+                                            _currentLearningLang,
+                                          ),
+                                          style: const TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
                                         ),
                                       ),
                                     ],
@@ -632,18 +622,9 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
     final pillarColor = widget.pillar.getColor();
 
     return AlioloScrollablePage(
-      title: FutureBuilder<String>(
-        future: TranslationService().translateForLanguage(
-          'pillar_${widget.pillar.name}',
-          widget.languageCode,
-        ),
-        builder: (context, snapshot) {
-          return Text(
-            snapshot.data ??
-                widget.pillar.getTranslatedName(widget.languageCode),
-            style: const TextStyle(color: appBarColor),
-          );
-        },
+      title: Text(
+        widget.pillar.getTranslatedName(widget.languageCode),
+        style: const TextStyle(color: appBarColor),
       ),
       appBarColor: pillarColor,
       actions: [
