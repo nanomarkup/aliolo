@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:aliolo/core/widgets/aliolo_scrollable_page.dart';
 import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/data/models/subject_model.dart';
@@ -62,6 +64,148 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
       c.dispose();
     }
     super.dispose();
+  }
+
+  void _showJsonDialog() {
+    final allLangs = TranslationService().availableUILanguages;
+    final Map<String, String> schemaNames = {};
+    final Map<String, String> schemaDescriptions = {};
+
+    for (var lang in allLangs) {
+      final code = lang.toLowerCase();
+      schemaNames[code] = _nameControllers[lang]?.text ?? '';
+      schemaDescriptions[code] = _descriptionControllers[lang]?.text ?? '';
+    }
+
+    final Map<String, dynamic> data = {
+      'pillarId': _selectedPillar,
+      'isPublic': _isPublic,
+      'names': schemaNames,
+      'descriptions': schemaDescriptions,
+    };
+
+    final encoder = const JsonEncoder.withIndent('  ');
+    final String jsonTemplate = encoder.convert(data);
+    final textController = TextEditingController(text: jsonTemplate);
+
+    showDialog(
+      context: context,
+      builder:
+          (context) => AlertDialog(
+            title: const Text('JSON Schema & Import'),
+            content: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 700, maxHeight: 500),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Expanded(
+                    child: TextField(
+                      controller: textController,
+                      maxLines: null,
+                      expands: true,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        contentPadding: EdgeInsets.all(12),
+                      ),
+                      style: const TextStyle(
+                        fontFamily: 'monospace',
+                        fontSize: 13,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            actionsPadding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 8,
+            ),
+            actions: [
+              Row(
+                children: [
+                  TextButton.icon(
+                    onPressed: () async {
+                      final data = await Clipboard.getData(Clipboard.kTextPlain);
+                      if (data?.text != null) {
+                        textController.text = data!.text!;
+                      }
+                    },
+                    icon: const Icon(Icons.paste, size: 18),
+                    label: const Text('PASTE'),
+                  ),
+                  const SizedBox(width: 8),
+                  TextButton.icon(
+                    onPressed: () {
+                      Clipboard.setData(
+                        ClipboardData(text: textController.text),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Copied to clipboard')),
+                      );
+                    },
+                    icon: const Icon(Icons.copy, size: 18),
+                    label: const Text('COPY'),
+                  ),
+                  const Spacer(),
+                  TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: Text(context.t('cancel')),
+                  ),
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      try {
+                        final Map<String, dynamic> parsed = jsonDecode(
+                          textController.text,
+                        );
+                        setState(() {
+                          if (parsed['pillarId'] is int) {
+                            _selectedPillar = parsed['pillarId'];
+                          }
+                          if (parsed['isPublic'] is bool) {
+                            _isPublic = parsed['isPublic'];
+                          }
+                          if (parsed['names'] is Map) {
+                            final names = parsed['names'] as Map;
+                            names.forEach((lang, val) {
+                              final l = lang.toString().toUpperCase();
+                              if (_nameControllers.containsKey(l)) {
+                                _nameControllers[l]!.text = val.toString();
+                              } else if (_nameControllers.containsKey(lang)) {
+                                _nameControllers[lang]!.text = val.toString();
+                              }
+                            });
+                          }
+                          if (parsed['descriptions'] is Map) {
+                            final descs = parsed['descriptions'] as Map;
+                            descs.forEach((lang, val) {
+                              final l = lang.toString().toUpperCase();
+                              if (_descriptionControllers.containsKey(l)) {
+                                _descriptionControllers[l]!.text =
+                                    val.toString();
+                              } else if (_descriptionControllers.containsKey(
+                                lang,
+                              )) {
+                                _descriptionControllers[lang]!.text =
+                                    val.toString();
+                              }
+                            });
+                          }
+                        });
+                        Navigator.pop(context);
+                      } catch (e) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Invalid JSON: $e')),
+                        );
+                      }
+                    },
+                    icon: const Icon(Icons.refresh),
+                    label: const Text('UPDATE'),
+                  ),
+                ],
+              ),
+            ],
+          ),
+    );
   }
 
   Future<void> _save() async {
@@ -143,6 +287,19 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
         IconButton(
           icon: const Icon(Icons.arrow_back, color: appBarColor),
           onPressed: () => Navigator.pop(context),
+        ),
+        IconButton(
+          icon: const Text(
+            '{}',
+            style: TextStyle(
+              color: appBarColor,
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'monospace',
+            ),
+          ),
+          tooltip: 'JSON Schema & Import',
+          onPressed: _showJsonDialog,
         ),
       ],
       body: Form(
