@@ -79,7 +79,7 @@ class _SubjectDetailsPageState extends State<SubjectDetailsPage> {
                 title: Text(context.t('delete_subject')),
                 content: Text(
                   cardCount > 0
-                      ? 'This subject contains $cardCount cards. Deleting it will permanently remove all of them. Are you sure?'
+                      ? 'This subject contains $cardCount ${context.plural('card', cardCount)}. Deleting it will permanently remove all of them. Are you sure?'
                       : 'Are you sure you want to delete this empty subject?',
                 ),
                 actions: [

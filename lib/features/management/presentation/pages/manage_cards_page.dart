@@ -285,7 +285,7 @@ class _ManageCardsPageState extends State<ManageCardsPage> {
                                           ),
                                         ),
                                         subtitle: Text(
-                                          '${s.cardCount} cards • ${p.getTranslatedName(uiLang)}${!isMine ? ' • ${s.ownerName ?? '... '}' : ''}',
+                                          '${s.cardCount} ${context.plural('card', s.cardCount)} • ${p.getTranslatedName(uiLang)}${!isMine ? ' • ${s.ownerName ?? '... '}' : ''}',
                                         ),
                                         trailing: Row(
                                           mainAxisSize: MainAxisSize.min,

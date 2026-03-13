@@ -105,7 +105,7 @@
   "selected_count": "{count} Selected",
   "delete_selected_cards": "Delete selected cards?",
   "no_cards_in_library": "No cards found in the library.",
-  "card_label": "card",
+  "card_label": "Card",
   "cards_label": "cards",
   "answer_label": "answer",
   "answers_label": "answers",
@@ -233,5 +233,10 @@
   "subject_deleted": "Subject deleted",
   "visibility": "Visibility",
   "wants_to_be_friend": "Wants to be your friend",
-  "you": "You"
+  "you": "You",
+  "subject_label": "Subject",
+  "day_label": "Day",
+  "subject_plural": "Subjects",
+  "card_plural": "Cards",
+  "day_plural": "Days"
 }

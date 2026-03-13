@@ -233,5 +233,10 @@
   "subject_deleted": "주제가 삭제되었습니다",
   "visibility": "가시성",
   "wants_to_be_friend": "친구 요청",
-  "you": "나"
+  "you": "나",
+  "subject_label": "Subject",
+  "day_label": "Day",
+  "subject_plural": "Subjects",
+  "card_plural": "Cards",
+  "day_plural": "Days"
 }

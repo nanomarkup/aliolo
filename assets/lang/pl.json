@@ -233,5 +233,10 @@
   "subject_deleted": "テーマを削除しました",
   "visibility": "公開設定",
   "wants_to_be_friend": "あなたと友達になりたがっています",
-  "you": "あなた"
+  "you": "あなた",
+  "subject_label": "Subject",
+  "day_label": "Day",
+  "subject_plural": "Subjects",
+  "card_plural": "Cards",
+  "day_plural": "Days"
 }

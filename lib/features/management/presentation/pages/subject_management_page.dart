@@ -239,7 +239,7 @@ class _SubjectManagementPageState extends State<SubjectManagementPage> {
                               ),
                             ),
                             subtitle: Text(
-                              '${s.cardCount} cards • ${p.getTranslatedName(uiLang)}${!isMine ? ' • ${s.ownerName ?? '... '}' : ''}',
+                              '${s.cardCount} ${context.plural('card', s.cardCount)} • ${p.getTranslatedName(uiLang)}${!isMine ? ' • ${s.ownerName ?? '... '}' : ''}',
                             ),
                             trailing: Switch(
                               value: s.isOnDashboard,

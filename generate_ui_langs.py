@@ -242,6 +242,13 @@ base_en = {
     "visibility": "Visibility",
     "wants_to_be_friend": "Wants to be your friend",
     "you": "You"
+,
+    "subject_label": "Subject",
+    "card_label": "Card",
+    "day_label": "Day",
+    "subject_plural": "Subjects",
+    "card_plural": "Cards",
+    "day_plural": "Days"
 }
 
 # Key translations for Spanish (es)
@@ -2585,6 +2592,13 @@ ko = {
     "visibility": "Видимість",
     "wants_to_be_friend": "Хоче стати вашим другом",
     "you": "Ви"
+,
+    "subject_label": "Предмет",
+    "card_label": "Картка",
+    "day_label": "День",
+    "subject_plural": "Предмети",
+    "card_plural": "Картки",
+    "day_plural": "Дні"
 }
 # Helper to merge with English for missing keys
 def write_lang(code, data):

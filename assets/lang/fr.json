@@ -233,5 +233,10 @@
   "subject_deleted": "Sujet supprimé",
   "visibility": "Visibilité",
   "wants_to_be_friend": "Veut être votre ami",
-  "you": "Vous"
+  "you": "Vous",
+  "subject_label": "Subject",
+  "day_label": "Day",
+  "subject_plural": "Subjects",
+  "card_plural": "Cards",
+  "day_plural": "Days"
 }

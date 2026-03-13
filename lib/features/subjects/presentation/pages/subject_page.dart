@@ -413,7 +413,7 @@ class _SubjectPageState extends State<SubjectPage> {
                                       ),
                                     ),
                                     Text(
-                                      '${pillar.getTranslatedName(_currentLearningLang)} • $cardCount cards • $authorLabel$privacyLabel',
+                                      '${pillar.getTranslatedName(_currentLearningLang)} • $cardCount ${context.plural('card', cardCount)} • $authorLabel$privacyLabel',
                                       style: TextStyle(
                                         color: Colors.grey[600],
                                         fontSize: 14,
@@ -558,7 +558,7 @@ class _SubjectPageState extends State<SubjectPage> {
                                   ),
                                   const Spacer(),
                                   Text(
-                                    '$count ${context.t('subjects')}',
+                                    '$count ${context.plural('subject', count)}',
                                     style: TextStyle(
                                       color: Colors.white.withValues(
                                         alpha: 0.8,
@@ -678,8 +678,8 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
           ),
         ),
         if (_filteredSubjects.isEmpty)
-          const SliverFillRemaining(
-            child: Center(child: Text('No subjects found')),
+          SliverFillRemaining(
+            child: Center(child: Text('No ${context.plural('subject', 0)} found')),
           )
         else
           SliverPadding(
@@ -815,7 +815,7 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
                               borderRadius: BorderRadius.circular(20),
                             ),
                             child: Text(
-                              '$cardCount ${context.t('cards_label')}',
+                              '$cardCount ${context.plural('card', cardCount)}',
                               style: TextStyle(
                                 color: pillarColor,
                                 fontWeight: FontWeight.bold,

@@ -393,7 +393,7 @@ class _ProfilePageState extends State<ProfilePage> {
           ListTile(
             leading: Icon(Icons.adjust, color: color),
             title: Text(context.t('daily_goal')),
-            trailing: Text('${user.dailyGoalCount} ${context.t('cards')}'),
+            trailing: Text('${user.dailyGoalCount} ${context.plural('card', user.dailyGoalCount)}'),
             onTap:
                 () => _showValuePicker(
                   title: context.t('daily_goal'),
@@ -407,7 +407,7 @@ class _ProfilePageState extends State<ProfilePage> {
           ListTile(
             leading: Icon(Icons.view_agenda, color: color),
             title: Text(context.t('session_size')),
-            trailing: Text('${user.sessionSize} ${context.t('cards')}'),
+            trailing: Text('${user.sessionSize} ${context.plural('card', user.sessionSize)}'),
             onTap:
                 () => _showValuePicker(
                   title: context.t('session_size'),

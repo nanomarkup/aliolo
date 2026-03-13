@@ -233,5 +233,10 @@
   "subject_deleted": "主题已删除",
   "visibility": "可见性",
   "wants_to_be_friend": "想成为你的朋友",
-  "you": "你"
+  "you": "你",
+  "subject_label": "Subject",
+  "day_label": "Day",
+  "subject_plural": "Subjects",
+  "card_plural": "Cards",
+  "day_plural": "Days"
 }
