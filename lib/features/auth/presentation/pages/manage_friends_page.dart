@@ -186,7 +186,7 @@ class _ManageFriendsPageState extends State<ManageFriendsPage> {
                     radius: 24,
                     backgroundImage:
                         avatarUrl != null
-                            ? (avatarUrl.startsWith('http')
+                            ? (avatarUrl.startsWith('http') || kIsWeb
                                     ? NetworkImage(avatarUrl)
                                     : FileImage(File(avatarUrl)))
                                 as ImageProvider

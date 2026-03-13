@@ -12,6 +12,7 @@ import 'package:aliolo/features/management/presentation/pages/manage_cards_page.
 import 'package:aliolo/features/auth/presentation/pages/profile_page.dart';
 import 'package:aliolo/features/settings/presentation/pages/settings_page.dart';
 import 'package:aliolo/features/subjects/presentation/pages/subject_page.dart';
+import 'package:aliolo/core/utils/logger.dart';
 
 class LeaderboardPage extends StatefulWidget {
   const LeaderboardPage({super.key});
@@ -44,7 +45,12 @@ class _LeaderboardPageState extends State<LeaderboardPage>
     _tabController.addListener(() {
       if (mounted) setState(() {});
     });
-    _loadData();
+    _loadInitialData();
+  }
+
+  Future<void> _loadInitialData() async {
+    await _loadData();
+    await _jumpToMe();
   }
 
   @override
@@ -123,11 +129,6 @@ class _LeaderboardPageState extends State<LeaderboardPage>
           ),
           appBarColor: currentSessionColor,
           actions: [
-            IconButton(
-              icon: const Icon(Icons.my_location, color: appBarColor),
-              tooltip: context.t('my_position'),
-              onPressed: _jumpToMe,
-            ),
             IconButton(
               icon: const Icon(Icons.school, color: appBarColor),
               onPressed:
@@ -304,7 +305,7 @@ class _LeaderboardPageState extends State<LeaderboardPage>
                 CircleAvatar(
                   backgroundImage:
                       user.avatarPath != null
-                          ? (user.avatarPath!.startsWith('http')
+                          ? (user.avatarPath!.startsWith('http') || kIsWeb
                                   ? NetworkImage(user.avatarPath!)
                                   : FileImage(File(user.avatarPath!)))
                               as ImageProvider

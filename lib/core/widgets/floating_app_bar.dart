@@ -21,7 +21,7 @@ class AlioloAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return PreferredSize(
-      preferredSize: const Size.fromHeight(100), // Height including margin
+      preferredSize: const Size.fromHeight(80), // 16 top padding + 64 container
       child: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 700),
@@ -42,6 +42,7 @@ class AlioloAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
               clipBehavior: Clip.antiAlias,
               child: AppBar(
+                toolbarHeight: 64,
                 title: DragToMoveArea(
                   child: SizedBox(
                     width: double.infinity,

@@ -8,6 +8,8 @@ import 'package:aliolo/data/services/sound_service.dart';
 import 'package:aliolo/data/services/math_service.dart';
 import 'package:aliolo/data/services/progress_service.dart';
 
+import 'package:aliolo/core/utils/logger.dart';
+
 final getIt = GetIt.instance;
 
 Future<void> setupLocator() async {
@@ -20,12 +22,10 @@ Future<void> setupLocator() async {
     getIt.registerSingleton<SoundService>(SoundService());
 
     // 2. Initialize critical services in order
-    print('Initializing CardService...');
     await getIt<CardService>().init().catchError(
       (e) => print('CardService init error: $e'),
     );
 
-    print('Initializing AuthService...');
     await getIt<AuthService>().init().catchError(
       (e) => print('AuthService init error: $e'),
     );

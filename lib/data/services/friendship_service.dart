@@ -2,6 +2,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:aliolo/data/models/friendship_model.dart';
 import 'package:aliolo/data/models/user_model.dart';
 import 'package:aliolo/data/services/auth_service.dart';
+import 'package:aliolo/core/utils/logger.dart';
 
 class FriendshipService {
   static final FriendshipService _instance = FriendshipService._internal();
@@ -120,17 +121,7 @@ class FriendshipService {
           .range(page * pageSize, (page + 1) * pageSize - 1);
 
       return List<dynamic>.from(profilesRes)
-          .map(
-            (p) => UserModel(
-              username: p['username'] ?? 'Learner',
-              email: p['email'] ?? '',
-              serverId: p['id'],
-              totalXp: p['total_xp'] ?? 0,
-              currentStreak: p['current_streak'] ?? 0,
-              maxStreak: p['max_streak'] ?? 0,
-              avatarPath: p['avatar_url'],
-            ),
-          )
+          .map((p) => UserModel.fromJson(p))
           .toList();
     } catch (e) {
       print('Error fetching friends leaderboard: $e');

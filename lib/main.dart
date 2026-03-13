@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:media_kit/media_kit.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/data/services/auth_service.dart';
@@ -17,6 +18,19 @@ void main() async {
   try {
     WidgetsFlutterBinding.ensureInitialized();
     await AppLogger.init();
+
+    // Initialize Supabase
+    const String supabaseUrl = String.fromEnvironment(
+      'SUPABASE_URL',
+      defaultValue: 'https://mltdjjszycfmokwqsqxm.supabase.co',
+    );
+    const String supabaseKey = String.fromEnvironment(
+      'SUPABASE_ANON_KEY',
+      defaultValue: 'sb_publishable_DCMw0z92Lr2nzC83sOQJXw_G1fYdEb3',
+    );
+
+    await Supabase.initialize(url: supabaseUrl, anonKey: supabaseKey);
+
     MediaKit.ensureInitialized();
 
     if (!kIsWeb) {

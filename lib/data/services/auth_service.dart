@@ -8,6 +8,7 @@ import 'package:aliolo/data/models/user_model.dart';
 import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/core/di/service_locator.dart';
+import 'package:aliolo/core/utils/logger.dart';
 
 class AuthService extends ChangeNotifier {
   static final AuthService _instance = AuthService._internal();
@@ -24,10 +25,14 @@ class AuthService extends ChangeNotifier {
   bool get _isSupabaseInitialized => _supabase != null;
 
   Future<void> init() async {
-    _supabase = Supabase.instance.client;
-    final session = _supabase!.auth.currentSession;
-    if (session != null && session.user != null) {
-      await _fetchAndSyncUser(session.user!);
+    try {
+      _supabase = Supabase.instance.client;
+      final session = _supabase!.auth.currentSession;
+      if (session != null && session.user != null) {
+        await _fetchAndSyncUser(session.user!);
+      }
+    } catch (e) {
+      AppLogger.log('AuthService.init() failed: $e');
     }
     notifyListeners();
   }
@@ -170,8 +175,6 @@ class AuthService extends ChangeNotifier {
       final List<dynamic> data = await _supabase!
           .from('profiles')
           .select()
-          .eq('is_deleted', false)
-          .eq('show_on_leaderboard', true)
           .order('total_xp', ascending: false)
           .range(page * pageSize, (page + 1) * pageSize - 1);
 
@@ -189,8 +192,6 @@ class AuthService extends ChangeNotifier {
       final List<dynamic> data = await _supabase!
           .from('profiles')
           .select('id')
-          .eq('is_deleted', false)
-          .eq('show_on_leaderboard', true)
           .order('total_xp', ascending: false);
 
       for (int i = 0; i < data.length; i++) {
