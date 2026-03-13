@@ -8,8 +8,6 @@ import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/friendship_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
-import 'package:aliolo/core/widgets/window_controls.dart';
-import 'package:aliolo/core/widgets/resize_wrapper.dart';
 import 'package:aliolo/features/management/presentation/pages/manage_cards_page.dart';
 import 'package:aliolo/features/auth/presentation/pages/profile_page.dart';
 import 'package:aliolo/features/settings/presentation/pages/settings_page.dart';
@@ -43,6 +41,9 @@ class _LeaderboardPageState extends State<LeaderboardPage>
       windowManager.setResizable(true);
     }
     _tabController = TabController(length: 2, vsync: this);
+    _tabController.addListener(() {
+      if (mounted) setState(() {});
+    });
     _loadData();
   }
 
@@ -106,11 +107,15 @@ class _LeaderboardPageState extends State<LeaderboardPage>
   Widget build(BuildContext context) {
     const Color currentSessionColor = ThemeService.mainColor;
     const appBarColor = Colors.white;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return ListenableBuilder(
       listenable: TranslationService(),
       builder: (context, _) {
+        final isGlobalTab = _tabController.index == 0;
+        final currentPage =
+            isGlobalTab ? _currentGlobalPage : _currentFriendsPage;
+        final currentList = isGlobalTab ? _globalUsers : _friendUsers;
+
         return AlioloPage(
           title: Text(
             context.t('leaderboard'),
@@ -118,6 +123,11 @@ class _LeaderboardPageState extends State<LeaderboardPage>
           ),
           appBarColor: currentSessionColor,
           actions: [
+            IconButton(
+              icon: const Icon(Icons.my_location, color: appBarColor),
+              tooltip: context.t('my_position'),
+              onPressed: _jumpToMe,
+            ),
             IconButton(
               icon: const Icon(Icons.school, color: appBarColor),
               onPressed:
@@ -128,10 +138,6 @@ class _LeaderboardPageState extends State<LeaderboardPage>
                     ),
                     (route) => false,
                   ),
-            ),
-            IconButton(
-              icon: const Icon(Icons.emoji_events, color: appBarColor),
-              onPressed: () => _loadData(),
             ),
             IconButton(
               icon: const Icon(Icons.collections_bookmark, color: appBarColor),
@@ -164,13 +170,74 @@ class _LeaderboardPageState extends State<LeaderboardPage>
                   ),
             ),
           ],
-          body:
-              _isLoading
-                  ? const Center(child: CircularProgressIndicator())
-                  : Column(
-                    children: [
-                      Expanded(
-                        child: TabBarView(
+          body: Column(
+            children: [
+              // Top Controls
+              Padding(
+                padding: const EdgeInsets.only(bottom: 16),
+                child: Column(
+                  children: [
+                    Center(
+                      child: SegmentedButton<int>(
+                        segments: [
+                          ButtonSegment(
+                            value: 0,
+                            label: Text(context.t('filter_all')),
+                            icon: const Icon(Icons.public),
+                          ),
+                          ButtonSegment(
+                            value: 1,
+                            label: Text(context.t('manage_friends')),
+                            icon: const Icon(Icons.people),
+                          ),
+                        ],
+                        selected: {_tabController.index},
+                        onSelectionChanged: (Set<int> newSelection) {
+                          _tabController.animateTo(newSelection.first);
+                        },
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.chevron_left),
+                          onPressed: currentPage > 0 ? _prevPage : null,
+                        ),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 8,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Theme.of(
+                              context,
+                            ).cardColor.withValues(alpha: 0.5),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Text(
+                            '${context.t('page')} ${currentPage + 1}',
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.chevron_right),
+                          onPressed:
+                              currentList.length == _pageSize
+                                  ? _nextPage
+                                  : null,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child:
+                    _isLoading
+                        ? const Center(child: CircularProgressIndicator())
+                        : TabBarView(
                           controller: _tabController,
                           physics: const NeverScrollableScrollPhysics(),
                           children: [
@@ -178,115 +245,9 @@ class _LeaderboardPageState extends State<LeaderboardPage>
                             _buildList(_friendUsers, isGlobal: false),
                           ],
                         ),
-                      ),
-                      // Shared Bottom Panel
-                      Container(
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          color: isDark ? Colors.grey[900] : Colors.white,
-                          border: Border(
-                            top: BorderSide(
-                              color: Theme.of(
-                                context,
-                              ).dividerColor.withValues(alpha: 0.1),
-                            ),
-                          ),
-                        ),
-                        child: ListenableBuilder(
-                          listenable: _tabController,
-                          builder: (context, _) {
-                            final isGlobalTab = _tabController.index == 0;
-                            final currentPage =
-                                isGlobalTab
-                                    ? _currentGlobalPage
-                                    : _currentFriendsPage;
-                            final list =
-                                isGlobalTab ? _globalUsers : _friendUsers;
-
-                            return Row(
-                              children: [
-                                // Left: Pagination
-                                Expanded(
-                                  flex: 2,
-                                  child: Row(
-                                    children: [
-                                      IconButton(
-                                        icon: const Icon(Icons.chevron_left),
-                                        onPressed:
-                                            currentPage > 0 ? _prevPage : null,
-                                      ),
-                                      Text(
-                                        '${context.t('page')} ${currentPage + 1}',
-                                        style: const TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      IconButton(
-                                        icon: const Icon(Icons.chevron_right),
-                                        onPressed:
-                                            list.length == _pageSize
-                                                ? _nextPage
-                                                : null,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                // Center: Tab Selection
-                                Expanded(
-                                  flex: 1,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      IconButton(
-                                        icon: Icon(
-                                          Icons.public,
-                                          color:
-                                              isGlobalTab
-                                                  ? currentSessionColor
-                                                  : Colors.grey,
-                                        ),
-                                        onPressed:
-                                            () => _tabController.animateTo(0),
-                                      ),
-                                      IconButton(
-                                        icon: Icon(
-                                          Icons.people,
-                                          color:
-                                              !isGlobalTab
-                                                  ? currentSessionColor
-                                                  : Colors.grey,
-                                        ),
-                                        onPressed:
-                                            () => _tabController.animateTo(1),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                // Right: My Position
-                                Expanded(
-                                  flex: 2,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      ElevatedButton.icon(
-                                        onPressed: _jumpToMe,
-                                        icon: const Icon(Icons.my_location),
-                                        label: Text(context.t('my_position')),
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: currentSessionColor,
-                                          foregroundColor: Colors.white,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            );
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
+              ),
+            ],
+          ),
         );
       },
     );
@@ -294,11 +255,10 @@ class _LeaderboardPageState extends State<LeaderboardPage>
 
   Widget _buildList(List<UserModel> users, {required bool isGlobal}) {
     if (users.isEmpty) return Center(child: Text(context.t('no_users_found')));
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     final currentPage = isGlobal ? _currentGlobalPage : _currentFriendsPage;
 
     return ListView.builder(
-      padding: const EdgeInsets.symmetric(vertical: 8),
+      padding: const EdgeInsets.only(bottom: 32),
       itemCount: users.length,
       itemBuilder: (context, index) {
         final user = users[index];
@@ -313,7 +273,7 @@ class _LeaderboardPageState extends State<LeaderboardPage>
 
         return Card(
           elevation: isMe ? 4 : 1,
-          margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+          margin: const EdgeInsets.only(bottom: 8),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
             side:
@@ -326,7 +286,7 @@ class _LeaderboardPageState extends State<LeaderboardPage>
               mainAxisSize: MainAxisSize.min,
               children: [
                 SizedBox(
-                  width: 30,
+                  width: 35,
                   child: Text(
                     '#${rank + 1}',
                     style: TextStyle(
@@ -354,7 +314,7 @@ class _LeaderboardPageState extends State<LeaderboardPage>
               user.username + (isMe ? ' (${context.t('you')})' : ''),
               style: TextStyle(
                 fontWeight: isMe ? FontWeight.bold : FontWeight.normal,
-                fontSize: rank < 3 ? 20 : 16,
+                fontSize: rank < 3 ? 18 : 16,
               ),
             ),
             subtitle: Text('${user.totalXp} XP'),
