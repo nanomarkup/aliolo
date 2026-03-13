@@ -161,7 +161,11 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
                       .map(
                         (p) => DropdownMenuItem(
                           value: p.id,
-                          child: Text(context.t('pillar_${p.name}')),
+                          child: Text(
+                            p.getTranslatedName(
+                              TranslationService().currentLocale.languageCode,
+                            ),
+                          ),
                         ),
                       )
                       .toList(),

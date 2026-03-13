@@ -366,7 +366,7 @@ class _LearningPageState extends State<LearningPage> {
 
         Widget sidebar = Container(
           width: 450,
-          padding: const EdgeInsets.all(32),
+          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 32),
           color: Theme.of(context).colorScheme.surface,
           child: Column(
             children: [
@@ -380,142 +380,160 @@ class _LearningPageState extends State<LearningPage> {
                   valueColor: AlwaysStoppedAnimation<Color>(headerColor),
                 ),
               ),
+              const SizedBox(height: 32),
 
-              // Scrollable prompt and answers
+              // Prompt (Fixed/Intrinsic height above answers)
+              Text(
+                _getDisplayPrompt(_currentCard).isNotEmpty
+                    ? _getDisplayPrompt(_currentCard)
+                    : context.t('select_an_answer'),
+                style: TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                  color: headerColor,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 32),
+
+              // Dynamic Answers Area
               Expanded(
-                child: Center(
-                  child: SingleChildScrollView(
-                    padding: const EdgeInsets.symmetric(vertical: 24),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Flexible(
-                              child: Text(
-                                _getDisplayPrompt(_currentCard).isNotEmpty
-                                    ? _getDisplayPrompt(_currentCard)
-                                    : context.t('select_an_answer'),
-                                style: TextStyle(
-                                  fontSize: 28,
-                                  fontWeight: FontWeight.bold,
-                                  color: headerColor,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 48),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 32),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: List.generate(_options.length, (index) {
-                              final option = _options[index];
-                              final isSelected = _selectedIndex == index;
-                              final correctValue = _correctAnswerText;
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    final double availableHeight = constraints.maxHeight;
+                    final int count = _options.length;
+                    const double spacing = 12.0;
+                    final double totalSpacing = spacing * (count - 1);
 
-                              Color? tileColor;
-                              if (_isAnswered) {
-                                if (option == correctValue) {
-                                  tileColor = Colors.green.withValues(
-                                    alpha: 0.2,
-                                  );
-                                } else if (isSelected && !_isCorrect) {
-                                  tileColor = Colors.red.withValues(alpha: 0.2);
-                                }
-                              } else if (isSelected) {
-                                tileColor = headerColor.withValues(alpha: 0.1);
+                    // Calculate ideal height per item to fill space
+                    double targetItemHeight =
+                        (availableHeight - totalSpacing) / count;
+
+                    // Constraints for height and font
+                    const double minHeight = 54.0;
+                    const double maxHeight = 86.0;
+                    const double minFontSize = 16.0;
+                    const double maxFontSize = 22.0;
+
+                    final double finalHeight = targetItemHeight.clamp(
+                      minHeight,
+                      maxHeight,
+                    );
+                    final double fontSize = (finalHeight * 0.28).clamp(
+                      minFontSize,
+                      maxFontSize,
+                    );
+                    final bool isScrollable = targetItemHeight < minHeight;
+
+                    return Center(
+                      child: SingleChildScrollView(
+                        physics:
+                            isScrollable
+                                ? const AlwaysScrollableScrollPhysics()
+                                : const NeverScrollableScrollPhysics(),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: List.generate(count, (index) {
+                            final option = _options[index];
+                            final isSelected = _selectedIndex == index;
+                            final correctValue = _correctAnswerText;
+
+                            Color? tileColor;
+                            if (_isAnswered) {
+                              if (option == correctValue) {
+                                tileColor = Colors.green.withValues(alpha: 0.2);
+                              } else if (isSelected && !_isCorrect) {
+                                tileColor = Colors.red.withValues(alpha: 0.2);
                               }
+                            } else if (isSelected) {
+                              tileColor = headerColor.withValues(alpha: 0.1);
+                            }
 
-                              return Padding(
-                                padding: const EdgeInsets.only(bottom: 16),
-                                child: InkWell(
-                                  onTap: () => _selectOption(index),
-                                  borderRadius: BorderRadius.circular(12),
-                                  child: Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 24,
-                                      vertical: 20,
+                            return Padding(
+                              padding: EdgeInsets.only(
+                                bottom: index == count - 1 ? 0 : spacing,
+                              ),
+                              child: InkWell(
+                                onTap: () => _selectOption(index),
+                                borderRadius: BorderRadius.circular(16),
+                                child: Container(
+                                  height: finalHeight,
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 20,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color:
+                                          _isAnswered && option == correctValue
+                                              ? Colors.green
+                                              : (isSelected
+                                                  ? headerColor
+                                                  : Colors.grey[300]!),
+                                      width: 2.5,
                                     ),
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                        color:
-                                            _isAnswered &&
-                                                    option == correctValue
-                                                ? Colors.green
-                                                : (isSelected
-                                                    ? headerColor
-                                                    : Colors.grey[300]!),
-                                        width: 2.5,
-                                      ),
-                                      borderRadius: BorderRadius.circular(16),
-                                      color: tileColor,
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        Container(
-                                          width: 36,
-                                          height: 36,
-                                          decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            color:
-                                                isSelected
-                                                    ? headerColor
-                                                    : Colors.grey[200],
-                                          ),
-                                          child: Center(
-                                            child: Text(
-                                              '${index + 1}',
-                                              style: TextStyle(
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.bold,
-                                                color:
-                                                    isSelected
-                                                        ? Colors.white
-                                                        : Colors.black,
-                                              ),
-                                            ),
-                                          ),
+                                    borderRadius: BorderRadius.circular(16),
+                                    color: tileColor,
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                        width: fontSize * 1.8,
+                                        height: fontSize * 1.8,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color:
+                                              isSelected
+                                                  ? headerColor
+                                                  : Colors.grey[200],
                                         ),
-                                        const SizedBox(width: 20),
-                                        Expanded(
+                                        child: Center(
                                           child: Text(
-                                            option,
-                                            style: const TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w500,
+                                            '${index + 1}',
+                                            style: TextStyle(
+                                              fontSize: fontSize * 0.8,
+                                              fontWeight: FontWeight.bold,
+                                              color:
+                                                  isSelected
+                                                      ? Colors.white
+                                                      : Colors.black,
                                             ),
                                           ),
                                         ),
-                                        if (_isAnswered &&
-                                            option == correctValue)
-                                          const Icon(
-                                            Icons.check_circle,
-                                            color: Colors.green,
-                                            size: 28,
+                                      ),
+                                      const SizedBox(width: 16),
+                                      Expanded(
+                                        child: Text(
+                                          option,
+                                          style: TextStyle(
+                                            fontSize: fontSize,
+                                            fontWeight: FontWeight.w500,
                                           ),
-                                        if (_isAnswered &&
-                                            isSelected &&
-                                            !_isCorrect)
-                                          const Icon(
-                                            Icons.cancel,
-                                            color: Colors.red,
-                                            size: 28,
-                                          ),
-                                      ],
-                                    ),
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                      if (_isAnswered && option == correctValue)
+                                        Icon(
+                                          Icons.check_circle,
+                                          color: Colors.green,
+                                          size: fontSize * 1.4,
+                                        ),
+                                      if (_isAnswered && isSelected && !_isCorrect)
+                                        Icon(
+                                          Icons.cancel,
+                                          color: Colors.red,
+                                          size: fontSize * 1.4,
+                                        ),
+                                    ],
                                   ),
                                 ),
-                              );
-                            }),
-                          ),
+                              ),
+                            );
+                          }),
                         ),
-                      ],
-                    ),
-                  ),
+                      ),
+                    );
+                  },
                 ),
               ),
 
