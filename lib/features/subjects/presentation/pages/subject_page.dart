@@ -112,17 +112,23 @@ class _SubjectPageState extends State<SubjectPage> {
             final prompts = c['prompts'] as Map?;
             final answers = c['answers'] as Map?;
             if (prompts != null) {
-              detectedLangs.addAll(prompts.keys.map((k) => k.toString().toLowerCase()));
+              detectedLangs.addAll(
+                prompts.keys.map((k) => k.toString().toLowerCase()),
+              );
             }
             if (answers != null) {
-              detectedLangs.addAll(answers.keys.map((k) => k.toString().toLowerCase()));
+              detectedLangs.addAll(
+                answers.keys.map((k) => k.toString().toLowerCase()),
+              );
             }
           }
         }
       }
 
       if (detectedLangs.isNotEmpty) {
-        getIt<LearningLanguageService>().addActiveLanguages(detectedLangs.toList());
+        getIt<LearningLanguageService>().addActiveLanguages(
+          detectedLangs.toList(),
+        );
       }
 
       setState(() {
@@ -136,11 +142,16 @@ class _SubjectPageState extends State<SubjectPage> {
   void _applySearch() {
     final query = _searchController.text.toLowerCase();
     setState(() {
-      _filteredSubjects = _allDashboardSubjects.where((s) {
-        final matchesName = s.getName(_currentLearningLang).toLowerCase().contains(query);
-        final hasCards = s.getCardCountForLanguage(_currentLearningLang) > 0;
-        return matchesName && hasCards;
-      }).toList();
+      _filteredSubjects =
+          _allDashboardSubjects.where((s) {
+            final matchesName = s
+                .getName(_currentLearningLang)
+                .toLowerCase()
+                .contains(query);
+            final hasCards =
+                s.getCardCountForLanguage(_currentLearningLang) > 0;
+            return matchesName && hasCards;
+          }).toList();
     });
   }
 
@@ -149,7 +160,8 @@ class _SubjectPageState extends State<SubjectPage> {
     const appBarColor = Colors.white;
     final currentSessionColor = ThemeService().sessionColorNotifier.value;
     final rawActiveLangs =
-        getIt<LearningLanguageService>().activeLanguageCodes
+        getIt<LearningLanguageService>()
+            .activeLanguageCodes
             .map((l) => l.toLowerCase())
             .toSet();
     final List<String> activeLangs = rawActiveLangs.toList()..sort();
@@ -160,7 +172,9 @@ class _SubjectPageState extends State<SubjectPage> {
 
     final isSearching = _searchController.text.isNotEmpty;
     final activePillarIds = _filteredSubjects.map((s) => s.pillarId).toSet();
-    final activePillars = pillars.where((p) => activePillarIds.contains(p.id)).toList();
+    final activePillars = pillars
+        .where((p) => activePillarIds.contains(p.id))
+        .toList();
 
     return ListenableBuilder(
       listenable: Listenable.merge([
@@ -313,7 +327,9 @@ class _SubjectPageState extends State<SubjectPage> {
                         borderRadius: BorderRadius.circular(12),
                       ),
                       filled: true,
-                      fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
+                      fillColor: Theme.of(
+                        context,
+                      ).cardColor.withValues(alpha: 0.5),
                     ),
                     onChanged: (_) => _applySearch(),
                   ),
@@ -323,27 +339,39 @@ class _SubjectPageState extends State<SubjectPage> {
                 SliverList(
                   delegate: SliverChildBuilderDelegate((context, index) {
                     final subject = _filteredSubjects[index];
-                    final pillar = pillars.firstWhere((p) => p.id == subject.pillarId);
+                    final pillar = pillars.firstWhere(
+                      (p) => p.id == subject.pillarId,
+                    );
                     final pillarColor = pillar.getColor();
-                    final cardCount = subject.getCardCountForLanguage(_currentLearningLang);
+                    final cardCount = subject.getCardCountForLanguage(
+                      _currentLearningLang,
+                    );
 
-                    final isMine = subject.ownerId == getIt<AuthService>().currentUser?.serverId;
-                    final authorLabel = isMine ? context.t('you') : (subject.ownerName ?? '...');
-                    final privacyLabel = (isMine && !subject.isPublic) ? ' • 🔒 ${context.t('private')}' : '';
+                    final isMine =
+                        subject.ownerId == getIt<AuthService>().currentUser?.serverId;
+                    final authorLabel =
+                        isMine ? context.t('you') : (subject.ownerName ?? '...');
+                    final privacyLabel =
+                        (isMine && !subject.isPublic)
+                            ? ' • 🔒 ${context.t('private')}'
+                            : '';
 
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 16),
                       child: InkWell(
                         onTap: () async {
-                          final cards = await CardService().getCardsBySubject(subject.id);
+                          final cards = await CardService().getCardsBySubject(
+                            subject.id,
+                          );
                           if (cards.isNotEmpty && context.mounted) {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => LearningPage(
-                                  card: cards.first,
-                                  languageCode: _currentLearningLang,
-                                ),
+                                builder:
+                                    (context) => LearningPage(
+                                      card: cards.first,
+                                      languageCode: _currentLearningLang,
+                                    ),
                               ),
                             );
                           }
@@ -369,16 +397,25 @@ class _SubjectPageState extends State<SubjectPage> {
                                   children: [
                                     Text(
                                       subject.getName(_currentLearningLang),
-                                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18,
+                                      ),
                                     ),
                                     Text(
                                       '${pillar.getTranslatedName(_currentLearningLang)} • $cardCount cards • $authorLabel$privacyLabel',
-                                      style: TextStyle(color: Colors.grey[600], fontSize: 14),
+                                      style: TextStyle(
+                                        color: Colors.grey[600],
+                                        fontSize: 14,
+                                      ),
                                     ),
                                   ],
                                 ),
                               ),
-                              const Icon(Icons.chevron_right, color: Colors.grey),
+                              const Icon(
+                                Icons.chevron_right,
+                                color: Colors.grey,
+                              ),
                             ],
                           ),
                         ),
@@ -392,7 +429,7 @@ class _SubjectPageState extends State<SubjectPage> {
                     crossAxisCount: 2,
                     crossAxisSpacing: 24,
                     mainAxisSpacing: 24,
-                    childAspectRatio: 1.5,
+                    childAspectRatio: 1.4,
                   ),
                   delegate: SliverChildBuilderDelegate((context, index) {
                     final pillar = activePillars[index];
@@ -466,44 +503,63 @@ class _SubjectPageState extends State<SubjectPage> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Icon(pillarIcon, color: Colors.white, size: 40),
-                                  const Spacer(),
-                                  FutureBuilder<String>(
-                                    future: TranslationService()
-                                        .translateForLanguage(
-                                          'pillar_${pillar.name}',
-                                          _currentLearningLang,
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        pillarIcon,
+                                        color: Colors.white,
+                                        size: 28,
+                                      ),
+                                      const SizedBox(width: 12),
+                                      Expanded(
+                                        child: FutureBuilder<String>(
+                                          future: TranslationService()
+                                              .translateForLanguage(
+                                                'pillar_${pillar.name}',
+                                                _currentLearningLang,
+                                              ),
+                                          builder: (context, snapshot) {
+                                            return Text(
+                                              snapshot.data ??
+                                                  pillar.getTranslatedName(
+                                                    _currentLearningLang,
+                                                  ),
+                                              style: const TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                            );
+                                          },
                                         ),
-                                    builder: (context, snapshot) {
-                                      return Text(
-                                        snapshot.data ??
-                                            pillar.getTranslatedName(
-                                              _currentLearningLang,
-                                            ),
-                                        style: const TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 24,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      );
-                                    },
+                                      ),
+                                    ],
                                   ),
+                                  const SizedBox(height: 12),
                                   Text(
-                                    pillar.getTranslatedDescription(_currentLearningLang),
-                                    style: const TextStyle(
-                                      color: Colors.white70,
-                                      fontSize: 12,
+                                    pillar.getTranslatedDescription(
+                                      _currentLearningLang,
                                     ),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  const SizedBox(height: 4),
-                                  Text(
-                                    '$count ${context.t('subjects')}',
                                     style: const TextStyle(
                                       color: Colors.white,
-                                      fontSize: 14,
+                                      fontSize: 16,
                                       fontWeight: FontWeight.w500,
+                                      height: 1.3,
+                                    ),
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  const Spacer(),
+                                  Text(
+                                    '$count ${context.t('subjects')}',
+                                    style: TextStyle(
+                                      color: Colors.white.withValues(
+                                        alpha: 0.8,
+                                      ),
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                 ],
@@ -558,11 +614,15 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
   void _applySearch() {
     final query = _searchController.text.toLowerCase();
     setState(() {
-      _filteredSubjects = widget.subjects.where((s) {
-        final matchesName = s.getName(widget.languageCode).toLowerCase().contains(query);
-        final hasCards = s.getCardCountForLanguage(widget.languageCode) > 0;
-        return matchesName && hasCards;
-      }).toList();
+      _filteredSubjects =
+          widget.subjects.where((s) {
+            final matchesName = s
+                .getName(widget.languageCode)
+                .toLowerCase()
+                .contains(query);
+            final hasCards = s.getCardCountForLanguage(widget.languageCode) > 0;
+            return matchesName && hasCards;
+          }).toList();
     });
   }
 
@@ -572,32 +632,18 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
     final pillarColor = widget.pillar.getColor();
 
     return AlioloScrollablePage(
-      title: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          FutureBuilder<String>(
-            future: TranslationService().translateForLanguage(
-              'pillar_${widget.pillar.name}',
-              widget.languageCode,
-            ),
-            builder: (context, snapshot) {
-              return Text(
-                snapshot.data ??
-                    widget.pillar.getTranslatedName(widget.languageCode),
-                style: const TextStyle(color: appBarColor, fontSize: 20),
-              );
-            },
-          ),
-          Text(
-            widget.pillar.getTranslatedDescription(widget.languageCode),
-            style: const TextStyle(
-              color: Colors.white70,
-              fontSize: 12,
-              fontWeight: FontWeight.normal,
-            ),
-          ),
-        ],
+      title: FutureBuilder<String>(
+        future: TranslationService().translateForLanguage(
+          'pillar_${widget.pillar.name}',
+          widget.languageCode,
+        ),
+        builder: (context, snapshot) {
+          return Text(
+            snapshot.data ??
+                widget.pillar.getTranslatedName(widget.languageCode),
+            style: const TextStyle(color: appBarColor),
+          );
+        },
       ),
       appBarColor: pillarColor,
       actions: [
@@ -649,7 +695,7 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
                   widget.languageCode,
                 );
 
-                  return Padding(
+                return Padding(
                   padding: const EdgeInsets.only(bottom: 16),
                   child: InkWell(
                     onTap: () async {
@@ -705,8 +751,15 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
                                   ),
                                 ),
                                 (() {
-                                  final isMine = subject.ownerId == getIt<AuthService>().currentUser?.serverId;
-                                  final label = isMine ? context.t('you') : (subject.ownerName ?? '...');
+                                  final isMine =
+                                      subject.ownerId ==
+                                      getIt<AuthService>()
+                                          .currentUser
+                                          ?.serverId;
+                                  final label =
+                                      isMine
+                                          ? context.t('you')
+                                          : (subject.ownerName ?? '...');
                                   final isPrivate = isMine && !subject.isPublic;
 
                                   return Row(
@@ -721,7 +774,11 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
                                       ),
                                       if (isPrivate) ...[
                                         const SizedBox(width: 8),
-                                        const Icon(Icons.lock, size: 12, color: Colors.grey),
+                                        const Icon(
+                                          Icons.lock,
+                                          size: 12,
+                                          color: Colors.grey,
+                                        ),
                                         const SizedBox(width: 2),
                                         Text(
                                           context.t('private'),
@@ -734,7 +791,9 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
                                     ],
                                   );
                                 })(),
-                                if (subject.getDescription(widget.languageCode).isNotEmpty) ...[
+                                if (subject
+                                    .getDescription(widget.languageCode)
+                                    .isNotEmpty) ...[
                                   const SizedBox(height: 4),
                                   Text(
                                     subject.getDescription(widget.languageCode),
