@@ -197,27 +197,23 @@ class _AddCardPageState extends State<AddCardPage> {
                             _videoUrlController.text =
                                 parsed['videoUrl'].toString();
                           }
-                          if (parsed['prompts'] is Map) {
-                            final p = parsed['prompts'] as Map;
-                            p.forEach((lang, val) {
-                              final l = lang.toString().toUpperCase();
-                              if (_promptControllers.containsKey(l)) {
-                                _promptControllers[l]!.text = val.toString();
-                              } else if (_promptControllers.containsKey(lang)) {
-                                _promptControllers[lang]!.text = val.toString();
+                          final Map? pMap = parsed['prompts'] as Map?;
+                          final Map? aMap = parsed['answers'] as Map?;
+
+                          if (pMap != null && aMap != null) {
+                            // Only update languages that already exist in our controllers
+                            for (var lang in _promptControllers.keys) {
+                              final jsonPrompt = pMap[lang];
+                              final jsonAnswer = aMap[lang];
+
+                              // Only update if BOTH are provided in the JSON for this language
+                              if (jsonPrompt != null && jsonAnswer != null) {
+                                _promptControllers[lang]!.text =
+                                    jsonPrompt.toString();
+                                _answerControllers[lang]!.text =
+                                    jsonAnswer.toString();
                               }
-                            });
-                          }
-                          if (parsed['answers'] is Map) {
-                            final a = parsed['answers'] as Map;
-                            a.forEach((lang, val) {
-                              final l = lang.toString().toUpperCase();
-                              if (_answerControllers.containsKey(l)) {
-                                _answerControllers[l]!.text = val.toString();
-                              } else if (_answerControllers.containsKey(lang)) {
-                                _answerControllers[lang]!.text = val.toString();
-                              }
-                            });
+                            }
                           }
                         });
                         Navigator.pop(context);
@@ -393,7 +389,6 @@ class _AddCardPageState extends State<AddCardPage> {
               fontFamily: 'monospace',
             ),
           ),
-          tooltip: 'JSON Data',
           onPressed: _showJsonDialog,
         ),
         if (widget.existingCard != null && !widget.isReadOnly)

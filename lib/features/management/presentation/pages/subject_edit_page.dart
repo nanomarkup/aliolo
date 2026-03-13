@@ -163,25 +163,18 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
                           if (parsed['names'] is Map) {
                             final names = parsed['names'] as Map;
                             names.forEach((lang, val) {
-                              final l = lang.toString().toUpperCase();
+                              final l = lang.toString();
                               if (_nameControllers.containsKey(l)) {
                                 _nameControllers[l]!.text = val.toString();
-                              } else if (_nameControllers.containsKey(lang)) {
-                                _nameControllers[lang]!.text = val.toString();
                               }
                             });
                           }
                           if (parsed['descriptions'] is Map) {
                             final descs = parsed['descriptions'] as Map;
                             descs.forEach((lang, val) {
-                              final l = lang.toString().toUpperCase();
+                              final l = lang.toString();
                               if (_descriptionControllers.containsKey(l)) {
                                 _descriptionControllers[l]!.text =
-                                    val.toString();
-                              } else if (_descriptionControllers.containsKey(
-                                lang,
-                              )) {
-                                _descriptionControllers[lang]!.text =
                                     val.toString();
                               }
                             });
@@ -300,7 +293,6 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
               fontFamily: 'monospace',
             ),
           ),
-          tooltip: 'JSON Schema & Import',
           onPressed: _showJsonDialog,
         ),
       ],
