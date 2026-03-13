@@ -180,7 +180,17 @@ class AlioloMainApp extends StatelessWidget {
           locale: translationService.currentLocale,
           themeMode: currentMode,
           theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange),
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: Colors.orange,
+              surface: Colors.white,
+              surfaceContainerHighest: const Color(0xFFF5F7FA),
+            ),
+            scaffoldBackgroundColor: const Color(0xFFF5F7FA),
+            cardTheme: const CardTheme(
+              color: Colors.white,
+              surfaceTintColor: Colors.white,
+              elevation: 2,
+            ),
             useMaterial3: true,
             fontFamily: 'Roboto',
           ),
@@ -188,6 +198,14 @@ class AlioloMainApp extends StatelessWidget {
             colorScheme: ColorScheme.fromSeed(
               seedColor: Colors.orange,
               brightness: Brightness.dark,
+              surface: const Color(0xFF1A1C1E),
+              surfaceContainerHighest: const Color(0xFF0F1113),
+            ),
+            scaffoldBackgroundColor: const Color(0xFF0F1113),
+            cardTheme: const CardTheme(
+              color: Color(0xFF1A1C1E),
+              surfaceTintColor: Color(0xFF1A1C1E),
+              elevation: 2,
             ),
             useMaterial3: true,
             fontFamily: 'Roboto',
