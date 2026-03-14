@@ -1,30 +1,27 @@
-import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:aliolo/data/models/user_model.dart';
 import 'package:aliolo/data/services/auth_service.dart';
+import 'package:aliolo/core/di/service_locator.dart';
 
 class ProgressService {
-  static final ProgressService _instance = ProgressService._internal();
-  factory ProgressService() => _instance;
-  ProgressService._internal();
+  final SupabaseClient _supabase = Supabase.instance.client;
+  final AuthService _authService = getIt<AuthService>();
 
-  final _authService = AuthService();
-  SupabaseClient get _supabase => Supabase.instance.client;
-
-  Future<void> recordCorrectAnswer(
-    String cardId,
-    String subjectId, {
-    int quality = 5,
-    int cardLevel = 1,
+  Future<void> recordProgress({
+    required String userServerId,
+    required String cardId,
+    required String subjectId,
+    required int quality, // 0-5
+    required int cardLevel,
   }) async {
     final user = _authService.currentUser;
-    if (user == null || user.serverId == null) return;
+    if (user == null) return;
 
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
-    final userServerId = user.serverId!;
 
     try {
+      // 1. Update card specific progress in DB
       final remoteRes =
           await _supabase
               .from('progress')
@@ -45,24 +42,30 @@ class ProgressService {
         'updated_at': now.toIso8601String(),
       }, onConflict: 'user_id, card_id');
 
-      int xpGain = 1;
+      // 2. Calculate XP (New logic: fixed values, no card level)
+      int xpGain = 1; // Incorrect
       if (quality == 5)
-        xpGain = 9;
+        xpGain = 9; // Perfect
       else if (quality == 3)
-        xpGain = 6;
+        xpGain = 6; // Correct
       else if (quality == 2)
-        xpGain = 3;
+        xpGain = 3; // Hesitant
 
-      int totalXp = user.totalXp + xpGain + cardLevel;
+      int totalXp = user.totalXp + xpGain;
 
-      int dailyCompletions = user.dailyCompletions;
+      // 3. Update Streak & Daily Goal
+      double dailyCompletions = user.dailyCompletions;
       int currentStreak = user.currentStreak;
       int maxStreak = user.maxStreak;
 
-      if (quality >= 3) {
+      // Only count correct/hesitant answers toward daily goal
+      if (quality >= 2) {
         if (user.lastActiveDate == null) {
-          dailyCompletions = 1;
-          if (dailyCompletions >= user.dailyGoalCount) currentStreak = 1;
+          dailyCompletions = 1.0;
+          if (dailyCompletions >= user.dailyGoalCount) {
+            currentStreak = 1;
+            totalXp += user.dailyGoalCount; // Streak Bonus
+          }
         } else {
           final lastActiveDay = DateTime(
             user.lastActiveDate!.year,
@@ -70,14 +73,28 @@ class ProgressService {
             user.lastActiveDate!.day,
           );
           final dayDifference = today.difference(lastActiveDay).inDays;
+
           if (dayDifference == 0) {
-            dailyCompletions++;
+            final wasGoalReachedBefore =
+                dailyCompletions >= user.dailyGoalCount;
+            dailyCompletions += 1.0;
+            final isGoalReachedNow = dailyCompletions >= user.dailyGoalCount;
+
+            if (!wasGoalReachedBefore && isGoalReachedNow) {
+              currentStreak++;
+              totalXp += user.dailyGoalCount; // Streak Bonus
+            }
           } else {
-            if (dayDifference > 1 || dailyCompletions < user.dailyGoalCount)
-              currentStreak = 0;
-            dailyCompletions = 1;
+            // New day
+            if (dayDifference > 1) {
+              currentStreak = 0; // Broke streak
+            }
+            dailyCompletions = 1.0;
+            if (dailyCompletions >= user.dailyGoalCount) {
+              currentStreak++;
+              totalXp += user.dailyGoalCount; // Streak Bonus
+            }
           }
-          if (dailyCompletions == user.dailyGoalCount) currentStreak++;
         }
         if (currentStreak > maxStreak) maxStreak = currentStreak;
       }
@@ -92,6 +109,78 @@ class ProgressService {
     } catch (e) {
       print('Progress Sync Error: $e');
     }
+  }
+
+  Future<void> recordLearnProgress({
+    required String cardId,
+    required String subjectId,
+  }) async {
+    final user = _authService.currentUser;
+    if (user == null || user.serverId == null) return;
+
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+
+    try {
+      // 1. XP Gain for Learn Mode: 2
+      int totalXp = user.totalXp + 2;
+
+      // 2. Daily Goal Logic
+      double dailyCompletions = user.dailyCompletions;
+      int currentStreak = user.currentStreak;
+      int maxStreak = user.maxStreak;
+
+      if (user.lastActiveDate == null) {
+        dailyCompletions = 0.25;
+        if (dailyCompletions >= user.dailyGoalCount) {
+          currentStreak = 1;
+          totalXp += user.dailyGoalCount;
+        }
+      } else {
+        final lastActiveDay = DateTime(
+          user.lastActiveDate!.year,
+          user.lastActiveDate!.month,
+          user.lastActiveDate!.day,
+        );
+        final dayDifference = today.difference(lastActiveDay).inDays;
+
+        if (dayDifference == 0) {
+          final wasGoalReachedBefore = dailyCompletions >= user.dailyGoalCount;
+          dailyCompletions += 0.25;
+          final isGoalReachedNow = dailyCompletions >= user.dailyGoalCount;
+          if (!wasGoalReachedBefore && isGoalReachedNow) {
+            currentStreak++;
+            totalXp += user.dailyGoalCount;
+          }
+        } else {
+          if (dayDifference > 1) currentStreak = 0;
+          dailyCompletions = 0.25;
+          if (dailyCompletions >= user.dailyGoalCount) {
+            currentStreak++;
+            totalXp += user.dailyGoalCount;
+          }
+        }
+      }
+      if (currentStreak > maxStreak) maxStreak = currentStreak;
+
+      user.totalXp = totalXp;
+      user.dailyCompletions = dailyCompletions;
+      user.currentStreak = currentStreak;
+      user.maxStreak = maxStreak;
+      user.lastActiveDate = now;
+
+      await _authService.updateUser(user);
+    } catch (e) {
+      print('Learn Progress Error: $e');
+    }
+  }
+
+  Future<void> awardSubjectCompletionBonus(int cardCount) async {
+    final user = _authService.currentUser;
+    if (user == null) return;
+    // Bonus equal to number of cards in the session
+    user.totalXp += cardCount;
+    await _authService.updateUser(user);
   }
 
   Future<void> hideCard(String cardId, bool hidden) async {
@@ -126,20 +215,13 @@ class ProgressService {
     return 0.0;
   }
 
-  Future<void> awardSubjectCompletionBonus() async {
-    final user = _authService.currentUser;
-    if (user == null) return;
-    user.totalXp += 50;
-    await _authService.updateUser(user);
-  }
-
   Future<int> getMathLevelCount() async => 0;
   Future<List<ProgressRecord>> getMathRecords() async => [];
   Future<Map<String, int>> getSubjectCrowns() async {
     return {}; // Stub for now
   }
 
-  Future<int> getDailyProgress() async {
-    return _authService.currentUser?.dailyCompletions ?? 0;
+  Future<double> getDailyProgress() async {
+    return _authService.currentUser?.dailyCompletions ?? 0.0;
   }
 }

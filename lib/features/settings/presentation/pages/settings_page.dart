@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart';
 import 'package:aliolo/core/widgets/aliolo_scrollable_page.dart';
 import 'package:window_manager/window_manager.dart';
@@ -7,15 +6,12 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
-import 'package:aliolo/data/services/learning_language_service.dart';
+import 'package:aliolo/data/services/testing_language_service.dart';
 import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/data/models/pillar_model.dart';
-
 import 'package:aliolo/features/leaderboard/presentation/pages/leaderboard_page.dart';
-import 'package:aliolo/features/management/presentation/pages/manage_cards_page.dart';
-import 'package:aliolo/features/auth/presentation/pages/profile_page.dart';
-
 import 'package:aliolo/features/subjects/presentation/pages/subject_page.dart';
+import 'package:aliolo/features/auth/presentation/pages/profile_page.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -30,8 +26,6 @@ class _SettingsPageState extends State<SettingsPage> {
   late String _themeMode;
   late bool _soundEnabled;
   late bool _showOnLeaderboard;
-  late int _shortcutPrev;
-  late int _shortcutNext;
   late String _defaultLanguage;
 
   String _version = '1.0.0';
@@ -47,8 +41,6 @@ class _SettingsPageState extends State<SettingsPage> {
     _themeMode = user?.themeMode ?? 'system';
     _soundEnabled = user?.soundEnabled ?? true;
     _showOnLeaderboard = user?.showOnLeaderboard ?? true;
-    _shortcutPrev = user?.shortcutPrevKey ?? 0x0000000042b;
-    _shortcutNext = user?.shortcutNextKey ?? 0x0000000042a;
     _defaultLanguage = user?.defaultLanguage ?? 'EN';
     _loadPackageInfo();
   }
@@ -103,38 +95,6 @@ class _SettingsPageState extends State<SettingsPage> {
     }
   }
 
-  Future<void> _listenForKey(bool isPrev) async {
-    final key = await showDialog<LogicalKeyboardKey>(
-      context: context,
-      builder: (context) => _KeyCaptureDialog(),
-    );
-
-    if (key != null) {
-      int prev = isPrev ? key.keyId : _shortcutPrev;
-      int next = isPrev ? _shortcutNext : key.keyId;
-
-      await _authService.updateShortcuts(prev, next);
-      setState(() {
-        _shortcutPrev = prev;
-        _shortcutNext = next;
-      });
-      _showSavedMsg();
-    }
-  }
-
-  String _getKeyName(BuildContext context, int id) {
-    if (id == 0x0000000042b) return context.t('left_arrow');
-    if (id == 0x0000000042a) return context.t('right_arrow');
-    if (id == 0x00000000429) return context.t('up_arrow');
-    if (id == 0x00000000428) return context.t('down_arrow');
-    try {
-      final key = LogicalKeyboardKey.findKeyByKeyId(id);
-      return key?.keyLabel ?? "Key $id";
-    } catch (_) {
-      return "Key $id";
-    }
-  }
-
   Widget _buildSectionTitle(String title, Color color) {
     return Padding(
       padding: const EdgeInsets.only(left: 8, bottom: 12, top: 16),
@@ -153,12 +113,13 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     const appBarColor = Colors.white;
-    final currentSessionColor = ThemeService().primaryColor;
 
     return ListenableBuilder(
       listenable: Listenable.merge([TranslationService(), ThemeService()]),
       builder: (context, _) {
         final currentPrimaryColor = ThemeService().primaryColor;
+        final isDark = Theme.of(context).brightness == Brightness.dark;
+
         return AlioloScrollablePage(
           title: Text(
             context.t('settings'),
@@ -188,16 +149,6 @@ class _SettingsPageState extends State<SettingsPage> {
                   ),
             ),
             IconButton(
-              icon: const Icon(Icons.edit, color: appBarColor),
-              onPressed:
-                  () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const ManageCardsPage(),
-                    ),
-                  ),
-            ),
-            IconButton(
               icon: const Icon(Icons.person, color: appBarColor),
               onPressed:
                   () => Navigator.push(
@@ -212,7 +163,7 @@ class _SettingsPageState extends State<SettingsPage> {
               onPressed: () => setState(() {}),
             ),
           ],
-          body: Column(
+          fixedBody: Column(
             children: [
               _buildSectionTitle(
                 context.t('general_preferences'),
@@ -221,48 +172,6 @@ class _SettingsPageState extends State<SettingsPage> {
               Card(
                 child: Column(
                   children: [
-                    ListTile(
-                      title: Text(context.t('theme_color')),
-                      subtitle: Text(context.t('theme_color_desc')),
-                      leading: Icon(Icons.palette, color: currentPrimaryColor),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-                      child: Wrap(
-                        spacing: 12,
-                        runSpacing: 12,
-                        alignment: WrapAlignment.center,
-                        children: pillars.map((p) {
-                          final color = p.getColor();
-                          final isSelected = ThemeService.toHexStatic(color) == ThemeService.toHexStatic(ThemeService().primaryColor);
-                          
-                          return GestureDetector(
-                            onTap: () => _authService.updateMainColor(ThemeService.toHexStatic(color)),
-                            child: Container(
-                              width: 44,
-                              height: 44,
-                              decoration: BoxDecoration(
-                                color: color,
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  color: isSelected ? Colors.white : Colors.transparent,
-                                  width: 3,
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withValues(alpha: 0.2),
-                                    blurRadius: 4,
-                                    offset: const Offset(0, 2),
-                                  ),
-                                ],
-                              ),
-                              child: isSelected ? const Icon(Icons.check, color: Colors.white) : null,
-                            ),
-                          );
-                        }).toList(),
-                      ),
-                    ),
-                    const Divider(height: 1),
                     SwitchListTile(
                       title: Text(context.t('sidebar_left')),
                       subtitle: Text(context.t('sidebar_left_desc')),
@@ -307,15 +216,13 @@ class _SettingsPageState extends State<SettingsPage> {
                         child: DropdownButton<String>(
                           value:
                               TranslationService().currentLocale.languageCode,
-                          underline: const SizedBox(),
                           isExpanded: true,
-                          alignment: AlignmentDirectional.centerEnd,
+                          underline: const SizedBox(),
                           items:
                               TranslationService().availableUILanguages
                                   .map(
                                     (code) => DropdownMenuItem(
-                                      value: code,
-                                      alignment: AlignmentDirectional.centerEnd,
+                                      value: code.toLowerCase(),
                                       child: Text(
                                         TranslationService().getLanguageName(
                                           code,
@@ -327,7 +234,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           onChanged: (val) {
                             if (val != null) {
                               TranslationService().setLocale(Locale(val));
-                              _authService.updateUiLanguagePreference(val);
+                              _showSavedMsg();
                             }
                           },
                         ),
@@ -335,209 +242,132 @@ class _SettingsPageState extends State<SettingsPage> {
                     ),
                     const Divider(height: 1),
                     ListTile(
-                      title: Text(context.t('default_learning_language')),
-                      subtitle: Text(
-                        context.t('default_learning_language_desc'),
-                      ),
-                      leading: Icon(Icons.language, color: currentPrimaryColor),
-                      trailing: SizedBox(
-                        width: 150,
-                        child: ListenableBuilder(
-                          listenable: LearningLanguageService(),
-                          builder: (context, _) {
-                            final langService = LearningLanguageService();
-                            final rawActiveLangs =
-                                langService.activeLanguageCodes
-                                    .map((c) => c.toLowerCase())
-                                    .toSet();
-
-                            // Ensure current default is always in the list even if not in active (safety)
-                            rawActiveLangs.add(_defaultLanguage.toLowerCase());
-
-                            final activeLangs = rawActiveLangs.toList()..sort();
-
-                            return DropdownButton<String>(
-                              value: _defaultLanguage.toLowerCase(),
-                              underline: const SizedBox(),
-                              isExpanded: true,
-                              alignment: AlignmentDirectional.centerEnd,
-                              items:
-                                  activeLangs
-                                      .map(
-                                        (l) => DropdownMenuItem(
-                                          value: l,
-                                          alignment:
-                                              AlignmentDirectional.centerEnd,
-                                          child: Text(
-                                            langService.getLanguageName(l),
-                                          ),
-                                        ),
-                                      )
-                                      .toList(),
-                              onChanged: (val) {
-                                if (val != null) _updateDefaultLanguage(val);
-                              },
-                            );
-                          },
-                        ),
+                      title: Text(context.t('theme_mode')),
+                      leading: Icon(
+                        Icons.brightness_medium,
+                        color: currentPrimaryColor,
                       ),
                     ),
-                    const Divider(height: 1),
                     Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.brightness_medium,
-                                color: currentPrimaryColor,
-                              ),
-                              const SizedBox(width: 16),
-                              Text(
-                                context.t('theme_mode'),
-                                style: const TextStyle(fontSize: 16),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 12),
-                          Center(
-                            child: SegmentedButton<String>(
-                              segments: [
-                                ButtonSegment(
-                                  value: 'system',
-                                  label: Text(context.t('system')),
-                                  icon: const Icon(Icons.brightness_auto),
-                                ),
-                                ButtonSegment(
-                                  label: Text(context.t('light')),
-                                  value: 'light',
-                                  icon: const Icon(Icons.light_mode),
-                                ),
-                                ButtonSegment(
-                                  value: 'dark',
-                                  label: Text(context.t('dark')),
-                                  icon: const Icon(Icons.dark_mode),
-                                ),
-                              ],
-                              selected: {_themeMode},
-                              onSelectionChanged: (Set<String> newSelection) {
-                                _updateTheme(newSelection.first);
+                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children:
+                            [
+                              {'mode': 'light', 'icon': Icons.light_mode},
+                              {'mode': 'dark', 'icon': Icons.dark_mode},
+                              {
+                                'mode': 'system',
+                                'icon': Icons.settings_brightness,
                               },
-                            ),
-                          ),
-                        ],
+                            ].map((item) {
+                              final mode = item['mode'] as String;
+                              final icon = item['icon'] as IconData;
+                              final isSelected = _themeMode == mode;
+                              return ChoiceChip(
+                                avatar: Icon(
+                                  icon,
+                                  size: 16,
+                                  color:
+                                      isSelected
+                                          ? Colors.white
+                                          : currentPrimaryColor,
+                                ),
+                                label: Text(context.t('theme_$mode')),
+                                selected: isSelected,
+                                onSelected: (val) {
+                                  if (val) _updateTheme(mode);
+                                },
+                                selectedColor: currentPrimaryColor,
+                                labelStyle: TextStyle(
+                                  color:
+                                      isSelected
+                                          ? Colors.white
+                                          : (isDark
+                                              ? Colors.white70
+                                              : Colors.black87),
+                                ),
+                                showCheckmark: false,
+                              );
+                            }).toList(),
                       ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 32),
-              _buildSectionTitle(
-                context.t('keyboard_shortcuts'),
-                currentPrimaryColor,
-              ),
-              Card(
-                child: Column(
-                  children: [
-                    ListTile(
-                      title: Text(context.t('previous_card')),
-                      subtitle: Text(
-                        "Ctrl + ${_getKeyName(context, _shortcutPrev)}",
-                      ),
-                      leading: Icon(Icons.keyboard, color: currentPrimaryColor),
-                      trailing: const Icon(Icons.edit, size: 18),
-                      onTap: () => _listenForKey(true),
                     ),
                     const Divider(height: 1),
                     ListTile(
-                      title: Text(context.t('next_card')),
-                      subtitle: Text(
-                        "Ctrl + ${_getKeyName(context, _shortcutNext)}",
+                      title: Text(context.t('theme_color')),
+                      subtitle: Text(context.t('theme_color_desc')),
+                      leading: Icon(Icons.palette, color: currentPrimaryColor),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                      child: Wrap(
+                        spacing: 12,
+                        runSpacing: 12,
+                        alignment: WrapAlignment.center,
+                        children:
+                            pillars.map((p) {
+                              final color = p.getColor();
+                              final isSelected =
+                                  ThemeService.toHexStatic(color) ==
+                                  ThemeService.toHexStatic(
+                                    ThemeService().primaryColor,
+                                  );
+
+                              return GestureDetector(
+                                onTap:
+                                    () => _authService.updateMainColor(
+                                      ThemeService.toHexStatic(color),
+                                    ),
+                                child: Container(
+                                  width: 44,
+                                  height: 44,
+                                  decoration: BoxDecoration(
+                                    color: color,
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                      color:
+                                          isSelected
+                                              ? Colors.white
+                                              : Colors.transparent,
+                                      width: 3,
+                                    ),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withValues(
+                                          alpha: 0.2,
+                                        ),
+                                        blurRadius: 4,
+                                        offset: const Offset(0, 2),
+                                      ),
+                                    ],
+                                  ),
+                                  child:
+                                      isSelected
+                                          ? const Icon(
+                                            Icons.check,
+                                            color: Colors.white,
+                                          )
+                                          : null,
+                                ),
+                              );
+                            }).toList(),
                       ),
-                      leading: Icon(Icons.keyboard, color: currentPrimaryColor),
-                      trailing: const Icon(Icons.edit, size: 18),
-                      onTap: () => _listenForKey(false),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(height: 48),
-              Column(
-                children: [
-                  Text(
-                    'Aliolo Pro',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: currentPrimaryColor.withValues(alpha: 0.8),
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    '${context.t('version')} $_version',
-                    style: TextStyle(fontSize: 12, color: Colors.grey[500]),
-                  ),
-                ],
+              const SizedBox(height: 24),
+              Center(
+                child: Text(
+                  '${context.t('version')} $_version',
+                  style: TextStyle(fontSize: 12, color: Colors.grey[500]),
+                ),
               ),
             ],
           ),
+          slivers: const [],
         );
       },
-    );
-  }
-}
-
-class _KeyCaptureDialog extends StatefulWidget {
-  @override
-  State<_KeyCaptureDialog> createState() => _KeyCaptureDialogState();
-}
-
-class _KeyCaptureDialogState extends State<_KeyCaptureDialog> {
-  final FocusNode _node = FocusNode();
-
-  @override
-  void dispose() {
-    _node.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return KeyboardListener(
-      focusNode: _node,
-      autofocus: true,
-      onKeyEvent: (event) {
-        if (event is KeyDownEvent) {
-          if (event.logicalKey == LogicalKeyboardKey.controlLeft ||
-              event.logicalKey == LogicalKeyboardKey.controlRight ||
-              event.logicalKey == LogicalKeyboardKey.shiftLeft ||
-              event.logicalKey == LogicalKeyboardKey.shiftRight ||
-              event.logicalKey == LogicalKeyboardKey.altLeft ||
-              event.logicalKey == LogicalKeyboardKey.altRight) {
-            return;
-          }
-          Navigator.pop(context, event.logicalKey);
-        }
-      },
-      child: AlertDialog(
-        title: Text(context.t('record_shortcut')),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Icon(Icons.keyboard, size: 48, color: Colors.orange),
-            const SizedBox(height: 16),
-            Text(context.t('shortcuts_hint')),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text(context.t('cancel')),
-          ),
-        ],
-      ),
     );
   }
 }

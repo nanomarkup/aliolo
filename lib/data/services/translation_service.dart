@@ -261,8 +261,13 @@ class TranslationService extends ChangeNotifier {
 }
 
 extension TranslationExtension on BuildContext {
-  String t(String key, {Map<String, String>? args}) =>
-      TranslationService().translate(key, args: args);
+  String t(String key, {Map<String, String>? args}) {
+    try {
+      return TranslationService().translate(key, args: args);
+    } catch (_) {
+      return key;
+    }
+  }
 
   String plural(String baseKey, int count) {
     final key = count == 1 ? '${baseKey}_label' : '${baseKey}_plural';

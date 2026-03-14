@@ -13,7 +13,6 @@ import 'package:aliolo/features/auth/presentation/pages/login_page.dart';
 import 'package:aliolo/features/subjects/presentation/pages/subject_page.dart';
 import 'package:aliolo/features/leaderboard/presentation/pages/leaderboard_page.dart';
 import 'package:aliolo/features/settings/presentation/pages/settings_page.dart';
-import 'package:aliolo/features/management/presentation/pages/manage_cards_page.dart';
 import 'package:aliolo/features/auth/presentation/pages/manage_friends_page.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -50,37 +49,51 @@ class _ProfilePageState extends State<ProfilePage> {
     showDialog(
       context: context,
       builder:
-          (context) => AlertDialog(
-            title: Text(context.t('edit_name')),
-            content: TextField(
-              controller: nameController,
-              autofocus: true,
-              decoration: InputDecoration(
-                hintText: context.t('enter_new_name'),
-              ),
-              onSubmitted: (val) async {
-                if (val.trim().isNotEmpty) {
-                  await _authService.updateUsername(val.trim());
-                  if (mounted) Navigator.pop(context);
-                }
-              },
-            ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: Text(context.t('cancel')),
-              ),
-              TextButton(
-                onPressed: () async {
-                  final newName = nameController.text.trim();
-                  if (newName.isNotEmpty) {
-                    await _authService.updateUsername(newName);
-                    if (mounted) Navigator.pop(context);
-                  }
-                },
-                child: Text(context.t('save')),
-              ),
-            ],
+          (context) => StatefulBuilder(
+            builder:
+                (context, setDialogState) => AlertDialog(
+                  title: Text(context.t('edit_name')),
+                  content: TextField(
+                    controller: nameController,
+                    autofocus: true,
+                    decoration: InputDecoration(
+                      hintText: context.t('enter_new_name'),
+                      suffixIcon:
+                          nameController.text.isNotEmpty
+                              ? IconButton(
+                                icon: const Icon(Icons.clear),
+                                onPressed: () {
+                                  nameController.clear();
+                                  setDialogState(() {});
+                                },
+                              )
+                              : null,
+                    ),
+                    onChanged: (val) => setDialogState(() {}),
+                    onSubmitted: (val) async {
+                      if (val.trim().isNotEmpty) {
+                        await _authService.updateUsername(val.trim());
+                        if (mounted) Navigator.pop(context);
+                      }
+                    },
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: Text(context.t('cancel')),
+                    ),
+                    TextButton(
+                      onPressed: () async {
+                        final newName = nameController.text.trim();
+                        if (newName.isNotEmpty) {
+                          await _authService.updateUsername(newName);
+                          if (mounted) Navigator.pop(context);
+                        }
+                      },
+                      child: Text(context.t('save')),
+                    ),
+                  ],
+                ),
           ),
     );
   }
@@ -185,16 +198,6 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
             ),
             IconButton(
-              icon: const Icon(Icons.edit, color: appBarColor),
-              onPressed:
-                  () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const ManageCardsPage(),
-                    ),
-                  ),
-            ),
-            IconButton(
               icon: const Icon(Icons.person, color: appBarColor),
               onPressed: () => setState(() {}),
             ),
@@ -213,6 +216,13 @@ class _ProfilePageState extends State<ProfilePage> {
             children: [
               const SizedBox(height: 24),
               _buildProfileHeader(user, currentSessionColor),
+              const SizedBox(height: 32),
+              _buildSectionTitle(
+                context,
+                context.t('daily_progress'),
+                currentSessionColor,
+              ),
+              _buildDailyProgressCard(context, user, currentSessionColor),
               const SizedBox(height: 32),
               _buildSectionTitle(
                 context,
@@ -237,7 +247,7 @@ class _ProfilePageState extends State<ProfilePage> {
               const SizedBox(height: 32),
               _buildSectionTitle(
                 context,
-                context.t('learning_section'),
+                context.t('testing_section'),
                 currentSessionColor,
               ),
               _buildSettingsCard(context, currentSessionColor, user),
@@ -287,43 +297,122 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
+  Widget _buildDailyProgressCard(
+    BuildContext context,
+    UserModel user,
+    Color color,
+  ) {
+    final progress = (user.dailyCompletions / user.dailyGoalCount).clamp(
+      0.0,
+      1.0,
+    );
+    final isGoalReached = user.dailyCompletions >= user.dailyGoalCount;
+
+    return Card(
+      elevation: 2,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(16, 16, 24, 16),
+        child: Row(
+          children: [
+            Icon(Icons.trending_up, size: 24, color: color),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        context.t('done_today'),
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      Text(
+                        '${user.dailyCompletions.toStringAsFixed(1).replaceAll('.0', '')} / ${user.dailyGoalCount}',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: isGoalReached ? Colors.green : color,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: LinearProgressIndicator(
+                      value: progress,
+                      minHeight: 12,
+                      backgroundColor: color.withValues(alpha: 0.1),
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                        isGoalReached ? Colors.green : color,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   void _showDeleteAccountDialog() {
     final passwordController = TextEditingController();
     showDialog(
       context: context,
       builder:
-          (context) => AlertDialog(
-            title: Text(context.t('delete_account')),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(context.t('delete_account_confirm')),
-                const SizedBox(height: 16),
-                TextField(
-                  controller: passwordController,
-                  obscureText: true,
-                  autofocus: true,
-                  decoration: InputDecoration(
-                    labelText: context.t('password'),
-                    hintText: context.t('password_required'),
+          (context) => StatefulBuilder(
+            builder:
+                (context, setDialogState) => AlertDialog(
+                  title: Text(context.t('delete_account')),
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(context.t('delete_account_confirm')),
+                      const SizedBox(height: 16),
+                      TextField(
+                        controller: passwordController,
+                        obscureText: true,
+                        autofocus: true,
+                        decoration: InputDecoration(
+                          labelText: context.t('password'),
+                          hintText: context.t('password_required'),
+                          suffixIcon:
+                              passwordController.text.isNotEmpty
+                                  ? IconButton(
+                                    icon: const Icon(Icons.clear),
+                                    onPressed: () {
+                                      passwordController.clear();
+                                      setDialogState(() {});
+                                    },
+                                  )
+                                  : null,
+                        ),
+                        onChanged: (val) => setDialogState(() {}),
+                        onSubmitted: (val) => _handleDeleteConfirm(val),
+                      ),
+                    ],
                   ),
-                  onSubmitted: (val) => _handleDeleteConfirm(val),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: Text(context.t('cancel')),
+                    ),
+                    TextButton(
+                      onPressed:
+                          () => _handleDeleteConfirm(passwordController.text),
+                      child: Text(
+                        context.t('delete_account'),
+                        style: const TextStyle(color: Colors.red),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: Text(context.t('cancel')),
-              ),
-              TextButton(
-                onPressed: () => _handleDeleteConfirm(passwordController.text),
-                child: Text(
-                  context.t('delete_account'),
-                  style: const TextStyle(color: Colors.red),
-                ),
-              ),
-            ],
           ),
     );
   }
@@ -353,19 +442,32 @@ class _ProfilePageState extends State<ProfilePage> {
     }
   }
 
-  Widget _buildSectionTitle(BuildContext context, String title, Color color) {
+  Widget _buildSectionTitle(
+    BuildContext context,
+    String title,
+    Color color, {
+    IconData? icon,
+  }) {
     return Padding(
       padding: const EdgeInsets.only(left: 8, bottom: 12),
       child: Align(
         alignment: Alignment.centerLeft,
-        child: Text(
-          title.toUpperCase(),
-          style: TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w900,
-            color: color,
-            letterSpacing: 1.5,
-          ),
+        child: Row(
+          children: [
+            if (icon != null) ...[
+              Icon(icon, size: 18, color: color),
+              const SizedBox(width: 8),
+            ],
+            Text(
+              title.toUpperCase(),
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w900,
+                color: color,
+                letterSpacing: 1.5,
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -392,34 +494,58 @@ class _ProfilePageState extends State<ProfilePage> {
         children: [
           ListTile(
             leading: Icon(Icons.adjust, color: color),
-            title: Text(context.t('daily_goal')),
-            trailing: Text('${user.dailyGoalCount} ${context.plural('card', user.dailyGoalCount)}'),
+            title: Text(context.t('next_day_goal')),
+            subtitle: Text(
+              context.t('goal_change_hint'),
+              style: const TextStyle(fontSize: 12),
+            ),
+            trailing: Text(
+              '${user.nextDailyGoal} ${context.plural('card', user.nextDailyGoal)}',
+            ),
             onTap:
                 () => _showValuePicker(
-                  title: context.t('daily_goal'),
-                  initialValue: user.dailyGoalCount,
+                  title: context.t('next_day_goal'),
+                  initialValue: user.nextDailyGoal,
                   min: 5,
                   max: 50,
-                  onSelected: (val) => _authService.updateDailyGoal(val),
+                  onSelected: (val) => _authService.updateNextDailyGoal(val),
                 ),
           ),
           const Divider(height: 1),
           ListTile(
-            leading: Icon(Icons.view_agenda, color: color),
-            title: Text(context.t('session_size')),
-            trailing: Text('${user.sessionSize} ${context.plural('card', user.sessionSize)}'),
+            leading: Icon(Icons.school, color: color),
+            title: Text(context.t('learn_session_size')),
+            trailing: Text(
+              '${user.learnSessionSize} ${context.plural('card', user.learnSessionSize)}',
+            ),
             onTap:
                 () => _showValuePicker(
-                  title: context.t('session_size'),
-                  initialValue: user.sessionSize,
+                  title: context.t('learn_session_size'),
+                  initialValue: user.learnSessionSize,
                   min: 5,
-                  max: 25,
-                  onSelected: (val) => _authService.updateSessionSize(val),
+                  max: 50,
+                  onSelected: (val) => _authService.updateLearnSessionSize(val),
                 ),
           ),
           const Divider(height: 1),
           ListTile(
             leading: Icon(Icons.quiz, color: color),
+            title: Text(context.t('test_session_size')),
+            trailing: Text(
+              '${user.testSessionSize} ${context.plural('card', user.testSessionSize)}',
+            ),
+            onTap:
+                () => _showValuePicker(
+                  title: context.t('test_session_size'),
+                  initialValue: user.testSessionSize,
+                  min: 5,
+                  max: 25,
+                  onSelected: (val) => _authService.updateTestSessionSize(val),
+                ),
+          ),
+          const Divider(height: 1),
+          ListTile(
+            leading: Icon(Icons.view_headline, color: color),
             title: Text(context.t('options_count')),
             trailing: Text('${user.optionsCount}'),
             onTap:

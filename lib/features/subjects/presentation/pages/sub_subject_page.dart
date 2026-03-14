@@ -6,7 +6,7 @@ import 'package:aliolo/data/models/pillar_model.dart';
 import 'package:aliolo/data/services/card_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/core/widgets/resize_wrapper.dart';
-import 'package:aliolo/features/learning/presentation/pages/learning_page.dart';
+import 'package:aliolo/features/testing/presentation/pages/test_page.dart';
 
 class SubSubjectPage extends StatefulWidget {
   final SubjectModel subject;
@@ -50,9 +50,7 @@ class _SubSubjectPageState extends State<SubSubjectPage> {
                   ),
                   const SizedBox(width: 24),
                   Theme(
-                    data: Theme.of(
-                      context,
-                    ).copyWith(canvasColor: pillarColor),
+                    data: Theme.of(context).copyWith(canvasColor: pillarColor),
                     child: DropdownButton<String>(
                       value: _selectedLanguage,
                       dropdownColor: pillarColor,
@@ -165,7 +163,7 @@ class _SubSubjectPageState extends State<SubSubjectPage> {
                                                 context,
                                                 MaterialPageRoute(
                                                   builder:
-                                                      (context) => LearningPage(
+                                                      (context) => TestPage(
                                                         card: card,
                                                         languageCode:
                                                             _selectedLanguage,

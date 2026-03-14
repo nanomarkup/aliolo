@@ -9,8 +9,9 @@ import 'package:aliolo/data/models/subject_model.dart';
 import 'package:aliolo/data/models/pillar_model.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/core/utils/logger.dart';
+import 'package:aliolo/core/di/service_locator.dart';
 
-class CardService {
+class CardService with ChangeNotifier {
   static final CardService _instance = CardService._internal();
   factory CardService() => _instance;
   CardService._internal();
@@ -40,8 +41,10 @@ class CardService {
   Future<List<Pillar>> getPillars() async {
     if (_supabase == null) return pillars;
     try {
-      final List<dynamic> data =
-          await _supabase!.from('pillars').select().order('id', ascending: true);
+      final List<dynamic> data = await _supabase!
+          .from('pillars')
+          .select()
+          .order('sort_order', ascending: true);
 
       final dbPillars = data.map((json) => Pillar.fromJson(json)).toList();
       if (dbPillars.isNotEmpty) {
@@ -61,45 +64,33 @@ class CardService {
     final Map<String, SubjectModel> combined = {};
 
     try {
-      // 1. Always get ALL owned subjects
-      final List<dynamic> ownedData = await _supabase!
+      // 1. Get ALL owned subjects AND ALL public subjects
+      final List<dynamic> subjectsData = await _supabase!
           .from('subjects')
           .select(
             '*, profiles(username), cards(id, is_deleted, prompts, answers)',
           )
-          .eq('owner_id', user.serverId!);
+          .or('owner_id.eq.${user.serverId!},is_public.eq.true');
 
-      for (var json in ownedData) {
+      for (var json in subjectsData) {
         final s = SubjectModel.fromJson(json);
         combined[s.id] = s;
       }
 
-      // 2. Get subjects added from others
+      // 2. Get the list of subject IDs that are specifically on the user's dashboard
       final List<dynamic> dashboardData = await _supabase!
           .from('user_subjects')
           .select('subject_id')
           .eq('user_id', user.serverId!);
 
-      final List<String> addedIds =
-          dashboardData
-              .map((e) => e['subject_id'] as String)
-              .where(
-                (id) => !combined.containsKey(id),
-              ) // Only those we don't already own
-              .toList();
+      final Set<String> dashboardIds = {
+        for (var item in dashboardData) item['subject_id'] as String,
+      };
 
-      if (addedIds.isNotEmpty) {
-        final List<dynamic> addedData = await _supabase!
-            .from('subjects')
-            .select(
-              '*, profiles(username), cards(id, is_deleted, prompts, answers)',
-            )
-            .inFilter('id', addedIds);
-
-        for (var json in addedData) {
-          final s = SubjectModel.fromJson(json);
-          combined[s.id] = s;
-        }
+      // Mark subjects as being on dashboard if they are owned or explicitly added
+      for (var s in combined.values) {
+        s.isOnDashboard =
+            s.ownerId == user.serverId || dashboardIds.contains(s.id);
       }
 
       return combined.values.toList();
@@ -158,6 +149,7 @@ class CardService {
               updatedAt: s.updatedAt,
               cardCount: s.cardCount,
               rawCards: s.rawCards,
+              ageGroup: s.ageGroup,
               isOnDashboard:
                   s.ownerId == user.serverId || dashboardIds.contains(s.id),
             );
@@ -187,6 +179,7 @@ class CardService {
             .eq('user_id', user.serverId!)
             .eq('subject_id', subjectId);
       }
+      notifyListeners();
     } catch (e) {
       print('Error in toggleSubjectOnDashboard: $e');
     }
@@ -200,6 +193,7 @@ class CardService {
         'user_id': user.serverId,
         'subject_id': subjectId,
       }, onConflict: 'user_id, subject_id');
+      notifyListeners();
     } catch (_) {}
   }
 
@@ -212,6 +206,7 @@ class CardService {
           .delete()
           .eq('user_id', user.serverId!)
           .eq('subject_id', subjectId);
+      notifyListeners();
     } catch (_) {}
   }
 
@@ -227,6 +222,7 @@ class CardService {
   }
 
   Future<SubjectModel?> getSubjectById(String id) async {
+    final user = _authService.currentUser;
     try {
       final res =
           await _supabase!
@@ -235,7 +231,22 @@ class CardService {
               .eq('id', id)
               .maybeSingle();
       if (res == null) return null;
-      return SubjectModel.fromJson(res);
+
+      final subject = SubjectModel.fromJson(res);
+
+      if (user?.serverId != null) {
+        final dashboardCheck =
+            await _supabase!
+                .from('user_subjects')
+                .select()
+                .eq('user_id', user!.serverId!)
+                .eq('subject_id', id)
+                .maybeSingle();
+        subject.isOnDashboard =
+            subject.ownerId == user.serverId || dashboardCheck != null;
+      }
+
+      return subject;
     } catch (e) {
       print('Error fetching subject by id: $e');
       return null;
@@ -270,14 +281,38 @@ class CardService {
     }
   }
 
-  Future<List<String>> getSubjectsByPillar(int pillarId) async {
+  Future<List<SubjectModel>> getSubjectsByPillar(int pillarId) async {
+    final user = _authService.currentUser;
+    if (user == null || user.serverId == null) return [];
+
     try {
+      // Get all subjects for this pillar that are either public or owned by the user
       final List<dynamic> data = await _supabase!
           .from('subjects')
-          .select('name')
-          .eq('pillar_id', pillarId);
-      return data.map((e) => e['name'] as String).toSet().toList()..sort();
-    } catch (_) {
+          .select(
+            '*, profiles(username), cards(id, is_deleted, prompts, answers)',
+          )
+          .eq('pillar_id', pillarId)
+          .or('is_public.eq.true,owner_id.eq.${user.serverId!}');
+
+      // Get dashboard status
+      final List<dynamic> dashboardData = await _supabase!
+          .from('user_subjects')
+          .select('subject_id')
+          .eq('user_id', user.serverId!);
+
+      final Set<String> dashboardIds = {
+        for (var item in dashboardData) item['subject_id'] as String,
+      };
+
+      return data.map((json) {
+        final s = SubjectModel.fromJson(json);
+        s.isOnDashboard =
+            dashboardIds.contains(s.id) || s.ownerId == user.serverId;
+        return s;
+      }).toList();
+    } catch (e) {
+      print('Error fetching subjects by pillar: $e');
       return [];
     }
   }
@@ -375,9 +410,11 @@ class CardService {
         'descriptions': subject.descriptions,
         'owner_id': subject.ownerId,
         'is_public': subject.isPublic,
+        'age_group': subject.ageGroup,
         'updated_at': DateTime.now().toIso8601String(),
         'created_at': subject.createdAt.toIso8601String(),
       });
+      notifyListeners();
     } catch (e) {
       print('Error saving subject: $e');
       rethrow;
@@ -387,6 +424,7 @@ class CardService {
   Future<void> deleteSubjectById(String subjectId) async {
     try {
       await _supabase!.from('subjects').delete().eq('id', subjectId);
+      notifyListeners();
     } catch (e) {
       print('Error deleting subject: $e');
     }
@@ -493,11 +531,14 @@ class CardService {
         'video_url': card.videoUrl,
         'image_url': card.imageUrl,
         'image_urls': card.imageUrls,
+        'kind': card.kind,
+        'audio_urls': card.audioUrls,
         'owner_id': card.ownerId,
         'is_public': card.isPublic,
         'updated_at': card.updatedAt.toIso8601String(),
         'created_at': card.createdAt.toIso8601String(),
       });
+      notifyListeners();
     } catch (e) {
       print('Error adding card: $e');
     }

@@ -11,8 +11,9 @@ import 'package:aliolo/data/services/translation_service.dart';
 
 class SubjectEditPage extends StatefulWidget {
   final SubjectModel? existingSubject;
+  final int? pillarId;
 
-  const SubjectEditPage({super.key, this.existingSubject});
+  const SubjectEditPage({super.key, this.existingSubject, this.pillarId});
 
   @override
   State<SubjectEditPage> createState() => _SubjectEditPageState();
@@ -25,6 +26,7 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
 
   late int _selectedPillar;
   late bool _isPublic;
+  late String _selectedAgeGroup;
   bool _showAllLangs = false;
   bool _isSaving = false;
 
@@ -34,8 +36,9 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
   @override
   void initState() {
     super.initState();
-    _selectedPillar = widget.existingSubject?.pillarId ?? 1;
+    _selectedPillar = widget.existingSubject?.pillarId ?? widget.pillarId ?? 1;
     _isPublic = widget.existingSubject?.isPublic ?? false;
+    _selectedAgeGroup = widget.existingSubject?.ageGroup ?? 'advanced';
 
     _initLanguageControllers();
   }
@@ -80,6 +83,7 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
     final Map<String, dynamic> data = {
       'pillarId': _selectedPillar,
       'isPublic': _isPublic,
+      'ageGroup': _selectedAgeGroup,
       'names': schemaNames,
       'descriptions': schemaDescriptions,
     };
@@ -138,7 +142,9 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
                   const SizedBox(width: 8),
                   TextButton.icon(
                     onPressed: () async {
-                      final data = await Clipboard.getData(Clipboard.kTextPlain);
+                      final data = await Clipboard.getData(
+                        Clipboard.kTextPlain,
+                      );
                       if (data?.text != null) {
                         textController.text = data!.text!;
                       }
@@ -159,6 +165,9 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
                           }
                           if (parsed['isPublic'] is bool) {
                             _isPublic = parsed['isPublic'];
+                          }
+                          if (parsed['ageGroup'] is String) {
+                            _selectedAgeGroup = parsed['ageGroup'];
                           }
                           if (parsed['names'] is Map) {
                             final names = parsed['names'] as Map;
@@ -236,6 +245,7 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
         names: names,
         descriptions: descriptions,
         pillarId: _selectedPillar,
+        ageGroup: _selectedAgeGroup,
         ownerId:
             widget.existingSubject?.ownerId ??
             _authService.currentUser!.serverId!,
@@ -269,6 +279,9 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
       orElse: () => pillars.first,
     );
     final currentSessionColor = pillar.getColor();
+    final isOwner =
+        widget.existingSubject == null ||
+        widget.existingSubject!.ownerId == _authService.currentUser?.serverId;
 
     return AlioloScrollablePage(
       title: Text(
@@ -283,18 +296,26 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
           icon: const Icon(Icons.arrow_back, color: appBarColor),
           onPressed: () => Navigator.pop(context),
         ),
-        IconButton(
-          icon: const Text(
-            '{}',
-            style: TextStyle(
-              color: appBarColor,
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'monospace',
-            ),
+        if (isOwner)
+          IconButton(
+            icon:
+                _isSaving
+                    ? const SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator(
+                        color: appBarColor,
+                        strokeWidth: 2,
+                      ),
+                    )
+                    : const Icon(Icons.save, color: appBarColor),
+            onPressed: _isSaving ? null : _save,
           ),
-          onPressed: _showJsonDialog,
-        ),
+        if (isOwner)
+          IconButton(
+            icon: const Icon(Icons.code, color: appBarColor),
+            onPressed: _showJsonDialog,
+          ),
       ],
       body: Form(
         key: _formKey,
@@ -302,35 +323,71 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 24),
-            _buildSectionCaption(context.t('pillar')),
-            const SizedBox(height: 8),
-            DropdownButtonFormField<int>(
-              value: _selectedPillar,
-              decoration: const InputDecoration(border: OutlineInputBorder()),
-              items:
-                  pillars
-                      .map(
-                        (p) => DropdownMenuItem(
-                          value: p.id,
-                          child: Text(
-                            p.getTranslatedName(
-                              TranslationService().currentLocale.languageCode,
+            if (widget.pillarId == null && widget.existingSubject == null) ...[
+              _buildSectionCaption(context.t('pillar')),
+              const SizedBox(height: 8),
+              DropdownButtonFormField<int>(
+                value: _selectedPillar,
+                decoration: const InputDecoration(border: OutlineInputBorder()),
+                items:
+                    pillars
+                        .map(
+                          (p) => DropdownMenuItem(
+                            value: p.id,
+                            child: Text(
+                              p.getTranslatedName(
+                                TranslationService().currentLocale.languageCode,
+                              ),
                             ),
                           ),
-                        ),
-                      )
-                      .toList(),
-              onChanged: (val) {
-                if (val != null) setState(() => _selectedPillar = val);
-              },
-            ),
-            const SizedBox(height: 24),
+                        )
+                        .toList(),
+                onChanged: (val) {
+                  if (val != null) setState(() => _selectedPillar = val);
+                },
+              ),
+              const SizedBox(height: 24),
+            ],
+
             _buildSectionCaption(context.t('visibility')),
             SwitchListTile(
               title: Text(context.t('public_subject')),
               subtitle: Text(context.t('public_subject_desc')),
               value: _isPublic,
-              onChanged: (val) => setState(() => _isPublic = val),
+              onChanged:
+                  isOwner ? (val) => setState(() => _isPublic = val) : null,
+            ),
+            const SizedBox(height: 24),
+            _buildSectionCaption(context.t('age_group')),
+            const SizedBox(height: 8),
+            DropdownButtonFormField<String>(
+              value: _selectedAgeGroup,
+              decoration: const InputDecoration(border: OutlineInputBorder()),
+              items: [
+                DropdownMenuItem(
+                  value: 'early',
+                  child: Text(context.t('age_early')),
+                ),
+                DropdownMenuItem(
+                  value: 'primary',
+                  child: Text(context.t('age_primary')),
+                ),
+                DropdownMenuItem(
+                  value: 'intermediate',
+                  child: Text(context.t('age_intermediate')),
+                ),
+                DropdownMenuItem(
+                  value: 'advanced',
+                  child: Text(context.t('age_advanced')),
+                ),
+              ],
+              onChanged:
+                  isOwner
+                      ? (val) {
+                        if (val != null)
+                          setState(() => _selectedAgeGroup = val);
+                      }
+                      : null,
             ),
             const SizedBox(height: 24),
             _buildSectionCaption(context.t('names_descriptions')),
@@ -373,6 +430,7 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
                             labelText: context.t('name'),
                             border: const OutlineInputBorder(),
                           ),
+                          enabled: isOwner,
                         ),
                         const SizedBox(height: 8),
                         TextFormField(
@@ -382,6 +440,7 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
                             border: const OutlineInputBorder(),
                           ),
                           maxLines: 2,
+                          enabled: isOwner,
                         ),
                       ],
                     ),
@@ -394,22 +453,6 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
                     ? context.t('show_less_languages')
                     : context.t('show_all_languages'),
               ),
-            ),
-            const SizedBox(height: 32),
-            ElevatedButton(
-              onPressed: _isSaving ? null : _save,
-              style: ElevatedButton.styleFrom(
-                minimumSize: const Size(double.infinity, 60),
-                backgroundColor: currentSessionColor,
-                foregroundColor: Colors.white,
-              ),
-              child:
-                  _isSaving
-                      ? const CircularProgressIndicator(color: Colors.white)
-                      : Text(
-                        context.t('save_subject'),
-                        style: const TextStyle(fontSize: 18),
-                      ),
             ),
             const SizedBox(height: 48),
           ],

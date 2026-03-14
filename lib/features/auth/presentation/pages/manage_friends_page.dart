@@ -92,24 +92,40 @@ class _ManageFriendsPageState extends State<ManageFriendsPage> {
     showDialog(
       context: context,
       builder:
-          (context) => AlertDialog(
-            title: Text(context.t('add_friend_by_email')),
-            content: TextField(
-              controller: emailController,
-              autofocus: true,
-              decoration: InputDecoration(hintText: context.t('email')),
-              onSubmitted: (val) => _sendRequest(val),
-            ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: Text(context.t('cancel')),
-              ),
-              TextButton(
-                onPressed: () => _sendRequest(emailController.text),
-                child: Text(context.t('send')),
-              ),
-            ],
+          (context) => StatefulBuilder(
+            builder:
+                (context, setDialogState) => AlertDialog(
+                  title: Text(context.t('add_friend_by_email')),
+                  content: TextField(
+                    controller: emailController,
+                    autofocus: true,
+                    decoration: InputDecoration(
+                      hintText: context.t('email'),
+                      suffixIcon:
+                          emailController.text.isNotEmpty
+                              ? IconButton(
+                                icon: const Icon(Icons.clear),
+                                onPressed: () {
+                                  emailController.clear();
+                                  setDialogState(() {});
+                                },
+                              )
+                              : null,
+                    ),
+                    onChanged: (val) => setDialogState(() {}),
+                    onSubmitted: (val) => _sendRequest(val),
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: Text(context.t('cancel')),
+                    ),
+                    TextButton(
+                      onPressed: () => _sendRequest(emailController.text),
+                      child: Text(context.t('send')),
+                    ),
+                  ],
+                ),
           ),
     );
   }

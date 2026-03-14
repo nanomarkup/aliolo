@@ -120,9 +120,9 @@ class FriendshipService {
           .order('total_xp', ascending: false)
           .range(page * pageSize, (page + 1) * pageSize - 1);
 
-      return List<dynamic>.from(profilesRes)
-          .map((p) => UserModel.fromJson(p))
-          .toList();
+      return List<dynamic>.from(
+        profilesRes,
+      ).map((p) => UserModel.fromJson(p)).toList();
     } catch (e) {
       print('Error fetching friends leaderboard: $e');
       return [];

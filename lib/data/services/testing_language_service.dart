@@ -5,58 +5,58 @@ import 'package:flutter/foundation.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 
-class LearningLanguage {
+class TestingLanguage {
   final String code;
   final String name;
   final String nativeName;
 
-  const LearningLanguage({
+  const TestingLanguage({
     required this.code,
     required this.name,
     required this.nativeName,
   });
 }
 
-class LearningLanguageService extends ChangeNotifier {
-  static final LearningLanguageService _instance =
-      LearningLanguageService._internal();
-  factory LearningLanguageService() => _instance;
-  LearningLanguageService._internal();
+class TestingLanguageService extends ChangeNotifier {
+  static final TestingLanguageService _instance =
+      TestingLanguageService._internal();
+  factory TestingLanguageService() => _instance;
+  TestingLanguageService._internal();
 
   // Sorted alphabetically by nativeName string values
-  final List<LearningLanguage> allLanguages = const [
-    LearningLanguage(
+  final List<TestingLanguage> allLanguages = const [
+    TestingLanguage(
       code: 'id',
       name: 'Indonesian',
       nativeName: 'Bahasa Indonesia',
     ),
-    LearningLanguage(code: 'de', name: 'German', nativeName: 'Deutsch'),
-    LearningLanguage(code: 'en', name: 'English', nativeName: 'English'),
-    LearningLanguage(code: 'es', name: 'Spanish', nativeName: 'Español'),
-    LearningLanguage(code: 'fa', name: 'Persian', nativeName: 'Farsi'),
-    LearningLanguage(code: 'fr', name: 'French', nativeName: 'Français'),
-    LearningLanguage(code: 'it', name: 'Italian', nativeName: 'Italiano'),
-    LearningLanguage(code: 'sw', name: 'Swahili', nativeName: 'Kiswahili'),
-    LearningLanguage(code: 'nl', name: 'Dutch', nativeName: 'Nederlands'),
-    LearningLanguage(code: 'pl', name: 'Polish', nativeName: 'Polski'),
-    LearningLanguage(code: 'pt', name: 'Portuguese', nativeName: 'Português'),
-    LearningLanguage(code: 'tl', name: 'Tagalog', nativeName: 'Tagalog'),
-    LearningLanguage(code: 'vi', name: 'Vietnamese', nativeName: 'Tiếng Việt'),
-    LearningLanguage(code: 'tr', name: 'Turkish', nativeName: 'Türkçe'),
-    LearningLanguage(code: 'el', name: 'Greek', nativeName: 'Ελληνικά'),
-    LearningLanguage(code: 'uk', name: 'Ukrainian', nativeName: 'Українська'),
-    LearningLanguage(code: 'ar', name: 'Arabic', nativeName: 'العربية'),
-    LearningLanguage(code: 'ur', name: 'Urdu', nativeName: 'اردو'),
-    LearningLanguage(code: 'bn', name: 'Bengali', nativeName: 'বাংলা'),
-    LearningLanguage(code: 'pa', name: 'Punjabi', nativeName: 'ਪੰਜਾਬੀ'),
-    LearningLanguage(code: 'hi', name: 'Hindi', nativeName: 'हिन्दी'),
-    LearningLanguage(code: 'mr', name: 'Marathi', nativeName: 'мраठी'),
-    LearningLanguage(code: 'te', name: 'Telugu', nativeName: 'తెలుగు'),
-    LearningLanguage(code: 'ta', name: 'Tamil', nativeName: 'தமிழ்'),
-    LearningLanguage(code: 'th', name: 'Thai', nativeName: 'ไทย'),
-    LearningLanguage(code: 'zh', name: 'Chinese', nativeName: '中文'),
-    LearningLanguage(code: 'ja', name: 'Japanese', nativeName: '日本語'),
-    LearningLanguage(code: 'ko', name: 'Korean', nativeName: '한국어'),
+    TestingLanguage(code: 'de', name: 'German', nativeName: 'Deutsch'),
+    TestingLanguage(code: 'en', name: 'English', nativeName: 'English'),
+    TestingLanguage(code: 'es', name: 'Spanish', nativeName: 'Español'),
+    TestingLanguage(code: 'fa', name: 'Persian', nativeName: 'Farsi'),
+    TestingLanguage(code: 'fr', name: 'French', nativeName: 'Français'),
+    TestingLanguage(code: 'it', name: 'Italian', nativeName: 'Italiano'),
+    TestingLanguage(code: 'sw', name: 'Swahili', nativeName: 'Kiswahili'),
+    TestingLanguage(code: 'nl', name: 'Dutch', nativeName: 'Nederlands'),
+    TestingLanguage(code: 'pl', name: 'Polish', nativeName: 'Polski'),
+    TestingLanguage(code: 'pt', name: 'Portuguese', nativeName: 'Português'),
+    TestingLanguage(code: 'tl', name: 'Tagalog', nativeName: 'Tagalog'),
+    TestingLanguage(code: 'vi', name: 'Vietnamese', nativeName: 'Tiếng Việt'),
+    TestingLanguage(code: 'tr', name: 'Turkish', nativeName: 'Türkçe'),
+    TestingLanguage(code: 'el', name: 'Greek', nativeName: 'Ελληνικά'),
+    TestingLanguage(code: 'uk', name: 'Ukrainian', nativeName: 'Українська'),
+    TestingLanguage(code: 'ar', name: 'Arabic', nativeName: 'العربية'),
+    TestingLanguage(code: 'ur', name: 'Urdu', nativeName: 'اردو'),
+    TestingLanguage(code: 'bn', name: 'Bengali', nativeName: 'বাংলা'),
+    TestingLanguage(code: 'pa', name: 'Punjabi', nativeName: 'ਪੰਜਾਬੀ'),
+    TestingLanguage(code: 'hi', name: 'Hindi', nativeName: 'हिन्दी'),
+    TestingLanguage(code: 'mr', name: 'Marathi', nativeName: 'мраठी'),
+    TestingLanguage(code: 'te', name: 'Telugu', nativeName: 'తెలుగు'),
+    TestingLanguage(code: 'ta', name: 'Tamil', nativeName: 'தமிழ்'),
+    TestingLanguage(code: 'th', name: 'Thai', nativeName: 'ไทย'),
+    TestingLanguage(code: 'zh', name: 'Chinese', nativeName: '中文'),
+    TestingLanguage(code: 'ja', name: 'Japanese', nativeName: '日本語'),
+    TestingLanguage(code: 'ko', name: 'Korean', nativeName: '한국어'),
   ];
 
   List<String> _activeLanguageCodes = ['en'];

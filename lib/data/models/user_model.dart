@@ -11,6 +11,7 @@ class UserModel {
   late String themeMode;
   late String uiLanguage;
   late bool soundEnabled;
+  late bool autoPlayEnabled;
   late String mainColor; // Hex string, e.g., #FF9800
 
   late int totalXp;
@@ -18,14 +19,14 @@ class UserModel {
   late int maxStreak;
   DateTime? lastActiveDate;
   late int dailyGoalCount;
-  late int dailyCompletions;
-  late int sessionSize;
+  late int nextDailyGoal;
+  late double dailyCompletions;
+  late int learnSessionSize;
+  late int testSessionSize;
   late int optionsCount;
   late String defaultLanguage;
   late String? avatarPath;
   late bool showOnLeaderboard;
-  late int shortcutPrevKey;
-  late int shortcutNextKey;
 
   UserModel({
     required this.username,
@@ -34,20 +35,21 @@ class UserModel {
     this.themeMode = 'system',
     this.uiLanguage = 'en',
     this.soundEnabled = true,
+    this.autoPlayEnabled = false,
     this.mainColor = '#FF9800',
     this.totalXp = 0,
     this.currentStreak = 0,
     this.maxStreak = 0,
     this.lastActiveDate,
     this.dailyGoalCount = 20,
-    this.dailyCompletions = 0,
-    this.sessionSize = 10,
+    this.nextDailyGoal = 20,
+    this.dailyCompletions = 0.0,
+    this.learnSessionSize = 20,
+    this.testSessionSize = 10,
     this.optionsCount = 6,
     this.defaultLanguage = 'EN',
     this.avatarPath,
     this.showOnLeaderboard = true,
-    this.shortcutPrevKey = 1067,
-    this.shortcutNextKey = 1066,
     this.serverId,
     this.createdAt,
     this.updatedAt,
@@ -65,17 +67,21 @@ class UserModel {
       themeMode: json['theme_mode'] ?? 'system',
       uiLanguage: json['ui_language'] ?? 'en',
       dailyGoalCount: json['daily_goal_count'] ?? 20,
+      nextDailyGoal:
+          json['next_daily_goal'] ?? (json['daily_goal_count'] ?? 20),
+      dailyCompletions: (json['daily_completions'] ?? 0).toDouble(),
       sidebarLeft: json['sidebar_left'] ?? false,
       soundEnabled: json['sound_enabled'] ?? true,
+      autoPlayEnabled: json['auto_play_enabled'] ?? false,
       mainColor: json['main_color'] ?? '#FF9800',
       showOnLeaderboard: json['show_on_leaderboard'] ?? true,
-      sessionSize: json['session_size'] ?? 10,
+      learnSessionSize: json['learn_session_size'] ?? 20,
+      testSessionSize: json['test_session_size'] ?? json['session_size'] ?? 10,
       optionsCount: json['options_count'] ?? 6,
       defaultLanguage:
           (json['default_language'] ?? 'en').toString().toLowerCase(),
-      shortcutPrevKey: (json['shortcut_prev_key'] as num?)?.toInt() ?? 1067,
-      shortcutNextKey: (json['shortcut_next_key'] as num?)?.toInt() ?? 1066,
       avatarPath: json['avatar_url'],
+      lastActiveDate: DateTime.tryParse(json['last_active_date'] ?? ''),
       updatedAt: DateTime.tryParse(json['updated_at'] ?? ''),
       createdAt: DateTime.tryParse(json['created_at'] ?? ''),
     );
@@ -92,16 +98,19 @@ class UserModel {
       'theme_mode': themeMode,
       'ui_language': uiLanguage,
       'daily_goal_count': dailyGoalCount,
+      'next_daily_goal': nextDailyGoal,
+      'daily_completions': dailyCompletions,
       'sidebar_left': sidebarLeft,
       'sound_enabled': soundEnabled,
+      'auto_play_enabled': autoPlayEnabled,
       'main_color': mainColor,
       'show_on_leaderboard': showOnLeaderboard,
-      'session_size': sessionSize,
+      'learn_session_size': learnSessionSize,
+      'test_session_size': testSessionSize,
       'options_count': optionsCount,
       'default_language': defaultLanguage.toLowerCase(),
-      'shortcut_prev_key': shortcutPrevKey,
-      'shortcut_next_key': shortcutNextKey,
       'avatar_url': avatarPath,
+      'last_active_date': lastActiveDate?.toIso8601String(),
       'updated_at': updatedAt?.toIso8601String(),
     };
   }

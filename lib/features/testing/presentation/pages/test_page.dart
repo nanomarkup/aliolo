@@ -20,21 +20,17 @@ import 'package:aliolo/core/widgets/window_controls.dart';
 import 'package:aliolo/core/widgets/resize_wrapper.dart';
 import 'package:aliolo/core/utils/logger.dart';
 
-class LearningPage extends StatefulWidget {
+class TestPage extends StatefulWidget {
   final CardModel card;
   final String languageCode;
 
-  const LearningPage({
-    super.key,
-    required this.card,
-    required this.languageCode,
-  });
+  const TestPage({super.key, required this.card, required this.languageCode});
 
   @override
-  State<LearningPage> createState() => _LearningPageState();
+  State<TestPage> createState() => _TestPageState();
 }
 
-class _LearningPageState extends State<LearningPage> {
+class _TestPageState extends State<TestPage> {
   late CardModel _currentCard;
   SubjectModel? _subject;
   String _translatedSubjectName = '';
@@ -46,6 +42,11 @@ class _LearningPageState extends State<LearningPage> {
   bool _isCorrect = false;
   String _correctAnswerText = '';
 
+  bool get _isAudioMode =>
+      _currentCard.kind == 'audio_to_image' ||
+      _currentCard.kind == 'audio_to_text' ||
+      _currentCard.isAudio;
+
   // Multi-image State
   List<String> _currentImages = [];
   int _currentImageIndex = 0;
@@ -55,6 +56,11 @@ class _LearningPageState extends State<LearningPage> {
   List<CardModel> _sessionQueue = [];
   int _completedInSession = 0;
   int _totalInSession = 0;
+  int _sessionCorrect = 0;
+  int _sessionWrong = 0;
+
+  bool _isAutoPlay = false;
+  bool _isAutoPlayWaiting = false;
 
   final _authService = AuthService();
   final _soundService = SoundService();
@@ -69,6 +75,7 @@ class _LearningPageState extends State<LearningPage> {
     if (!kIsWeb) {
       windowManager.setResizable(true);
     }
+    _isAutoPlay = _authService.currentUser?.autoPlayEnabled ?? false;
     _currentCard = widget.card;
     _initSession();
   }
@@ -90,7 +97,7 @@ class _LearningPageState extends State<LearningPage> {
       final List<CardModel> sessionCards = [];
       final int mathLevel = widget.card.level;
 
-      for (int i = 0; i < (user.sessionSize); i++) {
+      for (int i = 0; i < (user.testSessionSize); i++) {
         final problem = MathService().generateProblem(mathLevel);
         final card = MathService().createVirtualCard(problem, mathLevel);
         sessionCards.add(card);
@@ -119,7 +126,8 @@ class _LearningPageState extends State<LearningPage> {
             .toList();
     langFiltered.shuffle();
 
-    final size = user.sessionSize;
+    final size = user.testSessionSize;
+
     final List<CardModel> sessionCards = langFiltered.take(size).toList();
 
     if (sessionCards.isNotEmpty) {
@@ -173,7 +181,26 @@ class _LearningPageState extends State<LearningPage> {
       if (_currentCard.mathOptions != null) {
         options = List.from(_currentCard.mathOptions!);
       }
+    } else if (_currentCard.kind == 'audio_to_image') {
+      _correctAnswerText = _currentCard.imageUrl ?? '';
+      final allInSubject = await CardService().getCardsBySubject(
+        _currentCard.subjectId,
+      );
+      final validOptions =
+          allInSubject
+              .where((c) => c.id != _currentCard.id)
+              .map((c) => c.imageUrl)
+              .whereType<String>()
+              .toSet()
+              .toList();
+      validOptions.shuffle();
+
+      final optCount = user?.optionsCount ?? 6;
+      options = validOptions.take(optCount - 1).toList();
+      options.add(_correctAnswerText);
+      options.shuffle();
     } else {
+      // Standard text options for image_to_text AND audio_to_text
       final allInSubject = await CardService().getCardsBySubject(
         _currentCard.subjectId,
       );
@@ -210,16 +237,47 @@ class _LearningPageState extends State<LearningPage> {
       ];
       _currentImageIndex = 0;
       _showingVideo =
-          _currentImages.isEmpty &&
-          (_currentCard.videoUrl?.isNotEmpty ?? false);
+          (_currentImages.isEmpty &&
+              (_currentCard.videoUrl?.isNotEmpty ?? false)) ||
+          _isAudioMode;
 
-      AppLogger.log('DEBUG: LearningPage Card images: $_currentImages');
+      AppLogger.log('DEBUG: TestPage Card images: $_currentImages');
     });
 
-    if (_showingVideo && _currentCard.videoUrl != null) {
-      player.open(Media(_currentCard.videoUrl!));
-      player.play();
+    if (_showingVideo && (_currentCard.videoUrl != null || _isAudioMode)) {
+      final lang = widget.languageCode.toLowerCase();
+      final audioUrl =
+          _isAudioMode
+              ? (_currentCard.audioUrls[lang] ?? _currentCard.audioUrls['en'])
+              : _currentCard.videoUrl;
+
+      if (audioUrl != null) {
+        player.open(Media(audioUrl));
+        player.play(); // Always autoplay if audio mode or video
+      }
     }
+  }
+
+  void _saveAutoPlayPreference() {
+    _authService.updateAutoPlayPreference(_isAutoPlay);
+  }
+
+  void _scheduleAutoNext() {
+    if (!_isAutoPlay || _isAutoPlayWaiting) return;
+
+    setState(() => _isAutoPlayWaiting = true);
+
+    // Dynamic delay: shorter for correct, longer for wrong
+    final delay =
+        _isCorrect
+            ? const Duration(milliseconds: 1000)
+            : const Duration(milliseconds: 2000);
+
+    Future.delayed(delay, () {
+      if (mounted && _isAutoPlay && _isAnswered) {
+        _nextCard();
+      }
+    });
   }
 
   void _selectOption(int index) {
@@ -235,27 +293,43 @@ class _LearningPageState extends State<LearningPage> {
     });
 
     if (correct) {
+      _sessionCorrect++;
       _soundService.playCorrect();
-      _progressService.recordCorrectAnswer(
-        _currentCard.id,
-        _currentCard.subjectId,
-        quality: 5,
-        cardLevel: _currentCard.level,
-      );
+      final user = _authService.currentUser;
+      if (user?.serverId != null) {
+        _progressService.recordProgress(
+          userServerId: user!.serverId!,
+          cardId: _currentCard.id,
+          subjectId: _currentCard.subjectId,
+          quality: 5,
+          cardLevel: _currentCard.level,
+        );
+      }
     } else {
+      _sessionWrong++;
       _soundService.playWrong();
-      _progressService.recordCorrectAnswer(
-        _currentCard.id,
-        _currentCard.subjectId,
-        quality: 0,
-        cardLevel: _currentCard.level,
-      );
+      final user = _authService.currentUser;
+      if (user?.serverId != null) {
+        _progressService.recordProgress(
+          userServerId: user!.serverId!,
+          cardId: _currentCard.id,
+          subjectId: _currentCard.subjectId,
+          quality: 0,
+          cardLevel: _currentCard.level,
+        );
+      }
+
       final card = _sessionQueue.removeAt(0);
       _sessionQueue.add(card);
+    }
+
+    if (_isAutoPlay) {
+      _scheduleAutoNext();
     }
   }
 
   void _nextCard() {
+    setState(() => _isAutoPlayWaiting = false);
     player.stop();
     if (_isCorrect) {
       _sessionQueue.removeAt(0);
@@ -269,19 +343,56 @@ class _LearningPageState extends State<LearningPage> {
       _setupMCQ();
       _loadVideo();
     } else {
-      _progressService.awardSubjectCompletionBonus();
-      _soundService.playCompleted();
+      _progressService.awardSubjectCompletionBonus(_totalInSession);
+      if (_sessionWrong == 0) {
+        _soundService.playGreat();
+      } else if (_sessionWrong <= 2) {
+        _soundService.playGood();
+      } else {
+        _soundService.playCompleted();
+      }
+
       showDialog(
         context: context,
         barrierDismissible: false,
         builder:
             (context) => AlertDialog(
               title: Text(context.t('session_complete')),
-              content: Text(
-                context.t(
-                  'finished_session',
-                  args: {'count': _totalInSession.toString()},
-                ),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Column(
+                        children: [
+                          Text(
+                            _sessionCorrect.toString(),
+                            style: const TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.green,
+                            ),
+                          ),
+                          Text(context.t('correct_answers')),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          Text(
+                            _sessionWrong.toString(),
+                            style: const TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.red,
+                            ),
+                          ),
+                          Text(context.t('wrong_answers')),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
               ),
               actions: [
                 TextButton(
@@ -425,6 +536,87 @@ class _LearningPageState extends State<LearningPage> {
                     );
                     final bool isScrollable = targetItemHeight < minHeight;
 
+                    if (_currentCard.kind == 'audio_to_image') {
+                      return GridView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 12,
+                              mainAxisSpacing: 12,
+                              childAspectRatio: 1,
+                            ),
+                        itemCount: count,
+                        itemBuilder: (context, index) {
+                          final option = _options[index];
+                          final isSelected = _selectedIndex == index;
+                          final isCorrect = option == _correctAnswerText;
+
+                          return InkWell(
+                            onTap: () => _selectOption(index),
+                            borderRadius: BorderRadius.circular(16),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(16),
+                                border: Border.all(
+                                  color:
+                                      _isAnswered
+                                          ? (isCorrect
+                                              ? Colors.green
+                                              : (isSelected
+                                                  ? Colors.red
+                                                  : Colors.transparent))
+                                          : (isSelected
+                                              ? headerColor
+                                              : Colors.grey[300]!),
+                                  width: 4,
+                                ),
+                              ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(12),
+                                child: Stack(
+                                  children: [
+                                    Positioned.fill(
+                                      child:
+                                          (option.startsWith('http')
+                                              ? Image.network(
+                                                option,
+                                                fit: BoxFit.cover,
+                                              )
+                                              : Image.file(
+                                                File(option),
+                                                fit: BoxFit.cover,
+                                              )),
+                                    ),
+                                    if (_isAnswered && isCorrect)
+                                      const Center(
+                                        child: CircleAvatar(
+                                          backgroundColor: Colors.white,
+                                          child: Icon(
+                                            Icons.check,
+                                            color: Colors.green,
+                                          ),
+                                        ),
+                                      ),
+                                    if (_isAnswered && isSelected && !isCorrect)
+                                      const Center(
+                                        child: CircleAvatar(
+                                          backgroundColor: Colors.white,
+                                          child: Icon(
+                                            Icons.close,
+                                            color: Colors.red,
+                                          ),
+                                        ),
+                                      ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    }
+
                     return Center(
                       child: SingleChildScrollView(
                         physics:
@@ -518,7 +710,9 @@ class _LearningPageState extends State<LearningPage> {
                                           color: Colors.green,
                                           size: fontSize * 1.4,
                                         ),
-                                      if (_isAnswered && isSelected && !_isCorrect)
+                                      if (_isAnswered &&
+                                          isSelected &&
+                                          !_isCorrect)
                                         Icon(
                                           Icons.cancel,
                                           color: Colors.red,
@@ -543,28 +737,78 @@ class _LearningPageState extends State<LearningPage> {
               SizedBox(
                 width: double.infinity,
                 height: 70,
-                child: ElevatedButton.icon(
-                  onPressed: _isAnswered ? _nextCard : null,
-                  icon: const Icon(Icons.arrow_forward),
-                  label: Text(
-                    context.t('next'),
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: ElevatedButton.icon(
+                        onPressed: _isAnswered ? _nextCard : null,
+                        icon: const Icon(Icons.arrow_forward),
+                        label: Text(
+                          context.t('next'),
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size.fromHeight(70),
+                          backgroundColor:
+                              _isAnswered
+                                  ? (_isCorrect
+                                      ? Colors.green
+                                      : Colors.blueGrey)
+                                  : headerColor,
+                          foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          disabledBackgroundColor: Colors.grey[300],
+                          disabledForegroundColor: Colors.grey[500],
+                        ),
+                      ),
                     ),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor:
-                        _isAnswered
-                            ? (_isCorrect ? Colors.green : Colors.blueGrey)
-                            : headerColor,
-                    foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
+                    const SizedBox(width: 12),
+                    Container(
+                      height: 70,
+                      width: 70,
+                      decoration: BoxDecoration(
+                        color:
+                            _isAutoPlay
+                                ? headerColor.withValues(alpha: 0.2)
+                                : Colors.grey[200],
+                        borderRadius: BorderRadius.circular(15),
+                        border: Border.all(
+                          color: _isAutoPlay ? headerColor : Colors.grey[400]!,
+                          width: 2,
+                        ),
+                      ),
+                      child: IconButton(
+                        icon: Icon(
+                          _isAutoPlay
+                              ? Icons.pause_circle_filled
+                              : Icons.play_circle_fill,
+                          size: 32,
+                          color: _isAutoPlay ? headerColor : Colors.grey[600],
+                        ),
+                        tooltip:
+                            _isAutoPlay
+                                ? 'Disable Auto-play'
+                                : 'Enable Auto-play', // Add translation later if needed
+                        onPressed: () {
+                          setState(() {
+                            _isAutoPlay = !_isAutoPlay;
+                            _saveAutoPlayPreference();
+                            // If auto-play is turned on while an answer is selected, trigger it immediately
+                            if (_isAutoPlay &&
+                                _isAnswered &&
+                                !_isAutoPlayWaiting) {
+                              _scheduleAutoNext();
+                            }
+                          });
+                        },
+                      ),
                     ),
-                    disabledBackgroundColor: Colors.grey[300],
-                    disabledForegroundColor: Colors.grey[500],
-                  ),
+                  ],
                 ),
               ),
             ],
@@ -580,7 +824,8 @@ class _LearningPageState extends State<LearningPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  if (_showingVideo && _currentCard.videoUrl != null)
+                  if (_showingVideo &&
+                      (_currentCard.videoUrl != null || _isAudioMode))
                     Expanded(
                       child: Card(
                         elevation: 10,
@@ -588,7 +833,53 @@ class _LearningPageState extends State<LearningPage> {
                           borderRadius: BorderRadius.circular(20),
                         ),
                         clipBehavior: Clip.antiAlias,
-                        child: Video(controller: controller),
+                        child:
+                            _isAudioMode
+                                ? InkWell(
+                                  onTap: () async {
+                                    await player.seek(Duration.zero);
+                                    player.play();
+                                  },
+                                  child: Center(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.volume_up,
+                                          size: 160,
+                                          color: headerColor,
+                                        ),
+                                        const SizedBox(height: 16),
+                                        Text(
+                                          context.t('audio_playing') ==
+                                                  'audio_playing'
+                                              ? 'Audio Playing'
+                                              : context.t('audio_playing'),
+                                          style: TextStyle(
+                                            fontSize: 28,
+                                            color: headerColor,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 12),
+                                        Text(
+                                          context.t('tap_to_replay') ==
+                                                  'tap_to_replay'
+                                              ? 'Tap to Replay'
+                                              : context.t('tap_to_replay'),
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            color: headerColor.withValues(
+                                              alpha: 0.7,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                )
+                                : Video(controller: controller),
                       ),
                     )
                   else
@@ -619,57 +910,66 @@ class _LearningPageState extends State<LearningPage> {
                                           ),
                                         ),
                                       )
-                                      : (_currentImages.isNotEmpty
-                                          ? Builder(
-                                            builder: (context) {
-                                              final path =
-                                                  _currentImages[_currentImageIndex];
-                                              AppLogger.log(
-                                                'DEBUG: LearningPage rendering image index $_currentImageIndex path: $path',
-                                              );
-                                              if (kIsWeb ||
-                                                  path.startsWith('http')) {
-                                                return Image.network(
-                                                  path,
-                                                  fit: BoxFit.contain,
-                                                  errorBuilder: (
-                                                    context,
-                                                    error,
-                                                    stackTrace,
-                                                  ) {
-                                                    AppLogger.log(
-                                                      'DEBUG: Image.network error: $error',
-                                                    );
-                                                    return const Icon(
-                                                      Icons.broken_image,
-                                                      size: 100,
-                                                      color: Colors.red,
-                                                    );
-                                                  },
-                                                );
-                                              } else if (path.startsWith(
-                                                'assets/',
-                                              )) {
-                                                return Image.asset(
-                                                  path,
-                                                  fit: BoxFit.contain,
-                                                );
-                                              } else {
-                                                return Image.file(
-                                                  File(path),
-                                                  fit: BoxFit.contain,
-                                                );
-                                              }
-                                            },
+                                      : (_isAudioMode
+                                          ? Center(
+                                            child: Icon(
+                                              Icons.volume_up,
+                                              size: 160,
+                                              color: headerColor,
+                                            ),
                                           )
-                                          : const Icon(
-                                            Icons.image_not_supported,
-                                            size: 100,
-                                            color: Colors.grey,
-                                          )),
+                                          : (_currentImages.isNotEmpty
+                                              ? Builder(
+                                                builder: (context) {
+                                                  final path =
+                                                      _currentImages[_currentImageIndex];
+                                                  AppLogger.log(
+                                                    'DEBUG: TestPage rendering image index $_currentImageIndex path: $path',
+                                                  );
+                                                  if (kIsWeb ||
+                                                      path.startsWith('http')) {
+                                                    return Image.network(
+                                                      path,
+                                                      fit: BoxFit.contain,
+                                                      errorBuilder: (
+                                                        context,
+                                                        error,
+                                                        stackTrace,
+                                                      ) {
+                                                        AppLogger.log(
+                                                          'DEBUG: Image.network error: $error',
+                                                        );
+                                                        return const Icon(
+                                                          Icons.broken_image,
+                                                          size: 100,
+                                                          color: Colors.red,
+                                                        );
+                                                      },
+                                                    );
+                                                  } else if (path.startsWith(
+                                                    'assets/',
+                                                  )) {
+                                                    return Image.asset(
+                                                      path,
+                                                      fit: BoxFit.contain,
+                                                    );
+                                                  } else {
+                                                    return Image.file(
+                                                      File(path),
+                                                      fit: BoxFit.contain,
+                                                    );
+                                                  }
+                                                },
+                                              )
+                                              : const Icon(
+                                                Icons.image_not_supported,
+                                                size: 100,
+                                                color: Colors.grey,
+                                              ))),
                             ),
                           ),
-                          if (_currentImages.length > 1) ...[
+                          if (_currentCard.kind != 'audio_to_image' &&
+                              _currentImages.length > 1) ...[
                             Positioned(
                               left: 20,
                               child: CircleAvatar(
@@ -721,7 +1021,8 @@ class _LearningPageState extends State<LearningPage> {
 
                   const SizedBox(height: 20),
 
-                  if (_currentImages.length > 1)
+                  if (_currentCard.kind != 'audio_to_image' &&
+                      _currentImages.length > 1)
                     SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: Row(
@@ -771,7 +1072,8 @@ class _LearningPageState extends State<LearningPage> {
                       ),
                     ),
 
-                  if (_currentCard.videoUrl != null &&
+                  if (_currentCard.kind != 'audio_to_image' &&
+                      _currentCard.videoUrl != null &&
                       _currentCard.videoUrl!.isNotEmpty) ...[
                     const SizedBox(height: 16),
                     Center(
@@ -791,20 +1093,32 @@ class _LearningPageState extends State<LearningPage> {
                           }
                         },
                         icon: Icon(
-                          _showingVideo ? Icons.image : Icons.videocam,
+                          _showingVideo
+                              ? Icons.image
+                              : (_currentCard.isAudio
+                                  ? Icons.volume_up
+                                  : Icons.videocam),
                         ),
                         label: Text(
                           _showingVideo
                               ? (context.t('picture') == 'picture'
                                   ? 'Picture'
                                   : context.t('picture'))
-                              : (context.t('video') == 'video'
-                                  ? 'Video'
-                                  : context.t('video')),
+                              : (_currentCard.isAudio
+                                  ? (context.t('audio') == 'audio'
+                                      ? 'Audio'
+                                      : context.t('audio'))
+                                  : (context.t('video') == 'video'
+                                      ? 'Video'
+                                      : context.t('video'))),
                         ),
                         style: ElevatedButton.styleFrom(
                           backgroundColor:
-                              _showingVideo ? Colors.orange : Colors.blue,
+                              _showingVideo
+                                  ? Colors.orange
+                                  : (_currentCard.isAudio
+                                      ? Colors.teal
+                                      : Colors.blue),
                           foregroundColor: Colors.white,
                           padding: const EdgeInsets.symmetric(
                             horizontal: 30,

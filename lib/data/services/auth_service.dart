@@ -1,15 +1,12 @@
-import 'dart:io';
-import 'package:path/path.dart' as p;
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:aliolo/data/models/user_model.dart';
 import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
-import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/core/utils/logger.dart';
-
 class AuthService extends ChangeNotifier {
   static final AuthService _instance = AuthService._internal();
   factory AuthService() => _instance;
@@ -49,6 +46,25 @@ class AuthService extends ChangeNotifier {
 
       if (remoteData != null) {
         _currentUser = UserModel.fromJson(remoteData);
+
+        // Reset daily progress if it's a new day
+        if (_currentUser!.lastActiveDate != null) {
+          final now = DateTime.now();
+          final today = DateTime(now.year, now.month, now.day);
+          final lastDay = DateTime(
+            _currentUser!.lastActiveDate!.year,
+            _currentUser!.lastActiveDate!.month,
+            _currentUser!.lastActiveDate!.day,
+          );
+
+          if (today.isAfter(lastDay)) {
+            _currentUser!.dailyCompletions = 0;
+            _currentUser!.dailyGoalCount = _currentUser!.nextDailyGoal;
+            // Update immediately in DB to sync state
+            await updateUser(_currentUser!);
+          }
+        }
+
         // Ensure email is consistent from remoteUser if missing or different
         _currentUser!.email = remoteUser.email!.toLowerCase();
         ThemeService().setThemeFromString(_currentUser!.themeMode);
@@ -146,12 +162,15 @@ class AuthService extends ChangeNotifier {
   }
 
   Future<void> updateMainColor(String hexColor) async {
-    if (_currentUser == null || _currentUser!.serverId == null || _supabase == null) return;
+    if (_currentUser == null ||
+        _currentUser!.serverId == null ||
+        _supabase == null)
+      return;
     try {
-      await _supabase!.from('profiles').update({'main_color': hexColor}).eq(
-        'id',
-        _currentUser!.serverId!,
-      );
+      await _supabase!
+          .from('profiles')
+          .update({'main_color': hexColor})
+          .eq('id', _currentUser!.serverId!);
       _currentUser!.mainColor = hexColor;
       ThemeService().setPrimaryColor(ThemeService.fromHex(hexColor));
       notifyListeners();
@@ -225,6 +244,13 @@ class AuthService extends ChangeNotifier {
     }
   }
 
+  Future<void> updateAutoPlayPreference(bool enabled) async {
+    if (_currentUser != null) {
+      _currentUser!.autoPlayEnabled = enabled;
+      await updateUser(_currentUser!);
+    }
+  }
+
   Future<void> updateLeaderboardPreference(bool show) async {
     if (_currentUser != null) {
       _currentUser!.showOnLeaderboard = show;
@@ -239,16 +265,23 @@ class AuthService extends ChangeNotifier {
     }
   }
 
-  Future<void> updateDailyGoal(int count) async {
+  Future<void> updateNextDailyGoal(int count) async {
     if (_currentUser != null) {
-      _currentUser!.dailyGoalCount = count;
+      _currentUser!.nextDailyGoal = count;
       await updateUser(_currentUser!);
     }
   }
 
-  Future<void> updateSessionSize(int size) async {
+  Future<void> updateLearnSessionSize(int size) async {
     if (_currentUser != null) {
-      _currentUser!.sessionSize = size;
+      _currentUser!.learnSessionSize = size;
+      await updateUser(_currentUser!);
+    }
+  }
+
+  Future<void> updateTestSessionSize(int size) async {
+    if (_currentUser != null) {
+      _currentUser!.testSessionSize = size;
       await updateUser(_currentUser!);
     }
   }
@@ -256,14 +289,6 @@ class AuthService extends ChangeNotifier {
   Future<void> updateOptionsCount(int count) async {
     if (_currentUser != null) {
       _currentUser!.optionsCount = count;
-      await updateUser(_currentUser!);
-    }
-  }
-
-  Future<void> updateShortcuts(int prev, int next) async {
-    if (_currentUser != null) {
-      _currentUser!.shortcutPrevKey = prev;
-      _currentUser!.shortcutNextKey = next;
       await updateUser(_currentUser!);
     }
   }
@@ -290,11 +315,13 @@ class AuthService extends ChangeNotifier {
       final storagePath = 'avatars/$fileName';
 
       final bytes = await image.readAsBytes();
-      await _supabase!.storage.from('user_assets').uploadBinary(
-        storagePath,
-        bytes,
-        fileOptions: const FileOptions(cacheControl: '3600', upsert: true),
-      );
+      await _supabase!.storage
+          .from('user_assets')
+          .uploadBinary(
+            storagePath,
+            bytes,
+            fileOptions: const FileOptions(cacheControl: '3600', upsert: true),
+          );
 
       final String publicUrl = _supabase!.storage
           .from('user_assets')

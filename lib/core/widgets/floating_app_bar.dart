@@ -5,17 +5,23 @@ import 'package:aliolo/core/widgets/window_controls.dart';
 class AlioloAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Widget title;
   final List<Widget>? actions;
+  final Widget? leading;
+  final double? leadingWidth;
   final Color backgroundColor;
   final Color foregroundColor;
   final bool automaticallyImplyLeading;
+  final Alignment titleAlignment;
 
   const AlioloAppBar({
     super.key,
     required this.title,
     this.actions,
+    this.leading,
+    this.leadingWidth,
     this.backgroundColor = Colors.blue,
     this.foregroundColor = Colors.white,
     this.automaticallyImplyLeading = false,
+    this.titleAlignment = Alignment.centerLeft,
   });
 
   @override
@@ -47,15 +53,17 @@ class AlioloAppBar extends StatelessWidget implements PreferredSizeWidget {
                   child: SizedBox(
                     width: double.infinity,
                     height: 64,
-                    child: Align(alignment: Alignment.centerLeft, child: title),
+                    child: Align(alignment: titleAlignment, child: title),
                   ),
                 ),
                 backgroundColor: Colors.transparent,
                 foregroundColor: foregroundColor,
                 elevation: 0,
+                leading: leading,
+                leadingWidth: leadingWidth,
                 automaticallyImplyLeading: automaticallyImplyLeading,
                 centerTitle: false,
-                titleSpacing: 20,
+                titleSpacing: leading != null ? 0 : 20,
                 actions: [
                   if (actions != null) ...actions!,
                   const WindowControls(color: Colors.white, iconSize: 24),

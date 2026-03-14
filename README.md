@@ -44,5 +44,5 @@ flutter build web --release
 
 - `lib/core`: Dependency injection, widgets, and utilities.
 - `lib/data`: Models and services (Supabase, Progress, Sound, etc.).
-- `lib/features`: UI features (Auth, Learning, Leaderboard, Management).
+- `lib/features`: UI features (Auth, Testing, Leaderboard, Management).
 - `assets/lang`: UI translation files.

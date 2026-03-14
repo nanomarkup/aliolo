@@ -20,7 +20,7 @@ class AlioloPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const double standardTopGap = 100.0;
+    const double standardTopGap = 92.0;
 
     return ResizeWrapper(
       child: Scaffold(

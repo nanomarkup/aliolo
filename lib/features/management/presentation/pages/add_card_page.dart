@@ -53,7 +53,8 @@ class _AddCardPageState extends State<AddCardPage> {
   @override
   void initState() {
     super.initState();
-    _selectedSubjectId = widget.initialSubjectId ?? widget.existingCard?.subjectId;
+    _selectedSubjectId =
+        widget.initialSubjectId ?? widget.existingCard?.subjectId;
     _initLanguageControllers();
     _loadData();
   }
@@ -106,145 +107,6 @@ class _AddCardPageState extends State<AddCardPage> {
     super.dispose();
   }
 
-  void _showJsonDialog() {
-    final allLangs = TranslationService().availableUILanguages;
-    final Map<String, String> schemaPrompts = {};
-    final Map<String, String> schemaAnswers = {};
-
-    for (var lang in allLangs) {
-      final code = lang.toLowerCase();
-      schemaPrompts[code] = _promptControllers[lang]?.text ?? '';
-      schemaAnswers[code] = _answerControllers[lang]?.text ?? '';
-    }
-
-    final Map<String, dynamic> data = {
-      'videoUrl': _videoUrlController.text,
-      'prompts': schemaPrompts,
-      'answers': schemaAnswers,
-    };
-
-    final encoder = const JsonEncoder.withIndent('  ');
-    final String jsonTemplate = encoder.convert(data);
-    final textController = TextEditingController(text: jsonTemplate);
-
-    showDialog(
-      context: context,
-      builder:
-          (context) => AlertDialog(
-            title: const Text('JSON Data'),
-            content: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 700, maxHeight: 500),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Expanded(
-                    child: TextField(
-                      controller: textController,
-                      maxLines: null,
-                      expands: true,
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.all(12),
-                      ),
-                      style: const TextStyle(
-                        fontFamily: 'monospace',
-                        fontSize: 13,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            actionsPadding: const EdgeInsets.symmetric(
-              horizontal: 16,
-              vertical: 8,
-            ),
-            actions: [
-              Row(
-                children: [
-                  TextButton.icon(
-                    onPressed: () {
-                      Clipboard.setData(
-                        ClipboardData(text: textController.text),
-                      );
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Copied to clipboard')),
-                      );
-                    },
-                    icon: const Icon(Icons.copy, size: 18),
-                    label: const Text('COPY'),
-                  ),
-                  const SizedBox(width: 8),
-                  TextButton.icon(
-                    onPressed: () async {
-                      final data = await Clipboard.getData(Clipboard.kTextPlain);
-                      if (data?.text != null) {
-                        textController.text = data!.text!;
-                      }
-                    },
-                    icon: const Icon(Icons.paste, size: 18),
-                    label: const Text('PASTE'),
-                  ),
-                  const Spacer(),
-                  TextButton.icon(
-                    onPressed: () {
-                      try {
-                        final Map<String, dynamic> parsed = jsonDecode(
-                          textController.text,
-                        );
-                        setState(() {
-                          if (parsed['videoUrl'] != null) {
-                            _videoUrlController.text =
-                                parsed['videoUrl'].toString();
-                          }
-                          final Map? pMap = parsed['prompts'] as Map?;
-                          final Map? aMap = parsed['answers'] as Map?;
-
-                          if (pMap != null && aMap != null) {
-                            // Only update languages that already exist in our controllers
-                            for (var lang in _promptControllers.keys) {
-                              final jsonPrompt = pMap[lang]?.toString() ?? '';
-                              final jsonAnswer = aMap[lang]?.toString() ?? '';
-
-                              final bool isPromptEmpty =
-                                  jsonPrompt.trim().isEmpty;
-                              final bool isAnswerEmpty =
-                                  jsonAnswer.trim().isEmpty;
-
-                              // Requirement:
-                              // 1. If both empty -> update (effectively clear/delete)
-                              // 2. If both non-empty -> update
-                              // 3. If one is missing/empty and other is not -> ignore
-                              if (isPromptEmpty == isAnswerEmpty) {
-                                _promptControllers[lang]!.text = jsonPrompt;
-                                _answerControllers[lang]!.text = jsonAnswer;
-                              }
-                            }
-                          }
-                        });
-                        Navigator.pop(context);
-                      } catch (e) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Invalid JSON: $e')),
-                        );
-                      }
-                    },
-                    icon: const Icon(Icons.refresh, size: 18),
-                    label: const Text('UPDATE'),
-                  ),
-                  const SizedBox(width: 8),
-                  TextButton.icon(
-                    onPressed: () => Navigator.pop(context),
-                    icon: const Icon(Icons.close, size: 18),
-                    label: Text(context.t('cancel').toUpperCase()),
-                  ),
-                ],
-              ),
-            ],
-          ),
-    );
-  }
-
   Future<void> _pickImage({int? replaceIndex, bool? isExisting}) async {
     final picker = ImagePicker();
     final XFile? image = await picker.pickImage(source: ImageSource.gallery);
@@ -293,7 +155,9 @@ class _AddCardPageState extends State<AddCardPage> {
 
     if (prompts.isEmpty || answers.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please provide at least one prompt and answer.')),
+        const SnackBar(
+          content: Text('Please provide at least one prompt and answer.'),
+        ),
       );
       return;
     }
@@ -303,7 +167,6 @@ class _AddCardPageState extends State<AddCardPage> {
     try {
       final cardId = widget.existingCard?.id ?? _cardService.generateId();
 
-      // Handle image uploads
       final List<String> imageUrls = List.from(_existingImageUrls);
       for (var file in _newImageFiles) {
         final url = await _cardService.uploadCardImageXFile(cardId, file);
@@ -316,10 +179,14 @@ class _AddCardPageState extends State<AddCardPage> {
         level: widget.existingCard?.level ?? 1,
         prompts: prompts,
         answers: answers,
-        videoUrl: _videoUrlController.text.trim().isEmpty ? null : _videoUrlController.text.trim(),
+        videoUrl:
+            _videoUrlController.text.trim().isEmpty
+                ? null
+                : _videoUrlController.text.trim(),
         imageUrl: imageUrls.isNotEmpty ? imageUrls.first : null,
         imageUrls: imageUrls,
-        ownerId: widget.existingCard?.ownerId ?? _authService.currentUser!.serverId!,
+        ownerId:
+            widget.existingCard?.ownerId ?? _authService.currentUser!.serverId!,
         isPublic: widget.existingCard?.isPublic ?? false,
         isDeleted: false,
         createdAt: widget.existingCard?.createdAt ?? DateTime.now(),
@@ -330,9 +197,9 @@ class _AddCardPageState extends State<AddCardPage> {
       if (mounted) Navigator.pop(context, true);
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error saving card: $e')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Error saving card: $e')));
         setState(() => _isSaving = false);
       }
     }
@@ -385,18 +252,21 @@ class _AddCardPageState extends State<AddCardPage> {
           icon: const Icon(Icons.arrow_back, color: appBarColor),
           onPressed: () => Navigator.pop(context),
         ),
-        IconButton(
-          icon: const Text(
-            '{}',
-            style: TextStyle(
-              color: appBarColor,
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'monospace',
-            ),
+        if (!widget.isReadOnly)
+          IconButton(
+            icon:
+                _isSaving
+                    ? const SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator(
+                        color: appBarColor,
+                        strokeWidth: 2,
+                      ),
+                    )
+                    : const Icon(Icons.save, color: appBarColor),
+            onPressed: _isSaving ? null : _save,
           ),
-          onPressed: _showJsonDialog,
-        ),
         if (widget.existingCard != null && !widget.isReadOnly)
           IconButton(
             icon: const Icon(Icons.delete, color: appBarColor),
@@ -422,9 +292,7 @@ class _AddCardPageState extends State<AddCardPage> {
 
               if (confirmed == true && mounted) {
                 await _cardService.deleteCard(widget.existingCard!);
-                if (mounted) {
-                  Navigator.pop(context, true);
-                }
+                if (mounted) Navigator.pop(context, true);
               }
             },
           ),
@@ -468,14 +336,18 @@ class _AddCardPageState extends State<AddCardPage> {
                             width: 40,
                             child: Text(
                               lang.toUpperCase(),
-                              style: const TextStyle(fontWeight: FontWeight.bold),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ),
                         Expanded(
                           child: TextFormField(
                             controller: _promptControllers[lang],
-                            decoration: InputDecoration(labelText: context.t('prompt_label')),
+                            decoration: InputDecoration(
+                              labelText: context.t('prompt_label'),
+                            ),
                             enabled: !widget.isReadOnly,
                           ),
                         ),
@@ -483,7 +355,9 @@ class _AddCardPageState extends State<AddCardPage> {
                         Expanded(
                           child: TextFormField(
                             controller: _answerControllers[lang],
-                            decoration: InputDecoration(labelText: context.t('answer')),
+                            decoration: InputDecoration(
+                              labelText: context.t('answer'),
+                            ),
                             enabled: !widget.isReadOnly,
                           ),
                         ),
@@ -499,23 +373,6 @@ class _AddCardPageState extends State<AddCardPage> {
                     : context.t('show_all_languages'),
               ),
             ),
-            const SizedBox(height: 32),
-            if (!widget.isReadOnly)
-              ElevatedButton(
-                onPressed: _isSaving ? null : _save,
-                style: ElevatedButton.styleFrom(
-                  minimumSize: const Size(double.infinity, 60),
-                  backgroundColor: currentSessionColor,
-                  foregroundColor: Colors.white,
-                ),
-                child:
-                    _isSaving
-                        ? const CircularProgressIndicator(color: Colors.white)
-                        : Text(
-                          context.t('save_card'),
-                          style: const TextStyle(fontSize: 18),
-                        ),
-              ),
             const SizedBox(height: 48),
           ],
         ),
@@ -560,7 +417,10 @@ class _AddCardPageState extends State<AddCardPage> {
               borderRadius: BorderRadius.circular(12),
             ),
             child: const Center(
-              child: Text('No images added', style: TextStyle(color: Colors.grey)),
+              child: Text(
+                'No images added',
+                style: TextStyle(color: Colors.grey),
+              ),
             ),
           )
         else
@@ -574,7 +434,10 @@ class _AddCardPageState extends State<AddCardPage> {
                     imageUrl: entry.value,
                     onRemove: () => _removeExistingImage(entry.key),
                     onReplace:
-                        () => _pickImage(replaceIndex: entry.key, isExisting: true),
+                        () => _pickImage(
+                          replaceIndex: entry.key,
+                          isExisting: true,
+                        ),
                   ),
                 ),
                 ..._newImageFiles.asMap().entries.map(
@@ -582,7 +445,10 @@ class _AddCardPageState extends State<AddCardPage> {
                     file: entry.value,
                     onRemove: () => _removeNewImage(entry.key),
                     onReplace:
-                        () => _pickImage(replaceIndex: entry.key, isExisting: false),
+                        () => _pickImage(
+                          replaceIndex: entry.key,
+                          isExisting: false,
+                        ),
                   ),
                 ),
               ],
@@ -599,7 +465,6 @@ class _AddCardPageState extends State<AddCardPage> {
     required VoidCallback onReplace,
   }) {
     if (file == null && imageUrl == null) return const SizedBox.shrink();
-
     return Container(
       width: 120,
       margin: const EdgeInsets.only(right: 12),
@@ -627,8 +492,15 @@ class _AddCardPageState extends State<AddCardPage> {
                     onTap: onRemove,
                     child: Container(
                       padding: const EdgeInsets.all(4),
-                      decoration: const BoxDecoration(color: Colors.black54, shape: BoxShape.circle),
-                      child: const Icon(Icons.close, color: Colors.white, size: 16),
+                      decoration: const BoxDecoration(
+                        color: Colors.black54,
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(
+                        Icons.close,
+                        color: Colors.white,
+                        size: 16,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 4),
@@ -636,8 +508,15 @@ class _AddCardPageState extends State<AddCardPage> {
                     onTap: onReplace,
                     child: Container(
                       padding: const EdgeInsets.all(4),
-                      decoration: const BoxDecoration(color: Colors.black54, shape: BoxShape.circle),
-                      child: const Icon(Icons.edit, color: Colors.white, size: 16),
+                      decoration: const BoxDecoration(
+                        color: Colors.black54,
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(
+                        Icons.edit,
+                        color: Colors.white,
+                        size: 16,
+                      ),
                     ),
                   ),
                 ],

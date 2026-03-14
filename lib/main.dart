@@ -8,7 +8,7 @@ import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
-import 'package:aliolo/data/services/learning_language_service.dart';
+import 'package:aliolo/data/services/testing_language_service.dart';
 import 'package:aliolo/features/auth/presentation/pages/login_page.dart';
 import 'package:aliolo/features/subjects/presentation/pages/subject_page.dart';
 
@@ -30,6 +30,31 @@ void main() async {
     );
 
     await Supabase.initialize(url: supabaseUrl, anonKey: supabaseKey);
+
+    LicenseRegistry.addLicense(() {
+      return Stream<LicenseEntry>.fromIterable([
+        const LicenseEntryWithLineBreaks(
+          ['Aliolo'],
+          """
+Aliolo - Commercial License
+
+Copyright (c) 2026 Aliolo Team. All Rights Reserved.
+
+This software and all associated files, source code, and assets are the sole
+property of the Aliolo Team. Unauthorized copying, modification, distribution,
+or decompilation of this software is strictly prohibited.
+
+Use of this software is subject to a valid, active subscription agreement.
+Failure to maintain a subscription will result in the termination of access to
+the software's features and services.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED. IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+OTHER LIABILITY.
+""",
+        ),
+      ]);
+    });
 
     MediaKit.ensureInitialized();
 
@@ -164,7 +189,7 @@ class _AlioloAppState extends State<AlioloApp> {
             ChangeNotifierProvider.value(value: getIt<AuthService>()),
             ChangeNotifierProvider.value(value: getIt<TranslationService>()),
             ChangeNotifierProvider.value(
-              value: getIt<LearningLanguageService>(),
+              value: getIt<TestingLanguageService>(),
             ),
             ListenableProvider.value(value: getIt<ThemeService>()),
           ],

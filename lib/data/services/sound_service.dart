@@ -12,49 +12,74 @@ class SoundService {
 
   final AudioPlayer _player = AudioPlayer();
   final _authService = AuthService();
+
+  // Desktop paths
   String? _correctPath;
   String? _wrongPath;
   String? _completedPath;
+  String? _greatPath;
+  String? _goodPath;
+
+  // Asset paths (Web & Fallback)
+  static const String assetCorrect = 'media/correct.mp3';
+  static const String assetWrong = 'media/wrong.mp3';
+  static const String assetCompleted = 'media/completed.mp3';
+  static const String assetGreat = 'media/completed.mp3'; // Placeholder
+  static const String assetGood = 'media/completed.mp3'; // Placeholder
 
   Future<void> init() async {
     if (kIsWeb) return;
-    final dir = await getApplicationDocumentsDirectory();
-    // Path provider Documents/.aliolo/media
-    _correctPath = p.join(dir.path, '.aliolo', 'media', 'correct.mp3');
-    _wrongPath = p.join(dir.path, '.aliolo', 'media', 'wrong.mp3');
-    _completedPath = p.join(dir.path, '.aliolo', 'media', 'completed.mp3');
+    try {
+      final dir = await getApplicationDocumentsDirectory();
+      _correctPath = p.join(dir.path, '.aliolo', 'media', 'correct.mp3');
+      _wrongPath = p.join(dir.path, '.aliolo', 'media', 'wrong.mp3');
+      _completedPath = p.join(dir.path, '.aliolo', 'media', 'completed.mp3');
+      _greatPath = p.join(dir.path, '.aliolo', 'media', 'great.mp3');
+      _goodPath = p.join(dir.path, '.aliolo', 'media', 'good.mp3');
+    } catch (e) {
+      debugPrint('SoundService init error: $e');
+    }
+  }
+
+  Future<void> _playSound(String assetPath, String? devicePath) async {
+    if (!(_authService.currentUser?.soundEnabled ?? true)) return;
+
+    try {
+      Source source;
+      if (kIsWeb) {
+        source = AssetSource(assetPath);
+      } else {
+        if (devicePath != null && await File(devicePath).exists()) {
+          source = DeviceFileSource(devicePath);
+        } else {
+          source = AssetSource(assetPath);
+        }
+      }
+
+      await _player.stop();
+      await _player.play(source);
+    } catch (e) {
+      debugPrint('Error playing sound $assetPath: $e');
+    }
   }
 
   Future<void> playCorrect() async {
-    if (kIsWeb) return;
-    if ((_authService.currentUser?.soundEnabled ?? true) &&
-        _correctPath != null) {
-      if (await File(_correctPath!).exists()) {
-        await _player.stop();
-        await _player.play(DeviceFileSource(_correctPath!));
-      }
-    }
+    await _playSound(assetCorrect, _correctPath);
   }
 
   Future<void> playWrong() async {
-    if (kIsWeb) return;
-    if ((_authService.currentUser?.soundEnabled ?? true) &&
-        _wrongPath != null) {
-      if (await File(_wrongPath!).exists()) {
-        await _player.stop();
-        await _player.play(DeviceFileSource(_wrongPath!));
-      }
-    }
+    await _playSound(assetWrong, _wrongPath);
   }
 
   Future<void> playCompleted() async {
-    if (kIsWeb) return;
-    if ((_authService.currentUser?.soundEnabled ?? true) &&
-        _completedPath != null) {
-      if (await File(_completedPath!).exists()) {
-        await _player.stop();
-        await _player.play(DeviceFileSource(_completedPath!));
-      }
-    }
+    await _playSound(assetCompleted, _completedPath);
+  }
+
+  Future<void> playGreat() async {
+    await _playSound(assetGreat, _greatPath);
+  }
+
+  Future<void> playGood() async {
+    await _playSound(assetGood, _goodPath);
   }
 }

@@ -3,7 +3,7 @@ import 'package:aliolo/data/services/card_service.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
-import 'package:aliolo/data/services/learning_language_service.dart';
+import 'package:aliolo/data/services/testing_language_service.dart';
 import 'package:aliolo/data/services/sound_service.dart';
 import 'package:aliolo/data/services/math_service.dart';
 import 'package:aliolo/data/services/progress_service.dart';
@@ -18,7 +18,7 @@ Future<void> setupLocator() async {
     getIt.registerSingleton<CardService>(CardService());
     getIt.registerSingleton<AuthService>(AuthService());
     getIt.registerSingleton<TranslationService>(TranslationService());
-    getIt.registerSingleton<LearningLanguageService>(LearningLanguageService());
+    getIt.registerSingleton<TestingLanguageService>(TestingLanguageService());
     getIt.registerSingleton<SoundService>(SoundService());
 
     // 2. Initialize critical services in order
@@ -35,9 +35,9 @@ Future<void> setupLocator() async {
       (e) => print('TranslationService init error: $e'),
     );
 
-    print('Initializing LearningLanguageService...');
-    await getIt<LearningLanguageService>().init().catchError(
-      (e) => print('LearningLanguageService init error: $e'),
+    print('Initializing TestingLanguageService...');
+    await getIt<TestingLanguageService>().init().catchError(
+      (e) => print('TestingLanguageService init error: $e'),
     );
 
     print('Initializing SoundService...');

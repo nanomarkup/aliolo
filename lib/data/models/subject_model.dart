@@ -11,6 +11,8 @@ class SubjectModel {
   final List<Map<String, dynamic>>? rawCards;
   final String? ownerName;
 
+  final String ageGroup;
+
   bool isOnDashboard;
 
   SubjectModel({
@@ -26,6 +28,7 @@ class SubjectModel {
     this.cardCount = 0,
     this.rawCards,
     this.isOnDashboard = false,
+    this.ageGroup = 'advanced',
   });
 
   String getName(String langCode) {
@@ -62,6 +65,7 @@ class SubjectModel {
       'descriptions': descriptions,
       'owner_id': ownerId,
       'is_public': isPublic,
+      'age_group': ageGroup,
       'updated_at': updatedAt.toIso8601String(),
       'created_at': createdAt.toIso8601String(),
     };
@@ -110,6 +114,7 @@ class SubjectModel {
           activeCards != null
               ? List<Map<String, dynamic>>.from(activeCards)
               : null,
+      ageGroup: json['age_group'] ?? 'advanced',
     );
   }
 }

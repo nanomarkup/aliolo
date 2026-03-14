@@ -9,11 +9,9 @@ import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/core/widgets/window_controls.dart';
 import 'package:aliolo/core/widgets/resize_wrapper.dart';
 import 'package:aliolo/features/leaderboard/presentation/pages/leaderboard_page.dart';
-import 'package:aliolo/features/management/presentation/pages/manage_cards_page.dart';
-import 'package:aliolo/features/auth/presentation/pages/profile_page.dart';
-import 'package:aliolo/features/settings/presentation/pages/settings_page.dart';
-
 import 'package:aliolo/features/subjects/presentation/pages/subject_page.dart';
+import 'package:aliolo/features/settings/presentation/pages/settings_page.dart';
+import 'package:aliolo/features/auth/presentation/pages/profile_page.dart';
 
 class UserManagementPage extends StatefulWidget {
   const UserManagementPage({super.key});
@@ -88,18 +86,17 @@ class _UserManagementPageState extends State<UserManagementPage> {
                       ),
                 ),
                 IconButton(
-                  icon: const Icon(
-                    Icons.edit,
-                    color: appBarColor,
-                  ),
+                  icon: const Icon(Icons.edit, color: appBarColor),
                   onPressed:
-                      () => Navigator.push(
+                      () => Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const ManageCardsPage(),
+                          builder: (context) => const SubjectPage(),
                         ),
+                        (route) => false,
                       ),
                 ),
+
                 IconButton(
                   icon: const Icon(Icons.person, color: appBarColor),
                   onPressed:

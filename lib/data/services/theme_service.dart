@@ -11,7 +11,7 @@ class ThemeService extends ChangeNotifier {
 
   static const Color orange = Colors.orange;
   static const Color mainColor = orange; // For backward compatibility
-  
+
   // Dynamic primary color
   Color _primaryColor = orange;
   Color get primaryColor => _primaryColor;

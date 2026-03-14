@@ -8,7 +8,6 @@ import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/friendship_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
-import 'package:aliolo/features/management/presentation/pages/manage_cards_page.dart';
 import 'package:aliolo/features/auth/presentation/pages/profile_page.dart';
 import 'package:aliolo/features/settings/presentation/pages/settings_page.dart';
 import 'package:aliolo/features/subjects/presentation/pages/subject_page.dart';
@@ -145,16 +144,6 @@ class _LeaderboardPageState extends State<LeaderboardPage>
               onPressed: () => _loadData(),
             ),
             IconButton(
-              icon: const Icon(Icons.edit, color: appBarColor),
-              onPressed:
-                  () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const ManageCardsPage(),
-                    ),
-                  ),
-            ),
-            IconButton(
               icon: const Icon(Icons.person, color: appBarColor),
               onPressed:
                   () => Navigator.push(
@@ -177,6 +166,7 @@ class _LeaderboardPageState extends State<LeaderboardPage>
           ],
           body: Column(
             children: [
+              const SizedBox(height: 24),
               // Top Controls
               Padding(
                 padding: const EdgeInsets.only(bottom: 16),
@@ -297,7 +287,8 @@ class _LeaderboardPageState extends State<LeaderboardPage>
                     style: TextStyle(
                       fontWeight:
                           rank < 3 ? FontWeight.bold : FontWeight.normal,
-                      color: rank < 3 ? ThemeService().primaryColor : Colors.grey,
+                      color:
+                          rank < 3 ? ThemeService().primaryColor : Colors.grey,
                     ),
                   ),
                 ),

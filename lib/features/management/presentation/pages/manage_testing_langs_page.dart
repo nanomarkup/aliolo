@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:window_manager/window_manager.dart';
-import 'package:aliolo/data/services/learning_language_service.dart';
+import 'package:aliolo/data/services/testing_language_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/core/widgets/window_controls.dart';
@@ -10,16 +10,15 @@ import 'package:aliolo/features/leaderboard/presentation/pages/leaderboard_page.
 import 'package:aliolo/features/auth/presentation/pages/profile_page.dart';
 import 'package:aliolo/features/settings/presentation/pages/settings_page.dart';
 
-class ManageLearningLangsPage extends StatefulWidget {
-  const ManageLearningLangsPage({super.key});
+class ManageTestingLangsPage extends StatefulWidget {
+  const ManageTestingLangsPage({super.key});
 
   @override
-  State<ManageLearningLangsPage> createState() =>
-      _ManageLearningLangsPageState();
+  State<ManageTestingLangsPage> createState() => _ManageTestingLangsPageState();
 }
 
-class _ManageLearningLangsPageState extends State<ManageLearningLangsPage> {
-  final _langService = LearningLanguageService();
+class _ManageTestingLangsPageState extends State<ManageTestingLangsPage> {
+  final _langService = TestingLanguageService();
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +35,7 @@ class _ManageLearningLangsPageState extends State<ManageLearningLangsPage> {
                 child: SizedBox(
                   width: double.infinity,
                   child: Text(
-                    context.t('manage_learning_langs'),
+                    context.t('manage_testing_langs'),
                     style: const TextStyle(color: appBarColor),
                   ),
                 ),

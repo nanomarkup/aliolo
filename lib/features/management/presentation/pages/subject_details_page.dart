@@ -144,15 +144,13 @@ class _SubjectDetailsPageState extends State<SubjectDetailsPage> {
         if (isMine) ...[
           IconButton(
             icon: const Icon(Icons.edit, color: appBarColor),
-            tooltip: context.t('edit_subject'),
             onPressed: () async {
               final result = await Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder:
-                      (context) => SubjectEditPage(
-                        existingSubject: _currentSubject,
-                      ),
+                      (context) =>
+                          SubjectEditPage(existingSubject: _currentSubject),
                 ),
               );
               if (result == true) {
@@ -167,88 +165,93 @@ class _SubjectDetailsPageState extends State<SubjectDetailsPage> {
           ),
           IconButton(
             icon: const Icon(Icons.delete, color: appBarColor),
-            tooltip: context.t('delete_subject'),
             onPressed: _confirmDeleteSubject,
           ),
         ],
       ],
-      body: Column(
+      fixedBody: Column(
         children: [
-          Container(
-            padding: const EdgeInsets.symmetric(vertical: 24),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _searchController,
-                    decoration: InputDecoration(
-                      hintText: context.t('search_cards'),
-                      prefixIcon: const Icon(Icons.search),
-                      suffixIcon:
-                          _searchController.text.isNotEmpty
-                              ? IconButton(
-                                icon: const Icon(Icons.clear),
-                                onPressed: () {
-                                  _searchController.clear();
-                                  _applyFilters();
-                                },
-                              )
-                              : null,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      filled: true,
-                      fillColor: Theme.of(
-                        context,
-                      ).cardColor.withValues(alpha: 0.5),
+          Row(
+            children: [
+              Expanded(
+                child: TextField(
+                  controller: _searchController,
+                  decoration: InputDecoration(
+                    hintText: context.t('search_cards'),
+                    prefixIcon: const Icon(Icons.search),
+                    suffixIcon: ValueListenableBuilder<TextEditingValue>(
+                      valueListenable: _searchController,
+                      builder: (context, value, _) {
+                        return value.text.isNotEmpty
+                            ? IconButton(
+                              icon: const Icon(Icons.clear),
+                              onPressed: () {
+                                _searchController.clear();
+                                _applyFilters();
+                              },
+                            )
+                            : const SizedBox.shrink();
+                      },
                     ),
-                    onChanged: (_) => _applyFilters(),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    filled: true,
+                    fillColor: Theme.of(
+                      context,
+                    ).cardColor.withValues(alpha: 0.5),
                   ),
+                  onChanged: (_) => _applyFilters(),
                 ),
-                if (isMine) ...[
-                  const SizedBox(width: 12),
-                  IconButton(
-                    icon: Icon(
-                      Icons.add_circle,
-                      color: currentSessionColor,
-                      size: 40,
-                    ),
-                    tooltip: context.t('add_card'),
-                    onPressed: () async {
-                      final result = await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder:
-                              (context) => AddCardPage(
-                                initialSubjectId: _currentSubject.id,
-                                pillarId: _currentSubject.pillarId,
-                              ),
-                        ),
-                      );
-                      if (result == true) _loadCards();
-                    },
+              ),
+              if (isMine) ...[
+                const SizedBox(width: 12),
+                IconButton(
+                  icon: Icon(
+                    Icons.add_circle,
+                    color: currentSessionColor,
+                    size: 40,
                   ),
-                ],
+                  onPressed: () async {
+                    final result = await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder:
+                            (context) => AddCardPage(
+                              initialSubjectId: _currentSubject.id,
+                              pillarId: _currentSubject.pillarId,
+                            ),
+                      ),
+                    );
+                    if (result == true) _loadCards();
+                  },
+                ),
               ],
-            ),
+            ],
           ),
-          if (_isLoading)
-            const Center(child: CircularProgressIndicator())
-          else if (_filteredCards.isEmpty)
-            Center(child: Text(context.t('no_cards_found')))
-          else
-            GridView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              padding: const EdgeInsets.only(bottom: 32),
+          const SizedBox(height: 32),
+        ],
+      ),
+      slivers: [
+        if (_isLoading)
+          const SliverFillRemaining(
+            child: Center(child: CircularProgressIndicator()),
+          )
+        else if (_filteredCards.isEmpty)
+          SliverFillRemaining(
+            child: Center(child: Text(context.t('no_cards_found'))),
+          )
+        else
+          SliverPadding(
+            padding: const EdgeInsets.only(bottom: 32),
+            sliver: SliverGrid(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3,
                 crossAxisSpacing: 12,
                 mainAxisSpacing: 12,
                 childAspectRatio: 0.7,
               ),
-              itemCount: _filteredCards.length,
-              itemBuilder: (context, index) {
+              delegate: SliverChildBuilderDelegate((context, index) {
                 final card = _filteredCards[index];
                 final answer =
                     card.answers[lang] ??
@@ -290,9 +293,9 @@ class _SubjectDetailsPageState extends State<SubjectDetailsPage> {
                                     fit: BoxFit.cover,
                                   )
                                   : Container(
-                                    color: pillar
-                                        .getColor()
-                                        .withValues(alpha: 0.1),
+                                    color: pillar.getColor().withValues(
+                                      alpha: 0.1,
+                                    ),
                                     child: Icon(
                                       Icons.image,
                                       size: 48,
@@ -323,10 +326,10 @@ class _SubjectDetailsPageState extends State<SubjectDetailsPage> {
                     ),
                   ),
                 );
-              },
+              }, childCount: _filteredCards.length),
             ),
-        ],
-      ),
+          ),
+      ],
     );
   }
 }
