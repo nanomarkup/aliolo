@@ -1,4 +1,4 @@
-package com.example.aliolo
+package com.nanomarkup.aliolo
 
 import io.flutter.embedding.android.FlutterActivity
 
