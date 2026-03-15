@@ -152,12 +152,12 @@ class _LearnPageState extends State<LearnPage> {
     });
   }
 
-  void _nextCard() {
+  Future<void> _nextCard() async {
     _autoNextTimer?.cancel();
     setState(() => _isAutoPlayWaiting = false);
     player.stop();
 
-    _progressService.recordLearnProgress(
+    await _progressService.recordLearnProgress(
       cardId: _currentCard.id,
       subjectId: _currentCard.subjectId,
     );

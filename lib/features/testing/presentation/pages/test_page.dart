@@ -183,7 +183,7 @@ class _TestPageState extends State<TestPage> {
     }
   }
 
-  void _selectOption(int index) {
+  Future<void> _selectOption(int index) async {
     if (_isAnswered) return;
     final correct = _options[index] == _correctAnswerText;
     setState(() {
@@ -195,7 +195,7 @@ class _TestPageState extends State<TestPage> {
     if (correct) {
       _sessionCorrect++;
       _soundService.playCorrect();
-      _progressService.recordProgress(
+      await _progressService.recordProgress(
         userServerId: _authService.currentUser!.serverId!,
         cardId: _currentCard.id,
         subjectId: _currentCard.subjectId,
@@ -205,7 +205,7 @@ class _TestPageState extends State<TestPage> {
     } else {
       _sessionWrong++;
       _soundService.playWrong();
-      _progressService.recordProgress(
+      await _progressService.recordProgress(
         userServerId: _authService.currentUser!.serverId!,
         cardId: _currentCard.id,
         subjectId: _currentCard.subjectId,

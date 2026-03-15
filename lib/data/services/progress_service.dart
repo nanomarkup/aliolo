@@ -42,70 +42,39 @@ class ProgressService {
         'updated_at': now.toIso8601String(),
       }, onConflict: 'user_id, card_id');
 
-      // 2. Calculate XP (New logic: fixed values, no card level)
+      // 2. XP Gain
       int xpGain = 1; // Incorrect
       if (quality == 5) {
         xpGain = 9; // Perfect
-      } else if (quality == 3)
+      } else if (quality == 3) {
         xpGain = 6; // Correct
-      else if (quality == 2)
+      } else if (quality == 2) {
         xpGain = 3; // Hesitant
-
-      int totalXp = user.totalXp + xpGain;
-
-      // 3. Update Streak & Daily Goal
-      double dailyCompletions = user.dailyCompletions;
-      int currentStreak = user.currentStreak;
-      int maxStreak = user.maxStreak;
-
-      // Only count correct/hesitant answers toward daily goal
-      if (quality >= 2) {
-        if (user.lastActiveDate == null) {
-          dailyCompletions = 1.0;
-          if (dailyCompletions >= user.dailyGoalCount) {
-            currentStreak = 1;
-            totalXp += user.dailyGoalCount; // Streak Bonus
-          }
-        } else {
-          final lastLocal = user.lastActiveDate!.toLocal();
-          final lastActiveDay = DateTime(
-            lastLocal.year,
-            lastLocal.month,
-            lastLocal.day,
-          );
-          final dayDifference = today.difference(lastActiveDay).inDays;
-
-          if (dayDifference == 0) {
-            final wasGoalReachedBefore =
-                dailyCompletions >= user.dailyGoalCount;
-            dailyCompletions += 1.0;
-            final isGoalReachedNow = dailyCompletions >= user.dailyGoalCount;
-
-            if (!wasGoalReachedBefore && isGoalReachedNow) {
-              currentStreak++;
-              totalXp += user.dailyGoalCount; // Streak Bonus
-            }
-          } else {
-            // New day
-            if (dayDifference > 1) {
-              currentStreak = 0; // Broke streak
-            }
-            dailyCompletions = 1.0;
-            if (dailyCompletions >= user.dailyGoalCount) {
-              currentStreak++;
-              totalXp += user.dailyGoalCount; // Streak Bonus
-            }
-          }
-        }
-        if (currentStreak > maxStreak) maxStreak = currentStreak;
       }
 
-      user.totalXp = totalXp;
-      user.dailyCompletions = dailyCompletions;
-      user.currentStreak = currentStreak;
-      user.maxStreak = maxStreak;
-      user.lastActiveDate = now;
+      user.totalXp += xpGain;
 
+      // 3. New Day Detection & Reset
+      _handleNewDayReset(user, today);
+
+      // 4. Update Daily Completions & Streak
+      // Only count correct/hesitant answers toward daily goal
+      if (quality >= 2) {
+        final wasGoalReachedBefore = user.dailyCompletions >= user.dailyGoalCount;
+        user.dailyCompletions += 1.0;
+        final isGoalReachedNow = user.dailyCompletions >= user.dailyGoalCount;
+
+        if (!wasGoalReachedBefore && isGoalReachedNow) {
+          user.currentStreak++;
+          user.totalXp += user.dailyGoalCount; // Streak Bonus
+        }
+      }
+
+      if (user.currentStreak > user.maxStreak) {
+        user.maxStreak = user.currentStreak;
+      }
+
+      user.lastActiveDate = now;
       await _authService.updateUser(user);
     } catch (e) {
       print('Progress Sync Error: $e');
@@ -124,56 +93,51 @@ class ProgressService {
 
     try {
       // 1. XP Gain for Learn Mode: 2
-      int totalXp = user.totalXp + 2;
+      user.totalXp += 2;
 
-      // 2. Daily Goal Logic
-      double dailyCompletions = user.dailyCompletions;
-      int currentStreak = user.currentStreak;
-      int maxStreak = user.maxStreak;
+      // 2. New Day Detection & Reset
+      _handleNewDayReset(user, today);
 
-      if (user.lastActiveDate == null) {
-        dailyCompletions = 0.25;
-        if (dailyCompletions >= user.dailyGoalCount) {
-          currentStreak = 1;
-          totalXp += user.dailyGoalCount;
-        }
-      } else {
-        final lastLocal = user.lastActiveDate!.toLocal();
-        final lastActiveDay = DateTime(
-          lastLocal.year,
-          lastLocal.month,
-          lastLocal.day,
-        );
-        final dayDifference = today.difference(lastActiveDay).inDays;
+      // 3. Daily Goal Logic
+      final wasGoalReachedBefore = user.dailyCompletions >= user.dailyGoalCount;
+      user.dailyCompletions += 0.25;
+      final isGoalReachedNow = user.dailyCompletions >= user.dailyGoalCount;
 
-        if (dayDifference == 0) {
-          final wasGoalReachedBefore = dailyCompletions >= user.dailyGoalCount;
-          dailyCompletions += 0.25;
-          final isGoalReachedNow = dailyCompletions >= user.dailyGoalCount;
-          if (!wasGoalReachedBefore && isGoalReachedNow) {
-            currentStreak++;
-            totalXp += user.dailyGoalCount;
-          }
-        } else {
-          if (dayDifference > 1) currentStreak = 0;
-          dailyCompletions = 0.25;
-          if (dailyCompletions >= user.dailyGoalCount) {
-            currentStreak++;
-            totalXp += user.dailyGoalCount;
-          }
-        }
+      if (!wasGoalReachedBefore && isGoalReachedNow) {
+        user.currentStreak++;
+        user.totalXp += user.dailyGoalCount; // Streak Bonus
       }
-      if (currentStreak > maxStreak) maxStreak = currentStreak;
 
-      user.totalXp = totalXp;
-      user.dailyCompletions = dailyCompletions;
-      user.currentStreak = currentStreak;
-      user.maxStreak = maxStreak;
+      if (user.currentStreak > user.maxStreak) {
+        user.maxStreak = user.currentStreak;
+      }
+
       user.lastActiveDate = now;
-
       await _authService.updateUser(user);
     } catch (e) {
       print('Learn Progress Error: $e');
+    }
+  }
+
+  /// Consolidates new day reset logic for completions and streaks.
+  void _handleNewDayReset(UserModel user, DateTime today) {
+    if (user.lastActiveDate == null) return;
+
+    final lastLocal = user.lastActiveDate!.toLocal();
+    final lastDay = DateTime(
+      lastLocal.year,
+      lastLocal.month,
+      lastLocal.day,
+    );
+    final dayDifference = today.difference(lastDay).inDays;
+
+    if (dayDifference > 0) {
+      // New day detected: reset completions and sync goal
+      user.dailyCompletions = 0.0;
+      user.dailyGoalCount = user.nextDailyGoal;
+      if (dayDifference > 1) {
+        user.currentStreak = 0; // Broke streak (missed at least one full day)
+      }
     }
   }
 
