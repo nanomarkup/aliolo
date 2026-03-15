@@ -42,7 +42,9 @@ class _LearnPageState extends State<LearnPage> {
 
   bool _isAutoPlay = false;
   bool _isAutoPlayWaiting = false;
+  bool _canGoNext = false;
   Timer? _autoNextTimer;
+  Timer? _cooldownTimer;
   StreamSubscription? _playerSubscription;
 
   final _authService = AuthService();
@@ -104,7 +106,13 @@ class _LearnPageState extends State<LearnPage> {
 
   void _setupMedia() {
     _autoNextTimer?.cancel();
+    _cooldownTimer?.cancel();
     _isAutoPlayWaiting = false;
+    setState(() => _canGoNext = false);
+
+    _cooldownTimer = Timer(const Duration(seconds: 1), () {
+      if (mounted) setState(() => _canGoNext = true);
+    });
 
     final lang = widget.languageCode.toLowerCase();
     final images = _currentCard.getImageUrls(lang);
@@ -153,7 +161,9 @@ class _LearnPageState extends State<LearnPage> {
   }
 
   Future<void> _nextCard() async {
+    if (!_canGoNext) return;
     _autoNextTimer?.cancel();
+    _cooldownTimer?.cancel();
     setState(() => _isAutoPlayWaiting = false);
     player.stop();
 
@@ -331,13 +341,15 @@ class _LearnPageState extends State<LearnPage> {
                 children: [
                   Expanded(
                     child: ElevatedButton.icon(
-                      onPressed: _nextCard,
+                      onPressed: _canGoNext ? _nextCard : null,
                       icon: const Icon(Icons.arrow_forward),
                       label: Text(context.t('next')),
                       style: ElevatedButton.styleFrom(
                         minimumSize: const Size.fromHeight(70),
                         backgroundColor: headerColor,
                         foregroundColor: Colors.white,
+                        disabledBackgroundColor: Colors.grey[300],
+                        disabledForegroundColor: Colors.grey[600],
                       ),
                     ),
                   ),
@@ -473,6 +485,7 @@ class _LearnPageState extends State<LearnPage> {
   @override
   void dispose() {
     _autoNextTimer?.cancel();
+    _cooldownTimer?.cancel();
     _playerSubscription?.cancel();
     player.dispose();
     super.dispose();

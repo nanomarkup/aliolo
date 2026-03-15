@@ -67,19 +67,17 @@ class UserModel {
       themeMode: json['theme_mode'] ?? 'system',
       uiLanguage: json['ui_language'] ?? 'en',
       dailyGoalCount: json['daily_goal_count'] ?? 20,
-      nextDailyGoal:
-          json['next_daily_goal'] ?? (json['daily_goal_count'] ?? 20),
+      nextDailyGoal: json['next_daily_goal'] ?? 20,
       dailyCompletions: (json['daily_completions'] ?? 0).toDouble(),
       sidebarLeft: json['sidebar_left'] ?? false,
       soundEnabled: json['sound_enabled'] ?? true,
       autoPlayEnabled: json['auto_play_enabled'] ?? false,
       mainColor: json['main_color'] ?? '#FF9800',
       showOnLeaderboard: json['show_on_leaderboard'] ?? true,
-      learnSessionSize: json['learn_session_size'] ?? 20,
+      learnSessionSize: json['learn_session_size'] ?? json['session_size'] ?? 20,
       testSessionSize: json['test_session_size'] ?? json['session_size'] ?? 10,
       optionsCount: json['options_count'] ?? 6,
-      defaultLanguage:
-          (json['default_language'] ?? 'en').toString().toLowerCase(),
+      defaultLanguage: (json['default_language'] ?? 'en').toString().toLowerCase(),
       avatarPath: json['avatar_url'],
       lastActiveDate: DateTime.tryParse(json['last_active_date'] ?? ''),
       updatedAt: DateTime.tryParse(json['updated_at'] ?? ''),
@@ -110,8 +108,8 @@ class UserModel {
       'options_count': optionsCount,
       'default_language': defaultLanguage.toLowerCase(),
       'avatar_url': avatarPath,
-      'last_active_date': lastActiveDate?.toIso8601String(),
-      'updated_at': updatedAt?.toIso8601String(),
+      'last_active_date': lastActiveDate?.toUtc().toIso8601String(),
+      'updated_at': updatedAt?.toUtc().toIso8601String(),
     };
   }
 
@@ -146,14 +144,13 @@ class ProgressRecord {
   factory ProgressRecord.fromJson(Map<String, dynamic> json) {
     return ProgressRecord(
       userServerId: json['user_id'] ?? '',
-      id: json['card_id'] ?? '', // Map card_id from DB to id in model
+      id: json['card_id'] ?? '',
       correctCount: json['correct_count'] ?? 0,
       isHidden: json['is_hidden'] ?? false,
       easeFactor: (json['ease_factor'] ?? 2.5).toDouble(),
       interval: json['interval'] ?? 0,
       repetitionCount: json['repetition_count'] ?? 0,
-      nextReview:
-          DateTime.tryParse(json['next_review'] ?? '') ?? DateTime.now(),
+      nextReview: DateTime.tryParse(json['next_review'] ?? '') ?? DateTime.now(),
       createdAt: DateTime.tryParse(json['created_at'] ?? '') ?? DateTime.now(),
       updatedAt: DateTime.tryParse(json['updated_at'] ?? '') ?? DateTime.now(),
     );

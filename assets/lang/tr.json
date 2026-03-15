@@ -1,5 +1,5 @@
 {
-  "login": "Giriş Yap",
+  "login": "Giriş",
   "username": "Username",
   "password": "Password",
   "email": "Email",
@@ -267,5 +267,6 @@
   "tap_to_replay": "Tekrar oynatmak için dokunun",
   "sort_by": "Sırala",
   "ascending": "Artan",
-  "descending": "Azalan"
+  "descending": "Azalan",
+  "default": "Varsayılan"
 }

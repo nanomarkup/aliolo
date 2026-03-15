@@ -1,5 +1,5 @@
 {
-  "login": "Inloggen",
+  "login": "Login",
   "username": "Username",
   "password": "Password",
   "email": "Email",
@@ -267,5 +267,6 @@
   "tap_to_replay": "Tik om opnieuw af te spelen",
   "sort_by": "Sorteren op",
   "ascending": "Oplopend",
-  "descending": "Aflopend"
+  "descending": "Aflopend",
+  "default": "Standaard"
 }

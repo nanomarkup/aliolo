@@ -119,6 +119,7 @@ class _ProfilePageState extends State<ProfilePage> {
     required int initialValue,
     required int min,
     required int max,
+    int? defaultValue,
     required Function(int) onSelected,
   }) {
     showDialog(
@@ -157,6 +158,14 @@ class _ProfilePageState extends State<ProfilePage> {
               onPressed: () => Navigator.pop(context),
               child: Text(context.t('cancel')),
             ),
+            if (defaultValue != null)
+              TextButton(
+                onPressed: () {
+                  onSelected(defaultValue);
+                  Navigator.pop(context);
+                },
+                child: Text(context.t('default')),
+              ),
             TextButton(
               onPressed: () {
                 onSelected(tempValue);
@@ -524,6 +533,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   initialValue: user.nextDailyGoal,
                   min: 5,
                   max: 50,
+                  defaultValue: 20,
                   onSelected: (val) => _authService.updateNextDailyGoal(val),
                 ),
           ),
@@ -540,6 +550,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   initialValue: user.learnSessionSize,
                   min: 5,
                   max: 50,
+                  defaultValue: 20,
                   onSelected: (val) => _authService.updateLearnSessionSize(val),
                 ),
           ),
@@ -556,6 +567,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   initialValue: user.testSessionSize,
                   min: 5,
                   max: 25,
+                  defaultValue: 10,
                   onSelected: (val) => _authService.updateTestSessionSize(val),
                 ),
           ),
@@ -570,6 +582,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   initialValue: user.optionsCount,
                   min: 4,
                   max: 8,
+                  defaultValue: 6,
                   onSelected: (val) => _authService.updateOptionsCount(val),
                 ),
           ),

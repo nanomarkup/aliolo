@@ -267,5 +267,6 @@
   "tap_to_replay": "اضغط لإعادة التشغيل",
   "sort_by": "فرز حسب",
   "ascending": "تصاعدي",
-  "descending": "تنازلي"
+  "descending": "تنازلي",
+  "default": "افتراضي"
 }

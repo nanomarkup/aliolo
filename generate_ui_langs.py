@@ -276,11 +276,14 @@ base_en = {
     "tap_to_replay": "Tap to Replay",
     "sort_by": "Sort by",
     "ascending": "Ascending",
-    "descending": "Descending"
+    "descending": "Descending",
+    "default": "Default"
 }
 
 # Translations
 ar = {
+    "default": "افتراضي",
+    "default": "افتراضي",
     "login": "تسجيل الدخول",
     "settings": "الإعدادات",
     "subjects": "المواد",
@@ -308,6 +311,7 @@ ar = {
 }
 
 de = {
+    "default": "Standard",
     "login": "Anmelden",
     "username": "Benutzername",
     "password": "Passwort",
@@ -562,6 +566,8 @@ de = {
 }
 
 el = {
+    "default": "Προεπιλογή",
+    "default": "Προεπιλογή",
     "login": "Σύνδεση",
     "settings": "Ρυθμίσεις",
     "subjects": "Θέματα",
@@ -589,6 +595,7 @@ el = {
 }
 
 es = {
+    "default": "Predeterminado",
     "login": "Iniciar sesión",
     "username": "Nombre de usuario",
     "password": "Contraseña",
@@ -854,6 +861,7 @@ es = {
 }
 
 fr = {
+    "default": "Par défaut",
     "login": "Connexion",
     "username": "Nom d'utilisateur",
     "password": "Mot de passe",
@@ -1119,8 +1127,11 @@ fr = {
 }
 
 hi = {
-    "login": "लॉग इन करें",
+    "default": "डिफ़ॉल्ट",
+    "default": "डिफ़ॉल्ट",
+    "login": "लॉगिन",
     "settings": "सेटिंग्स",
+
     "subjects": "विषय",
     "filter_favorites": "पसंदीदा",
     "audio_playing": "ऑडियो चल रहा है",
@@ -1146,8 +1157,11 @@ hi = {
 }
 
 id = {
-    "login": "Masuk",
+    "default": "Default",
+    "default": "Default",
+    "login": "Login",
     "settings": "Pengaturan",
+
     "subjects": "Subjek",
     "filter_favorites": "Favorit",
     "audio_playing": "Audio Sedang Diputar",
@@ -1173,6 +1187,7 @@ id = {
     }
 
 it = {
+    "default": "Predefinito",
     "login": "Accedi",
     "username": "Nome utente",
     "password": "Password",
@@ -1429,6 +1444,7 @@ it = {
 }
 
 ja = {
+    "default": "デフォルト",
     "login": "ログイン",
     "username": "ユーザー名",
     "password": "パスワード",
@@ -1689,6 +1705,7 @@ ja = {
 }
 
 ko = {
+    "default": "기본값",
     "login": "로그인",
     "username": "사용자 이름",
     "password": "비밀번호",
@@ -1949,8 +1966,11 @@ ko = {
 }
 
 nl = {
-    "login": "Inloggen",
+    "default": "Standaard",
+    "default": "Standaard",
+    "login": "Login",
     "settings": "Instellingen",
+
     "subjects": "Onderwerpen",
     "filter_favorites": "Favorieten",
     "audio_playing": "Audio wordt afgespeeld",
@@ -1976,6 +1996,7 @@ nl = {
     }
 
 pl = {
+    "default": "Domyślne",
     "login": "Zaloguj się",
     "username": "Nazwa użytkownika",
     "password": "Hasło",
@@ -2232,6 +2253,7 @@ pl = {
 }
 
 pt = {
+    "default": "Padrão",
     "login": "Entrar",
     "username": "Nome de usuário",
     "password": "Senha",
@@ -2492,6 +2514,7 @@ pt = {
 }
 
 tl = {
+    "default": "Default",
     "login": "Mag-login",
     "settings": "Mga Setting",
     "subjects": "Mga Paksa",
@@ -2519,8 +2542,11 @@ tl = {
     }
 
 tr = {
-    "login": "Giriş Yap",
+    "default": "Varsayılan",
+    "default": "Varsayılan",
+    "login": "Giriş",
     "settings": "Ayarlar",
+
     "subjects": "Konular",
     "filter_favorites": "Favoriler",
     "audio_playing": "Ses Çalınıyor",
@@ -2546,6 +2572,7 @@ tr = {
 }
 
 uk = {
+    "default": "За замовчуванням",
     "login": "Увійти",
     "username": "Ім'я користувача",
     "password": "Пароль",
@@ -2813,6 +2840,8 @@ uk = {
 }
 
 vi = {
+    "default": "Mặc định",
+    "default": "Mặc định",
     "login": "Đăng nhập",
     "settings": "Cài đặt",
     "subjects": "Chủ đề",
@@ -2840,6 +2869,7 @@ vi = {
 }
 
 zh = {
+    "default": "默认",
     "login": "登录",
     "username": "用户名",
     "password": "密码",

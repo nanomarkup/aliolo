@@ -1,5 +1,5 @@
 {
-  "login": "लॉग इन करें",
+  "login": "लॉगिन",
   "username": "Username",
   "password": "Password",
   "email": "Email",
@@ -267,5 +267,6 @@
   "tap_to_replay": "दोबारा चलाने के लिए टैप करें",
   "sort_by": "इसके अनुसार क्रमबद्ध करें",
   "ascending": "आरोही",
-  "descending": "अवरोही"
+  "descending": "अवरोही",
+  "default": "डिफ़ॉल्ट"
 }

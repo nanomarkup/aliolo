@@ -268,5 +268,6 @@
   "sort_by": "排序方式",
   "ascending": "升序",
   "descending": "降序",
+  "default": "默认",
   "learning": "学习中"
 }

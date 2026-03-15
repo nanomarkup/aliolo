@@ -74,24 +74,29 @@ class ProgressService {
         user.maxStreak = user.currentStreak;
       }
 
-      user.lastActiveDate = now;
-      await _authService.updateUser(user);
-    } catch (e) {
+      await _authService.patchProgress(
+        dailyCompletions: user.dailyCompletions,
+        totalXp: user.totalXp,
+        currentStreak: user.currentStreak,
+        maxStreak: user.maxStreak,
+        lastActiveDate: now,
+      );
+      } catch (e) {
       print('Progress Sync Error: $e');
-    }
-  }
+      }
+      }
 
-  Future<void> recordLearnProgress({
-    required String cardId,
-    required String subjectId,
-  }) async {
-    final user = _authService.currentUser;
-    if (user == null || user.serverId == null) return;
+      Future<void> recordLearnProgress({
+      required String cardId,
+      required String subjectId,
+      }) async {
+      final user = _authService.currentUser;
+      if (user == null || user.serverId == null) return;
 
-    final now = DateTime.now();
-    final today = DateTime(now.year, now.month, now.day);
+      final now = DateTime.now();
+      final today = DateTime(now.year, now.month, now.day);
 
-    try {
+      try {
       // 1. XP Gain for Learn Mode: 2
       user.totalXp += 2;
 
@@ -113,11 +118,18 @@ class ProgressService {
       }
 
       user.lastActiveDate = now;
-      await _authService.updateUser(user);
-    } catch (e) {
+      await _authService.patchProgress(
+        dailyCompletions: user.dailyCompletions,
+        totalXp: user.totalXp,
+        currentStreak: user.currentStreak,
+        maxStreak: user.maxStreak,
+        lastActiveDate: now,
+      );
+      } catch (e) {
       print('Learn Progress Error: $e');
-    }
-  }
+      }
+      }
+
 
   /// Consolidates new day reset logic for completions and streaks.
   void _handleNewDayReset(UserModel user, DateTime today) {

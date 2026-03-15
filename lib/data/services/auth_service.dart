@@ -152,15 +152,79 @@ class AuthService extends ChangeNotifier {
   }
 
   Future<void> updateUser(UserModel user) async {
-    if (_supabase == null) return;
+    if (_supabase == null || user.serverId == null) return;
+
+    final now = DateTime.now();
+    user.updatedAt = now;
+    user.lastActiveDate ??= now;
     _currentUser = user;
-    user.updatedAt = DateTime.now();
+
     try {
-      await _supabase!.from('profiles').upsert(user.toJson());
+      // Whitelist ONLY confirmed columns from user's provided schema
+      final data = {
+        'username': user.username,
+        'email': user.email,
+        'total_xp': user.totalXp,
+        'current_streak': user.currentStreak,
+        'max_streak': user.maxStreak,
+        'theme_mode': user.themeMode,
+        'ui_language': user.uiLanguage,
+        'daily_goal_count': user.dailyGoalCount,
+        'sidebar_left': user.sidebarLeft,
+        'sound_enabled': user.soundEnabled,
+        'show_on_leaderboard': user.showOnLeaderboard,
+        'learn_session_size': user.learnSessionSize,
+        'test_session_size': user.testSessionSize,
+        'options_count': user.optionsCount,
+        'avatar_url': user.avatarPath,
+        'default_language': user.defaultLanguage.toLowerCase(),
+        'main_color': user.mainColor,
+        'last_active_date': user.lastActiveDate?.toUtc().toIso8601String(),
+        'next_daily_goal': user.nextDailyGoal,
+        'daily_completions': user.dailyCompletions,
+        'auto_play_enabled': user.autoPlayEnabled,
+        'updated_at': user.updatedAt?.toUtc().toIso8601String(),
+      };
+
+      final List<dynamic> res = await _supabase!
+          .from('profiles')
+          .update(data)
+          .eq('id', user.serverId!)
+          .select('id');
+
+      if (res.isEmpty) {
+        data['id'] = user.serverId!;
+        await _supabase!.from('profiles').upsert(data);
+      }
     } catch (e) {
-      print('Error updating remote user: $e');
+      print('Error updating user profile: $e');
     }
     notifyListeners();
+  }
+
+  Future<void> patchProgress({
+    required double dailyCompletions,
+    required int totalXp,
+    required int currentStreak,
+    required int maxStreak,
+    required DateTime lastActiveDate,
+  }) async {
+    if (_currentUser != null) {
+      _currentUser!.dailyCompletions = dailyCompletions;
+      _currentUser!.totalXp = totalXp;
+      _currentUser!.currentStreak = currentStreak;
+      _currentUser!.maxStreak = maxStreak;
+      _currentUser!.lastActiveDate = lastActiveDate;
+
+      await _patchCurrentUser({
+        'daily_completions': dailyCompletions,
+        'total_xp': totalXp,
+        'current_streak': currentStreak,
+        'max_streak': maxStreak,
+        'last_active_date': lastActiveDate.toUtc().toIso8601String(),
+        'updated_at': DateTime.now().toUtc().toIso8601String(),
+      });
+    }
   }
 
   Future<void> updateMainColor(String hexColor) async {
@@ -226,87 +290,101 @@ class AuthService extends ChangeNotifier {
     }
   }
 
+  Future<void> _patchCurrentUser(Map<String, dynamic> changes) async {
+    if (_supabase == null || _currentUser?.serverId == null) return;
+
+    try {
+      await _supabase!
+          .from('profiles')
+          .update(changes)
+          .eq('id', _currentUser!.serverId!);
+    } catch (e) {
+      print('Error patching profile with $changes: $e');
+    }
+    notifyListeners();
+  }
+
   Future<void> updateSidebarPreference(bool left) async {
     if (_currentUser != null) {
       _currentUser!.sidebarLeft = left;
-      await updateUser(_currentUser!);
+      await _patchCurrentUser({'sidebar_left': left});
     }
   }
 
   Future<void> updateThemePreference(String mode) async {
     if (_currentUser != null) {
       _currentUser!.themeMode = mode;
-      await updateUser(_currentUser!);
+      await _patchCurrentUser({'theme_mode': mode});
     }
   }
 
   Future<void> updateSoundPreference(bool enabled) async {
     if (_currentUser != null) {
       _currentUser!.soundEnabled = enabled;
-      await updateUser(_currentUser!);
+      await _patchCurrentUser({'sound_enabled': enabled});
     }
   }
 
   Future<void> updateAutoPlayPreference(bool enabled) async {
     if (_currentUser != null) {
       _currentUser!.autoPlayEnabled = enabled;
-      await updateUser(_currentUser!);
+      await _patchCurrentUser({'auto_play_enabled': enabled});
     }
   }
 
   Future<void> updateLeaderboardPreference(bool show) async {
     if (_currentUser != null) {
       _currentUser!.showOnLeaderboard = show;
-      await updateUser(_currentUser!);
+      await _patchCurrentUser({'show_on_leaderboard': show});
     }
   }
 
   Future<void> updateDefaultLanguage(String lang) async {
     if (_currentUser != null) {
       _currentUser!.defaultLanguage = lang;
-      await updateUser(_currentUser!);
+      await _patchCurrentUser({'default_language': lang});
     }
   }
 
   Future<void> updateNextDailyGoal(int count) async {
     if (_currentUser != null) {
       _currentUser!.nextDailyGoal = count;
-      await updateUser(_currentUser!);
+      await _patchCurrentUser({'next_daily_goal': count});
     }
   }
 
   Future<void> updateLearnSessionSize(int size) async {
     if (_currentUser != null) {
       _currentUser!.learnSessionSize = size;
-      await updateUser(_currentUser!);
+      await _patchCurrentUser({'learn_session_size': size});
     }
   }
 
   Future<void> updateTestSessionSize(int size) async {
     if (_currentUser != null) {
       _currentUser!.testSessionSize = size;
-      await updateUser(_currentUser!);
+      await _patchCurrentUser({'test_session_size': size});
     }
   }
 
   Future<void> updateOptionsCount(int count) async {
     if (_currentUser != null) {
       _currentUser!.optionsCount = count;
-      await updateUser(_currentUser!);
+      await _patchCurrentUser({'options_count': count});
     }
   }
 
   Future<void> updateUiLanguagePreference(String lang) async {
     if (_currentUser != null) {
       _currentUser!.uiLanguage = lang;
-      await updateUser(_currentUser!);
+      await _patchCurrentUser({'ui_language': lang});
     }
   }
 
   Future<void> updateUsername(String newName) async {
     if (_currentUser != null) {
       _currentUser!.username = newName;
-      await updateUser(_currentUser!);
+      await _patchCurrentUser({'username': newName});
     }
   }
 
