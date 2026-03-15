@@ -19,14 +19,18 @@ class MathService {
     final now = DateTime.now();
     final card = CardModel(
       id: 'math_${now.millisecondsSinceEpoch}',
-      subjectId: 'math',
+      subjectId: 'Math',
       level: level,
-      prompts: {'en': problem.question},
-      answers: {'en': problem.answer},
       ownerId: 'system',
       isPublic: true,
       createdAt: now,
       updatedAt: now,
+      localizedData: {
+        'en': LocalizedCardData(
+          prompt: problem.question,
+          answer: problem.answer,
+        ),
+      },
     );
     card.mathQuestion = problem.question;
     card.mathOptions = problem.options;

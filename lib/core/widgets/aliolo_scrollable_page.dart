@@ -12,6 +12,7 @@ class AlioloScrollablePage extends StatelessWidget {
   final Widget? fixedBody;
   final Color? appBarColor;
   final double maxWidth;
+  final double appBarMaxWidth;
   final ScrollController? controller;
   final Widget? floatingActionButton;
   final Alignment titleAlignment;
@@ -27,6 +28,7 @@ class AlioloScrollablePage extends StatelessWidget {
     this.fixedBody,
     this.appBarColor,
     this.maxWidth = 640,
+    this.appBarMaxWidth = 700,
     this.controller,
     this.floatingActionButton,
     this.titleAlignment = Alignment.centerLeft,
@@ -47,6 +49,7 @@ class AlioloScrollablePage extends StatelessWidget {
           leadingWidth: leadingWidth,
           titleAlignment: titleAlignment,
           backgroundColor: appBarColor ?? Theme.of(context).primaryColor,
+          maxWidth: appBarMaxWidth,
         ),
         body: Center(
           child: ConstrainedBox(

@@ -156,11 +156,12 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
 
       final success = await _authService.login(email, pass);
       if (success) {
-        if (mounted)
+        if (mounted) {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => const SubjectPage()),
           );
+        }
       } else {
         final err = _authService.lastErrorMessage ?? '';
         if (err.toLowerCase().contains('confirmed')) {
@@ -362,11 +363,22 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
                                 : context.t('create_new_account'),
                           ),
                         ),
-                        if (!_isCreatingAccount)
+                        if (!_isCreatingAccount) ...[
                           TextButton(
                             onPressed: _toggleRecovery,
                             child: Text(context.t('forgot_password')),
                           ),
+                          TextButton(
+                            onPressed:
+                                () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const AboutPage(),
+                                  ),
+                                ),
+                            child: Text(context.t('about')),
+                          ),
+                        ],
                       ],
                     ] else ...[
                       Text(

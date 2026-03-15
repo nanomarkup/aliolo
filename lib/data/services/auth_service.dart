@@ -1,12 +1,13 @@
+import 'package:path/path.dart' as p;
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:aliolo/data/models/user_model.dart';
 import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/core/utils/logger.dart';
+
 class AuthService extends ChangeNotifier {
   static final AuthService _instance = AuthService._internal();
   factory AuthService() => _instance;
@@ -25,8 +26,8 @@ class AuthService extends ChangeNotifier {
     try {
       _supabase = Supabase.instance.client;
       final session = _supabase!.auth.currentSession;
-      if (session != null && session.user != null) {
-        await _fetchAndSyncUser(session.user!);
+      if (session != null) {
+        await _fetchAndSyncUser(session.user);
       }
     } catch (e) {
       AppLogger.log('AuthService.init() failed: $e');
@@ -51,10 +52,11 @@ class AuthService extends ChangeNotifier {
         if (_currentUser!.lastActiveDate != null) {
           final now = DateTime.now();
           final today = DateTime(now.year, now.month, now.day);
+          final lastLocal = _currentUser!.lastActiveDate!.toLocal();
           final lastDay = DateTime(
-            _currentUser!.lastActiveDate!.year,
-            _currentUser!.lastActiveDate!.month,
-            _currentUser!.lastActiveDate!.day,
+            lastLocal.year,
+            lastLocal.month,
+            lastLocal.day,
           );
 
           if (today.isAfter(lastDay)) {
@@ -164,8 +166,9 @@ class AuthService extends ChangeNotifier {
   Future<void> updateMainColor(String hexColor) async {
     if (_currentUser == null ||
         _currentUser!.serverId == null ||
-        _supabase == null)
+        _supabase == null) {
       return;
+    }
     try {
       await _supabase!
           .from('profiles')

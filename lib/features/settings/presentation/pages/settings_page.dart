@@ -6,7 +6,6 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
-import 'package:aliolo/data/services/testing_language_service.dart';
 import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/data/models/pillar_model.dart';
 import 'package:aliolo/features/leaderboard/presentation/pages/leaderboard_page.dart';
@@ -247,49 +246,37 @@ class _SettingsPageState extends State<SettingsPage> {
                         Icons.brightness_medium,
                         color: currentPrimaryColor,
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children:
-                            [
-                              {'mode': 'light', 'icon': Icons.light_mode},
-                              {'mode': 'dark', 'icon': Icons.dark_mode},
-                              {
-                                'mode': 'system',
-                                'icon': Icons.settings_brightness,
-                              },
-                            ].map((item) {
-                              final mode = item['mode'] as String;
-                              final icon = item['icon'] as IconData;
-                              final isSelected = _themeMode == mode;
-                              return ChoiceChip(
-                                avatar: Icon(
-                                  icon,
-                                  size: 16,
-                                  color:
-                                      isSelected
-                                          ? Colors.white
-                                          : currentPrimaryColor,
-                                ),
-                                label: Text(context.t('theme_$mode')),
-                                selected: isSelected,
-                                onSelected: (val) {
-                                  if (val) _updateTheme(mode);
-                                },
-                                selectedColor: currentPrimaryColor,
-                                labelStyle: TextStyle(
-                                  color:
-                                      isSelected
-                                          ? Colors.white
-                                          : (isDark
-                                              ? Colors.white70
-                                              : Colors.black87),
-                                ),
-                                showCheckmark: false,
-                              );
-                            }).toList(),
+                      trailing: SegmentedButton<String>(
+                        segments: [
+                          ButtonSegment<String>(
+                            value: 'light',
+                            label: Text(context.t('theme_light')),
+                            icon: const Icon(Icons.light_mode, size: 18),
+                          ),
+                          ButtonSegment<String>(
+                            value: 'dark',
+                            label: Text(context.t('theme_dark')),
+                            icon: const Icon(Icons.dark_mode, size: 18),
+                          ),
+                          ButtonSegment<String>(
+                            value: 'system',
+                            label: Text(context.t('theme_system')),
+                            icon: const Icon(
+                              Icons.settings_brightness,
+                              size: 18,
+                            ),
+                          ),
+                        ],
+                        selected: {_themeMode},
+                        onSelectionChanged: (Set<String> newSelection) {
+                          _updateTheme(newSelection.first);
+                        },
+                        style: SegmentedButton.styleFrom(
+                          selectedBackgroundColor: currentPrimaryColor,
+                          selectedForegroundColor: Colors.white,
+                          visualDensity: VisualDensity.compact,
+                        ),
+                        showSelectedIcon: false,
                       ),
                     ),
                     const Divider(height: 1),

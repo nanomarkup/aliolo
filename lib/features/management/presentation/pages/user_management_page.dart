@@ -6,7 +6,6 @@ import 'package:aliolo/data/models/user_model.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
-import 'package:aliolo/core/widgets/window_controls.dart';
 import 'package:aliolo/core/widgets/resize_wrapper.dart';
 import 'package:aliolo/features/leaderboard/presentation/pages/leaderboard_page.dart';
 import 'package:aliolo/features/subjects/presentation/pages/subject_page.dart';

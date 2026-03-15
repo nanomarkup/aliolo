@@ -104,8 +104,8 @@ class _SubSubjectPageState extends State<SubSubjectPage> {
                           cards
                               .where(
                                 (c) =>
-                                    c.answers.containsKey(_selectedLanguage) ||
-                                    c.answers.containsKey('en'),
+                                    c.getAnswer(_selectedLanguage).isNotEmpty ||
+                                    c.getAnswer('en').isNotEmpty,
                               )
                               .toList();
 
@@ -143,10 +143,10 @@ class _SubSubjectPageState extends State<SubSubjectPage> {
                                       itemCount: filteredCards.length,
                                       itemBuilder: (context, index) {
                                         final card = filteredCards[index];
-                                        final answer =
-                                            card.answers[_selectedLanguage] ??
-                                            card.answers['en'] ??
-                                            '';
+                                        final answer = card.getAnswer(
+                                          _selectedLanguage,
+                                        );
+                                        final imageUrl = card.primaryImageUrl;
 
                                         return Card(
                                           margin: const EdgeInsets.only(
@@ -172,14 +172,14 @@ class _SubSubjectPageState extends State<SubSubjectPage> {
                                               );
                                             },
                                             leading:
-                                                card.imageUrl != null
+                                                imageUrl != null
                                                     ? ClipRRect(
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                             8,
                                                           ),
                                                       child: Image.network(
-                                                        card.imageUrl!,
+                                                        imageUrl,
                                                         width: 50,
                                                         height: 50,
                                                         fit: BoxFit.cover,

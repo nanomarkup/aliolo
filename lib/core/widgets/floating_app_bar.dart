@@ -11,6 +11,7 @@ class AlioloAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Color foregroundColor;
   final bool automaticallyImplyLeading;
   final Alignment titleAlignment;
+  final double maxWidth;
 
   const AlioloAppBar({
     super.key,
@@ -22,6 +23,7 @@ class AlioloAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.foregroundColor = Colors.white,
     this.automaticallyImplyLeading = false,
     this.titleAlignment = Alignment.centerLeft,
+    this.maxWidth = 700,
   });
 
   @override
@@ -30,7 +32,7 @@ class AlioloAppBar extends StatelessWidget implements PreferredSizeWidget {
       preferredSize: const Size.fromHeight(80), // 16 top padding + 64 container
       child: Center(
         child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 700),
+          constraints: BoxConstraints(maxWidth: maxWidth),
           child: Padding(
             padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
             child: Container(

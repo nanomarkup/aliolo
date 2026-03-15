@@ -39,6 +39,22 @@ class _ProfilePageState extends State<ProfilePage> {
       source: ImageSource.gallery,
     );
     if (image != null) {
+      // Check file size (Max 1MB for avatar)
+      final sizeInBytes = await image.length();
+      if (sizeInBytes > 1 * 1024 * 1024) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                '${context.t('file_too_large')}. ${context.t('max_size_is', args: {'size': '1'})}',
+              ),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+        return;
+      }
+
       await _authService.updateAvatarPath(image);
       if (mounted) setState(() {});
     }

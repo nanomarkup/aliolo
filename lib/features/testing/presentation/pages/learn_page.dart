@@ -1,7 +1,5 @@
-import 'dart:io';
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:media_kit/media_kit.dart';
@@ -13,12 +11,9 @@ import 'package:aliolo/data/services/card_service.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/sound_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
-import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/data/services/progress_service.dart';
 import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/core/widgets/window_controls.dart';
-import 'package:aliolo/core/widgets/resize_wrapper.dart';
-import 'package:aliolo/core/utils/logger.dart';
 
 class LearnPage extends StatefulWidget {
   final CardModel card;
@@ -60,9 +55,7 @@ class _LearnPageState extends State<LearnPage> {
   @override
   void initState() {
     super.initState();
-    if (!kIsWeb) {
-      windowManager.setResizable(true);
-    }
+    if (!kIsWeb) windowManager.setResizable(true);
     _isAutoPlay = _authService.currentUser?.autoPlayEnabled ?? false;
     _currentCard = widget.card;
 
@@ -89,15 +82,14 @@ class _LearnPageState extends State<LearnPage> {
     );
     if (allCards.isEmpty) return;
 
+    // Filter cards that have at least an answer in target lang, en, or global
     final lang = widget.languageCode.toLowerCase();
     final langFiltered =
-        allCards
-            .where(
-              (c) => c.answers.containsKey(lang) || c.answers.containsKey('en'),
-            )
-            .toList();
-    langFiltered.shuffle();
+        allCards.where((c) {
+          return c.getAnswer(lang).isNotEmpty || c.getAnswer('en').isNotEmpty;
+        }).toList();
 
+    langFiltered.shuffle();
     final size = user.learnSessionSize;
     _sessionQueue = langFiltered.take(size).toList();
 
@@ -114,17 +106,14 @@ class _LearnPageState extends State<LearnPage> {
     _autoNextTimer?.cancel();
     _isAutoPlayWaiting = false;
 
-    setState(() {
-      _currentImages = [
-        if (_currentCard.imageUrl != null && _currentCard.imageUrl!.isNotEmpty)
-          _currentCard.imageUrl!,
-        ..._currentCard.imageUrls.where((u) => u != _currentCard.imageUrl),
-      ];
-      _currentImageIndex = 0;
+    final lang = widget.languageCode.toLowerCase();
+    final images = _currentCard.getImageUrls(lang);
+    final video = _currentCard.getVideoUrl(lang);
 
-      _showingVideo =
-          _currentImages.isEmpty &&
-          (_currentCard.videoUrl?.isNotEmpty ?? false);
+    setState(() {
+      _currentImages = images;
+      _currentImageIndex = 0;
+      _showingVideo = images.isEmpty && (video?.isNotEmpty ?? false);
     });
 
     _playInitialMedia();
@@ -132,14 +121,13 @@ class _LearnPageState extends State<LearnPage> {
 
   Future<void> _playInitialMedia() async {
     await player.stop();
-
     final lang = widget.languageCode.toLowerCase();
-    final audioUrl =
-        _currentCard.audioUrls[lang] ?? _currentCard.audioUrls['en'];
+    final audioUrl = _currentCard.getAudioUrl(lang);
+    final videoUrl = _currentCard.getVideoUrl(lang);
 
     bool hasMedia = false;
-    if (_showingVideo && _currentCard.videoUrl != null) {
-      await player.open(Media(_currentCard.videoUrl!));
+    if (_showingVideo && videoUrl != null) {
+      await player.open(Media(videoUrl));
       player.play();
       hasMedia = true;
     } else if (audioUrl != null) {
@@ -155,18 +143,12 @@ class _LearnPageState extends State<LearnPage> {
 
   void _scheduleAutoNext({required bool afterMedia}) {
     if (!_isAutoPlay || _isAutoPlayWaiting) return;
-
     setState(() => _isAutoPlayWaiting = true);
-
-    // If media just finished, shorter delay. If no media, longer delay to read.
     final delay =
         afterMedia ? const Duration(seconds: 2) : const Duration(seconds: 4);
-
     _autoNextTimer?.cancel();
     _autoNextTimer = Timer(delay, () {
-      if (mounted && _isAutoPlay && _isAutoPlayWaiting) {
-        _nextCard();
-      }
+      if (mounted && _isAutoPlay && _isAutoPlayWaiting) _nextCard();
     });
   }
 
@@ -175,7 +157,6 @@ class _LearnPageState extends State<LearnPage> {
     setState(() => _isAutoPlayWaiting = false);
     player.stop();
 
-    // Record progress for the card just viewed
     _progressService.recordLearnProgress(
       cardId: _currentCard.id,
       subjectId: _currentCard.subjectId,
@@ -187,64 +168,109 @@ class _LearnPageState extends State<LearnPage> {
     }
 
     if (_sessionQueue.isNotEmpty) {
-      setState(() {
-        _currentCard = _sessionQueue.first;
-      });
+      setState(() => _currentCard = _sessionQueue.first);
       _setupMedia();
     } else {
       _progressService.awardSubjectCompletionBonus(_totalInSession);
       _soundService.playCompleted();
-      showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder:
-            (context) => AlertDialog(
-              title: Text(context.t('session_complete')),
-              content: Text(
-                'You have finished reviewing all cards in this session.',
-              ),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                    Navigator.pop(context);
-                  },
-                  child: Text(context.t('back_to_subjects')),
-                ),
-              ],
-            ),
-      );
+      _showCompletionDialog();
     }
   }
 
-  String _getDisplayPrompt(CardModel card) {
-    final lang = widget.languageCode.toLowerCase();
-    return card.prompts[lang] ??
-        card.prompts['en'] ??
-        card.prompts.values.firstOrNull ??
-        '';
+  void _showCompletionDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder:
+          (context) => AlertDialog(
+            title: Text(context.t('session_complete')),
+            content: const Text(
+              'You have finished reviewing all cards in this session.',
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                },
+                child: Text(context.t('back_to_subjects')),
+              ),
+            ],
+          ),
+    );
   }
 
-  String _getDisplayAnswer(CardModel card) {
+  void _showPeekSheet() {
     final lang = widget.languageCode.toLowerCase();
-    return card.answers[lang] ??
-        card.answers['en'] ??
-        card.answers.values.firstOrNull ??
-        '';
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Container(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'TRANSLATIONS',
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey,
+                ),
+              ),
+              const SizedBox(height: 16),
+              ..._currentCard.localizedData.entries
+                  .where((e) => e.key != lang)
+                  .map((e) {
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            e.key.toUpperCase(),
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12,
+                              color: Colors.orange,
+                            ),
+                          ),
+                          Text(
+                            e.value.prompt ?? '-',
+                            style: const TextStyle(fontSize: 16),
+                          ),
+                          Text(
+                            e.value.answer ?? '-',
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  }),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     bool isLeft = _authService.currentUser?.sidebarLeft ?? false;
-    const appBarColor = Colors.white;
-
-    Color headerColor = ThemeService().sessionColorNotifier.value;
+    final lang = widget.languageCode.toLowerCase();
+    Color headerColor = Colors.orange;
     if (_subject != null) {
-      final p = pillars.firstWhere(
-        (p) => p.id == _subject!.pillarId,
-        orElse: () => pillars.first,
-      );
-      headerColor = p.getColor();
+      headerColor =
+          pillars
+              .firstWhere(
+                (p) => p.id == _subject!.pillarId,
+                orElse: () => pillars.first,
+              )
+              .getColor();
     }
 
     return ListenableBuilder(
@@ -255,33 +281,25 @@ class _LearnPageState extends State<LearnPage> {
 
         Widget sidebar = Container(
           width: 400,
-          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 32),
+          padding: const EdgeInsets.all(32),
           color: Theme.of(context).colorScheme.surface,
           child: Column(
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: LinearProgressIndicator(
-                  value: progressValue,
-                  minHeight: 12,
-                  backgroundColor: Colors.grey[200],
-                  valueColor: AlwaysStoppedAnimation<Color>(headerColor),
-                ),
+              LinearProgressIndicator(
+                value: progressValue,
+                minHeight: 8,
+                borderRadius: BorderRadius.circular(4),
+                color: headerColor,
               ),
               const SizedBox(height: 48),
-
               Text(
-                _getDisplayPrompt(_currentCard),
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.grey[600],
-                ),
+                _currentCard.getPrompt(lang),
+                style: TextStyle(fontSize: 24, color: Colors.grey[600]),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 16),
               Text(
-                _getDisplayAnswer(_currentCard),
+                _currentCard.getAnswer(lang),
                 style: TextStyle(
                   fontSize: 36,
                   fontWeight: FontWeight.bold,
@@ -289,132 +307,61 @@ class _LearnPageState extends State<LearnPage> {
                 ),
                 textAlign: TextAlign.center,
               ),
-
               const Spacer(),
-
-              if (_currentCard.audioUrls.isNotEmpty)
+              if (_currentCard.getAudioUrl(lang) != null)
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 24),
-                  child: ElevatedButton.icon(
+                  padding: const EdgeInsets.only(bottom: 12),
+                  child: OutlinedButton.icon(
                     onPressed: () async {
-                      final lang = widget.languageCode.toLowerCase();
-                      final url =
-                          _currentCard.audioUrls[lang] ??
-                          _currentCard.audioUrls['en'];
+                      final url = _currentCard.getAudioUrl(lang);
                       if (url != null) {
                         await player.open(Media(url));
                         player.play();
                       }
                     },
-                    icon: const Icon(Icons.volume_up, size: 32),
-                    label: const Text(
-                      'Play Audio',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: headerColor.withValues(alpha: 0.1),
-                      foregroundColor: headerColor,
-                      minimumSize: const Size(double.infinity, 60),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
+                    icon: const Icon(Icons.volume_up),
+                    label: const Text('Play Audio'),
+                    style: OutlinedButton.styleFrom(
+                      minimumSize: const Size(double.infinity, 50),
                     ),
                   ),
                 ),
-
-              if (_currentCard.videoUrl != null &&
-                  _currentCard.videoUrl!.isNotEmpty)
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 24),
-                  child: ElevatedButton.icon(
-                    onPressed:
-                        () => setState(() {
-                          _showingVideo = !_showingVideo;
-                          if (_showingVideo) {
-                            player.open(Media(_currentCard.videoUrl!));
-                            player.play();
-                          } else {
-                            player.stop();
-                          }
-                        }),
-                    icon: Icon(
-                      _showingVideo ? Icons.image : Icons.videocam,
-                      size: 32,
-                    ),
-                    label: Text(
-                      _showingVideo ? 'Show Image' : 'Show Video',
-                      style: const TextStyle(fontSize: 18),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: headerColor.withValues(alpha: 0.1),
-                      foregroundColor: headerColor,
-                      minimumSize: const Size(double.infinity, 60),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                    ),
-                  ),
-                ),
-
+              const SizedBox(height: 24),
               Row(
                 children: [
                   Expanded(
                     child: ElevatedButton.icon(
                       onPressed: _nextCard,
                       icon: const Icon(Icons.arrow_forward),
-                      label: Text(
-                        context.t('next'),
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                      label: Text(context.t('next')),
                       style: ElevatedButton.styleFrom(
                         minimumSize: const Size.fromHeight(70),
                         backgroundColor: headerColor,
                         foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
                       ),
                     ),
                   ),
                   const SizedBox(width: 12),
-                  Container(
-                    height: 70,
-                    width: 70,
-                    decoration: BoxDecoration(
-                      color:
-                          _isAutoPlay
-                              ? headerColor.withValues(alpha: 0.2)
-                              : Colors.grey[200],
-                      borderRadius: BorderRadius.circular(15),
-                      border: Border.all(
-                        color: _isAutoPlay ? headerColor : Colors.grey[400]!,
-                        width: 2,
-                      ),
+                  IconButton.filledTonal(
+                    onPressed: () {
+                      final newVal = !_isAutoPlay;
+                      _authService.updateAutoPlayPreference(newVal);
+                      setState(() {
+                        _isAutoPlay = newVal;
+                        if (_isAutoPlay) {
+                          _scheduleAutoNext(afterMedia: false);
+                        } else {
+                          _autoNextTimer?.cancel();
+                          _isAutoPlayWaiting = false;
+                        }
+                      });
+                    },
+                    icon: Icon(
+                      _isAutoPlay ? Icons.pause_circle : Icons.play_circle,
+                      size: 32,
                     ),
-                    child: IconButton(
-                      icon: Icon(
-                        _isAutoPlay
-                            ? Icons.pause_circle_filled
-                            : Icons.play_circle_fill,
-                        size: 32,
-                        color: _isAutoPlay ? headerColor : Colors.grey[600],
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          _isAutoPlay = !_isAutoPlay;
-                          if (_isAutoPlay && !_isAutoPlayWaiting) {
-                            // Check if already finished or no media
-                            if (player.state.completed) {
-                              _scheduleAutoNext(afterMedia: true);
-                            } else {
-                              // Will be handled by stream listener or _playInitialMedia
-                            }
-                          }
-                        });
-                      },
+                    style: IconButton.styleFrom(
+                      minimumSize: const Size(70, 70),
                     ),
                   ),
                 ],
@@ -424,85 +371,78 @@ class _LearnPageState extends State<LearnPage> {
         );
 
         Widget mainContent = Expanded(
-          child: Container(
-            color: Theme.of(context).colorScheme.surfaceContainerHighest,
-            padding: const EdgeInsets.all(32.0),
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: Card(
-                      elevation: 10,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      clipBehavior: Clip.antiAlias,
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          Positioned.fill(
-                            child:
-                                _showingVideo && _currentCard.videoUrl != null
-                                    ? Video(controller: controller)
-                                    : (_currentImages.isNotEmpty
-                                        ? Image.network(
-                                          _currentImages[_currentImageIndex],
-                                          fit: BoxFit.contain,
-                                        )
-                                        : const Icon(
-                                          Icons.image_not_supported,
-                                          size: 100,
-                                          color: Colors.grey,
-                                        )),
-                          ),
-                          if (!_showingVideo && _currentImages.length > 1) ...[
-                            Positioned(
-                              left: 20,
-                              child: CircleAvatar(
-                                backgroundColor: Colors.black45,
-                                child: IconButton(
-                                  icon: const Icon(
-                                    Icons.chevron_left,
-                                    color: Colors.white,
-                                  ),
-                                  onPressed:
-                                      () => setState(
-                                        () =>
-                                            _currentImageIndex =
-                                                (_currentImageIndex -
-                                                    1 +
-                                                    _currentImages.length) %
-                                                _currentImages.length,
-                                      ),
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              right: 20,
-                              child: CircleAvatar(
-                                backgroundColor: Colors.black45,
-                                child: IconButton(
-                                  icon: const Icon(
-                                    Icons.chevron_right,
-                                    color: Colors.white,
-                                  ),
-                                  onPressed:
-                                      () => setState(
-                                        () =>
-                                            _currentImageIndex =
-                                                (_currentImageIndex + 1) %
-                                                _currentImages.length,
-                                      ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ],
-                      ),
-                    ),
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(32),
+              child: AspectRatio(
+                aspectRatio: 4 / 3,
+                child: Card(
+                  elevation: 8,
+                  clipBehavior: Clip.antiAlias,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24),
                   ),
-                ],
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      if (_showingVideo)
+                        Video(controller: controller)
+                      else if (_currentImages.isNotEmpty)
+                        Image.network(
+                          _currentImages[_currentImageIndex],
+                          fit: BoxFit.contain,
+                        )
+                      else
+                        const Icon(
+                          Icons.image_not_supported,
+                          size: 100,
+                          color: Colors.grey,
+                        ),
+                      if (!_showingVideo && _currentImages.length > 1) ...[
+                        Positioned(
+                          left: 10,
+                          top: 0,
+                          bottom: 0,
+                          child: IconButton(
+                            icon: const Icon(
+                              Icons.chevron_left,
+                              color: Colors.white,
+                              size: 40,
+                            ),
+                            onPressed:
+                                () => setState(
+                                  () =>
+                                      _currentImageIndex =
+                                          (_currentImageIndex -
+                                              1 +
+                                              _currentImages.length) %
+                                          _currentImages.length,
+                                ),
+                          ),
+                        ),
+                        Positioned(
+                          right: 10,
+                          top: 0,
+                          bottom: 0,
+                          child: IconButton(
+                            icon: const Icon(
+                              Icons.chevron_right,
+                              color: Colors.white,
+                              size: 40,
+                            ),
+                            onPressed:
+                                () => setState(
+                                  () =>
+                                      _currentImageIndex =
+                                          (_currentImageIndex + 1) %
+                                          _currentImages.length,
+                                ),
+                          ),
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
               ),
             ),
           ),
@@ -510,28 +450,20 @@ class _LearnPageState extends State<LearnPage> {
 
         return Scaffold(
           appBar: AppBar(
-            title: DragToMoveArea(
-              child: SizedBox(
-                width: double.infinity,
-                child: Text(_translatedSubjectName),
-              ),
-            ),
-            backgroundColor: headerColor,
-            foregroundColor: appBarColor,
             automaticallyImplyLeading: false,
+            title: Text(_translatedSubjectName),
+            backgroundColor: headerColor,
+            foregroundColor: Colors.white,
             actions: [
               IconButton(
-                icon: const Icon(Icons.arrow_back, color: appBarColor),
+                icon: const Icon(Icons.arrow_back),
                 onPressed: () => Navigator.pop(context),
               ),
-              const WindowControls(color: appBarColor, iconSize: 24),
+              if (!kIsWeb) const WindowControls(color: Colors.white),
             ],
           ),
           body: Row(
-            children:
-                isLeft
-                    ? [sidebar, const VerticalDivider(width: 1), mainContent]
-                    : [mainContent, const VerticalDivider(width: 1), sidebar],
+            children: isLeft ? [sidebar, mainContent] : [mainContent, sidebar],
           ),
         );
       },
@@ -542,7 +474,6 @@ class _LearnPageState extends State<LearnPage> {
   void dispose() {
     _autoNextTimer?.cancel();
     _playerSubscription?.cancel();
-    player.stop();
     player.dispose();
     super.dispose();
   }

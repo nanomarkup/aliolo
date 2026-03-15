@@ -7,6 +7,7 @@ import 'package:aliolo/data/services/theme_service.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:aliolo/core/widgets/window_controls.dart';
 import 'package:aliolo/features/settings/presentation/pages/licenses_page.dart';
+import 'package:aliolo/features/onboarding/presentation/pages/onboarding_page.dart';
 
 class AboutPage extends StatefulWidget {
   const AboutPage({super.key});
@@ -48,19 +49,41 @@ class _AboutPageState extends State<AboutPage> {
     });
   }
 
-  Widget _buildFeatureRow(
+  Widget _buildSectionTitle(BuildContext context, String title) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 32, bottom: 20),
+      child: Row(
+        children: [
+          Text(
+            title,
+            style: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w900,
+              letterSpacing: 2.0,
+              color: Colors.orange,
+            ),
+          ),
+          const SizedBox(width: 16),
+          const Expanded(child: Divider()),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildInfoRow(
     BuildContext context,
     IconData icon,
     String title,
     String description,
   ) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Padding(
-      padding: const EdgeInsets.only(bottom: 16.0),
+      padding: const EdgeInsets.only(bottom: 24.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, size: 24, color: Theme.of(context).colorScheme.primary),
-          const SizedBox(width: 16),
+          Icon(icon, size: 28, color: Colors.orange),
+          const SizedBox(width: 20),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -69,18 +92,16 @@ class _AboutPageState extends State<AboutPage> {
                   title,
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 16,
+                    fontSize: 18,
                   ),
                 ),
-                const SizedBox(height: 4),
+                const SizedBox(height: 6),
                 Text(
                   description,
                   style: TextStyle(
-                    fontSize: 14,
-                    color:
-                        Theme.of(context).brightness == Brightness.dark
-                            ? Colors.grey.shade400
-                            : Colors.grey.shade600,
+                    fontSize: 15,
+                    height: 1.5,
+                    color: isDark ? Colors.grey.shade400 : Colors.grey.shade600,
                   ),
                 ),
               ],
@@ -94,6 +115,7 @@ class _AboutPageState extends State<AboutPage> {
   @override
   Widget build(BuildContext context) {
     final currentPrimaryColor = ThemeService().primaryColor;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return ListenableBuilder(
       listenable: TranslationService(),
@@ -101,173 +123,243 @@ class _AboutPageState extends State<AboutPage> {
         return Scaffold(
           body: Stack(
             children: [
+              // Global draggable background (for right side and gaps)
               const Positioned.fill(
                 child: DragToMoveArea(child: SizedBox.expand()),
               ),
-              Center(
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 640),
-                  child: SingleChildScrollView(
-                    padding: const EdgeInsets.fromLTRB(16, 48, 16, 48),
-                    child: Column(
-                      children: [
-                        const SizedBox(height: 24),
-                        Icon(
-                          Icons.account_circle,
-                          size: 80,
-                          color: currentPrimaryColor,
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Left side: Brand & Version
+                  SizedBox(
+                    width: 300,
+                    child: DragToMoveArea(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).scaffoldBackgroundColor,
+                          border: Border(
+                            right: BorderSide(
+                              color: Theme.of(context).dividerColor,
+                            ),
+                          ),
                         ),
-                        const SizedBox(height: 12),
-                        Row(
+                        child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Text(
+                            const Spacer(flex: 3),
+                            const Icon(
+                              Icons.school,
+                              size: 100,
+                              color: Colors.orange,
+                            ),
+                            const SizedBox(height: 16),
+                            const Text(
                               'Aliolo',
                               style: TextStyle(
-                                fontSize: 32,
+                                fontSize: 48,
                                 fontWeight: FontWeight.bold,
-                                color: currentPrimaryColor,
+                                color: Colors.orange,
                               ),
                             ),
-                            const SizedBox(width: 12),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 4.0),
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 10,
-                                  vertical: 4,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: Colors.amber,
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: Text(
-                                  context.t('pro_label'),
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                    letterSpacing: 1.1,
-                                  ),
-                                ),
+                            const SizedBox(height: 8),
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12,
+                                vertical: 6,
                               ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 6),
-                        Text(
-                          '${context.t('version')} $_version',
-                          style: const TextStyle(
-                            fontSize: 14,
-                            color: Colors.grey,
-                          ),
-                        ),
-                        const SizedBox(height: 24),
-                        Text(
-                          context.t('about_tagline'),
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 18,
-                            color:
-                                Theme.of(context).brightness == Brightness.dark
-                                    ? Colors.grey.shade400
-                                    : Colors.grey.shade600,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        const SizedBox(height: 32),
-                        Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.all(24),
-                          decoration: BoxDecoration(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .primaryContainer
-                                .withValues(alpha: 0.3),
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                context.t('algorithm_title'),
+                              decoration: BoxDecoration(
+                                color: Colors.amber,
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Text(
+                                context.t('pro_label'),
                                 style: const TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
+                                  color: Colors.black,
                                   letterSpacing: 1.2,
                                 ),
                               ),
-                              const SizedBox(height: 20),
-                              _buildFeatureRow(
-                                context,
-                                Icons.history_edu,
-                                context.t('feat_spacing_title'),
-                                context.t('feat_spacing_desc'),
+                            ),
+                            const SizedBox(height: 12),
+                            Text(
+                              '${context.t('version')} $_version',
+                              style: const TextStyle(
+                                fontSize: 16,
+                                color: Colors.grey,
                               ),
-                              _buildFeatureRow(
-                                context,
-                                Icons.speed,
-                                context.t('feat_adaptive_title'),
-                                context.t('feat_adaptive_desc'),
+                            ),
+                            const SizedBox(height: 48),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 24.0,
                               ),
-                              _buildFeatureRow(
-                                context,
-                                Icons.visibility,
-                                context.t('feat_recognition_title'),
-                                context.t('feat_recognition_desc'),
-                              ),
-                              _buildFeatureRow(
-                                context,
-                                Icons.workspace_premium,
-                                context.t('feat_mastery_title'),
-                                context.t('feat_mastery_desc'),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(height: 24),
-                        OutlinedButton.icon(
-                          onPressed:
-                              () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder:
-                                      (context) => const CustomLicensesPage(),
+                              child: OutlinedButton.icon(
+                                onPressed:
+                                    () => Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder:
+                                            (context) =>
+                                                const CustomLicensesPage(),
+                                      ),
+                                    ),
+                                icon: const Icon(Icons.description_outlined),
+                                label: Text(context.t('licenses')),
+                                style: OutlinedButton.styleFrom(
+                                  minimumSize: const Size(double.infinity, 50),
+                                  foregroundColor: Colors.orange,
+                                  side: const BorderSide(color: Colors.orange),
                                 ),
                               ),
-                          icon: const Icon(Icons.description_outlined),
-                          label: Text(context.t('licenses')),
-                          style: OutlinedButton.styleFrom(
-                            minimumSize: const Size(double.infinity, 50),
-                          ),
+                            ),
+                            const SizedBox(height: 16),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 24.0,
+                              ),
+                              child: OutlinedButton.icon(
+                                onPressed:
+                                    () => Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder:
+                                            (context) => const OnboardingPage(),
+                                      ),
+                                    ),
+                                icon: const Icon(Icons.auto_awesome),
+                                label: Text(context.t('view_onboarding')),
+                                style: OutlinedButton.styleFrom(
+                                  minimumSize: const Size(double.infinity, 50),
+                                  foregroundColor: Colors.orange,
+                                  side: const BorderSide(color: Colors.orange),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 24.0,
+                              ),
+                              child: OutlinedButton.icon(
+                                onPressed: () => Navigator.pop(context),
+                                icon: const Icon(Icons.arrow_back),
+                                label: Text(context.t('back')),
+                                style: OutlinedButton.styleFrom(
+                                  minimumSize: const Size(double.infinity, 50),
+                                  foregroundColor: Colors.orange,
+                                  side: const BorderSide(color: Colors.orange),
+                                ),
+                              ),
+                            ),
+                            const Spacer(flex: 2),
+                            Text(
+                              context.t('all_rights_reserved'),
+                              style: const TextStyle(
+                                fontSize: 12,
+                                color: Colors.grey,
+                              ),
+                            ),
+                            const SizedBox(height: 24),
+                          ],
                         ),
-                        const SizedBox(height: 16),
-                        TextButton(
-                          onPressed: () => Navigator.pop(context),
-                          child: Text(context.t('back')),
-                        ),
-                        const SizedBox(height: 60),
-                        Text(
-                          context.t('master_visual_ease'),
-                          style: const TextStyle(
-                            fontStyle: FontStyle.italic,
-                            color: Colors.grey,
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          context.t('all_rights_reserved'),
-                          style: const TextStyle(
-                            fontSize: 12,
-                            color: Colors.grey,
-                          ),
-                        ),
-                        const SizedBox(height: 40),
-                      ],
+                      ),
                     ),
                   ),
-                ),
+                  // Right side: Features & Details
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(64, 48, 64, 64),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              context.t('our_mission'),
+                              style: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w900,
+                                letterSpacing: 2.0,
+                                color: Colors.orange,
+                              ),
+                            ),
+                            const SizedBox(height: 24),
+                            Text(
+                              context.t('mission_desc'),
+                              style: TextStyle(
+                                fontSize: 22,
+                                color:
+                                    isDark
+                                        ? Colors.grey.shade200
+                                        : Colors.grey.shade900,
+                                fontWeight: FontWeight.w600,
+                                height: 1.4,
+                              ),
+                            ),
+
+                            _buildSectionTitle(
+                              context,
+                              context.t('core_features'),
+                            ),
+                            _buildInfoRow(
+                              context,
+                              Icons.play_circle_fill,
+                              context.t('feat_multimedia_title'),
+                              context.t('feat_multimedia_desc'),
+                            ),
+                            _buildInfoRow(
+                              context,
+                              Icons.family_restroom,
+                              context.t('feat_ages_title'),
+                              context.t('feat_ages_desc'),
+                            ),
+                            _buildInfoRow(
+                              context,
+                              Icons.military_tech,
+                              context.t('feat_gamified_title'),
+                              context.t('feat_gamified_desc'),
+                            ),
+
+                            _buildSectionTitle(
+                              context,
+                              context.t('the_science'),
+                            ),
+                            _buildInfoRow(
+                              context,
+                              Icons.auto_graph,
+                              context.t('feat_science_spacing_title'),
+                              context.t('feat_science_spacing_desc'),
+                            ),
+                            _buildInfoRow(
+                              context,
+                              Icons.insights,
+                              context.t('feat_science_adaptive_title'),
+                              context.t('feat_science_adaptive_desc'),
+                            ),
+
+                            _buildSectionTitle(
+                              context,
+                              context.t('trust_privacy'),
+                            ),
+                            _buildInfoRow(
+                              context,
+                              Icons.cloud_done,
+                              context.t('trust_cloud_title'),
+                              context.t('trust_cloud_desc'),
+                            ),
+                            _buildInfoRow(
+                              context,
+                              Icons.sync_lock,
+                              context.t('trust_sync_title'),
+                              context.t('trust_sync_desc'),
+                            ),
+                            const SizedBox(height: 48),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
               Positioned(
                 top: 12,

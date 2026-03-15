@@ -11,7 +11,6 @@ import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/features/auth/presentation/pages/profile_page.dart';
 import 'package:aliolo/features/settings/presentation/pages/settings_page.dart';
 import 'package:aliolo/features/subjects/presentation/pages/subject_page.dart';
-import 'package:aliolo/core/utils/logger.dart';
 
 class LeaderboardPage extends StatefulWidget {
   const LeaderboardPage({super.key});

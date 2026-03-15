@@ -11,11 +11,9 @@ import 'package:aliolo/data/services/card_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/data/services/testing_language_service.dart';
-import 'package:aliolo/core/widgets/resize_wrapper.dart';
 import 'package:aliolo/features/auth/presentation/pages/profile_page.dart';
 import 'package:aliolo/features/settings/presentation/pages/settings_page.dart';
 import 'package:aliolo/features/leaderboard/presentation/pages/leaderboard_page.dart';
-import 'package:aliolo/features/testing/presentation/pages/test_page.dart';
 import 'package:aliolo/features/subjects/presentation/pages/subject_landing_page.dart';
 import 'package:aliolo/features/management/presentation/pages/subject_edit_page.dart';
 
@@ -283,11 +281,11 @@ class _SubjectPageState extends State<SubjectPage> {
               _isLoading
                   ? null
                   : Padding(
-                    padding: const EdgeInsets.only(top: 24, bottom: 24),
+                    padding: const EdgeInsets.only(top: 16, bottom: 24),
                     child: Row(
                       children: [
                         Expanded(
-                          flex: 1,
+                          flex: 3,
                           child: TextField(
                             controller: _searchController,
                             decoration: InputDecoration(
@@ -324,7 +322,7 @@ class _SubjectPageState extends State<SubjectPage> {
                         ),
                         const SizedBox(width: 8),
                         Expanded(
-                          flex: 1,
+                          flex: 2,
                           child: _buildCompactDropdown(
                             value: _collectionFilter,
                             items: {
@@ -334,31 +332,33 @@ class _SubjectPageState extends State<SubjectPage> {
                               'public': context.t('filter_public'),
                             },
                             onChanged: (val) {
-                              if (val != null)
+                              if (val != null) {
                                 setState(() {
                                   _collectionFilter = val;
                                   _applySearch();
                                 });
+                              }
                             },
                           ),
                         ),
                         const SizedBox(width: 8),
                         Expanded(
-                          flex: 1,
+                          flex: 2,
                           child: _buildCompactDropdown(
                             value: _selectedAgeFilter,
                             items: {
                               'all': context.t('age_all'),
-                              'early': context.t('age_early'),
-                              'primary': context.t('age_primary'),
-                              'intermediate': context.t('age_intermediate'),
+                              '0_6': context.t('age_0_6'),
+                              '7_14': context.t('age_7_14'),
+                              '15_plus': context.t('age_15_plus'),
                             },
                             onChanged: (val) {
-                              if (val != null)
+                              if (val != null) {
                                 setState(() {
                                   _selectedAgeFilter = val;
                                   _applySearch();
                                 });
+                              }
                             },
                           ),
                         ),
@@ -813,10 +813,11 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
       ],
       fixedBody: Column(
         children: [
+          const SizedBox(height: 16),
           Row(
             children: [
               Expanded(
-                flex: 1,
+                flex: 3,
                 child: TextField(
                   controller: _searchController,
                   decoration: InputDecoration(
@@ -835,7 +836,7 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
               ),
               const SizedBox(width: 8),
               Expanded(
-                flex: 1,
+                flex: 2,
                 child: _buildCompactDropdown(
                   value: _collectionFilter,
                   items: {
@@ -845,31 +846,33 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
                     'public': context.t('filter_public'),
                   },
                   onChanged: (val) {
-                    if (val != null)
+                    if (val != null) {
                       setState(() {
                         _collectionFilter = val;
                         _applyFilters();
                       });
+                    }
                   },
                 ),
               ),
               const SizedBox(width: 8),
               Expanded(
-                flex: 1,
+                flex: 2,
                 child: _buildCompactDropdown(
                   value: _selectedAgeFilter,
                   items: {
                     'all': context.t('age_all'),
-                    'early': context.t('age_early'),
-                    'primary': context.t('age_primary'),
-                    'intermediate': context.t('age_intermediate'),
+                    '0_6': context.t('age_0_6'),
+                    '7_14': context.t('age_7_14'),
+                    '15_plus': context.t('age_15_plus'),
                   },
                   onChanged: (val) {
-                    if (val != null)
+                    if (val != null) {
                       setState(() {
                         _selectedAgeFilter = val;
                         _applyFilters();
                       });
+                    }
                   },
                 ),
               ),

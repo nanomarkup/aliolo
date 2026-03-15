@@ -1,8 +1,6 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:aliolo/data/models/friendship_model.dart';
 import 'package:aliolo/data/models/user_model.dart';
 import 'package:aliolo/data/services/auth_service.dart';
-import 'package:aliolo/core/utils/logger.dart';
 
 class FriendshipService {
   static final FriendshipService _instance = FriendshipService._internal();
@@ -14,10 +12,12 @@ class FriendshipService {
 
   Future<String> sendFriendRequest(String email) async {
     final currentUser = _authService.currentUser;
-    if (currentUser == null || currentUser.serverId == null)
+    if (currentUser == null || currentUser.serverId == null) {
       return 'Not logged in';
-    if (email.toLowerCase() == currentUser.email.toLowerCase())
+    }
+    if (email.toLowerCase() == currentUser.email.toLowerCase()) {
       return 'Cannot add yourself';
+    }
 
     try {
       // 1. Find user by email
@@ -55,8 +55,9 @@ class FriendshipService {
 
       return 'success';
     } on PostgrestException catch (e) {
-      if (e.message.contains('unique_friendship'))
+      if (e.message.contains('unique_friendship')) {
         return 'Request already exists';
+      }
       return e.message;
     } catch (e) {
       return e.toString();

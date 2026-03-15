@@ -19,6 +19,20 @@ class SubjectEditPage extends StatefulWidget {
   State<SubjectEditPage> createState() => _SubjectEditPageState();
 }
 
+class DraftLocalizedSubjectData {
+  String name = '';
+  String description = '';
+
+  DraftLocalizedSubjectData();
+
+  factory DraftLocalizedSubjectData.fromModel(LocalizedSubjectData data) {
+    final d = DraftLocalizedSubjectData();
+    d.name = data.name ?? '';
+    d.description = data.description ?? '';
+    return d;
+  }
+}
+
 class _SubjectEditPageState extends State<SubjectEditPage> {
   final _cardService = getIt<CardService>();
   final _authService = getIt<AuthService>();
@@ -27,65 +41,71 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
   late int _selectedPillar;
   late bool _isPublic;
   late String _selectedAgeGroup;
-  bool _showAllLangs = false;
+  String _selectedLang = 'global';
   bool _isSaving = false;
 
-  final Map<String, TextEditingController> _nameControllers = {};
-  final Map<String, TextEditingController> _descriptionControllers = {};
+  final Map<String, DraftLocalizedSubjectData> _drafts = {
+    'global': DraftLocalizedSubjectData(),
+  };
+
+  final _nameController = TextEditingController();
+  final _descriptionController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
     _selectedPillar = widget.existingSubject?.pillarId ?? widget.pillarId ?? 1;
     _isPublic = widget.existingSubject?.isPublic ?? false;
-    _selectedAgeGroup = widget.existingSubject?.ageGroup ?? 'advanced';
+    _selectedAgeGroup = widget.existingSubject?.ageGroup ?? 'all';
 
-    _initLanguageControllers();
+    _initDrafts();
+    _updateControllers();
   }
 
-  void _initLanguageControllers() {
-    final allLangs = TranslationService().availableUILanguages;
-    final subject = widget.existingSubject;
-
-    for (var lang in allLangs) {
-      final code = lang.toLowerCase();
-      _nameControllers[lang] = TextEditingController(
-        text: subject?.names[code] ?? '',
-      );
-      _descriptionControllers[lang] = TextEditingController(
-        text: subject?.descriptions[code] ?? '',
-      );
+  void _initDrafts() {
+    final availableLangs = TranslationService().availableUILanguages;
+    for (var lang in availableLangs) {
+      _drafts[lang.toLowerCase()] = DraftLocalizedSubjectData();
     }
+
+    if (widget.existingSubject != null) {
+      widget.existingSubject!.localizedData.forEach((lang, data) {
+        _drafts[lang] = DraftLocalizedSubjectData.fromModel(data);
+      });
+    }
+  }
+
+  void _ensureDraftExists(String lang) {
+    if (!_drafts.containsKey(lang)) {
+      _drafts[lang] = DraftLocalizedSubjectData();
+    }
+  }
+
+  void _updateControllers() {
+    _ensureDraftExists(_selectedLang);
+    final draft = _drafts[_selectedLang]!;
+    _nameController.text = draft.name;
+    _descriptionController.text = draft.description;
   }
 
   @override
   void dispose() {
-    for (var c in _nameControllers.values) {
-      c.dispose();
-    }
-    for (var c in _descriptionControllers.values) {
-      c.dispose();
-    }
+    _nameController.dispose();
+    _descriptionController.dispose();
     super.dispose();
   }
 
   void _showJsonDialog() {
-    final allLangs = TranslationService().availableUILanguages;
-    final Map<String, String> schemaNames = {};
-    final Map<String, String> schemaDescriptions = {};
-
-    for (var lang in allLangs) {
-      final code = lang.toLowerCase();
-      schemaNames[code] = _nameControllers[lang]?.text ?? '';
-      schemaDescriptions[code] = _descriptionControllers[lang]?.text ?? '';
-    }
-
     final Map<String, dynamic> data = {
       'pillarId': _selectedPillar,
       'isPublic': _isPublic,
       'ageGroup': _selectedAgeGroup,
-      'names': schemaNames,
-      'descriptions': schemaDescriptions,
+      'localizedData': _drafts.map(
+        (key, value) => MapEntry(key, {
+          if (value.name.isNotEmpty) 'name': value.name,
+          if (value.description.isNotEmpty) 'description': value.description,
+        }),
+      ),
     };
 
     final encoder = const JsonEncoder.withIndent('  ');
@@ -169,24 +189,16 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
                           if (parsed['ageGroup'] is String) {
                             _selectedAgeGroup = parsed['ageGroup'];
                           }
-                          if (parsed['names'] is Map) {
-                            final names = parsed['names'] as Map;
-                            names.forEach((lang, val) {
-                              final l = lang.toString();
-                              if (_nameControllers.containsKey(l)) {
-                                _nameControllers[l]!.text = val.toString();
-                              }
+                          if (parsed['localizedData'] is Map) {
+                            final locData = parsed['localizedData'] as Map;
+                            locData.forEach((lang, val) {
+                              final l = lang.toString().toLowerCase();
+                              _ensureDraftExists(l);
+                              final d = val as Map<String, dynamic>;
+                              _drafts[l]!.name = d['name'] ?? '';
+                              _drafts[l]!.description = d['description'] ?? '';
                             });
-                          }
-                          if (parsed['descriptions'] is Map) {
-                            final descs = parsed['descriptions'] as Map;
-                            descs.forEach((lang, val) {
-                              final l = lang.toString();
-                              if (_descriptionControllers.containsKey(l)) {
-                                _descriptionControllers[l]!.text =
-                                    val.toString();
-                              }
-                            });
+                            _updateControllers();
                           }
                         });
                         Navigator.pop(context);
@@ -215,21 +227,26 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
   Future<void> _save() async {
     if (!_formKey.currentState!.validate()) return;
 
-    final Map<String, String> names = {};
-    final Map<String, String> descriptions = {};
+    final Map<String, LocalizedSubjectData> finalData = {};
 
-    for (var entry in _nameControllers.entries) {
-      if (entry.value.text.isNotEmpty) {
-        names[entry.key.toLowerCase()] = entry.value.text;
+    for (var entry in _drafts.entries) {
+      final lang = entry.key;
+      final draft = entry.value;
+
+      if (lang != 'global' && draft.name.isEmpty && draft.description.isEmpty) {
+        continue;
       }
-    }
-    for (var entry in _descriptionControllers.entries) {
-      if (entry.value.text.isNotEmpty) {
-        descriptions[entry.key.toLowerCase()] = entry.value.text;
-      }
+
+      finalData[lang] = LocalizedSubjectData(
+        name: draft.name.isEmpty ? null : draft.name,
+        description: draft.description.isEmpty ? null : draft.description,
+      );
     }
 
-    if (names.isEmpty) {
+    if (finalData.isEmpty ||
+        (finalData.length == 1 &&
+            finalData.containsKey('global') &&
+            finalData['global']!.name == null)) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(context.t('provide_at_least_one_name'))),
       );
@@ -242,8 +259,6 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
       final now = DateTime.now();
       final subject = SubjectModel(
         id: widget.existingSubject?.id ?? '',
-        names: names,
-        descriptions: descriptions,
         pillarId: _selectedPillar,
         ageGroup: _selectedAgeGroup,
         ownerId:
@@ -257,6 +272,7 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
         cardCount: widget.existingSubject?.cardCount ?? 0,
         createdAt: widget.existingSubject?.createdAt ?? now,
         updatedAt: now,
+        localizedData: finalData,
       );
 
       await _cardService.saveSubject(subject);
@@ -269,6 +285,230 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
         setState(() => _isSaving = false);
       }
     }
+  }
+
+  Widget _buildLangTile(
+    String code,
+    String label,
+    IconData? icon,
+    String tooltip,
+  ) {
+    final isSelected = _selectedLang == code;
+    final draft = _drafts[code];
+    final hasData =
+        draft != null &&
+        (draft.name.isNotEmpty || draft.description.isNotEmpty);
+
+    return Tooltip(
+      message: tooltip,
+      child: InkWell(
+        onTap: () {
+          setState(() {
+            _selectedLang = code;
+            _updateControllers();
+          });
+        },
+        borderRadius: BorderRadius.circular(8),
+        child: Container(
+          width: 54,
+          height: 54,
+          decoration: BoxDecoration(
+            color:
+                isSelected
+                    ? Colors.orange.withValues(alpha: 0.1)
+                    : Theme.of(context).cardColor,
+            border: Border.all(
+              color:
+                  isSelected
+                      ? Colors.orange
+                      : Colors.grey.withValues(alpha: 0.3),
+              width: isSelected ? 2 : 1,
+            ),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              if (icon != null)
+                Icon(
+                  icon,
+                  size: 20,
+                  color: isSelected ? Colors.orange : Colors.grey,
+                )
+              else
+                Text(
+                  label,
+                  style: TextStyle(
+                    fontSize: 13,
+                    fontWeight:
+                        isSelected || hasData
+                            ? FontWeight.bold
+                            : FontWeight.normal,
+                    color:
+                        isSelected
+                            ? Colors.orange
+                            : (hasData ? null : Colors.grey),
+                  ),
+                ),
+              if (hasData && !isSelected)
+                Positioned(
+                  top: 6,
+                  right: 6,
+                  child: Container(
+                    width: 6,
+                    height: 6,
+                    decoration: const BoxDecoration(
+                      color: Colors.orange,
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildEditor() {
+    _ensureDraftExists(_selectedLang);
+    final draft = _drafts[_selectedLang]!;
+    final isGlobal = _selectedLang == 'global';
+    final isOwner =
+        widget.existingSubject == null ||
+        widget.existingSubject!.ownerId == _authService.currentUser?.serverId;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (isGlobal) ...[
+          _buildSectionCaption(context.t('common_settings')),
+          const SizedBox(height: 16),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: DropdownButtonFormField<int>(
+                  value: _selectedPillar,
+                  decoration: InputDecoration(
+                    labelText: context.t('pillar'),
+                    border: const OutlineInputBorder(),
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 8,
+                    ),
+                  ),
+                  items:
+                      pillars
+                          .map(
+                            (p) => DropdownMenuItem(
+                              value: p.id,
+                              child: Text(
+                                p.getTranslatedName(
+                                  TranslationService()
+                                      .currentLocale
+                                      .languageCode,
+                                ),
+                              ),
+                            ),
+                          )
+                          .toList(),
+                  onChanged:
+                      isOwner
+                          ? (val) {
+                            if (val != null) {
+                              setState(() => _selectedPillar = val);
+                            }
+                          }
+                          : null,
+                ),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: DropdownButtonFormField<String>(
+                  value: _selectedAgeGroup,
+                  decoration: InputDecoration(
+                    labelText: context.t('age_group'),
+                    border: const OutlineInputBorder(),
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 8,
+                    ),
+                  ),
+                  items: [
+                    DropdownMenuItem(
+                      value: 'all',
+                      child: Text(context.t('age_all')),
+                    ),
+                    DropdownMenuItem(
+                      value: '0_6',
+                      child: Text(context.t('age_0_6')),
+                    ),
+                    DropdownMenuItem(
+                      value: '7_14',
+                      child: Text(context.t('age_7_14')),
+                    ),
+                    DropdownMenuItem(
+                      value: '15_plus',
+                      child: Text(context.t('age_15_plus')),
+                    ),
+                  ],
+                  onChanged:
+                      isOwner
+                          ? (val) {
+                            if (val != null) {
+                              setState(() => _selectedAgeGroup = val);
+                            }
+                          }
+                          : null,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 20),
+          SwitchListTile(
+            contentPadding: EdgeInsets.zero,
+            title: Text(context.t('public_subject')),
+            subtitle: Text(context.t('public_subject_desc')),
+            value: _isPublic,
+            onChanged:
+                isOwner ? (val) => setState(() => _isPublic = val) : null,
+          ),
+          const SizedBox(height: 32),
+          const Divider(),
+          const SizedBox(height: 32),
+        ],
+
+        _buildSectionCaption(
+          context.t(
+            'content_label',
+            args: {'lang': _selectedLang.toUpperCase()},
+          ),
+        ),
+        const SizedBox(height: 24),
+        TextFormField(
+          controller: _nameController,
+          onChanged: (v) => draft.name = v,
+          decoration: InputDecoration(
+            labelText: context.t('name'),
+            border: const OutlineInputBorder(),
+          ),
+          enabled: isOwner,
+        ),
+        const SizedBox(height: 16),
+        TextFormField(
+          controller: _descriptionController,
+          onChanged: (v) => draft.description = v,
+          decoration: InputDecoration(
+            labelText: context.t('description'),
+            border: const OutlineInputBorder(),
+          ),
+          maxLines: 2,
+          enabled: isOwner,
+        ),
+        const SizedBox(height: 48),
+      ],
+    );
   }
 
   @override
@@ -313,149 +553,86 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
           ),
         if (isOwner)
           IconButton(
-            icon: const Icon(Icons.code, color: appBarColor),
+            icon: const Icon(Icons.data_object, color: appBarColor),
             onPressed: _showJsonDialog,
           ),
-      ],
-      body: Form(
-        key: _formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 24),
-            if (widget.pillarId == null && widget.existingSubject == null) ...[
-              _buildSectionCaption(context.t('pillar')),
-              const SizedBox(height: 8),
-              DropdownButtonFormField<int>(
-                value: _selectedPillar,
-                decoration: const InputDecoration(border: OutlineInputBorder()),
-                items:
-                    pillars
-                        .map(
-                          (p) => DropdownMenuItem(
-                            value: p.id,
-                            child: Text(
-                              p.getTranslatedName(
-                                TranslationService().currentLocale.languageCode,
-                              ),
-                            ),
-                          ),
-                        )
-                        .toList(),
-                onChanged: (val) {
-                  if (val != null) setState(() => _selectedPillar = val);
-                },
-              ),
-              const SizedBox(height: 24),
-            ],
-
-            _buildSectionCaption(context.t('visibility')),
-            SwitchListTile(
-              title: Text(context.t('public_subject')),
-              subtitle: Text(context.t('public_subject_desc')),
-              value: _isPublic,
-              onChanged:
-                  isOwner ? (val) => setState(() => _isPublic = val) : null,
-            ),
-            const SizedBox(height: 24),
-            _buildSectionCaption(context.t('age_group')),
-            const SizedBox(height: 8),
-            DropdownButtonFormField<String>(
-              value: _selectedAgeGroup,
-              decoration: const InputDecoration(border: OutlineInputBorder()),
-              items: [
-                DropdownMenuItem(
-                  value: 'early',
-                  child: Text(context.t('age_early')),
-                ),
-                DropdownMenuItem(
-                  value: 'primary',
-                  child: Text(context.t('age_primary')),
-                ),
-                DropdownMenuItem(
-                  value: 'intermediate',
-                  child: Text(context.t('age_intermediate')),
-                ),
-                DropdownMenuItem(
-                  value: 'advanced',
-                  child: Text(context.t('age_advanced')),
-                ),
-              ],
-              onChanged:
-                  isOwner
-                      ? (val) {
-                        if (val != null)
-                          setState(() => _selectedAgeGroup = val);
-                      }
-                      : null,
-            ),
-            const SizedBox(height: 24),
-            _buildSectionCaption(context.t('names_descriptions')),
-            const SizedBox(height: 12),
-            ..._nameControllers.keys
-                .where(
-                  (lang) =>
-                      _showAllLangs ||
-                      lang == 'en' ||
-                      _nameControllers[lang]!.text.isNotEmpty ||
-                      _descriptionControllers[lang]!.text.isNotEmpty,
-                )
-                .map(
-                  (lang) => Padding(
-                    padding: const EdgeInsets.only(bottom: 16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            SizedBox(
-                              width: 40,
-                              child: Text(
-                                lang.toUpperCase(),
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                            Text(
-                              TranslationService().getLanguageName(lang),
-                              style: const TextStyle(color: Colors.grey),
-                            ),
-                          ],
+        if (isOwner && widget.existingSubject != null)
+          IconButton(
+            icon: const Icon(Icons.delete, color: appBarColor),
+            onPressed: () async {
+              final cardCount = widget.existingSubject!.cardCount;
+              final confirmed = await showDialog<bool>(
+                context: context,
+                builder:
+                    (context) => AlertDialog(
+                      title: Text(context.t('delete_subject')),
+                      content: Text(
+                        cardCount > 0
+                            ? 'This subject contains $cardCount ${context.plural('card', cardCount)}. Deleting it will permanently remove all of them.'
+                            : 'Delete this subject?',
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(context, false),
+                          child: Text(context.t('cancel')),
                         ),
-                        const SizedBox(height: 8),
-                        TextFormField(
-                          controller: _nameControllers[lang],
-                          decoration: InputDecoration(
-                            labelText: context.t('name'),
-                            border: const OutlineInputBorder(),
+                        TextButton(
+                          onPressed: () => Navigator.pop(context, true),
+                          style: TextButton.styleFrom(
+                            foregroundColor: Colors.red,
                           ),
-                          enabled: isOwner,
-                        ),
-                        const SizedBox(height: 8),
-                        TextFormField(
-                          controller: _descriptionControllers[lang],
-                          decoration: InputDecoration(
-                            labelText: context.t('description'),
-                            border: const OutlineInputBorder(),
-                          ),
-                          maxLines: 2,
-                          enabled: isOwner,
+                          child: Text(context.t('delete')),
                         ),
                       ],
                     ),
-                  ),
+              );
+              if (confirmed == true && mounted) {
+                await _cardService.deleteSubjectById(
+                  widget.existingSubject!.id,
+                );
+                if (mounted) {
+                  Navigator.pop(context); // Close edit page
+                  Navigator.pop(context, true); // Signal parent to refresh
+                }
+              }
+            },
+          ),
+      ],
+      fixedBody: Padding(
+        padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: [
+                _buildLangTile(
+                  'global',
+                  'GLB',
+                  Icons.public,
+                  'Global / Fallback',
                 ),
-            TextButton(
-              onPressed: () => setState(() => _showAllLangs = !_showAllLangs),
-              child: Text(
-                _showAllLangs
-                    ? context.t('show_less_languages')
-                    : context.t('show_all_languages'),
-              ),
+                ...TranslationService().availableUILanguages.map((lang) {
+                  final code = lang.toLowerCase();
+                  return _buildLangTile(
+                    code,
+                    lang.toUpperCase(),
+                    null,
+                    TranslationService().getLanguageName(code),
+                  );
+                }),
+              ],
             ),
-            const SizedBox(height: 48),
+            const SizedBox(height: 32),
           ],
+        ),
+      ),
+      body: Form(
+        key: _formKey,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: _buildEditor(),
         ),
       ),
     );
@@ -465,7 +642,7 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
     return Text(
       label.toUpperCase(),
       style: const TextStyle(
-        fontSize: 12,
+        fontSize: 11,
         fontWeight: FontWeight.bold,
         color: Colors.grey,
         letterSpacing: 1.2,

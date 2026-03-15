@@ -44,9 +44,9 @@ class ProgressService {
 
       // 2. Calculate XP (New logic: fixed values, no card level)
       int xpGain = 1; // Incorrect
-      if (quality == 5)
+      if (quality == 5) {
         xpGain = 9; // Perfect
-      else if (quality == 3)
+      } else if (quality == 3)
         xpGain = 6; // Correct
       else if (quality == 2)
         xpGain = 3; // Hesitant
@@ -67,10 +67,11 @@ class ProgressService {
             totalXp += user.dailyGoalCount; // Streak Bonus
           }
         } else {
+          final lastLocal = user.lastActiveDate!.toLocal();
           final lastActiveDay = DateTime(
-            user.lastActiveDate!.year,
-            user.lastActiveDate!.month,
-            user.lastActiveDate!.day,
+            lastLocal.year,
+            lastLocal.month,
+            lastLocal.day,
           );
           final dayDifference = today.difference(lastActiveDay).inDays;
 
@@ -137,10 +138,11 @@ class ProgressService {
           totalXp += user.dailyGoalCount;
         }
       } else {
+        final lastLocal = user.lastActiveDate!.toLocal();
         final lastActiveDay = DateTime(
-          user.lastActiveDate!.year,
-          user.lastActiveDate!.month,
-          user.lastActiveDate!.day,
+          lastLocal.year,
+          lastLocal.month,
+          lastLocal.day,
         );
         final dayDifference = today.difference(lastActiveDay).inDays;
 

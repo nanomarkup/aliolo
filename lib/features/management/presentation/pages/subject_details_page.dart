@@ -61,8 +61,8 @@ class _SubjectDetailsPageState extends State<SubjectDetailsPage> {
     setState(() {
       _filteredCards =
           _allCards.where((c) {
-            final answer = c.answers[lang] ?? c.answers['en'] ?? '';
-            final prompt = c.prompts[lang] ?? c.prompts['en'] ?? '';
+            final answer = c.getAnswer(lang);
+            final prompt = c.getPrompt(lang);
             return answer.toLowerCase().contains(query) ||
                 prompt.toLowerCase().contains(query);
           }).toList();
@@ -253,13 +253,10 @@ class _SubjectDetailsPageState extends State<SubjectDetailsPage> {
               ),
               delegate: SliverChildBuilderDelegate((context, index) {
                 final card = _filteredCards[index];
-                final answer =
-                    card.answers[lang] ??
-                    card.answers['en'] ??
-                    card.answers.values.firstOrNull ??
-                    '';
+                final answer = card.getAnswer(lang);
                 final isCardMine =
                     card.ownerId == _authService.currentUser?.serverId;
+                final imageUrl = card.primaryImageUrl;
 
                 return InkWell(
                   onTap: () async {
@@ -287,11 +284,8 @@ class _SubjectDetailsPageState extends State<SubjectDetailsPage> {
                         Expanded(
                           flex: 3,
                           child:
-                              card.imageUrl != null
-                                  ? Image.network(
-                                    card.imageUrl!,
-                                    fit: BoxFit.cover,
-                                  )
+                              imageUrl != null
+                                  ? Image.network(imageUrl, fit: BoxFit.cover)
                                   : Container(
                                     color: pillar.getColor().withValues(
                                       alpha: 0.1,

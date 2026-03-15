@@ -8,7 +8,6 @@ import 'package:aliolo/data/services/sound_service.dart';
 import 'package:aliolo/data/services/math_service.dart';
 import 'package:aliolo/data/services/progress_service.dart';
 
-import 'package:aliolo/core/utils/logger.dart';
 
 final getIt = GetIt.instance;
 

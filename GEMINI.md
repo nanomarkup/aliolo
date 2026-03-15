@@ -19,6 +19,12 @@ This file serves as the primary context bridge for Gemini CLI.
 - **Auto-play:** Testing sessions can advance automatically (1s for correct, 2s for wrong). Preference is saved in `auto_play_enabled`.
 - **System Sounds:** Stored in `assets/media/` to support Web (`AssetSource`) and Linux (`DeviceFileSource`).
 
+## 📁 Media Upload Restrictions
+- **Profile Avatars:** 1 MB
+- **Card Images:** 5 MB
+- **Card Audio:** 10 MB (Planned)
+- **Card Video:** 50 MB (Planned)
+
 ## 💾 Database Schema Updates (Supabase)
 - **`profiles` table:**
     - `last_active_date` (TIMESTAMPTZ)
@@ -27,6 +33,7 @@ This file serves as the primary context bridge for Gemini CLI.
     - `auto_play_enabled` (BOOL)
 - **`subjects` table:**
     - `age_group` (TEXT)
+    - `localized_data` (JSONB) - Replaces `names` and `descriptions`
 - **`pillars` table:**
     - `sort_order` (INT)
 
@@ -44,4 +51,4 @@ This file serves as the primary context bridge for Gemini CLI.
 
 ## 🚀 Ongoing / Next Steps
 - Continue refining the "Recent Subjects" row on the dashboard.
-- Monitor Isar implementation for true offline-first capability.
+- Optimize Supabase queries for faster synchronization.

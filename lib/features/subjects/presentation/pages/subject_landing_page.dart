@@ -4,7 +4,6 @@ import 'package:aliolo/data/models/subject_model.dart';
 import 'package:aliolo/data/models/pillar_model.dart';
 import 'package:aliolo/data/models/card_model.dart';
 import 'package:aliolo/data/services/translation_service.dart';
-import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/card_service.dart';
 import 'package:aliolo/core/di/service_locator.dart';
@@ -64,7 +63,6 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
   Future<void> _refreshData({bool silent = false}) async {
     if (!silent) setState(() => _isLoading = true);
 
-    // Fetch latest subject and cards to ensure state is fresh
     final cards = await _cardService.getCardsBySubject(_currentSubject.id);
     final updatedSubject = await _cardService.getSubjectById(
       _currentSubject.id,
@@ -73,9 +71,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
     if (mounted) {
       setState(() {
         _allCards = cards;
-        if (updatedSubject != null) {
-          _currentSubject = updatedSubject;
-        }
+        if (updatedSubject != null) _currentSubject = updatedSubject;
         _isLoading = false;
         _applyFilters();
       });
@@ -84,19 +80,12 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
 
   Future<void> _toggleFavorite() async {
     final newState = !_currentSubject.isOnDashboard;
-    // Update local state immediately for instant UI feedback
-    setState(() {
-      _currentSubject.isOnDashboard = newState;
-    });
-
+    setState(() => _currentSubject.isOnDashboard = newState);
     try {
       await _cardService.toggleSubjectOnDashboard(_currentSubject.id, newState);
     } catch (e) {
       if (mounted) {
-        // Revert on error
-        setState(() {
-          _currentSubject.isOnDashboard = !newState;
-        });
+        setState(() => _currentSubject.isOnDashboard = !newState);
         ScaffoldMessenger.of(
           context,
         ).showSnackBar(SnackBar(content: Text('Error updating favorite: $e')));
@@ -111,8 +100,8 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
     setState(() {
       _filteredCards =
           _allCards.where((c) {
-            final answer = c.answers[lang] ?? c.answers['en'] ?? '';
-            final prompt = c.prompts[lang] ?? c.prompts['en'] ?? '';
+            final answer = c.getAnswer(lang);
+            final prompt = c.getPrompt(lang);
             return answer.toLowerCase().contains(query) ||
                 prompt.toLowerCase().contains(query);
           }).toList();
@@ -129,8 +118,8 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                 title: Text(context.t('delete_subject')),
                 content: Text(
                   cardCount > 0
-                      ? 'This subject contains $cardCount ${context.plural('card', cardCount)}. Deleting it will permanently remove all of them. Are you sure?'
-                      : 'Are you sure you want to delete this empty subject?',
+                      ? 'This subject contains $cardCount ${context.plural('card', cardCount)}. Deleting it will permanently remove all of them.'
+                      : 'Delete this subject?',
                 ),
                 actions: [
                   TextButton(
@@ -148,21 +137,8 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
         false;
 
     if (confirmed) {
-      try {
-        await _cardService.deleteSubjectById(_currentSubject.id);
-        if (mounted) {
-          Navigator.pop(context, true);
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(context.t('subject_deleted'))));
-        }
-      } catch (e) {
-        if (mounted) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text('Error deleting: $e')));
-        }
-      }
+      await _cardService.deleteSubjectById(_currentSubject.id);
+      if (mounted) Navigator.pop(context, true);
     }
   }
 
@@ -176,21 +152,20 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
     const appBarColor = Colors.white;
     final isOwner =
         _currentSubject.ownerId == _authService.currentUser?.serverId;
-    final uiLang = TranslationService().currentLocale.languageCode;
+    final displayLang = widget.languageCode;
 
     return ListenableBuilder(
       listenable: _cardService,
       builder: (context, _) {
         return AlioloScrollablePage(
           title: Text(
-            _currentSubject.getName(uiLang),
+            _currentSubject.getName(displayLang),
             style: const TextStyle(
               color: appBarColor,
               fontWeight: FontWeight.bold,
             ),
             overflow: TextOverflow.ellipsis,
           ),
-          titleAlignment: Alignment.centerLeft,
           appBarColor: pillarColor,
           actions: [
             IconButton(
@@ -206,7 +181,6 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                   color: appBarColor,
                 ),
                 onPressed: _toggleFavorite,
-                tooltip: context.t('filter_favorites'),
               ),
             if (isOwner) ...[
               IconButton(
@@ -231,8 +205,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
           ],
           fixedBody: Column(
             children: [
-              const SizedBox(height: 20),
-              // Subject Info Header
+              const SizedBox(height: 16),
               Row(
                 children: [
                   Container(
@@ -253,15 +226,17 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          _currentSubject.getName(uiLang),
+                          _currentSubject.getName(displayLang),
                           style: const TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        if (_currentSubject.getDescription(uiLang).isNotEmpty)
+                        if (_currentSubject
+                            .getDescription(displayLang)
+                            .isNotEmpty)
                           Text(
-                            _currentSubject.getDescription(uiLang),
+                            _currentSubject.getDescription(displayLang),
                             style: TextStyle(
                               color: Colors.grey[600],
                               fontSize: 14,
@@ -275,7 +250,6 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                 ],
               ),
               const SizedBox(height: 32),
-              // Action Row: Learn & Test
               Row(
                 children: [
                   Expanded(
@@ -285,13 +259,33 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                       icon: Icons.auto_stories,
                       color: Colors.blue,
                       onTap: () {
-                        if (_allCards.isEmpty) return;
+                        final lang = widget.languageCode.toLowerCase();
+                        final validCards =
+                            _allCards
+                                .where(
+                                  (c) =>
+                                      c.getAnswer(lang).isNotEmpty ||
+                                      c.getAnswer('en').isNotEmpty,
+                                )
+                                .toList();
+
+                        if (validCards.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text(
+                                'No cards available for this language.',
+                              ),
+                            ),
+                          );
+                          return;
+                        }
+
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder:
                                 (context) => LearnPage(
-                                  card: _allCards.first,
+                                  card: validCards.first,
                                   languageCode: widget.languageCode,
                                 ),
                           ),
@@ -307,13 +301,33 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                       icon: Icons.quiz,
                       color: Colors.orange,
                       onTap: () {
-                        if (_allCards.isEmpty) return;
+                        final lang = widget.languageCode.toLowerCase();
+                        final validCards =
+                            _allCards
+                                .where(
+                                  (c) =>
+                                      c.getAnswer(lang).isNotEmpty ||
+                                      c.getAnswer('en').isNotEmpty,
+                                )
+                                .toList();
+
+                        if (validCards.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text(
+                                'No cards available for this language.',
+                              ),
+                            ),
+                          );
+                          return;
+                        }
+
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder:
                                 (context) => TestPage(
-                                  card: _allCards.first,
+                                  card: validCards.first,
                                   languageCode: widget.languageCode,
                                 ),
                           ),
@@ -324,7 +338,6 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                 ],
               ),
               const SizedBox(height: 32),
-              // Search & Add Header
               Row(
                 children: [
                   Expanded(
@@ -396,11 +409,10 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                   ),
                   delegate: SliverChildBuilderDelegate((context, index) {
                     final card = _filteredCards[index];
-                    final answer =
-                        card.answers[widget.languageCode.toLowerCase()] ??
-                        card.answers['en'] ??
-                        card.answers.values.firstOrNull ??
-                        '';
+                    final answer = card.getAnswer(
+                      widget.languageCode.toLowerCase(),
+                    );
+                    final imageUrl = card.primaryImageUrl;
                     final isCardMine =
                         card.ownerId == _authService.currentUser?.serverId;
 
@@ -430,9 +442,9 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                             Expanded(
                               flex: 3,
                               child:
-                                  card.imageUrl != null
+                                  imageUrl != null
                                       ? Image.network(
-                                        card.imageUrl!,
+                                        imageUrl,
                                         fit: BoxFit.cover,
                                       )
                                       : Container(

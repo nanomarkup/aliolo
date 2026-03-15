@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:path/path.dart' as p;
 import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -9,7 +8,6 @@ import 'package:aliolo/data/models/subject_model.dart';
 import 'package:aliolo/data/models/pillar_model.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/core/utils/logger.dart';
-import 'package:aliolo/core/di/service_locator.dart';
 
 class CardService with ChangeNotifier {
   static final CardService _instance = CardService._internal();
@@ -29,8 +27,6 @@ class CardService with ChangeNotifier {
 
   static const int minLevel = 1;
   static const int maxLevel = 20;
-
-  bool get hasLocalDb => false;
 
   Future<void> init() async {
     if (_supabase != null) {
@@ -53,22 +49,19 @@ class CardService with ChangeNotifier {
       return pillars;
     } catch (e) {
       print('Error fetching pillars: $e');
-      return pillars; // Return fallback
+      return pillars;
     }
   }
 
   Future<List<SubjectModel>> getDashboardSubjects() async {
     final user = _authService.currentUser;
     if (user == null || user.serverId == null) return [];
-
     final Map<String, SubjectModel> combined = {};
-
     try {
-      // 1. Get ALL owned subjects AND ALL public subjects
       final List<dynamic> subjectsData = await _supabase!
           .from('subjects')
           .select(
-            '*, profiles(username), cards(id, is_deleted, prompts, answers)',
+            '*, profiles(username), cards(id, is_deleted, localized_data)',
           )
           .or('owner_id.eq.${user.serverId!},is_public.eq.true');
 
@@ -77,7 +70,6 @@ class CardService with ChangeNotifier {
         combined[s.id] = s;
       }
 
-      // 2. Get the list of subject IDs that are specifically on the user's dashboard
       final List<dynamic> dashboardData = await _supabase!
           .from('user_subjects')
           .select('subject_id')
@@ -87,12 +79,10 @@ class CardService with ChangeNotifier {
         for (var item in dashboardData) item['subject_id'] as String,
       };
 
-      // Mark subjects as being on dashboard if they are owned or explicitly added
       for (var s in combined.values) {
         s.isOnDashboard =
             s.ownerId == user.serverId || dashboardIds.contains(s.id);
       }
-
       return combined.values.toList();
     } catch (e) {
       print('Error fetching dashboard subjects: $e');
@@ -100,66 +90,122 @@ class CardService with ChangeNotifier {
     }
   }
 
-  Future<List<SubjectModel>> getManagementSubjects() async {
-    final user = _authService.currentUser;
-    if (user == null || user.serverId == null) return [];
-
+  Future<List<CardModel>> getCardsBySubject(String subjectId) async {
     try {
-      // 1. Get all public subjects + all owned subjects (filter non-deleted cards)
-      final List<dynamic> subjectsData = await _supabase!
-          .from('subjects')
-          .select('*, cards(id, is_deleted)')
-          .or('is_public.eq.true,owner_id.eq."${user.serverId!}"');
-
-      final allSubjects =
-          subjectsData.map((json) => SubjectModel.fromJson(json)).toList();
-
-      // 2. Get items currently on dashboard (to mark as added)
-      final List<dynamic> dashboardData = await _supabase!
-          .from('user_subjects')
-          .select('subject_id')
-          .eq('user_id', user.serverId!);
-
-      final Set<String> dashboardIds = {
-        for (var item in dashboardData) item['subject_id'] as String,
-      };
-
-      // 3. Fetch owner names manually
-      final ownerIds = allSubjects.map((s) => s.ownerId).toSet().toList();
-      final List<dynamic> profilesData = await _supabase!
-          .from('profiles')
-          .select('id, username')
-          .inFilter('id', ownerIds);
-
-      final Map<String, String> namesMap = {
-        for (var p in profilesData) p['id'] as String: p['username'] as String,
-      };
-
-      final List<SubjectModel> results =
-          allSubjects.map((s) {
-            return SubjectModel(
-              id: s.id,
-              names: s.names,
-              pillarId: s.pillarId,
-              descriptions: s.descriptions,
-              ownerId: s.ownerId,
-              ownerName: namesMap[s.ownerId],
-              isPublic: s.isPublic,
-              createdAt: s.createdAt,
-              updatedAt: s.updatedAt,
-              cardCount: s.cardCount,
-              rawCards: s.rawCards,
-              ageGroup: s.ageGroup,
-              isOnDashboard:
-                  s.ownerId == user.serverId || dashboardIds.contains(s.id),
-            );
-          }).toList();
-
-      return results;
+      final List<dynamic> data = await _supabase!
+          .from('cards')
+          .select()
+          .eq('subject_id', subjectId)
+          .eq('is_deleted', false);
+      return data.map((json) => CardModel.fromJson(json)).toList();
     } catch (e) {
-      print('Error in getManagementSubjects: $e');
+      print('Error fetching cards: $e');
       return [];
     }
+  }
+
+  String generateId() => _uuid.v4();
+
+  Future<void> deleteCard(CardModel card) async {
+    await _supabase!
+        .from('cards')
+        .update({'is_deleted': true})
+        .eq('id', card.id);
+    notifyListeners();
+  }
+
+  Future<void> addCard(CardModel card) async {
+    try {
+      await _supabase!.from('cards').upsert(card.toJson());
+      notifyListeners();
+    } catch (e) {
+      print('Error adding card: $e');
+    }
+  }
+
+  // --- Localized Media Uploads ---
+
+  Future<String?> uploadCardImage(
+    String cardId,
+    XFile file,
+    String lang,
+  ) async {
+    return _uploadFile(
+      bucket: 'card_images',
+      cardId: cardId,
+      file: file,
+      lang: lang,
+    );
+  }
+
+  Future<String?> uploadCardAudio(
+    String cardId,
+    XFile file,
+    String lang,
+  ) async {
+    return _uploadFile(
+      bucket: 'card_audio',
+      cardId: cardId,
+      file: file,
+      lang: lang,
+    );
+  }
+
+  Future<String?> uploadCardVideo(
+    String cardId,
+    XFile file,
+    String lang,
+  ) async {
+    return _uploadFile(
+      bucket: 'card_videos',
+      cardId: cardId,
+      file: file,
+      lang: lang,
+    );
+  }
+
+  Future<String?> _uploadFile({
+    required String bucket,
+    required String cardId,
+    required XFile file,
+    required String lang,
+  }) async {
+    final user = _authService.currentUser;
+    if (user == null || user.serverId == null) return null;
+
+    final fileExtension = p.extension(file.path);
+    final fileName = '${DateTime.now().millisecondsSinceEpoch}$fileExtension';
+    // Path: userId / cardId / lang / filename
+    final storagePath = '${user.serverId}/$cardId/$lang/$fileName';
+
+    for (int attempt = 0; attempt < 2; attempt++) {
+      try {
+        final bytes = await file.readAsBytes();
+        AppLogger.log(
+          'Uploading ${file.name} to $bucket, path: $storagePath, bytes: ${bytes.length}',
+        );
+
+        await _supabase!.storage
+            .from(bucket)
+            .uploadBinary(
+              storagePath,
+              bytes,
+              fileOptions: FileOptions(
+                cacheControl: '3600',
+                upsert: true,
+                contentType: file.mimeType,
+              ),
+            );
+
+        final url = _supabase!.storage.from(bucket).getPublicUrl(storagePath);
+        AppLogger.log('Upload successful. URL: $url');
+        return url;
+      } catch (e) {
+        AppLogger.log('Upload attempt ${attempt + 1} failed: $e');
+        if (attempt == 0) await Future.delayed(const Duration(seconds: 1));
+      }
+    }
+    return null;
   }
 
   Future<void> toggleSubjectOnDashboard(String subjectId, bool show) async {
@@ -185,117 +231,19 @@ class CardService with ChangeNotifier {
     }
   }
 
-  Future<void> addSubjectToDashboard(String subjectId) async {
-    final user = _authService.currentUser;
-    if (user == null || user.serverId == null) return;
-    try {
-      await _supabase!.from('user_subjects').upsert({
-        'user_id': user.serverId,
-        'subject_id': subjectId,
-      }, onConflict: 'user_id, subject_id');
-      notifyListeners();
-    } catch (_) {}
-  }
-
-  Future<void> removeSubjectFromDashboard(String subjectId) async {
-    final user = _authService.currentUser;
-    if (user == null || user.serverId == null) return;
-    try {
-      await _supabase!
-          .from('user_subjects')
-          .delete()
-          .eq('user_id', user.serverId!)
-          .eq('subject_id', subjectId);
-      notifyListeners();
-    } catch (_) {}
-  }
-
-  Future<List<SubjectModel>> searchPublicSubjects(String query) async {
-    try {
-      var request = _supabase!.from('subjects').select().eq('is_public', true);
-      if (query.isNotEmpty) request = request.ilike('name', '%$query%');
-      final List<dynamic> data = await request.limit(50);
-      return data.map((json) => SubjectModel.fromJson(json)).toList();
-    } catch (_) {
-      return [];
-    }
-  }
-
-  Future<SubjectModel?> getSubjectById(String id) async {
-    final user = _authService.currentUser;
-    try {
-      final res =
-          await _supabase!
-              .from('subjects')
-              .select('*, profiles(username)')
-              .eq('id', id)
-              .maybeSingle();
-      if (res == null) return null;
-
-      final subject = SubjectModel.fromJson(res);
-
-      if (user?.serverId != null) {
-        final dashboardCheck =
-            await _supabase!
-                .from('user_subjects')
-                .select()
-                .eq('user_id', user!.serverId!)
-                .eq('subject_id', id)
-                .maybeSingle();
-        subject.isOnDashboard =
-            subject.ownerId == user.serverId || dashboardCheck != null;
-      }
-
-      return subject;
-    } catch (e) {
-      print('Error fetching subject by id: $e');
-      return null;
-    }
-  }
-
-  Future<List<CardModel>> getCardsBySubject(String subjectId) async {
-    try {
-      final List<dynamic> data = await _supabase!
-          .from('cards')
-          .select()
-          .eq('subject_id', subjectId)
-          .eq('is_deleted', false);
-      return data.map((json) => CardModel.fromJson(json)).toList();
-    } catch (e) {
-      print('Error fetching cards: $e');
-      return [];
-    }
-  }
-
-  Future<List<CardModel>> getCardsByPillar(int pillarId) async {
-    try {
-      final List<dynamic> data = await _supabase!
-          .from('cards')
-          .select('*, subjects!inner(pillar_id)')
-          .eq('subjects.pillar_id', pillarId)
-          .eq('is_deleted', false);
-      return data.map((json) => CardModel.fromJson(json)).toList();
-    } catch (e) {
-      print('Error fetching cards by pillar: $e');
-      return [];
-    }
-  }
-
   Future<List<SubjectModel>> getSubjectsByPillar(int pillarId) async {
     final user = _authService.currentUser;
     if (user == null || user.serverId == null) return [];
 
     try {
-      // Get all subjects for this pillar that are either public or owned by the user
       final List<dynamic> data = await _supabase!
           .from('subjects')
           .select(
-            '*, profiles(username), cards(id, is_deleted, prompts, answers)',
+            '*, profiles(username), cards(id, is_deleted, localized_data)',
           )
           .eq('pillar_id', pillarId)
           .or('is_public.eq.true,owner_id.eq.${user.serverId!}');
 
-      // Get dashboard status
       final List<dynamic> dashboardData = await _supabase!
           .from('user_subjects')
           .select('subject_id')
@@ -317,97 +265,42 @@ class CardService with ChangeNotifier {
     }
   }
 
-  Future<int?> getPillarForSubject(String subjectName) async {
+  Future<void> deleteMedia(String url) async {
     try {
-      final data =
-          await _supabase!
-              .from('subjects')
-              .select('pillar_id')
-              .eq('name', subjectName)
-              .limit(1)
-              .maybeSingle();
-      return data?['pillar_id'];
-    } catch (_) {
-      return null;
-    }
-  }
+      final uri = Uri.parse(url);
+      final pathSegments = uri.pathSegments;
+      // Find bucket name in segments to extract storage path
+      final buckets = ['card_images', 'card_audio', 'card_videos'];
+      String? foundBucket;
+      int bucketIndex = -1;
 
-  Future<List<({int pillarId, String subject})>> getSubjects() async {
-    try {
-      final List<dynamic> data = await _supabase!
-          .from('subjects')
-          .select('pillar_id, name');
-      return data
-          .map(
-            (item) => (
-              pillarId: item['pillar_id'] as int,
-              subject: item['name'] as String,
-            ),
-          )
-          .toList();
-    } catch (_) {
-      return [];
-    }
-  }
-
-  Future<List<String>> getAvailableLanguages() async {
-    return ['EN', 'UK', 'ES', 'FR', 'DE'];
-  }
-
-  String generateId() => _uuid.v4();
-
-  Future<void> deleteCard(CardModel card) async {
-    await _supabase!
-        .from('cards')
-        .update({'is_deleted': true})
-        .eq('id', card.id);
-  }
-
-  Future<SubjectModel?> createSubject(
-    Map<String, String> names,
-    int pillarId, {
-    Map<String, String>? descriptions,
-    bool isPublic = false,
-  }) async {
-    final user = _authService.currentUser;
-    if (user == null || user.serverId == null) {
-      return null;
-    }
-    try {
-      final payload = {
-        'names': names,
-        'pillar_id': pillarId,
-        'descriptions': descriptions ?? {},
-        'owner_id': user.serverId,
-        'is_public': isPublic,
-      };
-
-      final List<dynamic> res =
-          await _supabase!.from('subjects').insert(payload).select();
-
-      if (res.isEmpty) {
-        return null;
+      for (var b in buckets) {
+        bucketIndex = pathSegments.indexOf(b);
+        if (bucketIndex != -1) {
+          foundBucket = b;
+          break;
+        }
       }
 
-      final subject = SubjectModel.fromJson(res.first);
-
-      // Automatically add to user_subjects for dashboard visibility
-      await addSubjectToDashboard(subject.id);
-
-      return subject;
+      if (foundBucket != null && bucketIndex < pathSegments.length - 1) {
+        final path = pathSegments.sublist(bucketIndex + 1).join('/');
+        await _supabase!.storage.from(foundBucket).remove([path]);
+      }
     } catch (e) {
-      print('Error creating subject: $e');
-      return null;
+      print('Error deleting media: $e');
     }
   }
+
+  // --- Subjects ---
 
   Future<void> saveSubject(SubjectModel subject) async {
     try {
       await _supabase!.from('subjects').upsert({
         'id': subject.id.isEmpty ? generateId() : subject.id,
-        'names': subject.names,
+        'localized_data': subject.localizedData.map(
+          (k, v) => MapEntry(k, v.toJson()),
+        ),
         'pillar_id': subject.pillarId,
-        'descriptions': subject.descriptions,
         'owner_id': subject.ownerId,
         'is_public': subject.isPublic,
         'age_group': subject.ageGroup,
@@ -421,6 +314,35 @@ class CardService with ChangeNotifier {
     }
   }
 
+  Future<SubjectModel?> createSubject(
+    Map<String, LocalizedSubjectData> localizedData,
+    int pillarId, {
+    bool isPublic = false,
+  }) async {
+    final user = _authService.currentUser;
+    if (user == null || user.serverId == null) return null;
+    try {
+      final payload = {
+        'localized_data': localizedData.map((k, v) => MapEntry(k, v.toJson())),
+        'pillar_id': pillarId,
+        'owner_id': user.serverId,
+        'is_public': isPublic,
+      };
+      final List<dynamic> res =
+          await _supabase!.from('subjects').insert(payload).select();
+      if (res.isEmpty) return null;
+      final subject = SubjectModel.fromJson(res.first);
+      await _supabase!.from('user_subjects').upsert({
+        'user_id': user.serverId,
+        'subject_id': subject.id,
+      });
+      return subject;
+    } catch (e) {
+      print('Error creating subject: $e');
+      return null;
+    }
+  }
+
   Future<void> deleteSubjectById(String subjectId) async {
     try {
       await _supabase!.from('subjects').delete().eq('id', subjectId);
@@ -430,154 +352,32 @@ class CardService with ChangeNotifier {
     }
   }
 
-  Future<String?> uploadCardImage(String cardId, File file) async {
-    return _uploadImage(cardId, file, file.path);
-  }
-
-  Future<String?> uploadCardImageXFile(String cardId, XFile xFile) async {
-    return _uploadImage(cardId, xFile, xFile.path);
-  }
-
-  Future<String?> _uploadImage(
-    String cardId,
-    dynamic fileSource,
-    String originalPath,
-  ) async {
+  Future<SubjectModel?> getSubjectById(String id) async {
     final user = _authService.currentUser;
-    if (user == null || user.serverId == null) return null;
-
-    for (int attempt = 0; attempt < 2; attempt++) {
-      try {
-        final fileExtension = p.extension(originalPath);
-        final fileName =
-            'card_${cardId}_${DateTime.now().millisecondsSinceEpoch}$fileExtension';
-        final path = '${user.serverId}/$fileName';
-
-        AppLogger.log(
-          'DEBUG: Uploading image. Attempt ${attempt + 1}. Path: $path',
-        );
-
-        if (attempt == 0)
-          await Future.delayed(const Duration(milliseconds: 500));
-
-        if (fileSource is File) {
-          await _supabase!.storage
-              .from('card_images')
-              .upload(
-                path,
-                fileSource,
-                fileOptions: const FileOptions(
-                  cacheControl: '3600',
-                  upsert: true,
-                ),
-              );
-        } else if (fileSource is XFile) {
-          final bytes = await fileSource.readAsBytes();
-          await _supabase!.storage
-              .from('card_images')
-              .uploadBinary(
-                path,
-                bytes,
-                fileOptions: FileOptions(
-                  cacheControl: '3600',
-                  upsert: true,
-                  contentType: fileSource.mimeType,
-                ),
-              );
-        }
-
-        AppLogger.log('DEBUG: Upload successful.');
-        final publicUrl = _supabase!.storage
-            .from('card_images')
-            .getPublicUrl(path);
-        return publicUrl;
-      } catch (e) {
-        AppLogger.log('DEBUG: Attempt ${attempt + 1} failed: $e');
-        if (attempt == 0) {
-          AppLogger.log('DEBUG: Retrying in 1s...');
-          await Future.delayed(const Duration(seconds: 1));
-        } else {
-          return null;
-        }
-      }
-    }
-    return null;
-  }
-
-  Future<void> deleteCardImage(String imageUrl) async {
     try {
-      // Extract path from public URL
-      final uri = Uri.parse(imageUrl);
-      final pathSegments = uri.pathSegments;
-      // Usually: /storage/v1/object/public/card_images/card_id/file_name
-      final bucketIndex = pathSegments.indexOf('card_images');
-      if (bucketIndex != -1 && bucketIndex < pathSegments.length - 1) {
-        final path = pathSegments.sublist(bucketIndex + 1).join('/');
-        await _supabase!.storage.from('card_images').remove([path]);
+      final res =
+          await _supabase!
+              .from('subjects')
+              .select('*, profiles(username)')
+              .eq('id', id)
+              .maybeSingle();
+      if (res == null) return null;
+      final subject = SubjectModel.fromJson(res);
+      if (user?.serverId != null) {
+        final dashboardCheck =
+            await _supabase!
+                .from('user_subjects')
+                .select()
+                .eq('user_id', user!.serverId!)
+                .eq('subject_id', id)
+                .maybeSingle();
+        subject.isOnDashboard =
+            subject.ownerId == user.serverId || dashboardCheck != null;
       }
+      return subject;
     } catch (e) {
-      print('Error deleting card image: $e');
+      print('Error fetching subject by id: $e');
+      return null;
     }
-  }
-
-  Future<void> addCard(CardModel card) async {
-    try {
-      await _supabase!.from('cards').upsert({
-        'id': card.id.isEmpty ? generateId() : card.id,
-        'subject_id': card.subjectId,
-        'level': card.level,
-        'prompts': card.prompts,
-        'answers': card.answers,
-        'video_url': card.videoUrl,
-        'image_url': card.imageUrl,
-        'image_urls': card.imageUrls,
-        'kind': card.kind,
-        'audio_urls': card.audioUrls,
-        'owner_id': card.ownerId,
-        'is_public': card.isPublic,
-        'updated_at': card.updatedAt.toIso8601String(),
-        'created_at': card.createdAt.toIso8601String(),
-      });
-      notifyListeners();
-    } catch (e) {
-      print('Error adding card: $e');
-    }
-  }
-
-  Future<void> moveCard(CardModel card, int p, String s) async {}
-  Future<void> addCardFile(
-    int p,
-    String s,
-    List<dynamic> i,
-    List<String> a, {
-    String? videoUrl,
-    List<String> prompts = const [],
-    String? customFileId,
-    int level = 1,
-  }) async {}
-  Future<CardModel> updateCardFile(
-    CardModel o,
-    int p,
-    String s,
-    List<dynamic> ni,
-    List<String> na, {
-    String? videoUrl,
-    List<String> prompts = const [],
-    bool ci = false,
-    int? level,
-  }) async {
-    return o;
-  }
-
-  Future<void> createSubjectDirectory(int p, String s) async {}
-  Future<void> deleteSubject(int p, String s) async {}
-  Future<void> syncFileSystem() async {}
-
-  Future<List<CardModel>> getAllCards() async {
-    final List<dynamic> data = await _supabase!
-        .from('cards')
-        .select()
-        .eq('is_deleted', false);
-    return data.map((json) => CardModel.fromJson(json)).toList();
   }
 }

@@ -141,7 +141,7 @@ class TranslationService extends ChangeNotifier {
     if (lc != 'en') {
       try {
         final String assetJson = await rootBundle.loadString(
-          '${assetsPrefix}$lc.json',
+          '$assetsPrefix$lc.json',
         );
         Map<String, dynamic> assetMap = jsonDecode(assetJson);
         assetMap.forEach((key, value) {
@@ -199,7 +199,7 @@ class TranslationService extends ChangeNotifier {
       try {
         const String assetsPrefix = 'assets/lang/';
         final String jsonString = await rootBundle.loadString(
-          '${assetsPrefix}${langCode.toLowerCase()}.json',
+          '$assetsPrefix${langCode.toLowerCase()}.json',
         );
         _languageMaps[langCode] = Map<String, String>.from(
           jsonDecode(jsonString),

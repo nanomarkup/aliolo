@@ -80,10 +80,4 @@ The output will be in `build/web/`. You can host this on **Vercel**, **Netlify**
 The app is now "Sync-Ready":
 - `CardModel`, `UserModel`, and `ProgressRecord` now have `updatedAt` and `isDeleted` fields.
 - `AuthService` is ready to handle Supabase sessions.
-- You can now implement a `SyncService` that pulls/pushes data based on the `updatedAt` timestamps.
-
-## 5. Offline Support
-
-The app continues to use **Isar** for local storage. 
-- **Offline:** Users can study and create content; it's saved locally with a new `updatedAt` timestamp.
-- **Online:** The app detects a connection and syncs the latest `updatedAt` records with Supabase.
+- All progress is synchronized in real-time with the Supabase backend.

@@ -11,6 +11,8 @@ import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/data/services/testing_language_service.dart';
 import 'package:aliolo/features/auth/presentation/pages/login_page.dart';
 import 'package:aliolo/features/subjects/presentation/pages/subject_page.dart';
+import 'package:aliolo/features/onboarding/presentation/pages/onboarding_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:aliolo/core/utils/logger.dart';
 
@@ -249,8 +251,27 @@ class AlioloMainApp extends StatelessWidget {
             useMaterial3: true,
             fontFamily: 'Roboto',
           ),
-          home: SelectionArea(
-            child: user == null ? const LoginPage() : const SubjectPage(),
+          home: FutureBuilder<bool>(
+            future: SharedPreferences.getInstance().then(
+              (p) => p.getBool('has_seen_onboarding') ?? false,
+            ),
+            builder: (context, onboardingSnapshot) {
+              if (onboardingSnapshot.connectionState != ConnectionState.done) {
+                return const Scaffold(
+                  body: Center(child: CircularProgressIndicator()),
+                );
+              }
+
+              final hasSeenOnboarding = onboardingSnapshot.data ?? false;
+
+              if (!hasSeenOnboarding) {
+                return const OnboardingPage();
+              }
+
+              return SelectionArea(
+                child: user == null ? const LoginPage() : const SubjectPage(),
+              );
+            },
           ),
         );
       },
