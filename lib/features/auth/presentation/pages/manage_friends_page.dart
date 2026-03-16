@@ -1,4 +1,4 @@
-import 'dart:io';
+import 'package:aliolo/core/utils/io_utils.dart' if (dart.library.html) 'package:aliolo/core/utils/file_stub.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:aliolo/core/widgets/aliolo_scrollable_page.dart';
@@ -196,12 +196,11 @@ class _ManageFriendsPageState extends State<ManageFriendsPage> {
                 ),
                 child: ListTile(
                   leading: CircleAvatar(
-                    radius: 24,
                     backgroundImage:
                         avatarUrl != null
                             ? (avatarUrl.startsWith('http') || kIsWeb
                                     ? NetworkImage(avatarUrl)
-                                    : FileImage(File(avatarUrl)))
+                                    : FileImage(dynamicFile(avatarUrl)))
                                 as ImageProvider
                             : null,
                     child: avatarUrl == null ? const Icon(Icons.person) : null,

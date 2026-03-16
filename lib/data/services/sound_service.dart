@@ -1,4 +1,4 @@
-import 'dart:io';
+import 'package:aliolo/core/utils/io_utils.dart' if (dart.library.html) 'package:aliolo/core/utils/file_stub.dart';
 import 'package:flutter/foundation.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:path_provider/path_provider.dart';
@@ -49,7 +49,7 @@ class SoundService {
       if (kIsWeb) {
         source = AssetSource(assetPath);
       } else {
-        if (devicePath != null && await File(devicePath).exists()) {
+        if (devicePath != null && await dynamicFile(devicePath).exists()) {
           source = DeviceFileSource(devicePath);
         } else {
           source = AssetSource(assetPath);

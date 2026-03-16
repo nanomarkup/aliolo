@@ -1,4 +1,4 @@
-import 'dart:io';
+import 'package:aliolo/core/utils/io_utils.dart' if (dart.library.html) 'package:aliolo/core/utils/file_stub.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -901,7 +901,7 @@ class _AddCardPageState extends State<AddCardPage> {
           else if (file != null)
             kIsWeb
                 ? Image.network(file.path, fit: BoxFit.cover)
-                : Image.file(File(file.path), fit: BoxFit.cover),
+                : Image.file(dynamicFile(file.path), fit: BoxFit.cover),
           if (!widget.isReadOnly)
             Positioned(
               top: 0,

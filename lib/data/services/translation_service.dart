@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'dart:io';
+import 'package:aliolo/core/utils/io_utils.dart' if (dart.library.html) 'package:aliolo/core/utils/file_stub.dart';
 import 'dart:convert';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
@@ -40,7 +40,7 @@ class TranslationService extends ChangeNotifier {
 
   List<String> get availableUILanguages => _availableUILanguages;
 
-  Directory? _langDir;
+  dynamic _langDir;
 
   Future<void> init() async {
     final prefs = await SharedPreferences.getInstance();
@@ -55,8 +55,8 @@ class TranslationService extends ChangeNotifier {
 
     try {
       final dir = await getApplicationDocumentsDirectory();
-      final alioloDir = Directory(p.join(dir.path, '.aliolo'));
-      _langDir = Directory(p.join(alioloDir.path, 'lang'));
+      final alioloDir = dynamicDirectory(p.join(dir.path, '.aliolo'));
+      _langDir = dynamicDirectory(p.join(alioloDir.path, 'lang'));
 
       if (!await _langDir!.exists()) {
         await _langDir!.create(recursive: true);
@@ -100,7 +100,7 @@ class TranslationService extends ChangeNotifier {
     if (_langDir == null) return;
     try {
       final data = await rootBundle.loadString('assets/lang/$langCode.json');
-      final file = File(p.join(_langDir!.path, '$langCode.json'));
+      final file = dynamicFile(p.join(_langDir!.path, '$langCode.json'));
       await file.writeAsString(data);
     } catch (e) {
       print('Error copying asset $langCode: $e');
@@ -113,7 +113,7 @@ class TranslationService extends ChangeNotifier {
     final List<String> codes = [];
     final entities = await _langDir!.list().toList();
     for (var entity in entities) {
-      if (entity is File && entity.path.endsWith('.json')) {
+      if (entity.path.endsWith('.json')) {
         codes.add(p.basenameWithoutExtension(entity.path).toLowerCase());
       }
     }
@@ -154,7 +154,7 @@ class TranslationService extends ChangeNotifier {
 
     // 3. Try to load selected language from external folder (Non-Web)
     if (_langDir != null) {
-      final externalFile = File(p.join(_langDir!.path, '$lc.json'));
+      final externalFile = dynamicFile(p.join(_langDir!.path, '$lc.json'));
       if (await externalFile.exists()) {
         try {
           final String content = await externalFile.readAsString();

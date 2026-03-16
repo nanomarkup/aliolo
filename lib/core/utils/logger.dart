@@ -1,18 +1,18 @@
-import 'dart:io';
+import 'package:aliolo/core/utils/io_utils.dart' if (dart.library.html) 'package:aliolo/core/utils/file_stub.dart';
 import 'package:flutter/foundation.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 
 class AppLogger {
-  static File? _logFile;
+  static dynamic _logFile;
 
   static Future<void> init() async {
     if (kIsWeb) return;
     try {
       final dir = await getApplicationDocumentsDirectory();
-      final alioloDir = Directory(p.join(dir.path, '.aliolo'));
+      final alioloDir = dynamicDirectory(p.join(dir.path, '.aliolo'));
       if (!await alioloDir.exists()) await alioloDir.create(recursive: true);
-      _logFile = File(p.join(alioloDir.path, 'debug.log'));
+      _logFile = dynamicFile(p.join(alioloDir.path, 'debug.log'));
 
       // Overwrite the file on startup
       await _logFile!.writeAsString(

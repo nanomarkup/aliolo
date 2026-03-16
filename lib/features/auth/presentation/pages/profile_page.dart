@@ -1,4 +1,4 @@
-import 'dart:io';
+import 'package:aliolo/core/utils/io_utils.dart' if (dart.library.html) 'package:aliolo/core/utils/file_stub.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:aliolo/core/widgets/aliolo_scrollable_page.dart';
@@ -610,7 +610,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         user.avatarPath != null
                             ? (user.avatarPath!.startsWith('http') || kIsWeb
                                     ? NetworkImage(user.avatarPath!)
-                                    : FileImage(File(user.avatarPath!)))
+                                    : FileImage(dynamicFile(user.avatarPath!)))
                                 as ImageProvider
                             : null,
                     child:

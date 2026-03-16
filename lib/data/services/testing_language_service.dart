@@ -1,4 +1,4 @@
-import 'dart:io';
+import 'package:aliolo/core/utils/io_utils.dart' if (dart.library.html) 'package:aliolo/core/utils/file_stub.dart';
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:path_provider/path_provider.dart';
@@ -61,7 +61,7 @@ class TestingLanguageService extends ChangeNotifier {
   List<String> _activeLanguageCodes = ['en'];
   List<String> get activeLanguageCodes => _activeLanguageCodes;
 
-  late File _settingsFile;
+  late dynamic _settingsFile;
 
   Future<void> init() async {
     if (kIsWeb) {
@@ -69,10 +69,10 @@ class TestingLanguageService extends ChangeNotifier {
       return;
     }
     final dir = await getApplicationDocumentsDirectory();
-    final alioloDir = Directory(p.join(dir.path, '.aliolo'));
+    final alioloDir = dynamicDirectory(p.join(dir.path, '.aliolo'));
     if (!await alioloDir.exists()) await alioloDir.create(recursive: true);
 
-    _settingsFile = File(p.join(alioloDir.path, 'content_langs.json'));
+    _settingsFile = dynamicFile(p.join(alioloDir.path, 'content_langs.json'));
 
     if (await _settingsFile.exists()) {
       try {
