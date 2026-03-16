@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
@@ -22,14 +23,8 @@ void main() async {
     await AppLogger.init();
 
     // Initialize Supabase
-    const String supabaseUrl = String.fromEnvironment(
-      'SUPABASE_URL',
-      defaultValue: 'https://mltdjjszycfmokwqsqxm.supabase.co',
-    );
-    const String supabaseKey = String.fromEnvironment(
-      'SUPABASE_ANON_KEY',
-      defaultValue: 'sb_publishable_DCMw0z92Lr2nzC83sOQJXw_G1fYdEb3',
-    );
+    const String supabaseUrl = 'https://mltdjjszycfmokwqsqxm.supabase.co';
+    const String supabaseKey = 'sb_publishable_DCMw0z92Lr2nzC83sOQJXw_G1fYdEb3';
 
     await Supabase.initialize(url: supabaseUrl, anonKey: supabaseKey);
 
@@ -60,7 +55,7 @@ OTHER LIABILITY.
 
     MediaKit.ensureInitialized();
 
-    if (!kIsWeb) {
+    if (!kIsWeb && (Platform.isLinux || Platform.isMacOS || Platform.isWindows)) {
       await windowManager.ensureInitialized();
       windowManager.waitUntilReadyToShow(
         const WindowOptions(

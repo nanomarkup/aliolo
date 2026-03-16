@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/foundation.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 
 class AppLogger {
@@ -8,18 +9,16 @@ class AppLogger {
   static Future<void> init() async {
     if (kIsWeb) return;
     try {
-      final home = Platform.environment['HOME'];
-      if (home != null) {
-        final dir = Directory(p.join(home, '.aliolo'));
-        if (!await dir.exists()) await dir.create(recursive: true);
-        _logFile = File(p.join(dir.path, 'debug.log'));
+      final dir = await getApplicationDocumentsDirectory();
+      final alioloDir = Directory(p.join(dir.path, '.aliolo'));
+      if (!await alioloDir.exists()) await alioloDir.create(recursive: true);
+      _logFile = File(p.join(alioloDir.path, 'debug.log'));
 
-        // Overwrite the file on startup
-        await _logFile!.writeAsString(
-          '--- App Started at ${DateTime.now()} ---\n',
-          mode: FileMode.write,
-        );
-      }
+      // Overwrite the file on startup
+      await _logFile!.writeAsString(
+        '--- App Started at ${DateTime.now()} ---\n',
+        mode: FileMode.write,
+      );
     } catch (e) {
       print('Failed to initialize logger: $e');
     }
