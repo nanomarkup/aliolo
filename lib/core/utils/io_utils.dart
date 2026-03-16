@@ -1,4 +1,5 @@
 import 'dart:io';
+export 'dart:io' show Platform, File, Directory, FileMode;
 
-dynamic dynamicFile(String path) => File(path);
-dynamic dynamicDirectory(String path) => Directory(path);
+File dynamicFile(String path) => File(path);
+Directory dynamicDirectory(String path) => Directory(path);
