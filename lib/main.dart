@@ -225,7 +225,7 @@ class AlioloMainApp extends StatelessWidget {
               surfaceContainerHighest: const Color(0xFFF5F7FA),
             ),
             scaffoldBackgroundColor: const Color(0xFFF5F7FA),
-            cardTheme: const CardTheme(
+            cardTheme: const CardThemeData(
               color: Colors.white,
               surfaceTintColor: Colors.white,
               elevation: 2,
@@ -241,7 +241,7 @@ class AlioloMainApp extends StatelessWidget {
               surfaceContainerHighest: const Color(0xFF0F1113),
             ),
             scaffoldBackgroundColor: const Color(0xFF0F1113),
-            cardTheme: const CardTheme(
+            cardTheme: const CardThemeData(
               color: Color(0xFF1A1C1E),
               surfaceTintColor: Color(0xFF1A1C1E),
               elevation: 2,
