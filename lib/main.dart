@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
@@ -55,19 +54,23 @@ OTHER LIABILITY.
 
     MediaKit.ensureInitialized();
 
-    if (!kIsWeb && (Platform.isLinux || Platform.isMacOS || Platform.isWindows)) {
-      await windowManager.ensureInitialized();
-      windowManager.waitUntilReadyToShow(
-        const WindowOptions(
-          size: Size(1024, 1024),
-          center: true,
-          title: 'Aliolo',
-        ),
-        () async {
-          await windowManager.show();
-          await windowManager.focus();
-        },
-      );
+    if (!kIsWeb) {
+      if (defaultTargetPlatform == TargetPlatform.linux ||
+          defaultTargetPlatform == TargetPlatform.macOS ||
+          defaultTargetPlatform == TargetPlatform.windows) {
+        await windowManager.ensureInitialized();
+        windowManager.waitUntilReadyToShow(
+          const WindowOptions(
+            size: Size(1024, 1024),
+            center: true,
+            title: 'Aliolo',
+          ),
+          () async {
+            await windowManager.show();
+            await windowManager.focus();
+          },
+        );
+      }
     }
 
     runApp(const AlioloApp());
