@@ -4,6 +4,7 @@ import 'package:aliolo/core/widgets/aliolo_scrollable_page.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:aliolo/data/services/auth_service.dart';
+import 'package:aliolo/data/services/card_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/core/di/service_locator.dart';
@@ -42,6 +43,12 @@ class _SettingsPageState extends State<SettingsPage> {
     _showOnLeaderboard = user?.showOnLeaderboard ?? true;
     _defaultLanguage = user?.defaultLanguage ?? 'EN';
     _loadPackageInfo();
+
+    if (pillars.isEmpty) {
+      getIt<CardService>().getPillars().then((_) {
+        if (mounted) setState(() {});
+      });
+    }
   }
 
   Future<void> _loadPackageInfo() async {
@@ -240,45 +247,86 @@ class _SettingsPageState extends State<SettingsPage> {
                       ),
                     ),
                     const Divider(height: 1),
-                    ListTile(
-                      title: Text(context.t('theme_mode')),
-                      leading: Icon(
-                        Icons.brightness_medium,
-                        color: currentPrimaryColor,
-                      ),
-                      trailing: SegmentedButton<String>(
-                        segments: [
-                          ButtonSegment<String>(
-                            value: 'light',
-                            label: Text(context.t('theme_light')),
-                            icon: const Icon(Icons.light_mode, size: 18),
-                          ),
-                          ButtonSegment<String>(
-                            value: 'dark',
-                            label: Text(context.t('theme_dark')),
-                            icon: const Icon(Icons.dark_mode, size: 18),
-                          ),
-                          ButtonSegment<String>(
-                            value: 'system',
-                            label: Text(context.t('theme_system')),
-                            icon: const Icon(
-                              Icons.settings_brightness,
-                              size: 18,
+                    LayoutBuilder(
+                      builder: (context, constraints) {
+                        final isSmall = constraints.maxWidth < 500;
+
+                        final segmentedButton = SegmentedButton<String>(
+                          segments: [
+                            ButtonSegment<String>(
+                              value: 'light',
+                              label:
+                                  isSmall
+                                      ? null
+                                      : Text(context.t('theme_light')),
+                              icon: const Icon(Icons.light_mode, size: 18),
                             ),
+                            ButtonSegment<String>(
+                              value: 'dark',
+                              label:
+                                  isSmall ? null : Text(context.t('theme_dark')),
+                              icon: const Icon(Icons.dark_mode, size: 18),
+                            ),
+                            ButtonSegment<String>(
+                              value: 'system',
+                              label:
+                                  isSmall
+                                      ? null
+                                      : Text(context.t('theme_system')),
+                              icon: const Icon(
+                                Icons.settings_brightness,
+                                size: 18,
+                              ),
+                            ),
+                          ],
+                          selected: {_themeMode},
+                          onSelectionChanged: (Set<String> newSelection) {
+                            _updateTheme(newSelection.first);
+                          },
+                          style: SegmentedButton.styleFrom(
+                            selectedBackgroundColor: currentPrimaryColor,
+                            selectedForegroundColor: Colors.white,
+                            visualDensity: VisualDensity.compact,
                           ),
-                        ],
-                        selected: {_themeMode},
-                        onSelectionChanged: (Set<String> newSelection) {
-                          _updateTheme(newSelection.first);
-                        },
-                        style: SegmentedButton.styleFrom(
-                          selectedBackgroundColor: currentPrimaryColor,
-                          selectedForegroundColor: Colors.white,
-                          visualDensity: VisualDensity.compact,
-                        ),
-                        showSelectedIcon: false,
-                      ),
+                          showSelectedIcon: false,
+                        );
+
+                        if (isSmall) {
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ListTile(
+                                title: Text(context.t('theme_mode')),
+                                leading: Icon(
+                                  Icons.brightness_medium,
+                                  color: currentPrimaryColor,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 16,
+                                ),
+                                child: SizedBox(
+                                  width: double.infinity,
+                                  child: segmentedButton,
+                                ),
+                              ),
+                              const SizedBox(height: 12),
+                            ],
+                          );
+                        }
+
+                        return ListTile(
+                          title: Text(context.t('theme_mode')),
+                          leading: Icon(
+                            Icons.brightness_medium,
+                            color: currentPrimaryColor,
+                          ),
+                          trailing: segmentedButton,
+                        );
+                      },
                     ),
+
                     const Divider(height: 1),
                     ListTile(
                       title: Text(context.t('theme_color')),

@@ -280,107 +280,243 @@ class _SubjectPageState extends State<SubjectPage> {
           fixedBody:
               _isLoading
                   ? null
-                  : Padding(
-                    padding: const EdgeInsets.only(top: 16, bottom: 24),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          flex: 3,
-                          child: TextField(
-                            controller: _searchController,
-                            decoration: InputDecoration(
-                              hintText: context.t('search_subjects'),
-                              prefixIcon: const Icon(Icons.search),
-                              suffixIcon:
-                                  ValueListenableBuilder<TextEditingValue>(
-                                    valueListenable: _searchController,
-                                    builder:
-                                        (context, value, _) =>
-                                            value.text.isNotEmpty
-                                                ? IconButton(
-                                                  icon: const Icon(Icons.clear),
-                                                  onPressed: () {
-                                                    _searchController.clear();
-                                                    _applySearch();
-                                                  },
-                                                )
-                                                : const SizedBox.shrink(),
+                  : LayoutBuilder(
+                    builder: (context, constraints) {
+                      final isSmall = constraints.maxWidth < 600;
+
+                      if (isSmall) {
+                        return Padding(
+                          padding: const EdgeInsets.only(top: 12, bottom: 16),
+                          child: Column(
+                            children: [
+                              // Row 1: Search + Add
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: TextField(
+                                      controller: _searchController,
+                                      decoration: InputDecoration(
+                                        hintText: context.t('search_subjects'),
+                                        prefixIcon: const Icon(Icons.search),
+                                        suffixIcon:
+                                            ValueListenableBuilder<
+                                              TextEditingValue
+                                            >(
+                                              valueListenable: _searchController,
+                                              builder:
+                                                  (context, value, _) =>
+                                                      value.text.isNotEmpty
+                                                          ? IconButton(
+                                                            icon: const Icon(
+                                                              Icons.clear,
+                                                            ),
+                                                            onPressed: () {
+                                                              _searchController
+                                                                  .clear();
+                                                              _applySearch();
+                                                            },
+                                                          )
+                                                          : const SizedBox
+                                                              .shrink(),
+                                            ),
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(
+                                            12,
+                                          ),
+                                        ),
+                                        contentPadding:
+                                            const EdgeInsets.symmetric(
+                                              horizontal: 12,
+                                            ),
+                                        filled: true,
+                                        fillColor: Theme.of(
+                                          context,
+                                        ).cardColor.withValues(alpha: 0.5),
+                                      ),
+                                      onChanged: (_) => _applySearch(),
+                                    ),
                                   ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
+                                  const SizedBox(width: 8),
+                                  IconButton(
+                                    icon: Icon(
+                                      Icons.add_circle,
+                                      color: currentSessionColor,
+                                      size: 40,
+                                    ),
+                                    onPressed: () async {
+                                      final result = await Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder:
+                                              (context) =>
+                                                  const SubjectEditPage(),
+                                        ),
+                                      );
+                                      if (result == true) _loadDashboard();
+                                    },
+                                  ),
+                                ],
                               ),
-                              contentPadding: const EdgeInsets.symmetric(
-                                horizontal: 12,
+                              const SizedBox(height: 12),
+                              // Row 2: Filters
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: _buildCompactDropdown(
+                                      value: _collectionFilter,
+                                      items: {
+                                        'all': context.t('filter_all'),
+                                        'favorites': context.t(
+                                          'filter_favorites',
+                                        ),
+                                        'mine': context.t('filter_my_subjects'),
+                                        'public': context.t('filter_public'),
+                                      },
+                                      onChanged: (val) {
+                                        if (val != null) {
+                                          setState(() {
+                                            _collectionFilter = val;
+                                            _applySearch();
+                                          });
+                                        }
+                                      },
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Expanded(
+                                    child: _buildCompactDropdown(
+                                      value: _selectedAgeFilter,
+                                      items: {
+                                        'all': context.t('age_all'),
+                                        '0_6': context.t('age_0_6'),
+                                        '7_14': context.t('age_7_14'),
+                                        '15_plus': context.t('age_15_plus'),
+                                      },
+                                      onChanged: (val) {
+                                        if (val != null) {
+                                          setState(() {
+                                            _selectedAgeFilter = val;
+                                            _applySearch();
+                                          });
+                                        }
+                                      },
+                                    ),
+                                  ),
+                                ],
                               ),
-                              filled: true,
-                              fillColor: Theme.of(
-                                context,
-                              ).cardColor.withValues(alpha: 0.5),
+                            ],
+                          ),
+                        );
+                      }
+
+                      // Desktop: Single row
+                      return Padding(
+                        padding: const EdgeInsets.only(top: 16, bottom: 24),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              flex: 3,
+                              child: TextField(
+                                controller: _searchController,
+                                decoration: InputDecoration(
+                                  hintText: context.t('search_subjects'),
+                                  prefixIcon: const Icon(Icons.search),
+                                  suffixIcon:
+                                      ValueListenableBuilder<TextEditingValue>(
+                                        valueListenable: _searchController,
+                                        builder:
+                                            (context, value, _) =>
+                                                value.text.isNotEmpty
+                                                    ? IconButton(
+                                                      icon: const Icon(
+                                                        Icons.clear,
+                                                      ),
+                                                      onPressed: () {
+                                                        _searchController
+                                                            .clear();
+                                                        _applySearch();
+                                                      },
+                                                    )
+                                                    : const SizedBox.shrink(),
+                                      ),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  contentPadding: const EdgeInsets.symmetric(
+                                    horizontal: 12,
+                                  ),
+                                  filled: true,
+                                  fillColor: Theme.of(
+                                    context,
+                                  ).cardColor.withValues(alpha: 0.5),
+                                ),
+                                onChanged: (_) => _applySearch(),
+                              ),
                             ),
-                            onChanged: (_) => _applySearch(),
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          flex: 2,
-                          child: _buildCompactDropdown(
-                            value: _collectionFilter,
-                            items: {
-                              'all': context.t('filter_all'),
-                              'favorites': context.t('filter_favorites'),
-                              'mine': context.t('filter_my_subjects'),
-                              'public': context.t('filter_public'),
-                            },
-                            onChanged: (val) {
-                              if (val != null) {
-                                setState(() {
-                                  _collectionFilter = val;
-                                  _applySearch();
-                                });
-                              }
-                            },
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          flex: 2,
-                          child: _buildCompactDropdown(
-                            value: _selectedAgeFilter,
-                            items: {
-                              'all': context.t('age_all'),
-                              '0_6': context.t('age_0_6'),
-                              '7_14': context.t('age_7_14'),
-                              '15_plus': context.t('age_15_plus'),
-                            },
-                            onChanged: (val) {
-                              if (val != null) {
-                                setState(() {
-                                  _selectedAgeFilter = val;
-                                  _applySearch();
-                                });
-                              }
-                            },
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        IconButton(
-                          icon: Icon(
-                            Icons.add_circle,
-                            color: currentSessionColor,
-                            size: 40,
-                          ),
-                          onPressed: () async {
-                            final result = await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const SubjectEditPage(),
+                            const SizedBox(width: 8),
+                            Expanded(
+                              flex: 2,
+                              child: _buildCompactDropdown(
+                                value: _collectionFilter,
+                                items: {
+                                  'all': context.t('filter_all'),
+                                  'favorites': context.t('filter_favorites'),
+                                  'mine': context.t('filter_my_subjects'),
+                                  'public': context.t('filter_public'),
+                                },
+                                onChanged: (val) {
+                                  if (val != null) {
+                                    setState(() {
+                                      _collectionFilter = val;
+                                      _applySearch();
+                                    });
+                                  }
+                                },
                               ),
-                            );
-                            if (result == true) _loadDashboard();
-                          },
+                            ),
+                            const SizedBox(width: 8),
+                            Expanded(
+                              flex: 2,
+                              child: _buildCompactDropdown(
+                                value: _selectedAgeFilter,
+                                items: {
+                                  'all': context.t('age_all'),
+                                  '0_6': context.t('age_0_6'),
+                                  '7_14': context.t('age_7_14'),
+                                  '15_plus': context.t('age_15_plus'),
+                                },
+                                onChanged: (val) {
+                                  if (val != null) {
+                                    setState(() {
+                                      _selectedAgeFilter = val;
+                                      _applySearch();
+                                    });
+                                  }
+                                },
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            IconButton(
+                              icon: Icon(
+                                Icons.add_circle,
+                                color: currentSessionColor,
+                                size: 40,
+                              ),
+                              onPressed: () async {
+                                final result = await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder:
+                                        (context) => const SubjectEditPage(),
+                                  ),
+                                );
+                                if (result == true) _loadDashboard();
+                              },
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      );
+                    },
                   ),
           slivers: [
             if (_isLoading)
@@ -446,40 +582,45 @@ class _SubjectPageState extends State<SubjectPage> {
                 ),
               )
             else
-              SliverGrid(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 24,
-                  mainAxisSpacing: 24,
-                  childAspectRatio: 1.4,
-                ),
-                delegate: SliverChildBuilderDelegate((context, index) {
-                  final pillar = activePillars[index];
-                  // Filter subjects by this pillar from the already-filtered list
-                  final pillarSubjects =
-                      _filteredSubjects
-                          .where((s) => s.pillarId == pillar.id)
-                          .toList();
+              SliverLayoutBuilder(
+                builder: (context, constraints) {
+                  final crossAxisCount = constraints.crossAxisExtent < 600 ? 1 : 2;
+                  return SliverGrid(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: crossAxisCount,
+                      crossAxisSpacing: 24,
+                      mainAxisSpacing: 24,
+                      childAspectRatio: crossAxisCount == 1 ? 1.8 : 1.4,
+                    ),
+                    delegate: SliverChildBuilderDelegate((context, index) {
+                      final pillar = activePillars[index];
+                      // Filter subjects by this pillar from the already-filtered list
+                      final pillarSubjects =
+                          _filteredSubjects
+                              .where((s) => s.pillarId == pillar.id)
+                              .toList();
 
-                  return _PillarGridTile(
-                    pillar: pillar,
-                    count: pillarSubjects.length,
-                    onTap:
-                        () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder:
-                                (context) => PillarSubjectsPage(
-                                  pillar: pillar,
-                                  subjects: pillarSubjects,
-                                  languageCode: _currentTestingLang,
-                                  initialAgeFilter: _selectedAgeFilter,
-                                  initialCollectionFilter: _collectionFilter,
-                                ),
-                          ),
-                        ),
+                      return _PillarGridTile(
+                        pillar: pillar,
+                        count: pillarSubjects.length,
+                        onTap:
+                            () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder:
+                                    (context) => PillarSubjectsPage(
+                                      pillar: pillar,
+                                      subjects: pillarSubjects,
+                                      languageCode: _currentTestingLang,
+                                      initialAgeFilter: _selectedAgeFilter,
+                                      initialCollectionFilter: _collectionFilter,
+                                    ),
+                              ),
+                            ),
+                      );
+                    }, childCount: activePillars.length),
                   );
-                }, childCount: activePillars.length),
+                },
               ),
           ],
         );
