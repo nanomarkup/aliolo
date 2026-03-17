@@ -149,13 +149,13 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
                             ClipboardData(text: textController.text),
                           );
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Copied to clipboard'),
+                            SnackBar(
+                              content: Text(context.t('info_copied')),
                             ),
                           );
                         },
                         icon: const Icon(Icons.copy, size: 18),
-                        label: const Text('COPY'),
+                        label: Text(context.t('copy')),
                       ),
                       const SizedBox(width: 8),
                       TextButton.icon(
@@ -168,7 +168,7 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
                           }
                         },
                         icon: const Icon(Icons.paste, size: 18),
-                        label: const Text('PASTE'),
+                        label: Text(context.t('paste')),
                       ),
                       const SizedBox(width: 8),
                       ElevatedButton.icon(
@@ -208,7 +208,7 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
                           }
                         },
                         icon: const Icon(Icons.refresh, size: 18),
-                        label: const Text('UPDATE'),
+                        label: Text(context.t('update')),
                       ),
                     ],
                   ),

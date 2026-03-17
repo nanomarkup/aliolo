@@ -109,23 +109,25 @@ class _SubjectPageState extends State<SubjectPage> {
     if (mounted) {
       final Set<String> detectedLangs = {};
       for (var s in subjects) {
+        // Scan subject names/descriptions
+        detectedLangs.addAll(s.localizedData.keys.map((k) => k.toLowerCase()));
+
+        // Scan nested cards
         if (s.rawCards != null) {
           for (var c in s.rawCards!) {
-            final prompts = c['prompts'] as Map?;
-            final answers = c['answers'] as Map?;
-            if (prompts != null) {
+            final locData = c['localized_data'] as Map?;
+            if (locData != null) {
               detectedLangs.addAll(
-                prompts.keys.map((k) => k.toString().toLowerCase()),
-              );
-            }
-            if (answers != null) {
-              detectedLangs.addAll(
-                answers.keys.map((k) => k.toString().toLowerCase()),
+                locData.keys.map((k) => k.toString().toLowerCase()),
               );
             }
           }
         }
       }
+
+      // Filter out 'global' and other non-language markers
+      detectedLangs.remove('global');
+      detectedLangs.remove('default');
 
       if (detectedLangs.isNotEmpty) {
         getIt<TestingLanguageService>().addActiveLanguages(
