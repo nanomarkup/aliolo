@@ -328,7 +328,6 @@ class _TestPageState extends State<TestPage> {
 
   @override
   Widget build(BuildContext context) {
-    bool isLeft = _authService.currentUser?.sidebarLeft ?? false;
     final lang = widget.languageCode.toLowerCase();
     Color headerColor = Colors.orange;
     if (_subject != null) {
@@ -347,153 +346,6 @@ class _TestPageState extends State<TestPage> {
         double progressValue =
             _totalInSession > 0 ? _completedInSession / _totalInSession : 0.0;
 
-        Widget sidebar = Container(
-          width: 450,
-          padding: const EdgeInsets.all(32),
-          color: Theme.of(context).colorScheme.surface,
-          child: Column(
-            children: [
-              LinearProgressIndicator(
-                value: progressValue,
-                minHeight: 8,
-                borderRadius: BorderRadius.circular(4),
-                color: headerColor,
-              ),
-              const SizedBox(height: 32),
-              Text(
-                _currentCard.getPrompt(lang).isNotEmpty
-                    ? _currentCard.getPrompt(lang)
-                    : context.t('select_an_answer'),
-                style: TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                  color: headerColor,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 32),
-              Expanded(
-                child: ListView.separated(
-                  itemCount: _options.length,
-                  separatorBuilder: (_, __) => const SizedBox(height: 12),
-                  itemBuilder: (context, index) {
-                    final opt = _options[index];
-                    final isSelected = _selectedIndex == index;
-                    final isCorrect = opt == _correctAnswerText;
-                    Color? color;
-                    if (_isAnswered) {
-                      color =
-                          isCorrect
-                              ? Colors.green
-                              : (isSelected ? Colors.red : null);
-                    } else if (isSelected)
-                      color = headerColor;
-
-                    return InkWell(
-                      onTap: () => _selectOption(index),
-                      borderRadius: BorderRadius.circular(16),
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 20,
-                          vertical: 16,
-                        ),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: color ?? Colors.grey[300]!,
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(16),
-                          color: color?.withValues(alpha: 0.1),
-                        ),
-                        child: Text(
-                          opt,
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-              const SizedBox(height: 16),
-              Row(
-                children: [
-                  Expanded(
-                    child: ElevatedButton.icon(
-                      onPressed: _isAnswered ? _nextCard : null,
-                      icon: const Icon(Icons.arrow_forward),
-                      label: Text(context.t('next')),
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: const Size.fromHeight(70),
-                        backgroundColor: headerColor,
-                        foregroundColor: Colors.white,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  IconButton.filledTonal(
-                    onPressed: () {
-                      final newVal = !_isAutoPlay;
-                      _authService.updateAutoPlayPreference(newVal);
-                      setState(() {
-                        _isAutoPlay = newVal;
-                        if (_isAutoPlay && _isAnswered && !_isAutoPlayWaiting) {
-                          _scheduleAutoNext();
-                        }
-                      });
-                    },
-                    icon: Icon(
-                      _isAutoPlay ? Icons.pause_circle : Icons.play_circle,
-                      size: 32,
-                    ),
-                    style: IconButton.styleFrom(
-                      minimumSize: const Size(70, 70),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        );
-
-        Widget mainContent = Expanded(
-          child: Center(
-            child: Padding(
-              padding: const EdgeInsets.all(32),
-              child: AspectRatio(
-                aspectRatio: 4 / 3,
-                child: Card(
-                  elevation: 8,
-                  clipBehavior: Clip.antiAlias,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(24),
-                  ),
-                  child: Stack(
-                    fit: StackFit.expand,
-                    children: [
-                      if (_showingVideo)
-                        Video(controller: controller)
-                      else if (_currentImages.isNotEmpty)
-                        Image.network(
-                          _currentImages[_currentImageIndex],
-                          fit: BoxFit.contain,
-                        )
-                      else
-                        const Icon(
-                          Icons.image_not_supported,
-                          size: 100,
-                          color: Colors.grey,
-                        ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-        );
-
         return Scaffold(
           appBar: AppBar(
             automaticallyImplyLeading: false,
@@ -508,8 +360,221 @@ class _TestPageState extends State<TestPage> {
               if (!kIsWeb) const WindowControls(color: Colors.white),
             ],
           ),
-          body: Row(
-            children: isLeft ? [sidebar, mainContent] : [mainContent, sidebar],
+          body: LayoutBuilder(
+            builder: (context, constraints) {
+              final isMobile = constraints.maxWidth < 800;
+
+              final mediaContent = Center(
+                child: Padding(
+                  padding: EdgeInsets.all(isMobile ? 16 : 32),
+                  child: AspectRatio(
+                    aspectRatio: isMobile ? 1.5 : 4 / 3,
+                    child: Card(
+                      elevation: 8,
+                      clipBehavior: Clip.antiAlias,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(24),
+                      ),
+                      child: Stack(
+                        fit: StackFit.expand,
+                        children: [
+                          if (_showingVideo)
+                            Video(controller: controller)
+                          else if (_currentImages.isNotEmpty)
+                            Image.network(
+                              _currentImages[_currentImageIndex],
+                              fit: BoxFit.contain,
+                            )
+                          else
+                            const Icon(
+                              Icons.image_not_supported,
+                              size: 100,
+                              color: Colors.grey,
+                            ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              );
+
+              final sidebarContent = Container(
+                padding: EdgeInsets.all(isMobile ? 24 : 32),
+                color: Theme.of(context).colorScheme.surface,
+                child: Column(
+                  children: [
+                    LinearProgressIndicator(
+                      value: progressValue,
+                      minHeight: 8,
+                      borderRadius: BorderRadius.circular(4),
+                      color: headerColor,
+                    ),
+                    const SizedBox(height: 24),
+                    Text(
+                      _currentCard.getPrompt(lang).isNotEmpty
+                          ? _currentCard.getPrompt(lang)
+                          : context.t('select_an_answer'),
+                      style: TextStyle(
+                        fontSize: isMobile ? 22 : 28,
+                        fontWeight: FontWeight.bold,
+                        color: headerColor,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 24),
+                    if (isMobile)
+                      ..._options.asMap().entries.map((entry) {
+                        final index = entry.key;
+                        final opt = entry.value;
+                        final isSelected = _selectedIndex == index;
+                        final isCorrect = opt == _correctAnswerText;
+                        Color? color;
+                        if (_isAnswered) {
+                          color =
+                              isCorrect
+                                  ? Colors.green
+                                  : (isSelected ? Colors.red : null);
+                        } else if (isSelected)
+                          color = headerColor;
+
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 12),
+                          child: InkWell(
+                            onTap: () => _selectOption(index),
+                            borderRadius: BorderRadius.circular(16),
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 20,
+                                vertical: 16,
+                              ),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: color ?? Colors.grey[300]!,
+                                  width: 2,
+                                ),
+                                borderRadius: BorderRadius.circular(16),
+                                color: color?.withValues(alpha: 0.1),
+                              ),
+                              child: Text(
+                                opt,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      })
+                    else
+                      Expanded(
+                        child: ListView.separated(
+                          itemCount: _options.length,
+                          separatorBuilder: (_, __) => const SizedBox(height: 12),
+                          itemBuilder: (context, index) {
+                            final opt = _options[index];
+                            final isSelected = _selectedIndex == index;
+                            final isCorrect = opt == _correctAnswerText;
+                            Color? color;
+                            if (_isAnswered) {
+                              color =
+                                  isCorrect
+                                      ? Colors.green
+                                      : (isSelected ? Colors.red : null);
+                            } else if (isSelected)
+                              color = headerColor;
+
+                            return InkWell(
+                              onTap: () => _selectOption(index),
+                              borderRadius: BorderRadius.circular(16),
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 20,
+                                  vertical: 16,
+                                ),
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: color ?? Colors.grey[300]!,
+                                    width: 2,
+                                  ),
+                                  borderRadius: BorderRadius.circular(16),
+                                  color: color?.withValues(alpha: 0.1),
+                                ),
+                                child: Text(
+                                  opt,
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    const SizedBox(height: 16),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: ElevatedButton.icon(
+                            onPressed: _isAnswered ? _nextCard : null,
+                            icon: const Icon(Icons.arrow_forward),
+                            label: Text(context.t('next')),
+                            style: ElevatedButton.styleFrom(
+                              minimumSize: Size.fromHeight(isMobile ? 60 : 70),
+                              backgroundColor: headerColor,
+                              foregroundColor: Colors.white,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        IconButton.filledTonal(
+                          onPressed: () {
+                            final newVal = !_isAutoPlay;
+                            _authService.updateAutoPlayPreference(newVal);
+                            setState(() {
+                              _isAutoPlay = newVal;
+                              if (_isAutoPlay && _isAnswered && !_isAutoPlayWaiting) {
+                                _scheduleAutoNext();
+                              }
+                            });
+                          },
+                          icon: Icon(
+                            _isAutoPlay ? Icons.pause_circle : Icons.play_circle,
+                            size: 32,
+                          ),
+                          style: IconButton.styleFrom(
+                            minimumSize: Size(isMobile ? 60 : 70, isMobile ? 60 : 70),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              );
+
+              if (isMobile) {
+                return SingleChildScrollView(
+                  child: Column(
+                    children: [mediaContent, sidebarContent],
+                  ),
+                );
+              }
+
+              bool isLeft = _authService.currentUser?.sidebarLeft ?? false;
+              return Row(
+                children:
+                    isLeft
+                        ? [
+                          SizedBox(width: 450, child: sidebarContent),
+                          Expanded(child: mediaContent),
+                        ]
+                        : [
+                          Expanded(child: mediaContent),
+                          SizedBox(width: 450, child: sidebarContent),
+                        ],
+              );
+            },
           ),
         );
       },

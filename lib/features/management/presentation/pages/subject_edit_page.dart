@@ -114,113 +114,145 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
 
     showDialog(
       context: context,
-      builder:
-          (context) => AlertDialog(
-            title: const Text('JSON Data'),
-            content: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 700, maxHeight: 500),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Expanded(
-                    child: TextField(
-                      controller: textController,
-                      maxLines: null,
-                      expands: true,
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.all(12),
-                      ),
-                      style: const TextStyle(
-                        fontFamily: 'monospace',
-                        fontSize: 13,
-                      ),
+      builder: (context) {
+        return LayoutBuilder(
+          builder: (context, constraints) {
+            final isMobile = constraints.maxWidth < 600;
+
+            final content = Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: textController,
+                    maxLines: null,
+                    expands: true,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      contentPadding: EdgeInsets.all(12),
+                    ),
+                    style: const TextStyle(
+                      fontFamily: 'monospace',
+                      fontSize: 13,
                     ),
                   ),
-                ],
-              ),
-            ),
-            actionsPadding: const EdgeInsets.symmetric(
-              horizontal: 16,
-              vertical: 8,
-            ),
-            actions: [
-              Row(
-                children: [
-                  TextButton.icon(
-                    onPressed: () {
-                      Clipboard.setData(
-                        ClipboardData(text: textController.text),
-                      );
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Copied to clipboard')),
-                      );
-                    },
-                    icon: const Icon(Icons.copy, size: 18),
-                    label: const Text('COPY'),
-                  ),
-                  const SizedBox(width: 8),
-                  TextButton.icon(
-                    onPressed: () async {
-                      final data = await Clipboard.getData(
-                        Clipboard.kTextPlain,
-                      );
-                      if (data?.text != null) {
-                        textController.text = data!.text!;
-                      }
-                    },
-                    icon: const Icon(Icons.paste, size: 18),
-                    label: const Text('PASTE'),
-                  ),
-                  const Spacer(),
-                  TextButton.icon(
-                    onPressed: () {
-                      try {
-                        final Map<String, dynamic> parsed = jsonDecode(
-                          textController.text,
-                        );
-                        setState(() {
-                          if (parsed['pillarId'] is int) {
-                            _selectedPillar = parsed['pillarId'];
+                ),
+                const SizedBox(height: 16),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      TextButton.icon(
+                        onPressed: () {
+                          Clipboard.setData(
+                            ClipboardData(text: textController.text),
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Copied to clipboard'),
+                            ),
+                          );
+                        },
+                        icon: const Icon(Icons.copy, size: 18),
+                        label: const Text('COPY'),
+                      ),
+                      const SizedBox(width: 8),
+                      TextButton.icon(
+                        onPressed: () async {
+                          final data = await Clipboard.getData(
+                            Clipboard.kTextPlain,
+                          );
+                          if (data?.text != null) {
+                            textController.text = data!.text!;
                           }
-                          if (parsed['isPublic'] is bool) {
-                            _isPublic = parsed['isPublic'];
-                          }
-                          if (parsed['ageGroup'] is String) {
-                            _selectedAgeGroup = parsed['ageGroup'];
-                          }
-                          if (parsed['localizedData'] is Map) {
-                            final locData = parsed['localizedData'] as Map;
-                            locData.forEach((lang, val) {
-                              final l = lang.toString().toLowerCase();
-                              _ensureDraftExists(l);
-                              final d = val as Map<String, dynamic>;
-                              _drafts[l]!.name = d['name'] ?? '';
-                              _drafts[l]!.description = d['description'] ?? '';
+                        },
+                        icon: const Icon(Icons.paste, size: 18),
+                        label: const Text('PASTE'),
+                      ),
+                      const SizedBox(width: 8),
+                      ElevatedButton.icon(
+                        onPressed: () {
+                          try {
+                            final Map<String, dynamic> parsed = jsonDecode(
+                              textController.text,
+                            );
+                            setState(() {
+                              if (parsed['pillarId'] is int) {
+                                _selectedPillar = parsed['pillarId'];
+                              }
+                              if (parsed['isPublic'] is bool) {
+                                _isPublic = parsed['isPublic'];
+                              }
+                              if (parsed['ageGroup'] is String) {
+                                _selectedAgeGroup = parsed['ageGroup'];
+                              }
+                              if (parsed['localizedData'] is Map) {
+                                final locData = parsed['localizedData'] as Map;
+                                locData.forEach((lang, val) {
+                                  final l = lang.toString().toLowerCase();
+                                  _ensureDraftExists(l);
+                                  final d = val as Map<String, dynamic>;
+                                  _drafts[l]!.name = d['name'] ?? '';
+                                  _drafts[l]!.description =
+                                      d['description'] ?? '';
+                                });
+                                _updateControllers();
+                              }
                             });
-                            _updateControllers();
+                            Navigator.pop(context);
+                          } catch (e) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text('Invalid JSON: $e')),
+                            );
                           }
-                        });
-                        Navigator.pop(context);
-                      } catch (e) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Invalid JSON: $e')),
-                        );
-                      }
-                    },
-                    icon: const Icon(Icons.refresh, size: 18),
-                    label: const Text('UPDATE'),
+                        },
+                        icon: const Icon(Icons.refresh, size: 18),
+                        label: const Text('UPDATE'),
+                      ),
+                    ],
                   ),
-                  const SizedBox(width: 8),
-                  TextButton.icon(
+                ),
+              ],
+            );
+
+            if (isMobile) {
+              return Dialog.fullscreen(
+                child: Scaffold(
+                  appBar: AppBar(
+                    title: const Text('JSON Data'),
+                    leading: IconButton(
+                      icon: const Icon(Icons.close),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                  ),
+                  body: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: content,
+                  ),
+                ),
+              );
+            }
+
+            return AlertDialog(
+              title: Row(
+                children: [
+                  const Text('JSON Data'),
+                  const Spacer(),
+                  IconButton(
+                    icon: const Icon(Icons.close),
                     onPressed: () => Navigator.pop(context),
-                    icon: const Icon(Icons.close, size: 18),
-                    label: Text(context.t('cancel').toUpperCase()),
                   ),
                 ],
               ),
-            ],
-          ),
+              content: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 700, maxHeight: 500),
+                child: content,
+              ),
+            );
+          },
+        );
+      },
     );
   }
 

@@ -270,7 +270,6 @@ class _LearnPageState extends State<LearnPage> {
 
   @override
   Widget build(BuildContext context) {
-    bool isLeft = _authService.currentUser?.sidebarLeft ?? false;
     final lang = widget.languageCode.toLowerCase();
     Color headerColor = Colors.orange;
     if (_subject != null) {
@@ -289,177 +288,6 @@ class _LearnPageState extends State<LearnPage> {
         double progressValue =
             _totalInSession > 0 ? _completedInSession / _totalInSession : 0.0;
 
-        Widget sidebar = Container(
-          width: 400,
-          padding: const EdgeInsets.all(32),
-          color: Theme.of(context).colorScheme.surface,
-          child: Column(
-            children: [
-              LinearProgressIndicator(
-                value: progressValue,
-                minHeight: 8,
-                borderRadius: BorderRadius.circular(4),
-                color: headerColor,
-              ),
-              const SizedBox(height: 48),
-              Text(
-                _currentCard.getPrompt(lang),
-                style: TextStyle(fontSize: 24, color: Colors.grey[600]),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 16),
-              Text(
-                _currentCard.getAnswer(lang),
-                style: TextStyle(
-                  fontSize: 36,
-                  fontWeight: FontWeight.bold,
-                  color: headerColor,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              const Spacer(),
-              if (_currentCard.getAudioUrl(lang) != null)
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 12),
-                  child: OutlinedButton.icon(
-                    onPressed: () async {
-                      final url = _currentCard.getAudioUrl(lang);
-                      if (url != null) {
-                        await player.open(Media(url));
-                        player.play();
-                      }
-                    },
-                    icon: const Icon(Icons.volume_up),
-                    label: const Text('Play Audio'),
-                    style: OutlinedButton.styleFrom(
-                      minimumSize: const Size(double.infinity, 50),
-                    ),
-                  ),
-                ),
-              const SizedBox(height: 24),
-              Row(
-                children: [
-                  Expanded(
-                    child: ElevatedButton.icon(
-                      onPressed: _canGoNext ? _nextCard : null,
-                      icon: const Icon(Icons.arrow_forward),
-                      label: Text(context.t('next')),
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: const Size.fromHeight(70),
-                        backgroundColor: headerColor,
-                        foregroundColor: Colors.white,
-                        disabledBackgroundColor: Colors.grey[300],
-                        disabledForegroundColor: Colors.grey[600],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  IconButton.filledTonal(
-                    onPressed: () {
-                      final newVal = !_isAutoPlay;
-                      _authService.updateAutoPlayPreference(newVal);
-                      setState(() {
-                        _isAutoPlay = newVal;
-                        if (_isAutoPlay) {
-                          _scheduleAutoNext(afterMedia: false);
-                        } else {
-                          _autoNextTimer?.cancel();
-                          _isAutoPlayWaiting = false;
-                        }
-                      });
-                    },
-                    icon: Icon(
-                      _isAutoPlay ? Icons.pause_circle : Icons.play_circle,
-                      size: 32,
-                    ),
-                    style: IconButton.styleFrom(
-                      minimumSize: const Size(70, 70),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        );
-
-        Widget mainContent = Expanded(
-          child: Center(
-            child: Padding(
-              padding: const EdgeInsets.all(32),
-              child: AspectRatio(
-                aspectRatio: 4 / 3,
-                child: Card(
-                  elevation: 8,
-                  clipBehavior: Clip.antiAlias,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(24),
-                  ),
-                  child: Stack(
-                    fit: StackFit.expand,
-                    children: [
-                      if (_showingVideo)
-                        Video(controller: controller)
-                      else if (_currentImages.isNotEmpty)
-                        Image.network(
-                          _currentImages[_currentImageIndex],
-                          fit: BoxFit.contain,
-                        )
-                      else
-                        const Icon(
-                          Icons.image_not_supported,
-                          size: 100,
-                          color: Colors.grey,
-                        ),
-                      if (!_showingVideo && _currentImages.length > 1) ...[
-                        Positioned(
-                          left: 10,
-                          top: 0,
-                          bottom: 0,
-                          child: IconButton(
-                            icon: const Icon(
-                              Icons.chevron_left,
-                              color: Colors.white,
-                              size: 40,
-                            ),
-                            onPressed:
-                                () => setState(
-                                  () =>
-                                      _currentImageIndex =
-                                          (_currentImageIndex -
-                                              1 +
-                                              _currentImages.length) %
-                                          _currentImages.length,
-                                ),
-                          ),
-                        ),
-                        Positioned(
-                          right: 10,
-                          top: 0,
-                          bottom: 0,
-                          child: IconButton(
-                            icon: const Icon(
-                              Icons.chevron_right,
-                              color: Colors.white,
-                              size: 40,
-                            ),
-                            onPressed:
-                                () => setState(
-                                  () =>
-                                      _currentImageIndex =
-                                          (_currentImageIndex + 1) %
-                                          _currentImages.length,
-                                ),
-                          ),
-                        ),
-                      ],
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-        );
-
         return Scaffold(
           appBar: AppBar(
             automaticallyImplyLeading: false,
@@ -474,14 +302,208 @@ class _LearnPageState extends State<LearnPage> {
               if (!kIsWeb) const WindowControls(color: Colors.white),
             ],
           ),
-          body: Row(
-            children: isLeft ? [sidebar, mainContent] : [mainContent, sidebar],
+          body: LayoutBuilder(
+            builder: (context, constraints) {
+              final isMobile = constraints.maxWidth < 800;
+
+              final mediaContent = Center(
+                child: Padding(
+                  padding: EdgeInsets.all(isMobile ? 16 : 32),
+                  child: AspectRatio(
+                    aspectRatio: isMobile ? 1 : 4 / 3,
+                    child: Card(
+                      elevation: 8,
+                      clipBehavior: Clip.antiAlias,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(24),
+                      ),
+                      child: Stack(
+                        fit: StackFit.expand,
+                        children: [
+                          if (_showingVideo)
+                            Video(controller: controller)
+                          else if (_currentImages.isNotEmpty)
+                            Image.network(
+                              _currentImages[_currentImageIndex],
+                              fit: BoxFit.contain,
+                            )
+                          else
+                            const Icon(
+                              Icons.image_not_supported,
+                              size: 100,
+                              color: Colors.grey,
+                            ),
+                          if (!_showingVideo && _currentImages.length > 1) ...[
+                            Positioned(
+                              left: 10,
+                              top: 0,
+                              bottom: 0,
+                              child: IconButton(
+                                icon: const Icon(
+                                  Icons.chevron_left,
+                                  color: Colors.white,
+                                  size: 40,
+                                ),
+                                onPressed:
+                                    () => setState(
+                                      () =>
+                                          _currentImageIndex =
+                                              (_currentImageIndex -
+                                                  1 +
+                                                  _currentImages.length) %
+                                              _currentImages.length,
+                                    ),
+                              ),
+                            ),
+                            Positioned(
+                              right: 10,
+                              top: 0,
+                              bottom: 0,
+                              child: IconButton(
+                                icon: const Icon(
+                                  Icons.chevron_right,
+                                  color: Colors.white,
+                                  size: 40,
+                                ),
+                                onPressed:
+                                    () => setState(
+                                      () =>
+                                          _currentImageIndex =
+                                              (_currentImageIndex + 1) %
+                                              _currentImages.length,
+                                    ),
+                              ),
+                            ),
+                          ],
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              );
+
+              final controlsContent = Container(
+                padding: EdgeInsets.all(isMobile ? 24 : 32),
+                color: Theme.of(context).colorScheme.surface,
+                child: Column(
+                  children: [
+                    LinearProgressIndicator(
+                      value: progressValue,
+                      minHeight: 8,
+                      borderRadius: BorderRadius.circular(4),
+                      color: headerColor,
+                    ),
+                    SizedBox(height: isMobile ? 24 : 48),
+                    Text(
+                      _currentCard.getPrompt(lang),
+                      style: TextStyle(
+                        fontSize: isMobile ? 18 : 24,
+                        color: Colors.grey[600],
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      _currentCard.getAnswer(lang),
+                      style: TextStyle(
+                        fontSize: isMobile ? 28 : 36,
+                        fontWeight: FontWeight.bold,
+                        color: headerColor,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    if (isMobile) const SizedBox(height: 24) else const Spacer(),
+                    if (_currentCard.getAudioUrl(lang) != null)
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 12),
+                        child: OutlinedButton.icon(
+                          onPressed: () async {
+                            final url = _currentCard.getAudioUrl(lang);
+                            if (url != null) {
+                              await player.open(Media(url));
+                              player.play();
+                            }
+                          },
+                          icon: const Icon(Icons.volume_up),
+                          label: const Text('Play Audio'),
+                          style: OutlinedButton.styleFrom(
+                            minimumSize: const Size(double.infinity, 50),
+                          ),
+                        ),
+                      ),
+                    const SizedBox(height: 12),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: ElevatedButton.icon(
+                            onPressed: _canGoNext ? _nextCard : null,
+                            icon: const Icon(Icons.arrow_forward),
+                            label: Text(context.t('next')),
+                            style: ElevatedButton.styleFrom(
+                              minimumSize: Size.fromHeight(isMobile ? 60 : 70),
+                              backgroundColor: headerColor,
+                              foregroundColor: Colors.white,
+                              disabledBackgroundColor: Colors.grey[300],
+                              disabledForegroundColor: Colors.grey[600],
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        IconButton.filledTonal(
+                          onPressed: () {
+                            final newVal = !_isAutoPlay;
+                            _authService.updateAutoPlayPreference(newVal);
+                            setState(() {
+                              _isAutoPlay = newVal;
+                              if (_isAutoPlay) {
+                                _scheduleAutoNext(afterMedia: false);
+                              } else {
+                                _autoNextTimer?.cancel();
+                                _isAutoPlayWaiting = false;
+                              }
+                            });
+                          },
+                          icon: Icon(
+                            _isAutoPlay ? Icons.pause_circle : Icons.play_circle,
+                            size: 32,
+                          ),
+                          style: IconButton.styleFrom(
+                            minimumSize: Size(isMobile ? 60 : 70, isMobile ? 60 : 70),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              );
+
+              if (isMobile) {
+                return SingleChildScrollView(
+                  child: Column(
+                    children: [mediaContent, controlsContent],
+                  ),
+                );
+              }
+
+              bool isLeft = _authService.currentUser?.sidebarLeft ?? false;
+              return Row(
+                children:
+                    isLeft
+                        ? [
+                          SizedBox(width: 400, child: controlsContent),
+                          Expanded(child: mediaContent),
+                        ]
+                        : [
+                          Expanded(child: mediaContent),
+                          SizedBox(width: 400, child: controlsContent),
+                        ],
+              );
+            },
           ),
         );
       },
     );
   }
-
   @override
   void dispose() {
     _autoNextTimer?.cancel();
