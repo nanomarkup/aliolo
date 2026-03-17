@@ -128,7 +128,17 @@ class _CustomLicensesPageState extends State<CustomLicensesPage> {
                       const SizedBox(height: 12),
                       Row(
                         children: [
-                          const SizedBox(width: 24),
+                          if (isMobile) ...[
+                            const SizedBox(width: 8),
+                            IconButton(
+                              icon: const Icon(Icons.arrow_back),
+                              iconSize: 28,
+                              color: currentPrimaryColor,
+                              onPressed: () => Navigator.pop(context),
+                              tooltip: context.t('back'),
+                            ),
+                          ] else
+                            const SizedBox(width: 24),
                           Text(
                             context.t('licenses'),
                             style: const TextStyle(
@@ -137,25 +147,27 @@ class _CustomLicensesPageState extends State<CustomLicensesPage> {
                             ),
                           ),
                           const Spacer(),
-                          // Back Button styled like Close button
-                          IconButton(
-                            icon: const Icon(Icons.arrow_back),
-                            iconSize: 28,
-                            color: currentPrimaryColor,
-                            onPressed: () => Navigator.pop(context),
-                            tooltip: context.t('back'),
-                          ),
-                          if (!kIsWeb)
-                            Padding(
-                              padding: const EdgeInsets.only(right: 12.0),
-                              child: WindowControls(
-                                onlyClose: true,
-                                showSeparator: false,
-                                color: currentPrimaryColor,
-                                iconSize: 28,
-                                padding: false,
-                              ),
+                          if (!isMobile) ...[
+                            // Back Button styled like Close button
+                            IconButton(
+                              icon: const Icon(Icons.arrow_back),
+                              iconSize: 28,
+                              color: currentPrimaryColor,
+                              onPressed: () => Navigator.pop(context),
+                              tooltip: context.t('back'),
                             ),
+                            if (!kIsWeb)
+                              Padding(
+                                padding: const EdgeInsets.only(right: 12.0),
+                                child: WindowControls(
+                                  onlyClose: true,
+                                  showSeparator: false,
+                                  color: currentPrimaryColor,
+                                  iconSize: 28,
+                                  padding: false,
+                                ),
+                              ),
+                          ],
                         ],
                       ),
                       const Divider(),
