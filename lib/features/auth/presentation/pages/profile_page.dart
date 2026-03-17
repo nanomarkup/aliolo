@@ -718,9 +718,10 @@ class _ProfilePageState extends State<ProfilePage> {
             }
 
             return Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildAvatar(user, currentSessionColor),
-                const SizedBox(width: 32),
+                _buildAvatar(user, currentSessionColor, radius: 100),
+                const SizedBox(width: 48),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -730,13 +731,13 @@ class _ProfilePageState extends State<ProfilePage> {
                           Text(
                             user.username,
                             style: const TextStyle(
-                              fontSize: 32,
+                              fontSize: 36,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          const SizedBox(width: 8),
+                          const SizedBox(width: 12),
                           IconButton(
-                            icon: const Icon(Icons.edit, size: 20),
+                            icon: const Icon(Icons.edit, size: 24),
                             onPressed:
                                 () => _showEditUsernameDialog(user.username),
                           ),
@@ -744,29 +745,28 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                       Text(
                         user.email,
-                        style: TextStyle(fontSize: 18, color: Colors.grey[600]),
+                        style: TextStyle(fontSize: 20, color: Colors.grey[600]),
                       ),
-                      const SizedBox(height: 16),
-                      Wrap(
-                        spacing: 24,
-                        runSpacing: 12,
-                        children: [
-                          _buildStat(
-                            context,
-                            '${user.totalXp}',
-                            context.t('xp'),
-                          ),
-                          _buildStat(
-                            context,
-                            '${user.currentStreak}',
-                            context.t('streak'),
-                          ),
-                          _buildStat(
-                            context,
-                            '${user.maxStreak}',
-                            context.t('max_streak'),
-                          ),
-                        ],
+                      const SizedBox(height: 24),
+                      _buildStat(
+                        context,
+                        '${user.totalXp}',
+                        context.t('xp'),
+                        horizontal: true,
+                      ),
+                      const SizedBox(height: 8),
+                      _buildStat(
+                        context,
+                        '${user.currentStreak}',
+                        context.t('streak'),
+                        horizontal: true,
+                      ),
+                      const SizedBox(height: 8),
+                      _buildStat(
+                        context,
+                        '${user.maxStreak}',
+                        context.t('max_streak'),
+                        horizontal: true,
                       ),
                     ],
                   ),
