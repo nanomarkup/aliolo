@@ -6,11 +6,14 @@ import 'dart:convert';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:supabase_flutter/supabase_supabase.dart';
 
 class TranslationService extends ChangeNotifier {
   static final TranslationService _instance = TranslationService._internal();
   factory TranslationService() => _instance;
   TranslationService._internal();
+
+  SupabaseClient get _supabase => Supabase.instance.client;
 
   Locale _currentLocale = const Locale('en');
   Locale get currentLocale => _currentLocale;
@@ -46,40 +49,26 @@ class TranslationService extends ChangeNotifier {
     final prefs = await SharedPreferences.getInstance();
     String? savedLocale = prefs.getString('ui_locale');
 
-    if (kIsWeb) {
-      String langCode = savedLocale ?? 'en';
-      _currentLocale = Locale(langCode);
-      await loadTranslations(langCode);
-      return;
+    if (!kIsWeb) {
+      try {
+        final dir = await getApplicationDocumentsDirectory();
+        final alioloDir = dynamicDirectory(p.join(dir.path, '.aliolo'));
+        _langDir = dynamicDirectory(p.join(alioloDir.path, 'lang'));
+
+        if (!await _langDir!.exists()) {
+          await _langDir!.create(recursive: true);
+        }
+      } catch (e) {
+        print('Translation: FS init error: $e');
+      }
     }
 
-    try {
-      final dir = await getApplicationDocumentsDirectory();
-      final alioloDir = dynamicDirectory(p.join(dir.path, '.aliolo'));
-      _langDir = dynamicDirectory(p.join(alioloDir.path, 'lang'));
-
-      if (!await _langDir!.exists()) {
-        await _langDir!.create(recursive: true);
-      }
-
-      // Always sync all bundled assets to external folder to ensure updates are applied
-      for (var lang in _availableUILanguages) {
-        await _copyAssetToExternal(lang);
-      }
-
-      // 1. Scan for available languages in the external folder
-      await _refreshAvailableLanguages();
-    } catch (e) {
-      print('Translation: Non-critical init error (FS): $e');
-    }
-
-    // 2. Load saved locale or default to system language
+    // Load saved locale or default to system language
     String langCode = 'en';
     if (savedLocale != null) {
       langCode = savedLocale;
       _currentLocale = Locale(langCode);
     } else {
-      // First run: Guess from system
       try {
         if (!kIsWeb) {
           final String systemLocale =
@@ -96,38 +85,11 @@ class TranslationService extends ChangeNotifier {
     await loadTranslations(langCode);
   }
 
-  Future<void> _copyAssetToExternal(String langCode) async {
-    if (_langDir == null) return;
-    try {
-      final data = await rootBundle.loadString('assets/lang/$langCode.json');
-      final file = dynamicFile(p.join(_langDir!.path, '$langCode.json'));
-      await file.writeAsString(data);
-    } catch (e) {
-      print('Error copying asset $langCode: $e');
-    }
-  }
-
-  Future<void> _refreshAvailableLanguages() async {
-    if (_langDir == null || !await _langDir!.exists()) return;
-
-    final List<String> codes = [];
-    final entities = await _langDir!.list().toList();
-    for (var entity in entities) {
-      if (entity.path.endsWith('.json')) {
-        codes.add(p.basenameWithoutExtension(entity.path).toLowerCase());
-      }
-    }
-
-    if (codes.isNotEmpty) {
-      _availableUILanguages = (codes..sort());
-    }
-  }
-
   Future<void> loadTranslations(String langCode) async {
     const String assetsPrefix = 'assets/lang/';
     final lc = langCode.toLowerCase();
 
-    // 1. Load internal English as base fallback
+    // 1. ALWAYS Load internal English as base fallback from assets
     try {
       final String baseJson = await rootBundle.loadString(
         '${assetsPrefix}en.json',
@@ -137,7 +99,25 @@ class TranslationService extends ChangeNotifier {
       print('Translation: Failed to load base English: $e');
     }
 
-    // 2. Merge internal selected language (if not English)
+    // 2. Try to fetch the selected language from the DATABASE
+    try {
+      final dbData = await _fetchFromDb(lc);
+      if (dbData.isNotEmpty) {
+        dbData.forEach((key, value) {
+          _translations[key] = value;
+        });
+        // Cache to local file system for offline use
+        if (!kIsWeb && _langDir != null) {
+          final file = dynamicFile(p.join(_langDir!.path, '$lc.json'));
+          await file.writeAsString(jsonEncode(dbData));
+        }
+        return; // Success, skip asset loading
+      }
+    } catch (e) {
+      print('Translation: DB fetch failed for $lc, falling back: $e');
+    }
+
+    // 3. FALLBACK: Try internal bundled asset
     if (lc != 'en') {
       try {
         final String assetJson = await rootBundle.loadString(
@@ -150,10 +130,8 @@ class TranslationService extends ChangeNotifier {
       } catch (_) {}
     }
 
-    if (kIsWeb) return;
-
-    // 3. Try to load selected language from external folder (Non-Web)
-    if (_langDir != null) {
+    // 4. FALLBACK: Try external folder (if offline and previously cached)
+    if (!kIsWeb && _langDir != null) {
       final externalFile = dynamicFile(p.join(_langDir!.path, '$lc.json'));
       if (await externalFile.exists()) {
         try {
@@ -162,9 +140,57 @@ class TranslationService extends ChangeNotifier {
           externalMap.forEach((key, value) {
             _translations[key] = value.toString();
           });
-        } catch (e) {
-          print('Error loading external translation $lc: $e');
+        } catch (_) {}
+      }
+    }
+  }
+
+  Future<Map<String, String>> _fetchFromDb(String langCode) async {
+    try {
+      final List<dynamic> data = await _supabase
+          .from('ui_translations')
+          .select('key, value')
+          .eq('lang', langCode);
+
+      final Map<String, String> map = {};
+      for (var item in data) {
+        map[item['key'].toString()] = item['value'].toString();
+      }
+      return map;
+    } catch (e) {
+      return {};
+    }
+  }
+
+  /// UTILITY: Call this to upload all your local JSON files to Supabase.
+  /// You can call this from a dev screen or just once during maintenance.
+  Future<void> syncLocalTranslationsToDb() async {
+    for (var lang in _availableUILanguages) {
+      try {
+        final String jsonString = await rootBundle.loadString(
+          'assets/lang/$lang.json',
+        );
+        final Map<String, dynamic> map = jsonDecode(jsonString);
+
+        final List<Map<String, dynamic>> rows = [];
+        map.forEach((key, value) {
+          rows.add({
+            'key': key,
+            'lang': lang,
+            'value': value.toString(),
+            'updated_at': DateTime.now().toIso8601String(),
+          });
+        });
+
+        if (rows.isNotEmpty) {
+          await _supabase.from('ui_translations').upsert(
+            rows,
+            onConflict: 'key,lang',
+          );
+          print('Synced $lang to DB (${rows.length} keys)');
         }
+      } catch (e) {
+        print('Failed to sync $lang: $e');
       }
     }
   }
@@ -196,16 +222,23 @@ class TranslationService extends ChangeNotifier {
 
   Future<String> translateForLanguage(String key, String langCode) async {
     if (!_languageMaps.containsKey(langCode)) {
-      try {
-        const String assetsPrefix = 'assets/lang/';
-        final String jsonString = await rootBundle.loadString(
-          '$assetsPrefix${langCode.toLowerCase()}.json',
-        );
-        _languageMaps[langCode] = Map<String, String>.from(
-          jsonDecode(jsonString),
-        );
-      } catch (_) {
-        _languageMaps[langCode] = {};
+      // Try DB first
+      final dbData = await _fetchFromDb(langCode);
+      if (dbData.isNotEmpty) {
+        _languageMaps[langCode] = dbData;
+      } else {
+        // Fallback to assets
+        try {
+          const String assetsPrefix = 'assets/lang/';
+          final String jsonString = await rootBundle.loadString(
+            '$assetsPrefix${langCode.toLowerCase()}.json',
+          );
+          _languageMaps[langCode] = Map<String, String>.from(
+            jsonDecode(jsonString),
+          );
+        } catch (_) {
+          _languageMaps[langCode] = {};
+        }
       }
     }
     return _languageMaps[langCode]?[key] ?? key;

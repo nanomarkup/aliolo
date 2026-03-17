@@ -1,7 +1,7 @@
 import json
 import os
 
-lang_dir = "/home/vitaliinoha/aliolo/assets/lang"
+lang_dir = "/home/vitaliinoga/aliolo/assets/lang"
 os.makedirs(lang_dir, exist_ok=True)
 
 # Base template from en.json - Master Template with ALL keys
