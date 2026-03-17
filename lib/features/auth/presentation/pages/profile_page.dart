@@ -498,7 +498,25 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget _buildStat(BuildContext context, String value, String label) {
+  Widget _buildStat(
+    BuildContext context,
+    String value,
+    String label, {
+    bool horizontal = false,
+  }) {
+    if (horizontal) {
+      return Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            value,
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(width: 8),
+          Text(label, style: const TextStyle(fontSize: 14, color: Colors.grey)),
+        ],
+      );
+    }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -508,6 +526,40 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
         Text(label, style: const TextStyle(fontSize: 14, color: Colors.grey)),
       ],
+    );
+  }
+
+  Widget _buildAvatar(UserModel user, Color color, {double radius = 60}) {
+    return GestureDetector(
+      onTap: _pickImage,
+      child: Stack(
+        children: [
+          CircleAvatar(
+            radius: radius,
+            backgroundColor: color.withValues(alpha: 0.1),
+            backgroundImage:
+                user.avatarPath != null
+                    ? (user.avatarPath!.startsWith('http') || kIsWeb
+                            ? NetworkImage(user.avatarPath!)
+                            : FileImage(dynamicFile(user.avatarPath!)))
+                        as ImageProvider
+                    : null,
+            child:
+                user.avatarPath == null
+                    ? Icon(Icons.person, size: radius, color: color)
+                    : null,
+          ),
+          Positioned(
+            bottom: 0,
+            right: 0,
+            child: CircleAvatar(
+              radius: radius * 0.3,
+              backgroundColor: color,
+              child: Icon(Icons.camera_alt, size: radius * 0.3, color: Colors.white),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -597,62 +649,26 @@ class _ProfilePageState extends State<ProfilePage> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
       child: Padding(
         padding: const EdgeInsets.all(32),
-        child: Row(
-          children: [
-            GestureDetector(
-              onTap: _pickImage,
-              child: Stack(
-                children: [
-                  CircleAvatar(
-                    radius: 60,
-                    backgroundColor: currentSessionColor.withValues(alpha: 0.1),
-                    backgroundImage:
-                        user.avatarPath != null
-                            ? (user.avatarPath!.startsWith('http') || kIsWeb
-                                    ? NetworkImage(user.avatarPath!)
-                                    : FileImage(dynamicFile(user.avatarPath!)))
-                                as ImageProvider
-                            : null,
-                    child:
-                        user.avatarPath == null
-                            ? Icon(
-                              Icons.person,
-                              size: 60,
-                              color: currentSessionColor,
-                            )
-                            : null,
-                  ),
-                  Positioned(
-                    bottom: 0,
-                    right: 0,
-                    child: CircleAvatar(
-                      radius: 18,
-                      backgroundColor: currentSessionColor,
-                      child: const Icon(
-                        Icons.camera_alt,
-                        size: 18,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(width: 32),
-            Expanded(
-              child: Column(
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final isMobile = constraints.maxWidth < 550;
+
+            if (isMobile) {
+              return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     children: [
-                      Text(
-                        user.username,
-                        style: const TextStyle(
-                          fontSize: 32,
-                          fontWeight: FontWeight.bold,
+                      Expanded(
+                        child: Text(
+                          user.username,
+                          style: const TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      const SizedBox(width: 8),
                       IconButton(
                         icon: const Icon(Icons.edit, size: 20),
                         onPressed: () => _showEditUsernameDialog(user.username),
@@ -661,30 +677,103 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   Text(
                     user.email,
-                    style: TextStyle(fontSize: 18, color: Colors.grey[600]),
+                    style: TextStyle(fontSize: 16, color: Colors.grey[600]),
                   ),
-                  const SizedBox(height: 16),
-                  Wrap(
-                    spacing: 24,
-                    runSpacing: 12,
+                  const SizedBox(height: 24),
+                  Row(
                     children: [
-                      _buildStat(context, '${user.totalXp}', context.t('xp')),
-                      _buildStat(
-                        context,
-                        '${user.currentStreak}',
-                        context.t('streak'),
-                      ),
-                      _buildStat(
-                        context,
-                        '${user.maxStreak}',
-                        context.t('max_streak'),
+                      _buildAvatar(user, currentSessionColor, radius: 45),
+                      const SizedBox(width: 24),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _buildStat(
+                              context,
+                              '${user.totalXp}',
+                              context.t('xp'),
+                              horizontal: true,
+                            ),
+                            const SizedBox(height: 8),
+                            _buildStat(
+                              context,
+                              '${user.currentStreak}',
+                              context.t('streak'),
+                              horizontal: true,
+                            ),
+                            const SizedBox(height: 8),
+                            _buildStat(
+                              context,
+                              '${user.maxStreak}',
+                              context.t('max_streak'),
+                              horizontal: true,
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
                 ],
-              ),
-            ),
-          ],
+              );
+            }
+
+            return Row(
+              children: [
+                _buildAvatar(user, currentSessionColor),
+                const SizedBox(width: 32),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            user.username,
+                            style: const TextStyle(
+                              fontSize: 32,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          IconButton(
+                            icon: const Icon(Icons.edit, size: 20),
+                            onPressed:
+                                () => _showEditUsernameDialog(user.username),
+                          ),
+                        ],
+                      ),
+                      Text(
+                        user.email,
+                        style: TextStyle(fontSize: 18, color: Colors.grey[600]),
+                      ),
+                      const SizedBox(height: 16),
+                      Wrap(
+                        spacing: 24,
+                        runSpacing: 12,
+                        children: [
+                          _buildStat(
+                            context,
+                            '${user.totalXp}',
+                            context.t('xp'),
+                          ),
+                          _buildStat(
+                            context,
+                            '${user.currentStreak}',
+                            context.t('streak'),
+                          ),
+                          _buildStat(
+                            context,
+                            '${user.maxStreak}',
+                            context.t('max_streak'),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            );
+          },
         ),
       ),
     );
