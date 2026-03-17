@@ -952,90 +952,193 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
           onPressed: () => Navigator.pop(context),
         ),
       ],
-      fixedBody: Column(
-        children: [
-          const SizedBox(height: 16),
-          Row(
-            children: [
-              Expanded(
-                flex: 3,
-                child: TextField(
-                  controller: _searchController,
-                  decoration: InputDecoration(
-                    hintText: context.t('search_subjects'),
-                    prefixIcon: const Icon(Icons.search),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    filled: true,
-                    fillColor: Theme.of(
-                      context,
-                    ).cardColor.withValues(alpha: 0.5),
+      fixedBody: LayoutBuilder(
+        builder: (context, constraints) {
+          final isSmall = constraints.maxWidth < 600;
+
+          if (isSmall) {
+            return Padding(
+              padding: const EdgeInsets.only(top: 12, bottom: 16),
+              child: Column(
+                children: [
+                  // Row 1: Search + Add
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          controller: _searchController,
+                          decoration: InputDecoration(
+                            hintText: context.t('search_subjects'),
+                            prefixIcon: const Icon(Icons.search),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            filled: true,
+                            fillColor: Theme.of(
+                              context,
+                            ).cardColor.withValues(alpha: 0.5),
+                          ),
+                          onChanged: (_) => _applyFilters(),
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      IconButton(
+                        icon: Icon(
+                          Icons.add_circle,
+                          color: pillarColor,
+                          size: 40,
+                        ),
+                        onPressed: () async {
+                          final result = await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder:
+                                  (context) => SubjectEditPage(
+                                    pillarId: widget.pillar.id,
+                                  ),
+                            ),
+                          );
+                          if (result == true) _loadData();
+                        },
+                      ),
+                    ],
                   ),
-                  onChanged: (_) => _applyFilters(),
-                ),
+                  const SizedBox(height: 12),
+                  // Row 2: Filters
+                  Row(
+                    children: [
+                      Expanded(
+                        child: _buildCompactDropdown(
+                          value: _collectionFilter,
+                          items: {
+                            'all': context.t('filter_all'),
+                            'favorites': context.t('filter_favorites'),
+                            'mine': context.t('filter_my_subjects'),
+                            'public': context.t('filter_public'),
+                          },
+                          onChanged: (val) {
+                            if (val != null) {
+                              setState(() {
+                                _collectionFilter = val;
+                                _applyFilters();
+                              });
+                            }
+                          },
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: _buildCompactDropdown(
+                          value: _selectedAgeFilter,
+                          items: {
+                            'all': context.t('age_all'),
+                            '0_6': context.t('age_0_6'),
+                            '7_14': context.t('age_7_14'),
+                            '15_plus': context.t('age_15_plus'),
+                          },
+                          onChanged: (val) {
+                            if (val != null) {
+                              setState(() {
+                                _selectedAgeFilter = val;
+                                _applyFilters();
+                              });
+                            }
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-              const SizedBox(width: 8),
-              Expanded(
-                flex: 2,
-                child: _buildCompactDropdown(
-                  value: _collectionFilter,
-                  items: {
-                    'all': context.t('filter_all'),
-                    'favorites': context.t('filter_favorites'),
-                    'mine': context.t('filter_my_subjects'),
-                    'public': context.t('filter_public'),
-                  },
-                  onChanged: (val) {
-                    if (val != null) {
-                      setState(() {
-                        _collectionFilter = val;
-                        _applyFilters();
-                      });
-                    }
-                  },
-                ),
-              ),
-              const SizedBox(width: 8),
-              Expanded(
-                flex: 2,
-                child: _buildCompactDropdown(
-                  value: _selectedAgeFilter,
-                  items: {
-                    'all': context.t('age_all'),
-                    '0_6': context.t('age_0_6'),
-                    '7_14': context.t('age_7_14'),
-                    '15_plus': context.t('age_15_plus'),
-                  },
-                  onChanged: (val) {
-                    if (val != null) {
-                      setState(() {
-                        _selectedAgeFilter = val;
-                        _applyFilters();
-                      });
-                    }
-                  },
-                ),
-              ),
-              const SizedBox(width: 8),
-              IconButton(
-                icon: Icon(Icons.add_circle, color: pillarColor, size: 40),
-                onPressed: () async {
-                  final result = await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder:
-                          (context) =>
-                              SubjectEditPage(pillarId: widget.pillar.id),
+            );
+          }
+
+          return Column(
+            children: [
+              const SizedBox(height: 16),
+              Row(
+                children: [
+                  Expanded(
+                    flex: 3,
+                    child: TextField(
+                      controller: _searchController,
+                      decoration: InputDecoration(
+                        hintText: context.t('search_subjects'),
+                        prefixIcon: const Icon(Icons.search),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        filled: true,
+                        fillColor: Theme.of(
+                          context,
+                        ).cardColor.withValues(alpha: 0.5),
+                      ),
+                      onChanged: (_) => _applyFilters(),
                     ),
-                  );
-                  if (result == true) _loadData();
-                },
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    flex: 2,
+                    child: _buildCompactDropdown(
+                      value: _collectionFilter,
+                      items: {
+                        'all': context.t('filter_all'),
+                        'favorites': context.t('filter_favorites'),
+                        'mine': context.t('filter_my_subjects'),
+                        'public': context.t('filter_public'),
+                      },
+                      onChanged: (val) {
+                        if (val != null) {
+                          setState(() {
+                            _collectionFilter = val;
+                            _applyFilters();
+                          });
+                        }
+                      },
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    flex: 2,
+                    child: _buildCompactDropdown(
+                      value: _selectedAgeFilter,
+                      items: {
+                        'all': context.t('age_all'),
+                        '0_6': context.t('age_0_6'),
+                        '7_14': context.t('age_7_14'),
+                        '15_plus': context.t('age_15_plus'),
+                      },
+                      onChanged: (val) {
+                        if (val != null) {
+                          setState(() {
+                            _selectedAgeFilter = val;
+                            _applyFilters();
+                          });
+                        }
+                      },
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  IconButton(
+                    icon: Icon(Icons.add_circle, color: pillarColor, size: 40),
+                    onPressed: () async {
+                      final result = await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder:
+                              (context) =>
+                                  SubjectEditPage(pillarId: widget.pillar.id),
+                        ),
+                      );
+                      if (result == true) _loadData();
+                    },
+                  ),
+                ],
               ),
+              const SizedBox(height: 40),
             ],
-          ),
-          const SizedBox(height: 40),
-        ],
+          );
+        },
       ),
       slivers: [
         if (_isLoading)

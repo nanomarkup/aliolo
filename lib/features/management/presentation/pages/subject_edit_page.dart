@@ -511,6 +511,43 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
     );
   }
 
+  bool _hasUnsavedChanges() {
+    for (var draft in _drafts.values) {
+      if (draft.name.isNotEmpty || draft.description.isNotEmpty) {
+        if (widget.existingSubject == null) return true;
+        // For existing subjects, compare with original data
+        // (Simplification: if it's not empty and we're editing, assume change for now)
+        // A more robust check would compare with widget.existingSubject.localizedData
+        return true; 
+      }
+    }
+    return false;
+  }
+
+  Future<bool> _onWillPop() async {
+    if (_isSaving || !_hasUnsavedChanges()) return true;
+
+    final result = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(context.t('discard_changes')),
+        content: Text(context.t('unsaved_changes_msg')),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: Text(context.t('cancel')),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            style: TextButton.styleFrom(foregroundColor: Colors.red),
+            child: Text(context.t('discard')),
+          ),
+        ],
+      ),
+    );
+    return result ?? false;
+  }
+
   @override
   Widget build(BuildContext context) {
     const appBarColor = Colors.white;
@@ -523,116 +560,131 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
         widget.existingSubject == null ||
         widget.existingSubject!.ownerId == _authService.currentUser?.serverId;
 
-    return AlioloScrollablePage(
-      title: Text(
-        widget.existingSubject == null
-            ? context.t('add_subject')
-            : context.t('edit_subject'),
-        style: const TextStyle(color: appBarColor),
-      ),
-      appBarColor: currentSessionColor,
-      actions: [
-        IconButton(
-          icon: const Icon(Icons.arrow_back, color: appBarColor),
-          onPressed: () => Navigator.pop(context),
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) async {
+        if (didPop) return;
+        final shouldPop = await _onWillPop();
+        if (shouldPop && context.mounted) {
+          Navigator.pop(context);
+        }
+      },
+      child: AlioloScrollablePage(
+        title: Text(
+          widget.existingSubject == null
+              ? context.t('add_subject')
+              : context.t('edit_subject'),
+          style: const TextStyle(color: appBarColor),
         ),
-        if (isOwner)
-          IconButton(
-            icon:
-                _isSaving
-                    ? const SizedBox(
-                      width: 20,
-                      height: 20,
-                      child: CircularProgressIndicator(
-                        color: appBarColor,
-                        strokeWidth: 2,
-                      ),
-                    )
-                    : const Icon(Icons.save, color: appBarColor),
-            onPressed: _isSaving ? null : _save,
-          ),
-        if (isOwner)
-          IconButton(
-            icon: const Icon(Icons.data_object, color: appBarColor),
-            onPressed: _showJsonDialog,
-          ),
-        if (isOwner && widget.existingSubject != null)
-          IconButton(
-            icon: const Icon(Icons.delete, color: appBarColor),
-            onPressed: () async {
-              final cardCount = widget.existingSubject!.cardCount;
-              final confirmed = await showDialog<bool>(
-                context: context,
-                builder:
-                    (context) => AlertDialog(
-                      title: Text(context.t('delete_subject')),
-                      content: Text(
-                        cardCount > 0
-                            ? 'This subject contains $cardCount ${context.plural('card', cardCount)}. Deleting it will permanently remove all of them.'
-                            : 'Delete this subject?',
-                      ),
-                      actions: [
-                        TextButton(
-                          onPressed: () => Navigator.pop(context, false),
-                          child: Text(context.t('cancel')),
+        appBarColor: currentSessionColor,
+        leading: IconButton(
+          icon: const Icon(Icons.close, color: appBarColor),
+          onPressed: () async {
+            final shouldPop = await _onWillPop();
+            if (shouldPop && context.mounted) {
+              Navigator.pop(context);
+            }
+          },
+        ),
+        actions: [
+          if (isOwner)
+            IconButton(
+              icon:
+                  _isSaving
+                      ? const SizedBox(
+                        width: 20,
+                        height: 20,
+                        child: CircularProgressIndicator(
+                          color: appBarColor,
+                          strokeWidth: 2,
                         ),
-                        TextButton(
-                          onPressed: () => Navigator.pop(context, true),
-                          style: TextButton.styleFrom(
-                            foregroundColor: Colors.red,
-                          ),
-                          child: Text(context.t('delete')),
-                        ),
-                      ],
-                    ),
-              );
-              if (confirmed == true && mounted) {
-                await _cardService.deleteSubjectById(
-                  widget.existingSubject!.id,
-                );
-                if (mounted) {
-                  Navigator.pop(context); // Close edit page
-                  Navigator.pop(context, true); // Signal parent to refresh
-                }
-              }
-            },
-          ),
-      ],
-      fixedBody: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              children: [
-                _buildLangTile(
-                  'global',
-                  'GLB',
-                  Icons.public,
-                  'Global / Fallback',
-                ),
-                ...TranslationService().availableUILanguages.map((lang) {
-                  final code = lang.toLowerCase();
-                  return _buildLangTile(
-                    code,
-                    lang.toUpperCase(),
-                    null,
-                    TranslationService().getLanguageName(code),
-                  );
-                }),
-              ],
+                      )
+                      : const Icon(Icons.save, color: appBarColor),
+              onPressed: _isSaving ? null : _save,
             ),
-            const SizedBox(height: 32),
-          ],
+          if (isOwner)
+            IconButton(
+              icon: const Icon(Icons.data_object, color: appBarColor),
+              onPressed: _showJsonDialog,
+            ),
+          if (isOwner && widget.existingSubject != null)
+            IconButton(
+              icon: const Icon(Icons.delete, color: appBarColor),
+              onPressed: () async {
+                final cardCount = widget.existingSubject!.cardCount;
+                final confirmed = await showDialog<bool>(
+                  context: context,
+                  builder:
+                      (context) => AlertDialog(
+                        title: Text(context.t('delete_subject')),
+                        content: Text(
+                          cardCount > 0
+                              ? 'This subject contains $cardCount ${context.plural('card', cardCount)}. Deleting it will permanently remove all of them.'
+                              : 'Delete this subject?',
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(context, false),
+                            child: Text(context.t('cancel')),
+                          ),
+                          TextButton(
+                            onPressed: () => Navigator.pop(context, true),
+                            style: TextButton.styleFrom(
+                              foregroundColor: Colors.red,
+                            ),
+                            child: Text(context.t('delete')),
+                          ),
+                        ],
+                      ),
+                );
+                if (confirmed == true && mounted) {
+                  await _cardService.deleteSubjectById(
+                    widget.existingSubject!.id,
+                  );
+                  if (mounted) {
+                    Navigator.pop(context); // Close edit page
+                    Navigator.pop(context, true); // Signal parent to refresh
+                  }
+                }
+              },
+            ),
+        ],
+        fixedBody: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: [
+                  _buildLangTile(
+                    'global',
+                    'GLB',
+                    Icons.public,
+                    'Global / Fallback',
+                  ),
+                  ...TranslationService().availableUILanguages.map((lang) {
+                    final code = lang.toLowerCase();
+                    return _buildLangTile(
+                      code,
+                      lang.toUpperCase(),
+                      null,
+                      TranslationService().getLanguageName(code),
+                    );
+                  }),
+                ],
+              ),
+              const SizedBox(height: 32),
+            ],
+          ),
         ),
-      ),
-      body: Form(
-        key: _formKey,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: _buildEditor(),
+        body: Form(
+          key: _formKey,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: _buildEditor(),
+          ),
         ),
       ),
     );
