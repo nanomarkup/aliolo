@@ -221,10 +221,13 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
                 child: Scaffold(
                   appBar: AppBar(
                     title: const Text('JSON Data'),
-                    leading: IconButton(
-                      icon: const Icon(Icons.close),
-                      onPressed: () => Navigator.pop(context),
-                    ),
+                    automaticallyImplyLeading: false,
+                    actions: [
+                      IconButton(
+                        icon: const Icon(Icons.close),
+                        onPressed: () => Navigator.pop(context),
+                      ),
+                    ],
                   ),
                   body: Padding(
                     padding: const EdgeInsets.all(16),
@@ -609,15 +612,6 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
           style: const TextStyle(color: appBarColor),
         ),
         appBarColor: currentSessionColor,
-        leading: IconButton(
-          icon: const Icon(Icons.close, color: appBarColor),
-          onPressed: () async {
-            final shouldPop = await _onWillPop();
-            if (shouldPop && context.mounted) {
-              Navigator.pop(context);
-            }
-          },
-        ),
         actions: [
           if (isOwner)
             IconButton(
@@ -680,6 +674,15 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
                 }
               },
             ),
+          IconButton(
+            icon: const Icon(Icons.arrow_back, color: appBarColor),
+            onPressed: () async {
+              final shouldPop = await _onWillPop();
+              if (shouldPop && context.mounted) {
+                Navigator.pop(context);
+              }
+            },
+          ),
         ],
         fixedBody: Padding(
           padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
