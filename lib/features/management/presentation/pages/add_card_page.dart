@@ -501,7 +501,7 @@ class _AddCardPageState extends State<AddCardPage> {
 
     final String pageTitle =
         widget.isReadOnly
-            ? 'View Card'
+            ? context.t('view_card')
             : (widget.existingCard == null
                 ? context.t('add_card')
                 : context.t('edit_card'));
@@ -808,15 +808,15 @@ class _AddCardPageState extends State<AddCardPage> {
       items: [
         DropdownMenuItem(
           value: 'image_to_text',
-          child: Text(context.t('image_to_text')),
+          child: Text(context.t('mode_image_to_text')),
         ),
         DropdownMenuItem(
           value: 'audio_to_text',
-          child: Text(context.t('audio_to_text')),
+          child: Text(context.t('mode_audio_to_text')),
         ),
         DropdownMenuItem(
           value: 'audio_to_image',
-          child: Text(context.t('audio_to_image')),
+          child: Text(context.t('mode_audio_to_image')),
         ),
       ],
       onChanged:
