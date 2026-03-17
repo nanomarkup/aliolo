@@ -934,7 +934,9 @@ class _AddCardPageState extends State<AddCardPage> {
             Image.network(url, fit: BoxFit.cover, width: 70, height: 70)
           else if (file != null)
             kIsWeb
-                ? Image.network(file.path, fit: BoxFit.cover)
+                ? (file.path.isNotEmpty
+                    ? Image.network(file.path, fit: BoxFit.cover)
+                    : const Icon(Icons.image, color: Colors.grey))
                 : Image.file(dynamicFile(file.path), fit: BoxFit.cover),
           if (!widget.isReadOnly)
             Positioned(

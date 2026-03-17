@@ -169,7 +169,7 @@ class _SettingsPageState extends State<SettingsPage> {
               onPressed: () => setState(() {}),
             ),
           ],
-          fixedBody: Column(
+          body: Column(
             children: [
               _buildSectionTitle(
                 context.t('general_preferences'),
