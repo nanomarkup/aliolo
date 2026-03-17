@@ -413,24 +413,6 @@ class _LearnPageState extends State<LearnPage> {
                       textAlign: TextAlign.center,
                     ),
                     if (isMobile) const SizedBox(height: 24) else const Spacer(),
-                    if (_currentCard.getAudioUrl(lang) != null)
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 12),
-                        child: OutlinedButton.icon(
-                          onPressed: () async {
-                            final url = _currentCard.getAudioUrl(lang);
-                            if (url != null) {
-                              await player.open(Media(url));
-                              player.play();
-                            }
-                          },
-                          icon: const Icon(Icons.volume_up),
-                          label: const Text('Play Audio'),
-                          style: OutlinedButton.styleFrom(
-                            minimumSize: const Size(double.infinity, 50),
-                          ),
-                        ),
-                      ),
                     const SizedBox(height: 12),
                     Row(
                       children: [
@@ -448,6 +430,23 @@ class _LearnPageState extends State<LearnPage> {
                             ),
                           ),
                         ),
+                        if (_currentCard.getAudioUrl(lang) != null) ...[
+                          const SizedBox(width: 12),
+                          IconButton.filledTonal(
+                            onPressed: () async {
+                              final url = _currentCard.getAudioUrl(lang);
+                              if (url != null) {
+                                await player.open(Media(url));
+                                player.play();
+                              }
+                            },
+                            icon: const Icon(Icons.volume_up, size: 28),
+                            style: IconButton.styleFrom(
+                              minimumSize: Size(isMobile ? 60 : 70, isMobile ? 60 : 70),
+                            ),
+                            tooltip: 'Play Audio',
+                          ),
+                        ],
                         const SizedBox(width: 12),
                         IconButton.filledTonal(
                           onPressed: () {
