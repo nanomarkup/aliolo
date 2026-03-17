@@ -423,49 +423,46 @@ class _TestPageState extends State<TestPage> {
                     ),
                     const SizedBox(height: 24),
                     if (isMobile)
-                      ..._options.asMap().entries.map((entry) {
-                        final index = entry.key;
-                        final opt = entry.value;
-                        final isSelected = _selectedIndex == index;
-                        final isCorrect = opt == _correctAnswerText;
-                        Color? color;
-                        if (_isAnswered) {
-                          color =
-                              isCorrect
-                                  ? Colors.green
-                                  : (isSelected ? Colors.red : null);
-                        } else if (isSelected)
-                          color = headerColor;
-
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 12),
-                          child: InkWell(
-                            onTap: () => _selectOption(index),
-                            borderRadius: BorderRadius.circular(16),
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 20,
-                                vertical: 16,
-                              ),
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: color ?? Colors.grey[300]!,
-                                  width: 2,
-                                ),
-                                borderRadius: BorderRadius.circular(16),
-                                color: color?.withValues(alpha: 0.1),
-                              ),
-                              child: Text(
-                                opt,
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(16),
+                          border: Border.all(
+                            color: _isAnswered
+                                ? (_isCorrect ? Colors.green : Colors.red)
+                                : Colors.grey[300]!,
+                            width: 2,
                           ),
-                        );
-                      })
+                          color: _isAnswered
+                              ? (_isCorrect
+                                      ? Colors.green
+                                      : Colors.red)
+                                  .withValues(alpha: 0.1)
+                              : null,
+                        ),
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton<int>(
+                            value: _selectedIndex == -1 ? null : _selectedIndex,
+                            hint: Text(context.t('select_an_answer')),
+                            isExpanded: true,
+                            icon: const Icon(Icons.arrow_drop_down),
+                            items: _options.asMap().entries.map((entry) {
+                              return DropdownMenuItem<int>(
+                                value: entry.key,
+                                child: Text(
+                                  entry.value,
+                                  style: const TextStyle(fontSize: 16),
+                                ),
+                              );
+                            }).toList(),
+                            onChanged: _isAnswered
+                                ? null
+                                : (val) {
+                                    if (val != null) _selectOption(val);
+                                  },
+                          ),
+                        ),
+                      )
                     else
                       Expanded(
                         child: ListView.separated(
