@@ -2748,6 +2748,8 @@ uk = {
     "cards_per_day": "карток на день",
     "learn_session_size": "Розмір сесії навчання",
     "test_session_size": "Розмір сесії тестування",
+    "learn_mode_title": "Вивчити",
+    "test_mode_title": "Тест",
     "cards_per_session": "карток на сесію",
     "options_count": "Кількість відповідей",
     "options_per_card": "варіантів на картку",

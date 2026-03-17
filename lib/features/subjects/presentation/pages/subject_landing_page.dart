@@ -271,9 +271,9 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
 
                         if (validCards.isEmpty) {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
+                            SnackBar(
                               content: Text(
-                                'No cards available for this language.',
+                                context.t('no_cards_found_for_lang'),
                               ),
                             ),
                           );
@@ -313,9 +313,9 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
 
                         if (validCards.isEmpty) {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
+                            SnackBar(
                               content: Text(
-                                'No cards available for this language.',
+                                context.t('no_cards_found_for_lang'),
                               ),
                             ),
                           );
