@@ -613,6 +613,15 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
         ),
         appBarColor: currentSessionColor,
         actions: [
+          IconButton(
+            icon: const Icon(Icons.arrow_back, color: appBarColor),
+            onPressed: () async {
+              final shouldPop = await _onWillPop();
+              if (shouldPop && context.mounted) {
+                Navigator.pop(context);
+              }
+            },
+          ),
           if (isOwner)
             IconButton(
               icon:
@@ -674,15 +683,6 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
                 }
               },
             ),
-          IconButton(
-            icon: const Icon(Icons.arrow_back, color: appBarColor),
-            onPressed: () async {
-              final shouldPop = await _onWillPop();
-              if (shouldPop && context.mounted) {
-                Navigator.pop(context);
-              }
-            },
-          ),
         ],
         fixedBody: Padding(
           padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),

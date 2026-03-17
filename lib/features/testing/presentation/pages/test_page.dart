@@ -364,11 +364,11 @@ class _TestPageState extends State<TestPage> {
             builder: (context, constraints) {
               final isMobile = constraints.maxWidth < 800;
 
-              final mediaContent = Center(
-                child: Padding(
-                  padding: EdgeInsets.all(isMobile ? 16 : 32),
-                  child: AspectRatio(
-                    aspectRatio: isMobile ? 1.5 : 4 / 3,
+              final mediaContent = Expanded(
+                flex: 3,
+                child: Center(
+                  child: Padding(
+                    padding: EdgeInsets.all(isMobile ? 12 : 32),
                     child: Card(
                       elevation: 8,
                       clipBehavior: Clip.antiAlias,
@@ -399,29 +399,30 @@ class _TestPageState extends State<TestPage> {
               );
 
               final sidebarContent = Container(
-                padding: EdgeInsets.all(isMobile ? 24 : 32),
+                padding: EdgeInsets.all(isMobile ? 20 : 32),
                 color: Theme.of(context).colorScheme.surface,
                 child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     LinearProgressIndicator(
                       value: progressValue,
-                      minHeight: 8,
+                      minHeight: 6,
                       borderRadius: BorderRadius.circular(4),
                       color: headerColor,
                     ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 16),
                     Text(
                       _currentCard.getPrompt(lang).isNotEmpty
                           ? _currentCard.getPrompt(lang)
                           : context.t('select_an_answer'),
                       style: TextStyle(
-                        fontSize: isMobile ? 22 : 28,
+                        fontSize: isMobile ? 20 : 28,
                         fontWeight: FontWeight.bold,
                         color: headerColor,
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 16),
                     if (isMobile)
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -518,7 +519,7 @@ class _TestPageState extends State<TestPage> {
                             icon: const Icon(Icons.arrow_forward),
                             label: Text(context.t('next')),
                             style: ElevatedButton.styleFrom(
-                              minimumSize: Size.fromHeight(isMobile ? 60 : 70),
+                              minimumSize: Size.fromHeight(isMobile ? 55 : 70),
                               backgroundColor: headerColor,
                               foregroundColor: Colors.white,
                             ),
@@ -541,7 +542,7 @@ class _TestPageState extends State<TestPage> {
                             size: 32,
                           ),
                           style: IconButton.styleFrom(
-                            minimumSize: Size(isMobile ? 60 : 70, isMobile ? 60 : 70),
+                            minimumSize: Size(isMobile ? 55 : 70, isMobile ? 55 : 70),
                           ),
                         ),
                       ],
@@ -551,10 +552,8 @@ class _TestPageState extends State<TestPage> {
               );
 
               if (isMobile) {
-                return SingleChildScrollView(
-                  child: Column(
-                    children: [mediaContent, sidebarContent],
-                  ),
+                return Column(
+                  children: [mediaContent, sidebarContent],
                 );
               }
 
