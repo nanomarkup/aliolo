@@ -88,12 +88,21 @@ class _CustomLicensesPageState extends State<CustomLicensesPage> {
     setState(() => _isLoading = false);
   }
 
-  void _onPackageSelected(GroupedLicense license) {
+  void _onPackageSelected(GroupedLicense license, bool isMobile) {
     setState(() {
       _selectedLicense = license;
     });
-    if (_scrollController.hasClients) {
-      _scrollController.jumpTo(0);
+    if (isMobile) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => LicenseDetailScreen(license: license),
+        ),
+      );
+    } else {
+      if (_scrollController.hasClients) {
+        _scrollController.jumpTo(0);
+      }
     }
   }
 
@@ -110,264 +119,174 @@ class _CustomLicensesPageState extends State<CustomLicensesPage> {
               const Positioned.fill(
                 child: DragToMoveArea(child: SizedBox.expand()),
               ),
-              Column(
-                children: [
-                  const SizedBox(height: 12),
-                  Row(
+              LayoutBuilder(
+                builder: (context, constraints) {
+                  final isMobile = constraints.maxWidth < 600;
+
+                  return Column(
                     children: [
-                      const SizedBox(width: 24),
-                      Text(
-                        context.t('licenses'),
-                        style: const TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const Spacer(),
-                      // Back Button styled like Close button
-                      IconButton(
-                        icon: const Icon(Icons.arrow_back),
-                        iconSize: 28,
-                        color: currentPrimaryColor,
-                        onPressed: () => Navigator.pop(context),
-                        tooltip: context.t('back'),
-                      ),
-                      if (!kIsWeb)
-                        Padding(
-                          padding: const EdgeInsets.only(right: 12.0),
-                          child: WindowControls(
-                            onlyClose: true,
-                            showSeparator: false,
-                            color: currentPrimaryColor,
-                            iconSize: 28,
-                            padding: false,
+                      const SizedBox(height: 12),
+                      Row(
+                        children: [
+                          const SizedBox(width: 24),
+                          Text(
+                            context.t('licenses'),
+                            style: const TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                    ],
-                  ),
-                  const Divider(),
-                  Expanded(
-                    child:
-                        _isLoading
+                          const Spacer(),
+                          // Back Button styled like Close button
+                          IconButton(
+                            icon: const Icon(Icons.arrow_back),
+                            iconSize: 28,
+                            color: currentPrimaryColor,
+                            onPressed: () => Navigator.pop(context),
+                            tooltip: context.t('back'),
+                          ),
+                          if (!kIsWeb)
+                            Padding(
+                              padding: const EdgeInsets.only(right: 12.0),
+                              child: WindowControls(
+                                onlyClose: true,
+                                showSeparator: false,
+                                color: currentPrimaryColor,
+                                iconSize: 28,
+                                padding: false,
+                              ),
+                            ),
+                        ],
+                      ),
+                      const Divider(),
+                      Expanded(
+                        child: _isLoading
                             ? const Center(child: CircularProgressIndicator())
-                            : Center(
-                              child: ConstrainedBox(
-                                constraints: const BoxConstraints(
-                                  maxWidth: 900,
-                                ),
-                                child: Row(
-                                  children: [
-                                    // Master List
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                        bottom: 20.0,
+                            : isMobile
+                                ? ListView.builder(
+                                    itemCount: _groupedLicenses.length,
+                                    itemBuilder: (context, index) {
+                                      final license = _groupedLicenses[index];
+                                      return ListTile(
+                                        title: Text(
+                                          license.name,
+                                          style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: license.isAliolo
+                                                ? FontWeight.bold
+                                                : FontWeight.normal,
+                                            color: license.isAliolo
+                                                ? Colors.orange
+                                                : null,
+                                          ),
+                                        ),
+                                        trailing: const Icon(Icons.chevron_right),
+                                        onTap: () => _onPackageSelected(license, true),
+                                      );
+                                    },
+                                  )
+                                : Center(
+                                    child: ConstrainedBox(
+                                      constraints: const BoxConstraints(
+                                        maxWidth: 900,
                                       ),
-                                      child: SizedBox(
-                                        width: 250,
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            border: Border(
-                                              right: BorderSide(
-                                                color:
-                                                    Theme.of(
-                                                      context,
-                                                    ).dividerColor,
+                                      child: Row(
+                                        children: [
+                                          // Master List
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                              bottom: 20.0,
+                                            ),
+                                            child: SizedBox(
+                                              width: 250,
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  border: Border(
+                                                    right: BorderSide(
+                                                      color: Theme.of(context)
+                                                          .dividerColor,
+                                                    ),
+                                                  ),
+                                                ),
+                                                child: ListView.builder(
+                                                  itemCount:
+                                                      _groupedLicenses.length,
+                                                  itemBuilder: (context, index) {
+                                                    final license =
+                                                        _groupedLicenses[index];
+                                                    final isSelected =
+                                                        _selectedLicense ==
+                                                            license;
+
+                                                    return ListTile(
+                                                      selected: isSelected,
+                                                      selectedTileColor: Theme.of(
+                                                              context,
+                                                            )
+                                                          .colorScheme
+                                                          .primaryContainer
+                                                          .withValues(
+                                                              alpha: 0.3),
+                                                      title: Text(
+                                                        license.name,
+                                                        style: TextStyle(
+                                                          fontSize: 13,
+                                                          fontWeight:
+                                                              license.isAliolo
+                                                                  ? FontWeight
+                                                                      .bold
+                                                                  : FontWeight
+                                                                      .normal,
+                                                          color:
+                                                              license.isAliolo
+                                                                  ? Colors
+                                                                      .orange
+                                                                  : null,
+                                                        ),
+                                                        maxLines: 1,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                      ),
+                                                      onTap: () =>
+                                                          _onPackageSelected(
+                                                              license, false),
+                                                    );
+                                                  },
+                                                ),
                                               ),
                                             ),
                                           ),
-                                          child: ListView.builder(
-                                            itemCount: _groupedLicenses.length,
-                                            itemBuilder: (context, index) {
-                                              final license =
-                                                  _groupedLicenses[index];
-                                              final isSelected =
-                                                  _selectedLicense == license;
-
-                                              return ListTile(
-                                                selected: isSelected,
-                                                selectedTileColor: Theme.of(
-                                                      context,
-                                                    )
-                                                    .colorScheme
-                                                    .primaryContainer
-                                                    .withValues(alpha: 0.3),
-                                                title: Text(
-                                                  license.name,
-                                                  style: TextStyle(
-                                                    fontSize: 13,
-                                                    fontWeight:
-                                                        license.isAliolo
-                                                            ? FontWeight.bold
-                                                            : FontWeight.normal,
-                                                    color:
-                                                        license.isAliolo
-                                                            ? Colors.orange
-                                                            : null,
-                                                  ),
-                                                  maxLines: 1,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                ),
-                                                onTap:
-                                                    () => _onPackageSelected(
-                                                      license,
-                                                    ),
-                                              );
-                                            },
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    // Detail Content
-                                    Expanded(
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                          right: 0.0,
-                                          bottom: 20.0,
-                                          top: 0.0,
-                                        ),
-                                        child:
-                                            _selectedLicense == null
-                                                ? Center(
-                                                  child: Text(
-                                                    context.t(
-                                                      'select_package_license',
-                                                    ),
-                                                  ),
-                                                )
-                                                : Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                            left: 24.0,
-                                                            right: 24.0,
-                                                            bottom: 16.0,
-                                                          ),
+                                          // Detail Content
+                                          Expanded(
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                right: 0.0,
+                                                bottom: 20.0,
+                                                top: 0.0,
+                                              ),
+                                              child: _selectedLicense == null
+                                                  ? Center(
                                                       child: Text(
-                                                        _selectedLicense!.name,
-                                                        style: const TextStyle(
-                                                          fontSize: 20,
-                                                          fontWeight:
-                                                              FontWeight.bold,
+                                                        context.t(
+                                                          'select_package_license',
                                                         ),
                                                       ),
+                                                    )
+                                                  : LicenseDetailView(
+                                                      license: _selectedLicense!,
+                                                      scrollController:
+                                                          _scrollController,
                                                     ),
-                                                    const Divider(thickness: 1),
-                                                    Expanded(
-                                                      child: SingleChildScrollView(
-                                                        controller:
-                                                            _scrollController,
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets.symmetric(
-                                                                horizontal:
-                                                                    24.0,
-                                                                vertical: 12.0,
-                                                              ),
-                                                          child: Column(
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            children: [
-                                                              for (
-                                                                int i = 0;
-                                                                i <
-                                                                    _selectedLicense!
-                                                                        .licenseSections
-                                                                        .length;
-                                                                i++
-                                                              ) ...[
-                                                                if (i > 0) ...[
-                                                                  const SizedBox(
-                                                                    height: 32,
-                                                                  ),
-                                                                  Row(
-                                                                    children: [
-                                                                      Expanded(
-                                                                        child: Divider(
-                                                                          color: Colors.grey.withValues(
-                                                                            alpha:
-                                                                                0.5,
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                      const Padding(
-                                                                        padding: EdgeInsets.symmetric(
-                                                                          horizontal:
-                                                                              16.0,
-                                                                        ),
-                                                                        child: Text(
-                                                                          'ADDITIONAL LICENSE',
-                                                                          style: TextStyle(
-                                                                            fontSize:
-                                                                                10,
-                                                                            fontWeight:
-                                                                                FontWeight.bold,
-                                                                            color:
-                                                                                Colors.grey,
-                                                                            letterSpacing:
-                                                                                1.2,
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                      Expanded(
-                                                                        child: Divider(
-                                                                          color: Colors.grey.withValues(
-                                                                            alpha:
-                                                                                0.5,
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                  const SizedBox(
-                                                                    height: 32,
-                                                                  ),
-                                                                ],
-                                                                ..._selectedLicense!.licenseSections[i].map((
-                                                                  p,
-                                                                ) {
-                                                                  return Padding(
-                                                                    padding:
-                                                                        const EdgeInsets.only(
-                                                                          bottom:
-                                                                              12.0,
-                                                                        ),
-                                                                    child: Text(
-                                                                      p.text,
-                                                                      style: const TextStyle(
-                                                                        fontSize:
-                                                                            12,
-                                                                        height:
-                                                                            1.4,
-                                                                        fontFamily:
-                                                                            'monospace',
-                                                                      ),
-                                                                    ),
-                                                                  );
-                                                                }),
-                                                              ],
-                                                              const SizedBox(
-                                                                height: 40,
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                  ),
-                ],
+                                  ),
+                      ),
+                    ],
+                  );
+                },
               ),
             ],
           ),
@@ -376,3 +295,131 @@ class _CustomLicensesPageState extends State<CustomLicensesPage> {
     );
   }
 }
+
+class LicenseDetailScreen extends StatelessWidget {
+  final GroupedLicense license;
+  const LicenseDetailScreen({super.key, required this.license});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(license.name, style: const TextStyle(fontSize: 16)),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        foregroundColor: Colors.orange,
+      ),
+      body: LicenseDetailView(license: license),
+    );
+  }
+}
+
+class LicenseDetailView extends StatelessWidget {
+  final GroupedLicense license;
+  final ScrollController? scrollController;
+
+  const LicenseDetailView({
+    super.key,
+    required this.license,
+    this.scrollController,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (scrollController == null) // In mobile screen, title is in AppBar
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
+            child: Text(
+              license.name,
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          )
+        else
+          Padding(
+            padding: const EdgeInsets.only(
+              left: 24.0,
+              right: 24.0,
+              bottom: 16.0,
+            ),
+            child: Text(
+              license.name,
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        const Divider(thickness: 1),
+        Expanded(
+          child: SingleChildScrollView(
+            controller: scrollController,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 24.0,
+                vertical: 12.0,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  for (int i = 0; i < license.licenseSections.length; i++) ...[
+                    if (i > 0) ...[
+                      const SizedBox(height: 32),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Divider(
+                              color: Colors.grey.withValues(alpha: 0.5),
+                            ),
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 16.0),
+                            child: Text(
+                              'ADDITIONAL LICENSE',
+                              style: TextStyle(
+                                fontSize: 10,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey,
+                                letterSpacing: 1.2,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Divider(
+                              color: Colors.grey.withValues(alpha: 0.5),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 32),
+                    ],
+                    ...license.licenseSections[i].map((p) {
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 12.0),
+                        child: Text(
+                          p.text,
+                          style: const TextStyle(
+                            fontSize: 12,
+                            height: 1.4,
+                            fontFamily: 'monospace',
+                          ),
+                        ),
+                      );
+                    }),
+                  ],
+                  const SizedBox(height: 40),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
