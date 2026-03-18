@@ -502,30 +502,32 @@ class _ProfilePageState extends State<ProfilePage> {
     BuildContext context,
     String value,
     String label, {
+    required IconData icon,
+    required Color color,
     bool horizontal = false,
   }) {
-    if (horizontal) {
-      return Row(
+    return Padding(
+      padding: const EdgeInsets.only(right: 16, bottom: 8),
+      child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
+          Icon(icon, size: 20, color: color),
+          const SizedBox(width: 8),
           Text(
             value,
             style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
-          const SizedBox(width: 8),
-          Text(label, style: const TextStyle(fontSize: 14, color: Colors.grey)),
+          const SizedBox(width: 6),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 14,
+              color: Colors.grey[600],
+              fontWeight: FontWeight.w500,
+            ),
+          ),
         ],
-      );
-    }
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          value,
-          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-        ),
-        Text(label, style: const TextStyle(fontSize: 14, color: Colors.grey)),
-      ],
+      ),
     );
   }
 
@@ -534,28 +536,55 @@ class _ProfilePageState extends State<ProfilePage> {
       onTap: _pickImage,
       child: Stack(
         children: [
-          CircleAvatar(
-            radius: radius,
-            backgroundColor: color.withValues(alpha: 0.1),
-            backgroundImage:
-                user.avatarPath != null
-                    ? (user.avatarPath!.startsWith('http') || kIsWeb
-                            ? NetworkImage(user.avatarPath!)
-                            : FileImage(dynamicFile(user.avatarPath!)))
-                        as ImageProvider
-                    : null,
-            child:
-                user.avatarPath == null
-                    ? Icon(Icons.person, size: radius, color: color)
-                    : null,
+          Container(
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(color: color.withValues(alpha: 0.2), width: 4),
+              boxShadow: [
+                BoxShadow(
+                  color: color.withValues(alpha: 0.1),
+                  blurRadius: 12,
+                  spreadRadius: 2,
+                ),
+              ],
+            ),
+            child: CircleAvatar(
+              radius: radius,
+              backgroundColor: color.withValues(alpha: 0.1),
+              backgroundImage:
+                  user.avatarPath != null
+                      ? (user.avatarPath!.startsWith('http') || kIsWeb
+                              ? NetworkImage(user.avatarPath!)
+                              : FileImage(dynamicFile(user.avatarPath!)))
+                          as ImageProvider
+                      : null,
+              child:
+                  user.avatarPath == null
+                      ? Icon(Icons.person, size: radius, color: color)
+                      : null,
+            ),
           ),
           Positioned(
-            bottom: 0,
-            right: 0,
-            child: CircleAvatar(
-              radius: radius * 0.3,
-              backgroundColor: color,
-              child: Icon(Icons.camera_alt, size: radius * 0.3, color: Colors.white),
+            bottom: 4,
+            right: 4,
+            child: Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: color,
+                shape: BoxShape.circle,
+                border: Border.all(color: Colors.white, width: 3),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.2),
+                    blurRadius: 4,
+                  ),
+                ],
+              ),
+              child: Icon(
+                Icons.camera_alt,
+                size: radius * 0.25,
+                color: Colors.white,
+              ),
             ),
           ),
         ],
@@ -651,125 +680,90 @@ class _ProfilePageState extends State<ProfilePage> {
         padding: const EdgeInsets.all(32),
         child: LayoutBuilder(
           builder: (context, constraints) {
-            final isMobile = constraints.maxWidth < 550;
+            final isSmall = constraints.maxWidth < 600;
+            final avatarRadius = isSmall ? 35.0 : 60.0;
+            final spacing = isSmall ? 16.0 : 24.0;
+            final nameSize = isSmall ? 20.0 : 26.0;
+            final emailSize = isSmall ? 14.0 : 16.0;
 
-            if (isMobile) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          user.username,
-                          style: const TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      IconButton(
-                        icon: const Icon(Icons.edit, size: 20),
-                        onPressed: () => _showEditUsernameDialog(user.username),
-                      ),
-                    ],
-                  ),
-                  Text(
-                    user.email,
-                    style: TextStyle(fontSize: 16, color: Colors.grey[600]),
-                  ),
-                  const SizedBox(height: 24),
-                  Row(
-                    children: [
-                      _buildAvatar(user, currentSessionColor, radius: 45),
-                      const SizedBox(width: 24),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            _buildStat(
-                              context,
-                              '${user.totalXp}',
-                              context.t('xp'),
-                              horizontal: true,
-                            ),
-                            const SizedBox(height: 8),
-                            _buildStat(
-                              context,
-                              '${user.currentStreak}',
-                              context.t('streak'),
-                              horizontal: true,
-                            ),
-                            const SizedBox(height: 8),
-                            _buildStat(
-                              context,
-                              '${user.maxStreak}',
-                              context.t('max_streak'),
-                              horizontal: true,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              );
-            }
-
-            return Row(
+            return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildAvatar(user, currentSessionColor, radius: 100),
-                const SizedBox(width: 48),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
+                // Top Row: Avatar on Left, Name/Email on Right
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildAvatar(user, currentSessionColor, radius: avatarRadius),
+                    SizedBox(width: spacing),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            user.username,
-                            style: const TextStyle(
-                              fontSize: 36,
-                              fontWeight: FontWeight.bold,
-                            ),
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Flexible(
+                                child: Text(
+                                  user.username,
+                                  style: TextStyle(
+                                    fontSize: nameSize,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              const SizedBox(width: 8),
+                              IconButton(
+                                icon: Icon(Icons.edit, size: isSmall ? 18 : 20),
+                                onPressed:
+                                    () => _showEditUsernameDialog(user.username),
+                                padding: EdgeInsets.zero,
+                                constraints: const BoxConstraints(),
+                              ),
+                            ],
                           ),
-                          const SizedBox(width: 12),
-                          IconButton(
-                            icon: const Icon(Icons.edit, size: 24),
-                            onPressed:
-                                () => _showEditUsernameDialog(user.username),
+                          const SizedBox(height: 4), // Unified vertical gap
+                          Text(
+                            user.email,
+                            style: TextStyle(
+                              fontSize: emailSize,
+                              color: Colors.grey[600],
+                            ),
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ],
                       ),
-                      Text(
-                        user.email,
-                        style: TextStyle(fontSize: 20, color: Colors.grey[600]),
-                      ),
-                      const SizedBox(height: 24),
-                      _buildStat(
-                        context,
-                        '${user.totalXp}',
-                        context.t('xp'),
-                        horizontal: true,
-                      ),
-                      const SizedBox(height: 8),
-                      _buildStat(
-                        context,
-                        '${user.currentStreak}',
-                        context.t('streak'),
-                        horizontal: true,
-                      ),
-                      const SizedBox(height: 8),
-                      _buildStat(
-                        context,
-                        '${user.maxStreak}',
-                        context.t('max_streak'),
-                        horizontal: true,
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 24),
+                // Bottom Area: Stats in a row (Wrap for floating)
+                Wrap(
+                  spacing: 16,
+                  runSpacing: 12,
+                  children: [
+                    _buildStat(
+                      context,
+                      '${user.totalXp}',
+                      context.t('xp'),
+                      icon: Icons.stars,
+                      color: Colors.orange,
+                    ),
+                    _buildStat(
+                      context,
+                      '${user.currentStreak}',
+                      context.t('streak'),
+                      icon: Icons.local_fire_department,
+                      color: Colors.red,
+                    ),
+                    _buildStat(
+                      context,
+                      '${user.maxStreak}',
+                      context.t('max_streak'),
+                      icon: Icons.emoji_events,
+                      color: Colors.amber,
+                    ),
+                  ],
                 ),
               ],
             );

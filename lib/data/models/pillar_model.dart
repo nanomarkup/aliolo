@@ -1,30 +1,60 @@
+import 'package:aliolo/data/services/translation_service.dart';
 import 'package:flutter/material.dart';
+
+class LocalizedPillarData {
+  final String? name;
+  final String? description;
+
+  LocalizedPillarData({this.name, this.description});
+
+  factory LocalizedPillarData.fromJson(Map<String, dynamic> json) {
+    return LocalizedPillarData(
+      name: json['name'],
+      description: json['description'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      if (name != null) 'name': name,
+      if (description != null) 'description': description,
+    };
+  }
+}
 
 class Pillar {
   final int id;
-  final String name;
-  final Map<String, String> translations;
-  final Map<String, String> descriptions;
   final String icon;
   final String color;
+  final int sortOrder;
+
+  /// Map of language code to its specific data.
+  /// Key 'global' is used for primary fallback.
+  final Map<String, LocalizedPillarData> localizedData;
 
   const Pillar({
     required this.id,
-    required this.name,
-    required this.translations,
-    required this.descriptions,
     required this.icon,
     required this.color,
+    this.sortOrder = 0,
+    this.localizedData = const {},
   });
 
   factory Pillar.fromJson(Map<String, dynamic> json) {
+    final Map<String, dynamic> locMap = json['localized_data'] ?? {};
+    final localized = locMap.map(
+      (key, value) => MapEntry(
+        key.toLowerCase(),
+        LocalizedPillarData.fromJson(value as Map<String, dynamic>),
+      ),
+    );
+
     return Pillar(
       id: (json['id'] as num).toInt(),
-      name: json['name'] ?? '',
-      translations: Map<String, String>.from(json['translations'] ?? {}),
-      descriptions: Map<String, String>.from(json['descriptions'] ?? {}),
       icon: json['icon'] ?? 'category',
       color: json['color'] ?? '#9E9E9E',
+      sortOrder: (json['sort_order'] as num? ?? 0).toInt(),
+      localizedData: localized,
     );
   }
 
@@ -38,29 +68,64 @@ class Pillar {
         return Icons.engineering;
       case 'accessibility':
         return Icons.accessibility;
+      case 'human_body':
+        return Icons.accessibility;
       case 'menu_book':
+        return Icons.menu_book;
+      case 'humanities':
         return Icons.menu_book;
       case 'sports_esports':
         return Icons.sports_esports;
+      case 'leisure':
+        return Icons.sports_esports;
       case 'eco':
+        return Icons.eco;
+      case 'nature':
         return Icons.eco;
       case 'school':
         return Icons.school;
+      case 'stem':
+        return Icons.school;
       case 'public':
+        return Icons.public;
+      case 'world':
         return Icons.public;
       case 'category':
         return Icons.category;
+      case 'languages':
+        return Icons.translate;
       default:
         return Icons.category;
     }
   }
 
+  /// Helper to get an attribute with smart inheritance
+  T? _getInherited<T>(String lang, T? Function(LocalizedPillarData) getter) {
+    final lc = lang.toLowerCase();
+    // 1. Try requested language
+    if (localizedData.containsKey(lc)) {
+      final val = getter(localizedData[lc]!);
+      if (val != null && val.toString().isNotEmpty) return val;
+    }
+    // 2. Try 'global'
+    if (localizedData.containsKey('global')) {
+      final val = getter(localizedData['global']!);
+      if (val != null && val.toString().isNotEmpty) return val;
+    }
+    // 3. Try 'en'
+    if (localizedData.containsKey('en')) {
+      final val = getter(localizedData['en']!);
+      if (val != null && val.toString().isNotEmpty) return val;
+    }
+    return null;
+  }
+
   String getTranslatedName(String langCode) {
-    return translations[langCode.toLowerCase()] ?? translations['en'] ?? name;
+    return _getInherited(langCode, (d) => d.name) ?? 'Pillar $id';
   }
 
   String getTranslatedDescription(String langCode) {
-    return descriptions[langCode.toLowerCase()] ?? descriptions['en'] ?? '';
+    return _getInherited(langCode, (d) => d.description) ?? '';
   }
 }
 

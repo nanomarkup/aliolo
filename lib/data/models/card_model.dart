@@ -72,7 +72,7 @@ class CardModel {
     final Map<String, dynamic> locMap = json['localized_data'] ?? {};
     final localized = locMap.map(
       (key, value) => MapEntry(
-        key,
+        key.toLowerCase(),
         LocalizedCardData.fromJson(value as Map<String, dynamic>),
       ),
     );

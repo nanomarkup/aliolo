@@ -779,6 +779,22 @@ class _AddCardPageState extends State<AddCardPage> {
   }
 
   Widget _buildSubjectPicker() {
+    // Ensure the current subject ID is in the list to avoid dropdown assertion error
+    final List<DropdownMenuItem<String>> items =
+        _mySubjects
+            .map((s) => DropdownMenuItem(value: s.id, child: Text(s.name)))
+            .toList();
+
+    if (_selectedSubjectId != null &&
+        !_mySubjects.any((s) => s.id == _selectedSubjectId)) {
+      items.add(
+        DropdownMenuItem(
+          value: _selectedSubjectId,
+          child: const Text('Public/Other Subject'),
+        ),
+      );
+    }
+
     return DropdownButtonFormField<String>(
       value: _selectedSubjectId,
       decoration: InputDecoration(
@@ -786,10 +802,7 @@ class _AddCardPageState extends State<AddCardPage> {
         border: const OutlineInputBorder(),
         contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       ),
-      items:
-          _mySubjects
-              .map((s) => DropdownMenuItem(value: s.id, child: Text(s.name)))
-              .toList(),
+      items: items,
       onChanged:
           widget.isReadOnly
               ? null
@@ -817,6 +830,10 @@ class _AddCardPageState extends State<AddCardPage> {
         DropdownMenuItem(
           value: 'audio_to_image',
           child: Text(context.t('mode_audio_to_image')),
+        ),
+        DropdownMenuItem(
+          value: 'text_to_text',
+          child: Text(context.t('mode_text_to_text')),
         ),
       ],
       onChanged:

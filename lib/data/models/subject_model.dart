@@ -135,7 +135,7 @@ class SubjectModel {
     final Map<String, dynamic> locMap = json['localized_data'] ?? {};
     Map<String, LocalizedSubjectData> localized = locMap.map(
       (key, value) => MapEntry(
-        key,
+        key.toLowerCase(),
         LocalizedSubjectData.fromJson(value as Map<String, dynamic>),
       ),
     );

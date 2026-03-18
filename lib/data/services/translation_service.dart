@@ -19,29 +19,16 @@ class TranslationService extends ChangeNotifier {
   Locale get currentLocale => _currentLocale;
 
   Map<String, String> _translations = {};
-  List<String> _availableUILanguages = [
-    'en',
-    'uk',
-    'es',
-    'fr',
-    'de',
-    'it',
-    'pt',
-    'pl',
-    'nl',
-    'tr',
-    'vi',
-    'tl',
-    'id',
-    'el',
-    'ar',
-    'hi',
-    'zh',
-    'ja',
-    'ko',
+  
+  // Hardcoded fallback list
+  static const List<String> _fallbackUILanguages = [
+    'ar', 'bg', 'cs', 'da', 'de', 'el', 'en', 'es', 'et', 'fi', 'fr', 'ga', 'hi', 'hr', 'hu', 'id', 'it', 'ja', 'ko', 'lt', 'lv', 'mt', 'nl', 'pl', 'pt', 'ro', 'sk', 'sl', 'sv', 'tl', 'tr', 'uk', 'vi', 'zh'
   ];
 
+  List<String> _availableUILanguages = List.from(_fallbackUILanguages);
   List<String> get availableUILanguages => _availableUILanguages;
+
+  final Map<String, String> _languageNames = {};
 
   dynamic _langDir;
 
@@ -63,6 +50,9 @@ class TranslationService extends ChangeNotifier {
       }
     }
 
+    // 1. Fetch languages from DB
+    await fetchAvailableLanguages();
+
     // Load saved locale or default to system language
     String langCode = 'en';
     if (savedLocale != null) {
@@ -83,6 +73,26 @@ class TranslationService extends ChangeNotifier {
     }
 
     await loadTranslations(langCode);
+  }
+
+  Future<void> fetchAvailableLanguages() async {
+    try {
+      final List<dynamic> data = await _supabase
+          .from('languages')
+          .select('id, name')
+          .order('name');
+      
+      if (data.isNotEmpty) {
+        _availableUILanguages = data.map((e) => e['id'].toString()).toList();
+        for (var lang in data) {
+          _languageNames[lang['id'].toString()] = lang['name'].toString();
+        }
+        notifyListeners();
+      }
+    } catch (e) {
+      print('Translation: Failed to fetch languages from DB: $e');
+      // Fallback names for getLanguageName logic if DB fails
+    }
   }
 
   Future<void> loadTranslations(String langCode) async {
@@ -209,25 +219,31 @@ class TranslationService extends ChangeNotifier {
   }
 
   String translate(String key, {Map<String, String>? args}) {
-    String text = _translations[key] ?? key;
+    String value = _translations[key] ?? key;
     if (args != null) {
       args.forEach((k, v) {
-        text = text.replaceAll('{$k}', v);
+        value = value.replaceAll('{$k}', v);
       });
     }
-    return text;
+    return value;
+  }
+
+  /// Translates a key into a specific language code.
+  String translateInLanguage(String key, String langCode) {
+    if (langCode.toLowerCase() == _currentLocale.languageCode.toLowerCase()) {
+      return translate(key);
+    }
+    return key;
   }
 
   final Map<String, Map<String, String>> _languageMaps = {};
 
   Future<String> translateForLanguage(String key, String langCode) async {
     if (!_languageMaps.containsKey(langCode)) {
-      // Try DB first
       final dbData = await _fetchFromDb(langCode);
       if (dbData.isNotEmpty) {
         _languageMaps[langCode] = dbData;
       } else {
-        // Fallback to assets
         try {
           const String assetsPrefix = 'assets/lang/';
           final String jsonString = await rootBundle.loadString(
@@ -245,47 +261,46 @@ class TranslationService extends ChangeNotifier {
   }
 
   String getLanguageName(String code) {
-    switch (code.toLowerCase()) {
-      case 'en':
-        return 'English';
-      case 'uk':
-        return 'Українська';
-      case 'es':
-        return 'Español';
-      case 'fr':
-        return 'Français';
-      case 'de':
-        return 'Deutsch';
-      case 'it':
-        return 'Italiano';
-      case 'pt':
-        return 'Português';
-      case 'pl':
-        return 'Polski';
-      case 'nl':
-        return 'Nederlands';
-      case 'tr':
-        return 'Türkçe';
-      case 'vi':
-        return 'Tiếng Việt';
-      case 'tl':
-        return 'Tagalog';
-      case 'id':
-        return 'Bahasa Indonesia';
-      case 'el':
-        return 'Ελληνικά';
-      case 'ar':
-        return 'العربية';
-      case 'hi':
-        return 'हिन्दी';
-      case 'bn':
-        return 'বাংলা';
-      case 'zh':
-        return '中文';
-      case 'ja':
-        return '日本語';
-      case 'ko':
-        return '한국어';
+    final lc = code.toLowerCase();
+    if (_languageNames.containsKey(lc)) {
+      return _languageNames[lc]!;
+    }
+
+    switch (lc) {
+      case 'en': return 'English';
+      case 'uk': return 'Українська';
+      case 'es': return 'Español';
+      case 'fr': return 'Français';
+      case 'de': return 'Deutsch';
+      case 'it': return 'Italiano';
+      case 'pt': return 'Português';
+      case 'pl': return 'Polski';
+      case 'nl': return 'Nederlands';
+      case 'tr': return 'Türkçe';
+      case 'vi': return 'Tiếng Việt';
+      case 'tl': return 'Tagalog';
+      case 'id': return 'Bahasa Indonesia';
+      case 'el': return 'Ελληνικά';
+      case 'ar': return 'العربية';
+      case 'hi': return 'हिन्दी';
+      case 'zh': return '中文';
+      case 'ja': return '日本語';
+      case 'ko': return '한국어';
+      case 'bg': return 'Български';
+      case 'hr': return 'Hrvatski';
+      case 'cs': return 'Čeština';
+      case 'da': return 'Dansk';
+      case 'et': return 'Eesti';
+      case 'fi': return 'Suomi';
+      case 'hu': return 'Magyar';
+      case 'ga': return 'Gaeilge';
+      case 'lv': return 'Latviešu';
+      case 'lt': return 'Lietuvių';
+      case 'mt': return 'Malti';
+      case 'ro': return 'Română';
+      case 'sk': return 'Slovenčina';
+      case 'sl': return 'Slovenščina';
+      case 'sv': return 'Svenska';
       default:
         if (code.isEmpty) return code;
         return code[0].toUpperCase() + code.substring(1);

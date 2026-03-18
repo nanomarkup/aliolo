@@ -171,7 +171,12 @@ class _SubjectPageState extends State<SubjectPage> {
               matchesCollection = s.isPublic;
             }
 
-            return matchesName && matchesAge && matchesCollection;
+            // Ensure subject has data for selected language
+            final hasLang = s.localizedData.containsKey(
+              _currentTestingLang.toLowerCase(),
+            );
+
+            return matchesName && matchesAge && matchesCollection && hasLang;
           }).toList();
 
       // Hardcoded sort by name
@@ -605,6 +610,7 @@ class _SubjectPageState extends State<SubjectPage> {
                       return _PillarGridTile(
                         pillar: pillar,
                         count: pillarSubjects.length,
+                        languageCode: _currentTestingLang,
                         onTap:
                             () => Navigator.push(
                               context,
@@ -750,11 +756,13 @@ class _SubjectListTile extends StatelessWidget {
 class _PillarGridTile extends StatelessWidget {
   final Pillar pillar;
   final int count;
+  final String languageCode;
   final VoidCallback onTap;
 
   const _PillarGridTile({
     required this.pillar,
     required this.count,
+    required this.languageCode,
     required this.onTap,
   });
 
@@ -762,7 +770,6 @@ class _PillarGridTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final pillarColor = pillar.getColor();
     final pillarIcon = pillar.getIconData();
-    final uiLang = TranslationService().currentLocale.languageCode;
 
     return InkWell(
       onTap: () {
@@ -808,7 +815,7 @@ class _PillarGridTile extends StatelessWidget {
                       const SizedBox(width: 12),
                       Expanded(
                         child: Text(
-                          pillar.getTranslatedName(uiLang),
+                          pillar.getTranslatedName(languageCode),
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 24,
@@ -822,7 +829,7 @@ class _PillarGridTile extends StatelessWidget {
                   ),
                   const SizedBox(height: 12),
                   Text(
-                    pillar.getTranslatedDescription(uiLang),
+                    pillar.getTranslatedDescription(languageCode),
                     style: const TextStyle(color: Colors.white, fontSize: 16),
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,

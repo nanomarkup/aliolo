@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class TestingLanguage {
   final String code;
@@ -22,41 +23,48 @@ class TestingLanguageService extends ChangeNotifier {
   factory TestingLanguageService() => _instance;
   TestingLanguageService._internal();
 
-  // Sorted alphabetically by nativeName string values
-  final List<TestingLanguage> allLanguages = const [
-    TestingLanguage(
-      code: 'id',
-      name: 'Indonesian',
-      nativeName: 'Bahasa Indonesia',
-    ),
+  SupabaseClient get _supabase => Supabase.instance.client;
+
+  // Hardcoded fallback list
+  static const List<TestingLanguage> _fallbackLanguages = [
+    TestingLanguage(code: 'id', name: 'Indonesian', nativeName: 'Bahasa Indonesia'),
+    TestingLanguage(code: 'bg', name: 'Bulgarian', nativeName: 'Български'),
+    TestingLanguage(code: 'cs', name: 'Czech', nativeName: 'Čeština'),
+    TestingLanguage(code: 'da', name: 'Danish', nativeName: 'Dansk'),
     TestingLanguage(code: 'de', name: 'German', nativeName: 'Deutsch'),
+    TestingLanguage(code: 'et', name: 'Estonian', nativeName: 'Eesti'),
     TestingLanguage(code: 'en', name: 'English', nativeName: 'English'),
     TestingLanguage(code: 'es', name: 'Spanish', nativeName: 'Español'),
-    TestingLanguage(code: 'fa', name: 'Persian', nativeName: 'Farsi'),
     TestingLanguage(code: 'fr', name: 'French', nativeName: 'Français'),
+    TestingLanguage(code: 'ga', name: 'Irish', nativeName: 'Gaeilge'),
+    TestingLanguage(code: 'hr', name: 'Croatian', nativeName: 'Hrvatski'),
     TestingLanguage(code: 'it', name: 'Italian', nativeName: 'Italiano'),
-    TestingLanguage(code: 'sw', name: 'Swahili', nativeName: 'Kiswahili'),
+    TestingLanguage(code: 'lv', name: 'Latvian', nativeName: 'Latviešu'),
+    TestingLanguage(code: 'lt', name: 'Lithuanian', nativeName: 'Lietuvių'),
+    TestingLanguage(code: 'hu', name: 'Hungarian', nativeName: 'Magyar'),
+    TestingLanguage(code: 'mt', name: 'Maltese', nativeName: 'Malti'),
     TestingLanguage(code: 'nl', name: 'Dutch', nativeName: 'Nederlands'),
     TestingLanguage(code: 'pl', name: 'Polish', nativeName: 'Polski'),
     TestingLanguage(code: 'pt', name: 'Portuguese', nativeName: 'Português'),
+    TestingLanguage(code: 'ro', name: 'Romanian', nativeName: 'Română'),
+    TestingLanguage(code: 'sk', name: 'Slovak', nativeName: 'Slovenčina'),
+    TestingLanguage(code: 'sl', name: 'Slovenščina', nativeName: 'Slovenščina'),
+    TestingLanguage(code: 'fi', name: 'Finnish', nativeName: 'Suomi'),
+    TestingLanguage(code: 'sv', name: 'Swedish', nativeName: 'Svenska'),
     TestingLanguage(code: 'tl', name: 'Tagalog', nativeName: 'Tagalog'),
     TestingLanguage(code: 'vi', name: 'Vietnamese', nativeName: 'Tiếng Việt'),
     TestingLanguage(code: 'tr', name: 'Turkish', nativeName: 'Türkçe'),
     TestingLanguage(code: 'el', name: 'Greek', nativeName: 'Ελληνικά'),
     TestingLanguage(code: 'uk', name: 'Ukrainian', nativeName: 'Українська'),
     TestingLanguage(code: 'ar', name: 'Arabic', nativeName: 'العربية'),
-    TestingLanguage(code: 'ur', name: 'Urdu', nativeName: 'اردو'),
-    TestingLanguage(code: 'bn', name: 'Bengali', nativeName: 'বাংলা'),
-    TestingLanguage(code: 'pa', name: 'Punjabi', nativeName: 'ਪੰਜਾਬੀ'),
     TestingLanguage(code: 'hi', name: 'Hindi', nativeName: 'हिन्दी'),
-    TestingLanguage(code: 'mr', name: 'Marathi', nativeName: 'мраठी'),
-    TestingLanguage(code: 'te', name: 'Telugu', nativeName: 'తెలుగు'),
-    TestingLanguage(code: 'ta', name: 'Tamil', nativeName: 'தமிழ்'),
-    TestingLanguage(code: 'th', name: 'Thai', nativeName: 'ไทย'),
     TestingLanguage(code: 'zh', name: 'Chinese', nativeName: '中文'),
     TestingLanguage(code: 'ja', name: 'Japanese', nativeName: '日本語'),
     TestingLanguage(code: 'ko', name: 'Korean', nativeName: '한국어'),
   ];
+
+  List<TestingLanguage> _allLanguages = List.from(_fallbackLanguages);
+  List<TestingLanguage> get allLanguages => _allLanguages;
 
   List<String> _activeLanguageCodes = ['en'];
   List<String> get activeLanguageCodes => _activeLanguageCodes;
@@ -64,10 +72,11 @@ class TestingLanguageService extends ChangeNotifier {
   late dynamic _settingsFile;
 
   Future<void> init() async {
-    if (kIsWeb) {
-      // On web, we start with default but addActiveLanguages will work in-memory
-      return;
-    }
+    // 1. Fetch from DB
+    await fetchLanguagesFromDb();
+
+    if (kIsWeb) return;
+    
     final dir = await getApplicationDocumentsDirectory();
     final alioloDir = dynamicDirectory(p.join(dir.path, '.aliolo'));
     if (!await alioloDir.exists()) await alioloDir.create(recursive: true);
@@ -84,6 +93,26 @@ class TestingLanguageService extends ChangeNotifier {
       }
     } else {
       await _save();
+    }
+  }
+
+  Future<void> fetchLanguagesFromDb() async {
+    try {
+      final List<dynamic> data = await _supabase
+          .from('languages')
+          .select('id, name')
+          .order('name');
+      
+      if (data.isNotEmpty) {
+        _allLanguages = data.map((e) => TestingLanguage(
+          code: e['id'].toString(),
+          name: e['name'].toString(), // We use nativeName as primary name in DB
+          nativeName: e['name'].toString(),
+        )).toList();
+        notifyListeners();
+      }
+    } catch (e) {
+      print('TestingLanguageService: DB fetch failed: $e');
     }
   }
 
@@ -131,7 +160,7 @@ class TestingLanguageService extends ChangeNotifier {
 
   String getLanguageName(String code) {
     try {
-      return allLanguages
+      return _allLanguages
           .firstWhere((l) => l.code == code.toLowerCase())
           .nativeName;
     } catch (_) {

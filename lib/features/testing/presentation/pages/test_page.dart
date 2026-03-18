@@ -525,6 +525,27 @@ class _TestPageState extends State<TestPage> {
                             ),
                           ),
                         ),
+                        if (_currentCard.testMode == 'audio_to_text' ||
+                            _currentCard.testMode == 'audio_to_image') ...[
+                          const SizedBox(width: 12),
+                          IconButton.filledTonal(
+                            onPressed: () async {
+                              final url = _currentCard.getAudioUrl(lang);
+                              if (url != null) {
+                                await player.open(Media(url));
+                                player.play();
+                              }
+                            },
+                            icon: const Icon(Icons.volume_up, size: 28),
+                            style: IconButton.styleFrom(
+                              minimumSize: Size(
+                                isMobile ? 55 : 70,
+                                isMobile ? 55 : 70,
+                              ),
+                            ),
+                            tooltip: 'Replay Audio',
+                          ),
+                        ],
                         const SizedBox(width: 12),
                         IconButton.filledTonal(
                           onPressed: () {
@@ -532,7 +553,9 @@ class _TestPageState extends State<TestPage> {
                             _authService.updateAutoPlayPreference(newVal);
                             setState(() {
                               _isAutoPlay = newVal;
-                              if (_isAutoPlay && _isAnswered && !_isAutoPlayWaiting) {
+                              if (_isAutoPlay &&
+                                  _isAnswered &&
+                                  !_isAutoPlayWaiting) {
                                 _scheduleAutoNext();
                               }
                             });
@@ -542,7 +565,10 @@ class _TestPageState extends State<TestPage> {
                             size: 32,
                           ),
                           style: IconButton.styleFrom(
-                            minimumSize: Size(isMobile ? 55 : 70, isMobile ? 55 : 70),
+                            minimumSize: Size(
+                              isMobile ? 55 : 70,
+                              isMobile ? 55 : 70,
+                            ),
                           ),
                         ),
                       ],
