@@ -8,11 +8,14 @@ import 'package:aliolo/data/models/subject_model.dart';
 import 'package:aliolo/data/services/card_service.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
+import 'package:aliolo/data/services/sound_service.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:aliolo/data/models/pillar_model.dart';
 import 'package:aliolo/core/widgets/aliolo_scrollable_page.dart';
 import 'package:flutter/foundation.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:path/path.dart' as p;
 
 class AddCardPage extends StatefulWidget {
   final String? initialSubjectId;
@@ -78,6 +81,7 @@ class _AddCardPageState extends State<AddCardPage> {
   String _selectedLang = 'global';
   int _cardLevel = 1;
   String _testMode = 'image_to_text';
+  int _itemsPerRow = 8;
 
   final Map<String, DraftLocalizedData> _drafts = {
     'global': DraftLocalizedData(),
@@ -85,6 +89,7 @@ class _AddCardPageState extends State<AddCardPage> {
 
   List<SubjectModel> _mySubjects = [];
   String? _selectedSubjectId;
+  final _keyboardFocusNode = FocusNode();
 
   @override
   void initState() {
@@ -94,6 +99,46 @@ class _AddCardPageState extends State<AddCardPage> {
     _initDrafts();
     _loadData();
     _updateControllers();
+  }
+
+  void _onKeyEvent(KeyEvent event) {
+    if (event is! KeyDownEvent) return;
+
+    final availableLangs = [
+      'global',
+      ...TranslationService().availableUILanguages.map((l) => l.toLowerCase()),
+    ];
+    final currentIndex = availableLangs.indexOf(_selectedLang);
+    if (currentIndex == -1) return;
+
+    int? newIndex;
+
+    if (event.logicalKey == LogicalKeyboardKey.arrowRight) {
+      newIndex = (currentIndex + 1) % availableLangs.length;
+    } else if (event.logicalKey == LogicalKeyboardKey.arrowLeft) {
+      newIndex =
+          (currentIndex - 1 + availableLangs.length) % availableLangs.length;
+    } else if (event.logicalKey == LogicalKeyboardKey.arrowDown) {
+      newIndex = currentIndex + _itemsPerRow;
+      if (newIndex >= availableLangs.length) {
+        newIndex = currentIndex % _itemsPerRow;
+      }
+    } else if (event.logicalKey == LogicalKeyboardKey.arrowUp) {
+      newIndex = currentIndex - _itemsPerRow;
+      if (newIndex < 0) {
+        int lastRowStart =
+            ((availableLangs.length - 1) ~/ _itemsPerRow) * _itemsPerRow;
+        newIndex = lastRowStart + currentIndex;
+        if (newIndex >= availableLangs.length) newIndex -= _itemsPerRow;
+      }
+    }
+
+    if (newIndex != null) {
+      setState(() {
+        _selectedLang = availableLangs[newIndex!];
+        _updateControllers();
+      });
+    }
   }
 
   void _initDrafts() {
@@ -123,6 +168,7 @@ class _AddCardPageState extends State<AddCardPage> {
   void dispose() {
     _promptController.dispose();
     _answerController.dispose();
+    _keyboardFocusNode.dispose();
     super.dispose();
   }
 
@@ -214,6 +260,36 @@ class _AddCardPageState extends State<AddCardPage> {
     ScaffoldMessenger.of(
       context,
     ).showSnackBar(SnackBar(content: Text(msg), backgroundColor: Colors.red));
+  }
+
+  Future<void> _playUrl(String? url) async {
+    if (url == null || url.isEmpty) return;
+    
+    // If it's an audio file, use SoundService to play it in-app
+    final lowerUrl = url.toLowerCase();
+    if (lowerUrl.endsWith('.mp3') || lowerUrl.endsWith('.wav') || lowerUrl.endsWith('.m4a')) {
+      await SoundService().playUrl(url);
+      return;
+    }
+
+    final uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
+    } else {
+      _showError('Could not launch $url');
+    }
+  }
+
+  String _getFileName(String? url, XFile? file) {
+    if (file != null) return file.name;
+    if (url != null && url.isNotEmpty) {
+      try {
+        return p.basename(Uri.parse(url).path);
+      } catch (_) {
+        return 'file';
+      }
+    }
+    return '';
   }
 
   void _showJsonDialog() {
@@ -563,34 +639,54 @@ class _AddCardPageState extends State<AddCardPage> {
             },
           ),
       ],
-      fixedBody: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              children: [
-                _buildLangTile(
-                  'global',
-                  'GLB',
-                  Icons.public,
-                  'Global / Fallback',
-                ),
-                ...TranslationService().availableUILanguages.map((lang) {
-                  final code = lang.toLowerCase();
-                  return _buildLangTile(
-                    code,
-                    lang.toUpperCase(),
-                    null,
-                    TranslationService().getLanguageName(code),
-                  );
-                }),
-              ],
-            ),
-            const SizedBox(height: 32),
-          ],
+      fixedBody: KeyboardListener(
+        focusNode: _keyboardFocusNode,
+        autofocus: true,
+        onKeyEvent: _onKeyEvent,
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            // Tile width 54 + spacing 8 = 62. Total padding 16*2 = 32.
+            final availableWidth = constraints.maxWidth - 32;
+            final items = (availableWidth + 8) ~/ 62;
+            _itemsPerRow = items > 0 ? items : 1;
+
+            return Padding(
+              padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: [
+                      _buildLangTile(
+                        'global',
+                        'GLB',
+                        Icons.public,
+                        'Global / Fallback',
+                      ),
+                      ...(() {
+                        final langs = TranslationService()
+                            .availableUILanguages
+                            .map((l) => l.toLowerCase())
+                            .toList();
+                        langs.sort();
+                        return langs.map((code) {
+                          return _buildLangTile(
+                            code,
+                            code.toUpperCase(),
+                            null,
+                            TranslationService().getLanguageName(code),
+                          );
+                        });
+                      })(),
+                    ],
+                  ),
+                  const SizedBox(height: 32),
+                ],
+              ),
+            );
+          },
         ),
       ),
       body: Padding(
@@ -989,20 +1085,31 @@ class _AddCardPageState extends State<AddCardPage> {
       visualDensity: VisualDensity.compact,
       leading: const Icon(Icons.audiotrack, color: Colors.orange, size: 18),
       title: Text(
-        draft.newAudioFile?.name ?? context.t('uploaded_audio'),
+        _getFileName(draft.audioUrl, draft.newAudioFile),
         style: const TextStyle(fontSize: 13),
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
       ),
-      trailing:
-          widget.isReadOnly
-              ? null
-              : IconButton(
-                icon: const Icon(Icons.delete, size: 16),
-                onPressed:
-                    () => setState(() {
-                      draft.audioUrl = null;
-                      draft.newAudioFile = null;
-                    }),
-              ),
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (draft.audioUrl != null)
+            IconButton(
+              icon: const Icon(Icons.play_arrow, size: 18, color: Colors.blue),
+              onPressed: () => _playUrl(draft.audioUrl),
+              tooltip: 'Play',
+            ),
+          if (!widget.isReadOnly)
+            IconButton(
+              icon: const Icon(Icons.delete, size: 16),
+              onPressed:
+                  () => setState(() {
+                    draft.audioUrl = null;
+                    draft.newAudioFile = null;
+                  }),
+            ),
+        ],
+      ),
     );
   }
 
@@ -1023,20 +1130,31 @@ class _AddCardPageState extends State<AddCardPage> {
       visualDensity: VisualDensity.compact,
       leading: const Icon(Icons.videocam, color: Colors.orange, size: 18),
       title: Text(
-        draft.newVideoFile?.name ?? context.t('uploaded_video'),
+        _getFileName(draft.videoUrl, draft.newVideoFile),
         style: const TextStyle(fontSize: 13),
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
       ),
-      trailing:
-          widget.isReadOnly
-              ? null
-              : IconButton(
-                icon: const Icon(Icons.delete, size: 16),
-                onPressed:
-                    () => setState(() {
-                      draft.videoUrl = null;
-                      draft.newVideoFile = null;
-                    }),
-              ),
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (draft.videoUrl != null)
+            IconButton(
+              icon: const Icon(Icons.play_arrow, size: 18, color: Colors.blue),
+              onPressed: () => _playUrl(draft.videoUrl),
+              tooltip: 'Play',
+            ),
+          if (!widget.isReadOnly)
+            IconButton(
+              icon: const Icon(Icons.delete, size: 16),
+              onPressed:
+                  () => setState(() {
+                    draft.videoUrl = null;
+                    draft.newVideoFile = null;
+                  }),
+            ),
+        ],
+      ),
     );
   }
 }

@@ -20,9 +20,9 @@ class TranslationService extends ChangeNotifier {
 
   Map<String, String> _translations = {};
   
-  // Hardcoded fallback list
+  // Hardcoded fallback list - Sorted by Native Name (English first)
   static const List<String> _fallbackUILanguages = [
-    'ar', 'bg', 'cs', 'da', 'de', 'el', 'en', 'es', 'et', 'fi', 'fr', 'ga', 'hi', 'hr', 'hu', 'id', 'it', 'ja', 'ko', 'lt', 'lv', 'mt', 'nl', 'pl', 'pt', 'ro', 'sk', 'sl', 'sv', 'tl', 'tr', 'uk', 'vi', 'zh'
+    'en', 'id', 'bg', 'cs', 'da', 'de', 'et', 'es', 'fr', 'ga', 'hr', 'it', 'lv', 'lt', 'hu', 'mt', 'nl', 'pl', 'pt', 'ro', 'sk', 'sl', 'fi', 'sv', 'tl', 'vi', 'tr', 'el', 'uk', 'ar', 'hi', 'zh', 'ja', 'ko'
   ];
 
   List<String> _availableUILanguages = List.from(_fallbackUILanguages);
@@ -83,10 +83,26 @@ class TranslationService extends ChangeNotifier {
           .order('name');
       
       if (data.isNotEmpty) {
-        _availableUILanguages = data.map((e) => e['id'].toString()).toList();
+        final List<String> sortedIds = [];
+        final Map<String, String> nameMap = {};
+        
+        // Always put English first if exists
+        bool hasEn = false;
         for (var lang in data) {
-          _languageNames[lang['id'].toString()] = lang['name'].toString();
+          final id = lang['id'].toString().toLowerCase();
+          final name = lang['name'].toString();
+          nameMap[id] = name;
+          if (id == 'en') {
+            hasEn = true;
+          } else {
+            sortedIds.add(id);
+          }
         }
+        
+        _availableUILanguages = hasEn ? ['en', ...sortedIds] : sortedIds;
+        _languageNames.clear();
+        _languageNames.addAll(nameMap);
+        
         notifyListeners();
       }
     } catch (e) {

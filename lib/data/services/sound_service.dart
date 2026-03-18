@@ -82,4 +82,13 @@ class SoundService {
   Future<void> playGood() async {
     await _playSound(assetGood, _goodPath);
   }
+
+  Future<void> playUrl(String url) async {
+    try {
+      await _player.stop();
+      await _player.play(UrlSource(url));
+    } catch (e) {
+      debugPrint('Error playing URL $url: $e');
+    }
+  }
 }

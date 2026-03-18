@@ -51,22 +51,28 @@ class _SubjectPageState extends State<SubjectPage> {
   void _initLanguage() async {
     final prefs = await SharedPreferences.getInstance();
     final savedLang = prefs.getString('last_testing_lang');
+    final savedAgeFilter = prefs.getString('last_age_filter');
+    final savedCollectionFilter = prefs.getString('last_collection_filter');
 
     if (mounted) {
-      if (savedLang != null) {
-        setState(() {
+      setState(() {
+        if (savedLang != null) {
           _currentTestingLang = savedLang;
           _isLangInitialized = true;
-        });
-      } else {
-        final user = getIt<AuthService>().currentUser;
-        if (user != null) {
-          setState(() {
+        } else {
+          final user = getIt<AuthService>().currentUser;
+          if (user != null) {
             _currentTestingLang = user.defaultLanguage.toLowerCase();
             _isLangInitialized = true;
-          });
+          }
         }
-      }
+        if (savedAgeFilter != null) {
+          _selectedAgeFilter = savedAgeFilter;
+        }
+        if (savedCollectionFilter != null) {
+          _collectionFilter = savedCollectionFilter;
+        }
+      });
     }
     getIt<AuthService>().addListener(_onAuthChanged);
   }
@@ -135,10 +141,14 @@ class _SubjectPageState extends State<SubjectPage> {
         );
       }
 
+      final prefs = await SharedPreferences.getInstance();
+      final hasSavedCollection = prefs.containsKey('last_collection_filter');
+
       setState(() {
         _allDashboardSubjects = subjects;
-        // Smart default: if no favorites, show public subjects
-        if (_allDashboardSubjects.where((s) => s.isOnDashboard).isEmpty) {
+        // Smart default: if no favorites AND no saved preference, show public subjects
+        if (!hasSavedCollection &&
+            _allDashboardSubjects.where((s) => s.isOnDashboard).isEmpty) {
           _collectionFilter = 'public';
         }
         _applySearch();
@@ -379,12 +389,14 @@ class _SubjectPageState extends State<SubjectPage> {
                                         'mine': context.t('filter_my_subjects'),
                                         'public': context.t('filter_public'),
                                       },
-                                      onChanged: (val) {
+                                      onChanged: (val) async {
                                         if (val != null) {
                                           setState(() {
                                             _collectionFilter = val;
                                             _applySearch();
                                           });
+                                          final prefs = await SharedPreferences.getInstance();
+                                          await prefs.setString('last_collection_filter', val);
                                         }
                                       },
                                     ),
@@ -399,12 +411,14 @@ class _SubjectPageState extends State<SubjectPage> {
                                         '7_14': context.t('age_7_14'),
                                         '15_plus': context.t('age_15_plus'),
                                       },
-                                      onChanged: (val) {
+                                      onChanged: (val) async {
                                         if (val != null) {
                                           setState(() {
                                             _selectedAgeFilter = val;
                                             _applySearch();
                                           });
+                                          final prefs = await SharedPreferences.getInstance();
+                                          await prefs.setString('last_age_filter', val);
                                         }
                                       },
                                     ),
@@ -471,12 +485,14 @@ class _SubjectPageState extends State<SubjectPage> {
                                   'mine': context.t('filter_my_subjects'),
                                   'public': context.t('filter_public'),
                                 },
-                                onChanged: (val) {
+                                onChanged: (val) async {
                                   if (val != null) {
                                     setState(() {
                                       _collectionFilter = val;
                                       _applySearch();
                                     });
+                                    final prefs = await SharedPreferences.getInstance();
+                                    await prefs.setString('last_collection_filter', val);
                                   }
                                 },
                               ),
@@ -492,12 +508,14 @@ class _SubjectPageState extends State<SubjectPage> {
                                   '7_14': context.t('age_7_14'),
                                   '15_plus': context.t('age_15_plus'),
                                 },
-                                onChanged: (val) {
+                                onChanged: (val) async {
                                   if (val != null) {
                                     setState(() {
                                       _selectedAgeFilter = val;
                                       _applySearch();
                                     });
+                                    final prefs = await SharedPreferences.getInstance();
+                                    await prefs.setString('last_age_filter', val);
                                   }
                                 },
                               ),
@@ -1025,12 +1043,14 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
                             'mine': context.t('filter_my_subjects'),
                             'public': context.t('filter_public'),
                           },
-                          onChanged: (val) {
+                          onChanged: (val) async {
                             if (val != null) {
                               setState(() {
                                 _collectionFilter = val;
                                 _applyFilters();
                               });
+                              final prefs = await SharedPreferences.getInstance();
+                              await prefs.setString('last_collection_filter', val);
                             }
                           },
                         ),
@@ -1045,12 +1065,14 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
                             '7_14': context.t('age_7_14'),
                             '15_plus': context.t('age_15_plus'),
                           },
-                          onChanged: (val) {
+                          onChanged: (val) async {
                             if (val != null) {
                               setState(() {
                                 _selectedAgeFilter = val;
                                 _applyFilters();
                               });
+                              final prefs = await SharedPreferences.getInstance();
+                              await prefs.setString('last_age_filter', val);
                             }
                           },
                         ),

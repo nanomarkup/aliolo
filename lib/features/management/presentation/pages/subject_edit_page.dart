@@ -37,12 +37,14 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
   final _cardService = getIt<CardService>();
   final _authService = getIt<AuthService>();
   final _formKey = GlobalKey<FormState>();
+  final _keyboardFocusNode = FocusNode();
 
   late int _selectedPillar;
   late bool _isPublic;
   late String _selectedAgeGroup;
   String _selectedLang = 'global';
   bool _isSaving = false;
+  int _itemsPerRow = 8;
 
   final Map<String, DraftLocalizedSubjectData> _drafts = {
     'global': DraftLocalizedSubjectData(),
@@ -58,8 +60,53 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
     _isPublic = widget.existingSubject?.isPublic ?? false;
     _selectedAgeGroup = widget.existingSubject?.ageGroup ?? 'all';
 
+    if (pillars.isEmpty) {
+      _cardService.getPillars().then((_) {
+        if (mounted) setState(() {});
+      });
+    }
+
     _initDrafts();
     _updateControllers();
+  }
+
+  void _onKeyEvent(KeyEvent event) {
+    if (event is! KeyDownEvent) return;
+
+    final availableLangs = [
+      'global',
+      ...TranslationService().availableUILanguages.map((l) => l.toLowerCase()),
+    ];
+    final currentIndex = availableLangs.indexOf(_selectedLang);
+    if (currentIndex == -1) return;
+
+    int? newIndex;
+
+    if (event.logicalKey == LogicalKeyboardKey.arrowRight) {
+      newIndex = (currentIndex + 1) % availableLangs.length;
+    } else if (event.logicalKey == LogicalKeyboardKey.arrowLeft) {
+      newIndex = (currentIndex - 1 + availableLangs.length) % availableLangs.length;
+    } else if (event.logicalKey == LogicalKeyboardKey.arrowDown) {
+      newIndex = currentIndex + _itemsPerRow;
+      if (newIndex >= availableLangs.length) {
+        newIndex = currentIndex % _itemsPerRow; // Loop to top
+      }
+    } else if (event.logicalKey == LogicalKeyboardKey.arrowUp) {
+      newIndex = currentIndex - _itemsPerRow;
+      if (newIndex < 0) {
+        // Find last possible index in that column
+        int lastRowStart = ((availableLangs.length - 1) ~/ _itemsPerRow) * _itemsPerRow;
+        newIndex = lastRowStart + currentIndex;
+        if (newIndex >= availableLangs.length) newIndex -= _itemsPerRow;
+      }
+    }
+
+    if (newIndex != null) {
+      setState(() {
+        _selectedLang = availableLangs[newIndex!];
+        _updateControllers();
+      });
+    }
   }
 
   void _initDrafts() {
@@ -92,6 +139,7 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
   void dispose() {
     _nameController.dispose();
     _descriptionController.dispose();
+    _keyboardFocusNode.dispose();
     super.dispose();
   }
 
@@ -433,21 +481,34 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
                       vertical: 8,
                     ),
                   ),
-                  items:
-                      pillars
-                          .map(
-                            (p) => DropdownMenuItem(
-                              value: p.id,
-                              child: Text(
-                                p.getTranslatedName(
-                                  TranslationService()
-                                      .currentLocale
-                                      .languageCode,
+                  items: (() {
+                    final dropdownItems =
+                        pillars
+                            .map(
+                              (p) => DropdownMenuItem(
+                                value: p.id,
+                                child: Text(
+                                  p.getTranslatedName(
+                                    TranslationService()
+                                        .currentLocale
+                                        .languageCode,
+                                  ),
                                 ),
                               ),
-                            ),
-                          )
-                          .toList(),
+                            )
+                            .toList();
+
+                    // Ensure _selectedPillar is in the list to avoid assertion failure
+                    if (!pillars.any((p) => p.id == _selectedPillar)) {
+                      dropdownItems.add(
+                        DropdownMenuItem(
+                          value: _selectedPillar,
+                          child: Text('Pillar $_selectedPillar'),
+                        ),
+                      );
+                    }
+                    return dropdownItems;
+                  })(),
                   onChanged:
                       isOwner
                           ? (val) {
@@ -684,34 +745,53 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
               },
             ),
         ],
-        fixedBody: Padding(
-          padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Wrap(
-                spacing: 8,
-                runSpacing: 8,
-                children: [
-                  _buildLangTile(
-                    'global',
-                    'GLB',
-                    Icons.public,
-                    'Global / Fallback',
-                  ),
-                  ...TranslationService().availableUILanguages.map((lang) {
-                    final code = lang.toLowerCase();
-                    return _buildLangTile(
-                      code,
-                      lang.toUpperCase(),
-                      null,
-                      TranslationService().getLanguageName(code),
-                    );
-                  }),
-                ],
-              ),
-              const SizedBox(height: 32),
-            ],
+        fixedBody: KeyboardListener(
+          focusNode: _keyboardFocusNode,
+          autofocus: true,
+          onKeyEvent: _onKeyEvent,
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              // Tile width 54 + spacing 8 = 62. Total padding 16*2 = 32.
+              final availableWidth = constraints.maxWidth - 32;
+              final items = (availableWidth + 8) ~/ 62;
+              _itemsPerRow = items > 0 ? items : 1;
+
+              return Padding(
+                padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
+                      children: [
+                        _buildLangTile(
+                          'global',
+                          'GLB',
+                          Icons.public,
+                          'Global / Fallback',
+                        ),
+                        ...(() {
+                          final langs = TranslationService()
+                              .availableUILanguages
+                              .map((l) => l.toLowerCase())
+                              .toList();
+                          langs.sort();
+                          return langs.map((code) {
+                            return _buildLangTile(
+                              code,
+                              code.toUpperCase(),
+                              null,
+                              TranslationService().getLanguageName(code),
+                            );
+                          });
+                        })(),                      ],
+                    ),
+                    const SizedBox(height: 32),
+                  ],
+                ),
+              );
+            },
           ),
         ),
         body: Form(
