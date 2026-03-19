@@ -358,9 +358,11 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
         createdAt: widget.existingSubject?.createdAt ?? now,
         updatedAt: now,
         localizedData: finalData,
+        type: widget.existingSubject?.type ?? 'standard',
+        parentId: widget.existingSubject?.parentId,
       );
 
-      await _cardService.saveSubject(subject);
+      await _cardService.addSubject(subject);
       if (mounted) Navigator.pop(context, true);
     } catch (e) {
       if (mounted) {

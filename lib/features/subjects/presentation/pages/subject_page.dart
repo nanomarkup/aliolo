@@ -15,6 +15,7 @@ import 'package:aliolo/features/auth/presentation/pages/profile_page.dart';
 import 'package:aliolo/features/settings/presentation/pages/settings_page.dart';
 import 'package:aliolo/features/leaderboard/presentation/pages/leaderboard_page.dart';
 import 'package:aliolo/features/subjects/presentation/pages/subject_landing_page.dart';
+import 'package:aliolo/features/subjects/presentation/pages/sub_subject_page.dart';
 import 'package:aliolo/features/management/presentation/pages/subject_edit_page.dart';
 import 'package:aliolo/data/services/feedback_service.dart';
 
@@ -30,7 +31,9 @@ class SubjectPage extends StatefulWidget {
 class _SubjectPageState extends State<SubjectPage> {
   final _cardService = getIt<CardService>();
   final _searchController = TextEditingController();
-  late String _currentTestingLang = 'en';
+  final _authService = getIt<AuthService>();
+
+  String _currentTestingLang = 'en';
   bool _isLangInitialized = false;
 
   List<SubjectModel> _allDashboardSubjects = [];
@@ -49,6 +52,14 @@ class _SubjectPageState extends State<SubjectPage> {
     _initLanguage();
     _loadDashboard();
     _cardService.addListener(_loadDashboard);
+  }
+
+  @override
+  void dispose() {
+    getIt<AuthService>().removeListener(_onAuthChanged);
+    _cardService.removeListener(_loadDashboard);
+    _searchController.dispose();
+    super.dispose();
   }
 
   void _initLanguage() async {
@@ -80,14 +91,6 @@ class _SubjectPageState extends State<SubjectPage> {
     getIt<AuthService>().addListener(_onAuthChanged);
   }
 
-  @override
-  void dispose() {
-    getIt<AuthService>().removeListener(_onAuthChanged);
-    _cardService.removeListener(_loadDashboard);
-    _searchController.dispose();
-    super.dispose();
-  }
-
   void _onAuthChanged() async {
     if (mounted && !_isLangInitialized) {
       final prefs = await SharedPreferences.getInstance();
@@ -114,7 +117,6 @@ class _SubjectPageState extends State<SubjectPage> {
     setState(() => _isLoading = true);
     await _cardService.getPillars();
     final subjects = await _cardService.getDashboardSubjects();
-    final hasFeedbackNotif = await getIt<FeedbackService>().hasPendingNotifications();
 
     if (mounted) {
       final Set<String> detectedLangs = {};
@@ -185,87 +187,71 @@ class _SubjectPageState extends State<SubjectPage> {
               matchesCollection = s.isPublic;
             }
 
-            // Ensure subject has data for selected language
-            final hasLang = s.localizedData.containsKey(
-              _currentTestingLang.toLowerCase(),
-            );
+            // Hierarchy: Only show top-level subjects in dashboard unless searching
+            final matchesHierarchy = query.isNotEmpty || s.parentId == null;
 
-            return matchesName && matchesAge && matchesCollection && hasLang;
+            return matchesName && matchesAge && matchesCollection && matchesHierarchy;
           }).toList();
-
-      // Hardcoded sort by name
-      _filteredSubjects.sort(
-        (a, b) => a
-            .getName(_currentTestingLang)
-            .toLowerCase()
-            .compareTo(b.getName(_currentTestingLang).toLowerCase()),
-      );
     });
   }
 
   @override
   Widget build(BuildContext context) {
     const appBarColor = Colors.white;
-    final currentSessionColor = ThemeService().sessionColorNotifier.value;
+    final activePillars = pillars.toList();
     final isSearching = _searchController.text.isNotEmpty;
-
-    final rawActiveLangs =
-        getIt<TestingLanguageService>().activeLanguageCodes
-            .map((l) => l.toLowerCase())
-            .toSet();
-    final List<String> activeLangs = rawActiveLangs.toList()..sort();
-    if (!activeLangs.contains(_currentTestingLang.toLowerCase())) {
-      activeLangs.add(_currentTestingLang.toLowerCase());
-      activeLangs.sort();
-    }
-
-    final activePillarIds = _filteredSubjects.map((s) => s.pillarId).toSet();
-    final activePillars =
-        pillars.where((p) => activePillarIds.contains(p.id)).toList();
-    activePillars.sort(
-      (a, b) => pillars.indexOf(a).compareTo(pillars.indexOf(b)),
-    );
 
     return ListenableBuilder(
       listenable: Listenable.merge([
-        TranslationService(),
-        getIt<TestingLanguageService>(),
         _cardService,
+        TranslationService(),
+        ThemeService(),
+        getIt<TestingLanguageService>(),
       ]),
       builder: (context, _) {
+        final currentSessionColor = ThemeService().primaryColor;
+
         return AlioloScrollablePage(
-          title: DropdownButton<String>(
-            value: _currentTestingLang.toLowerCase(),
-            dropdownColor: currentSessionColor,
-            style: const TextStyle(color: appBarColor, fontSize: 22),
-            underline: const SizedBox(),
-            icon: const Icon(Icons.arrow_drop_down, color: appBarColor),
-            items:
-                activeLangs
-                    .map(
-                      (l) => DropdownMenuItem(
-                        value: l.toLowerCase(),
-                        child: Text(
-                          getIt<TestingLanguageService>().getLanguageName(l),
-                        ),
+          title: DropdownButtonHideUnderline(
+            child: DropdownButton<String>(
+              value: _currentTestingLang,
+              dropdownColor: currentSessionColor,
+              icon: const Icon(Icons.language, color: appBarColor, size: 20),
+              style: const TextStyle(
+                color: appBarColor,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+              items:
+                  getIt<TestingLanguageService>().activeLanguageCodes.map((l) {
+                    return DropdownMenuItem(
+                      value: l.toLowerCase(),
+                      child: Text(
+                        getIt<TestingLanguageService>().getLanguageName(l),
+                        style: const TextStyle(color: Colors.white),
                       ),
-                    )
-                    .toList(),
-            onChanged: (val) async {
-              if (val != null) {
-                setState(() => _currentTestingLang = val.toLowerCase());
-                final prefs = await SharedPreferences.getInstance();
-                await prefs.setString('last_testing_lang', val.toLowerCase());
-                _applySearch();
-              }
-            },
+                    );
+                  }).toList(),
+              onChanged: (val) async {
+                if (val != null) {
+                  setState(() => _currentTestingLang = val);
+                  final prefs = await SharedPreferences.getInstance();
+                  await prefs.setString('last_testing_lang', val);
+                  _applySearch();
+                }
+              },
+            ),
           ),
           appBarColor: currentSessionColor,
           actions: [
-            IconButton(
-              icon: const Icon(Icons.school, color: appBarColor),
-              onPressed: () => _loadDashboard(),
-            ),
+            if (isSearching)
+              IconButton(
+                icon: const Icon(Icons.school, color: appBarColor),
+                onPressed: () {
+                  _searchController.clear();
+                  _applySearch();
+                },
+              ),
             IconButton(
               icon: const Icon(Icons.emoji_events, color: appBarColor),
               onPressed:
@@ -306,361 +292,279 @@ class _SubjectPageState extends State<SubjectPage> {
                   ),
             ),
           ],
-          fixedBody:
-              _isLoading
-                  ? null
-                  : LayoutBuilder(
-                    builder: (context, constraints) {
-                      final isSmall = constraints.maxWidth < 600;
+          fixedBody: LayoutBuilder(
+            builder: (context, constraints) {
+              final isSmall = constraints.maxWidth < 600;
 
-                      if (isSmall) {
-                        return Padding(
-                          padding: const EdgeInsets.only(top: 12, bottom: 16),
-                          child: Column(
-                            children: [
-                              // Row 1: Search + Add
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: TextField(
-                                      controller: _searchController,
-                                      decoration: InputDecoration(
-                                        hintText: context.t('search_subjects'),
-                                        prefixIcon: const Icon(Icons.search),
-                                        suffixIcon:
-                                            ValueListenableBuilder<
-                                              TextEditingValue
-                                            >(
-                                              valueListenable: _searchController,
-                                              builder:
-                                                  (context, value, _) =>
-                                                      value.text.isNotEmpty
-                                                          ? IconButton(
-                                                            icon: const Icon(
-                                                              Icons.clear,
-                                                            ),
-                                                            onPressed: () {
-                                                              _searchController
-                                                                  .clear();
-                                                              _applySearch();
-                                                            },
-                                                          )
-                                                          : const SizedBox
-                                                              .shrink(),
-                                            ),
-                                        border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(
-                                            12,
-                                          ),
-                                        ),
-                                        contentPadding:
-                                            const EdgeInsets.symmetric(
-                                              horizontal: 12,
-                                            ),
-                                        filled: true,
-                                        fillColor: Theme.of(
-                                          context,
-                                        ).cardColor.withValues(alpha: 0.5),
-                                      ),
-                                      onChanged: (_) => _applySearch(),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 8),
-                                  IconButton(
-                                    icon: Icon(
-                                      Icons.add_circle,
-                                      color: currentSessionColor,
-                                      size: 40,
-                                    ),
-                                    onPressed: () async {
-                                      final result = await Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder:
-                                              (context) =>
-                                                  const SubjectEditPage(),
-                                        ),
-                                      );
-                                      if (result == true) _loadDashboard();
-                                    },
-                                  ),
-                                ],
+              if (isSmall) {
+                // Mobile: Stacked
+                return Padding(
+                  padding: const EdgeInsets.only(top: 16, bottom: 24),
+                  child: Column(
+                    children: [
+                      TextField(
+                        controller: _searchController,
+                        decoration: InputDecoration(
+                          hintText: context.t('search_subjects'),
+                          prefixIcon: const Icon(Icons.search),
+                          suffixIcon:
+                              ValueListenableBuilder<TextEditingValue>(
+                                valueListenable: _searchController,
+                                builder:
+                                    (context, value, _) =>
+                                        value.text.isNotEmpty
+                                            ? IconButton(
+                                              icon: const Icon(Icons.clear),
+                                              onPressed: () {
+                                                _searchController.clear();
+                                                _applySearch();
+                                              },
+                                            )
+                                            : const SizedBox.shrink(),
                               ),
-                              const SizedBox(height: 12),
-                              // Row 2: Filters
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: _buildCompactDropdown(
-                                      value: _collectionFilter,
-                                      items: {
-                                        'all': context.t('filter_all'),
-                                        'favorites': context.t(
-                                          'filter_favorites',
-                                        ),
-                                        'mine': context.t('filter_my_subjects'),
-                                        'public': context.t('filter_public'),
-                                      },
-                                      onChanged: (val) async {
-                                        if (val != null) {
-                                          setState(() {
-                                            _collectionFilter = val;
-                                            _applySearch();
-                                          });
-                                          final prefs = await SharedPreferences.getInstance();
-                                          await prefs.setString('last_collection_filter', val);
-                                        }
-                                      },
-                                    ),
-                                  ),
-                                  const SizedBox(width: 8),
-                                  Expanded(
-                                    child: _buildCompactDropdown(
-                                      value: _selectedAgeFilter,
-                                      items: {
-                                        'all': context.t('age_all'),
-                                        '0_6': context.t('age_0_6'),
-                                        '7_14': context.t('age_7_14'),
-                                        '15_plus': context.t('age_15_plus'),
-                                      },
-                                      onChanged: (val) async {
-                                        if (val != null) {
-                                          setState(() {
-                                            _selectedAgeFilter = val;
-                                            _applySearch();
-                                          });
-                                          final prefs = await SharedPreferences.getInstance();
-                                          await prefs.setString('last_age_filter', val);
-                                        }
-                                      },
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
                           ),
-                        );
-                      }
-
-                      // Desktop: Single row
-                      return Padding(
-                        padding: const EdgeInsets.only(top: 16, bottom: 24),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              flex: 3,
-                              child: TextField(
-                                controller: _searchController,
-                                decoration: InputDecoration(
-                                  hintText: context.t('search_subjects'),
-                                  prefixIcon: const Icon(Icons.search),
-                                  suffixIcon:
-                                      ValueListenableBuilder<TextEditingValue>(
-                                        valueListenable: _searchController,
-                                        builder:
-                                            (context, value, _) =>
-                                                value.text.isNotEmpty
-                                                    ? IconButton(
-                                                      icon: const Icon(
-                                                        Icons.clear,
-                                                      ),
-                                                      onPressed: () {
-                                                        _searchController
-                                                            .clear();
-                                                        _applySearch();
-                                                      },
-                                                    )
-                                                    : const SizedBox.shrink(),
-                                      ),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  contentPadding: const EdgeInsets.symmetric(
-                                    horizontal: 12,
-                                  ),
-                                  filled: true,
-                                  fillColor: Theme.of(
-                                    context,
-                                  ).cardColor.withValues(alpha: 0.5),
-                                ),
-                                onChanged: (_) => _applySearch(),
-                              ),
-                            ),
-                            const SizedBox(width: 8),
-                            Expanded(
-                              flex: 2,
-                              child: _buildCompactDropdown(
-                                value: _collectionFilter,
-                                items: {
-                                  'all': context.t('filter_all'),
-                                  'favorites': context.t('filter_favorites'),
-                                  'mine': context.t('filter_my_subjects'),
-                                  'public': context.t('filter_public'),
-                                },
-                                onChanged: (val) async {
-                                  if (val != null) {
-                                    setState(() {
-                                      _collectionFilter = val;
-                                      _applySearch();
-                                    });
-                                    final prefs = await SharedPreferences.getInstance();
-                                    await prefs.setString('last_collection_filter', val);
-                                  }
-                                },
-                              ),
-                            ),
-                            const SizedBox(width: 8),
-                            Expanded(
-                              flex: 2,
-                              child: _buildCompactDropdown(
-                                value: _selectedAgeFilter,
-                                items: {
-                                  'all': context.t('age_all'),
-                                  '0_6': context.t('age_0_6'),
-                                  '7_14': context.t('age_7_14'),
-                                  '15_plus': context.t('age_15_plus'),
-                                },
-                                onChanged: (val) async {
-                                  if (val != null) {
-                                    setState(() {
-                                      _selectedAgeFilter = val;
-                                      _applySearch();
-                                    });
-                                    final prefs = await SharedPreferences.getInstance();
-                                    await prefs.setString('last_age_filter', val);
-                                  }
-                                },
-                              ),
-                            ),
-                            const SizedBox(width: 8),
-                            IconButton(
-                              icon: Icon(
-                                Icons.add_circle,
-                                color: currentSessionColor,
-                                size: 40,
-                              ),
-                              onPressed: () async {
-                                final result = await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder:
-                                        (context) => const SubjectEditPage(),
-                                  ),
-                                );
-                                if (result == true) _loadDashboard();
+                          filled: true,
+                          fillColor: Theme.of(
+                            context,
+                          ).cardColor.withValues(alpha: 0.5),
+                        ),
+                        onChanged: (_) => _applySearch(),
+                      ),
+                      const SizedBox(height: 12),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: _buildCompactDropdown(
+                              value: _collectionFilter,
+                              items: {
+                                'all': context.t('filter_all'),
+                                'favorites': context.t('filter_favorites'),
+                                'mine': context.t('filter_my_subjects'),
+                                'public': context.t('filter_public'),
+                              },
+                              onChanged: (val) async {
+                                if (val != null) {
+                                  setState(() {
+                                    _collectionFilter = val;
+                                    _applySearch();
+                                  });
+                                  final prefs =
+                                      await SharedPreferences.getInstance();
+                                  await prefs.setString(
+                                    'last_collection_filter',
+                                    val,
+                                  );
+                                }
                               },
                             ),
-                          ],
-                        ),
-                      );
-                    },
-                  ),
-          slivers: [
-            if (_isLoading)
-              const SliverFillRemaining(
-                child: Center(child: CircularProgressIndicator()),
-              )
-            else if (_filteredSubjects.isEmpty)
-              SliverFillRemaining(
-                hasScrollBody: false,
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        _collectionFilter == 'favorites'
-                            ? Icons.star_outline
-                            : Icons.search_off,
-                        size: 80,
-                        color: Colors.grey,
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: _buildCompactDropdown(
+                              value: _selectedAgeFilter,
+                              items: {
+                                'all': context.t('age_all'),
+                                '0_6': context.t('age_0_6'),
+                                '7_14': context.t('age_7_14'),
+                                '15_plus': context.t('age_15_plus'),
+                              },
+                              onChanged: (val) async {
+                                if (val != null) {
+                                  setState(() {
+                                    _selectedAgeFilter = val;
+                                    _applySearch();
+                                  });
+                                  final prefs =
+                                      await SharedPreferences.getInstance();
+                                  await prefs.setString('last_age_filter', val);
+                                }
+                              },
+                            ),
+                          ),
+                        ],
                       ),
-                      const SizedBox(height: 16),
-                      Text(
-                        _collectionFilter == 'favorites'
-                            ? "Your collection is empty"
-                            : "No subjects found",
-                        style: const TextStyle(
-                          fontSize: 18,
-                          color: Colors.grey,
-                        ),
-                      ),
-                      if (_collectionFilter == 'favorites') ...[
-                        const SizedBox(height: 24),
-                        ElevatedButton.icon(
-                          onPressed: () {
-                            setState(() {
-                              _collectionFilter = 'public';
-                              _applySearch();
-                            });
-                          },
-                          icon: const Icon(Icons.explore),
-                          label: const Text("Discover Public Subjects"),
-                        ),
-                      ],
                     ],
                   ),
-                ),
-              )
-            else if (isSearching)
-              SliverPadding(
-                padding: const EdgeInsets.symmetric(horizontal: 0),
-                sliver: SliverList(
-                  delegate: SliverChildBuilderDelegate((context, index) {
-                    final subject = _filteredSubjects[index];
-                    final pillar = pillars.firstWhere(
-                      (p) => p.id == subject.pillarId,
-                    );
-                    return _SubjectListTile(
-                      subject: subject,
-                      pillar: pillar,
-                      languageCode: _currentTestingLang,
-                    );
-                  }, childCount: _filteredSubjects.length),
-                ),
-              )
-            else
-              SliverLayoutBuilder(
-                builder: (context, constraints) {
-                  final crossAxisCount = constraints.crossAxisExtent < 600 ? 1 : 2;
-                  return SliverGrid(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: crossAxisCount,
-                      crossAxisSpacing: 24,
-                      mainAxisSpacing: 24,
-                      childAspectRatio: crossAxisCount == 1 ? 1.8 : 1.4,
-                    ),
-                    delegate: SliverChildBuilderDelegate((context, index) {
-                      final pillar = activePillars[index];
-                      // Filter subjects by this pillar from the already-filtered list
-                      final pillarSubjects =
-                          _filteredSubjects
-                              .where((s) => s.pillarId == pillar.id)
-                              .toList();
+                );
+              }
 
-                      return _PillarGridTile(
-                        pillar: pillar,
-                        count: pillarSubjects.length,
-                        languageCode: _currentTestingLang,
-                        onTap:
-                            () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
+              // Desktop: Single row
+              return Padding(
+                padding: const EdgeInsets.only(top: 16, bottom: 24),
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 3,
+                      child: TextField(
+                        controller: _searchController,
+                        decoration: InputDecoration(
+                          hintText: context.t('search_subjects'),
+                          prefixIcon: const Icon(Icons.search),
+                          suffixIcon:
+                              ValueListenableBuilder<TextEditingValue>(
+                                valueListenable: _searchController,
                                 builder:
-                                    (context) => PillarSubjectsPage(
-                                      pillar: pillar,
-                                      subjects: pillarSubjects,
-                                      languageCode: _currentTestingLang,
-                                      initialAgeFilter: _selectedAgeFilter,
-                                      initialCollectionFilter: _collectionFilter,
-                                    ),
+                                    (context, value, _) =>
+                                        value.text.isNotEmpty
+                                            ? IconButton(
+                                              icon: const Icon(Icons.clear),
+                                              onPressed: () {
+                                                _searchController.clear();
+                                                _applySearch();
+                                              },
+                                            )
+                                            : const SizedBox.shrink(),
                               ),
-                            ),
-                      );
-                    }, childCount: activePillars.length),
-                  );
-                },
-              ),
-          ],
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                          ),
+                          filled: true,
+                          fillColor: Theme.of(
+                            context,
+                          ).cardColor.withValues(alpha: 0.5),
+                        ),
+                        onChanged: (_) => _applySearch(),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      flex: 2,
+                      child: _buildCompactDropdown(
+                        value: _collectionFilter,
+                        items: {
+                          'all': context.t('filter_all'),
+                          'favorites': context.t('filter_favorites'),
+                          'mine': context.t('filter_my_subjects'),
+                          'public': context.t('filter_public'),
+                        },
+                        onChanged: (val) async {
+                          if (val != null) {
+                            setState(() {
+                              _collectionFilter = val;
+                              _applySearch();
+                            });
+                            final prefs = await SharedPreferences.getInstance();
+                            await prefs.setString('last_collection_filter', val);
+                          }
+                        },
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      flex: 2,
+                      child: _buildCompactDropdown(
+                        value: _selectedAgeFilter,
+                        items: {
+                          'all': context.t('age_all'),
+                          '0_6': context.t('age_0_6'),
+                          '7_14': context.t('age_7_14'),
+                          '15_plus': context.t('age_15_plus'),
+                        },
+                        onChanged: (val) async {
+                          if (val != null) {
+                            setState(() {
+                              _selectedAgeFilter = val;
+                              _applySearch();
+                            });
+                            final prefs = await SharedPreferences.getInstance();
+                            await prefs.setString('last_age_filter', val);
+                          }
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+          slivers:
+              _isLoading
+                  ? [
+                    const SliverFillRemaining(
+                      child: Center(child: CircularProgressIndicator()),
+                    ),
+                  ]
+                  : [
+                    if (_filteredSubjects.isEmpty)
+                      const SliverFillRemaining(
+                        child: Center(child: Text('No subjects found')),
+                      )
+                    else if (isSearching)
+                      SliverPadding(
+                        padding: const EdgeInsets.symmetric(horizontal: 0),
+                        sliver: SliverList(
+                          delegate: SliverChildBuilderDelegate((
+                            context,
+                            index,
+                          ) {
+                            final subject = _filteredSubjects[index];
+                            final pillar = pillars.firstWhere(
+                              (p) => p.id == subject.pillarId,
+                            );
+                            return _SubjectListTile(
+                              subject: subject,
+                              pillar: pillar,
+                              languageCode: _currentTestingLang,
+                            );
+                          }, childCount: _filteredSubjects.length),
+                        ),
+                      )
+                    else
+                      SliverLayoutBuilder(
+                        builder: (context, constraints) {
+                          final crossAxisCount =
+                              constraints.crossAxisExtent < 600 ? 1 : 2;
+                          return SliverGrid(
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: crossAxisCount,
+                                  crossAxisSpacing: 24,
+                                  mainAxisSpacing: 24,
+                                  childAspectRatio:
+                                      crossAxisCount == 1 ? 1.8 : 1.4,
+                                ),
+                            delegate: SliverChildBuilderDelegate((
+                              context,
+                              index,
+                            ) {
+                              final pillar = activePillars[index];
+                              // Filter subjects by this pillar from the already-filtered list
+                              final pillarSubjects =
+                                  _filteredSubjects
+                                      .where((s) => s.pillarId == pillar.id)
+                                      .toList();
+
+                              return _PillarGridTile(
+                                pillar: pillar,
+                                count: pillarSubjects.length,
+                                languageCode: _currentTestingLang,
+                                onTap:
+                                    () => Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder:
+                                            (context) => PillarSubjectsPage(
+                                              pillar: pillar,
+                                              subjects: pillarSubjects,
+                                              languageCode: _currentTestingLang,
+                                              initialAgeFilter:
+                                                  _selectedAgeFilter,
+                                              initialCollectionFilter:
+                                                  _collectionFilter,
+                                            ),
+                                      ),
+                                    ),
+                              );
+                            }, childCount: activePillars.length),
+                          );
+                        },
+                      ),
+                  ],
         );
       },
     );
@@ -726,19 +630,28 @@ class _SubjectListTile extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 16),
       child: InkWell(
         onTap: () async {
-          final cards = await CardService().getCardsBySubject(subject.id);
-          if (context.mounted) {
+          if (subject.type == 'folder') {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder:
-                    (context) => SubjectLandingPage(
-                      subject: subject,
-                      cards: cards,
-                      languageCode: languageCode,
-                    ),
+                builder: (context) => SubSubjectPage(parentSubject: subject),
               ),
             );
+          } else {
+            final cards = await CardService().getCardsBySubject(subject.id);
+            if (context.mounted) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder:
+                      (context) => SubjectLandingPage(
+                        subject: subject,
+                        cards: cards,
+                        languageCode: languageCode,
+                      ),
+                ),
+              );
+            }
           }
         },
         borderRadius: BorderRadius.circular(16),
@@ -754,7 +667,10 @@ class _SubjectListTile extends StatelessWidget {
           ),
           child: Row(
             children: [
-              Icon(pillar.getIconData(), color: pillarColor),
+              Icon(
+                subject.type == 'folder' ? Icons.folder : pillar.getIconData(),
+                color: pillarColor,
+              ),
               const SizedBox(width: 16),
               Expanded(
                 child: Column(
@@ -768,7 +684,9 @@ class _SubjectListTile extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '${pillar.getTranslatedName(languageCode)} • $cardCount ${context.plural('card', cardCount)}',
+                      subject.type == 'folder'
+                          ? '${pillar.getTranslatedName(languageCode)} • ${subject.childCount} ${context.plural('subject', subject.childCount)}'
+                          : '${pillar.getTranslatedName(languageCode)} • $cardCount ${context.plural('card', cardCount)}',
                       style: TextStyle(color: Colors.grey[600], fontSize: 14),
                     ),
                   ],
@@ -799,84 +717,82 @@ class _PillarGridTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final pillarColor = pillar.getColor();
-    final pillarIcon = pillar.getIconData();
 
-    return InkWell(
-      onTap: () {
-        ThemeService().setSessionColor(pillarColor);
-        onTap();
-      },
-      borderRadius: BorderRadius.circular(24),
-      child: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [pillarColor, pillarColor.withValues(alpha: 0.7)],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
+    return Card(
+      clipBehavior: Clip.antiAlias,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      elevation: 4,
+      child: InkWell(
+        onTap: onTap,
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                pillarColor,
+                pillarColor.withValues(alpha: 0.8),
+              ],
+            ),
           ),
-          borderRadius: BorderRadius.circular(24),
-          boxShadow: [
-            BoxShadow(
-              color: pillarColor.withValues(alpha: 0.3),
-              blurRadius: 12,
-              offset: const Offset(0, 6),
-            ),
-          ],
-        ),
-        child: Stack(
-          children: [
-            Positioned(
-              right: -20,
-              bottom: -20,
-              child: Icon(
-                pillarIcon,
-                size: 120,
-                color: Colors.white.withValues(alpha: 0.2),
+          child: Stack(
+            children: [
+              Positioned(
+                right: -20,
+                bottom: -20,
+                child: Icon(
+                  pillar.getIconData(),
+                  size: 120,
+                  color: Colors.white.withValues(alpha: 0.15),
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Icon(pillarIcon, color: Colors.white, size: 28),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Text(
-                          pillar.getTranslatedName(languageCode),
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Icon(pillar.getIconData(), color: Colors.white, size: 28),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Text(
+                            pillar.getTranslatedName(languageCode),
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
+                              height: 1.1,
+                            ),
                           ),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
                         ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 12),
-                  Text(
-                    pillar.getTranslatedDescription(languageCode),
-                    style: const TextStyle(color: Colors.white, fontSize: 16),
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const Spacer(),
-                  Text(
-                    '$count ${context.plural('subject', count)}',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 13,
-                      fontWeight: FontWeight.bold,
+                      ],
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 12),
+                    Text(
+                      pillar.getTranslatedDescription(languageCode),
+                      style: TextStyle(
+                        color: Colors.white.withValues(alpha: 0.8),
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const Spacer(),
+                    Text(
+                      '$count ${context.plural('subject', count)}',
+                      style: TextStyle(
+                        color: Colors.white.withValues(alpha: 0.9),
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -905,7 +821,10 @@ class PillarSubjectsPage extends StatefulWidget {
 
 class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
   final _searchController = TextEditingController();
-  List<SubjectModel> _allSubjects = [];
+  final _cardService = getIt<CardService>();
+  final _authService = getIt<AuthService>();
+
+  late List<SubjectModel> _allSubjects;
   List<SubjectModel> _filteredSubjects = [];
   bool _isLoading = true;
   late String _selectedAgeFilter;
@@ -917,38 +836,29 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
     _selectedAgeFilter = widget.initialAgeFilter;
     _collectionFilter = widget.initialCollectionFilter;
     _loadData();
-    getIt<CardService>().addListener(_loadData);
-  }
-
-  @override
-  void dispose() {
-    getIt<CardService>().removeListener(_loadData);
-    _searchController.dispose();
-    super.dispose();
   }
 
   Future<void> _loadData() async {
     setState(() => _isLoading = true);
-    final allInPillar = await getIt<CardService>().getSubjectsByPillar(
-      widget.pillar.id,
-    );
+    // Fetch fresh subjects for this pillar (including sub-subjects)
+    final results = await _cardService.getSubjectsByPillar(widget.pillar.id);
     if (mounted) {
       setState(() {
-        _allSubjects = allInPillar;
-        _isLoading = false;
+        _allSubjects = results;
         _applyFilters();
+        _isLoading = false;
       });
     }
   }
 
   void _applyFilters() {
     final query = _searchController.text.toLowerCase();
-    final myId = getIt<AuthService>().currentUser?.serverId;
+    final myId = _authService.currentUser?.serverId;
 
     setState(() {
       _filteredSubjects =
           _allSubjects.where((s) {
-            final matchesSearch = s
+            final matchesName = s
                 .getName(widget.languageCode)
                 .toLowerCase()
                 .contains(query);
@@ -964,86 +874,59 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
               matchesCollection = s.isPublic;
             }
 
-            return matchesSearch && matchesAge && matchesCollection;
+            // Hierarchy: Only show top-level subjects in pillar list unless searching
+            final matchesHierarchy = query.isNotEmpty || s.parentId == null;
+
+            return matchesName && matchesAge && matchesCollection && matchesHierarchy;
           }).toList();
 
-      _filteredSubjects.sort(
-        (a, b) => a
-            .getName(widget.languageCode)
-            .toLowerCase()
-            .compareTo(b.getName(widget.languageCode).toLowerCase()),
-      );
+      // Sort alphabetically by name
+      _filteredSubjects.sort((a, b) => a.getName(widget.languageCode).toLowerCase().compareTo(b.getName(widget.languageCode).toLowerCase()));
     });
   }
 
   @override
   Widget build(BuildContext context) {
     final pillarColor = widget.pillar.getColor();
+    const appBarColor = Colors.white;
+
     return AlioloScrollablePage(
       title: Text(
         widget.pillar.getTranslatedName(widget.languageCode),
-        style: const TextStyle(color: Colors.white),
+        style: const TextStyle(color: appBarColor, fontWeight: FontWeight.bold),
       ),
       appBarColor: pillarColor,
       actions: [
         IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          icon: const Icon(Icons.arrow_back, color: appBarColor),
           onPressed: () => Navigator.pop(context),
         ),
       ],
-      fixedBody: LayoutBuilder(
-        builder: (context, constraints) {
-          final isSmall = constraints.maxWidth < 600;
+      fixedBody: Builder(
+        builder: (context) {
+          final isSmall = MediaQuery.of(context).size.width < 600;
 
           if (isSmall) {
             return Padding(
-              padding: const EdgeInsets.only(top: 12, bottom: 16),
+              padding: const EdgeInsets.only(top: 16, bottom: 24),
               child: Column(
                 children: [
-                  // Row 1: Search + Add
-                  Row(
-                    children: [
-                      Expanded(
-                        child: TextField(
-                          controller: _searchController,
-                          decoration: InputDecoration(
-                            hintText: context.t('search_subjects'),
-                            prefixIcon: const Icon(Icons.search),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            filled: true,
-                            fillColor: Theme.of(
-                              context,
-                            ).cardColor.withValues(alpha: 0.5),
-                          ),
-                          onChanged: (_) => _applyFilters(),
-                        ),
+                  TextField(
+                    controller: _searchController,
+                    decoration: InputDecoration(
+                      hintText: context.t('search_subjects'),
+                      prefixIcon: const Icon(Icons.search),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
                       ),
-                      const SizedBox(width: 8),
-                      IconButton(
-                        icon: Icon(
-                          Icons.add_circle,
-                          color: pillarColor,
-                          size: 40,
-                        ),
-                        onPressed: () async {
-                          final result = await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder:
-                                  (context) => SubjectEditPage(
-                                    pillarId: widget.pillar.id,
-                                  ),
-                            ),
-                          );
-                          if (result == true) _loadData();
-                        },
-                      ),
-                    ],
+                      filled: true,
+                      fillColor: Theme.of(
+                        context,
+                      ).cardColor.withValues(alpha: 0.5),
+                    ),
+                    onChanged: (_) => _applyFilters(),
                   ),
                   const SizedBox(height: 12),
-                  // Row 2: Filters
                   Row(
                     children: [
                       Expanded(
@@ -1055,14 +938,12 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
                             'mine': context.t('filter_my_subjects'),
                             'public': context.t('filter_public'),
                           },
-                          onChanged: (val) async {
+                          onChanged: (val) {
                             if (val != null) {
                               setState(() {
                                 _collectionFilter = val;
                                 _applyFilters();
                               });
-                              final prefs = await SharedPreferences.getInstance();
-                              await prefs.setString('last_collection_filter', val);
                             }
                           },
                         ),
@@ -1077,14 +958,12 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
                             '7_14': context.t('age_7_14'),
                             '15_plus': context.t('age_15_plus'),
                           },
-                          onChanged: (val) async {
+                          onChanged: (val) {
                             if (val != null) {
                               setState(() {
                                 _selectedAgeFilter = val;
                                 _applyFilters();
                               });
-                              final prefs = await SharedPreferences.getInstance();
-                              await prefs.setString('last_age_filter', val);
                             }
                           },
                         ),
@@ -1111,6 +990,7 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 12),
                         filled: true,
                         fillColor: Theme.of(
                           context,
@@ -1162,19 +1042,23 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
                     ),
                   ),
                   const SizedBox(width: 8),
-                  IconButton(
-                    icon: Icon(Icons.add_circle, color: pillarColor, size: 40),
-                    onPressed: () async {
-                      final result = await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder:
-                              (context) =>
-                                  SubjectEditPage(pillarId: widget.pillar.id),
-                        ),
-                      );
-                      if (result == true) _loadData();
-                    },
+                  SizedBox(
+                    width: 48,
+                    child: IconButton(
+                      icon: Icon(Icons.add_circle, color: pillarColor, size: 40),
+                      padding: EdgeInsets.zero,
+                      onPressed: () async {
+                        final result = await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder:
+                                (context) =>
+                                    SubjectEditPage(pillarId: widget.pillar.id),
+                          ),
+                        );
+                        if (result == true) _loadData();
+                      },
+                    ),
                   ),
                 ],
               ),

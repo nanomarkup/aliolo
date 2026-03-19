@@ -200,7 +200,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       value: _sidebarLeft,
                       onChanged: _toggleSidebar,
                     ),
-                    const Divider(height: 1),
+                    const Divider(height: 1, indent: 16, endIndent: 16),
                     SwitchListTile(
                       title: Text(context.t('sound_effects')),
                       subtitle: Text(context.t('sound_effects_desc')),
@@ -211,7 +211,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       value: _soundEnabled,
                       onChanged: _toggleSound,
                     ),
-                    const Divider(height: 1),
+                    const Divider(height: 1, indent: 16, endIndent: 16),
                     SwitchListTile(
                       title: Text(context.t('public_profile')),
                       subtitle: Text(context.t('public_profile_desc')),
@@ -222,7 +222,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       value: _showOnLeaderboard,
                       onChanged: _toggleLeaderboard,
                     ),
-                    const Divider(height: 1),
+                    const Divider(height: 1, indent: 16, endIndent: 16),
                     ListTile(
                       title: Text(context.t('ui_language')),
                       leading: Icon(
@@ -258,7 +258,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         ),
                       ),
                     ),
-                    const Divider(height: 1),
+                    const Divider(height: 1, indent: 16, endIndent: 16),
                     LayoutBuilder(
                       builder: (context, constraints) {
                         final isSmall = constraints.maxWidth < 500;
@@ -339,10 +339,9 @@ class _SettingsPageState extends State<SettingsPage> {
                       },
                     ),
 
-                    const Divider(height: 1),
+                    const Divider(height: 1, indent: 16, endIndent: 16),
                     ListTile(
                       title: Text(context.t('theme_color')),
-                      subtitle: Text(context.t('theme_color_desc')),
                       leading: Icon(Icons.palette, color: currentPrimaryColor),
                     ),
                     Padding(

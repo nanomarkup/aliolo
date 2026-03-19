@@ -1,215 +1,419 @@
 import 'package:flutter/material.dart';
-import 'package:aliolo/core/widgets/floating_app_bar.dart';
-import 'package:aliolo/data/models/card_model.dart';
+import 'package:aliolo/core/widgets/aliolo_scrollable_page.dart';
 import 'package:aliolo/data/models/subject_model.dart';
 import 'package:aliolo/data/models/pillar_model.dart';
 import 'package:aliolo/data/services/card_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
-import 'package:aliolo/core/widgets/resize_wrapper.dart';
-import 'package:aliolo/features/testing/presentation/pages/test_page.dart';
+import 'package:aliolo/data/services/theme_service.dart';
+import 'package:aliolo/data/services/auth_service.dart';
+import 'package:aliolo/core/di/service_locator.dart';
+import 'package:aliolo/features/subjects/presentation/pages/subject_landing_page.dart';
 
 class SubSubjectPage extends StatefulWidget {
-  final SubjectModel subject;
-  const SubSubjectPage({super.key, required this.subject});
+  final SubjectModel parentSubject;
+
+  const SubSubjectPage({super.key, required this.parentSubject});
 
   @override
   State<SubSubjectPage> createState() => _SubSubjectPageState();
 }
 
 class _SubSubjectPageState extends State<SubSubjectPage> {
-  late String _selectedLanguage = 'en';
+  final _cardService = getIt<CardService>();
+  final _authService = getIt<AuthService>();
+  final _searchController = TextEditingController();
+  List<SubjectModel> _allSubSubjects = [];
+  List<SubjectModel> _filteredSubSubjects = [];
+  bool _isLoading = true;
+  String _selectedAgeFilter = 'all';
+  String _collectionFilter = 'all';
 
   @override
   void initState() {
     super.initState();
-    _selectedLanguage =
-        TranslationService().currentLocale.languageCode.toLowerCase();
+    _loadSubSubjects();
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _loadSubSubjects() async {
+    setState(() => _isLoading = true);
+    final results = await _cardService.getSubSubjects(widget.parentSubject.id);
+    if (mounted) {
+      setState(() {
+        _allSubSubjects = results;
+        _applyFilters();
+        _isLoading = false;
+      });
+    }
+  }
+
+  void _applyFilters() {
+    final query = _searchController.text.toLowerCase();
+    final lang = TranslationService().currentLocale.languageCode;
+    final myId = _authService.currentUser?.serverId;
+
+    setState(() {
+      _filteredSubSubjects = _allSubSubjects.where((s) {
+        final matchesSearch = s.getName(lang).toLowerCase().contains(query);
+        final matchesAge =
+            _selectedAgeFilter == 'all' || s.ageGroup == _selectedAgeFilter;
+
+        bool matchesCollection = true;
+        if (_collectionFilter == 'favorites') {
+          matchesCollection = s.isOnDashboard;
+        } else if (_collectionFilter == 'mine') {
+          matchesCollection = s.ownerId == myId;
+        } else if (_collectionFilter == 'public') {
+          matchesCollection = s.isPublic;
+        }
+
+        return matchesSearch && matchesAge && matchesCollection;
+      }).toList();
+
+      _filteredSubSubjects.sort((a, b) => a
+          .getName(lang)
+          .toLowerCase()
+          .compareTo(b.getName(lang).toLowerCase()));
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     final pillar = pillars.firstWhere(
-      (p) => p.id == widget.subject.pillarId,
+      (p) => p.id == widget.parentSubject.pillarId,
       orElse: () => pillars.first,
     );
     final pillarColor = pillar.getColor();
     const appBarColor = Colors.white;
+    final lang = TranslationService().currentLocale.languageCode;
 
-    return ListenableBuilder(
-      listenable: TranslationService(),
-      builder: (context, _) {
-        return ResizeWrapper(
-          child: Scaffold(
-            extendBodyBehindAppBar: true,
-            appBar: AlioloAppBar(
-              title: Row(
+    return AlioloScrollablePage(
+      title: Text(
+        widget.parentSubject.getName(lang),
+        style: const TextStyle(color: appBarColor, fontWeight: FontWeight.bold),
+      ),
+      appBarColor: pillarColor,
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.arrow_back, color: appBarColor),
+          onPressed: () => Navigator.pop(context),
+        ),
+      ],
+      fixedBody: LayoutBuilder(
+        builder: (context, constraints) {
+          final isSmall = constraints.maxWidth < 600;
+
+          if (isSmall) {
+            return Padding(
+              padding: const EdgeInsets.only(top: 16, bottom: 24),
+              child: Column(
                 children: [
-                  Text(
-                    widget.subject.getName(_selectedLanguage),
-                    style: const TextStyle(color: appBarColor),
-                  ),
-                  const SizedBox(width: 24),
-                  Theme(
-                    data: Theme.of(context).copyWith(canvasColor: pillarColor),
-                    child: DropdownButton<String>(
-                      value: _selectedLanguage,
-                      dropdownColor: pillarColor,
-                      icon: const Icon(Icons.language, color: appBarColor),
-                      style: const TextStyle(color: appBarColor),
-                      underline: Container(height: 2, color: appBarColor),
-                      onChanged: (String? newValue) {
-                        if (newValue != null) {
-                          setState(() {
-                            _selectedLanguage = newValue;
-                          });
-                        }
-                      },
-                      items:
-                          TranslationService().availableUILanguages
-                              .map<DropdownMenuItem<String>>((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(
-                                    TranslationService().getLanguageName(value),
-                                  ),
-                                );
-                              })
-                              .toList(),
+                  TextField(
+                    controller: _searchController,
+                    decoration: InputDecoration(
+                      hintText: context.t('search_subjects'),
+                      prefixIcon: const Icon(Icons.search),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      filled: true,
+                      fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
                     ),
+                    onChanged: (_) => _applyFilters(),
+                  ),
+                  const SizedBox(height: 12),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: _buildCompactDropdown(
+                          value: _collectionFilter,
+                          items: {
+                            'all': context.t('filter_all'),
+                            'favorites': context.t('filter_favorites'),
+                            'mine': context.t('filter_my_subjects'),
+                            'public': context.t('filter_public'),
+                          },
+                          onChanged: (val) {
+                            if (val != null) {
+                              setState(() {
+                                _collectionFilter = val;
+                                _applyFilters();
+                              });
+                            }
+                          },
+                          pillarColor: pillarColor,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: _buildCompactDropdown(
+                          value: _selectedAgeFilter,
+                          items: {
+                            'all': context.t('age_all'),
+                            '0_6': context.t('age_0_6'),
+                            '7_14': context.t('age_7_14'),
+                            '15_plus': context.t('age_15_plus'),
+                          },
+                          onChanged: (val) {
+                            if (val != null) {
+                              setState(() {
+                                _selectedAgeFilter = val;
+                                _applyFilters();
+                              });
+                            }
+                          },
+                          pillarColor: pillarColor,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
-              backgroundColor: pillarColor,
-              actions: [
-                IconButton(
-                  icon: const Icon(Icons.arrow_back, color: appBarColor),
-                  onPressed: () => Navigator.pop(context),
+            );
+          }
+
+          return Padding(
+            padding: const EdgeInsets.only(top: 16, bottom: 24),
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 3,
+                  child: TextField(
+                    controller: _searchController,
+                    decoration: InputDecoration(
+                      hintText: context.t('search_subjects'),
+                      prefixIcon: const Icon(Icons.search),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+                      filled: true,
+                      fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
+                    ),
+                    onChanged: (_) => _applyFilters(),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  flex: 2,
+                  child: _buildCompactDropdown(
+                    value: _collectionFilter,
+                    items: {
+                      'all': context.t('filter_all'),
+                      'favorites': context.t('filter_favorites'),
+                      'mine': context.t('filter_my_subjects'),
+                      'public': context.t('filter_public'),
+                    },
+                    onChanged: (val) {
+                      if (val != null) {
+                        setState(() {
+                          _collectionFilter = val;
+                          _applyFilters();
+                        });
+                      }
+                    },
+                    pillarColor: pillarColor,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  flex: 2,
+                  child: _buildCompactDropdown(
+                    value: _selectedAgeFilter,
+                    items: {
+                      'all': context.t('age_all'),
+                      '0_6': context.t('age_0_6'),
+                      '7_14': context.t('age_7_14'),
+                      '15_plus': context.t('age_15_plus'),
+                    },
+                    onChanged: (val) {
+                      if (val != null) {
+                        setState(() {
+                          _selectedAgeFilter = val;
+                          _applyFilters();
+                        });
+                      }
+                    },
+                    pillarColor: pillarColor,
+                  ),
                 ),
               ],
             ),
-            body: Center(
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 640),
+          );
+        },
+      ),
+      body:
+          _isLoading
+              ? const Center(child: CircularProgressIndicator())
+              : _filteredSubSubjects.isEmpty
+              ? const Center(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: FutureBuilder<List<CardModel>>(
-                    future: CardService().getCardsBySubject(widget.subject.id),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(child: CircularProgressIndicator());
-                      }
-
-                      final cards = snapshot.data ?? [];
-                      final filteredCards =
-                          cards
-                              .where(
-                                (c) =>
-                                    c.getAnswer(_selectedLanguage).isNotEmpty ||
-                                    c.getAnswer('en').isNotEmpty,
-                              )
-                              .toList();
-
-                      return Column(
-                        children: [
-                          const SizedBox(height: 100),
-                          if (widget.subject
-                              .getDescription(_selectedLanguage)
-                              .isNotEmpty)
-                            Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: Text(
-                                widget.subject.getDescription(
-                                  _selectedLanguage,
-                                ),
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.grey,
-                                ),
-                              ),
-                            ),
-                          Expanded(
-                            child:
-                                filteredCards.isEmpty
-                                    ? Center(
-                                      child: Text(
-                                        context.t('no_cards_found_for_lang'),
-                                      ),
-                                    )
-                                    : ListView.builder(
-                                      padding: const EdgeInsets.only(
-                                        bottom: 32,
-                                      ),
-                                      itemCount: filteredCards.length,
-                                      itemBuilder: (context, index) {
-                                        final card = filteredCards[index];
-                                        final answer = card.getAnswer(
-                                          _selectedLanguage,
-                                        );
-                                        final imageUrl = card.primaryImageUrl;
-
-                                        return Card(
-                                          margin: const EdgeInsets.only(
-                                            bottom: 12,
-                                          ),
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(
-                                              12,
-                                            ),
-                                          ),
-                                          child: ListTile(
-                                            onTap: () {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder:
-                                                      (context) => TestPage(
-                                                        card: card,
-                                                        languageCode:
-                                                            _selectedLanguage,
-                                                      ),
-                                                ),
-                                              );
-                                            },
-                                            leading:
-                                                imageUrl != null
-                                                    ? ClipRRect(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                            8,
-                                                          ),
-                                                      child: Image.network(
-                                                        imageUrl,
-                                                        width: 50,
-                                                        height: 50,
-                                                        fit: BoxFit.cover,
-                                                      ),
-                                                    )
-                                                    : const Icon(Icons.image),
-                                            title: Text(
-                                              answer,
-                                              style: const TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                            trailing: const Icon(
-                                              Icons.chevron_right,
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                    ),
-                          ),
-                        ],
-                      );
-                    },
-                  ),
+                  padding: EdgeInsets.all(32.0),
+                  child: Text('No items found.'),
                 ),
+              )
+              : ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                padding: const EdgeInsets.only(bottom: 32),
+                itemCount: _filteredSubSubjects.length,
+                itemBuilder: (context, index) {
+                  final subject = _filteredSubSubjects[index];
+                  return _SubjectListTile(
+                    subject: subject,
+                    pillar: pillar,
+                    languageCode: lang,
+                  );
+                },
               ),
+    );
+  }
+
+  Widget _buildCompactDropdown({
+    required String value,
+    required Map<String, String> items,
+    required ValueChanged<String?> onChanged,
+    required Color pillarColor,
+  }) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12),
+      decoration: BoxDecoration(
+        color: Theme.of(context).cardColor.withValues(alpha: 0.5),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: pillarColor.withValues(alpha: 0.3)),
+      ),
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton<String>(
+          value: value,
+          isExpanded: true,
+          icon: const Icon(Icons.arrow_drop_down, size: 20),
+          style: TextStyle(
+            fontSize: 13,
+            color:
+                Theme.of(context).brightness == Brightness.dark
+                    ? Colors.white
+                    : Colors.black87,
+          ),
+          items:
+              items.entries
+                  .map(
+                    (e) => DropdownMenuItem(
+                      value: e.key,
+                      child: Text(
+                        e.value,
+                        style: const TextStyle(fontSize: 13),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  )
+                  .toList(),
+          onChanged: onChanged,
+        ),
+      ),
+    );
+  }
+}
+
+class _SubjectListTile extends StatelessWidget {
+  final SubjectModel subject;
+  final Pillar pillar;
+  final String languageCode;
+
+  const _SubjectListTile({
+    required this.subject,
+    required this.pillar,
+    required this.languageCode,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final pillarColor = pillar.getColor();
+    final cardCount = subject.getCardCountForLanguage(languageCode);
+
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16),
+      child: InkWell(
+        onTap: () async {
+          if (subject.type == 'folder') {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => SubSubjectPage(parentSubject: subject),
+              ),
+            );
+          } else {
+            final cards = await getIt<CardService>().getCardsBySubject(
+              subject.id,
+            );
+            if (context.mounted) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder:
+                      (context) => SubjectLandingPage(
+                        subject: subject,
+                        cards: cards,
+                        languageCode: languageCode,
+                      ),
+                ),
+              );
+            }
+          }
+        },
+        borderRadius: BorderRadius.circular(16),
+        child: Container(
+          padding: const EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            color: Theme.of(context).cardColor,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: pillarColor.withValues(alpha: 0.2),
+              width: 1.5,
             ),
           ),
-        );
-      },
+          child: Row(
+            children: [
+              Icon(
+                subject.type == 'math_engine'
+                    ? Icons.calculate
+                    : subject.type == 'folder'
+                    ? Icons.folder
+                    : pillar.getIconData(),
+                color: pillarColor,
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      subject.getName(languageCode),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
+                    ),
+                    Text(
+                      subject.type == 'math_engine'
+                          ? 'Interactive • ${pillar.getTranslatedName(languageCode)}'
+                          : subject.type == 'folder'
+                          ? '${pillar.getTranslatedName(languageCode)} • ${subject.childCount} ${context.plural('subject', subject.childCount)}'
+                          : '${pillar.getTranslatedName(languageCode)} • $cardCount ${context.plural('card', cardCount)}',
+                      style: TextStyle(color: Colors.grey[600], fontSize: 14),
+                    ),
+                  ],
+                ),
+              ),
+              const Icon(Icons.chevron_right, color: Colors.grey),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

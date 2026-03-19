@@ -30,6 +30,9 @@ class SubjectModel {
   final List<Map<String, dynamic>>? rawCards;
   final String? ownerName;
   final String ageGroup;
+  final String? parentId;
+  final String type; // 'standard', 'folder', 'math_engine'
+  final int childCount;
 
   bool isOnDashboard;
 
@@ -50,6 +53,9 @@ class SubjectModel {
     this.isOnDashboard = false,
     this.ageGroup = 'all',
     this.localizedData = const {},
+    this.parentId,
+    this.type = 'standard',
+    this.childCount = 0,
   });
 
   /// Helper to get an attribute with smart inheritance
@@ -121,6 +127,8 @@ class SubjectModel {
       'updated_at': updatedAt.toIso8601String(),
       'created_at': createdAt.toIso8601String(),
       'localized_data': localizedData.map((k, v) => MapEntry(k, v.toJson())),
+      'parent_id': parentId,
+      'type': type,
     };
   }
 
@@ -168,6 +176,19 @@ class SubjectModel {
       }
     }
 
+    // Try to get child count from children relation if present
+    int count = 0;
+    if (json['children'] is List) {
+      final childrenList = json['children'] as List;
+      if (childrenList.isNotEmpty && childrenList.first is Map && childrenList.first['count'] != null) {
+        count = childrenList.first['count'];
+      } else {
+        count = childrenList.length;
+      }
+    } else if (json['children'] is Map && json['children']['count'] != null) {
+      count = json['children']['count'];
+    }
+
     return SubjectModel(
       id: json['id'],
       pillarId: json['pillar_id'] ?? 1,
@@ -184,6 +205,9 @@ class SubjectModel {
               : null,
       ageGroup: json['age_group'] ?? 'all',
       localizedData: localized,
+      parentId: json['parent_id'],
+      type: json['type'] ?? 'standard',
+      childCount: count,
     );
   }
 
