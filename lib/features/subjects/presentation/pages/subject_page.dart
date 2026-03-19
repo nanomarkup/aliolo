@@ -16,6 +16,7 @@ import 'package:aliolo/features/settings/presentation/pages/settings_page.dart';
 import 'package:aliolo/features/leaderboard/presentation/pages/leaderboard_page.dart';
 import 'package:aliolo/features/subjects/presentation/pages/subject_landing_page.dart';
 import 'package:aliolo/features/management/presentation/pages/subject_edit_page.dart';
+import 'package:aliolo/data/services/feedback_service.dart';
 
 import 'package:aliolo/features/feedback/presentation/pages/feedback_page.dart';
 
@@ -113,6 +114,7 @@ class _SubjectPageState extends State<SubjectPage> {
     setState(() => _isLoading = true);
     await _cardService.getPillars();
     final subjects = await _cardService.getDashboardSubjects();
+    final hasFeedbackNotif = await getIt<FeedbackService>().hasPendingNotifications();
 
     if (mounted) {
       final Set<String> detectedLangs = {};
@@ -275,8 +277,16 @@ class _SubjectPageState extends State<SubjectPage> {
                   ),
             ),
             IconButton(
-              icon: const Icon(Icons.person, color: appBarColor),
-
+              icon: ValueListenableBuilder<bool>(
+                valueListenable: getIt<FeedbackService>().pendingNotifications,
+                builder: (context, hasNotif, _) {
+                  return Badge(
+                    isLabelVisible: hasNotif,
+                    backgroundColor: Colors.amber,
+                    child: const Icon(Icons.person, color: appBarColor),
+                  );
+                },
+              ),
               onPressed: () async {
                 await Navigator.push(
                   context,

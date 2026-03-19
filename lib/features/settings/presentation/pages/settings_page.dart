@@ -12,6 +12,8 @@ import 'package:aliolo/data/models/pillar_model.dart';
 import 'package:aliolo/features/leaderboard/presentation/pages/leaderboard_page.dart';
 import 'package:aliolo/features/subjects/presentation/pages/subject_page.dart';
 import 'package:aliolo/features/auth/presentation/pages/profile_page.dart';
+import 'package:aliolo/data/services/feedback_service.dart';
+import 'package:aliolo/core/di/service_locator.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -155,14 +157,24 @@ class _SettingsPageState extends State<SettingsPage> {
                   ),
             ),
             IconButton(
-              icon: const Icon(Icons.person, color: appBarColor),
-              onPressed:
-                  () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const ProfilePage(),
-                    ),
+              icon: ValueListenableBuilder<bool>(
+                valueListenable: getIt<FeedbackService>().pendingNotifications,
+                builder: (context, hasNotif, _) {
+                  return Badge(
+                    isLabelVisible: hasNotif,
+                    backgroundColor: Colors.amber,
+                    child: const Icon(Icons.person, color: appBarColor),
+                  );
+                },
+              ),
+              onPressed: () async {
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ProfilePage(),
                   ),
+                );
+              },
             ),
             IconButton(
               icon: const Icon(Icons.settings, color: appBarColor),

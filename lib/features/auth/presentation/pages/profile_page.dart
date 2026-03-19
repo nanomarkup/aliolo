@@ -2,19 +2,19 @@ import 'package:aliolo/core/utils/io_utils.dart' if (dart.library.html) 'package
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:aliolo/core/widgets/aliolo_scrollable_page.dart';
-import 'package:window_manager/window_manager.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:aliolo/data/services/auth_service.dart';
+import 'package:aliolo/data/services/translation_service.dart';
+import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/data/models/user_model.dart';
-import 'package:aliolo/data/services/auth_service.dart';
-import 'package:aliolo/data/services/theme_service.dart';
-import 'package:aliolo/data/services/translation_service.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:aliolo/features/auth/presentation/pages/login_page.dart';
 import 'package:aliolo/features/subjects/presentation/pages/subject_page.dart';
 import 'package:aliolo/features/leaderboard/presentation/pages/leaderboard_page.dart';
 import 'package:aliolo/features/settings/presentation/pages/settings_page.dart';
 import 'package:aliolo/features/auth/presentation/pages/manage_friends_page.dart';
 import 'package:aliolo/features/management/presentation/pages/feedback_management_page.dart';
+import 'package:aliolo/data/services/feedback_service.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -25,37 +25,16 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   final _authService = getIt<AuthService>();
-  final _imagePicker = ImagePicker();
 
-  @override
-  void initState() {
-    super.initState();
-    if (!kIsWeb) {
-      windowManager.setResizable(true);
-    }
-  }
-
-  void _pickImage() async {
-    final XFile? image = await _imagePicker.pickImage(
+  Future<void> _pickAndUploadAvatar() async {
+    final picker = ImagePicker();
+    final image = await picker.pickImage(
       source: ImageSource.gallery,
+      imageQuality: 50,
+      maxWidth: 512,
     );
-    if (image != null) {
-      // Check file size (Max 1MB for avatar)
-      final sizeInBytes = await image.length();
-      if (sizeInBytes > 1 * 1024 * 1024) {
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(
-                '${context.t('file_too_large')}. ${context.t('max_size_is', args: {'size': '1'})}',
-              ),
-              backgroundColor: Colors.red,
-            ),
-          );
-        }
-        return;
-      }
 
+    if (image != null) {
       await _authService.updateAvatarPath(image);
       if (mounted) setState(() {});
     }
@@ -75,24 +54,8 @@ class _ProfilePageState extends State<ProfilePage> {
                     autofocus: true,
                     decoration: InputDecoration(
                       hintText: context.t('enter_new_name'),
-                      suffixIcon:
-                          nameController.text.isNotEmpty
-                              ? IconButton(
-                                icon: const Icon(Icons.clear),
-                                onPressed: () {
-                                  nameController.clear();
-                                  setDialogState(() {});
-                                },
-                              )
-                              : null,
                     ),
                     onChanged: (val) => setDialogState(() {}),
-                    onSubmitted: (val) async {
-                      if (val.trim().isNotEmpty) {
-                        await _authService.updateUsername(val.trim());
-                        if (mounted) Navigator.pop(context);
-                      }
-                    },
                   ),
                   actions: [
                     TextButton(
@@ -105,6 +68,68 @@ class _ProfilePageState extends State<ProfilePage> {
                         if (newName.isNotEmpty) {
                           await _authService.updateUsername(newName);
                           if (mounted) Navigator.pop(context);
+                        }
+                      },
+                      child: Text(context.t('save')),
+                    ),
+                  ],
+                ),
+          ),
+    );
+  }
+
+  void _showEditEmailDialog(String currentEmail) {
+    final emailController = TextEditingController(text: currentEmail);
+    showDialog(
+      context: context,
+      builder:
+          (context) => StatefulBuilder(
+            builder:
+                (context, setDialogState) => AlertDialog(
+                  title: Text(context.t('edit_email')),
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      TextField(
+                        controller: emailController,
+                        autofocus: true,
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: InputDecoration(
+                          hintText: context.t('enter_new_email'),
+                        ),
+                        onChanged: (val) => setDialogState(() {}),
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        context.t('email_change_notice'),
+                        style: const TextStyle(fontSize: 12, color: Colors.grey),
+                      ),
+                    ],
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: Text(context.t('cancel')),
+                    ),
+                    TextButton(
+                      onPressed: () async {
+                        final newEmail = emailController.text.trim().toLowerCase();
+                        if (newEmail.isNotEmpty && _authService.isValidEmail(newEmail)) {
+                          try {
+                            await _authService.updateEmail(newEmail);
+                            if (mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text(context.t('email_update_sent'))),
+                              );
+                              Navigator.pop(context);
+                            }
+                          } catch (e) {
+                            if (mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text('Error: $e')),
+                              );
+                            }
+                          }
                         }
                       },
                       child: Text(context.t('save')),
@@ -224,7 +249,16 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
             ),
             IconButton(
-              icon: const Icon(Icons.person, color: appBarColor),
+              icon: ValueListenableBuilder<bool>(
+                valueListenable: getIt<FeedbackService>().pendingNotifications,
+                builder: (context, hasNotif, _) {
+                  return Badge(
+                    isLabelVisible: hasNotif,
+                    backgroundColor: Colors.amber,
+                    child: const Icon(Icons.person, color: appBarColor),
+                  );
+                },
+              ),
               onPressed: () => setState(() {}),
             ),
             IconButton(
@@ -245,34 +279,6 @@ class _ProfilePageState extends State<ProfilePage> {
               const SizedBox(height: 32),
               _buildSectionTitle(
                 context,
-                context.t('daily_progress'),
-                currentSessionColor,
-              ),
-              _buildDailyProgressCard(context, user, currentSessionColor),
-              const SizedBox(height: 32),
-              _buildSectionTitle(
-                context,
-                context.t('social'),
-                currentSessionColor,
-              ),
-              Card(
-                child: ListTile(
-                  leading: Icon(Icons.people, color: currentSessionColor),
-                  title: Text(context.t('manage_friends')),
-                  subtitle: Text(context.t('manage_friends_desc')),
-                  trailing: const Icon(Icons.chevron_right),
-                  onTap:
-                      () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const ManageFriendsPage(),
-                        ),
-                      ),
-                ),
-              ),
-              const SizedBox(height: 32),
-              _buildSectionTitle(
-                context,
                 context.t('testing_section'),
                 currentSessionColor,
               ),
@@ -284,17 +290,30 @@ class _ProfilePageState extends State<ProfilePage> {
                 currentSessionColor,
               ),
               Card(
-                child: ListTile(
-                  leading: Icon(Icons.feedback, color: currentSessionColor),
-                  title: Text(context.t('feedback_management_title')),
-                  subtitle: Text(context.t('feedback_management_desc')),
-                  trailing: const Icon(Icons.chevron_right),
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const FeedbackManagementPage(),
+                child: Column(
+                  children: [
+                    ListTile(
+                      leading: Icon(Icons.group, color: currentSessionColor),
+                      title: Text(context.t('manage_friends')),
+                      trailing: const Icon(Icons.chevron_right),
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const ManageFriendsPage()),
+                      ),
                     ),
-                  ),
+                    const Divider(height: 1, indent: 16, endIndent: 16),
+                    ListTile(
+                      leading: Icon(Icons.feedback, color: currentSessionColor),
+                      title: Text(context.t('feedback_management_title')),
+                      trailing: const Icon(Icons.chevron_right),
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const FeedbackManagementPage(),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               const SizedBox(height: 48),
@@ -319,23 +338,12 @@ class _ProfilePageState extends State<ProfilePage> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.red[50],
                       foregroundColor: Colors.red,
-                      minimumSize: const Size(160, 50),
-                    ),
-                  ),
-                  const SizedBox(width: 16),
-                  OutlinedButton.icon(
-                    onPressed: _showDeleteAccountDialog,
-                    icon: const Icon(Icons.delete_forever),
-                    label: Text(context.t('delete_account')),
-                    style: OutlinedButton.styleFrom(
-                      foregroundColor: Colors.red,
-                      side: const BorderSide(color: Colors.red),
-                      minimumSize: const Size(160, 50),
+                      elevation: 0,
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 48),
+              const SizedBox(height: 24),
             ],
           ),
         );
@@ -343,308 +351,175 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget _buildDailyProgressCard(
-    BuildContext context,
-    UserModel user,
-    Color color,
-  ) {
-    final progress = (user.dailyCompletions / user.dailyGoalCount).clamp(
-      0.0,
-      1.0,
-    );
-    final isGoalReached = user.dailyCompletions >= user.dailyGoalCount;
-
-    return Card(
-      elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 16, 24, 16),
-        child: Row(
-          children: [
-            Icon(Icons.trending_up, size: 24, color: color),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        context.t('done_today'),
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      Text(
-                        '${user.dailyCompletions.toStringAsFixed(1).replaceAll('.0', '')} / ${user.dailyGoalCount}',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: isGoalReached ? Colors.green : color,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 12),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: LinearProgressIndicator(
-                      value: progress,
-                      minHeight: 12,
-                      backgroundColor: color.withValues(alpha: 0.1),
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                        isGoalReached ? Colors.green : color,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  void _showDeleteAccountDialog() {
-    final passwordController = TextEditingController();
-    showDialog(
-      context: context,
-      builder:
-          (context) => StatefulBuilder(
-            builder:
-                (context, setDialogState) => AlertDialog(
-                  title: Text(context.t('delete_account')),
-                  content: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(context.t('delete_account_confirm')),
-                      const SizedBox(height: 16),
-                      TextField(
-                        controller: passwordController,
-                        obscureText: true,
-                        autofocus: true,
-                        decoration: InputDecoration(
-                          labelText: context.t('password'),
-                          hintText: context.t('password_required'),
-                          suffixIcon:
-                              passwordController.text.isNotEmpty
-                                  ? IconButton(
-                                    icon: const Icon(Icons.clear),
-                                    onPressed: () {
-                                      passwordController.clear();
-                                      setDialogState(() {});
-                                    },
-                                  )
-                                  : null,
-                        ),
-                        onChanged: (val) => setDialogState(() {}),
-                        onSubmitted: (val) => _handleDeleteConfirm(val),
-                      ),
-                    ],
-                  ),
-                  actions: [
-                    TextButton(
-                      onPressed: () => Navigator.pop(context),
-                      child: Text(context.t('cancel')),
-                    ),
-                    TextButton(
-                      onPressed:
-                          () => _handleDeleteConfirm(passwordController.text),
-                      child: Text(
-                        context.t('delete_account'),
-                        style: const TextStyle(color: Colors.red),
-                      ),
-                    ),
-                  ],
-                ),
-          ),
-    );
-  }
-
-  void _handleDeleteConfirm(String password) async {
-    final pass = password.trim();
-    if (pass.isEmpty) return;
-
-    final success = await _authService.deleteAccount(pass);
-    if (mounted) {
-      if (Navigator.canPop(context)) Navigator.pop(context); // Close dialog
-
-      if (success) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(context.t('account_deleted'))));
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => const LoginPage()),
-          (route) => false,
-        );
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(context.t('invalid_password_delete'))),
-        );
-      }
-    }
-  }
-
-  Widget _buildSectionTitle(
-    BuildContext context,
-    String title,
-    Color color, {
-    IconData? icon,
-  }) {
+  Widget _buildSectionTitle(BuildContext context, String title, Color color) {
     return Padding(
-      padding: const EdgeInsets.only(left: 8, bottom: 12),
+      padding: const EdgeInsets.only(bottom: 12, left: 4),
       child: Align(
         alignment: Alignment.centerLeft,
-        child: Row(
-          children: [
-            if (icon != null) ...[
-              Icon(icon, size: 18, color: color),
-              const SizedBox(width: 8),
-            ],
-            Text(
-              title.toUpperCase(),
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w900,
-                color: color,
-                letterSpacing: 1.5,
-              ),
-            ),
-          ],
+        child: Text(
+          title.toUpperCase(),
+          style: TextStyle(
+            color: color,
+            fontWeight: FontWeight.bold,
+            fontSize: 12,
+            letterSpacing: 1.2,
+          ),
         ),
       ),
     );
   }
 
-  Widget _buildStat(
-    BuildContext context,
-    String value,
-    String label, {
-    required IconData icon,
-    required Color color,
-    bool horizontal = false,
-  }) {
-    return Padding(
-      padding: const EdgeInsets.only(right: 16, bottom: 8),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, size: 20, color: color),
-          const SizedBox(width: 8),
-          Text(
-            value,
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(width: 6),
-          Text(
-            label,
-            style: TextStyle(
-              fontSize: 14,
-              color: Colors.grey[600],
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildAvatar(UserModel user, Color color, {double radius = 60}) {
-    return GestureDetector(
-      onTap: _pickImage,
-      child: Stack(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(color: color.withValues(alpha: 0.2), width: 4),
-              boxShadow: [
-                BoxShadow(
-                  color: color.withValues(alpha: 0.1),
-                  blurRadius: 12,
-                  spreadRadius: 2,
+  Widget _buildProfileHeader(UserModel user, Color color) {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Stack(
+              children: [
+                _buildAvatar(user, 45, color),
+                Positioned(
+                  right: 0,
+                  bottom: 0,
+                  child: GestureDetector(
+                    onTap: _pickAndUploadAvatar,
+                    child: Container(
+                      padding: const EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                        color: color,
+                        shape: BoxShape.circle,
+                        border: Border.all(color: Colors.white, width: 2),
+                      ),
+                      child: const Icon(
+                        Icons.camera_alt,
+                        size: 14,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),
-            child: CircleAvatar(
-              radius: radius,
-              backgroundColor: color.withValues(alpha: 0.1),
-              backgroundImage:
-                  user.avatarPath != null
-                      ? (user.avatarPath!.startsWith('http') || kIsWeb
-                              ? NetworkImage(user.avatarPath!)
-                              : FileImage(dynamicFile(user.avatarPath!)))
-                          as ImageProvider
-                      : null,
-              child:
-                  user.avatarPath == null
-                      ? Icon(Icons.person, size: radius, color: color)
-                      : null,
+            const SizedBox(width: 24),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      user.username,
+                      style: const TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(width: 4),
+                    IconButton(
+                      icon: const Icon(Icons.edit, size: 18, color: Colors.grey),
+                      onPressed: () => _showEditUsernameDialog(user.username),
+                      padding: EdgeInsets.zero,
+                      constraints: const BoxConstraints(),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      user.email,
+                      style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+                    ),
+                    const SizedBox(width: 4),
+                    IconButton(
+                      icon: const Icon(Icons.edit, size: 16, color: Colors.grey),
+                      onPressed: () => _showEditEmailDialog(user.email),
+                      padding: EdgeInsets.zero,
+                      constraints: const BoxConstraints(),
+                    ),
+                  ],
+                ),
+              ],
             ),
-          ),
-          Positioned(
-            bottom: 4,
-            right: 4,
-            child: Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: color,
-                shape: BoxShape.circle,
-                border: Border.all(color: Colors.white, width: 3),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.2),
-                    blurRadius: 4,
-                  ),
-                ],
-              ),
-              child: Icon(
-                Icons.camera_alt,
-                size: radius * 0.25,
-                color: Colors.white,
-              ),
-            ),
-          ),
-        ],
-      ),
+          ],
+        ),
+        const SizedBox(height: 32),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            _buildInfoItem(Icons.stars, '${user.totalXp}', context.t('total_xp'), Colors.orange),
+            _buildInfoItem(Icons.local_fire_department, '${user.currentStreak}', context.t('current_streak'), Colors.red),
+            _buildInfoItem(Icons.emoji_events, '${user.maxStreak}', context.t('max_streak'), Colors.amber),
+            _buildInfoItem(Icons.track_changes, '${user.dailyCompletions.toInt()}/${user.dailyGoalCount}', context.t('daily_goal'), color),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildInfoItem(IconData icon, String value, String label, Color color) {
+    return Column(
+      children: [
+        Icon(icon, color: color, size: 24),
+        const SizedBox(height: 4),
+        Text(
+          value,
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+        ),
+        Text(
+          label,
+          style: TextStyle(fontSize: 10, color: Colors.grey[600]),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildAvatar(UserModel user, double radius, Color color) {
+    return CircleAvatar(
+      radius: radius,
+      backgroundColor: color.withValues(alpha: 0.1),
+      backgroundImage:
+          user.avatarPath != null ? NetworkImage(user.avatarPath!) : null,
+      child:
+          user.avatarPath == null
+              ? Icon(Icons.person, size: radius, color: color)
+              : null,
     );
   }
 
   Widget _buildSettingsCard(BuildContext context, Color color, UserModel user) {
     return Card(
-      elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+        side: BorderSide(color: Colors.grey[200]!),
+      ),
       child: Column(
         children: [
           ListTile(
-            leading: Icon(Icons.adjust, color: color),
-            title: Text(context.t('next_day_goal')),
-            subtitle: Text(
-              context.t('goal_change_hint'),
-              style: const TextStyle(fontSize: 12),
-            ),
+            leading: Icon(Icons.flag, color: color),
+            title: Text(context.t('next_daily_goal')),
             trailing: Text(
-              '${user.nextDailyGoal} ${context.plural('card', user.nextDailyGoal)}',
+              '${user.nextDailyGoal}',
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
             onTap:
                 () => _showValuePicker(
-                  title: context.t('next_day_goal'),
+                  title: context.t('next_daily_goal'),
                   initialValue: user.nextDailyGoal,
                   min: 5,
-                  max: 50,
+                  max: 100,
                   defaultValue: 20,
                   onSelected: (val) => _authService.updateNextDailyGoal(val),
                 ),
           ),
-          const Divider(height: 1),
+          const Divider(height: 1, indent: 16, endIndent: 16),
           ListTile(
-            leading: Icon(Icons.school, color: color),
+            leading: Icon(Icons.slow_motion_video, color: color),
             title: Text(context.t('learn_session_size')),
             trailing: Text(
-              '${user.learnSessionSize} ${context.plural('card', user.learnSessionSize)}',
+              '${user.learnSessionSize}',
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
             onTap:
                 () => _showValuePicker(
@@ -652,144 +527,47 @@ class _ProfilePageState extends State<ProfilePage> {
                   initialValue: user.learnSessionSize,
                   min: 5,
                   max: 50,
-                  defaultValue: 20,
+                  defaultValue: 10,
                   onSelected: (val) => _authService.updateLearnSessionSize(val),
                 ),
           ),
-          const Divider(height: 1),
+          const Divider(height: 1, indent: 16, endIndent: 16),
           ListTile(
             leading: Icon(Icons.quiz, color: color),
             title: Text(context.t('test_session_size')),
             trailing: Text(
-              '${user.testSessionSize} ${context.plural('card', user.testSessionSize)}',
+              '${user.testSessionSize}',
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
             onTap:
                 () => _showValuePicker(
                   title: context.t('test_session_size'),
                   initialValue: user.testSessionSize,
                   min: 5,
-                  max: 25,
+                  max: 50,
                   defaultValue: 10,
                   onSelected: (val) => _authService.updateTestSessionSize(val),
                 ),
           ),
-          const Divider(height: 1),
+          const Divider(height: 1, indent: 16, endIndent: 16),
           ListTile(
-            leading: Icon(Icons.view_headline, color: color),
+            leading: Icon(Icons.view_list, color: color),
             title: Text(context.t('options_count')),
-            trailing: Text('${user.optionsCount}'),
+            trailing: Text(
+              '${user.optionsCount}',
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
             onTap:
                 () => _showValuePicker(
                   title: context.t('options_count'),
                   initialValue: user.optionsCount,
-                  min: 4,
-                  max: 8,
+                  min: 2,
+                  max: 12,
                   defaultValue: 6,
                   onSelected: (val) => _authService.updateOptionsCount(val),
                 ),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildProfileHeader(UserModel user, Color currentSessionColor) {
-    return Card(
-      elevation: 4,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-      child: Padding(
-        padding: const EdgeInsets.all(32),
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            final isSmall = constraints.maxWidth < 600;
-            final avatarRadius = isSmall ? 35.0 : 60.0;
-            final spacing = isSmall ? 16.0 : 24.0;
-            final nameSize = isSmall ? 20.0 : 26.0;
-            final emailSize = isSmall ? 14.0 : 16.0;
-
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Top Row: Avatar on Left, Name/Email on Right
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _buildAvatar(user, currentSessionColor, radius: avatarRadius),
-                    SizedBox(width: spacing),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Flexible(
-                                child: Text(
-                                  user.username,
-                                  style: TextStyle(
-                                    fontSize: nameSize,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                              const SizedBox(width: 8),
-                              IconButton(
-                                icon: Icon(Icons.edit, size: isSmall ? 18 : 20),
-                                onPressed:
-                                    () => _showEditUsernameDialog(user.username),
-                                padding: EdgeInsets.zero,
-                                constraints: const BoxConstraints(),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 4), // Unified vertical gap
-                          Text(
-                            user.email,
-                            style: TextStyle(
-                              fontSize: emailSize,
-                              color: Colors.grey[600],
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 24),
-                // Bottom Area: Stats in a row (Wrap for floating)
-                Wrap(
-                  spacing: 16,
-                  runSpacing: 12,
-                  children: [
-                    _buildStat(
-                      context,
-                      '${user.totalXp}',
-                      context.t('xp'),
-                      icon: Icons.stars,
-                      color: Colors.orange,
-                    ),
-                    _buildStat(
-                      context,
-                      '${user.currentStreak}',
-                      context.t('streak'),
-                      icon: Icons.local_fire_department,
-                      color: Colors.red,
-                    ),
-                    _buildStat(
-                      context,
-                      '${user.maxStreak}',
-                      context.t('max_streak'),
-                      icon: Icons.emoji_events,
-                      color: Colors.amber,
-                    ),
-                  ],
-                ),
-              ],
-            );
-          },
-        ),
       ),
     );
   }

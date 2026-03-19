@@ -7,6 +7,7 @@ import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/core/widgets/aliolo_scrollable_page.dart';
 import 'package:aliolo/features/management/presentation/pages/feedback_detail_page.dart';
 import 'package:aliolo/data/services/auth_service.dart';
+import 'package:aliolo/features/feedback/presentation/pages/feedback_page.dart';
 
 class FeedbackManagementPage extends StatefulWidget {
   const FeedbackManagementPage({super.key});
@@ -72,6 +73,21 @@ class _FeedbackManagementPageState extends State<FeedbackManagementPage> {
         IconButton(
           icon: const Icon(Icons.arrow_back, color: appBarColor),
           onPressed: () => Navigator.pop(context),
+        ),
+        IconButton(
+          icon: const Icon(Icons.add, color: appBarColor),
+          onPressed: () async {
+            await Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => FeedbackPage(
+                  appBarColor: themeColor,
+                  contextTitle: 'Feedback Management',
+                ),
+              ),
+            );
+            _loadFeedbacks();
+          },
         ),
         IconButton(
           icon: const Icon(Icons.refresh, color: appBarColor),

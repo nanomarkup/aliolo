@@ -15,6 +15,8 @@ class FeedbackService {
   final _supabase = Supabase.instance.client;
   final _uuid = const Uuid();
 
+  final ValueNotifier<bool> pendingNotifications = ValueNotifier<bool>(false);
+
   Future<void> submitFeedback(FeedbackModel feedback, List<XFile> attachments) async {
     try {
       final userId = _supabase.auth.currentUser?.id;
@@ -96,6 +98,7 @@ class FeedbackService {
   Future<void> updateFeedbackStatus(String feedbackId, String status) async {
     try {
       await _supabase.from('feedbacks').update({'status': status}).eq('id', feedbackId);
+      await hasPendingNotifications(); // Update global badge state
     } catch (e) {
       debugPrint('Error updating feedback status: $e');
       rethrow;
@@ -123,6 +126,7 @@ class FeedbackService {
   Future<void> deleteReply(String replyId) async {
     try {
       await _supabase.from('feedback_replies').delete().eq('id', replyId);
+      await hasPendingNotifications(); // Update global badge state
     } catch (e) {
       debugPrint('Error deleting reply: $e');
       rethrow;
@@ -171,7 +175,7 @@ class FeedbackService {
 
       await _supabase.from('feedback_replies').insert(replyData);
 
-      // 3. Automatically update status
+      // 3. Automatically update status (which calls hasPendingNotifications internally)
       final isAdmin = userId == 'f2fb4c9c-169b-447d-b8a6-dce72c4ed5ac';
       final newStatus = isAdmin ? 'replied' : 'open';
       await updateFeedbackStatus(reply.feedbackId, newStatus);
@@ -192,6 +196,45 @@ class FeedbackService {
     } catch (e) {
       debugPrint('Error fetching replies: $e');
       return [];
+    }
+  }
+
+  Future<bool> hasPendingNotifications() async {
+    try {
+      final userId = _supabase.auth.currentUser?.id;
+      if (userId == null) {
+        pendingNotifications.value = false;
+        return false;
+      }
+
+      final isAdmin = userId == 'f2fb4c9c-169b-447d-b8a6-dce72c4ed5ac';
+      bool hasNotif = false;
+      
+      if (isAdmin) {
+        // Admin: Check for any 'open' feedbacks in the system
+        final response = await _supabase
+            .from('feedbacks')
+            .select('id')
+            .eq('status', 'open')
+            .limit(1);
+        hasNotif = (response as List).isNotEmpty;
+      } else {
+        // User: Check for own feedbacks with 'replied' status
+        final response = await _supabase
+            .from('feedbacks')
+            .select('id')
+            .eq('user_id', userId)
+            .eq('status', 'replied')
+            .limit(1);
+        hasNotif = (response as List).isNotEmpty;
+      }
+      
+      pendingNotifications.value = hasNotif;
+      return hasNotif;
+    } catch (e) {
+      debugPrint('Error checking feedback notifications: $e');
+      pendingNotifications.value = false;
+      return false;
     }
   }
 }

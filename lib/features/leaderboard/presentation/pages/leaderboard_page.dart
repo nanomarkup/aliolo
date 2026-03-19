@@ -11,6 +11,8 @@ import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/features/auth/presentation/pages/profile_page.dart';
 import 'package:aliolo/features/settings/presentation/pages/settings_page.dart';
 import 'package:aliolo/features/subjects/presentation/pages/subject_page.dart';
+import 'package:aliolo/data/services/feedback_service.dart';
+import 'package:aliolo/core/di/service_locator.dart';
 
 class LeaderboardPage extends StatefulWidget {
   const LeaderboardPage({super.key});
@@ -143,14 +145,24 @@ class _LeaderboardPageState extends State<LeaderboardPage>
               onPressed: () => _loadData(),
             ),
             IconButton(
-              icon: const Icon(Icons.person, color: appBarColor),
-              onPressed:
-                  () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const ProfilePage(),
-                    ),
+              icon: ValueListenableBuilder<bool>(
+                valueListenable: getIt<FeedbackService>().pendingNotifications,
+                builder: (context, hasNotif, _) {
+                  return Badge(
+                    isLabelVisible: hasNotif,
+                    backgroundColor: Colors.amber,
+                    child: const Icon(Icons.person, color: appBarColor),
+                  );
+                },
+              ),
+              onPressed: () async {
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ProfilePage(),
                   ),
+                );
+              },
             ),
             IconButton(
               icon: const Icon(Icons.settings, color: appBarColor),

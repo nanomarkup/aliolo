@@ -25,6 +25,20 @@ class AuthService extends ChangeNotifier {
   Future<void> init() async {
     try {
       _supabase = Supabase.instance.client;
+      
+      // Listen to auth state changes (e.g. email confirmed, sign in/out)
+      _supabase!.auth.onAuthStateChange.listen((data) {
+        final AuthChangeEvent event = data.event;
+        final Session? session = data.session;
+
+        if (session != null && (event == AuthChangeEvent.signedIn || event == AuthChangeEvent.userUpdated)) {
+          _fetchAndSyncUser(session.user);
+        } else if (event == AuthChangeEvent.signedOut) {
+          _currentUser = null;
+          notifyListeners();
+        }
+      });
+
       final session = _supabase!.auth.currentSession;
       if (session != null) {
         await _fetchAndSyncUser(session.user);
@@ -68,7 +82,11 @@ class AuthService extends ChangeNotifier {
         }
 
         // Ensure email is consistent from remoteUser if missing or different
-        _currentUser!.email = remoteUser.email!.toLowerCase();
+        if (_currentUser!.email != remoteUser.email!.toLowerCase()) {
+          _currentUser!.email = remoteUser.email!.toLowerCase();
+          await updateUser(_currentUser!);
+        }
+
         ThemeService().setThemeFromString(_currentUser!.themeMode);
         ThemeService().setPrimaryColor(
           ThemeService.fromHex(_currentUser!.mainColor),
@@ -149,6 +167,14 @@ class AuthService extends ChangeNotifier {
     if (_isSupabaseInitialized) await _supabase!.auth.signOut();
     _currentUser = null;
     notifyListeners();
+  }
+
+  Future<void> refreshUser() async {
+    if (_supabase == null) return;
+    final user = _supabase!.auth.currentUser;
+    if (user != null) {
+      await _fetchAndSyncUser(user);
+    }
   }
 
   Future<void> updateUser(UserModel user) async {
@@ -388,6 +414,18 @@ class AuthService extends ChangeNotifier {
     }
   }
 
+  Future<void> updateEmail(String newEmail) async {
+    if (_supabase == null || _currentUser == null) return;
+    try {
+      await _supabase!.auth.updateUser(UserAttributes(email: newEmail));
+      // The email in our profiles table will be synced next time the user logs in 
+      // or we can optimisticly update it if we want, but usually we wait for confirmation.
+    } catch (e) {
+      _lastErrorMessage = e.toString();
+      rethrow;
+    }
+  }
+
   Future<void> updateAvatarPath(XFile image) async {
     if (_currentUser == null) return;
     try {
@@ -397,7 +435,7 @@ class AuthService extends ChangeNotifier {
 
       final bytes = await image.readAsBytes();
       await _supabase!.storage
-          .from('user_assets')
+          .from('avatars')
           .uploadBinary(
             storagePath,
             bytes,
@@ -405,11 +443,12 @@ class AuthService extends ChangeNotifier {
           );
 
       final String publicUrl = _supabase!.storage
-          .from('user_assets')
+          .from('avatars')
           .getPublicUrl(storagePath);
 
       _currentUser!.avatarPath = publicUrl;
       await updateUser(_currentUser!);
+      notifyListeners();
     } catch (e) {
       print('Error uploading avatar: $e');
     }

@@ -159,7 +159,7 @@ class _FeedbackDetailPageState extends State<FeedbackDetailPage> {
         context: context,
         builder: (context) => AlertDialog(
           title: const Text('Close Request?'),
-          content: const Text('Are you sure you want to close this feedback request? You will still be able to reopen it later if needed.'),
+          content: const Text('Are you sure you want to close this feedback request?'),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context, false),
