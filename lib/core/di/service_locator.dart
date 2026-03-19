@@ -7,6 +7,7 @@ import 'package:aliolo/data/services/testing_language_service.dart';
 import 'package:aliolo/data/services/sound_service.dart';
 import 'package:aliolo/data/services/math_service.dart';
 import 'package:aliolo/data/services/progress_service.dart';
+import 'package:aliolo/data/services/feedback_service.dart';
 
 
 final getIt = GetIt.instance;
@@ -19,6 +20,7 @@ Future<void> setupLocator() async {
     getIt.registerSingleton<TranslationService>(TranslationService());
     getIt.registerSingleton<TestingLanguageService>(TestingLanguageService());
     getIt.registerSingleton<SoundService>(SoundService());
+    getIt.registerSingleton<FeedbackService>(FeedbackService());
 
     // 2. Initialize critical services in order
     await getIt<CardService>().init().catchError(

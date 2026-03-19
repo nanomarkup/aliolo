@@ -11,6 +11,7 @@ import 'package:aliolo/features/testing/presentation/pages/test_page.dart';
 import 'package:aliolo/features/testing/presentation/pages/learn_page.dart';
 import 'package:aliolo/features/management/presentation/pages/subject_edit_page.dart';
 import 'package:aliolo/features/management/presentation/pages/add_card_page.dart';
+import 'package:aliolo/features/feedback/presentation/pages/feedback_page.dart';
 
 class SubjectLandingPage extends StatefulWidget {
   final SubjectModel subject;
@@ -182,6 +183,22 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                 ),
                 onPressed: _toggleFavorite,
               ),
+            IconButton(
+              icon: const Icon(Icons.feedback, color: appBarColor),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder:
+                        (context) => FeedbackPage(
+                          subjectId: _currentSubject.id,
+                          contextTitle: _currentSubject.getName(widget.languageCode),
+                          appBarColor: pillarColor,
+                        ),
+                  ),
+                );
+              },
+            ),
             if (isOwner) ...[
               IconButton(
                 icon: const Icon(Icons.edit, color: appBarColor),
@@ -425,10 +442,10 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                                 (context) => AddCardPage(
                                   existingCard: card,
                                   isReadOnly: !isCardMine,
+                                  pillarId: _currentSubject.pillarId,
                                 ),
                           ),
-                        );
-                        _refreshData(silent: true);
+                        );                        _refreshData(silent: true);
                       },
                       child: Card(
                         clipBehavior: Clip.antiAlias,

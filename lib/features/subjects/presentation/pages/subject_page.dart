@@ -17,6 +17,8 @@ import 'package:aliolo/features/leaderboard/presentation/pages/leaderboard_page.
 import 'package:aliolo/features/subjects/presentation/pages/subject_landing_page.dart';
 import 'package:aliolo/features/management/presentation/pages/subject_edit_page.dart';
 
+import 'package:aliolo/features/feedback/presentation/pages/feedback_page.dart';
+
 class SubjectPage extends StatefulWidget {
   const SubjectPage({super.key});
 

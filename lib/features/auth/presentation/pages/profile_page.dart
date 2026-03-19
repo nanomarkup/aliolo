@@ -14,6 +14,7 @@ import 'package:aliolo/features/subjects/presentation/pages/subject_page.dart';
 import 'package:aliolo/features/leaderboard/presentation/pages/leaderboard_page.dart';
 import 'package:aliolo/features/settings/presentation/pages/settings_page.dart';
 import 'package:aliolo/features/auth/presentation/pages/manage_friends_page.dart';
+import 'package:aliolo/features/management/presentation/pages/feedback_management_page.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -276,6 +277,26 @@ class _ProfilePageState extends State<ProfilePage> {
                 currentSessionColor,
               ),
               _buildSettingsCard(context, currentSessionColor, user),
+              const SizedBox(height: 32),
+              _buildSectionTitle(
+                context,
+                context.t('support_and_management'),
+                currentSessionColor,
+              ),
+              Card(
+                child: ListTile(
+                  leading: Icon(Icons.feedback, color: currentSessionColor),
+                  title: Text(context.t('feedback_management_title')),
+                  subtitle: Text(context.t('feedback_management_desc')),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const FeedbackManagementPage(),
+                    ),
+                  ),
+                ),
+              ),
               const SizedBox(height: 48),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,

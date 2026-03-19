@@ -267,10 +267,10 @@ class _SubjectDetailsPageState extends State<SubjectDetailsPage> {
                             (context) => AddCardPage(
                               existingCard: card,
                               isReadOnly: !isCardMine,
+                              pillarId: _currentSubject.pillarId,
                             ),
                       ),
-                    );
-                    _loadCards();
+                    );                    _loadCards();
                   },
                   child: Card(
                     clipBehavior: Clip.antiAlias,

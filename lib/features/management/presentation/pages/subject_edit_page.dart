@@ -9,6 +9,8 @@ import 'package:aliolo/data/services/card_service.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
 
+import 'package:aliolo/features/feedback/presentation/pages/feedback_page.dart';
+
 class SubjectEditPage extends StatefulWidget {
   final SubjectModel? existingSubject;
   final int? pillarId;
@@ -683,6 +685,30 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
               }
             },
           ),
+          if (widget.existingSubject != null)
+            IconButton(
+              icon: const Icon(Icons.feedback, color: appBarColor),
+              onPressed: () {
+                final pillar = pillars.firstWhere(
+                  (p) => p.id == _selectedPillar,
+                  orElse: () => pillars.first,
+                );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder:
+                        (context) => FeedbackPage(
+                          subjectId: widget.existingSubject?.id,
+                          contextTitle:
+                              widget.existingSubject?.getName(
+                                TranslationService().currentLocale.languageCode,
+                              ) ??
+                              'Subject',
+                          appBarColor: pillar.getColor(),
+                        ),
+                  ),
+                );
+              },            ),
           if (isOwner)
             IconButton(
               icon:

@@ -17,6 +17,8 @@ import 'package:flutter/foundation.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:path/path.dart' as p;
 
+import 'package:aliolo/features/feedback/presentation/pages/feedback_page.dart';
+
 class AddCardPage extends StatefulWidget {
   final String? initialSubjectId;
   final int? pillarId;
@@ -89,6 +91,7 @@ class _AddCardPageState extends State<AddCardPage> {
 
   List<SubjectModel> _mySubjects = [];
   String? _selectedSubjectId;
+  int? _internalPillarId;
   final _keyboardFocusNode = FocusNode();
 
   @override
@@ -96,6 +99,7 @@ class _AddCardPageState extends State<AddCardPage> {
     super.initState();
     _selectedSubjectId =
         widget.initialSubjectId ?? widget.existingCard?.subjectId;
+    _internalPillarId = widget.pillarId;
     _initDrafts();
     _loadData();
     _updateControllers();
@@ -181,6 +185,18 @@ class _AddCardPageState extends State<AddCardPage> {
         if (_selectedSubjectId == null && _mySubjects.isNotEmpty) {
           _selectedSubjectId = _mySubjects.first.id;
         }
+
+        // Try to find the pillarId if we don't have it
+        if (_internalPillarId == null && _selectedSubjectId != null) {
+          final s = subjects.firstWhere(
+            (s) => s.id == _selectedSubjectId,
+            orElse: () => subjects.firstWhere((s) => true), // just a dummy or keep null
+          );
+          if (s.id == _selectedSubjectId) {
+            _internalPillarId = s.pillarId;
+          }
+        }
+
         _isLoading = false;
       });
     }
@@ -590,11 +606,34 @@ class _AddCardPageState extends State<AddCardPage> {
           icon: const Icon(Icons.arrow_back, color: appBarColor),
           onPressed: () => Navigator.pop(context),
         ),
+        if (widget.existingCard != null)
+          IconButton(
+            icon: const Icon(Icons.feedback, color: appBarColor),
+            onPressed: () {
+              final pillar = pillars.firstWhere(
+                (p) => p.id == (_internalPillarId ?? 1),
+                orElse: () => pillars.first,
+              );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder:
+                      (context) => FeedbackPage(
+                        subjectId: widget.existingCard?.subjectId ?? widget.initialSubjectId,
+                        cardId: widget.existingCard?.id,
+                        contextTitle: widget.existingCard != null 
+                          ? 'Card: ${widget.existingCard!.localizedData['global']?.answer}'
+                          : 'Card',
+                        appBarColor: pillar.getColor(),
+                      ),
+                ),
+              );
+            },
+          ),
         if (!widget.isReadOnly)
           IconButton(
             icon:
-                _isSaving
-                    ? const SizedBox(
+                _isSaving                    ? const SizedBox(
                       width: 20,
                       height: 20,
                       child: CircularProgressIndicator(
