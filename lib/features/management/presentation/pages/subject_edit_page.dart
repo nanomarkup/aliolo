@@ -15,12 +15,14 @@ class SubjectEditPage extends StatefulWidget {
   final SubjectModel? existingSubject;
   final int? pillarId;
   final String? initialAgeGroup;
+  final String? initialParentId;
 
   const SubjectEditPage({
     super.key,
     this.existingSubject,
     this.pillarId,
     this.initialAgeGroup,
+    this.initialParentId,
   });
 
   @override
@@ -50,9 +52,12 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
   late int _selectedPillar;
   late bool _isPublic;
   late String _selectedAgeGroup;
+  late String _selectedType;
+  String? _selectedParentId;
   String _selectedLang = 'global';
   bool _isSaving = false;
   int _itemsPerRow = 8;
+  List<SubjectModel> _allSubjects = [];
 
   final Map<String, DraftLocalizedSubjectData> _drafts = {
     'global': DraftLocalizedSubjectData(),
@@ -70,15 +75,27 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
         ((widget.initialAgeGroup != null && widget.initialAgeGroup != 'all')
             ? widget.initialAgeGroup!
             : 'all');
+    _selectedType = widget.existingSubject?.type ?? 'standard';
+    _selectedParentId = widget.existingSubject?.parentId ?? widget.initialParentId;
 
     if (pillars.isEmpty) {
       _cardService.getPillars().then((_) {
         if (mounted) setState(() {});
       });
     }
-
+    
+    _loadAllSubjects();
     _initDrafts();
     _updateControllers();
+  }
+
+  Future<void> _loadAllSubjects() async {
+    final results = await _cardService.getDashboardSubjects();
+    if (mounted) {
+      setState(() {
+        _allSubjects = results;
+      });
+    }
   }
 
   void _onKeyEvent(KeyEvent event) {
@@ -165,6 +182,7 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
       'pillarId': _selectedPillar,
       'isPublic': _isPublic,
       'ageGroup': _selectedAgeGroup,
+      'type': _selectedType,
       'localizedData': _drafts.map(
         (key, value) => MapEntry(key, {
           if (value.name.isNotEmpty) 'name': value.name,
@@ -251,6 +269,9 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
                               }
                               if (parsed['ageGroup'] is String) {
                                 _selectedAgeGroup = parsed['ageGroup'];
+                              }
+                              if (parsed['type'] is String) {
+                                _selectedType = parsed['type'];
                               }
                               if (parsed['localizedData'] is Map) {
                                 final locData = parsed['localizedData'] as Map;
@@ -357,8 +378,10 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
 
     try {
       final now = DateTime.now();
+      final subjectId = widget.existingSubject?.id ?? _cardService.generateId();
+      
       final subject = SubjectModel(
-        id: widget.existingSubject?.id ?? '',
+        id: subjectId,
         pillarId: _selectedPillar,
         ageGroup: _selectedAgeGroup,
         ownerId:
@@ -373,8 +396,8 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
         createdAt: widget.existingSubject?.createdAt ?? now,
         updatedAt: now,
         localizedData: finalData,
-        type: widget.existingSubject?.type ?? 'standard',
-        parentId: widget.existingSubject?.parentId,
+        type: _selectedType,
+        parentId: _selectedParentId,
       );
 
       await _cardService.addSubject(subject);
@@ -517,7 +540,6 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
                             )
                             .toList();
 
-                    // Ensure _selectedPillar is in the list to avoid assertion failure
                     if (!pillars.any((p) => p.id == _selectedPillar)) {
                       dropdownItems.add(
                         DropdownMenuItem(
@@ -532,7 +554,128 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
                       isOwner
                           ? (val) {
                             if (val != null) {
-                              setState(() => _selectedPillar = val);
+                              setState(() {
+                                _selectedPillar = val;
+                                // Reset parent if it doesn't belong to the new pillar
+                                if (_selectedParentId != null) {
+                                  final p = _allSubjects.firstWhere(
+                                    (s) => s.id == _selectedParentId,
+                                  );
+                                  if (p.pillarId != val) {
+                                    _selectedParentId = null;
+                                  }
+                                }
+                              });
+                            }
+                          }
+                          : null,
+                ),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: DropdownButtonFormField<String?>(
+                  value: _selectedParentId,
+                  decoration: InputDecoration(
+                    labelText: context.t('parent_folder_label'),
+                    border: const OutlineInputBorder(),
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 8,
+                    ),
+                  ),
+                  items: (() {
+                    final items = [
+                      DropdownMenuItem<String?>(
+                        value: null,
+                        child: Text(context.t('no_folder')),
+                      ),
+                      ..._allSubjects
+                          .where(
+                            (s) =>
+                                s.type == 'folder' &&
+                                s.pillarId == _selectedPillar &&
+                                s.id != widget.existingSubject?.id,
+                          )
+                          .map(
+                            (s) => DropdownMenuItem(
+                              value: s.id,
+                              child: Text(
+                                s.getName(
+                                  TranslationService()
+                                      .currentLocale
+                                      .languageCode,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ),
+                    ];
+
+                    // Safety: Ensure current selected ID is in the list to avoid assertion
+                    if (_selectedParentId != null &&
+                        !items.any((item) => item.value == _selectedParentId)) {
+                      items.add(
+                        DropdownMenuItem(
+                          value: _selectedParentId,
+                          child: const Text('Loading folder...'),
+                        ),
+                      );
+                    }
+                    return items;
+                  })(),
+                  onChanged:
+                      (isOwner && _selectedType != 'folder')
+                          ? (val) {
+                            setState(() {
+                              _selectedParentId = val;
+                              if (val != null) {
+                                _selectedType = 'standard';
+                              }
+                            });
+                          }
+                          : null,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 20),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: DropdownButtonFormField<String>(
+                  value: _selectedType,
+                  decoration: InputDecoration(
+                    labelText: context.t('subject_type'),
+                    border: const OutlineInputBorder(),
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 8,
+                    ),
+                  ),
+                  items: [
+                    DropdownMenuItem(
+                      value: 'standard',
+                      child: Text(context.t('type_standard')),
+                    ),
+                    DropdownMenuItem(
+                      value: 'folder',
+                      child: Text(context.t('type_folder')),
+                    ),
+                  ],
+                  onChanged:
+                      (isOwner &&
+                              _selectedParentId == null &&
+                              (widget.existingSubject == null ||
+                                  widget.existingSubject!.isEditableType))
+                          ? (val) {
+                            if (val != null) {
+                              setState(() {
+                                _selectedType = val;
+                                if (val == 'folder') {
+                                  _selectedParentId = null;
+                                }
+                              });
                             }
                           }
                           : null,
@@ -627,15 +770,42 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
   }
 
   bool _hasUnsavedChanges() {
-    for (var draft in _drafts.values) {
-      if (draft.name.isNotEmpty || draft.description.isNotEmpty) {
-        if (widget.existingSubject == null) return true;
-        // For existing subjects, compare with original data
-        // (Simplification: if it's not empty and we're editing, assume change for now)
-        // A more robust check would compare with widget.existingSubject.localizedData
-        return true; 
+    if (widget.existingSubject == null) {
+      // For new subjects, check if anything is filled
+      for (var draft in _drafts.values) {
+        if (draft.name.isNotEmpty || draft.description.isNotEmpty) return true;
       }
+      return false;
     }
+
+    final original = widget.existingSubject!;
+
+    // 1. Check common settings
+    if (_selectedPillar != original.pillarId) return true;
+    if (_selectedAgeGroup != original.ageGroup) return true;
+    if (_isPublic != original.isPublic) return true;
+    if (_selectedType != original.type) return true;
+    if (_selectedParentId != original.parentId) return true;
+
+    // 2. Check localized data
+    // We check all potential languages (existing + current available ones)
+    final allLangs = {
+      ...original.localizedData.keys,
+      ..._drafts.keys,
+    };
+
+    for (var lang in allLangs) {
+      final draft = _drafts[lang];
+      final orig = original.localizedData[lang];
+
+      final draftName = draft?.name ?? '';
+      final draftDesc = draft?.description ?? '';
+      final origName = orig?.name ?? '';
+      final origDesc = orig?.description ?? '';
+
+      if (draftName != origName || draftDesc != origDesc) return true;
+    }
+
     return false;
   }
 
@@ -750,6 +920,25 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
             IconButton(
               icon: const Icon(Icons.delete, color: appBarColor),
               onPressed: () async {
+                if (widget.existingSubject!.type == 'folder' &&
+                    widget.existingSubject!.childCount > 0) {
+                  showDialog(
+                    context: context,
+                    builder:
+                        (context) => AlertDialog(
+                          title: Text(context.t('cannot_delete_folder')),
+                          content: Text(context.t('delete_subjects_first')),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.pop(context),
+                              child: Text(context.t('ok')),
+                            ),
+                          ],
+                        ),
+                  );
+                  return;
+                }
+
                 final cardCount = widget.existingSubject!.cardCount;
                 final confirmed = await showDialog<bool>(
                   context: context,

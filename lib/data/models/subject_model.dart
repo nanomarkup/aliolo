@@ -44,6 +44,8 @@ class SubjectModel {
       id == 'de04da1c-9820-4e61-ae6b-bc7ed07eeb93' ||
       id == '5e81da1f-f92c-44d2-b3cd-f921d05425df';
 
+  bool get isEditableType => cardCount == 0 && childCount == 0;
+
   bool get isSubtraction =>
       id == 'ce04da1c-9820-4e61-ae6b-bc7ed07eeb93' ||
       id == 'f59a0f9c-5d6d-4f2d-b426-eb9ca6bf2782';

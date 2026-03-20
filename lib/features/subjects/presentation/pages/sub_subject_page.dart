@@ -7,7 +7,9 @@ import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/core/di/service_locator.dart';
+import 'package:aliolo/features/management/presentation/pages/subject_edit_page.dart';
 import 'package:aliolo/features/subjects/presentation/pages/subject_landing_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SubSubjectPage extends StatefulWidget {
   final SubjectModel parentSubject;
@@ -36,12 +38,14 @@ class _SubSubjectPageState extends State<SubSubjectPage> {
   bool _isLoading = true;
   late String _selectedAgeFilter;
   late String _collectionFilter;
+  late SubjectModel _currentParentSubject;
 
   @override
   void initState() {
     super.initState();
     _selectedAgeFilter = widget.initialAgeFilter;
     _collectionFilter = widget.initialCollectionFilter;
+    _currentParentSubject = widget.parentSubject;
     _loadSubSubjects();
   }
 
@@ -53,10 +57,13 @@ class _SubSubjectPageState extends State<SubSubjectPage> {
 
   Future<void> _loadSubSubjects() async {
     setState(() => _isLoading = true);
-    final results = await _cardService.getSubSubjects(widget.parentSubject.id);
+    final results = await _cardService.getSubSubjects(_currentParentSubject.id);
+    final updatedParent = await _cardService.getSubjectById(_currentParentSubject.id);
+    
     if (mounted) {
       setState(() {
         _allSubSubjects = results;
+        if (updatedParent != null) _currentParentSubject = updatedParent;
         _applyFilters();
         _isLoading = false;
       });
@@ -92,19 +99,69 @@ class _SubSubjectPageState extends State<SubSubjectPage> {
     });
   }
 
+  void _confirmDeleteFolder() {
+    if (_allSubSubjects.isNotEmpty) {
+      showDialog(
+        context: context,
+        builder:
+            (context) => AlertDialog(
+              title: Text(context.t('cannot_delete_folder')),
+              content: Text(context.t('delete_subjects_first')),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: Text(context.t('ok')),
+                ),
+              ],
+            ),
+      );
+      return;
+    }
+
+    showDialog(
+      context: context,
+      builder:
+          (context) => AlertDialog(
+            title: Text(context.t('delete_subject')),
+            content: const Text('Delete this folder?'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text(context.t('cancel')),
+              ),
+              TextButton(
+                onPressed: () async {
+                  await _cardService.deleteSubjectById(_currentParentSubject.id);
+                  if (context.mounted) {
+                    Navigator.pop(context); // Close dialog
+                    Navigator.pop(context, true); // Go back to dashboard
+                  }
+                },
+                child: Text(
+                  context.t('delete'),
+                  style: const TextStyle(color: Colors.red),
+                ),
+              ),
+            ],
+          ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final pillar = pillars.firstWhere(
-      (p) => p.id == widget.parentSubject.pillarId,
+      (p) => p.id == _currentParentSubject.pillarId,
       orElse: () => pillars.first,
     );
     final pillarColor = pillar.getColor();
     const appBarColor = Colors.white;
     final lang = widget.languageCode;
 
+    final isOwner = _currentParentSubject.ownerId == _authService.currentUser?.serverId;
+
     return AlioloScrollablePage(
       title: Text(
-        widget.parentSubject.getName(lang),
+        _currentParentSubject.getName(lang),
         style: const TextStyle(color: appBarColor, fontWeight: FontWeight.bold),
       ),
       appBarColor: pillarColor,
@@ -113,6 +170,29 @@ class _SubSubjectPageState extends State<SubSubjectPage> {
           icon: const Icon(Icons.arrow_back, color: appBarColor),
           onPressed: () => Navigator.pop(context),
         ),
+        if (isOwner) ...[
+          IconButton(
+            icon: const Icon(Icons.edit, color: appBarColor),
+            onPressed: () async {
+              final result = await Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder:
+                      (context) => SubjectEditPage(
+                        existingSubject: _currentParentSubject,
+                      ),
+                ),
+              );
+              if (result == true) {
+                _loadSubSubjects();
+              }
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.delete, color: appBarColor),
+            onPressed: _confirmDeleteFolder,
+          ),
+        ],
       ],
       fixedBody: LayoutBuilder(
         builder: (context, constraints) {
@@ -180,6 +260,28 @@ class _SubSubjectPageState extends State<SubSubjectPage> {
                           pillarColor: pillarColor,
                         ),
                       ),
+                      const SizedBox(width: 8),
+                      SizedBox(
+                        width: 48,
+                        child: IconButton(
+                          icon: Icon(Icons.add_circle, color: pillarColor, size: 40),
+                          padding: EdgeInsets.zero,
+                          onPressed: () async {
+                            final result = await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder:
+                                    (context) => SubjectEditPage(
+                                      pillarId: _currentParentSubject.pillarId,
+                                      initialAgeGroup: _selectedAgeFilter,
+                                      initialParentId: _currentParentSubject.id,
+                                    ),
+                              ),
+                            );
+                            if (result == true) _loadSubSubjects();
+                          },
+                        ),
+                      ),
                     ],
                   ),
                 ],
@@ -187,73 +289,98 @@ class _SubSubjectPageState extends State<SubSubjectPage> {
             );
           }
 
-          return Padding(
-            padding: const EdgeInsets.only(top: 16, bottom: 24),
-            child: Row(
-              children: [
-                Expanded(
-                  flex: 3,
-                  child: TextField(
-                    controller: _searchController,
-                    decoration: InputDecoration(
-                      hintText: context.t('search_subjects'),
-                      prefixIcon: const Icon(Icons.search),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
+          return Column(
+            children: [
+              const SizedBox(height: 16),
+              Row(
+                children: [
+                  Expanded(
+                    flex: 3,
+                    child: TextField(
+                      controller: _searchController,
+                      decoration: InputDecoration(
+                        hintText: context.t('search_subjects'),
+                        prefixIcon: const Icon(Icons.search),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+                        filled: true,
+                        fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
                       ),
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 12),
-                      filled: true,
-                      fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
+                      onChanged: (_) => _applyFilters(),
                     ),
-                    onChanged: (_) => _applyFilters(),
                   ),
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  flex: 2,
-                  child: _buildCompactDropdown(
-                    value: _collectionFilter,
-                    items: {
-                      'all': context.t('filter_all'),
-                      'favorites': context.t('filter_favorites'),
-                      'mine': context.t('filter_my_subjects'),
-                      'public': context.t('filter_public'),
-                    },
-                    onChanged: (val) {
-                      if (val != null) {
-                        setState(() {
-                          _collectionFilter = val;
-                          _applyFilters();
-                        });
-                      }
-                    },
-                    pillarColor: pillarColor,
+                  const SizedBox(width: 8),
+                  Expanded(
+                    flex: 2,
+                    child: _buildCompactDropdown(
+                      value: _collectionFilter,
+                      items: {
+                        'all': context.t('filter_all'),
+                        'favorites': context.t('filter_favorites'),
+                        'mine': context.t('filter_my_subjects'),
+                        'public': context.t('filter_public'),
+                      },
+                      onChanged: (val) {
+                        if (val != null) {
+                          setState(() {
+                            _collectionFilter = val;
+                            _applyFilters();
+                          });
+                        }
+                      },
+                      pillarColor: pillarColor,
+                    ),
                   ),
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  flex: 2,
-                  child: _buildCompactDropdown(
-                    value: _selectedAgeFilter,
-                    items: {
-                      'all': context.t('age_all'),
-                      '0_6': context.t('age_0_6'),
-                      '7_14': context.t('age_7_14'),
-                      '15_plus': context.t('age_15_plus'),
-                    },
-                    onChanged: (val) {
-                      if (val != null) {
-                        setState(() {
-                          _selectedAgeFilter = val;
-                          _applyFilters();
-                        });
-                      }
-                    },
-                    pillarColor: pillarColor,
+                  const SizedBox(width: 8),
+                  Expanded(
+                    flex: 2,
+                    child: _buildCompactDropdown(
+                      value: _selectedAgeFilter,
+                      items: {
+                        'all': context.t('age_all'),
+                        '0_6': context.t('age_0_6'),
+                        '7_14': context.t('age_7_14'),
+                        '15_plus': context.t('age_15_plus'),
+                      },
+                      onChanged: (val) {
+                        if (val != null) {
+                          setState(() {
+                            _selectedAgeFilter = val;
+                            _applyFilters();
+                          });
+                        }
+                      },
+                      pillarColor: pillarColor,
+                    ),
                   ),
-                ),
-              ],
-            ),
+                  const SizedBox(width: 8),
+                  SizedBox(
+                    width: 48,
+                    child: IconButton(
+                      icon: Icon(Icons.add_circle, color: pillarColor, size: 40),
+                      padding: EdgeInsets.zero,
+                      onPressed: () async {
+                        final result = await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder:
+                                (context) => SubjectEditPage(
+                                  pillarId: _currentParentSubject.pillarId,
+                                  initialAgeGroup: _selectedAgeFilter,
+                                  initialParentId: _currentParentSubject.id,
+                                ),
+                          ),
+                        );
+                        if (result == true) _loadSubSubjects();
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 40),
+            ],
           );
         },
       ),
@@ -293,11 +420,11 @@ class _SubSubjectPageState extends State<SubSubjectPage> {
     required Color pillarColor,
   }) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 8),
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor.withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: pillarColor.withValues(alpha: 0.3)),
+        border: Border.all(color: Colors.grey.withValues(alpha: 0.5)),
       ),
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
@@ -316,11 +443,7 @@ class _SubSubjectPageState extends State<SubSubjectPage> {
                   .map(
                     (e) => DropdownMenuItem(
                       value: e.key,
-                      child: Text(
-                        e.value,
-                        style: const TextStyle(fontSize: 13),
-                        overflow: TextOverflow.ellipsis,
-                      ),
+                      child: Text(e.value, overflow: TextOverflow.ellipsis),
                     ),
                   )
                   .toList(),
@@ -400,11 +523,7 @@ class _SubjectListTile extends StatelessWidget {
           child: Row(
             children: [
               Icon(
-                subject.type == 'math_engine'
-                    ? Icons.calculate
-                    : subject.type == 'folder'
-                    ? Icons.folder
-                    : pillar.getIconData(),
+                subject.type == 'folder' ? Icons.folder : pillar.getIconData(),
                 color: pillarColor,
               ),
               const SizedBox(width: 16),
@@ -420,9 +539,7 @@ class _SubjectListTile extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      subject.type == 'math_engine'
-                          ? 'Interactive • ${pillar.getTranslatedName(languageCode)}'
-                          : subject.type == 'folder'
+                      subject.type == 'folder'
                           ? '${pillar.getTranslatedName(languageCode)} • ${subject.childCount} ${context.plural('subject', subject.childCount)}'
                           : '${pillar.getTranslatedName(languageCode)} • $cardCount ${context.plural('card', cardCount)}',
                       style: TextStyle(color: Colors.grey[600], fontSize: 14),
