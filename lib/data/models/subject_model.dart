@@ -31,8 +31,10 @@ class SubjectModel {
   final String? ownerName;
   final String ageGroup;
   final String? parentId;
-  final String type; // 'standard', 'folder', 'math_engine'
+  final String? folderId;
+  final String type; // 'standard', 'folder', 'collection'
   final int childCount;
+  final List<String> linkedSubjectIds;
 
   bool isOnDashboard;
 
@@ -128,8 +130,10 @@ class SubjectModel {
     this.ageGroup = 'all',
     this.localizedData = const {},
     this.parentId,
+    this.folderId,
     this.type = 'standard',
     this.childCount = 0,
+    this.linkedSubjectIds = const [],
   });
 
   T? _getInherited<T>(String langCode, T? Function(LocalizedSubjectData) getter) {
@@ -200,7 +204,9 @@ class SubjectModel {
       'created_at': createdAt.toIso8601String(),
       'localized_data': localizedData.map((k, v) => MapEntry(k, v.toJson())),
       'parent_id': parentId,
+      'folder_id': folderId,
       'type': type,
+      'linked_subject_ids': linkedSubjectIds,
     };
   }
 
@@ -261,6 +267,10 @@ class SubjectModel {
       count = json['children']['count'];
     }
 
+    final List<String> linkedIds = json['linked_subject_ids'] != null
+        ? List<String>.from(json['linked_subject_ids'])
+        : [];
+
     return SubjectModel(
       id: json['id'],
       pillarId: json['pillar_id'] ?? 1,
@@ -278,8 +288,10 @@ class SubjectModel {
       ageGroup: json['age_group'] ?? 'all',
       localizedData: localized,
       parentId: json['parent_id'],
+      folderId: json['folder_id'],
       type: json['type'] ?? 'standard',
       childCount: count,
+      linkedSubjectIds: linkedIds,
     );
   }
 

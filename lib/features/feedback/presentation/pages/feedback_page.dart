@@ -9,6 +9,7 @@ import 'package:aliolo/core/widgets/aliolo_scrollable_page.dart';
 
 class FeedbackPage extends StatefulWidget {
   final String? subjectId;
+  final String? folderId;
   final String? cardId;
   final String? contextTitle;
   final Color? appBarColor;
@@ -16,6 +17,7 @@ class FeedbackPage extends StatefulWidget {
   const FeedbackPage({
     super.key,
     this.subjectId,
+    this.folderId,
     this.cardId,
     this.contextTitle,
     this.appBarColor,
@@ -73,6 +75,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
         metadata: {
           'platform': Theme.of(context).platform.toString(),
           'context': widget.contextTitle,
+          if (widget.folderId != null) 'folder_id': widget.folderId,
         },
       );
 

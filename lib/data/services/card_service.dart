@@ -7,6 +7,7 @@ import 'package:uuid/uuid.dart';
 import 'package:aliolo/data/models/card_model.dart';
 import 'package:aliolo/data/models/subject_model.dart';
 import 'package:aliolo/data/models/pillar_model.dart';
+import 'package:aliolo/data/models/folder_model.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/core/utils/logger.dart';
 
@@ -59,8 +60,6 @@ class CardService with ChangeNotifier {
     if (user == null || user.serverId == null) return [];
     final Map<String, SubjectModel> combined = {};
     try {
-      // Fetch ALL subjects the user has access to (including sub-subjects)
-      // This is needed for global search to find nested items.
       final List<dynamic> subjectsData = await _supabase!
           .from('subjects')
           .select(
@@ -123,6 +122,57 @@ class CardService with ChangeNotifier {
       notifyListeners();
     } catch (e) {
       print('Error adding card: $e');
+    }
+  }
+
+  // --- Folders ---
+
+  Future<List<FolderModel>> getFoldersByPillar(int pillarId) async {
+    final user = _authService.currentUser;
+    if (user == null || user.serverId == null) return [];
+    try {
+      final List<dynamic> data = await _supabase!
+          .from('folders')
+          .select()
+          .eq('pillar_id', pillarId)
+          .eq('owner_id', user.serverId!)
+          .order('sort_order', ascending: true);
+      return data.map((json) => FolderModel.fromJson(json)).toList();
+    } catch (e) {
+      print('Error fetching folders: $e');
+      return [];
+    }
+  }
+
+  Future<void> addFolder(FolderModel folder) async {
+    try {
+      await _supabase!.from('folders').upsert(folder.toJson());
+      notifyListeners();
+    } catch (e) {
+      print('Error adding folder: $e');
+    }
+  }
+
+  Future<void> updateFolder(FolderModel folder) async {
+    try {
+      await _supabase!
+          .from('folders')
+          .update(folder.toJson())
+          .eq('id', folder.id);
+      notifyListeners();
+    } catch (e) {
+      print('Error updating folder: $e');
+    }
+  }
+
+  Future<void> deleteFolder(String folderId) async {
+    try {
+      // Move subjects to root or delete them? Usually safer to move or prevent deletion if not empty.
+      // For now, we'll just delete the folder.
+      await _supabase!.from('folders').delete().eq('id', folderId);
+      notifyListeners();
+    } catch (e) {
+      print('Error deleting folder: $e');
     }
   }
 
@@ -226,19 +276,26 @@ class CardService with ChangeNotifier {
     }
   }
 
-  Future<List<SubjectModel>> getSubjectsByPillar(int pillarId) async {
+  Future<List<SubjectModel>> getSubjectsByPillar(int pillarId, {String? folderId}) async {
     final user = _authService.currentUser;
     if (user == null || user.serverId == null) return [];
 
     try {
-      // Fetch ALL subjects for this pillar (including sub-subjects)
-      final List<dynamic> data = await _supabase!
+      var query = _supabase!
           .from('subjects')
           .select(
             '*, profiles(username), cards(id, is_deleted, localized_data), children:subjects(count)',
           )
           .eq('pillar_id', pillarId)
           .or('is_public.eq.true,owner_id.eq.${user.serverId!}');
+      
+      if (folderId != null) {
+        query = query.eq('folder_id', folderId);
+      } else {
+        query = query.filter('folder_id', 'is', null);
+      }
+
+      final List<dynamic> data = await query;
 
       final List<dynamic> dashboardData = await _supabase!
           .from('user_subjects')
@@ -304,9 +361,41 @@ class CardService with ChangeNotifier {
     }
   }
 
+  Future<List<SubjectModel>> getSubjectsByIds(List<String> ids) async {
+    final user = _authService.currentUser;
+    if (user == null || ids.isEmpty) return [];
+
+    try {
+      final List<dynamic> data = await _supabase!
+          .from('subjects')
+          .select(
+            '*, profiles(username), cards(id, is_deleted, localized_data), children:subjects(count)',
+          )
+          .inFilter('id', ids);
+
+      final List<dynamic> dashboardData = await _supabase!
+          .from('user_subjects')
+          .select('subject_id')
+          .eq('user_id', user.serverId!);
+
+      final Set<String> dashboardIds = {
+        for (var item in dashboardData) item['subject_id'] as String,
+      };
+
+      final subjects = data.map((json) => SubjectModel.fromJson(json)).toList();
+      for (var s in subjects) {
+        s.isOnDashboard =
+            s.ownerId == user.serverId || dashboardIds.contains(s.id);
+      }
+      return subjects;
+    } catch (e) {
+      print('Error fetching subjects by ids: $e');
+      return [];
+    }
+  }
+
   Future<void> deleteSubjectById(String id) async {
     try {
-      // First delete dependent cards (or let DB handle if CASCADE is set)
       await _supabase!.from('cards').delete().eq('subject_id', id);
       await _supabase!.from('subjects').delete().eq('id', id);
       notifyListeners();

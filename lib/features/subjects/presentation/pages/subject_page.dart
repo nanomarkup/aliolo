@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/data/models/pillar_model.dart';
 import 'package:aliolo/data/models/subject_model.dart';
+import 'package:aliolo/data/models/folder_model.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/card_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
@@ -191,7 +192,7 @@ class _SubjectPageState extends State<SubjectPage> {
             }
 
             // Hierarchy: Only show top-level subjects in dashboard unless searching
-            final matchesHierarchy = query.isNotEmpty || s.parentId == null;
+            final matchesHierarchy = query.isNotEmpty || (s.parentId == null && s.folderId == null);
 
             return matchesName && matchesAge && matchesCollection && matchesHierarchy;
           }).toList();
@@ -877,7 +878,9 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
   final _authService = getIt<AuthService>();
 
   late List<SubjectModel> _allSubjects;
+  late List<FolderModel> _allFolders;
   List<SubjectModel> _filteredSubjects = [];
+  List<FolderModel> _filteredFolders = [];
   bool _isLoading = true;
   late String _selectedAgeFilter;
   late String _collectionFilter;
@@ -892,11 +895,12 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
 
   Future<void> _loadData() async {
     setState(() => _isLoading = true);
-    // Fetch fresh subjects for this pillar (including sub-subjects)
-    final results = await _cardService.getSubjectsByPillar(widget.pillar.id);
+    final subjects = await _cardService.getSubjectsByPillar(widget.pillar.id);
+    final folders = await _cardService.getFoldersByPillar(widget.pillar.id);
     if (mounted) {
       setState(() {
-        _allSubjects = results;
+        _allSubjects = subjects;
+        _allFolders = folders;
         _applyFilters();
         _isLoading = false;
       });
@@ -908,6 +912,10 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
     final myId = _authService.currentUser?.serverId;
 
     setState(() {
+      _filteredFolders = _allFolders.where((f) {
+        return f.getName(widget.languageCode).toLowerCase().contains(query);
+      }).toList();
+
       _filteredSubjects =
           _allSubjects.where((s) {
             final matchesName = s.matchesNameRecursive(
@@ -930,12 +938,13 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
             }
 
             // Hierarchy: Only show top-level subjects in pillar list unless searching
-            final matchesHierarchy = query.isNotEmpty || s.parentId == null;
+            final matchesHierarchy = query.isNotEmpty || (s.parentId == null && s.folderId == null);
 
             return matchesName && matchesAge && matchesCollection && matchesHierarchy;
           }).toList();
 
-      // Sort alphabetically by name
+      // Sort alphabetically
+      _filteredFolders.sort((a, b) => a.getName(widget.languageCode).toLowerCase().compareTo(b.getName(widget.languageCode).toLowerCase()));
       _filteredSubjects.sort((a, b) => a.getName(widget.languageCode).toLowerCase().compareTo(b.getName(widget.languageCode).toLowerCase()));
     });
   }
@@ -1099,22 +1108,52 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
                   const SizedBox(width: 8),
                   SizedBox(
                     width: 48,
-                    child: IconButton(
+                    child: PopupMenuButton<String>(
                       icon: Icon(Icons.add_circle, color: pillarColor, size: 40),
                       padding: EdgeInsets.zero,
-                      onPressed: () async {
-                        final result = await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder:
-                                (context) => SubjectEditPage(
-                                  pillarId: widget.pillar.id,
-                                  initialAgeGroup: _selectedAgeFilter,
-                                ),
-                          ),
-                        );
+                      onSelected: (value) async {
+                        bool? result;
+                        if (value == 'subject') {
+                          result = await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SubjectEditPage(
+                                pillarId: widget.pillar.id,
+                                initialAgeGroup: _selectedAgeFilter,
+                              ),
+                            ),
+                          );
+                        } else if (value == 'folder') {
+                          result = await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SubjectEditPage(
+                                pillarId: widget.pillar.id,
+                                isFolderMode: true,
+                              ),
+                            ),
+                          );
+                        }
                         if (result == true) _loadData();
                       },
+                      itemBuilder: (context) => [
+                        PopupMenuItem(
+                          value: 'subject',
+                          child: ListTile(
+                            leading: Icon(Icons.description, color: pillarColor),
+                            title: Text(context.t('add_subject')),
+                            contentPadding: EdgeInsets.zero,
+                          ),
+                        ),
+                        PopupMenuItem(
+                          value: 'folder',
+                          child: ListTile(
+                            leading: Icon(Icons.folder, color: pillarColor),
+                            title: Text(context.t('add_folder')),
+                            contentPadding: EdgeInsets.zero,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
@@ -1129,16 +1168,27 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
           const SliverFillRemaining(
             child: Center(child: CircularProgressIndicator()),
           )
-        else if (_filteredSubjects.isEmpty)
+        else if (_filteredFolders.isEmpty && _filteredSubjects.isEmpty)
           const SliverFillRemaining(
-            child: Center(child: Text('No subjects found')),
+            child: Center(child: Text('No items found')),
           )
         else
           SliverPadding(
             padding: const EdgeInsets.only(bottom: 32),
             sliver: SliverList(
               delegate: SliverChildBuilderDelegate((context, index) {
-                final subject = _filteredSubjects[index];
+                if (index < _filteredFolders.length) {
+                  final folder = _filteredFolders[index];
+                  return _FolderListTile(
+                    folder: folder,
+                    pillar: widget.pillar,
+                    languageCode: widget.languageCode,
+                    initialAgeFilter: _selectedAgeFilter,
+                    initialCollectionFilter: _collectionFilter,
+                    onChanged: _loadData,
+                  );
+                }
+                final subject = _filteredSubjects[index - _filteredFolders.length];
                 return _SubjectListTile(
                   subject: subject,
                   pillar: widget.pillar,
@@ -1147,7 +1197,7 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
                   initialCollectionFilter: _collectionFilter,
                   onChanged: _loadData,
                 );
-              }, childCount: _filteredSubjects.length),
+              }, childCount: _filteredFolders.length + _filteredSubjects.length),
             ),
           ),
       ],
@@ -1188,6 +1238,313 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
                   )
                   .toList(),
           onChanged: onChanged,
+        ),
+      ),
+    );
+  }
+}
+
+class FolderPage extends StatefulWidget {
+  final FolderModel folder;
+  final Pillar pillar;
+  final String languageCode;
+  final String initialAgeFilter;
+  final String initialCollectionFilter;
+
+  const FolderPage({
+    super.key,
+    required this.folder,
+    required this.pillar,
+    required this.languageCode,
+    required this.initialAgeFilter,
+    required this.initialCollectionFilter,
+  });
+
+  @override
+  State<FolderPage> createState() => _FolderPageState();
+}
+
+class _FolderPageState extends State<FolderPage> {
+  final _searchController = TextEditingController();
+  final _cardService = getIt<CardService>();
+  final _authService = getIt<AuthService>();
+
+  List<SubjectModel> _allSubjects = [];
+  List<SubjectModel> _filteredSubjects = [];
+  bool _isLoading = true;
+  late String _selectedAgeFilter;
+  late String _collectionFilter;
+  bool _hasUpdated = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedAgeFilter = widget.initialAgeFilter;
+    _collectionFilter = widget.initialCollectionFilter;
+    _loadData();
+  }
+
+  Future<void> _loadData() async {
+    setState(() => _isLoading = true);
+    final results = await _cardService.getSubjectsByPillar(widget.pillar.id, folderId: widget.folder.id);
+    if (mounted) {
+      setState(() {
+        _allSubjects = results;
+        _applyFilters();
+        _isLoading = false;
+      });
+    }
+  }
+
+  void _applyFilters() {
+    final query = _searchController.text.toLowerCase();
+    final myId = _authService.currentUser?.serverId;
+
+    setState(() {
+      _filteredSubjects = _allSubjects.where((s) {
+        final matchesName = s.getName(widget.languageCode).toLowerCase().contains(query);
+        final matchesAge = widget.initialAgeFilter == 'all' || s.ageGroup == _selectedAgeFilter;
+
+        bool matchesCollection = true;
+        if (_collectionFilter == 'favorites') {
+          matchesCollection = s.isOnDashboard;
+        } else if (_collectionFilter == 'mine') {
+          matchesCollection = s.ownerId == myId;
+        } else if (_collectionFilter == 'public') {
+          matchesCollection = s.isPublic;
+        }
+
+        return matchesName && matchesAge && matchesCollection;
+      }).toList();
+
+      _filteredSubjects.sort((a, b) => a.getName(widget.languageCode).toLowerCase().compareTo(b.getName(widget.languageCode).toLowerCase()));
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final pillarColor = widget.pillar.getColor();
+    const appBarColor = Colors.white;
+
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) {
+        if (didPop) return;
+        Navigator.pop(context, _hasUpdated || (result == true));
+      },
+      child: AlioloScrollablePage(
+        title: Text(
+          widget.folder.getName(widget.languageCode),
+          style: const TextStyle(color: appBarColor, fontWeight: FontWeight.bold),
+        ),
+        appBarColor: pillarColor,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.arrow_back, color: appBarColor),
+            onPressed: () => Navigator.pop(context, _hasUpdated),
+          ),
+        ],
+        fixedBody: Builder(
+          builder: (context) {
+            return Column(
+              children: [
+                const SizedBox(height: 16),
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 3,
+                      child: TextField(
+                        controller: _searchController,
+                        decoration: InputDecoration(
+                          hintText: context.t('search_subjects'),
+                          prefixIcon: const Icon(Icons.search),
+                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                          filled: true,
+                          fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
+                        ),
+                        onChanged: (_) => _applyFilters(),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    SizedBox(
+                      width: 48,
+                      child: PopupMenuButton<String>(
+                        icon: Icon(Icons.add_circle, color: pillarColor, size: 40),
+                        padding: EdgeInsets.zero,
+                        onSelected: (value) async {
+                          bool? result;
+                          if (value == 'subject') {
+                            result = await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => SubjectEditPage(
+                                  pillarId: widget.pillar.id,
+                                  folderId: widget.folder.id,
+                                  initialAgeGroup: _selectedAgeFilter,
+                                ),
+                              ),
+                            );
+                          } else if (value == 'folder') {
+                            result = await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => SubjectEditPage(
+                                  pillarId: widget.pillar.id,
+                                  isFolderMode: true,
+                                ),
+                              ),
+                            );
+                          }
+                          if (result == true) {
+                            _loadData();
+                            _hasUpdated = true;
+                          }
+                        },
+                        itemBuilder: (context) => [
+                          PopupMenuItem(
+                            value: 'subject',
+                            child: ListTile(
+                              leading: Icon(Icons.description, color: pillarColor),
+                              title: Text(context.t('add_subject')),
+                              contentPadding: EdgeInsets.zero,
+                            ),
+                          ),
+                          PopupMenuItem(
+                            value: 'folder',
+                            child: ListTile(
+                              leading: Icon(Icons.folder, color: pillarColor),
+                              title: Text(context.t('add_folder')),
+                              contentPadding: EdgeInsets.zero,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 40),
+              ],
+            );
+          },
+        ),
+        slivers: [
+          if (_isLoading)
+            const SliverFillRemaining(child: Center(child: CircularProgressIndicator()))
+          else if (_filteredSubjects.isEmpty)
+            const SliverFillRemaining(child: Center(child: Text('No subjects found')))
+          else
+            SliverPadding(
+              padding: const EdgeInsets.only(bottom: 32),
+              sliver: SliverList(
+                delegate: SliverChildBuilderDelegate((context, index) {
+                  final subject = _filteredSubjects[index];
+                  return _SubjectListTile(
+                    subject: subject,
+                    pillar: widget.pillar,
+                    languageCode: widget.languageCode,
+                    initialAgeFilter: _selectedAgeFilter,
+                    initialCollectionFilter: _collectionFilter,
+                    onChanged: () {
+                      _loadData();
+                      _hasUpdated = true;
+                    },
+                  );
+                }, childCount: _filteredSubjects.length),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+class _FolderListTile extends StatelessWidget {
+  final FolderModel folder;
+  final Pillar pillar;
+  final String languageCode;
+  final String initialAgeFilter;
+  final String initialCollectionFilter;
+  final VoidCallback? onChanged;
+
+  const _FolderListTile({
+    required this.folder,
+    required this.pillar,
+    required this.languageCode,
+    required this.initialAgeFilter,
+    required this.initialCollectionFilter,
+    this.onChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final pillarColor = pillar.getColor();
+
+    final isOwner = folder.ownerId == getIt<AuthService>().currentUser?.serverId;
+
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16),
+      child: InkWell(
+        onTap: () async {
+          final result = await Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => FolderPage(
+                folder: folder,
+                pillar: pillar,
+                languageCode: languageCode,
+                initialAgeFilter: initialAgeFilter,
+                initialCollectionFilter: initialCollectionFilter,
+              ),
+            ),
+          );
+          if (result == true) onChanged?.call();
+        },
+        borderRadius: BorderRadius.circular(16),
+        child: Container(
+          padding: const EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            color: Theme.of(context).cardColor,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: pillarColor.withValues(alpha: 0.2), width: 1.5),
+          ),
+          child: Row(
+            children: [
+              Icon(Icons.folder, color: pillarColor),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      folder.getName(languageCode),
+                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                    ),
+                    Text(
+                      pillar.getTranslatedName(languageCode),
+                      style: TextStyle(color: Colors.grey[600], fontSize: 14),
+                    ),
+                  ],
+                ),
+              ),
+              if (isOwner)
+                IconButton(
+                  icon: const Icon(Icons.edit, color: Colors.grey, size: 20),
+                  onPressed: () async {
+                    final result = await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SubjectEditPage(
+                          existingFolder: folder,
+                          isFolderMode: true,
+                        ),
+                      ),
+                    );
+                    if (result == true) onChanged?.call();
+                  },
+                ),
+              const Icon(Icons.chevron_right, color: Colors.grey),
+            ],
+          ),
         ),
       ),
     );
