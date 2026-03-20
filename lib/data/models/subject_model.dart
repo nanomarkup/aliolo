@@ -82,8 +82,8 @@ class SubjectModel {
     this.childCount = 0,
   });
 
-  /// Helper to get an attribute with smart inheritance
-  T? _getInherited<T>(String lang, T? Function(LocalizedSubjectData) getter) {
+  T? _getInherited<T>(String langCode, T? Function(LocalizedSubjectData) getter) {
+    final lang = langCode.toLowerCase();
     // 1. Try requested language
     if (localizedData.containsKey(lang)) {
       final val = getter(localizedData[lang]!);
@@ -108,13 +108,11 @@ class SubjectModel {
   }
 
   String getName(String langCode) {
-    final lang = langCode.toLowerCase();
-    return _getInherited(lang, (d) => d.name) ?? 'Unnamed Subject';
+    return _getInherited(langCode, (d) => d.name) ?? 'Unnamed Subject';
   }
 
   String getDescription(String langCode) {
-    final lang = langCode.toLowerCase();
-    return _getInherited(lang, (d) => d.description) ?? '';
+    return _getInherited(langCode, (d) => d.description) ?? '';
   }
 
   // Legacy support for code that expects a single string name
