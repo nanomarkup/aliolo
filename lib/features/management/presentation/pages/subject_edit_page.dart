@@ -75,9 +75,15 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
   void _onKeyEvent(KeyEvent event) {
     if (event is! KeyDownEvent) return;
 
+    final sortedLangs = TranslationService()
+        .availableUILanguages
+        .map((l) => l.toLowerCase())
+        .toList();
+    sortedLangs.sort();
+
     final availableLangs = [
       'global',
-      ...TranslationService().availableUILanguages.map((l) => l.toLowerCase()),
+      ...sortedLangs,
     ];
     final currentIndex = availableLangs.indexOf(_selectedLang);
     if (currentIndex == -1) return;

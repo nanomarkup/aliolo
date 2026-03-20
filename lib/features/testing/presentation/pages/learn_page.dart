@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:media_kit_video/media_kit_video.dart';
@@ -14,6 +15,11 @@ import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/data/services/progress_service.dart';
 import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/core/widgets/window_controls.dart';
+import 'package:aliolo/core/widgets/aliolo_image.dart';
+import 'package:aliolo/core/widgets/counting_grid.dart';
+import 'package:aliolo/core/widgets/addition_grid.dart';
+import 'package:aliolo/core/widgets/subtraction_grid.dart';
+import 'package:aliolo/core/widgets/number_grid.dart';
 
 class LearnPage extends StatefulWidget {
   final CardModel card;
@@ -50,6 +56,7 @@ class _LearnPageState extends State<LearnPage> {
   final _authService = AuthService();
   final _soundService = SoundService();
   final _progressService = getIt<ProgressService>();
+  final _keyboardFocusNode = FocusNode();
 
   late final Player player = Player();
   late final VideoController controller = VideoController(player);
@@ -68,6 +75,17 @@ class _LearnPageState extends State<LearnPage> {
     });
 
     _initSession();
+  }
+
+  void _onKeyEvent(KeyEvent event) {
+    if (event is! KeyDownEvent) return;
+
+    if (event.logicalKey == LogicalKeyboardKey.space ||
+        event.logicalKey == LogicalKeyboardKey.enter) {
+      if (_canGoNext) {
+        _nextCard();
+      }
+    }
   }
 
   Future<void> _initSession() async {
@@ -288,29 +306,32 @@ class _LearnPageState extends State<LearnPage> {
         double progressValue =
             _totalInSession > 0 ? _completedInSession / _totalInSession : 0.0;
 
-        return Scaffold(
-          appBar: AppBar(
-            automaticallyImplyLeading: false,
-            title: Text(_translatedSubjectName),
-            backgroundColor: headerColor,
-            foregroundColor: Colors.white,
-            actions: [
-              IconButton(
-                icon: const Icon(Icons.arrow_back),
-                onPressed: () => Navigator.pop(context),
-              ),
-              if (!kIsWeb) const WindowControls(color: Colors.white),
-            ],
-          ),
+        return KeyboardListener(
+          focusNode: _keyboardFocusNode,
+          autofocus: true,
+          onKeyEvent: _onKeyEvent,
+          child: Scaffold(
+            appBar: AppBar(
+              automaticallyImplyLeading: false,
+              title: Text(_translatedSubjectName),
+              backgroundColor: headerColor,
+              foregroundColor: Colors.white,
+              actions: [
+                IconButton(
+                  icon: const Icon(Icons.arrow_back),
+                  onPressed: () => Navigator.pop(context),
+                ),
+                if (!kIsWeb) const WindowControls(color: Colors.white),
+              ],
+            ),
           body: LayoutBuilder(
             builder: (context, constraints) {
               final isMobile = constraints.maxWidth < 800;
 
-              final mediaContent = Center(
-                child: Padding(
-                  padding: EdgeInsets.all(isMobile ? 16 : 32),
-                  child: AspectRatio(
-                    aspectRatio: isMobile ? 1 : 4 / 3,
+              final mediaContent = Expanded(
+                child: Center(
+                  child: Padding(
+                    padding: EdgeInsets.all(isMobile ? 12 : 32),
                     child: Card(
                       elevation: 8,
                       clipBehavior: Clip.antiAlias,
@@ -322,9 +343,33 @@ class _LearnPageState extends State<LearnPage> {
                         children: [
                           if (_showingVideo)
                             Video(controller: controller)
+                          else if (_subject?.isNumbers ?? false)
+                            NumberGrid(
+                              displayChar: _currentCard.getNumericalChar(lang),
+                              fontSize: isMobile ? 120 : 200,
+                              color: headerColor,
+                            )
+                          else if (_subject?.isSubtraction ?? false)
+                            SubtractionGrid(
+                              totalSum: _currentCard.numericalAnswer,
+                              maxOperand: _subject!.maxOperand,
+                              iconSize: isMobile ? 40 : 60,
+                            )
+                          else if (_subject?.isAddition ?? false)
+                            AdditionGrid(
+                              totalSum: _currentCard.numericalAnswer,
+                              maxOperand: _subject!.maxOperand,
+                              iconSize: isMobile ? 40 : 60,
+                            )
+                          else if (_currentCard.subjectId == '68232807-b9cd-4cff-872c-c398444f85e2' ||
+                              _currentCard.subjectId == 'c3548727-65f4-4e0c-939c-56135b4eb543')
+                            CountingGrid(
+                              count: _currentCard.numericalAnswer,
+                              iconSize: isMobile ? 40 : 60,
+                            )
                           else if (_currentImages.isNotEmpty)
-                            Image.network(
-                              _currentImages[_currentImageIndex],
+                            AlioloImage(
+                              imageUrl: _currentImages[_currentImageIndex],
                               fit: BoxFit.contain,
                             )
                           else
@@ -393,26 +438,31 @@ class _LearnPageState extends State<LearnPage> {
                       borderRadius: BorderRadius.circular(4),
                       color: headerColor,
                     ),
-                    SizedBox(height: isMobile ? 24 : 48),
-                    Text(
-                      _currentCard.getPrompt(lang),
-                      style: TextStyle(
-                        fontSize: isMobile ? 18 : 24,
-                        color: Colors.grey[600],
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            _currentCard.getPrompt(lang),
+                            style: TextStyle(
+                              fontSize: isMobile ? 18 : 24,
+                              color: Colors.grey[600],
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          const SizedBox(height: 16),
+                          Text(
+                            _currentCard.getAnswer(lang),
+                            style: TextStyle(
+                              fontSize: isMobile ? 28 : 36,
+                              fontWeight: FontWeight.bold,
+                              color: headerColor,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
                       ),
-                      textAlign: TextAlign.center,
                     ),
-                    const SizedBox(height: 16),
-                    Text(
-                      _currentCard.getAnswer(lang),
-                      style: TextStyle(
-                        fontSize: isMobile ? 28 : 36,
-                        fontWeight: FontWeight.bold,
-                        color: headerColor,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                    if (isMobile) const SizedBox(height: 24) else const Spacer(),
                     const SizedBox(height: 12),
                     Row(
                       children: [
@@ -477,10 +527,11 @@ class _LearnPageState extends State<LearnPage> {
               );
 
               if (isMobile) {
-                return SingleChildScrollView(
-                  child: Column(
-                    children: [mediaContent, controlsContent],
-                  ),
+                return Column(
+                  children: [
+                    mediaContent,
+                    controlsContent,
+                  ],
                 );
               }
 
@@ -499,15 +550,17 @@ class _LearnPageState extends State<LearnPage> {
               );
             },
           ),
-        );
-      },
-    );
-  }
+        ),
+      );
+    },
+  );
+}
   @override
   void dispose() {
     _autoNextTimer?.cancel();
     _cooldownTimer?.cancel();
     _playerSubscription?.cancel();
+    _keyboardFocusNode.dispose();
     player.dispose();
     super.dispose();
   }

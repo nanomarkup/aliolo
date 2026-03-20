@@ -36,6 +36,30 @@ class SubjectModel {
 
   bool isOnDashboard;
 
+  bool get isCounting =>
+      id == '68232807-b9cd-4cff-872c-c398444f85e2' ||
+      id == 'c3548727-65f4-4e0c-939c-56135b4eb543';
+
+  bool get isAddition =>
+      id == 'de04da1c-9820-4e61-ae6b-bc7ed07eeb93' ||
+      id == '5e81da1f-f92c-44d2-b3cd-f921d05425df';
+
+  bool get isSubtraction =>
+      id == 'ce04da1c-9820-4e61-ae6b-bc7ed07eeb93' ||
+      id == 'f59a0f9c-5d6d-4f2d-b426-eb9ca6bf2782';
+
+  bool get isNumbers =>
+      id == 'bc354f43-f9be-42a9-a7bc-ac400bd5e310' ||
+      id == 'cb04da1c-9820-4e61-ae6b-bc7ed07eeb93';
+
+  int get maxOperand {
+    if (id == 'de04da1c-9820-4e61-ae6b-bc7ed07eeb93') return 5;
+    if (id == '5e81da1f-f92c-44d2-b3cd-f921d05425df') return 10;
+    if (id == 'ce04da1c-9820-4e61-ae6b-bc7ed07eeb93') return 10;
+    if (id == 'f59a0f9c-5d6d-4f2d-b426-eb9ca6bf2782') return 20;
+    return 0;
+  }
+
   /// Map of language code to its specific data.
   /// Key 'global' is used for fallback assets (if any).
   final Map<String, LocalizedSubjectData> localizedData;

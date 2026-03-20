@@ -12,6 +12,11 @@ import 'package:aliolo/features/testing/presentation/pages/learn_page.dart';
 import 'package:aliolo/features/management/presentation/pages/subject_edit_page.dart';
 import 'package:aliolo/features/management/presentation/pages/add_card_page.dart';
 import 'package:aliolo/features/feedback/presentation/pages/feedback_page.dart';
+import 'package:aliolo/core/widgets/aliolo_image.dart';
+import 'package:aliolo/core/widgets/counting_grid.dart';
+import 'package:aliolo/core/widgets/addition_grid.dart';
+import 'package:aliolo/core/widgets/subtraction_grid.dart';
+import 'package:aliolo/core/widgets/number_grid.dart';
 
 class SubjectLandingPage extends StatefulWidget {
   final SubjectModel subject;
@@ -458,22 +463,49 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                           children: [
                             Expanded(
                               flex: 3,
-                              child:
-                                  imageUrl != null
-                                      ? Image.network(
-                                        imageUrl,
-                                        fit: BoxFit.cover,
-                                      )
-                                      : Container(
-                                        color: pillarColor.withValues(
-                                          alpha: 0.1,
-                                        ),
-                                        child: Icon(
-                                          Icons.image,
-                                          size: 32,
-                                          color: pillarColor,
-                                        ),
+                              child: _currentSubject.isNumbers
+                                  ? NumberGrid(
+                                      displayChar: card.getNumericalChar(
+                                        widget.languageCode,
                                       ),
+                                      fontSize: 40,
+                                      color: pillarColor,
+                                    )
+                                  : (_currentSubject.isSubtraction
+                                      ? SubtractionGrid(
+                                          totalSum: card.numericalAnswer,
+                                          maxOperand: _currentSubject.maxOperand,
+                                          iconSize: 18,
+                                        )
+                                      : (_currentSubject.isAddition
+                                          ? AdditionGrid(
+                                              totalSum: card.numericalAnswer,
+                                              maxOperand:
+                                                  _currentSubject.maxOperand,
+                                              iconSize: 18,
+                                            )
+                                          : (_currentSubject.isCounting
+                                              ? CountingGrid(
+                                                  count: card.numericalAnswer,
+                                                  iconSize: 24,
+                                                )
+                                              : (imageUrl != null
+                                                  ? AlioloImage(
+                                                      imageUrl: imageUrl,
+                                                      fit: BoxFit.cover,
+                                                    )
+                                                  : Container(
+                                                      color:
+                                                          pillarColor
+                                                              .withValues(
+                                                                alpha: 0.1,
+                                                              ),
+                                                      child: Icon(
+                                                        Icons.image,
+                                                        size: 32,
+                                                        color: pillarColor,
+                                                      ),
+                                                    ))))),
                             ),
                             Padding(
                               padding: const EdgeInsets.all(8.0),

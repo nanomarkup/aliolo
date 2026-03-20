@@ -290,6 +290,10 @@ class _ProfilePageState extends State<ProfilePage> {
                 currentSessionColor,
               ),
               Card(
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
                 child: Column(
                   children: [
                     ListTile(
@@ -492,7 +496,6 @@ class _ProfilePageState extends State<ProfilePage> {
       elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
-        side: BorderSide(color: Colors.grey[200]!),
       ),
       child: Column(
         children: [

@@ -231,29 +231,46 @@ class _SettingsPageState extends State<SettingsPage> {
                       ),
                       trailing: SizedBox(
                         width: 150,
-                        child: DropdownButton<String>(
-                          value:
-                              TranslationService().currentLocale.languageCode,
-                          isExpanded: true,
-                          underline: const SizedBox(),
-                          items:
-                              TranslationService().availableUILanguages
-                                  .map(
-                                    (code) => DropdownMenuItem(
-                                      value: code.toLowerCase(),
-                                      child: Text(
-                                        TranslationService().getLanguageName(
-                                          code,
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                  .toList(),
-                          onChanged: (val) {
-                            if (val != null) {
-                              TranslationService().setLocale(Locale(val));
-                              _showSavedMsg();
+                        child: ListenableBuilder(
+                          listenable: TranslationService(),
+                          builder: (context, _) {
+                            final currentLang = TranslationService()
+                                .currentLocale
+                                .languageCode
+                                .toLowerCase();
+                            final availableLangs = TranslationService()
+                                .availableUILanguages
+                                .map((c) => c.toLowerCase())
+                                .toSet();
+
+                            if (!availableLangs.contains(currentLang)) {
+                              availableLangs.add(currentLang);
                             }
+
+                            return DropdownButtonHideUnderline(
+                              child: DropdownButton<String>(
+                                value: currentLang,
+                                isExpanded: true,
+                                underline: const SizedBox(),
+                                items:
+                                    availableLangs.map((code) {
+                                      return DropdownMenuItem(
+                                        value: code,
+                                        child: Text(
+                                          TranslationService().getLanguageName(
+                                            code,
+                                          ),
+                                        ),
+                                      );
+                                    }).toList(),
+                                onChanged: (val) {
+                                  if (val != null) {
+                                    TranslationService().setLocale(Locale(val));
+                                    _showSavedMsg();
+                                  }
+                                },
+                              ),
+                            );
                           },
                         ),
                       ),

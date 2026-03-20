@@ -11,8 +11,13 @@ import 'package:aliolo/features/subjects/presentation/pages/subject_landing_page
 
 class SubSubjectPage extends StatefulWidget {
   final SubjectModel parentSubject;
+  final String languageCode;
 
-  const SubSubjectPage({super.key, required this.parentSubject});
+  const SubSubjectPage({
+    super.key,
+    required this.parentSubject,
+    required this.languageCode,
+  });
 
   @override
   State<SubSubjectPage> createState() => _SubSubjectPageState();
@@ -54,7 +59,7 @@ class _SubSubjectPageState extends State<SubSubjectPage> {
 
   void _applyFilters() {
     final query = _searchController.text.toLowerCase();
-    final lang = TranslationService().currentLocale.languageCode;
+    final lang = widget.languageCode;
     final myId = _authService.currentUser?.serverId;
 
     setState(() {
@@ -90,7 +95,7 @@ class _SubSubjectPageState extends State<SubSubjectPage> {
     );
     final pillarColor = pillar.getColor();
     const appBarColor = Colors.white;
-    final lang = TranslationService().currentLocale.languageCode;
+    final lang = widget.languageCode;
 
     return AlioloScrollablePage(
       title: Text(
@@ -343,7 +348,10 @@ class _SubjectListTile extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => SubSubjectPage(parentSubject: subject),
+                builder: (context) => SubSubjectPage(
+                  parentSubject: subject,
+                  languageCode: languageCode,
+                ),
               ),
             );
           } else {

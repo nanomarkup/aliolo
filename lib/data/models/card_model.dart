@@ -4,6 +4,7 @@ class LocalizedCardData {
   final String? audioUrl;
   final String? videoUrl;
   final List<String>? imageUrls;
+  final Map<String, dynamic> rawData;
 
   LocalizedCardData({
     this.prompt,
@@ -11,6 +12,7 @@ class LocalizedCardData {
     this.audioUrl,
     this.videoUrl,
     this.imageUrls,
+    this.rawData = const {},
   });
 
   factory LocalizedCardData.fromJson(Map<String, dynamic> json) {
@@ -23,6 +25,7 @@ class LocalizedCardData {
           json['image_urls'] != null
               ? List<String>.from(json['image_urls'])
               : null,
+      rawData: json,
     );
   }
 
@@ -128,6 +131,60 @@ class CardModel {
 
   String getPrompt(String lang) => _getInherited(lang, (d) => d.prompt) ?? '';
   String getAnswer(String lang) => _getInherited(lang, (d) => d.answer) ?? '';
+
+  String getNumericalChar(String lang) {
+    final int val = numericalAnswer;
+    
+    // Map for special numeral systems
+    const Map<int, Map<String, String>> specialNums = {
+      0: {'ar': '٠', 'hi': '०', 'zh': '零', 'ja': '零', 'ko': '영'},
+      1: {'ar': '١', 'hi': '१', 'zh': '一', 'ja': '一', 'ko': '일'},
+      2: {'ar': '٢', 'hi': '२', 'zh': '二', 'ja': '二', 'ko': '이'},
+      3: {'ar': '٣', 'hi': '३', 'zh': '三', 'ja': '三', 'ko': '삼'},
+      4: {'ar': '٤', 'hi': '४', 'zh': '四', 'ja': '四', 'ko': '사'},
+      5: {'ar': '٥', 'hi': '५', 'zh': '五', 'ja': '五', 'ko': '오'},
+      6: {'ar': '٦', 'hi': '६', 'zh': '六', 'ja': '六', 'ko': '육'},
+      7: {'ar': '٧', 'hi': '७', 'zh': '七', 'ja': '七', 'ko': '칠'},
+      8: {'ar': '٨', 'hi': '८', 'zh': '八', 'ja': '八', 'ko': '팔'},
+      9: {'ar': '٩', 'hi': '९', 'zh': '九', 'ja': '九', 'ko': '구'},
+      10: {'ar': '١٠', 'hi': '१०', 'zh': '十', 'ja': '十', 'ko': '십'},
+      11: {'ar': '١١', 'hi': '११', 'zh': '十一', 'ja': '十一', 'ko': '십일'},
+      12: {'ar': '١٢', 'hi': '१२', 'zh': '十二', 'ja': '十二', 'ko': '십이'},
+      13: {'ar': '١٣', 'hi': '१३', 'zh': '十三', 'ja': '十三', 'ko': '십삼'},
+      14: {'ar': '١٤', 'hi': '१٤', 'zh': '十四', 'ja': '十四', 'ko': '십사'},
+      15: {'ar': '١٥', 'hi': '१५', 'zh': '十五', 'ja': '十五', 'ko': '십오'},
+      16: {'ar': '١٦', 'hi': '१६', 'zh': '十六', 'ja': '十六', 'ko': '십육'},
+      17: {'ar': '١٧', 'hi': '१७', 'zh': '十七', 'ja': '十七', 'ko': '십칠'},
+      18: {'ar': '١٨', 'hi': '१८', 'zh': '十八', 'ja': '十八', 'ko': '십팔'},
+      19: {'ar': '١٩', 'hi': '१९', 'zh': '十九', 'ja': '十九', 'ko': '십구'},
+      20: {'ar': '٢٠', 'hi': '२०', 'zh': '二十', 'ja': '二十', 'ko': '이십'},
+    };
+
+    if (specialNums.containsKey(val)) {
+      return specialNums[val]![lang] ?? val.toString();
+    }
+    return val.toString();
+  }
+
+  int get numericalAnswer {
+    // Try global first as it's most likely to be a standard digit
+    String? ans = localizedData['global']?.answer;
+    ans ??= localizedData['en']?.answer;
+    ans ??= getAnswer('en');
+    return int.tryParse(ans) ?? 0;
+  }
+
+  List<int>? get additionParts {
+    final data = localizedData['global'] ?? localizedData['en'] ?? localizedData.values.firstOrNull;
+    if (data == null) return null;
+    
+    final parts = data.rawData['parts'];
+    if (parts is List) {
+      return parts.map((e) => int.tryParse(e.toString()) ?? 0).toList();
+    }
+    return null;
+  }
+
   String? getAudioUrl(String lang) => _getInherited(lang, (d) => d.audioUrl);
   String? getVideoUrl(String lang) => _getInherited(lang, (d) => d.videoUrl);
   List<String> getImageUrls(String lang) =>

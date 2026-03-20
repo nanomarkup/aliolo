@@ -105,7 +105,7 @@ class TestingLanguageService extends ChangeNotifier {
       
       if (data.isNotEmpty) {
         _allLanguages = data.map((e) => TestingLanguage(
-          code: e['id'].toString(),
+          code: e['id'].toString().toLowerCase(),
           name: e['name'].toString(), // We use nativeName as primary name in DB
           nativeName: e['name'].toString(),
         )).toList();
@@ -138,7 +138,7 @@ class TestingLanguageService extends ChangeNotifier {
   }
 
   void addActiveLanguages(List<String> codes) {
-    final newSet = Set<String>.from(_activeLanguageCodes);
+    final newSet = _activeLanguageCodes.map((c) => c.toLowerCase()).toSet();
     newSet.addAll(codes.map((c) => c.toLowerCase()));
     if (newSet.length != _activeLanguageCodes.length) {
       _activeLanguageCodes = newSet.toList();

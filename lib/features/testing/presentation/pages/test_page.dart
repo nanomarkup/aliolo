@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:media_kit_video/media_kit_video.dart';
@@ -14,6 +15,11 @@ import 'package:aliolo/data/services/progress_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/data/services/math_service.dart';
 import 'package:aliolo/core/widgets/window_controls.dart';
+import 'package:aliolo/core/widgets/aliolo_image.dart';
+import 'package:aliolo/core/widgets/counting_grid.dart';
+import 'package:aliolo/core/widgets/addition_grid.dart';
+import 'package:aliolo/core/widgets/subtraction_grid.dart';
+import 'package:aliolo/core/widgets/number_grid.dart';
 
 class TestPage extends StatefulWidget {
   final CardModel card;
@@ -55,6 +61,7 @@ class _TestPageState extends State<TestPage> {
   final _authService = AuthService();
   final _soundService = SoundService();
   final _progressService = ProgressService();
+  final _keyboardFocusNode = FocusNode();
 
   late final Player player = Player();
   late final VideoController controller = VideoController(player);
@@ -66,6 +73,17 @@ class _TestPageState extends State<TestPage> {
     _isAutoPlay = _authService.currentUser?.autoPlayEnabled ?? false;
     _currentCard = widget.card;
     _initSession();
+  }
+
+  void _onKeyEvent(KeyEvent event) {
+    if (event is! KeyDownEvent) return;
+
+    if (event.logicalKey == LogicalKeyboardKey.space ||
+        event.logicalKey == LogicalKeyboardKey.enter) {
+      if (_isAnswered) {
+        _nextCard();
+      }
+    }
   }
 
   Future<void> _initSession() async {
@@ -177,7 +195,12 @@ class _TestPageState extends State<TestPage> {
     });
 
     final audio = _currentCard.getAudioUrl(lang);
-    if (audio != null) {
+    if (audio != null &&
+        _currentCard.subjectId != '68232807-b9cd-4cff-872c-c398444f85e2' &&
+        _currentCard.subjectId != 'c3548727-65f4-4e0c-939c-56135b4eb543' &&
+        _currentCard.subjectId != 'de04da1c-9820-4e61-ae6b-bc7ed07eeb93' &&
+        _currentCard.subjectId != '5e81da1f-f92c-44d2-b3cd-f921d05425df' &&
+        _currentCard.subjectId != 'ce04da1c-9820-4e61-ae6b-bc7ed07eeb93') {
       player.open(Media(audio));
       player.play();
     }
@@ -346,20 +369,24 @@ class _TestPageState extends State<TestPage> {
         double progressValue =
             _totalInSession > 0 ? _completedInSession / _totalInSession : 0.0;
 
-        return Scaffold(
-          appBar: AppBar(
-            automaticallyImplyLeading: false,
-            title: Text(_translatedSubjectName),
-            backgroundColor: headerColor,
-            foregroundColor: Colors.white,
-            actions: [
-              IconButton(
-                icon: const Icon(Icons.arrow_back),
-                onPressed: () => Navigator.pop(context),
-              ),
-              if (!kIsWeb) const WindowControls(color: Colors.white),
-            ],
-          ),
+        return KeyboardListener(
+          focusNode: _keyboardFocusNode,
+          autofocus: true,
+          onKeyEvent: _onKeyEvent,
+          child: Scaffold(
+            appBar: AppBar(
+              automaticallyImplyLeading: false,
+              title: Text(_translatedSubjectName),
+              backgroundColor: headerColor,
+              foregroundColor: Colors.white,
+              actions: [
+                IconButton(
+                  icon: const Icon(Icons.arrow_back),
+                  onPressed: () => Navigator.pop(context),
+                ),
+                if (!kIsWeb) const WindowControls(color: Colors.white),
+              ],
+            ),
           body: LayoutBuilder(
             builder: (context, constraints) {
               final isMobile = constraints.maxWidth < 800;
@@ -380,9 +407,33 @@ class _TestPageState extends State<TestPage> {
                         children: [
                           if (_showingVideo)
                             Video(controller: controller)
+                          else if (_subject?.isNumbers ?? false)
+                            NumberGrid(
+                              displayChar: _currentCard.getNumericalChar(lang),
+                              fontSize: isMobile ? 120 : 200,
+                              color: headerColor,
+                            )
+                          else if (_subject?.isSubtraction ?? false)
+                            SubtractionGrid(
+                              totalSum: _currentCard.numericalAnswer,
+                              maxOperand: _subject!.maxOperand,
+                              iconSize: isMobile ? 40 : 60,
+                            )
+                          else if (_subject?.isAddition ?? false)
+                            AdditionGrid(
+                              totalSum: _currentCard.numericalAnswer,
+                              maxOperand: _subject!.maxOperand,
+                              iconSize: isMobile ? 40 : 60,
+                            )
+                          else if (_currentCard.subjectId == '68232807-b9cd-4cff-872c-c398444f85e2' ||
+                              _currentCard.subjectId == 'c3548727-65f4-4e0c-939c-56135b4eb543')
+                            CountingGrid(
+                              count: _currentCard.numericalAnswer,
+                              iconSize: isMobile ? 40 : 60,
+                            )
                           else if (_currentImages.isNotEmpty)
-                            Image.network(
-                              _currentImages[_currentImageIndex],
+                            AlioloImage(
+                              imageUrl: _currentImages[_currentImageIndex],
                               fit: BoxFit.contain,
                             )
                           else
@@ -410,106 +461,122 @@ class _TestPageState extends State<TestPage> {
                       borderRadius: BorderRadius.circular(4),
                       color: headerColor,
                     ),
-                    const SizedBox(height: 16),
-                    Text(
-                      _currentCard.getPrompt(lang).isNotEmpty
-                          ? _currentCard.getPrompt(lang)
-                          : context.t('select_an_answer'),
-                      style: TextStyle(
-                        fontSize: isMobile ? 20 : 28,
-                        fontWeight: FontWeight.bold,
-                        color: headerColor,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: 16),
-                    if (isMobile)
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 12),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16),
-                          border: Border.all(
-                            color: _isAnswered
-                                ? (_isCorrect ? Colors.green : Colors.red)
-                                : Colors.grey[300]!,
-                            width: 2,
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            _currentCard.getPrompt(lang).isNotEmpty
+                                ? _currentCard.getPrompt(lang)
+                                : context.t('select_an_answer'),
+                            style: TextStyle(
+                              fontSize: isMobile ? 20 : 28,
+                              fontWeight: FontWeight.bold,
+                              color: headerColor,
+                            ),
+                            textAlign: TextAlign.center,
                           ),
-                          color: _isAnswered
-                              ? (_isCorrect
-                                      ? Colors.green
-                                      : Colors.red)
-                                  .withValues(alpha: 0.1)
-                              : null,
-                        ),
-                        child: DropdownButtonHideUnderline(
-                          child: DropdownButton<int>(
-                            value: _selectedIndex == -1 ? null : _selectedIndex,
-                            hint: Text(context.t('select_an_answer')),
-                            isExpanded: true,
-                            icon: const Icon(Icons.arrow_drop_down),
-                            items: _options.asMap().entries.map((entry) {
-                              return DropdownMenuItem<int>(
-                                value: entry.key,
-                                child: Text(
-                                  entry.value,
-                                  style: const TextStyle(fontSize: 16),
+                          const SizedBox(height: 24),
+                          if (isMobile)
+                            Container(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 12),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(16),
+                                border: Border.all(
+                                  color: _isAnswered
+                                      ? (_isCorrect ? Colors.green : Colors.red)
+                                      : Colors.grey[300]!,
+                                  width: 2,
                                 ),
-                              );
-                            }).toList(),
-                            onChanged: _isAnswered
-                                ? null
-                                : (val) {
-                                    if (val != null) _selectOption(val);
-                                  },
-                          ),
-                        ),
-                      )
-                    else
-                      Expanded(
-                        child: ListView.separated(
-                          itemCount: _options.length,
-                          separatorBuilder: (_, __) => const SizedBox(height: 12),
-                          itemBuilder: (context, index) {
-                            final opt = _options[index];
-                            final isSelected = _selectedIndex == index;
-                            final isCorrect = opt == _correctAnswerText;
-                            Color? color;
-                            if (_isAnswered) {
-                              color =
-                                  isCorrect
-                                      ? Colors.green
-                                      : (isSelected ? Colors.red : null);
-                            } else if (isSelected)
-                              color = headerColor;
-
-                            return InkWell(
-                              onTap: () => _selectOption(index),
-                              borderRadius: BorderRadius.circular(16),
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 20,
-                                  vertical: 16,
-                                ),
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: color ?? Colors.grey[300]!,
-                                    width: 2,
-                                  ),
-                                  borderRadius: BorderRadius.circular(16),
-                                  color: color?.withValues(alpha: 0.1),
-                                ),
-                                child: Text(
-                                  opt,
-                                  style: const TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                                color: _isAnswered
+                                    ? (_isCorrect
+                                            ? Colors.green
+                                            : Colors.red)
+                                        .withValues(alpha: 0.1)
+                                    : null,
+                              ),
+                              child: DropdownButtonHideUnderline(
+                                child: DropdownButton<int>(
+                                  value:
+                                      _selectedIndex == -1
+                                          ? null
+                                          : _selectedIndex,
+                                  hint: Text(context.t('select_an_answer')),
+                                  isExpanded: true,
+                                  icon: const Icon(Icons.arrow_drop_down),
+                                  items: _options.asMap().entries.map((entry) {
+                                    return DropdownMenuItem<int>(
+                                      value: entry.key,
+                                      child: Text(
+                                        entry.value,
+                                        style: const TextStyle(fontSize: 16),
+                                      ),
+                                    );
+                                  }).toList(),
+                                  onChanged: _isAnswered
+                                      ? null
+                                      : (val) {
+                                          if (val != null) _selectOption(val);
+                                        },
                                 ),
                               ),
-                            );
-                          },
-                        ),
+                            )
+                          else
+                            ConstrainedBox(
+                              constraints: const BoxConstraints(maxHeight: 500),
+                              child: ListView.separated(
+                                shrinkWrap: true,
+                                physics: const BouncingScrollPhysics(),
+                                itemCount: _options.length,
+                                separatorBuilder:
+                                    (_, __) => const SizedBox(height: 12),
+                                itemBuilder: (context, index) {
+                                  final opt = _options[index];
+                                  final isSelected = _selectedIndex == index;
+                                  final isCorrect = opt == _correctAnswerText;
+                                  Color? color;
+                                  if (_isAnswered) {
+                                    color =
+                                        isCorrect
+                                            ? Colors.green
+                                            : (isSelected
+                                                ? Colors.red
+                                                : null);
+                                  } else if (isSelected) color = headerColor;
+
+                                  return InkWell(
+                                    onTap: () => _selectOption(index),
+                                    borderRadius: BorderRadius.circular(16),
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 20,
+                                        vertical: 16,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: color ?? Colors.grey[300]!,
+                                          width: 2,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(16),
+                                        color: color?.withValues(alpha: 0.1),
+                                      ),
+                                      child: Text(
+                                        opt,
+                                        style: const TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                        ],
                       ),
+                    ),
                     const SizedBox(height: 16),
                     Row(
                       children: [
@@ -525,8 +592,14 @@ class _TestPageState extends State<TestPage> {
                             ),
                           ),
                         ),
-                        if (_currentCard.testMode == 'audio_to_text' ||
-                            _currentCard.testMode == 'audio_to_image') ...[
+                        if ((_currentCard.testMode == 'audio_to_text' ||
+                                _currentCard.testMode == 'audio_to_image') &&
+                            _currentCard.getAudioUrl(lang) != null &&
+                            _currentCard.subjectId != '68232807-b9cd-4cff-872c-c398444f85e2' &&
+                            _currentCard.subjectId != 'c3548727-65f4-4e0c-939c-56135b4eb543' &&
+                            _currentCard.subjectId != 'de04da1c-9820-4e61-ae6b-bc7ed07eeb93' &&
+                            _currentCard.subjectId != '5e81da1f-f92c-44d2-b3cd-f921d05425df' &&
+                            _currentCard.subjectId != 'ce04da1c-9820-4e61-ae6b-bc7ed07eeb93') ...[
                           const SizedBox(width: 12),
                           IconButton.filledTonal(
                             onPressed: () async {
@@ -598,13 +671,15 @@ class _TestPageState extends State<TestPage> {
               );
             },
           ),
-        );
-      },
-    );
-  }
+        ),
+      );
+    },
+  );
+}
 
   @override
   void dispose() {
+    _keyboardFocusNode.dispose();
     player.dispose();
     super.dispose();
   }

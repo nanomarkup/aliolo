@@ -211,6 +211,15 @@ class _SubjectPageState extends State<SubjectPage> {
       builder: (context, _) {
         final currentSessionColor = ThemeService().primaryColor;
 
+        final activeCodes = getIt<TestingLanguageService>().activeLanguageCodes
+            .map((l) => l.toLowerCase())
+            .toSet();
+        
+        // Safety: Ensure current language is in the list
+        if (!activeCodes.contains(_currentTestingLang)) {
+          activeCodes.add(_currentTestingLang);
+        }
+
         return AlioloScrollablePage(
           title: DropdownButtonHideUnderline(
             child: DropdownButton<String>(
@@ -223,9 +232,9 @@ class _SubjectPageState extends State<SubjectPage> {
                 fontWeight: FontWeight.bold,
               ),
               items:
-                  getIt<TestingLanguageService>().activeLanguageCodes.map((l) {
+                  activeCodes.map((l) {
                     return DropdownMenuItem(
-                      value: l.toLowerCase(),
+                      value: l,
                       child: Text(
                         getIt<TestingLanguageService>().getLanguageName(l),
                         style: const TextStyle(color: Colors.white),
@@ -244,14 +253,17 @@ class _SubjectPageState extends State<SubjectPage> {
           ),
           appBarColor: currentSessionColor,
           actions: [
-            if (isSearching)
-              IconButton(
-                icon: const Icon(Icons.school, color: appBarColor),
-                onPressed: () {
+            IconButton(
+              icon: const Icon(Icons.school, color: appBarColor),
+              onPressed: () {
+                if (isSearching) {
                   _searchController.clear();
                   _applySearch();
-                },
-              ),
+                } else {
+                  _loadDashboard();
+                }
+              },
+            ),
             IconButton(
               icon: const Icon(Icons.emoji_events, color: appBarColor),
               onPressed:
@@ -634,7 +646,10 @@ class _SubjectListTile extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => SubSubjectPage(parentSubject: subject),
+                builder: (context) => SubSubjectPage(
+                  parentSubject: subject,
+                  languageCode: languageCode,
+                ),
               ),
             );
           } else {
