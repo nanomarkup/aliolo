@@ -64,6 +64,7 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
   String? _selectedParentId;
   String? _selectedFolderId;
   String _selectedLang = 'global';
+  late List<String> _linkedSubjectIds;
   bool _isSaving = false;
   int _itemsPerRow = 8;
   List<SubjectModel> _allSubjects = [];
@@ -89,6 +90,7 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
     _selectedType = widget.existingSubject?.type ?? (_isFolderMode ? 'folder' : 'standard');
     _selectedParentId = widget.existingSubject?.parentId ?? widget.initialParentId;
     _selectedFolderId = widget.existingSubject?.folderId ?? widget.folderId;
+    _linkedSubjectIds = List.from(widget.existingSubject?.linkedSubjectIds ?? []);
 
     if (pillars.isEmpty) {
       _cardService.getPillars().then((_) {
@@ -437,6 +439,7 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
           type: _selectedType,
           parentId: _selectedParentId,
           folderId: _selectedFolderId,
+          linkedSubjectIds: _linkedSubjectIds,
         );
         await _cardService.addSubject(subject);
       }
@@ -663,6 +666,7 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
           const SizedBox(height: 32),
           const Divider(),
           const SizedBox(height: 32),
+          if (_selectedType == 'collection') _buildCollectionPicker(),
         ],
 
         _buildSectionCaption(
@@ -967,6 +971,56 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildCollectionPicker() {
+    final currentLang = TranslationService().currentLocale.languageCode;
+    final availableSubjects = _allSubjects.where((s) => s.pillarId == _selectedPillar && s.id != widget.existingSubject?.id && s.type != 'folder').toList();
+
+    if (availableSubjects.isEmpty) {
+      return Padding(
+        padding: const EdgeInsets.only(bottom: 24),
+        child: Text(context.t('no_subjects_available'), style: const TextStyle(fontStyle: FontStyle.italic, color: Colors.grey)),
+      );
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildSectionCaption(context.t('included_subjects')),
+        const SizedBox(height: 16),
+        Container(
+          constraints: const BoxConstraints(maxHeight: 300),
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey.withValues(alpha: 0.3)),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: availableSubjects.length,
+            itemBuilder: (context, index) {
+              final s = availableSubjects[index];
+              final isSelected = _linkedSubjectIds.contains(s.id);
+              return CheckboxListTile(
+                title: Text(s.getName(currentLang)),
+                subtitle: Text(s.ageGroup),
+                value: isSelected,
+                onChanged: (val) {
+                  setState(() {
+                    if (val == true) {
+                      _linkedSubjectIds.add(s.id);
+                    } else {
+                      _linkedSubjectIds.remove(s.id);
+                    }
+                  });
+                },
+              );
+            },
+          ),
+        ),
+        const SizedBox(height: 32),
+      ],
     );
   }
 

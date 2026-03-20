@@ -24,19 +24,19 @@ import 'package:aliolo/core/widgets/multiplication_grid.dart';
 import 'package:aliolo/core/widgets/division_grid.dart';
 
 class TestPage extends StatefulWidget {
-  final CardModel card;
+  final List<SubjectCard> sessionCards;
   final String languageCode;
 
-  const TestPage({super.key, required this.card, required this.languageCode});
+  const TestPage({super.key, required this.sessionCards, required this.languageCode});
 
   @override
   State<TestPage> createState() => _TestPageState();
 }
 
 class _TestPageState extends State<TestPage> {
-  late CardModel _currentCard;
-  SubjectModel? _subject;
-  String _translatedSubjectName = '';
+  late SubjectCard _currentSubjectCard;
+  CardModel get _currentCard => _currentSubjectCard.card;
+  SubjectModel get _subject => _currentSubjectCard.subject;
 
   // MCQ State
   List<String> _options = [];
@@ -51,7 +51,7 @@ class _TestPageState extends State<TestPage> {
   bool _showingVideo = false;
 
   // Session State
-  List<CardModel> _sessionQueue = [];
+  List<SubjectCard> _sessionQueue = [];
   int _completedInSession = 0;
   int _totalInSession = 0;
   int _sessionCorrect = 0;
@@ -73,8 +73,16 @@ class _TestPageState extends State<TestPage> {
     super.initState();
     if (!kIsWeb) windowManager.setResizable(true);
     _isAutoPlay = _authService.currentUser?.autoPlayEnabled ?? false;
-    _currentCard = widget.card;
-    _initSession();
+    
+    _sessionQueue = List.from(widget.sessionCards);
+    _totalInSession = _sessionQueue.length;
+
+    if (_sessionQueue.isNotEmpty) {
+      _currentSubjectCard = _sessionQueue.first;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _setupMCQ();
+      });
+    }
   }
 
   void _onKeyEvent(KeyEvent event) {
@@ -85,60 +93,6 @@ class _TestPageState extends State<TestPage> {
       if (_isAnswered) {
         _nextCard();
       }
-    }
-  }
-
-  Future<void> _initSession() async {
-    final user = _authService.currentUser;
-    if (user == null) return;
-
-    if (_currentCard.subjectId != 'Math') {
-      _subject = await CardService().getSubjectById(_currentCard.subjectId);
-      if (_subject != null) {
-        _translatedSubjectName = _subject!.getName(widget.languageCode);
-      }
-    } else {
-      _translatedSubjectName = 'Math';
-    }
-
-    // Special handling for Math virtual cards (keep as is for now)
-    if (_currentCard.subjectId == 'Math') {
-      final int mathLevel = widget.card.level;
-      final List<CardModel> sessionCards = List.generate(user.testSessionSize, (
-        i,
-      ) {
-        final problem = MathService().generateProblem(mathLevel);
-        return MathService().createVirtualCard(problem, mathLevel);
-      });
-      setState(() {
-        _sessionQueue = sessionCards;
-        _totalInSession = _sessionQueue.length;
-        _currentCard = _sessionQueue.first;
-        _setupMCQ();
-      });
-      return;
-    }
-
-    final allCards = await CardService().getCardsBySubject(
-      _currentCard.subjectId,
-    );
-    if (allCards.isEmpty) return;
-
-    final lang = widget.languageCode.toLowerCase();
-    final langFiltered =
-        allCards.where((c) {
-          return c.getAnswer(lang).isNotEmpty || c.getAnswer('en').isNotEmpty;
-        }).toList();
-
-    langFiltered.shuffle();
-    _sessionQueue = langFiltered.take(user.testSessionSize).toList();
-
-    if (_sessionQueue.isNotEmpty) {
-      setState(() {
-        _totalInSession = _sessionQueue.length;
-        _currentCard = _sessionQueue.first;
-        _setupMCQ();
-      });
     }
   }
 
@@ -165,7 +119,7 @@ class _TestPageState extends State<TestPage> {
     List<String> options = [];
 
     if (_currentCard.subjectId == 'Math') {
-      // options from math virtual card logic
+      options = _currentCard.mathOptions ?? [];
     } else {
       final allInSubject = await CardService().getCardsBySubject(
         _currentCard.subjectId,
@@ -185,24 +139,22 @@ class _TestPageState extends State<TestPage> {
       options.shuffle();
     }
 
-    setState(() {
-      _options = options;
-      _selectedIndex = -1;
-      _isAnswered = false;
-      _isCorrect = false;
-      _currentImages = _currentCard.getImageUrls(lang);
-      _currentImageIndex = 0;
-      final video = _currentCard.getVideoUrl(lang);
-      _showingVideo = _currentImages.isEmpty && (video?.isNotEmpty ?? false);
-    });
+    if (mounted) {
+      setState(() {
+        _options = options;
+        _selectedIndex = -1;
+        _isAnswered = false;
+        _isCorrect = false;
+        _currentImages = _currentCard.getImageUrls(lang);
+        _currentImageIndex = 0;
+        final video = _currentCard.getVideoUrl(lang);
+        _showingVideo = _currentImages.isEmpty && (video?.isNotEmpty ?? false);
+      });
+    }
 
     final audio = _currentCard.getAudioUrl(lang);
     if (audio != null &&
-        _currentCard.subjectId != '68232807-b9cd-4cff-872c-c398444f85e2' &&
-        _currentCard.subjectId != 'c3548727-65f4-4e0c-939c-56135b4eb543' &&
-        _currentCard.subjectId != 'de04da1c-9820-4e61-ae6b-bc7ed07eeb93' &&
-        _currentCard.subjectId != '5e81da1f-f92c-44d2-b3cd-f921d05425df' &&
-        _currentCard.subjectId != 'ce04da1c-9820-4e61-ae6b-bc7ed07eeb93') {
+        !_subject.isNumbers && !_subject.isAddition && !_subject.isSubtraction) {
       player.open(Media(audio));
       player.play();
     }
@@ -237,8 +189,9 @@ class _TestPageState extends State<TestPage> {
         quality: 0,
         cardLevel: _currentCard.level,
       );
-      final card = _sessionQueue.removeAt(0);
-      _sessionQueue.add(card);
+      // Re-add card to end of queue if wrong
+      final item = _sessionQueue.removeAt(0);
+      _sessionQueue.add(item);
     }
 
     if (_isAutoPlay) _scheduleAutoNext();
@@ -263,7 +216,7 @@ class _TestPageState extends State<TestPage> {
     }
 
     if (_sessionQueue.isNotEmpty) {
-      setState(() => _currentCard = _sessionQueue.first);
+      setState(() => _currentSubjectCard = _sessionQueue.first);
       _setupMCQ();
     } else {
       _progressService.awardSubjectCompletionBonus(_totalInSession);
@@ -293,77 +246,14 @@ class _TestPageState extends State<TestPage> {
     );
   }
 
-  void _showPeekSheet() {
-    final lang = widget.languageCode.toLowerCase();
-    showModalBottomSheet(
-      context: context,
-      builder: (context) {
-        return Container(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'TRANSLATIONS',
-                style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.grey,
-                ),
-              ),
-              const SizedBox(height: 16),
-              ..._currentCard.localizedData.entries
-                  .where((e) => e.key != lang)
-                  .map((e) {
-                    return Padding(
-                      padding: const EdgeInsets.only(bottom: 16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            e.key.toUpperCase(),
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 12,
-                              color: Colors.orange,
-                            ),
-                          ),
-                          Text(
-                            e.value.prompt ?? '-',
-                            style: const TextStyle(fontSize: 16),
-                          ),
-                          Text(
-                            e.value.answer ?? '-',
-                            style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  }),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final lang = widget.languageCode.toLowerCase();
-    Color headerColor = Colors.orange;
-    if (_subject != null) {
-      headerColor =
-          pillars
-              .firstWhere(
-                (p) => p.id == _subject!.pillarId,
-                orElse: () => pillars.first,
-              )
-              .getColor();
-    }
+    final pillar = pillars.firstWhere(
+      (p) => p.id == _subject.pillarId,
+      orElse: () => pillars.first,
+    );
+    final headerColor = pillar.getColor();
 
     return ListenableBuilder(
       listenable: TranslationService(),
@@ -378,7 +268,7 @@ class _TestPageState extends State<TestPage> {
           child: Scaffold(
             appBar: AppBar(
               automaticallyImplyLeading: false,
-              title: Text(_translatedSubjectName),
+              title: Text(_subject.getName(widget.languageCode)),
               backgroundColor: headerColor,
               foregroundColor: Colors.white,
               actions: [
@@ -409,7 +299,7 @@ class _TestPageState extends State<TestPage> {
                         children: [
                           if (_showingVideo)
                             Video(controller: controller)
-                          else if (_subject?.isDivision ?? false)
+                          else if (_subject.isDivision)
                             DivisionGrid(
                               a: _currentCard.divisionParts?[0] ?? 0,
                               b: _currentCard.divisionParts?[1] ?? 1,
@@ -417,7 +307,7 @@ class _TestPageState extends State<TestPage> {
                               fontSize: isMobile ? 120 : 200,
                               color: headerColor,
                             )
-                          else if (_subject?.isMultiplication ?? false)
+                          else if (_subject.isMultiplication)
                             MultiplicationGrid(
                               a: _currentCard.multiplicationParts?[0] ?? 1,
                               b: _currentCard.multiplicationParts?[1] ?? 0,
@@ -425,22 +315,22 @@ class _TestPageState extends State<TestPage> {
                               fontSize: isMobile ? 120 : 200,
                               color: headerColor,
                             )
-                          else if (_subject?.isNumbers ?? false)
+                          else if (_subject.isNumbers)
                             NumberGrid(
                               displayChar: _currentCard.getNumericalChar(lang),
                               fontSize: isMobile ? 120 : 200,
                               color: headerColor,
                             )
-                          else if (_subject?.isSubtraction ?? false)
+                          else if (_subject.isSubtraction)
                             SubtractionGrid(
                               totalSum: _currentCard.numericalAnswer,
-                              maxOperand: _subject!.maxOperand,
+                              maxOperand: _subject.maxOperand,
                               iconSize: isMobile ? 40 : 60,
                             )
-                          else if (_subject?.isAddition ?? false)
+                          else if (_subject.isAddition)
                             AdditionGrid(
                               totalSum: _currentCard.numericalAnswer,
-                              maxOperand: _subject!.maxOperand,
+                              maxOperand: _subject.maxOperand,
                               iconSize: isMobile ? 40 : 60,
                             )
                           else if (_currentCard.subjectId == '68232807-b9cd-4cff-872c-c398444f85e2' ||
@@ -613,11 +503,7 @@ class _TestPageState extends State<TestPage> {
                         if ((_currentCard.testMode == 'audio_to_text' ||
                                 _currentCard.testMode == 'audio_to_image') &&
                             _currentCard.getAudioUrl(lang) != null &&
-                            _currentCard.subjectId != '68232807-b9cd-4cff-872c-c398444f85e2' &&
-                            _currentCard.subjectId != 'c3548727-65f4-4e0c-939c-56135b4eb543' &&
-                            _currentCard.subjectId != 'de04da1c-9820-4e61-ae6b-bc7ed07eeb93' &&
-                            _currentCard.subjectId != '5e81da1f-f92c-44d2-b3cd-f921d05425df' &&
-                            _currentCard.subjectId != 'ce04da1c-9820-4e61-ae6b-bc7ed07eeb93') ...[
+                            !_subject.isNumbers && !_subject.isAddition && !_subject.isSubtraction) ...[
                           const SizedBox(width: 12),
                           IconButton.filledTonal(
                             onPressed: () async {

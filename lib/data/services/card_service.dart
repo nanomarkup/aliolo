@@ -429,4 +429,22 @@ class CardService with ChangeNotifier {
       return null;
     }
   }
+
+  Future<List<SubjectCard>> getSubjectCards(String subjectId, {SubjectModel? subject}) async {
+    final s = subject ?? await getSubjectById(subjectId);
+    if (s == null) return [];
+    final cards = await getCardsBySubject(subjectId);
+    return cards.map((c) => SubjectCard(card: c, subject: s)).toList();
+  }
+
+  Future<List<SubjectCard>> getCollectionCards(List<String> subjectIds) async {
+    final List<SubjectCard> all = [];
+    if (subjectIds.isEmpty) return all;
+    final subjects = await getSubjectsByIds(subjectIds);
+    for (final s in subjects) {
+      final cards = await getCardsBySubject(s.id);
+      all.addAll(cards.map((c) => SubjectCard(card: c, subject: s)));
+    }
+    return all;
+  }
 }

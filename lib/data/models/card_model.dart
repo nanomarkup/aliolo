@@ -1,3 +1,5 @@
+import 'subject_model.dart';
+
 class LocalizedCardData {
   final String? prompt;
   final String? answer;
@@ -239,4 +241,11 @@ class CardModel {
       createdAt = DateTime.now(),
       updatedAt = DateTime.now(),
       localizedData = const {};
+}
+
+class SubjectCard {
+  final CardModel card;
+  final SubjectModel subject;
+
+  SubjectCard({required this.card, required this.subject});
 }

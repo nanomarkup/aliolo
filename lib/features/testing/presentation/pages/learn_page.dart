@@ -24,19 +24,19 @@ import 'package:aliolo/core/widgets/multiplication_grid.dart';
 import 'package:aliolo/core/widgets/division_grid.dart';
 
 class LearnPage extends StatefulWidget {
-  final CardModel card;
+  final List<SubjectCard> sessionCards;
   final String languageCode;
 
-  const LearnPage({super.key, required this.card, required this.languageCode});
+  const LearnPage({super.key, required this.sessionCards, required this.languageCode});
 
   @override
   State<LearnPage> createState() => _LearnPageState();
 }
 
 class _LearnPageState extends State<LearnPage> {
-  late CardModel _currentCard;
-  SubjectModel? _subject;
-  String _translatedSubjectName = '';
+  late SubjectCard _currentSubjectCard;
+  CardModel get _currentCard => _currentSubjectCard.card;
+  SubjectModel get _subject => _currentSubjectCard.subject;
 
   // Media State
   List<String> _currentImages = [];
@@ -44,7 +44,7 @@ class _LearnPageState extends State<LearnPage> {
   bool _showingVideo = false;
 
   // Session State
-  List<CardModel> _sessionQueue = [];
+  List<SubjectCard> _sessionQueue = [];
   int _completedInSession = 0;
   int _totalInSession = 0;
 
@@ -68,7 +68,13 @@ class _LearnPageState extends State<LearnPage> {
     super.initState();
     if (!kIsWeb) windowManager.setResizable(true);
     _isAutoPlay = _authService.currentUser?.autoPlayEnabled ?? false;
-    _currentCard = widget.card;
+    
+    _sessionQueue = List.from(widget.sessionCards);
+    _totalInSession = _sessionQueue.length;
+    
+    if (_sessionQueue.isNotEmpty) {
+      _currentSubjectCard = _sessionQueue.first;
+    }
 
     _playerSubscription = player.stream.completed.listen((completed) {
       if (completed && _isAutoPlay && !_isAutoPlayWaiting) {
@@ -76,7 +82,11 @@ class _LearnPageState extends State<LearnPage> {
       }
     });
 
-    _initSession();
+    if (_sessionQueue.isNotEmpty) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _setupMedia();
+      });
+    }
   }
 
   void _onKeyEvent(KeyEvent event) {
@@ -87,40 +97,6 @@ class _LearnPageState extends State<LearnPage> {
       if (_canGoNext) {
         _nextCard();
       }
-    }
-  }
-
-  Future<void> _initSession() async {
-    final user = _authService.currentUser;
-    if (user == null) return;
-
-    _subject = await CardService().getSubjectById(_currentCard.subjectId);
-    if (_subject != null) {
-      _translatedSubjectName = _subject!.getName(widget.languageCode);
-    }
-
-    final allCards = await CardService().getCardsBySubject(
-      _currentCard.subjectId,
-    );
-    if (allCards.isEmpty) return;
-
-    // Filter cards that have at least an answer in target lang, en, or global
-    final lang = widget.languageCode.toLowerCase();
-    final langFiltered =
-        allCards.where((c) {
-          return c.getAnswer(lang).isNotEmpty || c.getAnswer('en').isNotEmpty;
-        }).toList();
-
-    langFiltered.shuffle();
-    final size = user.learnSessionSize;
-    _sessionQueue = langFiltered.take(size).toList();
-
-    if (_sessionQueue.isNotEmpty) {
-      setState(() {
-        _totalInSession = _sessionQueue.length;
-        _currentCard = _sessionQueue.first;
-        _setupMedia();
-      });
     }
   }
 
@@ -198,7 +174,7 @@ class _LearnPageState extends State<LearnPage> {
     }
 
     if (_sessionQueue.isNotEmpty) {
-      setState(() => _currentCard = _sessionQueue.first);
+      setState(() => _currentSubjectCard = _sessionQueue.first);
       _setupMedia();
     } else {
       _progressService.awardSubjectCompletionBonus(_totalInSession);
@@ -291,16 +267,11 @@ class _LearnPageState extends State<LearnPage> {
   @override
   Widget build(BuildContext context) {
     final lang = widget.languageCode.toLowerCase();
-    Color headerColor = Colors.orange;
-    if (_subject != null) {
-      headerColor =
-          pillars
-              .firstWhere(
-                (p) => p.id == _subject!.pillarId,
-                orElse: () => pillars.first,
-              )
-              .getColor();
-    }
+    final pillar = pillars.firstWhere(
+      (p) => p.id == _subject.pillarId,
+      orElse: () => pillars.first,
+    );
+    final headerColor = pillar.getColor();
 
     return ListenableBuilder(
       listenable: TranslationService(),
@@ -315,7 +286,7 @@ class _LearnPageState extends State<LearnPage> {
           child: Scaffold(
             appBar: AppBar(
               automaticallyImplyLeading: false,
-              title: Text(_translatedSubjectName),
+              title: Text(_subject.getName(widget.languageCode)),
               backgroundColor: headerColor,
               foregroundColor: Colors.white,
               actions: [
@@ -345,7 +316,7 @@ class _LearnPageState extends State<LearnPage> {
                         children: [
                           if (_showingVideo)
                             Video(controller: controller)
-                          else if (_subject?.isDivision ?? false)
+                          else if (_subject.isDivision)
                             DivisionGrid(
                               a: _currentCard.divisionParts?[0] ?? 0,
                               b: _currentCard.divisionParts?[1] ?? 1,
@@ -353,7 +324,7 @@ class _LearnPageState extends State<LearnPage> {
                               fontSize: isMobile ? 120 : 200,
                               color: headerColor,
                             )
-                          else if (_subject?.isMultiplication ?? false)
+                          else if (_subject.isMultiplication)
                             MultiplicationGrid(
                               a: _currentCard.multiplicationParts?[0] ?? 1,
                               b: _currentCard.multiplicationParts?[1] ?? 0,
@@ -361,22 +332,22 @@ class _LearnPageState extends State<LearnPage> {
                               fontSize: isMobile ? 120 : 200,
                               color: headerColor,
                             )
-                          else if (_subject?.isNumbers ?? false)
+                          else if (_subject.isNumbers)
                             NumberGrid(
                               displayChar: _currentCard.getNumericalChar(lang),
                               fontSize: isMobile ? 120 : 200,
                               color: headerColor,
                             )
-                          else if (_subject?.isSubtraction ?? false)
+                          else if (_subject.isSubtraction)
                             SubtractionGrid(
                               totalSum: _currentCard.numericalAnswer,
-                              maxOperand: _subject!.maxOperand,
+                              maxOperand: _subject.maxOperand,
                               iconSize: isMobile ? 40 : 60,
                             )
-                          else if (_subject?.isAddition ?? false)
+                          else if (_subject.isAddition)
                             AdditionGrid(
                               totalSum: _currentCard.numericalAnswer,
-                              maxOperand: _subject!.maxOperand,
+                              maxOperand: _subject.maxOperand,
                               iconSize: isMobile ? 40 : 60,
                             )
                           else if (_currentCard.subjectId == '68232807-b9cd-4cff-872c-c398444f85e2' ||

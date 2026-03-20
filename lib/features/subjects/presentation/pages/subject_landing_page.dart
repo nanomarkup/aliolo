@@ -148,6 +148,83 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
     );
   }
 
+  Future<void> _startSession(bool isTest) async {
+    List<SubjectCard> sessionCards = [];
+    final user = _authService.currentUser;
+    if (user == null) return;
+
+    setState(() => _isLoading = true);
+
+    try {
+      if (_currentSubject.type == 'collection') {
+        sessionCards = await _cardService.getCollectionCards(
+          _currentSubject.linkedSubjectIds,
+        );
+      } else if (_currentSubject.type == 'folder') {
+        final subSubjects = await _cardService.getSubSubjects(
+          _currentSubject.id,
+        );
+        for (var s in subSubjects) {
+          final cards = await _cardService.getCardsBySubject(s.id);
+          sessionCards.addAll(
+            cards.map((c) => SubjectCard(card: c, subject: s)),
+          );
+        }
+      } else {
+        // standard
+        sessionCards =
+            _allCards
+                .map((c) => SubjectCard(card: c, subject: _currentSubject))
+                .toList();
+      }
+
+      // Filter and Shuffle logic
+      final lang = widget.languageCode.toLowerCase();
+      sessionCards =
+          sessionCards.where((sc) {
+            return sc.card.getAnswer(lang).isNotEmpty ||
+                sc.card.getAnswer('en').isNotEmpty;
+          }).toList();
+
+      sessionCards.shuffle();
+      final size = isTest ? user.testSessionSize : user.learnSessionSize;
+      sessionCards = sessionCards.take(size).toList();
+
+      if (sessionCards.isEmpty) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('No cards available for this session.'),
+            ),
+          );
+        }
+        return;
+      }
+
+      if (mounted) {
+        await Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder:
+                (context) =>
+                    isTest
+                        ? TestPage(
+                          sessionCards: sessionCards,
+                          languageCode: widget.languageCode,
+                        )
+                        : LearnPage(
+                          sessionCards: sessionCards,
+                          languageCode: widget.languageCode,
+                        ),
+          ),
+        );
+        _refreshData(silent: true);
+      }
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final pillar = pillars.firstWhere(
@@ -286,19 +363,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                       title: context.t('learn_mode_title'),
                       icon: Icons.school,
                       color: pillarColor,
-                      onTap: () {
-                        if (_allCards.isEmpty) return;
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder:
-                                (context) => LearnPage(
-                                  card: _allCards.first,
-                                  languageCode: widget.languageCode,
-                                ),
-                          ),
-                        ).then((_) => _refreshData(silent: true));
-                      },
+                      onTap: () => _startSession(false),
                     ),
                   ),
                   const SizedBox(width: 16),
@@ -308,19 +373,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                       title: context.t('test_mode_title'),
                       icon: Icons.quiz,
                       color: pillarColor,
-                      onTap: () {
-                        if (_allCards.isEmpty) return;
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder:
-                                (context) => TestPage(
-                                  card: _allCards.first,
-                                  languageCode: widget.languageCode,
-                                ),
-                          ),
-                        ).then((_) => _refreshData(silent: true));
-                      },
+                      onTap: () => _startSession(true),
                     ),
                   ),
                 ],
