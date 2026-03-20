@@ -529,6 +529,7 @@ class _SubjectPageState extends State<SubjectPage> {
                               languageCode: _currentTestingLang,
                               initialAgeFilter: _selectedAgeFilter,
                               initialCollectionFilter: _collectionFilter,
+                              onChanged: _loadDashboard,
                             );
                           }, childCount: _filteredSubjects.length),
                         ),
@@ -639,6 +640,7 @@ class _SubjectListTile extends StatelessWidget {
   final String languageCode;
   final String initialAgeFilter;
   final String initialCollectionFilter;
+  final VoidCallback? onChanged;
 
   const _SubjectListTile({
     required this.subject,
@@ -646,6 +648,7 @@ class _SubjectListTile extends StatelessWidget {
     required this.languageCode,
     required this.initialAgeFilter,
     required this.initialCollectionFilter,
+    this.onChanged,
   });
 
   @override
@@ -1142,6 +1145,7 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
                   languageCode: widget.languageCode,
                   initialAgeFilter: _selectedAgeFilter,
                   initialCollectionFilter: _collectionFilter,
+                  onChanged: _loadData,
                 );
               }, childCount: _filteredSubjects.length),
             ),

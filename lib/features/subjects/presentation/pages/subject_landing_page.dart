@@ -413,10 +413,11 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                 ),
               ),
           ],
-        );
-      },
-    );
-  }
+        ),
+      );
+    },
+  );
+}
 
   Widget _buildCardPreview(CardModel card, Color pillarColor, String displayLang) {
     if (_currentSubject.isNumbers) {

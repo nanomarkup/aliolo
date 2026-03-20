@@ -411,6 +411,7 @@ class _SubSubjectPageState extends State<SubSubjectPage> {
                     languageCode: lang,
                     initialAgeFilter: _selectedAgeFilter,
                     initialCollectionFilter: _collectionFilter,
+                    onChanged: _loadSubSubjects,
                   );
                 },
               ),
@@ -464,6 +465,7 @@ class _SubjectListTile extends StatelessWidget {
   final String languageCode;
   final String initialAgeFilter;
   final String initialCollectionFilter;
+  final VoidCallback? onChanged;
 
   const _SubjectListTile({
     required this.subject,
@@ -471,6 +473,7 @@ class _SubjectListTile extends StatelessWidget {
     required this.languageCode,
     required this.initialAgeFilter,
     required this.initialCollectionFilter,
+    this.onChanged,
   });
 
   @override
