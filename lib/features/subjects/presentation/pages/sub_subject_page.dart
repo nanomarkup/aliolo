@@ -39,6 +39,7 @@ class _SubSubjectPageState extends State<SubSubjectPage> {
   late String _selectedAgeFilter;
   late String _collectionFilter;
   late SubjectModel _currentParentSubject;
+  bool _hasUpdated = false;
 
   @override
   void initState() {
@@ -63,7 +64,10 @@ class _SubSubjectPageState extends State<SubSubjectPage> {
     if (mounted) {
       setState(() {
         _allSubSubjects = results;
-        if (updatedParent != null) _currentParentSubject = updatedParent;
+        if (updatedParent != null) {
+          _currentParentSubject = updatedParent;
+          _hasUpdated = true;
+        }
         _applyFilters();
         _isLoading = false;
       });
@@ -168,7 +172,7 @@ class _SubSubjectPageState extends State<SubSubjectPage> {
       actions: [
         IconButton(
           icon: const Icon(Icons.arrow_back, color: appBarColor),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => Navigator.pop(context, _hasUpdated),
         ),
         if (isOwner) ...[
           IconButton(
@@ -479,7 +483,7 @@ class _SubjectListTile extends StatelessWidget {
       child: InkWell(
         onTap: () async {
           if (subject.type == 'folder') {
-            Navigator.push(
+            final result = await Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => SubSubjectPage(
@@ -490,12 +494,15 @@ class _SubjectListTile extends StatelessWidget {
                 ),
               ),
             );
+            if (result == true) {
+              onChanged?.call();
+            }
           } else {
             final cards = await getIt<CardService>().getCardsBySubject(
               subject.id,
             );
             if (context.mounted) {
-              Navigator.push(
+              final result = await Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder:
@@ -506,6 +513,9 @@ class _SubjectListTile extends StatelessWidget {
                       ),
                 ),
               );
+              if (result == true) {
+                onChanged?.call();
+              }
             }
           }
         },

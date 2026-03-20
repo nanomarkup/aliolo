@@ -658,7 +658,7 @@ class _SubjectListTile extends StatelessWidget {
       child: InkWell(
         onTap: () async {
           if (subject.type == 'folder') {
-            Navigator.push(
+            final result = await Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => SubSubjectPage(
@@ -669,10 +669,13 @@ class _SubjectListTile extends StatelessWidget {
                 ),
               ),
             );
+            if (result == true) {
+              onChanged?.call();
+            }
           } else {
             final cards = await CardService().getCardsBySubject(subject.id);
             if (context.mounted) {
-              Navigator.push(
+              final result = await Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder:
@@ -683,6 +686,9 @@ class _SubjectListTile extends StatelessWidget {
                       ),
                 ),
               );
+              if (result == true) {
+                onChanged?.call();
+              }
             }
           }
         },

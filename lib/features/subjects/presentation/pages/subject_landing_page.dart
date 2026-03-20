@@ -45,6 +45,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
   List<CardModel> _allCards = [];
   List<CardModel> _filteredCards = [];
   bool _isLoading = false;
+  bool _hasUpdated = false;
 
   @override
   void initState() {
@@ -79,7 +80,10 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
     if (mounted) {
       setState(() {
         _allCards = cards;
-        if (updatedSubject != null) _currentSubject = updatedSubject;
+        if (updatedSubject != null) {
+          _currentSubject = updatedSubject;
+          _hasUpdated = true;
+        }
         _isLoading = false;
         _applyFilters();
       });
@@ -159,21 +163,27 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
     return ListenableBuilder(
       listenable: _cardService,
       builder: (context, _) {
-        return AlioloScrollablePage(
-          title: Text(
-            _currentSubject.getName(displayLang),
-            style: const TextStyle(
-              color: appBarColor,
-              fontWeight: FontWeight.bold,
+        return PopScope(
+          canPop: false,
+          onPopInvokedWithResult: (didPop, result) {
+            if (didPop) return;
+            Navigator.pop(context, _hasUpdated || (result == true));
+          },
+          child: AlioloScrollablePage(
+            title: Text(
+              _currentSubject.getName(displayLang),
+              style: const TextStyle(
+                color: appBarColor,
+                fontWeight: FontWeight.bold,
+              ),
+              overflow: TextOverflow.ellipsis,
             ),
-            overflow: TextOverflow.ellipsis,
-          ),
-          appBarColor: pillarColor,
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.arrow_back, color: appBarColor),
-              onPressed: () => Navigator.pop(context),
-            ),
+            appBarColor: pillarColor,
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.arrow_back, color: appBarColor),
+                onPressed: () => Navigator.pop(context, _hasUpdated),
+              ),
             if (!isOwner)
               IconButton(
                 icon: Icon(
