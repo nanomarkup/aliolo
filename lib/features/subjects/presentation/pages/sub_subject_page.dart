@@ -12,11 +12,15 @@ import 'package:aliolo/features/subjects/presentation/pages/subject_landing_page
 class SubSubjectPage extends StatefulWidget {
   final SubjectModel parentSubject;
   final String languageCode;
+  final String initialAgeFilter;
+  final String initialCollectionFilter;
 
   const SubSubjectPage({
     super.key,
     required this.parentSubject,
     required this.languageCode,
+    this.initialAgeFilter = 'all',
+    this.initialCollectionFilter = 'all',
   });
 
   @override
@@ -30,12 +34,14 @@ class _SubSubjectPageState extends State<SubSubjectPage> {
   List<SubjectModel> _allSubSubjects = [];
   List<SubjectModel> _filteredSubSubjects = [];
   bool _isLoading = true;
-  String _selectedAgeFilter = 'all';
-  String _collectionFilter = 'all';
+  late String _selectedAgeFilter;
+  late String _collectionFilter;
 
   @override
   void initState() {
     super.initState();
+    _selectedAgeFilter = widget.initialAgeFilter;
+    _collectionFilter = widget.initialCollectionFilter;
     _loadSubSubjects();
   }
 
@@ -64,9 +70,8 @@ class _SubSubjectPageState extends State<SubSubjectPage> {
 
     setState(() {
       _filteredSubSubjects = _allSubSubjects.where((s) {
-        final matchesSearch = s.getName(lang).toLowerCase().contains(query);
-        final matchesAge =
-            _selectedAgeFilter == 'all' || s.ageGroup == _selectedAgeFilter;
+        final matchesSearch = s.matchesNameRecursive(query, lang, _allSubSubjects);
+        final matchesAge = s.matchesAgeGroupRecursive(_selectedAgeFilter, _allSubSubjects);
 
         bool matchesCollection = true;
         if (_collectionFilter == 'favorites') {
@@ -273,6 +278,8 @@ class _SubSubjectPageState extends State<SubSubjectPage> {
                     subject: subject,
                     pillar: pillar,
                     languageCode: lang,
+                    initialAgeFilter: _selectedAgeFilter,
+                    initialCollectionFilter: _collectionFilter,
                   );
                 },
               ),
@@ -328,11 +335,15 @@ class _SubjectListTile extends StatelessWidget {
   final SubjectModel subject;
   final Pillar pillar;
   final String languageCode;
+  final String initialAgeFilter;
+  final String initialCollectionFilter;
 
   const _SubjectListTile({
     required this.subject,
     required this.pillar,
     required this.languageCode,
+    required this.initialAgeFilter,
+    required this.initialCollectionFilter,
   });
 
   @override
@@ -351,6 +362,8 @@ class _SubjectListTile extends StatelessWidget {
                 builder: (context) => SubSubjectPage(
                   parentSubject: subject,
                   languageCode: languageCode,
+                  initialAgeFilter: initialAgeFilter,
+                  initialCollectionFilter: initialCollectionFilter,
                 ),
               ),
             );

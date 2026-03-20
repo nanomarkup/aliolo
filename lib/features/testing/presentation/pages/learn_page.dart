@@ -20,6 +20,8 @@ import 'package:aliolo/core/widgets/counting_grid.dart';
 import 'package:aliolo/core/widgets/addition_grid.dart';
 import 'package:aliolo/core/widgets/subtraction_grid.dart';
 import 'package:aliolo/core/widgets/number_grid.dart';
+import 'package:aliolo/core/widgets/multiplication_grid.dart';
+import 'package:aliolo/core/widgets/division_grid.dart';
 
 class LearnPage extends StatefulWidget {
   final CardModel card;
@@ -343,6 +345,22 @@ class _LearnPageState extends State<LearnPage> {
                         children: [
                           if (_showingVideo)
                             Video(controller: controller)
+                          else if (_subject?.isDivision ?? false)
+                            DivisionGrid(
+                              a: _currentCard.divisionParts?[0] ?? 0,
+                              b: _currentCard.divisionParts?[1] ?? 1,
+                              languageCode: lang,
+                              fontSize: isMobile ? 120 : 200,
+                              color: headerColor,
+                            )
+                          else if (_subject?.isMultiplication ?? false)
+                            MultiplicationGrid(
+                              a: _currentCard.multiplicationParts?[0] ?? 1,
+                              b: _currentCard.multiplicationParts?[1] ?? 0,
+                              languageCode: lang,
+                              fontSize: isMobile ? 120 : 200,
+                              color: headerColor,
+                            )
                           else if (_subject?.isNumbers ?? false)
                             NumberGrid(
                               displayChar: _currentCard.getNumericalChar(lang),

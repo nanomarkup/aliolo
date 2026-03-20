@@ -170,12 +170,15 @@ class _SubjectPageState extends State<SubjectPage> {
     setState(() {
       _filteredSubjects =
           _allDashboardSubjects.where((s) {
-            final matchesName = s
-                .getName(_currentTestingLang)
-                .toLowerCase()
-                .contains(query);
-            final matchesAge =
-                _selectedAgeFilter == 'all' || s.ageGroup == _selectedAgeFilter;
+            final matchesName = s.matchesNameRecursive(
+              query,
+              _currentTestingLang,
+              _allDashboardSubjects,
+            );
+            final matchesAge = s.matchesAgeGroupRecursive(
+              _selectedAgeFilter,
+              _allDashboardSubjects,
+            );
 
             // Collection filter
             bool matchesCollection = true;
@@ -198,7 +201,9 @@ class _SubjectPageState extends State<SubjectPage> {
   @override
   Widget build(BuildContext context) {
     const appBarColor = Colors.white;
-    final activePillars = pillars.toList();
+    final activePillars = pillars.where((p) {
+      return _filteredSubjects.any((s) => s.pillarId == p.id);
+    }).toList();
     final isSearching = _searchController.text.isNotEmpty;
 
     return ListenableBuilder(
@@ -522,6 +527,8 @@ class _SubjectPageState extends State<SubjectPage> {
                               subject: subject,
                               pillar: pillar,
                               languageCode: _currentTestingLang,
+                              initialAgeFilter: _selectedAgeFilter,
+                              initialCollectionFilter: _collectionFilter,
                             );
                           }, childCount: _filteredSubjects.length),
                         ),
@@ -551,9 +558,13 @@ class _SubjectPageState extends State<SubjectPage> {
                                       .where((s) => s.pillarId == pillar.id)
                                       .toList();
 
+                              final folderCount = pillarSubjects.where((s) => s.type == 'folder').length;
+                              final subjectCount = pillarSubjects.length - folderCount;
+
                               return _PillarGridTile(
                                 pillar: pillar,
-                                count: pillarSubjects.length,
+                                subjectCount: subjectCount,
+                                folderCount: folderCount,
                                 languageCode: _currentTestingLang,
                                 onTap:
                                     () => Navigator.push(
@@ -626,11 +637,15 @@ class _SubjectListTile extends StatelessWidget {
   final SubjectModel subject;
   final Pillar pillar;
   final String languageCode;
+  final String initialAgeFilter;
+  final String initialCollectionFilter;
 
   const _SubjectListTile({
     required this.subject,
     required this.pillar,
     required this.languageCode,
+    required this.initialAgeFilter,
+    required this.initialCollectionFilter,
   });
 
   @override
@@ -649,6 +664,8 @@ class _SubjectListTile extends StatelessWidget {
                 builder: (context) => SubSubjectPage(
                   parentSubject: subject,
                   languageCode: languageCode,
+                  initialAgeFilter: initialAgeFilter,
+                  initialCollectionFilter: initialCollectionFilter,
                 ),
               ),
             );
@@ -718,13 +735,15 @@ class _SubjectListTile extends StatelessWidget {
 
 class _PillarGridTile extends StatelessWidget {
   final Pillar pillar;
-  final int count;
+  final int subjectCount;
+  final int folderCount;
   final String languageCode;
   final VoidCallback onTap;
 
   const _PillarGridTile({
     required this.pillar,
-    required this.count,
+    required this.subjectCount,
+    required this.folderCount,
     required this.languageCode,
     required this.onTap,
   });
@@ -796,13 +815,22 @@ class _PillarGridTile extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                     const Spacer(),
-                    Text(
-                      '$count ${context.plural('subject', count)}',
-                      style: TextStyle(
-                        color: Colors.white.withValues(alpha: 0.9),
-                        fontSize: 14,
+                    if (folderCount > 0)
+                      Text(
+                        '$folderCount ${context.plural('folder', folderCount)}',
+                        style: TextStyle(
+                          color: Colors.white.withValues(alpha: 0.9),
+                          fontSize: 14,
+                        ),
                       ),
-                    ),
+                    if (subjectCount > 0)
+                      Text(
+                        '$subjectCount ${context.plural('subject', subjectCount)}',
+                        style: TextStyle(
+                          color: Colors.white.withValues(alpha: 0.9),
+                          fontSize: 14,
+                        ),
+                      ),
                   ],
                 ),
               ),
@@ -873,12 +901,15 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
     setState(() {
       _filteredSubjects =
           _allSubjects.where((s) {
-            final matchesName = s
-                .getName(widget.languageCode)
-                .toLowerCase()
-                .contains(query);
-            final matchesAge =
-                _selectedAgeFilter == 'all' || s.ageGroup == _selectedAgeFilter;
+            final matchesName = s.matchesNameRecursive(
+              query,
+              widget.languageCode,
+              _allSubjects,
+            );
+            final matchesAge = s.matchesAgeGroupRecursive(
+              _selectedAgeFilter,
+              _allSubjects,
+            );
 
             bool matchesCollection = true;
             if (_collectionFilter == 'favorites') {
@@ -1067,8 +1098,10 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
                           context,
                           MaterialPageRoute(
                             builder:
-                                (context) =>
-                                    SubjectEditPage(pillarId: widget.pillar.id),
+                                (context) => SubjectEditPage(
+                                  pillarId: widget.pillar.id,
+                                  initialAgeGroup: _selectedAgeFilter,
+                                ),
                           ),
                         );
                         if (result == true) _loadData();
@@ -1101,6 +1134,8 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
                   subject: subject,
                   pillar: widget.pillar,
                   languageCode: widget.languageCode,
+                  initialAgeFilter: _selectedAgeFilter,
+                  initialCollectionFilter: _collectionFilter,
                 );
               }, childCount: _filteredSubjects.length),
             ),

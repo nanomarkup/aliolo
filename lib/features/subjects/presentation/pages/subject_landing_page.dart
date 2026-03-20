@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:aliolo/core/widgets/aliolo_scrollable_page.dart';
 import 'package:aliolo/data/models/subject_model.dart';
-import 'package:aliolo/data/models/pillar_model.dart';
 import 'package:aliolo/data/models/card_model.dart';
+import 'package:aliolo/data/models/pillar_model.dart';
+import 'package:aliolo/data/services/card_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/data/services/auth_service.dart';
-import 'package:aliolo/data/services/card_service.dart';
 import 'package:aliolo/core/di/service_locator.dart';
-import 'package:aliolo/features/testing/presentation/pages/test_page.dart';
+import 'package:aliolo/core/widgets/aliolo_scrollable_page.dart';
 import 'package:aliolo/features/testing/presentation/pages/learn_page.dart';
+import 'package:aliolo/features/testing/presentation/pages/test_page.dart';
 import 'package:aliolo/features/management/presentation/pages/subject_edit_page.dart';
 import 'package:aliolo/features/management/presentation/pages/add_card_page.dart';
 import 'package:aliolo/features/feedback/presentation/pages/feedback_page.dart';
@@ -17,6 +17,8 @@ import 'package:aliolo/core/widgets/counting_grid.dart';
 import 'package:aliolo/core/widgets/addition_grid.dart';
 import 'package:aliolo/core/widgets/subtraction_grid.dart';
 import 'package:aliolo/core/widgets/number_grid.dart';
+import 'package:aliolo/core/widgets/multiplication_grid.dart';
+import 'package:aliolo/core/widgets/division_grid.dart';
 
 class SubjectLandingPage extends StatefulWidget {
   final SubjectModel subject;
@@ -84,6 +86,20 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
     }
   }
 
+  void _applyFilters() {
+    final query = _searchController.text.toLowerCase();
+    setState(() {
+      _filteredCards =
+          _allCards.where((c) {
+            final matchesSearch = c
+                .getPrompt(widget.languageCode)
+                .toLowerCase()
+                .contains(query);
+            return matchesSearch;
+          }).toList();
+    });
+  }
+
   Future<void> _toggleFavorite() async {
     final newState = !_currentSubject.isOnDashboard;
     setState(() => _currentSubject.isOnDashboard = newState);
@@ -99,53 +115,33 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
     }
   }
 
-  void _applyFilters() {
-    final query = _searchController.text.toLowerCase();
-    final lang = widget.languageCode.toLowerCase();
-
-    setState(() {
-      _filteredCards =
-          _allCards.where((c) {
-            final answer = c.getAnswer(lang);
-            final prompt = c.getPrompt(lang);
-            return answer.toLowerCase().contains(query) ||
-                prompt.toLowerCase().contains(query);
-          }).toList();
-    });
-  }
-
-  Future<void> _confirmDeleteSubject() async {
-    final cardCount = _allCards.length;
-    final bool confirmed =
-        await showDialog<bool>(
-          context: context,
-          builder:
-              (context) => AlertDialog(
-                title: Text(context.t('delete_subject')),
-                content: Text(
-                  cardCount > 0
-                      ? 'This subject contains $cardCount ${context.plural('card', cardCount)}. Deleting it will permanently remove all of them.'
-                      : 'Delete this subject?',
-                ),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.pop(context, false),
-                    child: Text(context.t('cancel')),
-                  ),
-                  TextButton(
-                    onPressed: () => Navigator.pop(context, true),
-                    style: TextButton.styleFrom(foregroundColor: Colors.red),
-                    child: Text(context.t('delete')),
-                  ),
-                ],
+  void _confirmDeleteSubject() {
+    showDialog(
+      context: context,
+      builder:
+          (context) => AlertDialog(
+            title: const Text('Delete Subject?'),
+            content: const Text(
+              'This will permanently delete the subject and all its cards.',
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text('Cancel'),
               ),
-        ) ??
-        false;
-
-    if (confirmed) {
-      await _cardService.deleteSubjectById(_currentSubject.id);
-      if (mounted) Navigator.pop(context, true);
-    }
+              TextButton(
+                onPressed: () async {
+                  await _cardService.deleteSubjectById(_currentSubject.id);
+                  if (context.mounted) {
+                    Navigator.pop(context); // Close dialog
+                    Navigator.pop(context, true); // Go back to dashboard
+                  }
+                },
+                child: const Text('Delete', style: TextStyle(color: Colors.red)),
+              ),
+            ],
+          ),
+    );
   }
 
   @override
@@ -278,36 +274,16 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                     child: _buildActionButton(
                       context: context,
                       title: context.t('learn_mode_title'),
-                      icon: Icons.auto_stories,
-                      color: Colors.blue,
+                      icon: Icons.school,
+                      color: pillarColor,
                       onTap: () {
-                        final lang = widget.languageCode.toLowerCase();
-                        final validCards =
-                            _allCards
-                                .where(
-                                  (c) =>
-                                      c.getAnswer(lang).isNotEmpty ||
-                                      c.getAnswer('en').isNotEmpty,
-                                )
-                                .toList();
-
-                        if (validCards.isEmpty) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(
-                                context.t('no_cards_found_for_lang'),
-                              ),
-                            ),
-                          );
-                          return;
-                        }
-
+                        if (_allCards.isEmpty) return;
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder:
                                 (context) => LearnPage(
-                                  card: validCards.first,
+                                  card: _allCards.first,
                                   languageCode: widget.languageCode,
                                 ),
                           ),
@@ -321,35 +297,15 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                       context: context,
                       title: context.t('test_mode_title'),
                       icon: Icons.quiz,
-                      color: Colors.orange,
+                      color: pillarColor,
                       onTap: () {
-                        final lang = widget.languageCode.toLowerCase();
-                        final validCards =
-                            _allCards
-                                .where(
-                                  (c) =>
-                                      c.getAnswer(lang).isNotEmpty ||
-                                      c.getAnswer('en').isNotEmpty,
-                                )
-                                .toList();
-
-                        if (validCards.isEmpty) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(
-                                context.t('no_cards_found_for_lang'),
-                              ),
-                            ),
-                          );
-                          return;
-                        }
-
+                        if (_allCards.isEmpty) return;
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder:
                                 (context) => TestPage(
-                                  card: validCards.first,
+                                  card: _allCards.first,
                                   languageCode: widget.languageCode,
                                 ),
                           ),
@@ -360,54 +316,18 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                 ],
               ),
               const SizedBox(height: 32),
-              Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      controller: _searchController,
-                      decoration: InputDecoration(
-                        hintText: context.t('search_cards'),
-                        prefixIcon: const Icon(Icons.search),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                        ),
-                        filled: true,
-                        fillColor: Theme.of(
-                          context,
-                        ).cardColor.withValues(alpha: 0.5),
-                      ),
-                      onChanged: (_) => _applyFilters(),
-                    ),
+              TextField(
+                controller: _searchController,
+                onChanged: (_) => _applyFilters(),
+                decoration: InputDecoration(
+                  hintText: 'Search cards...',
+                  prefixIcon: const Icon(Icons.search),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
                   ),
-                  if (isOwner) ...[
-                    const SizedBox(width: 12),
-                    IconButton(
-                      icon: Icon(
-                        Icons.add_circle,
-                        color: pillarColor,
-                        size: 40,
-                      ),
-                      onPressed: () async {
-                        final result = await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder:
-                                (context) => AddCardPage(
-                                  initialSubjectId: _currentSubject.id,
-                                  pillarId: _currentSubject.pillarId,
-                                ),
-                          ),
-                        );
-                        if (result == true) _refreshData();
-                      },
-                    ),
-                  ],
-                ],
+                ),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 24),
             ],
           ),
           slivers: [
@@ -416,27 +336,23 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                 child: Center(child: CircularProgressIndicator()),
               )
             else if (_filteredCards.isEmpty)
-              SliverFillRemaining(
-                child: Center(child: Text(context.t('no_cards_found'))),
+              const SliverFillRemaining(
+                child: Center(child: Text('No cards found')),
               )
             else
               SliverPadding(
                 padding: const EdgeInsets.only(bottom: 32),
                 sliver: SliverGrid(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    crossAxisSpacing: 12,
-                    mainAxisSpacing: 12,
-                    childAspectRatio: 0.75,
+                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                    maxCrossAxisExtent: 200,
+                    childAspectRatio: 0.8,
+                    crossAxisSpacing: 16,
+                    mainAxisSpacing: 16,
                   ),
                   delegate: SliverChildBuilderDelegate((context, index) {
                     final card = _filteredCards[index];
-                    final answer = card.getAnswer(
-                      widget.languageCode.toLowerCase(),
-                    );
-                    final imageUrl = card.primaryImageUrl;
-                    final isCardMine =
-                        card.ownerId == _authService.currentUser?.serverId;
+                    final isCardMine = card.ownerId == _authService.currentUser?.serverId;
+                    final answer = card.getAnswer(displayLang);
 
                     return InkWell(
                       onTap: () async {
@@ -450,7 +366,8 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                                   pillarId: _currentSubject.pillarId,
                                 ),
                           ),
-                        );                        _refreshData(silent: true);
+                        );
+                        _refreshData(silent: true);
                       },
                       child: Card(
                         clipBehavior: Clip.antiAlias,
@@ -463,49 +380,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                           children: [
                             Expanded(
                               flex: 3,
-                              child: _currentSubject.isNumbers
-                                  ? NumberGrid(
-                                      displayChar: card.getNumericalChar(
-                                        widget.languageCode,
-                                      ),
-                                      fontSize: 40,
-                                      color: pillarColor,
-                                    )
-                                  : (_currentSubject.isSubtraction
-                                      ? SubtractionGrid(
-                                          totalSum: card.numericalAnswer,
-                                          maxOperand: _currentSubject.maxOperand,
-                                          iconSize: 18,
-                                        )
-                                      : (_currentSubject.isAddition
-                                          ? AdditionGrid(
-                                              totalSum: card.numericalAnswer,
-                                              maxOperand:
-                                                  _currentSubject.maxOperand,
-                                              iconSize: 18,
-                                            )
-                                          : (_currentSubject.isCounting
-                                              ? CountingGrid(
-                                                  count: card.numericalAnswer,
-                                                  iconSize: 24,
-                                                )
-                                              : (imageUrl != null
-                                                  ? AlioloImage(
-                                                      imageUrl: imageUrl,
-                                                      fit: BoxFit.cover,
-                                                    )
-                                                  : Container(
-                                                      color:
-                                                          pillarColor
-                                                              .withValues(
-                                                                alpha: 0.1,
-                                                              ),
-                                                      child: Icon(
-                                                        Icons.image,
-                                                        size: 32,
-                                                        color: pillarColor,
-                                                      ),
-                                                    ))))),
+                              child: _buildCardPreview(card, pillarColor, displayLang),
                             ),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
@@ -531,6 +406,67 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
         );
       },
     );
+  }
+
+  Widget _buildCardPreview(CardModel card, Color pillarColor, String displayLang) {
+    if (_currentSubject.isNumbers) {
+      return NumberGrid(
+        displayChar: card.getNumericalChar(displayLang),
+        fontSize: 40,
+        color: pillarColor,
+      );
+    } else if (_currentSubject.isDivision) {
+      final parts = card.divisionParts ?? [0, 1];
+      return DivisionGrid(
+        a: parts[0],
+        b: parts[1],
+        languageCode: displayLang,
+        fontSize: 24,
+        color: pillarColor,
+      );
+    } else if (_currentSubject.isMultiplication) {
+      final parts = card.multiplicationParts ?? [1, 0];
+      return MultiplicationGrid(
+        a: parts[0],
+        b: parts[1],
+        languageCode: displayLang,
+        fontSize: 24,
+        color: pillarColor,
+      );
+    } else if (_currentSubject.isSubtraction) {
+      return SubtractionGrid(
+        totalSum: card.numericalAnswer,
+        maxOperand: _currentSubject.maxOperand,
+        iconSize: 18,
+      );
+    } else if (_currentSubject.isAddition) {
+      return AdditionGrid(
+        totalSum: card.numericalAnswer,
+        maxOperand: _currentSubject.maxOperand,
+        iconSize: 18,
+      );
+    } else if (_currentSubject.isCounting) {
+      return CountingGrid(
+        count: card.numericalAnswer,
+        iconSize: 24,
+      );
+    } else {
+      final imageUrl = card.getImageUrls(displayLang).firstOrNull;
+      if (imageUrl != null) {
+        return AlioloImage(
+          imageUrl: imageUrl,
+          fit: BoxFit.cover,
+        );
+      }
+      return Container(
+        color: pillarColor.withAlpha(25),
+        child: Icon(
+          Icons.image,
+          size: 32,
+          color: pillarColor,
+        ),
+      );
+    }
   }
 
   Widget _buildActionButton({

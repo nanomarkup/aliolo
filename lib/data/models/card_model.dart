@@ -185,6 +185,28 @@ class CardModel {
     return null;
   }
 
+  List<int>? get multiplicationParts {
+    final data = localizedData['global'] ?? localizedData['en'] ?? localizedData.values.firstOrNull;
+    if (data == null) return null;
+    
+    final parts = data.rawData['parts'];
+    if (parts is List) {
+      return parts.map((e) => int.tryParse(e.toString()) ?? 0).toList();
+    }
+    return null;
+  }
+
+  List<int>? get divisionParts {
+    final data = localizedData['global'] ?? localizedData['en'] ?? localizedData.values.firstOrNull;
+    if (data == null) return null;
+    
+    final parts = data.rawData['parts'];
+    if (parts is List) {
+      return parts.map((e) => int.tryParse(e.toString()) ?? 0).toList();
+    }
+    return null;
+  }
+
   String? getAudioUrl(String lang) => _getInherited(lang, (d) => d.audioUrl);
   String? getVideoUrl(String lang) => _getInherited(lang, (d) => d.videoUrl);
   List<String> getImageUrls(String lang) =>

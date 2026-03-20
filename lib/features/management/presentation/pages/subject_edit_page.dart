@@ -14,8 +14,14 @@ import 'package:aliolo/features/feedback/presentation/pages/feedback_page.dart';
 class SubjectEditPage extends StatefulWidget {
   final SubjectModel? existingSubject;
   final int? pillarId;
+  final String? initialAgeGroup;
 
-  const SubjectEditPage({super.key, this.existingSubject, this.pillarId});
+  const SubjectEditPage({
+    super.key,
+    this.existingSubject,
+    this.pillarId,
+    this.initialAgeGroup,
+  });
 
   @override
   State<SubjectEditPage> createState() => _SubjectEditPageState();
@@ -60,7 +66,10 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
     super.initState();
     _selectedPillar = widget.existingSubject?.pillarId ?? widget.pillarId ?? 1;
     _isPublic = widget.existingSubject?.isPublic ?? false;
-    _selectedAgeGroup = widget.existingSubject?.ageGroup ?? 'all';
+    _selectedAgeGroup = widget.existingSubject?.ageGroup ??
+        ((widget.initialAgeGroup != null && widget.initialAgeGroup != 'all')
+            ? widget.initialAgeGroup!
+            : 'all');
 
     if (pillars.isEmpty) {
       _cardService.getPillars().then((_) {

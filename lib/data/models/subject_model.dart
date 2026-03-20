@@ -48,6 +48,28 @@ class SubjectModel {
       id == 'ce04da1c-9820-4e61-ae6b-bc7ed07eeb93' ||
       id == 'f59a0f9c-5d6d-4f2d-b426-eb9ca6bf2782';
 
+  bool get isMultiplication =>
+      id == 'e104da1c-9820-4e61-ae6b-bc7ed07eeb93' ||
+      id == 'e204da1c-9820-4e61-ae6b-bc7ed07eeb93' ||
+      id == 'e304da1c-9820-4e61-ae6b-bc7ed07eeb93' ||
+      id == 'e404da1c-9820-4e61-ae6b-bc7ed07eeb93' ||
+      id == 'e504da1c-9820-4e61-ae6b-bc7ed07eeb93' ||
+      id == 'e604da1c-9820-4e61-ae6b-bc7ed07eeb93' ||
+      id == 'e704da1c-9820-4e61-ae6b-bc7ed07eeb93' ||
+      id == 'e804da1c-9820-4e61-ae6b-bc7ed07eeb93' ||
+      id == 'e904da1c-9820-4e61-ae6b-bc7ed07eeb93';
+
+  bool get isDivision =>
+      id == 'd104da1c-9820-4e61-ae6b-bc7ed07eeb93' ||
+      id == 'd204da1c-9820-4e61-ae6b-bc7ed07eeb93' ||
+      id == 'd304da1c-9820-4e61-ae6b-bc7ed07eeb93' ||
+      id == 'd404da1c-9820-4e61-ae6b-bc7ed07eeb93' ||
+      id == 'd504da1c-9820-4e61-ae6b-bc7ed07eeb93' ||
+      id == 'd604da1c-9820-4e61-ae6b-bc7ed07eeb93' ||
+      id == 'd704da1c-9820-4e61-ae6b-bc7ed07eeb93' ||
+      id == 'd804da1c-9820-4e61-ae6b-bc7ed07eeb93' ||
+      id == 'd904da1c-9820-4e61-ae6b-bc7ed07eeb93';
+
   bool get isNumbers =>
       id == 'bc354f43-f9be-42a9-a7bc-ac400bd5e310' ||
       id == 'cb04da1c-9820-4e61-ae6b-bc7ed07eeb93';
@@ -58,6 +80,32 @@ class SubjectModel {
     if (id == 'ce04da1c-9820-4e61-ae6b-bc7ed07eeb93') return 10;
     if (id == 'f59a0f9c-5d6d-4f2d-b426-eb9ca6bf2782') return 20;
     return 0;
+  }
+
+  bool matchesNameRecursive(String query, String langCode, List<SubjectModel> allSubjects) {
+    if (query.isEmpty) return true;
+    if (getName(langCode).toLowerCase().contains(query.toLowerCase())) return true;
+
+    if (type == 'folder') {
+      final children = allSubjects.where((s) => s.parentId == id);
+      for (var child in children) {
+        if (child.matchesNameRecursive(query, langCode, allSubjects)) return true;
+      }
+    }
+    return false;
+  }
+
+  bool matchesAgeGroupRecursive(String targetAge, List<SubjectModel> allSubjects) {
+    if (targetAge == 'all') return true;
+    if (ageGroup == targetAge) return true;
+
+    if (type == 'folder') {
+      final children = allSubjects.where((s) => s.parentId == id);
+      for (var child in children) {
+        if (child.matchesAgeGroupRecursive(targetAge, allSubjects)) return true;
+      }
+    }
+    return false;
   }
 
   /// Map of language code to its specific data.
