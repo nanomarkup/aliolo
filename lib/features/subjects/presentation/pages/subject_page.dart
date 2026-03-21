@@ -7,6 +7,7 @@ import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/data/models/pillar_model.dart';
 import 'package:aliolo/data/models/subject_model.dart';
 import 'package:aliolo/data/models/folder_model.dart';
+import 'package:aliolo/data/models/collection_model.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/card_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
@@ -38,11 +39,15 @@ class _SubjectPageState extends State<SubjectPage> {
 
   List<SubjectModel> _allDashboardSubjects = [];
   List<FolderModel> _allDashboardFolders = [];
+  List<CollectionModel> _allDashboardCollections = [];
   List<SubjectModel> _allMatchingSubjects = [];
+  List<CollectionModel> _allMatchingCollections = [];
   List<SubjectModel> _filteredSubjects = [];
+  List<CollectionModel> _filteredCollections = [];
+  List<FolderModel> _filteredFolders = [];
   bool _isLoading = true;
   String _selectedAgeFilter = 'all';
-  String _collectionFilter = 'favorites'; // Default to favorites
+  String _collectionFilter = 'favorites';
 
   @override
   void initState() {
@@ -119,35 +124,37 @@ class _SubjectPageState extends State<SubjectPage> {
     setState(() => _isLoading = true);
     await _cardService.getPillars();
     final subjects = await _cardService.getDashboardSubjects();
-    final folders = await _cardService.getAllFolders();
+    final collections = await _cardService.getAllCollections(rootOnly: false);
+    
+    final myFolders = await _cardService.getAllFolders();
+    final foreignFolderIds = {
+      ...subjects.where((s) => s.folderId != null).map((s) => s.folderId!),
+      ...collections.where((c) => c.folderId != null).map((c) => c.folderId!),
+    }.where((fid) => !myFolders.any((f) => f.id == fid)).toList();
+    
+    final List<FolderModel> allFolders = [...myFolders];
+    if (foreignFolderIds.isNotEmpty) {
+      final foreignFolders = await _cardService.getFoldersByIds(foreignFolderIds);
+      allFolders.addAll(foreignFolders);
+    }
 
     if (mounted) {
       final Set<String> detectedLangs = {};
       for (var s in subjects) {
-        // Scan subject names/descriptions
         detectedLangs.addAll(s.localizedData.keys.map((k) => k.toLowerCase()));
-
-        // Scan nested cards
         if (s.rawCards != null) {
           for (var c in s.rawCards!) {
             final locData = c['localized_data'] as Map?;
             if (locData != null) {
-              detectedLangs.addAll(
-                locData.keys.map((k) => k.toString().toLowerCase()),
-              );
+              detectedLangs.addAll(locData.keys.map((k) => k.toString().toLowerCase()));
             }
           }
         }
       }
-
-      // Filter out 'global' and other non-language markers
       detectedLangs.remove('global');
       detectedLangs.remove('default');
-
       if (detectedLangs.isNotEmpty) {
-        getIt<TestingLanguageService>().addActiveLanguages(
-          detectedLangs.toList(),
-        );
+        getIt<TestingLanguageService>().addActiveLanguages(detectedLangs.toList());
       }
 
       final prefs = await SharedPreferences.getInstance();
@@ -155,10 +162,9 @@ class _SubjectPageState extends State<SubjectPage> {
 
       setState(() {
         _allDashboardSubjects = subjects;
-        _allDashboardFolders = folders;
-        // Smart default: if no favorites AND no saved preference, show public subjects
-        if (!hasSavedCollection &&
-            _allDashboardSubjects.where((s) => s.isOnDashboard).isEmpty) {
+        _allDashboardFolders = allFolders;
+        _allDashboardCollections = collections;
+        if (!hasSavedCollection && _allDashboardSubjects.where((s) => s.isOnDashboard).isEmpty) {
           _collectionFilter = 'public';
         }
         _applySearch();
@@ -172,30 +178,60 @@ class _SubjectPageState extends State<SubjectPage> {
     final myId = getIt<AuthService>().currentUser?.serverId;
 
     setState(() {
-      // 1. All subjects that pass the basic filters (Pillar check uses this)
+      final availableFolderIds = _allDashboardFolders.map((f) => f.id).toSet();
+
       _allMatchingSubjects = _allDashboardSubjects.where((s) {
         final matchesName = s.getName(_currentTestingLang).toLowerCase().contains(query);
         final matchesAge = _selectedAgeFilter == 'all' || s.ageGroup == _selectedAgeFilter;
-
         bool matchesCollection = true;
         if (_collectionFilter == 'mine') {
           matchesCollection = s.ownerId == myId;
         } else if (_collectionFilter == 'public') {
           matchesCollection = s.isPublic;
         } else if (_collectionFilter == 'favorites') {
+          matchesCollection = s.isOnDashboard;
+        } else {
+          // 'all' filter
           matchesCollection = true;
         }
-
         return matchesName && matchesAge && matchesCollection;
       }).toList();
 
-      // 2. Visible subjects (The actual list/grid uses this)
-      _filteredSubjects =
-          _allMatchingSubjects.where((s) {
-            // Hierarchy: Only show subjects that are NOT in a folder on dashboard unless searching
-            final matchesHierarchy = query.isNotEmpty || s.folderId == null;
-            return matchesHierarchy;
-          }).toList();
+      _allMatchingCollections = _allDashboardCollections.where((c) {
+        final matchesName = c.getName(_currentTestingLang).toLowerCase().contains(query);
+        bool matchesCollection = true;
+        if (_collectionFilter == 'mine') {
+          matchesCollection = c.ownerId == myId;
+        } else if (_collectionFilter == 'public') {
+          matchesCollection = c.isPublic;
+        } else if (_collectionFilter == 'favorites') {
+          matchesCollection = true; // Favorites not yet implemented for collections
+        } else {
+          // 'all' filter
+          matchesCollection = true;
+        }
+        return matchesName && matchesCollection;
+      }).toList();
+
+      _filteredSubjects = _allMatchingSubjects.where((s) {
+        return query.isNotEmpty || s.folderId == null || !availableFolderIds.contains(s.folderId);
+      }).toList();
+
+      _filteredCollections = _allMatchingCollections.where((c) {
+        return query.isNotEmpty || c.folderId == null || !availableFolderIds.contains(c.folderId);
+      }).toList();
+
+      _filteredFolders = _allDashboardFolders.where((f) {
+        final matchesQuery = f.getName(_currentTestingLang).toLowerCase().contains(query);
+        final hasMatchingContent = _allMatchingSubjects.any((s) => s.folderId == f.id) || 
+                                 _allMatchingCollections.any((c) => c.folderId == f.id);
+        
+        if (hasMatchingContent) return true;
+        if (_collectionFilter == 'mine' || _collectionFilter == 'all') {
+          return f.ownerId == myId && matchesQuery;
+        }
+        return false;
+      }).toList();
     });
   }
 
@@ -212,12 +248,13 @@ class _SubjectPageState extends State<SubjectPage> {
       builder: (context, _) {
         final isSearching = _searchController.text.isNotEmpty;
         final currentSessionColor = ThemeService().primaryColor;
+        final activePillars = pillars.where((p) => 
+          _allMatchingSubjects.any((s) => s.pillarId == p.id) || 
+          _filteredFolders.any((f) => f.pillarId == p.id) ||
+          _allMatchingCollections.any((c) => c.pillarId == p.id)
+        ).toList();
 
-        final activeCodes = getIt<TestingLanguageService>().activeLanguageCodes
-            .map((l) => l.toLowerCase())
-            .toSet();
-        
-        // Safety: Ensure current language is in the list
+        final activeCodes = getIt<TestingLanguageService>().activeLanguageCodes.map((l) => l.toLowerCase()).toSet();
         if (!activeCodes.contains(_currentTestingLang)) {
           activeCodes.add(_currentTestingLang);
         }
@@ -228,21 +265,13 @@ class _SubjectPageState extends State<SubjectPage> {
               value: _currentTestingLang,
               dropdownColor: currentSessionColor,
               icon: const Icon(Icons.language, color: appBarColor, size: 20),
-              style: const TextStyle(
-                color: appBarColor,
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-              items:
-                  activeCodes.map((l) {
-                    return DropdownMenuItem(
-                      value: l,
-                      child: Text(
-                        getIt<TestingLanguageService>().getLanguageName(l),
-                        style: const TextStyle(color: Colors.white),
-                      ),
-                    );
-                  }).toList(),
+              style: const TextStyle(color: appBarColor, fontSize: 18, fontWeight: FontWeight.bold),
+              items: activeCodes.map((l) {
+                return DropdownMenuItem(
+                  value: l,
+                  child: Text(getIt<TestingLanguageService>().getLanguageName(l), style: const TextStyle(color: Colors.white)),
+                );
+              }).toList(),
               onChanged: (val) async {
                 if (val != null) {
                   setState(() => _currentTestingLang = val);
@@ -268,350 +297,301 @@ class _SubjectPageState extends State<SubjectPage> {
             ),
             IconButton(
               icon: const Icon(Icons.emoji_events, color: appBarColor),
-              onPressed:
-                  () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const LeaderboardPage(),
-                    ),
-                  ),
+              onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const LeaderboardPage())),
             ),
             IconButton(
               icon: ValueListenableBuilder<bool>(
                 valueListenable: getIt<FeedbackService>().pendingNotifications,
                 builder: (context, hasNotif, _) {
-                  return Badge(
-                    isLabelVisible: hasNotif,
-                    backgroundColor: Colors.amber,
-                    child: const Icon(Icons.person, color: appBarColor),
-                  );
+                  return Badge(isLabelVisible: hasNotif, backgroundColor: Colors.amber, child: const Icon(Icons.person, color: appBarColor));
                 },
               ),
               onPressed: () async {
-                await Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const ProfilePage()),
-                );
+                await Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfilePage()));
                 _loadDashboard();
               },
             ),
             IconButton(
               icon: const Icon(Icons.settings, color: appBarColor),
-              onPressed:
-                  () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const SettingsPage(),
-                    ),
-                  ),
+              onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const SettingsPage())),
             ),
           ],
           fixedBody: LayoutBuilder(
             builder: (context, constraints) {
               final isSmall = constraints.maxWidth < 600;
+              final filterRow = Row(
+                children: [
+                  Expanded(
+                    child: _buildCompactDropdown(
+                      value: _collectionFilter,
+                      items: {
+                        'all': context.t('filter_all'),
+                        'favorites': context.t('filter_favorites'),
+                        'mine': context.t('filter_my_subjects'),
+                        'public': context.t('filter_public'),
+                      },
+                      onChanged: (val) async {
+                        if (val != null) {
+                          setState(() { _collectionFilter = val; _applySearch(); });
+                          final prefs = await SharedPreferences.getInstance();
+                          await prefs.setString('last_collection_filter', val);
+                        }
+                      },
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: _buildCompactDropdown(
+                      value: _selectedAgeFilter,
+                      items: {
+                        'all': context.t('age_all'),
+                        '0_6': context.t('age_0_6'),
+                        '7_14': context.t('age_7_14'),
+                        '15_plus': context.t('age_15_plus'),
+                      },
+                      onChanged: (val) async {
+                        if (val != null) {
+                          setState(() { _selectedAgeFilter = val; _applySearch(); });
+                          final prefs = await SharedPreferences.getInstance();
+                          await prefs.setString('last_age_filter', val);
+                        }
+                      },
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  SizedBox(
+                    width: 48,
+                    child: PopupMenuButton<String>(
+                      icon: Icon(Icons.add_circle, color: currentSessionColor, size: 40),
+                      padding: EdgeInsets.zero,
+                      onSelected: (value) async {
+                        final defaultPillarId = pillars.isNotEmpty ? pillars.first.id : 8;
+                        bool? result;
+                        if (value == 'subject') {
+                          result = await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SubjectEditPage(pillarId: defaultPillarId),
+                            ),
+                          );
+                        } else if (value == 'collection') {
+                          result = await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SubjectEditPage(pillarId: defaultPillarId, isCollectionMode: true),
+                            ),
+                          );
+                        } else if (value == 'folder') {
+                          result = await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SubjectEditPage(pillarId: defaultPillarId, isFolderMode: true),
+                            ),
+                          );
+                        }
+                        if (result == true) _loadDashboard();
+                      },
+                      itemBuilder: (context) => [
+                        PopupMenuItem(
+                          value: 'subject',
+                          child: ListTile(
+                            leading: const Icon(Icons.description, color: Colors.orange),
+                            title: Text(context.t('add_subject')),
+                            contentPadding: EdgeInsets.zero,
+                          ),
+                        ),
+                        PopupMenuItem(
+                          value: 'collection',
+                          child: ListTile(
+                            leading: const Icon(Icons.collections, color: Colors.blue),
+                            title: Text(context.t('add_collection')),
+                            contentPadding: EdgeInsets.zero,
+                          ),
+                        ),
+                        PopupMenuItem(
+                          value: 'folder',
+                          child: ListTile(
+                            leading: const Icon(Icons.folder, color: Colors.amber),
+                            title: Text(context.t('add_folder')),
+                            contentPadding: EdgeInsets.zero,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              );
 
-              if (isSmall) {
-                // Mobile: Stacked
-                return Padding(
-                  padding: const EdgeInsets.only(top: 16, bottom: 24),
-                  child: Column(
-                    children: [
+              return Padding(
+                padding: const EdgeInsets.only(top: 16, bottom: 24),
+                child: isSmall 
+                  ? Column(children: [
                       TextField(
                         controller: _searchController,
                         decoration: InputDecoration(
                           hintText: context.t('search_subjects'),
                           prefixIcon: const Icon(Icons.search),
-                          suffixIcon:
-                              ValueListenableBuilder<TextEditingValue>(
-                                valueListenable: _searchController,
-                                builder:
-                                    (context, value, _) =>
-                                        value.text.isNotEmpty
-                                            ? IconButton(
-                                              icon: const Icon(Icons.clear),
-                                              onPressed: () {
-                                                _searchController.clear();
-                                                _applySearch();
-                                              },
-                                            )
-                                            : const SizedBox.shrink(),
-                              ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
+                          suffixIcon: ValueListenableBuilder<TextEditingValue>(
+                            valueListenable: _searchController,
+                            builder: (context, value, _) {
+                              return value.text.isNotEmpty
+                                  ? IconButton(
+                                      icon: const Icon(Icons.clear),
+                                      onPressed: () {
+                                        _searchController.clear();
+                                        _applySearch();
+                                      },
+                                    )
+                                  : const SizedBox.shrink();
+                            },
                           ),
+                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                           filled: true,
-                          fillColor: Theme.of(
-                            context,
-                          ).cardColor.withValues(alpha: 0.5),
+                          fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
                         ),
                         onChanged: (_) => _applySearch(),
                       ),
                       const SizedBox(height: 12),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: _buildCompactDropdown(
-                              value: _collectionFilter,
-                              items: {
-                                'all': context.t('filter_all'),
-                                'favorites': context.t('filter_favorites'),
-                                'mine': context.t('filter_my_subjects'),
-                                'public': context.t('filter_public'),
-                              },
-                              onChanged: (val) async {
-                                if (val != null) {
-                                  setState(() {
-                                    _collectionFilter = val;
-                                    _applySearch();
-                                  });
-                                  final prefs =
-                                      await SharedPreferences.getInstance();
-                                  await prefs.setString(
-                                    'last_collection_filter',
-                                    val,
-                                  );
-                                }
+                      filterRow,
+                    ])
+                  : Row(children: [
+                      Expanded(
+                        flex: 3,
+                        child: TextField(
+                          controller: _searchController,
+                          decoration: InputDecoration(
+                            hintText: context.t('search_subjects'),
+                            prefixIcon: const Icon(Icons.search),
+                            suffixIcon: ValueListenableBuilder<TextEditingValue>(
+                              valueListenable: _searchController,
+                              builder: (context, value, _) {
+                                return value.text.isNotEmpty
+                                    ? IconButton(
+                                        icon: const Icon(Icons.clear),
+                                        onPressed: () {
+                                          _searchController.clear();
+                                          _applySearch();
+                                        },
+                                      )
+                                    : const SizedBox.shrink();
                               },
                             ),
+                            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                            contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+                            filled: true,
+                            fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
                           ),
-                          const SizedBox(width: 8),
-                          Expanded(
-                            child: _buildCompactDropdown(
-                              value: _selectedAgeFilter,
-                              items: {
-                                'all': context.t('age_all'),
-                                '0_6': context.t('age_0_6'),
-                                '7_14': context.t('age_7_14'),
-                                '15_plus': context.t('age_15_plus'),
-                              },
-                              onChanged: (val) async {
-                                if (val != null) {
-                                  setState(() {
-                                    _selectedAgeFilter = val;
-                                    _applySearch();
-                                  });
-                                  final prefs =
-                                      await SharedPreferences.getInstance();
-                                  await prefs.setString('last_age_filter', val);
-                                }
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                );
-              }
-
-              // Desktop: Single row
-              return Padding(
-                padding: const EdgeInsets.only(top: 16, bottom: 24),
-                child: Row(
-                  children: [
-                    Expanded(
-                      flex: 3,
-                      child: TextField(
-                        controller: _searchController,
-                        decoration: InputDecoration(
-                          hintText: context.t('search_subjects'),
-                          prefixIcon: const Icon(Icons.search),
-                          suffixIcon:
-                              ValueListenableBuilder<TextEditingValue>(
-                                valueListenable: _searchController,
-                                builder:
-                                    (context, value, _) =>
-                                        value.text.isNotEmpty
-                                            ? IconButton(
-                                              icon: const Icon(Icons.clear),
-                                              onPressed: () {
-                                                _searchController.clear();
-                                                _applySearch();
-                                              },
-                                            )
-                                            : const SizedBox.shrink(),
-                              ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 12,
-                          ),
-                          filled: true,
-                          fillColor: Theme.of(
-                            context,
-                          ).cardColor.withValues(alpha: 0.5),
+                          onChanged: (_) => _applySearch(),
                         ),
-                        onChanged: (_) => _applySearch(),
                       ),
-                    ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      flex: 2,
-                      child: _buildCompactDropdown(
-                        value: _collectionFilter,
-                        items: {
-                          'all': context.t('filter_all'),
-                          'favorites': context.t('filter_favorites'),
-                          'mine': context.t('filter_my_subjects'),
-                          'public': context.t('filter_public'),
-                        },
-                        onChanged: (val) async {
-                          if (val != null) {
-                            setState(() {
-                              _collectionFilter = val;
-                              _applySearch();
-                            });
-                            final prefs = await SharedPreferences.getInstance();
-                            await prefs.setString('last_collection_filter', val);
-                          }
-                        },
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      flex: 2,
-                      child: _buildCompactDropdown(
-                        value: _selectedAgeFilter,
-                        items: {
-                          'all': context.t('age_all'),
-                          '0_6': context.t('age_0_6'),
-                          '7_14': context.t('age_7_14'),
-                          '15_plus': context.t('age_15_plus'),
-                        },
-                        onChanged: (val) async {
-                          if (val != null) {
-                            setState(() {
-                              _selectedAgeFilter = val;
-                              _applySearch();
-                            });
-                            final prefs = await SharedPreferences.getInstance();
-                            await prefs.setString('last_age_filter', val);
-                          }
-                        },
-                      ),
-                    ),
-                  ],
-                ),
+                      const SizedBox(width: 8),
+                      Expanded(flex: 5, child: filterRow),
+                    ]),
               );
             },
           ),
-          slivers:
-              _isLoading
-                  ? [
-                    const SliverFillRemaining(
-                      child: Center(child: CircularProgressIndicator()),
+          slivers: _isLoading
+            ? [const SliverFillRemaining(child: Center(child: CircularProgressIndicator()))]
+            : [
+                if (_allMatchingSubjects.isEmpty && _allDashboardFolders.isEmpty && _allMatchingCollections.isEmpty)
+                  const SliverFillRemaining(child: Center(child: Text('No subjects found')))
+                else if (isSearching)
+                  SliverPadding(
+                    padding: EdgeInsets.zero,
+                    sliver: SliverList(
+                      delegate: SliverChildBuilderDelegate((context, index) {
+                        final subject = _filteredSubjects[index];
+                        final pillar = pillars.firstWhere((p) => p.id == subject.pillarId);
+                        return _SubjectListTile(
+                          subject: subject,
+                          pillar: pillar,
+                          languageCode: _currentTestingLang,
+                          initialAgeFilter: _selectedAgeFilter,
+                          initialCollectionFilter: _collectionFilter,
+                          onChanged: _loadDashboard,
+                        );
+                      }, childCount: _filteredSubjects.length),
                     ),
-                  ]
-                  : [
-                    if (_allMatchingSubjects.isEmpty && _allDashboardFolders.isEmpty)
-                      const SliverFillRemaining(
-                        child: Center(child: Text('No subjects found')),
-                      )
-                    else if (isSearching)
-                      SliverPadding(
-                        padding: const EdgeInsets.symmetric(horizontal: 0),
-                        sliver: SliverList(
-                          delegate: SliverChildBuilderDelegate((
-                            context,
-                            index,
-                          ) {
-                            final subject = _filteredSubjects[index];
-                            final pillar = pillars.firstWhere(
-                              (p) => p.id == subject.pillarId,
-                            );
-                            return _SubjectListTile(
-                              subject: subject,
-                              pillar: pillar,
-                              languageCode: _currentTestingLang,
-                              initialAgeFilter: _selectedAgeFilter,
-                              initialCollectionFilter: _collectionFilter,
-                              onChanged: _loadDashboard,
-                            );
-                          }, childCount: _filteredSubjects.length),
+                  )
+                else
+                  SliverLayoutBuilder(
+                    builder: (context, constraints) {
+                      final crossAxisCount = constraints.crossAxisExtent < 600 ? 1 : 2;
+                      return SliverGrid(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: crossAxisCount,
+                          crossAxisSpacing: 24,
+                          mainAxisSpacing: 24,
+                          childAspectRatio: crossAxisCount == 1 ? 1.8 : 1.4,
                         ),
-                      )
-                    else
-                      SliverLayoutBuilder(
-                        builder: (context, constraints) {
-                          final crossAxisCount =
-                              constraints.crossAxisExtent < 600 ? 1 : 2;
-                          return SliverGrid(
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: crossAxisCount,
-                                  crossAxisSpacing: 24,
-                                  mainAxisSpacing: 24,
-                                  childAspectRatio:
-                                      crossAxisCount == 1 ? 1.8 : 1.4,
-                                ),
-                            delegate: SliverChildBuilderDelegate((
-                              context,
-                              index,
-                            ) {
-                              final pillar = pillars[index];
-                              
-                              final totalPillarSubjects = _allDashboardSubjects
-                                  .where((s) => s.pillarId == pillar.id)
-                                  .toList();
-                              final matchingPillarSubjects = _allMatchingSubjects
-                                  .where((s) => s.pillarId == pillar.id)
-                                  .toList();
+                        delegate: SliverChildBuilderDelegate((context, index) {
+                          final pillar = activePillars[index];
+                          final myId = _authService.currentUser?.serverId;
 
-                              final folderCount = _allDashboardFolders
-                                  .where((f) => f.pillarId == pillar.id)
-                                  .length;
+                          // 1. Calculate total items in this pillar that belong to the SELECTED CATEGORY
+                          final pillarCategoryTotal = _allDashboardSubjects.where((s) {
+                            if (s.pillarId != pillar.id) return false;
+                            if (_collectionFilter == 'mine') return s.ownerId == myId;
+                            if (_collectionFilter == 'public') return s.isPublic;
+                            if (_collectionFilter == 'favorites') return s.isOnDashboard;
+                            return true; // 'all'
+                          }).length + _allDashboardCollections.where((c) {
+                            if (c.pillarId != pillar.id) return false;
+                            if (_collectionFilter == 'mine') return c.ownerId == myId;
+                            if (_collectionFilter == 'public') return c.isPublic;
+                            if (_collectionFilter == 'favorites') return true;
+                            return true; // 'all'
+                          }).length;
 
-                              return _PillarGridTile(
-                                pillar: pillar,
-                                subjectCount: matchingPillarSubjects.length,
-                                totalSubjectCount: totalPillarSubjects.length,
-                                folderCount: folderCount,
-                                languageCode: _currentTestingLang,
-                                onTap: () async {
-                                  final result = await Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder:
-                                          (context) => PillarSubjectsPage(
-                                            pillar: pillar,
-                                            subjects: matchingPillarSubjects,
-                                            allPillarSubjects: totalPillarSubjects,
-                                            languageCode: _currentTestingLang,
-                                            initialAgeFilter: _selectedAgeFilter,
-                                            initialCollectionFilter: _collectionFilter,
-                                          ),
-                                    ),
-                                  );
+                          // 2. Matching count (filtered by Category + Age + Search)
+                          final pillarMatchingSubjects = _allMatchingSubjects.where((s) => s.pillarId == pillar.id).toList();
+                          final pillarMatchingCollections = _allMatchingCollections.where((c) => c.pillarId == pillar.id).toList();
+                          final matchingCount = pillarMatchingSubjects.length + pillarMatchingCollections.length;
+                          
+                          final folderCount = _allDashboardFolders.where((f) => f.pillarId == pillar.id).length;
 
-                                  if (result is Map) {
-                                    setState(() {
-                                      _selectedAgeFilter = result['ageFilter'] ?? _selectedAgeFilter;
-                                      _collectionFilter = result['collectionFilter'] ?? _collectionFilter;
-                                    });
-                                    if (result['hasUpdated'] == true) {
-                                      _loadDashboard();
-                                    } else {
-                                      _applySearch();
-                                    }
-                                  }
-                                },
+                          // 3. Only show "X of Y" if the user is further filtering by Age or Search
+                          final bool isFilteringBeyondCategory = _selectedAgeFilter != 'all' || _searchController.text.isNotEmpty;
+
+                          return _PillarGridTile(
+                            pillar: pillar,
+                            subjectCount: matchingCount,
+                            totalSubjectCount: pillarCategoryTotal,
+                            showComparison: isFilteringBeyondCategory,
+                            folderCount: folderCount,
+                            languageCode: _currentTestingLang,
+                            onTap: () async {
+                              final result = await Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => PillarSubjectsPage(
+                                  pillar: pillar,
+                                  subjects: pillarMatchingSubjects,
+                                  collections: pillarMatchingCollections,
+                                  languageCode: _currentTestingLang,
+                                  initialAgeFilter: _selectedAgeFilter,
+                                  initialCollectionFilter: _collectionFilter,
+                                )),
                               );
-                            }, childCount: pillars.length),
+                              if (result is Map) {
+                                setState(() {
+                                  _selectedAgeFilter = result['ageFilter'] ?? _selectedAgeFilter;
+                                  _collectionFilter = result['collectionFilter'] ?? _collectionFilter;
+                                });
+                                if (result['hasUpdated'] == true) _loadDashboard(); else _applySearch();
+                              }
+                            },
                           );
-                        },
-                      ),
-                  ],
+                        }, childCount: activePillars.length),
+                      );
+                    },
+                  ),
+              ],
         );
       },
     );
   }
 
-  Widget _buildCompactDropdown({
-    required String value,
-    required Map<String, String> items,
-    required ValueChanged<String?> onChanged,
-  }) {
+  Widget _buildCompactDropdown({required String value, required Map<String, String> items, required ValueChanged<String?> onChanged}) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12),
       decoration: BoxDecoration(
@@ -624,22 +604,8 @@ class _SubjectPageState extends State<SubjectPage> {
           value: value,
           isExpanded: true,
           icon: const Icon(Icons.arrow_drop_down, size: 20),
-          style: TextStyle(
-            fontSize: 14,
-            color:
-                Theme.of(context).brightness == Brightness.dark
-                    ? Colors.white
-                    : Colors.black87,
-          ),
-          items:
-              items.entries
-                  .map(
-                    (e) => DropdownMenuItem(
-                      value: e.key,
-                      child: Text(e.value, overflow: TextOverflow.ellipsis),
-                    ),
-                  )
-                  .toList(),
+          style: TextStyle(fontSize: 14, color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black87),
+          items: items.entries.map((e) => DropdownMenuItem(value: e.key, child: Text(e.value, overflow: TextOverflow.ellipsis))).toList(),
           onChanged: onChanged,
         ),
       ),
@@ -655,8 +621,53 @@ class _SubjectListTile extends StatelessWidget {
   final String initialCollectionFilter;
   final VoidCallback? onChanged;
 
-  const _SubjectListTile({
-    required this.subject,
+  const _SubjectListTile({required this.subject, required this.pillar, required this.languageCode, required this.initialAgeFilter, required this.initialCollectionFilter, this.onChanged});
+
+  @override
+  Widget build(BuildContext context) {
+    final pillarColor = pillar.getColor();
+    final cardCount = subject.cardCount; // Corrected to use simplified model
+    final isOwner = subject.ownerId == getIt<AuthService>().currentUser?.serverId;
+
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16),
+      child: InkWell(
+        onTap: () async {
+          final cards = await CardService().getCardsBySubject(subject.id);
+          if (context.mounted) {
+            final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectLandingPage(subject: subject, cards: cards, languageCode: languageCode)));
+            if (result == true) onChanged?.call();
+          }
+        },
+        borderRadius: BorderRadius.circular(16),
+        child: Container(
+          padding: const EdgeInsets.all(20),
+          decoration: BoxDecoration(color: Theme.of(context).cardColor, borderRadius: BorderRadius.circular(16), border: Border.all(color: pillarColor.withValues(alpha: 0.2), width: 1.5)),
+          child: Row(children: [
+            Icon(pillar.getIconData(), color: pillarColor),
+            const SizedBox(width: 16),
+            Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text(subject.getName(languageCode), style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+              Text('$cardCount ${context.plural('card', cardCount)}', style: TextStyle(color: Colors.grey[600], fontSize: 14)),
+            ])),
+            const Icon(Icons.chevron_right, color: Colors.grey),
+          ]),
+        ),
+      ),
+    );
+  }
+}
+
+class _CollectionListTile extends StatelessWidget {
+  final CollectionModel collection;
+  final Pillar pillar;
+  final String languageCode;
+  final String initialAgeFilter;
+  final String initialCollectionFilter;
+  final VoidCallback? onChanged;
+
+  const _CollectionListTile({
+    required this.collection,
     required this.pillar,
     required this.languageCode,
     required this.initialAgeFilter,
@@ -667,29 +678,25 @@ class _SubjectListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final pillarColor = pillar.getColor();
-    final cardCount = subject.getCardCountForLanguage(languageCode);
-    final isOwner = subject.ownerId == getIt<AuthService>().currentUser?.serverId;
+    final isOwner = collection.ownerId == getIt<AuthService>().currentUser?.serverId;
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
       child: InkWell(
         onTap: () async {
-          final cards = await CardService().getCardsBySubject(subject.id);
+          final cards = await CardService().getCollectionCards(collection.subjectIds);
           if (context.mounted) {
             final result = await Navigator.push(
               context,
               MaterialPageRoute(
-                builder:
-                    (context) => SubjectLandingPage(
-                      subject: subject,
-                      cards: cards,
-                      languageCode: languageCode,
-                    ),
+                builder: (context) => SubjectLandingPage(
+                  collection: collection,
+                  cards: cards.map((sc) => sc.card).toList(),
+                  languageCode: languageCode,
+                ),
               ),
             );
-            if (result == true) {
-              onChanged?.call();
-            }
+            if (result == true) onChanged?.call();
           }
         },
         borderRadius: BorderRadius.circular(16),
@@ -698,48 +705,27 @@ class _SubjectListTile extends StatelessWidget {
           decoration: BoxDecoration(
             color: Theme.of(context).cardColor,
             borderRadius: BorderRadius.circular(16),
-            border: Border.all(
-              color: pillarColor.withValues(alpha: 0.2),
-              width: 1.5,
-            ),
+            border: Border.all(color: pillarColor.withValues(alpha: 0.2), width: 1.5),
           ),
           child: Row(
             children: [
-              Icon(pillar.getIconData(), color: pillarColor),
+              Icon(Icons.auto_awesome_motion, color: pillarColor),
               const SizedBox(width: 16),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      subject.getName(languageCode),
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                      ),
+                      collection.getName(languageCode),
+                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                     ),
                     Text(
-                      '${pillar.getTranslatedName(languageCode)} • $cardCount ${context.plural('card', cardCount)}',
+                      '${collection.subjectIds.length} ${context.plural('subject', collection.subjectIds.length)}',
                       style: TextStyle(color: Colors.grey[600], fontSize: 14),
                     ),
                   ],
                 ),
               ),
-              if (isOwner)
-                IconButton(
-                  icon: const Icon(Icons.edit, color: Colors.grey, size: 20),
-                  onPressed: () async {
-                    final result = await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => SubjectEditPage(
-                          existingSubject: subject,
-                        ),
-                      ),
-                    );
-                    if (result == true) onChanged?.call();
-                  },
-                ),
               const Icon(Icons.chevron_right, color: Colors.grey),
             ],
           ),
@@ -753,6 +739,7 @@ class _PillarGridTile extends StatelessWidget {
   final Pillar pillar;
   final int subjectCount;
   final int totalSubjectCount;
+  final bool showComparison;
   final int folderCount;
   final String languageCode;
   final VoidCallback onTap;
@@ -761,6 +748,7 @@ class _PillarGridTile extends StatelessWidget {
     required this.pillar,
     required this.subjectCount,
     required this.totalSubjectCount,
+    this.showComparison = false,
     required this.folderCount,
     required this.languageCode,
     required this.onTap,
@@ -770,7 +758,6 @@ class _PillarGridTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final pillarColor = pillar.getColor();
     final bool isEmpty = subjectCount == 0 && folderCount == 0;
-
     return Opacity(
       opacity: isEmpty ? 0.5 : 1.0,
       child: Card(
@@ -780,77 +767,29 @@ class _PillarGridTile extends StatelessWidget {
         child: InkWell(
           onTap: onTap,
           child: Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  pillarColor,
-                  pillarColor.withValues(alpha: 0.8),
-                ],
+            decoration: BoxDecoration(gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [pillarColor, pillarColor.withValues(alpha: 0.8)])),
+            child: Stack(children: [
+              Positioned(right: -20, bottom: -20, child: Icon(pillar.getIconData(), size: 120, color: Colors.white.withValues(alpha: 0.15))),
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                    Icon(pillar.getIconData(), color: Colors.white, size: 28),
+                    const SizedBox(width: 12),
+                    Expanded(child: Text(pillar.getTranslatedName(languageCode), style: const TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold, height: 1.1))),
+                  ]),
+                  const SizedBox(height: 12),
+                  Text(pillar.getTranslatedDescription(languageCode), style: TextStyle(color: Colors.white.withValues(alpha: 0.8), fontSize: 14, fontWeight: FontWeight.w500), maxLines: 2, overflow: TextOverflow.ellipsis),
+                  const Spacer(),
+                  Text(
+                    (!showComparison || subjectCount == totalSubjectCount) 
+                      ? '$subjectCount ${context.plural('subject', subjectCount)}' 
+                      : '$subjectCount / $totalSubjectCount ${context.plural('subject', totalSubjectCount)}',
+                    style: TextStyle(color: Colors.white.withValues(alpha: 0.9), fontSize: 14, fontWeight: subjectCount > 0 ? FontWeight.bold : FontWeight.normal),
+                  ),
+                ]),
               ),
-            ),
-            child: Stack(
-              children: [
-                Positioned(
-                  right: -20,
-                  bottom: -20,
-                  child: Icon(
-                    pillar.getIconData(),
-                    size: 120,
-                    color: Colors.white.withValues(alpha: 0.15),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Icon(pillar.getIconData(), color: Colors.white, size: 28),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: Text(
-                              pillar.getTranslatedName(languageCode),
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 22,
-                                fontWeight: FontWeight.bold,
-                                height: 1.1,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 12),
-                      Text(
-                        pillar.getTranslatedDescription(languageCode),
-                        style: TextStyle(
-                          color: Colors.white.withValues(alpha: 0.8),
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                        ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      const Spacer(),
-                      Text(
-                        subjectCount == totalSubjectCount
-                            ? '$totalSubjectCount ${context.plural('subject', totalSubjectCount)}'
-                            : '$subjectCount / $totalSubjectCount ${context.plural('subject', totalSubjectCount)}',
-                        style: TextStyle(
-                          color: Colors.white.withValues(alpha: 0.9),
-                          fontSize: 14,
-                          fontWeight: subjectCount > 0 ? FontWeight.bold : FontWeight.normal,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+            ]),
           ),
         ),
       ),
@@ -861,20 +800,12 @@ class _PillarGridTile extends StatelessWidget {
 class PillarSubjectsPage extends StatefulWidget {
   final Pillar pillar;
   final List<SubjectModel> subjects;
-  final List<SubjectModel> allPillarSubjects;
+  final List<CollectionModel> collections;
   final String languageCode;
   final String initialAgeFilter;
   final String initialCollectionFilter;
 
-  const PillarSubjectsPage({
-    super.key,
-    required this.pillar,
-    required this.subjects,
-    required this.allPillarSubjects,
-    required this.languageCode,
-    required this.initialAgeFilter,
-    required this.initialCollectionFilter,
-  });
+  const PillarSubjectsPage({super.key, required this.pillar, required this.subjects, required this.collections, required this.languageCode, required this.initialAgeFilter, required this.initialCollectionFilter});
 
   @override
   State<PillarSubjectsPage> createState() => _PillarSubjectsPageState();
@@ -887,8 +818,11 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
 
   late List<SubjectModel> _allSubjects;
   late List<FolderModel> _allFolders;
+  late List<CollectionModel> _allCollections;
   List<SubjectModel> _filteredSubjects = [];
   List<SubjectModel> _matchingSubjectsRecursive = [];
+  List<CollectionModel> _filteredCollections = [];
+  List<CollectionModel> _matchingCollectionsRecursive = [];
   List<FolderModel> _filteredFolders = [];
   bool _isLoading = true;
   bool _hasUpdated = false;
@@ -906,47 +840,82 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
   Future<void> _loadData() async {
     setState(() => _isLoading = true);
     final subjects = await _cardService.getSubjectsByPillar(widget.pillar.id, rootOnly: false);
-    final folders = await _cardService.getFoldersByPillar(widget.pillar.id);
+    final collections = await _cardService.getCollectionsByPillar(widget.pillar.id, rootOnly: false);
+    
+    final myFolders = await _cardService.getFoldersByPillar(widget.pillar.id);
+    final foreignFolderIds = {
+      ...subjects.where((s) => s.folderId != null).map((s) => s.folderId!),
+      ...collections.where((c) => c.folderId != null).map((c) => c.folderId!),
+    }.where((fid) => !myFolders.any((f) => f.id == fid)).toList();
+    
+    final List<FolderModel> allFolders = [...myFolders];
+    if (foreignFolderIds.isNotEmpty) {
+      final foreignFolders = await _cardService.getFoldersByIds(foreignFolderIds);
+      allFolders.addAll(foreignFolders);
+    }
+
     if (mounted) {
-      setState(() {
-        _allSubjects = subjects;
-        _allFolders = folders;
-        _applyFilters();
-        _isLoading = false;
-      });
+      setState(() { _allSubjects = subjects; _allFolders = allFolders; _allCollections = collections; _applyFilters(); _isLoading = false; });
     }
   }
 
   void _applyFilters() {
     final query = _searchController.text.toLowerCase();
     final myId = _authService.currentUser?.serverId;
-
     setState(() {
-      _filteredFolders = _allFolders; // File system: folders always visible
-
-      final allMatching = _allSubjects.where((s) {
+      _matchingSubjectsRecursive = _allSubjects.where((s) {
         final matchesName = s.getName(widget.languageCode).toLowerCase().contains(query);
         final matchesAge = _selectedAgeFilter == 'all' || s.ageGroup == _selectedAgeFilter;
-
         bool matchesCollection = true;
         if (_collectionFilter == 'mine') {
           matchesCollection = s.ownerId == myId;
         } else if (_collectionFilter == 'public') {
           matchesCollection = s.isPublic;
         } else if (_collectionFilter == 'favorites') {
+          matchesCollection = s.isOnDashboard;
+        } else {
+          // 'all' filter
           matchesCollection = true;
         }
-
         return matchesName && matchesAge && matchesCollection;
       }).toList();
 
-      _matchingSubjectsRecursive = allMatching;
+      _matchingCollectionsRecursive = _allCollections.where((c) {
+        final matchesName = c.getName(widget.languageCode).toLowerCase().contains(query);
+        bool matchesCollection = true;
+        if (_collectionFilter == 'mine') {
+          matchesCollection = c.ownerId == myId;
+        } else if (_collectionFilter == 'public') {
+          matchesCollection = c.isPublic;
+        } else if (_collectionFilter == 'favorites') {
+          matchesCollection = true;
+        } else {
+          // 'all' filter
+          matchesCollection = true;
+        }
+        return matchesName && matchesCollection;
+      }).toList();
 
-      _filteredSubjects = allMatching.where((s) => s.folderId == null).toList();
+      final availableFolderIds = _allFolders.map((f) => f.id).toSet();
 
-      // Sort alphabetically
+      _filteredSubjects = _matchingSubjectsRecursive.where((s) => s.folderId == null || !availableFolderIds.contains(s.folderId)).toList();
+      _filteredCollections = _matchingCollectionsRecursive.where((c) => c.folderId == null || !availableFolderIds.contains(c.folderId)).toList();
+
+      _filteredFolders = _allFolders.where((f) {
+        final matchesQuery = f.getName(widget.languageCode).toLowerCase().contains(query);
+        final hasMatchingContent = _matchingSubjectsRecursive.any((s) => s.folderId == f.id) || 
+                                 _matchingCollectionsRecursive.any((c) => c.folderId == f.id);
+        
+        if (hasMatchingContent) return true;
+        if (_collectionFilter == 'mine' || _collectionFilter == 'all') {
+          return f.ownerId == myId && matchesQuery;
+        }
+        return false;
+      }).toList();
+
       _filteredFolders.sort((a, b) => a.getName(widget.languageCode).toLowerCase().compareTo(b.getName(widget.languageCode).toLowerCase()));
       _filteredSubjects.sort((a, b) => a.getName(widget.languageCode).toLowerCase().compareTo(b.getName(widget.languageCode).toLowerCase()));
+      _filteredCollections.sort((a, b) => a.getName(widget.languageCode).toLowerCase().compareTo(b.getName(widget.languageCode).toLowerCase()));
     });
   }
 
@@ -954,314 +923,151 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
   Widget build(BuildContext context) {
     final pillarColor = widget.pillar.getColor();
     const appBarColor = Colors.white;
-
-    return PopScope(
-      canPop: true,
-      onPopInvokedWithResult: (didPop, result) {},
-      child: AlioloScrollablePage(
-        title: Text(
-          widget.pillar.getTranslatedName(widget.languageCode),
-          style: const TextStyle(color: appBarColor, fontWeight: FontWeight.bold),
-        ),
-        appBarColor: pillarColor,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.arrow_back, color: appBarColor),
-            onPressed: () => Navigator.pop(context, {
-              'hasUpdated': _hasUpdated,
-              'ageFilter': _selectedAgeFilter,
-              'collectionFilter': _collectionFilter,
-            }),
-          ),
-        ],
-        fixedBody: Builder(
-        builder: (context) {
-          final isSmall = MediaQuery.of(context).size.width < 600;
-
-          if (isSmall) {
-            return Padding(
-              padding: const EdgeInsets.only(top: 16, bottom: 24),
-              child: Column(
-                children: [
-                  TextField(
-                    controller: _searchController,
-                    decoration: InputDecoration(
-                      hintText: context.t('search_subjects'),
-                      prefixIcon: const Icon(Icons.search),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
+    return ListenableBuilder(
+      listenable: TranslationService(),
+      builder: (context, _) {
+        return PopScope(
+          canPop: true,
+          onPopInvokedWithResult: (didPop, result) {},
+          child: AlioloScrollablePage(
+            title: Text(widget.pillar.getTranslatedName(widget.languageCode), style: const TextStyle(color: appBarColor, fontWeight: FontWeight.bold)),
+            appBarColor: pillarColor,
+            actions: [
+              IconButton(icon: const Icon(Icons.arrow_back, color: appBarColor), onPressed: () => Navigator.pop(context, {'hasUpdated': _hasUpdated, 'ageFilter': _selectedAgeFilter, 'collectionFilter': _collectionFilter})),
+            ],
+            fixedBody: LayoutBuilder(builder: (context, constraints) {
+              final isSmall = constraints.maxWidth < 600;
+              final filterRow = Row(children: [
+                Expanded(child: _buildCompactDropdown(value: _collectionFilter, items: {'all': context.t('filter_all'), 'favorites': context.t('filter_favorites'), 'mine': context.t('filter_my_subjects'), 'public': context.t('filter_public')}, onChanged: (val) { if (val != null) setState(() { _collectionFilter = val; _applyFilters(); }); })),
+                const SizedBox(width: 8),
+                Expanded(child: _buildCompactDropdown(value: _selectedAgeFilter, items: {'all': context.t('age_all'), '0_6': context.t('age_0_6'), '7_14': context.t('age_7_14'), '15_plus': context.t('age_15_plus')}, onChanged: (val) { if (val != null) setState(() { _selectedAgeFilter = val; _applyFilters(); }); })),
+                const SizedBox(width: 8),
+                SizedBox(width: 48, child: PopupMenuButton<String>(
+                  icon: Icon(Icons.add_circle, color: pillarColor, size: 40),
+                  padding: EdgeInsets.zero,
+                  onSelected: (value) async {
+                    bool? result;
+                    if (value == 'subject') result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: widget.pillar.id, initialAgeGroup: _selectedAgeFilter)));
+                    else if (value == 'collection') result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: widget.pillar.id, isCollectionMode: true, initialAgeGroup: _selectedAgeFilter)));
+                    else if (value == 'folder') result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: widget.pillar.id, isFolderMode: true)));
+                    if (result == true) { _loadData(); _hasUpdated = true; }
+                  },
+                  itemBuilder: (context) => [
+                    PopupMenuItem(value: 'subject', child: ListTile(leading: Icon(Icons.description, color: pillarColor), title: Text(context.t('add_subject')), contentPadding: EdgeInsets.zero)),
+                    PopupMenuItem(value: 'collection', child: ListTile(leading: Icon(Icons.auto_awesome_motion, color: pillarColor), title: Text(context.t('add_collection')), contentPadding: EdgeInsets.zero)),
+                    PopupMenuItem(value: 'folder', child: ListTile(leading: Icon(Icons.folder, color: pillarColor), title: Text(context.t('add_folder')), contentPadding: EdgeInsets.zero)),
+                  ],
+                )),
+              ]);
+              return Padding(
+                padding: const EdgeInsets.only(top: 16, bottom: 24),
+                child: isSmall 
+                  ? Column(children: [
+                      TextField(
+                        controller: _searchController,
+                        decoration: InputDecoration(
+                          hintText: context.t('search_subjects'),
+                          prefixIcon: const Icon(Icons.search),
+                          suffixIcon: ValueListenableBuilder<TextEditingValue>(
+                            valueListenable: _searchController,
+                            builder: (context, value, _) {
+                              return value.text.isNotEmpty
+                                  ? IconButton(
+                                      icon: const Icon(Icons.clear),
+                                      onPressed: () {
+                                        _searchController.clear();
+                                        _applyFilters();
+                                      },
+                                    )
+                                  : const SizedBox.shrink();
+                            },
+                          ),
+                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                          filled: true,
+                          fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
+                        ),
+                        onChanged: (_) => _applyFilters(),
                       ),
-                      filled: true,
-                      fillColor: Theme.of(
-                        context,
-                      ).cardColor.withValues(alpha: 0.5),
-                    ),
-                    onChanged: (_) => _applyFilters(),
-                  ),
-                  const SizedBox(height: 12),
-                  Row(
-                    children: [
+                      const SizedBox(height: 12),
+                      filterRow,
+                    ])
+                  : Row(children: [
                       Expanded(
-                        child: _buildCompactDropdown(
-                          value: _collectionFilter,
-                          items: {
-                            'all': context.t('filter_all'),
-                            'favorites': context.t('filter_favorites'),
-                            'mine': context.t('filter_my_subjects'),
-                            'public': context.t('filter_public'),
-                          },
-                          onChanged: (val) {
-                            if (val != null) {
-                              setState(() {
-                                _collectionFilter = val;
-                                _applyFilters();
-                              });
-                            }
-                          },
+                        flex: 3,
+                        child: TextField(
+                          controller: _searchController,
+                          decoration: InputDecoration(
+                            hintText: context.t('search_subjects'),
+                            prefixIcon: const Icon(Icons.search),
+                            suffixIcon: ValueListenableBuilder<TextEditingValue>(
+                              valueListenable: _searchController,
+                              builder: (context, value, _) {
+                                return value.text.isNotEmpty
+                                    ? IconButton(
+                                        icon: const Icon(Icons.clear),
+                                        onPressed: () {
+                                          _searchController.clear();
+                                          _applyFilters();
+                                        },
+                                      )
+                                    : const SizedBox.shrink();
+                              },
+                            ),
+                            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                            contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+                            filled: true,
+                            fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
+                          ),
+                          onChanged: (_) => _applyFilters(),
                         ),
                       ),
                       const SizedBox(width: 8),
-                      Expanded(
-                        child: _buildCompactDropdown(
-                          value: _selectedAgeFilter,
-                          items: {
-                            'all': context.t('age_all'),
-                            '0_6': context.t('age_0_6'),
-                            '7_14': context.t('age_7_14'),
-                            '15_plus': context.t('age_15_plus'),
-                          },
-                          onChanged: (val) {
-                            if (val != null) {
-                              setState(() {
-                                _selectedAgeFilter = val;
-                                _applyFilters();
-                              });
-                            }
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+                      Expanded(flex: 5, child: filterRow),
+                    ]),
+              );
+            }),
+            slivers: [
+              if (_isLoading) const SliverFillRemaining(child: Center(child: CircularProgressIndicator()))
+              else if (_filteredFolders.isEmpty && _filteredSubjects.isEmpty && _filteredCollections.isEmpty) const SliverFillRemaining(child: Center(child: Text('No items found')))
+              else SliverPadding(
+                padding: const EdgeInsets.only(bottom: 32),
+                sliver: SliverList(delegate: SliverChildBuilderDelegate((context, index) {
+                  if (index < _filteredFolders.length) {
+                    final folder = _filteredFolders[index];
+                    final matchingInFolder = _matchingSubjectsRecursive.where((s) => s.folderId == folder.id).length +
+                                           _matchingCollectionsRecursive.where((c) => c.folderId == folder.id).length;
+                    return _FolderListTile(
+                      folder: folder, matchingCount: matchingInFolder, totalCount: folder.childCount, pillar: widget.pillar, languageCode: widget.languageCode, initialAgeFilter: _selectedAgeFilter, initialCollectionFilter: _collectionFilter, onChanged: _loadData,
+                      onFilterChanged: (age, coll) { setState(() { _selectedAgeFilter = age; _collectionFilter = coll; _applyFilters(); }); },
+                    );
+                  }
+                  int collIndex = index - _filteredFolders.length;
+                  if (collIndex < _filteredCollections.length) {
+                    final collection = _filteredCollections[collIndex];
+                    return _CollectionListTile(collection: collection, pillar: widget.pillar, languageCode: widget.languageCode, initialAgeFilter: _selectedAgeFilter, initialCollectionFilter: _collectionFilter, onChanged: _loadData);
+                  }
+                  int subIndex = collIndex - _filteredCollections.length;
+                  final subject = _filteredSubjects[subIndex];
+                  return _SubjectListTile(subject: subject, pillar: widget.pillar, languageCode: widget.languageCode, initialAgeFilter: _selectedAgeFilter, initialCollectionFilter: _collectionFilter, onChanged: _loadData);
+                }, childCount: _filteredFolders.length + _filteredCollections.length + _filteredSubjects.length)),
               ),
-            );
-          }
-
-          return Column(
-            children: [
-              const SizedBox(height: 16),
-              Row(
-                children: [
-                  Expanded(
-                    flex: 3,
-                    child: TextField(
-                      controller: _searchController,
-                      decoration: InputDecoration(
-                        hintText: context.t('search_subjects'),
-                        prefixIcon: const Icon(Icons.search),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 12),
-                        filled: true,
-                        fillColor: Theme.of(
-                          context,
-                        ).cardColor.withValues(alpha: 0.5),
-                      ),
-                      onChanged: (_) => _applyFilters(),
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    flex: 2,
-                    child: _buildCompactDropdown(
-                      value: _collectionFilter,
-                      items: {
-                        'all': context.t('filter_all'),
-                        'favorites': context.t('filter_favorites'),
-                        'mine': context.t('filter_my_subjects'),
-                        'public': context.t('filter_public'),
-                      },
-                      onChanged: (val) {
-                        if (val != null) {
-                          setState(() {
-                            _collectionFilter = val;
-                            _applyFilters();
-                          });
-                        }
-                      },
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    flex: 2,
-                    child: _buildCompactDropdown(
-                      value: _selectedAgeFilter,
-                      items: {
-                        'all': context.t('age_all'),
-                        '0_6': context.t('age_0_6'),
-                        '7_14': context.t('age_7_14'),
-                        '15_plus': context.t('age_15_plus'),
-                      },
-                      onChanged: (val) {
-                        if (val != null) {
-                          setState(() {
-                            _selectedAgeFilter = val;
-                            _applyFilters();
-                          });
-                        }
-                      },
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  SizedBox(
-                    width: 48,
-                    child: PopupMenuButton<String>(
-                      icon: Icon(Icons.add_circle, color: pillarColor, size: 40),
-                      padding: EdgeInsets.zero,
-                      onSelected: (value) async {
-                        bool? result;
-                        if (value == 'subject') {
-                          result = await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => SubjectEditPage(
-                                pillarId: widget.pillar.id,
-                                initialAgeGroup: _selectedAgeFilter,
-                              ),
-                            ),
-                          );
-                        } else if (value == 'folder') {
-                          result = await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => SubjectEditPage(
-                                pillarId: widget.pillar.id,
-                                isFolderMode: true,
-                              ),
-                            ),
-                          );
-                        }
-                        if (result == true) _loadData();
-                      },
-                      itemBuilder: (context) => [
-                        PopupMenuItem(
-                          value: 'subject',
-                          child: ListTile(
-                            leading: Icon(Icons.description, color: pillarColor),
-                            title: Text(context.t('add_subject')),
-                            contentPadding: EdgeInsets.zero,
-                          ),
-                        ),
-                        PopupMenuItem(
-                          value: 'folder',
-                          child: ListTile(
-                            leading: Icon(Icons.folder, color: pillarColor),
-                            title: Text(context.t('add_folder')),
-                            contentPadding: EdgeInsets.zero,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 40),
             ],
-          );
-        },
-      ),
-      slivers: [
-        if (_isLoading)
-          const SliverFillRemaining(
-            child: Center(child: CircularProgressIndicator()),
-          )
-        else if (_filteredFolders.isEmpty && _filteredSubjects.isEmpty)
-          const SliverFillRemaining(
-            child: Center(child: Text('No items found')),
-          )
-        else
-          SliverPadding(
-            padding: const EdgeInsets.only(bottom: 32),
-            sliver: SliverList(
-              delegate: SliverChildBuilderDelegate((context, index) {
-                if (index < _filteredFolders.length) {
-                  final folder = _filteredFolders[index];
-                  
-                  final matchingInFolder = _matchingSubjectsRecursive.where((s) => s.folderId == folder.id).toList();
-                  final totalInFolder = folder.childCount;
-
-                  return _FolderListTile(
-                    folder: folder,
-                    matchingCount: matchingInFolder.length,
-                    totalCount: totalInFolder,
-                    pillar: widget.pillar,
-                    languageCode: widget.languageCode,
-                    initialAgeFilter: _selectedAgeFilter,
-                    initialCollectionFilter: _collectionFilter,
-                    onChanged: _loadData,
-                    onFilterChanged: (age, collection) {
-                      setState(() {
-                        _selectedAgeFilter = age;
-                        _collectionFilter = collection;
-                        _applyFilters();
-                      });
-                    },
-                  );
-                }
-                final subject = _filteredSubjects[index - _filteredFolders.length];
-                return _SubjectListTile(
-                  subject: subject,
-                  pillar: widget.pillar,
-                  languageCode: widget.languageCode,
-                  initialAgeFilter: _selectedAgeFilter,
-                  initialCollectionFilter: _collectionFilter,
-                  onChanged: _loadData,
-                );
-              }, childCount: _filteredFolders.length + _filteredSubjects.length),
-            ),
           ),
-      ],
-    ),
-  );
-}
+        );
+      },
+    );
+  }
 
-  Widget _buildCompactDropdown({
-    required String value,
-    required Map<String, String> items,
-    required ValueChanged<String?> onChanged,
-  }) {
+  Widget _buildCompactDropdown({required String value, required Map<String, String> items, required ValueChanged<String?> onChanged}) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
-      decoration: BoxDecoration(
-        color: Theme.of(context).cardColor.withValues(alpha: 0.5),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey.withValues(alpha: 0.5)),
-      ),
-      child: DropdownButtonHideUnderline(
-        child: DropdownButton<String>(
-          value: value,
-          isExpanded: true,
-          icon: const Icon(Icons.arrow_drop_down, size: 20),
-          style: TextStyle(
-            fontSize: 13,
-            color:
-                Theme.of(context).brightness == Brightness.dark
-                    ? Colors.white
-                    : Colors.black87,
-          ),
-          items:
-              items.entries
-                  .map(
-                    (e) => DropdownMenuItem(
-                      value: e.key,
-                      child: Text(e.value, overflow: TextOverflow.ellipsis),
-                    ),
-                  )
-                  .toList(),
-          onChanged: onChanged,
-        ),
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 12),
+      decoration: BoxDecoration(color: Theme.of(context).cardColor.withValues(alpha: 0.5), borderRadius: BorderRadius.circular(12), border: Border.all(color: Colors.grey.withValues(alpha: 0.5))),
+      child: DropdownButtonHideUnderline(child: DropdownButton<String>(
+        value: value, isExpanded: true, icon: const Icon(Icons.arrow_drop_down, size: 20),
+        style: TextStyle(fontSize: 14, color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black87),
+        items: items.entries.map((e) => DropdownMenuItem(value: e.key, child: Text(e.value, overflow: TextOverflow.ellipsis))).toList(),
+        onChanged: onChanged,
+      )),
     );
   }
 }
@@ -1273,14 +1079,7 @@ class FolderPage extends StatefulWidget {
   final String initialAgeFilter;
   final String initialCollectionFilter;
 
-  const FolderPage({
-    super.key,
-    required this.folder,
-    required this.pillar,
-    required this.languageCode,
-    required this.initialAgeFilter,
-    required this.initialCollectionFilter,
-  });
+  const FolderPage({super.key, required this.folder, required this.pillar, required this.languageCode, required this.initialAgeFilter, required this.initialCollectionFilter});
 
   @override
   State<FolderPage> createState() => _FolderPageState();
@@ -1292,7 +1091,9 @@ class _FolderPageState extends State<FolderPage> {
   final _authService = getIt<AuthService>();
 
   List<SubjectModel> _allSubjects = [];
+  List<CollectionModel> _allCollections = [];
   List<SubjectModel> _filteredSubjects = [];
+  List<CollectionModel> _filteredCollections = [];
   bool _isLoading = true;
   late String _selectedAgeFilter;
   late String _collectionFilter;
@@ -1309,37 +1110,33 @@ class _FolderPageState extends State<FolderPage> {
   Future<void> _loadData() async {
     setState(() => _isLoading = true);
     final results = await _cardService.getSubjectsByPillar(widget.pillar.id, folderId: widget.folder.id);
-    if (mounted) {
-      setState(() {
-        _allSubjects = results;
-        _applyFilters();
-        _isLoading = false;
-      });
-    }
+    final colResults = await _cardService.getCollectionsByPillar(widget.pillar.id, folderId: widget.folder.id);
+    if (mounted) setState(() { _allSubjects = results; _allCollections = colResults; _applyFilters(); _isLoading = false; });
   }
 
   void _applyFilters() {
     final query = _searchController.text.toLowerCase();
     final myId = _authService.currentUser?.serverId;
-
     setState(() {
       _filteredSubjects = _allSubjects.where((s) {
         final matchesName = s.getName(widget.languageCode).toLowerCase().contains(query);
         final matchesAge = _selectedAgeFilter == 'all' || s.ageGroup == _selectedAgeFilter;
-
         bool matchesCollection = true;
-        if (_collectionFilter == 'mine') {
-          matchesCollection = s.ownerId == myId;
-        } else if (_collectionFilter == 'public') {
-          matchesCollection = s.isPublic;
-        } else if (_collectionFilter == 'favorites') {
-          matchesCollection = true;
-        }
-
+        if (_collectionFilter == 'mine') matchesCollection = s.ownerId == myId;
+        else if (_collectionFilter == 'public') matchesCollection = s.isPublic;
         return matchesName && matchesAge && matchesCollection;
       }).toList();
 
+      _filteredCollections = _allCollections.where((c) {
+        final matchesName = c.getName(widget.languageCode).toLowerCase().contains(query);
+        bool matchesCollection = true;
+        if (_collectionFilter == 'mine') matchesCollection = c.ownerId == myId;
+        else if (_collectionFilter == 'public') matchesCollection = c.isPublic;
+        return matchesName && matchesCollection;
+      }).toList();
+
       _filteredSubjects.sort((a, b) => a.getName(widget.languageCode).toLowerCase().compareTo(b.getName(widget.languageCode).toLowerCase()));
+      _filteredCollections.sort((a, b) => a.getName(widget.languageCode).toLowerCase().compareTo(b.getName(widget.languageCode).toLowerCase()));
     });
   }
 
@@ -1347,136 +1144,157 @@ class _FolderPageState extends State<FolderPage> {
   Widget build(BuildContext context) {
     final pillarColor = widget.pillar.getColor();
     const appBarColor = Colors.white;
+    final isOwner = widget.folder.ownerId == _authService.currentUser?.serverId;
 
-    return PopScope(
-      canPop: true,
-      onPopInvokedWithResult: (didPop, result) {},
-      child: AlioloScrollablePage(
-        title: Text(
-          widget.folder.getName(widget.languageCode),
-          style: const TextStyle(color: appBarColor, fontWeight: FontWeight.bold),
-        ),
-        appBarColor: pillarColor,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.arrow_back, color: appBarColor),
-            onPressed: () => Navigator.pop(context, {
-              'hasUpdated': _hasUpdated,
-              'ageFilter': _selectedAgeFilter,
-              'collectionFilter': _collectionFilter,
-            }),
-          ),
-        ],
-        fixedBody: Builder(
-          builder: (context) {
-            return Column(
-              children: [
-                const SizedBox(height: 16),
-                Row(
-                  children: [
-                    Expanded(
-                      flex: 3,
-                      child: TextField(
+    return ListenableBuilder(
+      listenable: TranslationService(),
+      builder: (context, _) {
+        return PopScope(
+          canPop: true,
+          onPopInvokedWithResult: (didPop, result) {},
+          child: AlioloScrollablePage(
+            title: Text(widget.folder.getName(widget.languageCode), style: const TextStyle(color: appBarColor, fontWeight: FontWeight.bold)),
+            appBarColor: pillarColor,
+            actions: [
+              IconButton(icon: const Icon(Icons.arrow_back, color: appBarColor), onPressed: () => Navigator.pop(context, {'hasUpdated': _hasUpdated, 'ageFilter': _selectedAgeFilter, 'collectionFilter': _collectionFilter})),
+              if (isOwner) ...[
+                IconButton(icon: const Icon(Icons.edit, color: appBarColor), onPressed: () async {
+                  final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(existingFolder: widget.folder, isFolderMode: true)));
+                  if (result == true) { _loadData(); _hasUpdated = true; }
+                }),
+                IconButton(icon: const Icon(Icons.delete, color: appBarColor), onPressed: () async {
+                  final confirmed = await showDialog<bool>(context: context, builder: (context) => AlertDialog(title: Text(context.t('delete_folder')), content: const Text('Are you sure you want to delete this folder?'), actions: [TextButton(onPressed: () => Navigator.pop(context, false), child: Text(context.t('cancel'))), TextButton(onPressed: () => Navigator.pop(context, true), style: TextButton.styleFrom(foregroundColor: Colors.red), child: Text(context.t('delete')))]));
+                  if (confirmed == true && mounted) {
+                    try {
+                      await _cardService.deleteFolder(widget.folder.id);
+                      if (mounted) Navigator.pop(context, {'hasUpdated': true, 'ageFilter': _selectedAgeFilter, 'collectionFilter': _collectionFilter});
+                    } catch (e) {
+                      if (e.toString().contains('folder_not_empty') && mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(context.t('folder_not_empty_msg') ?? 'Cannot delete folder: it is not empty')));
+                      }
+                    }
+                  }
+                }),
+              ],
+              IconButton(icon: const Icon(Icons.feedback, color: appBarColor), onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => FeedbackPage(folderId: widget.folder.id, contextTitle: widget.folder.getName(widget.languageCode), appBarColor: pillarColor)))),
+            ],
+            fixedBody: LayoutBuilder(builder: (context, constraints) {
+              final isSmall = constraints.maxWidth < 600;
+              final filterRow = Row(children: [
+                Expanded(child: _buildCompactDropdown(value: _collectionFilter, items: {'all': context.t('filter_all'), 'favorites': context.t('filter_favorites'), 'mine': context.t('filter_my_subjects'), 'public': context.t('filter_public')}, onChanged: (val) { if (val != null) setState(() { _collectionFilter = val; _applyFilters(); }); })),
+                const SizedBox(width: 8),
+                Expanded(child: _buildCompactDropdown(value: _selectedAgeFilter, items: {'all': context.t('age_all'), '0_6': context.t('age_0_6'), '7_14': context.t('age_7_14'), '15_plus': context.t('age_15_plus')}, onChanged: (val) { if (val != null) setState(() { _selectedAgeFilter = val; _applyFilters(); }); })),
+                const SizedBox(width: 8),
+                SizedBox(width: 48, child: PopupMenuButton<String>(
+                  icon: Icon(Icons.add_circle, color: pillarColor, size: 40),
+                  padding: EdgeInsets.zero,
+                  onSelected: (value) async {
+                    bool? result;
+                    if (value == 'subject') result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: widget.pillar.id, folderId: widget.folder.id, initialAgeGroup: _selectedAgeFilter)));
+                    else if (value == 'collection') result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: widget.pillar.id, folderId: widget.folder.id, isCollectionMode: true, initialAgeGroup: _selectedAgeFilter)));
+                    if (result == true) { _loadData(); _hasUpdated = true; }
+                  },
+                  itemBuilder: (context) => [
+                    PopupMenuItem(value: 'subject', child: ListTile(leading: Icon(Icons.description, color: pillarColor), title: Text(context.t('add_subject')), contentPadding: EdgeInsets.zero)),
+                    PopupMenuItem(value: 'collection', child: ListTile(leading: Icon(Icons.auto_awesome_motion, color: pillarColor), title: Text(context.t('add_collection')), contentPadding: EdgeInsets.zero)),
+                  ],
+                )),
+              ]);
+              return Padding(
+                padding: const EdgeInsets.only(top: 16, bottom: 24),
+                child: isSmall 
+                  ? Column(children: [
+                      TextField(
                         controller: _searchController,
                         decoration: InputDecoration(
                           hintText: context.t('search_subjects'),
                           prefixIcon: const Icon(Icons.search),
+                          suffixIcon: ValueListenableBuilder<TextEditingValue>(
+                            valueListenable: _searchController,
+                            builder: (context, value, _) {
+                              return value.text.isNotEmpty
+                                  ? IconButton(
+                                      icon: const Icon(Icons.clear),
+                                      onPressed: () {
+                                        _searchController.clear();
+                                        _applyFilters();
+                                      },
+                                    )
+                                  : const SizedBox.shrink();
+                            },
+                          ),
                           border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                           filled: true,
                           fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
                         ),
                         onChanged: (_) => _applyFilters(),
                       ),
-                    ),
-                    const SizedBox(width: 8),
-                    SizedBox(
-                      width: 48,
-                      child: PopupMenuButton<String>(
-                        icon: Icon(Icons.add_circle, color: pillarColor, size: 40),
-                        padding: EdgeInsets.zero,
-                        onSelected: (value) async {
-                          bool? result;
-                          if (value == 'subject') {
-                            result = await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => SubjectEditPage(
-                                  pillarId: widget.pillar.id,
-                                  folderId: widget.folder.id,
-                                  initialAgeGroup: _selectedAgeFilter,
-                                ),
-                              ),
-                            );
-                          } else if (value == 'folder') {
-                            result = await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => SubjectEditPage(
-                                  pillarId: widget.pillar.id,
-                                  isFolderMode: true,
-                                ),
-                              ),
-                            );
-                          }
-                          if (result == true) {
-                            _loadData();
-                            _hasUpdated = true;
-                          }
-                        },
-                        itemBuilder: (context) => [
-                          PopupMenuItem(
-                            value: 'subject',
-                            child: ListTile(
-                              leading: Icon(Icons.description, color: pillarColor),
-                              title: Text(context.t('add_subject')),
-                              contentPadding: EdgeInsets.zero,
+                      const SizedBox(height: 12),
+                      filterRow,
+                    ])
+                  : Row(children: [
+                      Expanded(
+                        flex: 3,
+                        child: TextField(
+                          controller: _searchController,
+                          decoration: InputDecoration(
+                            hintText: context.t('search_subjects'),
+                            prefixIcon: const Icon(Icons.search),
+                            suffixIcon: ValueListenableBuilder<TextEditingValue>(
+                              valueListenable: _searchController,
+                              builder: (context, value, _) {
+                                return value.text.isNotEmpty
+                                    ? IconButton(
+                                        icon: const Icon(Icons.clear),
+                                        onPressed: () {
+                                          _searchController.clear();
+                                          _applyFilters();
+                                        },
+                                      )
+                                    : const SizedBox.shrink();
+                              },
                             ),
+                            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                            contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+                            filled: true,
+                            fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
                           ),
-                          PopupMenuItem(
-                            value: 'folder',
-                            child: ListTile(
-                              leading: Icon(Icons.folder, color: pillarColor),
-                              title: Text(context.t('add_folder')),
-                              contentPadding: EdgeInsets.zero,
-                            ),
-                          ),
-                        ],
+                          onChanged: (_) => _applyFilters(),
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 40),
-              ],
-            );
-          },
-        ),
-        slivers: [
-          if (_isLoading)
-            const SliverFillRemaining(child: Center(child: CircularProgressIndicator()))
-          else if (_filteredSubjects.isEmpty)
-            const SliverFillRemaining(child: Center(child: Text('No subjects found')))
-          else
-            SliverPadding(
-              padding: const EdgeInsets.only(bottom: 32),
-              sliver: SliverList(
-                delegate: SliverChildBuilderDelegate((context, index) {
-                  final subject = _filteredSubjects[index];
-                  return _SubjectListTile(
-                    subject: subject,
-                    pillar: widget.pillar,
-                    languageCode: widget.languageCode,
-                    initialAgeFilter: _selectedAgeFilter,
-                    initialCollectionFilter: _collectionFilter,
-                    onChanged: () {
-                      _loadData();
-                      _hasUpdated = true;
-                    },
-                  );
-                }, childCount: _filteredSubjects.length),
-              ),
-            ),
-        ],
-      ),
+                      const SizedBox(width: 8),
+                      Expanded(flex: 5, child: filterRow),
+                    ]),
+              );
+            }),
+            slivers: [
+              if (_isLoading) const SliverFillRemaining(child: Center(child: CircularProgressIndicator()))
+              else if (_filteredSubjects.isEmpty && _filteredCollections.isEmpty) const SliverFillRemaining(child: Center(child: Text('No subjects found')))
+              else SliverPadding(padding: const EdgeInsets.only(bottom: 32), sliver: SliverList(delegate: SliverChildBuilderDelegate((context, index) {
+                if (index < _filteredCollections.length) {
+                  final collection = _filteredCollections[index];
+                  return _CollectionListTile(collection: collection, pillar: widget.pillar, languageCode: widget.languageCode, initialAgeFilter: _selectedAgeFilter, initialCollectionFilter: _collectionFilter, onChanged: () { _loadData(); _hasUpdated = true; });
+                }
+                final subject = _filteredSubjects[index - _filteredCollections.length];
+                return _SubjectListTile(subject: subject, pillar: widget.pillar, languageCode: widget.languageCode, initialAgeFilter: _selectedAgeFilter, initialCollectionFilter: _collectionFilter, onChanged: () { _loadData(); _hasUpdated = true; });
+              }, childCount: _filteredCollections.length + _filteredSubjects.length))),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildCompactDropdown({required String value, required Map<String, String> items, required ValueChanged<String?> onChanged}) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12),
+      decoration: BoxDecoration(color: Theme.of(context).cardColor.withValues(alpha: 0.5), borderRadius: BorderRadius.circular(12), border: Border.all(color: Colors.grey.withValues(alpha: 0.5))),
+      child: DropdownButtonHideUnderline(child: DropdownButton<String>(
+        value: value, isExpanded: true, icon: const Icon(Icons.arrow_drop_down, size: 20),
+        style: TextStyle(fontSize: 14, color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black87),
+        items: items.entries.map((e) => DropdownMenuItem(value: e.key, child: Text(e.value, overflow: TextOverflow.ellipsis))).toList(),
+        onChanged: onChanged,
+      )),
     );
   }
 }
@@ -1492,102 +1310,37 @@ class _FolderListTile extends StatelessWidget {
   final VoidCallback? onChanged;
   final Function(String age, String collection)? onFilterChanged;
 
-  const _FolderListTile({
-    required this.folder,
-    required this.matchingCount,
-    required this.totalCount,
-    required this.pillar,
-    required this.languageCode,
-    required this.initialAgeFilter,
-    required this.initialCollectionFilter,
-    this.onChanged,
-    this.onFilterChanged,
-  });
+  const _FolderListTile({required this.folder, required this.matchingCount, required this.totalCount, required this.pillar, required this.languageCode, required this.initialAgeFilter, required this.initialCollectionFilter, this.onChanged, this.onFilterChanged});
 
   @override
   Widget build(BuildContext context) {
     final pillarColor = pillar.getColor();
-    final isOwner = folder.ownerId == getIt<AuthService>().currentUser?.serverId;
     final bool isEmpty = matchingCount == 0;
-
     return Opacity(
       opacity: isEmpty ? 0.5 : 1.0,
       child: Padding(
         padding: const EdgeInsets.only(bottom: 16),
         child: InkWell(
           onTap: () async {
-            final result = await Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => FolderPage(
-                  folder: folder,
-                  pillar: pillar,
-                  languageCode: languageCode,
-                  initialAgeFilter: initialAgeFilter,
-                  initialCollectionFilter: initialCollectionFilter,
-                ),
-              ),
-            );
+            final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => FolderPage(folder: folder, pillar: pillar, languageCode: languageCode, initialAgeFilter: initialAgeFilter, initialCollectionFilter: initialCollectionFilter)));
             if (result is Map) {
-              onFilterChanged?.call(
-                result['ageFilter'] ?? initialAgeFilter,
-                result['collectionFilter'] ?? initialCollectionFilter,
-              );
+              onFilterChanged?.call(result['ageFilter'] ?? initialAgeFilter, result['collectionFilter'] ?? initialCollectionFilter);
               if (result['hasUpdated'] == true) onChanged?.call();
             }
           },
           borderRadius: BorderRadius.circular(16),
           child: Container(
             padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              color: Theme.of(context).cardColor,
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: pillarColor.withValues(alpha: 0.2), width: 1.5),
-            ),
-            child: Row(
-              children: [
-                Icon(Icons.folder, color: pillarColor),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        folder.getName(languageCode),
-                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                      ),
-                      Text(
-                        matchingCount == totalCount
-                            ? '${pillar.getTranslatedName(languageCode)} • $totalCount ${context.plural('subject', totalCount)}'
-                            : '${pillar.getTranslatedName(languageCode)} • $matchingCount / $totalCount ${context.plural('subject', totalCount)}',
-                        style: TextStyle(
-                          color: Colors.grey[600],
-                          fontSize: 14,
-                          fontWeight: matchingCount > 0 ? FontWeight.bold : FontWeight.normal,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                if (isOwner)
-                  IconButton(
-                    icon: const Icon(Icons.edit, color: Colors.grey, size: 20),
-                    onPressed: () async {
-                      final result = await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => SubjectEditPage(
-                            existingFolder: folder,
-                            isFolderMode: true,
-                          ),
-                        ),
-                      );
-                      if (result == true) onChanged?.call();
-                    },
-                  ),
-                const Icon(Icons.chevron_right, color: Colors.grey),
-              ],
-            ),
+            decoration: BoxDecoration(color: Theme.of(context).cardColor, borderRadius: BorderRadius.circular(16), border: Border.all(color: pillarColor.withValues(alpha: 0.2), width: 1.5)),
+            child: Row(children: [
+              Icon(Icons.folder, color: pillarColor),
+              const SizedBox(width: 16),
+              Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Text(folder.getName(languageCode), style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                Text(matchingCount == totalCount ? '$totalCount ${context.plural('subject', totalCount)}' : '$matchingCount / $totalCount ${context.plural('subject', totalCount)}', style: TextStyle(color: Colors.grey[600], fontSize: 14, fontWeight: matchingCount > 0 ? FontWeight.bold : FontWeight.normal)),
+              ])),
+              const Icon(Icons.chevron_right, color: Colors.grey),
+            ]),
           ),
         ),
       ),

@@ -612,30 +612,6 @@ class _AddCardPageState extends State<AddCardPage> {
           icon: const Icon(Icons.arrow_back, color: appBarColor),
           onPressed: () => Navigator.pop(context),
         ),
-        if (widget.existingCard != null)
-          IconButton(
-            icon: const Icon(Icons.feedback, color: appBarColor),
-            onPressed: () {
-              final pillar = pillars.firstWhere(
-                (p) => p.id == (_internalPillarId ?? 1),
-                orElse: () => pillars.first,
-              );
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder:
-                      (context) => FeedbackPage(
-                        subjectId: widget.existingCard?.subjectId ?? widget.initialSubjectId,
-                        cardId: widget.existingCard?.id,
-                        contextTitle: widget.existingCard != null 
-                          ? 'Card: ${widget.existingCard!.localizedData['global']?.answer}'
-                          : 'Card',
-                        appBarColor: pillar.getColor(),
-                      ),
-                ),
-              );
-            },
-          ),
         if (!widget.isReadOnly)
           IconButton(
             icon:
@@ -681,6 +657,30 @@ class _AddCardPageState extends State<AddCardPage> {
                 await _cardService.deleteCard(widget.existingCard!);
                 if (mounted) Navigator.pop(context, true);
               }
+            },
+          ),
+        if (widget.existingCard != null)
+          IconButton(
+            icon: const Icon(Icons.feedback, color: appBarColor),
+            onPressed: () {
+              final pillar = pillars.firstWhere(
+                (p) => p.id == (_internalPillarId ?? 1),
+                orElse: () => pillars.first,
+              );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder:
+                      (context) => FeedbackPage(
+                        subjectId: widget.existingCard?.subjectId ?? widget.initialSubjectId,
+                        cardId: widget.existingCard?.id,
+                        contextTitle: widget.existingCard != null 
+                          ? 'Card: ${widget.existingCard!.localizedData['global']?.answer}'
+                          : 'Card',
+                        appBarColor: pillar.getColor(),
+                      ),
+                ),
+              );
             },
           ),
       ],

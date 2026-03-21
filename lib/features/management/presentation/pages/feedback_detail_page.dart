@@ -281,19 +281,25 @@ class _FeedbackDetailPageState extends State<FeedbackDetailPage> {
                   '${widget.feedback.userName} (${widget.feedback.userEmail})', subColor),
               _buildDetailRow(Icons.badge_outlined, 'User ID',
                   widget.feedback.userId, subColor),
-              if (widget.feedback.subjectId != null) ...[
-                _buildDetailRow(Icons.folder_outlined, 'Subject',
-                    '${widget.feedback.subjectName}', subColor),
+              if (widget.feedback.metadata['context'] != null)
+                _buildDetailRow(Icons.folder_outlined, 'Context',
+                    widget.feedback.metadata['context'], subColor),
+              if (widget.feedback.metadata['subject_id'] != null)
                 _buildDetailRow(Icons.tag, 'Subject ID',
-                    widget.feedback.subjectId!, subColor),
-              ],
-              if (widget.feedback.cardId != null)
+                    widget.feedback.metadata['subject_id'], subColor),
+              if (widget.feedback.metadata['folder_id'] != null)
+                _buildDetailRow(Icons.tag, 'Folder ID',
+                    widget.feedback.metadata['folder_id'], subColor),
+              if (widget.feedback.metadata['collection_id'] != null)
+                _buildDetailRow(Icons.tag, 'Collection ID',
+                    widget.feedback.metadata['collection_id'], subColor),
+              if (widget.feedback.metadata['card_id'] != null)
                 _buildDetailRow(Icons.layers_outlined, 'Card ID',
-                    widget.feedback.cardId!, subColor),
+                    widget.feedback.metadata['card_id'], subColor),
             ] else ...[
-              if (widget.feedback.subjectName != null)
-                _buildDetailRow(Icons.folder_outlined, 'Subject',
-                    widget.feedback.subjectName!, subColor),
+              if (widget.feedback.metadata['context'] != null)
+                _buildDetailRow(Icons.folder_outlined, 'Context',
+                    widget.feedback.metadata['context'], subColor),
             ],
           ],
         ),

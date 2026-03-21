@@ -8,6 +8,7 @@ import 'package:aliolo/data/models/card_model.dart';
 import 'package:aliolo/data/models/subject_model.dart';
 import 'package:aliolo/data/models/pillar_model.dart';
 import 'package:aliolo/data/models/folder_model.dart';
+import 'package:aliolo/data/models/collection_model.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/core/utils/logger.dart';
 
@@ -158,6 +159,20 @@ class CardService with ChangeNotifier {
     }
   }
 
+  Future<List<FolderModel>> getFoldersByIds(List<String> ids) async {
+    if (ids.isEmpty) return [];
+    try {
+      final List<dynamic> data = await _supabase!
+          .from('folders')
+          .select('*, subjects(count)')
+          .inFilter('id', ids);
+      return data.map((json) => FolderModel.fromJson(json)).toList();
+    } catch (e) {
+      print('Error fetching folders by IDs: $e');
+      return [];
+    }
+  }
+
   Future<void> addFolder(FolderModel folder) async {
     try {
       await _supabase!.from('folders').upsert(folder.toJson());
@@ -181,10 +196,108 @@ class CardService with ChangeNotifier {
 
   Future<void> deleteFolder(String folderId) async {
     try {
+      final subjects = await _supabase!.from('subjects').select('id').eq('folder_id', folderId).limit(1);
+      if (subjects.isNotEmpty) throw Exception('folder_not_empty');
+
+      final collections = await _supabase!.from('collections').select('id').eq('folder_id', folderId).limit(1);
+      if (collections.isNotEmpty) throw Exception('folder_not_empty');
+
       await _supabase!.from('folders').delete().eq('id', folderId);
       notifyListeners();
     } catch (e) {
       print('Error deleting folder: $e');
+      rethrow;
+    }
+  }
+
+  // --- Collections ---
+
+  Future<List<CollectionModel>> getAllCollections({bool rootOnly = true}) async {
+    final user = _authService.currentUser;
+    if (user == null || user.serverId == null) return [];
+    try {
+      var query = _supabase!
+          .from('collections')
+          .select('*, collection_items(subject_id)')
+          .or('owner_id.eq.${user.serverId},is_public.eq.true');
+      
+      if (rootOnly) {
+        query = query.filter('folder_id', 'is', null);
+      }
+
+      final List<dynamic> data = await query;
+      return data.map((json) => CollectionModel.fromJson(json)).toList();
+    } catch (e) {
+      print('Error fetching all collections: $e');
+      return [];
+    }
+  }
+
+  Future<List<CollectionModel>> getCollectionsByPillar(int pillarId, {String? folderId, bool rootOnly = true}) async {
+    final user = _authService.currentUser;
+    if (user == null || user.serverId == null) return [];
+    try {
+      var query = _supabase!
+          .from('collections')
+          .select('*, collection_items(subject_id)')
+          .eq('pillar_id', pillarId)
+          .or('owner_id.eq.${user.serverId},is_public.eq.true');
+      
+      if (folderId != null) {
+        query = query.eq('folder_id', folderId);
+      } else if (rootOnly) {
+        query = query.filter('folder_id', 'is', null);
+      }
+
+      final List<dynamic> data = await query;
+      return data.map((json) => CollectionModel.fromJson(json)).toList();
+    } catch (e) {
+      print('Error fetching collections by pillar: $e');
+      return [];
+    }
+  }
+
+  Future<void> addCollection(CollectionModel collection, List<String> subjectIds) async {
+    try {
+      await _supabase!.from('collections').upsert(collection.toJson());
+      
+      // Update bridge table: remove old, add new
+      await _supabase!.from('collection_items').delete().eq('collection_id', collection.id);
+      
+      if (subjectIds.isNotEmpty) {
+        final List<Map<String, dynamic>> items = subjectIds.map((sid) => {
+          'collection_id': collection.id,
+          'subject_id': sid,
+        }).toList();
+        await _supabase!.from('collection_items').insert(items);
+      }
+      
+      notifyListeners();
+    } catch (e) {
+      print('Error adding collection: $e');
+    }
+  }
+
+  Future<void> deleteCollection(String id) async {
+    try {
+      await _supabase!.from('collections').delete().eq('id', id);
+      notifyListeners();
+    } catch (e) {
+      print('Error deleting collection: $e');
+    }
+  }
+
+  Future<CollectionModel?> getCollectionById(String id) async {
+    try {
+      final data = await _supabase!
+          .from('collections')
+          .select('*, collection_items(subject_id)')
+          .eq('id', id)
+          .single();
+      return CollectionModel.fromJson(data);
+    } catch (e) {
+      print('Error fetching collection by id: $e');
+      return null;
     }
   }
 

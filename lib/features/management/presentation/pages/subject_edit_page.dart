@@ -6,6 +6,7 @@ import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/data/models/subject_model.dart';
 import 'package:aliolo/data/models/pillar_model.dart';
 import 'package:aliolo/data/models/folder_model.dart';
+import 'package:aliolo/data/models/collection_model.dart';
 import 'package:aliolo/data/services/card_service.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
@@ -19,6 +20,7 @@ class SubjectEditPage extends StatefulWidget {
   final String? folderId;
   final String? initialAgeGroup;
   final bool isFolderMode;
+  final bool isCollectionMode;
 
   const SubjectEditPage({
     super.key,
@@ -28,6 +30,7 @@ class SubjectEditPage extends StatefulWidget {
     this.folderId,
     this.initialAgeGroup,
     this.isFolderMode = false,
+    this.isCollectionMode = false,
   });
 
   @override
@@ -84,7 +87,8 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
         ((widget.initialAgeGroup != null && widget.initialAgeGroup != 'all')
             ? widget.initialAgeGroup!
             : 'all');
-    _selectedType = widget.existingSubject?.type ?? 'standard';
+    _selectedType = widget.existingSubject?.type ?? 
+        (widget.isCollectionMode ? 'collection' : 'standard');
     _selectedFolderId = widget.existingSubject?.folderId ?? widget.folderId;
     _linkedSubjectIds = List.from(widget.existingSubject?.linkedSubjectIds ?? []);
 
@@ -414,6 +418,20 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
           localizedData: finalData,
         );
         await _cardService.addFolder(folder);
+      } else if (_selectedType == 'collection') {
+        final collectionId = widget.existingSubject?.id ?? _cardService.generateId();
+        final collection = CollectionModel(
+          id: collectionId,
+          pillarId: _selectedPillar,
+          ownerId: widget.existingSubject?.ownerId ?? _authService.currentUser!.serverId!,
+          createdAt: widget.existingSubject?.createdAt ?? now,
+          updatedAt: now,
+          localizedData: finalData,
+          subjectIds: _linkedSubjectIds,
+          isPublic: _isPublic,
+          folderId: _selectedFolderId,
+        );
+        await _cardService.addCollection(collection, _linkedSubjectIds);
       } else {
         final subjectId = widget.existingSubject?.id ?? _cardService.generateId();
         final subject = SubjectModel(
@@ -432,14 +450,19 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
           createdAt: widget.existingSubject?.createdAt ?? now,
           updatedAt: now,
           localizedData: finalData,
-          type: _selectedType,
+          type: 'standard',
           folderId: _selectedFolderId,
-          linkedSubjectIds: _linkedSubjectIds,
+          linkedSubjectIds: [],
         );
         await _cardService.addSubject(subject);
       }
       
-      if (mounted) Navigator.pop(context, true);
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(context.t('save_success') ?? 'Saved successfully')),
+        );
+        Navigator.pop(context, true);
+      }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(
@@ -550,37 +573,35 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
         if (isGlobal) ...[
           _buildSectionCaption(context.t('common_settings')),
           const SizedBox(height: 16),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: DropdownButtonFormField<int>(
-                  value: _selectedPillar,
-                  decoration: InputDecoration(
-                    labelText: context.t('pillar'),
-                    border: const OutlineInputBorder(),
-                    contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 8,
-                    ),
-                  ),
-                  items: pillars.map((p) => DropdownMenuItem(
-                    value: p.id,
-                    child: Text(p.getTranslatedName(currentLang)),
-                  )).toList(),
-                  onChanged: isOwner ? (val) {
-                    if (val != null) {
-                      setState(() {
-                        _selectedPillar = val;
-                        _selectedFolderId = null;
-                        _loadFolders();
-                      });
-                    }
-                  } : null,
-                ),
+          DropdownButtonFormField<int>(
+            value: _selectedPillar,
+            decoration: InputDecoration(
+              labelText: context.t('pillar'),
+              border: const OutlineInputBorder(),
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 12,
+                vertical: 8,
               ),
-              if (!_isFolderMode) ...[
-                const SizedBox(width: 16),
+            ),
+            items: pillars.map((p) => DropdownMenuItem(
+              value: p.id,
+              child: Text(p.getTranslatedName(currentLang)),
+            )).toList(),
+            onChanged: isOwner ? (val) {
+              if (val != null) {
+                setState(() {
+                  _selectedPillar = val;
+                  _selectedFolderId = null;
+                  _loadFolders();
+                });
+              }
+            } : null,
+          ),
+          if (!_isFolderMode) ...[
+            const SizedBox(height: 20),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
                 Expanded(
                   child: DropdownButtonFormField<String?>(
                     value: _selectedFolderId,
@@ -589,66 +610,58 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
                       border: const OutlineInputBorder(),
                       contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                     ),
-                    items: [
-                      DropdownMenuItem<String?>(
-                        value: null,
-                        child: Text(context.t('no_folder')),
-                      ),
-                      ..._allFolders.map((f) => DropdownMenuItem(
-                        value: f.id,
-                        child: Text(f.getName(currentLang), overflow: TextOverflow.ellipsis),
-                      )),
-                    ],
+                    items: (() {
+                      final items = [
+                        DropdownMenuItem<String?>(
+                          value: null,
+                          child: Text(context.t('no_folder')),
+                        ),
+                        ..._allFolders.map((f) => DropdownMenuItem(
+                          value: f.id,
+                          child: Text(f.getName(currentLang), overflow: TextOverflow.ellipsis),
+                        )),
+                      ];
+
+                      // Safety: Ensure current selected ID is in the list to avoid assertion during initial load
+                      if (_selectedFolderId != null && !items.any((item) => item.value == _selectedFolderId)) {
+                        items.add(
+                          DropdownMenuItem(
+                            value: _selectedFolderId,
+                            child: const Text('Loading...'),
+                          ),
+                        );
+                      }
+                      return items;
+                    })(),
                     onChanged: isOwner ? (val) => setState(() => _selectedFolderId = val) : null,
                   ),
                 ),
-              ],
-            ],
-          ),
-          if (!_isFolderMode) ...[
-            const SizedBox(height: 20),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: DropdownButtonFormField<String>(
-                    value: _selectedType,
-                    decoration: InputDecoration(
-                      labelText: context.t('subject_type'),
-                      border: const OutlineInputBorder(),
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                if (_selectedType != 'collection') ...[
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: DropdownButtonFormField<String>(
+                      value: _selectedAgeGroup,
+                      decoration: InputDecoration(
+                        labelText: context.t('age_group'),
+                        border: const OutlineInputBorder(),
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                      ),
+                      items: [
+                        DropdownMenuItem(value: 'all', child: Text(context.t('age_all'))),
+                        DropdownMenuItem(value: '0_6', child: Text(context.t('age_0_6'))),
+                        DropdownMenuItem(value: '7_14', child: Text(context.t('age_7_14'))),
+                        DropdownMenuItem(value: '15_plus', child: Text(context.t('age_15_plus'))),
+                      ],
+                      onChanged: isOwner ? (val) {
+                        if (val != null) setState(() => _selectedAgeGroup = val);
+                      } : null,
                     ),
-                    items: [
-                      DropdownMenuItem(value: 'standard', child: Text(context.t('type_standard'))),
-                      DropdownMenuItem(value: 'collection', child: Text(context.t('type_collection'))),
-                    ],
-                    onChanged: isOwner ? (val) {
-                      if (val != null) setState(() => _selectedType = val);
-                    } : null,
                   ),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: DropdownButtonFormField<String>(
-                    value: _selectedAgeGroup,
-                    decoration: InputDecoration(
-                      labelText: context.t('age_group'),
-                      border: const OutlineInputBorder(),
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    ),
-                    items: [
-                      DropdownMenuItem(value: 'all', child: Text(context.t('age_all'))),
-                      DropdownMenuItem(value: '0_6', child: Text(context.t('age_0_6'))),
-                      DropdownMenuItem(value: '7_14', child: Text(context.t('age_7_14'))),
-                      DropdownMenuItem(value: '15_plus', child: Text(context.t('age_15_plus'))),
-                    ],
-                    onChanged: isOwner ? (val) {
-                      if (val != null) setState(() => _selectedAgeGroup = val);
-                    } : null,
-                  ),
-                ),
+                ],
               ],
             ),
+          ],
+          if (!_isFolderMode) ...[
             const SizedBox(height: 20),
             SwitchListTile(
               contentPadding: EdgeInsets.zero,
@@ -661,7 +674,6 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
           const SizedBox(height: 32),
           const Divider(),
           const SizedBox(height: 32),
-          if (_selectedType == 'collection') _buildCollectionPicker(),
         ],
 
         _buildSectionCaption(
@@ -784,7 +796,9 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
         title: Text(
           _isFolderMode
               ? (widget.existingFolder == null ? context.t('add_folder') : context.t('edit_folder'))
-              : (widget.existingSubject == null ? context.t('add_subject') : context.t('edit_subject')),
+              : _selectedType == 'collection'
+                  ? (widget.existingSubject == null ? context.t('add_collection') : context.t('edit_collection'))
+                  : (widget.existingSubject == null ? context.t('add_subject') : context.t('edit_subject')),
           style: const TextStyle(color: appBarColor),
         ),
         appBarColor: currentSessionColor,
@@ -798,26 +812,6 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
               }
             },
           ),
-          if (widget.existingSubject != null || widget.existingFolder != null)
-            IconButton(
-              icon: const Icon(Icons.feedback, color: appBarColor),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder:
-                        (context) => FeedbackPage(
-                          subjectId: widget.existingSubject?.id,
-                          folderId: widget.existingFolder?.id,
-                          contextTitle:
-                              _isFolderMode 
-                                ? widget.existingFolder!.getName(currentLang)
-                                : widget.existingSubject!.getName(currentLang),
-                          appBarColor: currentSessionColor,
-                        ),
-                  ),
-                );
-              },            ),
           if (isOwner)
             IconButton(
               icon:
@@ -865,22 +859,31 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
                         ),
                   );
                   if (confirmed == true && mounted) {
-                    await _cardService.deleteFolder(widget.existingFolder!.id);
-                    if (mounted) Navigator.pop(context, true);
+                    try {
+                      await _cardService.deleteFolder(widget.existingFolder!.id);
+                      if (mounted) Navigator.pop(context, true);
+                    } catch (e) {
+                      if (e.toString().contains('folder_not_empty') && mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(context.t('folder_not_empty_msg') ?? 'Cannot delete folder: it is not empty')));
+                      }
+                    }
                   }
                   return;
                 }
 
+                final isCollection = _selectedType == 'collection';
                 final cardCount = widget.existingSubject!.cardCount;
                 final confirmed = await showDialog<bool>(
                   context: context,
                   builder:
                       (context) => AlertDialog(
-                        title: Text(context.t('delete_subject')),
+                        title: Text(isCollection ? context.t('delete_collection') : context.t('delete_subject')),
                         content: Text(
-                          cardCount > 0
-                              ? 'This subject contains $cardCount ${context.plural('card', cardCount)}. Deleting it will permanently remove all of them.'
-                              : 'Delete this subject?',
+                          isCollection
+                              ? context.t('delete_collection_confirm')
+                              : (cardCount > 0
+                                  ? 'This subject contains $cardCount ${context.plural('card', cardCount)}. Deleting it will permanently remove all of them.'
+                                  : 'Delete this subject?'),
                         ),
                         actions: [
                           TextButton(
@@ -898,14 +901,37 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
                       ),
                 );
                 if (confirmed == true && mounted) {
-                  await _cardService.deleteSubjectById(
-                    widget.existingSubject!.id,
-                  );
+                  if (isCollection) {
+                    await _cardService.deleteCollection(widget.existingSubject!.id);
+                  } else {
+                    await _cardService.deleteSubjectById(widget.existingSubject!.id);
+                  }
                   if (mounted) {
                     Navigator.pop(context);
                     Navigator.pop(context, true);
                   }
                 }
+              },
+            ),
+          if (widget.existingSubject != null || widget.existingFolder != null)
+            IconButton(
+              icon: const Icon(Icons.feedback, color: appBarColor),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder:
+                        (context) => FeedbackPage(
+                          subjectId: widget.existingSubject?.id,
+                          folderId: widget.existingFolder?.id,
+                          contextTitle:
+                              _isFolderMode 
+                                ? widget.existingFolder!.getName(currentLang)
+                                : widget.existingSubject!.getName(currentLang),
+                          appBarColor: currentSessionColor,
+                        ),
+                  ),
+                );
               },
             ),
         ],
@@ -965,56 +991,6 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
           ),
         ),
       ),
-    );
-  }
-
-  Widget _buildCollectionPicker() {
-    final currentLang = TranslationService().currentLocale.languageCode;
-    final availableSubjects = _allSubjects.where((s) => s.pillarId == _selectedPillar && s.id != widget.existingSubject?.id).toList();
-
-    if (availableSubjects.isEmpty) {
-      return Padding(
-        padding: const EdgeInsets.only(bottom: 24),
-        child: Text(context.t('no_subjects_available'), style: const TextStyle(fontStyle: FontStyle.italic, color: Colors.grey)),
-      );
-    }
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _buildSectionCaption(context.t('included_subjects')),
-        const SizedBox(height: 16),
-        Container(
-          constraints: const BoxConstraints(maxHeight: 300),
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.grey.withValues(alpha: 0.3)),
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: ListView.builder(
-            shrinkWrap: true,
-            itemCount: availableSubjects.length,
-            itemBuilder: (context, index) {
-              final s = availableSubjects[index];
-              final isSelected = _linkedSubjectIds.contains(s.id);
-              return CheckboxListTile(
-                title: Text(s.getName(currentLang)),
-                subtitle: Text(s.ageGroup),
-                value: isSelected,
-                onChanged: (val) {
-                  setState(() {
-                    if (val == true) {
-                      _linkedSubjectIds.add(s.id);
-                    } else {
-                      _linkedSubjectIds.remove(s.id);
-                    }
-                  });
-                },
-              );
-            },
-          ),
-        ),
-        const SizedBox(height: 32),
-      ],
     );
   }
 

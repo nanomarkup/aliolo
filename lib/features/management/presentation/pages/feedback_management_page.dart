@@ -275,26 +275,21 @@ class _FeedbackManagementPageState extends State<FeedbackManagementPage> {
                   ),
                 ),
               ],
-              if (f.subjectId != null || f.cardId != null) ...[
+              if (f.metadata['subject_id'] != null || f.metadata['card_id'] != null || f.metadata['folder_id'] != null || f.metadata['collection_id'] != null) ...[
                 const SizedBox(height: 12),
                 const Divider(),
                 Row(
                   children: [
-                    if (f.subjectId != null) ...[
-                      Icon(Icons.folder_outlined, size: 14, color: subColor),
+                    if (f.metadata['context'] != null) ...[
+                      Icon(Icons.label_outline, size: 14, color: subColor),
                       const SizedBox(width: 4),
-                      Text(
-                        'Sub: ${f.subjectName ?? f.subjectId!.substring(0, 8)}',
-                        style: TextStyle(fontSize: 11, color: subColor),
-                      ),
-                    ],
-                    if (_isAdmin && f.cardId != null) ...[
-                      const SizedBox(width: 12),
-                      Icon(Icons.layers_outlined, size: 14, color: subColor),
-                      const SizedBox(width: 4),
-                      Text(
-                        'Card: ${f.cardId!.substring(0, 8)}',
-                        style: TextStyle(fontSize: 11, color: subColor),
+                      Expanded(
+                        child: Text(
+                          'Context: ${f.metadata['context']}',
+                          style: TextStyle(fontSize: 11, color: subColor),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
                     ],
                   ],

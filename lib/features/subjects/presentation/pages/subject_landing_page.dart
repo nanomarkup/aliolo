@@ -3,6 +3,7 @@ import 'package:aliolo/data/models/subject_model.dart';
 import 'package:aliolo/data/models/card_model.dart';
 import 'package:aliolo/data/models/pillar_model.dart';
 import 'package:aliolo/data/models/folder_model.dart';
+import 'package:aliolo/data/models/collection_model.dart';
 import 'package:aliolo/data/services/card_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/data/services/auth_service.dart';
@@ -24,6 +25,7 @@ import 'package:aliolo/core/widgets/division_grid.dart';
 class SubjectLandingPage extends StatefulWidget {
   final SubjectModel? subject;
   final FolderModel? folder;
+  final CollectionModel? collection;
   final List<CardModel> cards;
   final String languageCode;
 
@@ -31,6 +33,7 @@ class SubjectLandingPage extends StatefulWidget {
     super.key,
     this.subject,
     this.folder,
+    this.collection,
     required this.cards,
     required this.languageCode,
   });
@@ -46,19 +49,47 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
 
   SubjectModel? _currentSubject;
   FolderModel? _currentFolder;
+  CollectionModel? _currentCollection;
   List<CardModel> _allCards = [];
   List<CardModel> _filteredCards = [];
+  List<SubjectModel> _allSubjects = [];
+  List<SubjectModel> _filteredSubjects = [];
   bool _isLoading = false;
   bool _hasUpdated = false;
+
+  String _collectionFilter = 'all';
+  String _selectedAgeFilter = 'all';
 
   @override
   void initState() {
     super.initState();
     _currentSubject = widget.subject;
     _currentFolder = widget.folder;
+    _currentCollection = widget.collection;
     _allCards = widget.cards;
-    _applyFilters();
+    
+    if (_currentCollection != null) {
+      _fetchCollectionSubjects();
+    } else {
+      _applyFilters();
+    }
     _cardService.addListener(_onServiceChange);
+  }
+
+  Future<void> _fetchCollectionSubjects() async {
+    if (_currentCollection == null) return;
+    setState(() => _isLoading = true);
+    try {
+      final subjects = await _cardService.getDashboardSubjects();
+      if (mounted) {
+        setState(() {
+          _allSubjects = subjects;
+          _applyFilters();
+        });
+      }
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
   }
 
   @override
@@ -98,15 +129,40 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
 
   void _applyFilters() {
     final query = _searchController.text.toLowerCase();
+    final myId = _authService.currentUser?.serverId;
+    
     setState(() {
-      _filteredCards =
-          _allCards.where((c) {
-            final matchesSearch = c
-                .getPrompt(widget.languageCode)
-                .toLowerCase()
-                .contains(query);
-            return matchesSearch;
-          }).toList();
+      if (_currentCollection != null) {
+        _filteredSubjects = _allSubjects.where((s) {
+          final matchesName = s.getName(widget.languageCode).toLowerCase().contains(query);
+          final matchesAge = _selectedAgeFilter == 'all' || s.ageGroup == _selectedAgeFilter;
+          bool matchesCollection = true;
+          if (_collectionFilter == 'mine') {
+            matchesCollection = s.ownerId == myId;
+          } else if (_collectionFilter == 'public') {
+            matchesCollection = s.isPublic;
+          } else if (_collectionFilter == 'favorites') {
+            matchesCollection = s.isOnDashboard;
+          }
+          return matchesName && matchesAge && matchesCollection;
+        }).toList();
+
+        _filteredSubjects.sort((a, b) {
+          final aSelected = _currentCollection!.subjectIds.contains(a.id);
+          final bSelected = _currentCollection!.subjectIds.contains(b.id);
+          if (aSelected && !bSelected) return -1;
+          if (!aSelected && bSelected) return 1;
+          return a.getName(widget.languageCode).toLowerCase().compareTo(b.getName(widget.languageCode).toLowerCase());
+        });
+      } else {
+        _filteredCards = _allCards.where((c) {
+          final matchesSearch = c
+              .getPrompt(widget.languageCode)
+              .toLowerCase()
+              .contains(query);
+          return matchesSearch;
+        }).toList();
+      }
     });
   }
 
@@ -127,29 +183,36 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
   }
 
   void _confirmDeleteSubject() {
-    if (_currentSubject == null) return;
+    if (_currentSubject == null && _currentCollection == null) return;
+    final isCollection = _currentCollection != null;
     showDialog(
       context: context,
       builder:
           (context) => AlertDialog(
-            title: const Text('Delete Subject?'),
-            content: const Text(
-              'This will permanently delete the subject and all its cards.',
+            title: Text(isCollection ? context.t('delete_collection') : context.t('delete_subject')),
+            content: Text(
+              isCollection 
+                  ? context.t('delete_collection_confirm')
+                  : 'This will permanently delete the subject and all its cards.',
             ),
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(context),
-                child: const Text('Cancel'),
+                child: Text(context.t('cancel')),
               ),
               TextButton(
                 onPressed: () async {
-                  await _cardService.deleteSubjectById(_currentSubject!.id);
+                  if (isCollection) {
+                    await _cardService.deleteCollection(_currentCollection!.id);
+                  } else {
+                    await _cardService.deleteSubjectById(_currentSubject!.id);
+                  }
                   if (context.mounted) {
                     Navigator.pop(context); // Close dialog
                     Navigator.pop(context, true); // Go back to dashboard
                   }
                 },
-                child: const Text('Delete', style: TextStyle(color: Colors.red)),
+                child: Text(context.t('delete'), style: const TextStyle(color: Colors.red)),
               ),
             ],
           ),
@@ -164,7 +227,11 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
     setState(() => _isLoading = true);
 
     try {
-      if (_currentSubject?.type == 'collection') {
+      if (_currentCollection != null) {
+        sessionCards = await _cardService.getCollectionCards(
+          _currentCollection!.subjectIds,
+        );
+      } else if (_currentSubject?.type == 'collection') {
         sessionCards = await _cardService.getCollectionCards(
           _currentSubject!.linkedSubjectIds,
         );
@@ -234,18 +301,35 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
     }
   }
 
+  Widget _buildCompactDropdown({required String value, required Map<String, String> items, required ValueChanged<String?> onChanged}) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12),
+      decoration: BoxDecoration(color: Theme.of(context).cardColor.withValues(alpha: 0.5), borderRadius: BorderRadius.circular(12), border: Border.all(color: Colors.grey.withValues(alpha: 0.5))),
+      child: DropdownButtonHideUnderline(child: DropdownButton<String>(
+        value: value, isExpanded: true, icon: const Icon(Icons.arrow_drop_down, size: 20),
+        style: TextStyle(fontSize: 14, color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black87),
+        items: items.entries.map((e) => DropdownMenuItem(value: e.key, child: Text(e.value, overflow: TextOverflow.ellipsis))).toList(),
+        onChanged: onChanged,
+      )),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    final pillarId = _currentSubject?.pillarId ?? _currentFolder?.pillarId ?? 1;
+    final pillarId = _currentSubject?.pillarId ?? _currentFolder?.pillarId ?? _currentCollection?.pillarId ?? 1;
     final pillar = pillars.firstWhere(
       (p) => p.id == pillarId,
       orElse: () => pillars.first,
     );
     final pillarColor = pillar.getColor();
     const appBarColor = Colors.white;
-    final isOwner = _currentSubject != null && _currentSubject!.ownerId == _authService.currentUser?.serverId;
+    final isOwner = (_currentSubject != null && _currentSubject!.ownerId == _authService.currentUser?.serverId) ||
+                  (_currentCollection != null && _currentCollection!.ownerId == _authService.currentUser?.serverId);
     final displayLang = widget.languageCode;
-    final title = _currentSubject?.getName(displayLang) ?? _currentFolder?.getName(displayLang) ?? 'Aliolo';
+    final title = _currentSubject?.getName(displayLang) ?? 
+                 _currentFolder?.getName(displayLang) ?? 
+                 _currentCollection?.getName(displayLang) ?? 
+                 'Aliolo';
 
     return ListenableBuilder(
       listenable: _cardService,
@@ -281,6 +365,46 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                 ),
                 onPressed: _toggleFavorite,
               ),
+            if (isOwner) ...[
+              IconButton(
+                icon: const Icon(Icons.edit, color: appBarColor),
+                onPressed: () async {
+                  final result = await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder:
+                          (context) =>
+                              SubjectEditPage(
+                                existingSubject: _currentSubject ?? SubjectModel(
+                                  id: _currentCollection!.id,
+                                  pillarId: _currentCollection!.pillarId,
+                                  ownerId: _currentCollection!.ownerId,
+                                  isPublic: _currentCollection!.isPublic,
+                                  createdAt: _currentCollection!.createdAt,
+                                  updatedAt: _currentCollection!.updatedAt,
+                                  localizedData: _currentCollection!.localizedData,
+                                  folderId: _currentCollection!.folderId,
+                                  type: 'collection',
+                                  linkedSubjectIds: _currentCollection!.subjectIds,
+                                ),
+                                isCollectionMode: _currentCollection != null,
+                              ),
+                    ),
+                  );
+                  if (result == true) {
+                    if (_currentSubject != null) _refreshData();
+                    // Just pop if collection updated so dashboard refreshes it
+                    if (_currentCollection != null) {
+                      if (context.mounted) Navigator.pop(context, true);
+                    }
+                  }
+                },
+              ),
+              IconButton(
+                icon: const Icon(Icons.delete, color: appBarColor),
+                onPressed: _confirmDeleteSubject,
+              ),
+            ],
             IconButton(
               icon: const Icon(Icons.feedback, color: appBarColor),
               onPressed: () {
@@ -291,6 +415,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                         (context) => FeedbackPage(
                           subjectId: _currentSubject?.id,
                           folderId: _currentFolder?.id,
+                          collectionId: _currentCollection?.id,
                           contextTitle: title,
                           appBarColor: pillarColor,
                         ),
@@ -298,121 +423,304 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                 );
               },
             ),
-            if (isOwner) ...[
-              IconButton(
-                icon: const Icon(Icons.edit, color: appBarColor),
-                onPressed: () async {
-                  final result = await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder:
-                          (context) =>
-                              SubjectEditPage(existingSubject: _currentSubject),
-                    ),
-                  );
-                  if (result == true) _refreshData();
-                },
-              ),
-              IconButton(
-                icon: const Icon(Icons.delete, color: appBarColor),
-                onPressed: _confirmDeleteSubject,
-              ),
-            ],
           ],
-          fixedBody: Column(
-            children: [
-              const SizedBox(height: 16),
-              Row(
+          fixedBody: LayoutBuilder(
+            builder: (context, constraints) {
+              final isSmall = constraints.maxWidth < 600;
+              final filterRow = _currentCollection != null ? Row(children: [
+                Expanded(child: _buildCompactDropdown(value: _collectionFilter, items: {'all': context.t('filter_all'), 'favorites': context.t('filter_favorites'), 'mine': context.t('filter_my_subjects'), 'public': context.t('filter_public')}, onChanged: (val) { if (val != null) setState(() { _collectionFilter = val; _applyFilters(); }); })),
+                const SizedBox(width: 8),
+                Expanded(child: _buildCompactDropdown(value: _selectedAgeFilter, items: {'all': context.t('age_all'), '0_6': context.t('age_0_6'), '7_14': context.t('age_7_14'), '15_plus': context.t('age_15_plus')}, onChanged: (val) { if (val != null) setState(() { _selectedAgeFilter = val; _applyFilters(); }); })),
+              ]) : const SizedBox.shrink();
+
+              return Column(
                 children: [
-                  Container(
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: pillarColor.withValues(alpha: 0.1),
-                      shape: BoxShape.circle,
-                    ),
-                    child: Icon(
-                      _currentFolder != null ? Icons.folder : pillar.getIconData(),
-                      size: 40,
-                      color: pillarColor,
-                    ),
+                  const SizedBox(height: 16),
+                  Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: pillarColor.withValues(alpha: 0.1),
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(
+                          _currentFolder != null ? Icons.folder : 
+                          (_currentCollection != null ? Icons.collections : pillar.getIconData()),
+                          size: 40,
+                          color: pillarColor,
+                        ),
+                      ),
+                      const SizedBox(width: 20),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              title,
+                              style: const TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            if (_currentSubject?.getDescription(displayLang).isNotEmpty == true || 
+                                _currentFolder?.getDescription(displayLang).isNotEmpty == true ||
+                                _currentCollection?.getDescription(displayLang).isNotEmpty == true)
+                              Text(
+                                _currentSubject?.getDescription(displayLang) ?? 
+                                _currentFolder?.getDescription(displayLang) ?? 
+                                _currentCollection?.getDescription(displayLang) ?? '',
+                                style: TextStyle(
+                                  color: Colors.grey[600],
+                                  fontSize: 14,
+                                ),
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(width: 20),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          title,
-                          style: const TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
+                  const SizedBox(height: 32),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: _buildActionButton(
+                          context: context,
+                          title: context.t('learn_mode_title'),
+                          icon: Icons.school,
+                          color: pillarColor,
+                          onTap: () => _startSession(false),
+                        ),
+                      ),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: _buildActionButton(
+                          context: context,
+                          title: context.t('test_mode_title'),
+                          icon: Icons.quiz,
+                          color: pillarColor,
+                          onTap: () => _startSession(true),
+                        ),
+                      ),
+                    ],
+                  ),
+                  if (_currentSubject != null || _currentCollection != null) ...[
+                    const SizedBox(height: 32),
+                    if (_currentCollection != null && isSmall) ...[
+                      TextField(
+                        controller: _searchController,
+                        onChanged: (_) => _applyFilters(),
+                        decoration: InputDecoration(
+                          hintText: context.t('search_subjects'),
+                          prefixIcon: const Icon(Icons.search),
+                          suffixIcon: ValueListenableBuilder<TextEditingValue>(
+                            valueListenable: _searchController,
+                            builder: (context, value, _) {
+                              return value.text.isNotEmpty
+                                  ? IconButton(
+                                      icon: const Icon(Icons.clear),
+                                      onPressed: () {
+                                        _searchController.clear();
+                                        _applyFilters();
+                                      },
+                                    )
+                                  : const SizedBox.shrink();
+                            },
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
                           ),
                         ),
-                        if (_currentSubject?.getDescription(displayLang).isNotEmpty == true || _currentFolder?.getDescription(displayLang).isNotEmpty == true)
-                          Text(
-                            _currentSubject?.getDescription(displayLang) ?? _currentFolder?.getDescription(displayLang) ?? '',
-                            style: TextStyle(
-                              color: Colors.grey[600],
-                              fontSize: 14,
+                      ),
+                      const SizedBox(height: 12),
+                      filterRow,
+                    ] else if (_currentCollection != null && !isSmall) ...[
+                      Row(
+                        children: [
+                          Expanded(
+                            flex: 3,
+                            child: TextField(
+                              controller: _searchController,
+                              onChanged: (_) => _applyFilters(),
+                              decoration: InputDecoration(
+                                hintText: context.t('search_subjects'),
+                                prefixIcon: const Icon(Icons.search),
+                                suffixIcon: ValueListenableBuilder<TextEditingValue>(
+                                  valueListenable: _searchController,
+                                  builder: (context, value, _) {
+                                    return value.text.isNotEmpty
+                                        ? IconButton(
+                                            icon: const Icon(Icons.clear),
+                                            onPressed: () {
+                                              _searchController.clear();
+                                              _applyFilters();
+                                            },
+                                          )
+                                        : const SizedBox.shrink();
+                                  },
+                                ),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                              ),
                             ),
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
                           ),
-                      ],
-                    ),
-                  ),
+                          const SizedBox(width: 8),
+                          Expanded(flex: 5, child: filterRow),
+                        ],
+                      ),
+                    ] else ...[
+                      Row(
+                        children: [
+                          Expanded(
+                            child: TextField(
+                              controller: _searchController,
+                              onChanged: (_) => _applyFilters(),
+                              decoration: InputDecoration(
+                                hintText: 'Search cards...',
+                                prefixIcon: const Icon(Icons.search),
+                                suffixIcon: ValueListenableBuilder<TextEditingValue>(
+                                  valueListenable: _searchController,
+                                  builder: (context, value, _) {
+                                    return value.text.isNotEmpty
+                                        ? IconButton(
+                                            icon: const Icon(Icons.clear),
+                                            onPressed: () {
+                                              _searchController.clear();
+                                              _applyFilters();
+                                            },
+                                          )
+                                        : const SizedBox.shrink();
+                                  },
+                                ),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                              ),
+                            ),
+                          ),
+                          if (isOwner && _currentSubject != null) ...[
+                            const SizedBox(width: 8),
+                            IconButton(
+                              icon: Icon(Icons.add_circle, color: pillarColor, size: 40),
+                              padding: EdgeInsets.zero,
+                              onPressed: () async {
+                                final result = await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => AddCardPage(
+                                      pillarId: pillarId,
+                                      initialSubjectId: _currentSubject!.id,
+                                    ),
+                                  ),
+                                );
+                                if (result == true) _refreshData();
+                              },
+                            ),
+                          ],
+                        ],
+                      ),
+                    ],
+                  ],
+                  const SizedBox(height: 24),
                 ],
-              ),
-              const SizedBox(height: 32),
-              Row(
-                children: [
-                  Expanded(
-                    child: _buildActionButton(
-                      context: context,
-                      title: context.t('learn_mode_title'),
-                      icon: Icons.school,
-                      color: pillarColor,
-                      onTap: () => _startSession(false),
-                    ),
-                  ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: _buildActionButton(
-                      context: context,
-                      title: context.t('test_mode_title'),
-                      icon: Icons.quiz,
-                      color: pillarColor,
-                      onTap: () => _startSession(true),
-                    ),
-                  ),
-                ],
-              ),
-              if (_currentSubject != null) ...[
-                const SizedBox(height: 32),
-                TextField(
-                  controller: _searchController,
-                  onChanged: (_) => _applyFilters(),
-                  decoration: InputDecoration(
-                    hintText: 'Search cards...',
-                    prefixIcon: const Icon(Icons.search),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                ),
-              ],
-              const SizedBox(height: 24),
-            ],
+              );
+            },
           ),
           slivers: [
             if (_isLoading)
               const SliverFillRemaining(
                 child: Center(child: CircularProgressIndicator()),
               )
-            else if (_currentSubject == null)
+            else if (_currentSubject == null && _currentCollection == null)
               const SliverFillRemaining(
                 child: Center(child: Text('This is a folder. You can use Learn/Test buttons above to practice all cards.')),
               )
+            else if (_currentCollection != null)
+              if (_filteredSubjects.isEmpty)
+                const SliverFillRemaining(
+                  child: Center(child: Text('No subjects found in this collection')),
+                )
+              else
+                SliverPadding(
+                  padding: const EdgeInsets.only(bottom: 32),
+                  sliver: SliverList(
+                    delegate: SliverChildBuilderDelegate((context, index) {
+                      final subject = _filteredSubjects[index];
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 16),
+                        child: InkWell(
+                          onTap: () async {
+                            final cards = await _cardService.getCardsBySubject(subject.id);
+                            if (context.mounted) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => SubjectLandingPage(
+                                    subject: subject,
+                                    cards: cards,
+                                    languageCode: displayLang,
+                                  ),
+                                ),
+                              );
+                            }
+                          },
+                          borderRadius: BorderRadius.circular(16),
+                          child: Container(
+                            padding: const EdgeInsets.all(20),
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).cardColor,
+                              borderRadius: BorderRadius.circular(16),
+                              border: Border.all(color: pillarColor.withValues(alpha: 0.2), width: 1.5),
+                            ),
+                            child: Row(
+                              children: [
+                                if (isOwner)
+                                  Checkbox(
+                                    value: _currentCollection!.subjectIds.contains(subject.id),
+                                    activeColor: pillarColor,
+                                    onChanged: (val) async {
+                                      if (val == null) return;
+                                      setState(() {
+                                        if (val) {
+                                          _currentCollection!.subjectIds.add(subject.id);
+                                        } else {
+                                          _currentCollection!.subjectIds.remove(subject.id);
+                                        }
+                                        _hasUpdated = true;
+                                      });
+                                      await _cardService.addCollection(_currentCollection!, _currentCollection!.subjectIds);
+                                    },
+                                  )
+                                else
+                                  Icon(Icons.description, color: pillarColor),
+                                const SizedBox(width: 16),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        subject.getName(displayLang),
+                                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                                      ),
+                                      Text(
+                                        '${pillars.firstWhere((p) => p.id == subject.pillarId, orElse: () => pillars.first).getTranslatedName(displayLang)} • ${subject.cardCount} ${context.plural('card', subject.cardCount)}',
+                                        style: TextStyle(color: Colors.grey[600], fontSize: 14),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const Icon(Icons.chevron_right, color: Colors.grey),
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+                    }, childCount: _filteredSubjects.length),
+                  ),
+                )
             else if (_filteredCards.isEmpty)
               const SliverFillRemaining(
                 child: Center(child: Text('No cards found')),
@@ -441,7 +749,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                                 (context) => AddCardPage(
                                   existingCard: card,
                                   isReadOnly: !isCardMine,
-                                  pillarId: _currentSubject!.pillarId,
+                                  pillarId: pillarId,
                                 ),
                           ),
                         );
@@ -488,66 +796,68 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
 }
 
   Widget _buildCardPreview(CardModel card, Color pillarColor, String displayLang) {
-    if (_currentSubject == null) return Container();
+    if (_currentSubject == null && _currentCollection == null) return Container();
 
-    if (_currentSubject!.isNumbers) {
-      return NumberGrid(
-        displayChar: card.getNumericalChar(displayLang),
-        fontSize: 40,
-        color: pillarColor,
-      );
-    } else if (_currentSubject!.isDivision) {
-      final parts = card.divisionParts ?? [0, 1];
-      return DivisionGrid(
-        a: parts[0],
-        b: parts[1],
-        languageCode: displayLang,
-        fontSize: 24,
-        color: pillarColor,
-      );
-    } else if (_currentSubject!.isMultiplication) {
-      final parts = card.multiplicationParts ?? [1, 0];
-      return MultiplicationGrid(
-        a: parts[0],
-        b: parts[1],
-        languageCode: displayLang,
-        fontSize: 24,
-        color: pillarColor,
-      );
-    } else if (_currentSubject!.isSubtraction) {
-      return SubtractionGrid(
-        totalSum: card.numericalAnswer,
-        maxOperand: _currentSubject!.maxOperand,
-        iconSize: 18,
-      );
-    } else if (_currentSubject!.isAddition) {
-      return AdditionGrid(
-        totalSum: card.numericalAnswer,
-        maxOperand: _currentSubject!.maxOperand,
-        iconSize: 18,
-      );
-    } else if (_currentSubject!.isCounting) {
-      return CountingGrid(
-        count: card.numericalAnswer,
-        iconSize: 24,
-      );
-    } else {
-      final imageUrl = card.getImageUrls(displayLang).firstOrNull;
-      if (imageUrl != null) {
-        return AlioloImage(
-          imageUrl: imageUrl,
-          fit: BoxFit.cover,
+    if (_currentSubject != null) {
+      if (_currentSubject!.isNumbers) {
+        return NumberGrid(
+          displayChar: card.getNumericalChar(displayLang),
+          fontSize: 40,
+          color: pillarColor,
+        );
+      } else if (_currentSubject!.isDivision) {
+        final parts = card.divisionParts ?? [0, 1];
+        return DivisionGrid(
+          a: parts[0],
+          b: parts[1],
+          languageCode: displayLang,
+          fontSize: 24,
+          color: pillarColor,
+        );
+      } else if (_currentSubject!.isMultiplication) {
+        final parts = card.multiplicationParts ?? [1, 0];
+        return MultiplicationGrid(
+          a: parts[0],
+          b: parts[1],
+          languageCode: displayLang,
+          fontSize: 24,
+          color: pillarColor,
+        );
+      } else if (_currentSubject!.isSubtraction) {
+        return SubtractionGrid(
+          totalSum: card.numericalAnswer,
+          maxOperand: _currentSubject!.maxOperand,
+          iconSize: 18,
+        );
+      } else if (_currentSubject!.isAddition) {
+        return AdditionGrid(
+          totalSum: card.numericalAnswer,
+          maxOperand: _currentSubject!.maxOperand,
+          iconSize: 18,
+        );
+      } else if (_currentSubject!.isCounting) {
+        return CountingGrid(
+          count: card.numericalAnswer,
+          iconSize: 24,
         );
       }
-      return Container(
-        color: pillarColor.withAlpha(25),
-        child: Icon(
-          Icons.image,
-          size: 32,
-          color: pillarColor,
-        ),
+    }
+
+    final imageUrl = card.getImageUrls(displayLang).firstOrNull;
+    if (imageUrl != null) {
+      return AlioloImage(
+        imageUrl: imageUrl,
+        fit: BoxFit.cover,
       );
     }
+    return Container(
+      color: pillarColor.withAlpha(25),
+      child: Icon(
+        Icons.image,
+        size: 32,
+        color: pillarColor,
+      ),
+    );
   }
 
   Widget _buildActionButton({

@@ -8,7 +8,7 @@ import subprocess
 SUPABASE_URL = "https://mltdjjszycfmokwqsqxm.supabase.co"
 SERVICE_ROLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1sdGRqanN6eWNmbW9rd3FzcXhtIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MzEzMjg4NywiZXhwIjoyMDg4NzA4ODg3fQ.3HE7aC6ByeLFPKhErJNy40WO2vaO8tagl4UR0CnoHWI"
 USER_ID = "f2fb4c9c-169b-447d-b8a6-dce72c4ed5ac"
-PILLAR_ID = 8 # Universal
+PILLAR_ID = 8 # Other
 
 TTS_URL = "https://translate.google.com/translate_tts?ie=UTF-8&q={text}&tl={lang}&client=tw-ob"
 

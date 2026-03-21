@@ -301,7 +301,14 @@ base_en = {
     "trust_cloud_title": "Cloud Sync",
     "trust_cloud_desc": "Your progress is securely synced across all your devices in real-time.",
     "trust_sync_title": "Encrypted Data",
-    "trust_sync_desc": "Your data is private and encrypted to ensure the highest security standards."
+    "trust_sync_desc": "Your data is private and encrypted to ensure the highest security standards.",
+    "type_collection": "Collection",
+    "no_subjects_available": "No subjects available",
+    "included_subjects": "Included Subjects",
+    "add_folder": "Add Folder",
+    "edit_folder": "Edit Folder",
+    "delete_folder": "Delete Folder",
+    "add_collection": "Add Collection"
 }
 
 # Translations
@@ -337,7 +344,14 @@ ar = {
     "common_settings": "الإعدادات العامة",
     "content_label": "المحتوى",
     "copy": "نسخ",
-    "paste": "لصق"
+    "paste": "لصق",
+    "type_collection": "مجموعة",
+    "no_subjects_available": "لا توجد مواضيع متاحة",
+    "included_subjects": "المواضيع المشمولة",
+    "add_folder": "إضافة مجلد",
+    "edit_folder": "تعديل المجلد",
+    "delete_folder": "حذف المجلد",
+    "add_collection": "إضافة مجموعة"
 }
 
 de = {
@@ -584,7 +598,14 @@ de = {
     "daily_progress": "Täglicher Fortschritt",
     "next_day_goal": "Ziel für morgen",
     "done_today": "Heute erledigt",
-    "goal_change_hint": "Ändern Sie Ihr Kartenziel für morgen"
+    "goal_change_hint": "Ändern Sie Ihr Kartenziel für morgen",
+    "type_collection": "Kollektion",
+    "no_subjects_available": "Keine Fächer verfügbar",
+    "included_subjects": "Enthaltene Fächer",
+    "add_folder": "Ordner hinzufügen",
+    "edit_folder": "Ordner bearbeiten",
+    "delete_folder": "Ordner löschen",
+    "add_collection": "Kollektion hinzufügen"
 }
 
 el = {
@@ -613,7 +634,14 @@ el = {
     "done_today": "Ολοκληρώθηκαν σήμερα",
     "goal_change_hint": "Αλλάξτε τον στόχο των καρτών σας για αύριο",
     "learn_session_size": "Μέγεθος συνεδрії εκμάθησης",
-    "test_session_size": "Μέγεθος συνεδρίας δοκιμής"
+    "test_session_size": "Μέγεθος συνεδρίας δοκιμής",
+    "type_collection": "Συλλογή",
+    "no_subjects_available": "Δεν υπάρχουν διαθέсиμα θέματα",
+    "included_subjects": "Περιλαμβανόμενα θέματα",
+    "add_folder": "Προσθήκη φακέλου",
+    "edit_folder": "Επεξεργασία φακέλου",
+    "delete_folder": "Διαγραφή φακέλου",
+    "add_collection": "Προσθήκη συλλογής"
 }
 
 es = {
@@ -871,7 +899,14 @@ es = {
     "daily_progress": "Progreso diario",
     "next_day_goal": "Meta para mañana",
     "done_today": "Hecho hoy",
-    "goal_change_hint": "Cambia tu meta de tarjetas para mañana"
+    "goal_change_hint": "Cambia tu meta de tarjetas para mañana",
+    "type_collection": "Colección",
+    "no_subjects_available": "No hay temas disponibles",
+    "included_subjects": "Temas incluidos",
+    "add_folder": "Añadir carpeta",
+    "edit_folder": "Editar carpeta",
+    "delete_folder": "Eliminar carpeta",
+    "add_collection": "Añadir colección"
 }
 
 fr = {
@@ -1129,7 +1164,14 @@ fr = {
     "daily_progress": "Progrès quotidien",
     "next_day_goal": "Objectif pour demain",
     "done_today": "Fait aujourd'hui",
-    "goal_change_hint": "Modifiez votre objectif de cartes pour demain"
+    "goal_change_hint": "Modifiez votre objectif de cartes pour demain",
+    "type_collection": "Collection",
+    "no_subjects_available": "Aucun sujet disponible",
+    "included_subjects": "Sujets inclus",
+    "add_folder": "Ajouter un dossier",
+    "edit_folder": "Modifier le dossier",
+    "delete_folder": "Supprimer le dossier",
+    "add_collection": "Ajouter une collection"
 }
 
 hi = {
@@ -1159,7 +1201,14 @@ hi = {
     "done_today": "आज पूरा हुआ",
     "goal_change_hint": "कल के लिए अपना कार्ड लक्ष्य बदलें",
     "learn_session_size": "सीखने के सत्र का आकार",
-    "test_session_size": "परीक्षण सत्र का आकार"
+    "test_session_size": "परीक्षण सत्र का आकार",
+    "type_collection": "संग्रह",
+    "no_subjects_available": "कोई विषय उपलब्ध नहीं है",
+    "included_subjects": "शामिल विषय",
+    "add_folder": "फ़ोल्डर जोड़ें" ,
+    "edit_folder": "फ़ोルダー संपादित करें",
+    "delete_folder": "फ़ोल्डर हटाएँ",
+    "add_collection": "संग्रह जोड़ें"
 }
 
 id = {
@@ -1189,7 +1238,13 @@ id = {
     "done_today": "Selesai Hari Ini",
     "goal_change_hint": "Ubah target kartu Anda cho besok",
     "learn_session_size": "Ukuran sesi belajar",
-    "test_session_size": "Ukuran sesi tes"
+    "test_session_size": "Ukuran sesi tes",
+    "type_collection": "Koleksi",
+    "no_subjects_available": "Tidak ada subjek yang tersedia",
+    "included_subjects": "Subjek yang disertakan",
+    "add_folder": "Tambah Folder",
+    "edit_folder": "Ubah Folder",
+    "add_collection": "Tambah Koleksi"
     }
 
 it = {
@@ -1438,7 +1493,15 @@ it = {
     "daily_progress": "Progressi giornalieri",
     "next_day_goal": "Obiettivo di domani",
     "done_today": "Completato oggi",
-    "goal_change_hint": "Cambia il tuo obiettivo di carte per domani"
+    "goal_change_hint": "Cambia il tuo obiettivo di carte per domani",
+    "type_collection": "Collezione",
+    "no_subjects_available": "Nessuna materia disponibile",
+    "included_subjects": "Materie incluse",
+    "add_folder": "Aggiungi cartella",
+    "edit_folder": "Modifica cartella",
+    "delete_folder": "Hapus Folder",
+    "delete_folder": "Elimina cartella",
+    "add_collection": "Aggiungi collezione"
 }
 
 ja = {
@@ -1691,7 +1754,14 @@ ja = {
     "daily_progress": "今日の進捗",
     "next_day_goal": "明日の目標",
     "done_today": "今日の完了数",
-    "goal_change_hint": "明日のカード目標を変更する"
+    "goal_change_hint": "明日のカード目標を変更する",
+    "type_collection": "コレクション",
+    "no_subjects_available": "利用可能な科目はありません",
+    "included_subjects": "含まれる科目",
+    "add_folder": "フォルダを追加",
+    "edit_folder": "フォルダを編集",
+    "delete_folder": "フォルダを削除",
+    "add_collection": "コレクションを追加"
 }
 
 ko = {
@@ -1944,7 +2014,14 @@ ko = {
     "daily_progress": "일일 진행 상황",
     "next_day_goal": "내일의 목표",
     "done_today": "오늘 완료",
-    "goal_change_hint": "내일의 카드 목표를 변경하십시오"
+    "goal_change_hint": "내일의 카드 목표를 변경하십시오",
+    "type_collection": "컬렉션",
+    "no_subjects_available": "사용 가능한 주제가 없습니다",
+    "included_subjects": "포함된 주제",
+    "add_folder": "폴더 추가",
+    "edit_folder": "폴더 편집",
+    "delete_folder": "폴더 삭제",
+    "add_collection": "컬렉션 추가"
 }
 
 bg = {
@@ -1969,6 +2046,13 @@ bg = {
     "leaderboard": "Класация",
     "streak": "Серия",
     "profile": "Профил",
+    "type_collection": "Колекция",
+    "no_subjects_available": "Няма налични предмети",
+    "included_subjects": "Включени предмети",
+    "add_folder": "Добавяне на папка",
+    "edit_folder": "Редактиране на папка",
+    "delete_folder": "Изтриване на папка",
+    "add_collection": "Добавяне на колекция"
 }
 
 cs = {
@@ -1993,6 +2077,13 @@ cs = {
     "leaderboard": "Žebříček",
     "streak": "Série",
     "profile": "Profil",
+    "type_collection": "Kolekce",
+    "no_subjects_available": "Nejsou k dispozici žádné předměty",
+    "included_subjects": "Zahrnuté předměty",
+    "add_folder": "Přidat složku",
+    "edit_folder": "Upravit složku",
+    "delete_folder": "Smazat složku",
+    "add_collection": "Přidat kolekci"
 }
 
 da = {
@@ -2017,6 +2108,13 @@ da = {
     "leaderboard": "Rangliste",
     "streak": "Streak",
     "profile": "Profil",
+    "type_collection": "Samling",
+    "no_subjects_available": "Ingen emner tilgængelige",
+    "included_subjects": "Inkluderede emner",
+    "add_folder": "Tilføj mappe",
+    "edit_folder": "Rediger mappe",
+    "delete_folder": "Slet mappe",
+    "add_collection": "Tilføj samling"
 }
 
 et = {
@@ -2041,6 +2139,13 @@ et = {
     "leaderboard": "Edetabel",
     "streak": "Seeria",
     "profile": "Profiil",
+    "type_collection": "Kollektsioon",
+    "no_subjects_available": "Õppeaineid pole saadaval",
+    "included_subjects": "Kaasatud õppeained",
+    "add_folder": "Lisa kaust",
+    "edit_folder": "Muuda kausta",
+    "delete_folder": "Kustuta kaust",
+    "add_collection": "Lisa kollektsioon"
 }
 
 fi = {
@@ -2065,6 +2170,13 @@ fi = {
     "leaderboard": "Tulostaulu",
     "streak": "Putki",
     "profile": "Profiili",
+    "type_collection": "Kokoelma",
+    "no_subjects_available": "Aiheita ei ole saatavilla",
+    "included_subjects": "Sisältyvät aiheet",
+    "add_folder": "Lisää kansio",
+    "edit_folder": "Muokkaa kansiota",
+    "delete_folder": "Poista kansio",
+    "add_collection": "Lisää kokoelma"
 }
 
 ga = {
@@ -2089,6 +2201,13 @@ ga = {
     "leaderboard": "Clár na gceannairí",
     "streak": "Sraith",
     "profile": "Próifíl",
+    "type_collection": "Bailiúchán",
+    "no_subjects_available": "Níl aon ábhair ar fáil",
+    "included_subjects": "Ábhair san áireamh",
+    "add_folder": "Cuir fillteán leis",
+    "edit_folder": "Cuir fillteán in eagar",
+    "delete_folder": "Scrios Fillteán",
+    "add_collection": "Cuir bailiúchán leis"
 }
 
 hr = {
@@ -2113,6 +2232,13 @@ hr = {
     "leaderboard": "Poredak",
     "streak": "Niz",
     "profile": "Profil",
+    "type_collection": "Kolekcija",
+    "no_subjects_available": "Nema dostupnih predmeta",
+    "included_subjects": "Uključeni predmeti",
+    "add_folder": "Dodaj mapu",
+    "edit_folder": "Uredi mapu",
+    "delete_folder": "Obriši mapu",
+    "add_collection": "Dodaj kolekciju"
 }
 
 hu = {
@@ -2137,6 +2263,13 @@ hu = {
     "leaderboard": "Ranglista",
     "streak": "Sorozat",
     "profile": "Profil",
+    "type_collection": "Gyűjtemény",
+    "no_subjects_available": "Nem állnak rendelkezésre témák",
+    "included_subjects": "Tartalmazott témák",
+    "add_folder": "Mappa hozzáadása",
+    "edit_folder": "Mappa szerkesztése",
+    "delete_folder": "Mappa törlése",
+    "add_collection": "Gyűjtemény hozzáadása"
 }
 
 lt = {
@@ -2161,6 +2294,13 @@ lt = {
     "leaderboard": "Lyderių lentelė",
     "streak": "Serija",
     "profile": "Profilis",
+    "type_collection": "Kolekcija",
+    "no_subjects_available": "Temų nėra",
+    "included_subjects": "Įtrauktos temos",
+    "add_folder": "Pridėti aplanką",
+    "edit_folder": "Redaguoti aplanką",
+    "delete_folder": "Ištrinti aplanką",
+    "add_collection": "Pridėti kolekciją"
 }
 
 lv = {
@@ -2185,6 +2325,13 @@ lv = {
     "leaderboard": "Līderu saraksts",
     "streak": "Sērija",
     "profile": "Profils",
+    "type_collection": "Kolekcija",
+    "no_subjects_available": "Priekšmeti nav pieejami",
+    "included_subjects": "Iekļautie priekšmeti",
+    "add_folder": "Pievienot mapi",
+    "edit_folder": "Rediģēt mapi",
+    "delete_folder": "Dzēst mapi",
+    "add_collection": "Pievienot kolekciju"
 }
 
 mt = {
@@ -2209,6 +2356,13 @@ mt = {
     "leaderboard": "Klassifika",
     "streak": "Streak",
     "profile": "Profil",
+    "type_collection": "Kollezzjoni",
+    "no_subjects_available": "L-ebda suġġett disponibbli",
+    "included_subjects": "Suġġetti inklużi",
+    "add_folder": "Żid folder",
+    "edit_folder": "Editja l-folder",
+    "delete_folder": "Ħassar il-folder",
+    "add_collection": "Żid kollezzjoni"
 }
 
 ro = {
@@ -2233,6 +2387,13 @@ ro = {
     "leaderboard": "Clasament",
     "streak": "Serie",
     "profile": "Profil",
+    "type_collection": "Colecție",
+    "no_subjects_available": "Nu existã subiecte disponibile",
+    "included_subjects": "Subiecte incluse",
+    "add_folder": "Adaugă folder",
+    "edit_folder": "Editează folder",
+    "delete_folder": "Șterge folderul",
+    "add_collection": "Adaugă colecție"
 }
 
 sk = {
@@ -2257,6 +2418,13 @@ sk = {
     "leaderboard": "Rebríček",
     "streak": "Séria",
     "profile": "Profil",
+    "type_collection": "Kolekcia",
+    "no_subjects_available": "Nie sú k dispozícii žiadne predmety",
+    "included_subjects": "Zahrnuté předměty",
+    "add_folder": "Pridať priečinok",
+    "edit_folder": "Upraviť priečinok",
+    "delete_folder": "Vymazať priečinok",
+    "add_collection": "Pridať kolekciu"
 }
 
 sl = {
@@ -2281,6 +2449,13 @@ sl = {
     "leaderboard": "Lestvica",
     "streak": "Niz",
     "profile": "Profil",
+    "type_collection": "Zbirka",
+    "no_subjects_available": "Na voljo ni nobenega predmeta",
+    "included_subjects": "Vključeni predmeti",
+    "add_folder": "Dodaj mapo",
+    "edit_folder": "Uredi mapo",
+    "delete_folder": "Izbriši mapo",
+    "add_collection": "Dodaj zbirko"
 }
 
 sv = {
@@ -2305,6 +2480,13 @@ sv = {
     "leaderboard": "Topplista",
     "streak": "Svit",
     "profile": "Profil",
+    "type_collection": "Samling",
+    "no_subjects_available": "Inga ämnen tillgängliga",
+    "included_subjects": "Inkluderade ämnen",
+    "add_folder": "Lägg till mapp",
+    "edit_folder": "Redigera mapp",
+    "delete_folder": "Ta bort mapp",
+    "add_collection": "Lägg till samling"
 }
 
 nl = {
@@ -2334,7 +2516,13 @@ nl = {
     "done_today": "Vandaag gedaan",
     "goal_change_hint": "Wijzig uw kaartdoel cho morgen",
     "learn_session_size": "Grootte van leersessie",
-    "test_session_size": "Grootte van testsessie"
+    "test_session_size": "Grootte van testsessie",
+    "type_collection": "Collectie",
+    "no_subjects_available": "Geen onderwerpen beschikbaar",
+    "included_subjects": "Inbegrepen onderwerpen",
+    "add_folder": "Map toevoegen",
+    "edit_folder": "Map bewerken",
+    "add_collection": "Collectie toevoegen"
     }
 
 pl = {
@@ -2583,7 +2771,15 @@ pl = {
     "daily_progress": "Postęp dzienny",
     "next_day_goal": "Cel na jutro",
     "done_today": "Ukończono dzisiaj",
-    "goal_change_hint": "Zmień swój cel kart na jutro"
+    "goal_change_hint": "Zmień swój cel kart na jutro",
+    "type_collection": "Kolekcja",
+    "no_subjects_available": "Brak dostępnych tematów",
+    "included_subjects": "Uwzględnione tematy",
+    "add_folder": "Dodaj folder",
+    "edit_folder": "Edytuj folder",
+    "delete_folder": "Map verwijderen",
+    "delete_folder": "Usuń folder",
+    "add_collection": "Dodaj kolekcję"
 }
 
 pt = {
@@ -2836,7 +3032,14 @@ pt = {
     "daily_progress": "Progresso diário",
     "next_day_goal": "Meta para amanhã",
     "done_today": "Concluído hoje",
-    "goal_change_hint": "Altere sua meta de cartões para amanhã"
+    "goal_change_hint": "Altere sua meta de cartões para amanhã",
+    "type_collection": "Coleção",
+    "no_subjects_available": "Nenhum assunto disponível",
+    "included_subjects": "Assuntos incluídos",
+    "add_folder": "Adicionar pasta",
+    "edit_folder": "Editar pasta",
+    "delete_folder": "Excluir pasta",
+    "add_collection": "Adicionar coleção"
 }
 
 tl = {
@@ -2864,7 +3067,13 @@ tl = {
     "done_today": "Tapos na Ngayon",
     "goal_change_hint": "Baguhin ang iyong layunin ng card cho bukas",
     "learn_session_size": "Laki ng session sa pag-aaral",
-    "test_session_size": "Laki ng session sa pagsusulit"
+    "test_session_size": "Laki ng session sa pagsusulit",
+    "type_collection": "Koleksyon",
+    "no_subjects_available": "Walang available na paksa",
+    "included_subjects": "Kasamang mga paksa",
+    "add_folder": "Magdagdag ng folder",
+    "edit_folder": "I-edit ang folder",
+    "add_collection": "Magdagdag ng koleksyon"
     }
 
 tr = {
@@ -2894,7 +3103,15 @@ tr = {
     "done_today": "Bugün Yapıldı",
     "goal_change_hint": "Yarın için kart hedefinizi değiştirin",
     "learn_session_size": "Öğrenme oturumu boyutu",
-    "test_session_size": "Test oturumu boyutu"
+    "test_session_size": "Test oturumu boyutu",
+    "type_collection": "Koleksiyon",
+    "no_subjects_available": "Mevcut konu yok",
+    "included_subjects": "Dahil edilen konular",
+    "add_folder": "Klasör ekle",
+    "edit_folder": "Klasörü düzenle",
+    "delete_folder": "I-delete ang Folder",
+    "delete_folder": "Klasörü sil",
+    "add_collection": "Koleksiyon ekle"
 }
 
 uk = {
@@ -3160,7 +3377,14 @@ uk = {
     "daily_progress": "Щоденний прогрес",
     "next_day_goal": "Ціль на завтра",
     "done_today": "Виконано сьогодні",
-    "goal_change_hint": "Змінити ціль карток на завтра"
+    "goal_change_hint": "Змінити ціль карток на завтра",
+    "type_collection": "Колекція",
+    "no_subjects_available": "Немає доступних предметів",
+    "included_subjects": "Включені предмети",
+    "add_folder": "Додати папку",
+    "edit_folder": "Редагувати папку",
+    "delete_folder": "Видалити папку",
+    "add_collection": "Додати колекцію"
 }
 
 vi = {
@@ -3189,7 +3413,14 @@ vi = {
     "done_today": "Hoàn thành hôm nay",
     "goal_change_hint": "Thay đổi mục tiêu thẻ của bạn cho ngày mai",
     "learn_session_size": "Kích thước phiên học",
-    "test_session_size": "Kích thước phiên kiểm tra"
+    "test_session_size": "Kích thước phiên kiểm tra",
+    "type_collection": "Bộ sưu tập",
+    "no_subjects_available": "Không có chủ đề nào",
+    "included_subjects": "Các chủ đề bao gồm",
+    "add_folder": "Thêm thư mục",
+    "edit_folder": "Chỉnh sửa thư mục",
+    "delete_folder": "Xóa thư mục",
+    "add_collection": "Thêm bộ sưu tập"
 }
 
 zh = {
@@ -3444,7 +3675,14 @@ zh = {
     "daily_progress": "每日进度",
     "next_day_goal": "明日目标",
     "done_today": "今日已完成",
-    "goal_change_hint": "更改明天的卡片目标"
+    "goal_change_hint": "更改明天的卡片目标",
+    "type_collection": "收藏",
+    "no_subjects_available": "无可用主题",
+    "included_subjects": "包含的主题",
+    "add_folder": "添加文件夹",
+    "edit_folder": "编辑文件夹",
+    "delete_folder": "删除文件夹",
+    "add_collection": "添加收藏"
 }
 
 # Helper to merge with English for missing keys

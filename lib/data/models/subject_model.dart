@@ -31,8 +31,7 @@ class SubjectModel {
   final String? ownerName;
   final String ageGroup;
   final String? folderId;
-  final String type; // 'standard', 'collection'
-  final int childCount;
+  final String type;
   final List<String> linkedSubjectIds;
 
   bool isOnDashboard;
@@ -45,7 +44,7 @@ class SubjectModel {
       id == 'de04da1c-9820-4e61-ae6b-bc7ed07eeb93' ||
       id == '5e81da1f-f92c-44d2-b3cd-f921d05425df';
 
-  bool get isEditableType => cardCount == 0 && childCount == 0;
+  bool get isEditableType => cardCount == 0;
 
   bool get isSubtraction =>
       id == 'ce04da1c-9820-4e61-ae6b-bc7ed07eeb93' ||
@@ -104,7 +103,6 @@ class SubjectModel {
     this.localizedData = const {},
     this.folderId,
     this.type = 'standard',
-    this.childCount = 0,
     this.linkedSubjectIds = const [],
   });
 
@@ -176,8 +174,8 @@ class SubjectModel {
       'created_at': createdAt.toIso8601String(),
       'localized_data': localizedData.map((k, v) => MapEntry(k, v.toJson())),
       'folder_id': folderId,
-      'type': type,
-      'linked_subject_ids': linkedSubjectIds,
+      if (type != 'standard') 'type': type,
+      if (linkedSubjectIds.isNotEmpty) 'linked_subject_ids': linkedSubjectIds,
     };
   }
 
@@ -225,23 +223,6 @@ class SubjectModel {
       }
     }
 
-    // Try to get child count from children relation if present
-    int count = 0;
-    if (json['children'] is List) {
-      final childrenList = json['children'] as List;
-      if (childrenList.isNotEmpty && childrenList.first is Map && childrenList.first['count'] != null) {
-        count = childrenList.first['count'];
-      } else {
-        count = childrenList.length;
-      }
-    } else if (json['children'] is Map && json['children']['count'] != null) {
-      count = json['children']['count'];
-    }
-
-    final List<String> linkedIds = json['linked_subject_ids'] != null
-        ? List<String>.from(json['linked_subject_ids'])
-        : [];
-
     return SubjectModel(
       id: json['id'],
       pillarId: json['pillar_id'] ?? 1,
@@ -260,8 +241,7 @@ class SubjectModel {
       localizedData: localized,
       folderId: json['folder_id'],
       type: json['type'] ?? 'standard',
-      childCount: count,
-      linkedSubjectIds: linkedIds,
+      linkedSubjectIds: List<String>.from(json['linked_subject_ids'] ?? []),
     );
   }
 
@@ -273,6 +253,8 @@ class SubjectModel {
       isPublic: false,
       createdAt: DateTime.now(),
       updatedAt: DateTime.now(),
+      type: 'standard',
+      linkedSubjectIds: [],
     );
   }
 }

@@ -247,13 +247,21 @@ class _SettingsPageState extends State<SettingsPage> {
                               availableLangs.add(currentLang);
                             }
 
+                            final sortedLangs = availableLangs.toList()
+                              ..sort((a, b) => TranslationService()
+                                  .getLanguageName(a)
+                                  .toLowerCase()
+                                  .compareTo(TranslationService()
+                                      .getLanguageName(b)
+                                      .toLowerCase()));
+
                             return DropdownButtonHideUnderline(
                               child: DropdownButton<String>(
                                 value: currentLang,
                                 isExpanded: true,
                                 underline: const SizedBox(),
                                 items:
-                                    availableLangs.map((code) {
+                                    sortedLangs.map((code) {
                                       return DropdownMenuItem(
                                         value: code,
                                         child: Text(

@@ -79,7 +79,7 @@ class FeedbackService {
       final userId = _supabase.auth.currentUser?.id;
       if (userId == null) return [];
 
-      var query = _supabase.from('feedbacks').select('*, profiles(username, email), subjects(localized_data)');
+      var query = _supabase.from('feedbacks').select('*, profiles(username, email)');
       
       // If not admin, only see own feedback
       if (userId != 'f2fb4c9c-169b-447d-b8a6-dce72c4ed5ac') {
