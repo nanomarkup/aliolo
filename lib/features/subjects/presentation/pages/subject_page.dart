@@ -37,6 +37,7 @@ class _SubjectPageState extends State<SubjectPage> {
   bool _isLangInitialized = false;
 
   List<SubjectModel> _allDashboardSubjects = [];
+  List<FolderModel> _allDashboardFolders = [];
   List<SubjectModel> _allMatchingSubjects = [];
   List<SubjectModel> _filteredSubjects = [];
   bool _isLoading = true;
@@ -118,6 +119,7 @@ class _SubjectPageState extends State<SubjectPage> {
     setState(() => _isLoading = true);
     await _cardService.getPillars();
     final subjects = await _cardService.getDashboardSubjects();
+    final folders = await _cardService.getAllFolders();
 
     if (mounted) {
       final Set<String> detectedLangs = {};
@@ -153,6 +155,7 @@ class _SubjectPageState extends State<SubjectPage> {
 
       setState(() {
         _allDashboardSubjects = subjects;
+        _allDashboardFolders = folders;
         // Smart default: if no favorites AND no saved preference, show public subjects
         if (!hasSavedCollection &&
             _allDashboardSubjects.where((s) => s.isOnDashboard).isEmpty) {
@@ -175,12 +178,12 @@ class _SubjectPageState extends State<SubjectPage> {
         final matchesAge = _selectedAgeFilter == 'all' || s.ageGroup == _selectedAgeFilter;
 
         bool matchesCollection = true;
-        if (_collectionFilter == 'favorites') {
-          matchesCollection = s.isOnDashboard;
-        } else if (_collectionFilter == 'mine') {
+        if (_collectionFilter == 'mine') {
           matchesCollection = s.ownerId == myId;
         } else if (_collectionFilter == 'public') {
           matchesCollection = s.isPublic;
+        } else if (_collectionFilter == 'favorites') {
+          matchesCollection = true;
         }
 
         return matchesName && matchesAge && matchesCollection;
@@ -199,11 +202,6 @@ class _SubjectPageState extends State<SubjectPage> {
   @override
   Widget build(BuildContext context) {
     const appBarColor = Colors.white;
-    final activePillars = pillars.where((p) {
-      return _allMatchingSubjects.any((s) => s.pillarId == p.id);
-    }).toList();
-    final isSearching = _searchController.text.isNotEmpty;
-
     return ListenableBuilder(
       listenable: Listenable.merge([
         _cardService,
@@ -212,6 +210,12 @@ class _SubjectPageState extends State<SubjectPage> {
         getIt<TestingLanguageService>(),
       ]),
       builder: (context, _) {
+        final activePillars = pillars.where((p) {
+          final hasMatchingSubjects = _allMatchingSubjects.any((s) => s.pillarId == p.id);
+          final hasFolders = _allDashboardFolders.any((f) => f.pillarId == p.id);
+          return hasMatchingSubjects || hasFolders;
+        }).toList();
+        final isSearching = _searchController.text.isNotEmpty;
         final currentSessionColor = ThemeService().primaryColor;
 
         final activeCodes = getIt<TestingLanguageService>().activeLanguageCodes
@@ -505,7 +509,7 @@ class _SubjectPageState extends State<SubjectPage> {
                     ),
                   ]
                   : [
-                    if (_allMatchingSubjects.isEmpty)
+                    if (_allMatchingSubjects.isEmpty && _allDashboardFolders.isEmpty)
                       const SliverFillRemaining(
                         child: Center(child: Text('No subjects found')),
                       )
@@ -558,10 +562,12 @@ class _SubjectPageState extends State<SubjectPage> {
                                       .toList();
 
                               final subjectCount = pillarSubjects.length;
+                              final folderCount = _allDashboardFolders.where((f) => f.pillarId == pillar.id).length;
 
                               return _PillarGridTile(
                                 pillar: pillar,
                                 subjectCount: subjectCount,
+                                folderCount: folderCount,
                                 languageCode: _currentTestingLang,
                                 onTap:
                                     () => Navigator.push(
@@ -735,12 +741,14 @@ class _SubjectListTile extends StatelessWidget {
 class _PillarGridTile extends StatelessWidget {
   final Pillar pillar;
   final int subjectCount;
+  final int folderCount;
   final String languageCode;
   final VoidCallback onTap;
 
   const _PillarGridTile({
     required this.pillar,
     required this.subjectCount,
+    required this.folderCount,
     required this.languageCode,
     required this.onTap,
   });
@@ -812,6 +820,14 @@ class _PillarGridTile extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                     const Spacer(),
+                    if (folderCount > 0)
+                      Text(
+                        '$folderCount ${context.plural('folder', folderCount)}',
+                        style: TextStyle(
+                          color: Colors.white.withValues(alpha: 0.9),
+                          fontSize: 14,
+                        ),
+                      ),
                     if (subjectCount > 0)
                       Text(
                         '$subjectCount ${context.plural('subject', subjectCount)}',
@@ -901,12 +917,14 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
             final matchesAge = _selectedAgeFilter == 'all' || s.ageGroup == _selectedAgeFilter;
 
             bool matchesCollection = true;
-            if (_collectionFilter == 'favorites') {
-              matchesCollection = s.isOnDashboard;
-            } else if (_collectionFilter == 'mine') {
+            if (_collectionFilter == 'mine') {
               matchesCollection = s.ownerId == myId;
             } else if (_collectionFilter == 'public') {
               matchesCollection = s.isPublic;
+            } else if (_collectionFilter == 'favorites') {
+              // In Pillar view, 'favorites' usually means 'show everything' unless user specifically toggles it
+              // Actually, let's just make it inclusive by default when navigating into a pillar.
+              matchesCollection = true;
             }
 
             // Hierarchy: Only show subjects that belong to NO folder or specific selected folder logic
@@ -1279,12 +1297,12 @@ class _FolderPageState extends State<FolderPage> {
         final matchesAge = _selectedAgeFilter == 'all' || s.ageGroup == _selectedAgeFilter;
 
         bool matchesCollection = true;
-        if (_collectionFilter == 'favorites') {
-          matchesCollection = s.isOnDashboard;
-        } else if (_collectionFilter == 'mine') {
+        if (_collectionFilter == 'mine') {
           matchesCollection = s.ownerId == myId;
         } else if (_collectionFilter == 'public') {
           matchesCollection = s.isPublic;
+        } else if (_collectionFilter == 'favorites') {
+          matchesCollection = true;
         }
 
         return matchesName && matchesAge && matchesCollection;
@@ -1493,7 +1511,7 @@ class _FolderListTile extends StatelessWidget {
                       style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                     ),
                     Text(
-                      pillar.getTranslatedName(languageCode),
+                      '${pillar.getTranslatedName(languageCode)} • ${folder.childCount} ${context.plural('subject', folder.childCount)}',
                       style: TextStyle(color: Colors.grey[600], fontSize: 14),
                     ),
                   ],

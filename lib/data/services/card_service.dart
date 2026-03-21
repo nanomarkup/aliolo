@@ -41,7 +41,7 @@ class CardService with ChangeNotifier {
     try {
       final List<dynamic> data = await _supabase!
           .from('pillars')
-          .select()
+          .select('*')
           .order('sort_order', ascending: true);
 
       final dbPillars = data.map((json) => Pillar.fromJson(json)).toList();
@@ -63,9 +63,9 @@ class CardService with ChangeNotifier {
       final List<dynamic> subjectsData = await _supabase!
           .from('subjects')
           .select(
-            '*, profiles(username), cards(id, is_deleted, localized_data), children:subjects(count)',
+            '*, profiles(username), cards(id, is_deleted, localized_data)',
           )
-          .or('owner_id.eq.${user.serverId!},is_public.eq.true');
+          .or('owner_id.eq.${user.serverId},is_public.eq.true');
 
       for (var json in subjectsData) {
         final s = SubjectModel.fromJson(json);
@@ -96,7 +96,7 @@ class CardService with ChangeNotifier {
     try {
       final List<dynamic> data = await _supabase!
           .from('cards')
-          .select()
+          .select('*')
           .eq('subject_id', subjectId)
           .eq('is_deleted', false);
       return data.map((json) => CardModel.fromJson(json)).toList();
@@ -133,12 +133,27 @@ class CardService with ChangeNotifier {
     try {
       final List<dynamic> data = await _supabase!
           .from('folders')
-          .select()
+          .select('*, subjects(count)')
           .eq('pillar_id', pillarId)
           .eq('owner_id', user.serverId!);
       return data.map((json) => FolderModel.fromJson(json)).toList();
     } catch (e) {
-      print('Error fetching folders: $e');
+      print('Error fetching folders by pillar: $e');
+      return [];
+    }
+  }
+
+  Future<List<FolderModel>> getAllFolders() async {
+    final user = _authService.currentUser;
+    if (user == null || user.serverId == null) return [];
+    try {
+      final List<dynamic> data = await _supabase!
+          .from('folders')
+          .select('*, subjects(count)')
+          .eq('owner_id', user.serverId!);
+      return data.map((json) => FolderModel.fromJson(json)).toList();
+    } catch (e) {
+      print('Error fetching all folders: $e');
       return [];
     }
   }
@@ -281,16 +296,16 @@ class CardService with ChangeNotifier {
       var query = _supabase!
           .from('subjects')
           .select(
-            '*, profiles(username), cards(id, is_deleted, localized_data), children:subjects(count)',
-          )
-          .eq('pillar_id', pillarId)
-          .or('is_public.eq.true,owner_id.eq.${user.serverId!}');
+            '*, profiles(username), cards(id, is_deleted, localized_data)',
+          );
       
       if (folderId != null) {
         query = query.eq('folder_id', folderId);
       } else {
-        query = query.filter('folder_id', 'is', null);
+        query = query.eq('pillar_id', pillarId).filter('folder_id', 'is', null);
       }
+
+      query = query.or('is_public.eq.true,owner_id.eq.${user.serverId}');
 
       final List<dynamic> data = await query;
 
@@ -332,7 +347,7 @@ class CardService with ChangeNotifier {
       final List<dynamic> data = await _supabase!
           .from('subjects')
           .select(
-            '*, profiles(username), cards(id, is_deleted, localized_data), children:subjects(count)',
+            '*, profiles(username), cards(id, is_deleted, localized_data)',
           )
           .inFilter('id', ids);
 
@@ -380,7 +395,7 @@ class CardService with ChangeNotifier {
       final subject = SubjectModel.fromJson(data);
       final dashboardCheck = await _supabase!
           .from('user_subjects')
-          .select()
+          .select('*')
           .eq('user_id', user.serverId!)
           .eq('subject_id', id)
           .maybeSingle();

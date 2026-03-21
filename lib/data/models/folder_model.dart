@@ -7,6 +7,7 @@ class FolderModel {
   final DateTime createdAt;
   final DateTime updatedAt;
   final Map<String, LocalizedSubjectData> localizedData;
+  final int childCount;
 
   FolderModel({
     required this.id,
@@ -15,6 +16,7 @@ class FolderModel {
     required this.createdAt,
     required this.updatedAt,
     this.localizedData = const {},
+    this.childCount = 0,
   });
 
   factory FolderModel.fromJson(Map<String, dynamic> json) {
@@ -26,6 +28,18 @@ class FolderModel {
       ),
     );
 
+    int count = 0;
+    if (json['subjects'] is List) {
+      final subjectsList = json['subjects'] as List;
+      if (subjectsList.isNotEmpty && subjectsList.first is Map && subjectsList.first['count'] != null) {
+        count = subjectsList.first['count'];
+      } else {
+        count = subjectsList.length;
+      }
+    } else if (json['subjects'] is Map && json['subjects']['count'] != null) {
+      count = json['subjects']['count'];
+    }
+
     return FolderModel(
       id: json['id'],
       pillarId: json['pillar_id'] ?? 1,
@@ -33,6 +47,7 @@ class FolderModel {
       createdAt: DateTime.tryParse(json['created_at'] ?? '') ?? DateTime.now(),
       updatedAt: DateTime.tryParse(json['updated_at'] ?? '') ?? DateTime.now(),
       localizedData: localized,
+      childCount: count,
     );
   }
 
