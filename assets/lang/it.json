@@ -189,7 +189,6 @@
   "close": "Chiudi",
   "copy": "COPY",
   "paste": "PASTE",
-  "filter_all": "Tutti",
   "filter_my_subjects": "Le mie materie",
   "filter_public": "Pubblico",
   "filter_on_dashboard": "Sulla dashboard",
@@ -306,5 +305,6 @@
   "edit_collection": "Modifica collezione",
   "delete_collection": "Elimina collezione",
   "delete_collection_confirm": "Sei sicuro di voler eliminare questa collezione?",
-  "folder_not_empty_msg": "Impossibile eliminare: la cartella non è vuota."
+  "folder_not_empty_msg": "Impossibile eliminare: la cartella non è vuota.",
+  "filter_dashboard": "Dashboard"
 }

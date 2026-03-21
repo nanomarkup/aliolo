@@ -189,7 +189,6 @@
   "close": "关闭",
   "copy": "COPY",
   "paste": "PASTE",
-  "filter_all": "全部",
   "filter_my_subjects": "我的主题",
   "filter_public": "公开",
   "filter_on_dashboard": "在仪表板上",
@@ -306,5 +305,6 @@
   "edit_collection": "编辑收藏",
   "delete_collection": "删除收藏",
   "delete_collection_confirm": "你确定要删除这个收藏吗？",
-  "folder_not_empty_msg": "无法删除：文件夹非空。"
+  "folder_not_empty_msg": "无法删除：文件夹非空。",
+  "filter_dashboard": "仪表板"
 }

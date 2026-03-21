@@ -189,7 +189,6 @@
   "close": "Zamknij",
   "copy": "COPY",
   "paste": "PASTE",
-  "filter_all": "Wszystkie",
   "filter_my_subjects": "Moje tematy",
   "filter_public": "Publiczne",
   "filter_on_dashboard": "Na pulpicie",
@@ -306,5 +305,6 @@
   "edit_collection": "Edytuj kolekcję",
   "delete_collection": "Usuń kolekcję",
   "delete_collection_confirm": "Czy na pewno chcesz usunąć tę kolekcję?",
-  "folder_not_empty_msg": "Nie można usunąć: folder nie jest pusty."
+  "folder_not_empty_msg": "Nie można usunąć: folder nie jest pusty.",
+  "filter_dashboard": "Pulpit"
 }

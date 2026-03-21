@@ -189,7 +189,6 @@
   "close": "Fermer",
   "copy": "COPY",
   "paste": "PASTE",
-  "filter_all": "Tout",
   "filter_my_subjects": "Mes sujets",
   "filter_public": "Public",
   "filter_on_dashboard": "Sur le tableau de bord",
@@ -306,5 +305,6 @@
   "edit_collection": "Modifier la collection",
   "delete_collection": "Supprimer la collection",
   "delete_collection_confirm": "Êtes-vous sûr de vouloir supprimer cette collection ?",
-  "folder_not_empty_msg": "Impossible de supprimer : le dossier n'est pas vide."
+  "folder_not_empty_msg": "Impossible de supprimer : le dossier n'est pas vide.",
+  "filter_dashboard": "Tableau de bord"
 }

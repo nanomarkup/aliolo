@@ -189,7 +189,6 @@
   "close": "閉じる",
   "copy": "COPY",
   "paste": "PASTE",
-  "filter_all": "すべて",
   "filter_my_subjects": "マイ科目",
   "filter_public": "公開",
   "filter_on_dashboard": "ダッシュボード上",
@@ -306,5 +305,6 @@
   "edit_collection": "コレクションを編集",
   "delete_collection": "コレクションを削除",
   "delete_collection_confirm": "このコレクションを削除してもよろしいですか？",
-  "folder_not_empty_msg": "削除できません：フォルダが空ではありません。"
+  "folder_not_empty_msg": "削除できません：フォルダが空ではありません。",
+  "filter_dashboard": "ダッシュボード"
 }

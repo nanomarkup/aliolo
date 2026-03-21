@@ -189,7 +189,6 @@
   "close": "Close",
   "copy": "COPY",
   "paste": "PASTE",
-  "filter_all": "All",
   "filter_my_subjects": "My Subjects",
   "filter_public": "Public",
   "filter_on_dashboard": "On Dashboard",
@@ -220,7 +219,7 @@
   "edit_name": "Edit Name",
   "enter_new_name": "Enter New Name",
   "fatal_startup_error": "Fatal Startup Error",
-  "initializing_aliolo": "Initializing Aliolo...",
+  "initializing_aliolo": "Inicializacija Aliolo...",
   "invalid_password_delete": "Invalid Password",
   "manage_users": "Manage Users",
   "names_descriptions": "Names & Descriptions",
@@ -305,5 +304,6 @@
   "edit_collection": "Uredi zbirko",
   "delete_collection": "Izbriši zbirko",
   "delete_collection_confirm": "Ste prepričani, da želite izbrisati to zbirko?",
-  "folder_not_empty_msg": "Ni mogoče izbrisati: mapa ni prazna."
+  "folder_not_empty_msg": "Ni mogoče izbrisati: mapa ni prazna.",
+  "filter_dashboard": "Nadzorna plošča"
 }

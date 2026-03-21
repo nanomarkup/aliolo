@@ -189,7 +189,6 @@
   "close": "Fechar",
   "copy": "COPY",
   "paste": "PASTE",
-  "filter_all": "Todos",
   "filter_my_subjects": "Meus assuntos",
   "filter_public": "Público",
   "filter_on_dashboard": "No painel",
@@ -306,5 +305,6 @@
   "edit_collection": "Editar coleção",
   "delete_collection": "Excluir coleção",
   "delete_collection_confirm": "Tem certeza que deseja excluir esta coleção?",
-  "folder_not_empty_msg": "Não é possível excluir: a pasta não está vazia."
+  "folder_not_empty_msg": "Não é possível excluir: a pasta não está vazia.",
+  "filter_dashboard": "Painel"
 }

@@ -189,7 +189,6 @@
   "close": "Close",
   "copy": "COPY",
   "paste": "PASTE",
-  "filter_all": "All",
   "filter_my_subjects": "My Subjects",
   "filter_public": "Public",
   "filter_on_dashboard": "On Dashboard",
@@ -306,5 +305,6 @@
   "no_folder": "No Folder (Root)",
   "delete_collection": "Delete Collection",
   "delete_collection_confirm": "Are you sure you want to delete this collection?",
-  "folder_not_empty_msg": "Cannot delete: folder is not empty."
+  "folder_not_empty_msg": "Cannot delete: folder is not empty.",
+  "filter_dashboard": "Dashboard"
 }

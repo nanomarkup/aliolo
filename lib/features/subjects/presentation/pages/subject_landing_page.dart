@@ -355,7 +355,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                 icon: const Icon(Icons.arrow_back, color: appBarColor),
                 onPressed: () => Navigator.pop(context, _hasUpdated),
               ),
-            if (!isOwner && _currentSubject != null)
+            if (_currentSubject != null)
               IconButton(
                 icon: Icon(
                   _currentSubject!.isOnDashboard

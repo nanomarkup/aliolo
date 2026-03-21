@@ -189,7 +189,6 @@
   "close": "닫기",
   "copy": "COPY",
   "paste": "PASTE",
-  "filter_all": "전체",
   "filter_my_subjects": "내 주제",
   "filter_public": "공개",
   "filter_on_dashboard": "대시보드에서",
@@ -306,5 +305,6 @@
   "edit_collection": "컬렉션 편집",
   "delete_collection": "컬렉션 삭제",
   "delete_collection_confirm": "이 컬렉션을 삭제하시겠습니까?",
-  "folder_not_empty_msg": "삭제할 수 없음: 폴더가 비어있지 않습니다."
+  "folder_not_empty_msg": "삭제할 수 없음: 폴더가 비어있지 않습니다.",
+  "filter_dashboard": "대시보드"
 }

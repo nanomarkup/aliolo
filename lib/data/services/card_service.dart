@@ -83,8 +83,7 @@ class CardService with ChangeNotifier {
       };
 
       for (var s in combined.values) {
-        s.isOnDashboard =
-            s.ownerId == user.serverId || dashboardIds.contains(s.id);
+        s.isOnDashboard = dashboardIds.contains(s.id);
       }
       return combined.values.toList();
     } catch (e) {
@@ -218,7 +217,7 @@ class CardService with ChangeNotifier {
     try {
       var query = _supabase!
           .from('collections')
-          .select('*, collection_items(subject_id)')
+          .select('*, profiles(username), collection_items(subject_id)')
           .or('owner_id.eq.${user.serverId},is_public.eq.true');
       
       if (rootOnly) {
@@ -239,7 +238,7 @@ class CardService with ChangeNotifier {
     try {
       var query = _supabase!
           .from('collections')
-          .select('*, collection_items(subject_id)')
+          .select('*, profiles(username), collection_items(subject_id)')
           .eq('pillar_id', pillarId)
           .or('owner_id.eq.${user.serverId},is_public.eq.true');
       
@@ -435,8 +434,7 @@ class CardService with ChangeNotifier {
 
       final subjects = data.map((json) => SubjectModel.fromJson(json)).toList();
       for (var s in subjects) {
-        s.isOnDashboard =
-            s.ownerId == user.serverId || dashboardIds.contains(s.id);
+        s.isOnDashboard = dashboardIds.contains(s.id);
       }
       return subjects;
     } catch (e) {
@@ -446,8 +444,25 @@ class CardService with ChangeNotifier {
   }
 
   Future<void> addSubject(SubjectModel subject) async {
+    final user = _authService.currentUser;
     try {
       await _supabase!.from('subjects').upsert(subject.toJson());
+      
+      if (user?.serverId != null) {
+        if (subject.isOnDashboard) {
+          await _supabase!.from('user_subjects').upsert({
+            'user_id': user!.serverId!,
+            'subject_id': subject.id,
+          });
+        } else {
+          await _supabase!
+              .from('user_subjects')
+              .delete()
+              .eq('user_id', user!.serverId!)
+              .eq('subject_id', subject.id);
+        }
+      }
+      
       notifyListeners();
     } catch (e) {
       print('Error adding subject: $e');
@@ -477,8 +492,7 @@ class CardService with ChangeNotifier {
 
       final subjects = data.map((json) => SubjectModel.fromJson(json)).toList();
       for (var s in subjects) {
-        s.isOnDashboard =
-            s.ownerId == user.serverId || dashboardIds.contains(s.id);
+        s.isOnDashboard = dashboardIds.contains(s.id);
       }
       return subjects;
     } catch (e) {
@@ -514,8 +528,7 @@ class CardService with ChangeNotifier {
           .eq('user_id', user.serverId!)
           .eq('subject_id', id)
           .maybeSingle();
-      subject.isOnDashboard =
-          subject.ownerId == user.serverId || dashboardCheck != null;
+      subject.isOnDashboard = dashboardCheck != null;
       return subject;
     } catch (e) {
       print('Error fetching subject by id: $e');

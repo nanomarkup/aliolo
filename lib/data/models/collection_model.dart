@@ -5,6 +5,7 @@ class CollectionModel {
   final int pillarId;
   final String? folderId;
   final String ownerId;
+  final String? ownerName;
   final bool isPublic;
   final DateTime createdAt;
   final DateTime updatedAt;
@@ -16,6 +17,7 @@ class CollectionModel {
     required this.pillarId,
     this.folderId,
     required this.ownerId,
+    this.ownerName,
     this.isPublic = false,
     required this.createdAt,
     required this.updatedAt,
@@ -32,6 +34,8 @@ class CollectionModel {
       ),
     );
 
+    final Map<String, dynamic>? profile = json['profiles'];
+
     final List<String> subjects = [];
     if (json['collection_items'] is List) {
       for (var item in json['collection_items']) {
@@ -46,6 +50,7 @@ class CollectionModel {
       pillarId: json['pillar_id'] ?? 1,
       folderId: json['folder_id'],
       ownerId: json['owner_id'] ?? '',
+      ownerName: profile != null ? profile['username'] : null,
       isPublic: json['is_public'] ?? false,
       createdAt: DateTime.tryParse(json['created_at'] ?? '') ?? DateTime.now(),
       updatedAt: DateTime.tryParse(json['updated_at'] ?? '') ?? DateTime.now(),

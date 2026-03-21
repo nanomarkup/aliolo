@@ -189,7 +189,6 @@
   "close": "Cerrar",
   "copy": "COPY",
   "paste": "PASTE",
-  "filter_all": "Todos",
   "filter_my_subjects": "Mis temas",
   "filter_public": "Públicos",
   "filter_on_dashboard": "En el tablero",
@@ -306,5 +305,6 @@
   "edit_collection": "Editar colección",
   "delete_collection": "Eliminar colección",
   "delete_collection_confirm": "¿Seguro que quieres eliminar esta colección?",
-  "folder_not_empty_msg": "No se puede eliminar: la carpeta no está vacía."
+  "folder_not_empty_msg": "No se puede eliminar: la carpeta no está vacía.",
+  "filter_dashboard": "Tablero"
 }

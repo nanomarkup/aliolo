@@ -189,7 +189,6 @@
   "close": "Schließen",
   "copy": "COPY",
   "paste": "PASTE",
-  "filter_all": "Alle",
   "filter_my_subjects": "Meine Fächer",
   "filter_public": "Öffentlich",
   "filter_on_dashboard": "Auf dem Dashboard",
@@ -306,5 +305,6 @@
   "edit_collection": "Kollektion bearbeiten",
   "delete_collection": "Kollektion löschen",
   "delete_collection_confirm": "Möchten Sie diese Kollektion wirklich löschen?",
-  "folder_not_empty_msg": "Löschen nicht möglich: Ordner ist nicht leer."
+  "folder_not_empty_msg": "Löschen nicht möglich: Ordner ist nicht leer.",
+  "filter_dashboard": "Dashboard"
 }

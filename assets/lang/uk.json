@@ -189,7 +189,6 @@
   "close": "Закрити",
   "copy": "КОПІЮВАТИ",
   "paste": "ВСТАВИТИ",
-  "filter_all": "Всі",
   "filter_my_subjects": "Мої предмети",
   "filter_public": "Публічні",
   "filter_on_dashboard": "На головній",
@@ -307,5 +306,6 @@
   "no_folder": "Немає папки (Коренева)",
   "delete_collection": "Видалити колекцію",
   "delete_collection_confirm": "Ви впевнені, що хочете видалити цю колекцію?",
-  "folder_not_empty_msg": "Неможливо видалити: папка не порожня."
+  "folder_not_empty_msg": "Неможливо видалити: папка не порожня.",
+  "filter_dashboard": "Дашборд"
 }

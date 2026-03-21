@@ -188,11 +188,9 @@ class _SubjectPageState extends State<SubjectPage> {
           matchesCollection = s.ownerId == myId;
         } else if (_collectionFilter == 'public') {
           matchesCollection = s.isPublic;
-        } else if (_collectionFilter == 'favorites') {
-          matchesCollection = s.isOnDashboard;
         } else {
-          // 'all' filter
-          matchesCollection = true;
+          // 'favorites' (Dashboard)
+          matchesCollection = s.isOnDashboard;
         }
         return matchesName && matchesAge && matchesCollection;
       }).toList();
@@ -204,11 +202,9 @@ class _SubjectPageState extends State<SubjectPage> {
           matchesCollection = c.ownerId == myId;
         } else if (_collectionFilter == 'public') {
           matchesCollection = c.isPublic;
-        } else if (_collectionFilter == 'favorites') {
-          matchesCollection = true; // Favorites not yet implemented for collections
         } else {
-          // 'all' filter
-          matchesCollection = true;
+          // 'favorites' (Dashboard)
+          matchesCollection = true; // For now all public collections are on dashboard? Or implement bridge table too?
         }
         return matchesName && matchesCollection;
       }).toList();
@@ -325,8 +321,7 @@ class _SubjectPageState extends State<SubjectPage> {
                     child: _buildCompactDropdown(
                       value: _collectionFilter,
                       items: {
-                        'all': context.t('filter_all'),
-                        'favorites': context.t('filter_favorites'),
+                        'favorites': context.t('filter_dashboard'),
                         'mine': context.t('filter_my_subjects'),
                         'public': context.t('filter_public'),
                       },
@@ -648,7 +643,23 @@ class _SubjectListTile extends StatelessWidget {
             const SizedBox(width: 16),
             Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text(subject.getName(languageCode), style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
-              Text('$cardCount ${context.plural('card', cardCount)}', style: TextStyle(color: Colors.grey[600], fontSize: 14)),
+              Row(
+                children: [
+                  Text('$cardCount ${context.plural('card', cardCount)}', style: TextStyle(color: Colors.grey[600], fontSize: 14)),
+                  if (!isOwner && subject.ownerName != null) ...[
+                    const SizedBox(width: 8),
+                    Text('•', style: TextStyle(color: Colors.grey[400], fontSize: 14)),
+                    const SizedBox(width: 8),
+                    Flexible(
+                      child: Text(
+                        subject.ownerName!,
+                        style: TextStyle(color: pillarColor.withValues(alpha: 0.7), fontSize: 14, fontWeight: FontWeight.w500),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
+                ],
+              ),
             ])),
             const Icon(Icons.chevron_right, color: Colors.grey),
           ]),
@@ -719,9 +730,25 @@ class _CollectionListTile extends StatelessWidget {
                       collection.getName(languageCode),
                       style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                     ),
-                    Text(
-                      '${collection.subjectIds.length} ${context.plural('subject', collection.subjectIds.length)}',
-                      style: TextStyle(color: Colors.grey[600], fontSize: 14),
+                    Row(
+                      children: [
+                        Text(
+                          '${collection.subjectIds.length} ${context.plural('subject', collection.subjectIds.length)}',
+                          style: TextStyle(color: Colors.grey[600], fontSize: 14),
+                        ),
+                        if (!isOwner && collection.ownerName != null) ...[
+                          const SizedBox(width: 8),
+                          Text('•', style: TextStyle(color: Colors.grey[400], fontSize: 14)),
+                          const SizedBox(width: 8),
+                          Flexible(
+                            child: Text(
+                              collection.ownerName!,
+                              style: TextStyle(color: pillarColor.withValues(alpha: 0.7), fontSize: 14, fontWeight: FontWeight.w500),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
+                      ],
                     ),
                   ],
                 ),
@@ -871,11 +898,9 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
           matchesCollection = s.ownerId == myId;
         } else if (_collectionFilter == 'public') {
           matchesCollection = s.isPublic;
-        } else if (_collectionFilter == 'favorites') {
-          matchesCollection = s.isOnDashboard;
         } else {
-          // 'all' filter
-          matchesCollection = true;
+          // 'favorites' (Dashboard)
+          matchesCollection = s.isOnDashboard;
         }
         return matchesName && matchesAge && matchesCollection;
       }).toList();
@@ -887,10 +912,8 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
           matchesCollection = c.ownerId == myId;
         } else if (_collectionFilter == 'public') {
           matchesCollection = c.isPublic;
-        } else if (_collectionFilter == 'favorites') {
-          matchesCollection = true;
         } else {
-          // 'all' filter
+          // 'favorites' (Dashboard)
           matchesCollection = true;
         }
         return matchesName && matchesCollection;
@@ -938,7 +961,7 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
             fixedBody: LayoutBuilder(builder: (context, constraints) {
               final isSmall = constraints.maxWidth < 600;
               final filterRow = Row(children: [
-                Expanded(child: _buildCompactDropdown(value: _collectionFilter, items: {'all': context.t('filter_all'), 'favorites': context.t('filter_favorites'), 'mine': context.t('filter_my_subjects'), 'public': context.t('filter_public')}, onChanged: (val) { if (val != null) setState(() { _collectionFilter = val; _applyFilters(); }); })),
+                Expanded(child: _buildCompactDropdown(value: _collectionFilter, items: {'favorites': context.t('filter_dashboard'), 'mine': context.t('filter_my_subjects'), 'public': context.t('filter_public')}, onChanged: (val) { if (val != null) setState(() { _collectionFilter = val; _applyFilters(); }); })),
                 const SizedBox(width: 8),
                 Expanded(child: _buildCompactDropdown(value: _selectedAgeFilter, items: {'all': context.t('age_all'), '0_6': context.t('age_0_6'), '7_14': context.t('age_7_14'), '15_plus': context.t('age_15_plus')}, onChanged: (val) { if (val != null) setState(() { _selectedAgeFilter = val; _applyFilters(); }); })),
                 const SizedBox(width: 8),
@@ -1124,6 +1147,10 @@ class _FolderPageState extends State<FolderPage> {
         bool matchesCollection = true;
         if (_collectionFilter == 'mine') matchesCollection = s.ownerId == myId;
         else if (_collectionFilter == 'public') matchesCollection = s.isPublic;
+        else {
+          // Dashboard
+          matchesCollection = s.isOnDashboard;
+        }
         return matchesName && matchesAge && matchesCollection;
       }).toList();
 
@@ -1132,6 +1159,10 @@ class _FolderPageState extends State<FolderPage> {
         bool matchesCollection = true;
         if (_collectionFilter == 'mine') matchesCollection = c.ownerId == myId;
         else if (_collectionFilter == 'public') matchesCollection = c.isPublic;
+        else {
+          // Dashboard
+          matchesCollection = true;
+        }
         return matchesName && matchesCollection;
       }).toList();
 
@@ -1181,7 +1212,7 @@ class _FolderPageState extends State<FolderPage> {
             fixedBody: LayoutBuilder(builder: (context, constraints) {
               final isSmall = constraints.maxWidth < 600;
               final filterRow = Row(children: [
-                Expanded(child: _buildCompactDropdown(value: _collectionFilter, items: {'all': context.t('filter_all'), 'favorites': context.t('filter_favorites'), 'mine': context.t('filter_my_subjects'), 'public': context.t('filter_public')}, onChanged: (val) { if (val != null) setState(() { _collectionFilter = val; _applyFilters(); }); })),
+                Expanded(child: _buildCompactDropdown(value: _collectionFilter, items: {'favorites': context.t('filter_dashboard'), 'mine': context.t('filter_my_subjects'), 'public': context.t('filter_public')}, onChanged: (val) { if (val != null) setState(() { _collectionFilter = val; _applyFilters(); }); })),
                 const SizedBox(width: 8),
                 Expanded(child: _buildCompactDropdown(value: _selectedAgeFilter, items: {'all': context.t('age_all'), '0_6': context.t('age_0_6'), '7_14': context.t('age_7_14'), '15_plus': context.t('age_15_plus')}, onChanged: (val) { if (val != null) setState(() { _selectedAgeFilter = val; _applyFilters(); }); })),
                 const SizedBox(width: 8),
