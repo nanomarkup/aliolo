@@ -288,7 +288,7 @@ class CardService with ChangeNotifier {
     }
   }
 
-  Future<List<SubjectModel>> getSubjectsByPillar(int pillarId, {String? folderId}) async {
+  Future<List<SubjectModel>> getSubjectsByPillar(int pillarId, {String? folderId, bool rootOnly = true}) async {
     final user = _authService.currentUser;
     if (user == null || user.serverId == null) return [];
 
@@ -301,8 +301,10 @@ class CardService with ChangeNotifier {
       
       if (folderId != null) {
         query = query.eq('folder_id', folderId);
-      } else {
+      } else if (rootOnly) {
         query = query.eq('pillar_id', pillarId).filter('folder_id', 'is', null);
+      } else {
+        query = query.eq('pillar_id', pillarId);
       }
 
       query = query.or('is_public.eq.true,owner_id.eq.${user.serverId}');

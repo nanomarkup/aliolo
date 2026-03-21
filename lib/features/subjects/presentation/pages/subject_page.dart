@@ -210,11 +210,6 @@ class _SubjectPageState extends State<SubjectPage> {
         getIt<TestingLanguageService>(),
       ]),
       builder: (context, _) {
-        final activePillars = pillars.where((p) {
-          final hasMatchingSubjects = _allMatchingSubjects.any((s) => s.pillarId == p.id);
-          final hasFolders = _allDashboardFolders.any((f) => f.pillarId == p.id);
-          return hasMatchingSubjects || hasFolders;
-        }).toList();
         final isSearching = _searchController.text.isNotEmpty;
         final currentSessionColor = ThemeService().primaryColor;
 
@@ -554,39 +549,55 @@ class _SubjectPageState extends State<SubjectPage> {
                               context,
                               index,
                             ) {
-                              final pillar = activePillars[index];
-                              // Filter subjects by this pillar from the already-filtered list
-                              final pillarSubjects =
-                                  _allMatchingSubjects
-                                      .where((s) => s.pillarId == pillar.id)
-                                      .toList();
+                              final pillar = pillars[index];
+                              
+                              final totalPillarSubjects = _allDashboardSubjects
+                                  .where((s) => s.pillarId == pillar.id)
+                                  .toList();
+                              final matchingPillarSubjects = _allMatchingSubjects
+                                  .where((s) => s.pillarId == pillar.id)
+                                  .toList();
 
-                              final subjectCount = pillarSubjects.length;
-                              final folderCount = _allDashboardFolders.where((f) => f.pillarId == pillar.id).length;
+                              final folderCount = _allDashboardFolders
+                                  .where((f) => f.pillarId == pillar.id)
+                                  .length;
 
                               return _PillarGridTile(
                                 pillar: pillar,
-                                subjectCount: subjectCount,
+                                subjectCount: matchingPillarSubjects.length,
+                                totalSubjectCount: totalPillarSubjects.length,
                                 folderCount: folderCount,
                                 languageCode: _currentTestingLang,
-                                onTap:
-                                    () => Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder:
-                                            (context) => PillarSubjectsPage(
-                                              pillar: pillar,
-                                              subjects: pillarSubjects,
-                                              languageCode: _currentTestingLang,
-                                              initialAgeFilter:
-                                                  _selectedAgeFilter,
-                                              initialCollectionFilter:
-                                                  _collectionFilter,
-                                            ),
-                                      ),
+                                onTap: () async {
+                                  final result = await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder:
+                                          (context) => PillarSubjectsPage(
+                                            pillar: pillar,
+                                            subjects: matchingPillarSubjects,
+                                            allPillarSubjects: totalPillarSubjects,
+                                            languageCode: _currentTestingLang,
+                                            initialAgeFilter: _selectedAgeFilter,
+                                            initialCollectionFilter: _collectionFilter,
+                                          ),
                                     ),
+                                  );
+
+                                  if (result is Map) {
+                                    setState(() {
+                                      _selectedAgeFilter = result['ageFilter'] ?? _selectedAgeFilter;
+                                      _collectionFilter = result['collectionFilter'] ?? _collectionFilter;
+                                    });
+                                    if (result['hasUpdated'] == true) {
+                                      _loadDashboard();
+                                    } else {
+                                      _applySearch();
+                                    }
+                                  }
+                                },
                               );
-                            }, childCount: activePillars.length),
+                            }, childCount: pillars.length),
                           );
                         },
                       ),
@@ -741,6 +752,7 @@ class _SubjectListTile extends StatelessWidget {
 class _PillarGridTile extends StatelessWidget {
   final Pillar pillar;
   final int subjectCount;
+  final int totalSubjectCount;
   final int folderCount;
   final String languageCode;
   final VoidCallback onTap;
@@ -748,6 +760,7 @@ class _PillarGridTile extends StatelessWidget {
   const _PillarGridTile({
     required this.pillar,
     required this.subjectCount,
+    required this.totalSubjectCount,
     required this.folderCount,
     required this.languageCode,
     required this.onTap,
@@ -756,90 +769,88 @@ class _PillarGridTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final pillarColor = pillar.getColor();
+    final bool isEmpty = subjectCount == 0 && folderCount == 0;
 
-    return Card(
-      clipBehavior: Clip.antiAlias,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-      elevation: 4,
-      child: InkWell(
-        onTap: onTap,
-        child: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                pillarColor,
-                pillarColor.withValues(alpha: 0.8),
-              ],
-            ),
-          ),
-          child: Stack(
-            children: [
-              Positioned(
-                right: -20,
-                bottom: -20,
-                child: Icon(
-                  pillar.getIconData(),
-                  size: 120,
-                  color: Colors.white.withValues(alpha: 0.15),
-                ),
+    return Opacity(
+      opacity: isEmpty ? 0.5 : 1.0,
+      child: Card(
+        clipBehavior: Clip.antiAlias,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        elevation: isEmpty ? 1 : 4,
+        child: InkWell(
+          onTap: onTap,
+          child: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  pillarColor,
+                  pillarColor.withValues(alpha: 0.8),
+                ],
               ),
-              Padding(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Icon(pillar.getIconData(), color: Colors.white, size: 28),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: Text(
-                            pillar.getTranslatedName(languageCode),
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold,
-                              height: 1.1,
+            ),
+            child: Stack(
+              children: [
+                Positioned(
+                  right: -20,
+                  bottom: -20,
+                  child: Icon(
+                    pillar.getIconData(),
+                    size: 120,
+                    color: Colors.white.withValues(alpha: 0.15),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Icon(pillar.getIconData(), color: Colors.white, size: 28),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Text(
+                              pillar.getTranslatedName(languageCode),
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold,
+                                height: 1.1,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
-                    Text(
-                      pillar.getTranslatedDescription(languageCode),
-                      style: TextStyle(
-                        color: Colors.white.withValues(alpha: 0.8),
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
+                        ],
                       ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    const Spacer(),
-                    if (folderCount > 0)
+                      const SizedBox(height: 12),
                       Text(
-                        '$folderCount ${context.plural('folder', folderCount)}',
+                        pillar.getTranslatedDescription(languageCode),
+                        style: TextStyle(
+                          color: Colors.white.withValues(alpha: 0.8),
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      const Spacer(),
+                      Text(
+                        subjectCount == totalSubjectCount
+                            ? '$totalSubjectCount ${context.plural('subject', totalSubjectCount)}'
+                            : '$subjectCount / $totalSubjectCount ${context.plural('subject', totalSubjectCount)}',
                         style: TextStyle(
                           color: Colors.white.withValues(alpha: 0.9),
                           fontSize: 14,
+                          fontWeight: subjectCount > 0 ? FontWeight.bold : FontWeight.normal,
                         ),
                       ),
-                    if (subjectCount > 0)
-                      Text(
-                        '$subjectCount ${context.plural('subject', subjectCount)}',
-                        style: TextStyle(
-                          color: Colors.white.withValues(alpha: 0.9),
-                          fontSize: 14,
-                        ),
-                      ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -850,6 +861,7 @@ class _PillarGridTile extends StatelessWidget {
 class PillarSubjectsPage extends StatefulWidget {
   final Pillar pillar;
   final List<SubjectModel> subjects;
+  final List<SubjectModel> allPillarSubjects;
   final String languageCode;
   final String initialAgeFilter;
   final String initialCollectionFilter;
@@ -858,6 +870,7 @@ class PillarSubjectsPage extends StatefulWidget {
     super.key,
     required this.pillar,
     required this.subjects,
+    required this.allPillarSubjects,
     required this.languageCode,
     required this.initialAgeFilter,
     required this.initialCollectionFilter,
@@ -875,8 +888,10 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
   late List<SubjectModel> _allSubjects;
   late List<FolderModel> _allFolders;
   List<SubjectModel> _filteredSubjects = [];
+  List<SubjectModel> _matchingSubjectsRecursive = [];
   List<FolderModel> _filteredFolders = [];
   bool _isLoading = true;
+  bool _hasUpdated = false;
   late String _selectedAgeFilter;
   late String _collectionFilter;
 
@@ -890,7 +905,7 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
 
   Future<void> _loadData() async {
     setState(() => _isLoading = true);
-    final subjects = await _cardService.getSubjectsByPillar(widget.pillar.id);
+    final subjects = await _cardService.getSubjectsByPillar(widget.pillar.id, rootOnly: false);
     final folders = await _cardService.getFoldersByPillar(widget.pillar.id);
     if (mounted) {
       setState(() {
@@ -907,32 +922,27 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
     final myId = _authService.currentUser?.serverId;
 
     setState(() {
-      _filteredFolders = _allFolders.where((f) {
-        return f.getName(widget.languageCode).toLowerCase().contains(query);
+      _filteredFolders = _allFolders; // File system: folders always visible
+
+      final allMatching = _allSubjects.where((s) {
+        final matchesName = s.getName(widget.languageCode).toLowerCase().contains(query);
+        final matchesAge = _selectedAgeFilter == 'all' || s.ageGroup == _selectedAgeFilter;
+
+        bool matchesCollection = true;
+        if (_collectionFilter == 'mine') {
+          matchesCollection = s.ownerId == myId;
+        } else if (_collectionFilter == 'public') {
+          matchesCollection = s.isPublic;
+        } else if (_collectionFilter == 'favorites') {
+          matchesCollection = true;
+        }
+
+        return matchesName && matchesAge && matchesCollection;
       }).toList();
 
-      _filteredSubjects =
-          _allSubjects.where((s) {
-            final matchesName = s.getName(widget.languageCode).toLowerCase().contains(query);
-            final matchesAge = _selectedAgeFilter == 'all' || s.ageGroup == _selectedAgeFilter;
+      _matchingSubjectsRecursive = allMatching;
 
-            bool matchesCollection = true;
-            if (_collectionFilter == 'mine') {
-              matchesCollection = s.ownerId == myId;
-            } else if (_collectionFilter == 'public') {
-              matchesCollection = s.isPublic;
-            } else if (_collectionFilter == 'favorites') {
-              // In Pillar view, 'favorites' usually means 'show everything' unless user specifically toggles it
-              // Actually, let's just make it inclusive by default when navigating into a pillar.
-              matchesCollection = true;
-            }
-
-            // Hierarchy: Only show subjects that belong to NO folder or specific selected folder logic
-            // In PillarSubjectsPage, we show root folders and root subjects.
-            final matchesHierarchy = query.isNotEmpty || s.folderId == null;
-
-            return matchesName && matchesAge && matchesCollection && matchesHierarchy;
-          }).toList();
+      _filteredSubjects = allMatching.where((s) => s.folderId == null).toList();
 
       // Sort alphabetically
       _filteredFolders.sort((a, b) => a.getName(widget.languageCode).toLowerCase().compareTo(b.getName(widget.languageCode).toLowerCase()));
@@ -945,19 +955,26 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
     final pillarColor = widget.pillar.getColor();
     const appBarColor = Colors.white;
 
-    return AlioloScrollablePage(
-      title: Text(
-        widget.pillar.getTranslatedName(widget.languageCode),
-        style: const TextStyle(color: appBarColor, fontWeight: FontWeight.bold),
-      ),
-      appBarColor: pillarColor,
-      actions: [
-        IconButton(
-          icon: const Icon(Icons.arrow_back, color: appBarColor),
-          onPressed: () => Navigator.pop(context),
+    return PopScope(
+      canPop: true,
+      onPopInvokedWithResult: (didPop, result) {},
+      child: AlioloScrollablePage(
+        title: Text(
+          widget.pillar.getTranslatedName(widget.languageCode),
+          style: const TextStyle(color: appBarColor, fontWeight: FontWeight.bold),
         ),
-      ],
-      fixedBody: Builder(
+        appBarColor: pillarColor,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.arrow_back, color: appBarColor),
+            onPressed: () => Navigator.pop(context, {
+              'hasUpdated': _hasUpdated,
+              'ageFilter': _selectedAgeFilter,
+              'collectionFilter': _collectionFilter,
+            }),
+          ),
+        ],
+        fixedBody: Builder(
         builder: (context) {
           final isSmall = MediaQuery.of(context).size.width < 600;
 
@@ -1170,13 +1187,26 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
               delegate: SliverChildBuilderDelegate((context, index) {
                 if (index < _filteredFolders.length) {
                   final folder = _filteredFolders[index];
+                  
+                  final matchingInFolder = _matchingSubjectsRecursive.where((s) => s.folderId == folder.id).toList();
+                  final totalInFolder = folder.childCount;
+
                   return _FolderListTile(
                     folder: folder,
+                    matchingCount: matchingInFolder.length,
+                    totalCount: totalInFolder,
                     pillar: widget.pillar,
                     languageCode: widget.languageCode,
                     initialAgeFilter: _selectedAgeFilter,
                     initialCollectionFilter: _collectionFilter,
                     onChanged: _loadData,
+                    onFilterChanged: (age, collection) {
+                      setState(() {
+                        _selectedAgeFilter = age;
+                        _collectionFilter = collection;
+                        _applyFilters();
+                      });
+                    },
                   );
                 }
                 final subject = _filteredSubjects[index - _filteredFolders.length];
@@ -1192,8 +1222,9 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
             ),
           ),
       ],
-    );
-  }
+    ),
+  );
+}
 
   Widget _buildCompactDropdown({
     required String value,
@@ -1318,11 +1349,8 @@ class _FolderPageState extends State<FolderPage> {
     const appBarColor = Colors.white;
 
     return PopScope(
-      canPop: false,
-      onPopInvokedWithResult: (didPop, result) {
-        if (didPop) return;
-        Navigator.pop(context, _hasUpdated || (result == true));
-      },
+      canPop: true,
+      onPopInvokedWithResult: (didPop, result) {},
       child: AlioloScrollablePage(
         title: Text(
           widget.folder.getName(widget.languageCode),
@@ -1332,7 +1360,11 @@ class _FolderPageState extends State<FolderPage> {
         actions: [
           IconButton(
             icon: const Icon(Icons.arrow_back, color: appBarColor),
-            onPressed: () => Navigator.pop(context, _hasUpdated),
+            onPressed: () => Navigator.pop(context, {
+              'hasUpdated': _hasUpdated,
+              'ageFilter': _selectedAgeFilter,
+              'collectionFilter': _collectionFilter,
+            }),
           ),
         ],
         fixedBody: Builder(
@@ -1451,90 +1483,111 @@ class _FolderPageState extends State<FolderPage> {
 
 class _FolderListTile extends StatelessWidget {
   final FolderModel folder;
+  final int matchingCount;
+  final int totalCount;
   final Pillar pillar;
   final String languageCode;
   final String initialAgeFilter;
   final String initialCollectionFilter;
   final VoidCallback? onChanged;
+  final Function(String age, String collection)? onFilterChanged;
 
   const _FolderListTile({
     required this.folder,
+    required this.matchingCount,
+    required this.totalCount,
     required this.pillar,
     required this.languageCode,
     required this.initialAgeFilter,
     required this.initialCollectionFilter,
     this.onChanged,
+    this.onFilterChanged,
   });
 
   @override
   Widget build(BuildContext context) {
     final pillarColor = pillar.getColor();
-
     final isOwner = folder.ownerId == getIt<AuthService>().currentUser?.serverId;
+    final bool isEmpty = matchingCount == 0;
 
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 16),
-      child: InkWell(
-        onTap: () async {
-          final result = await Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => FolderPage(
-                folder: folder,
-                pillar: pillar,
-                languageCode: languageCode,
-                initialAgeFilter: initialAgeFilter,
-                initialCollectionFilter: initialCollectionFilter,
-              ),
-            ),
-          );
-          if (result == true) onChanged?.call();
-        },
-        borderRadius: BorderRadius.circular(16),
-        child: Container(
-          padding: const EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            color: Theme.of(context).cardColor,
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: pillarColor.withValues(alpha: 0.2), width: 1.5),
-          ),
-          child: Row(
-            children: [
-              Icon(Icons.folder, color: pillarColor),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      folder.getName(languageCode),
-                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                    ),
-                    Text(
-                      '${pillar.getTranslatedName(languageCode)} • ${folder.childCount} ${context.plural('subject', folder.childCount)}',
-                      style: TextStyle(color: Colors.grey[600], fontSize: 14),
-                    ),
-                  ],
+    return Opacity(
+      opacity: isEmpty ? 0.5 : 1.0,
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 16),
+        child: InkWell(
+          onTap: () async {
+            final result = await Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => FolderPage(
+                  folder: folder,
+                  pillar: pillar,
+                  languageCode: languageCode,
+                  initialAgeFilter: initialAgeFilter,
+                  initialCollectionFilter: initialCollectionFilter,
                 ),
               ),
-              if (isOwner)
-                IconButton(
-                  icon: const Icon(Icons.edit, color: Colors.grey, size: 20),
-                  onPressed: () async {
-                    final result = await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => SubjectEditPage(
-                          existingFolder: folder,
-                          isFolderMode: true,
+            );
+            if (result is Map) {
+              onFilterChanged?.call(
+                result['ageFilter'] ?? initialAgeFilter,
+                result['collectionFilter'] ?? initialCollectionFilter,
+              );
+              if (result['hasUpdated'] == true) onChanged?.call();
+            }
+          },
+          borderRadius: BorderRadius.circular(16),
+          child: Container(
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: Theme.of(context).cardColor,
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: pillarColor.withValues(alpha: 0.2), width: 1.5),
+            ),
+            child: Row(
+              children: [
+                Icon(Icons.folder, color: pillarColor),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        folder.getName(languageCode),
+                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                      ),
+                      Text(
+                        matchingCount == totalCount
+                            ? '${pillar.getTranslatedName(languageCode)} • $totalCount ${context.plural('subject', totalCount)}'
+                            : '${pillar.getTranslatedName(languageCode)} • $matchingCount / $totalCount ${context.plural('subject', totalCount)}',
+                        style: TextStyle(
+                          color: Colors.grey[600],
+                          fontSize: 14,
+                          fontWeight: matchingCount > 0 ? FontWeight.bold : FontWeight.normal,
                         ),
                       ),
-                    );
-                    if (result == true) onChanged?.call();
-                  },
+                    ],
+                  ),
                 ),
-              const Icon(Icons.chevron_right, color: Colors.grey),
-            ],
+                if (isOwner)
+                  IconButton(
+                    icon: const Icon(Icons.edit, color: Colors.grey, size: 20),
+                    onPressed: () async {
+                      final result = await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SubjectEditPage(
+                            existingFolder: folder,
+                            isFolderMode: true,
+                          ),
+                        ),
+                      );
+                      if (result == true) onChanged?.call();
+                    },
+                  ),
+                const Icon(Icons.chevron_right, color: Colors.grey),
+              ],
+            ),
           ),
         ),
       ),
