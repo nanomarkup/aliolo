@@ -505,7 +505,7 @@ class _SubjectPageState extends State<SubjectPage> {
                     ),
                   ]
                   : [
-                    if (_filteredSubjects.isEmpty)
+                    if (_allMatchingSubjects.isEmpty)
                       const SliverFillRemaining(
                         child: Center(child: Text('No subjects found')),
                       )
