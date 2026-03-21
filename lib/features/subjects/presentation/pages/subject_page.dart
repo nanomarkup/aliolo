@@ -37,6 +37,7 @@ class _SubjectPageState extends State<SubjectPage> {
   bool _isLangInitialized = false;
 
   List<SubjectModel> _allDashboardSubjects = [];
+  List<SubjectModel> _allMatchingSubjects = [];
   List<SubjectModel> _filteredSubjects = [];
   bool _isLoading = true;
   String _selectedAgeFilter = 'all';
@@ -168,25 +169,29 @@ class _SubjectPageState extends State<SubjectPage> {
     final myId = getIt<AuthService>().currentUser?.serverId;
 
     setState(() {
+      // 1. All subjects that pass the basic filters (Pillar check uses this)
+      _allMatchingSubjects = _allDashboardSubjects.where((s) {
+        final matchesName = s.getName(_currentTestingLang).toLowerCase().contains(query);
+        final matchesAge = _selectedAgeFilter == 'all' || s.ageGroup == _selectedAgeFilter;
+
+        bool matchesCollection = true;
+        if (_collectionFilter == 'favorites') {
+          matchesCollection = s.isOnDashboard;
+        } else if (_collectionFilter == 'mine') {
+          matchesCollection = s.ownerId == myId;
+        } else if (_collectionFilter == 'public') {
+          matchesCollection = s.isPublic;
+        }
+
+        return matchesName && matchesAge && matchesCollection;
+      }).toList();
+
+      // 2. Visible subjects (The actual list/grid uses this)
       _filteredSubjects =
-          _allDashboardSubjects.where((s) {
-            final matchesName = s.getName(_currentTestingLang).toLowerCase().contains(query);
-            final matchesAge = _selectedAgeFilter == 'all' || s.ageGroup == _selectedAgeFilter;
-
-            // Collection filter
-            bool matchesCollection = true;
-            if (_collectionFilter == 'favorites') {
-              matchesCollection = s.isOnDashboard;
-            } else if (_collectionFilter == 'mine') {
-              matchesCollection = s.ownerId == myId;
-            } else if (_collectionFilter == 'public') {
-              matchesCollection = s.isPublic;
-            }
-
+          _allMatchingSubjects.where((s) {
             // Hierarchy: Only show subjects that are NOT in a folder on dashboard unless searching
             final matchesHierarchy = query.isNotEmpty || s.folderId == null;
-
-            return matchesName && matchesAge && matchesCollection && matchesHierarchy;
+            return matchesHierarchy;
           }).toList();
     });
   }
@@ -195,7 +200,7 @@ class _SubjectPageState extends State<SubjectPage> {
   Widget build(BuildContext context) {
     const appBarColor = Colors.white;
     final activePillars = pillars.where((p) {
-      return _filteredSubjects.any((s) => s.pillarId == p.id);
+      return _allMatchingSubjects.any((s) => s.pillarId == p.id);
     }).toList();
     final isSearching = _searchController.text.isNotEmpty;
 
@@ -548,7 +553,7 @@ class _SubjectPageState extends State<SubjectPage> {
                               final pillar = activePillars[index];
                               // Filter subjects by this pillar from the already-filtered list
                               final pillarSubjects =
-                                  _filteredSubjects
+                                  _allMatchingSubjects
                                       .where((s) => s.pillarId == pillar.id)
                                       .toList();
 
