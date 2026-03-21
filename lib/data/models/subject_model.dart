@@ -30,9 +30,8 @@ class SubjectModel {
   final List<Map<String, dynamic>>? rawCards;
   final String? ownerName;
   final String ageGroup;
-  final String? parentId;
   final String? folderId;
-  final String type; // 'standard', 'folder', 'collection'
+  final String type; // 'standard', 'collection'
   final int childCount;
   final List<String> linkedSubjectIds;
 
@@ -86,32 +85,6 @@ class SubjectModel {
     return 0;
   }
 
-  bool matchesNameRecursive(String query, String langCode, List<SubjectModel> allSubjects) {
-    if (query.isEmpty) return true;
-    if (getName(langCode).toLowerCase().contains(query.toLowerCase())) return true;
-
-    if (type == 'folder') {
-      final children = allSubjects.where((s) => s.parentId == id);
-      for (var child in children) {
-        if (child.matchesNameRecursive(query, langCode, allSubjects)) return true;
-      }
-    }
-    return false;
-  }
-
-  bool matchesAgeGroupRecursive(String targetAge, List<SubjectModel> allSubjects) {
-    if (targetAge == 'all') return true;
-    if (ageGroup == targetAge) return true;
-
-    if (type == 'folder') {
-      final children = allSubjects.where((s) => s.parentId == id);
-      for (var child in children) {
-        if (child.matchesAgeGroupRecursive(targetAge, allSubjects)) return true;
-      }
-    }
-    return false;
-  }
-
   /// Map of language code to its specific data.
   /// Key 'global' is used for fallback assets (if any).
   final Map<String, LocalizedSubjectData> localizedData;
@@ -129,7 +102,6 @@ class SubjectModel {
     this.isOnDashboard = false,
     this.ageGroup = 'all',
     this.localizedData = const {},
-    this.parentId,
     this.folderId,
     this.type = 'standard',
     this.childCount = 0,
@@ -203,7 +175,6 @@ class SubjectModel {
       'updated_at': updatedAt.toIso8601String(),
       'created_at': createdAt.toIso8601String(),
       'localized_data': localizedData.map((k, v) => MapEntry(k, v.toJson())),
-      'parent_id': parentId,
       'folder_id': folderId,
       'type': type,
       'linked_subject_ids': linkedSubjectIds,
@@ -287,7 +258,6 @@ class SubjectModel {
               : null,
       ageGroup: json['age_group'] ?? 'all',
       localizedData: localized,
-      parentId: json['parent_id'],
       folderId: json['folder_id'],
       type: json['type'] ?? 'standard',
       childCount: count,

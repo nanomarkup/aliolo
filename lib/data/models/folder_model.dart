@@ -4,7 +4,6 @@ class FolderModel {
   final String id;
   final int pillarId;
   final String ownerId;
-  final int sortOrder;
   final DateTime createdAt;
   final DateTime updatedAt;
   final Map<String, LocalizedSubjectData> localizedData;
@@ -13,7 +12,6 @@ class FolderModel {
     required this.id,
     required this.pillarId,
     required this.ownerId,
-    this.sortOrder = 0,
     required this.createdAt,
     required this.updatedAt,
     this.localizedData = const {},
@@ -32,7 +30,6 @@ class FolderModel {
       id: json['id'],
       pillarId: json['pillar_id'] ?? 1,
       ownerId: json['owner_id'] ?? '',
-      sortOrder: json['sort_order'] ?? 0,
       createdAt: DateTime.tryParse(json['created_at'] ?? '') ?? DateTime.now(),
       updatedAt: DateTime.tryParse(json['updated_at'] ?? '') ?? DateTime.now(),
       localizedData: localized,
@@ -44,7 +41,6 @@ class FolderModel {
       'id': id,
       'pillar_id': pillarId,
       'owner_id': ownerId,
-      'sort_order': sortOrder,
       'localized_data': localizedData.map((k, v) => MapEntry(k, v.toJson())),
       'created_at': createdAt.toIso8601String(),
       'updated_at': updatedAt.toIso8601String(),

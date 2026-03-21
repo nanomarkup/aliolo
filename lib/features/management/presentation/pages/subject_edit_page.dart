@@ -18,7 +18,6 @@ class SubjectEditPage extends StatefulWidget {
   final int? pillarId;
   final String? folderId;
   final String? initialAgeGroup;
-  final String? initialParentId;
   final bool isFolderMode;
 
   const SubjectEditPage({
@@ -28,7 +27,6 @@ class SubjectEditPage extends StatefulWidget {
     this.pillarId,
     this.folderId,
     this.initialAgeGroup,
-    this.initialParentId,
     this.isFolderMode = false,
   });
 
@@ -61,7 +59,6 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
   late String _selectedAgeGroup;
   late String _selectedType;
   late bool _isFolderMode;
-  String? _selectedParentId;
   String? _selectedFolderId;
   String _selectedLang = 'global';
   late List<String> _linkedSubjectIds;
@@ -87,8 +84,7 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
         ((widget.initialAgeGroup != null && widget.initialAgeGroup != 'all')
             ? widget.initialAgeGroup!
             : 'all');
-    _selectedType = widget.existingSubject?.type ?? (_isFolderMode ? 'folder' : 'standard');
-    _selectedParentId = widget.existingSubject?.parentId ?? widget.initialParentId;
+    _selectedType = widget.existingSubject?.type ?? 'standard';
     _selectedFolderId = widget.existingSubject?.folderId ?? widget.folderId;
     _linkedSubjectIds = List.from(widget.existingSubject?.linkedSubjectIds ?? []);
 
@@ -437,7 +433,6 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
           updatedAt: now,
           localizedData: finalData,
           type: _selectedType,
-          parentId: _selectedParentId,
           folderId: _selectedFolderId,
           linkedSubjectIds: _linkedSubjectIds,
         );
@@ -725,7 +720,6 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
     if (_selectedAgeGroup != original.ageGroup) return true;
     if (_isPublic != original.isPublic) return true;
     if (_selectedType != original.type) return true;
-    if (_selectedParentId != original.parentId) return true;
     if (_selectedFolderId != original.folderId) return true;
 
     final allLangs = {...original.localizedData.keys, ..._drafts.keys};
@@ -976,7 +970,7 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
 
   Widget _buildCollectionPicker() {
     final currentLang = TranslationService().currentLocale.languageCode;
-    final availableSubjects = _allSubjects.where((s) => s.pillarId == _selectedPillar && s.id != widget.existingSubject?.id && s.type != 'folder').toList();
+    final availableSubjects = _allSubjects.where((s) => s.pillarId == _selectedPillar && s.id != widget.existingSubject?.id).toList();
 
     if (availableSubjects.isEmpty) {
       return Padding(

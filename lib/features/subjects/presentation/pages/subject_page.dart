@@ -16,7 +16,6 @@ import 'package:aliolo/features/auth/presentation/pages/profile_page.dart';
 import 'package:aliolo/features/settings/presentation/pages/settings_page.dart';
 import 'package:aliolo/features/leaderboard/presentation/pages/leaderboard_page.dart';
 import 'package:aliolo/features/subjects/presentation/pages/subject_landing_page.dart';
-import 'package:aliolo/features/subjects/presentation/pages/sub_subject_page.dart';
 import 'package:aliolo/features/management/presentation/pages/subject_edit_page.dart';
 import 'package:aliolo/data/services/feedback_service.dart';
 
@@ -171,15 +170,8 @@ class _SubjectPageState extends State<SubjectPage> {
     setState(() {
       _filteredSubjects =
           _allDashboardSubjects.where((s) {
-            final matchesName = s.matchesNameRecursive(
-              query,
-              _currentTestingLang,
-              _allDashboardSubjects,
-            );
-            final matchesAge = s.matchesAgeGroupRecursive(
-              _selectedAgeFilter,
-              _allDashboardSubjects,
-            );
+            final matchesName = s.getName(_currentTestingLang).toLowerCase().contains(query);
+            final matchesAge = _selectedAgeFilter == 'all' || s.ageGroup == _selectedAgeFilter;
 
             // Collection filter
             bool matchesCollection = true;
@@ -191,8 +183,8 @@ class _SubjectPageState extends State<SubjectPage> {
               matchesCollection = s.isPublic;
             }
 
-            // Hierarchy: Only show top-level subjects in dashboard unless searching
-            final matchesHierarchy = query.isNotEmpty || (s.parentId == null && s.folderId == null);
+            // Hierarchy: Only show subjects that are NOT in a folder on dashboard unless searching
+            final matchesHierarchy = query.isNotEmpty || s.folderId == null;
 
             return matchesName && matchesAge && matchesCollection && matchesHierarchy;
           }).toList();
@@ -560,13 +552,11 @@ class _SubjectPageState extends State<SubjectPage> {
                                       .where((s) => s.pillarId == pillar.id)
                                       .toList();
 
-                              final folderCount = pillarSubjects.where((s) => s.type == 'folder').length;
-                              final subjectCount = pillarSubjects.length - folderCount;
+                              final subjectCount = pillarSubjects.length;
 
                               return _PillarGridTile(
                                 pillar: pillar,
                                 subjectCount: subjectCount,
-                                folderCount: folderCount,
                                 languageCode: _currentTestingLang,
                                 onTap:
                                     () => Navigator.push(
@@ -656,43 +646,27 @@ class _SubjectListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final pillarColor = pillar.getColor();
     final cardCount = subject.getCardCountForLanguage(languageCode);
+    final isOwner = subject.ownerId == getIt<AuthService>().currentUser?.serverId;
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
       child: InkWell(
         onTap: () async {
-          if (subject.type == 'folder') {
+          final cards = await CardService().getCardsBySubject(subject.id);
+          if (context.mounted) {
             final result = await Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => SubSubjectPage(
-                  parentSubject: subject,
-                  languageCode: languageCode,
-                  initialAgeFilter: initialAgeFilter,
-                  initialCollectionFilter: initialCollectionFilter,
-                ),
+                builder:
+                    (context) => SubjectLandingPage(
+                      subject: subject,
+                      cards: cards,
+                      languageCode: languageCode,
+                    ),
               ),
             );
             if (result == true) {
               onChanged?.call();
-            }
-          } else {
-            final cards = await CardService().getCardsBySubject(subject.id);
-            if (context.mounted) {
-              final result = await Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder:
-                      (context) => SubjectLandingPage(
-                        subject: subject,
-                        cards: cards,
-                        languageCode: languageCode,
-                      ),
-                ),
-              );
-              if (result == true) {
-                onChanged?.call();
-              }
             }
           }
         },
@@ -709,10 +683,7 @@ class _SubjectListTile extends StatelessWidget {
           ),
           child: Row(
             children: [
-              Icon(
-                subject.type == 'folder' ? Icons.folder : pillar.getIconData(),
-                color: pillarColor,
-              ),
+              Icon(pillar.getIconData(), color: pillarColor),
               const SizedBox(width: 16),
               Expanded(
                 child: Column(
@@ -726,14 +697,27 @@ class _SubjectListTile extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      subject.type == 'folder'
-                          ? '${pillar.getTranslatedName(languageCode)} • ${subject.childCount} ${context.plural('subject', subject.childCount)}'
-                          : '${pillar.getTranslatedName(languageCode)} • $cardCount ${context.plural('card', cardCount)}',
+                      '${pillar.getTranslatedName(languageCode)} • $cardCount ${context.plural('card', cardCount)}',
                       style: TextStyle(color: Colors.grey[600], fontSize: 14),
                     ),
                   ],
                 ),
               ),
+              if (isOwner)
+                IconButton(
+                  icon: const Icon(Icons.edit, color: Colors.grey, size: 20),
+                  onPressed: () async {
+                    final result = await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SubjectEditPage(
+                          existingSubject: subject,
+                        ),
+                      ),
+                    );
+                    if (result == true) onChanged?.call();
+                  },
+                ),
               const Icon(Icons.chevron_right, color: Colors.grey),
             ],
           ),
@@ -746,14 +730,12 @@ class _SubjectListTile extends StatelessWidget {
 class _PillarGridTile extends StatelessWidget {
   final Pillar pillar;
   final int subjectCount;
-  final int folderCount;
   final String languageCode;
   final VoidCallback onTap;
 
   const _PillarGridTile({
     required this.pillar,
     required this.subjectCount,
-    required this.folderCount,
     required this.languageCode,
     required this.onTap,
   });
@@ -825,14 +807,6 @@ class _PillarGridTile extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                     const Spacer(),
-                    if (folderCount > 0)
-                      Text(
-                        '$folderCount ${context.plural('folder', folderCount)}',
-                        style: TextStyle(
-                          color: Colors.white.withValues(alpha: 0.9),
-                          fontSize: 14,
-                        ),
-                      ),
                     if (subjectCount > 0)
                       Text(
                         '$subjectCount ${context.plural('subject', subjectCount)}',
@@ -918,15 +892,8 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
 
       _filteredSubjects =
           _allSubjects.where((s) {
-            final matchesName = s.matchesNameRecursive(
-              query,
-              widget.languageCode,
-              _allSubjects,
-            );
-            final matchesAge = s.matchesAgeGroupRecursive(
-              _selectedAgeFilter,
-              _allSubjects,
-            );
+            final matchesName = s.getName(widget.languageCode).toLowerCase().contains(query);
+            final matchesAge = _selectedAgeFilter == 'all' || s.ageGroup == _selectedAgeFilter;
 
             bool matchesCollection = true;
             if (_collectionFilter == 'favorites') {
@@ -937,8 +904,9 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
               matchesCollection = s.isPublic;
             }
 
-            // Hierarchy: Only show top-level subjects in pillar list unless searching
-            final matchesHierarchy = query.isNotEmpty || (s.parentId == null && s.folderId == null);
+            // Hierarchy: Only show subjects that belong to NO folder or specific selected folder logic
+            // In PillarSubjectsPage, we show root folders and root subjects.
+            final matchesHierarchy = query.isNotEmpty || s.folderId == null;
 
             return matchesName && matchesAge && matchesCollection && matchesHierarchy;
           }).toList();
@@ -1303,7 +1271,7 @@ class _FolderPageState extends State<FolderPage> {
     setState(() {
       _filteredSubjects = _allSubjects.where((s) {
         final matchesName = s.getName(widget.languageCode).toLowerCase().contains(query);
-        final matchesAge = widget.initialAgeFilter == 'all' || s.ageGroup == _selectedAgeFilter;
+        final matchesAge = _selectedAgeFilter == 'all' || s.ageGroup == _selectedAgeFilter;
 
         bool matchesCollection = true;
         if (_collectionFilter == 'favorites') {

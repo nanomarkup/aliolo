@@ -135,8 +135,7 @@ class CardService with ChangeNotifier {
           .from('folders')
           .select()
           .eq('pillar_id', pillarId)
-          .eq('owner_id', user.serverId!)
-          .order('sort_order', ascending: true);
+          .eq('owner_id', user.serverId!);
       return data.map((json) => FolderModel.fromJson(json)).toList();
     } catch (e) {
       print('Error fetching folders: $e');
@@ -167,8 +166,6 @@ class CardService with ChangeNotifier {
 
   Future<void> deleteFolder(String folderId) async {
     try {
-      // Move subjects to root or delete them? Usually safer to move or prevent deletion if not empty.
-      // For now, we'll just delete the folder.
       await _supabase!.from('folders').delete().eq('id', folderId);
       notifyListeners();
     } catch (e) {
@@ -314,40 +311,6 @@ class CardService with ChangeNotifier {
       return subjects;
     } catch (e) {
       print('Error fetching subjects by pillar: $e');
-      return [];
-    }
-  }
-
-  Future<List<SubjectModel>> getSubSubjects(String parentId) async {
-    final user = _authService.currentUser;
-    if (user == null || user.serverId == null) return [];
-
-    try {
-      final List<dynamic> data = await _supabase!
-          .from('subjects')
-          .select(
-            '*, profiles(username), cards(id, is_deleted, localized_data)',
-          )
-          .eq('parent_id', parentId)
-          .or('is_public.eq.true,owner_id.eq.${user.serverId!}');
-
-      final List<dynamic> dashboardData = await _supabase!
-          .from('user_subjects')
-          .select('subject_id')
-          .eq('user_id', user.serverId!);
-
-      final Set<String> dashboardIds = {
-        for (var item in dashboardData) item['subject_id'] as String,
-      };
-
-      final subjects = data.map((json) => SubjectModel.fromJson(json)).toList();
-      for (var s in subjects) {
-        s.isOnDashboard =
-            s.ownerId == user.serverId || dashboardIds.contains(s.id);
-      }
-      return subjects;
-    } catch (e) {
-      print('Error fetching sub-subjects: $e');
       return [];
     }
   }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:aliolo/data/models/subject_model.dart';
 import 'package:aliolo/data/models/card_model.dart';
 import 'package:aliolo/data/models/pillar_model.dart';
+import 'package:aliolo/data/models/folder_model.dart';
 import 'package:aliolo/data/services/card_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/data/services/auth_service.dart';
@@ -21,13 +22,15 @@ import 'package:aliolo/core/widgets/multiplication_grid.dart';
 import 'package:aliolo/core/widgets/division_grid.dart';
 
 class SubjectLandingPage extends StatefulWidget {
-  final SubjectModel subject;
+  final SubjectModel? subject;
+  final FolderModel? folder;
   final List<CardModel> cards;
   final String languageCode;
 
   const SubjectLandingPage({
     super.key,
-    required this.subject,
+    this.subject,
+    this.folder,
     required this.cards,
     required this.languageCode,
   });
@@ -41,7 +44,8 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
   final _authService = getIt<AuthService>();
   final _searchController = TextEditingController();
 
-  late SubjectModel _currentSubject;
+  SubjectModel? _currentSubject;
+  FolderModel? _currentFolder;
   List<CardModel> _allCards = [];
   List<CardModel> _filteredCards = [];
   bool _isLoading = false;
@@ -51,6 +55,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
   void initState() {
     super.initState();
     _currentSubject = widget.subject;
+    _currentFolder = widget.folder;
     _allCards = widget.cards;
     _applyFilters();
     _cardService.addListener(_onServiceChange);
@@ -70,11 +75,12 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
   }
 
   Future<void> _refreshData({bool silent = false}) async {
+    if (_currentSubject == null) return;
     if (!silent) setState(() => _isLoading = true);
 
-    final cards = await _cardService.getCardsBySubject(_currentSubject.id);
+    final cards = await _cardService.getCardsBySubject(_currentSubject!.id);
     final updatedSubject = await _cardService.getSubjectById(
-      _currentSubject.id,
+      _currentSubject!.id,
     );
 
     if (mounted) {
@@ -105,13 +111,14 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
   }
 
   Future<void> _toggleFavorite() async {
-    final newState = !_currentSubject.isOnDashboard;
-    setState(() => _currentSubject.isOnDashboard = newState);
+    if (_currentSubject == null) return;
+    final newState = !_currentSubject!.isOnDashboard;
+    setState(() => _currentSubject!.isOnDashboard = newState);
     try {
-      await _cardService.toggleSubjectOnDashboard(_currentSubject.id, newState);
+      await _cardService.toggleSubjectOnDashboard(_currentSubject!.id, newState);
     } catch (e) {
       if (mounted) {
-        setState(() => _currentSubject.isOnDashboard = !newState);
+        setState(() => _currentSubject!.isOnDashboard = !newState);
         ScaffoldMessenger.of(
           context,
         ).showSnackBar(SnackBar(content: Text('Error updating favorite: $e')));
@@ -120,6 +127,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
   }
 
   void _confirmDeleteSubject() {
+    if (_currentSubject == null) return;
     showDialog(
       context: context,
       builder:
@@ -135,7 +143,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
               ),
               TextButton(
                 onPressed: () async {
-                  await _cardService.deleteSubjectById(_currentSubject.id);
+                  await _cardService.deleteSubjectById(_currentSubject!.id);
                   if (context.mounted) {
                     Navigator.pop(context); // Close dialog
                     Navigator.pop(context, true); // Go back to dashboard
@@ -156,13 +164,14 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
     setState(() => _isLoading = true);
 
     try {
-      if (_currentSubject.type == 'collection') {
+      if (_currentSubject?.type == 'collection') {
         sessionCards = await _cardService.getCollectionCards(
-          _currentSubject.linkedSubjectIds,
+          _currentSubject!.linkedSubjectIds,
         );
-      } else if (_currentSubject.type == 'folder') {
-        final subSubjects = await _cardService.getSubSubjects(
-          _currentSubject.id,
+      } else if (_currentFolder != null) {
+        final subSubjects = await _cardService.getSubjectsByPillar(
+          _currentFolder!.pillarId,
+          folderId: _currentFolder!.id,
         );
         for (var s in subSubjects) {
           final cards = await _cardService.getCardsBySubject(s.id);
@@ -170,11 +179,11 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
             cards.map((c) => SubjectCard(card: c, subject: s)),
           );
         }
-      } else {
+      } else if (_currentSubject != null) {
         // standard
         sessionCards =
             _allCards
-                .map((c) => SubjectCard(card: c, subject: _currentSubject))
+                .map((c) => SubjectCard(card: c, subject: _currentSubject!))
                 .toList();
       }
 
@@ -218,7 +227,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                         ),
           ),
         );
-        _refreshData(silent: true);
+        if (_currentSubject != null) _refreshData(silent: true);
       }
     } finally {
       if (mounted) setState(() => _isLoading = false);
@@ -227,15 +236,16 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
 
   @override
   Widget build(BuildContext context) {
+    final pillarId = _currentSubject?.pillarId ?? _currentFolder?.pillarId ?? 1;
     final pillar = pillars.firstWhere(
-      (p) => p.id == _currentSubject.pillarId,
+      (p) => p.id == pillarId,
       orElse: () => pillars.first,
     );
     final pillarColor = pillar.getColor();
     const appBarColor = Colors.white;
-    final isOwner =
-        _currentSubject.ownerId == _authService.currentUser?.serverId;
+    final isOwner = _currentSubject != null && _currentSubject!.ownerId == _authService.currentUser?.serverId;
     final displayLang = widget.languageCode;
+    final title = _currentSubject?.getName(displayLang) ?? _currentFolder?.getName(displayLang) ?? 'Aliolo';
 
     return ListenableBuilder(
       listenable: _cardService,
@@ -248,7 +258,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
           },
           child: AlioloScrollablePage(
             title: Text(
-              _currentSubject.getName(displayLang),
+              title,
               style: const TextStyle(
                 color: appBarColor,
                 fontWeight: FontWeight.bold,
@@ -261,10 +271,10 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                 icon: const Icon(Icons.arrow_back, color: appBarColor),
                 onPressed: () => Navigator.pop(context, _hasUpdated),
               ),
-            if (!isOwner)
+            if (!isOwner && _currentSubject != null)
               IconButton(
                 icon: Icon(
-                  _currentSubject.isOnDashboard
+                  _currentSubject!.isOnDashboard
                       ? Icons.star
                       : Icons.star_border,
                   color: appBarColor,
@@ -279,8 +289,9 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                   MaterialPageRoute(
                     builder:
                         (context) => FeedbackPage(
-                          subjectId: _currentSubject.id,
-                          contextTitle: _currentSubject.getName(widget.languageCode),
+                          subjectId: _currentSubject?.id,
+                          folderId: _currentFolder?.id,
+                          contextTitle: title,
                           appBarColor: pillarColor,
                         ),
                   ),
@@ -320,7 +331,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                       shape: BoxShape.circle,
                     ),
                     child: Icon(
-                      pillar.getIconData(),
+                      _currentFolder != null ? Icons.folder : pillar.getIconData(),
                       size: 40,
                       color: pillarColor,
                     ),
@@ -331,17 +342,15 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          _currentSubject.getName(displayLang),
+                          title,
                           style: const TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        if (_currentSubject
-                            .getDescription(displayLang)
-                            .isNotEmpty)
+                        if (_currentSubject?.getDescription(displayLang).isNotEmpty == true || _currentFolder?.getDescription(displayLang).isNotEmpty == true)
                           Text(
-                            _currentSubject.getDescription(displayLang),
+                            _currentSubject?.getDescription(displayLang) ?? _currentFolder?.getDescription(displayLang) ?? '',
                             style: TextStyle(
                               color: Colors.grey[600],
                               fontSize: 14,
@@ -378,18 +387,20 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                   ),
                 ],
               ),
-              const SizedBox(height: 32),
-              TextField(
-                controller: _searchController,
-                onChanged: (_) => _applyFilters(),
-                decoration: InputDecoration(
-                  hintText: 'Search cards...',
-                  prefixIcon: const Icon(Icons.search),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+              if (_currentSubject != null) ...[
+                const SizedBox(height: 32),
+                TextField(
+                  controller: _searchController,
+                  onChanged: (_) => _applyFilters(),
+                  decoration: InputDecoration(
+                    hintText: 'Search cards...',
+                    prefixIcon: const Icon(Icons.search),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
                   ),
                 ),
-              ),
+              ],
               const SizedBox(height: 24),
             ],
           ),
@@ -397,6 +408,10 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
             if (_isLoading)
               const SliverFillRemaining(
                 child: Center(child: CircularProgressIndicator()),
+              )
+            else if (_currentSubject == null)
+              const SliverFillRemaining(
+                child: Center(child: Text('This is a folder. You can use Learn/Test buttons above to practice all cards.')),
               )
             else if (_filteredCards.isEmpty)
               const SliverFillRemaining(
@@ -426,7 +441,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                                 (context) => AddCardPage(
                                   existingCard: card,
                                   isReadOnly: !isCardMine,
-                                  pillarId: _currentSubject.pillarId,
+                                  pillarId: _currentSubject!.pillarId,
                                 ),
                           ),
                         );
@@ -473,13 +488,15 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
 }
 
   Widget _buildCardPreview(CardModel card, Color pillarColor, String displayLang) {
-    if (_currentSubject.isNumbers) {
+    if (_currentSubject == null) return Container();
+
+    if (_currentSubject!.isNumbers) {
       return NumberGrid(
         displayChar: card.getNumericalChar(displayLang),
         fontSize: 40,
         color: pillarColor,
       );
-    } else if (_currentSubject.isDivision) {
+    } else if (_currentSubject!.isDivision) {
       final parts = card.divisionParts ?? [0, 1];
       return DivisionGrid(
         a: parts[0],
@@ -488,7 +505,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
         fontSize: 24,
         color: pillarColor,
       );
-    } else if (_currentSubject.isMultiplication) {
+    } else if (_currentSubject!.isMultiplication) {
       final parts = card.multiplicationParts ?? [1, 0];
       return MultiplicationGrid(
         a: parts[0],
@@ -497,19 +514,19 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
         fontSize: 24,
         color: pillarColor,
       );
-    } else if (_currentSubject.isSubtraction) {
+    } else if (_currentSubject!.isSubtraction) {
       return SubtractionGrid(
         totalSum: card.numericalAnswer,
-        maxOperand: _currentSubject.maxOperand,
+        maxOperand: _currentSubject!.maxOperand,
         iconSize: 18,
       );
-    } else if (_currentSubject.isAddition) {
+    } else if (_currentSubject!.isAddition) {
       return AdditionGrid(
         totalSum: card.numericalAnswer,
-        maxOperand: _currentSubject.maxOperand,
+        maxOperand: _currentSubject!.maxOperand,
         iconSize: 18,
       );
-    } else if (_currentSubject.isCounting) {
+    } else if (_currentSubject!.isCounting) {
       return CountingGrid(
         count: card.numericalAnswer,
         iconSize: 24,
