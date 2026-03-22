@@ -1,13 +1,26 @@
 import 'subject_model.dart';
+import 'content_item.dart';
 
-class FolderModel {
+class FolderModel implements ContentItem {
+  @override
   final String id;
+  @override
   final int pillarId;
+  @override
   final String ownerId;
   final DateTime createdAt;
+  @override
   final DateTime updatedAt;
+  @override
   final Map<String, LocalizedSubjectData> localizedData;
   final int childCount;
+  
+  @override
+  ContentType get type => ContentType.folder;
+  @override
+  String? get ownerName => null; // Currently folders don't have owner names, or we can use ownerId
+  @override
+  String? get folderId => null; // Folders are top-level or in pillar, not in folders (yet?)
 
   FolderModel({
     required this.id,

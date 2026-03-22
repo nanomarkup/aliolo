@@ -106,34 +106,55 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
   }
 
   Future<void> _refreshData({bool silent = false}) async {
-    if (_currentSubject == null) return;
+    if (_currentSubject == null && _currentCollection == null) return;
     if (!silent) setState(() => _isLoading = true);
 
-    final cards = await _cardService.getCardsBySubject(_currentSubject!.id);
-    final updatedSubject = await _cardService.getSubjectById(
-      _currentSubject!.id,
-    );
+    if (_currentSubject != null) {
+      final cards = await _cardService.getCardsBySubject(_currentSubject!.id);
+      final updatedSubject = await _cardService.getSubjectById(_currentSubject!.id);
 
-    if (mounted) {
-      setState(() {
-        _allCards = cards;
-        if (updatedSubject != null) {
-          _currentSubject = updatedSubject;
-          _hasUpdated = true;
-        }
-        _isLoading = false;
-        _applyFilters();
-      });
+      if (mounted) {
+        setState(() {
+          _allCards = cards;
+          if (updatedSubject != null) {
+            _currentSubject = updatedSubject;
+            _hasUpdated = true;
+          }
+          _isLoading = false;
+          _applyFilters();
+        });
+      }
+    } else if (_currentCollection != null) {
+      final cards = await _cardService.getCollectionCards(_currentCollection!.subjectIds);
+      final updatedCollection = await _cardService.getCollectionById(_currentCollection!.id);
+
+      if (mounted) {
+        setState(() {
+          _allCards = cards.map((sc) => sc.card).toList();
+          if (updatedCollection != null) {
+            _currentCollection = updatedCollection;
+            _hasUpdated = true;
+          }
+          _isLoading = false;
+          _applyFilters();
+        });
+      }
     }
   }
 
   void _applyFilters() {
     final query = _searchController.text.toLowerCase();
     final myId = _authService.currentUser?.serverId;
+    final isOwner = _currentCollection?.ownerId == myId;
     
     setState(() {
       if (_currentCollection != null) {
         _filteredSubjects = _allSubjects.where((s) {
+          // If not owner, only show subjects that are in the collection
+          if (!isOwner && !_currentCollection!.subjectIds.contains(s.id)) {
+            return false;
+          }
+
           final matchesName = s.getName(widget.languageCode).toLowerCase().contains(query);
           final matchesAge = _selectedAgeFilter == 'all' || s.ageGroup == _selectedAgeFilter;
           bool matchesCollection = true;
@@ -167,17 +188,35 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
   }
 
   Future<void> _toggleFavorite() async {
-    if (_currentSubject == null) return;
-    final newState = !_currentSubject!.isOnDashboard;
-    setState(() => _currentSubject!.isOnDashboard = newState);
-    try {
-      await _cardService.toggleSubjectOnDashboard(_currentSubject!.id, newState);
-    } catch (e) {
-      if (mounted) {
-        setState(() => _currentSubject!.isOnDashboard = !newState);
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text('Error updating favorite: $e')));
+    if (_currentSubject == null && _currentCollection == null) return;
+    
+    if (_currentSubject != null) {
+      final newState = !_currentSubject!.isOnDashboard;
+      setState(() {
+        _currentSubject!.isOnDashboard = newState;
+        _hasUpdated = true;
+      });
+      try {
+        await _cardService.toggleSubjectOnDashboard(_currentSubject!.id, newState);
+      } catch (e) {
+        if (mounted) {
+          setState(() => _currentSubject!.isOnDashboard = !newState);
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error updating favorite: $e')));
+        }
+      }
+    } else if (_currentCollection != null) {
+      final newState = !_currentCollection!.isOnDashboard;
+      setState(() {
+        _currentCollection!.isOnDashboard = newState;
+        _hasUpdated = true;
+      });
+      try {
+        await _cardService.toggleCollectionOnDashboard(_currentCollection!.id, newState);
+      } catch (e) {
+        if (mounted) {
+          setState(() => _currentCollection!.isOnDashboard = !newState);
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error updating favorite: $e')));
+        }
       }
     }
   }
@@ -231,7 +270,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
         sessionCards = await _cardService.getCollectionCards(
           _currentCollection!.subjectIds,
         );
-      } else if (_currentSubject?.type == 'collection') {
+      } else if (_currentSubject?.typeStr == 'collection') {
         sessionCards = await _cardService.getCollectionCards(
           _currentSubject!.linkedSubjectIds,
         );
@@ -355,10 +394,10 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                 icon: const Icon(Icons.arrow_back, color: appBarColor),
                 onPressed: () => Navigator.pop(context, _hasUpdated),
               ),
-            if (_currentSubject != null)
+            if (_currentSubject != null || _currentCollection != null)
               IconButton(
                 icon: Icon(
-                  _currentSubject!.isOnDashboard
+                  (_currentSubject?.isOnDashboard ?? _currentCollection?.isOnDashboard ?? false)
                       ? Icons.star
                       : Icons.star_border,
                   color: appBarColor,
@@ -384,7 +423,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                                   updatedAt: _currentCollection!.updatedAt,
                                   localizedData: _currentCollection!.localizedData,
                                   folderId: _currentCollection!.folderId,
-                                  type: 'collection',
+                                  typeStr: 'collection',
                                   linkedSubjectIds: _currentCollection!.subjectIds,
                                 ),
                                 isCollectionMode: _currentCollection != null,

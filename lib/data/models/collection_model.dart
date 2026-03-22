@@ -1,16 +1,30 @@
+import 'dart:convert';
 import 'subject_model.dart';
+import 'content_item.dart';
 
-class CollectionModel {
+class CollectionModel implements ContentItem {
+  @override
   final String id;
+  @override
   final int pillarId;
+  @override
   final String? folderId;
+  @override
   final String ownerId;
+  @override
   final String? ownerName;
   final bool isPublic;
+  final String ageGroup;
   final DateTime createdAt;
+  @override
   final DateTime updatedAt;
+  @override
   final Map<String, LocalizedSubjectData> localizedData;
   final List<String> subjectIds;
+  bool isOnDashboard;
+
+  @override
+  ContentType get type => ContentType.collection;
 
   CollectionModel({
     required this.id,
@@ -19,14 +33,25 @@ class CollectionModel {
     required this.ownerId,
     this.ownerName,
     this.isPublic = false,
+    this.ageGroup = 'all',
     required this.createdAt,
     required this.updatedAt,
     this.localizedData = const {},
     this.subjectIds = const [],
+    this.isOnDashboard = false,
   });
 
   factory CollectionModel.fromJson(Map<String, dynamic> json) {
-    final Map<String, dynamic> locMap = json['localized_data'] ?? {};
+    var locData = json['localized_data'];
+    Map<String, dynamic> locMap = {};
+    if (locData is Map) {
+      locMap = Map<String, dynamic>.from(locData);
+    } else if (locData is String && locData.isNotEmpty) {
+      try {
+        locMap = Map<String, dynamic>.from(jsonDecode(locData));
+      } catch (_) {}
+    }
+
     final localized = locMap.map(
       (key, value) => MapEntry(
         key.toLowerCase(),
@@ -52,6 +77,7 @@ class CollectionModel {
       ownerId: json['owner_id'] ?? '',
       ownerName: profile != null ? profile['username'] : null,
       isPublic: json['is_public'] ?? false,
+      ageGroup: json['age_group'] ?? 'all',
       createdAt: DateTime.tryParse(json['created_at'] ?? '') ?? DateTime.now(),
       updatedAt: DateTime.tryParse(json['updated_at'] ?? '') ?? DateTime.now(),
       localizedData: localized,
@@ -66,6 +92,7 @@ class CollectionModel {
       'folder_id': folderId,
       'owner_id': ownerId,
       'is_public': isPublic,
+      'age_group': ageGroup,
       'localized_data': localizedData.map((k, v) => MapEntry(k, v.toJson())),
       'updated_at': updatedAt.toIso8601String(),
       'created_at': createdAt.toIso8601String(),

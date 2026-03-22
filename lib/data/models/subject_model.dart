@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'content_item.dart';
+
 class LocalizedSubjectData {
   final String? name;
   final String? description;
@@ -19,20 +22,29 @@ class LocalizedSubjectData {
   }
 }
 
-class SubjectModel {
+class SubjectModel implements ContentItem {
+  @override
   final String id;
+  @override
   final int pillarId;
+  @override
   final String ownerId;
   final bool isPublic;
   final DateTime createdAt;
+  @override
   final DateTime updatedAt;
   final int cardCount;
   final List<Map<String, dynamic>>? rawCards;
+  @override
   final String? ownerName;
   final String ageGroup;
+  @override
   final String? folderId;
-  final String type;
+  final String typeStr; // renamed from type to avoid conflict with ContentItem.type
   final List<String> linkedSubjectIds;
+
+  @override
+  ContentType get type => ContentType.subject;
 
   bool isOnDashboard;
 
@@ -102,7 +114,7 @@ class SubjectModel {
     this.ageGroup = 'all',
     this.localizedData = const {},
     this.folderId,
-    this.type = 'standard',
+    this.typeStr = 'standard',
     this.linkedSubjectIds = const [],
   });
 
@@ -174,7 +186,7 @@ class SubjectModel {
       'created_at': createdAt.toIso8601String(),
       'localized_data': localizedData.map((k, v) => MapEntry(k, v.toJson())),
       'folder_id': folderId,
-      if (type != 'standard') 'type': type,
+      if (typeStr != 'standard') 'type': typeStr,
       if (linkedSubjectIds.isNotEmpty) 'linked_subject_ids': linkedSubjectIds,
     };
   }
@@ -187,7 +199,16 @@ class SubjectModel {
 
     final Map<String, dynamic>? profile = json['profiles'];
 
-    final Map<String, dynamic> locMap = json['localized_data'] ?? {};
+    var locData = json['localized_data'];
+    Map<String, dynamic> locMap = {};
+    if (locData is Map) {
+      locMap = Map<String, dynamic>.from(locData);
+    } else if (locData is String && locData.isNotEmpty) {
+      try {
+        locMap = Map<String, dynamic>.from(jsonDecode(locData));
+      } catch (_) {}
+    }
+
     Map<String, LocalizedSubjectData> localized = locMap.map(
       (key, value) => MapEntry(
         key.toLowerCase(),
@@ -240,7 +261,7 @@ class SubjectModel {
       ageGroup: json['age_group'] ?? 'all',
       localizedData: localized,
       folderId: json['folder_id'],
-      type: json['type'] ?? 'standard',
+      typeStr: json['type'] ?? 'standard',
       linkedSubjectIds: List<String>.from(json['linked_subject_ids'] ?? []),
     );
   }
@@ -253,7 +274,7 @@ class SubjectModel {
       isPublic: false,
       createdAt: DateTime.now(),
       updatedAt: DateTime.now(),
-      type: 'standard',
+      typeStr: 'standard',
       linkedSubjectIds: [],
     );
   }

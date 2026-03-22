@@ -87,7 +87,7 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
         ((widget.initialAgeGroup != null && widget.initialAgeGroup != 'all')
             ? widget.initialAgeGroup!
             : 'all');
-    _selectedType = widget.existingSubject?.type ?? 
+    _selectedType = widget.existingSubject?.typeStr ?? 
         (widget.isCollectionMode ? 'collection' : 'standard');
     _selectedFolderId = widget.existingSubject?.folderId ?? widget.folderId;
     _linkedSubjectIds = List.from(widget.existingSubject?.linkedSubjectIds ?? []);
@@ -450,7 +450,7 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
           createdAt: widget.existingSubject?.createdAt ?? now,
           updatedAt: now,
           localizedData: finalData,
-          type: 'standard',
+          typeStr: 'standard',
           folderId: _selectedFolderId,
           linkedSubjectIds: [],
         );
@@ -731,7 +731,7 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
     if (_selectedPillar != original.pillarId) return true;
     if (_selectedAgeGroup != original.ageGroup) return true;
     if (_isPublic != original.isPublic) return true;
-    if (_selectedType != original.type) return true;
+    if (_selectedType != original.typeStr) return true;
     if (_selectedFolderId != original.folderId) return true;
 
     final allLangs = {...original.localizedData.keys, ..._drafts.keys};

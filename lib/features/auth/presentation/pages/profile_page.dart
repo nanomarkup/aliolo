@@ -205,6 +205,72 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
+  void _showDeleteAccountDialog() {
+    final passwordController = TextEditingController();
+    showDialog(
+      context: context,
+      builder:
+          (context) => AlertDialog(
+            title: Text(context.t('delete_account')),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(context.t('delete_account_confirm')),
+                const SizedBox(height: 16),
+                TextField(
+                  controller: passwordController,
+                  obscureText: true,
+                  autofocus: true,
+                  decoration: InputDecoration(
+                    labelText: context.t('password'),
+                    hintText: context.t('password_required'),
+                  ),
+                  onSubmitted: (val) => _handleDeleteConfirm(val),
+                ),
+              ],
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text(context.t('cancel')),
+              ),
+              TextButton(
+                onPressed: () => _handleDeleteConfirm(passwordController.text),
+                child: Text(
+                  context.t('delete_account'),
+                  style: const TextStyle(color: Colors.red),
+                ),
+              ),
+            ],
+          ),
+    );
+  }
+
+  void _handleDeleteConfirm(String password) async {
+    final pass = password.trim();
+    if (pass.isEmpty) return;
+
+    final success = await _authService.deleteAccount(pass);
+    if (mounted) {
+      if (Navigator.canPop(context)) Navigator.pop(context); // Close dialog
+
+      if (success) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(context.t('account_deleted'))));
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => const LoginPage()),
+          (route) => false,
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(context.t('invalid_password_delete'))),
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     const appBarColor = Colors.white;
@@ -343,6 +409,18 @@ class _ProfilePageState extends State<ProfilePage> {
                       backgroundColor: Colors.red[50],
                       foregroundColor: Colors.red,
                       elevation: 0,
+                      minimumSize: const Size(160, 50),
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  OutlinedButton.icon(
+                    onPressed: _showDeleteAccountDialog,
+                    icon: const Icon(Icons.delete_forever),
+                    label: Text(context.t('delete_account')),
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: Colors.red,
+                      side: const BorderSide(color: Colors.red),
+                      minimumSize: const Size(160, 50),
                     ),
                   ),
                 ],

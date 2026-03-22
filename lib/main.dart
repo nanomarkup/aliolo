@@ -174,7 +174,7 @@ class _AlioloAppState extends State<AlioloApp> {
                     const CircularProgressIndicator(color: Colors.orange),
                     const SizedBox(height: 16),
                     Text(
-                      context.t('initializing_aliolo'),
+                      context.t('Initializing Aliolo'),
                       style: const TextStyle(color: Colors.grey),
                     ),
                   ],

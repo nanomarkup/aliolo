@@ -66,7 +66,7 @@ class CardService with ChangeNotifier {
           .select(
             '*, profiles(username), cards(id, is_deleted, localized_data)',
           )
-          .or('owner_id.eq.${user.serverId},is_public.eq.true');
+          .or('owner_id.eq."${user.serverId}",is_public.eq.true');
 
       for (var json in subjectsData) {
         final s = SubjectModel.fromJson(json);
@@ -76,10 +76,11 @@ class CardService with ChangeNotifier {
       final List<dynamic> dashboardData = await _supabase!
           .from('user_subjects')
           .select('subject_id')
-          .eq('user_id', user.serverId!);
+          .eq('user_id', user.serverId!)
+          .not('subject_id', 'is', null);
 
       final Set<String> dashboardIds = {
-        for (var item in dashboardData) item['subject_id'] as String,
+        for (var item in dashboardData) item['subject_id'].toString(),
       };
 
       for (var s in combined.values) {
@@ -134,8 +135,7 @@ class CardService with ChangeNotifier {
       final List<dynamic> data = await _supabase!
           .from('folders')
           .select('*, subjects(count)')
-          .eq('pillar_id', pillarId)
-          .eq('owner_id', user.serverId!);
+          .eq('pillar_id', pillarId);
       return data.map((json) => FolderModel.fromJson(json)).toList();
     } catch (e) {
       print('Error fetching folders by pillar: $e');
@@ -149,8 +149,7 @@ class CardService with ChangeNotifier {
     try {
       final List<dynamic> data = await _supabase!
           .from('folders')
-          .select('*, subjects(count)')
-          .eq('owner_id', user.serverId!);
+          .select('*, subjects(count)');
       return data.map((json) => FolderModel.fromJson(json)).toList();
     } catch (e) {
       print('Error fetching all folders: $e');
@@ -178,6 +177,7 @@ class CardService with ChangeNotifier {
       notifyListeners();
     } catch (e) {
       print('Error adding folder: $e');
+      rethrow;
     }
   }
 
@@ -218,14 +218,30 @@ class CardService with ChangeNotifier {
       var query = _supabase!
           .from('collections')
           .select('*, profiles(username), collection_items(subject_id)')
-          .or('owner_id.eq.${user.serverId},is_public.eq.true');
+          .or('owner_id.eq."${user.serverId}",is_public.eq.true');
       
       if (rootOnly) {
         query = query.filter('folder_id', 'is', null);
       }
 
       final List<dynamic> data = await query;
-      return data.map((json) => CollectionModel.fromJson(json)).toList();
+      final collections = data.map((json) => CollectionModel.fromJson(json)).toList();
+
+      final List<dynamic> dashboardData = await _supabase!
+          .from('user_subjects')
+          .select('collection_id')
+          .eq('user_id', user.serverId!)
+          .not('collection_id', 'is', null);
+
+      final Set<String> dashboardIds = {
+        for (var item in dashboardData) item['collection_id'].toString(),
+      };
+
+      for (var c in collections) {
+        c.isOnDashboard = dashboardIds.contains(c.id);
+      }
+
+      return collections;
     } catch (e) {
       print('Error fetching all collections: $e');
       return [];
@@ -240,7 +256,7 @@ class CardService with ChangeNotifier {
           .from('collections')
           .select('*, profiles(username), collection_items(subject_id)')
           .eq('pillar_id', pillarId)
-          .or('owner_id.eq.${user.serverId},is_public.eq.true');
+          .or('owner_id.eq."${user.serverId}",is_public.eq.true');
       
       if (folderId != null) {
         query = query.eq('folder_id', folderId);
@@ -249,7 +265,23 @@ class CardService with ChangeNotifier {
       }
 
       final List<dynamic> data = await query;
-      return data.map((json) => CollectionModel.fromJson(json)).toList();
+      final collections = data.map((json) => CollectionModel.fromJson(json)).toList();
+
+      final List<dynamic> dashboardData = await _supabase!
+          .from('user_subjects')
+          .select('collection_id')
+          .eq('user_id', user.serverId!)
+          .not('collection_id', 'is', null);
+
+      final Set<String> dashboardIds = {
+        for (var item in dashboardData) item['collection_id'].toString(),
+      };
+
+      for (var c in collections) {
+        c.isOnDashboard = dashboardIds.contains(c.id);
+      }
+
+      return collections;
     } catch (e) {
       print('Error fetching collections by pillar: $e');
       return [];
@@ -257,6 +289,7 @@ class CardService with ChangeNotifier {
   }
 
   Future<void> addCollection(CollectionModel collection, List<String> subjectIds) async {
+    final user = _authService.currentUser;
     try {
       await _supabase!.from('collections').upsert(collection.toJson());
       
@@ -270,10 +303,52 @@ class CardService with ChangeNotifier {
         }).toList();
         await _supabase!.from('collection_items').insert(items);
       }
+
+      if (user?.serverId != null) {
+        if (collection.isOnDashboard) {
+          await _supabase!.from('user_subjects').upsert({
+            'user_id': user!.serverId!,
+            'collection_id': collection.id,
+            'subject_id': null,
+          }, onConflict: 'user_id, subject_id, collection_id');
+        } else {
+          await _supabase!
+              .from('user_subjects')
+              .delete()
+              .eq('user_id', user!.serverId!)
+              .eq('collection_id', collection.id);
+        }
+      }
       
       notifyListeners();
     } catch (e) {
       print('Error adding collection: $e');
+      rethrow;
+    }
+  }
+
+  Future<void> toggleCollectionOnDashboard(String collectionId, bool show) async {
+    final user = _authService.currentUser;
+    if (user == null || user.serverId == null) return;
+
+    try {
+      if (show) {
+        await _supabase!.from('user_subjects').upsert({
+          'user_id': user.serverId,
+          'collection_id': collectionId,
+          'subject_id': null,
+        }, onConflict: 'user_id, subject_id, collection_id');
+      } else {
+        await _supabase!
+            .from('user_subjects')
+            .delete()
+            .eq('user_id', user.serverId!)
+            .eq('collection_id', collectionId);
+      }
+      notifyListeners();
+    } catch (e) {
+      print('Error in toggleCollectionOnDashboard: $e');
+      rethrow;
     }
   }
 
@@ -287,13 +362,24 @@ class CardService with ChangeNotifier {
   }
 
   Future<CollectionModel?> getCollectionById(String id) async {
+    final user = _authService.currentUser;
     try {
       final data = await _supabase!
           .from('collections')
           .select('*, collection_items(subject_id)')
           .eq('id', id)
           .single();
-      return CollectionModel.fromJson(data);
+      final collection = CollectionModel.fromJson(data);
+      if (user?.serverId != null) {
+        final dashboardCheck = await _supabase!
+            .from('user_subjects')
+            .select('*')
+            .eq('user_id', user!.serverId!)
+            .eq('collection_id', id)
+            .maybeSingle();
+        collection.isOnDashboard = dashboardCheck != null;
+      }
+      return collection;
     } catch (e) {
       print('Error fetching collection by id: $e');
       return null;
@@ -386,7 +472,8 @@ class CardService with ChangeNotifier {
         await _supabase!.from('user_subjects').upsert({
           'user_id': user.serverId,
           'subject_id': subjectId,
-        }, onConflict: 'user_id, subject_id');
+          'collection_id': null,
+        }, onConflict: 'user_id, subject_id, collection_id');
       } else {
         await _supabase!
             .from('user_subjects')
@@ -397,6 +484,7 @@ class CardService with ChangeNotifier {
       notifyListeners();
     } catch (e) {
       print('Error in toggleSubjectOnDashboard: $e');
+      rethrow;
     }
   }
 
@@ -419,17 +507,18 @@ class CardService with ChangeNotifier {
         query = query.eq('pillar_id', pillarId);
       }
 
-      query = query.or('is_public.eq.true,owner_id.eq.${user.serverId}');
+      query = query.or('is_public.eq.true,owner_id.eq."${user.serverId}"');
 
       final List<dynamic> data = await query;
 
       final List<dynamic> dashboardData = await _supabase!
           .from('user_subjects')
           .select('subject_id')
-          .eq('user_id', user.serverId!);
+          .eq('user_id', user.serverId!)
+          .not('subject_id', 'is', null);
 
       final Set<String> dashboardIds = {
-        for (var item in dashboardData) item['subject_id'] as String,
+        for (var item in dashboardData) item['subject_id'].toString(),
       };
 
       final subjects = data.map((json) => SubjectModel.fromJson(json)).toList();
@@ -453,7 +542,8 @@ class CardService with ChangeNotifier {
           await _supabase!.from('user_subjects').upsert({
             'user_id': user!.serverId!,
             'subject_id': subject.id,
-          });
+            'collection_id': null,
+          }, onConflict: 'user_id, subject_id, collection_id');
         } else {
           await _supabase!
               .from('user_subjects')
@@ -466,6 +556,7 @@ class CardService with ChangeNotifier {
       notifyListeners();
     } catch (e) {
       print('Error adding subject: $e');
+      rethrow;
     }
   }
 
@@ -484,10 +575,11 @@ class CardService with ChangeNotifier {
       final List<dynamic> dashboardData = await _supabase!
           .from('user_subjects')
           .select('subject_id')
-          .eq('user_id', user.serverId!);
+          .eq('user_id', user.serverId!)
+          .not('subject_id', 'is', null);
 
       final Set<String> dashboardIds = {
-        for (var item in dashboardData) item['subject_id'] as String,
+        for (var item in dashboardData) item['subject_id'].toString(),
       };
 
       final subjects = data.map((json) => SubjectModel.fromJson(json)).toList();

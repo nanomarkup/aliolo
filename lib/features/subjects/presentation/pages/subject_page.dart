@@ -19,6 +19,8 @@ import 'package:aliolo/features/leaderboard/presentation/pages/leaderboard_page.
 import 'package:aliolo/features/subjects/presentation/pages/subject_landing_page.dart';
 import 'package:aliolo/features/management/presentation/pages/subject_edit_page.dart';
 import 'package:aliolo/data/services/feedback_service.dart';
+import 'package:aliolo/data/models/content_item.dart';
+import 'package:aliolo/data/services/discovery_engine.dart';
 
 import 'package:aliolo/features/feedback/presentation/pages/feedback_page.dart';
 
@@ -31,23 +33,23 @@ class SubjectPage extends StatefulWidget {
 
 class _SubjectPageState extends State<SubjectPage> {
   final _cardService = getIt<CardService>();
+  final _discoveryEngine = getIt<DiscoveryEngine>();
   final _searchController = TextEditingController();
   final _authService = getIt<AuthService>();
 
   String _currentTestingLang = 'en';
   bool _isLangInitialized = false;
 
-  List<SubjectModel> _allDashboardSubjects = [];
-  List<FolderModel> _allDashboardFolders = [];
-  List<CollectionModel> _allDashboardCollections = [];
-  List<SubjectModel> _allMatchingSubjects = [];
-  List<CollectionModel> _allMatchingCollections = [];
-  List<SubjectModel> _filteredSubjects = [];
-  List<CollectionModel> _filteredCollections = [];
-  List<FolderModel> _filteredFolders = [];
+  List<ContentItem> _allContent = [];
+  List<ContentItem> _matchingContent = [];
+  List<ContentItem> _filteredContent = [];
   bool _isLoading = true;
-  String _selectedAgeFilter = 'all';
-  String _collectionFilter = 'favorites';
+
+  DiscoveryFilters _filters = DiscoveryFilters(
+    ageGroup: 'all',
+    collectionFilter: 'favorites',
+    rootOnly: true,
+  );
 
   @override
   void initState() {
@@ -87,12 +89,11 @@ class _SubjectPageState extends State<SubjectPage> {
             _isLangInitialized = true;
           }
         }
-        if (savedAgeFilter != null) {
-          _selectedAgeFilter = savedAgeFilter;
-        }
-        if (savedCollectionFilter != null) {
-          _collectionFilter = savedCollectionFilter;
-        }
+        
+        _filters = _filters.copyWith(
+          ageGroup: savedAgeFilter,
+          collectionFilter: savedCollectionFilter,
+        );
       });
     }
     getIt<AuthService>().addListener(_onAuthChanged);
@@ -123,27 +124,16 @@ class _SubjectPageState extends State<SubjectPage> {
   Future<void> _loadDashboard() async {
     setState(() => _isLoading = true);
     await _cardService.getPillars();
-    final subjects = await _cardService.getDashboardSubjects();
-    final collections = await _cardService.getAllCollections(rootOnly: false);
     
-    final myFolders = await _cardService.getAllFolders();
-    final foreignFolderIds = {
-      ...subjects.where((s) => s.folderId != null).map((s) => s.folderId!),
-      ...collections.where((c) => c.folderId != null).map((c) => c.folderId!),
-    }.where((fid) => !myFolders.any((f) => f.id == fid)).toList();
-    
-    final List<FolderModel> allFolders = [...myFolders];
-    if (foreignFolderIds.isNotEmpty) {
-      final foreignFolders = await _cardService.getFoldersByIds(foreignFolderIds);
-      allFolders.addAll(foreignFolders);
-    }
+    // Fetch ALL accessible raw content once
+    final content = await _discoveryEngine.getRawContent(_filters);
 
     if (mounted) {
       final Set<String> detectedLangs = {};
-      for (var s in subjects) {
-        detectedLangs.addAll(s.localizedData.keys.map((k) => k.toLowerCase()));
-        if (s.rawCards != null) {
-          for (var c in s.rawCards!) {
+      for (var item in content) {
+        detectedLangs.addAll(item.localizedData.keys.map((k) => k.toLowerCase()));
+        if (item is SubjectModel && item.rawCards != null) {
+          for (var c in item.rawCards!) {
             final locData = c['localized_data'] as Map?;
             if (locData != null) {
               detectedLangs.addAll(locData.keys.map((k) => k.toString().toLowerCase()));
@@ -161,11 +151,9 @@ class _SubjectPageState extends State<SubjectPage> {
       final hasSavedCollection = prefs.containsKey('last_collection_filter');
 
       setState(() {
-        _allDashboardSubjects = subjects;
-        _allDashboardFolders = allFolders;
-        _allDashboardCollections = collections;
-        if (!hasSavedCollection && _allDashboardSubjects.where((s) => s.isOnDashboard).isEmpty) {
-          _collectionFilter = 'public';
+        _allContent = content;
+        if (!hasSavedCollection && _allContent.whereType<SubjectModel>().where((s) => s.isOnDashboard).isEmpty) {
+          _filters = _filters.copyWith(collectionFilter: 'public');
         }
         _applySearch();
         _isLoading = false;
@@ -174,60 +162,22 @@ class _SubjectPageState extends State<SubjectPage> {
   }
 
   void _applySearch() {
-    final query = _searchController.text.toLowerCase();
-    final myId = getIt<AuthService>().currentUser?.serverId;
-
     setState(() {
-      final availableFolderIds = _allDashboardFolders.map((f) => f.id).toSet();
-
-      _allMatchingSubjects = _allDashboardSubjects.where((s) {
-        final matchesName = s.getName(_currentTestingLang).toLowerCase().contains(query);
-        final matchesAge = _selectedAgeFilter == 'all' || s.ageGroup == _selectedAgeFilter;
-        bool matchesCollection = true;
-        if (_collectionFilter == 'mine') {
-          matchesCollection = s.ownerId == myId;
-        } else if (_collectionFilter == 'public') {
-          matchesCollection = s.isPublic;
-        } else {
-          // 'favorites' (Dashboard)
-          matchesCollection = s.isOnDashboard;
-        }
-        return matchesName && matchesAge && matchesCollection;
-      }).toList();
-
-      _allMatchingCollections = _allDashboardCollections.where((c) {
-        final matchesName = c.getName(_currentTestingLang).toLowerCase().contains(query);
-        bool matchesCollection = true;
-        if (_collectionFilter == 'mine') {
-          matchesCollection = c.ownerId == myId;
-        } else if (_collectionFilter == 'public') {
-          matchesCollection = c.isPublic;
-        } else {
-          // 'favorites' (Dashboard)
-          matchesCollection = true; // For now all public collections are on dashboard? Or implement bridge table too?
-        }
-        return matchesName && matchesCollection;
-      }).toList();
-
-      _filteredSubjects = _allMatchingSubjects.where((s) {
-        return query.isNotEmpty || s.folderId == null || !availableFolderIds.contains(s.folderId);
-      }).toList();
-
-      _filteredCollections = _allMatchingCollections.where((c) {
-        return query.isNotEmpty || c.folderId == null || !availableFolderIds.contains(c.folderId);
-      }).toList();
-
-      _filteredFolders = _allDashboardFolders.where((f) {
-        final matchesQuery = f.getName(_currentTestingLang).toLowerCase().contains(query);
-        final hasMatchingContent = _allMatchingSubjects.any((s) => s.folderId == f.id) || 
-                                 _allMatchingCollections.any((c) => c.folderId == f.id);
-        
-        if (hasMatchingContent) return true;
-        if (_collectionFilter == 'mine' || _collectionFilter == 'all') {
-          return f.ownerId == myId && matchesQuery;
-        }
-        return false;
-      }).toList();
+      _filters = _filters.copyWith(
+        query: _searchController.text,
+      );
+      // We first apply content filters (Age, Category, Query) to everything
+      _matchingContent = _discoveryEngine.applyFiltersAndSort(_allContent, _filters, _currentTestingLang);
+      
+      // Then we apply structural filtering to get only what's visible at the root level
+      _filteredContent = _discoveryEngine.getVisibleContent(
+        _matchingContent,
+        _currentTestingLang,
+        rootOnly: true,
+        collectionFilter: _filters.collectionFilter,
+        myId: _authService.currentUser?.serverId,
+        query: _filters.query,
+      );
     });
   }
 
@@ -244,10 +194,10 @@ class _SubjectPageState extends State<SubjectPage> {
       builder: (context, _) {
         final isSearching = _searchController.text.isNotEmpty;
         final currentSessionColor = ThemeService().primaryColor;
+        
+        // Pillars that have any content matching current search/filters
         final activePillars = pillars.where((p) => 
-          _allMatchingSubjects.any((s) => s.pillarId == p.id) || 
-          _filteredFolders.any((f) => f.pillarId == p.id) ||
-          _allMatchingCollections.any((c) => c.pillarId == p.id)
+          _filteredContent.any((item) => item.pillarId == p.id)
         ).toList();
 
         final activeCodes = getIt<TestingLanguageService>().activeLanguageCodes.map((l) => l.toLowerCase()).toSet();
@@ -319,7 +269,7 @@ class _SubjectPageState extends State<SubjectPage> {
                 children: [
                   Expanded(
                     child: _buildCompactDropdown(
-                      value: _collectionFilter,
+                      value: _filters.collectionFilter,
                       items: {
                         'favorites': context.t('filter_dashboard'),
                         'mine': context.t('filter_my_subjects'),
@@ -327,7 +277,10 @@ class _SubjectPageState extends State<SubjectPage> {
                       },
                       onChanged: (val) async {
                         if (val != null) {
-                          setState(() { _collectionFilter = val; _applySearch(); });
+                          setState(() { 
+                            _filters = _filters.copyWith(collectionFilter: val); 
+                            _applySearch(); 
+                          });
                           final prefs = await SharedPreferences.getInstance();
                           await prefs.setString('last_collection_filter', val);
                         }
@@ -337,7 +290,7 @@ class _SubjectPageState extends State<SubjectPage> {
                   const SizedBox(width: 8),
                   Expanded(
                     child: _buildCompactDropdown(
-                      value: _selectedAgeFilter,
+                      value: _filters.ageGroup,
                       items: {
                         'all': context.t('age_all'),
                         '0_6': context.t('age_0_6'),
@@ -346,7 +299,10 @@ class _SubjectPageState extends State<SubjectPage> {
                       },
                       onChanged: (val) async {
                         if (val != null) {
-                          setState(() { _selectedAgeFilter = val; _applySearch(); });
+                          setState(() { 
+                            _filters = _filters.copyWith(ageGroup: val); 
+                            _applySearch(); 
+                          });
                           final prefs = await SharedPreferences.getInstance();
                           await prefs.setString('last_age_filter', val);
                         }
@@ -488,24 +444,42 @@ class _SubjectPageState extends State<SubjectPage> {
           slivers: _isLoading
             ? [const SliverFillRemaining(child: Center(child: CircularProgressIndicator()))]
             : [
-                if (_allMatchingSubjects.isEmpty && _allDashboardFolders.isEmpty && _allMatchingCollections.isEmpty)
+                if (_allContent.isEmpty)
                   const SliverFillRemaining(child: Center(child: Text('No subjects found')))
                 else if (isSearching)
                   SliverPadding(
                     padding: EdgeInsets.zero,
                     sliver: SliverList(
                       delegate: SliverChildBuilderDelegate((context, index) {
-                        final subject = _filteredSubjects[index];
-                        final pillar = pillars.firstWhere((p) => p.id == subject.pillarId);
-                        return _SubjectListTile(
-                          subject: subject,
-                          pillar: pillar,
-                          languageCode: _currentTestingLang,
-                          initialAgeFilter: _selectedAgeFilter,
-                          initialCollectionFilter: _collectionFilter,
-                          onChanged: _loadDashboard,
-                        );
-                      }, childCount: _filteredSubjects.length),
+                        final item = _filteredContent[index];
+                        final pillar = pillars.firstWhere((p) => p.id == item.pillarId, orElse: () => pillars.first);
+                        
+                        if (item is FolderModel) {
+                          final matchingInFolder = _matchingContent.where((e) => e.folderId == item.id).length;
+                          return _FolderListTile(
+                            folder: item, 
+                            matchingCount: matchingInFolder, 
+                            totalCount: item.childCount, 
+                            pillar: pillar, 
+                            languageCode: _currentTestingLang, 
+                            initialAgeFilter: _filters.ageGroup, 
+                            initialCollectionFilter: _filters.collectionFilter,
+                            onChanged: _loadDashboard,
+                          );
+                        } else if (item is CollectionModel) {
+                          return _CollectionListTile(collection: item, pillar: pillar, languageCode: _currentTestingLang, initialAgeFilter: _filters.ageGroup, initialCollectionFilter: _filters.collectionFilter, onChanged: _loadDashboard);
+                        } else if (item is SubjectModel) {
+                          return _SubjectListTile(
+                            subject: item,
+                            pillar: pillar,
+                            languageCode: _currentTestingLang,
+                            initialAgeFilter: _filters.ageGroup,
+                            initialCollectionFilter: _filters.collectionFilter,
+                            onChanged: _loadDashboard,
+                          );
+                        }
+                        return const SizedBox.shrink();
+                      }, childCount: _filteredContent.length),
                     ),
                   )
                 else
@@ -524,29 +498,39 @@ class _SubjectPageState extends State<SubjectPage> {
                           final myId = _authService.currentUser?.serverId;
 
                           // 1. Calculate total items in this pillar that belong to the SELECTED CATEGORY
-                          final pillarCategoryTotal = _allDashboardSubjects.where((s) {
-                            if (s.pillarId != pillar.id) return false;
-                            if (_collectionFilter == 'mine') return s.ownerId == myId;
-                            if (_collectionFilter == 'public') return s.isPublic;
-                            if (_collectionFilter == 'favorites') return s.isOnDashboard;
+                          // We should count Subjects and Collections, including those inside folders.
+                          // Folders themselves are NOT counted as subjects.
+                          final pillarSubjectsAndCollections = _allContent.where((item) {
+                            if (item.pillarId != pillar.id) return false;
+                            if (item is FolderModel) return false; // Don't count folders themselves
+
+                            if (_filters.collectionFilter == 'mine') return item.ownerId == myId;
+                            if (_filters.collectionFilter == 'public') {
+                              if (item is SubjectModel) return item.isPublic;
+                              if (item is CollectionModel) return item.isPublic;
+                              return false;
+                            }
+                            if (_filters.collectionFilter == 'favorites') {
+                              if (item is SubjectModel) return item.isOnDashboard;
+                              return item.ownerId == myId || (item is CollectionModel && item.isPublic);
+                            }
                             return true; // 'all'
-                          }).length + _allDashboardCollections.where((c) {
-                            if (c.pillarId != pillar.id) return false;
-                            if (_collectionFilter == 'mine') return c.ownerId == myId;
-                            if (_collectionFilter == 'public') return c.isPublic;
-                            if (_collectionFilter == 'favorites') return true;
-                            return true; // 'all'
-                          }).length;
+                          }).toList();
+
+                          final pillarCategoryTotal = pillarSubjectsAndCollections.length;
 
                           // 2. Matching count (filtered by Category + Age + Search)
-                          final pillarMatchingSubjects = _allMatchingSubjects.where((s) => s.pillarId == pillar.id).toList();
-                          final pillarMatchingCollections = _allMatchingCollections.where((c) => c.pillarId == pillar.id).toList();
-                          final matchingCount = pillarMatchingSubjects.length + pillarMatchingCollections.length;
+                          // We apply the same logic as _applySearch/DiscoveryEngine to see what matches.
+                          final matchingCount = _discoveryEngine.applyFiltersAndSort(
+                            _allContent.where((e) => e.pillarId == pillar.id).toList(), 
+                            _filters.copyWith(rootOnly: false), // Include items in folders
+                            _currentTestingLang
+                          ).where((e) => e is! FolderModel).length;
                           
-                          final folderCount = _allDashboardFolders.where((f) => f.pillarId == pillar.id).length;
+                          final folderCount = _allContent.whereType<FolderModel>().where((f) => f.pillarId == pillar.id).length;
 
                           // 3. Only show "X of Y" if the user is further filtering by Age or Search
-                          final bool isFilteringBeyondCategory = _selectedAgeFilter != 'all' || _searchController.text.isNotEmpty;
+                          final bool isFilteringBeyondCategory = _filters.ageGroup != 'all' || _searchController.text.isNotEmpty;
 
                           return _PillarGridTile(
                             pillar: pillar,
@@ -560,17 +544,17 @@ class _SubjectPageState extends State<SubjectPage> {
                                 context,
                                 MaterialPageRoute(builder: (context) => PillarSubjectsPage(
                                   pillar: pillar,
-                                  subjects: pillarMatchingSubjects,
-                                  collections: pillarMatchingCollections,
                                   languageCode: _currentTestingLang,
-                                  initialAgeFilter: _selectedAgeFilter,
-                                  initialCollectionFilter: _collectionFilter,
+                                  initialAgeFilter: _filters.ageGroup,
+                                  initialCollectionFilter: _filters.collectionFilter,
                                 )),
                               );
                               if (result is Map) {
                                 setState(() {
-                                  _selectedAgeFilter = result['ageFilter'] ?? _selectedAgeFilter;
-                                  _collectionFilter = result['collectionFilter'] ?? _collectionFilter;
+                                  _filters = _filters.copyWith(
+                                    ageGroup: result['ageFilter'] ?? _filters.ageGroup,
+                                    collectionFilter: result['collectionFilter'] ?? _filters.collectionFilter,
+                                  );
                                 });
                                 if (result['hasUpdated'] == true) _loadDashboard(); else _applySearch();
                               }
@@ -653,7 +637,11 @@ class _SubjectListTile extends StatelessWidget {
                     Flexible(
                       child: Text(
                         subject.ownerName!,
-                        style: TextStyle(color: pillarColor.withValues(alpha: 0.7), fontSize: 14, fontWeight: FontWeight.w500),
+                        style: TextStyle(
+                          color: subject.ownerName == 'Aliolo' ? Colors.orange[700] : pillarColor.withValues(alpha: 0.7), 
+                          fontSize: 14, 
+                          fontWeight: subject.ownerName == 'Aliolo' ? FontWeight.bold : FontWeight.w500
+                        ),
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
@@ -661,6 +649,22 @@ class _SubjectListTile extends StatelessWidget {
                 ],
               ),
             ])),
+            IconButton(
+              icon: Icon(
+                subject.isOnDashboard ? Icons.star : Icons.star_border,
+                color: subject.isOnDashboard ? Colors.amber : Colors.grey,
+              ),
+              onPressed: () async {
+                try {
+                  await getIt<CardService>().toggleSubjectOnDashboard(subject.id, !subject.isOnDashboard);
+                  onChanged?.call();
+                } catch (e) {
+                  if (context.mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error updating favorite: $e')));
+                  }
+                }
+              },
+            ),
             const Icon(Icons.chevron_right, color: Colors.grey),
           ]),
         ),
@@ -743,7 +747,11 @@ class _CollectionListTile extends StatelessWidget {
                           Flexible(
                             child: Text(
                               collection.ownerName!,
-                              style: TextStyle(color: pillarColor.withValues(alpha: 0.7), fontSize: 14, fontWeight: FontWeight.w500),
+                              style: TextStyle(
+                                color: collection.ownerName == 'Aliolo' ? Colors.orange[700] : pillarColor.withValues(alpha: 0.7), 
+                                fontSize: 14, 
+                                fontWeight: collection.ownerName == 'Aliolo' ? FontWeight.bold : FontWeight.w500
+                              ),
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
@@ -752,6 +760,22 @@ class _CollectionListTile extends StatelessWidget {
                     ),
                   ],
                 ),
+              ),
+              IconButton(
+                icon: Icon(
+                  collection.isOnDashboard ? Icons.star : Icons.star_border,
+                  color: collection.isOnDashboard ? Colors.amber : Colors.grey,
+                ),
+                onPressed: () async {
+                  try {
+                    await getIt<CardService>().toggleCollectionOnDashboard(collection.id, !collection.isOnDashboard);
+                    onChanged?.call();
+                  } catch (e) {
+                    if (context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error updating favorite: $e')));
+                    }
+                  }
+                },
               ),
               const Icon(Icons.chevron_right, color: Colors.grey),
             ],
@@ -826,13 +850,11 @@ class _PillarGridTile extends StatelessWidget {
 
 class PillarSubjectsPage extends StatefulWidget {
   final Pillar pillar;
-  final List<SubjectModel> subjects;
-  final List<CollectionModel> collections;
   final String languageCode;
   final String initialAgeFilter;
   final String initialCollectionFilter;
 
-  const PillarSubjectsPage({super.key, required this.pillar, required this.subjects, required this.collections, required this.languageCode, required this.initialAgeFilter, required this.initialCollectionFilter});
+  const PillarSubjectsPage({super.key, required this.pillar, required this.languageCode, required this.initialAgeFilter, required this.initialCollectionFilter});
 
   @override
   State<PillarSubjectsPage> createState() => _PillarSubjectsPageState();
@@ -841,104 +863,54 @@ class PillarSubjectsPage extends StatefulWidget {
 class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
   final _searchController = TextEditingController();
   final _cardService = getIt<CardService>();
-  final _authService = getIt<AuthService>();
+  final _discoveryEngine = getIt<DiscoveryEngine>();
 
-  late List<SubjectModel> _allSubjects;
-  late List<FolderModel> _allFolders;
-  late List<CollectionModel> _allCollections;
-  List<SubjectModel> _filteredSubjects = [];
-  List<SubjectModel> _matchingSubjectsRecursive = [];
-  List<CollectionModel> _filteredCollections = [];
-  List<CollectionModel> _matchingCollectionsRecursive = [];
-  List<FolderModel> _filteredFolders = [];
+  List<ContentItem> _allContent = [];
+  List<ContentItem> _matchingContent = [];
+  List<ContentItem> _filteredContent = [];
   bool _isLoading = true;
   bool _hasUpdated = false;
-  late String _selectedAgeFilter;
-  late String _collectionFilter;
+  late DiscoveryFilters _filters;
 
   @override
   void initState() {
     super.initState();
-    _selectedAgeFilter = widget.initialAgeFilter;
-    _collectionFilter = widget.initialCollectionFilter;
+    _filters = DiscoveryFilters(
+      pillarId: widget.pillar.id,
+      ageGroup: widget.initialAgeFilter,
+      collectionFilter: widget.initialCollectionFilter,
+      rootOnly: false,
+    );
     _loadData();
   }
 
   Future<void> _loadData() async {
     setState(() => _isLoading = true);
-    final subjects = await _cardService.getSubjectsByPillar(widget.pillar.id, rootOnly: false);
-    final collections = await _cardService.getCollectionsByPillar(widget.pillar.id, rootOnly: false);
+    final content = await _discoveryEngine.getRawContent(_filters);
     
-    final myFolders = await _cardService.getFoldersByPillar(widget.pillar.id);
-    final foreignFolderIds = {
-      ...subjects.where((s) => s.folderId != null).map((s) => s.folderId!),
-      ...collections.where((c) => c.folderId != null).map((c) => c.folderId!),
-    }.where((fid) => !myFolders.any((f) => f.id == fid)).toList();
-    
-    final List<FolderModel> allFolders = [...myFolders];
-    if (foreignFolderIds.isNotEmpty) {
-      final foreignFolders = await _cardService.getFoldersByIds(foreignFolderIds);
-      allFolders.addAll(foreignFolders);
-    }
-
     if (mounted) {
-      setState(() { _allSubjects = subjects; _allFolders = allFolders; _allCollections = collections; _applyFilters(); _isLoading = false; });
+      setState(() { 
+        _allContent = content; 
+        _applyFilters(); 
+        _isLoading = false; 
+      });
     }
   }
 
   void _applyFilters() {
-    final query = _searchController.text.toLowerCase();
-    final myId = _authService.currentUser?.serverId;
     setState(() {
-      _matchingSubjectsRecursive = _allSubjects.where((s) {
-        final matchesName = s.getName(widget.languageCode).toLowerCase().contains(query);
-        final matchesAge = _selectedAgeFilter == 'all' || s.ageGroup == _selectedAgeFilter;
-        bool matchesCollection = true;
-        if (_collectionFilter == 'mine') {
-          matchesCollection = s.ownerId == myId;
-        } else if (_collectionFilter == 'public') {
-          matchesCollection = s.isPublic;
-        } else {
-          // 'favorites' (Dashboard)
-          matchesCollection = s.isOnDashboard;
-        }
-        return matchesName && matchesAge && matchesCollection;
-      }).toList();
-
-      _matchingCollectionsRecursive = _allCollections.where((c) {
-        final matchesName = c.getName(widget.languageCode).toLowerCase().contains(query);
-        bool matchesCollection = true;
-        if (_collectionFilter == 'mine') {
-          matchesCollection = c.ownerId == myId;
-        } else if (_collectionFilter == 'public') {
-          matchesCollection = c.isPublic;
-        } else {
-          // 'favorites' (Dashboard)
-          matchesCollection = true;
-        }
-        return matchesName && matchesCollection;
-      }).toList();
-
-      final availableFolderIds = _allFolders.map((f) => f.id).toSet();
-
-      _filteredSubjects = _matchingSubjectsRecursive.where((s) => s.folderId == null || !availableFolderIds.contains(s.folderId)).toList();
-      _filteredCollections = _matchingCollectionsRecursive.where((c) => c.folderId == null || !availableFolderIds.contains(c.folderId)).toList();
-
-      _filteredFolders = _allFolders.where((f) {
-        final matchesQuery = f.getName(widget.languageCode).toLowerCase().contains(query);
-        final hasMatchingContent = _matchingSubjectsRecursive.any((s) => s.folderId == f.id) || 
-                                 _matchingCollectionsRecursive.any((c) => c.folderId == f.id);
-        
-        if (hasMatchingContent) return true;
-        if (_collectionFilter == 'mine' || _collectionFilter == 'all') {
-          return f.ownerId == myId && matchesQuery;
-        }
-        return false;
-      }).toList();
-
-      _filteredFolders.sort((a, b) => a.getName(widget.languageCode).toLowerCase().compareTo(b.getName(widget.languageCode).toLowerCase()));
-      _filteredSubjects.sort((a, b) => a.getName(widget.languageCode).toLowerCase().compareTo(b.getName(widget.languageCode).toLowerCase()));
-      _filteredCollections.sort((a, b) => a.getName(widget.languageCode).toLowerCase().compareTo(b.getName(widget.languageCode).toLowerCase()));
+      _filters = _filters.copyWith(query: _searchController.text);
+      _matchingContent = _discoveryEngine.applyFiltersAndSort(_allContent, _filters, widget.languageCode);
+      
+      _filteredContent = _discoveryEngine.getVisibleContent(
+        _matchingContent,
+        widget.languageCode,
+        folderId: _filters.folderId,
+        rootOnly: _filters.folderId == null,
+        collectionFilter: _filters.collectionFilter,
+        myId: getIt<AuthService>().currentUser?.serverId,
+        query: _filters.query,
+      );
     });
   }
 
@@ -956,22 +928,22 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
             title: Text(widget.pillar.getTranslatedName(widget.languageCode), style: const TextStyle(color: appBarColor, fontWeight: FontWeight.bold)),
             appBarColor: pillarColor,
             actions: [
-              IconButton(icon: const Icon(Icons.arrow_back, color: appBarColor), onPressed: () => Navigator.pop(context, {'hasUpdated': _hasUpdated, 'ageFilter': _selectedAgeFilter, 'collectionFilter': _collectionFilter})),
+              IconButton(icon: const Icon(Icons.arrow_back, color: appBarColor), onPressed: () => Navigator.pop(context, {'hasUpdated': _hasUpdated, 'ageFilter': _filters.ageGroup, 'collectionFilter': _filters.collectionFilter})),
             ],
             fixedBody: LayoutBuilder(builder: (context, constraints) {
               final isSmall = constraints.maxWidth < 600;
               final filterRow = Row(children: [
-                Expanded(child: _buildCompactDropdown(value: _collectionFilter, items: {'favorites': context.t('filter_dashboard'), 'mine': context.t('filter_my_subjects'), 'public': context.t('filter_public')}, onChanged: (val) { if (val != null) setState(() { _collectionFilter = val; _applyFilters(); }); })),
+                Expanded(child: _buildCompactDropdown(value: _filters.collectionFilter, items: {'favorites': context.t('filter_dashboard'), 'mine': context.t('filter_my_subjects'), 'public': context.t('filter_public')}, onChanged: (val) { if (val != null) setState(() { _filters = _filters.copyWith(collectionFilter: val); _applyFilters(); }); })),
                 const SizedBox(width: 8),
-                Expanded(child: _buildCompactDropdown(value: _selectedAgeFilter, items: {'all': context.t('age_all'), '0_6': context.t('age_0_6'), '7_14': context.t('age_7_14'), '15_plus': context.t('age_15_plus')}, onChanged: (val) { if (val != null) setState(() { _selectedAgeFilter = val; _applyFilters(); }); })),
+                Expanded(child: _buildCompactDropdown(value: _filters.ageGroup, items: {'all': context.t('age_all'), '0_6': context.t('age_0_6'), '7_14': context.t('age_7_14'), '15_plus': context.t('age_15_plus')}, onChanged: (val) { if (val != null) setState(() { _filters = _filters.copyWith(ageGroup: val); _applyFilters(); }); })),
                 const SizedBox(width: 8),
                 SizedBox(width: 48, child: PopupMenuButton<String>(
                   icon: Icon(Icons.add_circle, color: pillarColor, size: 40),
                   padding: EdgeInsets.zero,
                   onSelected: (value) async {
                     bool? result;
-                    if (value == 'subject') result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: widget.pillar.id, initialAgeGroup: _selectedAgeFilter)));
-                    else if (value == 'collection') result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: widget.pillar.id, isCollectionMode: true, initialAgeGroup: _selectedAgeFilter)));
+                    if (value == 'subject') result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: widget.pillar.id, initialAgeGroup: _filters.ageGroup)));
+                    else if (value == 'collection') result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: widget.pillar.id, isCollectionMode: true, initialAgeGroup: _filters.ageGroup)));
                     else if (value == 'folder') result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: widget.pillar.id, isFolderMode: true)));
                     if (result == true) { _loadData(); _hasUpdated = true; }
                   },
@@ -1051,28 +1023,25 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
             }),
             slivers: [
               if (_isLoading) const SliverFillRemaining(child: Center(child: CircularProgressIndicator()))
-              else if (_filteredFolders.isEmpty && _filteredSubjects.isEmpty && _filteredCollections.isEmpty) const SliverFillRemaining(child: Center(child: Text('No items found')))
+              else if (_filteredContent.isEmpty) const SliverFillRemaining(child: Center(child: Text('No items found')))
               else SliverPadding(
                 padding: const EdgeInsets.only(bottom: 32),
                 sliver: SliverList(delegate: SliverChildBuilderDelegate((context, index) {
-                  if (index < _filteredFolders.length) {
-                    final folder = _filteredFolders[index];
-                    final matchingInFolder = _matchingSubjectsRecursive.where((s) => s.folderId == folder.id).length +
-                                           _matchingCollectionsRecursive.where((c) => c.folderId == folder.id).length;
+                  final item = _filteredContent[index];
+                  final pillar = pillars.firstWhere((p) => p.id == item.pillarId, orElse: () => pillars.first);
+                  if (item is FolderModel) {
+                    final matchingInFolder = _matchingContent.where((e) => e.folderId == item.id).length;
                     return _FolderListTile(
-                      folder: folder, matchingCount: matchingInFolder, totalCount: folder.childCount, pillar: widget.pillar, languageCode: widget.languageCode, initialAgeFilter: _selectedAgeFilter, initialCollectionFilter: _collectionFilter, onChanged: _loadData,
-                      onFilterChanged: (age, coll) { setState(() { _selectedAgeFilter = age; _collectionFilter = coll; _applyFilters(); }); },
+                      folder: item, matchingCount: matchingInFolder, totalCount: item.childCount, pillar: pillar, languageCode: widget.languageCode, initialAgeFilter: _filters.ageGroup, initialCollectionFilter: _filters.collectionFilter, onChanged: _loadData,
+                      onFilterChanged: (age, coll) { setState(() { _filters = _filters.copyWith(ageGroup: age, collectionFilter: coll); _applyFilters(); }); },
                     );
+                  } else if (item is CollectionModel) {
+                    return _CollectionListTile(collection: item, pillar: pillar, languageCode: widget.languageCode, initialAgeFilter: _filters.ageGroup, initialCollectionFilter: _filters.collectionFilter, onChanged: _loadData);
+                  } else if (item is SubjectModel) {
+                    return _SubjectListTile(subject: item, pillar: pillar, languageCode: widget.languageCode, initialAgeFilter: _filters.ageGroup, initialCollectionFilter: _filters.collectionFilter, onChanged: _loadData);
                   }
-                  int collIndex = index - _filteredFolders.length;
-                  if (collIndex < _filteredCollections.length) {
-                    final collection = _filteredCollections[collIndex];
-                    return _CollectionListTile(collection: collection, pillar: widget.pillar, languageCode: widget.languageCode, initialAgeFilter: _selectedAgeFilter, initialCollectionFilter: _collectionFilter, onChanged: _loadData);
-                  }
-                  int subIndex = collIndex - _filteredCollections.length;
-                  final subject = _filteredSubjects[subIndex];
-                  return _SubjectListTile(subject: subject, pillar: widget.pillar, languageCode: widget.languageCode, initialAgeFilter: _selectedAgeFilter, initialCollectionFilter: _collectionFilter, onChanged: _loadData);
-                }, childCount: _filteredFolders.length + _filteredCollections.length + _filteredSubjects.length)),
+                  return const SizedBox.shrink();
+                }, childCount: _filteredContent.length)),
               ),
             ],
           ),
@@ -1111,63 +1080,48 @@ class FolderPage extends StatefulWidget {
 class _FolderPageState extends State<FolderPage> {
   final _searchController = TextEditingController();
   final _cardService = getIt<CardService>();
+  final _discoveryEngine = getIt<DiscoveryEngine>();
   final _authService = getIt<AuthService>();
 
-  List<SubjectModel> _allSubjects = [];
-  List<CollectionModel> _allCollections = [];
-  List<SubjectModel> _filteredSubjects = [];
-  List<CollectionModel> _filteredCollections = [];
+  List<ContentItem> _allContent = [];
+  List<ContentItem> _matchingContent = [];
+  List<ContentItem> _filteredContent = [];
   bool _isLoading = true;
-  late String _selectedAgeFilter;
-  late String _collectionFilter;
+  late DiscoveryFilters _filters;
   bool _hasUpdated = false;
 
   @override
   void initState() {
     super.initState();
-    _selectedAgeFilter = widget.initialAgeFilter;
-    _collectionFilter = widget.initialCollectionFilter;
+    _filters = DiscoveryFilters(
+      pillarId: widget.pillar.id,
+      folderId: widget.folder.id,
+      ageGroup: widget.initialAgeFilter,
+      collectionFilter: widget.initialCollectionFilter,
+    );
     _loadData();
   }
 
   Future<void> _loadData() async {
     setState(() => _isLoading = true);
-    final results = await _cardService.getSubjectsByPillar(widget.pillar.id, folderId: widget.folder.id);
-    final colResults = await _cardService.getCollectionsByPillar(widget.pillar.id, folderId: widget.folder.id);
-    if (mounted) setState(() { _allSubjects = results; _allCollections = colResults; _applyFilters(); _isLoading = false; });
+    final content = await _discoveryEngine.getRawContent(_filters);
+    if (mounted) setState(() { _allContent = content; _applyFilters(); _isLoading = false; });
   }
 
   void _applyFilters() {
-    final query = _searchController.text.toLowerCase();
-    final myId = _authService.currentUser?.serverId;
     setState(() {
-      _filteredSubjects = _allSubjects.where((s) {
-        final matchesName = s.getName(widget.languageCode).toLowerCase().contains(query);
-        final matchesAge = _selectedAgeFilter == 'all' || s.ageGroup == _selectedAgeFilter;
-        bool matchesCollection = true;
-        if (_collectionFilter == 'mine') matchesCollection = s.ownerId == myId;
-        else if (_collectionFilter == 'public') matchesCollection = s.isPublic;
-        else {
-          // Dashboard
-          matchesCollection = s.isOnDashboard;
-        }
-        return matchesName && matchesAge && matchesCollection;
-      }).toList();
-
-      _filteredCollections = _allCollections.where((c) {
-        final matchesName = c.getName(widget.languageCode).toLowerCase().contains(query);
-        bool matchesCollection = true;
-        if (_collectionFilter == 'mine') matchesCollection = c.ownerId == myId;
-        else if (_collectionFilter == 'public') matchesCollection = c.isPublic;
-        else {
-          // Dashboard
-          matchesCollection = true;
-        }
-        return matchesName && matchesCollection;
-      }).toList();
-
-      _filteredSubjects.sort((a, b) => a.getName(widget.languageCode).toLowerCase().compareTo(b.getName(widget.languageCode).toLowerCase()));
-      _filteredCollections.sort((a, b) => a.getName(widget.languageCode).toLowerCase().compareTo(b.getName(widget.languageCode).toLowerCase()));
+      _filters = _filters.copyWith(query: _searchController.text);
+      _matchingContent = _discoveryEngine.applyFiltersAndSort(_allContent, _filters, widget.languageCode);
+      
+      _filteredContent = _discoveryEngine.getVisibleContent(
+        _matchingContent,
+        widget.languageCode,
+        folderId: _filters.folderId,
+        rootOnly: _filters.folderId == null,
+        collectionFilter: _filters.collectionFilter,
+        myId: getIt<AuthService>().currentUser?.serverId,
+        query: _filters.query,
+      );
     });
   }
 
@@ -1187,7 +1141,7 @@ class _FolderPageState extends State<FolderPage> {
             title: Text(widget.folder.getName(widget.languageCode), style: const TextStyle(color: appBarColor, fontWeight: FontWeight.bold)),
             appBarColor: pillarColor,
             actions: [
-              IconButton(icon: const Icon(Icons.arrow_back, color: appBarColor), onPressed: () => Navigator.pop(context, {'hasUpdated': _hasUpdated, 'ageFilter': _selectedAgeFilter, 'collectionFilter': _collectionFilter})),
+              IconButton(icon: const Icon(Icons.arrow_back, color: appBarColor), onPressed: () => Navigator.pop(context, {'hasUpdated': _hasUpdated, 'ageFilter': _filters.ageGroup, 'collectionFilter': _filters.collectionFilter})),
               if (isOwner) ...[
                 IconButton(icon: const Icon(Icons.edit, color: appBarColor), onPressed: () async {
                   final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(existingFolder: widget.folder, isFolderMode: true)));
@@ -1198,7 +1152,7 @@ class _FolderPageState extends State<FolderPage> {
                   if (confirmed == true && mounted) {
                     try {
                       await _cardService.deleteFolder(widget.folder.id);
-                      if (mounted) Navigator.pop(context, {'hasUpdated': true, 'ageFilter': _selectedAgeFilter, 'collectionFilter': _collectionFilter});
+                      if (mounted) Navigator.pop(context, {'hasUpdated': true, 'ageFilter': _filters.ageGroup, 'collectionFilter': _filters.collectionFilter});
                     } catch (e) {
                       if (e.toString().contains('folder_not_empty') && mounted) {
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(context.t('folder_not_empty_msg') ?? 'Cannot delete folder: it is not empty')));
@@ -1212,17 +1166,17 @@ class _FolderPageState extends State<FolderPage> {
             fixedBody: LayoutBuilder(builder: (context, constraints) {
               final isSmall = constraints.maxWidth < 600;
               final filterRow = Row(children: [
-                Expanded(child: _buildCompactDropdown(value: _collectionFilter, items: {'favorites': context.t('filter_dashboard'), 'mine': context.t('filter_my_subjects'), 'public': context.t('filter_public')}, onChanged: (val) { if (val != null) setState(() { _collectionFilter = val; _applyFilters(); }); })),
+                Expanded(child: _buildCompactDropdown(value: _filters.collectionFilter, items: {'favorites': context.t('filter_dashboard'), 'mine': context.t('filter_my_subjects'), 'public': context.t('filter_public')}, onChanged: (val) { if (val != null) setState(() { _filters = _filters.copyWith(collectionFilter: val); _applyFilters(); }); })),
                 const SizedBox(width: 8),
-                Expanded(child: _buildCompactDropdown(value: _selectedAgeFilter, items: {'all': context.t('age_all'), '0_6': context.t('age_0_6'), '7_14': context.t('age_7_14'), '15_plus': context.t('age_15_plus')}, onChanged: (val) { if (val != null) setState(() { _selectedAgeFilter = val; _applyFilters(); }); })),
+                Expanded(child: _buildCompactDropdown(value: _filters.ageGroup, items: {'all': context.t('age_all'), '0_6': context.t('age_0_6'), '7_14': context.t('age_7_14'), '15_plus': context.t('age_15_plus')}, onChanged: (val) { if (val != null) setState(() { _filters = _filters.copyWith(ageGroup: val); _applyFilters(); }); })),
                 const SizedBox(width: 8),
                 SizedBox(width: 48, child: PopupMenuButton<String>(
                   icon: Icon(Icons.add_circle, color: pillarColor, size: 40),
                   padding: EdgeInsets.zero,
                   onSelected: (value) async {
                     bool? result;
-                    if (value == 'subject') result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: widget.pillar.id, folderId: widget.folder.id, initialAgeGroup: _selectedAgeFilter)));
-                    else if (value == 'collection') result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: widget.pillar.id, folderId: widget.folder.id, isCollectionMode: true, initialAgeGroup: _selectedAgeFilter)));
+                    if (value == 'subject') result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: widget.pillar.id, folderId: widget.folder.id, initialAgeGroup: _filters.ageGroup)));
+                    else if (value == 'collection') result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: widget.pillar.id, folderId: widget.folder.id, isCollectionMode: true, initialAgeGroup: _filters.ageGroup)));
                     if (result == true) { _loadData(); _hasUpdated = true; }
                   },
                   itemBuilder: (context) => [
@@ -1300,15 +1254,16 @@ class _FolderPageState extends State<FolderPage> {
             }),
             slivers: [
               if (_isLoading) const SliverFillRemaining(child: Center(child: CircularProgressIndicator()))
-              else if (_filteredSubjects.isEmpty && _filteredCollections.isEmpty) const SliverFillRemaining(child: Center(child: Text('No subjects found')))
+              else if (_filteredContent.isEmpty) const SliverFillRemaining(child: Center(child: Text('No subjects found')))
               else SliverPadding(padding: const EdgeInsets.only(bottom: 32), sliver: SliverList(delegate: SliverChildBuilderDelegate((context, index) {
-                if (index < _filteredCollections.length) {
-                  final collection = _filteredCollections[index];
-                  return _CollectionListTile(collection: collection, pillar: widget.pillar, languageCode: widget.languageCode, initialAgeFilter: _selectedAgeFilter, initialCollectionFilter: _collectionFilter, onChanged: () { _loadData(); _hasUpdated = true; });
+                final item = _filteredContent[index];
+                if (item is CollectionModel) {
+                  return _CollectionListTile(collection: item, pillar: widget.pillar, languageCode: widget.languageCode, initialAgeFilter: _filters.ageGroup, initialCollectionFilter: _filters.collectionFilter, onChanged: () { _loadData(); _hasUpdated = true; });
+                } else if (item is SubjectModel) {
+                  return _SubjectListTile(subject: item, pillar: widget.pillar, languageCode: widget.languageCode, initialAgeFilter: _filters.ageGroup, initialCollectionFilter: _filters.collectionFilter, onChanged: () { _loadData(); _hasUpdated = true; });
                 }
-                final subject = _filteredSubjects[index - _filteredCollections.length];
-                return _SubjectListTile(subject: subject, pillar: widget.pillar, languageCode: widget.languageCode, initialAgeFilter: _selectedAgeFilter, initialCollectionFilter: _collectionFilter, onChanged: () { _loadData(); _hasUpdated = true; });
-              }, childCount: _filteredCollections.length + _filteredSubjects.length))),
+                return const SizedBox.shrink();
+              }, childCount: _filteredContent.length))),
             ],
           ),
         );
