@@ -129,7 +129,11 @@ class _TestPageState extends State<TestPage> {
     List<TestOption> options = [];
 
     if (_subject.isMath) {
-      final mathOpts = _currentCard.mathOptions ?? [];
+      List<String> mathOpts = _currentCard.mathOptions ?? [];
+      if (mathOpts.isEmpty) {
+        final optCount = user?.optionsCount ?? 6;
+        mathOpts = MathService().generateDistractors(_currentCard.numericalAnswer, optCount);
+      }
       options = mathOpts.map((o) => TestOption(text: o, id: o)).toList();
     } else {
       final allInSubject = await CardService().getCardsBySubject(
@@ -319,7 +323,47 @@ class _TestPageState extends State<TestPage> {
                       child: Stack(
                         fit: StackFit.expand,
                         children: [
-                          if (isAudioToText)
+                          if (_subject.isDivision)
+                            DivisionGrid(
+                              a: _currentCard.divisionParts?[0] ?? 0,
+                              b: _currentCard.divisionParts?[1] ?? 1,
+                              languageCode: lang,
+                              fontSize: isMobile ? 120 : 200,
+                              color: headerColor,
+                            )
+                          else if (_subject.isMultiplication)
+                            MultiplicationGrid(
+                              a: _currentCard.multiplicationParts?[0] ?? 1,
+                              b: _currentCard.multiplicationParts?[1] ?? 0,
+                              languageCode: lang,
+                              fontSize: isMobile ? 120 : 200,
+                              color: headerColor,
+                            )
+                          else if (_subject.isNumbers)
+                            NumberGrid(
+                              displayChar: _currentCard.getNumericalChar(lang),
+                              fontSize: isMobile ? 120 : 200,
+                              color: headerColor,
+                            )
+                          else if (_subject.isSubtraction)
+                            SubtractionGrid(
+                              totalSum: _currentCard.numericalAnswer,
+                              maxOperand: _subject.maxOperand,
+                              iconSize: isMobile ? 40 : 60,
+                            )
+                          else if (_subject.isAddition)
+                            AdditionGrid(
+                              totalSum: _currentCard.numericalAnswer,
+                              maxOperand: _subject.maxOperand,
+                              iconSize: isMobile ? 40 : 60,
+                            )
+                          else if (_currentCard.subjectId == '68232807-b9cd-4cff-872c-c398444f85e2' ||
+                              _currentCard.subjectId == 'c3548727-65f4-4e0c-939c-56135b4eb543')
+                            CountingGrid(
+                              count: _currentCard.numericalAnswer,
+                              iconSize: isMobile ? 40 : 60,
+                            )
+                          else if (isAudioToText)
                             Container(
                               color: headerColor.withValues(alpha: 0.05),
                               child: Center(
@@ -372,46 +416,6 @@ class _TestPageState extends State<TestPage> {
                             )
                           else if (_showingVideo)
                             Video(controller: controller)
-                          else if (_subject.isDivision)
-                            DivisionGrid(
-                              a: _currentCard.divisionParts?[0] ?? 0,
-                              b: _currentCard.divisionParts?[1] ?? 1,
-                              languageCode: lang,
-                              fontSize: isMobile ? 120 : 200,
-                              color: headerColor,
-                            )
-                          else if (_subject.isMultiplication)
-                            MultiplicationGrid(
-                              a: _currentCard.multiplicationParts?[0] ?? 1,
-                              b: _currentCard.multiplicationParts?[1] ?? 0,
-                              languageCode: lang,
-                              fontSize: isMobile ? 120 : 200,
-                              color: headerColor,
-                            )
-                          else if (_subject.isNumbers)
-                            NumberGrid(
-                              displayChar: _currentCard.getNumericalChar(lang),
-                              fontSize: isMobile ? 120 : 200,
-                              color: headerColor,
-                            )
-                          else if (_subject.isSubtraction)
-                            SubtractionGrid(
-                              totalSum: _currentCard.numericalAnswer,
-                              maxOperand: _subject.maxOperand,
-                              iconSize: isMobile ? 40 : 60,
-                            )
-                          else if (_subject.isAddition)
-                            AdditionGrid(
-                              totalSum: _currentCard.numericalAnswer,
-                              maxOperand: _subject.maxOperand,
-                              iconSize: isMobile ? 40 : 60,
-                            )
-                          else if (_currentCard.subjectId == '68232807-b9cd-4cff-872c-c398444f85e2' ||
-                              _currentCard.subjectId == 'c3548727-65f4-4e0c-939c-56135b4eb543')
-                            CountingGrid(
-                              count: _currentCard.numericalAnswer,
-                              iconSize: isMobile ? 40 : 60,
-                            )
                           else if (_currentImages.isNotEmpty)
                             AlioloImage(
                               imageUrl: _currentImages[_currentImageIndex],
@@ -424,7 +428,7 @@ class _TestPageState extends State<TestPage> {
                               color: Colors.grey,
                             ),
                           // Prompt Overlay
-                          if (!isAudioToText && !isAudioToImage)
+                          if (!isAudioToText && !isAudioToImage && !_subject.isMath)
                             Positioned(
                               top: 0,
                               left: 0,
@@ -485,7 +489,7 @@ class _TestPageState extends State<TestPage> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            if (isAudioToImage)
+                            if (isAudioToImage && !_subject.isMath)
                               Text(
                                 context.t('select_an_answer'),
                                 style: TextStyle(
