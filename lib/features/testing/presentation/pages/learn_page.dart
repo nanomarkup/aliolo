@@ -286,42 +286,126 @@ class _LearnPageState extends State<LearnPage> {
           child: Scaffold(
             appBar: AppBar(
               automaticallyImplyLeading: false,
-              title: Text(_subject.getName(widget.languageCode)),
+              title: Text(_subject.getName(widget.languageCode), style: const TextStyle(fontSize: 18)),
               backgroundColor: headerColor,
               foregroundColor: Colors.white,
               actions: [
                 IconButton(
                   icon: const Icon(Icons.arrow_back),
                   onPressed: () => Navigator.pop(context),
+                  tooltip: 'Back',
+                ),
+                if (_currentCard.getAudioUrl(lang) != null)
+                  IconButton(
+                    icon: const Icon(Icons.volume_up),
+                    onPressed: () async {
+                      final url = _currentCard.getAudioUrl(lang);
+                      if (url != null) {
+                        await player.open(Media(url));
+                        player.play();
+                      }
+                    },
+                    tooltip: 'Play Audio',
+                  ),
+                IconButton(
+                  icon: Icon(_isAutoPlay ? Icons.pause_circle : Icons.play_circle),
+                  onPressed: () {
+                    final newVal = !_isAutoPlay;
+                    _authService.updateAutoPlayPreference(newVal);
+                    setState(() {
+                      _isAutoPlay = newVal;
+                      if (_isAutoPlay) {
+                        _scheduleAutoNext(afterMedia: false);
+                      } else {
+                        _autoNextTimer?.cancel();
+                        _isAutoPlayWaiting = false;
+                      }
+                    });
+                  },
+                  tooltip: 'Auto-play',
                 ),
                 if (!kIsWeb) const WindowControls(color: Colors.white),
               ],
             ),
-          body: LayoutBuilder(
-            builder: (context, constraints) {
-              final isMobile = constraints.maxWidth < 800;
-
-              final mediaContent = Expanded(
+            floatingActionButton: _canGoNext 
+              ? FloatingActionButton.extended(
+                  onPressed: _nextCard,
+                  backgroundColor: headerColor,
+                  foregroundColor: Colors.white,
+                  icon: const Icon(Icons.arrow_forward),
+                  label: Text(context.t('next'), style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                )
+              : null,
+          body: Column(
+            children: [
+              // Integrated Header
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 32),
+                color: headerColor.withValues(alpha: 0.05),
+                child: Wrap(
+                  alignment: WrapAlignment.center,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  spacing: 12,
+                  runSpacing: 8,
+                  children: [
+                    Text(
+                      _currentCard.getPrompt(lang),
+                      style: TextStyle(fontSize: 20, color: Colors.grey[700], fontWeight: FontWeight.w500),
+                    ),
+                    InkWell(
+                      onTap: () async {
+                        final url = _currentCard.getAudioUrl(lang);
+                        if (url != null) {
+                          await player.open(Media(url));
+                          player.play();
+                        }
+                      },
+                      borderRadius: BorderRadius.circular(8),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                        child: Text(
+                          _currentCard.getAnswer(lang),
+                          style: TextStyle(fontSize: 32, color: headerColor, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              LinearProgressIndicator(
+                value: progressValue,
+                minHeight: 4,
+                backgroundColor: headerColor.withValues(alpha: 0.1),
+                valueColor: AlwaysStoppedAnimation<Color>(headerColor),
+              ),
+              Expanded(
                 child: Center(
                   child: Padding(
-                    padding: EdgeInsets.all(isMobile ? 12 : 32),
+                    padding: const EdgeInsets.all(32),
                     child: Card(
-                      elevation: 8,
+                      elevation: 4,
                       clipBehavior: Clip.antiAlias,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(24),
+                        side: BorderSide(color: headerColor.withValues(alpha: 0.1), width: 1),
                       ),
                       child: Stack(
                         fit: StackFit.expand,
                         children: [
                           if (_showingVideo)
                             Video(controller: controller)
+                          else if (_currentImages.isNotEmpty)
+                            AlioloImage(
+                              imageUrl: _currentImages[_currentImageIndex],
+                              fit: BoxFit.contain,
+                            )
                           else if (_subject.isDivision)
                             DivisionGrid(
                               a: _currentCard.divisionParts?[0] ?? 0,
                               b: _currentCard.divisionParts?[1] ?? 1,
                               languageCode: lang,
-                              fontSize: isMobile ? 120 : 200,
+                              fontSize: 120,
                               color: headerColor,
                             )
                           else if (_subject.isMultiplication)
@@ -329,37 +413,32 @@ class _LearnPageState extends State<LearnPage> {
                               a: _currentCard.multiplicationParts?[0] ?? 1,
                               b: _currentCard.multiplicationParts?[1] ?? 0,
                               languageCode: lang,
-                              fontSize: isMobile ? 120 : 200,
+                              fontSize: 120,
                               color: headerColor,
                             )
                           else if (_subject.isNumbers)
                             NumberGrid(
                               displayChar: _currentCard.getNumericalChar(lang),
-                              fontSize: isMobile ? 120 : 200,
+                              fontSize: 120,
                               color: headerColor,
                             )
                           else if (_subject.isSubtraction)
                             SubtractionGrid(
                               totalSum: _currentCard.numericalAnswer,
                               maxOperand: _subject.maxOperand,
-                              iconSize: isMobile ? 40 : 60,
+                              iconSize: 60,
                             )
                           else if (_subject.isAddition)
                             AdditionGrid(
                               totalSum: _currentCard.numericalAnswer,
                               maxOperand: _subject.maxOperand,
-                              iconSize: isMobile ? 40 : 60,
+                              iconSize: 60,
                             )
                           else if (_currentCard.subjectId == '68232807-b9cd-4cff-872c-c398444f85e2' ||
                               _currentCard.subjectId == 'c3548727-65f4-4e0c-939c-56135b4eb543')
                             CountingGrid(
                               count: _currentCard.numericalAnswer,
-                              iconSize: isMobile ? 40 : 60,
-                            )
-                          else if (_currentImages.isNotEmpty)
-                            AlioloImage(
-                              imageUrl: _currentImages[_currentImageIndex],
-                              fit: BoxFit.contain,
+                              iconSize: 60,
                             )
                           else
                             const Icon(
@@ -367,41 +446,6 @@ class _LearnPageState extends State<LearnPage> {
                               size: 100,
                               color: Colors.grey,
                             ),
-                          // Prompt Overlay
-                          Positioned(
-                            top: 0,
-                            left: 0,
-                            right: 0,
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                              decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                  begin: Alignment.topCenter,
-                                  end: Alignment.bottomCenter,
-                                  colors: [
-                                    Colors.black.withValues(alpha: 0.6),
-                                    Colors.transparent,
-                                  ],
-                                ),
-                              ),
-                              child: Text(
-                                _currentCard.getPrompt(lang),
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w500,
-                                  shadows: [
-                                    Shadow(
-                                      offset: Offset(0, 1),
-                                      blurRadius: 3.0,
-                                      color: Colors.black,
-                                    ),
-                                  ],
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ),
                           if (!_showingVideo && _currentImages.length > 1) ...[
                             Positioned(
                               left: 10,
@@ -410,7 +454,7 @@ class _LearnPageState extends State<LearnPage> {
                               child: IconButton(
                                 icon: const Icon(
                                   Icons.chevron_left,
-                                  color: Colors.white,
+                                  color: Colors.black26,
                                   size: 40,
                                 ),
                                 onPressed:
@@ -431,7 +475,7 @@ class _LearnPageState extends State<LearnPage> {
                               child: IconButton(
                                 icon: const Icon(
                                   Icons.chevron_right,
-                                  color: Colors.white,
+                                  color: Colors.black26,
                                   size: 40,
                                 ),
                                 onPressed:
@@ -449,131 +493,8 @@ class _LearnPageState extends State<LearnPage> {
                     ),
                   ),
                 ),
-              );
-
-              final controlsContent = Container(
-                padding: EdgeInsets.all(isMobile ? 24 : 32),
-                color: Theme.of(context).colorScheme.surface,
-                child: Column(
-                  children: [
-                    LinearProgressIndicator(
-                      value: progressValue,
-                      minHeight: 8,
-                      borderRadius: BorderRadius.circular(4),
-                      color: headerColor,
-                    ),
-                    Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            '${context.t('answer')}:',
-                            style: TextStyle(
-                              fontSize: isMobile ? 14 : 16,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.grey,
-                              letterSpacing: 1.1,
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            _currentCard.getAnswer(lang),
-                            style: TextStyle(
-                              fontSize: isMobile ? 28 : 36,
-                              fontWeight: FontWeight.bold,
-                              color: headerColor,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: ElevatedButton.icon(
-                            onPressed: _canGoNext ? _nextCard : null,
-                            icon: const Icon(Icons.arrow_forward),
-                            label: Text(context.t('next')),
-                            style: ElevatedButton.styleFrom(
-                              minimumSize: Size.fromHeight(isMobile ? 60 : 70),
-                              backgroundColor: headerColor,
-                              foregroundColor: Colors.white,
-                              disabledBackgroundColor: Colors.grey[300],
-                              disabledForegroundColor: Colors.grey[600],
-                            ),
-                          ),
-                        ),
-                        if (_currentCard.getAudioUrl(lang) != null) ...[
-                          const SizedBox(width: 12),
-                          IconButton.filledTonal(
-                            onPressed: () async {
-                              final url = _currentCard.getAudioUrl(lang);
-                              if (url != null) {
-                                await player.open(Media(url));
-                                player.play();
-                              }
-                            },
-                            icon: const Icon(Icons.volume_up, size: 28),
-                            style: IconButton.styleFrom(
-                              minimumSize: Size(isMobile ? 60 : 70, isMobile ? 60 : 70),
-                            ),
-                            tooltip: 'Play Audio',
-                          ),
-                        ],
-                        const SizedBox(width: 12),
-                        IconButton.filledTonal(
-                          onPressed: () {
-                            final newVal = !_isAutoPlay;
-                            _authService.updateAutoPlayPreference(newVal);
-                            setState(() {
-                              _isAutoPlay = newVal;
-                              if (_isAutoPlay) {
-                                _scheduleAutoNext(afterMedia: false);
-                              } else {
-                                _autoNextTimer?.cancel();
-                                _isAutoPlayWaiting = false;
-                              }
-                            });
-                          },
-                          icon: Icon(
-                            _isAutoPlay ? Icons.pause_circle : Icons.play_circle,
-                            size: 32,
-                          ),
-                          style: IconButton.styleFrom(
-                            minimumSize: Size(isMobile ? 60 : 70, isMobile ? 60 : 70),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              );
-
-              if (isMobile) {
-                return Column(
-                  children: [
-                    mediaContent,
-                    controlsContent,
-                  ],
-                );
-              }
-
-              bool isLeft = _authService.currentUser?.sidebarLeft ?? false;
-              return Row(
-                children:
-                    isLeft
-                        ? [
-                          SizedBox(width: 400, child: controlsContent),
-                          Expanded(child: mediaContent),
-                        ]
-                        : [
-                          Expanded(child: mediaContent),
-                          SizedBox(width: 400, child: controlsContent),
-                        ],
-              );
-            },
+              ),
+            ],
           ),
         ),
       );
