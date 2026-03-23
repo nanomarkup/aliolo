@@ -305,5 +305,6 @@
   "delete_collection": "Izbriši zbirko",
   "delete_collection_confirm": "Ste prepričani, da želite izbrisati to zbirko?",
   "folder_not_empty_msg": "Ni mogoče izbrisati: mapa ni prazna.",
-  "filter_dashboard": "Nadzorna plošča"
+  "filter_dashboard": "Nadzorna plošča",
+  "folder_already_exists": "Mapa s tem imenom v tem stebru že obstaja"
 }

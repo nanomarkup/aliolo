@@ -305,5 +305,6 @@
   "delete_collection": "Slet samling",
   "delete_collection_confirm": "Er du sikker på, at du vil slette denne samling?",
   "folder_not_empty_msg": "Kan ikke slette: mappen er ikke tom.",
-  "filter_dashboard": "Kontrolpanel"
+  "filter_dashboard": "Kontrolpanel",
+  "folder_already_exists": "En mappe med dette navn findes allerede i denne søjle"
 }

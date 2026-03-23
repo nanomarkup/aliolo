@@ -406,8 +406,31 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
 
     try {
       final now = DateTime.now();
+      final myId = _authService.currentUser?.serverId;
       
       if (_isFolderMode) {
+        // Validation: Prevent duplicate folder names for this user in this pillar
+        final newName = finalData['global']?.name?.trim().toLowerCase() ?? 
+                        finalData.values.firstWhere((d) => d.name != null, orElse: () => LocalizedSubjectData()).name?.trim().toLowerCase();
+        
+        if (newName != null) {
+          final isDuplicate = _allFolders.any((f) => 
+            f.ownerId == myId && 
+            f.id != widget.existingFolder?.id &&
+            f.getName('global').trim().toLowerCase() == newName
+          );
+
+          if (isDuplicate) {
+            if (mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text(context.t('folder_already_exists') ?? 'A folder with this name already exists in this pillar')),
+              );
+              setState(() => _isSaving = false);
+            }
+            return;
+          }
+        }
+
         final folderId = widget.existingFolder?.id ?? _cardService.generateId();
         final folder = FolderModel(
           id: folderId,

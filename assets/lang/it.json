@@ -306,5 +306,6 @@
   "delete_collection": "Elimina collezione",
   "delete_collection_confirm": "Sei sicuro di voler eliminare questa collezione?",
   "folder_not_empty_msg": "Impossibile eliminare: la cartella non è vuota.",
-  "filter_dashboard": "Dashboard"
+  "filter_dashboard": "Dashboard",
+  "folder_already_exists": "Una cartella con questo nome esiste già in questo pilastro"
 }

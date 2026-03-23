@@ -412,17 +412,19 @@ class _ProfilePageState extends State<ProfilePage> {
                       minimumSize: const Size(160, 50),
                     ),
                   ),
-                  const SizedBox(width: 16),
-                  OutlinedButton.icon(
-                    onPressed: _showDeleteAccountDialog,
-                    icon: const Icon(Icons.delete_forever),
-                    label: Text(context.t('delete_account')),
-                    style: OutlinedButton.styleFrom(
-                      foregroundColor: Colors.red,
-                      side: const BorderSide(color: Colors.red),
-                      minimumSize: const Size(160, 50),
+                  if (user.username != 'Aliolo') ...[
+                    const SizedBox(width: 16),
+                    OutlinedButton.icon(
+                      onPressed: _showDeleteAccountDialog,
+                      icon: const Icon(Icons.delete_forever),
+                      label: Text(context.t('delete_account')),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: Colors.red,
+                        side: const BorderSide(color: Colors.red),
+                        minimumSize: const Size(160, 50),
+                      ),
                     ),
-                  ),
+                  ],
                 ],
               ),
               const SizedBox(height: 24),

@@ -306,5 +306,6 @@
   "delete_collection": "Eliminar colección",
   "delete_collection_confirm": "¿Seguro que quieres eliminar esta colección?",
   "folder_not_empty_msg": "No se puede eliminar: la carpeta no está vacía.",
-  "filter_dashboard": "Tablero"
+  "filter_dashboard": "Tablero",
+  "folder_already_exists": "Ya existe una carpeta con este nombre en este pilar"
 }

@@ -305,5 +305,6 @@
   "delete_collection": "संग्रह हटाएं",
   "delete_collection_confirm": "क्या आप वाकई इस संग्रह को हटाना चाहते हैं?",
   "folder_not_empty_msg": "हटा नहीं सकते: फ़ोल्डर खाली नहीं है।",
-  "filter_dashboard": "डैशबोर्ड"
+  "filter_dashboard": "डैशबोर्ड",
+  "folder_already_exists": "इस नाम का फोल्डर इस पिलर में पहले से मौजूद है"
 }

@@ -305,5 +305,6 @@
   "delete_collection": "Dzēst kolekciju",
   "delete_collection_confirm": "Vai tiešām vēlaties dzēst šo kolekciju?",
   "folder_not_empty_msg": "Nevar dzēst: mape nav tukša.",
-  "filter_dashboard": "Informācijas panelis"
+  "filter_dashboard": "Informācijas panelis",
+  "folder_already_exists": "Mape ar šādu nosaukumu šajā pīlārā jau eksistē"
 }

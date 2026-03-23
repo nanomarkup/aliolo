@@ -305,5 +305,6 @@
   "delete_collection": "Ištrinti kolekciją",
   "delete_collection_confirm": "Ar tikrai norite ištrinti šią kolekciją?",
   "folder_not_empty_msg": "Negalima ištrinti: aplankas nėra tuščias.",
-  "filter_dashboard": "Valdymo skydas"
+  "filter_dashboard": "Valdymo skydas",
+  "folder_already_exists": "Aplankas tokiu pavadinimu jau egzistuoja šiame pilioriuje"
 }

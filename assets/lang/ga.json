@@ -305,5 +305,6 @@
   "delete_collection": "Scrios bailiúchán",
   "delete_collection_confirm": "An bhfuil tú cinnte go dteastaíonn uait an bailiúchán seo a scriosadh?",
   "folder_not_empty_msg": "Ní féidir scriosadh: níl an fillteán folamh.",
-  "filter_dashboard": "Painéal"
+  "filter_dashboard": "Painéal",
+  "folder_already_exists": "Tá fillteán leis an ainm seo ann cheana féin sa cholún seo"
 }

@@ -305,5 +305,6 @@
   "delete_collection": "Tanggalin ang koleksyon",
   "delete_collection_confirm": "Sigurado ka bang gusto mong tanggalin ang koleksyong ito?",
   "folder_not_empty_msg": "Hindi ma-delete: hindi walang laman ang folder.",
-  "filter_dashboard": "Dashboard"
+  "filter_dashboard": "Dashboard",
+  "folder_already_exists": "Mayroon nang folder na may ganitong pangalan sa pilar na ito"
 }

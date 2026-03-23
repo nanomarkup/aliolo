@@ -305,5 +305,6 @@
   "delete_collection": "Ștergeți colecția",
   "delete_collection_confirm": "Sigur doriți să ștergeți această colecție?",
   "folder_not_empty_msg": "Nu se poate șterge: folderul nu este gol.",
-  "filter_dashboard": "Tablou de bord"
+  "filter_dashboard": "Tablou de bord",
+  "folder_already_exists": "Un dosar cu acest nume există deja în acest pilon"
 }

@@ -305,5 +305,6 @@
   "delete_collection": "Smazat kolekci",
   "delete_collection_confirm": "Opravdu chcete tuto kolekci smazat?",
   "folder_not_empty_msg": "Nelze smazat: složka není prázdná.",
-  "filter_dashboard": "Nástěnka"
+  "filter_dashboard": "Nástěnka",
+  "folder_already_exists": "Složka s tímto názvem již v tomto pilíři existuje"
 }

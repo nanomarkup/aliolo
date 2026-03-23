@@ -305,5 +305,6 @@
   "delete_collection": "Poista kokoelma",
   "delete_collection_confirm": "Haluatko varmasti poistaa tämän kokoelman?",
   "folder_not_empty_msg": "Ei voi poistaa: kansio ei ole tyhjä.",
-  "filter_dashboard": "Hallintapaneeli"
+  "filter_dashboard": "Hallintapaneeli",
+  "folder_already_exists": "Tämänniminen kansio on jo olemassa tässä pilarissa"
 }

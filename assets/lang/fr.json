@@ -306,5 +306,6 @@
   "delete_collection": "Supprimer la collection",
   "delete_collection_confirm": "Êtes-vous sûr de vouloir supprimer cette collection ?",
   "folder_not_empty_msg": "Impossible de supprimer : le dossier n'est pas vide.",
-  "filter_dashboard": "Tableau de bord"
+  "filter_dashboard": "Tableau de bord",
+  "folder_already_exists": "Un dossier portant ce nom existe déjà dans ce pilier"
 }

@@ -306,5 +306,6 @@
   "delete_collection": "컬렉션 삭제",
   "delete_collection_confirm": "이 컬렉션을 삭제하시겠습니까?",
   "folder_not_empty_msg": "삭제할 수 없음: 폴더가 비어있지 않습니다.",
-  "filter_dashboard": "대시보드"
+  "filter_dashboard": "대시보드",
+  "folder_already_exists": "이 이름의 폴더가 이 기둥에 이미 존재합니다"
 }

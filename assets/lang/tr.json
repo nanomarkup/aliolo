@@ -305,5 +305,6 @@
   "delete_collection": "Koleksiyonu Sil",
   "delete_collection_confirm": "Bu koleksiyonu silmek istediğinizden emin misiniz?",
   "folder_not_empty_msg": "Silinemiyor: klasör boş değil.",
-  "filter_dashboard": "Kontrol Paneli"
+  "filter_dashboard": "Kontrol Paneli",
+  "folder_already_exists": "Bu isimde bir klasör bu sütunda zaten var"
 }

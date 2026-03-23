@@ -10313,3 +10313,39 @@ INSERT INTO ui_translations (key, lang, value) VALUES
 ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value, updated_at = NOW();
 
 COMMIT;
+
+-- New translations for duplicate folder validation
+INSERT INTO ui_translations (key, lang, value) VALUES ('folder_already_exists', 'ar', 'يوجد مجلد بهذا الاسم بالفعل في هذا الركن') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('folder_already_exists', 'bg', 'Папка с това име вече съществува в този стълб') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('folder_already_exists', 'cs', 'Složka s tímto názvem již v tomto pilíři existuje') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('folder_already_exists', 'da', 'En mappe med dette navn findes allerede i denne søjle') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('folder_already_exists', 'de', 'Ein Ordner mit diesem Namen existiert bereits in dieser Säule') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('folder_already_exists', 'el', 'Ένας φάκελος με αυτό το όνομα υπάρχει ήδη σε αυτόν τον πυλώνα') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('folder_already_exists', 'en', 'A folder with this name already exists in this pillar') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('folder_already_exists', 'es', 'Ya existe una carpeta con este nombre en este pilar') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('folder_already_exists', 'et', 'Selle nimega kaust on selles sambas juba olemas') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('folder_already_exists', 'fi', 'Tämänniminen kansio on jo olemassa tässä pilarissa') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('folder_already_exists', 'fr', 'Un dossier portant ce nom existe déjà dans ce pilier') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('folder_already_exists', 'ga', 'Tá fillteán leis an ainm seo ann cheana féin sa cholún seo') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('folder_already_exists', 'hi', 'इस नाम का फोल्डर इस पिलर में पहले से मौजूद है') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('folder_already_exists', 'hr', 'Mapa s tim imenom već postoji u ovom stupu') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('folder_already_exists', 'hu', 'Egy ilyen nevű mappa már létezik ebben a pillérben') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('folder_already_exists', 'id', 'Folder dengan nama ini sudah ada di pilar ini') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('folder_already_exists', 'it', 'Una cartella con questo nome esiste già in questo pilastro') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('folder_already_exists', 'ja', 'この名前のフォルダはこのピラーに既に存在します') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('folder_already_exists', 'ko', '이 이름의 폴더가 이 기둥에 이미 존재합니다') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('folder_already_exists', 'lt', 'Aplankas tokiu pavadinimu jau egzistuoja šiame pilioriuje') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('folder_already_exists', 'lv', 'Mape ar šādu nosaukumu šajā pīlārā jau eksistē') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('folder_already_exists', 'mt', 'Folder b''dan l-isem diġà jeżisti f''dan il-pilastru') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('folder_already_exists', 'nl', 'Er bestaat al een map met deze naam in deze zuil') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('folder_already_exists', 'pl', 'Folder o tej nazwie już istnieje w tym filarze') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('folder_already_exists', 'pt', 'Já existe uma pasta com este nome neste pilar') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('folder_already_exists', 'ro', 'Un dosar cu acest nume există deja în acest pilon') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('folder_already_exists', 'sk', 'Priečinok s týmto názvom už v tomto pilieri existuje') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('folder_already_exists', 'sl', 'Mapa s tem imenom v tem stebru že obstaja') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('folder_already_exists', 'sv', 'En mapp med detta namn finns redan i denna pelare') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('folder_already_exists', 'tl', 'Mayroon nang folder na may ganitong pangalan sa pilar na ito') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('folder_already_exists', 'tr', 'Bu isimde bir klasör bu sütunda zaten var') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('folder_already_exists', 'uk', 'Папка з такою назвою вже існує в цьому стовпі') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('folder_already_exists', 'vi', 'Thư mục có tên này đã tồn tại trong trụ cột này') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('folder_already_exists', 'zh', '该名称的文件夹已在此支柱中存在') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;

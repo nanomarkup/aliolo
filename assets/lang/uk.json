@@ -307,5 +307,6 @@
   "delete_collection": "Видалити колекцію",
   "delete_collection_confirm": "Ви впевнені, що хочете видалити цю колекцію?",
   "folder_not_empty_msg": "Неможливо видалити: папка не порожня.",
-  "filter_dashboard": "Дашборд"
+  "filter_dashboard": "Дашборд",
+  "folder_already_exists": "Папка з такою назвою вже існує в цьому стовпі"
 }

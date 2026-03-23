@@ -305,5 +305,6 @@
   "delete_collection": "Hapus Koleksi",
   "delete_collection_confirm": "Apakah Anda yakin ingin menghapus koleksi ini?",
   "folder_not_empty_msg": "Tidak dapat menghapus: folder tidak kosong.",
-  "filter_dashboard": "Dasbor"
+  "filter_dashboard": "Dasbor",
+  "folder_already_exists": "Folder dengan nama ini sudah ada di pilar ini"
 }

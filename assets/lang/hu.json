@@ -305,5 +305,6 @@
   "delete_collection": "Gyűjtemény törlése",
   "delete_collection_confirm": "Biztosan törölni szeretné ezt a gyűjteményt?",
   "folder_not_empty_msg": "Nem törölhető: a mappa nem üres.",
-  "filter_dashboard": "Vezérlőpult"
+  "filter_dashboard": "Vezérlőpult",
+  "folder_already_exists": "Egy ilyen nevű mappa már létezik ebben a pillérben"
 }

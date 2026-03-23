@@ -305,5 +305,6 @@
   "delete_collection": "Collectie verwijderen",
   "delete_collection_confirm": "Weet je zeker dat je deze collectie wilt verwijderen?",
   "folder_not_empty_msg": "Kan niet verwijderen: map is niet leeg.",
-  "filter_dashboard": "Dashboard"
+  "filter_dashboard": "Dashboard",
+  "folder_already_exists": "Er bestaat al een map met deze naam in deze zuil"
 }

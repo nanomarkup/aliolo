@@ -306,5 +306,6 @@
   "delete_collection": "Excluir coleção",
   "delete_collection_confirm": "Tem certeza que deseja excluir esta coleção?",
   "folder_not_empty_msg": "Não é possível excluir: a pasta não está vazia.",
-  "filter_dashboard": "Painel"
+  "filter_dashboard": "Painel",
+  "folder_already_exists": "Já existe uma pasta com este nome neste pilar"
 }

@@ -306,5 +306,6 @@
   "delete_collection": "コレクションを削除",
   "delete_collection_confirm": "このコレクションを削除してもよろしいですか？",
   "folder_not_empty_msg": "削除できません：フォルダが空ではありません。",
-  "filter_dashboard": "ダッシュボード"
+  "filter_dashboard": "ダッシュボード",
+  "folder_already_exists": "この名前のフォルダはこのピラーに既に存在します"
 }

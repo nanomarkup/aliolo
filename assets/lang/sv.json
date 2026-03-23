@@ -305,5 +305,6 @@
   "delete_collection": "Ta bort samling",
   "delete_collection_confirm": "Är du säker på att du vill ta bort denna samling?",
   "folder_not_empty_msg": "Kan inte ta bort: mappen är inte tom.",
-  "filter_dashboard": "Instrumentpanel"
+  "filter_dashboard": "Instrumentpanel",
+  "folder_already_exists": "En mapp med detta namn finns redan i denna pelare"
 }

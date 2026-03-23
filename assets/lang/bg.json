@@ -305,5 +305,6 @@
   "delete_collection": "Изтриване на колекция",
   "delete_collection_confirm": "Сигурни ли сте, че искате да изтриете тази колекция?",
   "folder_not_empty_msg": "Не може да се изтрие: папката не е празна.",
-  "filter_dashboard": "Табло"
+  "filter_dashboard": "Табло",
+  "folder_already_exists": "Папка с това име вече съществува в този стълб"
 }

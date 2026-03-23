@@ -1189,6 +1189,7 @@ class _FolderPageState extends State<FolderPage> {
       folderId: widget.folder.id,
       ageGroup: widget.initialAgeFilter,
       collectionFilter: widget.initialCollectionFilter,
+      rootOnly: false,
     );
     _loadData();
   }
@@ -1348,7 +1349,36 @@ class _FolderPageState extends State<FolderPage> {
               else if (_filteredContent.isEmpty) const SliverFillRemaining(child: Center(child: Text('No subjects found')))
               else SliverPadding(padding: const EdgeInsets.only(bottom: 32), sliver: SliverList(delegate: SliverChildBuilderDelegate((context, index) {
                 final item = _filteredContent[index];
-                if (item is CollectionModel) {
+                if (item is FolderModel) {
+                  // 1. Calculate how many items in this folder belong to the SELECTED CATEGORY
+                  final myId = getIt<AuthService>().currentUser?.serverId;
+                  final folderCategoryTotal = _allContent.where((e) {
+                    if (e.folderId != item.id) return false;
+                    if (_filters.collectionFilter == 'mine') return e.ownerId == myId;
+                    if (_filters.collectionFilter == 'public') {
+                      if (e is SubjectModel) return e.isPublic;
+                      if (e is CollectionModel) return e.isPublic;
+                      return false;
+                    }
+                    if (_filters.collectionFilter == 'favorites') return e.isOnDashboard;
+                    return true;
+                  }).length;
+
+                  // 2. Matching count (filtered by Category + Age + Search)
+                  final matchingInFolder = _matchingContent.where((e) => e.folderId == item.id).length;
+
+                  return _FolderListTile(
+                    folder: item, 
+                    matchingCount: matchingInFolder, 
+                    totalCount: folderCategoryTotal, 
+                    pillar: widget.pillar, 
+                    languageCode: widget.languageCode, 
+                    initialAgeFilter: _filters.ageGroup, 
+                    initialCollectionFilter: _filters.collectionFilter,
+                    onChanged: () { _loadData(); _hasUpdated = true; },
+                    onFilterChanged: (age, coll) { setState(() { _filters = _filters.copyWith(ageGroup: age, collectionFilter: coll); _applyFilters(); }); },
+                  );
+                } else if (item is CollectionModel) {
                   return _CollectionListTile(
                     collection: item, 
                     pillar: widget.pillar, 
@@ -1419,6 +1449,8 @@ class _FolderListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final pillarColor = pillar.getColor();
     final bool isEmpty = matchingCount == 0;
+    final isOwner = folder.ownerId == getIt<AuthService>().currentUser?.serverId;
+
     return Opacity(
       opacity: isEmpty ? 0.5 : 1.0,
       child: Padding(
@@ -1440,7 +1472,30 @@ class _FolderListTile extends StatelessWidget {
               const SizedBox(width: 16),
               Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Text(folder.getName(languageCode), style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
-                Text(matchingCount == totalCount ? '$totalCount ${context.plural('subject', totalCount)}' : '$matchingCount / $totalCount ${context.plural('subject', totalCount)}', style: TextStyle(color: Colors.grey[600], fontSize: 14, fontWeight: matchingCount > 0 ? FontWeight.bold : FontWeight.normal)),
+                Row(
+                  children: [
+                    Text(
+                      matchingCount == totalCount ? '$totalCount ${context.plural('subject', totalCount)}' : '$matchingCount / $totalCount ${context.plural('subject', totalCount)}', 
+                      style: TextStyle(color: Colors.grey[600], fontSize: 14, fontWeight: matchingCount > 0 ? FontWeight.bold : FontWeight.normal)
+                    ),
+                    if (!isOwner && folder.ownerName != null) ...[
+                      const SizedBox(width: 8),
+                      Text('•', style: TextStyle(color: Colors.grey[400], fontSize: 14)),
+                      const SizedBox(width: 8),
+                      Flexible(
+                        child: Text(
+                          folder.ownerName!,
+                          style: TextStyle(
+                            color: pillarColor.withValues(alpha: 0.7), 
+                            fontSize: 14, 
+                            fontWeight: folder.ownerName == 'Aliolo' ? FontWeight.bold : FontWeight.w500
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
+                  ],
+                ),
               ])),
               const Icon(Icons.chevron_right, color: Colors.grey),
             ]),

@@ -305,5 +305,6 @@
   "delete_collection": "Kustuta kollektsioon",
   "delete_collection_confirm": "Kas olete kindel, et soovite selle kollektsiooni kustutada?",
   "folder_not_empty_msg": "Ei saa kustutada: kaust pole tühi.",
-  "filter_dashboard": "Töölaud"
+  "filter_dashboard": "Töölaud",
+  "folder_already_exists": "Selle nimega kaust on selles sambas juba olemas"
 }

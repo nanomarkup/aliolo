@@ -306,5 +306,6 @@
   "delete_collection": "删除收藏",
   "delete_collection_confirm": "你确定要删除这个收藏吗？",
   "folder_not_empty_msg": "无法删除：文件夹非空。",
-  "filter_dashboard": "仪表板"
+  "filter_dashboard": "仪表板",
+  "folder_already_exists": "该名称的文件夹已在此支柱中存在"
 }

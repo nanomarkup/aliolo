@@ -305,5 +305,6 @@
   "delete_collection": "Xóa bộ sưu tập",
   "delete_collection_confirm": "Bạn có chắc chắn muốn xóa bộ sưu tập này không?",
   "folder_not_empty_msg": "Không thể xóa: thư mục không trống.",
-  "filter_dashboard": "Bảng điều khiển"
+  "filter_dashboard": "Bảng điều khiển",
+  "folder_already_exists": "Thư mục có tên này đã tồn tại trong trụ cột này"
 }

@@ -305,5 +305,6 @@
   "delete_collection": "حذف المجموعة",
   "delete_collection_confirm": "هل أنت متأكد أنك تريد حذف هذه المجموعة؟",
   "folder_not_empty_msg": "لا يمكن الحذف: المجلد ليس فارغًا.",
-  "filter_dashboard": "لوحة القيادة"
+  "filter_dashboard": "لوحة القيادة",
+  "folder_already_exists": "يوجد مجلد بهذا الاسم بالفعل في هذا الركن"
 }

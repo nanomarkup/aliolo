@@ -8,6 +8,8 @@ class FolderModel implements ContentItem {
   final int pillarId;
   @override
   final String ownerId;
+  @override
+  final String? ownerName;
   final DateTime createdAt;
   @override
   final DateTime updatedAt;
@@ -18,8 +20,6 @@ class FolderModel implements ContentItem {
   @override
   ContentType get type => ContentType.folder;
   @override
-  String? get ownerName => null; // Currently folders don't have owner names, or we can use ownerId
-  @override
   String? get folderId => null; // Folders are top-level or in pillar, not in folders (yet?)
   @override
   bool get isOnDashboard => false;
@@ -28,6 +28,7 @@ class FolderModel implements ContentItem {
     required this.id,
     required this.pillarId,
     required this.ownerId,
+    this.ownerName,
     required this.createdAt,
     required this.updatedAt,
     this.localizedData = const {},
@@ -42,6 +43,8 @@ class FolderModel implements ContentItem {
         LocalizedSubjectData.fromJson(value as Map<String, dynamic>),
       ),
     );
+
+    final Map<String, dynamic>? profile = json['profiles'];
 
     int count = 0;
     
@@ -73,6 +76,7 @@ class FolderModel implements ContentItem {
       id: json['id'],
       pillarId: json['pillar_id'] ?? 1,
       ownerId: json['owner_id'] ?? '',
+      ownerName: profile != null ? profile['username'] : null,
       createdAt: DateTime.tryParse(json['created_at'] ?? '') ?? DateTime.now(),
       updatedAt: DateTime.tryParse(json['updated_at'] ?? '') ?? DateTime.now(),
       localizedData: localized,

@@ -128,6 +128,30 @@ class CardService with ChangeNotifier {
 
   // --- Folders ---
 
+  Future<List<FolderModel>> _withFolderAuthors(List<dynamic> data) async {
+    if (data.isEmpty) return [];
+    
+    final Set<String> ownerIds = data.map((e) => e['owner_id'].toString()).toSet();
+    final List<dynamic> profilesData = await _supabase!
+        .from('profiles')
+        .select('id, username')
+        .inFilter('id', ownerIds.toList());
+    
+    final Map<String, String> profileMap = {
+      for (var p in profilesData) p['id'].toString(): p['username']?.toString() ?? 'Unknown'
+    };
+
+    return data.map((json) {
+      final ownerId = json['owner_id'];
+      final username = profileMap[ownerId];
+      // Inject profile for FolderModel.fromJson
+      if (username != null) {
+        json['profiles'] = {'username': username};
+      }
+      return FolderModel.fromJson(json);
+    }).toList();
+  }
+
   Future<List<FolderModel>> getFoldersByPillar(int pillarId) async {
     final user = _authService.currentUser;
     if (user == null || user.serverId == null) return [];
@@ -136,7 +160,7 @@ class CardService with ChangeNotifier {
           .from('folders')
           .select('*, subjects(count), collections(count)')
           .eq('pillar_id', pillarId);
-      return data.map((json) => FolderModel.fromJson(json)).toList();
+      return _withFolderAuthors(data);
     } catch (e) {
       print('Error fetching folders by pillar: $e');
       return [];
@@ -150,7 +174,7 @@ class CardService with ChangeNotifier {
       final List<dynamic> data = await _supabase!
           .from('folders')
           .select('*, subjects(count), collections(count)');
-      return data.map((json) => FolderModel.fromJson(json)).toList();
+      return _withFolderAuthors(data);
     } catch (e) {
       print('Error fetching all folders: $e');
       return [];
@@ -164,7 +188,7 @@ class CardService with ChangeNotifier {
           .from('folders')
           .select('*, subjects(count), collections(count)')
           .inFilter('id', ids);
-      return data.map((json) => FolderModel.fromJson(json)).toList();
+      return _withFolderAuthors(data);
     } catch (e) {
       print('Error fetching folders by IDs: $e');
       return [];

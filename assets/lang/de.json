@@ -306,5 +306,6 @@
   "delete_collection": "Kollektion löschen",
   "delete_collection_confirm": "Möchten Sie diese Kollektion wirklich löschen?",
   "folder_not_empty_msg": "Löschen nicht möglich: Ordner ist nicht leer.",
-  "filter_dashboard": "Dashboard"
+  "filter_dashboard": "Dashboard",
+  "folder_already_exists": "Ein Ordner mit diesem Namen existiert bereits in dieser Säule"
 }
