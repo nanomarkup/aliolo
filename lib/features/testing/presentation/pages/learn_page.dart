@@ -293,7 +293,6 @@ class _LearnPageState extends State<LearnPage> {
                 IconButton(
                   icon: const Icon(Icons.arrow_back),
                   onPressed: () => Navigator.pop(context),
-                  tooltip: 'Back',
                 ),
                 if (_currentCard.getAudioUrl(lang) != null)
                   IconButton(
@@ -305,7 +304,6 @@ class _LearnPageState extends State<LearnPage> {
                         player.play();
                       }
                     },
-                    tooltip: 'Play Audio',
                   ),
                 IconButton(
                   icon: Icon(_isAutoPlay ? Icons.pause_circle : Icons.play_circle),
@@ -322,7 +320,6 @@ class _LearnPageState extends State<LearnPage> {
                       }
                     });
                   },
-                  tooltip: 'Auto-play',
                 ),
                 if (!kIsWeb) const WindowControls(color: Colors.white),
               ],
@@ -341,7 +338,7 @@ class _LearnPageState extends State<LearnPage> {
               // Integrated Header
               Container(
                 width: double.infinity,
-                padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 32),
+                padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 32),
                 color: headerColor.withValues(alpha: 0.05),
                 child: Wrap(
                   alignment: WrapAlignment.center,

@@ -102,6 +102,15 @@ class _TestPageState extends State<TestPage> {
       if (_isAnswered) {
         _nextCard();
       }
+    } else {
+      // Handle number keys 1-9
+      final keyLabel = event.logicalKey.keyLabel;
+      if (keyLabel.length == 1 && RegExp(r'[1-9]').hasMatch(keyLabel)) {
+        final index = int.parse(keyLabel) - 1;
+        if (index < _options.length && !_isAnswered) {
+          _selectOption(index);
+        }
+      }
     }
   }
 
@@ -300,7 +309,6 @@ class _TestPageState extends State<TestPage> {
                 IconButton(
                   icon: const Icon(Icons.arrow_back),
                   onPressed: () => Navigator.pop(context),
-                  tooltip: 'Back',
                 ),
                 if ((_currentCard.testMode == 'audio_to_text' || _currentCard.testMode == 'audio_to_image') &&
                     _currentCard.getAudioUrl(lang) != null &&
@@ -314,7 +322,6 @@ class _TestPageState extends State<TestPage> {
                         player.play();
                       }
                     },
-                    tooltip: 'Replay Audio',
                   ),
                 IconButton(
                   icon: Icon(_isAutoPlay ? Icons.pause_circle : Icons.play_circle),
@@ -328,7 +335,6 @@ class _TestPageState extends State<TestPage> {
                       }
                     });
                   },
-                  tooltip: 'Auto-play',
                 ),
                 if (!kIsWeb) const WindowControls(color: Colors.white),
               ],
@@ -347,7 +353,7 @@ class _TestPageState extends State<TestPage> {
               // Integrated Header
               Container(
                 width: double.infinity,
-                padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 32),
+                padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 32),
                 color: headerColor.withValues(alpha: 0.05),
                 child: Wrap(
                   alignment: WrapAlignment.center,
@@ -536,31 +542,42 @@ class _TestPageState extends State<TestPage> {
                                   Text(context.t('select_an_answer'), style: TextStyle(fontSize: isMobile ? 12 : 14, fontWeight: FontWeight.bold, color: Colors.grey)),
                                   const SizedBox(height: 16),
                                   Expanded(
-                                    child: ListView.separated(
-                                      itemCount: _options.length,
-                                      separatorBuilder: (_, __) => const SizedBox(height: 12),
-                                      itemBuilder: (context, index) {
-                                        final opt = _options[index];
-                                        final isSelected = _selectedIndex == index;
-                                        final isCorrect = opt.id == _correctAnswerId;
-                                        Color? color;
-                                        if (_isAnswered) {
-                                          color = isCorrect ? Colors.green : (isSelected ? Colors.red : null);
-                                        } else if (isSelected) color = headerColor;
-                                        return InkWell(
-                                          onTap: () => _selectOption(index),
-                                          borderRadius: BorderRadius.circular(12),
-                                          child: Container(
-                                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                                            decoration: BoxDecoration(
-                                              border: Border.all(color: color ?? Colors.grey[300]!, width: 2),
-                                              borderRadius: BorderRadius.circular(12),
-                                              color: color?.withValues(alpha: 0.1),
+                                    child: Center(
+                                      child: ListView.separated(
+                                        shrinkWrap: true,
+                                        physics: const BouncingScrollPhysics(),
+                                        itemCount: _options.length,
+                                        separatorBuilder: (_, __) => const SizedBox(height: 12),
+                                        itemBuilder: (context, index) {
+                                          final opt = _options[index];
+                                          final isSelected = _selectedIndex == index;
+                                          final isCorrect = opt.id == _correctAnswerId;
+                                          Color? color;
+                                          if (_isAnswered) {
+                                            color = isCorrect ? Colors.green : (isSelected ? Colors.red : null);
+                                          } else if (isSelected) color = headerColor;
+                                          return InkWell(
+                                            onTap: () => _selectOption(index),
+                                            borderRadius: BorderRadius.circular(12),
+                                            child: Container(
+                                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                                              decoration: BoxDecoration(
+                                                border: Border.all(color: color ?? Colors.grey[300]!, width: 2),
+                                                borderRadius: BorderRadius.circular(12),
+                                                color: color?.withValues(alpha: 0.1),
+                                              ),
+                                              child: Row(
+                                                children: [
+                                                  Text('${index + 1}.', style: TextStyle(fontSize: 14, color: Colors.grey[500], fontWeight: FontWeight.bold)),
+                                                  const SizedBox(width: 8),
+                                                  Expanded(child: Text(opt.text, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500), textAlign: TextAlign.center)),
+                                                  const SizedBox(width: 20), // Balance the index text width
+                                                ],
+                                              ),
                                             ),
-                                            child: Text(opt.text, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500), textAlign: TextAlign.center),
-                                          ),
-                                        );
-                                      },
+                                          );
+                                        },
+                                      ),
                                     ),
                                   ),
                                 ],

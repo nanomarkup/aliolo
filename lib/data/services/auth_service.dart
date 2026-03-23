@@ -287,6 +287,7 @@ class AuthService extends ChangeNotifier {
       final List<dynamic> data = await _supabase!
           .from('profiles')
           .select()
+          .eq('show_on_leaderboard', true)
           .order('total_xp', ascending: false)
           .range(page * pageSize, (page + 1) * pageSize - 1);
 
@@ -298,12 +299,13 @@ class AuthService extends ChangeNotifier {
   }
 
   Future<int?> getMyGlobalRank() async {
-    if (_currentUser == null || _currentUser!.serverId == null) return null;
+    if (_currentUser == null || _currentUser!.serverId == null || !_currentUser!.showOnLeaderboard) return null;
     try {
       // Very simple way to get rank for a medium amount of users
       final List<dynamic> data = await _supabase!
           .from('profiles')
           .select('id')
+          .eq('show_on_leaderboard', true)
           .order('total_xp', ascending: false);
 
       for (int i = 0; i < data.length; i++) {
