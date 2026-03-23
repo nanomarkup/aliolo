@@ -11,6 +11,7 @@ abstract class ContentItem {
   DateTime get updatedAt;
   ContentType get type;
   String? get ownerName;
+  bool get isOnDashboard;
 
   String getName(String langCode);
   String getDescription(String langCode);

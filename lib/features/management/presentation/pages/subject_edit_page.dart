@@ -86,7 +86,7 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
     _selectedAgeGroup = widget.existingSubject?.ageGroup ??
         ((widget.initialAgeGroup != null && widget.initialAgeGroup != 'all')
             ? widget.initialAgeGroup!
-            : 'all');
+            : '15_plus');
     _selectedType = widget.existingSubject?.typeStr ?? 
         (widget.isCollectionMode ? 'collection' : 'standard');
     _selectedFolderId = widget.existingSubject?.folderId ?? widget.folderId;
@@ -423,6 +423,7 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
         final collection = CollectionModel(
           id: collectionId,
           pillarId: _selectedPillar,
+          ageGroup: _selectedAgeGroup,
           ownerId: widget.existingSubject?.ownerId ?? _authService.currentUser!.serverId!,
           createdAt: widget.existingSubject?.createdAt ?? now,
           updatedAt: now,
@@ -430,6 +431,7 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
           subjectIds: _linkedSubjectIds,
           isPublic: _isPublic,
           folderId: _selectedFolderId,
+          isOnDashboard: widget.existingSubject?.isOnDashboard ?? false,
         );
         await _cardService.addCollection(collection, _linkedSubjectIds);
       } else {
@@ -635,32 +637,29 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
                     })(),
                     onChanged: isOwner ? (val) => setState(() => _selectedFolderId = val) : null,
                   ),
-                ),
-                if (_selectedType != 'collection') ...[
+                  ),
                   const SizedBox(width: 16),
                   Expanded(
-                    child: DropdownButtonFormField<String>(
-                      value: _selectedAgeGroup,
-                      decoration: InputDecoration(
-                        labelText: context.t('age_group'),
-                        border: const OutlineInputBorder(),
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                      ),
-                      items: [
-                        DropdownMenuItem(value: 'all', child: Text(context.t('age_all'))),
-                        DropdownMenuItem(value: '0_6', child: Text(context.t('age_0_6'))),
-                        DropdownMenuItem(value: '7_14', child: Text(context.t('age_7_14'))),
-                        DropdownMenuItem(value: '15_plus', child: Text(context.t('age_15_plus'))),
-                      ],
-                      onChanged: isOwner ? (val) {
-                        if (val != null) setState(() => _selectedAgeGroup = val);
-                      } : null,
+                  child: DropdownButtonFormField<String>(
+                    value: _selectedAgeGroup,
+                    decoration: InputDecoration(
+                      labelText: context.t('age_group'),
+                      border: const OutlineInputBorder(),
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                     ),
+                    items: [
+                      DropdownMenuItem(value: '0_6', child: Text(context.t('age_0_6'))),
+                      DropdownMenuItem(value: '7_14', child: Text(context.t('age_7_14'))),
+                      DropdownMenuItem(value: '15_plus', child: Text(context.t('age_15_plus'))),
+                    ],
+                    onChanged: isOwner ? (val) {
+                      if (val != null) setState(() => _selectedAgeGroup = val);
+                    } : null,
                   ),
-                ],
-              ],
-            ),
-          ],
+                  ),
+                  ],
+                  ),
+                  ],
           if (!_isFolderMode) ...[
             const SizedBox(height: 20),
             SwitchListTile(

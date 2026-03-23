@@ -33,17 +33,26 @@ class TestPage extends StatefulWidget {
   State<TestPage> createState() => _TestPageState();
 }
 
+class TestOption {
+  final String text;
+  final String? imageUrl;
+  final String id;
+
+  TestOption({required this.text, this.imageUrl, required this.id});
+}
+
 class _TestPageState extends State<TestPage> {
   late SubjectCard _currentSubjectCard;
   CardModel get _currentCard => _currentSubjectCard.card;
   SubjectModel get _subject => _currentSubjectCard.subject;
 
   // MCQ State
-  List<String> _options = [];
+  List<TestOption> _options = [];
   int _selectedIndex = -1;
   bool _isAnswered = false;
   bool _isCorrect = false;
   String _correctAnswerText = '';
+  String _correctAnswerId = '';
 
   // Media State
   List<String> _currentImages = [];
@@ -112,30 +121,41 @@ class _TestPageState extends State<TestPage> {
   }
 
   Future<void> _setupMCQ() async {
-    _correctAnswerText = _getDisplayAnswer(_currentCard);
-    final user = _authService.currentUser;
     final lang = widget.languageCode.toLowerCase();
+    _correctAnswerText = _getDisplayAnswer(_currentCard);
+    _correctAnswerId = _currentCard.id;
+    final user = _authService.currentUser;
 
-    List<String> options = [];
+    List<TestOption> options = [];
 
-    if (_currentCard.subjectId == 'Math') {
-      options = _currentCard.mathOptions ?? [];
+    if (_subject.isMath) {
+      final mathOpts = _currentCard.mathOptions ?? [];
+      options = mathOpts.map((o) => TestOption(text: o, id: o)).toList();
     } else {
       final allInSubject = await CardService().getCardsBySubject(
         _currentCard.subjectId,
       );
-      final validOptions =
-          allInSubject
-              .where((c) => c.id != _currentCard.id)
-              .map((c) => _getDisplayAnswer(c))
-              .where((ans) => ans.isNotEmpty && ans != _correctAnswerText)
-              .toSet()
-              .toList();
+      
+      final distractors = allInSubject
+          .where((c) => c.id != _currentCard.id)
+          .toList();
+      distractors.shuffle();
 
-      validOptions.shuffle();
       final optCount = user?.optionsCount ?? 6;
-      options = validOptions.take(optCount - 1).toList();
-      options.add(_correctAnswerText);
+      final selectedDistractors = distractors.take(optCount - 1).toList();
+
+      options = selectedDistractors.map((c) => TestOption(
+        text: _getDisplayAnswer(c),
+        imageUrl: c.primaryImageUrl,
+        id: c.id,
+      )).toList();
+
+      options.add(TestOption(
+        text: _correctAnswerText,
+        imageUrl: _currentCard.primaryImageUrl,
+        id: _currentCard.id,
+      ));
+      
       options.shuffle();
     }
 
@@ -162,7 +182,7 @@ class _TestPageState extends State<TestPage> {
 
   Future<void> _selectOption(int index) async {
     if (_isAnswered) return;
-    final correct = _options[index] == _correctAnswerText;
+    final correct = _options[index].id == _correctAnswerId;
     setState(() {
       _selectedIndex = index;
       _isAnswered = true;
@@ -282,6 +302,8 @@ class _TestPageState extends State<TestPage> {
           body: LayoutBuilder(
             builder: (context, constraints) {
               final isMobile = constraints.maxWidth < 800;
+              final isAudioToText = _currentCard.testMode == 'audio_to_text';
+              final isAudioToImage = _currentCard.testMode == 'audio_to_image';
 
               final mediaContent = Expanded(
                 flex: 3,
@@ -297,7 +319,58 @@ class _TestPageState extends State<TestPage> {
                       child: Stack(
                         fit: StackFit.expand,
                         children: [
-                          if (_showingVideo)
+                          if (isAudioToText)
+                            Container(
+                              color: headerColor.withValues(alpha: 0.05),
+                              child: Center(
+                                child: Icon(Icons.hearing, size: 120, color: headerColor.withValues(alpha: 0.5)),
+                              ),
+                            )
+                          else if (isAudioToImage)
+                            Padding(
+                              padding: const EdgeInsets.all(16),
+                              child: GridView.builder(
+                                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  crossAxisSpacing: 16,
+                                  mainAxisSpacing: 16,
+                                ),
+                                itemCount: _options.length,
+                                itemBuilder: (context, index) {
+                                  final opt = _options[index];
+                                  final isSelected = _selectedIndex == index;
+                                  final isCorrect = opt.id == _correctAnswerId;
+                                  
+                                  Color? borderColor;
+                                  if (_isAnswered) {
+                                    borderColor = isCorrect ? Colors.green : (isSelected ? Colors.red : Colors.grey[300]);
+                                  } else if (isSelected) {
+                                    borderColor = headerColor;
+                                  }
+
+                                  return InkWell(
+                                    onTap: () => _selectOption(index),
+                                    borderRadius: BorderRadius.circular(16),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(16),
+                                        border: Border.all(
+                                          color: borderColor ?? Colors.grey[300]!,
+                                          width: isSelected || _isAnswered ? 4 : 2,
+                                        ),
+                                      ),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(12),
+                                        child: opt.imageUrl != null 
+                                          ? AlioloImage(imageUrl: opt.imageUrl!, fit: BoxFit.cover)
+                                          : Center(child: Text(opt.text, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold))),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            )
+                          else if (_showingVideo)
                             Video(controller: controller)
                           else if (_subject.isDivision)
                             DivisionGrid(
@@ -350,6 +423,44 @@ class _TestPageState extends State<TestPage> {
                               size: 100,
                               color: Colors.grey,
                             ),
+                          // Prompt Overlay
+                          if (!isAudioToText && !isAudioToImage)
+                            Positioned(
+                              top: 0,
+                              left: 0,
+                              right: 0,
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    begin: Alignment.topCenter,
+                                    end: Alignment.bottomCenter,
+                                    colors: [
+                                      Colors.black.withValues(alpha: 0.6),
+                                      Colors.transparent,
+                                    ],
+                                  ),
+                                ),
+                                child: Text(
+                                  _currentCard.getPrompt(lang).isNotEmpty
+                                      ? _currentCard.getPrompt(lang)
+                                      : context.t('select_an_answer'),
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w500,
+                                    shadows: [
+                                      Shadow(
+                                        offset: Offset(0, 1),
+                                        blurRadius: 3.0,
+                                        color: Colors.black,
+                                      ),
+                                    ],
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ),
                         ],
                       ),
                     ),
@@ -370,119 +481,119 @@ class _TestPageState extends State<TestPage> {
                       color: headerColor,
                     ),
                     Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            _currentCard.getPrompt(lang).isNotEmpty
-                                ? _currentCard.getPrompt(lang)
-                                : context.t('select_an_answer'),
-                            style: TextStyle(
-                              fontSize: isMobile ? 20 : 28,
-                              fontWeight: FontWeight.bold,
-                              color: headerColor,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                          const SizedBox(height: 24),
-                          if (isMobile)
-                            Container(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 12),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(16),
-                                border: Border.all(
-                                  color: _isAnswered
-                                      ? (_isCorrect ? Colors.green : Colors.red)
-                                      : Colors.grey[300]!,
-                                  width: 2,
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            if (isAudioToImage)
+                              Text(
+                                context.t('select_an_answer'),
+                                style: TextStyle(
+                                  fontSize: isMobile ? 20 : 24,
+                                  fontWeight: FontWeight.bold,
+                                  color: headerColor,
                                 ),
-                                color: _isAnswered
-                                    ? (_isCorrect
-                                            ? Colors.green
-                                            : Colors.red)
-                                        .withValues(alpha: 0.1)
-                                    : null,
-                              ),
-                              child: DropdownButtonHideUnderline(
-                                child: DropdownButton<int>(
-                                  value:
-                                      _selectedIndex == -1
-                                          ? null
-                                          : _selectedIndex,
-                                  hint: Text(context.t('select_an_answer')),
-                                  isExpanded: true,
-                                  icon: const Icon(Icons.arrow_drop_down),
-                                  items: _options.asMap().entries.map((entry) {
-                                    return DropdownMenuItem<int>(
-                                      value: entry.key,
-                                      child: Text(
-                                        entry.value,
-                                        style: const TextStyle(fontSize: 16),
+                                textAlign: TextAlign.center,
+                              )
+                            else if (isMobile)
+                              Container(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 12),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(16),
+                                  border: Border.all(
+                                    color: _isAnswered
+                                        ? (_isCorrect ? Colors.green : Colors.red)
+                                        : Colors.grey[300]!,
+                                    width: 2,
+                                  ),
+                                  color: _isAnswered
+                                      ? (_isCorrect
+                                              ? Colors.green
+                                              : Colors.red)
+                                          .withValues(alpha: 0.1)
+                                      : null,
+                                ),
+                                child: DropdownButtonHideUnderline(
+                                  child: DropdownButton<int>(
+                                    value:
+                                        _selectedIndex == -1
+                                            ? null
+                                            : _selectedIndex,
+                                    hint: Text(context.t('select_an_answer')),
+                                    isExpanded: true,
+                                    icon: const Icon(Icons.arrow_drop_down),
+                                    items: _options.asMap().entries.map((entry) {
+                                      return DropdownMenuItem<int>(
+                                        value: entry.key,
+                                        child: Text(
+                                          entry.value.text,
+                                          style: const TextStyle(fontSize: 16),
+                                        ),
+                                      );
+                                    }).toList(),
+                                    onChanged: _isAnswered
+                                        ? null
+                                        : (val) {
+                                            if (val != null) _selectOption(val);
+                                          },
+                                  ),
+                                ),
+                              )
+                            else
+                              ConstrainedBox(
+                                constraints: const BoxConstraints(maxHeight: 500),
+                                child: ListView.separated(
+                                  shrinkWrap: true,
+                                  physics: const BouncingScrollPhysics(),
+                                  itemCount: _options.length,
+                                  separatorBuilder:
+                                      (_, __) => const SizedBox(height: 12),
+                                  itemBuilder: (context, index) {
+                                    final opt = _options[index];
+                                    final isSelected = _selectedIndex == index;
+                                    final isCorrect = opt.id == _correctAnswerId;
+                                    Color? color;
+                                    if (_isAnswered) {
+                                      color =
+                                          isCorrect
+                                              ? Colors.green
+                                              : (isSelected
+                                                  ? Colors.red
+                                                  : null);
+                                    } else if (isSelected) color = headerColor;
+
+                                    return InkWell(
+                                      onTap: () => _selectOption(index),
+                                      borderRadius: BorderRadius.circular(16),
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 20,
+                                          vertical: 16,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                            color: color ?? Colors.grey[300]!,
+                                            width: 2,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(16),
+                                          color: color?.withValues(alpha: 0.1),
+                                        ),
+                                        child: Text(
+                                          opt.text,
+                                          style: const TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
                                       ),
                                     );
-                                  }).toList(),
-                                  onChanged: _isAnswered
-                                      ? null
-                                      : (val) {
-                                          if (val != null) _selectOption(val);
-                                        },
+                                  },
                                 ),
                               ),
-                            )
-                          else
-                            ConstrainedBox(
-                              constraints: const BoxConstraints(maxHeight: 500),
-                              child: ListView.separated(
-                                shrinkWrap: true,
-                                physics: const BouncingScrollPhysics(),
-                                itemCount: _options.length,
-                                separatorBuilder:
-                                    (_, __) => const SizedBox(height: 12),
-                                itemBuilder: (context, index) {
-                                  final opt = _options[index];
-                                  final isSelected = _selectedIndex == index;
-                                  final isCorrect = opt == _correctAnswerText;
-                                  Color? color;
-                                  if (_isAnswered) {
-                                    color =
-                                        isCorrect
-                                            ? Colors.green
-                                            : (isSelected
-                                                ? Colors.red
-                                                : null);
-                                  } else if (isSelected) color = headerColor;
-
-                                  return InkWell(
-                                    onTap: () => _selectOption(index),
-                                    borderRadius: BorderRadius.circular(16),
-                                    child: Container(
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 20,
-                                        vertical: 16,
-                                      ),
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                          color: color ?? Colors.grey[300]!,
-                                          width: 2,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(16),
-                                        color: color?.withValues(alpha: 0.1),
-                                      ),
-                                      child: Text(
-                                        opt,
-                                        style: const TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                     const SizedBox(height: 16),

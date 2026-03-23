@@ -425,6 +425,8 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                                   folderId: _currentCollection!.folderId,
                                   typeStr: 'collection',
                                   linkedSubjectIds: _currentCollection!.subjectIds,
+                                  isOnDashboard: _currentCollection!.isOnDashboard,
+                                  ageGroup: _currentCollection!.ageGroup,
                                 ),
                                 isCollectionMode: _currentCollection != null,
                               ),

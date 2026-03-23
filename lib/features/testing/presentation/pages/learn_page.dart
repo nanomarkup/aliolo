@@ -367,6 +367,41 @@ class _LearnPageState extends State<LearnPage> {
                               size: 100,
                               color: Colors.grey,
                             ),
+                          // Prompt Overlay
+                          Positioned(
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                  colors: [
+                                    Colors.black.withValues(alpha: 0.6),
+                                    Colors.transparent,
+                                  ],
+                                ),
+                              ),
+                              child: Text(
+                                _currentCard.getPrompt(lang),
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500,
+                                  shadows: [
+                                    Shadow(
+                                      offset: Offset(0, 1),
+                                      blurRadius: 3.0,
+                                      color: Colors.black,
+                                    ),
+                                  ],
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
                           if (!_showingVideo && _currentImages.length > 1) ...[
                             Positioned(
                               left: 10,
@@ -432,14 +467,15 @@ class _LearnPageState extends State<LearnPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            _currentCard.getPrompt(lang),
+                            '${context.t('answer')}:',
                             style: TextStyle(
-                              fontSize: isMobile ? 18 : 24,
-                              color: Colors.grey[600],
+                              fontSize: isMobile ? 14 : 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey,
+                              letterSpacing: 1.1,
                             ),
-                            textAlign: TextAlign.center,
                           ),
-                          const SizedBox(height: 16),
+                          const SizedBox(height: 8),
                           Text(
                             _currentCard.getAnswer(lang),
                             style: TextStyle(

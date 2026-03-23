@@ -134,7 +134,7 @@ class CardService with ChangeNotifier {
     try {
       final List<dynamic> data = await _supabase!
           .from('folders')
-          .select('*, subjects(count)')
+          .select('*, subjects(count), collections(count)')
           .eq('pillar_id', pillarId);
       return data.map((json) => FolderModel.fromJson(json)).toList();
     } catch (e) {
@@ -149,7 +149,7 @@ class CardService with ChangeNotifier {
     try {
       final List<dynamic> data = await _supabase!
           .from('folders')
-          .select('*, subjects(count)');
+          .select('*, subjects(count), collections(count)');
       return data.map((json) => FolderModel.fromJson(json)).toList();
     } catch (e) {
       print('Error fetching all folders: $e');
@@ -162,7 +162,7 @@ class CardService with ChangeNotifier {
     try {
       final List<dynamic> data = await _supabase!
           .from('folders')
-          .select('*, subjects(count)')
+          .select('*, subjects(count), collections(count)')
           .inFilter('id', ids);
       return data.map((json) => FolderModel.fromJson(json)).toList();
     } catch (e) {

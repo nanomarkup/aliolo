@@ -455,11 +455,27 @@ class _SubjectPageState extends State<SubjectPage> {
                         final pillar = pillars.firstWhere((p) => p.id == item.pillarId, orElse: () => pillars.first);
                         
                         if (item is FolderModel) {
+                          // 1. Calculate how many items in this folder belong to the SELECTED CATEGORY
+                          final myId = _authService.currentUser?.serverId;
+                          final folderCategoryTotal = _allContent.where((e) {
+                            if (e.folderId != item.id) return false;
+                            if (_filters.collectionFilter == 'mine') return e.ownerId == myId;
+                            if (_filters.collectionFilter == 'public') {
+                              if (e is SubjectModel) return e.isPublic;
+                              if (e is CollectionModel) return e.isPublic;
+                              return false;
+                            }
+                            if (_filters.collectionFilter == 'favorites') return e.isOnDashboard;
+                            return true;
+                          }).length;
+
+                          // 2. Matching count (filtered by Category + Age + Search)
                           final matchingInFolder = _matchingContent.where((e) => e.folderId == item.id).length;
+
                           return _FolderListTile(
                             folder: item, 
                             matchingCount: matchingInFolder, 
-                            totalCount: item.childCount, 
+                            totalCount: folderCategoryTotal, 
                             pillar: pillar, 
                             languageCode: _currentTestingLang, 
                             initialAgeFilter: _filters.ageGroup, 
@@ -467,7 +483,22 @@ class _SubjectPageState extends State<SubjectPage> {
                             onChanged: _loadDashboard,
                           );
                         } else if (item is CollectionModel) {
-                          return _CollectionListTile(collection: item, pillar: pillar, languageCode: _currentTestingLang, initialAgeFilter: _filters.ageGroup, initialCollectionFilter: _filters.collectionFilter, onChanged: _loadDashboard);
+                          return _CollectionListTile(
+                            collection: item, 
+                            pillar: pillar, 
+                            languageCode: _currentTestingLang, 
+                            initialAgeFilter: _filters.ageGroup, 
+                            initialCollectionFilter: _filters.collectionFilter, 
+                            onChanged: _loadDashboard,
+                            onFavoriteChanged: () {
+                              setState(() {
+                                item.isOnDashboard = !item.isOnDashboard;
+                                // We don't call _applySearch immediately here to avoid removing the item 
+                                // from the list if they are in 'Dashboard' view, which causes jumps.
+                                // It will be removed on next full refresh or filter change.
+                              });
+                            },
+                          );
                         } else if (item is SubjectModel) {
                           return _SubjectListTile(
                             subject: item,
@@ -476,6 +507,11 @@ class _SubjectPageState extends State<SubjectPage> {
                             initialAgeFilter: _filters.ageGroup,
                             initialCollectionFilter: _filters.collectionFilter,
                             onChanged: _loadDashboard,
+                            onFavoriteChanged: () {
+                              setState(() {
+                                item.isOnDashboard = !item.isOnDashboard;
+                              });
+                            },
                           );
                         }
                         return const SizedBox.shrink();
@@ -500,24 +536,21 @@ class _SubjectPageState extends State<SubjectPage> {
                           // 1. Calculate total items in this pillar that belong to the SELECTED CATEGORY
                           // We should count Subjects and Collections, including those inside folders.
                           // Folders themselves are NOT counted as subjects.
-                          final pillarSubjectsAndCollections = _allContent.where((item) {
+                          final pillarCategoryTotal = _allContent.where((item) {
                             if (item.pillarId != pillar.id) return false;
-                            if (item is FolderModel) return false; // Don't count folders themselves
+                            if (item is FolderModel) return false;
 
-                            if (_filters.collectionFilter == 'mine') return item.ownerId == myId;
-                            if (_filters.collectionFilter == 'public') {
+                            if (_filters.collectionFilter == 'mine') {
+                              return item.ownerId == myId;
+                            } else if (_filters.collectionFilter == 'public') {
                               if (item is SubjectModel) return item.isPublic;
                               if (item is CollectionModel) return item.isPublic;
                               return false;
-                            }
-                            if (_filters.collectionFilter == 'favorites') {
-                              if (item is SubjectModel) return item.isOnDashboard;
-                              return item.ownerId == myId || (item is CollectionModel && item.isPublic);
+                            } else if (_filters.collectionFilter == 'favorites') {
+                              return item.isOnDashboard;
                             }
                             return true; // 'all'
-                          }).toList();
-
-                          final pillarCategoryTotal = pillarSubjectsAndCollections.length;
+                          }).length;
 
                           // 2. Matching count (filtered by Category + Age + Search)
                           // We apply the same logic as _applySearch/DiscoveryEngine to see what matches.
@@ -599,8 +632,9 @@ class _SubjectListTile extends StatelessWidget {
   final String initialAgeFilter;
   final String initialCollectionFilter;
   final VoidCallback? onChanged;
+  final VoidCallback? onFavoriteChanged;
 
-  const _SubjectListTile({required this.subject, required this.pillar, required this.languageCode, required this.initialAgeFilter, required this.initialCollectionFilter, this.onChanged});
+  const _SubjectListTile({required this.subject, required this.pillar, required this.languageCode, required this.initialAgeFilter, required this.initialCollectionFilter, this.onChanged, this.onFavoriteChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -638,7 +672,7 @@ class _SubjectListTile extends StatelessWidget {
                       child: Text(
                         subject.ownerName!,
                         style: TextStyle(
-                          color: subject.ownerName == 'Aliolo' ? Colors.orange[700] : pillarColor.withValues(alpha: 0.7), 
+                          color: pillarColor.withValues(alpha: 0.7), 
                           fontSize: 14, 
                           fontWeight: subject.ownerName == 'Aliolo' ? FontWeight.bold : FontWeight.w500
                         ),
@@ -657,7 +691,11 @@ class _SubjectListTile extends StatelessWidget {
               onPressed: () async {
                 try {
                   await getIt<CardService>().toggleSubjectOnDashboard(subject.id, !subject.isOnDashboard);
-                  onChanged?.call();
+                  if (onFavoriteChanged != null) {
+                    onFavoriteChanged!();
+                  } else {
+                    onChanged?.call();
+                  }
                 } catch (e) {
                   if (context.mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error updating favorite: $e')));
@@ -680,6 +718,7 @@ class _CollectionListTile extends StatelessWidget {
   final String initialAgeFilter;
   final String initialCollectionFilter;
   final VoidCallback? onChanged;
+  final VoidCallback? onFavoriteChanged;
 
   const _CollectionListTile({
     required this.collection,
@@ -688,6 +727,7 @@ class _CollectionListTile extends StatelessWidget {
     required this.initialAgeFilter,
     required this.initialCollectionFilter,
     this.onChanged,
+    this.onFavoriteChanged,
   });
 
   @override
@@ -748,7 +788,7 @@ class _CollectionListTile extends StatelessWidget {
                             child: Text(
                               collection.ownerName!,
                               style: TextStyle(
-                                color: collection.ownerName == 'Aliolo' ? Colors.orange[700] : pillarColor.withValues(alpha: 0.7), 
+                                color: pillarColor.withValues(alpha: 0.7), 
                                 fontSize: 14, 
                                 fontWeight: collection.ownerName == 'Aliolo' ? FontWeight.bold : FontWeight.w500
                               ),
@@ -769,7 +809,11 @@ class _CollectionListTile extends StatelessWidget {
                 onPressed: () async {
                   try {
                     await getIt<CardService>().toggleCollectionOnDashboard(collection.id, !collection.isOnDashboard);
-                    onChanged?.call();
+                    if (onFavoriteChanged != null) {
+                      onFavoriteChanged!();
+                    } else {
+                      onChanged?.call();
+                    }
                   } catch (e) {
                     if (context.mounted) {
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error updating favorite: $e')));
@@ -1030,15 +1074,62 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
                   final item = _filteredContent[index];
                   final pillar = pillars.firstWhere((p) => p.id == item.pillarId, orElse: () => pillars.first);
                   if (item is FolderModel) {
+                    // 1. Calculate how many items in this folder belong to the SELECTED CATEGORY
+                    final myId = getIt<AuthService>().currentUser?.serverId;
+                    final folderCategoryTotal = _allContent.where((e) {
+                      if (e.folderId != item.id) return false;
+                      if (_filters.collectionFilter == 'mine') return e.ownerId == myId;
+                      if (_filters.collectionFilter == 'public') {
+                        if (e is SubjectModel) return e.isPublic;
+                        if (e is CollectionModel) return e.isPublic;
+                        return false;
+                      }
+                      if (_filters.collectionFilter == 'favorites') return e.isOnDashboard;
+                      return true;
+                    }).length;
+
+                    // 2. Matching count (filtered by Category + Age + Search)
                     final matchingInFolder = _matchingContent.where((e) => e.folderId == item.id).length;
+
                     return _FolderListTile(
-                      folder: item, matchingCount: matchingInFolder, totalCount: item.childCount, pillar: pillar, languageCode: widget.languageCode, initialAgeFilter: _filters.ageGroup, initialCollectionFilter: _filters.collectionFilter, onChanged: _loadData,
+                      folder: item, 
+                      matchingCount: matchingInFolder, 
+                      totalCount: folderCategoryTotal, 
+                      pillar: pillar, 
+                      languageCode: widget.languageCode, 
+                      initialAgeFilter: _filters.ageGroup, 
+                      initialCollectionFilter: _filters.collectionFilter, 
+                      onChanged: _loadData,
                       onFilterChanged: (age, coll) { setState(() { _filters = _filters.copyWith(ageGroup: age, collectionFilter: coll); _applyFilters(); }); },
                     );
                   } else if (item is CollectionModel) {
-                    return _CollectionListTile(collection: item, pillar: pillar, languageCode: widget.languageCode, initialAgeFilter: _filters.ageGroup, initialCollectionFilter: _filters.collectionFilter, onChanged: _loadData);
+                    return _CollectionListTile(
+                      collection: item, 
+                      pillar: pillar, 
+                      languageCode: widget.languageCode, 
+                      initialAgeFilter: _filters.ageGroup, 
+                      initialCollectionFilter: _filters.collectionFilter, 
+                      onChanged: _loadData,
+                      onFavoriteChanged: () {
+                        setState(() {
+                          item.isOnDashboard = !item.isOnDashboard;
+                        });
+                      },
+                    );
                   } else if (item is SubjectModel) {
-                    return _SubjectListTile(subject: item, pillar: pillar, languageCode: widget.languageCode, initialAgeFilter: _filters.ageGroup, initialCollectionFilter: _filters.collectionFilter, onChanged: _loadData);
+                    return _SubjectListTile(
+                      subject: item, 
+                      pillar: pillar, 
+                      languageCode: widget.languageCode, 
+                      initialAgeFilter: _filters.ageGroup, 
+                      initialCollectionFilter: _filters.collectionFilter, 
+                      onChanged: _loadData,
+                      onFavoriteChanged: () {
+                        setState(() {
+                          item.isOnDashboard = !item.isOnDashboard;
+                        });
+                      },
+                    );
                   }
                   return const SizedBox.shrink();
                 }, childCount: _filteredContent.length)),
@@ -1258,9 +1349,35 @@ class _FolderPageState extends State<FolderPage> {
               else SliverPadding(padding: const EdgeInsets.only(bottom: 32), sliver: SliverList(delegate: SliverChildBuilderDelegate((context, index) {
                 final item = _filteredContent[index];
                 if (item is CollectionModel) {
-                  return _CollectionListTile(collection: item, pillar: widget.pillar, languageCode: widget.languageCode, initialAgeFilter: _filters.ageGroup, initialCollectionFilter: _filters.collectionFilter, onChanged: () { _loadData(); _hasUpdated = true; });
+                  return _CollectionListTile(
+                    collection: item, 
+                    pillar: widget.pillar, 
+                    languageCode: widget.languageCode, 
+                    initialAgeFilter: _filters.ageGroup, 
+                    initialCollectionFilter: _filters.collectionFilter, 
+                    onChanged: () { _loadData(); _hasUpdated = true; },
+                    onFavoriteChanged: () {
+                      setState(() {
+                        item.isOnDashboard = !item.isOnDashboard;
+                        _hasUpdated = true;
+                      });
+                    },
+                  );
                 } else if (item is SubjectModel) {
-                  return _SubjectListTile(subject: item, pillar: widget.pillar, languageCode: widget.languageCode, initialAgeFilter: _filters.ageGroup, initialCollectionFilter: _filters.collectionFilter, onChanged: () { _loadData(); _hasUpdated = true; });
+                  return _SubjectListTile(
+                    subject: item, 
+                    pillar: widget.pillar, 
+                    languageCode: widget.languageCode, 
+                    initialAgeFilter: _filters.ageGroup, 
+                    initialCollectionFilter: _filters.collectionFilter, 
+                    onChanged: () { _loadData(); _hasUpdated = true; },
+                    onFavoriteChanged: () {
+                      setState(() {
+                        item.isOnDashboard = !item.isOnDashboard;
+                        _hasUpdated = true;
+                      });
+                    },
+                  );
                 }
                 return const SizedBox.shrink();
               }, childCount: _filteredContent.length))),

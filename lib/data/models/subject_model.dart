@@ -88,6 +88,14 @@ class SubjectModel implements ContentItem {
       id == 'bc354f43-f9be-42a9-a7bc-ac400bd5e310' ||
       id == 'cb04da1c-9820-4e61-ae6b-bc7ed07eeb93';
 
+  bool get isMath =>
+      isCounting ||
+      isAddition ||
+      isSubtraction ||
+      isMultiplication ||
+      isDivision ||
+      isNumbers;
+
   int get maxOperand {
     if (id == 'de04da1c-9820-4e61-ae6b-bc7ed07eeb93') return 5;
     if (id == '5e81da1f-f92c-44d2-b3cd-f921d05425df') return 10;
@@ -111,7 +119,7 @@ class SubjectModel implements ContentItem {
     this.cardCount = 0,
     this.rawCards,
     this.isOnDashboard = false,
-    this.ageGroup = 'all',
+    this.ageGroup = '15_plus',
     this.localizedData = const {},
     this.folderId,
     this.typeStr = 'standard',
@@ -258,7 +266,7 @@ class SubjectModel implements ContentItem {
           activeCards != null
               ? List<Map<String, dynamic>>.from(activeCards)
               : null,
-      ageGroup: json['age_group'] ?? 'all',
+      ageGroup: json['age_group'] ?? '15_plus',
       localizedData: localized,
       folderId: json['folder_id'],
       typeStr: json['type'] ?? 'standard',
