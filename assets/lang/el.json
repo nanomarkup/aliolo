@@ -306,5 +306,8 @@
   "delete_collection_confirm": "Είστε σίγουροι ότι θέλετε να διαγράψετε αυτήν τη συλλογή;",
   "folder_not_empty_msg": "Δεν είναι δυνατή η διαγραφή: ο φάκελος δεν είναι άδειος.",
   "filter_dashboard": "Πίνακας ελέγχου",
-  "folder_already_exists": "Ένας φάκελος με αυτό το όνομα υπάρχει ήδη σε αυτόν τον πυλώνα"
+  "folder_already_exists": "Ένας φάκελος με αυτό το όνομα υπάρχει ήδη σε αυτόν τον πυλώνα",
+  "back": "Πίσω",
+  "email_change_notice": "For security, a confirmation link will be sent to BOTH your old and new email addresses. You must click both to complete the change.",
+  "email_update_sent": "Confirmation emails sent. Please check both inboxes."
 }

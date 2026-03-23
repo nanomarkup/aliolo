@@ -306,5 +306,8 @@
   "delete_collection_confirm": "Ar tikrai norite ištrinti šią kolekciją?",
   "folder_not_empty_msg": "Negalima ištrinti: aplankas nėra tuščias.",
   "filter_dashboard": "Valdymo skydas",
-  "folder_already_exists": "Aplankas tokiu pavadinimu jau egzistuoja šiame pilioriuje"
+  "folder_already_exists": "Aplankas tokiu pavadinimu jau egzistuoja šiame pilioriuje",
+  "back": "Atgal",
+  "email_change_notice": "For security, a confirmation link will be sent to BOTH your old and new email addresses. You must click both to complete the change.",
+  "email_update_sent": "Confirmation emails sent. Please check both inboxes."
 }

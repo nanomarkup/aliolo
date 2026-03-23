@@ -306,5 +306,8 @@
   "delete_collection_confirm": "Bu koleksiyonu silmek istediğinizden emin misiniz?",
   "folder_not_empty_msg": "Silinemiyor: klasör boş değil.",
   "filter_dashboard": "Kontrol Paneli",
-  "folder_already_exists": "Bu isimde bir klasör bu sütunda zaten var"
+  "folder_already_exists": "Bu isimde bir klasör bu sütunda zaten var",
+  "back": "Geri",
+  "email_change_notice": "For security, a confirmation link will be sent to BOTH your old and new email addresses. You must click both to complete the change.",
+  "email_update_sent": "Confirmation emails sent. Please check both inboxes."
 }

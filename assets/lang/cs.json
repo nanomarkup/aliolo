@@ -306,5 +306,8 @@
   "delete_collection_confirm": "Opravdu chcete tuto kolekci smazat?",
   "folder_not_empty_msg": "Nelze smazat: složka není prázdná.",
   "filter_dashboard": "Nástěnka",
-  "folder_already_exists": "Složka s tímto názvem již v tomto pilíři existuje"
+  "folder_already_exists": "Složka s tímto názvem již v tomto pilíři existuje",
+  "back": "Zpět",
+  "email_change_notice": "For security, a confirmation link will be sent to BOTH your old and new email addresses. You must click both to complete the change.",
+  "email_update_sent": "Confirmation emails sent. Please check both inboxes."
 }

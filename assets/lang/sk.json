@@ -306,5 +306,8 @@
   "delete_collection_confirm": "Naozaj chcete vymazať túto kolekciu?",
   "folder_not_empty_msg": "Nemožno vymazať: priečinok nie je prázdny.",
   "filter_dashboard": "Nástenka",
-  "folder_already_exists": "Priečinok s týmto názvom už v tomto pilieri existuje"
+  "folder_already_exists": "Priečinok s týmto názvom už v tomto pilieri existuje",
+  "back": "Späť",
+  "email_change_notice": "For security, a confirmation link will be sent to BOTH your old and new email addresses. You must click both to complete the change.",
+  "email_update_sent": "Confirmation emails sent. Please check both inboxes."
 }

@@ -306,5 +306,8 @@
   "delete_collection_confirm": "Haluatko varmasti poistaa tämän kokoelman?",
   "folder_not_empty_msg": "Ei voi poistaa: kansio ei ole tyhjä.",
   "filter_dashboard": "Hallintapaneeli",
-  "folder_already_exists": "Tämänniminen kansio on jo olemassa tässä pilarissa"
+  "folder_already_exists": "Tämänniminen kansio on jo olemassa tässä pilarissa",
+  "back": "Takaisin",
+  "email_change_notice": "For security, a confirmation link will be sent to BOTH your old and new email addresses. You must click both to complete the change.",
+  "email_update_sent": "Confirmation emails sent. Please check both inboxes."
 }

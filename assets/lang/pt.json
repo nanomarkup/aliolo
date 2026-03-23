@@ -307,5 +307,8 @@
   "delete_collection_confirm": "Tem certeza que deseja excluir esta coleção?",
   "folder_not_empty_msg": "Não é possível excluir: a pasta não está vazia.",
   "filter_dashboard": "Painel",
-  "folder_already_exists": "Já existe uma pasta com este nome neste pilar"
+  "folder_already_exists": "Já existe uma pasta com este nome neste pilar",
+  "back": "Voltar",
+  "email_change_notice": "For security, a confirmation link will be sent to BOTH your old and new email addresses. You must click both to complete the change.",
+  "email_update_sent": "Confirmation emails sent. Please check both inboxes."
 }

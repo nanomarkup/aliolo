@@ -307,5 +307,8 @@
   "delete_collection_confirm": "Möchten Sie diese Kollektion wirklich löschen?",
   "folder_not_empty_msg": "Löschen nicht möglich: Ordner ist nicht leer.",
   "filter_dashboard": "Dashboard",
-  "folder_already_exists": "Ein Ordner mit diesem Namen existiert bereits in dieser Säule"
+  "folder_already_exists": "Ein Ordner mit diesem Namen existiert bereits in dieser Säule",
+  "back": "Zurück",
+  "email_change_notice": "Aus Sicherheitsgründen wird ein Bestätigungslink an IHRE ALTE UND NEUE E-Mail-Adresse gesendet. Sie müssen auf beide klicken, um die Änderung abzuschließen.",
+  "email_update_sent": "Bestätigungs-E-Mails gesendet. Bitte überprüfen Sie beide Posteingänge."
 }

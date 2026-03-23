@@ -307,5 +307,8 @@
   "delete_collection_confirm": "Czy na pewno chcesz usunąć tę kolekcję?",
   "folder_not_empty_msg": "Nie można usunąć: folder nie jest pusty.",
   "filter_dashboard": "Pulpit",
-  "folder_already_exists": "Folder o tej nazwie już istnieje w tym filarze"
+  "folder_already_exists": "Folder o tej nazwie już istnieje w tym filarze",
+  "back": "Wstecz",
+  "email_change_notice": "For security, a confirmation link will be sent to BOTH your old and new email addresses. You must click both to complete the change.",
+  "email_update_sent": "Confirmation emails sent. Please check both inboxes."
 }

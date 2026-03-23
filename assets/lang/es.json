@@ -307,5 +307,8 @@
   "delete_collection_confirm": "¿Seguro que quieres eliminar esta colección?",
   "folder_not_empty_msg": "No se puede eliminar: la carpeta no está vacía.",
   "filter_dashboard": "Tablero",
-  "folder_already_exists": "Ya existe una carpeta con este nombre en este pilar"
+  "folder_already_exists": "Ya existe una carpeta con este nombre en este pilar",
+  "back": "Atrás",
+  "email_change_notice": "Por seguridad, se enviará un enlace de confirmación a AMBAS direcciones de correo electrónico. Debe hacer clic en ambos para completar el cambio.",
+  "email_update_sent": "Correos de confirmación enviados. Por favor revise ambas bandejas de entrada."
 }

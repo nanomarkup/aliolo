@@ -10349,3 +10349,45 @@ INSERT INTO ui_translations (key, lang, value) VALUES ('folder_already_exists', 
 INSERT INTO ui_translations (key, lang, value) VALUES ('folder_already_exists', 'uk', 'Папка з такою назвою вже існує в цьому стовпі') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
 INSERT INTO ui_translations (key, lang, value) VALUES ('folder_already_exists', 'vi', 'Thư mục có tên này đã tồn tại trong trụ cột này') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
 INSERT INTO ui_translations (key, lang, value) VALUES ('folder_already_exists', 'zh', '该名称的文件夹已在此支柱中存在') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+
+-- Back button translations
+INSERT INTO ui_translations (key, lang, value) VALUES ('back', 'ar', 'العودة') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('back', 'bg', 'Назад') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('back', 'cs', 'Zpět') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('back', 'da', 'Tilbage') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('back', 'de', 'Zurück') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('back', 'el', 'Πίσω') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('back', 'en', 'Back') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('back', 'es', 'Atrás') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('back', 'et', 'Tagasi') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('back', 'fi', 'Takaisin') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('back', 'fr', 'Retour') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('back', 'ga', 'Ar ais') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('back', 'hi', 'वापस') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('back', 'hr', 'Natrag') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('back', 'hu', 'Vissza') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('back', 'id', 'Kembali') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('back', 'it', 'Indietro') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('back', 'ja', '戻る') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('back', 'ko', '뒤로') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('back', 'lt', 'Atgal') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('back', 'lv', 'Atpakaļ') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('back', 'mt', 'Lura') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('back', 'nl', 'Terug') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('back', 'pl', 'Wstecz') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('back', 'pt', 'Voltar') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('back', 'ro', 'Înapoi') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('back', 'sk', 'Späť') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('back', 'sl', 'Nazaj') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('back', 'sv', 'Tillbaka') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('back', 'tl', 'Bumalik') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('back', 'tr', 'Geri') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('back', 'uk', 'Назад') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('back', 'vi', 'Quay lại') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('back', 'zh', '返回') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+
+-- Email change translations
+INSERT INTO ui_translations (key, lang, value) VALUES ('email_change_notice', 'en', 'For security, a confirmation link will be sent to BOTH your old and new email addresses. You must click both to complete the change.') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('email_update_sent', 'en', 'Confirmation emails sent. Please check both inboxes.') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('email_change_notice', 'uk', 'Для безпеки посилання для підтвердження буде надіслано на ОБИДВІ ваші електронні адреси: стару та нову. Ви повинні натиснути обидва, щоб завершити зміну.') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO ui_translations (key, lang, value) VALUES ('email_update_sent', 'uk', 'Електронні листи з підтвердженням надіслано. Будь ласка, перевірте обидві поштові скриньки.') ON CONFLICT (key, lang) DO UPDATE SET value = EXCLUDED.value;

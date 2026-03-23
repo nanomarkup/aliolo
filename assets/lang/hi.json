@@ -306,5 +306,8 @@
   "delete_collection_confirm": "क्या आप वाकई इस संग्रह को हटाना चाहते हैं?",
   "folder_not_empty_msg": "हटा नहीं सकते: फ़ोल्डर खाली नहीं है।",
   "filter_dashboard": "डैशबोर्ड",
-  "folder_already_exists": "इस नाम का फोल्डर इस पिलर में पहले से मौजूद है"
+  "folder_already_exists": "इस नाम का फोल्डर इस पिलर में पहले से मौजूद है",
+  "back": "वापस",
+  "email_change_notice": "For security, a confirmation link will be sent to BOTH your old and new email addresses. You must click both to complete the change.",
+  "email_update_sent": "Confirmation emails sent. Please check both inboxes."
 }

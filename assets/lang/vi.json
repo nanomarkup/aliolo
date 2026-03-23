@@ -306,5 +306,8 @@
   "delete_collection_confirm": "Bạn có chắc chắn muốn xóa bộ sưu tập này không?",
   "folder_not_empty_msg": "Không thể xóa: thư mục không trống.",
   "filter_dashboard": "Bảng điều khiển",
-  "folder_already_exists": "Thư mục có tên này đã tồn tại trong trụ cột này"
+  "folder_already_exists": "Thư mục có tên này đã tồn tại trong trụ cột này",
+  "back": "Quay lại",
+  "email_change_notice": "For security, a confirmation link will be sent to BOTH your old and new email addresses. You must click both to complete the change.",
+  "email_update_sent": "Confirmation emails sent. Please check both inboxes."
 }

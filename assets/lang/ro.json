@@ -306,5 +306,8 @@
   "delete_collection_confirm": "Sigur doriți să ștergeți această colecție?",
   "folder_not_empty_msg": "Nu se poate șterge: folderul nu este gol.",
   "filter_dashboard": "Tablou de bord",
-  "folder_already_exists": "Un dosar cu acest nume există deja în acest pilon"
+  "folder_already_exists": "Un dosar cu acest nume există deja în acest pilon",
+  "back": "Înapoi",
+  "email_change_notice": "For security, a confirmation link will be sent to BOTH your old and new email addresses. You must click both to complete the change.",
+  "email_update_sent": "Confirmation emails sent. Please check both inboxes."
 }

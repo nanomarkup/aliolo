@@ -306,5 +306,8 @@
   "delete_collection_confirm": "Weet je zeker dat je deze collectie wilt verwijderen?",
   "folder_not_empty_msg": "Kan niet verwijderen: map is niet leeg.",
   "filter_dashboard": "Dashboard",
-  "folder_already_exists": "Er bestaat al een map met deze naam in deze zuil"
+  "folder_already_exists": "Er bestaat al een map met deze naam in deze zuil",
+  "back": "Terug",
+  "email_change_notice": "For security, a confirmation link will be sent to BOTH your old and new email addresses. You must click both to complete the change.",
+  "email_update_sent": "Confirmation emails sent. Please check both inboxes."
 }

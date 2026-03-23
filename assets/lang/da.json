@@ -306,5 +306,8 @@
   "delete_collection_confirm": "Er du sikker på, at du vil slette denne samling?",
   "folder_not_empty_msg": "Kan ikke slette: mappen er ikke tom.",
   "filter_dashboard": "Kontrolpanel",
-  "folder_already_exists": "En mappe med dette navn findes allerede i denne søjle"
+  "folder_already_exists": "En mappe med dette navn findes allerede i denne søjle",
+  "back": "Tilbage",
+  "email_change_notice": "For security, a confirmation link will be sent to BOTH your old and new email addresses. You must click both to complete the change.",
+  "email_update_sent": "Confirmation emails sent. Please check both inboxes."
 }

@@ -306,5 +306,8 @@
   "delete_collection_confirm": "Kas olete kindel, et soovite selle kollektsiooni kustutada?",
   "folder_not_empty_msg": "Ei saa kustutada: kaust pole tühi.",
   "filter_dashboard": "Töölaud",
-  "folder_already_exists": "Selle nimega kaust on selles sambas juba olemas"
+  "folder_already_exists": "Selle nimega kaust on selles sambas juba olemas",
+  "back": "Tagasi",
+  "email_change_notice": "For security, a confirmation link will be sent to BOTH your old and new email addresses. You must click both to complete the change.",
+  "email_update_sent": "Confirmation emails sent. Please check both inboxes."
 }

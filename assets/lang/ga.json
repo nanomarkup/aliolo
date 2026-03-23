@@ -306,5 +306,8 @@
   "delete_collection_confirm": "An bhfuil tú cinnte go dteastaíonn uait an bailiúchán seo a scriosadh?",
   "folder_not_empty_msg": "Ní féidir scriosadh: níl an fillteán folamh.",
   "filter_dashboard": "Painéal",
-  "folder_already_exists": "Tá fillteán leis an ainm seo ann cheana féin sa cholún seo"
+  "folder_already_exists": "Tá fillteán leis an ainm seo ann cheana féin sa cholún seo",
+  "back": "Ar ais",
+  "email_change_notice": "For security, a confirmation link will be sent to BOTH your old and new email addresses. You must click both to complete the change.",
+  "email_update_sent": "Confirmation emails sent. Please check both inboxes."
 }

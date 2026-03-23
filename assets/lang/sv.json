@@ -306,5 +306,8 @@
   "delete_collection_confirm": "Är du säker på att du vill ta bort denna samling?",
   "folder_not_empty_msg": "Kan inte ta bort: mappen är inte tom.",
   "filter_dashboard": "Instrumentpanel",
-  "folder_already_exists": "En mapp med detta namn finns redan i denna pelare"
+  "folder_already_exists": "En mapp med detta namn finns redan i denna pelare",
+  "back": "Tillbaka",
+  "email_change_notice": "For security, a confirmation link will be sent to BOTH your old and new email addresses. You must click both to complete the change.",
+  "email_update_sent": "Confirmation emails sent. Please check both inboxes."
 }

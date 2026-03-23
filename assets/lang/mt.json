@@ -306,5 +306,8 @@
   "delete_collection_confirm": "Inti żgur li trid tħassar din il-kollezzjoni?",
   "folder_not_empty_msg": "Ma jistax jitħassar: il-folder mhuwiex vojt.",
   "filter_dashboard": "Dashboard",
-  "folder_already_exists": "Folder b'dan l-isem diġà jeżisti f'dan il-pilastru"
+  "folder_already_exists": "Folder b'dan l-isem diġà jeżisti f'dan il-pilastru",
+  "back": "Lura",
+  "email_change_notice": "For security, a confirmation link will be sent to BOTH your old and new email addresses. You must click both to complete the change.",
+  "email_update_sent": "Confirmation emails sent. Please check both inboxes."
 }

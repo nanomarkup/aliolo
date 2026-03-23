@@ -306,5 +306,8 @@
   "delete_collection_confirm": "Biztosan törölni szeretné ezt a gyűjteményt?",
   "folder_not_empty_msg": "Nem törölhető: a mappa nem üres.",
   "filter_dashboard": "Vezérlőpult",
-  "folder_already_exists": "Egy ilyen nevű mappa már létezik ebben a pillérben"
+  "folder_already_exists": "Egy ilyen nevű mappa már létezik ebben a pillérben",
+  "back": "Vissza",
+  "email_change_notice": "For security, a confirmation link will be sent to BOTH your old and new email addresses. You must click both to complete the change.",
+  "email_update_sent": "Confirmation emails sent. Please check both inboxes."
 }

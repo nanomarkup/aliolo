@@ -306,5 +306,8 @@
   "delete_collection_confirm": "Сигурни ли сте, че искате да изтриете тази колекция?",
   "folder_not_empty_msg": "Не може да се изтрие: папката не е празна.",
   "filter_dashboard": "Табло",
-  "folder_already_exists": "Папка с това име вече съществува в този стълб"
+  "folder_already_exists": "Папка с това име вече съществува в този стълб",
+  "back": "Назад",
+  "email_change_notice": "For security, a confirmation link will be sent to BOTH your old and new email addresses. You must click both to complete the change.",
+  "email_update_sent": "Confirmation emails sent. Please check both inboxes."
 }

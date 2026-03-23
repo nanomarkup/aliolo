@@ -306,5 +306,8 @@
   "delete_collection_confirm": "Vai tiešām vēlaties dzēst šo kolekciju?",
   "folder_not_empty_msg": "Nevar dzēst: mape nav tukša.",
   "filter_dashboard": "Informācijas panelis",
-  "folder_already_exists": "Mape ar šādu nosaukumu šajā pīlārā jau eksistē"
+  "folder_already_exists": "Mape ar šādu nosaukumu šajā pīlārā jau eksistē",
+  "back": "Atpakaļ",
+  "email_change_notice": "For security, a confirmation link will be sent to BOTH your old and new email addresses. You must click both to complete the change.",
+  "email_update_sent": "Confirmation emails sent. Please check both inboxes."
 }

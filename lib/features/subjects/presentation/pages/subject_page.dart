@@ -668,21 +668,23 @@ class _SubjectListTile extends StatelessWidget {
                     const SizedBox(width: 8),
                     Text('•', style: TextStyle(color: Colors.grey[400], fontSize: 14)),
                     const SizedBox(width: 8),
-                    Flexible(
-                      child: Text(
-                        subject.ownerName!,
-                        style: TextStyle(
-                          color: pillarColor.withValues(alpha: 0.7), 
-                          fontSize: 14, 
-                          fontWeight: subject.ownerName == 'Aliolo' ? FontWeight.bold : FontWeight.w500
+                    if (subject.ownerName == 'Aliolo')
+                      Icon(Icons.verified, color: Colors.grey[600], size: 16)
+                    else
+                      Flexible(
+                        child: Text(
+                          subject.ownerName!,
+                          style: TextStyle(
+                            color: Colors.grey[600], 
+                            fontSize: 14, 
+                            fontWeight: FontWeight.w500
+                          ),
+                          overflow: TextOverflow.ellipsis,
                         ),
-                        overflow: TextOverflow.ellipsis,
                       ),
-                    ),
                   ],
                 ],
-              ),
-            ])),
+              ),            ])),
             IconButton(
               icon: Icon(
                 subject.isOnDashboard ? Icons.star : Icons.star_border,
@@ -784,17 +786,20 @@ class _CollectionListTile extends StatelessWidget {
                           const SizedBox(width: 8),
                           Text('•', style: TextStyle(color: Colors.grey[400], fontSize: 14)),
                           const SizedBox(width: 8),
-                          Flexible(
-                            child: Text(
-                              collection.ownerName!,
-                              style: TextStyle(
-                                color: pillarColor.withValues(alpha: 0.7), 
-                                fontSize: 14, 
-                                fontWeight: collection.ownerName == 'Aliolo' ? FontWeight.bold : FontWeight.w500
+                          if (collection.ownerName == 'Aliolo')
+                            Icon(Icons.verified, color: Colors.grey[600], size: 16)
+                          else
+                            Flexible(
+                              child: Text(
+                                collection.ownerName!,
+                                style: TextStyle(
+                                  color: Colors.grey[600], 
+                                  fontSize: 14, 
+                                  fontWeight: FontWeight.w500
+                                ),
+                                overflow: TextOverflow.ellipsis,
                               ),
-                              overflow: TextOverflow.ellipsis,
                             ),
-                          ),
                         ],
                       ],
                     ),
@@ -1482,17 +1487,20 @@ class _FolderListTile extends StatelessWidget {
                       const SizedBox(width: 8),
                       Text('•', style: TextStyle(color: Colors.grey[400], fontSize: 14)),
                       const SizedBox(width: 8),
-                      Flexible(
-                        child: Text(
-                          folder.ownerName!,
-                          style: TextStyle(
-                            color: pillarColor.withValues(alpha: 0.7), 
-                            fontSize: 14, 
-                            fontWeight: folder.ownerName == 'Aliolo' ? FontWeight.bold : FontWeight.w500
+                      if (folder.ownerName == 'Aliolo')
+                        Icon(Icons.verified, color: Colors.grey[600], size: 16)
+                      else
+                        Flexible(
+                          child: Text(
+                            folder.ownerName!,
+                            style: TextStyle(
+                              color: Colors.grey[600], 
+                              fontSize: 14, 
+                              fontWeight: FontWeight.w500
+                            ),
+                            overflow: TextOverflow.ellipsis,
                           ),
-                          overflow: TextOverflow.ellipsis,
                         ),
-                      ),
                     ],
                   ],
                 ),

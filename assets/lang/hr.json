@@ -306,5 +306,8 @@
   "delete_collection_confirm": "Jeste li sigurni da želite obrisati ovu kolekciju?",
   "folder_not_empty_msg": "Nije moguće obrisati: mapa nije prazna.",
   "filter_dashboard": "Nadzorna ploča",
-  "folder_already_exists": "Mapa s tim imenom već postoji u ovom stupu"
+  "folder_already_exists": "Mapa s tim imenom već postoji u ovom stupu",
+  "back": "Natrag",
+  "email_change_notice": "For security, a confirmation link will be sent to BOTH your old and new email addresses. You must click both to complete the change.",
+  "email_update_sent": "Confirmation emails sent. Please check both inboxes."
 }

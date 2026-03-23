@@ -307,5 +307,8 @@
   "delete_collection_confirm": "このコレクションを削除してもよろしいですか？",
   "folder_not_empty_msg": "削除できません：フォルダが空ではありません。",
   "filter_dashboard": "ダッシュボード",
-  "folder_already_exists": "この名前のフォルダはこのピラーに既に存在します"
+  "folder_already_exists": "この名前のフォルダはこのピラーに既に存在します",
+  "back": "戻る",
+  "email_change_notice": "For security, a confirmation link will be sent to BOTH your old and new email addresses. You must click both to complete the change.",
+  "email_update_sent": "Confirmation emails sent. Please check both inboxes."
 }
