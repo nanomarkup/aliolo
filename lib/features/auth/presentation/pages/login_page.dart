@@ -261,24 +261,24 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
                           children: [
                             Image.asset(
                               'assets/app_icon.png',
-                              height: 100,
+                              height: 120,
                               fit: BoxFit.contain,
                             ),
                             Transform.translate(
-                              offset: const Offset(0, -12),
+                              offset: const Offset(0, -16),
                               child: Column(
                                 children: [
                                   Text(
                                     'aliolo',
                                     style: GoogleFonts.poppins(
                                       fontSize: 80,
-                                      fontWeight: FontWeight.w600,
+                                      fontWeight: FontWeight.w500,
                                       color: const Color(0xFF1C6887),
                                       letterSpacing: 4.0,
                                     ),
                                   ),
                                   Transform.translate(
-                                    offset: const Offset(0, -16),
+                                    offset: const Offset(0, -20),
                                     child: Text(
                                       context.t('about_tagline'),
                                       textAlign: TextAlign.center,

@@ -136,24 +136,24 @@ class _AboutPageState extends State<AboutPage> {
                           // Brand Section (Mobile)
                           Image.asset(
                             'assets/app_icon.png',
-                            height: 100,
+                            height: 120,
                             fit: BoxFit.contain,
                           ),
                           Transform.translate(
-                            offset: const Offset(0, -10),
+                            offset: const Offset(0, -14),
                             child: Column(
                               children: [
                                 Text(
                                   'aliolo',
                                   style: GoogleFonts.poppins(
                                     fontSize: 72,
-                                    fontWeight: FontWeight.w600,
+                                    fontWeight: FontWeight.w500,
                                     color: const Color(0xFF1C6887),
                                     letterSpacing: 4.0,
                                   ),
                                 ),
                                 Transform.translate(
-                                  offset: const Offset(0, -12),
+                                  offset: const Offset(0, -16),
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(horizontal: 24),
                                     child: Text(
@@ -320,24 +320,24 @@ class _AboutPageState extends State<AboutPage> {
                                 const Spacer(flex: 3),
                                 Image.asset(
                                   'assets/app_icon.png',
-                                  height: 120,
+                                  height: 150,
                                   fit: BoxFit.contain,
                                 ),
                                 Transform.translate(
-                                  offset: const Offset(0, -12),
+                                  offset: const Offset(0, -20),
                                   child: Column(
                                     children: [
                                       Text(
                                         'aliolo',
                                         style: GoogleFonts.poppins(
                                           fontSize: 80,
-                                          fontWeight: FontWeight.w600,
+                                          fontWeight: FontWeight.w500,
                                           color: const Color(0xFF1C6887),
                                           letterSpacing: 4.0,
                                         ),
                                       ),
                                       Transform.translate(
-                                        offset: const Offset(0, -16),
+                                        offset: const Offset(0, -24),
                                         child: Padding(
                                           padding: const EdgeInsets.symmetric(horizontal: 24),
                                           child: Text(
