@@ -247,54 +247,43 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    GestureDetector(
-                      onTap:
-                          () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const AboutPage(),
-                            ),
-                          ),
-                      child: MouseRegion(
-                        cursor: SystemMouseCursors.click,
-                        child: Column(
-                          children: [
-                            Image.asset(
-                              'assets/app_icon.png',
-                              height: 120,
-                              fit: BoxFit.contain,
-                            ),
-                            Transform.translate(
-                              offset: const Offset(0, -16),
-                              child: Column(
-                                children: [
-                                  Text(
-                                    'aliolo',
-                                    style: GoogleFonts.poppins(
-                                      fontSize: 80,
-                                      fontWeight: FontWeight.w500,
-                                      color: Theme.of(context).primaryColor,
-                                      letterSpacing: 4.0,
-                                    ),
-                                  ),
-                                  Transform.translate(
-                                    offset: const Offset(0, -20),
-                                    child: Text(
-                                      context.t('about_tagline'),
-                                      textAlign: TextAlign.center,
-                                      style: GoogleFonts.roboto(
-                                        fontSize: 14,
-                                        color: Theme.of(context).primaryColor,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          'assets/app_icon.png',
+                          height: 120,
+                          fit: BoxFit.contain,
                         ),
-                      ),
+                        Transform.translate(
+                          offset: const Offset(0, -16),
+                          child: Column(
+                            children: [
+                              Text(
+                                'aliolo',
+                                style: GoogleFonts.poppins(
+                                  fontSize: 80,
+                                  fontWeight: FontWeight.w500,
+                                  color: Theme.of(context).primaryColor,
+                                  letterSpacing: 4.0,
+                                ),
+                              ),
+                              Transform.translate(
+                                offset: const Offset(0, -20),
+                                child: Text(
+                                  context.t('about_tagline'),
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.roboto(
+                                    fontSize: 14,
+                                    color: Theme.of(context).primaryColor,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 32),
                     if (!_isRecovering) ...[
