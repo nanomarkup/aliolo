@@ -19,50 +19,35 @@ class AboutPage extends StatefulWidget {
 }
 
 class _AboutPageState extends State<AboutPage> {
-  String _version = '1.0.0';
+  String _version = '...';
 
   @override
   void initState() {
     super.initState();
-    HardwareKeyboard.instance.addHandler(_handleGlobalKeyEvent);
-    _loadPackageInfo();
+    _loadVersion();
   }
 
-  @override
-  void dispose() {
-    HardwareKeyboard.instance.removeHandler(_handleGlobalKeyEvent);
-    super.dispose();
-  }
-
-  bool _handleGlobalKeyEvent(KeyEvent event) {
-    if (!ModalRoute.of(context)!.isCurrent) return false;
-    if (event is KeyDownEvent &&
-        event.logicalKey == LogicalKeyboardKey.escape) {
-      if (mounted) Navigator.pop(context);
-      return true;
-    }
-    return false;
-  }
-
-  Future<void> _loadPackageInfo() async {
+  Future<void> _loadVersion() async {
     final info = await PackageInfo.fromPlatform();
-    setState(() {
-      _version = info.version;
-    });
+    if (mounted) {
+      setState(() {
+        _version = info.version;
+      });
+    }
   }
 
-  Widget _buildSectionTitle(BuildContext context, String title) {
+  Widget _buildSectionTitle(BuildContext context, String title, Color color) {
     return Padding(
       padding: const EdgeInsets.only(top: 32, bottom: 20),
       child: Row(
         children: [
           Text(
             title,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w900,
               letterSpacing: 2.0,
-              color: Colors.orange,
+              color: color,
             ),
           ),
           const SizedBox(width: 16),
@@ -77,6 +62,7 @@ class _AboutPageState extends State<AboutPage> {
     IconData icon,
     String title,
     String description,
+    Color color,
   ) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return Padding(
@@ -84,7 +70,7 @@ class _AboutPageState extends State<AboutPage> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, size: 28, color: Colors.orange),
+          Icon(icon, size: 28, color: color),
           const SizedBox(width: 20),
           Expanded(
             child: Column(
@@ -117,8 +103,7 @@ class _AboutPageState extends State<AboutPage> {
   @override
   Widget build(BuildContext context) {
     final themeService = getIt<ThemeService>();
-    final currentPrimaryColor = themeService.getAdjustedPrimary();
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final orangeColor = themeService.getAdjustedPrimary(forceOrange: true);
 
     return ListenableBuilder(
       listenable: TranslationService(),
@@ -150,7 +135,7 @@ class _AboutPageState extends State<AboutPage> {
                                   style: GoogleFonts.poppins(
                                     fontSize: 72,
                                     fontWeight: FontWeight.w500,
-                                    color: currentPrimaryColor,
+                                    color: orangeColor,
                                     letterSpacing: 4.0,
                                   ),
                                 ),
@@ -163,7 +148,7 @@ class _AboutPageState extends State<AboutPage> {
                                       textAlign: TextAlign.center,
                                       style: GoogleFonts.roboto(
                                         fontSize: 14,
-                                        color: currentPrimaryColor,
+                                        color: orangeColor,
                                         fontWeight: FontWeight.w400,
                                       ),
                                     ),
@@ -177,44 +162,29 @@ class _AboutPageState extends State<AboutPage> {
                             '${context.t('version')} $_version',
                             style: const TextStyle(fontSize: 14, color: Colors.grey),
                           ),
-
-                          // Features Section (Mobile)
+                          const SizedBox(height: 16),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+                            padding: const EdgeInsets.all(24.0),
                             child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  context.t('our_mission'),
-                                  style: const TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w900,
-                                    letterSpacing: 2.0,
-                                    color: Colors.orange,
-                                  ),
-                                ),
-                                const SizedBox(height: 16),
+                                _buildSectionTitle(context, context.t('our_mission'), orangeColor),
                                 Text(
                                   context.t('mission_desc'),
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    color: isDark ? Colors.grey.shade200 : Colors.grey.shade900,
-                                    fontWeight: FontWeight.w600,
-                                    height: 1.4,
-                                  ),
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(fontSize: 16, height: 1.6),
                                 ),
-                                _buildSectionTitle(context, context.t('core_features')),
-                                _buildInfoRow(context, Icons.play_circle_fill, context.t('feat_multimedia_title'), context.t('feat_multimedia_desc')),
-                                _buildInfoRow(context, Icons.family_restroom, context.t('feat_ages_title'), context.t('feat_ages_desc')),
-                                _buildInfoRow(context, Icons.military_tech, context.t('feat_gamified_title'), context.t('feat_gamified_desc')),
-
-                                _buildSectionTitle(context, context.t('the_science')),
-                                _buildInfoRow(context, Icons.auto_graph, context.t('feat_science_spacing_title'), context.t('feat_science_spacing_desc')),
-                                _buildInfoRow(context, Icons.insights, context.t('feat_science_adaptive_title'), context.t('feat_science_adaptive_desc')),
-
-                                _buildSectionTitle(context, context.t('trust_privacy')),
-                                _buildInfoRow(context, Icons.cloud_done, context.t('trust_cloud_title'), context.t('trust_cloud_desc')),
-                                _buildInfoRow(context, Icons.sync_lock, context.t('trust_sync_title'), context.t('trust_sync_desc')),
+                                _buildSectionTitle(context, context.t('core_features'), orangeColor),
+                                _buildInfoRow(context, Icons.collections, context.t('feat_multimedia_title'), context.t('feat_multimedia_desc'), orangeColor),
+                                _buildInfoRow(context, Icons.child_care, context.t('feat_ages_title'), context.t('feat_ages_desc'), orangeColor),
+                                _buildInfoRow(context, Icons.emoji_events, context.t('feat_gamified_title'), context.t('feat_gamified_desc'), orangeColor),
+                                
+                                _buildSectionTitle(context, context.t('the_science'), orangeColor),
+                                _buildInfoRow(context, Icons.psychology, context.t('feat_science_spacing_title'), context.t('feat_science_spacing_desc'), orangeColor),
+                                _buildInfoRow(context, Icons.timer, context.t('feat_science_adaptive_title'), context.t('feat_science_adaptive_desc'), orangeColor),
+                                
+                                _buildSectionTitle(context, context.t('trust_privacy'), orangeColor),
+                                _buildInfoRow(context, Icons.cloud_done, context.t('trust_cloud_title'), context.t('trust_cloud_desc'), orangeColor),
+                                _buildInfoRow(context, Icons.sync_lock, context.t('trust_sync_title'), context.t('trust_sync_desc'), orangeColor),
 
                                 const SizedBox(height: 32),
                                 // Buttons
@@ -224,8 +194,8 @@ class _AboutPageState extends State<AboutPage> {
                                   label: Text(context.t('view_onboarding')),
                                   style: OutlinedButton.styleFrom(
                                     minimumSize: const Size(double.infinity, 50),
-                                    foregroundColor: Colors.orange,
-                                    side: const BorderSide(color: Colors.orange),
+                                    foregroundColor: orangeColor,
+                                    side: BorderSide(color: orangeColor),
                                   ),
                                 ),
                                 const SizedBox(height: 12),
@@ -235,8 +205,8 @@ class _AboutPageState extends State<AboutPage> {
                                   label: Text(context.t('licenses')),
                                   style: OutlinedButton.styleFrom(
                                     minimumSize: const Size(double.infinity, 50),
-                                    foregroundColor: Colors.orange,
-                                    side: const BorderSide(color: Colors.orange),
+                                    foregroundColor: orangeColor,
+                                    side: BorderSide(color: orangeColor),
                                   ),
                                 ),
                                 const SizedBox(height: 12),
@@ -246,8 +216,8 @@ class _AboutPageState extends State<AboutPage> {
                                   label: Text(context.t('back')),
                                   style: OutlinedButton.styleFrom(
                                     minimumSize: const Size(double.infinity, 50),
-                                    foregroundColor: Colors.orange,
-                                    side: const BorderSide(color: Colors.orange),
+                                    foregroundColor: orangeColor,
+                                    side: BorderSide(color: orangeColor),
                                   ),
                                 ),
                                 const SizedBox(height: 32),
@@ -269,7 +239,7 @@ class _AboutPageState extends State<AboutPage> {
                       top: 12,
                       left: 12,
                       child: IconButton(
-                        icon: const Icon(Icons.arrow_back, color: Colors.orange),
+                        icon: Icon(Icons.arrow_back, color: orangeColor),
                         onPressed: () => Navigator.pop(context),
                       ),
                     ),
@@ -283,7 +253,7 @@ class _AboutPageState extends State<AboutPage> {
                             WindowControls(
                               onlyClose: true,
                               showSeparator: false,
-                              color: currentPrimaryColor,
+                              color: orangeColor,
                               iconSize: 28,
                               padding: false,
                             ),
@@ -334,7 +304,7 @@ class _AboutPageState extends State<AboutPage> {
                                         style: GoogleFonts.poppins(
                                           fontSize: 80,
                                           fontWeight: FontWeight.w500,
-                                          color: currentPrimaryColor,
+                                          color: orangeColor,
                                           letterSpacing: 4.0,
                                         ),
                                       ),
@@ -347,7 +317,7 @@ class _AboutPageState extends State<AboutPage> {
                                             textAlign: TextAlign.center,
                                             style: GoogleFonts.roboto(
                                               fontSize: 14,
-                                              color: currentPrimaryColor,
+                                              color: orangeColor,
                                               fontWeight: FontWeight.w400,
                                             ),
                                           ),
@@ -382,8 +352,8 @@ class _AboutPageState extends State<AboutPage> {
                                     label: Text(context.t('view_onboarding')),
                                     style: OutlinedButton.styleFrom(
                                       minimumSize: const Size(double.infinity, 50),
-                                      foregroundColor: Colors.orange,
-                                      side: const BorderSide(color: Colors.orange),
+                                      foregroundColor: orangeColor,
+                                      side: BorderSide(color: orangeColor),
                                     ),
                                   ),
                                 ),
@@ -406,8 +376,8 @@ class _AboutPageState extends State<AboutPage> {
                                     label: Text(context.t('licenses')),
                                     style: OutlinedButton.styleFrom(
                                       minimumSize: const Size(double.infinity, 50),
-                                      foregroundColor: Colors.orange,
-                                      side: const BorderSide(color: Colors.orange),
+                                      foregroundColor: orangeColor,
+                                      side: BorderSide(color: orangeColor),
                                     ),
                                   ),
                                 ),
@@ -422,12 +392,12 @@ class _AboutPageState extends State<AboutPage> {
                                     label: Text(context.t('back')),
                                     style: OutlinedButton.styleFrom(
                                       minimumSize: const Size(double.infinity, 50),
-                                      foregroundColor: Colors.orange,
-                                      side: const BorderSide(color: Colors.orange),
+                                      foregroundColor: orangeColor,
+                                      side: BorderSide(color: orangeColor),
                                     ),
                                   ),
                                 ),
-                                const Spacer(flex: 2),
+                                const Spacer(flex: 4),
                                 Text(
                                   context.t('all_rights_reserved'),
                                   style: const TextStyle(
@@ -441,96 +411,31 @@ class _AboutPageState extends State<AboutPage> {
                           ),
                         ),
                       ),
-                      // Right side: Features & Details
+                      // Right side: Content
                       Expanded(
                         child: SingleChildScrollView(
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(64, 48, 64, 64),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  context.t('our_mission'),
-                                  style: const TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w900,
-                                    letterSpacing: 2.0,
-                                    color: Colors.orange,
-                                  ),
-                                ),
-                                const SizedBox(height: 24),
-                                Text(
-                                  context.t('mission_desc'),
-                                  style: TextStyle(
-                                    fontSize: 22,
-                                    color:
-                                        isDark
-                                            ? Colors.grey.shade200
-                                            : Colors.grey.shade900,
-                                    fontWeight: FontWeight.w600,
-                                    height: 1.4,
-                                  ),
-                                ),
-
-                                _buildSectionTitle(
-                                  context,
-                                  context.t('core_features'),
-                                ),
-                                _buildInfoRow(
-                                  context,
-                                  Icons.play_circle_fill,
-                                  context.t('feat_multimedia_title'),
-                                  context.t('feat_multimedia_desc'),
-                                ),
-                                _buildInfoRow(
-                                  context,
-                                  Icons.family_restroom,
-                                  context.t('feat_ages_title'),
-                                  context.t('feat_ages_desc'),
-                                ),
-                                _buildInfoRow(
-                                  context,
-                                  Icons.military_tech,
-                                  context.t('feat_gamified_title'),
-                                  context.t('feat_gamified_desc'),
-                                ),
-
-                                _buildSectionTitle(
-                                  context,
-                                  context.t('the_science'),
-                                ),
-                                _buildInfoRow(
-                                  context,
-                                  Icons.auto_graph,
-                                  context.t('feat_science_spacing_title'),
-                                  context.t('feat_science_spacing_desc'),
-                                ),
-                                _buildInfoRow(
-                                  context,
-                                  Icons.insights,
-                                  context.t('feat_science_adaptive_title'),
-                                  context.t('feat_science_adaptive_desc'),
-                                ),
-
-                                _buildSectionTitle(
-                                  context,
-                                  context.t('trust_privacy'),
-                                ),
-                                _buildInfoRow(
-                                  context,
-                                  Icons.cloud_done,
-                                  context.t('trust_cloud_title'),
-                                  context.t('trust_cloud_desc'),
-                                ),
-                                _buildInfoRow(
-                                  context,
-                                  Icons.sync_lock,
-                                  context.t('trust_sync_title'),
-                                  context.t('trust_sync_desc'),
-                                ),
-                                const SizedBox(height: 48),
-                              ],
-                            ),
+                          padding: const EdgeInsets.all(48),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              _buildSectionTitle(context, context.t('our_mission'), orangeColor),
+                              Text(
+                                context.t('mission_desc'),
+                                style: const TextStyle(fontSize: 18, height: 1.6),
+                              ),
+                              _buildSectionTitle(context, context.t('core_features'), orangeColor),
+                              _buildInfoRow(context, Icons.collections, context.t('feat_multimedia_title'), context.t('feat_multimedia_desc'), orangeColor),
+                              _buildInfoRow(context, Icons.child_care, context.t('feat_ages_title'), context.t('feat_ages_desc'), orangeColor),
+                              _buildInfoRow(context, Icons.emoji_events, context.t('feat_gamified_title'), context.t('feat_gamified_desc'), orangeColor),
+                              
+                              _buildSectionTitle(context, context.t('the_science'), orangeColor),
+                              _buildInfoRow(context, Icons.psychology, context.t('feat_science_spacing_title'), context.t('feat_science_spacing_desc'), orangeColor),
+                              _buildInfoRow(context, Icons.timer, context.t('feat_science_adaptive_title'), context.t('feat_science_adaptive_desc'), orangeColor),
+                              
+                              _buildSectionTitle(context, context.t('trust_privacy'), orangeColor),
+                              _buildInfoRow(context, Icons.cloud_done, context.t('trust_cloud_title'), context.t('trust_cloud_desc'), orangeColor),
+                              _buildInfoRow(context, Icons.sync_lock, context.t('trust_sync_title'), context.t('trust_sync_desc'), orangeColor),
+                            ],
                           ),
                         ),
                       ),
@@ -541,13 +446,12 @@ class _AboutPageState extends State<AboutPage> {
                     right: 12,
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         if (!kIsWeb)
                           WindowControls(
                             onlyClose: true,
                             showSeparator: false,
-                            color: currentPrimaryColor,
+                            color: orangeColor,
                             iconSize: 28,
                             padding: false,
                           ),

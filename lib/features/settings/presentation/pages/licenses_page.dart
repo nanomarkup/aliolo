@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:window_manager/window_manager.dart';
+import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/core/widgets/window_controls.dart';
@@ -108,7 +109,7 @@ class _CustomLicensesPageState extends State<CustomLicensesPage> {
 
   @override
   Widget build(BuildContext context) {
-    final currentPrimaryColor = ThemeService().primaryColor;
+    final orangeColor = getIt<ThemeService>().getAdjustedPrimary(forceOrange: true);
 
     return ListenableBuilder(
       listenable: TranslationService(),
@@ -133,7 +134,7 @@ class _CustomLicensesPageState extends State<CustomLicensesPage> {
                             IconButton(
                               icon: const Icon(Icons.arrow_back),
                               iconSize: 28,
-                              color: currentPrimaryColor,
+                              color: orangeColor,
                               onPressed: () => Navigator.pop(context),
                               tooltip: context.t('back'),
                             ),
@@ -152,7 +153,7 @@ class _CustomLicensesPageState extends State<CustomLicensesPage> {
                             IconButton(
                               icon: const Icon(Icons.arrow_back),
                               iconSize: 28,
-                              color: currentPrimaryColor,
+                              color: orangeColor,
                               onPressed: () => Navigator.pop(context),
                               tooltip: context.t('back'),
                             ),
@@ -162,7 +163,7 @@ class _CustomLicensesPageState extends State<CustomLicensesPage> {
                                 child: WindowControls(
                                   onlyClose: true,
                                   showSeparator: false,
-                                  color: currentPrimaryColor,
+                                  color: orangeColor,
                                   iconSize: 28,
                                   padding: false,
                                 ),
@@ -173,7 +174,7 @@ class _CustomLicensesPageState extends State<CustomLicensesPage> {
                       const Divider(),
                       Expanded(
                         child: _isLoading
-                            ? const Center(child: CircularProgressIndicator())
+                            ? Center(child: CircularProgressIndicator(color: orangeColor))
                             : isMobile
                                 ? ListView.builder(
                                     itemCount: _groupedLicenses.length,
@@ -188,7 +189,7 @@ class _CustomLicensesPageState extends State<CustomLicensesPage> {
                                                 ? FontWeight.bold
                                                 : FontWeight.normal,
                                             color: license.isAliolo
-                                                ? Colors.orange
+                                                ? orangeColor
                                                 : null,
                                           ),
                                         ),
@@ -232,13 +233,7 @@ class _CustomLicensesPageState extends State<CustomLicensesPage> {
 
                                                     return ListTile(
                                                       selected: isSelected,
-                                                      selectedTileColor: Theme.of(
-                                                              context,
-                                                            )
-                                                          .colorScheme
-                                                          .primaryContainer
-                                                          .withValues(
-                                                              alpha: 0.3),
+                                                      selectedTileColor: orangeColor.withValues(alpha: 0.1),
                                                       title: Text(
                                                         license.name,
                                                         style: TextStyle(
@@ -250,9 +245,8 @@ class _CustomLicensesPageState extends State<CustomLicensesPage> {
                                                                   : FontWeight
                                                                       .normal,
                                                           color:
-                                                              license.isAliolo
-                                                                  ? Colors
-                                                                      .orange
+                                                              license.isAliolo || isSelected
+                                                                  ? orangeColor
                                                                   : null,
                                                         ),
                                                         maxLines: 1,
@@ -314,12 +308,13 @@ class LicenseDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final orangeColor = getIt<ThemeService>().getAdjustedPrimary(forceOrange: true);
     return Scaffold(
       appBar: AppBar(
         title: Text(license.name, style: const TextStyle(fontSize: 16)),
         backgroundColor: Colors.transparent,
         elevation: 0,
-        foregroundColor: Colors.orange,
+        foregroundColor: orangeColor,
       ),
       body: LicenseDetailView(license: license),
     );

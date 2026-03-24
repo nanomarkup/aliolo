@@ -11,6 +11,9 @@ class ThemeService extends ChangeNotifier {
 
   static const Color orange = Colors.orange;
   static const Color mainColor = orange; // For backward compatibility
+  
+  // The fixed brand orange for non-working pages
+  static const Color alioloOrange = orange;
 
   // Dynamic primary color
   Color _primaryColor = orange;
@@ -25,11 +28,12 @@ class ThemeService extends ChangeNotifier {
   Color get hint => isDarkMode ? const Color(0xFFA0A0A0) : const Color(0xFF888888);
 
   /// Returns the primary color adjusted for the current theme mode
-  Color getAdjustedPrimary([Color? baseColor]) {
-    final color = baseColor ?? _primaryColor;
+  /// Set [forceOrange] to true for non-working pages (Login, About, etc.)
+  Color getAdjustedPrimary({Color? baseColor, bool forceOrange = false}) {
+    final color = forceOrange ? alioloOrange : (baseColor ?? _primaryColor);
     if (!isDarkMode) return color;
     
-    // For dark mode, if it's the default orange, use the requested #E68A00
+    // For dark mode, if it's the brand orange, use the requested #E68A00
     if (color.value == orange.value) return const Color(0xFFE68A00);
     
     // For other custom colors, slightly darken/desaturate for dark mode comfort

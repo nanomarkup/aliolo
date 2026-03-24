@@ -230,6 +230,9 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
 
   @override
   Widget build(BuildContext context) {
+    final themeService = getIt<ThemeService>();
+    final orangeColor = themeService.getAdjustedPrimary(forceOrange: true);
+
     return Scaffold(
       body: Stack(
         children: [
@@ -265,7 +268,7 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
                                 style: GoogleFonts.poppins(
                                   fontSize: 80,
                                   fontWeight: FontWeight.w500,
-                                  color: getIt<ThemeService>().getAdjustedPrimary(),
+                                  color: orangeColor,
                                   letterSpacing: 4.0,
                                 ),
                               ),
@@ -276,11 +279,12 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
                                   textAlign: TextAlign.center,
                                   style: GoogleFonts.roboto(
                                     fontSize: 14,
-                                    color: getIt<ThemeService>().getAdjustedPrimary(),
+                                    color: orangeColor,
                                     fontWeight: FontWeight.w400,
                                   ),
                                 ),
-                              ),                            ],
+                              ),
+                            ],
                           ),
                         ),
                       ],
@@ -297,6 +301,12 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
                           labelText: context.t('email'),
                           border: const OutlineInputBorder(),
                           prefixIcon: const Icon(Icons.email),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: orangeColor, width: 2),
+                          ),
+                          labelStyle: TextStyle(
+                            color: _emailFocusNode.hasFocus ? orangeColor : null,
+                          ),
                         ),
                         keyboardType: TextInputType.emailAddress,
                         onSubmitted: (_) => _handleAuth(),
@@ -309,6 +319,9 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
                             labelText: context.t('username'),
                             border: const OutlineInputBorder(),
                             prefixIcon: const Icon(Icons.person),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: orangeColor, width: 2),
+                            ),
                           ),
                           onSubmitted: (_) => _handleAuth(),
                           autofillHints: const [AutofillHints.username],
@@ -321,11 +334,14 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
                         obscureText: true,
                         enableSuggestions: false,
                         autocorrect: false,
-                        autofillHints: null, // Disable autofill hints
+                        autofillHints: null,
                         decoration: InputDecoration(
                           labelText: context.t('password'),
                           border: const OutlineInputBorder(),
                           prefixIcon: const Icon(Icons.lock),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: orangeColor, width: 2),
+                          ),
                         ),
                         onSubmitted: (_) => _handleAuth(),
                       ),
@@ -337,11 +353,14 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
                           obscureText: true,
                           enableSuggestions: false,
                           autocorrect: false,
-                          autofillHints: null, // Disable autofill hints
+                          autofillHints: null,
                           decoration: InputDecoration(
                             labelText: context.t('confirm_password'),
                             border: const OutlineInputBorder(),
                             prefixIcon: const Icon(Icons.lock_reset),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: orangeColor, width: 2),
+                            ),
                           ),
                           onSubmitted: (_) => _handleAuth(),
                         ),
@@ -349,13 +368,13 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
                       ],
                       const SizedBox(height: 16),
                       if (_isLoading)
-                        const CircularProgressIndicator()
+                        CircularProgressIndicator(color: orangeColor)
                       else ...[
                         ElevatedButton(
                           onPressed: _handleAuth,
                           style: ElevatedButton.styleFrom(
                             minimumSize: const Size(double.infinity, 50),
-                            backgroundColor: Colors.orange,
+                            backgroundColor: orangeColor,
                             foregroundColor: Colors.white,
                           ),
                           child: Text(
@@ -371,12 +390,16 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
                             _isCreatingAccount
                                 ? context.t('back_to_login')
                                 : context.t('create_new_account'),
+                            style: TextStyle(color: orangeColor),
                           ),
                         ),
                         if (!_isCreatingAccount) ...[
                           TextButton(
                             onPressed: _toggleRecovery,
-                            child: Text(context.t('forgot_password')),
+                            child: Text(
+                              context.t('forgot_password'),
+                              style: TextStyle(color: orangeColor),
+                            ),
                           ),
                           TextButton(
                             onPressed:
@@ -386,7 +409,10 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
                                     builder: (context) => const AboutPage(),
                                   ),
                                 ),
-                            child: Text(context.t('about')),
+                            child: Text(
+                              context.t('about'),
+                              style: TextStyle(color: orangeColor),
+                            ),
                           ),
                         ],
                       ],
@@ -407,6 +433,9 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
                           labelText: context.t('email'),
                           border: const OutlineInputBorder(),
                           prefixIcon: const Icon(Icons.email),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: orangeColor, width: 2),
+                          ),
                         ),
                         onSubmitted: (_) => _handleRecovery(),
                       ),
@@ -414,10 +443,13 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
                       if (_recoveryStep == 1) ...[
                         TextField(
                           controller: _codeController,
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             labelText: 'Reset Code',
-                            border: OutlineInputBorder(),
-                            prefixIcon: Icon(Icons.pin),
+                            border: const OutlineInputBorder(),
+                            prefixIcon: const Icon(Icons.pin),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: orangeColor, width: 2),
+                            ),
                           ),
                           onSubmitted: (_) => _handleRecovery(),
                         ),
@@ -431,6 +463,9 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
                             labelText: context.t('new_password'),
                             border: const OutlineInputBorder(),
                             prefixIcon: const Icon(Icons.lock),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: orangeColor, width: 2),
+                            ),
                           ),
                           onSubmitted: (_) => _handleRecovery(),
                         ),
@@ -444,19 +479,22 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
                             labelText: context.t('confirm_password'),
                             border: const OutlineInputBorder(),
                             prefixIcon: const Icon(Icons.lock_reset),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: orangeColor, width: 2),
+                            ),
                           ),
                           onSubmitted: (_) => _handleRecovery(),
                         ),
                       ],
                       const SizedBox(height: 24),
                       if (_isLoading)
-                        const CircularProgressIndicator()
+                        CircularProgressIndicator(color: orangeColor)
                       else ...[
                         ElevatedButton(
                           onPressed: _handleRecovery,
                           style: ElevatedButton.styleFrom(
                             minimumSize: const Size(double.infinity, 50),
-                            backgroundColor: Colors.orange,
+                            backgroundColor: orangeColor,
                             foregroundColor: Colors.white,
                           ),
                           child: Text(
@@ -468,7 +506,10 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
                         const SizedBox(height: 12),
                         TextButton(
                           onPressed: _toggleRecovery,
-                          child: Text(context.t('back_to_login')),
+                          child: Text(
+                            context.t('back_to_login'),
+                            style: TextStyle(color: orangeColor),
+                          ),
                         ),
                       ],
                     ],
@@ -485,10 +526,10 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 if (!kIsWeb)
-                  const WindowControls(
+                  WindowControls(
                     onlyClose: true,
                     showSeparator: false,
-                    color: Colors.orange,
+                    color: orangeColor,
                     iconSize: 28,
                     padding: false,
                   ),

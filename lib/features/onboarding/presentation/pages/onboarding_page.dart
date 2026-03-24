@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/features/auth/presentation/pages/login_page.dart';
 import 'package:aliolo/features/subjects/presentation/pages/subject_page.dart';
-import 'package:aliolo/data/services/auth_service.dart';
-import 'package:aliolo/core/di/service_locator.dart';
 
 class OnboardingPage extends StatefulWidget {
   const OnboardingPage({super.key});
@@ -20,27 +21,27 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
   final List<OnboardingData> _screens = [
     OnboardingData(
-      icon: Icons.school,
+      icon: Icons.auto_awesome,
       titleKey: 'onboarding_1_title',
       descKey: 'onboarding_1_desc',
     ),
     OnboardingData(
-      icon: Icons.play_circle_fill,
+      icon: Icons.psychology,
       titleKey: 'onboarding_2_title',
       descKey: 'onboarding_2_desc',
     ),
     OnboardingData(
-      icon: Icons.auto_graph,
+      icon: Icons.emoji_events,
       titleKey: 'onboarding_3_title',
       descKey: 'onboarding_3_desc',
     ),
     OnboardingData(
-      icon: Icons.family_restroom,
+      icon: Icons.groups,
       titleKey: 'onboarding_4_title',
       descKey: 'onboarding_4_desc',
     ),
     OnboardingData(
-      icon: Icons.sync_lock,
+      icon: Icons.sync,
       titleKey: 'onboarding_5_title',
       descKey: 'onboarding_5_desc',
     ),
@@ -69,7 +70,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
   @override
   Widget build(BuildContext context) {
-    final currentPrimaryColor = ThemeService().primaryColor;
+    final themeService = getIt<ThemeService>();
+    final orangeColor = themeService.getAdjustedPrimary(forceOrange: true);
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
@@ -78,29 +80,33 @@ class _OnboardingPageState extends State<OnboardingPage> {
           PageView.builder(
             controller: _pageController,
             itemCount: _screens.length,
-            onPageChanged: (int page) {
+            onPageChanged: (index) {
               setState(() {
-                _currentPage = page;
+                _currentPage = index;
               });
             },
             itemBuilder: (context, index) {
               final screen = _screens[index];
               return Center(
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 400),
+                child: SingleChildScrollView(
                   child: Padding(
                     padding: const EdgeInsets.all(40.0),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(screen.icon, size: 120, color: Colors.orange),
-                        const SizedBox(height: 48),
+                        Icon(
+                          screen.icon,
+                          size: 120,
+                          color: orangeColor,
+                        ),
+                        const SizedBox(height: 40),
                         Text(
                           context.t(screen.titleKey),
                           textAlign: TextAlign.center,
-                          style: const TextStyle(
+                          style: GoogleFonts.poppins(
                             fontSize: 28,
                             fontWeight: FontWeight.bold,
+                            color: orangeColor,
                           ),
                         ),
                         const SizedBox(height: 24),
@@ -152,8 +158,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       decoration: BoxDecoration(
                         color:
                             _currentPage == index
-                                ? Colors.orange
-                                : Colors.grey.withValues(alpha: 0.3),
+                                ? orangeColor
+                                : orangeColor.withValues(alpha: 0.3),
                         borderRadius: BorderRadius.circular(4),
                       ),
                     ),
@@ -177,7 +183,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                         }
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.orange,
+                        backgroundColor: orangeColor,
                         foregroundColor: Colors.white,
                         minimumSize: const Size(double.infinity, 56),
                         shape: RoundedRectangleBorder(
