@@ -139,29 +139,35 @@ class _AboutPageState extends State<AboutPage> {
                             height: 100,
                             fit: BoxFit.contain,
                           ),
-                          const SizedBox(height: 0),
-                          Text(
-                            'aliolo',
-                            style: GoogleFonts.poppins(
-                              fontSize: 72,
-                              fontWeight: FontWeight.w600,
-                              color: const Color(0xFF1C6887),
-                              letterSpacing: 4.0,
-                            ),
-                          ),
                           Transform.translate(
-                            offset: const Offset(0, -6),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 24),
-                              child: Text(
-                                context.t('about_tagline'),
-                                textAlign: TextAlign.center,
-                                style: GoogleFonts.roboto(
-                                  fontSize: 14,
-                                  color: const Color(0xFF1C6887),
-                                  fontWeight: FontWeight.w400,
+                            offset: const Offset(0, -10),
+                            child: Column(
+                              children: [
+                                Text(
+                                  'aliolo',
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 72,
+                                    fontWeight: FontWeight.w600,
+                                    color: const Color(0xFF1C6887),
+                                    letterSpacing: 4.0,
+                                  ),
                                 ),
-                              ),
+                                Transform.translate(
+                                  offset: const Offset(0, -12),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                                    child: Text(
+                                      context.t('about_tagline'),
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.roboto(
+                                        fontSize: 14,
+                                        color: const Color(0xFF1C6887),
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                           const SizedBox(height: 12),
@@ -317,29 +323,35 @@ class _AboutPageState extends State<AboutPage> {
                                   height: 120,
                                   fit: BoxFit.contain,
                                 ),
-                                const SizedBox(height: 0),
-                                Text(
-                                  'aliolo',
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 80,
-                                    fontWeight: FontWeight.w600,
-                                    color: const Color(0xFF1C6887),
-                                    letterSpacing: 4.0,
-                                  ),
-                                ),
                                 Transform.translate(
-                                  offset: const Offset(0, -8),
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 24),
-                                    child: Text(
-                                      context.t('about_tagline'),
-                                      textAlign: TextAlign.center,
-                                      style: GoogleFonts.roboto(
-                                        fontSize: 14,
-                                        color: const Color(0xFF1C6887),
-                                        fontWeight: FontWeight.w400,
+                                  offset: const Offset(0, -12),
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        'aliolo',
+                                        style: GoogleFonts.poppins(
+                                          fontSize: 80,
+                                          fontWeight: FontWeight.w600,
+                                          color: const Color(0xFF1C6887),
+                                          letterSpacing: 4.0,
+                                        ),
                                       ),
-                                    ),
+                                      Transform.translate(
+                                        offset: const Offset(0, -16),
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(horizontal: 24),
+                                          child: Text(
+                                            context.t('about_tagline'),
+                                            textAlign: TextAlign.center,
+                                            style: GoogleFonts.roboto(
+                                              fontSize: 14,
+                                              color: const Color(0xFF1C6887),
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                                 const SizedBox(height: 16),
