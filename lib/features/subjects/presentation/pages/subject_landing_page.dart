@@ -7,6 +7,7 @@ import 'package:aliolo/data/models/collection_model.dart';
 import 'package:aliolo/data/services/card_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/data/services/auth_service.dart';
+import 'package:aliolo/data/services/math_service.dart';
 import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/core/widgets/aliolo_scrollable_page.dart';
 import 'package:aliolo/features/testing/presentation/pages/learn_page.dart';
@@ -286,24 +287,39 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
           );
         }
       } else if (_currentSubject != null) {
-        // standard
-        sessionCards =
-            _allCards
-                .map((c) => SubjectCard(card: c, subject: _currentSubject!))
-                .toList();
+        // Special logic for Math subjects that generate problems dynamically
+        if (_currentSubject!.isMath && _allCards.isEmpty) {
+          final mathService = getIt<MathService>();
+          final size = isTest ? user.testSessionSize : user.learnSessionSize;
+          for (int i = 0; i < size; i++) {
+            final problem = mathService.generateProblem(_currentSubject!);
+            final card = mathService.createVirtualCard(problem, 1);
+            sessionCards.add(SubjectCard(card: card, subject: _currentSubject!));
+          }
+        } else {
+          // standard
+          sessionCards =
+              _allCards
+                  .map((c) => SubjectCard(card: c, subject: _currentSubject!))
+                  .toList();
+        }
       }
 
-      // Filter and Shuffle logic
+      // Filter and Shuffle logic (skip for generated math)
       final lang = widget.languageCode.toLowerCase();
-      sessionCards =
-          sessionCards.where((sc) {
-            return sc.card.getAnswer(lang).isNotEmpty ||
-                sc.card.getAnswer('en').isNotEmpty;
-          }).toList();
+      if (!(_currentSubject?.isMath ?? false)) {
+        sessionCards =
+            sessionCards.where((sc) {
+              return sc.card.getAnswer(lang).isNotEmpty ||
+                  sc.card.getAnswer('en').isNotEmpty;
+            }).toList();
+        sessionCards.shuffle();
+      }
 
-      sessionCards.shuffle();
       final size = isTest ? user.testSessionSize : user.learnSessionSize;
-      sessionCards = sessionCards.take(size).toList();
+      if (sessionCards.length > size) {
+        sessionCards = sessionCards.take(size).toList();
+      }
 
       if (sessionCards.isEmpty) {
         if (mounted) {
