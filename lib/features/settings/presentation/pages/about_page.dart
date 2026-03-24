@@ -143,10 +143,10 @@ class _AboutPageState extends State<AboutPage> {
                           Text(
                             'aliolo',
                             style: GoogleFonts.poppins(
-                              fontSize: 40,
-                              fontWeight: FontWeight.bold,
+                              fontSize: 56,
+                              fontWeight: FontWeight.w600,
                               color: const Color(0xFF1C6887),
-                              letterSpacing: -1.0,
+                              letterSpacing: 2.0,
                             ),
                           ),
                           Padding(
@@ -318,10 +318,10 @@ class _AboutPageState extends State<AboutPage> {
                                 Text(
                                   'aliolo',
                                   style: GoogleFonts.poppins(
-                                    fontSize: 48,
-                                    fontWeight: FontWeight.bold,
+                                    fontSize: 64,
+                                    fontWeight: FontWeight.w600,
                                     color: const Color(0xFF1C6887),
-                                    letterSpacing: -1.0,
+                                    letterSpacing: 2.0,
                                   ),
                                 ),
                                 Padding(
