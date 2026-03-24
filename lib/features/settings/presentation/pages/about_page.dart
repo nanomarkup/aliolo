@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
@@ -139,12 +140,12 @@ class _AboutPageState extends State<AboutPage> {
                             fit: BoxFit.contain,
                           ),
                           const SizedBox(height: 8),
-                          const Text(
+                          Text(
                             'aliolo',
-                            style: TextStyle(
+                            style: GoogleFonts.montserrat(
                               fontSize: 40,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.orange,
+                              fontWeight: FontWeight.w600,
+                              color: const Color(0xFF333C4E),
                               letterSpacing: -1.0,
                             ),
                           ),
@@ -153,10 +154,10 @@ class _AboutPageState extends State<AboutPage> {
                             child: Text(
                               context.t('about_tagline'),
                               textAlign: TextAlign.center,
-                              style: TextStyle(
+                              style: GoogleFonts.roboto(
                                 fontSize: 14,
-                                color: Colors.grey[600],
-                                fontWeight: FontWeight.w500,
+                                color: const Color(0xFF333C4E),
+                                fontWeight: FontWeight.w400,
                               ),
                             ),
                           ),
@@ -314,12 +315,12 @@ class _AboutPageState extends State<AboutPage> {
                                   fit: BoxFit.contain,
                                 ),
                                 const SizedBox(height: 12),
-                                const Text(
+                                Text(
                                   'aliolo',
-                                  style: TextStyle(
+                                  style: GoogleFonts.montserrat(
                                     fontSize: 48,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.orange,
+                                    fontWeight: FontWeight.w600,
+                                    color: const Color(0xFF333C4E),
                                     letterSpacing: -1.0,
                                   ),
                                 ),
@@ -328,10 +329,10 @@ class _AboutPageState extends State<AboutPage> {
                                   child: Text(
                                     context.t('about_tagline'),
                                     textAlign: TextAlign.center,
-                                    style: TextStyle(
+                                    style: GoogleFonts.roboto(
                                       fontSize: 14,
-                                      color: Colors.grey[600],
-                                      fontWeight: FontWeight.w500,
+                                      color: const Color(0xFF333C4E),
+                                      fontWeight: FontWeight.w400,
                                     ),
                                   ),
                                 ),
