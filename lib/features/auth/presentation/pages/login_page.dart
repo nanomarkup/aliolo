@@ -268,10 +268,10 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
                             Text(
                               'aliolo',
                               style: GoogleFonts.poppins(
-                                fontSize: 64,
+                                fontSize: 80,
                                 fontWeight: FontWeight.w600,
                                 color: const Color(0xFF1C6887),
-                                letterSpacing: 2.0,
+                                letterSpacing: 4.0,
                               ),
                             ),
                             Text(
