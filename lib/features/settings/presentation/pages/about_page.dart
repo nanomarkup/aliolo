@@ -190,7 +190,7 @@ class _AboutPageState extends State<AboutPage> {
                                 // Buttons
                                 OutlinedButton.icon(
                                   onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const OnboardingPage())),
-                                  icon: const Icon(Icons.auto_awesome),
+                                  icon: Icon(Icons.auto_awesome, color: orangeColor),
                                   label: Text(context.t('view_onboarding')),
                                   style: OutlinedButton.styleFrom(
                                     minimumSize: const Size(double.infinity, 50),
@@ -201,7 +201,7 @@ class _AboutPageState extends State<AboutPage> {
                                 const SizedBox(height: 12),
                                 OutlinedButton.icon(
                                   onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const CustomLicensesPage())),
-                                  icon: const Icon(Icons.description_outlined),
+                                  icon: Icon(Icons.description_outlined, color: orangeColor),
                                   label: Text(context.t('licenses')),
                                   style: OutlinedButton.styleFrom(
                                     minimumSize: const Size(double.infinity, 50),
@@ -212,7 +212,7 @@ class _AboutPageState extends State<AboutPage> {
                                 const SizedBox(height: 12),
                                 OutlinedButton.icon(
                                   onPressed: () => Navigator.pop(context),
-                                  icon: const Icon(Icons.arrow_back),
+                                  icon: Icon(Icons.arrow_back, color: orangeColor),
                                   label: Text(context.t('back')),
                                   style: OutlinedButton.styleFrom(
                                     minimumSize: const Size(double.infinity, 50),
@@ -348,7 +348,7 @@ class _AboutPageState extends State<AboutPage> {
                                                 (context) => const OnboardingPage(),
                                           ),
                                         ),
-                                    icon: const Icon(Icons.auto_awesome),
+                                    icon: Icon(Icons.auto_awesome, color: orangeColor),
                                     label: Text(context.t('view_onboarding')),
                                     style: OutlinedButton.styleFrom(
                                       minimumSize: const Size(double.infinity, 50),
@@ -372,7 +372,7 @@ class _AboutPageState extends State<AboutPage> {
                                                     const CustomLicensesPage(),
                                           ),
                                         ),
-                                    icon: const Icon(Icons.description_outlined),
+                                    icon: Icon(Icons.description_outlined, color: orangeColor),
                                     label: Text(context.t('licenses')),
                                     style: OutlinedButton.styleFrom(
                                       minimumSize: const Size(double.infinity, 50),
@@ -388,7 +388,7 @@ class _AboutPageState extends State<AboutPage> {
                                   ),
                                   child: OutlinedButton.icon(
                                     onPressed: () => Navigator.pop(context),
-                                    icon: const Icon(Icons.arrow_back),
+                                    icon: Icon(Icons.arrow_back, color: orangeColor),
                                     label: Text(context.t('back')),
                                     style: OutlinedButton.styleFrom(
                                       minimumSize: const Size(double.infinity, 50),
