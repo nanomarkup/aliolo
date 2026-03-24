@@ -267,10 +267,10 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
                             const SizedBox(height: 8),
                             Text(
                               'aliolo',
-                              style: GoogleFonts.montserrat(
+                              style: GoogleFonts.poppins(
                                 fontSize: 48,
-                                fontWeight: FontWeight.w600,
-                                color: const Color(0xFF333C4E),
+                                fontWeight: FontWeight.bold,
+                                color: const Color(0xFF1C6887),
                                 letterSpacing: -1.0,
                               ),
                             ),
@@ -279,7 +279,7 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
                               textAlign: TextAlign.center,
                               style: GoogleFonts.roboto(
                                 fontSize: 14,
-                                color: const Color(0xFF333C4E),
+                                color: const Color(0xFF1C6887),
                                 fontWeight: FontWeight.w400,
                               ),
                             ),
