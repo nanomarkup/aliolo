@@ -13,11 +13,13 @@ import 'package:aliolo/features/auth/presentation/pages/login_page.dart';
 import 'package:aliolo/features/subjects/presentation/pages/subject_page.dart';
 import 'package:aliolo/features/onboarding/presentation/pages/onboarding_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_web_plugins/url_strategy.dart';
 
 import 'package:aliolo/core/utils/logger.dart';
 
 void main() async {
   try {
+    usePathUrlStrategy();
     WidgetsFlutterBinding.ensureInitialized();
     await AppLogger.init();
 
@@ -200,6 +202,20 @@ class _AlioloAppState extends State<AlioloApp> {
   }
 }
 
+class InstantPageTransitionsBuilder extends PageTransitionsBuilder {
+  const InstantPageTransitionsBuilder();
+  @override
+  Widget buildTransitions<T>(
+    PageRoute<T> route,
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) {
+    return child;
+  }
+}
+
 class AlioloMainApp extends StatelessWidget {
   const AlioloMainApp({super.key});
 
@@ -222,23 +238,28 @@ class AlioloMainApp extends StatelessWidget {
             colorScheme: ColorScheme.fromSeed(
               seedColor: themeService.primaryColor,
               surface: Colors.white,
-              surfaceContainerHighest: const Color(0xFFF5F7FA),
+              surfaceContainerHighest: const Color(0xFFE2E8F0), // Subtle divider/dropdown color
             ),
-            scaffoldBackgroundColor: const Color(0xFFF5F7FA),
-            cardTheme: const CardThemeData(
+            scaffoldBackgroundColor: const Color(0xFFF1F5F9), // Slate-grey background
+            cardTheme: CardThemeData(
               color: Colors.white,
               surfaceTintColor: Colors.white,
-              elevation: 2,
+              elevation: 0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+                side: BorderSide(color: Colors.black.withValues(alpha: 0.05), width: 1),
+              ),
             ),
+            dividerTheme: DividerThemeData(color: Colors.black.withValues(alpha: 0.05)),
             useMaterial3: true,
             fontFamily: 'Roboto',
             pageTransitionsTheme: const PageTransitionsTheme(
               builders: {
-                TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
-                TargetPlatform.iOS: FadeUpwardsPageTransitionsBuilder(),
-                TargetPlatform.linux: FadeUpwardsPageTransitionsBuilder(),
-                TargetPlatform.macOS: FadeUpwardsPageTransitionsBuilder(),
-                TargetPlatform.windows: FadeUpwardsPageTransitionsBuilder(),
+                TargetPlatform.android: InstantPageTransitionsBuilder(),
+                TargetPlatform.iOS: InstantPageTransitionsBuilder(),
+                TargetPlatform.linux: InstantPageTransitionsBuilder(),
+                TargetPlatform.macOS: InstantPageTransitionsBuilder(),
+                TargetPlatform.windows: InstantPageTransitionsBuilder(),
               },
             ),
           ),
@@ -246,24 +267,29 @@ class AlioloMainApp extends StatelessWidget {
             colorScheme: ColorScheme.fromSeed(
               seedColor: themeService.primaryColor,
               brightness: Brightness.dark,
-              surface: const Color(0xFF1A1C1E),
-              surfaceContainerHighest: const Color(0xFF0F1113),
+              surface: const Color(0xFF1E293B), // Deep slate surface
+              surfaceContainerHighest: const Color(0xFF334155),
             ),
-            scaffoldBackgroundColor: const Color(0xFF0F1113),
-            cardTheme: const CardThemeData(
-              color: Color(0xFF1A1C1E),
-              surfaceTintColor: Color(0xFF1A1C1E),
-              elevation: 2,
+            scaffoldBackgroundColor: const Color(0xFF0F172A), // Very deep navy/slate background
+            cardTheme: CardThemeData(
+              color: const Color(0xFF1E293B),
+              surfaceTintColor: const Color(0xFF1E293B),
+              elevation: 0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+                side: BorderSide(color: Colors.white.withValues(alpha: 0.05), width: 1),
+              ),
             ),
+            dividerTheme: DividerThemeData(color: Colors.white.withValues(alpha: 0.05)),
             useMaterial3: true,
             fontFamily: 'Roboto',
             pageTransitionsTheme: const PageTransitionsTheme(
               builders: {
-                TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
-                TargetPlatform.iOS: FadeUpwardsPageTransitionsBuilder(),
-                TargetPlatform.linux: FadeUpwardsPageTransitionsBuilder(),
-                TargetPlatform.macOS: FadeUpwardsPageTransitionsBuilder(),
-                TargetPlatform.windows: FadeUpwardsPageTransitionsBuilder(),
+                TargetPlatform.android: InstantPageTransitionsBuilder(),
+                TargetPlatform.iOS: InstantPageTransitionsBuilder(),
+                TargetPlatform.linux: InstantPageTransitionsBuilder(),
+                TargetPlatform.macOS: InstantPageTransitionsBuilder(),
+                TargetPlatform.windows: InstantPageTransitionsBuilder(),
               },
             ),
           ),
