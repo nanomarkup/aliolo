@@ -236,7 +236,7 @@ class AlioloMainApp extends StatelessWidget {
           themeMode: currentMode,
           theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(
-              seedColor: themeService.primaryColor,
+              seedColor: themeService.getAdjustedPrimary(),
               surface: Colors.white,
               surfaceContainerHighest: const Color(0xFFE2E8F0), // Subtle divider/dropdown color
             ),
@@ -265,20 +265,28 @@ class AlioloMainApp extends StatelessWidget {
           ),
           darkTheme: ThemeData(
             colorScheme: ColorScheme.fromSeed(
-              seedColor: themeService.primaryColor,
+              seedColor: themeService.getAdjustedPrimary(),
               brightness: Brightness.dark,
               surface: const Color(0xFF1E293B), // Deep slate surface
               surfaceContainerHighest: const Color(0xFF334155),
+              shadow: Colors.transparent,
             ),
+            shadowColor: Colors.transparent,
             scaffoldBackgroundColor: const Color(0xFF0F172A), // Very deep navy/slate background
             cardTheme: CardThemeData(
               color: const Color(0xFF1E293B),
               surfaceTintColor: const Color(0xFF1E293B),
               elevation: 0,
+              shadowColor: Colors.transparent,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16),
                 side: BorderSide(color: Colors.white.withValues(alpha: 0.05), width: 1),
               ),
+            ),
+            appBarTheme: const AppBarTheme(
+              elevation: 0,
+              scrolledUnderElevation: 0,
+              shadowColor: Colors.transparent,
             ),
             dividerTheme: DividerThemeData(color: Colors.white.withValues(alpha: 0.05)),
             useMaterial3: true,

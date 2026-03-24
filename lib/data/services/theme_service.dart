@@ -16,6 +16,27 @@ class ThemeService extends ChangeNotifier {
   Color _primaryColor = orange;
   Color get primaryColor => _primaryColor;
 
+  // Semantic Colors based on current theme mode
+  Color get success => isDarkMode ? const Color(0xFF81C784) : const Color(0xFF4CAF50);
+  Color get error => isDarkMode ? const Color(0xFFEF5350) : const Color(0xFFF44336);
+  Color get streak => error;
+  Color get xp => isDarkMode ? const Color(0xFFE68A00) : const Color(0xFFFF9800);
+  Color get amber => const Color(0xFFFFC107);
+  Color get hint => isDarkMode ? const Color(0xFFA0A0A0) : const Color(0xFF888888);
+
+  /// Returns the primary color adjusted for the current theme mode
+  Color getAdjustedPrimary([Color? baseColor]) {
+    final color = baseColor ?? _primaryColor;
+    if (!isDarkMode) return color;
+    
+    // For dark mode, if it's the default orange, use the requested #E68A00
+    if (color.value == orange.value) return const Color(0xFFE68A00);
+    
+    // For other custom colors, slightly darken/desaturate for dark mode comfort
+    final hsl = HSLColor.fromColor(color);
+    return hsl.withLightness((hsl.lightness - 0.05).clamp(0.0, 1.0)).toColor();
+  }
+
   final ValueNotifier<Color> sessionColorNotifier = ValueNotifier(orange);
 
   void setTheme(ThemeMode mode) {

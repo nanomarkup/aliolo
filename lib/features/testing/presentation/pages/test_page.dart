@@ -12,6 +12,7 @@ import 'package:aliolo/data/services/card_service.dart';
 import 'package:aliolo/data/services/progress_service.dart';
 import 'package:aliolo/data/services/sound_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
+import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/core/widgets/aliolo_image.dart';
 import 'package:aliolo/core/widgets/window_controls.dart';
 import 'package:aliolo/core/di/service_locator.dart';
@@ -586,7 +587,7 @@ Widget _buildAudioToImageGrid(Color headerColor, bool isMobile) {
                 final isCorrect = opt.id == _correctAnswerId;
                 Color? borderColor;
                 if (_isAnswered) {
-                  borderColor = isCorrect ? Colors.green : (isSelected ? Colors.red : Colors.grey[300]);
+                  borderColor = isCorrect ? getIt<ThemeService>().success : (isSelected ? getIt<ThemeService>().error : Colors.grey[300]);
                 } else if (isSelected) borderColor = headerColor;
                 return InkWell(
                   onTap: () => _selectOption(index),
@@ -619,7 +620,7 @@ Widget _buildOptionButton(int index, Color headerColor, bool isMobile) {
   final isCorrect = opt.id == _correctAnswerId;
   Color? color;
   if (_isAnswered) {
-    color = isCorrect ? Colors.green : (isSelected ? Colors.red : null);
+    color = isCorrect ? getIt<ThemeService>().success : (isSelected ? getIt<ThemeService>().error : null);
   } else if (isSelected) color = headerColor;
 
   // Dynamic font size based on text length

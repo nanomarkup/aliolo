@@ -594,9 +594,9 @@ class _ProfilePageState extends State<ProfilePage> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            _buildInfoItem(Icons.stars, '${user.totalXp}', context.t('total_xp'), Colors.orange),
-            _buildInfoItem(Icons.local_fire_department, '${user.currentStreak}', context.t('current_streak'), Colors.red),
-            _buildInfoItem(Icons.emoji_events, '${user.maxStreak}', context.t('max_streak'), Colors.amber),
+            _buildInfoItem(Icons.stars, '${user.totalXp}', context.t('total_xp'), getIt<ThemeService>().xp),
+            _buildInfoItem(Icons.local_fire_department, '${user.currentStreak}', context.t('current_streak'), getIt<ThemeService>().streak),
+            _buildInfoItem(Icons.emoji_events, '${user.maxStreak}', context.t('max_streak'), getIt<ThemeService>().amber),
             _buildInfoItem(Icons.track_changes, '${user.dailyCompletions.toInt()}/${user.dailyGoalCount}', context.t('daily_goal'), color),
           ],
         ),
