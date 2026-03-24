@@ -134,9 +134,31 @@ class _AboutPageState extends State<AboutPage> {
                           const SizedBox(height: 60),
                           // Brand Section (Mobile)
                           Image.asset(
-                            'assets/app_vlogo.png',
-                            height: 120,
+                            'assets/app_icon.png',
+                            height: 100,
                             fit: BoxFit.contain,
+                          ),
+                          const SizedBox(height: 8),
+                          const Text(
+                            'aliolo',
+                            style: TextStyle(
+                              fontSize: 40,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.orange,
+                              letterSpacing: -1.0,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 24),
+                            child: Text(
+                              context.t('about_tagline'),
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.grey[600],
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
                           ),
                           const SizedBox(height: 12),
                           Text(
@@ -287,9 +309,31 @@ class _AboutPageState extends State<AboutPage> {
                               children: [
                                 const Spacer(flex: 3),
                                 Image.asset(
-                                  'assets/app_vlogo.png',
-                                  height: 150,
+                                  'assets/app_icon.png',
+                                  height: 120,
                                   fit: BoxFit.contain,
+                                ),
+                                const SizedBox(height: 12),
+                                const Text(
+                                  'aliolo',
+                                  style: TextStyle(
+                                    fontSize: 48,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.orange,
+                                    letterSpacing: -1.0,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                                  child: Text(
+                                    context.t('about_tagline'),
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.grey[600],
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
                                 ),
                                 const SizedBox(height: 16),
                                 Text(
