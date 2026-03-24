@@ -264,7 +264,7 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
                               height: 100,
                               fit: BoxFit.contain,
                             ),
-                            const SizedBox(height: 4),
+                            const SizedBox(height: 0),
                             Text(
                               'aliolo',
                               style: GoogleFonts.poppins(
@@ -274,14 +274,16 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
                                 letterSpacing: 4.0,
                               ),
                             ),
-                            const SizedBox(height: 0),
-                            Text(
-                              context.t('about_tagline'),
-                              textAlign: TextAlign.center,
-                              style: GoogleFonts.roboto(
-                                fontSize: 14,
-                                color: const Color(0xFF1C6887),
-                                fontWeight: FontWeight.w400,
+                            Transform.translate(
+                              offset: const Offset(0, -8),
+                              child: Text(
+                                context.t('about_tagline'),
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.roboto(
+                                  fontSize: 14,
+                                  color: const Color(0xFF1C6887),
+                                  fontWeight: FontWeight.w400,
+                                ),
                               ),
                             ),
                           ],
