@@ -264,7 +264,7 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
                               height: 100,
                               fit: BoxFit.contain,
                             ),
-                            const SizedBox(height: 8),
+                            const SizedBox(height: 4),
                             Text(
                               'aliolo',
                               style: GoogleFonts.poppins(
@@ -274,6 +274,7 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
                                 letterSpacing: 4.0,
                               ),
                             ),
+                            const SizedBox(height: 0),
                             Text(
                               context.t('about_tagline'),
                               textAlign: TextAlign.center,

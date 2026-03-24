@@ -139,7 +139,7 @@ class _AboutPageState extends State<AboutPage> {
                             height: 100,
                             fit: BoxFit.contain,
                           ),
-                          const SizedBox(height: 8),
+                          const SizedBox(height: 4),
                           Text(
                             'aliolo',
                             style: GoogleFonts.poppins(
@@ -149,6 +149,7 @@ class _AboutPageState extends State<AboutPage> {
                               letterSpacing: 4.0,
                             ),
                           ),
+                          const SizedBox(height: 0),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 24),
                             child: Text(
@@ -314,7 +315,7 @@ class _AboutPageState extends State<AboutPage> {
                                   height: 120,
                                   fit: BoxFit.contain,
                                 ),
-                                const SizedBox(height: 12),
+                                const SizedBox(height: 4),
                                 Text(
                                   'aliolo',
                                   style: GoogleFonts.poppins(
@@ -324,6 +325,7 @@ class _AboutPageState extends State<AboutPage> {
                                     letterSpacing: 4.0,
                                   ),
                                 ),
+                                const SizedBox(height: 0),
                                 Padding(
                                   padding: const EdgeInsets.symmetric(horizontal: 24),
                                   child: Text(
