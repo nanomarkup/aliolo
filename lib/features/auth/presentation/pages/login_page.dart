@@ -273,7 +273,7 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
                                     style: GoogleFonts.poppins(
                                       fontSize: 80,
                                       fontWeight: FontWeight.w500,
-                                      color: const Color(0xFF1C6887),
+                                      color: Theme.of(context).primaryColor,
                                       letterSpacing: 4.0,
                                     ),
                                   ),
@@ -284,7 +284,7 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
                                       textAlign: TextAlign.center,
                                       style: GoogleFonts.roboto(
                                         fontSize: 14,
-                                        color: const Color(0xFF1C6887),
+                                        color: Theme.of(context).primaryColor,
                                         fontWeight: FontWeight.w400,
                                       ),
                                     ),

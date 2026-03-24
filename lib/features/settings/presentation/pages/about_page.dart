@@ -148,7 +148,7 @@ class _AboutPageState extends State<AboutPage> {
                                   style: GoogleFonts.poppins(
                                     fontSize: 72,
                                     fontWeight: FontWeight.w500,
-                                    color: const Color(0xFF1C6887),
+                                    color: currentPrimaryColor,
                                     letterSpacing: 4.0,
                                   ),
                                 ),
@@ -161,7 +161,7 @@ class _AboutPageState extends State<AboutPage> {
                                       textAlign: TextAlign.center,
                                       style: GoogleFonts.roboto(
                                         fontSize: 14,
-                                        color: const Color(0xFF1C6887),
+                                        color: currentPrimaryColor,
                                         fontWeight: FontWeight.w400,
                                       ),
                                     ),
@@ -332,7 +332,7 @@ class _AboutPageState extends State<AboutPage> {
                                         style: GoogleFonts.poppins(
                                           fontSize: 80,
                                           fontWeight: FontWeight.w500,
-                                          color: const Color(0xFF1C6887),
+                                          color: currentPrimaryColor,
                                           letterSpacing: 4.0,
                                         ),
                                       ),
@@ -345,7 +345,7 @@ class _AboutPageState extends State<AboutPage> {
                                             textAlign: TextAlign.center,
                                             style: GoogleFonts.roboto(
                                               fontSize: 14,
-                                              color: const Color(0xFF1C6887),
+                                              color: currentPrimaryColor,
                                               fontWeight: FontWeight.w400,
                                             ),
                                           ),
