@@ -256,22 +256,10 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
                           ),
                       child: MouseRegion(
                         cursor: SystemMouseCursors.click,
-                        child: Column(
-                          children: [
-                            const Icon(
-                              Icons.account_circle,
-                              size: 80,
-                              color: Colors.orange,
-                            ),
-                            const Text(
-                              'Aliolo',
-                              style: TextStyle(
-                                fontSize: 42,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.orange,
-                              ),
-                            ),
-                          ],
+                        child: Image.asset(
+                          'assets/app_vlogo.png',
+                          height: 150,
+                          fit: BoxFit.contain,
                         ),
                       ),
                     ),

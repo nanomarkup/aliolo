@@ -66,4 +66,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/app_icon.png
+    - assets/app_hlogo.png
+    - assets/app_vlogo.png
+    - assets/app_text.png
     - assets/media/

@@ -133,17 +133,12 @@ class _AboutPageState extends State<AboutPage> {
                         children: [
                           const SizedBox(height: 60),
                           // Brand Section (Mobile)
-                          const Icon(Icons.school, size: 80, color: Colors.orange),
-                          const SizedBox(height: 12),
-                          const Text(
-                            'Aliolo',
-                            style: TextStyle(
-                              fontSize: 40,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.orange,
-                            ),
+                          Image.asset(
+                            'assets/app_vlogo.png',
+                            height: 120,
+                            fit: BoxFit.contain,
                           ),
-                          const SizedBox(height: 8),
+                          const SizedBox(height: 12),
                           Container(
                             padding: const EdgeInsets.symmetric(
                               horizontal: 10,
@@ -311,21 +306,12 @@ class _AboutPageState extends State<AboutPage> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 const Spacer(flex: 3),
-                                const Icon(
-                                  Icons.school,
-                                  size: 100,
-                                  color: Colors.orange,
+                                Image.asset(
+                                  'assets/app_vlogo.png',
+                                  height: 150,
+                                  fit: BoxFit.contain,
                                 ),
                                 const SizedBox(height: 16),
-                                const Text(
-                                  'Aliolo',
-                                  style: TextStyle(
-                                    fontSize: 48,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.orange,
-                                  ),
-                                ),
-                                const SizedBox(height: 8),
                                 Container(
                                   padding: const EdgeInsets.symmetric(
                                     horizontal: 12,
