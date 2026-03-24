@@ -139,26 +139,6 @@ class _AboutPageState extends State<AboutPage> {
                             fit: BoxFit.contain,
                           ),
                           const SizedBox(height: 12),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 10,
-                              vertical: 4,
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.amber,
-                              borderRadius: BorderRadius.circular(6),
-                            ),
-                            child: Text(
-                              context.t('pro_label'),
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                                letterSpacing: 1.1,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 8),
                           Text(
                             '${context.t('version')} $_version',
                             style: const TextStyle(fontSize: 14, color: Colors.grey),
@@ -312,26 +292,6 @@ class _AboutPageState extends State<AboutPage> {
                                   fit: BoxFit.contain,
                                 ),
                                 const SizedBox(height: 16),
-                                Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 12,
-                                    vertical: 6,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: Colors.amber,
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  child: Text(
-                                    context.t('pro_label'),
-                                    style: const TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black,
-                                      letterSpacing: 1.2,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(height: 12),
                                 Text(
                                   '${context.t('version')} $_version',
                                   style: const TextStyle(
