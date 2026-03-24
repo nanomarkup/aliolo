@@ -3,6 +3,9 @@ import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:aliolo/features/auth/presentation/pages/login_page.dart';
+import 'package:aliolo/features/subjects/presentation/pages/subject_page.dart';
+import 'package:aliolo/data/services/auth_service.dart';
+import 'package:aliolo/core/di/service_locator.dart';
 
 class OnboardingPage extends StatefulWidget {
   const OnboardingPage({super.key});
@@ -47,9 +50,20 @@ class _OnboardingPageState extends State<OnboardingPage> {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('has_seen_onboarding', true);
     if (mounted) {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const LoginPage()),
-      );
+      if (Navigator.of(context).canPop()) {
+        Navigator.of(context).pop();
+      } else {
+        final authService = getIt<AuthService>();
+        if (authService.currentUser != null) {
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const SubjectPage()),
+          );
+        } else {
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const LoginPage()),
+          );
+        }
+      }
     }
   }
 

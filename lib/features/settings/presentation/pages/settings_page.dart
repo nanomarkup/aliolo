@@ -12,6 +12,7 @@ import 'package:aliolo/data/models/pillar_model.dart';
 import 'package:aliolo/features/leaderboard/presentation/pages/leaderboard_page.dart';
 import 'package:aliolo/features/subjects/presentation/pages/subject_page.dart';
 import 'package:aliolo/features/auth/presentation/pages/profile_page.dart';
+import 'package:aliolo/features/settings/presentation/pages/about_page.dart';
 import 'package:aliolo/data/services/feedback_service.dart';
 import 'package:aliolo/core/di/service_locator.dart';
 
@@ -422,6 +423,16 @@ class _SettingsPageState extends State<SettingsPage> {
                                 ),
                               );
                             }).toList(),
+                      ),
+                    ),
+                    const Divider(height: 1, indent: 16, endIndent: 16),
+                    ListTile(
+                      leading: Icon(Icons.info_outline, color: currentPrimaryColor),
+                      title: Text(context.t('about')),
+                      trailing: const Icon(Icons.chevron_right),
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const AboutPage()),
                       ),
                     ),
                   ],

@@ -208,11 +208,11 @@ class _AboutPageState extends State<AboutPage> {
                                 _buildInfoRow(context, Icons.sync_lock, context.t('trust_sync_title'), context.t('trust_sync_desc')),
 
                                 const SizedBox(height: 32),
-                                // Buttons (Mobile)
+                                // Buttons
                                 OutlinedButton.icon(
-                                  onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const CustomLicensesPage())),
-                                  icon: const Icon(Icons.description_outlined),
-                                  label: Text(context.t('licenses')),
+                                  onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const OnboardingPage())),
+                                  icon: const Icon(Icons.auto_awesome),
+                                  label: Text(context.t('view_onboarding')),
                                   style: OutlinedButton.styleFrom(
                                     minimumSize: const Size(double.infinity, 50),
                                     foregroundColor: Colors.orange,
@@ -221,9 +221,9 @@ class _AboutPageState extends State<AboutPage> {
                                 ),
                                 const SizedBox(height: 12),
                                 OutlinedButton.icon(
-                                  onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const OnboardingPage())),
-                                  icon: const Icon(Icons.auto_awesome),
-                                  label: Text(context.t('view_onboarding')),
+                                  onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const CustomLicensesPage())),
+                                  icon: const Icon(Icons.description_outlined),
+                                  label: Text(context.t('licenses')),
                                   style: OutlinedButton.styleFrom(
                                     minimumSize: const Size(double.infinity, 50),
                                     foregroundColor: Colors.orange,
@@ -364,12 +364,11 @@ class _AboutPageState extends State<AboutPage> {
                                           context,
                                           MaterialPageRoute(
                                             builder:
-                                                (context) =>
-                                                    const CustomLicensesPage(),
+                                                (context) => const OnboardingPage(),
                                           ),
                                         ),
-                                    icon: const Icon(Icons.description_outlined),
-                                    label: Text(context.t('licenses')),
+                                    icon: const Icon(Icons.auto_awesome),
+                                    label: Text(context.t('view_onboarding')),
                                     style: OutlinedButton.styleFrom(
                                       minimumSize: const Size(double.infinity, 50),
                                       foregroundColor: Colors.orange,
@@ -388,11 +387,12 @@ class _AboutPageState extends State<AboutPage> {
                                           context,
                                           MaterialPageRoute(
                                             builder:
-                                                (context) => const OnboardingPage(),
+                                                (context) =>
+                                                    const CustomLicensesPage(),
                                           ),
                                         ),
-                                    icon: const Icon(Icons.auto_awesome),
-                                    label: Text(context.t('view_onboarding')),
+                                    icon: const Icon(Icons.description_outlined),
+                                    label: Text(context.t('licenses')),
                                     style: OutlinedButton.styleFrom(
                                       minimumSize: const Size(double.infinity, 50),
                                       foregroundColor: Colors.orange,

@@ -310,5 +310,21 @@
   "folder_already_exists": "A folder with this name already exists in this pillar",
   "back": "Back",
   "email_change_notice": "For security, a confirmation link will be sent to BOTH your old and new email addresses. You must click both to complete the change.",
-  "email_update_sent": "Confirmation emails sent. Please check both inboxes."
+  "email_update_sent": "Confirmation emails sent. Please check both inboxes.",
+  "exit_confirm_title": "Exit Aliolo?",
+  "exit_confirm_msg": "Are you sure you want to exit the application?",
+  "exit": "Exit",
+  "onboarding_1_title": "Welcome to Aliolo",
+  "onboarding_1_desc": "Your smart companion for mastering visual subjects through science-backed algorithms.",
+  "onboarding_2_title": "Interactive Learning",
+  "onboarding_2_desc": "Study with images, audio, and video cards. Test yourself with adaptive MCQ sessions.",
+  "onboarding_3_title": "Track Your Progress",
+  "onboarding_3_desc": "Earn XP, badges, and build streaks. Watch your mastery grow from Bronze to Gold.",
+  "onboarding_4_title": "For All Ages",
+  "onboarding_4_desc": "Content curated for everyone, from early childhood to advanced professional learning.",
+  "onboarding_5_title": "Cloud Sync",
+  "onboarding_5_desc": "Your progress and cards are securely synced across all your devices in real-time.",
+  "onboarding_next": "Next",
+  "onboarding_skip": "Skip",
+  "onboarding_get_started": "Get Started"
 }
