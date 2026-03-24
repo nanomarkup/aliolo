@@ -326,5 +326,8 @@
   "onboarding_5_desc": "학습 진행 상황과 카드가 모든 기기에서 실시간으로 안전하게 동기화됩니다.",
   "onboarding_next": "다음",
   "onboarding_skip": "건너뛰기",
-  "onboarding_get_started": "시작하기"
+  "onboarding_get_started": "시작하기",
+  "upload_new_photo": "새 사진 업로드",
+  "delete_avatar": "아바타 삭제",
+  "delete_avatar_confirm": "프로필 사진을 삭제하시겠습니까?"
 }

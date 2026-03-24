@@ -326,5 +326,8 @@
   "onboarding_5_desc": "Ihr Fortschritt und Ihre Karten werden in Echtzeit sicher auf all Ihren Geräten synchronisiert.",
   "onboarding_next": "Weiter",
   "onboarding_skip": "Überspringen",
-  "onboarding_get_started": "Loslegen"
+  "onboarding_get_started": "Loslegen",
+  "upload_new_photo": "Neues Foto hochladen",
+  "delete_avatar": "Avatar löschen",
+  "delete_avatar_confirm": "Sind Sie sicher, dass Sie Ihr Profilbild entfernen möchten?"
 }

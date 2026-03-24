@@ -325,5 +325,8 @@
   "onboarding_5_desc": "Ang iyong progress at mga card ay ligtas na naka-sync sa lahat ng iyong device nang real-time.",
   "onboarding_next": "Susunod",
   "onboarding_skip": "Laktawan",
-  "onboarding_get_started": "Magsimula Na"
+  "onboarding_get_started": "Magsimula Na",
+  "upload_new_photo": "Mag-upload ng bagong larawan",
+  "delete_avatar": "I-delete ang avatar",
+  "delete_avatar_confirm": "Sigurado ka bang gusto mong alisin ang iyong profile picture?"
 }

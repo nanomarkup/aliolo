@@ -326,5 +326,8 @@
   "onboarding_5_desc": "Twoje postępy i karty są bezpiecznie synchronizowane na wszystkich urządzeniach w czasie rzeczywistym.",
   "onboarding_next": "Dalej",
   "onboarding_skip": "Pomiń",
-  "onboarding_get_started": "Zacznij teraz"
+  "onboarding_get_started": "Zacznij teraz",
+  "upload_new_photo": "Prześlij nowe zdjęcie",
+  "delete_avatar": "Usuń awatar",
+  "delete_avatar_confirm": "Czy na pewno chcesz usunąć swoje zdjęcie profilowe?"
 }

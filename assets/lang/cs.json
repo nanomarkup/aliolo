@@ -325,5 +325,8 @@
   "onboarding_5_desc": "Váš pokrok a karty jsou bezpečně synchronizovány ve všech vašich zařízeních v reálném čase.",
   "onboarding_next": "Další",
   "onboarding_skip": "Přeskočit",
-  "onboarding_get_started": "Začít"
+  "onboarding_get_started": "Začít",
+  "upload_new_photo": "Nahrát novou fotku",
+  "delete_avatar": "Smazat avatara",
+  "delete_avatar_confirm": "Opravdu chcete odstranit svou profilovou fotku?"
 }

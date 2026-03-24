@@ -326,5 +326,8 @@
   "onboarding_5_desc": "Votre progression et vos cartes sont synchronisées en temps réel sur tous vos appareils.",
   "onboarding_next": "Suivant",
   "onboarding_skip": "Ignorer",
-  "onboarding_get_started": "Commencer"
+  "onboarding_get_started": "Commencer",
+  "upload_new_photo": "Télécharger une nouvelle photo",
+  "delete_avatar": "Supprimer l'avatar",
+  "delete_avatar_confirm": "Voulez-vous vraiment supprimer votre photo de profil ?"
 }

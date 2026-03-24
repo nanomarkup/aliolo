@@ -325,5 +325,8 @@
   "onboarding_5_desc": "आपकी प्रगति और कार्ड आपके सभी उपकरणों में रीयल-टाइम में सुरक्षित रूप से सिंक होते हैं।",
   "onboarding_next": "अगला",
   "onboarding_skip": "छोड़ें",
-  "onboarding_get_started": "शुरू करें"
+  "onboarding_get_started": "शुरू करें",
+  "upload_new_photo": "नई फ़ोटो अपलोड करें",
+  "delete_avatar": "अवतार हटाएँ",
+  "delete_avatar_confirm": "क्या आप वाकई अपनी प्रोफ़ाइल फ़ोटो हटाना चाहते हैं?"
 }

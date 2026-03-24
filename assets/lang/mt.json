@@ -325,5 +325,8 @@
   "onboarding_5_desc": "Il-progress u l-cards tiegħek huma sinkronizzati b'mod sikur fl-apparati kollha tiegħek f'ħin reali.",
   "onboarding_next": "Li jmiss",
   "onboarding_skip": "Aqbeż",
-  "onboarding_get_started": "Ibda"
+  "onboarding_get_started": "Ibda",
+  "upload_new_photo": "Tella' ritratt ġdid",
+  "delete_avatar": "Ħassar l-avatar",
+  "delete_avatar_confirm": "Int żgur li trid tneħħi l-istampa tal-profil tiegħek?"
 }

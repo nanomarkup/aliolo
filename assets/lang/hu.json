@@ -325,5 +325,8 @@
   "onboarding_5_desc": "A fejlődésed és a kártyáid valós időben, biztonságosan szinkronizálódnak minden eszközödön.",
   "onboarding_next": "Tovább",
   "onboarding_skip": "Kihagyás",
-  "onboarding_get_started": "Kezdés"
+  "onboarding_get_started": "Kezdés",
+  "upload_new_photo": "Új fotó feltöltése",
+  "delete_avatar": "Avatar törlése",
+  "delete_avatar_confirm": "Biztosan el akarja távolítani a profilképét?"
 }

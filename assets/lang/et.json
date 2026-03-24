@@ -325,5 +325,8 @@
   "onboarding_5_desc": "Sinu edenemine ja kaardid sünkroonitakse turvaliselt kõigis seadmetes reaalajas.",
   "onboarding_next": "Edasi",
   "onboarding_skip": "Jäta vahele",
-  "onboarding_get_started": "Alustage"
+  "onboarding_get_started": "Alustage",
+  "upload_new_photo": "Laadi üles uus foto",
+  "delete_avatar": "Kustuta avatar",
+  "delete_avatar_confirm": "Kas olete kindel, et soovite oma profiilipildi eemaldada?"
 }

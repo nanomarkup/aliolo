@@ -325,5 +325,8 @@
   "onboarding_5_desc": "Déantar do dhul chun cinn agus do chártaí a shioncronú go slán thar do ghléasanna go léir i bhfíor-am.",
   "onboarding_next": "Ar Aghaidh",
   "onboarding_skip": "Scaip",
-  "onboarding_get_started": "Tosaigh"
+  "onboarding_get_started": "Tosaigh",
+  "upload_new_photo": "Uaslódáil grianghraf nua",
+  "delete_avatar": "Scrios avatar",
+  "delete_avatar_confirm": "An bhfuil tú cinnte gur mhaith leat do phictiúr próifíle a bhaint?"
 }

@@ -325,5 +325,8 @@
   "onboarding_5_desc": "Вашият напредък и карти се синхронизираят сигурно на всички ваши устройства в реално време.",
   "onboarding_next": "Напред",
   "onboarding_skip": "Пропусни",
-  "onboarding_get_started": "Започни сега"
+  "onboarding_get_started": "Започни сега",
+  "upload_new_photo": "Качване на нова снимка",
+  "delete_avatar": "Изтриване на аватара",
+  "delete_avatar_confirm": "Сигурни ли сте, че искате да премахнете профилната си снимка?"
 }

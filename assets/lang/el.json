@@ -325,5 +325,8 @@
   "onboarding_5_desc": "Η πρόοδος και οι κάρτες σας συγχρονίζονται με ασφάλεια σε όλες τις συσκευές σας σε πραγματικό χρόνο.",
   "onboarding_next": "Επόμενο",
   "onboarding_skip": "Παράλειψη",
-  "onboarding_get_started": "Ξεκινήστε"
+  "onboarding_get_started": "Ξεκινήστε",
+  "upload_new_photo": "Μεταφόρτωση νέας φωτογραφίας",
+  "delete_avatar": "Διαγραφή avatar",
+  "delete_avatar_confirm": "Είστε βέβαιοι ότι θέλετε να καταργήσετε τη φωτογραφία προφίλ σας;"
 }

@@ -325,5 +325,8 @@
   "onboarding_5_desc": "İlerlemeniz ve kartlarınız tüm cihazlarınız arasında gerçek zamanlı olarak güvenli bir şekilde senkronize edilir.",
   "onboarding_next": "Sonraki",
   "onboarding_skip": "Atla",
-  "onboarding_get_started": "Başlayın"
+  "onboarding_get_started": "Başlayın",
+  "upload_new_photo": "Yeni fotoğraf yükle",
+  "delete_avatar": "Avatarı sil",
+  "delete_avatar_confirm": "Profil resminizi kaldırmak istediğinizden emin misiniz?"
 }

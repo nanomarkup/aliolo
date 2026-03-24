@@ -325,5 +325,8 @@
   "onboarding_5_desc": "Tiến trình và thẻ của bạn được đồng bộ hóa an toàn trên tất cả các thiết bị của bạn trong thời gian thực.",
   "onboarding_next": "Tiếp theo",
   "onboarding_skip": "Bỏ qua",
-  "onboarding_get_started": "Bắt đầu"
+  "onboarding_get_started": "Bắt đầu",
+  "upload_new_photo": "Tải lên ảnh mới",
+  "delete_avatar": "Xóa ảnh đại diện",
+  "delete_avatar_confirm": "Bạn có chắc chắn muốn xóa ảnh hồ sơ của mình không?"
 }

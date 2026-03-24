@@ -325,5 +325,8 @@
   "onboarding_5_desc": "Progresul și cardurile tale sunt sincronizate în siguranță pe toate dispozitivele tale în timp real.",
   "onboarding_next": "Înainte",
   "onboarding_skip": "Omite",
-  "onboarding_get_started": "Începe acum"
+  "onboarding_get_started": "Începe acum",
+  "upload_new_photo": "Încărcați o fotografie nouă",
+  "delete_avatar": "Șterge avatar",
+  "delete_avatar_confirm": "Sigur doriți să eliminați fotografia de profil?"
 }

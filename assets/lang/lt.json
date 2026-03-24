@@ -325,5 +325,8 @@
   "onboarding_5_desc": "Jūsų pažanga ir kortelės saugiai sinchronizuojamos visuose įrenginiuose realiuoju laiku.",
   "onboarding_next": "Toliau",
   "onboarding_skip": "Praleisti",
-  "onboarding_get_started": "Pradėti"
+  "onboarding_get_started": "Pradėti",
+  "upload_new_photo": "Įkelti naują nuotrauką",
+  "delete_avatar": "Ištrinti avatarą",
+  "delete_avatar_confirm": "Ar tikrai norite pašalinti savo profilio nuotrauką?"
 }

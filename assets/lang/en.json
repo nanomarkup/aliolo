@@ -326,5 +326,8 @@
   "onboarding_5_desc": "Your progress and cards are securely synced across all your devices in real-time.",
   "onboarding_next": "Next",
   "onboarding_skip": "Skip",
-  "onboarding_get_started": "Get Started"
+  "onboarding_get_started": "Get Started",
+  "upload_new_photo": "Upload New Photo",
+  "delete_avatar": "Delete Avatar",
+  "delete_avatar_confirm": "Are you sure you want to remove your profile picture?"
 }

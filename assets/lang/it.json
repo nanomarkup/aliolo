@@ -326,5 +326,8 @@
   "onboarding_5_desc": "I tuoi progressi e le tue schede sono sincronizzati in tempo reale su tutti i tuoi dispositivi.",
   "onboarding_next": "Avanti",
   "onboarding_skip": "Salta",
-  "onboarding_get_started": "Inizia"
+  "onboarding_get_started": "Inizia",
+  "upload_new_photo": "Carica nuova foto",
+  "delete_avatar": "Elimina avatar",
+  "delete_avatar_confirm": "Sei sicuro di voler rimuovere la tua immagine del profilo?"
 }

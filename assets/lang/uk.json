@@ -327,5 +327,8 @@
   "onboarding_5_desc": "Ваш прогрес і картки безпечно синхронізуються між усіма вашими пристроями в режимі реального часу.",
   "onboarding_next": "Далі",
   "onboarding_skip": "Пропустити",
-  "onboarding_get_started": "Розпочати"
+  "onboarding_get_started": "Розпочати",
+  "upload_new_photo": "Завантажити нове фото",
+  "delete_avatar": "Видалити аватар",
+  "delete_avatar_confirm": "Ви впевнені, що хочете видалити фото профілю?"
 }

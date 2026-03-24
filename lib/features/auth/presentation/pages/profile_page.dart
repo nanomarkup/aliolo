@@ -40,6 +40,66 @@ class _ProfilePageState extends State<ProfilePage> {
     }
   }
 
+  void _showAvatarOptions() {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: const Icon(Icons.photo_library),
+              title: Text(context.t('upload_new_photo')),
+              onTap: () {
+                Navigator.pop(context);
+                _pickAndUploadAvatar();
+              },
+            ),
+            if (_authService.currentUser?.avatarPath != null)
+              ListTile(
+                leading: const Icon(Icons.delete, color: Colors.red),
+                title: Text(
+                  context.t('delete_avatar'),
+                  style: const TextStyle(color: Colors.red),
+                ),
+                onTap: () async {
+                  Navigator.pop(context);
+                  final confirm = await showDialog<bool>(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      title: Text(context.t('delete_avatar')),
+                      content: Text(context.t('delete_avatar_confirm')),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(context, false),
+                          child: Text(context.t('cancel')),
+                        ),
+                        TextButton(
+                          onPressed: () => Navigator.pop(context, true),
+                          child: Text(
+                            context.t('delete'),
+                            style: const TextStyle(color: Colors.red),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                  if (confirm == true) {
+                    await _authService.deleteAvatar();
+                    if (mounted) setState(() {});
+                  }
+                },
+              ),
+            const SizedBox(height: 8),
+          ],
+        ),
+      ),
+    );
+  }
+
   void _showEditUsernameDialog(String currentName) {
     final nameController = TextEditingController(text: currentName);
     showDialog(
@@ -461,12 +521,15 @@ class _ProfilePageState extends State<ProfilePage> {
           children: [
             Stack(
               children: [
-                _buildAvatar(user, 45, color),
+                GestureDetector(
+                  onTap: _showAvatarOptions,
+                  child: _buildAvatar(user, 45, color),
+                ),
                 Positioned(
                   right: 0,
                   bottom: 0,
                   child: GestureDetector(
-                    onTap: _pickAndUploadAvatar,
+                    onTap: _showAvatarOptions,
                     child: Container(
                       padding: const EdgeInsets.all(4),
                       decoration: BoxDecoration(

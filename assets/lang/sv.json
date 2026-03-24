@@ -325,5 +325,8 @@
   "onboarding_5_desc": "Dina framsteg och kort synkroniseras säkert över alla dina enheter i realtid.",
   "onboarding_next": "Nästa",
   "onboarding_skip": "Hoppa över",
-  "onboarding_get_started": "Kom igång"
+  "onboarding_get_started": "Kom igång",
+  "upload_new_photo": "Ladda upp nytt foto",
+  "delete_avatar": "Ta bort avatar",
+  "delete_avatar_confirm": "Är du säker på att du vill ta bort din profilbild?"
 }

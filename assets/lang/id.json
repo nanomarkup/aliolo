@@ -325,5 +325,8 @@
   "onboarding_5_desc": "Kemajuan dan kartu Anda disinkronkan dengan aman di semua perangkat Anda secara real-time.",
   "onboarding_next": "Berikutnya",
   "onboarding_skip": "Lewati",
-  "onboarding_get_started": "Mulai"
+  "onboarding_get_started": "Mulai",
+  "upload_new_photo": "Unggah foto baru",
+  "delete_avatar": "Hapus avatar",
+  "delete_avatar_confirm": "Apakah Anda yakin ingin menghapus foto profil Anda?"
 }

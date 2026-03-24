@@ -325,5 +325,8 @@
   "onboarding_5_desc": "Edistymisesi ja korttisi synkronoidaan turvallisesti kaikille laitteillasi reaaliajassa.",
   "onboarding_next": "Seuraava",
   "onboarding_skip": "Ohita",
-  "onboarding_get_started": "Aloita"
+  "onboarding_get_started": "Aloita",
+  "upload_new_photo": "Lataa uusi kuva",
+  "delete_avatar": "Poista avatar",
+  "delete_avatar_confirm": "Haluatko varmasti poistaa profiilikuvasi?"
 }

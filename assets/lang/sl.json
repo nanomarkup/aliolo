@@ -325,5 +325,8 @@
   "onboarding_5_desc": "Vaš napredek in kartice so varno sinhronizirani v vseh vaših napravah v realnem času.",
   "onboarding_next": "Naprej",
   "onboarding_skip": "Preskoči",
-  "onboarding_get_started": "Začni"
+  "onboarding_get_started": "Začni",
+  "upload_new_photo": "Naloži novo fotografijo",
+  "delete_avatar": "Izbriši avatar",
+  "delete_avatar_confirm": "Ali ste prepričani, da želite odstraniti svojo profilno sliko?"
 }

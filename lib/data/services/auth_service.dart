@@ -456,6 +456,29 @@ class AuthService extends ChangeNotifier {
     }
   }
 
+  Future<void> deleteAvatar() async {
+    if (_currentUser == null || _currentUser!.avatarPath == null) return;
+    try {
+      // Extract file name from public URL if possible to delete from storage
+      final uri = Uri.parse(_currentUser!.avatarPath!);
+      final pathSegments = uri.pathSegments;
+      if (pathSegments.isNotEmpty) {
+        final fileName = pathSegments.last;
+        await _supabase!.storage.from('avatars').remove(['avatars/$fileName']);
+      }
+
+      _currentUser!.avatarPath = null;
+      await updateUser(_currentUser!);
+      notifyListeners();
+    } catch (e) {
+      print('Error deleting avatar: $e');
+      // Even if storage delete fails, clear the path in profile
+      _currentUser!.avatarPath = null;
+      await updateUser(_currentUser!);
+      notifyListeners();
+    }
+  }
+
   Future<void> sendResetCode(String email) async {
     try {
       await _supabase!.auth.resetPasswordForEmail(email);

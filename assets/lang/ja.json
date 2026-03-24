@@ -326,5 +326,8 @@
   "onboarding_5_desc": "進捗状況とカードは、すべてのデバイス間でリアルタイムに安全に同期されます。",
   "onboarding_next": "次へ",
   "onboarding_skip": "スキップ",
-  "onboarding_get_started": "始める"
+  "onboarding_get_started": "始める",
+  "upload_new_photo": "新しい写真をアップロード",
+  "delete_avatar": "アバターを削除",
+  "delete_avatar_confirm": "プロフィール写真を削除してもよろしいですか？"
 }

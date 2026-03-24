@@ -325,5 +325,8 @@
   "onboarding_5_desc": "يتم مزامنة تقدمك وبطاقاتك بشكل آمن عبر جميع أجهزتك في الوقت الفعلي.",
   "onboarding_next": "التالي",
   "onboarding_skip": "تخطي",
-  "onboarding_get_started": "ابدأ الآن"
+  "onboarding_get_started": "ابدأ الآن",
+  "upload_new_photo": "تحميل صورة جديدة",
+  "delete_avatar": "حذف الصورة الرمزية",
+  "delete_avatar_confirm": "هل أنت متأكد أنك تريد إزالة صورة ملفك الشخصي؟"
 }

@@ -326,5 +326,8 @@
   "onboarding_5_desc": "您的进度和卡片可在所有设备间实时安全同步。",
   "onboarding_next": "下一步",
   "onboarding_skip": "跳过",
-  "onboarding_get_started": "开始体验"
+  "onboarding_get_started": "开始体验",
+  "upload_new_photo": "上传新照片",
+  "delete_avatar": "删除头像",
+  "delete_avatar_confirm": "您确定要删除您的个人资料照片吗？"
 }

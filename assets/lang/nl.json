@@ -325,5 +325,8 @@
   "onboarding_5_desc": "Uw voortgang en kaarten worden in realtime veilig gesynchroniseerd op al uw apparaten.",
   "onboarding_next": "Volgende",
   "onboarding_skip": "Overslaan",
-  "onboarding_get_started": "Aan de slag"
+  "onboarding_get_started": "Aan de slag",
+  "upload_new_photo": "Nieuwe foto uploaden",
+  "delete_avatar": "Avatar verwijderen",
+  "delete_avatar_confirm": "Weet je zeker dat je je profielfoto wilt verwijderen?"
 }

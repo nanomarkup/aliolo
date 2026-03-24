@@ -325,5 +325,8 @@
   "onboarding_5_desc": "Jūsu progress un kartītes tiek droši sinhronizētas visās jūsu ierīcēs reāllaikā.",
   "onboarding_next": "Tālāk",
   "onboarding_skip": "Izlaist",
-  "onboarding_get_started": "Sākt"
+  "onboarding_get_started": "Sākt",
+  "upload_new_photo": "Augšupielādēt jaunu fotoattēlu",
+  "delete_avatar": "Dzēst avataru",
+  "delete_avatar_confirm": "Vai tiešām vēlaties noņemt savu profila attēlu?"
 }
