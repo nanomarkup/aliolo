@@ -6,6 +6,7 @@ import 'package:window_manager/window_manager.dart';
 import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
+import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/core/widgets/window_controls.dart';
 import 'package:aliolo/features/subjects/presentation/pages/subject_page.dart';
 import 'package:aliolo/features/settings/presentation/pages/about_page.dart';
@@ -264,7 +265,7 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
                                 style: GoogleFonts.poppins(
                                   fontSize: 80,
                                   fontWeight: FontWeight.w500,
-                                  color: Theme.of(context).primaryColor,
+                                  color: getIt<ThemeService>().getAdjustedPrimary(),
                                   letterSpacing: 4.0,
                                 ),
                               ),
@@ -275,12 +276,11 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
                                   textAlign: TextAlign.center,
                                   style: GoogleFonts.roboto(
                                     fontSize: 14,
-                                    color: Theme.of(context).primaryColor,
+                                    color: getIt<ThemeService>().getAdjustedPrimary(),
                                     fontWeight: FontWeight.w400,
                                   ),
                                 ),
-                              ),
-                            ],
+                              ),                            ],
                           ),
                         ),
                       ],

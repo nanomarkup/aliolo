@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
 import 'package:window_manager/window_manager.dart';
@@ -115,7 +116,8 @@ class _AboutPageState extends State<AboutPage> {
 
   @override
   Widget build(BuildContext context) {
-    final currentPrimaryColor = ThemeService().primaryColor;
+    final themeService = getIt<ThemeService>();
+    final currentPrimaryColor = themeService.getAdjustedPrimary();
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return ListenableBuilder(
