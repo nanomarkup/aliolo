@@ -2,23 +2,28 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
 serve(async (req) => {
-  // 1. Setup CORS
+  // CORS setup for browser requests
   if (req.method === 'OPTIONS') {
-    return new Response('ok', { headers: { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'POST', 'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type' } })
+    return new Response('ok', { 
+      headers: { 
+        'Access-Control-Allow-Origin': '*', 
+        'Access-Control-Allow-Methods': 'POST', 
+        'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type' 
+      } 
+    })
   }
 
   try {
     const { email } = await req.json()
     
-    // 2. Initialize Supabase Admin Client
-    // These environment variables are automatically available in Supabase Edge Functions
+    // Initialize Supabase Admin Client
     const supabaseAdmin = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '',
       { auth: { persistSession: false } }
     )
 
-    // 3. Send the invitation
+    // Invite user via official Admin API
     const { data, error } = await supabaseAdmin.auth.admin.inviteUserByEmail(email)
     
     if (error) throw error
