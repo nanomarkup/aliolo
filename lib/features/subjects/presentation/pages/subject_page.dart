@@ -78,6 +78,11 @@ class _SubjectPageState extends State<SubjectPage> {
     final savedCollectionFilter = prefs.getString('last_collection_filter');
 
     if (mounted) {
+      final validCollectionFilters = {'favorites', 'mine', 'public'};
+      final validatedCollectionFilter = validCollectionFilters.contains(savedCollectionFilter) 
+          ? savedCollectionFilter 
+          : 'favorites';
+
       setState(() {
         if (savedLang != null) {
           _currentTestingLang = savedLang;
@@ -92,7 +97,7 @@ class _SubjectPageState extends State<SubjectPage> {
         
         _filters = _filters.copyWith(
           ageGroup: savedAgeFilter,
-          collectionFilter: savedCollectionFilter,
+          collectionFilter: validatedCollectionFilter,
         );
       });
     }
@@ -288,6 +293,7 @@ class _SubjectPageState extends State<SubjectPage> {
                       child: _buildCompactDropdown(
                         value: _filters.collectionFilter,
                         items: {
+                          'all': context.t('filter_all') ?? 'All',
                           'favorites': context.t('filter_dashboard'),
                           'mine': context.t('filter_my_subjects'),
                           'public': context.t('filter_public'),
@@ -493,11 +499,12 @@ class _SubjectPageState extends State<SubjectPage> {
   }
 
   Widget _buildCompactDropdown({required String value, required Map<String, String> items, required ValueChanged<String?> onChanged}) {
+    final validatedValue = items.containsKey(value) ? value : items.keys.first;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12),
       decoration: BoxDecoration(color: Theme.of(context).cardColor.withValues(alpha: 0.5), borderRadius: BorderRadius.circular(12), border: Border.all(color: Colors.grey.withValues(alpha: 0.5))),
       child: DropdownButtonHideUnderline(child: DropdownButton<String>(
-        value: value, isExpanded: true, icon: const Icon(Icons.arrow_drop_down, size: 20),
+        value: validatedValue, isExpanded: true, icon: const Icon(Icons.arrow_drop_down, size: 20),
         style: TextStyle(fontSize: 14, color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black87),
         items: items.entries.map((e) => DropdownMenuItem(value: e.key, child: Text(e.value, overflow: TextOverflow.ellipsis))).toList(),
         onChanged: onChanged,
@@ -884,11 +891,12 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
   }
 
   Widget _buildCompactDropdown({required String value, required Map<String, String> items, required ValueChanged<String?> onChanged}) {
+    final validatedValue = items.containsKey(value) ? value : items.keys.first;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12),
       decoration: BoxDecoration(color: Theme.of(context).cardColor.withValues(alpha: 0.5), borderRadius: BorderRadius.circular(12), border: Border.all(color: Colors.grey.withValues(alpha: 0.5))),
       child: DropdownButtonHideUnderline(child: DropdownButton<String>(
-        value: value, isExpanded: true, icon: const Icon(Icons.arrow_drop_down, size: 20),
+        value: validatedValue, isExpanded: true, icon: const Icon(Icons.arrow_drop_down, size: 20),
         style: TextStyle(fontSize: 14, color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black87),
         items: items.entries.map((e) => DropdownMenuItem(value: e.key, child: Text(e.value, overflow: TextOverflow.ellipsis))).toList(),
         onChanged: onChanged,
@@ -1167,11 +1175,12 @@ class _FolderPageState extends State<FolderPage> {
   }
 
   Widget _buildCompactDropdown({required String value, required Map<String, String> items, required ValueChanged<String?> onChanged}) {
+    final validatedValue = items.containsKey(value) ? value : items.keys.first;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12),
       decoration: BoxDecoration(color: Theme.of(context).cardColor.withValues(alpha: 0.5), borderRadius: BorderRadius.circular(12), border: Border.all(color: Colors.grey.withValues(alpha: 0.5))),
       child: DropdownButtonHideUnderline(child: DropdownButton<String>(
-        value: value, isExpanded: true, icon: const Icon(Icons.arrow_drop_down, size: 20),
+        value: validatedValue, isExpanded: true, icon: const Icon(Icons.arrow_drop_down, size: 20),
         style: TextStyle(fontSize: 14, color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black87),
         items: items.entries.map((e) => DropdownMenuItem(value: e.key, child: Text(e.value, overflow: TextOverflow.ellipsis))).toList(),
         onChanged: onChanged,

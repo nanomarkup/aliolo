@@ -205,7 +205,7 @@ class SubjectModel implements ContentItem {
     final List<dynamic>? activeCards =
         allCards?.where((c) => c['is_deleted'] != true).toList();
 
-    final Map<String, dynamic>? profile = json['profiles'];
+    final Map<String, dynamic>? profile = json['profiles'] ?? json['profiles!fk_subjects_owner'];
 
     var locData = json['localized_data'];
     Map<String, dynamic> locMap = {};
@@ -217,12 +217,16 @@ class SubjectModel implements ContentItem {
       } catch (_) {}
     }
 
-    Map<String, LocalizedSubjectData> localized = locMap.map(
-      (key, value) => MapEntry(
-        key.toLowerCase(),
-        LocalizedSubjectData.fromJson(value as Map<String, dynamic>),
-      ),
-    );
+    Map<String, LocalizedSubjectData> localized = {};
+    try {
+      locMap.forEach((key, value) {
+        if (value is Map) {
+          localized[key.toLowerCase()] = LocalizedSubjectData.fromJson(Map<String, dynamic>.from(value));
+        }
+      });
+    } catch (e) {
+      print('Error parsing localized_data for subject ${json['id']}: $e');
+    }
 
     // Fallback migration logic in app just in case
     if (localized.isEmpty) {

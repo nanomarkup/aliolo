@@ -44,12 +44,16 @@ class Pillar {
 
   factory Pillar.fromJson(Map<String, dynamic> json) {
     final Map<String, dynamic> locMap = json['localized_data'] ?? {};
-    final localized = locMap.map(
-      (key, value) => MapEntry(
-        key.toLowerCase(),
-        LocalizedPillarData.fromJson(value as Map<String, dynamic>),
-      ),
-    );
+    Map<String, LocalizedPillarData> localized = {};
+    try {
+      locMap.forEach((key, value) {
+        if (value is Map) {
+          localized[key.toLowerCase()] = LocalizedPillarData.fromJson(Map<String, dynamic>.from(value));
+        }
+      });
+    } catch (e) {
+      print('Error parsing localized_data for pillar ${json['id']}: $e');
+    }
 
     return Pillar(
       id: (json['id'] as num).toInt(),
