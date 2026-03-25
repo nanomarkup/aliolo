@@ -31,8 +31,17 @@ class AuthService extends ChangeNotifier {
         final AuthChangeEvent event = data.event;
         final Session? session = data.session;
 
-        if (session != null && (event == AuthChangeEvent.signedIn || event == AuthChangeEvent.userUpdated)) {
-          _fetchAndSyncUser(session.user);
+        if (session != null &&
+            (event == AuthChangeEvent.signedIn ||
+                event == AuthChangeEvent.userUpdated)) {
+          // ONLY sync if email is confirmed (or if it's not a new registration that needs confirmation)
+          if (session.user.emailConfirmedAt != null) {
+            _fetchAndSyncUser(session.user);
+          } else {
+            // If session exists but email not confirmed, we don't treat them as logged in
+            _currentUser = null;
+            notifyListeners();
+          }
         } else if (event == AuthChangeEvent.signedOut) {
           _currentUser = null;
           notifyListeners();
@@ -40,7 +49,7 @@ class AuthService extends ChangeNotifier {
       });
 
       final session = _supabase!.auth.currentSession;
-      if (session != null) {
+      if (session != null && session.user.emailConfirmedAt != null) {
         await _fetchAndSyncUser(session.user);
       }
     } catch (e) {
@@ -130,9 +139,9 @@ class AuthService extends ChangeNotifier {
         password: password,
         data: {'username': username},
       );
-      if (res.user != null) {
-        await _fetchAndSyncUser(res.user!);
-      }
+      // Explicitly logout to clear any session from signUp, 
+      // preventing automatic navigation to main page before confirmation.
+      await logout();
     } on AuthException catch (e) {
       _lastErrorMessage = e.message;
       rethrow;

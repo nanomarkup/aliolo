@@ -147,14 +147,7 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
 
         await _authService.createUser(username, email, pass);
 
-        if (_authService.lastErrorMessage != null &&
-            _authService.lastErrorMessage!.contains('confirmation')) {
-          _showMsg('Account created! Please check your email to confirm.');
-          _toggleMode();
-          return;
-        }
-        
-        _showMsg('Account created successfully! You can now log in.');
+        _showMsg('Account created! Please check your email to confirm.');
         _toggleMode();
         return;
       }
