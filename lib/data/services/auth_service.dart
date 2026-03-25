@@ -536,25 +536,6 @@ class AuthService extends ChangeNotifier {
     }
   }
 
-  Future<void> inviteUserByEmail(String email) async {
-    if (_supabase == null) return;
-    try {
-      // We use the service role key from the scripts to perform admin actions
-      const serviceRoleKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1sdGRqanN6eWNmbW9rd3FzcXhtIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MzEzMjg4NywiZXhwIjoyMDg4NzA4ODg3fQ.3HE7aC6ByeLFPKhErJNy40WO2vaO8tagl4UR0CnoHWI';
-      
-      // We need a separate client for admin actions to avoid overriding the current user session
-      final adminClient = SupabaseClient(
-        'https://mltdjjszycfmokwqsqxm.supabase.co',
-        serviceRoleKey,
-      );
-      
-      await adminClient.auth.admin.inviteUserByEmail(email);
-    } catch (e) {
-      _lastErrorMessage = e.toString();
-      rethrow;
-    }
-  }
-
   Future<bool> deleteAccount(String password) async {
     if (_currentUser == null) return false;
     _lastErrorMessage = null;

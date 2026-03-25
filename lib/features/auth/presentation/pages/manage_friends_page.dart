@@ -133,46 +133,7 @@ class _ManageFriendsPageState extends State<ManageFriendsPage> {
 
     final result = await _friendshipService.sendFriendRequest(emailTrimmed);
     if (mounted) {
-      if (result == 'user_not_found') {
-        final invite = await showDialog<bool>(
-          context: context,
-          builder:
-              (context) => AlertDialog(
-                title: const Text('User Not Found'),
-                content: Text(
-                  'The user with email $emailTrimmed is not in our system. Would you like to invite them to join Aliolo?',
-                ),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.pop(context, false),
-                    child: Text(context.t('cancel')),
-                  ),
-                  TextButton(
-                    onPressed: () => Navigator.pop(context, true),
-                    child: const Text('Invite'),
-                  ),
-                ],
-              ),
-        );
-
-        if (invite == true) {
-          try {
-            await _authService.inviteUserByEmail(emailTrimmed);
-            if (mounted) {
-              Navigator.pop(context); // Close the original add friend dialog
-              ScaffoldMessenger.of(
-                context,
-              ).showSnackBar(const SnackBar(content: Text('Invitation sent!')));
-            }
-          } catch (e) {
-            if (mounted) {
-              ScaffoldMessenger.of(
-                context,
-              ).showSnackBar(SnackBar(content: Text('Error: $e')));
-            }
-          }
-        }
-      } else if (result == 'success') {
+      if (result == 'success') {
         Navigator.pop(context);
         ScaffoldMessenger.of(
           context,
@@ -181,7 +142,7 @@ class _ManageFriendsPageState extends State<ManageFriendsPage> {
       } else {
         ScaffoldMessenger.of(
           context,
-        ).showSnackBar(SnackBar(content: Text(result)));
+        ).showSnackBar(SnackBar(content: Text(result == 'user_not_found' ? context.t('user_not_found') : result)));
       }
     }
   }
