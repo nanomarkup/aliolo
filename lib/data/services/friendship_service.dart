@@ -36,9 +36,8 @@ class FriendshipService {
           await _supabase
               .from('user_friendships')
               .select()
-              .or(
-                'and(sender_id.eq.${currentUser.serverId},receiver_id.eq.$targetId),and(sender_id.eq.$targetId,receiver_id.eq.${currentUser.serverId})',
-              )
+              .or('sender_id.eq.${currentUser.serverId},receiver_id.eq.${currentUser.serverId}')
+              .or('sender_id.eq.$targetId,receiver_id.eq.$targetId')
               .maybeSingle();
 
       if (existing != null) {
