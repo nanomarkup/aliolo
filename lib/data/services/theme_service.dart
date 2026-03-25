@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:aliolo/data/models/pillar_model.dart';
 
 class ThemeService extends ChangeNotifier {
   static final ThemeService _instance = ThemeService._internal();
@@ -42,6 +43,15 @@ class ThemeService extends ChangeNotifier {
   }
 
   final ValueNotifier<Color> sessionColorNotifier = ValueNotifier(orange);
+
+  void setPrimaryColorFromPillar(int pillarId) {
+    // Find the pillar in the global list
+    final pillar = pillars.firstWhere((p) => p.id == pillarId, orElse: () => pillars.firstWhere((p) => p.id == 8, orElse: () => pillars.isNotEmpty ? pillars.first : Pillar(id: 8, icon: '', lightColor: '#FF9800')));
+    
+    // Set primary based on the pillar's theme-aware color
+    _primaryColor = pillar.getColor(isDarkMode);
+    notifyListeners();
+  }
 
   void setTheme(ThemeMode mode) {
     themeNotifier.value = mode;

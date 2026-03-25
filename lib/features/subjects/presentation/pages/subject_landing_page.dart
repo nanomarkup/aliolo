@@ -799,20 +799,20 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                     final answer = card.getAnswer(displayLang);
 
                     return InkWell(
-                      onTap: () async {
+                      onTap: isCardMine ? () async {
                         await Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder:
                                 (context) => AddCardPage(
                                   existingCard: card,
-                                  isReadOnly: !isCardMine,
+                                  isReadOnly: false,
                                   pillarId: pillarId,
                                 ),
                           ),
                         );
                         _refreshData(silent: true);
-                      },
+                      } : null,
                       child: Card(
                         clipBehavior: Clip.antiAlias,
                         elevation: 2,
@@ -828,15 +828,30 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                             ),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                answer,
-                                textAlign: TextAlign.center,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 12,
-                                ),
+                              child: Stack(
+                                children: [
+                                  Center(
+                                    child: Text(
+                                      answer,
+                                      textAlign: TextAlign.center,
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ),
+                                  if (!isCardMine)
+                                    Positioned(
+                                      right: 0,
+                                      bottom: 0,
+                                      child: Tooltip(
+                                        message: 'You do not have permission to edit this card',
+                                        child: const Icon(Icons.lock_outline, size: 10, color: Colors.grey),
+                                      ),
+                                    ),
+                                ],
                               ),
                             ),
                           ],

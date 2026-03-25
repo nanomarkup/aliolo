@@ -12,7 +12,7 @@ class UserModel {
   late String uiLanguage;
   late bool soundEnabled;
   late bool autoPlayEnabled;
-  late String mainColor; // Hex string, e.g., #FF9800
+  late int mainPillarId; 
 
   late int totalXp;
   late int currentStreak;
@@ -36,7 +36,7 @@ class UserModel {
     this.uiLanguage = 'en',
     this.soundEnabled = true,
     this.autoPlayEnabled = false,
-    this.mainColor = '#FF9800',
+    this.mainPillarId = 8,
     this.totalXp = 0,
     this.currentStreak = 0,
     this.maxStreak = 0,
@@ -72,7 +72,7 @@ class UserModel {
       sidebarLeft: json['sidebar_left'] ?? false,
       soundEnabled: json['sound_enabled'] ?? true,
       autoPlayEnabled: json['auto_play_enabled'] ?? false,
-      mainColor: json['main_color'] ?? '#FF9800',
+      mainPillarId: json['main_pillar_id'] ?? 8,
       showOnLeaderboard: json['show_on_leaderboard'] ?? true,
       learnSessionSize: json['learn_session_size'] ?? json['session_size'] ?? 20,
       testSessionSize: json['test_session_size'] ?? json['session_size'] ?? 10,
@@ -81,7 +81,7 @@ class UserModel {
       avatarPath: json['avatar_url'],
       lastActiveDate: DateTime.tryParse(json['last_active_date'] ?? ''),
       updatedAt: DateTime.tryParse(json['updated_at'] ?? ''),
-      createdAt: DateTime.tryParse(json['created_at'] ?? ''),
+      createdAt: DateTime.tryParse(json['createdAt'] ?? ''),
     );
   }
 
@@ -101,7 +101,7 @@ class UserModel {
       'sidebar_left': sidebarLeft,
       'sound_enabled': soundEnabled,
       'auto_play_enabled': autoPlayEnabled,
-      'main_color': mainColor,
+      'main_pillar_id': mainPillarId,
       'show_on_leaderboard': showOnLeaderboard,
       'learn_session_size': learnSessionSize,
       'test_session_size': testSessionSize,

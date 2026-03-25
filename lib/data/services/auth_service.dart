@@ -88,9 +88,7 @@ class AuthService extends ChangeNotifier {
         }
 
         ThemeService().setThemeFromString(_currentUser!.themeMode);
-        ThemeService().setPrimaryColor(
-          ThemeService.fromHex(_currentUser!.mainColor),
-        );
+        ThemeService().setPrimaryColorFromPillar(_currentUser!.mainPillarId);
       } else {
         _currentUser = UserModel(
           username:
@@ -99,6 +97,7 @@ class AuthService extends ChangeNotifier {
           email: remoteUser.email!.toLowerCase(),
           serverId: remoteUser.id,
           uiLanguage: TranslationService().currentLocale.languageCode,
+          mainPillarId: 8,
         );
         await updateUser(_currentUser!);
       }
@@ -204,7 +203,7 @@ class AuthService extends ChangeNotifier {
         'options_count': user.optionsCount,
         'avatar_url': user.avatarPath,
         'default_language': user.defaultLanguage.toLowerCase(),
-        'main_color': user.mainColor,
+        'main_pillar_id': user.mainPillarId,
         'last_active_date': user.lastActiveDate?.toUtc().toIso8601String(),
         'next_daily_goal': user.nextDailyGoal,
         'daily_completions': user.dailyCompletions,
@@ -253,7 +252,7 @@ class AuthService extends ChangeNotifier {
     }
   }
 
-  Future<void> updateMainColor(String hexColor) async {
+  Future<void> updateMainColorFromPillar(int pillarId) async {
     if (_currentUser == null ||
         _currentUser!.serverId == null ||
         _supabase == null) {
@@ -262,13 +261,13 @@ class AuthService extends ChangeNotifier {
     try {
       await _supabase!
           .from('profiles')
-          .update({'main_color': hexColor})
+          .update({'main_pillar_id': pillarId})
           .eq('id', _currentUser!.serverId!);
-      _currentUser!.mainColor = hexColor;
-      ThemeService().setPrimaryColor(ThemeService.fromHex(hexColor));
+      _currentUser!.mainPillarId = pillarId;
+      ThemeService().setPrimaryColorFromPillar(pillarId);
       notifyListeners();
     } catch (e) {
-      print('Error updating main color: $e');
+      print('Error updating main pillar color: $e');
     }
   }
 

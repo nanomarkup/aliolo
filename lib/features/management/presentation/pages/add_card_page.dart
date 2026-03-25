@@ -316,14 +316,9 @@ class _AddCardPageState extends State<AddCardPage> {
   }
 
   void _showJsonDialog() {
-    final Map<String, dynamic> data = {
-      'subjectId': _selectedSubjectId,
-      'testMode': _testMode,
-      'level': _cardLevel,
-      'localizedData': _drafts.map(
-        (key, value) => MapEntry(key, value.toJson()),
-      ),
-    };
+    final Map<String, dynamic> data = _drafts.map(
+      (key, value) => MapEntry(key, value.toJson()),
+    );
 
     final encoder = const JsonEncoder.withIndent('  ');
     final String jsonTemplate = encoder.convert(data);
@@ -395,33 +390,23 @@ class _AddCardPageState extends State<AddCardPage> {
                               textController.text,
                             );
                             setState(() {
-                              if (parsed['subjectId'] is String) {
-                                _selectedSubjectId = parsed['subjectId'];
-                              }
-                              if (parsed['testMode'] is String) {
-                                _testMode = parsed['testMode'];
-                              }
-                              if (parsed['level'] is int) {
-                                _cardLevel = parsed['level'];
-                              }
-                              if (parsed['localizedData'] is Map) {
-                                final locData = parsed['localizedData'] as Map;
-                                locData.forEach((lang, val) {
-                                  final l = lang.toString().toLowerCase();
-                                  _ensureDraftExists(l);
+                              parsed.forEach((lang, val) {
+                                final l = lang.toString().toLowerCase();
+                                _ensureDraftExists(l);
+                                if (val is Map) {
                                   final d = val as Map<String, dynamic>;
-                                  _drafts[l]!.prompt = d['prompt'] ?? '';
-                                  _drafts[l]!.answer = d['answer'] ?? '';
-                                  _drafts[l]!.audioUrl = d['audio_url'];
-                                  _drafts[l]!.videoUrl = d['video_url'];
+                                  _drafts[l]!.prompt = d['prompt']?.toString() ?? '';
+                                  _drafts[l]!.answer = d['answer']?.toString() ?? '';
+                                  _drafts[l]!.audioUrl = d['audio_url']?.toString();
+                                  _drafts[l]!.videoUrl = d['video_url']?.toString();
                                   if (d['image_urls'] != null) {
                                     _drafts[l]!.imageUrls = List<String>.from(
                                       d['image_urls'],
                                     );
                                   }
-                                });
-                                _updateControllers();
-                              }
+                                }
+                              });
+                              _updateControllers();
                             });
                             Navigator.pop(context);
                           } catch (e) {
@@ -443,7 +428,7 @@ class _AddCardPageState extends State<AddCardPage> {
               return Dialog.fullscreen(
                 child: Scaffold(
                   appBar: AppBar(
-                    title: const Text('JSON Data'),
+                    title: const Text('Localized Data'),
                     automaticallyImplyLeading: false,
                     actions: [
                       IconButton(
@@ -463,7 +448,7 @@ class _AddCardPageState extends State<AddCardPage> {
             return AlertDialog(
               title: Row(
                 children: [
-                  const Text('JSON Data'),
+                  const Text('Localized Data'),
                   const Spacer(),
                   IconButton(
                     icon: const Icon(Icons.close),
@@ -582,6 +567,21 @@ class _AddCardPageState extends State<AddCardPage> {
   Widget build(BuildContext context) {
     if (_isLoading) {
       return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    }
+
+    final myId = _authService.currentUser?.serverId;
+    final isOwner = widget.existingCard == null || widget.existingCard!.ownerId == myId;
+
+    if (!isOwner) {
+      return Scaffold(
+        appBar: AppBar(title: Text(context.t('view_card'))),
+        body: const Center(
+          child: Padding(
+            padding: EdgeInsets.all(32.0),
+            child: Text('You do not have permission to view this card details.', textAlign: TextAlign.center),
+          ),
+        ),
+      );
     }
 
     final selectedSubject = _mySubjects.firstWhere(

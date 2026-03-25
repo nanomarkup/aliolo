@@ -379,17 +379,10 @@ class _SettingsPageState extends State<SettingsPage> {
                         children:
                             pillars.map((p) {
                               final color = p.getColor(getIt<ThemeService>().isDarkMode);
-                              final isSelected =
-                                  ThemeService.toHexStatic(color) ==
-                                  ThemeService.toHexStatic(
-                                    ThemeService().primaryColor,
-                                  );
+                              final isSelected = _authService.currentUser?.mainPillarId == p.id;
 
                               return GestureDetector(
-                                onTap:
-                                    () => _authService.updateMainColor(
-                                      ThemeService.toHexStatic(color),
-                                    ),
+                                onTap: () => _authService.updateMainColorFromPillar(p.id),
                                 child: Container(
                                   width: 44,
                                   height: 44,
@@ -399,7 +392,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                     border: Border.all(
                                       color:
                                           isSelected
-                                              ? Colors.white
+                                              ? (isDark ? Colors.white : Colors.black54)
                                               : Colors.transparent,
                                       width: 3,
                                     ),
