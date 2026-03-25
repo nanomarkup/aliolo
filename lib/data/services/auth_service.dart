@@ -539,17 +539,13 @@ class AuthService extends ChangeNotifier {
   Future<void> inviteUserByEmail(String email) async {
     if (_supabase == null) return;
     try {
-      // SECURE: We call a Supabase Edge Function.
-      // The Edge Function runs on the server and safely uses the SERVICE_ROLE_KEY
-      // to invite the user via the Admin API, ensuring the email is actually sent.
-      final response = await _supabase!.functions.invoke(
-        'invite-user',
-        body: {'email': email},
+      // SECURE: This calls the PostgreSQL function 'invite_user_by_email' 
+      // that we created in the Supabase SQL Editor.
+      // It triggers the official Supabase invitation email securely.
+      await _supabase!.rpc(
+        'invite_user_by_email',
+        params: {'target_email': email},
       );
-      
-      if (response.status != 200) {
-        throw Exception(response.data['error'] ?? 'Failed to send invite');
-      }
     } catch (e) {
       _lastErrorMessage = e.toString();
       rethrow;
