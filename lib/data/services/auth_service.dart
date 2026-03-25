@@ -540,8 +540,8 @@ class AuthService extends ChangeNotifier {
     if (_supabase == null) return;
     try {
       // SECURE: We call a Supabase Edge Function named 'invite-user'.
-      // The Edge Function runs on the server and safely uses the SERVICE_ROLE_KEY
-      // to invite the user via the Admin API, ensuring the email is actually sent.
+      // The Supabase client automatically handles the Authorization header
+      // when you use the standard .invoke() method.
       final response = await _supabase!.functions.invoke(
         'invite-user',
         body: {'email': email},

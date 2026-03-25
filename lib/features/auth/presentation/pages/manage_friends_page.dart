@@ -138,9 +138,9 @@ class _ManageFriendsPageState extends State<ManageFriendsPage> {
           context: context,
           builder:
               (context) => AlertDialog(
-                title: const Text('User Not Found'),
+                title: const Text('Invite User?'),
                 content: Text(
-                  'The user with email $emailTrimmed is not in our system. Would you like to invite them to join Aliolo?',
+                  'Email $emailTrimmed not found. Invite them to join Aliolo?',
                 ),
                 actions: [
                   TextButton(
@@ -162,7 +162,7 @@ class _ManageFriendsPageState extends State<ManageFriendsPage> {
               Navigator.pop(context); // Close the original add friend dialog
               ScaffoldMessenger.of(
                 context,
-              ).showSnackBar(const SnackBar(content: Text('Invitation sent!')));
+              ).showSnackBar(const SnackBar(content: Text('Invited!')));
             }
           } catch (e) {
             if (mounted) {

@@ -36,8 +36,7 @@ class FriendshipService {
           await _supabase
               .from('user_friendships')
               .select()
-              .or('sender_id.eq.${currentUser.serverId},receiver_id.eq.${currentUser.serverId}')
-              .or('sender_id.eq.$targetId,receiver_id.eq.$targetId')
+              .or('and(sender_id.eq.${currentUser.serverId},receiver_id.eq.$targetId),and(sender_id.eq.$targetId,receiver_id.eq.${currentUser.serverId})')
               .maybeSingle();
 
       if (existing != null) {
@@ -81,9 +80,7 @@ class FriendshipService {
     try {
       final res = await _supabase
           .from('user_friendships')
-          .select(
-            '*, sender:profiles!sender_id(*), receiver:profiles!receiver_id(*)',
-          )
+          .select('*, sender:profiles!sender_id(*), receiver:profiles!receiver_id(*)')
           .or('sender_id.eq.${user.serverId},receiver_id.eq.${user.serverId}');
 
       return List<Map<String, dynamic>>.from(res);
