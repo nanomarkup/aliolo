@@ -28,7 +28,7 @@ class FriendshipService {
               .eq('email', email.toLowerCase())
               .maybeSingle();
 
-      if (targetUserRes == null) return 'User not found';
+      if (targetUserRes == null) return 'user_not_found';
       final String targetId = targetUserRes['id'];
 
       // 2. Check if friendship already exists (any direction)
