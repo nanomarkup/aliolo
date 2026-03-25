@@ -14,6 +14,7 @@ import 'package:aliolo/features/subjects/presentation/pages/subject_page.dart';
 import 'package:aliolo/features/onboarding/presentation/pages/onboarding_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
+import 'dart:html' as html if (dart.library.io) 'package:aliolo/core/utils/file_stub.dart';
 
 import 'package:aliolo/core/utils/logger.dart';
 
@@ -318,11 +319,12 @@ class AlioloMainApp extends StatelessWidget {
                 return const OnboardingPage();
               }
 
-              // Check for Auth link (Recovery / Invite)
-              final uri = Uri.parse(window.location.href);
-              if (uri.fragment.contains('access_token=') && 
-                  (uri.fragment.contains('type=recovery') || uri.fragment.contains('type=invite') || uri.fragment.contains('type=signup'))) {
-                 return const LoginPage(); // LoginPage now handles the view state for Reset
+              if (kIsWeb) {
+                final uri = Uri.parse(html.window.location.href);
+                if (uri.fragment.contains('access_token=') && 
+                    (uri.fragment.contains('type=recovery') || uri.fragment.contains('type=invite') || uri.fragment.contains('type=signup'))) {
+                   return const LoginPage(); 
+                }
               }
 
               return SelectionArea(

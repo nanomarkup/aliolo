@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:window_manager/window_manager.dart';
+import 'dart:html' as html if (dart.library.io) 'package:aliolo/core/utils/file_stub.dart';
 import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
@@ -45,7 +46,7 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
 
     // Detect access_token for Invitation / Reset
     if (kIsWeb) {
-      final fragment = Uri.parse(window.location.href).fragment;
+      final fragment = Uri.parse(html.window.location.href).fragment;
       if (fragment.contains('access_token=')) {
         setState(() {
           _isRecovering = true;
@@ -450,7 +451,7 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
                       const SizedBox(height: 12),
                       if (_recoveryStep == 1) ...[
                         // We hide the code field if we have the access token already
-                        if (!Uri.parse(window.location.href).fragment.contains('access_token=')) ...[
+                        if (kIsWeb && !Uri.parse(html.window.location.href).fragment.contains('access_token=')) ...[
                           TextField(
                             controller: _codeController,
                             decoration: InputDecoration(
