@@ -536,6 +536,18 @@ class AuthService extends ChangeNotifier {
     }
   }
 
+  Future<void> inviteUserByEmail(String email) async {
+    if (_supabase == null) return;
+    try {
+      // SECURE: This calls a PostgreSQL RPC function on Supabase.
+      // The RPC function is marked with SECURITY DEFINER to perform privileged actions.
+      await _supabase!.rpc('invite_user_by_email', params: {'target_email': email});
+    } catch (e) {
+      _lastErrorMessage = e.toString();
+      rethrow;
+    }
+  }
+
   Future<bool> deleteAccount(String password) async {
     if (_currentUser == null) return false;
     _lastErrorMessage = null;
