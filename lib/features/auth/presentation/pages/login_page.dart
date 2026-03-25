@@ -153,7 +153,10 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
           _toggleMode();
           return;
         }
-        _showMsg('Account created successfully!');
+        
+        _showMsg('Account created successfully! You can now log in.');
+        _toggleMode();
+        return;
       }
 
       final success = await _authService.login(email, pass);

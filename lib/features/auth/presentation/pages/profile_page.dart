@@ -265,6 +265,105 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
+  void _showUpdatePasswordDialog() {
+    final oldPasswordController = TextEditingController();
+    final passwordController = TextEditingController();
+    final confirmController = TextEditingController();
+    showDialog(
+      context: context,
+      builder:
+          (context) => AlertDialog(
+            title: Text(context.t('change_password')),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextField(
+                  controller: oldPasswordController,
+                  obscureText: true,
+                  autofocus: true,
+                  decoration: InputDecoration(
+                    labelText: context.t('old_password'),
+                    hintText: context.t('old_password_required'),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                TextField(
+                  controller: passwordController,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    labelText: context.t('new_password'),
+                    hintText: context.t('new_password_required'),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                TextField(
+                  controller: confirmController,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    labelText: context.t('confirm_password'),
+                    hintText: context.t('confirm_password_required'),
+                  ),
+                  onSubmitted: (_) => _handlePasswordUpdate(
+                    oldPasswordController.text,
+                    passwordController.text,
+                    confirmController.text,
+                  ),
+                ),
+              ],
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text(context.t('cancel')),
+              ),
+              TextButton(
+                onPressed: () => _handlePasswordUpdate(
+                  oldPasswordController.text,
+                  passwordController.text,
+                  confirmController.text,
+                ),
+                child: Text(context.t('save')),
+              ),
+            ],
+          ),
+    );
+  }
+
+  void _handlePasswordUpdate(
+    String oldPassword,
+    String password,
+    String confirm,
+  ) async {
+    if (oldPassword.isEmpty || password.isEmpty || confirm.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(context.t('fill_all_fields'))),
+      );
+      return;
+    }
+    if (password != confirm) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(context.t('passwords_dont_match'))),
+      );
+      return;
+    }
+
+    try {
+      await _authService.updatePassword(oldPassword, password);
+      if (mounted) {
+        Navigator.pop(context); // Close dialog
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(context.t('password_updated'))),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(_authService.lastErrorMessage ?? e.toString())),
+        );
+      }
+    }
+  }
+
   void _showDeleteAccountDialog() {
     final passwordController = TextEditingController();
     showDialog(
@@ -325,7 +424,7 @@ class _ProfilePageState extends State<ProfilePage> {
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(context.t('invalid_password_delete'))),
+          SnackBar(content: Text(_authService.lastErrorMessage ?? context.t('invalid_password_delete'))),
         );
       }
     }
@@ -442,6 +541,13 @@ class _ProfilePageState extends State<ProfilePage> {
                           builder: (context) => const FeedbackManagementPage(),
                         ),
                       ),
+                    ),
+                    const Divider(height: 1, indent: 16, endIndent: 16),
+                    ListTile(
+                      leading: Icon(Icons.lock, color: currentSessionColor),
+                      title: Text(context.t('change_password')),
+                      trailing: const Icon(Icons.chevron_right),
+                      onTap: _showUpdatePasswordDialog,
                     ),
                   ],
                 ),

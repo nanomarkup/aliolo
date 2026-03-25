@@ -79,6 +79,7 @@ class UserModel {
       optionsCount: json['options_count'] ?? 6,
       defaultLanguage: (json['default_language'] ?? 'en').toString().toLowerCase(),
       avatarPath: json['avatar_url'],
+      isDeleted: json['is_deleted'] ?? false,
       lastActiveDate: DateTime.tryParse(json['last_active_date'] ?? ''),
       updatedAt: DateTime.tryParse(json['updated_at'] ?? ''),
       createdAt: DateTime.tryParse(json['createdAt'] ?? ''),
@@ -108,10 +109,11 @@ class UserModel {
       'options_count': optionsCount,
       'default_language': defaultLanguage.toLowerCase(),
       'avatar_url': avatarPath,
-      'last_active_date': lastActiveDate?.toUtc().toIso8601String(),
-      'updated_at': updatedAt?.toUtc().toIso8601String(),
-    };
-  }
+      'is_deleted': isDeleted,
+      'last_active_date': lastActiveDate?.toIso8601String(),
+      'updated_at': updatedAt?.toIso8601String(),
+      };
+      }
 
   UserModel.empty();
 }

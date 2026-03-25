@@ -60,7 +60,13 @@ class AuthService extends ChangeNotifier {
               .maybeSingle();
 
       if (remoteData != null) {
-        _currentUser = UserModel.fromJson(remoteData);
+        final user = UserModel.fromJson(remoteData);
+        if (user.isDeleted) {
+          await logout();
+          _lastErrorMessage = 'account_deleted';
+          return;
+        }
+        _currentUser = user;
 
         // Reset daily progress if it's a new day
         if (_currentUser!.lastActiveDate != null) {
@@ -165,6 +171,7 @@ class AuthService extends ChangeNotifier {
   Future<void> logout() async {
     if (_isSupabaseInitialized) await _supabase!.auth.signOut();
     _currentUser = null;
+    _lastErrorMessage = null;
     notifyListeners();
   }
 
@@ -208,6 +215,7 @@ class AuthService extends ChangeNotifier {
         'next_daily_goal': user.nextDailyGoal,
         'daily_completions': user.dailyCompletions,
         'auto_play_enabled': user.autoPlayEnabled,
+        'is_deleted': user.isDeleted,
         'updated_at': user.updatedAt?.toUtc().toIso8601String(),
       };
 
@@ -419,7 +427,7 @@ class AuthService extends ChangeNotifier {
     if (_supabase == null || _currentUser == null) return;
     try {
       await _supabase!.auth.updateUser(UserAttributes(email: newEmail));
-      // The email in our profiles table will be synced next time the user logs in 
+      // The email in our profiles table will be synced next time the user logs in
       // or we can optimisticly update it if we want, but usually we wait for confirmation.
     } catch (e) {
       _lastErrorMessage = e.toString();
@@ -427,6 +435,25 @@ class AuthService extends ChangeNotifier {
     }
   }
 
+  Future<void> updatePassword(String oldPassword, String newPassword) async {
+    if (_supabase == null || _currentUser == null) return;
+    try {
+      // 1. Verify old password by attempting a silent sign-in
+      await _supabase!.auth.signInWithPassword(
+        email: _currentUser!.email,
+        password: oldPassword,
+      );
+
+      // 2. If successful, update to the new password
+      await _supabase!.auth.updateUser(UserAttributes(password: newPassword));
+    } on AuthException catch (ae) {
+      _lastErrorMessage = ae.message;
+      rethrow;
+    } catch (e) {
+      _lastErrorMessage = e.toString();
+      rethrow;
+    }
+  }
   Future<void> updateAvatarPath(XFile image) async {
     if (_currentUser == null) return;
     try {
@@ -502,18 +529,29 @@ class AuthService extends ChangeNotifier {
 
   Future<bool> deleteAccount(String password) async {
     if (_currentUser == null) return false;
+    _lastErrorMessage = null;
     try {
-      // For security, Supabase doesn't allow users to delete themselves easily via client SDK
-      // Usually, you'd call an Edge Function or mark as is_deleted.
-      // We will mark as deleted in profiles and sign out.
-      _currentUser!.isDeleted = true;
-      await updateUser(_currentUser!);
+      // Re-verify the password by attempting a silent sign-in
+      await _supabase!.auth.signInWithPassword(
+        email: _currentUser!.email,
+        password: password,
+      );
+
+      // Call our custom RPC function which handles cascading deletion of all user data
+      // including auth.users record (via SECURITY DEFINER).
+      await _supabase!.rpc('delete_user_account');
+      
       await logout();
       _currentUser = null;
       notifyListeners();
       return true;
+    } on AuthException catch (ae) {
+      print('Auth error during account deletion: ${ae.message}');
+      _lastErrorMessage = ae.message;
+      return false;
     } catch (e) {
       print('Error deleting account: $e');
+      _lastErrorMessage = e.toString();
       return false;
     }
   }
