@@ -318,6 +318,13 @@ class AlioloMainApp extends StatelessWidget {
                 return const OnboardingPage();
               }
 
+              // Check for Auth link (Recovery / Invite)
+              final uri = Uri.parse(window.location.href);
+              if (uri.fragment.contains('access_token=') && 
+                  (uri.fragment.contains('type=recovery') || uri.fragment.contains('type=invite') || uri.fragment.contains('type=signup'))) {
+                 return const LoginPage(); // LoginPage now handles the view state for Reset
+              }
+
               return SelectionArea(
                 child: user == null ? const LoginPage() : const SubjectPage(),
               );

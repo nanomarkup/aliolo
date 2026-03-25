@@ -43,6 +43,17 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
     _clearFields();
     _focusEmail();
 
+    // Detect access_token for Invitation / Reset
+    if (kIsWeb) {
+      final fragment = Uri.parse(window.location.href).fragment;
+      if (fragment.contains('access_token=')) {
+        setState(() {
+          _isRecovering = true;
+          _recoveryStep = 1; // Skip email step, go to new password
+        });
+      }
+    }
+
     // Extra clear for web to fight browser autofill
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Future.delayed(const Duration(milliseconds: 500), () {
@@ -414,42 +425,46 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
                       ],
                     ] else ...[
                       Text(
-                        context.t('restore_password'),
+                        _recoveryStep == 0 ? context.t('restore_password') : 'Set Your Password',
                         style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       const SizedBox(height: 16),
-                      TextField(
-                        focusNode: _emailFocusNode,
-                        controller: _emailController,
-                        enabled: _recoveryStep == 0,
-                        decoration: InputDecoration(
-                          labelText: context.t('email'),
-                          border: const OutlineInputBorder(),
-                          prefixIcon: const Icon(Icons.email),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: orangeColor, width: 2),
-                          ),
-                        ),
-                        onSubmitted: (_) => _handleRecovery(),
-                      ),
-                      const SizedBox(height: 12),
-                      if (_recoveryStep == 1) ...[
+                      if (_recoveryStep == 0) ...[
                         TextField(
-                          controller: _codeController,
+                          focusNode: _emailFocusNode,
+                          controller: _emailController,
                           decoration: InputDecoration(
-                            labelText: 'Reset Code',
+                            labelText: context.t('email'),
                             border: const OutlineInputBorder(),
-                            prefixIcon: const Icon(Icons.pin),
+                            prefixIcon: const Icon(Icons.email),
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: orangeColor, width: 2),
                             ),
                           ),
                           onSubmitted: (_) => _handleRecovery(),
                         ),
-                        const SizedBox(height: 12),
+                      ],
+                      const SizedBox(height: 12),
+                      if (_recoveryStep == 1) ...[
+                        // We hide the code field if we have the access token already
+                        if (!Uri.parse(window.location.href).fragment.contains('access_token=')) ...[
+                          TextField(
+                            controller: _codeController,
+                            decoration: InputDecoration(
+                              labelText: 'Reset Code',
+                              border: const OutlineInputBorder(),
+                              prefixIcon: const Icon(Icons.pin),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: orangeColor, width: 2),
+                              ),
+                            ),
+                            onSubmitted: (_) => _handleRecovery(),
+                          ),
+                          const SizedBox(height: 12),
+                        ],
                         TextField(
                           key: _passwordKey,
                           controller: _passwordController,
