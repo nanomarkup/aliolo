@@ -7,6 +7,7 @@ import 'package:aliolo/data/models/pillar_model.dart';
 import 'package:aliolo/data/services/card_service.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
+import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/features/management/presentation/pages/add_card_page.dart';
 import 'package:aliolo/features/management/presentation/pages/subject_edit_page.dart';
 
@@ -122,7 +123,8 @@ class _SubjectDetailsPageState extends State<SubjectDetailsPage> {
       (p) => p.id == _currentSubject.pillarId,
       orElse: () => pillars.first,
     );
-    final currentSessionColor = pillar.getColor();
+    final isDarkMode = getIt<ThemeService>().isDarkMode;
+    final currentSessionColor = pillar.getColor(isDarkMode);
     const appBarColor = Colors.white;
     final lang =
         _authService.currentUser?.defaultLanguage.toLowerCase() ?? 'en';
@@ -287,13 +289,13 @@ class _SubjectDetailsPageState extends State<SubjectDetailsPage> {
                               imageUrl != null
                                   ? Image.network(imageUrl, fit: BoxFit.cover)
                                   : Container(
-                                    color: pillar.getColor().withValues(
+                                    color: pillar.getColor(isDarkMode).withValues(
                                       alpha: 0.1,
                                     ),
                                     child: Icon(
                                       Icons.image,
                                       size: 48,
-                                      color: pillar.getColor(),
+                                      color: pillar.getColor(isDarkMode),
                                     ),
                                   ),
                         ),

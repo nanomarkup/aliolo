@@ -265,7 +265,7 @@ class _TestPageState extends State<TestPage> {
       (p) => p.id == _subject.pillarId,
       orElse: () => pillars.first,
     );
-    final headerColor = pillar.getColor();
+    final headerColor = pillar.getColor(getIt<ThemeService>().isDarkMode);
 
     return ListenableBuilder(
       listenable: TranslationService(),

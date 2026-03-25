@@ -378,7 +378,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         alignment: WrapAlignment.center,
                         children:
                             pillars.map((p) {
-                              final color = p.getColor();
+                              final color = p.getColor(getIt<ThemeService>().isDarkMode);
                               final isSelected =
                                   ThemeService.toHexStatic(color) ==
                                   ThemeService.toHexStatic(

@@ -10,7 +10,7 @@ import 'package:aliolo/data/models/collection_model.dart';
 import 'package:aliolo/data/services/card_service.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
-
+import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/features/feedback/presentation/pages/feedback_page.dart';
 
 class SubjectEditPage extends StatefulWidget {
@@ -206,18 +206,12 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
   }
 
   void _showJsonDialog() {
-    final Map<String, dynamic> data = {
-      'pillarId': _selectedPillar,
-      'isPublic': _isPublic,
-      'ageGroup': _selectedAgeGroup,
-      'type': _selectedType,
-      'localizedData': _drafts.map(
-        (key, value) => MapEntry(key, {
-          if (value.name.isNotEmpty) 'name': value.name,
-          if (value.description.isNotEmpty) 'description': value.description,
-        }),
-      ),
-    };
+    final Map<String, dynamic> data = _drafts.map(
+      (key, value) => MapEntry(key, {
+        if (value.name.isNotEmpty) 'name': value.name,
+        if (value.description.isNotEmpty) 'description': value.description,
+      }),
+    );
 
     final encoder = const JsonEncoder.withIndent('  ');
     final String jsonTemplate = encoder.convert(data);
@@ -289,30 +283,17 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
                               textController.text,
                             );
                             setState(() {
-                              if (parsed['pillarId'] is int) {
-                                _selectedPillar = parsed['pillarId'];
-                              }
-                              if (parsed['isPublic'] is bool) {
-                                _isPublic = parsed['isPublic'];
-                              }
-                              if (parsed['ageGroup'] is String) {
-                                _selectedAgeGroup = parsed['ageGroup'];
-                              }
-                              if (parsed['type'] is String) {
-                                _selectedType = parsed['type'];
-                              }
-                              if (parsed['localizedData'] is Map) {
-                                final locData = parsed['localizedData'] as Map;
-                                locData.forEach((lang, val) {
-                                  final l = lang.toString().toLowerCase();
-                                  _ensureDraftExists(l);
+                              parsed.forEach((lang, val) {
+                                final l = lang.toString().toLowerCase();
+                                _ensureDraftExists(l);
+                                if (val is Map) {
                                   final d = val as Map<String, dynamic>;
-                                  _drafts[l]!.name = d['name'] ?? '';
+                                  _drafts[l]!.name = d['name']?.toString() ?? '';
                                   _drafts[l]!.description =
-                                      d['description'] ?? '';
-                                });
-                                _updateControllers();
-                              }
+                                      d['description']?.toString() ?? '';
+                                }
+                              });
+                              _updateControllers();
                             });
                             Navigator.pop(context);
                           } catch (e) {
@@ -334,7 +315,7 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
               return Dialog.fullscreen(
                 child: Scaffold(
                   appBar: AppBar(
-                    title: const Text('JSON Data'),
+                    title: const Text('Localized Data'),
                     automaticallyImplyLeading: false,
                     actions: [
                       IconButton(
@@ -354,7 +335,7 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
             return AlertDialog(
               title: Row(
                 children: [
-                  const Text('JSON Data'),
+                  const Text('Localized Data'),
                   const Spacer(),
                   IconButton(
                     icon: const Icon(Icons.close),
@@ -797,7 +778,8 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
       (p) => p.id == _selectedPillar,
       orElse: () => pillars.first,
     );
-    final currentSessionColor = pillar.getColor();
+    final isDarkMode = getIt<ThemeService>().isDarkMode;
+    final currentSessionColor = pillar.getColor(isDarkMode);
     final isOwner =
         (widget.existingSubject == null && widget.existingFolder == null) ||
         widget.existingSubject?.ownerId == _authService.currentUser?.serverId ||

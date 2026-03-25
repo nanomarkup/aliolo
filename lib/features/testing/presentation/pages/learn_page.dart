@@ -12,6 +12,7 @@ import 'package:aliolo/data/services/card_service.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/sound_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
+import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/data/services/progress_service.dart';
 import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/core/widgets/window_controls.dart';
@@ -271,7 +272,7 @@ class _LearnPageState extends State<LearnPage> {
       (p) => p.id == _subject.pillarId,
       orElse: () => pillars.first,
     );
-    final headerColor = pillar.getColor();
+    final headerColor = pillar.getColor(getIt<ThemeService>().isDarkMode);
 
     return ListenableBuilder(
       listenable: TranslationService(),

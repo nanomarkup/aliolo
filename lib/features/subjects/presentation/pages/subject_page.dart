@@ -519,7 +519,7 @@ class _SubjectListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final pillarColor = pillar.getColor();
+    final pillarColor = pillar.getColor(getIt<ThemeService>().isDarkMode);
     final cardCount = subject.cardCount;
     final isOwner = subject.ownerId == getIt<AuthService>().currentUser?.serverId;
 
@@ -587,7 +587,7 @@ class _CollectionListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final pillarColor = pillar.getColor();
+    final pillarColor = pillar.getColor(getIt<ThemeService>().isDarkMode);
     final isOwner = collection.ownerId == getIt<AuthService>().currentUser?.serverId;
 
     return Padding(
@@ -654,7 +654,7 @@ class _PillarGridTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final pillarColor = pillar.getColor();
+    final pillarColor = pillar.getColor(getIt<ThemeService>().isDarkMode);
     final bool isEmpty = subjectCount == 0 && folderCount == 0;
     return Opacity(
       opacity: isEmpty ? 0.5 : 1.0,
@@ -756,7 +756,7 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final pillarColor = widget.pillar.getColor();
+    final pillarColor = widget.pillar.getColor(getIt<ThemeService>().isDarkMode);
     const appBarColor = Colors.white;
     return ListenableBuilder(
       listenable: TranslationService(),
@@ -912,7 +912,7 @@ class _FolderListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final pillarColor = pillar.getColor();
+    final pillarColor = pillar.getColor(getIt<ThemeService>().isDarkMode);
     final bool isEmpty = matchingCount == 0;
     final isOwner = folder.ownerId == getIt<AuthService>().currentUser?.serverId;
 
@@ -1023,7 +1023,7 @@ class _FolderPageState extends State<FolderPage> {
 
   @override
   Widget build(BuildContext context) {
-    final pillarColor = widget.pillar.getColor();
+    final pillarColor = widget.pillar.getColor(getIt<ThemeService>().isDarkMode);
     const appBarColor = Colors.white;
     final isOwner = widget.folder.ownerId == _authService.currentUser?.serverId;
 

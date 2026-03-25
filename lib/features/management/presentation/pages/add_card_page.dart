@@ -7,6 +7,7 @@ import 'package:aliolo/data/models/card_model.dart';
 import 'package:aliolo/data/models/subject_model.dart';
 import 'package:aliolo/data/services/card_service.dart';
 import 'package:aliolo/data/services/auth_service.dart';
+import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/data/services/sound_service.dart';
 import 'package:image_picker/image_picker.dart';
@@ -594,7 +595,8 @@ class _AddCardPageState extends State<AddCardPage> {
       (p) => p.id == (widget.pillarId ?? selectedSubject.pillarId),
       orElse: () => pillars.first,
     );
-    final themeColor = pillar.getColor();
+    final themeService = getIt<ThemeService>();
+    final themeColor = pillar.getColor(themeService.isDarkMode);
     const appBarColor = Colors.white;
 
     final String pageTitle =
@@ -677,7 +679,7 @@ class _AddCardPageState extends State<AddCardPage> {
                         contextTitle: widget.existingCard != null 
                           ? 'Card: ${widget.existingCard!.localizedData['global']?.answer}'
                           : 'Card',
-                        appBarColor: pillar.getColor(),
+                        appBarColor: pillar.getColor(themeService.isDarkMode),
                       ),
                 ),
               );

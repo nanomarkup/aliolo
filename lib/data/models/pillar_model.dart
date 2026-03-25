@@ -25,7 +25,8 @@ class LocalizedPillarData {
 class Pillar {
   final int id;
   final String icon;
-  final String color;
+  final String lightColor;
+  final String? darkColor;
   final int sortOrder;
 
   /// Map of language code to its specific data.
@@ -35,7 +36,8 @@ class Pillar {
   const Pillar({
     required this.id,
     required this.icon,
-    required this.color,
+    required this.lightColor,
+    this.darkColor,
     this.sortOrder = 0,
     this.localizedData = const {},
   });
@@ -52,14 +54,16 @@ class Pillar {
     return Pillar(
       id: (json['id'] as num).toInt(),
       icon: json['icon'] ?? 'category',
-      color: json['color'] ?? '#9E9E9E',
+      lightColor: json['light_color'] ?? json['color'] ?? '#9E9E9E',
+      darkColor: json['dark_color'],
       sortOrder: (json['sort_order'] as num? ?? 0).toInt(),
       localizedData: localized,
     );
   }
 
-  Color getColor() {
-    return Color(int.parse(color.replaceFirst('#', '0xFF')));
+  Color getColor([bool isDarkMode = false]) {
+    final hex = (isDarkMode && darkColor != null) ? darkColor! : lightColor;
+    return Color(int.parse(hex.replaceFirst('#', '0xFF')));
   }
 
   IconData getIconData() {

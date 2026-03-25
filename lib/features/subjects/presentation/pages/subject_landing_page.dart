@@ -6,6 +6,7 @@ import 'package:aliolo/data/models/folder_model.dart';
 import 'package:aliolo/data/models/collection_model.dart';
 import 'package:aliolo/data/services/card_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
+import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/math_service.dart';
 import 'package:aliolo/core/di/service_locator.dart';
@@ -376,7 +377,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
       (p) => p.id == pillarId,
       orElse: () => pillars.first,
     );
-    final pillarColor = pillar.getColor();
+    final pillarColor = pillar.getColor(getIt<ThemeService>().isDarkMode);
     const appBarColor = Colors.white;
     final isOwner = (_currentSubject != null && _currentSubject!.ownerId == _authService.currentUser?.serverId) ||
                   (_currentCollection != null && _currentCollection!.ownerId == _authService.currentUser?.serverId);
