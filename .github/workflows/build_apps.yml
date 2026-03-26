@@ -70,7 +70,7 @@ jobs:
           channel: 'stable'
           cache: true
       - run: flutter pub get
-      - run: flutter build linux --release
+      - run: flutter build linux --release --dart-define=SUPABASE_URL=${{ env.SUPABASE_URL }} --dart-define=SUPABASE_ANON_KEY=${{ env.SUPABASE_ANON_KEY }}
       - name: Create Linux Bundle (Zip)
         run: |
           cd build/linux/x64/release/bundle/
@@ -91,7 +91,7 @@ jobs:
           channel: 'stable'
           cache: true
       - run: flutter pub get
-      - run: flutter build windows --release
+      - run: flutter build windows --release --dart-define=SUPABASE_URL=${{ env.SUPABASE_URL }} --dart-define=SUPABASE_ANON_KEY=${{ env.SUPABASE_ANON_KEY }}
       - name: Upload Windows Artifact
         uses: actions/upload-artifact@v4
         with:
@@ -128,10 +128,6 @@ jobs:
       - run: flutter build ios --release --no-codesign --dart-define=SUPABASE_URL=${{ env.SUPABASE_URL }} --dart-define=SUPABASE_ANON_KEY=${{ env.SUPABASE_ANON_KEY }}
       - name: Upload iOS Artifact
         uses: actions/upload-artifact@v4
-        with:
-          name: aliolo-ios
-          path: build/ios/iphoneos/
-  uses: actions/upload-artifact@v4
         with:
           name: aliolo-ios
           path: build/ios/iphoneos/
