@@ -131,57 +131,71 @@ class _ManageFriendsPageState extends State<ManageFriendsPage> {
     final emailTrimmed = email.trim();
     if (emailTrimmed.isEmpty) return;
 
-    final result = await _friendshipService.sendFriendRequest(emailTrimmed);
-    if (mounted) {
-      if (result == 'user_not_found') {
-        final invite = await showDialog<bool>(
-          context: context,
-          builder:
-              (context) => AlertDialog(
-                title: const Text('Invite User?'),
-                content: Text(
-                  'Email $emailTrimmed not found. Invite them to join Aliolo?',
-                ),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.pop(context, false),
-                    child: Text(context.t('cancel')),
-                  ),
-                  TextButton(
-                    onPressed: () => Navigator.pop(context, true),
-                    child: const Text('Invite'),
-                  ),
-                ],
-              ),
-        );
+    try {
+      final result = await _friendshipService.sendFriendRequest(emailTrimmed);
+      if (mounted) {
+        if (result == 'user_not_found') {
+          // Close the "Add Friend By Email" dialog BEFORE showing the "Invite" confirmation
+          Navigator.pop(context);
 
-        if (invite == true) {
-          try {
-            await _authService.inviteUserByEmail(emailTrimmed);
-            if (mounted) {
-              Navigator.pop(context); // Close the original add friend dialog
-              ScaffoldMessenger.of(
-                context,
-              ).showSnackBar(const SnackBar(content: Text('Invited!')));
-            }
-          } catch (e) {
-            if (mounted) {
-              ScaffoldMessenger.of(
-                context,
-              ).showSnackBar(SnackBar(content: Text('Error: $e')));
+          final invite = await showDialog<bool>(
+            context: context,
+            builder:
+                (context) => AlertDialog(
+                  title: const Text('Invite User?'),
+                  content: Text(
+                    'Email $emailTrimmed not found. Invite them to join Aliolo?',
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context, false),
+                      child: Text(context.t('cancel')),
+                    ),
+                    TextButton(
+                      onPressed: () => Navigator.pop(context, true),
+                      child: const Text('Invite'),
+                    ),
+                  ],
+                ),
+          );
+
+          if (invite == true) {
+            try {
+              final senderId = _authService.currentUser?.serverId;
+              await _authService.inviteUserByEmail(emailTrimmed, senderId: senderId);
+
+              if (mounted) {
+                ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(const SnackBar(content: Text('Invited and request sent!')));
+                _loadFriendships();
+              }
+            } catch (e) {
+              if (mounted) {
+                ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(SnackBar(content: Text('Error: $e')));
+              }
             }
           }
+        } else if (result == 'success') {
+          Navigator.pop(context); // Close the "Add Friend" dialog
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(context.t('request_sent'))));
+          _loadFriendships();
+        } else {
+          // Keep the dialog open on other errors (like "Cannot add yourself")
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(result)));
         }
-      } else if (result == 'success') {
-        Navigator.pop(context);
+      }
+    } catch (e) {
+      if (mounted) {
         ScaffoldMessenger.of(
           context,
-        ).showSnackBar(SnackBar(content: Text(context.t('request_sent'))));
-        _loadFriendships();
-      } else {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(result)));
+        ).showSnackBar(SnackBar(content: Text('Error: $e')));
       }
     }
   }
@@ -223,6 +237,16 @@ class _ManageFriendsPageState extends State<ManageFriendsPage> {
               final isSender =
                   f['sender_id'] == _authService.currentUser?.serverId;
               final otherUser = isSender ? f['receiver'] : f['sender'];
+              
+              if (otherUser == null) {
+                return const Card(
+                  margin: EdgeInsets.only(bottom: 12),
+                  child: ListTile(
+                    title: Text('Unknown User (Profile missing)'),
+                  ),
+                );
+              }
+
               final status = f['status'];
               final id = f['id'];
               final avatarUrl = otherUser['avatar_url'] as String?;

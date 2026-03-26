@@ -44,16 +44,8 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
     _clearFields();
     _focusEmail();
 
-    // Detect access_token for Invitation / Reset
-    if (kIsWeb) {
-      final fragment = Uri.parse(html.window.location.href).fragment;
-      if (fragment.contains('access_token=')) {
-        setState(() {
-          _isRecovering = true;
-          _recoveryStep = 1; // Skip email step, go to new password
-        });
-      }
-    }
+    _authService.addListener(_syncWithServiceState);
+    _syncWithServiceState();
 
     // Extra clear for web to fight browser autofill
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -64,6 +56,17 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
         }
       });
     });
+  }
+
+  void _syncWithServiceState() {
+    if (_authService.isPasswordRecoveryFlow) {
+      if (mounted) {
+        setState(() {
+          _isRecovering = true;
+          _recoveryStep = 1; // Skip email step, go to new password
+        });
+      }
+    }
   }
 
   @override
@@ -85,7 +88,6 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
         return true; // Handled
       } else if (event.logicalKey == LogicalKeyboardKey.enter) {
         // Only trigger global enter if no text field is focused or if handled by onSubmitted
-        // For simplicity, we can let onSubmitted handle text fields and this handle buttons
         return false;
       }
     }
@@ -197,9 +199,14 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
 
   Future<void> _handleRecovery() async {
     final email = _emailController.text.trim();
-    if (email.isEmpty) {
-      _showMsg(context.t('fill_all_fields'));
-      return;
+    
+    // Only require email if we are starting the recovery flow (Step 0)
+    // and NOT already in a verified URL recovery flow.
+    if (_recoveryStep == 0 && !_authService.isPasswordRecoveryFlow) {
+      if (email.isEmpty) {
+        _showMsg(context.t('fill_all_fields'));
+        return;
+      }
     }
 
     setState(() => _isLoading = true);
@@ -207,13 +214,22 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
     try {
       if (_recoveryStep == 0) {
         await _authService.sendResetCode(email);
-        _showMsg('Reset code sent to $email (Mock: 123456)');
+        _showMsg('Reset code sent to $email');
         setState(() => _recoveryStep = 1);
       } else {
         final code = _codeController.text.trim();
         final newPass = _passwordController.text;
         final confirm = _confirmPasswordController.text;
-        if (code.isEmpty || newPass.isEmpty) {
+        
+        // If we are in web recovery flow from URL, we might not need the code input from user
+        final isUrlRecovery = _authService.isPasswordRecoveryFlow;
+        
+        if (!isUrlRecovery && code.isEmpty) {
+          _showMsg(context.t('fill_all_fields'));
+          return;
+        }
+        
+        if (newPass.isEmpty || confirm.isEmpty) {
           _showMsg(context.t('fill_all_fields'));
           return;
         }
@@ -221,9 +237,14 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
           _showMsg(context.t('passwords_dont_match'));
           return;
         }
-        if (_authService.verifyResetCode(email, code)) {
+        
+        // If URL recovery, we don't call verifyResetCode (which is a mock anyway)
+        bool canProceed = isUrlRecovery || _authService.verifyResetCode(email, code);
+        
+        if (canProceed) {
           await _authService.finalizePasswordReset(email, newPass);
           _showMsg('Password updated successfully!');
+          _authService.clearRecoveryFlow();
           _toggleRecovery();
         } else {
           _showMsg(_authService.lastErrorMessage ?? 'Invalid reset code.');
@@ -450,8 +471,8 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
                       ],
                       const SizedBox(height: 12),
                       if (_recoveryStep == 1) ...[
-                        // We hide the code field if we have the access token already
-                        if (kIsWeb && !Uri.parse(html.window.location.href).fragment.contains('access_token=')) ...[
+                        // We hide the code field if we have the access token already (recovery flow)
+                        if (!_authService.isPasswordRecoveryFlow) ...[
                           TextField(
                             controller: _codeController,
                             decoration: InputDecoration(
@@ -555,6 +576,7 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
 
   @override
   void dispose() {
+    _authService.removeListener(_syncWithServiceState);
     if (!kIsWeb) windowManager.removeListener(this);
     HardwareKeyboard.instance.removeHandler(_handleGlobalKeyEvent);
     _emailFocusNode.dispose();

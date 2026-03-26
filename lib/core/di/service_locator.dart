@@ -13,7 +13,7 @@ import 'package:aliolo/data/services/discovery_engine.dart';
 
 final getIt = GetIt.instance;
 
-Future<void> setupLocator() async {
+Future<void> setupLocator({String? initialUrl}) async {
   try {
     // 1. Register base singleton services
     getIt.registerSingleton<CardService>(CardService());
@@ -29,7 +29,7 @@ Future<void> setupLocator() async {
       (e) => print('CardService init error: $e'),
     );
 
-    await getIt<AuthService>().init().catchError(
+    await getIt<AuthService>().init(manualUrl: initialUrl).catchError(
       (e) => print('AuthService init error: $e'),
     );
 

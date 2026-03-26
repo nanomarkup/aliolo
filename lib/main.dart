@@ -20,6 +20,10 @@ import 'package:aliolo/core/utils/logger.dart';
 
 void main() async {
   try {
+    String? initialUrl;
+    if (kIsWeb) {
+      initialUrl = html.window.location.href;
+    }
     usePathUrlStrategy();
     WidgetsFlutterBinding.ensureInitialized();
     await AppLogger.init();
@@ -76,7 +80,7 @@ OTHER LIABILITY.
       }
     }
 
-    runApp(const AlioloApp());
+    runApp(AlioloApp(initialUrl: initialUrl));
   } catch (e, stack) {
     print('CRITICAL MAIN ERROR: $e');
     print(stack);
@@ -84,7 +88,8 @@ OTHER LIABILITY.
 }
 
 class AlioloApp extends StatefulWidget {
-  const AlioloApp({super.key});
+  final String? initialUrl;
+  const AlioloApp({super.key, this.initialUrl});
 
   @override
   State<AlioloApp> createState() => _AlioloAppState();
@@ -101,7 +106,7 @@ class _AlioloAppState extends State<AlioloApp> {
 
   Future<void> _doInit() async {
     try {
-      await setupLocator();
+      await setupLocator(initialUrl: widget.initialUrl);
     } catch (e, stack) {
       print('Initialization failed: $e');
       print(stack);
@@ -315,16 +320,18 @@ class AlioloMainApp extends StatelessWidget {
 
               final hasSeenOnboarding = onboardingSnapshot.data ?? false;
 
+              print('--- DEBUG: MAIN APP HOME BUILD ---');
+              print('AuthService isPasswordRecoveryFlow: ${authService.isPasswordRecoveryFlow}');
+              print('CurrentUser: ${user?.email}');
+              print('HasSeenOnboarding: $hasSeenOnboarding');
+
               if (!hasSeenOnboarding) {
                 return const OnboardingPage();
               }
 
-              if (kIsWeb) {
-                final uri = Uri.parse(html.window.location.href);
-                if (uri.fragment.contains('access_token=') && 
-                    (uri.fragment.contains('type=recovery') || uri.fragment.contains('type=invite') || uri.fragment.contains('type=signup'))) {
-                   return const LoginPage(); 
-                }
+              if (authService.isPasswordRecoveryFlow) {
+                 print('MainApp: Showing LoginPage due to recovery flow');
+                 return const LoginPage(); 
               }
 
               return SelectionArea(

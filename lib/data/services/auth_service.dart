@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:image_picker/image_picker.dart';
+import 'dart:html' as html if (dart.library.io) 'package:aliolo/core/utils/file_stub.dart';
 import 'package:aliolo/data/models/user_model.dart';
 import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
@@ -16,29 +17,71 @@ class AuthService extends ChangeNotifier {
   SupabaseClient? _supabase;
   UserModel? _currentUser;
   String? _lastErrorMessage;
+  bool _isPasswordRecoveryFlow = false;
+  String? _initialUrl;
 
   UserModel? get currentUser => _currentUser;
   String? get lastErrorMessage => _lastErrorMessage;
+  bool get isPasswordRecoveryFlow => _isPasswordRecoveryFlow;
 
   bool get _isSupabaseInitialized => _supabase != null;
 
-  Future<void> init() async {
+  Future<void> init({String? manualUrl}) async {
     try {
       _supabase = Supabase.instance.client;
+      _initialUrl = manualUrl ?? (kIsWeb ? html.window.location.href : null);
       
-      // Listen to auth state changes (e.g. email confirmed, sign in/out)
+      // 1. PRE-CHECK: Detect recovery/invite/signup flows from URL
+      if (kIsWeb && _initialUrl != null) {
+        final uri = Uri.parse(_initialUrl!);
+        bool flowDetected = false;
+        
+        // Check hash first (Implicit flow)
+        final hash = uri.fragment;
+        if (hash.contains('access_token=')) {
+          final params = Uri.splitQueryString(hash);
+          final type = params['type'];
+          if (type == 'recovery' || type == 'invite' || type == 'signup') {
+            flowDetected = true;
+          }
+        } 
+        
+        // Check query params (PKCE flow)
+        if (!flowDetected) {
+          final type = uri.queryParameters['type'];
+          final code = uri.queryParameters['code'];
+          if (code != null || type == 'recovery' || type == 'invite' || type == 'signup') {
+             flowDetected = true;
+          }
+        }
+
+        if (flowDetected) {
+          _isPasswordRecoveryFlow = true;
+          // IMPORTANT: If we detect an auth flow but already have a session, 
+          // it means another user might be logged in. We MUST logout to avoid session conflict.
+          if (_supabase!.auth.currentSession != null) {
+            await _supabase!.auth.signOut();
+          }
+        }
+      }
+
+      // 2. Listen to auth state changes
       _supabase!.auth.onAuthStateChange.listen((data) {
         final AuthChangeEvent event = data.event;
         final Session? session = data.session;
 
+        if (event == AuthChangeEvent.passwordRecovery) {
+          _isPasswordRecoveryFlow = true;
+          notifyListeners();
+        }
+
         if (session != null &&
             (event == AuthChangeEvent.signedIn ||
-                event == AuthChangeEvent.userUpdated)) {
-          // ONLY sync if email is confirmed (or if it's not a new registration that needs confirmation)
-          if (session.user.emailConfirmedAt != null) {
+                event == AuthChangeEvent.userUpdated ||
+                event == AuthChangeEvent.initialSession)) {
+          if (session.user.emailConfirmedAt != null || _isPasswordRecoveryFlow) {
             _fetchAndSyncUser(session.user);
           } else {
-            // If session exists but email not confirmed, we don't treat them as logged in
             _currentUser = null;
             notifyListeners();
           }
@@ -48,8 +91,32 @@ class AuthService extends ChangeNotifier {
         }
       });
 
+      // 3. MANUAL FALLBACK: If no session but we have tokens in URL, force-establish it
+      if (kIsWeb && _supabase!.auth.currentSession == null && _initialUrl != null) {
+        if (_initialUrl!.contains('access_token=') || _initialUrl!.contains('code=')) {
+          try {
+            await _supabase!.auth.getSessionFromUrl(Uri.parse(_initialUrl!));
+          } catch (e) {
+            // MANUAL EXTRACTION FALLBACK for Implicit Flow
+            if (_initialUrl!.contains('access_token=')) {
+               final uri = Uri.parse(_initialUrl!);
+               final fragment = uri.fragment;
+               final params = Uri.splitQueryString(fragment);
+               final refresh = params['refresh_token'];
+               if (refresh != null) {
+                  try {
+                    await _supabase!.auth.setSession(refresh);
+                  } catch (e2) {
+                    // Ignore silently if fallback fails
+                  }
+               }
+            }
+          }
+        }
+      }
+
       final session = _supabase!.auth.currentSession;
-      if (session != null && session.user.emailConfirmedAt != null) {
+      if (session != null && (session.user.emailConfirmedAt != null || _isPasswordRecoveryFlow)) {
         await _fetchAndSyncUser(session.user);
       }
     } catch (e) {
@@ -77,7 +144,6 @@ class AuthService extends ChangeNotifier {
         }
         _currentUser = user;
 
-        // Reset daily progress if it's a new day
         if (_currentUser!.lastActiveDate != null) {
           final now = DateTime.now();
           final today = DateTime(now.year, now.month, now.day);
@@ -91,12 +157,10 @@ class AuthService extends ChangeNotifier {
           if (today.isAfter(lastDay)) {
             _currentUser!.dailyCompletions = 0;
             _currentUser!.dailyGoalCount = _currentUser!.nextDailyGoal;
-            // Update immediately in DB to sync state
             await updateUser(_currentUser!);
           }
         }
 
-        // Ensure email is consistent from remoteUser if missing or different
         if (_currentUser!.email != remoteUser.email!.toLowerCase()) {
           _currentUser!.email = remoteUser.email!.toLowerCase();
           await updateUser(_currentUser!);
@@ -108,17 +172,21 @@ class AuthService extends ChangeNotifier {
         _currentUser = UserModel(
           username:
               remoteUser.userMetadata?['username'] ??
-              remoteUser.email!.split('@')[0],
+              remoteUser.email!.toLowerCase().split('@')[0],
           email: remoteUser.email!.toLowerCase(),
           serverId: remoteUser.id,
           uiLanguage: TranslationService().currentLocale.languageCode,
           mainPillarId: 8,
         );
-        await updateUser(_currentUser!);
+        try {
+          await updateUser(_currentUser!);
+        } catch (e) {
+          // Optional profile creation failure (RLS or other)
+        }
       }
       notifyListeners();
     } catch (e) {
-      print('Error fetching user profile: $e');
+      // Error fetching profile handled silently
     }
   }
 
@@ -139,8 +207,6 @@ class AuthService extends ChangeNotifier {
         password: password,
         data: {'username': username},
       );
-      // Explicitly logout to clear any session from signUp, 
-      // preventing automatic navigation to main page before confirmation.
       await logout();
     } on AuthException catch (e) {
       _lastErrorMessage = e.message;
@@ -201,7 +267,6 @@ class AuthService extends ChangeNotifier {
     _currentUser = user;
 
     try {
-      // Whitelist ONLY confirmed columns from user's provided schema
       final data = {
         'username': user.username,
         'email': user.email,
@@ -239,7 +304,7 @@ class AuthService extends ChangeNotifier {
         await _supabase!.from('profiles').upsert(data);
       }
     } catch (e) {
-      print('Error updating user profile: $e');
+      // Profile update error logged or handled
     }
     notifyListeners();
   }
@@ -284,14 +349,13 @@ class AuthService extends ChangeNotifier {
       ThemeService().setPrimaryColorFromPillar(pillarId);
       notifyListeners();
     } catch (e) {
-      print('Error updating main pillar color: $e');
+      // Error handling
     }
   }
 
   bool isValidEmail(String e) =>
       RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(e);
 
-  // Everyone is treated equally in terms of edit permissions now
   bool get canEditLibrary => true;
   bool get canManageUsers => false;
 
@@ -309,7 +373,6 @@ class AuthService extends ChangeNotifier {
 
       return data.map((json) => UserModel.fromJson(json)).toList();
     } catch (e) {
-      print('Error fetching leaderboard: $e');
       return [];
     }
   }
@@ -317,7 +380,6 @@ class AuthService extends ChangeNotifier {
   Future<int?> getMyGlobalRank() async {
     if (_currentUser == null || _currentUser!.serverId == null || !_currentUser!.showOnLeaderboard) return null;
     try {
-      // Very simple way to get rank for a medium amount of users
       final List<dynamic> data = await _supabase!
           .from('profiles')
           .select('id')
@@ -329,7 +391,6 @@ class AuthService extends ChangeNotifier {
       }
       return null;
     } catch (e) {
-      print('Error getting my rank: $e');
       return null;
     }
   }
@@ -343,7 +404,7 @@ class AuthService extends ChangeNotifier {
           .update(changes)
           .eq('id', _currentUser!.serverId!);
     } catch (e) {
-      print('Error patching profile with $changes: $e');
+      // Silence patch errors
     }
     notifyListeners();
   }
@@ -436,8 +497,6 @@ class AuthService extends ChangeNotifier {
     if (_supabase == null || _currentUser == null) return;
     try {
       await _supabase!.auth.updateUser(UserAttributes(email: newEmail));
-      // The email in our profiles table will be synced next time the user logs in
-      // or we can optimisticly update it if we want, but usually we wait for confirmation.
     } catch (e) {
       _lastErrorMessage = e.toString();
       rethrow;
@@ -447,13 +506,10 @@ class AuthService extends ChangeNotifier {
   Future<void> updatePassword(String oldPassword, String newPassword) async {
     if (_supabase == null || _currentUser == null) return;
     try {
-      // 1. Verify old password by attempting a silent sign-in
       await _supabase!.auth.signInWithPassword(
         email: _currentUser!.email,
         password: oldPassword,
       );
-
-      // 2. If successful, update to the new password
       await _supabase!.auth.updateUser(UserAttributes(password: newPassword));
     } on AuthException catch (ae) {
       _lastErrorMessage = ae.message;
@@ -487,14 +543,13 @@ class AuthService extends ChangeNotifier {
       await updateUser(_currentUser!);
       notifyListeners();
     } catch (e) {
-      print('Error uploading avatar: $e');
+      // Silent error for avatar upload failure
     }
   }
 
   Future<void> deleteAvatar() async {
     if (_currentUser == null || _currentUser!.avatarPath == null) return;
     try {
-      // Extract file name from public URL if possible to delete from storage
       final uri = Uri.parse(_currentUser!.avatarPath!);
       final pathSegments = uri.pathSegments;
       if (pathSegments.isNotEmpty) {
@@ -506,8 +561,6 @@ class AuthService extends ChangeNotifier {
       await updateUser(_currentUser!);
       notifyListeners();
     } catch (e) {
-      print('Error deleting avatar: $e');
-      // Even if storage delete fails, clear the path in profile
       _currentUser!.avatarPath = null;
       await updateUser(_currentUser!);
       notifyListeners();
@@ -527,29 +580,67 @@ class AuthService extends ChangeNotifier {
     return true;
   }
 
+  void clearRecoveryFlow() {
+    _isPasswordRecoveryFlow = false;
+    notifyListeners();
+  }
+
   Future<void> finalizePasswordReset(String email, String newPassword) async {
     try {
+      var session = _supabase!.auth.currentSession;
+      
+      if (session == null && kIsWeb && _initialUrl != null) {
+        try {
+          await _supabase!.auth.getSessionFromUrl(Uri.parse(_initialUrl!));
+          session = _supabase!.auth.currentSession;
+        } catch (e) {
+          final uri = Uri.parse(_initialUrl!);
+          final fragment = uri.fragment;
+          if (fragment.contains('access_token=')) {
+             final params = Uri.splitQueryString(fragment);
+             final refresh = params['refresh_token'];
+             if (refresh != null) {
+                await _supabase!.auth.setSession(refresh);
+                session = _supabase!.auth.currentSession;
+             }
+          }
+        }
+      }
+
+      if (session == null) {
+        throw Exception("Auth session missing. Please try clicking the link in your email again.");
+      }
+      
+      // SAFETY: Ensure provided email matches current session user
+      if (email.isNotEmpty && session.user.email?.toLowerCase() != email.toLowerCase()) {
+         throw Exception("Session conflict: Logged in as ${session.user.email}, resetting for $email. Logout first.");
+      }
+      
       await _supabase!.auth.updateUser(UserAttributes(password: newPassword));
+      _isPasswordRecoveryFlow = false;
+      await _fetchAndSyncUser(session.user);
+      
+      notifyListeners();
     } catch (e) {
       _lastErrorMessage = e.toString();
       rethrow;
     }
   }
 
-  Future<void> inviteUserByEmail(String email) async {
-    if (_supabase == null) return;
+  Future<String> inviteUserByEmail(String email, {String? senderId}) async {
+    if (_supabase == null) throw Exception('Supabase not initialized');
     try {
-      // SECURE: We call a Supabase Edge Function named 'invite-user'.
-      // The Supabase client automatically handles the Authorization header
-      // when you use the standard .invoke() method.
       final response = await _supabase!.functions.invoke(
         'invite-user',
-        body: {'email': email},
+        body: {'email': email, 'senderId': senderId},
       );
       
       if (response.status != 200) {
         throw Exception(response.data['error'] ?? 'Failed to send invite');
       }
+      
+      final String userId = response.data['data']['user']['id'];
+      return userId;
     } catch (e) {
       _lastErrorMessage = e.toString();
       rethrow;
@@ -560,26 +651,19 @@ class AuthService extends ChangeNotifier {
     if (_currentUser == null) return false;
     _lastErrorMessage = null;
     try {
-      // Re-verify the password by attempting a silent sign-in
       await _supabase!.auth.signInWithPassword(
         email: _currentUser!.email,
         password: password,
       );
-
-      // Call our custom RPC function which handles cascading deletion of all user data
-      // including auth.users record (via SECURITY DEFINER).
       await _supabase!.rpc('delete_user_account');
-      
       await logout();
       _currentUser = null;
       notifyListeners();
       return true;
     } on AuthException catch (ae) {
-      print('Auth error during account deletion: ${ae.message}');
       _lastErrorMessage = ae.message;
       return false;
     } catch (e) {
-      print('Error deleting account: $e');
       _lastErrorMessage = e.toString();
       return false;
     }

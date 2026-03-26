@@ -1,6 +1,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:aliolo/data/models/user_model.dart';
 import 'package:aliolo/data/services/auth_service.dart';
+import 'package:aliolo/core/di/service_locator.dart';
 
 class FriendshipService {
   static final FriendshipService _instance = FriendshipService._internal();
@@ -8,7 +9,7 @@ class FriendshipService {
   FriendshipService._internal();
 
   SupabaseClient get _supabase => Supabase.instance.client;
-  final _authService = AuthService();
+  AuthService get _authService => getIt<AuthService>();
 
   Future<String> sendFriendRequest(String email) async {
     final currentUser = _authService.currentUser;
@@ -31,6 +32,22 @@ class FriendshipService {
       if (targetUserRes == null) return 'user_not_found';
       final String targetId = targetUserRes['id'];
 
+      return await sendFriendRequestById(targetId);
+    } catch (e) {
+      return e.toString();
+    }
+  }
+
+  Future<String> sendFriendRequestById(String targetId) async {
+    final currentUser = _authService.currentUser;
+    if (currentUser == null || currentUser.serverId == null) {
+      return 'Not logged in';
+    }
+    if (targetId == currentUser.serverId) {
+      return 'Cannot add yourself';
+    }
+
+    try {
       // 2. Check if friendship already exists (any direction)
       final existing =
           await _supabase
@@ -85,7 +102,6 @@ class FriendshipService {
 
       return List<Map<String, dynamic>>.from(res);
     } catch (e) {
-      print('Error fetching friendships: $e');
       return [];
     }
   }
@@ -121,7 +137,6 @@ class FriendshipService {
         profilesRes,
       ).map((p) => UserModel.fromJson(p)).toList();
     } catch (e) {
-      print('Error fetching friends leaderboard: $e');
       return [];
     }
   }
