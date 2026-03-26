@@ -125,9 +125,13 @@ jobs:
           channel: 'stable'
           cache: true
       - run: flutter pub get
-      - run: flutter build ios --release --no-codesign
+      - run: flutter build ios --release --no-codesign --dart-define=SUPABASE_URL=${{ env.SUPABASE_URL }} --dart-define=SUPABASE_ANON_KEY=${{ env.SUPABASE_ANON_KEY }}
       - name: Upload iOS Artifact
         uses: actions/upload-artifact@v4
+        with:
+          name: aliolo-ios
+          path: build/ios/iphoneos/
+  uses: actions/upload-artifact@v4
         with:
           name: aliolo-ios
           path: build/ios/iphoneos/
