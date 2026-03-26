@@ -225,8 +225,28 @@ class InstantPageTransitionsBuilder extends PageTransitionsBuilder {
   }
 }
 
-class AlioloMainApp extends StatelessWidget {
+class AlioloMainApp extends StatefulWidget {
   const AlioloMainApp({super.key});
+
+  @override
+  State<AlioloMainApp> createState() => _AlioloMainAppState();
+}
+
+class _AlioloMainAppState extends State<AlioloMainApp> {
+  late Future<bool> _onboardingFuture;
+  late Future<bool> _friendshipFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _onboardingFuture = _loadOnboardingStatus();
+    _friendshipFuture = FriendshipService().hasPendingRequests();
+  }
+
+  Future<bool> _loadOnboardingStatus() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('has_seen_onboarding') ?? false;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -247,7 +267,9 @@ class AlioloMainApp extends StatelessWidget {
             colorScheme: ColorScheme.fromSeed(
               seedColor: themeService.getAdjustedPrimary(),
               surface: Colors.white,
-              surfaceContainerHighest: const Color(0xFFE2E8F0), // Subtle divider/dropdown color
+              surfaceContainerHighest: const Color(
+                0xFFE2E8F0,
+              ), // Subtle divider/dropdown color
             ),
             scaffoldBackgroundColor: const Color(0xFFF1F5F9), // Slate-grey background
             cardTheme: CardThemeData(
@@ -256,10 +278,15 @@ class AlioloMainApp extends StatelessWidget {
               elevation: 0,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16),
-                side: BorderSide(color: Colors.black.withValues(alpha: 0.05), width: 1),
+                side: BorderSide(
+                  color: Colors.black.withValues(alpha: 0.05),
+                  width: 1,
+                ),
               ),
             ),
-            dividerTheme: DividerThemeData(color: Colors.black.withValues(alpha: 0.05)),
+            dividerTheme: DividerThemeData(
+              color: Colors.black.withValues(alpha: 0.05),
+            ),
             useMaterial3: true,
             fontFamily: 'Roboto',
             pageTransitionsTheme: const PageTransitionsTheme(
@@ -281,7 +308,9 @@ class AlioloMainApp extends StatelessWidget {
               shadow: Colors.transparent,
             ),
             shadowColor: Colors.transparent,
-            scaffoldBackgroundColor: const Color(0xFF0F172A), // Very deep navy/slate background
+            scaffoldBackgroundColor: const Color(
+              0xFF0F172A,
+            ), // Very deep navy/slate background
             cardTheme: CardThemeData(
               color: const Color(0xFF1E293B),
               surfaceTintColor: const Color(0xFF1E293B),
@@ -289,7 +318,10 @@ class AlioloMainApp extends StatelessWidget {
               shadowColor: Colors.transparent,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16),
-                side: BorderSide(color: Colors.white.withValues(alpha: 0.05), width: 1),
+                side: BorderSide(
+                  color: Colors.white.withValues(alpha: 0.05),
+                  width: 1,
+                ),
               ),
             ),
             appBarTheme: const AppBarTheme(
@@ -297,7 +329,9 @@ class AlioloMainApp extends StatelessWidget {
               scrolledUnderElevation: 0,
               shadowColor: Colors.transparent,
             ),
-            dividerTheme: DividerThemeData(color: Colors.white.withValues(alpha: 0.05)),
+            dividerTheme: DividerThemeData(
+              color: Colors.white.withValues(alpha: 0.05),
+            ),
             useMaterial3: true,
             fontFamily: 'Roboto',
             pageTransitionsTheme: const PageTransitionsTheme(
@@ -311,9 +345,7 @@ class AlioloMainApp extends StatelessWidget {
             ),
           ),
           home: FutureBuilder<bool>(
-            future: SharedPreferences.getInstance().then(
-              (p) => p.getBool('has_seen_onboarding') ?? false,
-            ),
+            future: _onboardingFuture,
             builder: (context, onboardingSnapshot) {
               if (onboardingSnapshot.connectionState != ConnectionState.done) {
                 return const Scaffold(
@@ -324,7 +356,9 @@ class AlioloMainApp extends StatelessWidget {
               final hasSeenOnboarding = onboardingSnapshot.data ?? false;
 
               print('--- DEBUG: MAIN APP HOME BUILD ---');
-              print('AuthService isPasswordRecoveryFlow: ${authService.isPasswordRecoveryFlow}');
+              print(
+                'AuthService isPasswordRecoveryFlow: ${authService.isPasswordRecoveryFlow}',
+              );
               print('CurrentUser: ${user?.email}');
               print('HasSeenOnboarding: $hasSeenOnboarding');
 
@@ -333,8 +367,8 @@ class AlioloMainApp extends StatelessWidget {
               }
 
               if (authService.isPasswordRecoveryFlow) {
-                 print('MainApp: Showing LoginPage due to recovery flow');
-                 return const LoginPage(); 
+                print('MainApp: Showing LoginPage due to recovery flow');
+                return const LoginPage();
               }
 
               if (user == null) {
@@ -342,7 +376,7 @@ class AlioloMainApp extends StatelessWidget {
               }
 
               return FutureBuilder<bool>(
-                future: FriendshipService().hasPendingRequests(),
+                future: _friendshipFuture,
                 builder: (context, friendshipSnapshot) {
                   if (friendshipSnapshot.connectionState !=
                       ConnectionState.done) {
