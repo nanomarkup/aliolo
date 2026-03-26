@@ -22,7 +22,7 @@ jobs:
       - run: flutter pub get
       - run: flutter build web --release --dart-define=SUPABASE_URL=${{ env.SUPABASE_URL }} --dart-define=SUPABASE_ANON_KEY=${{ env.SUPABASE_ANON_KEY }}
       - name: Fix Web Build (Python Script)
-        run: python3 fix_web_build.py
+        run: python3 scripts/python/fix_web_build.py
       - name: Upload Web Artifact
         uses: actions/upload-artifact@v4
         with:
