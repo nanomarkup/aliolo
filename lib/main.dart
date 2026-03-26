@@ -14,7 +14,7 @@ import 'package:aliolo/features/subjects/presentation/pages/subject_page.dart';
 import 'package:aliolo/features/onboarding/presentation/pages/onboarding_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
-import 'dart:html' as html if (dart.library.io) 'package:aliolo/core/utils/file_stub.dart';
+import 'package:aliolo/core/utils/file_stub.dart' if (dart.library.html) 'dart:html' as html;
 
 import 'package:aliolo/data/services/friendship_service.dart';
 import 'package:aliolo/features/auth/presentation/pages/manage_friends_page.dart';

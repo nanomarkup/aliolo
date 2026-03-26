@@ -34,3 +34,13 @@ class Platform {
 
 dynamic dynamicFile(String path) => File(path);
 dynamic dynamicDirectory(String path) => Directory(path);
+
+class LocationStub {
+  String get href => '';
+}
+
+class WindowStub {
+  final LocationStub location = LocationStub();
+}
+
+final window = WindowStub();

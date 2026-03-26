@@ -1,7 +1,13 @@
 name: Multi-Platform Build
 
 on:
+  push:
+    branches: [ main ]
   workflow_dispatch:
+
+env:
+  SUPABASE_URL: https://mltdjjszycfmokwqsqxm.supabase.co
+  SUPABASE_ANON_KEY: sb_publishable_DCMw0z92Lr2nzC83sOQJXw_G1fYdEb3
 
 jobs:
   build_web:
@@ -14,7 +20,7 @@ jobs:
           channel: 'stable'
           cache: true
       - run: flutter pub get
-      - run: flutter build web --release
+      - run: flutter build web --release --dart-define=SUPABASE_URL=${{ env.SUPABASE_URL }} --dart-define=SUPABASE_ANON_KEY=${{ env.SUPABASE_ANON_KEY }}
       - name: Fix Web Build (Python Script)
         run: python3 fix_web_build.py
       - name: Upload Web Artifact
@@ -37,8 +43,8 @@ jobs:
           channel: 'stable'
           cache: true
       - run: flutter pub get
-      - run: flutter build apk --release
-      - run: flutter build appbundle --release
+      - run: flutter build apk --release --dart-define=SUPABASE_URL=${{ env.SUPABASE_URL }} --dart-define=SUPABASE_ANON_KEY=${{ env.SUPABASE_ANON_KEY }}
+      - run: flutter build appbundle --release --dart-define=SUPABASE_URL=${{ env.SUPABASE_URL }} --dart-define=SUPABASE_ANON_KEY=${{ env.SUPABASE_ANON_KEY }}
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
@@ -102,7 +108,7 @@ jobs:
           channel: 'stable'
           cache: true
       - run: flutter pub get
-      - run: flutter build macos --release
+      - run: flutter build macos --release --dart-define=SUPABASE_URL=${{ env.SUPABASE_URL }} --dart-define=SUPABASE_ANON_KEY=${{ env.SUPABASE_ANON_KEY }}
       - name: Upload macOS Artifact
         uses: actions/upload-artifact@v4
         with:

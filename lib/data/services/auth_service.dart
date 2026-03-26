@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:image_picker/image_picker.dart';
-import 'dart:html' as html if (dart.library.io) 'package:aliolo/core/utils/file_stub.dart';
+import 'package:aliolo/core/utils/file_stub.dart' if (dart.library.html) 'dart:html' as html;
 import 'package:aliolo/data/models/user_model.dart';
 import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
