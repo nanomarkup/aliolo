@@ -6,8 +6,8 @@ on:
   workflow_dispatch:
 
 env:
-  SUPABASE_URL: https://mltdjjszycfmokwqsqxm.supabase.co
-  SUPABASE_ANON_KEY: sb_publishable_DCMw0z92Lr2nzC83sOQJXw_G1fYdEb3
+  SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+  SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
 
 jobs:
   build_web:
