@@ -234,13 +234,13 @@ class AlioloMainApp extends StatefulWidget {
 
 class _AlioloMainAppState extends State<AlioloMainApp> {
   late Future<bool> _onboardingFuture;
-  late Future<bool> _friendshipFuture;
+  Future<bool>? _friendshipFuture;
+  String? _lastUserId;
 
   @override
   void initState() {
     super.initState();
     _onboardingFuture = _loadOnboardingStatus();
-    _friendshipFuture = FriendshipService().hasPendingRequests();
   }
 
   Future<bool> _loadOnboardingStatus() async {
@@ -253,11 +253,21 @@ class _AlioloMainAppState extends State<AlioloMainApp> {
     final translationService = context.watch<TranslationService>();
     final themeService = context.watch<ThemeService>();
     final authService = context.watch<AuthService>();
+    final user = authService.currentUser;
+
+    // Refresh friendship future if user changes
+    if (user?.serverId != _lastUserId) {
+      _lastUserId = user?.serverId;
+      if (_lastUserId != null) {
+        _friendshipFuture = FriendshipService().hasPendingRequests();
+      } else {
+        _friendshipFuture = null;
+      }
+    }
 
     return ValueListenableBuilder<ThemeMode>(
       valueListenable: themeService.themeNotifier,
       builder: (context, currentMode, _) {
-        final user = authService.currentUser;
         return MaterialApp(
           title: 'Aliolo',
           debugShowCheckedModeBanner: false,
@@ -376,7 +386,7 @@ class _AlioloMainAppState extends State<AlioloMainApp> {
               }
 
               return FutureBuilder<bool>(
-                future: _friendshipFuture,
+                future: _friendshipFuture ?? Future.value(false),
                 builder: (context, friendshipSnapshot) {
                   if (friendshipSnapshot.connectionState !=
                       ConnectionState.done) {
