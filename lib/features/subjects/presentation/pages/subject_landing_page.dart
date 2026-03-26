@@ -637,7 +637,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                               controller: _searchController,
                               onChanged: (_) => _applyFilters(),
                               decoration: InputDecoration(
-                                hintText: 'Search cards...',
+                                hintText: context.t('search_cards'),
                                 prefixIcon: const Icon(Icons.search),
                                 suffixIcon: ValueListenableBuilder<TextEditingValue>(
                                   valueListenable: _searchController,

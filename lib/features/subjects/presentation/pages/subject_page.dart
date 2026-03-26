@@ -78,7 +78,7 @@ class _SubjectPageState extends State<SubjectPage> {
     final savedCollectionFilter = prefs.getString('last_collection_filter');
 
     if (mounted) {
-      final validCollectionFilters = {'favorites', 'mine', 'public'};
+      final validCollectionFilters = {'all', 'favorites', 'mine', 'public'};
       final validatedCollectionFilter = validCollectionFilters.contains(savedCollectionFilter) 
           ? savedCollectionFilter 
           : 'favorites';
@@ -780,7 +780,7 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
             fixedBody: LayoutBuilder(builder: (context, constraints) {
               final isSmall = constraints.maxWidth < 600;
               final filterRow = Row(children: [
-                Expanded(child: _buildCompactDropdown(value: _filters.collectionFilter, items: {'favorites': context.t('filter_dashboard'), 'mine': context.t('filter_my_subjects'), 'public': context.t('filter_public')}, onChanged: (val) { if (val != null) setState(() { _filters = _filters.copyWith(collectionFilter: val); _applySearch(); }); })),
+                Expanded(child: _buildCompactDropdown(value: _filters.collectionFilter, items: {'all': context.t('filter_all') ?? 'All', 'favorites': context.t('filter_dashboard'), 'mine': context.t('filter_my_subjects'), 'public': context.t('filter_public')}, onChanged: (val) { if (val != null) setState(() { _filters = _filters.copyWith(collectionFilter: val); _applySearch(); }); })),
                 const SizedBox(width: 8),
                 Expanded(child: _buildCompactDropdown(value: _filters.ageGroup, items: {'all': context.t('age_all'), '0_6': context.t('age_0_6'), '7_14': context.t('age_7_14'), '15_plus': context.t('age_15_plus')}, onChanged: (val) { if (val != null) setState(() { _filters = _filters.copyWith(ageGroup: val); _applySearch(); }); })),
                 const SizedBox(width: 8),
@@ -1070,7 +1070,7 @@ class _FolderPageState extends State<FolderPage> {
             fixedBody: LayoutBuilder(builder: (context, constraints) {
               final isSmall = constraints.maxWidth < 600;
               final filterRow = Row(children: [
-                Expanded(child: _buildCompactDropdown(value: _filters.collectionFilter, items: {'favorites': context.t('filter_dashboard'), 'mine': context.t('filter_my_subjects'), 'public': context.t('filter_public')}, onChanged: (val) { if (val != null) setState(() { _filters = _filters.copyWith(collectionFilter: val); _applySearch(); }); })),
+                Expanded(child: _buildCompactDropdown(value: _filters.collectionFilter, items: {'all': context.t('filter_all') ?? 'All', 'favorites': context.t('filter_dashboard'), 'mine': context.t('filter_my_subjects'), 'public': context.t('filter_public')}, onChanged: (val) { if (val != null) setState(() { _filters = _filters.copyWith(collectionFilter: val); _applySearch(); }); })),
                 const SizedBox(width: 8),
                 Expanded(child: _buildCompactDropdown(value: _filters.ageGroup, items: {'all': context.t('age_all'), '0_6': context.t('age_0_6'), '7_14': context.t('age_7_14'), '15_plus': context.t('age_15_plus')}, onChanged: (val) { if (val != null) setState(() { _filters = _filters.copyWith(ageGroup: val); _applySearch(); }); })),
                 const SizedBox(width: 8),

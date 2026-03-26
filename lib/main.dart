@@ -16,6 +16,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'dart:html' as html if (dart.library.io) 'package:aliolo/core/utils/file_stub.dart';
 
+import 'package:aliolo/data/services/friendship_service.dart';
+import 'package:aliolo/features/auth/presentation/pages/manage_friends_page.dart';
+
 import 'package:aliolo/core/utils/logger.dart';
 
 void main() async {
@@ -334,8 +337,27 @@ class AlioloMainApp extends StatelessWidget {
                  return const LoginPage(); 
               }
 
-              return SelectionArea(
-                child: user == null ? const LoginPage() : const SubjectPage(),
+              if (user == null) {
+                return const SelectionArea(child: LoginPage());
+              }
+
+              return FutureBuilder<bool>(
+                future: FriendshipService().hasPendingRequests(),
+                builder: (context, friendshipSnapshot) {
+                  if (friendshipSnapshot.connectionState !=
+                      ConnectionState.done) {
+                    return const Scaffold(
+                      body: Center(child: CircularProgressIndicator()),
+                    );
+                  }
+                  final hasPending = friendshipSnapshot.data ?? false;
+                  return SelectionArea(
+                    child:
+                        hasPending
+                            ? const ManageFriendsPage()
+                            : const SubjectPage(),
+                  );
+                },
               );
             },
           ),

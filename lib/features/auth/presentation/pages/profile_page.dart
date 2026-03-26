@@ -813,8 +813,8 @@ class _ProfilePageState extends State<ProfilePage> {
                 () => _showValuePicker(
                   title: context.t('options_count'),
                   initialValue: user.optionsCount,
-                  min: 2,
-                  max: 12,
+                  min: 3,
+                  max: 9,
                   defaultValue: 6,
                   onSelected: (val) => _authService.updateOptionsCount(val),
                 ),

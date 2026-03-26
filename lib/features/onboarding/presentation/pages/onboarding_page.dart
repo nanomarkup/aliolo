@@ -45,6 +45,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
       titleKey: 'onboarding_5_title',
       descKey: 'onboarding_5_desc',
     ),
+    OnboardingData(
+      icon: Icons.add_circle_outline,
+      titleKey: 'onboarding_6_title',
+      descKey: 'onboarding_6_desc',
+    ),
   ];
 
   Future<void> _completeOnboarding() async {

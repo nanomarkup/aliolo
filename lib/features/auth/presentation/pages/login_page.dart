@@ -12,6 +12,9 @@ import 'package:aliolo/core/widgets/window_controls.dart';
 import 'package:aliolo/features/subjects/presentation/pages/subject_page.dart';
 import 'package:aliolo/features/settings/presentation/pages/about_page.dart';
 
+import 'package:aliolo/data/services/friendship_service.dart';
+import 'package:aliolo/features/auth/presentation/pages/manage_friends_page.dart';
+
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -169,10 +172,19 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
       final success = await _authService.login(email, pass);
       if (success) {
         if (mounted) {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => const SubjectPage()),
-          );
+          final hasPending = await FriendshipService().hasPendingRequests();
+          if (mounted) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder:
+                    (context) =>
+                        hasPending
+                            ? const ManageFriendsPage()
+                            : const SubjectPage(),
+              ),
+            );
+          }
         }
       } else {
         final err = _authService.lastErrorMessage ?? '';

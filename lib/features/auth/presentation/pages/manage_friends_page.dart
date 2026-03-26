@@ -7,6 +7,8 @@ import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
 
+import 'package:aliolo/features/subjects/presentation/pages/subject_page.dart';
+
 class ManageFriendsPage extends StatefulWidget {
   const ManageFriendsPage({super.key});
 
@@ -142,9 +144,9 @@ class _ManageFriendsPageState extends State<ManageFriendsPage> {
             context: context,
             builder:
                 (context) => AlertDialog(
-                  title: const Text('Invite User?'),
+                  title: Text(context.t('invite_user_title')),
                   content: Text(
-                    'Email $emailTrimmed not found. Invite them to join Aliolo?',
+                    context.t('invite_user_content', args: {'email': emailTrimmed}),
                   ),
                   actions: [
                     TextButton(
@@ -153,7 +155,7 @@ class _ManageFriendsPageState extends State<ManageFriendsPage> {
                     ),
                     TextButton(
                       onPressed: () => Navigator.pop(context, true),
-                      child: const Text('Invite'),
+                      child: Text(context.t('invite')),
                     ),
                   ],
                 ),
@@ -214,7 +216,16 @@ class _ManageFriendsPageState extends State<ManageFriendsPage> {
       actions: [
         IconButton(
           icon: const Icon(Icons.arrow_back, color: appBarColor),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () {
+            if (Navigator.canPop(context)) {
+              Navigator.pop(context);
+            } else {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const SubjectPage()),
+              );
+            }
+          },
         ),
         IconButton(
           icon: const Icon(Icons.person_add, color: appBarColor),

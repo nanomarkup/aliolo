@@ -90,6 +90,25 @@ class FriendshipService {
     await _supabase.from('user_friendships').delete().eq('id', friendshipId);
   }
 
+  Future<bool> hasPendingRequests() async {
+    final user = _authService.currentUser;
+    if (user == null || user.serverId == null) return false;
+
+    try {
+      final res = await _supabase
+          .from('user_friendships')
+          .select('id')
+          .eq('receiver_id', user.serverId!)
+          .eq('status', 'pending')
+          .limit(1)
+          .maybeSingle();
+
+      return res != null;
+    } catch (e) {
+      return false;
+    }
+  }
+
   Future<List<Map<String, dynamic>>> getFriendships() async {
     final user = _authService.currentUser;
     if (user == null || user.serverId == null) return [];
