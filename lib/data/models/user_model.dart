@@ -5,7 +5,6 @@ class UserModel {
   String? serverId;
   DateTime? createdAt;
   DateTime? updatedAt;
-  bool isDeleted = false;
 
   late bool sidebarLeft;
   late String themeMode;
@@ -53,7 +52,6 @@ class UserModel {
     this.serverId,
     this.createdAt,
     this.updatedAt,
-    this.isDeleted = false,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
@@ -79,10 +77,9 @@ class UserModel {
       optionsCount: json['options_count'] ?? 6,
       defaultLanguage: (json['default_language'] ?? 'en').toString().toLowerCase(),
       avatarPath: json['avatar_url'],
-      isDeleted: json['is_deleted'] ?? false,
       lastActiveDate: DateTime.tryParse(json['last_active_date'] ?? ''),
       updatedAt: DateTime.tryParse(json['updated_at'] ?? ''),
-      createdAt: DateTime.tryParse(json['createdAt'] ?? ''),
+      createdAt: DateTime.tryParse(json['created_at'] ?? ''),
     );
   }
 
@@ -109,7 +106,6 @@ class UserModel {
       'options_count': optionsCount,
       'default_language': defaultLanguage.toLowerCase(),
       'avatar_url': avatarPath,
-      'is_deleted': isDeleted,
       'last_active_date': lastActiveDate?.toIso8601String(),
       'updated_at': updatedAt?.toIso8601String(),
       };

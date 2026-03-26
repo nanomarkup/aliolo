@@ -137,11 +137,6 @@ class AuthService extends ChangeNotifier {
 
       if (remoteData != null) {
         final user = UserModel.fromJson(remoteData);
-        if (user.isDeleted) {
-          await logout();
-          _lastErrorMessage = 'account_deleted';
-          return;
-        }
         _currentUser = user;
 
         if (_currentUser!.lastActiveDate != null) {
@@ -289,7 +284,6 @@ class AuthService extends ChangeNotifier {
         'next_daily_goal': user.nextDailyGoal,
         'daily_completions': user.dailyCompletions,
         'auto_play_enabled': user.autoPlayEnabled,
-        'is_deleted': user.isDeleted,
         'updated_at': user.updatedAt?.toUtc().toIso8601String(),
       };
 
