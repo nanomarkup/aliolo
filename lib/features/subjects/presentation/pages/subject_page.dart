@@ -229,9 +229,9 @@ class _SubjectPageState extends State<SubjectPage> {
             }
           },
           child: AlioloScrollablePage(
-            title: DropdownButtonHideUnderline(
-              child: SizedBox(
-                width: 80, // Minimum width to ensure reasonable popup width
+            title: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 300),
+              child: DropdownButtonHideUnderline(
                 child: DropdownButton<String>(
                   value: _currentTestingLang,
                   dropdownColor: currentSessionColor,
@@ -241,11 +241,12 @@ class _SubjectPageState extends State<SubjectPage> {
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
+                  isExpanded: false,
                   selectedItemBuilder: (context) {
                     final isSmall = MediaQuery.of(context).size.width < 500;
                     return activeCodes.map((l) {
                       return Align(
-                        alignment: Alignment.centerRight,
+                        alignment: Alignment.centerLeft,
                         child: Text(
                           isSmall
                               ? l.toUpperCase()
