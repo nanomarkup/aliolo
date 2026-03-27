@@ -171,7 +171,7 @@ class AuthService extends ChangeNotifier {
           email: remoteUser.email!.toLowerCase(),
           serverId: remoteUser.id,
           uiLanguage: TranslationService().currentLocale.languageCode,
-          mainPillarId: 8,
+          mainPillarId: 6,
         );
         try {
           await updateUser(_currentUser!);
