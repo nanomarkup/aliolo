@@ -239,6 +239,7 @@ class _SubjectPageState extends State<SubjectPage> {
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
+                alignment: Alignment.center,
                 selectedItemBuilder: (context) {
                   final isSmall = MediaQuery.of(context).size.width < 500;
                   return activeCodes.map((l) {
@@ -254,9 +255,12 @@ class _SubjectPageState extends State<SubjectPage> {
                     activeCodes.map((l) {
                       return DropdownMenuItem(
                         value: l,
-                        child: Text(
-                          getIt<TestingLanguageService>().getLanguageName(l),
-                          style: const TextStyle(color: Colors.white),
+                        child: Container(
+                          constraints: const BoxConstraints(minWidth: 150),
+                          child: Text(
+                            getIt<TestingLanguageService>().getLanguageName(l),
+                            style: const TextStyle(color: Colors.white),
+                          ),
                         ),
                       );
                     }).toList(),
