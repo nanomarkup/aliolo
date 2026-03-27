@@ -76,7 +76,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
   @override
   Widget build(BuildContext context) {
     final themeService = getIt<ThemeService>();
-    final orangeColor = themeService.getAdjustedPrimary(forceOrange: true);
+    final mainColor = themeService.systemColor;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
@@ -105,7 +105,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                             Icon(
                               screen.icon,
                               size: 120,
-                              color: orangeColor,
+                              color: mainColor,
                             ),
                             const SizedBox(height: 40),
                             Text(
@@ -114,7 +114,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                               style: GoogleFonts.poppins(
                                 fontSize: 28,
                                 fontWeight: FontWeight.bold,
-                                color: orangeColor,
+                                color: mainColor,
                               ),
                             ),
                             const SizedBox(height: 24),
@@ -166,8 +166,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
                           decoration: BoxDecoration(
                             color:
                                 _currentPage == index
-                                    ? orangeColor
-                                    : orangeColor.withValues(alpha: 0.3),
+                                    ? mainColor
+                                    : mainColor.withValues(alpha: 0.3),
                             borderRadius: BorderRadius.circular(4),
                           ),
                         ),
@@ -191,7 +191,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                             }
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: orangeColor,
+                            backgroundColor: mainColor,
                             foregroundColor: Colors.white,
                             minimumSize: const Size(double.infinity, 56),
                             shape: RoundedRectangleBorder(

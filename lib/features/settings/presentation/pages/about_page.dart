@@ -103,7 +103,7 @@ class _AboutPageState extends State<AboutPage> {
   @override
   Widget build(BuildContext context) {
     final themeService = getIt<ThemeService>();
-    final orangeColor = themeService.getAdjustedPrimary(forceOrange: true);
+    final mainColor = themeService.systemColor;
 
     return ListenableBuilder(
       listenable: TranslationService(),
@@ -135,7 +135,7 @@ class _AboutPageState extends State<AboutPage> {
                                   style: GoogleFonts.poppins(
                                     fontSize: 72,
                                     fontWeight: FontWeight.w500,
-                                    color: orangeColor,
+                                    color: mainColor,
                                     letterSpacing: 4.0,
                                   ),
                                 ),
@@ -148,7 +148,7 @@ class _AboutPageState extends State<AboutPage> {
                                       textAlign: TextAlign.center,
                                       style: GoogleFonts.roboto(
                                         fontSize: 14,
-                                        color: orangeColor,
+                                        color: mainColor,
                                         fontWeight: FontWeight.w400,
                                       ),
                                     ),
@@ -160,73 +160,73 @@ class _AboutPageState extends State<AboutPage> {
                           const SizedBox(height: 12),
                           Text(
                             '${context.t('version')} $_version',
-                            style: const TextStyle(fontSize: 14, color: Colors.grey),
+                            style: TextStyle(fontSize: 14, color: mainColor.withValues(alpha: 0.7)),
                           ),
                           const SizedBox(height: 16),
                           Padding(
                             padding: const EdgeInsets.all(24.0),
                             child: Column(
                               children: [
-                                _buildSectionTitle(context, context.t('our_mission'), orangeColor),
+                                _buildSectionTitle(context, context.t('our_mission'), mainColor),
                                 Text(
                                   context.t('mission_desc'),
                                   textAlign: TextAlign.center,
                                   style: const TextStyle(fontSize: 16, height: 1.6),
                                 ),
-                                _buildSectionTitle(context, context.t('core_features'), orangeColor),
-                                _buildInfoRow(context, Icons.collections, context.t('feat_multimedia_title'), context.t('feat_multimedia_desc'), orangeColor),
-                                _buildInfoRow(context, Icons.add_circle_outline, context.t('feat_create_share_title'), context.t('feat_create_share_desc'), orangeColor),
-                                _buildInfoRow(context, Icons.play_circle_outline, context.t('feat_autoplay_title'), context.t('feat_autoplay_desc'), orangeColor),
-                                _buildInfoRow(context, Icons.child_care, context.t('feat_ages_title'), context.t('feat_ages_desc'), orangeColor),
-                                _buildInfoRow(context, Icons.emoji_events, context.t('feat_gamified_title'), context.t('feat_gamified_desc'), orangeColor),
+                                _buildSectionTitle(context, context.t('core_features'), mainColor),
+                                _buildInfoRow(context, Icons.collections, context.t('feat_multimedia_title'), context.t('feat_multimedia_desc'), mainColor),
+                                _buildInfoRow(context, Icons.add_circle_outline, context.t('feat_create_share_title'), context.t('feat_create_share_desc'), mainColor),
+                                _buildInfoRow(context, Icons.play_circle_outline, context.t('feat_autoplay_title'), context.t('feat_autoplay_desc'), mainColor),
+                                _buildInfoRow(context, Icons.child_care, context.t('feat_ages_title'), context.t('feat_ages_desc'), mainColor),
+                                _buildInfoRow(context, Icons.emoji_events, context.t('feat_gamified_title'), context.t('feat_gamified_desc'), mainColor),
                                 
-                                _buildSectionTitle(context, context.t('the_science'), orangeColor),
-                                _buildInfoRow(context, Icons.psychology, context.t('feat_science_spacing_title'), context.t('feat_science_spacing_desc'), orangeColor),
-                                _buildInfoRow(context, Icons.auto_graph, context.t('feat_science_smart_review_title'), context.t('feat_science_smart_review_desc'), orangeColor),
+                                _buildSectionTitle(context, context.t('the_science'), mainColor),
+                                _buildInfoRow(context, Icons.psychology, context.t('feat_science_spacing_title'), context.t('feat_science_spacing_desc'), mainColor),
+                                _buildInfoRow(context, Icons.auto_graph, context.t('feat_science_smart_review_title'), context.t('feat_science_smart_review_desc'), mainColor),
                                 
-                                _buildSectionTitle(context, context.t('trust_privacy'), orangeColor),
-                                _buildInfoRow(context, Icons.sync, context.t('trust_ecosystem_title'), context.t('trust_ecosystem_desc'), orangeColor),
-                                _buildInfoRow(context, Icons.sync_lock, context.t('trust_sync_title'), context.t('trust_sync_desc'), orangeColor),
+                                _buildSectionTitle(context, context.t('trust_privacy'), mainColor),
+                                _buildInfoRow(context, Icons.sync, context.t('trust_ecosystem_title'), context.t('trust_ecosystem_desc'), mainColor),
+                                _buildInfoRow(context, Icons.sync_lock, context.t('trust_sync_title'), context.t('trust_sync_desc'), mainColor),
 
                                 const SizedBox(height: 32),
                                 // Buttons
                                 OutlinedButton.icon(
                                   onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const OnboardingPage())),
-                                  icon: Icon(Icons.auto_awesome, color: orangeColor),
+                                  icon: Icon(Icons.auto_awesome, color: mainColor),
                                   label: Text(context.t('view_onboarding')),
                                   style: OutlinedButton.styleFrom(
                                     minimumSize: const Size(double.infinity, 50),
-                                    foregroundColor: orangeColor,
-                                    side: BorderSide(color: orangeColor),
+                                    foregroundColor: mainColor,
+                                    side: BorderSide(color: mainColor),
                                   ),
                                 ),
                                 const SizedBox(height: 12),
                                 OutlinedButton.icon(
                                   onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const CustomLicensesPage())),
-                                  icon: Icon(Icons.description_outlined, color: orangeColor),
+                                  icon: Icon(Icons.description_outlined, color: mainColor),
                                   label: Text(context.t('licenses')),
                                   style: OutlinedButton.styleFrom(
                                     minimumSize: const Size(double.infinity, 50),
-                                    foregroundColor: orangeColor,
-                                    side: BorderSide(color: orangeColor),
+                                    foregroundColor: mainColor,
+                                    side: BorderSide(color: mainColor),
                                   ),
                                 ),
                                 const SizedBox(height: 12),
                                 OutlinedButton.icon(
                                   onPressed: () => Navigator.pop(context),
-                                  icon: Icon(Icons.arrow_back, color: orangeColor),
+                                  icon: Icon(Icons.arrow_back, color: mainColor),
                                   label: Text(context.t('back')),
                                   style: OutlinedButton.styleFrom(
                                     minimumSize: const Size(double.infinity, 50),
-                                    foregroundColor: orangeColor,
-                                    side: BorderSide(color: orangeColor),
+                                    foregroundColor: mainColor,
+                                    side: BorderSide(color: mainColor),
                                   ),
                                 ),
                                 const SizedBox(height: 32),
                                 Center(
                                   child: Text(
                                     context.t('all_rights_reserved'),
-                                    style: const TextStyle(fontSize: 12, color: Colors.grey),
+                                    style: TextStyle(fontSize: 12, color: mainColor.withValues(alpha: 0.7)),
                                   ),
                                 ),
                                 const SizedBox(height: 40),
@@ -241,7 +241,7 @@ class _AboutPageState extends State<AboutPage> {
                       top: 12,
                       left: 12,
                       child: IconButton(
-                        icon: Icon(Icons.arrow_back, color: orangeColor),
+                        icon: Icon(Icons.arrow_back, color: mainColor),
                         onPressed: () => Navigator.pop(context),
                       ),
                     ),
@@ -255,7 +255,7 @@ class _AboutPageState extends State<AboutPage> {
                             WindowControls(
                               onlyClose: true,
                               showSeparator: false,
-                              color: orangeColor,
+                              color: mainColor,
                               iconSize: 28,
                               padding: false,
                             ),
@@ -306,7 +306,7 @@ class _AboutPageState extends State<AboutPage> {
                                         style: GoogleFonts.poppins(
                                           fontSize: 80,
                                           fontWeight: FontWeight.w500,
-                                          color: orangeColor,
+                                          color: mainColor,
                                           letterSpacing: 4.0,
                                         ),
                                       ),
@@ -319,7 +319,7 @@ class _AboutPageState extends State<AboutPage> {
                                             textAlign: TextAlign.center,
                                             style: GoogleFonts.roboto(
                                               fontSize: 14,
-                                              color: orangeColor,
+                                              color: mainColor,
                                               fontWeight: FontWeight.w400,
                                             ),
                                           ),
@@ -331,9 +331,9 @@ class _AboutPageState extends State<AboutPage> {
                                 const SizedBox(height: 16),
                                 Text(
                                   '${context.t('version')} $_version',
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontSize: 16,
-                                    color: Colors.grey,
+                                    color: mainColor.withValues(alpha: 0.7),
                                   ),
                                 ),
                                 const SizedBox(height: 48),
@@ -350,12 +350,12 @@ class _AboutPageState extends State<AboutPage> {
                                                 (context) => const OnboardingPage(),
                                           ),
                                         ),
-                                    icon: Icon(Icons.auto_awesome, color: orangeColor),
+                                    icon: Icon(Icons.auto_awesome, color: mainColor),
                                     label: Text(context.t('view_onboarding')),
                                     style: OutlinedButton.styleFrom(
                                       minimumSize: const Size(double.infinity, 50),
-                                      foregroundColor: orangeColor,
-                                      side: BorderSide(color: orangeColor),
+                                      foregroundColor: mainColor,
+                                      side: BorderSide(color: mainColor),
                                     ),
                                   ),
                                 ),
@@ -374,12 +374,12 @@ class _AboutPageState extends State<AboutPage> {
                                                     const CustomLicensesPage(),
                                           ),
                                         ),
-                                    icon: Icon(Icons.description_outlined, color: orangeColor),
+                                    icon: Icon(Icons.description_outlined, color: mainColor),
                                     label: Text(context.t('licenses')),
                                     style: OutlinedButton.styleFrom(
                                       minimumSize: const Size(double.infinity, 50),
-                                      foregroundColor: orangeColor,
-                                      side: BorderSide(color: orangeColor),
+                                      foregroundColor: mainColor,
+                                      side: BorderSide(color: mainColor),
                                     ),
                                   ),
                                 ),
@@ -390,21 +390,21 @@ class _AboutPageState extends State<AboutPage> {
                                   ),
                                   child: OutlinedButton.icon(
                                     onPressed: () => Navigator.pop(context),
-                                    icon: Icon(Icons.arrow_back, color: orangeColor),
+                                    icon: Icon(Icons.arrow_back, color: mainColor),
                                     label: Text(context.t('back')),
                                     style: OutlinedButton.styleFrom(
                                       minimumSize: const Size(double.infinity, 50),
-                                      foregroundColor: orangeColor,
-                                      side: BorderSide(color: orangeColor),
+                                      foregroundColor: mainColor,
+                                      side: BorderSide(color: mainColor),
                                     ),
                                   ),
                                 ),
                                 const Spacer(flex: 4),
                                 Text(
                                   context.t('all_rights_reserved'),
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontSize: 12,
-                                    color: Colors.grey,
+                                    color: mainColor.withValues(alpha: 0.7),
                                   ),
                                 ),
                                 const SizedBox(height: 24),
@@ -420,25 +420,25 @@ class _AboutPageState extends State<AboutPage> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              _buildSectionTitle(context, context.t('our_mission'), orangeColor),
+                              _buildSectionTitle(context, context.t('our_mission'), mainColor),
                               Text(
                                 context.t('mission_desc'),
                                 style: const TextStyle(fontSize: 18, height: 1.6),
                               ),
-                              _buildSectionTitle(context, context.t('core_features'), orangeColor),
-                              _buildInfoRow(context, Icons.collections, context.t('feat_multimedia_title'), context.t('feat_multimedia_desc'), orangeColor),
-                              _buildInfoRow(context, Icons.add_circle_outline, context.t('feat_create_share_title'), context.t('feat_create_share_desc'), orangeColor),
-                              _buildInfoRow(context, Icons.play_circle_outline, context.t('feat_autoplay_title'), context.t('feat_autoplay_desc'), orangeColor),
-                              _buildInfoRow(context, Icons.child_care, context.t('feat_ages_title'), context.t('feat_ages_desc'), orangeColor),
-                              _buildInfoRow(context, Icons.emoji_events, context.t('feat_gamified_title'), context.t('feat_gamified_desc'), orangeColor),
+                              _buildSectionTitle(context, context.t('core_features'), mainColor),
+                              _buildInfoRow(context, Icons.collections, context.t('feat_multimedia_title'), context.t('feat_multimedia_desc'), mainColor),
+                              _buildInfoRow(context, Icons.add_circle_outline, context.t('feat_create_share_title'), context.t('feat_create_share_desc'), mainColor),
+                              _buildInfoRow(context, Icons.play_circle_outline, context.t('feat_autoplay_title'), context.t('feat_autoplay_desc'), mainColor),
+                              _buildInfoRow(context, Icons.child_care, context.t('feat_ages_title'), context.t('feat_ages_desc'), mainColor),
+                              _buildInfoRow(context, Icons.emoji_events, context.t('feat_gamified_title'), context.t('feat_gamified_desc'), mainColor),
                               
-                              _buildSectionTitle(context, context.t('the_science'), orangeColor),
-                              _buildInfoRow(context, Icons.psychology, context.t('feat_science_spacing_title'), context.t('feat_science_spacing_desc'), orangeColor),
-                              _buildInfoRow(context, Icons.auto_graph, context.t('feat_science_smart_review_title'), context.t('feat_science_smart_review_desc'), orangeColor),
+                              _buildSectionTitle(context, context.t('the_science'), mainColor),
+                              _buildInfoRow(context, Icons.psychology, context.t('feat_science_spacing_title'), context.t('feat_science_spacing_desc'), mainColor),
+                              _buildInfoRow(context, Icons.auto_graph, context.t('feat_science_smart_review_title'), context.t('feat_science_smart_review_desc'), mainColor),
                               
-                              _buildSectionTitle(context, context.t('trust_privacy'), orangeColor),
-                              _buildInfoRow(context, Icons.sync, context.t('trust_ecosystem_title'), context.t('trust_ecosystem_desc'), orangeColor),
-                              _buildInfoRow(context, Icons.sync_lock, context.t('trust_sync_title'), context.t('trust_sync_desc'), orangeColor),
+                              _buildSectionTitle(context, context.t('trust_privacy'), mainColor),
+                              _buildInfoRow(context, Icons.sync, context.t('trust_ecosystem_title'), context.t('trust_ecosystem_desc'), mainColor),
+                              _buildInfoRow(context, Icons.sync_lock, context.t('trust_sync_title'), context.t('trust_sync_desc'), mainColor),
                             ],
                           ),
                         ),
@@ -455,7 +455,7 @@ class _AboutPageState extends State<AboutPage> {
                           WindowControls(
                             onlyClose: true,
                             showSeparator: false,
-                            color: orangeColor,
+                            color: mainColor,
                             iconSize: 28,
                             padding: false,
                           ),

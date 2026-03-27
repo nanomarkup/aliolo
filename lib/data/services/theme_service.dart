@@ -16,6 +16,9 @@ class ThemeService extends ChangeNotifier {
   // The fixed brand orange for non-working pages
   static const Color alioloOrange = orange;
 
+  // Pillar 6 (Academic & Professional) colors for system pages
+  Color get systemColor => isDarkMode ? const Color(0xFF3F51B5) : const Color(0xFF1D4289);
+
   // Dynamic primary color
   Color _primaryColor = orange;
   Color get primaryColor => _primaryColor;

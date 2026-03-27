@@ -26,15 +26,32 @@ class TranslationService extends ChangeNotifier {
       'show_documentation_btn_desc': 'Display a help icon in the top navigation bar',
       'support_and_management': 'Support & About',
       'about_tagline': 'Learn Visually. Master Permanently.',
+      'doc_tab_general': 'General',
+      'doc_tab_learning': 'Learning & Testing',
+      'doc_tab_creator': 'Creator Guide',
       'doc_welcome_title': 'Welcome to Aliolo',
       'doc_welcome_desc':
           'Aliolo is a visual learning platform designed to help you master subjects through flashcards and interactive testing.',
-      'doc_flashcards_title': 'Visual Flashcards',
+      'doc_pillars_title': 'The 8 Core Pillars',
+      'doc_pillars_desc':
+          'All content in Aliolo is organized into 8 foundational pillars: Academic & Professional, World, Nature, Human Body, Humanities, Leisure, Engineering, and Other. These categories provide a structured framework for all subjects across the platform.',
       'doc_flashcards_desc':
-          'Each subject contains a set of cards with images and audio. You can browse through them to familiarize yourself with the content.',
+          'Each subject contains a set of cards. While images and audio are supported, they are optional—content can be purely textual or dynamically generated.',
       'doc_testing_title': 'Interactive Testing',
       'doc_testing_desc':
           'Challenge yourself with multiple-choice questions (MCQ). The app will automatically advance as you answer, helping you learn faster.',
+      'doc_study_modes_title': 'Adaptive Study Modes',
+      'doc_study_modes_desc':
+          'Aliolo supports various testing modes based on your content: Image-to-Text, Audio-to-Image, and Text-to-Audio. This multi-sensory approach ensures you master subjects from every angle.',
+      'doc_math_title': 'Mathematical Subjects',
+      'doc_math_desc':
+          'Mathematical subjects use specialized engines to generate card visualizations in real-time. These subjects feature unique learning and testing modes tailored to specific mathematical concepts, ensuring a more effective practice environment.',
+      'doc_lang_title': 'Learning Language',
+      'doc_lang_desc':
+          'Always select your preferred learning language in the top menu before selecting a subject. This ensures the correct audio and translations are loaded.',
+      'doc_autoplay_title': 'Auto-Play Learning',
+      'doc_autoplay_desc':
+          'The app can automatically advance to the next card after you answer. Correct answers wait 1s, while incorrect ones wait 2s to let you review.',
       'doc_streaks_title': 'Streak System',
       'doc_streaks_desc':
           'Consistency is key! Complete your daily goal every day to build your streak. Don\'t miss a day, or the streak will reset.',
@@ -44,6 +61,45 @@ class TranslationService extends ChangeNotifier {
       'doc_sync_title': 'Cloud Sync',
       'doc_sync_desc':
           'Your progress is automatically synced to the cloud. You can switch between web and desktop versions without losing your streak.',
+      'doc_leaderboard_title': 'Global Leaderboard',
+      'doc_leaderboard_desc':
+          'Compete with learners worldwide! Earn XP by completing card sessions and climb the ranks. Your position is updated in real-time as you master new subjects.',
+      'doc_friends_title': 'Friends & Invitations',
+      'doc_friends_desc':
+          'Learning is better together! Invite friends to Aliolo through your profile. You can track each other\'s progress and stay motivated by seeing who maintains the longest streak.',
+      'doc_public_title': 'Public vs Private',
+      'doc_public_desc':
+          'Subjects can be private (visible only to you) or public. Public content is shared with the entire Aliolo community, allowing everyone to discover and learn from your creations.',
+      'doc_feedback_title': 'Feedback System',
+      'doc_feedback_desc':
+          'Help us improve! Use the feedback icon (Icons.feedback) on any Subject or Folder to report issues. You can also send general app feedback through the Support section.',
+      'doc_collections_purpose_title': 'The Purpose of Collections',
+      'doc_collections_purpose_desc':
+          'Collections are curated paths that group Subjects together. When you start a session from a Collection, the system mixes cards from all included subjects to provide a randomized, comprehensive test.',
+      'doc_filters_title': 'Search & Filters',
+      'doc_filters_desc':
+          'Quickly find content using the search bar. You can filter by Age Group (Early to Advanced) or narrow your view to specific Collections and Folders.',
+      'doc_organization_title': 'Organizing Content',
+      'doc_organization_desc':
+          'Use Folders to group related Subjects together. You can also create Collections to organize Subjects into curated paths.',
+      'doc_creation_title': 'Creating Subjects & Cards',
+      'doc_creation_desc':
+          'Create your own Subjects and add visual Flashcards. Each card supports an image and an optional audio file for pronunciation.',
+      'doc_card_scope_title': 'Where Cards Live',
+      'doc_card_scope_desc':
+          'Cards are the building blocks of learning and always belong to a specific Subject. While you can organize Subjects into Folders or Collections, cards themselves must be created within a Subject.',
+      'doc_localization_ui_title': 'Adding Translations',
+      'doc_localization_ui_desc':
+          'To add localized data, simply tap the language code icon (e.g., EN, ES, FR) in the editor header. This allows you to provide specific names, descriptions, and card content for each supported language. The "Global" tab serves as the primary fallback if no specific translation is provided.',
+      'doc_json_title': 'JSON Localization',
+      'doc_json_desc':
+          'Advanced creators can use JSON data to provide localized names and descriptions, making subjects accessible across all supported languages.',
+      'doc_localization_details_title': 'How Localization Works',
+      'doc_localization_details_desc':
+          'The "Global" language is your primary fallback—it can be any language you choose. If you provide specific translations (like English or Spanish), they will override the Global data only when a user selects that specific UI language.',
+      'doc_media_title': 'Media Upload Limits',
+      'doc_media_desc':
+          'To ensure fast sync, keep images under 5MB and audio files under 10MB.',
       'onboarding_1_title': 'Welcome to Aliolo',
       'onboarding_1_desc': 'Your personal visual learning assistant for mastering any subject.',
       'onboarding_2_title': 'Smart Learning',

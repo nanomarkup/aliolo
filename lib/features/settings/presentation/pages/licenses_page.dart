@@ -109,7 +109,7 @@ class _CustomLicensesPageState extends State<CustomLicensesPage> {
 
   @override
   Widget build(BuildContext context) {
-    final orangeColor = getIt<ThemeService>().getAdjustedPrimary(forceOrange: true);
+    final mainColor = getIt<ThemeService>().systemColor;
 
     return ListenableBuilder(
       listenable: TranslationService(),
@@ -134,7 +134,7 @@ class _CustomLicensesPageState extends State<CustomLicensesPage> {
                             IconButton(
                               icon: const Icon(Icons.arrow_back),
                               iconSize: 28,
-                              color: orangeColor,
+                              color: mainColor,
                               onPressed: () => Navigator.pop(context),
                               tooltip: context.t('back'),
                             ),
@@ -153,7 +153,7 @@ class _CustomLicensesPageState extends State<CustomLicensesPage> {
                             IconButton(
                               icon: const Icon(Icons.arrow_back),
                               iconSize: 28,
-                              color: orangeColor,
+                              color: mainColor,
                               onPressed: () => Navigator.pop(context),
                               tooltip: context.t('back'),
                             ),
@@ -163,7 +163,7 @@ class _CustomLicensesPageState extends State<CustomLicensesPage> {
                                 child: WindowControls(
                                   onlyClose: true,
                                   showSeparator: false,
-                                  color: orangeColor,
+                                  color: mainColor,
                                   iconSize: 28,
                                   padding: false,
                                 ),
@@ -174,7 +174,7 @@ class _CustomLicensesPageState extends State<CustomLicensesPage> {
                       const Divider(),
                       Expanded(
                         child: _isLoading
-                            ? Center(child: CircularProgressIndicator(color: orangeColor))
+                            ? Center(child: CircularProgressIndicator(color: mainColor))
                             : isMobile
                                 ? ListView.builder(
                                     itemCount: _groupedLicenses.length,
@@ -189,7 +189,7 @@ class _CustomLicensesPageState extends State<CustomLicensesPage> {
                                                 ? FontWeight.bold
                                                 : FontWeight.normal,
                                             color: license.isAliolo
-                                                ? orangeColor
+                                                ? mainColor
                                                 : null,
                                           ),
                                         ),
@@ -233,7 +233,7 @@ class _CustomLicensesPageState extends State<CustomLicensesPage> {
 
                                                     return ListTile(
                                                       selected: isSelected,
-                                                      selectedTileColor: orangeColor.withValues(alpha: 0.1),
+                                                      selectedTileColor: mainColor.withValues(alpha: 0.1),
                                                       title: Text(
                                                         license.name,
                                                         style: TextStyle(
@@ -246,7 +246,7 @@ class _CustomLicensesPageState extends State<CustomLicensesPage> {
                                                                       .normal,
                                                           color:
                                                               license.isAliolo || isSelected
-                                                                  ? orangeColor
+                                                                  ? mainColor
                                                                   : null,
                                                         ),
                                                         maxLines: 1,
@@ -308,13 +308,13 @@ class LicenseDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final orangeColor = getIt<ThemeService>().getAdjustedPrimary(forceOrange: true);
+    final mainColor = getIt<ThemeService>().systemColor;
     return Scaffold(
       appBar: AppBar(
         title: Text(license.name, style: const TextStyle(fontSize: 16)),
         backgroundColor: Colors.transparent,
         elevation: 0,
-        foregroundColor: orangeColor,
+        foregroundColor: mainColor,
       ),
       body: LicenseDetailView(license: license),
     );

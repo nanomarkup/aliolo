@@ -183,6 +183,44 @@ class _SubjectPageState extends State<SubjectPage> {
     });
   }
 
+  Future<void> _navigateToSubject(dynamic result) async {
+    if (result == null || result == true) return;
+    
+    final lang = TranslationService().currentLocale.languageCode;
+    
+    if (result is SubjectModel) {
+      final cards = await _cardService.getCardsBySubject(result.id);
+      if (mounted) {
+        await Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => SubjectLandingPage(
+              subject: result,
+              cards: cards,
+              languageCode: lang,
+            ),
+          ),
+        );
+        _loadDashboard();
+      }
+    } else if (result is CollectionModel) {
+      final cards = await _cardService.getCollectionCards(result.subjectIds);
+      if (mounted) {
+        await Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => SubjectLandingPage(
+              collection: result,
+              cards: cards.map((sc) => sc.card).toList(),
+              languageCode: lang,
+            ),
+          ),
+        );
+        _loadDashboard();
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     const appBarColor = Colors.white;
@@ -371,7 +409,7 @@ class _SubjectPageState extends State<SubjectPage> {
                         padding: EdgeInsets.zero,
                         onSelected: (value) async {
                           final defaultPillarId = pillars.isNotEmpty ? pillars.first.id : 8;
-                          bool? result;
+                          dynamic result;
                           if (value == 'subject') {
                             result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: defaultPillarId)));
                           } else if (value == 'collection') {
@@ -379,7 +417,12 @@ class _SubjectPageState extends State<SubjectPage> {
                           } else if (value == 'folder') {
                             result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: defaultPillarId, isFolderMode: true)));
                           }
-                          if (result == true) _loadDashboard();
+                          
+                          if (result == true) {
+                            _loadDashboard();
+                          } else if (result != null) {
+                            await _navigateToSubject(result);
+                          }
                         },
                         itemBuilder: (context) => [
                           PopupMenuItem(value: 'subject', child: ListTile(leading: const Icon(Icons.description, color: Colors.orange), title: Text(context.t('add_subject')), contentPadding: EdgeInsets.zero)),
@@ -779,7 +822,7 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
     setState(() {
       _filters = _filters.copyWith(query: _searchController.text);
       _matchingContent = _discoveryEngine.applyFiltersAndSort(_allContent, _filters, widget.languageCode);
-      
+
       _filteredContent = _discoveryEngine.getVisibleContent(
         _matchingContent,
         widget.languageCode,
@@ -792,9 +835,46 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
     });
   }
 
+  Future<void> _navigateToSubject(dynamic result) async {
+    if (result == null || result == true) return;
+
+    final lang = TranslationService().currentLocale.languageCode;
+
+    if (result is SubjectModel) {
+      final cards = await _cardService.getCardsBySubject(result.id);
+      if (mounted) {
+        await Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => SubjectLandingPage(
+              subject: result,
+              cards: cards,
+              languageCode: lang,
+            ),
+          ),
+        );
+        _loadData();
+      }
+    } else if (result is CollectionModel) {
+      final cards = await _cardService.getCollectionCards(result.subjectIds);
+      if (mounted) {
+        await Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => SubjectLandingPage(
+              collection: result,
+              cards: cards.map((sc) => sc.card).toList(),
+              languageCode: lang,
+            ),
+          ),
+        );
+        _loadData();
+      }
+    }
+  }
+
   @override
-  Widget build(BuildContext context) {
-    final pillarColor = widget.pillar.getColor(getIt<ThemeService>().isDarkMode);
+  Widget build(BuildContext context) {    final pillarColor = widget.pillar.getColor(getIt<ThemeService>().isDarkMode);
     const appBarColor = Colors.white;
     return ListenableBuilder(
       listenable: TranslationService(),
@@ -819,11 +899,19 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
                   icon: Icon(Icons.add_circle, color: pillarColor, size: 40),
                   padding: EdgeInsets.zero,
                   onSelected: (value) async {
-                    bool? result;
+                    dynamic result;
                     if (value == 'subject') result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: widget.pillar.id, initialAgeGroup: _filters.ageGroup)));
                     else if (value == 'collection') result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: widget.pillar.id, isCollectionMode: true, initialAgeGroup: _filters.ageGroup)));
                     else if (value == 'folder') result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: widget.pillar.id, isFolderMode: true)));
-                    if (result == true) { _loadData(); _hasUpdated = true; }
+                    
+                    if (result == true) {
+                      _loadData();
+                      _hasUpdated = true;
+                    } else if (result != null) {
+                      _loadData();
+                      _hasUpdated = true;
+                      await _navigateToSubject(result);
+                    }
                   },
                   itemBuilder: (context) => [
                     PopupMenuItem(value: 'subject', child: ListTile(leading: Icon(Icons.description, color: pillarColor), title: Text(context.t('add_subject')), contentPadding: EdgeInsets.zero)),
@@ -1047,7 +1135,7 @@ class _FolderPageState extends State<FolderPage> {
     setState(() {
       _filters = _filters.copyWith(query: _searchController.text);
       _matchingContent = _discoveryEngine.applyFiltersAndSort(_allContent, _filters, widget.languageCode);
-      
+
       _filteredContent = _discoveryEngine.getVisibleContent(
         _matchingContent,
         widget.languageCode,
@@ -1060,9 +1148,46 @@ class _FolderPageState extends State<FolderPage> {
     });
   }
 
+  Future<void> _navigateToSubject(dynamic result) async {
+    if (result == null || result == true) return;
+
+    final lang = TranslationService().currentLocale.languageCode;
+
+    if (result is SubjectModel) {
+      final cards = await _cardService.getCardsBySubject(result.id);
+      if (mounted) {
+        await Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => SubjectLandingPage(
+              subject: result,
+              cards: cards,
+              languageCode: lang,
+            ),
+          ),
+        );
+        _loadData();
+      }
+    } else if (result is CollectionModel) {
+      final cards = await _cardService.getCollectionCards(result.subjectIds);
+      if (mounted) {
+        await Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => SubjectLandingPage(
+              collection: result,
+              cards: cards.map((sc) => sc.card).toList(),
+              languageCode: lang,
+            ),
+          ),
+        );
+        _loadData();
+      }
+    }
+  }
+
   @override
-  Widget build(BuildContext context) {
-    final pillarColor = widget.pillar.getColor(getIt<ThemeService>().isDarkMode);
+  Widget build(BuildContext context) {    final pillarColor = widget.pillar.getColor(getIt<ThemeService>().isDarkMode);
     const appBarColor = Colors.white;
     final isOwner = widget.folder.ownerId == _authService.currentUser?.serverId;
 
@@ -1109,10 +1234,18 @@ class _FolderPageState extends State<FolderPage> {
                   icon: Icon(Icons.add_circle, color: pillarColor, size: 40),
                   padding: EdgeInsets.zero,
                   onSelected: (value) async {
-                    bool? result;
+                    dynamic result;
                     if (value == 'subject') result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: widget.pillar.id, folderId: widget.folder.id, initialAgeGroup: _filters.ageGroup)));
                     else if (value == 'collection') result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: widget.pillar.id, folderId: widget.folder.id, isCollectionMode: true, initialAgeGroup: _filters.ageGroup)));
-                    if (result == true) { _loadData(); _hasUpdated = true; }
+                    
+                    if (result == true) {
+                      _loadData();
+                      _hasUpdated = true;
+                    } else if (result != null) {
+                      _loadData();
+                      _hasUpdated = true;
+                      await _navigateToSubject(result);
+                    }
                   },
                   itemBuilder: (context) => [
                     PopupMenuItem(value: 'subject', child: ListTile(leading: Icon(Icons.description, color: pillarColor), title: Text(context.t('add_subject')), contentPadding: EdgeInsets.zero)),

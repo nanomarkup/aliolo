@@ -422,6 +422,13 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
           localizedData: finalData,
         );
         await _cardService.addFolder(folder);
+        
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(context.t('save_success') ?? 'Saved successfully')),
+          );
+          Navigator.pop(context, true);
+        }
       } else if (_selectedType == 'collection') {
         final collectionId = widget.existingSubject?.id ?? _cardService.generateId();
         final collection = CollectionModel(
@@ -438,6 +445,18 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
           isOnDashboard: widget.existingSubject?.isOnDashboard ?? false,
         );
         await _cardService.addCollection(collection, _linkedSubjectIds);
+
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(context.t('save_success') ?? 'Saved successfully')),
+          );
+          // If it's a new collection, return the object so we can navigate to it
+          if (widget.existingSubject == null) {
+            Navigator.pop(context, collection);
+          } else {
+            Navigator.pop(context, true);
+          }
+        }
       } else {
         final subjectId = widget.existingSubject?.id ?? _cardService.generateId();
         final subject = SubjectModel(
@@ -461,13 +480,18 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
           linkedSubjectIds: [],
         );
         await _cardService.addSubject(subject);
-      }
-      
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(context.t('save_success') ?? 'Saved successfully')),
-        );
-        Navigator.pop(context, true);
+
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(context.t('save_success') ?? 'Saved successfully')),
+          );
+          // If it's a new subject, return the object so we can navigate to it
+          if (widget.existingSubject == null) {
+            Navigator.pop(context, subject);
+          } else {
+            Navigator.pop(context, true);
+          }
+        }
       }
     } catch (e) {
       if (mounted) {
