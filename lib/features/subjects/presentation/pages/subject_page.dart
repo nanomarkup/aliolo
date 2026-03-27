@@ -229,55 +229,51 @@ class _SubjectPageState extends State<SubjectPage> {
             }
           },
           child: AlioloScrollablePage(
-            title: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 300),
-              child: DropdownButtonHideUnderline(
-                child: DropdownButton<String>(
-                  value: _currentTestingLang,
-                  dropdownColor: currentSessionColor,
-                  icon: const Icon(Icons.language, color: appBarColor, size: 20),
-                  style: const TextStyle(
-                    color: appBarColor,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  isExpanded: false,
-                  selectedItemBuilder: (context) {
-                    final isSmall = MediaQuery.of(context).size.width < 500;
-                    return activeCodes.map((l) {
-                      return Align(
-                        alignment: Alignment.centerLeft,
+            title: DropdownButtonHideUnderline(
+              child: DropdownButton<String>(
+                value: _currentTestingLang,
+                dropdownColor: currentSessionColor,
+                icon: const Icon(Icons.language, color: appBarColor, size: 20),
+                style: const TextStyle(
+                  color: appBarColor,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+                // This ensures the popup is wide even if the button is narrow
+                menuWidth: 250,
+                isExpanded: false,
+                selectedItemBuilder: (context) {
+                  final isSmall = MediaQuery.of(context).size.width < 500;
+                  return activeCodes.map((l) {
+                    return Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        isSmall
+                            ? l.toUpperCase()
+                            : getIt<TestingLanguageService>().getLanguageName(l),
+                        style: const TextStyle(color: appBarColor),
+                      ),
+                    );
+                  }).toList();
+                },
+                items:
+                    activeCodes.map((l) {
+                      return DropdownMenuItem(
+                        value: l,
                         child: Text(
-                          isSmall
-                              ? l.toUpperCase()
-                              : getIt<TestingLanguageService>().getLanguageName(l),
-                          style: const TextStyle(color: appBarColor),
+                          getIt<TestingLanguageService>().getLanguageName(l),
+                          style: const TextStyle(color: Colors.white),
                         ),
                       );
-                    }).toList();
-                  },
-                  items:
-                      activeCodes.map((l) {
-                        return DropdownMenuItem(
-                          value: l,
-                          child: Container(
-                            constraints: const BoxConstraints(minWidth: 200),
-                            child: Text(
-                              getIt<TestingLanguageService>().getLanguageName(l),
-                              style: const TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        );
-                      }).toList(),
-                  onChanged: (val) async {
-                    if (val != null) {
-                      setState(() => _currentTestingLang = val);
-                      final prefs = await SharedPreferences.getInstance();
-                      await prefs.setString('last_testing_lang', val);
-                      _applySearch();
-                    }
-                  },
-                ),
+                    }).toList(),
+                onChanged: (val) async {
+                  if (val != null) {
+                    setState(() => _currentTestingLang = val);
+                    final prefs = await SharedPreferences.getInstance();
+                    await prefs.setString('last_testing_lang', val);
+                    _applySearch();
+                  }
+                },
               ),
             ),
             appBarColor: currentSessionColor,
