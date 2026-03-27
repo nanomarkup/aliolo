@@ -763,6 +763,7 @@ class _ProfilePageState extends State<ProfilePage> {
           ListTile(
             leading: Icon(Icons.flag, color: color),
             title: Text(context.t('next_daily_goal')),
+            subtitle: Text(context.t('next_daily_goal_desc')),
             trailing: Text(
               '${user.nextDailyGoal}',
               style: const TextStyle(fontWeight: FontWeight.bold),
@@ -781,6 +782,7 @@ class _ProfilePageState extends State<ProfilePage> {
           ListTile(
             leading: Icon(Icons.slow_motion_video, color: color),
             title: Text(context.t('learn_session_size')),
+            subtitle: Text(context.t('learn_session_size_desc')),
             trailing: Text(
               '${user.learnSessionSize}',
               style: const TextStyle(fontWeight: FontWeight.bold),
@@ -799,6 +801,7 @@ class _ProfilePageState extends State<ProfilePage> {
           ListTile(
             leading: Icon(Icons.quiz, color: color),
             title: Text(context.t('test_session_size')),
+            subtitle: Text(context.t('test_session_size_desc')),
             trailing: Text(
               '${user.testSessionSize}',
               style: const TextStyle(fontWeight: FontWeight.bold),
@@ -817,6 +820,7 @@ class _ProfilePageState extends State<ProfilePage> {
           ListTile(
             leading: Icon(Icons.view_list, color: color),
             title: Text(context.t('options_count')),
+            subtitle: Text(context.t('options_count_desc')),
             trailing: Text(
               '${user.optionsCount}',
               style: const TextStyle(fontWeight: FontWeight.bold),
