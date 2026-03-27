@@ -41,6 +41,7 @@ class TranslationService extends ChangeNotifier {
     'doc_sync_title': 'Cloud Sync',
     'doc_sync_desc':
         'Your progress is automatically synced to the cloud. You can switch between web and desktop versions without losing your streak.',
+    'support_and_management': 'Support & About',
   };
   
   // Hardcoded fallback list - Sorted by Native Name (English first)

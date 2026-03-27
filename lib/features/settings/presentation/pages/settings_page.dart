@@ -186,6 +186,17 @@ class _SettingsPageState extends State<SettingsPage> {
                 );
               },
             ),
+            if (_authService.currentUser?.showDocumentation ?? true)
+              IconButton(
+                icon: const Icon(Icons.help_outline, color: appBarColor),
+                onPressed:
+                    () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const DocumentationPage(),
+                      ),
+                    ),
+              ),
             IconButton(
               icon: const Icon(Icons.settings, color: appBarColor),
               onPressed: () => setState(() {}),
@@ -438,14 +449,25 @@ class _SettingsPageState extends State<SettingsPage> {
                             }).toList(),
                       ),
                     ),
-                    const Divider(height: 1, indent: 16, endIndent: 16),
+                  ],
+                ),
+              ),
+              _buildSectionTitle(
+                context.t('support_and_management'),
+                currentPrimaryColor,
+              ),
+              Card(
+                child: Column(
+                  children: [
                     ListTile(
                       leading: Icon(Icons.help_outline, color: currentPrimaryColor),
                       title: Text(context.t('documentation')),
                       trailing: const Icon(Icons.chevron_right),
                       onTap: () => Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const DocumentationPage()),
+                        MaterialPageRoute(
+                          builder: (context) => const DocumentationPage(),
+                        ),
                       ),
                     ),
                     const Divider(height: 1, indent: 16, endIndent: 16),

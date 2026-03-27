@@ -10,6 +10,7 @@ import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/features/auth/presentation/pages/profile_page.dart';
 import 'package:aliolo/features/settings/presentation/pages/settings_page.dart';
+import 'package:aliolo/features/documentation/presentation/pages/documentation_page.dart';
 import 'package:aliolo/features/subjects/presentation/pages/subject_page.dart';
 import 'package:aliolo/data/services/feedback_service.dart';
 import 'package:aliolo/core/di/service_locator.dart';
@@ -164,6 +165,17 @@ class _LeaderboardPageState extends State<LeaderboardPage>
                 );
               },
             ),
+            if (_authService.currentUser?.showDocumentation ?? true)
+              IconButton(
+                icon: const Icon(Icons.help_outline, color: appBarColor),
+                onPressed:
+                    () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const DocumentationPage(),
+                      ),
+                    ),
+              ),
             IconButton(
               icon: const Icon(Icons.settings, color: appBarColor),
               onPressed:

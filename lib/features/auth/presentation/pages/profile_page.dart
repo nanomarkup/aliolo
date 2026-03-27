@@ -12,6 +12,7 @@ import 'package:aliolo/features/auth/presentation/pages/login_page.dart';
 import 'package:aliolo/features/subjects/presentation/pages/subject_page.dart';
 import 'package:aliolo/features/leaderboard/presentation/pages/leaderboard_page.dart';
 import 'package:aliolo/features/settings/presentation/pages/settings_page.dart';
+import 'package:aliolo/features/documentation/presentation/pages/documentation_page.dart';
 import 'package:aliolo/features/auth/presentation/pages/manage_friends_page.dart';
 import 'package:aliolo/features/management/presentation/pages/feedback_management_page.dart';
 import 'package:aliolo/data/services/feedback_service.dart';
@@ -486,6 +487,17 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               onPressed: () => setState(() {}),
             ),
+            if (_authService.currentUser?.showDocumentation ?? true)
+              IconButton(
+                icon: const Icon(Icons.help_outline, color: appBarColor),
+                onPressed:
+                    () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const DocumentationPage(),
+                      ),
+                    ),
+              ),
             IconButton(
               icon: const Icon(Icons.settings, color: appBarColor),
               onPressed:

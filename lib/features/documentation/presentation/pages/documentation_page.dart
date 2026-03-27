@@ -17,6 +17,12 @@ class DocumentationPage extends StatelessWidget {
         style: const TextStyle(color: appBarColor),
       ),
       appBarColor: currentPrimaryColor,
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.arrow_back, color: appBarColor),
+          onPressed: () => Navigator.pop(context),
+        ),
+      ],
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Column(
