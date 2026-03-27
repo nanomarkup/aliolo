@@ -2,6 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:aliolo/core/widgets/aliolo_scrollable_page.dart';
 import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
+import 'package:aliolo/data/services/auth_service.dart';
+import 'package:aliolo/data/services/feedback_service.dart';
+import 'package:aliolo/core/di/service_locator.dart';
+import 'package:aliolo/features/subjects/presentation/pages/subject_page.dart';
+import 'package:aliolo/features/leaderboard/presentation/pages/leaderboard_page.dart';
+import 'package:aliolo/features/auth/presentation/pages/profile_page.dart';
+import 'package:aliolo/features/settings/presentation/pages/settings_page.dart';
 
 class DocumentationPage extends StatelessWidget {
   const DocumentationPage({super.key});
@@ -10,6 +17,7 @@ class DocumentationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final currentPrimaryColor = ThemeService().primaryColor;
     const appBarColor = Colors.white;
+    final authService = getIt<AuthService>();
 
     return AlioloScrollablePage(
       title: Text(
@@ -19,9 +27,52 @@ class DocumentationPage extends StatelessWidget {
       appBarColor: currentPrimaryColor,
       actions: [
         IconButton(
-          icon: const Icon(Icons.arrow_back, color: appBarColor),
-          onPressed: () => Navigator.pop(context),
+          icon: const Icon(Icons.school, color: appBarColor),
+          onPressed:
+              () => Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => const SubjectPage()),
+                (route) => false,
+              ),
         ),
+        IconButton(
+          icon: const Icon(Icons.emoji_events, color: appBarColor),
+          onPressed:
+              () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const LeaderboardPage()),
+              ),
+        ),
+        IconButton(
+          icon: ValueListenableBuilder<bool>(
+            valueListenable: getIt<FeedbackService>().pendingNotifications,
+            builder: (context, hasNotif, _) {
+              return Badge(
+                isLabelVisible: hasNotif,
+                backgroundColor: Colors.amber,
+                child: const Icon(Icons.person, color: appBarColor),
+              );
+            },
+          ),
+          onPressed:
+              () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const ProfilePage()),
+              ),
+        ),
+        IconButton(
+          icon: const Icon(Icons.settings, color: appBarColor),
+          onPressed:
+              () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const SettingsPage()),
+              ),
+        ),
+        if (authService.currentUser?.showDocumentation ?? true)
+          IconButton(
+            icon: const Icon(Icons.help_outline, color: appBarColor),
+            onPressed: () {},
+          ),
       ],
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
