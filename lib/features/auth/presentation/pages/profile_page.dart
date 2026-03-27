@@ -487,6 +487,16 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               onPressed: () => setState(() {}),
             ),
+            IconButton(
+              icon: const Icon(Icons.settings, color: appBarColor),
+              onPressed:
+                  () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const SettingsPage(),
+                    ),
+                  ),
+            ),
             if (_authService.currentUser?.showDocumentation ?? true)
               IconButton(
                 icon: const Icon(Icons.help_outline, color: appBarColor),
@@ -498,16 +508,6 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                     ),
               ),
-            IconButton(
-              icon: const Icon(Icons.settings, color: appBarColor),
-              onPressed:
-                  () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const SettingsPage(),
-                    ),
-                  ),
-            ),
           ],
           body: Column(
             children: [

@@ -186,6 +186,10 @@ class _SettingsPageState extends State<SettingsPage> {
                 );
               },
             ),
+            IconButton(
+              icon: const Icon(Icons.settings, color: appBarColor),
+              onPressed: () => setState(() {}),
+            ),
             if (_authService.currentUser?.showDocumentation ?? true)
               IconButton(
                 icon: const Icon(Icons.help_outline, color: appBarColor),
@@ -197,10 +201,6 @@ class _SettingsPageState extends State<SettingsPage> {
                       ),
                     ),
               ),
-            IconButton(
-              icon: const Icon(Icons.settings, color: appBarColor),
-              onPressed: () => setState(() {}),
-            ),
           ],
           body: Column(
             children: [

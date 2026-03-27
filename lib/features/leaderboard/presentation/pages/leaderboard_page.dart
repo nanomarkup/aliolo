@@ -165,6 +165,16 @@ class _LeaderboardPageState extends State<LeaderboardPage>
                 );
               },
             ),
+            IconButton(
+              icon: const Icon(Icons.settings, color: appBarColor),
+              onPressed:
+                  () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const SettingsPage(),
+                    ),
+                  ),
+            ),
             if (_authService.currentUser?.showDocumentation ?? true)
               IconButton(
                 icon: const Icon(Icons.help_outline, color: appBarColor),
@@ -176,16 +186,6 @@ class _LeaderboardPageState extends State<LeaderboardPage>
                       ),
                     ),
               ),
-            IconButton(
-              icon: const Icon(Icons.settings, color: appBarColor),
-              onPressed:
-                  () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const SettingsPage(),
-                    ),
-                  ),
-            ),
           ],
           body: Column(
             children: [
