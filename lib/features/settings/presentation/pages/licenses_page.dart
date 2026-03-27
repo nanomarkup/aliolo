@@ -109,192 +109,200 @@ class _CustomLicensesPageState extends State<CustomLicensesPage> {
 
   @override
   Widget build(BuildContext context) {
-    final mainColor = getIt<ThemeService>().systemColor;
+    final themeService = getIt<ThemeService>();
 
     return ListenableBuilder(
-      listenable: TranslationService(),
+      listenable: Listenable.merge([TranslationService(), themeService]),
       builder: (context, _) {
-        return Scaffold(
-          body: Stack(
-            children: [
-              const Positioned.fill(
-                child: DragToMoveArea(child: SizedBox.expand()),
-              ),
-              LayoutBuilder(
-                builder: (context, constraints) {
-                  final isMobile = constraints.maxWidth < 600;
+        final mainColor = themeService.getSystemColor(Brightness.light);
 
-                  return Column(
-                    children: [
-                      const SizedBox(height: 12),
-                      Row(
-                        children: [
-                          if (isMobile) ...[
-                            const SizedBox(width: 8),
-                            IconButton(
-                              icon: const Icon(Icons.arrow_back),
-                              iconSize: 28,
-                              color: mainColor,
-                              onPressed: () => Navigator.pop(context),
-                              tooltip: context.t('back'),
-                            ),
-                          ] else
-                            const SizedBox(width: 24),
-                          Text(
-                            context.t('licenses'),
-                            style: const TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const Spacer(),
-                          if (!isMobile) ...[
-                            // Back Button styled like Close button
-                            IconButton(
-                              icon: const Icon(Icons.arrow_back),
-                              iconSize: 28,
-                              color: mainColor,
-                              onPressed: () => Navigator.pop(context),
-                              tooltip: context.t('back'),
-                            ),
-                            if (!kIsWeb)
-                              Padding(
-                                padding: const EdgeInsets.only(right: 12.0),
-                                child: WindowControls(
-                                  onlyClose: true,
-                                  showSeparator: false,
-                                  color: mainColor,
-                                  iconSize: 28,
-                                  padding: false,
-                                ),
+        return Theme(
+          data: ThemeData.light(useMaterial3: true).copyWith(
+            colorScheme: ColorScheme.fromSeed(seedColor: mainColor),
+          ),
+          child: Scaffold(
+            backgroundColor: const Color(0xFFF1F5F9),
+            body: Stack(
+              children: [
+                const Positioned.fill(
+                  child: DragToMoveArea(child: SizedBox.expand()),
+                ),
+                LayoutBuilder(
+                  builder: (context, constraints) {
+                    final isMobile = constraints.maxWidth < 600;
+
+                    return Column(
+                      children: [
+                        const SizedBox(height: 12),
+                        Row(
+                          children: [
+                            if (isMobile) ...[
+                              const SizedBox(width: 8),
+                              IconButton(
+                                icon: const Icon(Icons.arrow_back),
+                                iconSize: 28,
+                                color: mainColor,
+                                onPressed: () => Navigator.pop(context),
+                                tooltip: context.t('back'),
                               ),
+                            ] else
+                              const SizedBox(width: 24),
+                            Text(
+                              context.t('licenses'),
+                              style: const TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const Spacer(),
+                            if (!isMobile) ...[
+                              // Back Button styled like Close button
+                              IconButton(
+                                icon: const Icon(Icons.arrow_back),
+                                iconSize: 28,
+                                color: mainColor,
+                                onPressed: () => Navigator.pop(context),
+                                tooltip: context.t('back'),
+                              ),
+                              if (!kIsWeb)
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 12.0),
+                                  child: WindowControls(
+                                    onlyClose: true,
+                                    showSeparator: false,
+                                    color: mainColor,
+                                    iconSize: 28,
+                                    padding: false,
+                                  ),
+                                ),
+                            ],
                           ],
-                        ],
-                      ),
-                      const Divider(),
-                      Expanded(
-                        child: _isLoading
-                            ? Center(child: CircularProgressIndicator(color: mainColor))
-                            : isMobile
-                                ? ListView.builder(
-                                    itemCount: _groupedLicenses.length,
-                                    itemBuilder: (context, index) {
-                                      final license = _groupedLicenses[index];
-                                      return ListTile(
-                                        title: Text(
-                                          license.name,
-                                          style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: license.isAliolo
-                                                ? FontWeight.bold
-                                                : FontWeight.normal,
-                                            color: license.isAliolo
-                                                ? mainColor
-                                                : null,
-                                          ),
-                                        ),
-                                        trailing: const Icon(Icons.chevron_right),
-                                        onTap: () => _onPackageSelected(license, true),
-                                      );
-                                    },
-                                  )
-                                : Center(
-                                    child: ConstrainedBox(
-                                      constraints: const BoxConstraints(
-                                        maxWidth: 900,
-                                      ),
-                                      child: Row(
-                                        children: [
-                                          // Master List
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                              bottom: 20.0,
+                        ),
+                        const Divider(),
+                        Expanded(
+                          child: _isLoading
+                              ? Center(child: CircularProgressIndicator(color: mainColor))
+                              : isMobile
+                                  ? ListView.builder(
+                                      itemCount: _groupedLicenses.length,
+                                      itemBuilder: (context, index) {
+                                        final license = _groupedLicenses[index];
+                                        return ListTile(
+                                          title: Text(
+                                            license.name,
+                                            style: TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: license.isAliolo
+                                                  ? FontWeight.bold
+                                                  : FontWeight.normal,
+                                              color: license.isAliolo
+                                                  ? mainColor
+                                                  : null,
                                             ),
-                                            child: SizedBox(
-                                              width: 250,
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                  border: Border(
-                                                    right: BorderSide(
-                                                      color: Theme.of(context)
-                                                          .dividerColor,
+                                          ),
+                                          trailing: const Icon(Icons.chevron_right),
+                                          onTap: () => _onPackageSelected(license, true),
+                                        );
+                                      },
+                                    )
+                                  : Center(
+                                      child: ConstrainedBox(
+                                        constraints: const BoxConstraints(
+                                          maxWidth: 900,
+                                        ),
+                                        child: Row(
+                                          children: [
+                                            // Master List
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                bottom: 20.0,
+                                              ),
+                                              child: SizedBox(
+                                                width: 250,
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                    border: Border(
+                                                      right: BorderSide(
+                                                        color: Theme.of(context)
+                                                            .dividerColor,
+                                                      ),
                                                     ),
                                                   ),
-                                                ),
-                                                child: ListView.builder(
-                                                  itemCount:
-                                                      _groupedLicenses.length,
-                                                  itemBuilder: (context, index) {
-                                                    final license =
-                                                        _groupedLicenses[index];
-                                                    final isSelected =
-                                                        _selectedLicense ==
-                                                            license;
+                                                  child: ListView.builder(
+                                                    itemCount:
+                                                        _groupedLicenses.length,
+                                                    itemBuilder: (context, index) {
+                                                      final license =
+                                                          _groupedLicenses[index];
+                                                      final isSelected =
+                                                          _selectedLicense ==
+                                                              license;
 
-                                                    return ListTile(
-                                                      selected: isSelected,
-                                                      selectedTileColor: mainColor.withValues(alpha: 0.1),
-                                                      title: Text(
-                                                        license.name,
-                                                        style: TextStyle(
-                                                          fontSize: 13,
-                                                          fontWeight:
-                                                              license.isAliolo
-                                                                  ? FontWeight
-                                                                      .bold
-                                                                  : FontWeight
-                                                                      .normal,
-                                                          color:
-                                                              license.isAliolo || isSelected
-                                                                  ? mainColor
-                                                                  : null,
+                                                      return ListTile(
+                                                        selected: isSelected,
+                                                        selectedTileColor: mainColor.withValues(alpha: 0.1),
+                                                        title: Text(
+                                                          license.name,
+                                                          style: TextStyle(
+                                                            fontSize: 13,
+                                                            fontWeight:
+                                                                license.isAliolo
+                                                                    ? FontWeight
+                                                                        .bold
+                                                                    : FontWeight
+                                                                        .normal,
+                                                            color:
+                                                                license.isAliolo || isSelected
+                                                                    ? mainColor
+                                                                    : null,
+                                                          ),
+                                                          maxLines: 1,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
                                                         ),
-                                                        maxLines: 1,
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                      ),
-                                                      onTap: () =>
-                                                          _onPackageSelected(
-                                                              license, false),
-                                                    );
-                                                  },
+                                                        onTap: () =>
+                                                            _onPackageSelected(
+                                                                license, false),
+                                                      );
+                                                    },
+                                                  ),
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                          // Detail Content
-                                          Expanded(
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                right: 0.0,
-                                                bottom: 20.0,
-                                                top: 0.0,
-                                              ),
-                                              child: _selectedLicense == null
-                                                  ? Center(
-                                                      child: Text(
-                                                        context.t(
-                                                          'select_package_license',
+                                            // Detail Content
+                                            Expanded(
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                  right: 0.0,
+                                                  bottom: 20.0,
+                                                  top: 0.0,
+                                                ),
+                                                child: _selectedLicense == null
+                                                    ? Center(
+                                                        child: Text(
+                                                          context.t(
+                                                            'select_package_license',
+                                                          ),
                                                         ),
+                                                      )
+                                                    : LicenseDetailView(
+                                                        license: _selectedLicense!,
+                                                        scrollController:
+                                                            _scrollController,
                                                       ),
-                                                    )
-                                                  : LicenseDetailView(
-                                                      license: _selectedLicense!,
-                                                      scrollController:
-                                                          _scrollController,
-                                                    ),
+                                              ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                  ),
-                      ),
-                    ],
-                  );
-                },
-              ),
-            ],
+                        ),
+                      ],
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
         );
       },
@@ -308,15 +316,22 @@ class LicenseDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mainColor = getIt<ThemeService>().systemColor;
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(license.name, style: const TextStyle(fontSize: 16)),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        foregroundColor: mainColor,
+    final themeService = getIt<ThemeService>();
+    final mainColor = themeService.getSystemColor(Brightness.light);
+    return Theme(
+      data: ThemeData.light(useMaterial3: true).copyWith(
+        colorScheme: ColorScheme.fromSeed(seedColor: mainColor),
       ),
-      body: LicenseDetailView(license: license),
+      child: Scaffold(
+        backgroundColor: const Color(0xFFF1F5F9),
+        appBar: AppBar(
+          title: Text(license.name, style: const TextStyle(fontSize: 16)),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          foregroundColor: mainColor,
+        ),
+        body: LicenseDetailView(license: license),
+      ),
     );
   }
 }
@@ -429,4 +444,3 @@ class LicenseDetailView extends StatelessWidget {
     );
   }
 }
-

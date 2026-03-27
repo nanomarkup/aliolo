@@ -3,7 +3,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:window_manager/window_manager.dart';
-import 'package:aliolo/core/utils/file_stub.dart' if (dart.library.html) 'dart:html' as html;
 import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
@@ -11,7 +10,6 @@ import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/core/widgets/window_controls.dart';
 import 'package:aliolo/features/subjects/presentation/pages/subject_page.dart';
 import 'package:aliolo/features/settings/presentation/pages/about_page.dart';
-
 import 'package:aliolo/data/services/friendship_service.dart';
 import 'package:aliolo/features/auth/presentation/pages/manage_friends_page.dart';
 
@@ -50,7 +48,6 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
     _authService.addListener(_syncWithServiceState);
     _syncWithServiceState();
 
-    // Extra clear for web to fight browser autofill
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Future.delayed(const Duration(milliseconds: 500), () {
         if (mounted) {
@@ -66,7 +63,7 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
       if (mounted) {
         setState(() {
           _isRecovering = true;
-          _recoveryStep = 1; // Skip email step, go to new password
+          _recoveryStep = 1;
         });
       }
     }
@@ -88,10 +85,7 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
         } else {
           if (!kIsWeb) windowManager.close();
         }
-        return true; // Handled
-      } else if (event.logicalKey == LogicalKeyboardKey.enter) {
-        // Only trigger global enter if no text field is focused or if handled by onSubmitted
-        return false;
+        return true;
       }
     }
     return false;
@@ -106,8 +100,8 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
   void _clearFields() {
     _emailController.clear();
     _usernameController.clear();
-    _passwordController.text = ""; // Force empty
-    _confirmPasswordController.text = ""; // Force empty
+    _passwordController.text = "";
+    _confirmPasswordController.text = "";
     _codeController.clear();
     _passwordKey = UniqueKey();
     _confirmKey = UniqueKey();
@@ -161,9 +155,7 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
           _showMsg(context.t('invalid_email'));
           return;
         }
-
         await _authService.createUser(username, email, pass);
-
         _showMsg('Account created! Please check your email to confirm.');
         _toggleMode();
         return;
@@ -177,11 +169,7 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder:
-                    (context) =>
-                        hasPending
-                            ? const ManageFriendsPage()
-                            : const SubjectPage(),
+                builder: (context) => hasPending ? const ManageFriendsPage() : const SubjectPage(),
               ),
             );
           }
@@ -191,9 +179,7 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
         if (err.toLowerCase().contains('confirmed')) {
           _showMsg('Please confirm your email address before logging in.');
         } else {
-          _showMsg(
-            _authService.lastErrorMessage ?? context.t('invalid_password'),
-          );
+          _showMsg(_authService.lastErrorMessage ?? context.t('invalid_password'));
         }
       }
     } catch (e) {
@@ -211,18 +197,13 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
 
   Future<void> _handleRecovery() async {
     final email = _emailController.text.trim();
-    
-    // Only require email if we are starting the recovery flow (Step 0)
-    // and NOT already in a verified URL recovery flow.
     if (_recoveryStep == 0 && !_authService.isPasswordRecoveryFlow) {
       if (email.isEmpty) {
         _showMsg(context.t('fill_all_fields'));
         return;
       }
     }
-
     setState(() => _isLoading = true);
-
     try {
       if (_recoveryStep == 0) {
         await _authService.sendResetCode(email);
@@ -232,15 +213,11 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
         final code = _codeController.text.trim();
         final newPass = _passwordController.text;
         final confirm = _confirmPasswordController.text;
-        
-        // If we are in web recovery flow from URL, we might not need the code input from user
         final isUrlRecovery = _authService.isPasswordRecoveryFlow;
-        
         if (!isUrlRecovery && code.isEmpty) {
           _showMsg(context.t('fill_all_fields'));
           return;
         }
-        
         if (newPass.isEmpty || confirm.isEmpty) {
           _showMsg(context.t('fill_all_fields'));
           return;
@@ -249,10 +226,7 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
           _showMsg(context.t('passwords_dont_match'));
           return;
         }
-        
-        // If URL recovery, we don't call verifyResetCode (which is a mock anyway)
         bool canProceed = isUrlRecovery || _authService.verifyResetCode(email, code);
-        
         if (canProceed) {
           await _authService.finalizePasswordReset(email, newPass);
           _showMsg('Password updated successfully!');
@@ -272,317 +246,326 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
   @override
   Widget build(BuildContext context) {
     final themeService = getIt<ThemeService>();
-    final mainColor = themeService.systemColor;
 
-    return Scaffold(
-      body: Stack(
-        children: [
-          const Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            height: 60,
-            child: DragToMoveArea(child: SizedBox.expand()),
+    return ListenableBuilder(
+      listenable: themeService,
+      builder: (context, _) {
+        final mainColor = themeService.getSystemColor(Brightness.light);
+
+        return Theme(
+          data: ThemeData.light(useMaterial3: true).copyWith(
+            colorScheme: ColorScheme.fromSeed(seedColor: mainColor),
           ),
-          Center(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.all(24),
-              child: Container(
-                constraints: const BoxConstraints(maxWidth: 400),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          'assets/app_icon.png',
-                          height: 120,
-                          fit: BoxFit.contain,
-                        ),
-                        Transform.translate(
-                          offset: const Offset(0, -16),
-                          child: Column(
+          child: Scaffold(
+            backgroundColor: const Color(0xFFF1F5F9), // Force the light slate background
+            body: Stack(
+              children: [
+                const Positioned(
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  height: 60,
+                  child: DragToMoveArea(child: SizedBox.expand()),
+                ),
+                Center(
+                  child: SingleChildScrollView(
+                    padding: const EdgeInsets.all(24),
+                    child: Container(
+                      constraints: const BoxConstraints(maxWidth: 400),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text(
-                                'aliolo',
-                                style: GoogleFonts.poppins(
-                                  fontSize: 80,
-                                  fontWeight: FontWeight.w500,
-                                  color: mainColor,
-                                  letterSpacing: 4.0,
-                                ),
+                              Image.asset(
+                                'assets/app_icon.png',
+                                height: 120,
+                                fit: BoxFit.contain,
                               ),
                               Transform.translate(
-                                offset: const Offset(0, -20),
-                                child: Text(
-                                  context.t('about_tagline'),
-                                  textAlign: TextAlign.center,
-                                  style: GoogleFonts.roboto(
-                                    fontSize: 14,
-                                    color: mainColor,
-                                    fontWeight: FontWeight.w400,
-                                  ),
+                                offset: const Offset(0, -16),
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      'aliolo',
+                                      style: GoogleFonts.poppins(
+                                        fontSize: 80,
+                                        fontWeight: FontWeight.w500,
+                                        color: mainColor,
+                                        letterSpacing: 4.0,
+                                      ),
+                                    ),
+                                    Transform.translate(
+                                      offset: const Offset(0, -20),
+                                      child: Text(
+                                        context.t('about_tagline'),
+                                        textAlign: TextAlign.center,
+                                        style: GoogleFonts.roboto(
+                                          fontSize: 14,
+                                          color: mainColor,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ],
                           ),
+                          const SizedBox(height: 32),
+                          if (!_isRecovering) ...[
+                            TextField(
+                              focusNode: _emailFocusNode,
+                              controller: _emailController,
+                              enableSuggestions: false,
+                              autocorrect: false,
+                              autofillHints: const [AutofillHints.email],
+                              decoration: InputDecoration(
+                                labelText: context.t('email'),
+                                border: const OutlineInputBorder(),
+                                prefixIcon: const Icon(Icons.email),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: mainColor, width: 2),
+                                ),
+                                labelStyle: TextStyle(
+                                  color: _emailFocusNode.hasFocus ? mainColor : null,
+                                ),
+                              ),
+                              keyboardType: TextInputType.emailAddress,
+                              onSubmitted: (_) => _handleAuth(),
+                            ),
+                            const SizedBox(height: 12),
+                            if (_isCreatingAccount) ...[
+                              TextField(
+                                controller: _usernameController,
+                                decoration: InputDecoration(
+                                  labelText: context.t('username'),
+                                  border: const OutlineInputBorder(),
+                                  prefixIcon: const Icon(Icons.person),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: mainColor, width: 2),
+                                  ),
+                                ),
+                                onSubmitted: (_) => _handleAuth(),
+                                autofillHints: const [AutofillHints.username],
+                              ),
+                              const SizedBox(height: 12),
+                            ],
+                            TextField(
+                              key: _passwordKey,
+                              controller: _passwordController,
+                              obscureText: true,
+                              enableSuggestions: false,
+                              autocorrect: false,
+                              autofillHints: null,
+                              decoration: InputDecoration(
+                                labelText: context.t('password'),
+                                border: const OutlineInputBorder(),
+                                prefixIcon: const Icon(Icons.lock),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: mainColor, width: 2),
+                                ),
+                              ),
+                              onSubmitted: (_) => _handleAuth(),
+                            ),
+                            const SizedBox(height: 12),
+                            if (_isCreatingAccount) ...[
+                              TextField(
+                                key: _confirmKey,
+                                controller: _confirmPasswordController,
+                                obscureText: true,
+                                enableSuggestions: false,
+                                autocorrect: false,
+                                autofillHints: null,
+                                decoration: InputDecoration(
+                                  labelText: context.t('confirm_password'),
+                                  border: const OutlineInputBorder(),
+                                  prefixIcon: const Icon(Icons.lock_reset),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: mainColor, width: 2),
+                                  ),
+                                ),
+                                onSubmitted: (_) => _handleAuth(),
+                              ),
+                              const SizedBox(height: 24),
+                            ],
+                            const SizedBox(height: 16),
+                            if (_isLoading)
+                              CircularProgressIndicator(color: mainColor)
+                            else ...[
+                              ElevatedButton(
+                                onPressed: _handleAuth,
+                                style: ElevatedButton.styleFrom(
+                                  minimumSize: const Size(double.infinity, 50),
+                                  backgroundColor: mainColor,
+                                  foregroundColor: Colors.white,
+                                ),
+                                child: Text(
+                                  _isCreatingAccount
+                                      ? context.t('create_account')
+                                      : context.t('login'),
+                                ),
+                              ),
+                              const SizedBox(height: 12),
+                              TextButton(
+                                onPressed: _toggleMode,
+                                child: Text(
+                                  _isCreatingAccount
+                                      ? context.t('back_to_login')
+                                      : context.t('create_new_account'),
+                                  style: TextStyle(color: mainColor),
+                                ),
+                              ),
+                              if (!_isCreatingAccount) ...[
+                                TextButton(
+                                  onPressed: _toggleRecovery,
+                                  child: Text(
+                                    context.t('forgot_password'),
+                                    style: TextStyle(color: mainColor),
+                                  ),
+                                ),
+                                TextButton(
+                                  onPressed:
+                                      () => Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => const AboutPage(),
+                                        ),
+                                      ),
+                                  child: Text(
+                                    context.t('about'),
+                                    style: TextStyle(color: mainColor),
+                                  ),
+                                ),
+                              ],
+                            ],
+                          ] else ...[
+                            Text(
+                              _recoveryStep == 0 ? context.t('restore_password') : 'Set Your Password',
+                              style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                            if (_recoveryStep == 0) ...[
+                              TextField(
+                                focusNode: _emailFocusNode,
+                                controller: _emailController,
+                                decoration: InputDecoration(
+                                  labelText: context.t('email'),
+                                  border: const OutlineInputBorder(),
+                                  prefixIcon: const Icon(Icons.email),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: mainColor, width: 2),
+                                  ),
+                                ),
+                                onSubmitted: (_) => _handleRecovery(),
+                              ),
+                            ],
+                            const SizedBox(height: 12),
+                            if (_recoveryStep == 1) ...[
+                              if (!_authService.isPasswordRecoveryFlow) ...[
+                                TextField(
+                                  controller: _codeController,
+                                  decoration: InputDecoration(
+                                    labelText: 'Reset Code',
+                                    border: const OutlineInputBorder(),
+                                    prefixIcon: const Icon(Icons.pin),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(color: mainColor, width: 2),
+                                    ),
+                                  ),
+                                  onSubmitted: (_) => _handleRecovery(),
+                                ),
+                                const SizedBox(height: 12),
+                              ],
+                              TextField(
+                                key: _passwordKey,
+                                controller: _passwordController,
+                                obscureText: true,
+                                autofillHints: null,
+                                decoration: InputDecoration(
+                                  labelText: context.t('new_password'),
+                                  border: const OutlineInputBorder(),
+                                  prefixIcon: const Icon(Icons.lock),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: mainColor, width: 2),
+                                  ),
+                                ),
+                                onSubmitted: (_) => _handleRecovery(),
+                              ),
+                              const SizedBox(height: 12),
+                              TextField(
+                                key: _confirmKey,
+                                controller: _confirmPasswordController,
+                                obscureText: true,
+                                autofillHints: null,
+                                decoration: InputDecoration(
+                                  labelText: context.t('confirm_password'),
+                                  border: const OutlineInputBorder(),
+                                  prefixIcon: const Icon(Icons.lock_reset),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: mainColor, width: 2),
+                                  ),
+                                ),
+                                onSubmitted: (_) => _handleRecovery(),
+                              ),
+                            ],
+                            const SizedBox(height: 24),
+                            if (_isLoading)
+                              CircularProgressIndicator(color: mainColor)
+                            else ...[
+                              ElevatedButton(
+                                onPressed: _handleRecovery,
+                                style: ElevatedButton.styleFrom(
+                                  minimumSize: const Size(double.infinity, 50),
+                                  backgroundColor: mainColor,
+                                  foregroundColor: Colors.white,
+                                ),
+                                child: Text(
+                                  _recoveryStep == 0 ? 'Send Code' : 'Update Password',
+                                ),
+                              ),
+                              const SizedBox(height: 12),
+                              TextButton(
+                                onPressed: _toggleRecovery,
+                                child: Text(
+                                  context.t('back_to_login'),
+                                  style: TextStyle(color: mainColor),
+                                ),
+                              ),
+                            ],
+                          ],
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                if (!kIsWeb)
+                  Positioned(
+                    top: 12,
+                    right: 12,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        WindowControls(
+                          onlyClose: true,
+                          showSeparator: false,
+                          color: mainColor,
+                          iconSize: 28,
+                          padding: false,
                         ),
                       ],
                     ),
-                    const SizedBox(height: 32),
-                    if (!_isRecovering) ...[
-                      TextField(
-                        focusNode: _emailFocusNode,
-                        controller: _emailController,
-                        enableSuggestions: false,
-                        autocorrect: false,
-                        autofillHints: const [AutofillHints.email],
-                        decoration: InputDecoration(
-                          labelText: context.t('email'),
-                          border: const OutlineInputBorder(),
-                          prefixIcon: const Icon(Icons.email),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: mainColor, width: 2),
-                          ),
-                          labelStyle: TextStyle(
-                            color: _emailFocusNode.hasFocus ? mainColor : null,
-                          ),
-                        ),
-                        keyboardType: TextInputType.emailAddress,
-                        onSubmitted: (_) => _handleAuth(),
-                      ),
-                      const SizedBox(height: 12),
-                      if (_isCreatingAccount) ...[
-                        TextField(
-                          controller: _usernameController,
-                          decoration: InputDecoration(
-                            labelText: context.t('username'),
-                            border: const OutlineInputBorder(),
-                            prefixIcon: const Icon(Icons.person),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: mainColor, width: 2),
-                            ),
-                          ),
-                          onSubmitted: (_) => _handleAuth(),
-                          autofillHints: const [AutofillHints.username],
-                        ),
-                        const SizedBox(height: 12),
-                      ],
-                      TextField(
-                        key: _passwordKey,
-                        controller: _passwordController,
-                        obscureText: true,
-                        enableSuggestions: false,
-                        autocorrect: false,
-                        autofillHints: null,
-                        decoration: InputDecoration(
-                          labelText: context.t('password'),
-                          border: const OutlineInputBorder(),
-                          prefixIcon: const Icon(Icons.lock),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: mainColor, width: 2),
-                          ),
-                        ),
-                        onSubmitted: (_) => _handleAuth(),
-                      ),
-                      const SizedBox(height: 12),
-                      if (_isCreatingAccount) ...[
-                        TextField(
-                          key: _confirmKey,
-                          controller: _confirmPasswordController,
-                          obscureText: true,
-                          enableSuggestions: false,
-                          autocorrect: false,
-                          autofillHints: null,
-                          decoration: InputDecoration(
-                            labelText: context.t('confirm_password'),
-                            border: const OutlineInputBorder(),
-                            prefixIcon: const Icon(Icons.lock_reset),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: mainColor, width: 2),
-                            ),
-                          ),
-                          onSubmitted: (_) => _handleAuth(),
-                        ),
-                        const SizedBox(height: 24),
-                      ],
-                      const SizedBox(height: 16),
-                      if (_isLoading)
-                        CircularProgressIndicator(color: mainColor)
-                      else ...[
-                        ElevatedButton(
-                          onPressed: _handleAuth,
-                          style: ElevatedButton.styleFrom(
-                            minimumSize: const Size(double.infinity, 50),
-                            backgroundColor: mainColor,
-                            foregroundColor: Colors.white,
-                          ),
-                          child: Text(
-                            _isCreatingAccount
-                                ? context.t('create_account')
-                                : context.t('login'),
-                          ),
-                        ),
-                        const SizedBox(height: 12),
-                        TextButton(
-                          onPressed: _toggleMode,
-                          child: Text(
-                            _isCreatingAccount
-                                ? context.t('back_to_login')
-                                : context.t('create_new_account'),
-                            style: TextStyle(color: mainColor),
-                          ),
-                        ),
-                        if (!_isCreatingAccount) ...[
-                          TextButton(
-                            onPressed: _toggleRecovery,
-                            child: Text(
-                              context.t('forgot_password'),
-                              style: TextStyle(color: mainColor),
-                            ),
-                          ),
-                          TextButton(
-                            onPressed:
-                                () => Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const AboutPage(),
-                                  ),
-                                ),
-                            child: Text(
-                              context.t('about'),
-                              style: TextStyle(color: mainColor),
-                            ),
-                          ),
-                        ],
-                      ],
-                    ] else ...[
-                      Text(
-                        _recoveryStep == 0 ? context.t('restore_password') : 'Set Your Password',
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      if (_recoveryStep == 0) ...[
-                        TextField(
-                          focusNode: _emailFocusNode,
-                          controller: _emailController,
-                          decoration: InputDecoration(
-                            labelText: context.t('email'),
-                            border: const OutlineInputBorder(),
-                            prefixIcon: const Icon(Icons.email),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: mainColor, width: 2),
-                            ),
-                          ),
-                          onSubmitted: (_) => _handleRecovery(),
-                        ),
-                      ],
-                      const SizedBox(height: 12),
-                      if (_recoveryStep == 1) ...[
-                        // We hide the code field if we have the access token already (recovery flow)
-                        if (!_authService.isPasswordRecoveryFlow) ...[
-                          TextField(
-                            controller: _codeController,
-                            decoration: InputDecoration(
-                              labelText: 'Reset Code',
-                              border: const OutlineInputBorder(),
-                              prefixIcon: const Icon(Icons.pin),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: mainColor, width: 2),
-                              ),
-                            ),
-                            onSubmitted: (_) => _handleRecovery(),
-                          ),
-                          const SizedBox(height: 12),
-                        ],
-                        TextField(
-                          key: _passwordKey,
-                          controller: _passwordController,
-                          obscureText: true,
-                          autofillHints: null,
-                          decoration: InputDecoration(
-                            labelText: context.t('new_password'),
-                            border: const OutlineInputBorder(),
-                            prefixIcon: const Icon(Icons.lock),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: mainColor, width: 2),
-                            ),
-                          ),
-                          onSubmitted: (_) => _handleRecovery(),
-                        ),
-                        const SizedBox(height: 12),
-                        TextField(
-                          key: _confirmKey,
-                          controller: _confirmPasswordController,
-                          obscureText: true,
-                          autofillHints: null,
-                          decoration: InputDecoration(
-                            labelText: context.t('confirm_password'),
-                            border: const OutlineInputBorder(),
-                            prefixIcon: const Icon(Icons.lock_reset),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: mainColor, width: 2),
-                            ),
-                          ),
-                          onSubmitted: (_) => _handleRecovery(),
-                        ),
-                      ],
-                      const SizedBox(height: 24),
-                      if (_isLoading)
-                        CircularProgressIndicator(color: mainColor)
-                      else ...[
-                        ElevatedButton(
-                          onPressed: _handleRecovery,
-                          style: ElevatedButton.styleFrom(
-                            minimumSize: const Size(double.infinity, 50),
-                            backgroundColor: mainColor,
-                            foregroundColor: Colors.white,
-                          ),
-                          child: Text(
-                            _recoveryStep == 0
-                                ? 'Send Code'
-                                : 'Update Password',
-                          ),
-                        ),
-                        const SizedBox(height: 12),
-                        TextButton(
-                          onPressed: _toggleRecovery,
-                          child: Text(
-                            context.t('back_to_login'),
-                            style: TextStyle(color: mainColor),
-                          ),
-                        ),
-                      ],
-                    ],
-                  ],
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            top: 12,
-            right: 12,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                if (!kIsWeb)
-                  WindowControls(
-                    onlyClose: true,
-                    showSeparator: false,
-                    color: mainColor,
-                    iconSize: 28,
-                    padding: false,
                   ),
               ],
             ),
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 

@@ -268,6 +268,10 @@ class _AlioloMainAppState extends State<AlioloMainApp> {
     return ValueListenableBuilder<ThemeMode>(
       valueListenable: themeService.themeNotifier,
       builder: (context, currentMode, _) {
+        final brightness = currentMode == ThemeMode.system
+            ? View.of(context).platformDispatcher.platformBrightness
+            : (currentMode == ThemeMode.dark ? Brightness.dark : Brightness.light);
+
         return MaterialApp(
           title: 'Aliolo',
           debugShowCheckedModeBanner: false,
@@ -275,7 +279,7 @@ class _AlioloMainAppState extends State<AlioloMainApp> {
           themeMode: currentMode,
           theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(
-              seedColor: themeService.getAdjustedPrimary(),
+              seedColor: themeService.getAdjustedPrimary(brightness: brightness),
               surface: Colors.white,
               surfaceContainerHighest: const Color(
                 0xFFE2E8F0,

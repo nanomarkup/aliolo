@@ -104,13 +104,19 @@ class _AboutPageState extends State<AboutPage> {
   @override
   Widget build(BuildContext context) {
     final themeService = getIt<ThemeService>();
-    final mainColor = themeService.systemColor;
 
     return ListenableBuilder(
-      listenable: TranslationService(),
+      listenable: Listenable.merge([TranslationService(), themeService]),
       builder: (context, _) {
-        return Scaffold(
-          body: LayoutBuilder(
+        final mainColor = themeService.getSystemColor(Brightness.light);
+
+        return Theme(
+          data: ThemeData.light(useMaterial3: true).copyWith(
+            colorScheme: ColorScheme.fromSeed(seedColor: mainColor),
+          ),
+          child: Scaffold(
+            backgroundColor: const Color(0xFFF1F5F9),
+            body: LayoutBuilder(
             builder: (context, constraints) {
               final isMobile = constraints.maxWidth < 800;
 
@@ -467,8 +473,9 @@ class _AboutPageState extends State<AboutPage> {
               );
             },
           ),
-        );
-      },
-    );
-  }
+        ),
+      );
+    },
+  );
+}
 }
