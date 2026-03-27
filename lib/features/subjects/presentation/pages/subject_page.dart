@@ -234,13 +234,32 @@ class _SubjectPageState extends State<SubjectPage> {
                 value: _currentTestingLang,
                 dropdownColor: currentSessionColor,
                 icon: const Icon(Icons.language, color: appBarColor, size: 20),
-                style: const TextStyle(color: appBarColor, fontSize: 18, fontWeight: FontWeight.bold),
-                items: activeCodes.map((l) {
-                  return DropdownMenuItem(
-                    value: l,
-                    child: Text(getIt<TestingLanguageService>().getLanguageName(l), style: const TextStyle(color: Colors.white)),
-                  );
-                }).toList(),
+                style: const TextStyle(
+                  color: appBarColor,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+                selectedItemBuilder: (context) {
+                  final isSmall = MediaQuery.of(context).size.width < 500;
+                  return activeCodes.map((l) {
+                    return Center(
+                      child: Text(
+                        isSmall ? l.toUpperCase() : getIt<TestingLanguageService>().getLanguageName(l),
+                        style: const TextStyle(color: appBarColor),
+                      ),
+                    );
+                  }).toList();
+                },
+                items:
+                    activeCodes.map((l) {
+                      return DropdownMenuItem(
+                        value: l,
+                        child: Text(
+                          getIt<TestingLanguageService>().getLanguageName(l),
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                      );
+                    }).toList(),
                 onChanged: (val) async {
                   if (val != null) {
                     setState(() => _currentTestingLang = val);
