@@ -253,8 +253,15 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
         final mainColor = themeService.getSystemColor(Brightness.light);
 
         return Theme(
-          data: ThemeData.light(useMaterial3: true).copyWith(
-            colorScheme: ColorScheme.fromSeed(seedColor: mainColor),
+          data: ThemeData(
+            useMaterial3: true,
+            brightness: Brightness.light,
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: mainColor,
+              brightness: Brightness.light,
+            ),
+            scaffoldBackgroundColor: const Color(0xFFF1F5F9),
+            fontFamily: 'Roboto',
           ),
           child: Scaffold(
             backgroundColor: const Color(0xFFF1F5F9), // Force the light slate background
@@ -443,9 +450,10 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
                           ] else ...[
                             Text(
                               _recoveryStep == 0 ? context.t('restore_password') : 'Set Your Password',
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
+                                color: mainColor,
                               ),
                             ),
                             const SizedBox(height: 16),

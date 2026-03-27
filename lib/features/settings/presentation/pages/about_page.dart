@@ -111,8 +111,15 @@ class _AboutPageState extends State<AboutPage> {
         final mainColor = themeService.getSystemColor(Brightness.light);
 
         return Theme(
-          data: ThemeData.light(useMaterial3: true).copyWith(
-            colorScheme: ColorScheme.fromSeed(seedColor: mainColor),
+          data: ThemeData(
+            useMaterial3: true,
+            brightness: Brightness.light,
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: mainColor,
+              brightness: Brightness.light,
+            ),
+            scaffoldBackgroundColor: const Color(0xFFF1F5F9),
+            fontFamily: 'Roboto',
           ),
           child: Scaffold(
             backgroundColor: const Color(0xFFF1F5F9),

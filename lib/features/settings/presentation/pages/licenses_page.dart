@@ -117,8 +117,15 @@ class _CustomLicensesPageState extends State<CustomLicensesPage> {
         final mainColor = themeService.getSystemColor(Brightness.light);
 
         return Theme(
-          data: ThemeData.light(useMaterial3: true).copyWith(
-            colorScheme: ColorScheme.fromSeed(seedColor: mainColor),
+          data: ThemeData(
+            useMaterial3: true,
+            brightness: Brightness.light,
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: mainColor,
+              brightness: Brightness.light,
+            ),
+            scaffoldBackgroundColor: const Color(0xFFF1F5F9),
+            fontFamily: 'Roboto',
           ),
           child: Scaffold(
             backgroundColor: const Color(0xFFF1F5F9),
@@ -149,9 +156,10 @@ class _CustomLicensesPageState extends State<CustomLicensesPage> {
                               const SizedBox(width: 24),
                             Text(
                               context.t('licenses'),
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 24,
                                 fontWeight: FontWeight.bold,
+                                color: mainColor,
                               ),
                             ),
                             const Spacer(),
@@ -319,8 +327,15 @@ class LicenseDetailScreen extends StatelessWidget {
     final themeService = getIt<ThemeService>();
     final mainColor = themeService.getSystemColor(Brightness.light);
     return Theme(
-      data: ThemeData.light(useMaterial3: true).copyWith(
-        colorScheme: ColorScheme.fromSeed(seedColor: mainColor),
+      data: ThemeData(
+        useMaterial3: true,
+        brightness: Brightness.light,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: mainColor,
+          brightness: Brightness.light,
+        ),
+        scaffoldBackgroundColor: const Color(0xFFF1F5F9),
+        fontFamily: 'Roboto',
       ),
       child: Scaffold(
         backgroundColor: const Color(0xFFF1F5F9),
@@ -348,6 +363,7 @@ class LicenseDetailView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final mainColor = Theme.of(context).colorScheme.primary;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -356,9 +372,10 @@ class LicenseDetailView extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
             child: Text(
               license.name,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
+                color: mainColor,
               ),
             ),
           )
@@ -371,9 +388,10 @@ class LicenseDetailView extends StatelessWidget {
             ),
             child: Text(
               license.name,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
+                color: mainColor,
               ),
             ),
           ),

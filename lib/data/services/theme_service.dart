@@ -118,10 +118,9 @@ class ThemeService extends ChangeNotifier {
   }
 
   bool resolveIsDarkMode([Brightness? brightness]) {
+    if (brightness != null) return brightness == Brightness.dark;
     if (themeNotifier.value == ThemeMode.dark) return true;
     if (themeNotifier.value == ThemeMode.light) return false;
-    // If system, use provided brightness or fallback to platform
-    if (brightness != null) return brightness == Brightness.dark;
     return WidgetsBinding.instance.platformDispatcher.platformBrightness == Brightness.dark;
   }
 

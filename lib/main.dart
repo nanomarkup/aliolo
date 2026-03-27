@@ -180,9 +180,9 @@ class _AlioloAppState extends State<AlioloApp> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(Icons.school, size: 80, color: Colors.orange),
+                    const Icon(Icons.school, size: 80, color: Color(0xFF1D4289)),
                     const SizedBox(height: 24),
-                    const CircularProgressIndicator(color: Colors.orange),
+                    const CircularProgressIndicator(color: Color(0xFF1D4289)),
                     const SizedBox(height: 16),
                     Text(
                       context.t('Initializing Aliolo'),
