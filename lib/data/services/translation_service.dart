@@ -25,6 +25,7 @@ class TranslationService extends ChangeNotifier {
       'show_documentation_btn': 'Show Documentation Button',
       'show_documentation_btn_desc': 'Display a help icon in the top navigation bar',
       'support_and_management': 'Support & About',
+      'about_tagline': 'Learn Visually. Master Permanently.',
       'doc_welcome_title': 'Welcome to Aliolo',
       'doc_welcome_desc':
           'Aliolo is a visual learning platform designed to help you master subjects through flashcards and interactive testing.',
@@ -64,204 +65,270 @@ class TranslationService extends ChangeNotifier {
       'show_documentation_btn': 'Tampilkan Tombol Dokumentasi',
       'show_documentation_btn_desc': 'Menampilkan ikon bantuan di bilah navigasi atas',
       'support_and_management': 'Dukungan & Tentang',
+      'about_tagline': 'Belajar Visual. Kuasai Selamanya.',
     },
     'bg': {
       'documentation': 'Документация',
       'show_documentation_btn': 'Показване на бутона за документация',
       'show_documentation_btn_desc': 'Показване на икона за помощ в горната лента за навигация',
       'support_and_management': 'Поддръжка и Информация',
+      'about_tagline': 'Учете визуално. Овладейте завинаги.',
     },
     'cs': {
       'documentation': 'Dokumentace',
       'show_documentation_btn': 'Zobrazit tlačítko dokumentace',
       'show_documentation_btn_desc': 'Zobrazit ikonu nápovědy v horní navigační liště',
       'support_and_management': 'Podpora a o aplikaci',
+      'about_tagline': 'Učte se vizuálně. Ovládněte natrvalo.',
     },
     'da': {
       'documentation': 'Dokumentation',
       'show_documentation_btn': 'Vis dokumentationsknap',
       'show_documentation_btn_desc': 'Vis et hjælpeikon i den øverste navigationslinje',
       'support_and_management': 'Support og Om',
+      'about_tagline': 'Lær visuelt. Mestrer for altid.',
     },
     'de': {
       'documentation': 'Dokumentation',
       'show_documentation_btn': 'Dokumentations-Schaltfläche anzeigen',
       'show_documentation_btn_desc': 'Ein Hilfe-Symbol in der oberen Navigationsleiste anzeigen',
       'support_and_management': 'Support & Über uns',
+      'about_tagline': 'Visuell lernen. Dauerhaft beherrschen.',
     },
     'et': {
       'documentation': 'Dokumentatsioon',
       'show_documentation_btn': 'Näita dokumentatsiooni nuppu',
       'show_documentation_btn_desc': 'Kuva abiikoon ülemisel navigeerimisribal',
       'support_and_management': 'Tugi ja teave',
+      'about_tagline': 'Õpi visuaalselt. Valda püsivalt.',
     },
     'es': {
       'documentation': 'Documentación',
       'show_documentation_btn': 'Mostrar botón de documentación',
       'show_documentation_btn_desc': 'Mostrar un icono de ayuda en la barra de navegación superior',
       'support_and_management': 'Soporte y Acerca de',
+      'about_tagline': 'Aprende visualmente. Domina para siempre.',
     },
     'fr': {
       'documentation': 'Documentation',
       'show_documentation_btn': 'Afficher le bouton de documentation',
       'show_documentation_btn_desc': 'Afficher une icône d\'aide dans la barre de navigation supérieure',
       'support_and_management': 'Support et À propos',
+      'about_tagline': 'Apprenez visuellement. Maîtrisez durablement.',
     },
     'ga': {
       'documentation': 'Doiciméadúchán',
       'show_documentation_btn': 'Taispeáin Cnaipe Doiciméadúcháin',
       'show_documentation_btn_desc': 'Taispeáin deilbhín cabhrach sa bharra nascleanúna uachtarach',
       'support_and_management': 'Tacaíocht & Maidir le',
+      'about_tagline': 'Foghlaim go hamhairc. Máistir go buan.',
     },
     'hr': {
       'documentation': 'Dokumentacija',
       'show_documentation_btn': 'Prikaži gumb za dokumentaciju',
       'show_documentation_btn_desc': 'Prikaži ikonu pomoći u gornjoj navigacijskoj traci',
       'support_and_management': 'Podrška i O aplikaciji',
+      'about_tagline': 'Učite vizualno. Ovladajte trajno.',
     },
     'it': {
       'documentation': 'Documentazione',
       'show_documentation_btn': 'Mostra pulsante documentazione',
       'show_documentation_btn_desc': 'Mostra un\'icona di aiuto nella barra di navigazione superiore',
       'support_and_management': 'Supporto e Informazioni',
+      'about_tagline': 'Impara visivamente. Padroneggia per sempre.',
     },
     'lv': {
       'documentation': 'Dokumentācija',
       'show_documentation_btn': 'Rādīt dokumentācijas pogu',
       'show_documentation_btn_desc': 'Rādīt palīdzības ikonu augšējā navigācijas joslā',
       'support_and_management': 'Atbalsts un Par',
+      'about_tagline': 'Mācieties vizuāli. Apgūstiet uz visiem laikiem.',
     },
     'lt': {
       'documentation': 'Dokumentacija',
       'show_documentation_btn': 'Rodyti dokumentacijos mygtuką',
       'show_documentation_btn_desc': 'Rodyti pagalbos piktogramą viršutinėje navigacijos juostoje',
       'support_and_management': 'Palaikymas ir Apie',
+      'about_tagline': 'Mokykitės vizualiai. Įsisavinkite visam laikui.',
     },
     'hu': {
       'documentation': 'Dokumentáció',
       'show_documentation_btn': 'Dokumentáció gomb megjelenítése',
       'show_documentation_btn_desc': 'Súgó ikon megjelenítése a felső navigációs sávban',
       'support_and_management': 'Támogatás és Névjegy',
+      'about_tagline': 'Tanulj vizuálisan. Sajátítsd el örökre.',
     },
     'mt': {
       'documentation': 'Dokumentazzjoni',
       'show_documentation_btn': 'Uri l-buttuna tad-dokumentazzjoni',
       'show_documentation_btn_desc': 'Uri ikona tal-għajnuna fil-bar tan-navigazzjoni ta\' fuq',
       'support_and_management': 'Appoġġ u Dwar',
+      'about_tagline': 'Tgħallem viżwalment. Ikkontrolla għal dejjem.',
     },
     'nl': {
       'documentation': 'Documentatie',
       'show_documentation_btn': 'Documentatieknop weergeven',
       'show_documentation_btn_desc': 'Help-icoon weergeven in de bovenste navigatiebalk',
       'support_and_management': 'Ondersteuning & Over',
+      'about_tagline': 'Leer visueel. Beheers blijvend.',
     },
     'pl': {
       'documentation': 'Dokumentacja',
       'show_documentation_btn': 'Pokaż przycisk dokumentacji',
       'show_documentation_btn_desc': 'Wyświetl ikonę pomocy w górnym pasku nawigacyjnym',
       'support_and_management': 'Wsparcie i informacje',
+      'about_tagline': 'Ucz się wizualnie. Opanuj na zawsze.',
     },
     'pt': {
       'documentation': 'Documentação',
-      'show_documentation_btn': 'Mostrar botão de documentação',
-      'show_documentation_btn_desc': 'Exibir um ícone de ajuda na barra de navigação superior',
+      'show_documentation_btn': 'Mostrar botón de documentación',
+      'show_documentation_btn_desc': 'Exibir um ícone de ayuda na barra de navigação superior',
       'support_and_management': 'Suporte e Sobre',
+      'about_tagline': 'Aprenda visualmente. Domine para siempre.',
     },
     'ro': {
       'documentation': 'Documentație',
       'show_documentation_btn': 'Afișează butonul de documentație',
       'show_documentation_btn_desc': 'Afișează o pictogramă de ajutor în bara de navigare superioară',
       'support_and_management': 'Suport și Despre',
+      'about_tagline': 'Învață vizual. Stăpânește permanent.',
     },
     'sk': {
       'documentation': 'Dokumentácia',
       'show_documentation_btn': 'Zobraziť tlačidlo dokumentácie',
       'show_documentation_btn_desc': 'Zobraziť ikonu pomocníka v hornej navigačnej lište',
       'support_and_management': 'Podpora a O aplikácii',
+      'about_tagline': 'Učte sa vizuálne. Ovládnite navždy.',
     },
     'sl': {
       'documentation': 'Dokumentacija',
-      'show_documentation_btn': 'Prikaži gumb za dokumentacijo',
-      'show_documentation_btn_desc': 'Prikaži ikono pomoči v zgornji navigacijski vrstici',
+      'show_documentation_btn': 'Prikaži gumb za dokumentaciju',
+      'show_documentation_btn_desc': 'Prikaži ikonu pomoči v zgornji navigacijski vrstici',
       'support_and_management': 'Podpora in O aplikaciji',
+      'about_tagline': 'Učite se vizualno. Obvladajte trajno.',
     },
     'fi': {
       'documentation': 'Dokumentaatio',
       'show_documentation_btn': 'Näytä dokumentaatiopainike',
       'show_documentation_btn_desc': 'Näytä ohjekuvake yläreunan navigointipalkissa',
       'support_and_management': 'Tuki ja Tietoja',
+      'about_tagline': 'Opi visuaalisesti. Hallitse pysyvästi.',
     },
     'sv': {
       'documentation': 'Dokumentation',
       'show_documentation_btn': 'Visa dokumentationsknapp',
       'show_documentation_btn_desc': 'Visa en hjälpikon i det övre navigeringsfältet',
       'support_and_management': 'Support och Om',
+      'about_tagline': 'Lär dig visuellt. Bemästra för alltid.',
     },
     'tl': {
       'documentation': 'Dokumentasyon',
       'show_documentation_btn': 'Ipakita ang Button ng Dokumentasyon',
       'show_documentation_btn_desc': 'Ipakita ang icon ng tulong sa itaas na navigation bar',
       'support_and_management': 'Suporta at Tungkol',
+      'about_tagline': 'Matuto nang Visual. Kabisaduhin nang Lubusan.',
     },
     'vi': {
       'documentation': 'Tài liệu',
       'show_documentation_btn': 'Hiển thị nút tài liệu',
-      'show_documentation_btn_desc': 'Hiển thị biểu tượng trợ giúp trong thanh điều hướng trên cùng',
+      'show_documentation_btn_desc': 'Hiển thị biểu tượng trợ giúp dalam thanh điều hướng trên cùng',
       'support_and_management': 'Hỗ trợ & Giới thiệu',
+      'about_tagline': 'Học bằng hình ảnh. Làm chủ mãi mãi.',
     },
     'tr': {
       'documentation': 'Dokümantasyon',
       'show_documentation_btn': 'Dokümantasyon Butonunu Göster',
       'show_documentation_btn_desc': 'Üst navigasyon çubuğunda bir yardım simgesi görüntüle',
       'support_and_management': 'Destek ve Hakkında',
+      'about_tagline': 'Görselle Öğren. Kalıcı Olarak Ustalaş.',
     },
     'el': {
       'documentation': 'Τεκμηρίωση',
       'show_documentation_btn': 'Εμφάνιση κουμπιού τεκμηρίωσης',
       'show_documentation_btn_desc': 'Εμφάνιση εικονιδίου βοήθειας στην επάνω γραμμή πλοήγησης',
       'support_and_management': 'Υποστήριξη & Σχετικά',
+      'about_tagline': 'Μάθετε οπτικά. Κατακτήστε μόνιμα.',
     },
     'uk': {
       'documentation': 'Документація',
       'show_documentation_btn': 'Показати кнопку документації',
       'show_documentation_btn_desc': 'Відображати іконку допомоги у верхній навігаційній панелі',
       'support_and_management': 'Підтримка та Про програму',
+      'about_tagline': 'Навчайся візуально. Опановуй назавжди.',
     },
     'ar': {
       'documentation': 'التوثيق',
       'show_documentation_btn': 'عرض زر التوثيق',
       'show_documentation_btn_desc': 'عرض أيقونة المساعدة في شريط التنقل العلوي',
       'support_and_management': 'الدعم وعن التطبيق',
+      'about_tagline': 'تعلم بصرياً. أتقن للأبد.',
     },
     'hi': {
       'documentation': 'दस्तावेज़ीकरण',
       'show_documentation_btn': 'दस्तावेज़ीकरण बटन दिखाएं',
-      'show_documentation_btn_desc': 'शीर्ष नेविगेशन बार में सहायता आइकन प्रदर्शित करें',
+      'show_documentation_btn_desc': 'शीर्ष नेвиगेशन बार में सहायता आइकन प्रदर्शित करें',
       'support_and_management': 'सहायता और जानकारी',
+      'about_tagline': 'विज़ुअली सीखें। स्थायी महारत पाएं।',
     },
     'zh': {
       'documentation': '文档',
       'show_documentation_btn': '显示文档按钮',
       'show_documentation_btn_desc': '在顶部导航栏显示帮助图标',
       'support_and_management': '支持与关于',
+      'about_tagline': '视觉学习，终身掌握。',
     },
     'ja': {
       'documentation': 'ドキュメント',
       'show_documentation_btn': 'ドキュメントボタンを表示',
       'show_documentation_btn_desc': '上部のナビゲーションバーにヘルプアイコンを表示',
       'support_and_management': 'サポートと詳細',
+      'about_tagline': '視覚で学び、一生モノの知識に.',
     },
     'ko': {
       'documentation': '문서',
       'show_documentation_btn': '문서 버튼 표시',
-      'show_documentation_btn_desc': '상단 내비게이션 바에 도움말 아이콘 표시',
+      'show_documentation_btn_desc': '상단 내비ге이션 바에 도움말 아이콘 표시',
       'support_and_management': '지원 및 정보',
+      'about_tagline': '시각적으로 배우고 영원히 마스터하세요.',
     },
   };
-  
+
   // Hardcoded fallback list - Sorted by Native Name (English first)
   static const List<String> _fallbackUILanguages = [
-    'en', 'id', 'bg', 'cs', 'da', 'de', 'et', 'es', 'fr', 'ga', 'hr', 'it', 'lv', 'lt', 'hu', 'mt', 'nl', 'pl', 'pt', 'ro', 'sk', 'sl', 'fi', 'sv', 'tl', 'vi', 'tr', 'el', 'uk', 'ar', 'hi', 'zh', 'ja', 'ko'
+    'en',
+    'id',
+    'bg',
+    'cs',
+    'da',
+    'de',
+    'et',
+    'es',
+    'fr',
+    'ga',
+    'hr',
+    'it',
+    'lv',
+    'lt',
+    'hu',
+    'mt',
+    'nl',
+    'pl',
+    'pt',
+    'ro',
+    'sk',
+    'sl',
+    'fi',
+    'sv',
+    'tl',
+    'vi',
+    'tr',
+    'el',
+    'uk',
+    'ar',
+    'hi',
+    'zh',
+    'ja',
+    'ko',
   ];
 
   List<String> _availableUILanguages = List.from(_fallbackUILanguages);
@@ -287,8 +354,7 @@ class TranslationService extends ChangeNotifier {
     } else {
       try {
         if (!kIsWeb) {
-          final String systemLocale =
-              Platform.localeName.split('_')[0].toLowerCase();
+          final String systemLocale = Platform.localeName.split('_')[0].toLowerCase();
           if (_availableUILanguages.contains(systemLocale)) {
             langCode = systemLocale;
             _currentLocale = Locale(langCode);
@@ -303,15 +369,12 @@ class TranslationService extends ChangeNotifier {
 
   Future<void> fetchAvailableLanguages() async {
     try {
-      final List<dynamic> data = await _supabase
-          .from('languages')
-          .select('id, name')
-          .order('name');
-      
+      final List<dynamic> data = await _supabase.from('languages').select('id, name').order('name');
+
       if (data.isNotEmpty) {
         final List<String> sortedIds = [];
         final Map<String, String> nameMap = {};
-        
+
         // Always put English first if exists
         bool hasEn = false;
         for (var lang in data) {
@@ -324,11 +387,11 @@ class TranslationService extends ChangeNotifier {
             sortedIds.add(id);
           }
         }
-        
+
         _availableUILanguages = hasEn ? ['en', ...sortedIds] : sortedIds;
         _languageNames.clear();
         _languageNames.addAll(nameMap);
-        
+
         notifyListeners();
       }
     } catch (e) {
@@ -358,10 +421,8 @@ class TranslationService extends ChangeNotifier {
 
   Future<Map<String, String>> _fetchFromDb(String langCode) async {
     try {
-      final List<dynamic> data = await _supabase
-          .from('ui_translations')
-          .select('key, value')
-          .eq('lang', langCode);
+      final List<dynamic> data =
+          await _supabase.from('ui_translations').select('key, value').eq('lang', langCode);
 
       final Map<String, String> map = {};
       for (var item in data) {
@@ -426,40 +487,74 @@ class TranslationService extends ChangeNotifier {
     }
 
     switch (lc) {
-      case 'en': return 'English';
-      case 'uk': return 'Українська';
-      case 'es': return 'Español';
-      case 'fr': return 'Français';
-      case 'de': return 'Deutsch';
-      case 'it': return 'Italiano';
-      case 'pt': return 'Português';
-      case 'pl': return 'Polski';
-      case 'nl': return 'Nederlands';
-      case 'tr': return 'Türkçe';
-      case 'vi': return 'Tiếng Việt';
-      case 'tl': return 'Tagalog';
-      case 'id': return 'Bahasa Indonesia';
-      case 'el': return 'Ελληνικά';
-      case 'ar': return 'العربية';
-      case 'hi': return 'हिन्दी';
-      case 'zh': return '中文';
-      case 'ja': return '日本語';
-      case 'ko': return '한국어';
-      case 'bg': return 'Български';
-      case 'hr': return 'Hrvatski';
-      case 'cs': return 'Čeština';
-      case 'da': return 'Dansk';
-      case 'et': return 'Eesti';
-      case 'fi': return 'Suomi';
-      case 'hu': return 'Magyar';
-      case 'ga': return 'Gaeilge';
-      case 'lv': return 'Latviešu';
-      case 'lt': return 'Lietuvių';
-      case 'mt': return 'Malti';
-      case 'ro': return 'Română';
-      case 'sk': return 'Slovenčina';
-      case 'sl': return 'Slovenščina';
-      case 'sv': return 'Svenska';
+      case 'en':
+        return 'English';
+      case 'uk':
+        return 'Українська';
+      case 'es':
+        return 'Español';
+      case 'fr':
+        return 'Français';
+      case 'de':
+        return 'Deutsch';
+      case 'it':
+        return 'Italiano';
+      case 'pt':
+        return 'Português';
+      case 'pl':
+        return 'Polski';
+      case 'nl':
+        return 'Nederlands';
+      case 'tr':
+        return 'Türkçe';
+      case 'vi':
+        return 'Tiếng Việt';
+      case 'tl':
+        return 'Tagalog';
+      case 'id':
+        return 'Bahasa Indonesia';
+      case 'el':
+        return 'Ελληνικά';
+      case 'ar':
+        return 'العربية';
+      case 'hi':
+        return 'हिन्दी';
+      case 'zh':
+        return '中文';
+      case 'ja':
+        return '日本語';
+      case 'ko':
+        return '한국어';
+      case 'bg':
+        return 'Български';
+      case 'hr':
+        return 'Hrvatski';
+      case 'cs':
+        return 'Čeština';
+      case 'da':
+        return 'Dansk';
+      case 'et':
+        return 'Eesti';
+      case 'fi':
+        return 'Suomi';
+      case 'hu':
+        return 'Magyar';
+      case 'ga':
+        return 'Gaeilge';
+      case 'lv':
+        return 'Latviešu';
+      case 'lt':
+        return 'Lietuvių';
+      case 'mt':
+        return 'Malti';
+      case 'ro':
+        return 'Română';
+      case 'sk':
+        return 'Slovenčina';
+      case 'sl':
+        return 'Slovenščina';
+      case 'sv':
+        return 'Svenska';
       default:
         if (code.isEmpty) return code;
         return code[0].toUpperCase() + code.substring(1);

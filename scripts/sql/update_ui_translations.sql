@@ -1,9 +1,45 @@
--- SQL Script to update UI translations for Documentation and Onboarding
+-- SQL Script to update UI translations for Documentation, Onboarding, and Tagline
 -- You can run this in your Supabase SQL Editor
 
 INSERT INTO ui_translations (lang, key, value)
 VALUES 
-  -- Documentation
+  -- Tagline Updates
+  ('en', 'about_tagline', 'Learn Visually. Master Permanently.'),
+  ('id', 'about_tagline', 'Belajar Visual. Kuasai Selamanya.'),
+  ('bg', 'about_tagline', 'Учете визуално. Овладейте завинаги.'),
+  ('cs', 'about_tagline', 'Učte se vizuálně. Ovládněte natrvalo.'),
+  ('da', 'about_tagline', 'Lær visuelt. Mestrer for altid.'),
+  ('de', 'about_tagline', 'Visuell lernen. Dauerhaft beherrschen.'),
+  ('et', 'about_tagline', 'Õpi visuaalselt. Valda püsivalt.'),
+  ('es', 'about_tagline', 'Aprende visualmente. Domina para siempre.'),
+  ('fr', 'about_tagline', 'Apprenez visuellement. Maîtrisez durablement.'),
+  ('ga', 'about_tagline', 'Foghlaim go hamhairc. Máistir go buan.'),
+  ('hr', 'about_tagline', 'Učite vizualno. Ovladajte trajno.'),
+  ('it', 'about_tagline', 'Impara visivamente. Padroneggia per sempre.'),
+  ('lv', 'about_tagline', 'Mācieties vizuāli. Apgūstiet uz visiem laikiem.'),
+  ('lt', 'about_tagline', 'Mokykitės vizualiai. Įsisavinkite visam laikui.'),
+  ('hu', 'about_tagline', 'Tanulj vizuálisan. Sajátítsd el örökre.'),
+  ('mt', 'about_tagline', 'Tgħallem viżwalment. Ikkontrolla għal dejjem.'),
+  ('nl', 'about_tagline', 'Leer visueel. Beheers blijvend.'),
+  ('pl', 'about_tagline', 'Ucz się wizualnie. Opanuj na zawsze.'),
+  ('pt', 'about_tagline', 'Aprenda visualmente. Domine para siempre.'),
+  ('ro', 'about_tagline', 'Învață vizual. Stăpânește permanent.'),
+  ('sk', 'about_tagline', 'Učte sa vizuálne. Ovládnite navždy.'),
+  ('sl', 'about_tagline', 'Učite se vizuálne. Obvladajte trajno.'),
+  ('fi', 'about_tagline', 'Opi visuaalisesti. Hallitse pysyvästi.'),
+  ('sv', 'about_tagline', 'Lär dig visuellt. Bemästra för alltid.'),
+  ('tl', 'about_tagline', 'Matuto nang Visual. Kabisaduhin nang Lubusan.'),
+  ('vi', 'about_tagline', 'Học bằng hình ảnh. Làm chủ mãi mãi.'),
+  ('tr', 'about_tagline', 'Görselle Öğren. Kalıcı Olarak Ustalaş.'),
+  ('el', 'about_tagline', 'Μάθετε οπτικά. Κατακτήστε μόνιμα.'),
+  ('uk', 'about_tagline', 'Навчайся візуально. Опановуй назавжди.'),
+  ('ar', 'about_tagline', 'تعلم بصرياً. أتقن للأبد.'),
+  ('hi', 'about_tagline', 'विज़ुअली सीखें। स्थायी महारत पाएं।'),
+  ('zh', 'about_tagline', '视觉学习，终身掌握。'),
+  ('ja', 'about_tagline', '視覚で学び、一生モノの知識に。'),
+  ('ko', 'about_tagline', '시각적으로 배우고 영원히 마스터하세요.'),
+
+  -- Documentation (English fallback)
   ('en', 'doc_welcome_title', 'Welcome to Aliolo'),
   ('en', 'doc_welcome_desc', 'Aliolo is a visual learning platform designed to help you master subjects through flashcards and interactive testing.'),
   ('en', 'doc_flashcards_title', 'Visual Flashcards'),
@@ -17,7 +53,7 @@ VALUES
   ('en', 'doc_sync_title', 'Cloud Sync'),
   ('en', 'doc_sync_desc', 'Your progress is automatically synced to the cloud. You can switch between web and desktop versions without losing your streak.'),
   
-  -- Onboarding
+  -- Onboarding (English fallback)
   ('en', 'onboarding_1_title', 'Welcome to Aliolo'),
   ('en', 'onboarding_1_desc', 'Your personal visual learning assistant for mastering any subject.'),
   ('en', 'onboarding_2_title', 'Smart Learning'),
