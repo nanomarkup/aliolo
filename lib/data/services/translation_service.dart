@@ -18,6 +18,30 @@ class TranslationService extends ChangeNotifier {
 
   Map<String, String> _translations = {};
   Map<String, String> _englishFallbacks = {};
+
+  static const Map<String, String> _localFallbacks = {
+    'documentation': 'Documentation',
+    'show_documentation_btn': 'Show Documentation Button',
+    'show_documentation_btn_desc': 'Display a help icon in the top navigation bar',
+    'doc_welcome_title': 'Welcome to Aliolo',
+    'doc_welcome_desc':
+        'Aliolo is a visual learning platform designed to help you master subjects through flashcards and interactive testing.',
+    'doc_flashcards_title': 'Visual Flashcards',
+    'doc_flashcards_desc':
+        'Each subject contains a set of cards with images and audio. You can browse through them to familiarize yourself with the content.',
+    'doc_testing_title': 'Interactive Testing',
+    'doc_testing_desc':
+        'Challenge yourself with multiple-choice questions (MCQ). The app will automatically advance as you answer, helping you learn faster.',
+    'doc_streaks_title': 'Streak System',
+    'doc_streaks_desc':
+        'Consistency is key! Complete your daily goal every day to build your streak. Don\'t miss a day, or the streak will reset.',
+    'doc_goals_title': 'Daily Goals',
+    'doc_goals_desc':
+        'Set your daily card completion target in the settings. Changes to your goal take effect starting the next day.',
+    'doc_sync_title': 'Cloud Sync',
+    'doc_sync_desc':
+        'Your progress is automatically synced to the cloud. You can switch between web and desktop versions without losing your streak.',
+  };
   
   // Hardcoded fallback list - Sorted by Native Name (English first)
   static const List<String> _fallbackUILanguages = [
@@ -147,7 +171,7 @@ class TranslationService extends ChangeNotifier {
   }
 
   String translate(String key, {Map<String, String>? args}) {
-    String value = _translations[key] ?? key;
+    String value = _translations[key] ?? _localFallbacks[key] ?? key;
     if (args != null) {
       args.forEach((k, v) {
         value = value.replaceAll('{$k}', v);

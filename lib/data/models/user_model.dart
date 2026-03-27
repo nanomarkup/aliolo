@@ -26,6 +26,7 @@ class UserModel {
   late String defaultLanguage;
   late String? avatarPath;
   late bool showOnLeaderboard;
+  late bool showDocumentation;
 
   UserModel({
     required this.username,
@@ -49,6 +50,7 @@ class UserModel {
     this.defaultLanguage = 'EN',
     this.avatarPath,
     this.showOnLeaderboard = true,
+    this.showDocumentation = true,
     this.serverId,
     this.createdAt,
     this.updatedAt,
@@ -72,6 +74,7 @@ class UserModel {
       autoPlayEnabled: json['auto_play_enabled'] ?? false,
       mainPillarId: json['main_pillar_id'] ?? 8,
       showOnLeaderboard: json['show_on_leaderboard'] ?? true,
+      showDocumentation: json['show_documentation'] ?? true,
       learnSessionSize: json['learn_session_size'] ?? json['session_size'] ?? 20,
       testSessionSize: json['test_session_size'] ?? json['session_size'] ?? 10,
       optionsCount: json['options_count'] ?? 6,
@@ -101,6 +104,7 @@ class UserModel {
       'auto_play_enabled': autoPlayEnabled,
       'main_pillar_id': mainPillarId,
       'show_on_leaderboard': showOnLeaderboard,
+      'show_documentation': showDocumentation,
       'learn_session_size': learnSessionSize,
       'test_session_size': testSessionSize,
       'options_count': optionsCount,
@@ -108,9 +112,8 @@ class UserModel {
       'avatar_url': avatarPath,
       'last_active_date': lastActiveDate?.toIso8601String(),
       'updated_at': updatedAt?.toIso8601String(),
-      };
-      }
-
+    };
+  }
   UserModel.empty();
 }
 

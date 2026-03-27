@@ -13,6 +13,7 @@ import 'package:aliolo/features/leaderboard/presentation/pages/leaderboard_page.
 import 'package:aliolo/features/subjects/presentation/pages/subject_page.dart';
 import 'package:aliolo/features/auth/presentation/pages/profile_page.dart';
 import 'package:aliolo/features/settings/presentation/pages/about_page.dart';
+import 'package:aliolo/features/documentation/presentation/pages/documentation_page.dart';
 import 'package:aliolo/data/services/feedback_service.dart';
 import 'package:aliolo/core/di/service_locator.dart';
 
@@ -29,6 +30,7 @@ class _SettingsPageState extends State<SettingsPage> {
   late String _themeMode;
   late bool _soundEnabled;
   late bool _showOnLeaderboard;
+  late bool _showDocumentation;
   late String _defaultLanguage;
 
   String _version = '1.0.0';
@@ -44,6 +46,7 @@ class _SettingsPageState extends State<SettingsPage> {
     _themeMode = user?.themeMode ?? 'system';
     _soundEnabled = user?.soundEnabled ?? true;
     _showOnLeaderboard = user?.showOnLeaderboard ?? true;
+    _showDocumentation = user?.showDocumentation ?? true;
     _defaultLanguage = user?.defaultLanguage ?? 'EN';
     _loadPackageInfo();
 
@@ -83,6 +86,12 @@ class _SettingsPageState extends State<SettingsPage> {
   Future<void> _toggleLeaderboard(bool val) async {
     await _authService.updateLeaderboardPreference(val);
     setState(() => _showOnLeaderboard = val);
+    _showSavedMsg();
+  }
+
+  Future<void> _toggleDocumentation(bool val) async {
+    await _authService.updateDocumentationPreference(val);
+    setState(() => _showDocumentation = val);
     _showSavedMsg();
   }
 
@@ -222,6 +231,17 @@ class _SettingsPageState extends State<SettingsPage> {
                       ),
                       value: _showOnLeaderboard,
                       onChanged: _toggleLeaderboard,
+                    ),
+                    const Divider(height: 1, indent: 16, endIndent: 16),
+                    SwitchListTile(
+                      title: Text(context.t('show_documentation_btn')),
+                      subtitle: Text(context.t('show_documentation_btn_desc')),
+                      secondary: Icon(
+                        Icons.help_outline,
+                        color: currentPrimaryColor,
+                      ),
+                      value: _showDocumentation,
+                      onChanged: _toggleDocumentation,
                     ),
                     const Divider(height: 1, indent: 16, endIndent: 16),
                     ListTile(
@@ -416,6 +436,16 @@ class _SettingsPageState extends State<SettingsPage> {
                                 ),
                               );
                             }).toList(),
+                      ),
+                    ),
+                    const Divider(height: 1, indent: 16, endIndent: 16),
+                    ListTile(
+                      leading: Icon(Icons.help_outline, color: currentPrimaryColor),
+                      title: Text(context.t('documentation')),
+                      trailing: const Icon(Icons.chevron_right),
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const DocumentationPage()),
                       ),
                     ),
                     const Divider(height: 1, indent: 16, endIndent: 16),

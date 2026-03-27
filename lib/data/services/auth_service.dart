@@ -284,6 +284,7 @@ class AuthService extends ChangeNotifier {
         'next_daily_goal': user.nextDailyGoal,
         'daily_completions': user.dailyCompletions,
         'auto_play_enabled': user.autoPlayEnabled,
+        'show_documentation': user.showDocumentation,
         'updated_at': user.updatedAt?.toUtc().toIso8601String(),
       };
 
@@ -435,6 +436,13 @@ class AuthService extends ChangeNotifier {
     if (_currentUser != null) {
       _currentUser!.showOnLeaderboard = show;
       await _patchCurrentUser({'show_on_leaderboard': show});
+    }
+  }
+
+  Future<void> updateDocumentationPreference(bool show) async {
+    if (_currentUser != null) {
+      _currentUser!.showDocumentation = show;
+      await _patchCurrentUser({'show_documentation': show});
     }
   }
 

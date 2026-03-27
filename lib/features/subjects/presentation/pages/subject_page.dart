@@ -16,6 +16,7 @@ import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/data/services/testing_language_service.dart';
 import 'package:aliolo/features/auth/presentation/pages/profile_page.dart';
 import 'package:aliolo/features/settings/presentation/pages/settings_page.dart';
+import 'package:aliolo/features/documentation/presentation/pages/documentation_page.dart';
 import 'package:aliolo/features/leaderboard/presentation/pages/leaderboard_page.dart';
 import 'package:aliolo/features/subjects/presentation/pages/subject_landing_page.dart';
 import 'package:aliolo/features/management/presentation/pages/subject_edit_page.dart';
@@ -283,6 +284,11 @@ class _SubjectPageState extends State<SubjectPage> {
                 icon: const Icon(Icons.settings, color: appBarColor),
                 onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const SettingsPage())),
               ),
+              if (_authService.currentUser?.showDocumentation ?? true)
+                IconButton(
+                  icon: const Icon(Icons.help_outline, color: appBarColor),
+                  onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const DocumentationPage())),
+                ),
             ],
             fixedBody: LayoutBuilder(
               builder: (context, constraints) {
