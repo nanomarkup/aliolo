@@ -78,9 +78,10 @@ class _AboutPageState extends State<AboutPage> {
               children: [
                 Text(
                   title,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
+                    color: color,
                   ),
                 ),
                 const SizedBox(height: 6),
