@@ -21,27 +21,27 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
   final List<OnboardingData> _screens = [
     OnboardingData(
-      icon: Icons.auto_awesome,
+      imageAsset: 'assets/app_icon.png',
       titleKey: 'onboarding_1_title',
       descKey: 'onboarding_1_desc',
     ),
     OnboardingData(
-      icon: Icons.psychology,
+      icon: Icons.auto_stories,
       titleKey: 'onboarding_2_title',
       descKey: 'onboarding_2_desc',
     ),
     OnboardingData(
-      icon: Icons.emoji_events,
+      icon: Icons.trending_up,
       titleKey: 'onboarding_3_title',
       descKey: 'onboarding_3_desc',
     ),
     OnboardingData(
-      icon: Icons.groups,
+      icon: Icons.person_add_alt_1,
       titleKey: 'onboarding_4_title',
       descKey: 'onboarding_4_desc',
     ),
     OnboardingData(
-      icon: Icons.sync,
+      icon: Icons.cloud_sync,
       titleKey: 'onboarding_5_title',
       descKey: 'onboarding_5_desc',
     ),
@@ -118,11 +118,18 @@ class _OnboardingPageState extends State<OnboardingPage> {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Icon(
-                                    screen.icon,
-                                    size: 120,
-                                    color: mainColor,
-                                  ),
+                                  if (screen.imageAsset != null)
+                                    Image.asset(
+                                      screen.imageAsset!,
+                                      height: 120,
+                                      fit: BoxFit.contain,
+                                    )
+                                  else
+                                    Icon(
+                                      screen.icon,
+                                      size: 120,
+                                      color: mainColor,
+                                    ),
                                   const SizedBox(height: 40),
                                   Text(
                                     context.t(screen.titleKey),
@@ -243,11 +250,13 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
 class OnboardingData {
   final IconData icon;
+  final String? imageAsset;
   final String titleKey;
   final String descKey;
 
   OnboardingData({
-    required this.icon,
+    this.icon = Icons.star,
+    this.imageAsset,
     required this.titleKey,
     required this.descKey,
   });

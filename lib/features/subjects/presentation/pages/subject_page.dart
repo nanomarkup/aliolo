@@ -1253,55 +1253,73 @@ class _FolderPageState extends State<FolderPage> {
                   ],
                 )),
               ]);
+
+              final description = widget.folder.getDescription(widget.languageCode);
+
               return Padding(
                 padding: const EdgeInsets.only(top: 16, bottom: 24),
-                child: isSmall 
-                  ? Column(children: [
-                      TextField(
-                        controller: _searchController,
-                        decoration: InputDecoration(
-                          hintText: context.t('search_subjects'),
-                          prefixIcon: const Icon(Icons.search),
-                          suffixIcon: ValueListenableBuilder<TextEditingValue>(
-                            valueListenable: _searchController,
-                            builder: (context, value, _) {
-                              return value.text.isNotEmpty ? IconButton(icon: const Icon(Icons.clear), onPressed: () { _searchController.clear(); _applySearch(); }) : const SizedBox.shrink();
-                            },
-                          ),
-                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                          filled: true,
-                          fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    if (description.isNotEmpty) ...[
+                      Text(
+                        description,
+                        style: TextStyle(
+                          color: Colors.grey[600],
+                          fontSize: 14,
                         ),
-                        onChanged: (_) => _applySearch(),
                       ),
-                      const SizedBox(height: 12),
-                      filterRow,
-                    ])
-                  : Row(children: [
-                      Expanded(
-                        flex: 3,
-                        child: TextField(
-                          controller: _searchController,
-                          decoration: InputDecoration(
-                            hintText: context.t('search_subjects'),
-                            prefixIcon: const Icon(Icons.search),
-                            suffixIcon: ValueListenableBuilder<TextEditingValue>(
-                              valueListenable: _searchController,
-                              builder: (context, value, _) {
-                                return value.text.isNotEmpty ? IconButton(icon: const Icon(Icons.clear), onPressed: () { _searchController.clear(); _applySearch(); }) : const SizedBox.shrink();
-                              },
+                      const SizedBox(height: 16),
+                    ],
+                    isSmall 
+                      ? Column(children: [
+                          TextField(
+                            controller: _searchController,
+                            decoration: InputDecoration(
+                              hintText: context.t('search_subjects'),
+                              prefixIcon: const Icon(Icons.search),
+                              suffixIcon: ValueListenableBuilder<TextEditingValue>(
+                                valueListenable: _searchController,
+                                builder: (context, value, _) {
+                                  return value.text.isNotEmpty ? IconButton(icon: const Icon(Icons.clear), onPressed: () { _searchController.clear(); _applySearch(); }) : const SizedBox.shrink();
+                                },
+                              ),
+                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                              filled: true,
+                              fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
                             ),
-                            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                            contentPadding: const EdgeInsets.symmetric(horizontal: 12),
-                            filled: true,
-                            fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
+                            onChanged: (_) => _applySearch(),
                           ),
-                          onChanged: (_) => _applySearch(),
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      Expanded(flex: 5, child: filterRow),
-                    ]),
+                          const SizedBox(height: 12),
+                          filterRow,
+                        ])
+                      : Row(children: [
+                          Expanded(
+                            flex: 3,
+                            child: TextField(
+                              controller: _searchController,
+                              decoration: InputDecoration(
+                                hintText: context.t('search_subjects'),
+                                prefixIcon: const Icon(Icons.search),
+                                suffixIcon: ValueListenableBuilder<TextEditingValue>(
+                                  valueListenable: _searchController,
+                                  builder: (context, value, _) {
+                                    return value.text.isNotEmpty ? IconButton(icon: const Icon(Icons.clear), onPressed: () { _searchController.clear(); _applySearch(); }) : const SizedBox.shrink();
+                                  },
+                                ),
+                                border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                                contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+                                filled: true,
+                                fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
+                              ),
+                              onChanged: (_) => _applySearch(),
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(flex: 5, child: filterRow),
+                        ]),
+                  ],
+                ),
               );
             }),
             slivers: [
