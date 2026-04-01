@@ -508,11 +508,12 @@ class _TestPageState extends State<TestPage> {
                           ),
                           child: ConstrainedBox(
                             constraints: BoxConstraints(
-                              minHeight: isMobile ? 250 : 0,
-                              maxHeight: (isMobile && !isAudioToImage) ? 400 : double.infinity,
+                              minHeight: isMobile ? 300 : 0,
+                              maxHeight: (isMobile && !isAudioToImage) ? 450 : double.infinity,
                             ),
                             child: Stack(
-                              fit: StackFit.expand,
+                              fit: isMobile ? StackFit.loose : StackFit.expand,
+                              alignment: Alignment.center,
                               children: [
                                 if (_showingVideo)
                                   Video(controller: controller)

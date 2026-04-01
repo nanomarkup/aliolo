@@ -57,8 +57,8 @@ class _CountingGridState extends State<CountingGrid> {
     }
 
     return Center(
-      child: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
+      child: FittedBox(
+        fit: BoxFit.contain,
         child: Padding(
           padding: EdgeInsets.all(padding),
           child: Wrap(

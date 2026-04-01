@@ -63,8 +63,8 @@ class _AdditionGridState extends State<AdditionGrid> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
+      child: FittedBox(
+        fit: BoxFit.contain,
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
