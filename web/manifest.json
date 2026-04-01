@@ -4,7 +4,7 @@
     "start_url": ".",
     "display": "standalone",
     "background_color": "#ffffff",
-    "theme_color": "#ff9800",
+    "theme_color": "#1D4289",
     "description": "Aliolo - Your Logic Ally for visual learning.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,

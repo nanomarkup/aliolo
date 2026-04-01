@@ -333,9 +333,9 @@ class _TestPageState extends State<TestPage> {
                       style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 48),
-                    _buildResultRow('Total Cards:', '$_completedInSession'),
-                    _buildResultRow('Correct Answers:', '$_sessionCorrect', color: Colors.green),
-                    _buildResultRow('Failed:', '$failed', color: Colors.red),
+                    _buildResultRow(context.t('total_cards'), '$_completedInSession'),
+                    _buildResultRow(context.t('correct_answers'), '$_sessionCorrect', color: Colors.green),
+                    _buildResultRow(context.t('failed_answers'), '$failed', color: Colors.red),
                     const Divider(height: 64),
                     Text(
                       '${percent.toStringAsFixed(0)}%',
@@ -351,7 +351,7 @@ class _TestPageState extends State<TestPage> {
                       height: 56,
                       child: ElevatedButton.icon(
                         onPressed: () => Navigator.pop(context, true),
-                        icon: const Icon(Icons.home),
+                        icon: const Icon(Icons.school),
                         label: Text(
                           context.t('back_to_subjects'),
                           style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
