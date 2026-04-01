@@ -63,6 +63,7 @@ class _TestPageState extends State<TestPage> {
   int _completedInSession = 0;
   int _totalInSession = 0;
   int _sessionCorrect = 0;
+  bool _isSessionFinished = false;
 
   late final Player player;
   late final VideoController controller;
@@ -270,49 +271,6 @@ class _TestPageState extends State<TestPage> {
     _setupNextCard();
   }
 
-  void _showResultsDialog() {
-    final int failed = _completedInSession - _sessionCorrect;
-    final double percent = _completedInSession > 0 ? (_sessionCorrect / _completedInSession) * 100 : 0;
-    final navigator = Navigator.of(context);
-
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => AlertDialog(
-        title: Text(context.t('session_complete')),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildResultRow('Total Cards:', '$_completedInSession'),
-            _buildResultRow('Correct:', '$_sessionCorrect', color: Colors.green),
-            _buildResultRow('Failed:', '$failed', color: Colors.red),
-            const Divider(height: 24),
-            Center(
-              child: Text(
-                '${percent.toStringAsFixed(0)}%',
-                style: TextStyle(
-                  fontSize: 48,
-                  fontWeight: FontWeight.bold,
-                  color: percent >= 70 ? Colors.green : (percent >= 40 ? Colors.orange : Colors.red),
-                ),
-              ),
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              navigator.pop(); // Close dialog
-              navigator.pop(true); // Go back to subject page
-            },
-            child: Text(context.t('back_to_subjects')),
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget _buildResultRow(String label, String value, {Color? color}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
@@ -334,7 +292,85 @@ class _TestPageState extends State<TestPage> {
   }
 
   void _finishSession() {
-    _showResultsDialog();
+    setState(() {
+      _isSessionFinished = true;
+    });
+  }
+
+  Widget _buildResultsView(Color headerColor) {
+    final int failed = _completedInSession - _sessionCorrect;
+    final double percent = _completedInSession > 0 ? (_sessionCorrect / _completedInSession) * 100 : 0;
+
+    return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: Text(_subject.getName(widget.languageCode), style: const TextStyle(fontSize: 18)),
+        backgroundColor: headerColor,
+        foregroundColor: Colors.white,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () => Navigator.pop(context),
+          ),
+          if (!kIsWeb) const WindowControls(color: Colors.white),
+        ],
+      ),
+      body: Center(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(32),
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 600),
+            child: Card(
+              elevation: 8,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+              child: Padding(
+                padding: const EdgeInsets.all(48),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      context.t('session_complete'),
+                      style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 48),
+                    _buildResultRow('Total Cards:', '$_completedInSession'),
+                    _buildResultRow('Correct Answers:', '$_sessionCorrect', color: Colors.green),
+                    _buildResultRow('Failed:', '$failed', color: Colors.red),
+                    const Divider(height: 64),
+                    Text(
+                      '${percent.toStringAsFixed(0)}%',
+                      style: TextStyle(
+                        fontSize: 80,
+                        fontWeight: FontWeight.bold,
+                        color: percent >= 70 ? Colors.green : (percent >= 40 ? Colors.orange : Colors.red),
+                      ),
+                    ),
+                    const SizedBox(height: 48),
+                    SizedBox(
+                      width: double.infinity,
+                      height: 56,
+                      child: ElevatedButton.icon(
+                        onPressed: () => Navigator.pop(context, true),
+                        icon: const Icon(Icons.home),
+                        label: Text(
+                          context.t('back_to_subjects'),
+                          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: headerColor,
+                          foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   @override
@@ -345,6 +381,10 @@ class _TestPageState extends State<TestPage> {
       orElse: () => pillars.first,
     );
     final headerColor = pillar.getColor(getIt<ThemeService>().isDarkMode);
+
+    if (_isSessionFinished) {
+      return _buildResultsView(headerColor);
+    }
 
     return ListenableBuilder(
       listenable: TranslationService(),
