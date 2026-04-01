@@ -75,6 +75,7 @@ class _LearnPageState extends State<LearnPage> {
     
     if (_sessionQueue.isNotEmpty) {
       _currentSubjectCard = _sessionQueue.first;
+      _completedInSession++;
     }
 
     _playerSubscription = player.stream.completed.listen((completed) {
@@ -171,10 +172,10 @@ class _LearnPageState extends State<LearnPage> {
 
     if (_sessionQueue.isNotEmpty) {
       _sessionQueue.removeAt(0);
-      _completedInSession++;
     }
 
     if (_sessionQueue.isNotEmpty) {
+      _completedInSession++;
       setState(() => _currentSubjectCard = _sessionQueue.first);
       _setupMedia();
     } else {
@@ -247,13 +248,19 @@ class _LearnPageState extends State<LearnPage> {
                             e.value.prompt ?? '-',
                             style: const TextStyle(fontSize: 16),
                           ),
-                          Text(
-                            e.value.answer ?? '-',
-                            style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
+                          ...(() {
+                            final ansRaw = e.value.answer ?? '-';
+                            final answers = ansRaw.split(';').map((s) => s.trim()).where((s) => s.isNotEmpty).toList();
+                            if (answers.isEmpty) return [const Text('-', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold))];
+                            
+                            return answers.map((a) => Text(
+                              CardModel.capitalizeFirst(a),
+                              style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ));
+                          })(),
                         ],
                       ),
                     );
@@ -351,23 +358,38 @@ class _LearnPageState extends State<LearnPage> {
                       _currentCard.getPrompt(lang),
                       style: TextStyle(fontSize: 20, color: Colors.grey[700], fontWeight: FontWeight.w500),
                     ),
-                    InkWell(
-                      onTap: () async {
-                        final url = _currentCard.getAudioUrl(lang);
-                        if (url != null) {
-                          await player.open(Media(url));
-                          player.play();
-                        }
-                      },
-                      borderRadius: BorderRadius.circular(8),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                        child: Text(
-                          _currentCard.getAnswer(lang),
-                          style: TextStyle(fontSize: 32, color: headerColor, fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ),
+                    const SizedBox(width: 12),
+                    ...(() {
+                      final answers = _currentCard.getAnswerList(lang);
+                      if (answers.isEmpty) return [const SizedBox.shrink()];
+                      
+                      return [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: answers.map((ans) => InkWell(
+                            onTap: () async {
+                              final url = _currentCard.getAudioUrl(lang);
+                              if (url != null) {
+                                await player.open(Media(url));
+                                player.play();
+                              }
+                            },
+                            borderRadius: BorderRadius.circular(8),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                              child: Text(
+                                CardModel.capitalizeFirst(ans),
+                                style: TextStyle(
+                                  fontSize: answers.length > 1 ? 24 : 32, 
+                                  color: headerColor, 
+                                  fontWeight: FontWeight.bold
+                                ),
+                              ),
+                            ),
+                          )).toList(),
+                        )
+                      ];
+                    })(),
                   ],
                 ),
               ),

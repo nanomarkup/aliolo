@@ -442,7 +442,7 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
           subjectIds: _linkedSubjectIds,
           isPublic: _isPublic,
           folderId: _selectedFolderId,
-          isOnDashboard: widget.existingSubject?.isOnDashboard ?? false,
+          isOnDashboard: widget.existingSubject?.isOnDashboard ?? true,
         );
         await _cardService.addCollection(collection, _linkedSubjectIds);
 

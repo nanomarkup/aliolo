@@ -796,7 +796,8 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                   delegate: SliverChildBuilderDelegate((context, index) {
                     final card = _filteredCards[index];
                     final isCardMine = card.ownerId == _authService.currentUser?.serverId;
-                    final answer = card.getAnswer(displayLang);
+                    final answers = card.getAnswerList(displayLang);
+                    final answerText = answers.map((a) => CardModel.capitalizeFirst(a)).join(', ');
 
                     return InkWell(
                       onTap: isCardMine ? () async {
@@ -832,7 +833,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                                 children: [
                                   Center(
                                     child: Text(
-                                      answer,
+                                      answerText,
                                       textAlign: TextAlign.center,
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,

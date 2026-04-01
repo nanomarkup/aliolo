@@ -134,6 +134,24 @@ class CardModel {
   String getPrompt(String lang) => _getInherited(lang, (d) => d.prompt) ?? '';
   String getAnswer(String lang) => _getInherited(lang, (d) => d.answer) ?? '';
 
+  static String capitalizeFirst(String s) {
+    if (s.isEmpty) return s;
+    return s[0].toUpperCase() + s.substring(1);
+  }
+
+  List<String> getAnswerList(String lang) {
+    final ans = getAnswer(lang);
+    if (ans.isEmpty) return [];
+    return ans.split(';').map((s) => s.trim()).where((s) => s.isNotEmpty).toList();
+  }
+
+  bool isCorrectAnswer(String lang, String input) {
+    final answers = getAnswerList(lang);
+    if (answers.isEmpty) return false;
+    final normalizedInput = input.trim().toLowerCase();
+    return answers.any((a) => a.toLowerCase() == normalizedInput);
+  }
+
   String getNumericalChar(String lang) {
     final int val = numericalAnswer;
     

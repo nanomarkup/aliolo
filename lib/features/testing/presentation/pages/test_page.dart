@@ -92,6 +92,7 @@ class _TestPageState extends State<TestPage> {
       _finishSession();
       return;
     }
+    _completedInSession++;
 
     // Scroll to top for both main page and grid area when new card loads
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -135,8 +136,16 @@ class _TestPageState extends State<TestPage> {
         _currentCard.subjectId,
       );
       
+      final lang = widget.languageCode.toLowerCase();
+      final currentAnswers = _currentCard.getAnswerList(lang).map((e) => e.toLowerCase()).toSet();
+
       final distractors = allInSubject
           .where((c) => c.id != _currentCard.id)
+          .where((c) {
+            final otherAnswers = c.getAnswerList(lang).map((e) => e.toLowerCase()).toSet();
+            // Only include as distractor if there's no overlap in answers
+            return otherAnswers.intersection(currentAnswers).isEmpty;
+          })
           .toList();
       distractors.shuffle();
 
@@ -200,9 +209,13 @@ class _TestPageState extends State<TestPage> {
 
   String _getDisplayAnswer(CardModel card) {
     final lang = widget.languageCode.toLowerCase();
-    String ans = card.getAnswer(lang);
-    if (ans.isEmpty && lang != 'en') ans = card.getAnswer('en');
-    return ans;
+    final list = card.getAnswerList(lang);
+    if (list.isNotEmpty) return CardModel.capitalizeFirst(list.first);
+    
+    final enList = card.getAnswerList('en');
+    if (enList.isNotEmpty) return CardModel.capitalizeFirst(enList.first);
+    
+    return '';
   }
 
   Future<void> _selectOption(int index) async {
@@ -250,12 +263,77 @@ class _TestPageState extends State<TestPage> {
   }
 
   void _nextCard() {
-    _completedInSession++;
+    if (_sessionQueue.isEmpty && _isAnswered) {
+      _finishSession();
+      return;
+    }
     _setupNextCard();
   }
 
+  void _showResultsDialog() {
+    final int failed = _completedInSession - _sessionCorrect;
+    final double percent = _completedInSession > 0 ? (_sessionCorrect / _completedInSession) * 100 : 0;
+
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => AlertDialog(
+        title: Text(context.t('session_complete')),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildResultRow('Total Cards:', '$_completedInSession'),
+            _buildResultRow('Correct:', '$_sessionCorrect', color: Colors.green),
+            _buildResultRow('Failed:', '$failed', color: Colors.red),
+            const Divider(height: 24),
+            Center(
+              child: Text(
+                '${percent.toStringAsFixed(0)}%',
+                style: TextStyle(
+                  fontSize: 48,
+                  fontWeight: FontWeight.bold,
+                  color: percent >= 70 ? Colors.green : (percent >= 40 ? Colors.orange : Colors.red),
+                ),
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context); // Close dialog
+              Navigator.pop(context, true); // Go back to subject page
+            },
+            child: Text(context.t('back_to_subjects')),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildResultRow(String label, String value, {Color? color}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(label, style: const TextStyle(fontWeight: FontWeight.w500)),
+          Text(
+            value,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: color,
+              fontSize: 16,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   void _finishSession() {
-    Navigator.pop(context, true);
+    _showResultsDialog();
   }
 
   @override
@@ -343,10 +421,18 @@ class _TestPageState extends State<TestPage> {
                       _currentCard.getPrompt(lang),
                       style: TextStyle(fontSize: 20, color: Colors.grey[700], fontWeight: FontWeight.w500),
                     ),
+                    const SizedBox(width: 12),
                     if (_isAnswered)
-                      Text(
-                        _correctAnswerText,
-                        style: TextStyle(fontSize: 32, color: _isCorrect ? Colors.green : Colors.red, fontWeight: FontWeight.bold),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: _currentCard.getAnswerList(lang).map((ans) => Text(
+                          CardModel.capitalizeFirst(ans),
+                          style: TextStyle(
+                            fontSize: _currentCard.getAnswerList(lang).length > 1 ? 24 : 32, 
+                            color: _isCorrect ? Colors.green : Colors.red, 
+                            fontWeight: FontWeight.bold
+                          ),
+                        )).toList(),
                       )
                     else
                       Text(
