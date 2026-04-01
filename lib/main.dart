@@ -11,7 +11,7 @@ import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/data/services/testing_language_service.dart';
 import 'package:aliolo/features/auth/presentation/pages/login_page.dart';
 import 'package:aliolo/features/subjects/presentation/pages/subject_page.dart';
-import 'package:aliolo/features/onboarding/presentation/pages/onboarding_page.dart';
+import 'package:aliolo/src/onboarding/onboarding_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:aliolo/core/utils/file_stub.dart' if (dart.library.html) 'dart:html' as html;
@@ -377,7 +377,7 @@ class _AlioloMainAppState extends State<AlioloMainApp> {
               print('HasSeenOnboarding: $hasSeenOnboarding');
 
               if (!hasSeenOnboarding) {
-                return const OnboardingPage();
+                return const OnboardingScreen();
               }
 
               if (authService.isPasswordRecoveryFlow) {
