@@ -151,12 +151,19 @@ class SubjectModel implements ContentItem {
     return null;
   }
 
+  static String capitalizeFirst(String s) {
+    if (s.isEmpty) return s;
+    return s[0].toUpperCase() + s.substring(1);
+  }
+
   String getName(String langCode) {
-    return _getInherited(langCode, (d) => d.name) ?? 'Unnamed Subject';
+    final name = _getInherited(langCode, (d) => d.name) ?? 'Unnamed Subject';
+    return capitalizeFirst(name);
   }
 
   String getDescription(String langCode) {
-    return _getInherited(langCode, (d) => d.description) ?? '';
+    final desc = _getInherited(langCode, (d) => d.description) ?? '';
+    return capitalizeFirst(desc);
   }
 
   // Legacy support for code that expects a single string name

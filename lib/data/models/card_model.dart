@@ -131,7 +131,11 @@ class CardModel {
     return null;
   }
 
-  String getPrompt(String lang) => _getInherited(lang, (d) => d.prompt) ?? '';
+  String getPrompt(String lang) {
+    final prompt = _getInherited(lang, (d) => d.prompt) ?? '';
+    return capitalizeFirst(prompt);
+  }
+
   String getAnswer(String lang) => _getInherited(lang, (d) => d.answer) ?? '';
 
   static String capitalizeFirst(String s) {
