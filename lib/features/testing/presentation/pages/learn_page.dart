@@ -186,6 +186,7 @@ class _LearnPageState extends State<LearnPage> {
   }
 
   void _showCompletionDialog() {
+    final navigator = Navigator.of(context);
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -198,8 +199,8 @@ class _LearnPageState extends State<LearnPage> {
             actions: [
               TextButton(
                 onPressed: () {
-                  Navigator.pop(context);
-                  Navigator.pop(context);
+                  navigator.pop();
+                  navigator.pop();
                 },
                 child: Text(context.t('back_to_subjects')),
               ),

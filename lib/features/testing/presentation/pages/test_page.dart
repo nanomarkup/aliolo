@@ -273,6 +273,7 @@ class _TestPageState extends State<TestPage> {
   void _showResultsDialog() {
     final int failed = _completedInSession - _sessionCorrect;
     final double percent = _completedInSession > 0 ? (_sessionCorrect / _completedInSession) * 100 : 0;
+    final navigator = Navigator.of(context);
 
     showDialog(
       context: context,
@@ -302,8 +303,8 @@ class _TestPageState extends State<TestPage> {
         actions: [
           TextButton(
             onPressed: () {
-              Navigator.pop(context); // Close dialog
-              Navigator.pop(context, true); // Go back to subject page
+              navigator.pop(); // Close dialog
+              navigator.pop(true); // Go back to subject page
             },
             child: Text(context.t('back_to_subjects')),
           ),
