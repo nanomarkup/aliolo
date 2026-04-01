@@ -385,7 +385,7 @@ class _TestPageState extends State<TestPage> {
                               maxHeight: (isMobile && !isAudioToImage) ? 400 : double.infinity,
                             ),
                             child: Stack(
-                              fit: isAudioToImage ? StackFit.loose : StackFit.expand,
+                              fit: StackFit.expand,
                               children: [
                                 if (_showingVideo)
                                   Video(controller: controller)
@@ -495,6 +495,11 @@ class _TestPageState extends State<TestPage> {
                         : const SizedBox.shrink();
 
                     if (isMobile) {
+                      // For Audio to Image on mobile, fill screen and let grid handle its own scroll
+                      if (isAudioToImage && !(_subject.isMath && !_subject.isNumbers)) {
+                        return mediaContent;
+                      }
+
                       return SingleChildScrollView(
                         controller: _scrollController,
                         child: Column(

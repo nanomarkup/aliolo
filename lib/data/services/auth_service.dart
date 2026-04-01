@@ -19,10 +19,13 @@ class AuthService extends ChangeNotifier {
   String? _lastErrorMessage;
   bool _isPasswordRecoveryFlow = false;
   String? _initialUrl;
+  String? _recoveryFlowType;
 
   UserModel? get currentUser => _currentUser;
   String? get lastErrorMessage => _lastErrorMessage;
   bool get isPasswordRecoveryFlow => _isPasswordRecoveryFlow;
+  String? get recoveryFlowType => _recoveryFlowType;
+  String? get currentSessionEmail => _supabase?.auth.currentSession?.user.email;
 
   bool get _isSupabaseInitialized => _supabase != null;
 
@@ -31,47 +34,16 @@ class AuthService extends ChangeNotifier {
       _supabase = Supabase.instance.client;
       _initialUrl = manualUrl ?? (kIsWeb ? html.window.location.href : null);
       
-      // 1. PRE-CHECK: Detect recovery/invite/signup flows from URL
-      if (kIsWeb && _initialUrl != null) {
-        final uri = Uri.parse(_initialUrl!);
-        bool flowDetected = false;
-        
-        // Check hash first (Implicit flow)
-        final hash = uri.fragment;
-        if (hash.contains('access_token=')) {
-          final params = Uri.splitQueryString(hash);
-          final type = params['type'];
-          if (type == 'recovery' || type == 'invite' || type == 'signup') {
-            flowDetected = true;
-          }
-        } 
-        
-        // Check query params (PKCE flow)
-        if (!flowDetected) {
-          final type = uri.queryParameters['type'];
-          final code = uri.queryParameters['code'];
-          if (code != null || type == 'recovery' || type == 'invite' || type == 'signup') {
-             flowDetected = true;
-          }
-        }
-
-        if (flowDetected) {
-          _isPasswordRecoveryFlow = true;
-          // IMPORTANT: If we detect an auth flow but already have a session, 
-          // it means another user might be logged in. We MUST logout to avoid session conflict.
-          if (_supabase!.auth.currentSession != null) {
-            await _supabase!.auth.signOut();
-          }
-        }
-      }
-
-      // 2. Listen to auth state changes
+      // 1. Register auth state listener FIRST so we don't miss any events
       _supabase!.auth.onAuthStateChange.listen((data) {
         final AuthChangeEvent event = data.event;
         final Session? session = data.session;
 
+        AppLogger.log('AuthService: Auth state change: $event');
+
         if (event == AuthChangeEvent.passwordRecovery) {
           _isPasswordRecoveryFlow = true;
+          _recoveryFlowType = 'recovery';
           notifyListeners();
         }
 
@@ -79,6 +51,17 @@ class AuthService extends ChangeNotifier {
             (event == AuthChangeEvent.signedIn ||
                 event == AuthChangeEvent.userUpdated ||
                 event == AuthChangeEvent.initialSession)) {
+          
+          // Re-check URL if flag is not set but it looks like a recovery/invite
+          if (!_isPasswordRecoveryFlow && kIsWeb && _initialUrl != null) {
+            final uri = Uri.parse(_initialUrl!);
+            final type = uri.queryParameters['type'] ?? Uri.splitQueryString(uri.fragment)['type'];
+            if (type == 'recovery' || type == 'invite') {
+              _isPasswordRecoveryFlow = true;
+              _recoveryFlowType = type;
+            }
+          }
+
           if (session.user.emailConfirmedAt != null || _isPasswordRecoveryFlow) {
             _fetchAndSyncUser(session.user);
           } else {
@@ -91,30 +74,45 @@ class AuthService extends ChangeNotifier {
         }
       });
 
-      // 3. MANUAL FALLBACK: If no session but we have tokens in URL, force-establish it
-      if (kIsWeb && _supabase!.auth.currentSession == null && _initialUrl != null) {
-        if (_initialUrl!.contains('access_token=') || _initialUrl!.contains('code=')) {
+      // 2. PRE-CHECK: Detect recovery/invite flows from URL
+      if (kIsWeb && _initialUrl != null) {
+        final uri = Uri.parse(_initialUrl!);
+        String? detectedType;
+        
+        // Check hash first (Implicit flow)
+        final hash = uri.fragment;
+        if (hash.contains('access_token=')) {
+          final params = Uri.splitQueryString(hash);
+          detectedType = params['type'];
+        } 
+        
+        // Check query params (PKCE flow)
+        if (detectedType == null) {
+          detectedType = uri.queryParameters['type'];
+        }
+
+        if (detectedType == 'recovery' || detectedType == 'invite') {
+          AppLogger.log('AuthService: Detected $detectedType flow in URL.');
+          _isPasswordRecoveryFlow = true;
+          _recoveryFlowType = detectedType;
+
+          // If we have a session, it might be a different user. 
+          // Sign out to ensure clean state before consuming URL tokens.
+          if (_supabase!.auth.currentSession != null) {
+            AppLogger.log('AuthService: Signing out existing user to handle $detectedType flow.');
+            await _supabase!.auth.signOut();
+          }
+          
+          // Force Supabase to process the URL tokens/code
           try {
-            await _supabase!.auth.getSessionFromUrl(Uri.parse(_initialUrl!));
+            await _supabase!.auth.getSessionFromUrl(uri);
           } catch (e) {
-            // MANUAL EXTRACTION FALLBACK for Implicit Flow
-            if (_initialUrl!.contains('access_token=')) {
-               final uri = Uri.parse(_initialUrl!);
-               final fragment = uri.fragment;
-               final params = Uri.splitQueryString(fragment);
-               final refresh = params['refresh_token'];
-               if (refresh != null) {
-                  try {
-                    await _supabase!.auth.setSession(refresh);
-                  } catch (e2) {
-                    // Ignore silently if fallback fails
-                  }
-               }
-            }
+            AppLogger.log('AuthService: getSessionFromUrl failed: $e');
           }
         }
       }
 
+      // 3. Manual Sync if session exists but wasn't caught by listener yet
       final session = _supabase!.auth.currentSession;
       if (session != null && (session.user.emailConfirmedAt != null || _isPasswordRecoveryFlow)) {
         await _fetchAndSyncUser(session.user);
@@ -197,7 +195,7 @@ class AuthService extends ChangeNotifier {
     }
     final cleanEmail = email.trim().toLowerCase();
     try {
-      final res = await _supabase!.auth.signUp(
+      await _supabase!.auth.signUp(
         email: cleanEmail,
         password: password,
         data: {'username': username},
@@ -242,6 +240,8 @@ class AuthService extends ChangeNotifier {
     if (_isSupabaseInitialized) await _supabase!.auth.signOut();
     _currentUser = null;
     _lastErrorMessage = null;
+    _isPasswordRecoveryFlow = false;
+    _recoveryFlowType = null;
     notifyListeners();
   }
 
@@ -584,6 +584,7 @@ class AuthService extends ChangeNotifier {
 
   void clearRecoveryFlow() {
     _isPasswordRecoveryFlow = false;
+    _recoveryFlowType = null;
     notifyListeners();
   }
 
@@ -620,6 +621,7 @@ class AuthService extends ChangeNotifier {
       
       await _supabase!.auth.updateUser(UserAttributes(password: newPassword));
       _isPasswordRecoveryFlow = false;
+      _recoveryFlowType = null;
       await _fetchAndSyncUser(session.user);
       
       notifyListeners();

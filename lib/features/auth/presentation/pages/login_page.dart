@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:aliolo/core/di/service_locator.dart';
@@ -59,11 +60,18 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
   }
 
   void _syncWithServiceState() {
+    print('LoginPage: syncWithServiceState, flow: ${_authService.isPasswordRecoveryFlow}');
     if (_authService.isPasswordRecoveryFlow) {
       if (mounted) {
         setState(() {
           _isRecovering = true;
           _recoveryStep = 1;
+          // Pre-fill email from current session if available, 
+          // because finalizePasswordReset requires email for safety check
+          final sessionEmail = _authService.currentSessionEmail;
+          if (sessionEmail != null) {
+            _emailController.text = sessionEmail;
+          }
         });
       }
     }
@@ -207,8 +215,9 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
     try {
       if (_recoveryStep == 0) {
         await _authService.sendResetCode(email);
-        _showMsg('Reset code sent to $email');
-        setState(() => _recoveryStep = 1);
+        _showMsg('Reset link sent to $email. Please check your inbox.');
+        // Instead of going to step 1, go back to login as requested
+        _toggleRecovery();
       } else {
         final code = _codeController.text.trim();
         final newPass = _passwordController.text;
@@ -246,6 +255,20 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
   @override
   Widget build(BuildContext context) {
     final themeService = getIt<ThemeService>();
+    final authService = context.watch<AuthService>();
+    
+    // Robustness: If service says we are in recovery flow, ensure local state matches
+    final bool isActuallyRecovering = _isRecovering || authService.isPasswordRecoveryFlow;
+    final int effectiveStep = authService.isPasswordRecoveryFlow ? 1 : _recoveryStep;
+
+    if (authService.isPasswordRecoveryFlow && _recoveryStep == 0) {
+       // Auto-sync if missed by listener
+       WidgetsBinding.instance.addPostFrameCallback((_) {
+         if (mounted && _recoveryStep == 0) {
+           _syncWithServiceState();
+         }
+       });
+    }
 
     return ListenableBuilder(
       listenable: themeService,
@@ -321,7 +344,7 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
                             ],
                           ),
                           const SizedBox(height: 32),
-                          if (!_isRecovering) ...[
+                          if (!isActuallyRecovering) ...[
                             TextField(
                               focusNode: _emailFocusNode,
                               controller: _emailController,
@@ -449,7 +472,7 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
                             ],
                           ] else ...[
                             Text(
-                              _recoveryStep == 0 ? context.t('restore_password') : 'Set Your Password',
+                              effectiveStep == 0 ? context.t('restore_password') : 'Set Your Password',
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
@@ -457,7 +480,7 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
                               ),
                             ),
                             const SizedBox(height: 16),
-                            if (_recoveryStep == 0) ...[
+                            if (effectiveStep == 0) ...[
                               TextField(
                                 focusNode: _emailFocusNode,
                                 controller: _emailController,
@@ -473,7 +496,7 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
                               ),
                             ],
                             const SizedBox(height: 12),
-                            if (_recoveryStep == 1) ...[
+                            if (effectiveStep == 1) ...[
                               if (!_authService.isPasswordRecoveryFlow) ...[
                                 TextField(
                                   controller: _codeController,
@@ -533,7 +556,7 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
                                   foregroundColor: Colors.white,
                                 ),
                                 child: Text(
-                                  _recoveryStep == 0 ? 'Send Code' : 'Update Password',
+                                  effectiveStep == 0 ? 'Send Reset Link' : 'Update Password',
                                 ),
                               ),
                               const SizedBox(height: 12),

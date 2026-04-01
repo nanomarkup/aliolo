@@ -686,63 +686,62 @@ class _AddCardPageState extends State<AddCardPage> {
             },
           ),
       ],
-      fixedBody: KeyboardListener(
+      body: KeyboardListener(
         focusNode: _keyboardFocusNode,
         autofocus: true,
         onKeyEvent: _onKeyEvent,
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            // Tile width 54 + spacing 8 = 62. Total padding 16*2 = 32.
-            final availableWidth = constraints.maxWidth - 32;
-            final items = (availableWidth + 8) ~/ 62;
-            _itemsPerRow = items > 0 ? items : 1;
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              LayoutBuilder(
+                builder: (context, constraints) {
+                  // Tile width 54 + spacing 8 = 62. Total padding 16*2 = 32.
+                  final availableWidth = constraints.maxWidth - 32;
+                  final items = (availableWidth + 8) ~/ 62;
+                  _itemsPerRow = items > 0 ? items : 1;
 
-            return Padding(
-              padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Wrap(
-                    spacing: 8,
-                    runSpacing: 8,
-                    children: [
-                      _buildLangTile(
-                        'global',
-                        'GLB',
-                        Icons.public,
-                        'Global / Fallback',
-                      ),
-                      ...(() {
-                        final langs = TranslationService()
-                            .availableUILanguages
-                            .map((l) => l.toLowerCase())
-                            .toList();
-                        langs.sort();
-                        return langs.map((code) {
-                          return _buildLangTile(
-                            code,
-                            code.toUpperCase(),
-                            null,
-                            TranslationService().getLanguageName(code),
-                          );
-                        });
-                      })(),
-                    ],
-                  ),
-                  const SizedBox(height: 32),
-                ],
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    child: Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
+                      children: [
+                        _buildLangTile(
+                          'global',
+                          'GLB',
+                          Icons.public,
+                          'Global / Fallback',
+                        ),
+                        ...(() {
+                          final langs = TranslationService()
+                              .availableUILanguages
+                              .map((l) => l.toLowerCase())
+                              .toList();
+                          langs.sort();
+                          return langs.map((code) {
+                            return _buildLangTile(
+                              code,
+                              code.toUpperCase(),
+                              null,
+                              TranslationService().getLanguageName(code),
+                            );
+                          });
+                        })(),
+                      ],
+                    ),
+                  );
+                },
               ),
-            );
-          },
+              const SizedBox(height: 16),
+              _buildEditor(themeColor),
+            ],
+          ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: _buildEditor(themeColor),
-      ),
-    );
-  }
-
+      );
+      }
   Widget _buildLangTile(
     String code,
     String label,

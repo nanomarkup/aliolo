@@ -963,22 +963,22 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
               },
             ),
         ],
-        fixedBody: KeyboardListener(
+        body: KeyboardListener(
           focusNode: _keyboardFocusNode,
           autofocus: true,
           onKeyEvent: _onKeyEvent,
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              final availableWidth = constraints.maxWidth - 32;
-              final items = (availableWidth + 8) ~/ 62;
-              _itemsPerRow = items > 0 ? items : 1;
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              LayoutBuilder(
+                builder: (context, constraints) {
+                  final availableWidth = constraints.maxWidth - 32;
+                  final items = (availableWidth + 8) ~/ 62;
+                  _itemsPerRow = items > 0 ? items : 1;
 
-              return Padding(
-                padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Wrap(
+                  return Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+                    child: Wrap(
                       spacing: 8,
                       runSpacing: 8,
                       children: [
@@ -1002,20 +1002,21 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
                               TranslationService().getLanguageName(code),
                             );
                           });
-                        })(),                      ],
+                        })(),
+                      ],
                     ),
-                    const SizedBox(height: 32),
-                  ],
+                  );
+                },
+              ),
+              const SizedBox(height: 32),
+              Form(
+                key: _formKey,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: _buildEditor(),
                 ),
-              );
-            },
-          ),
-        ),
-        body: Form(
-          key: _formKey,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: _buildEditor(),
+              ),
+            ],
           ),
         ),
       ),
