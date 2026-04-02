@@ -124,19 +124,37 @@ class _TestPageState extends State<TestPage> {
 
     List<TestOption> options = [];
 
+    final allInSubject = await CardService().getCardsBySubject(
+      _currentCard.subjectId,
+    );
+
     if (_subject.isMath && !_subject.isNumbers) {
       _correctAnswerId = _currentCard.numericalAnswer.toString();
       List<String> mathOpts = _currentCard.mathOptions ?? [];
+      
       if (mathOpts.isEmpty) {
-        final optCount = user?.optionsCount ?? 6;
-        mathOpts = MathService().generateDistractors(_currentCard.numericalAnswer, optCount);
+        // Try to get options from other cards in the subject first
+        final otherAnswers = allInSubject
+            .map((c) => c.numericalAnswer.toString())
+            .where((v) => v != _correctAnswerId && v != '0')
+            .toSet()
+            .toList();
+        
+        if (otherAnswers.isNotEmpty) {
+          otherAnswers.shuffle();
+          final optCount = user?.optionsCount ?? 6;
+          final selected = otherAnswers.take(optCount - 1).toList();
+          selected.add(_correctAnswerId);
+          selected.shuffle();
+          mathOpts = selected;
+        } else {
+          // Purely dynamic (no cards in subject yet), fallback to generated
+          final optCount = user?.optionsCount ?? 6;
+          mathOpts = MathService().generateDistractors(_currentCard.numericalAnswer, optCount);
+        }
       }
       options = mathOpts.map((o) => TestOption(text: o, id: o)).toList();
     } else {
-      final allInSubject = await CardService().getCardsBySubject(
-        _currentCard.subjectId,
-      );
-      
       final lang = widget.languageCode.toLowerCase();
       final currentAnswers = _currentCard.getAnswerList(lang).map((e) => e.toLowerCase()).toSet();
 
