@@ -38,18 +38,46 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     super.initState();
     _player1 = Player();
     _controller1 = VideoController(_player1);
-    _player1.open(Media('asset:///assets/Slide1_v4.webm'));
-    _player1.setPlaylistMode(PlaylistMode.loop);
+    _player1.open(Media('asset:///assets/Slide1_v1.webm'));
+    _player1.setPlaylistMode(PlaylistMode.none);
 
     _player3 = Player();
     _controller3 = VideoController(_player3);
     _player3.open(Media('asset:///assets/Slide3_v1.webm'));
-    _player3.setPlaylistMode(PlaylistMode.loop);
+    _player3.setPlaylistMode(PlaylistMode.none);
+    _player3.pause();
 
     _player4 = Player();
     _controller4 = VideoController(_player4);
     _player4.open(Media('asset:///assets/Slide4_v1.mp4'));
-    _player4.setPlaylistMode(PlaylistMode.loop);
+    _player4.setPlaylistMode(PlaylistMode.none);
+    _player4.pause();
+  }
+
+  void _handlePageChange(int page) {
+    setState(() => _currentPage = page);
+    
+    // Manage playback based on slide index
+    if (page == 0) {
+      _player1.seek(Duration.zero);
+      _player1.play();
+    } else {
+      _player1.pause();
+    }
+
+    if (page == 3) {
+      _player3.seek(Duration.zero);
+      _player3.play();
+    } else {
+      _player3.pause();
+    }
+
+    if (page == 4) {
+      _player4.seek(Duration.zero);
+      _player4.play();
+    } else {
+      _player4.pause();
+    }
   }
 
   @override
@@ -98,23 +126,18 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         children: [
           PageView(
             controller: _pageController,
-            onPageChanged: (int page) {
-              setState(() => _currentPage = page);
-            },
+            onPageChanged: _handlePageChange,
             children: [
               // Slide 1: Hook
               OnboardingSlide(
-                visual: ConstrainedBox(
-                  constraints: const BoxConstraints(maxHeight: 200),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(24),
-                    child: AspectRatio(
-                      aspectRatio: 16 / 9,
-                      child: Video(
-                        controller: _controller1,
-                        controls: NoVideoControls,
-                        fill: Colors.transparent,
-                      ),
+                visual: ClipRRect(
+                  borderRadius: BorderRadius.circular(24),
+                  child: AspectRatio(
+                    aspectRatio: 16 / 9,
+                    child: Video(
+                      controller: _controller1,
+                      controls: NoVideoControls,
+                      fill: Colors.transparent,
                     ),
                   ),
                 ),
