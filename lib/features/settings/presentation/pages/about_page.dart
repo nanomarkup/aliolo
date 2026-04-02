@@ -9,7 +9,7 @@ import 'package:aliolo/data/services/theme_service.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:aliolo/core/widgets/window_controls.dart';
 import 'package:aliolo/features/settings/presentation/pages/licenses_page.dart';
-import 'package:aliolo/features/onboarding/presentation/pages/onboarding_page.dart';
+import 'package:aliolo/src/onboarding/onboarding_screen.dart';
 
 class AboutPage extends StatefulWidget {
   const AboutPage({super.key});
@@ -205,7 +205,7 @@ class _AboutPageState extends State<AboutPage> {
                                 const SizedBox(height: 32),
                                 // Buttons
                                 OutlinedButton.icon(
-                                  onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const OnboardingPage())),
+                                  onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const OnboardingScreen())),
                                   icon: Icon(Icons.auto_awesome, color: mainColor),
                                   label: Text(context.t('view_onboarding')),
                                   style: OutlinedButton.styleFrom(
@@ -361,7 +361,7 @@ class _AboutPageState extends State<AboutPage> {
                                           context,
                                           MaterialPageRoute(
                                             builder:
-                                                (context) => const OnboardingPage(),
+                                                (context) => const OnboardingScreen(),
                                           ),
                                         ),
                                     icon: Icon(Icons.auto_awesome, color: mainColor),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:media_kit/media_kit.dart';
+import 'package:media_kit_video/media_kit_video.dart';
 import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
@@ -19,8 +21,45 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   int _currentPage = 0;
   double _dailyGoal = 30;
 
+  late final Player _player1;
+  late final VideoController _controller1;
+  
+  late final Player _player3;
+  late final VideoController _controller3;
+  
+  late final Player _player4;
+  late final VideoController _controller4;
+
   final Color primaryColor = const Color(0xFF1D4289);
   final Color bgColor = const Color(0xFFF1F5F9);
+
+  @override
+  void initState() {
+    super.initState();
+    _player1 = Player();
+    _controller1 = VideoController(_player1);
+    _player1.open(Media('asset:///assets/Slide1_v4.webm'));
+    _player1.setPlaylistMode(PlaylistMode.loop);
+
+    _player3 = Player();
+    _controller3 = VideoController(_player3);
+    _player3.open(Media('asset:///assets/Slide3_v1.webm'));
+    _player3.setPlaylistMode(PlaylistMode.loop);
+
+    _player4 = Player();
+    _controller4 = VideoController(_player4);
+    _player4.open(Media('asset:///assets/Slide4_v1.mp4'));
+    _player4.setPlaylistMode(PlaylistMode.loop);
+  }
+
+  @override
+  void dispose() {
+    _player1.dispose();
+    _player3.dispose();
+    _player4.dispose();
+    _pageController.dispose();
+    super.dispose();
+  }
 
   Future<void> _finishOnboarding() async {
     final prefs = await SharedPreferences.getInstance();
@@ -65,89 +104,71 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             children: [
               // Slide 1: Hook
               OnboardingSlide(
-                visual: Icon(Icons.auto_awesome, size: 120, color: primaryColor),
+                visual: ConstrainedBox(
+                  constraints: const BoxConstraints(maxHeight: 200),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(24),
+                    child: AspectRatio(
+                      aspectRatio: 16 / 9,
+                      child: Video(
+                        controller: _controller1,
+                        controls: NoVideoControls,
+                        fill: Colors.transparent,
+                      ),
+                    ),
+                  ),
+                ),
                 title: "Welcome to Aliolo",
-                description: "Learn Visually. Master Permanently. The smart companion powered by SM-2 science.",
+                description: "Learn Visually. Master Permanently. Your visual learning companion powered by SM-2 science.",
               ),
               // Slide 2: Smart Learning
               const OnboardingSlide(
-                visual: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    FakeCardWidget(),
-                    SizedBox(height: 24),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        FakeMCQButton(text: "Ukraine", isSelected: true),
-                        SizedBox(width: 12),
-                        FakeMCQButton(text: "Poland"),
-                      ],
-                    ),
-                  ],
-                ),
+                visual: SizedBox.shrink(),
                 title: "Interactive Cards",
-                description: "Multimedia flashcards adapt to your pace. Swipe to Learn, Tap to Test.",
+                description: "Multimedia cards adapt to your pace. Swipe to Learn, Tap to Test.",
               ),
-              // Slide 3: Goal Setting
+              // Slide 3: Create & Share (New)
               OnboardingSlide(
-                visual: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    SizedBox(
-                      width: 200,
-                      height: 200,
-                      child: CircularProgressIndicator(
-                        value: _dailyGoal / 100,
-                        strokeWidth: 12,
-                        backgroundColor: primaryColor.withValues(alpha: 0.1),
-                        valueColor: AlwaysStoppedAnimation<Color>(primaryColor),
-                      ),
+                visual: Icon(Icons.groups, size: 120, color: primaryColor),
+                title: "Create & Share",
+                description: "Build your own subjects or master decks shared by the Aliolo community.",
+              ),
+              // Slide 4: Goal Setting
+              OnboardingSlide(
+                visual: ClipRRect(
+                  borderRadius: BorderRadius.circular(24),
+                  child: AspectRatio(
+                    aspectRatio: 16 / 9,
+                    child: Video(
+                      controller: _controller3,
+                      controls: NoVideoControls,
+                      fill: Colors.transparent,
                     ),
-                    Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          "${_dailyGoal.toInt()}",
-                          style: TextStyle(
-                            fontSize: 48,
-                            fontWeight: FontWeight.bold,
-                            color: primaryColor,
-                          ),
-                        ),
-                        const Text(
-                          "Cards",
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Color(0xFF64748B),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+                  ),
                 ),
                 title: "Build Your Streak",
-                description: "Consistency is key! Set your Daily Goal and build streaks to climb the global leaderboard.",
-                extra: Slider(
-                  value: _dailyGoal,
-                  min: 5,
-                  max: 100,
-                  divisions: 19,
-                  activeColor: primaryColor,
-                  inactiveColor: primaryColor.withValues(alpha: 0.2),
-                  onChanged: (val) => setState(() => _dailyGoal = val),
-                ),
+                description: "Consistency is key! Set your Daily Goal and rise through the ranks—both globally and against your friends.",
               ),
-              // Slide 4: Sync
+              // Slide 5: Sync
               OnboardingSlide(
-                visual: Icon(Icons.cloud_sync, size: 120, color: primaryColor),
+                visual: ClipRRect(
+                  borderRadius: BorderRadius.circular(24),
+                  child: AspectRatio(
+                    aspectRatio: 16 / 9,
+                    child: Video(
+                      controller: _controller4,
+                      controls: NoVideoControls,
+                      fill: Colors.transparent,
+                    ),
+                  ),
+                ),
                 title: "Master Anywhere",
-                description: "Sync your data instantly via the Aliolo Ecosystem. We’ll notify you only when it’s time to keep your streak alive.",
+                description: "Your library stays in sync across all your devices. We’ll only nudge you when it’s time to protect your streak.",
               ),
             ],
           ),
           // Top Overlay: Skip
-          if (_currentPage < 3)
+          if (_currentPage < 4)
             Positioned(
               top: 48,
               right: 20,
@@ -168,7 +189,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: List.generate(4, (index) {
+                  children: List.generate(5, (index) {
                     return AnimatedContainer(
                       duration: const Duration(milliseconds: 300),
                       margin: const EdgeInsets.symmetric(horizontal: 4),
@@ -190,7 +211,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     constraints: const BoxConstraints(maxWidth: 320),
                     child: ElevatedButton(
                       onPressed: () {
-                        if (_currentPage == 3) {
+                        if (_currentPage == 4) {
                           _finishOnboarding();
                         } else {
                           _pageController.nextPage(
@@ -209,7 +230,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         elevation: 0,
                       ),
                       child: Text(
-                        _currentPage == 3 ? "Get Started" : "Next",
+                        _currentPage == 4 ? "Get Started" : "Next",
                         style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                     ),
