@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:media_kit_video/media_kit_video.dart';
+import 'package:uuid/uuid.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
@@ -20,6 +22,7 @@ class OnboardingScreen extends StatefulWidget {
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
   final PageController _pageController = PageController();
+  final String _sessionId = const Uuid().v4();
   int _currentPage = 0;
   double _dailyGoal = 30;
   String? _selectedAge;
@@ -49,6 +52,24 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     _player1.setPlaylistMode(PlaylistMode.none);
   }
 
+  // We use upsert so that the record is created on the first update
+  Future<void> _updateAnalytics({String? ageRange, int? pillarId, int? lastSlideIndex}) async {
+    try {
+      final updates = <String, dynamic>{
+        'session_id': _sessionId,
+      };
+      if (ageRange != null) updates['age_range'] = ageRange;
+      if (pillarId != null) updates['pillar_id'] = pillarId;
+      if (lastSlideIndex != null) updates['last_slide_index'] = lastSlideIndex;
+      
+      await Supabase.instance.client
+          .from('onboarding_analytics')
+          .upsert(updates, onConflict: 'session_id');
+    } catch (e) {
+      debugPrint('Error updating onboarding analytics: $e');
+    }
+  }
+
   void _handlePageChange(int page) {
     setState(() => _currentPage = page);
     
@@ -68,9 +89,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     super.dispose();
   }
 
-  Future<void> _finishOnboarding() async {
+  Future<void> _finishOnboarding({bool skipped = false}) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('has_seen_onboarding', true);
+    
+    // Record the last slide reached before finishing/skipping
+    await _updateAnalytics(lastSlideIndex: _currentPage);
+
     if (_selectedAge != null) {
       await prefs.setString('user_age_range', _selectedAge!);
     }
@@ -146,17 +171,35 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       children: ageOptions.map((age) {
                         final bool isSelected = _selectedAge == age;
                         return InkWell(
-                          onTap: () => setState(() => _selectedAge = age),
-                          borderRadius: BorderRadius.circular(12),
-                          child: Container(
+                          onTap: () {
+                            setState(() => _selectedAge = age);
+                            _updateAnalytics(ageRange: age);
+                            Future.delayed(const Duration(milliseconds: 300), () {
+                              if (mounted) {
+                                _pageController.nextPage(
+                                  duration: const Duration(milliseconds: 300),
+                                  curve: Curves.easeInOut,
+                                );
+                              }
+                            });
+                          },
+                          borderRadius: BorderRadius.circular(20),
+                          child: AnimatedContainer(
+                            duration: const Duration(milliseconds: 200),
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                               color: isSelected ? primaryColor : Colors.white,
-                              borderRadius: BorderRadius.circular(12),
+                              borderRadius: BorderRadius.circular(20),
                               border: Border.all(
-                                color: isSelected ? primaryColor : Colors.black.withValues(alpha: 0.1),
+                                color: isSelected ? Colors.white.withValues(alpha: 0.8) : Colors.black.withValues(alpha: 0.05),
+                                width: isSelected ? 3 : 2,
                               ),
                               boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withValues(alpha: 0.03),
+                                  blurRadius: 10,
+                                  offset: const Offset(0, 4),
+                                ),
                                 if (isSelected)
                                   BoxShadow(
                                     color: primaryColor.withValues(alpha: 0.2),
@@ -169,7 +212,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               age,
                               style: TextStyle(
                                 color: isSelected ? Colors.white : Colors.black87,
-                                fontWeight: FontWeight.w600,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
                               ),
                             ),
                           ),
@@ -203,6 +247,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             displayLang: displayLang,
                             onTap: () {
                               setState(() => _selectedPillarId = pillar.id);
+                              _updateAnalytics(pillarId: pillar.id);
                               Future.delayed(const Duration(milliseconds: 300), () {
                                 if (mounted) {
                                   _pageController.nextPage(
@@ -366,7 +411,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               top: 48,
               right: 20,
               child: TextButton(
-                onPressed: _finishOnboarding,
+                onPressed: () => _finishOnboarding(skipped: true),
                 child: Text(
                   context.t('onboarding_skip'),
                   style: const TextStyle(color: Color(0xFF64748B), fontSize: 16),
@@ -403,9 +448,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   child: ConstrainedBox(
                     constraints: const BoxConstraints(maxWidth: 320),
                     child: ElevatedButton(
-                      onPressed: () {
+                      onPressed: (_currentPage == 1 || _currentPage == 2) 
+                        ? null 
+                        : () {
                         if (_currentPage == 6) {
-                          _finishOnboarding();
+                          _finishOnboarding(skipped: false);
                         } else {
                           _pageController.nextPage(
                             duration: const Duration(milliseconds: 300),
