@@ -60,14 +60,11 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
   }
 
   void _syncWithServiceState() {
-    print('LoginPage: syncWithServiceState, flow: ${_authService.isPasswordRecoveryFlow}');
     if (_authService.isPasswordRecoveryFlow) {
       if (mounted) {
         setState(() {
           _isRecovering = true;
           _recoveryStep = 1;
-          // Pre-fill email from current session if available, 
-          // because finalizePasswordReset requires email for safety check
           final sessionEmail = _authService.currentSessionEmail;
           if (sessionEmail != null) {
             _emailController.text = sessionEmail;
@@ -216,7 +213,6 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
       if (_recoveryStep == 0) {
         await _authService.sendResetCode(email);
         _showMsg('Reset link sent to $email. Please check your inbox.');
-        // Instead of going to step 1, go back to login as requested
         _toggleRecovery();
       } else {
         final code = _codeController.text.trim();
@@ -256,13 +252,10 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
   Widget build(BuildContext context) {
     final themeService = getIt<ThemeService>();
     final authService = context.watch<AuthService>();
-    
-    // Robustness: If service says we are in recovery flow, ensure local state matches
     final bool isActuallyRecovering = _isRecovering || authService.isPasswordRecoveryFlow;
     final int effectiveStep = authService.isPasswordRecoveryFlow ? 1 : _recoveryStep;
 
     if (authService.isPasswordRecoveryFlow && _recoveryStep == 0) {
-       // Auto-sync if missed by listener
        WidgetsBinding.instance.addPostFrameCallback((_) {
          if (mounted && _recoveryStep == 0) {
            _syncWithServiceState();
@@ -287,7 +280,7 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
             fontFamily: 'Roboto',
           ),
           child: Scaffold(
-            backgroundColor: const Color(0xFFF1F5F9), // Force the light slate background
+            backgroundColor: const Color(0xFFF1F5F9),
             body: Stack(
               children: [
                 const Positioned(

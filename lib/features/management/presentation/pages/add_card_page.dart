@@ -10,6 +10,7 @@ import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/data/services/sound_service.dart';
+import 'package:aliolo/data/services/subscription_service.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:aliolo/data/models/pillar_model.dart';
@@ -19,6 +20,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:path/path.dart' as p;
 
 import 'package:aliolo/features/feedback/presentation/pages/feedback_page.dart';
+import 'package:aliolo/features/settings/presentation/pages/premium_upgrade_page.dart';
 
 class AddCardPage extends StatefulWidget {
   final String? initialSubjectId;
@@ -98,6 +100,22 @@ class _AddCardPageState extends State<AddCardPage> {
   @override
   void initState() {
     super.initState();
+
+    // Premium Locking: Redirect if creating new and not premium
+    if (widget.existingCard == null) {
+      final sub = getIt<SubscriptionService>();
+      if (!sub.isPremium) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (mounted) {
+            Navigator.pushReplacement(
+              context, 
+              MaterialPageRoute(builder: (context) => const PremiumUpgradePage())
+            );
+          }
+        });
+      }
+    }
+
     _selectedSubjectId =
         widget.initialSubjectId ?? widget.existingCard?.subjectId;
     _internalPillarId = widget.pillarId;

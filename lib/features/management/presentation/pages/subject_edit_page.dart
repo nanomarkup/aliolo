@@ -11,7 +11,9 @@ import 'package:aliolo/data/services/card_service.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
+import 'package:aliolo/data/services/subscription_service.dart';
 import 'package:aliolo/features/feedback/presentation/pages/feedback_page.dart';
+import 'package:aliolo/features/settings/presentation/pages/premium_upgrade_page.dart';
 
 class SubjectEditPage extends StatefulWidget {
   final SubjectModel? existingSubject;
@@ -80,6 +82,22 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
   @override
   void initState() {
     super.initState();
+
+    // Premium Locking: Redirect if creating new and not premium
+    if (widget.existingSubject == null && widget.existingFolder == null) {
+      final sub = getIt<SubscriptionService>();
+      if (!sub.isPremium) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (mounted) {
+            Navigator.pushReplacement(
+              context, 
+              MaterialPageRoute(builder: (context) => const PremiumUpgradePage())
+            );
+          }
+        });
+      }
+    }
+
     _isFolderMode = widget.isFolderMode || widget.existingFolder != null;
     _selectedPillar = widget.existingSubject?.pillarId ?? widget.existingFolder?.pillarId ?? widget.pillarId ?? 1;
     _isPublic = widget.existingSubject?.isPublic ?? false;

@@ -14,6 +14,7 @@ import 'package:aliolo/features/documentation/presentation/pages/documentation_p
 import 'package:aliolo/features/subjects/presentation/pages/subject_page.dart';
 import 'package:aliolo/data/services/feedback_service.dart';
 import 'package:aliolo/core/di/service_locator.dart';
+import 'package:aliolo/core/widgets/premium_badge.dart';
 
 class LeaderboardPage extends StatefulWidget {
   const LeaderboardPage({super.key});
@@ -319,22 +320,27 @@ class _LeaderboardPageState extends State<LeaderboardPage>
                 CircleAvatar(
                   backgroundImage:
                       user.avatarPath != null
-                          ? (user.avatarPath!.startsWith('http') || kIsWeb
-                                  ? NetworkImage(user.avatarPath!)
-                                  : FileImage(dynamicFile(user.avatarPath!)))
-                              as ImageProvider
+                          ? NetworkImage(user.avatarPath!)
                           : null,
                   child:
                       user.avatarPath == null ? const Icon(Icons.person) : null,
                 ),
               ],
             ),
-            title: Text(
-              user.username + (isMe ? ' (${context.t('you')})' : ''),
-              style: TextStyle(
-                fontWeight: isMe ? FontWeight.bold : FontWeight.normal,
-                fontSize: rank < 3 ? 18 : 16,
-              ),
+            title: Row(
+              children: [
+                Text(
+                  user.username + (isMe ? ' (${context.t('you')})' : ''),
+                  style: TextStyle(
+                    fontWeight: isMe ? FontWeight.bold : FontWeight.normal,
+                    fontSize: rank < 3 ? 18 : 16,
+                  ),
+                ),
+                if (user.isPremium) ...[
+                  const SizedBox(width: 6),
+                  const PremiumBadge(size: 14),
+                ],
+              ],
             ),
             subtitle: Text('${user.totalXp} XP'),
             trailing: trailing,

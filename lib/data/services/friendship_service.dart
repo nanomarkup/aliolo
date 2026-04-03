@@ -125,6 +125,17 @@ class FriendshipService {
     }
   }
 
+  bool _checkPremiumStatus(dynamic subsData) {
+    if (subsData == null) return false;
+    final List subs = subsData is List ? subsData : [subsData];
+    if (subs.isEmpty) return false;
+    
+    final s = subs.first;
+    final status = s['status'] as String;
+    final expiry = s['expiry_date'] != null ? DateTime.parse(s['expiry_date']) : null;
+    return status == 'active' && (expiry == null || expiry.isAfter(DateTime.now()));
+  }
+
   Future<List<UserModel>> getFriendsLeaderboard({
     int page = 0,
     int pageSize = 20,
@@ -147,14 +158,18 @@ class FriendshipService {
 
       final profilesRes = await _supabase
           .from('profiles')
-          .select()
+          .select('*, user_subscriptions(status, expiry_date)')
           .inFilter('id', friendIds.toList())
           .order('total_xp', ascending: false)
           .range(page * pageSize, (page + 1) * pageSize - 1);
 
-      return List<dynamic>.from(
-        profilesRes,
-      ).map((p) => UserModel.fromJson(p)).toList();
+      return List<dynamic>.from(profilesRes).map((p) {
+        final u = UserModel.fromJson(p);
+        u.isPremium = (u.serverId == 'f2fb4c9c-169b-447d-b8a6-dce72c4ed5ac')
+            ? true
+            : _checkPremiumStatus(p['user_subscriptions']);
+        return u;
+      }).toList();
     } catch (e) {
       return [];
     }

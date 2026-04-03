@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:media_kit_video/media_kit_video.dart';
@@ -23,10 +24,12 @@ class OnboardingScreen extends StatefulWidget {
 class _OnboardingScreenState extends State<OnboardingScreen> {
   final PageController _pageController = PageController();
   final String _sessionId = const Uuid().v4();
+  final GlobalKey _featuresKey = GlobalKey();
   int _currentPage = 0;
   double _dailyGoal = 30;
   String? _selectedAge;
   int? _selectedPillarId;
+  bool _showFeatures = false;
 
   late final Player _player1;
   late final VideoController _controller1;
@@ -43,16 +46,40 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     'Over 50',
   ];
 
+  final List<Map<String, dynamic>> _features = [
+    {'name': 'Learn any subject or collection', 'free': true},
+    {'name': 'Access to community subjects', 'free': true},
+    {'name': 'Spaced Repetition (SM-2)', 'free': true},
+    {'name': 'Favorite items on dashboard', 'free': true},
+    {'name': 'Invite and connect with friends', 'free': true},
+    {'name': 'Direct feedback and suggestions', 'free': true},
+    {'name': 'Unlimited daily XP goals', 'free': false},
+    {'name': 'Create folders, subjects and collections', 'free': false},
+    {'name': 'Test subjects and collections', 'free': false},
+    {'name': 'Customize learning and testing', 'free': false},
+    {'name': 'Private profile mode', 'free': false},
+  ];
+
   @override
   void initState() {
     super.initState();
+    _initAnalytics();
     _player1 = Player();
     _controller1 = VideoController(_player1);
     _player1.open(Media('asset:///assets/Slide1_v1.webm'));
     _player1.setPlaylistMode(PlaylistMode.none);
   }
 
-  // We use upsert so that the record is created on the first update
+  Future<void> _initAnalytics() async {
+    try {
+      await Supabase.instance.client.from('onboarding_analytics').insert({
+        'session_id': _sessionId,
+      });
+    } catch (e) {
+      debugPrint('Error initializing onboarding analytics: $e');
+    }
+  }
+
   Future<void> _updateAnalytics({String? ageRange, int? pillarId, int? lastSlideIndex}) async {
     try {
       final updates = <String, dynamic>{
@@ -71,9 +98,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   void _handlePageChange(int page) {
-    setState(() => _currentPage = page);
+    setState(() {
+      _currentPage = page;
+      if (page != 6) _showFeatures = false;
+    });
     
-    // Manage playback based on slide index
     if (page == 0) {
       _player1.seek(Duration.zero);
       _player1.play();
@@ -93,7 +122,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('has_seen_onboarding', true);
     
-    // Record the last slide reached before finishing/skipping
     await _updateAnalytics(lastSlideIndex: _currentPage);
 
     if (_selectedAge != null) {
@@ -103,9 +131,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     final authService = getIt<AuthService>();
     if (authService.currentUser != null) {
       await authService.updateNextDailyGoal(_dailyGoal.toInt());
-      if (_selectedPillarId != null) {
-        await authService.updateMainColorFromPillar(_selectedPillarId!);
-      }
     }
 
     if (!mounted) return;
@@ -140,8 +165,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             controller: _pageController,
             onPageChanged: _handlePageChange,
             children: [
-              // Slide 1: Hook
+              // Slide 1: Hook (Title below video)
               OnboardingSlide(
+                useFixedHeader: false,
+                invertContent: true,
                 visual: ClipRRect(
                   borderRadius: BorderRadius.circular(24),
                   child: AspectRatio(
@@ -158,6 +185,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               ),
               // Slide 2: Age Selection
               OnboardingSlide(
+                useFixedHeader: false,
                 visual: Center(
                   child: ConstrainedBox(
                     constraints: const BoxConstraints(maxWidth: 400),
@@ -227,6 +255,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               ),
               // Slide 3: Pillar Selection
               OnboardingSlide(
+                useFixedHeader: false,
                 visual: pillars.isEmpty 
                   ? const Center(child: CircularProgressIndicator())
                   : Center(
@@ -265,20 +294,23 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 title: "What do you want to master?",
                 description: "Select your primary interest to customize your initial dashboard.",
               ),
-              // Slide 4: Create & Share (New)
+              // Slide 4: Create & Share
               OnboardingSlide(
+                useFixedHeader: false,
                 visual: Icon(Icons.groups, size: 120, color: primaryColor),
                 title: "Create & Share",
                 description: "Build your own deck or dive into cards shared by Aliolo learners worldwide.\n\nLearn at your pace, then test yourself when you're ready.",
               ),
               // Slide 5: Sync
               OnboardingSlide(
+                useFixedHeader: false,
                 visual: Icon(Icons.cloud_sync_outlined, size: 120, color: primaryColor),
                 title: "Master Anywhere",
                 description: "Your library stays in sync across all your devices. We’ll only nudge you when it’s time to protect your streak.",
               ),
               // Slide 6: Social Proof
               OnboardingSlide(
+                useFixedHeader: false,
                 visual: Center(
                   child: ConstrainedBox(
                     constraints: const BoxConstraints(maxWidth: 400),
@@ -298,12 +330,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               ),
                             ],
                           ),
-                          child: Column(
+                          child: const Column(
                             children: [
-                              const Icon(Icons.format_quote, color: Color(0xFF1D4289), size: 40),
-                              const SizedBox(height: 16),
-                              const Text(
-                                "\"Aliolo changed the way I learn languages. The visual cards and spaced repetition make everything stick!\"",
+                              Icon(Icons.format_quote, color: Color(0xFF1D4289), size: 40),
+                              SizedBox(height: 16),
+                              Text(
+                                "Aliolo has completely transformed the way my children and I master new topics. The visual cards and spaced repetition make learning feel like a game!",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontSize: 18,
@@ -312,35 +344,28 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                   height: 1.4,
                                 ),
                               ),
-                              const SizedBox(height: 24),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SizedBox(
-                                    width: 80,
-                                    height: 40,
-                                    child: Stack(
-                                      children: [
-                                        Positioned(left: 0, child: _buildUserAvatar(Colors.blue[100]!, Icons.person)),
-                                        Positioned(left: 20, child: _buildUserAvatar(Colors.green[100]!, Icons.person_outline)),
-                                        Positioned(left: 40, child: _buildUserAvatar(Colors.orange[100]!, Icons.face)),
-                                      ],
-                                    ),
-                                  ),
-                                  const SizedBox(width: 12),
-                                  const Expanded(
-                                    child: Text(
-                                      "Joined by 10,000+ learners",
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600,
-                                        color: Color(0xFF64748B),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
                             ],
+                          ),
+                        ),
+                        const SizedBox(height: 32),
+                        SizedBox(
+                          width: 80,
+                          height: 40,
+                          child: Stack(
+                            children: [
+                              Positioned(left: 0, child: _buildUserAvatar(Colors.blue[100]!, Icons.person)),
+                              Positioned(left: 20, child: _buildUserAvatar(Colors.green[100]!, Icons.person_outline)),
+                              Positioned(left: 40, child: _buildUserAvatar(Colors.orange[100]!, Icons.face)),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                        const Text(
+                          "Joined by thousands of learners",
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: Color(0xFF64748B),
                           ),
                         ),
                         const SizedBox(height: 32),
@@ -348,7 +373,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             const Text(
-                              "5/5",
+                              "4.8/5",
                               style: TextStyle(
                                 fontSize: 32,
                                 fontWeight: FontWeight.bold,
@@ -357,18 +382,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             ),
                             const SizedBox(width: 12),
                             Row(
-                              children: List.generate(5, (index) => const Icon(
-                                Icons.star,
-                                color: Colors.amber,
-                                size: 28,
-                              )),
+                              children: [
+                                ...List.generate(4, (index) => const Icon(
+                                  Icons.star,
+                                  color: Colors.amber,
+                                  size: 28,
+                                )),
+                                const Icon(Icons.star_half, color: Colors.amber, size: 28),
+                              ],
                             ),
                           ],
-                        ),
-                        const SizedBox(height: 8),
-                        const Text(
-                          "Average learner rating",
-                          style: TextStyle(color: Color(0xFF64748B), fontWeight: FontWeight.w500),
                         ),
                       ],
                     ),
@@ -377,8 +400,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 title: "Join the Community",
                 description: "Start your journey today and master anything you set your mind to.",
               ),
-              // Slide 7: Paywall (Placeholder)
+              // Slide 7: Paywall
               OnboardingSlide(
+                useFixedHeader: false,
                 visual: Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -391,9 +415,75 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           children: [
                             _buildSubscriptionOption("Weekly Access", r"$2.99", "Best for quick goals", originalPrice: r"$5.98"),
                             const SizedBox(height: 12),
-                            _buildSubscriptionOption("Monthly Access", r"$8.99", "Most popular choice", originalPrice: r"$17.98", isSelected: true),
+                            _buildSubscriptionOption(
+                              "Monthly Access", r"$8.99", "Most popular choice", 
+                              originalPrice: r"$17.98", isSelected: true, 
+                              extraInfo: r"($2.25 / Week)"
+                            ),
                             const SizedBox(height: 12),
-                            _buildSubscriptionOption("Yearly Access", r"$80.99", "Save 33% per month", originalPrice: r"$161.98"),
+                            _buildSubscriptionOption(
+                              "Yearly Access", r"$80.99", "Save 33% per month", 
+                              originalPrice: r"$161.98",
+                              extraInfo: r"($1.56 / Week)"
+                            ),
+                            const SizedBox(height: 24),
+                            // Collapsible Features List with Auto-Scroll
+                            TextButton.icon(
+                              onPressed: () {
+                                setState(() => _showFeatures = !_showFeatures);
+                                if (_showFeatures) {
+                                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                                    final context = _featuresKey.currentContext;
+                                    if (context != null) {
+                                      Scrollable.ensureVisible(
+                                        context,
+                                        duration: const Duration(milliseconds: 500),
+                                        curve: Curves.easeInOut,
+                                      );
+                                    }
+                                  });
+                                }
+                              },
+                              icon: Icon(_showFeatures ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down, color: primaryColor),
+                              label: Text(
+                                _showFeatures ? "Hide Plan Comparison" : "Compare Free vs Premium",
+                                style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            if (_showFeatures) ...[
+                              const SizedBox(height: 16),
+                              Container(
+                                key: _featuresKey,
+                                padding: const EdgeInsets.all(16),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(16),
+                                  border: Border.all(color: Colors.black.withValues(alpha: 0.05)),
+                                ),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        const Expanded(child: SizedBox()),
+                                        SizedBox(width: 50, child: Text('FREE', textAlign: TextAlign.center, style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.grey[600]))),
+                                        SizedBox(width: 50, child: Text('PRO', textAlign: TextAlign.center, style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: primaryColor))),
+                                      ],
+                                    ),
+                                    const Divider(),
+                                    ..._features.map((f) => Padding(
+                                      padding: const EdgeInsets.symmetric(vertical: 6),
+                                      child: Row(
+                                        children: [
+                                          Expanded(child: Text(f['name'], style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500))),
+                                          SizedBox(width: 50, child: Icon(f['free'] ? Icons.check_circle : Icons.cancel, size: 16, color: f['free'] ? Colors.green : Colors.grey[300])),
+                                          const SizedBox(width: 50, child: Icon(Icons.check_circle, size: 16, color: Color(0xFF1D4289))),
+                                        ],
+                                      ),
+                                    )),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ],
                         ),
                       ),
@@ -408,7 +498,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           // Top Overlay: Skip
           if (_currentPage < 6)
             Positioned(
-              top: 48,
+              top: 20,
               right: 20,
               child: TextButton(
                 onPressed: () => _finishOnboarding(skipped: true),
@@ -484,7 +574,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 
-  Widget _buildSubscriptionOption(String title, String price, String sub, {bool isSelected = false, String? originalPrice}) {
+  Widget _buildSubscriptionOption(String title, String price, String sub, {bool isSelected = false, String? originalPrice, String? extraInfo}) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(16),
@@ -527,6 +617,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   color: Color(0xFF1D4289),
                 ),
               ),
+              if (extraInfo != null)
+                Text(
+                  extraInfo,
+                  style: TextStyle(
+                    color: primaryColor.withValues(alpha: 0.7),
+                    fontSize: 11,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
             ],
           ),
         ],

@@ -14,8 +14,10 @@ import 'package:aliolo/data/services/card_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/data/services/testing_language_service.dart';
+import 'package:aliolo/data/services/subscription_service.dart';
 import 'package:aliolo/features/auth/presentation/pages/profile_page.dart';
 import 'package:aliolo/features/settings/presentation/pages/settings_page.dart';
+import 'package:aliolo/features/settings/presentation/pages/premium_upgrade_page.dart';
 import 'package:aliolo/features/documentation/presentation/pages/documentation_page.dart';
 import 'package:aliolo/features/leaderboard/presentation/pages/leaderboard_page.dart';
 import 'package:aliolo/features/subjects/presentation/pages/subject_landing_page.dart';
@@ -37,6 +39,7 @@ class _SubjectPageState extends State<SubjectPage> {
   final _discoveryEngine = getIt<DiscoveryEngine>();
   final _searchController = TextEditingController();
   final _authService = getIt<AuthService>();
+  final _subService = getIt<SubscriptionService>();
 
   String _currentTestingLang = 'en';
   bool _isLangInitialized = false;
@@ -230,6 +233,7 @@ class _SubjectPageState extends State<SubjectPage> {
         TranslationService(),
         ThemeService(),
         getIt<TestingLanguageService>(),
+        _subService,
       ]),
       builder: (context, _) {
         final isSearching = _searchController.text.isNotEmpty;
@@ -242,6 +246,8 @@ class _SubjectPageState extends State<SubjectPage> {
         if (!activeCodes.contains(_currentTestingLang)) {
           activeCodes.add(_currentTestingLang);
         }
+
+        final isPremium = _subService.isPremium;
 
         return PopScope(
           canPop: false,
@@ -353,7 +359,6 @@ class _SubjectPageState extends State<SubjectPage> {
                 ),
             ],
             slivers: [
-              // Scrollable Header Section
               SliverToBoxAdapter(
                 child: LayoutBuilder(
                   builder: (context, constraints) {
@@ -410,6 +415,11 @@ class _SubjectPageState extends State<SubjectPage> {
                             icon: Icon(Icons.add_circle, color: currentSessionColor, size: 40),
                             padding: EdgeInsets.zero,
                             onSelected: (value) async {
+                              if (!isPremium) {
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => const PremiumUpgradePage()));
+                                return;
+                              }
+                              
                               final defaultPillarId = pillars.isNotEmpty ? pillars.first.id : 8;
                               dynamic result;
                               if (value == 'subject') {
@@ -427,9 +437,54 @@ class _SubjectPageState extends State<SubjectPage> {
                               }
                             },
                             itemBuilder: (context) => [
-                              PopupMenuItem(value: 'subject', child: ListTile(leading: const Icon(Icons.description, color: Colors.orange), title: Text(context.t('add_subject')), contentPadding: EdgeInsets.zero)),
-                              PopupMenuItem(value: 'collection', child: ListTile(leading: const Icon(Icons.collections, color: Colors.blue), title: Text(context.t('add_collection')), contentPadding: EdgeInsets.zero)),
-                              PopupMenuItem(value: 'folder', child: ListTile(leading: const Icon(Icons.folder, color: Colors.amber), title: Text(context.t('add_folder')), contentPadding: EdgeInsets.zero)),
+                              PopupMenuItem(
+                                value: 'subject', 
+                                child: ListTile(
+                                  leading: const Icon(Icons.description, color: Colors.orange), 
+                                  title: Row(
+                                    children: [
+                                      Text(context.t('add_subject')),
+                                      if (!isPremium) ...[
+                                        const SizedBox(width: 8),
+                                        const Icon(Icons.stars, color: Colors.amber, size: 16),
+                                      ],
+                                    ],
+                                  ), 
+                                  contentPadding: EdgeInsets.zero,
+                                ),
+                              ),
+                              PopupMenuItem(
+                                value: 'collection', 
+                                child: ListTile(
+                                  leading: const Icon(Icons.collections, color: Colors.blue), 
+                                  title: Row(
+                                    children: [
+                                      Text(context.t('add_collection')),
+                                      if (!isPremium) ...[
+                                        const SizedBox(width: 8),
+                                        const Icon(Icons.stars, color: Colors.amber, size: 16),
+                                      ],
+                                    ],
+                                  ), 
+                                  contentPadding: EdgeInsets.zero,
+                                ),
+                              ),
+                              PopupMenuItem(
+                                value: 'folder', 
+                                child: ListTile(
+                                  leading: const Icon(Icons.folder, color: Colors.amber), 
+                                  title: Row(
+                                    children: [
+                                      Text(context.t('add_folder')),
+                                      if (!isPremium) ...[
+                                        const SizedBox(width: 8),
+                                        const Icon(Icons.stars, color: Colors.amber, size: 16),
+                                      ],
+                                    ],
+                                  ), 
+                                  contentPadding: EdgeInsets.zero,
+                                ),
+                              ),
                             ],
                           ),
                         ),
@@ -517,8 +572,10 @@ class _SubjectPageState extends State<SubjectPage> {
                             final matchingInFolder = _matchingContent.where((e) => e.folderId == item.id).length;
                             return _FolderListTile(folder: item, matchingCount: matchingInFolder, totalCount: folderCategoryTotal, pillar: pillar, languageCode: _currentTestingLang, initialAgeFilter: _filters.ageGroup, initialCollectionFilter: _filters.collectionFilter, onChanged: _loadDashboard);
                           } else if (item is CollectionModel) {
+                            final pillar = pillars.firstWhere((p) => p.id == item.pillarId, orElse: () => pillars.first);
                             return _CollectionListTile(collection: item, pillar: pillar, languageCode: _currentTestingLang, initialAgeFilter: _filters.ageGroup, initialCollectionFilter: _filters.collectionFilter, onChanged: _loadDashboard, onFavoriteChanged: () { setState(() { item.isOnDashboard = !item.isOnDashboard; }); });
                           } else if (item is SubjectModel) {
+                            final pillar = pillars.firstWhere((p) => p.id == item.pillarId, orElse: () => pillars.first);
                             return _SubjectListTile(subject: item, pillar: pillar, languageCode: _currentTestingLang, initialAgeFilter: _filters.ageGroup, initialCollectionFilter: _filters.collectionFilter, onChanged: _loadDashboard, onFavoriteChanged: () { setState(() { item.isOnDashboard = !item.isOnDashboard; }); });
                           }
                           return const SizedBox.shrink();
@@ -587,6 +644,704 @@ class _SubjectPageState extends State<SubjectPage> {
         items: items.entries.map((e) => DropdownMenuItem(value: e.key, child: Text(e.value, overflow: TextOverflow.ellipsis))).toList(),
         onChanged: onChanged,
       )),
+    );
+  }
+}
+
+class PillarSubjectsPage extends StatefulWidget {
+  final Pillar pillar;
+  final String languageCode;
+  final String initialAgeFilter;
+  final String initialCollectionFilter;
+
+  const PillarSubjectsPage({super.key, required this.pillar, required this.languageCode, required this.initialAgeFilter, required this.initialCollectionFilter});
+
+  @override
+  State<PillarSubjectsPage> createState() => _PillarSubjectsPageState();
+}
+
+class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
+  final _searchController = TextEditingController();
+  final _cardService = getIt<CardService>();
+  final _discoveryEngine = getIt<DiscoveryEngine>();
+  final _subService = getIt<SubscriptionService>();
+
+  List<ContentItem> _allContent = [];
+  List<ContentItem> _matchingContent = [];
+  List<ContentItem> _filteredContent = [];
+  bool _isLoading = true;
+  bool _hasUpdated = false;
+  late DiscoveryFilters _filters;
+
+  @override
+  void initState() {
+    super.initState();
+    _filters = DiscoveryFilters(
+      pillarId: widget.pillar.id,
+      ageGroup: widget.initialAgeFilter,
+      collectionFilter: widget.initialCollectionFilter,
+      rootOnly: false,
+    );
+    _loadData();
+  }
+
+  Future<void> _loadData() async {
+    setState(() => _isLoading = true);
+    final content = await _discoveryEngine.getRawContent(_filters);
+    if (mounted) setState(() { _allContent = content; _applySearch(); _isLoading = false; });
+  }
+
+  void _applySearch() {
+    setState(() {
+      _filters = _filters.copyWith(query: _searchController.text);
+      _matchingContent = _discoveryEngine.applyFiltersAndSort(_allContent, _filters, widget.languageCode);
+
+      _filteredContent = _discoveryEngine.getVisibleContent(
+        _matchingContent,
+        widget.languageCode,
+        folderId: _filters.folderId,
+        rootOnly: _filters.folderId == null,
+        collectionFilter: _filters.collectionFilter,
+        myId: getIt<AuthService>().currentUser?.serverId,
+        query: _filters.query,
+      );
+    });
+  }
+
+  Future<void> _navigateToSubject(dynamic result) async {
+    if (result == null || result == true) return;
+
+    final lang = TranslationService().currentLocale.languageCode;
+
+    if (result is SubjectModel) {
+      final cards = await _cardService.getCardsBySubject(result.id);
+      if (mounted) {
+        await Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => SubjectLandingPage(
+              subject: result,
+              cards: cards,
+              languageCode: lang,
+            ),
+          ),
+        );
+        _loadData();
+      }
+    } else if (result is CollectionModel) {
+      final cards = await _cardService.getCollectionCards(result.subjectIds);
+      if (mounted) {
+        await Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => SubjectLandingPage(
+              collection: result,
+              cards: cards.map((sc) => sc.card).toList(),
+              languageCode: lang,
+            ),
+          ),
+        );
+        _loadData();
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {    final pillarColor = widget.pillar.getColor(getIt<ThemeService>().isDarkMode);
+    const appBarColor = Colors.white;
+    return ListenableBuilder(
+      listenable: Listenable.merge([TranslationService(), _subService]),
+      builder: (context, _) {
+        final isPremium = _subService.isPremium;
+        return PopScope(
+          canPop: true,
+          onPopInvokedWithResult: (didPop, result) {},
+          child: AlioloScrollablePage(
+            title: Text(widget.pillar.getTranslatedName(widget.languageCode), style: const TextStyle(color: appBarColor, fontWeight: FontWeight.bold)),
+            appBarColor: pillarColor,
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.school, color: appBarColor),
+                onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
+              ),
+              IconButton(icon: const Icon(Icons.arrow_back, color: appBarColor), onPressed: () => Navigator.pop(context, {'hasUpdated': _hasUpdated, 'ageFilter': _filters.ageGroup, 'collectionFilter': _filters.collectionFilter})),
+            ],
+            slivers: [
+              SliverToBoxAdapter(
+                child: LayoutBuilder(builder: (context, constraints) {
+                  final isSmall = constraints.maxWidth < 600;
+                  final filterRow = Row(children: [
+                    Expanded(child: _buildCompactDropdown(value: _filters.collectionFilter, items: {'all': context.t('filter_all') ?? 'All', 'favorites': context.t('filter_dashboard'), 'mine': context.t('filter_my_subjects'), 'public': context.t('filter_public')}, onChanged: (val) { if (val != null) setState(() { _filters = _filters.copyWith(collectionFilter: val); _applySearch(); }); })),
+                    const SizedBox(width: 8),
+                    Expanded(child: _buildCompactDropdown(value: _filters.ageGroup, items: {'all': context.t('age_all'), '0_6': context.t('age_0_6'), '7_14': context.t('age_7_14'), '15_plus': context.t('age_15_plus')}, onChanged: (val) { if (val != null) setState(() { _filters = _filters.copyWith(ageGroup: val); _applySearch(); }); })),
+                    const SizedBox(width: 8),
+                    SizedBox(width: 48, child: PopupMenuButton<String>(
+                      icon: Icon(Icons.add_circle, color: pillarColor, size: 40),
+                      padding: EdgeInsets.zero,
+                      onSelected: (value) async {
+                        if (!isPremium) {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => const PremiumUpgradePage()));
+                          return;
+                        }
+                        dynamic result;
+                        if (value == 'subject') result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: widget.pillar.id, initialAgeGroup: _filters.ageGroup)));
+                        else if (value == 'collection') result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: widget.pillar.id, isCollectionMode: true, initialAgeGroup: _filters.ageGroup)));
+                        else if (value == 'folder') result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: widget.pillar.id, isFolderMode: true)));
+                        
+                        if (result == true) {
+                          _loadData();
+                          _hasUpdated = true;
+                        } else if (result != null) {
+                          _loadData();
+                          _hasUpdated = true;
+                          await _navigateToSubject(result);
+                        }
+                      },
+                      itemBuilder: (context) => [
+                        PopupMenuItem(
+                          value: 'subject', 
+                          child: ListTile(
+                            leading: Icon(Icons.description, color: pillarColor), 
+                            title: Row(
+                              children: [
+                                Text(context.t('add_subject')),
+                                if (!isPremium) ...[
+                                  const SizedBox(width: 8),
+                                  const Icon(Icons.stars, color: Colors.amber, size: 16),
+                                ],
+                              ],
+                            ), 
+                            contentPadding: EdgeInsets.zero,
+                          ),
+                        ),
+                        PopupMenuItem(
+                          value: 'collection', 
+                          child: ListTile(
+                            leading: Icon(Icons.auto_awesome_motion, color: pillarColor), 
+                            title: Row(
+                              children: [
+                                Text(context.t('add_collection')),
+                                if (!isPremium) ...[
+                                  const SizedBox(width: 8),
+                                  const Icon(Icons.stars, color: Colors.amber, size: 16),
+                                ],
+                              ],
+                            ), 
+                            contentPadding: EdgeInsets.zero,
+                          ),
+                        ),
+                        PopupMenuItem(
+                          value: 'folder', 
+                          child: ListTile(
+                            leading: Icon(Icons.folder, color: pillarColor), 
+                            title: Row(
+                              children: [
+                                Text(context.t('add_folder')),
+                                if (!isPremium) ...[
+                                  const SizedBox(width: 8),
+                                  const Icon(Icons.stars, color: Colors.amber, size: 16),
+                                ],
+                              ],
+                            ), 
+                            contentPadding: EdgeInsets.zero,
+                          ),
+                        ),
+                      ],
+                    )),
+                  ]);
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 16, bottom: 24),
+                    child: isSmall 
+                      ? Column(children: [
+                          TextField(
+                            controller: _searchController,
+                            decoration: InputDecoration(
+                              hintText: context.t('search_subjects'),
+                              prefixIcon: const Icon(Icons.search),
+                              suffixIcon: ValueListenableBuilder<TextEditingValue>(
+                                valueListenable: _searchController,
+                                builder: (context, value, _) {
+                                  return value.text.isNotEmpty ? IconButton(icon: const Icon(Icons.clear), onPressed: () { _searchController.clear(); _applySearch(); }) : const SizedBox.shrink();
+                                },
+                              ),
+                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                              filled: true,
+                              fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
+                            ),
+                            onChanged: (_) => _applySearch(),
+                          ),
+                          const SizedBox(height: 12),
+                          filterRow,
+                        ])
+                      : Row(children: [
+                          Expanded(
+                            flex: 3,
+                            child: TextField(
+                              controller: _searchController,
+                              decoration: InputDecoration(
+                                hintText: context.t('search_subjects'),
+                                prefixIcon: const Icon(Icons.search),
+                                suffixIcon: ValueListenableBuilder<TextEditingValue>(
+                                  valueListenable: _searchController,
+                                  builder: (context, value, _) {
+                                    return value.text.isNotEmpty ? IconButton(icon: const Icon(Icons.clear), onPressed: () { _searchController.clear(); _applySearch(); }) : const SizedBox.shrink();
+                                  },
+                                ),
+                                border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                                contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+                                filled: true,
+                                fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
+                              ),
+                              onChanged: (_) => _applySearch(),
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(flex: 5, child: filterRow),
+                        ]),
+                  );
+                }),
+              ),
+              if (_isLoading) const SliverFillRemaining(child: Center(child: CircularProgressIndicator()))
+              else if (_filteredContent.isEmpty) const SliverFillRemaining(child: Center(child: Text('No items found')))
+              else SliverPadding(
+                padding: const EdgeInsets.only(bottom: 32),
+                sliver: SliverList(delegate: SliverChildBuilderDelegate((context, index) {
+                  final item = _filteredContent[index];
+                  final pillar = pillars.firstWhere((p) => p.id == item.pillarId, orElse: () => pillars.first);
+                  if (item is FolderModel) {
+                    final myId = getIt<AuthService>().currentUser?.serverId;
+                    final folderCategoryTotal = _allContent.where((e) {
+                      if (e.folderId != item.id) return false;
+                      if (_filters.collectionFilter == 'mine') return e.ownerId == myId;
+                      if (_filters.collectionFilter == 'public') {
+                        if (e is SubjectModel) return e.isPublic;
+                        if (e is CollectionModel) return e.isPublic;
+                        return false;
+                      }
+                      if (_filters.collectionFilter == 'favorites') return e.isOnDashboard;
+                      return true;
+                    }).length;
+                    final matchingInFolder = _matchingContent.where((e) => e.folderId == item.id).length;
+                    return _FolderListTile(folder: item, matchingCount: matchingInFolder, totalCount: folderCategoryTotal, pillar: pillar, languageCode: widget.languageCode, initialAgeFilter: _filters.ageGroup, initialCollectionFilter: _filters.collectionFilter, onChanged: _loadData, onFilterChanged: (age, coll) { setState(() { _filters = _filters.copyWith(ageGroup: age, collectionFilter: coll); _applySearch(); }); });
+                  } else if (item is CollectionModel) {
+                    final pillar = pillars.firstWhere((p) => p.id == item.pillarId, orElse: () => pillars.first);
+                    return _CollectionListTile(collection: item, pillar: pillar, languageCode: widget.languageCode, initialAgeFilter: _filters.ageGroup, initialCollectionFilter: _filters.collectionFilter, onChanged: _loadData, onFavoriteChanged: () { setState(() { item.isOnDashboard = !item.isOnDashboard; }); });
+                  } else if (item is SubjectModel) {
+                    final pillar = pillars.firstWhere((p) => p.id == item.pillarId, orElse: () => pillars.first);
+                    return _SubjectListTile(subject: item, pillar: pillar, languageCode: widget.languageCode, initialAgeFilter: _filters.ageGroup, initialCollectionFilter: _filters.collectionFilter, onChanged: _loadData, onFavoriteChanged: () { setState(() { item.isOnDashboard = !item.isOnDashboard; }); });
+                  }
+                  return const SizedBox.shrink();
+                }, childCount: _filteredContent.length)),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildCompactDropdown({required String value, required Map<String, String> items, required ValueChanged<String?> onChanged}) {
+    final validatedValue = items.containsKey(value) ? value : items.keys.first;
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12),
+      decoration: BoxDecoration(color: Theme.of(context).cardColor.withValues(alpha: 0.5), borderRadius: BorderRadius.circular(12), border: Border.all(color: Colors.grey.withValues(alpha: 0.5))),
+      child: DropdownButtonHideUnderline(child: DropdownButton<String>(
+        value: validatedValue, isExpanded: true, icon: const Icon(Icons.arrow_drop_down, size: 20),
+        style: TextStyle(fontSize: 14, color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black87),
+        items: items.entries.map((e) => DropdownMenuItem(value: e.key, child: Text(e.value, overflow: TextOverflow.ellipsis))).toList(),
+        onChanged: onChanged,
+      )),
+    );
+  }
+}
+
+class FolderPage extends StatefulWidget {
+  final FolderModel folder;
+  final Pillar pillar;
+  final String languageCode;
+  final String initialAgeFilter;
+  final String initialCollectionFilter;
+
+  const FolderPage({super.key, required this.folder, required this.pillar, required this.languageCode, required this.initialAgeFilter, required this.initialCollectionFilter});
+
+  @override
+  State<FolderPage> createState() => _FolderPageState();
+}
+
+class _FolderPageState extends State<FolderPage> {
+  final _searchController = TextEditingController();
+  final _cardService = getIt<CardService>();
+  final _discoveryEngine = getIt<DiscoveryEngine>();
+  final _authService = getIt<AuthService>();
+  final _subService = getIt<SubscriptionService>();
+
+  List<ContentItem> _allContent = [];
+  List<ContentItem> _matchingContent = [];
+  List<ContentItem> _filteredContent = [];
+  bool _isLoading = true;
+  late DiscoveryFilters _filters;
+  bool _hasUpdated = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _filters = DiscoveryFilters(
+      pillarId: widget.pillar.id,
+      folderId: widget.folder.id,
+      ageGroup: widget.initialAgeFilter,
+      collectionFilter: widget.initialCollectionFilter,
+      rootOnly: false,
+    );
+    _loadData();
+  }
+
+  Future<void> _loadData() async {
+    setState(() => _isLoading = true);
+    final content = await _discoveryEngine.getRawContent(_filters);
+    if (mounted) setState(() { _allContent = content; _applySearch(); _isLoading = false; });
+  }
+
+  void _applySearch() {
+    setState(() {
+      _filters = _filters.copyWith(query: _searchController.text);
+      _matchingContent = _discoveryEngine.applyFiltersAndSort(_allContent, _filters, widget.languageCode);
+
+      _filteredContent = _discoveryEngine.getVisibleContent(
+        _matchingContent,
+        widget.languageCode,
+        folderId: _filters.folderId,
+        rootOnly: _filters.folderId == null,
+        collectionFilter: _filters.collectionFilter,
+        myId: getIt<AuthService>().currentUser?.serverId,
+        query: _filters.query,
+      );
+    });
+  }
+
+  Future<void> _navigateToSubject(dynamic result) async {
+    if (result == null || result == true) return;
+
+    final lang = TranslationService().currentLocale.languageCode;
+
+    if (result is SubjectModel) {
+      final cards = await _cardService.getCardsBySubject(result.id);
+      if (mounted) {
+        await Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => SubjectLandingPage(
+              subject: result,
+              cards: cards,
+              languageCode: lang,
+            ),
+          ),
+        );
+        _loadData();
+      }
+    } else if (result is CollectionModel) {
+      final cards = await _cardService.getCollectionCards(result.subjectIds);
+      if (mounted) {
+        await Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => SubjectLandingPage(
+              collection: result,
+              cards: cards.map((sc) => sc.card).toList(),
+              languageCode: lang,
+            ),
+          ),
+        );
+        _loadData();
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {    final pillarColor = widget.pillar.getColor(getIt<ThemeService>().isDarkMode);
+    const appBarColor = Colors.white;
+    final isOwner = widget.folder.ownerId == _authService.currentUser?.serverId;
+
+    return ListenableBuilder(
+      listenable: Listenable.merge([TranslationService(), _subService]),
+      builder: (context, _) {
+        final isPremium = _subService.isPremium;
+        return PopScope(
+          canPop: true,
+          onPopInvokedWithResult: (didPop, result) {},
+          child: AlioloScrollablePage(
+            title: Text(widget.folder.getName(widget.languageCode), style: const TextStyle(color: appBarColor, fontWeight: FontWeight.bold)),
+            appBarColor: pillarColor,
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.school, color: appBarColor),
+                onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
+              ),
+              IconButton(icon: const Icon(Icons.arrow_back, color: appBarColor), onPressed: () => Navigator.pop(context, {'hasUpdated': _hasUpdated, 'ageFilter': _filters.ageGroup, 'collectionFilter': _filters.collectionFilter})),
+              if (isOwner) ...[
+                IconButton(icon: const Icon(Icons.edit, color: appBarColor), onPressed: () async {
+                  final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(existingFolder: widget.folder, isFolderMode: true)));
+                  if (result == true) { _loadData(); _hasUpdated = true; }
+                }),
+                IconButton(icon: const Icon(Icons.delete, color: appBarColor), onPressed: () async {
+                  final confirmed = await showDialog<bool>(context: context, builder: (context) => AlertDialog(title: Text(context.t('delete_folder')), content: const Text('Are you sure you want to delete this folder?'), actions: [TextButton(onPressed: () => Navigator.pop(context, false), child: Text(context.t('cancel'))), TextButton(onPressed: () => Navigator.pop(context, true), style: TextButton.styleFrom(foregroundColor: Colors.red), child: Text(context.t('delete')))]));
+                  if (confirmed == true && mounted) {
+                    try {
+                      await _cardService.deleteFolder(widget.folder.id);
+                      if (mounted) Navigator.pop(context, {'hasUpdated': true, 'ageFilter': _filters.ageGroup, 'collectionFilter': _filters.collectionFilter});
+                    } catch (e) {
+                      if (e.toString().contains('folder_not_empty') && mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(context.t('folder_not_empty_msg') ?? 'Cannot delete folder: it is not empty')));
+                      }
+                    }
+                  }
+                }),
+              ],
+              IconButton(icon: const Icon(Icons.feedback, color: appBarColor), onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => FeedbackPage(folderId: widget.folder.id, contextTitle: widget.folder.getName(widget.languageCode), appBarColor: pillarColor)))),
+            ],
+            slivers: [
+              SliverToBoxAdapter(
+                child: LayoutBuilder(builder: (context, constraints) {
+                  final isSmall = constraints.maxWidth < 600;
+                  final filterRow = Row(children: [
+                    Expanded(child: _buildCompactDropdown(value: _filters.collectionFilter, items: {'all': context.t('filter_all') ?? 'All', 'favorites': context.t('filter_dashboard'), 'mine': context.t('filter_my_subjects'), 'public': context.t('filter_public')}, onChanged: (val) { if (val != null) setState(() { _filters = _filters.copyWith(collectionFilter: val); _applySearch(); }); })),
+                    const SizedBox(width: 8),
+                    Expanded(child: _buildCompactDropdown(value: _filters.ageGroup, items: {'all': context.t('age_all'), '0_6': context.t('age_0_6'), '7_14': context.t('age_7_14'), '15_plus': context.t('age_15_plus')}, onChanged: (val) { if (val != null) setState(() { _filters = _filters.copyWith(ageGroup: val); _applySearch(); }); })),
+                    const SizedBox(width: 8),
+                    SizedBox(width: 48, child: PopupMenuButton<String>(
+                      icon: Icon(Icons.add_circle, color: pillarColor, size: 40),
+                      padding: EdgeInsets.zero,
+                      onSelected: (value) async {
+                        if (!isPremium) {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => const PremiumUpgradePage()));
+                          return;
+                        }
+                        dynamic result;
+                        if (value == 'subject') result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: widget.pillar.id, folderId: widget.folder.id, initialAgeGroup: _filters.ageGroup)));
+                        else if (value == 'collection') result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: widget.pillar.id, folderId: widget.folder.id, isCollectionMode: true, initialAgeGroup: _filters.ageGroup)));
+                        
+                        if (result == true) {
+                          _loadData();
+                          _hasUpdated = true;
+                        } else if (result != null) {
+                          _loadData();
+                          _hasUpdated = true;
+                          await _navigateToSubject(result);
+                        }
+                      },
+                      itemBuilder: (context) => [
+                        PopupMenuItem(
+                          value: 'subject', 
+                          child: ListTile(
+                            leading: Icon(Icons.description, color: pillarColor), 
+                            title: Row(
+                              children: [
+                                Text(context.t('add_subject')),
+                                if (!isPremium) ...[
+                                  const SizedBox(width: 8),
+                                  const Icon(Icons.stars, color: Colors.amber, size: 16),
+                                ],
+                              ],
+                            ), 
+                            contentPadding: EdgeInsets.zero,
+                          ),
+                        ),
+                        PopupMenuItem(
+                          value: 'collection', 
+                          child: ListTile(
+                            leading: Icon(Icons.auto_awesome_motion, color: pillarColor), 
+                            title: Row(
+                              children: [
+                                Text(context.t('add_collection')),
+                                if (!isPremium) ...[
+                                  const SizedBox(width: 8),
+                                  const Icon(Icons.stars, color: Colors.amber, size: 16),
+                                ],
+                              ],
+                            ), 
+                            contentPadding: EdgeInsets.zero,
+                          ),
+                        ),
+                      ],
+                    )),
+                  ]);
+
+                  final description = widget.folder.getDescription(widget.languageCode);
+
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 16, bottom: 24),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        if (description.isNotEmpty) ...[
+                          Text(
+                            description,
+                            style: TextStyle(
+                              color: Colors.grey[600],
+                              fontSize: 14,
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                        ],
+                        isSmall 
+                          ? Column(children: [
+                              TextField(
+                                controller: _searchController,
+                                decoration: InputDecoration(
+                                  hintText: context.t('search_subjects'),
+                                  prefixIcon: const Icon(Icons.search),
+                                  suffixIcon: ValueListenableBuilder<TextEditingValue>(
+                                    valueListenable: _searchController,
+                                    builder: (context, value, _) {
+                                      return value.text.isNotEmpty ? IconButton(icon: const Icon(Icons.clear), onPressed: () { _searchController.clear(); _applySearch(); }) : const SizedBox.shrink();
+                                    },
+                                  ),
+                                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                                  filled: true,
+                                  fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
+                                ),
+                                onChanged: (_) => _applySearch(),
+                              ),
+                              const SizedBox(height: 12),
+                              filterRow,
+                            ])
+                          : Row(children: [
+                              Expanded(
+                                flex: 3,
+                                child: TextField(
+                                  controller: _searchController,
+                                  decoration: InputDecoration(
+                                    hintText: context.t('search_subjects'),
+                                    prefixIcon: const Icon(Icons.search),
+                                    suffixIcon: ValueListenableBuilder<TextEditingValue>(
+                                      valueListenable: _searchController,
+                                      builder: (context, value, _) {
+                                        return value.text.isNotEmpty ? IconButton(icon: const Icon(Icons.clear), onPressed: () { _searchController.clear(); _applySearch(); }) : const SizedBox.shrink();
+                                      },
+                                    ),
+                                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                                    contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+                                    filled: true,
+                                    fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
+                                  ),
+                                  onChanged: (_) => _applySearch(),
+                                ),
+                              ),
+                              const SizedBox(width: 8),
+                              Expanded(flex: 5, child: filterRow),
+                            ]),
+                      ],
+                    ),
+                  );
+                }),
+              ),
+              if (_isLoading) const SliverFillRemaining(child: Center(child: CircularProgressIndicator()))
+              else if (_filteredContent.isEmpty) const SliverFillRemaining(child: Center(child: Text('No subjects found')))
+              else SliverPadding(padding: const EdgeInsets.only(bottom: 32), sliver: SliverList(delegate: SliverChildBuilderDelegate((context, index) {
+                final item = _filteredContent[index];
+                if (item is FolderModel) {
+                  final myId = getIt<AuthService>().currentUser?.serverId;
+                  final folderCategoryTotal = _allContent.where((e) {
+                    if (e.folderId != item.id) return false;
+                    if (_filters.collectionFilter == 'mine') return e.ownerId == myId;
+                    if (_filters.collectionFilter == 'public') {
+                      if (e is SubjectModel) return e.isPublic;
+                      if (e is CollectionModel) return e.isPublic;
+                      return false;
+                    }
+                    if (_filters.collectionFilter == 'favorites') return e.isOnDashboard;
+                    return true;
+                  }).length;
+                  final matchingInFolder = _matchingContent.where((e) => e.folderId == item.id).length;
+                  return _FolderListTile(folder: item, matchingCount: matchingInFolder, totalCount: folderCategoryTotal, pillar: widget.pillar, languageCode: widget.languageCode, initialAgeFilter: _filters.ageGroup, initialCollectionFilter: _filters.collectionFilter, onChanged: () { _loadData(); _hasUpdated = true; }, onFilterChanged: (age, coll) { setState(() { _filters = _filters.copyWith(ageGroup: age, collectionFilter: coll); _applySearch(); }); });
+                } else if (item is CollectionModel) {
+                  final pillar = pillars.firstWhere((p) => p.id == item.pillarId, orElse: () => pillars.first);
+                  return _CollectionListTile(collection: item, pillar: pillar, languageCode: widget.languageCode, initialAgeFilter: _filters.ageGroup, initialCollectionFilter: _filters.collectionFilter, onChanged: () { _loadData(); _hasUpdated = true; }, onFavoriteChanged: () { setState(() { item.isOnDashboard = !item.isOnDashboard; _hasUpdated = true; }); });
+                } else if (item is SubjectModel) {
+                  final pillar = pillars.firstWhere((p) => p.id == item.pillarId, orElse: () => pillars.first);
+                  return _SubjectListTile(subject: item, pillar: pillar, languageCode: widget.languageCode, initialAgeFilter: _filters.ageGroup, initialCollectionFilter: _filters.collectionFilter, onChanged: () { _loadData(); _hasUpdated = true; }, onFavoriteChanged: () { setState(() { item.isOnDashboard = !item.isOnDashboard; _hasUpdated = true; }); });
+                }
+                return const SizedBox.shrink();
+              }, childCount: _filteredContent.length))),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildCompactDropdown({required String value, required Map<String, String> items, required ValueChanged<String?> onChanged}) {
+    final validatedValue = items.containsKey(value) ? value : items.keys.first;
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12),
+      decoration: BoxDecoration(color: Theme.of(context).cardColor.withValues(alpha: 0.5), borderRadius: BorderRadius.circular(12), border: Border.all(color: Colors.grey.withValues(alpha: 0.5))),
+      child: DropdownButtonHideUnderline(child: DropdownButton<String>(
+        value: validatedValue, isExpanded: true, icon: const Icon(Icons.arrow_drop_down, size: 20),
+        style: TextStyle(fontSize: 14, color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black87),
+        items: items.entries.map((e) => DropdownMenuItem(value: e.key, child: Text(e.value, overflow: TextOverflow.ellipsis))).toList(),
+        onChanged: onChanged,
+      )),
+    );
+  }
+}
+
+class _FolderListTile extends StatelessWidget {
+  final FolderModel folder;
+  final int matchingCount;
+  final int totalCount;
+  final Pillar pillar;
+  final String languageCode;
+  final String initialAgeFilter;
+  final String initialCollectionFilter;
+  final VoidCallback? onChanged;
+  final Function(String age, String collection)? onFilterChanged;
+
+  const _FolderListTile({required this.folder, required this.matchingCount, required this.totalCount, required this.pillar, required this.languageCode, required this.initialAgeFilter, required this.initialCollectionFilter, this.onChanged, this.onFilterChanged});
+
+  @override
+  Widget build(BuildContext context) {
+    final pillarColor = pillar.getColor(getIt<ThemeService>().isDarkMode);
+    final bool isEmpty = matchingCount == 0;
+    final isOwner = folder.ownerId == getIt<AuthService>().currentUser?.serverId;
+
+    return Opacity(
+      opacity: isEmpty ? 0.5 : 1.0,
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 16),
+        child: InkWell(
+          onTap: () async {
+            final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => FolderPage(folder: folder, pillar: pillar, languageCode: languageCode, initialAgeFilter: initialAgeFilter, initialCollectionFilter: initialCollectionFilter)));
+            if (result is Map) {
+              onFilterChanged?.call(result['ageFilter'] ?? initialAgeFilter, result['collectionFilter'] ?? initialCollectionFilter);
+              if (result['hasUpdated'] == true) onChanged?.call();
+            }
+          },
+          borderRadius: BorderRadius.circular(16),
+          child: Container(
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(color: Theme.of(context).cardColor, borderRadius: BorderRadius.circular(16), border: Border.all(color: pillarColor.withValues(alpha: 0.2), width: 1.5)),
+            child: Row(children: [
+              Icon(Icons.folder, color: pillarColor),
+              const SizedBox(width: 16),
+              Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Text(folder.getName(languageCode), style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                Row(
+                  children: [
+                    Text(matchingCount == totalCount ? '$totalCount ${context.plural('subject', totalCount)}' : '$matchingCount / $totalCount ${context.plural('subject', totalCount)}', style: TextStyle(color: Colors.grey[600], fontSize: 14, fontWeight: matchingCount > 0 ? FontWeight.bold : FontWeight.normal)),
+                    if (!isOwner && folder.ownerName != null) ...[
+                      const SizedBox(width: 8),
+                      Text('•', style: TextStyle(color: Colors.grey[400], fontSize: 14)),
+                      const SizedBox(width: 8),
+                      if (folder.ownerName == 'Aliolo') Icon(Icons.verified, color: Colors.grey[600], size: 16)
+                      else Flexible(child: Text(folder.ownerName!, style: TextStyle(color: Colors.grey[600], fontSize: 14, fontWeight: FontWeight.w500), overflow: TextOverflow.ellipsis)),
+                    ],
+                  ],
+                ),
+              ])),
+              const Icon(Icons.chevron_right, color: Colors.grey),
+            ]),
+          ),
+        ),
+      ),
     );
   }
 }
@@ -776,615 +1531,6 @@ class _PillarGridTile extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class PillarSubjectsPage extends StatefulWidget {
-  final Pillar pillar;
-  final String languageCode;
-  final String initialAgeFilter;
-  final String initialCollectionFilter;
-
-  const PillarSubjectsPage({super.key, required this.pillar, required this.languageCode, required this.initialAgeFilter, required this.initialCollectionFilter});
-
-  @override
-  State<PillarSubjectsPage> createState() => _PillarSubjectsPageState();
-}
-
-class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
-  final _searchController = TextEditingController();
-  final _cardService = getIt<CardService>();
-  final _discoveryEngine = getIt<DiscoveryEngine>();
-
-  List<ContentItem> _allContent = [];
-  List<ContentItem> _matchingContent = [];
-  List<ContentItem> _filteredContent = [];
-  bool _isLoading = true;
-  bool _hasUpdated = false;
-  late DiscoveryFilters _filters;
-
-  @override
-  void initState() {
-    super.initState();
-    _filters = DiscoveryFilters(
-      pillarId: widget.pillar.id,
-      ageGroup: widget.initialAgeFilter,
-      collectionFilter: widget.initialCollectionFilter,
-      rootOnly: false,
-    );
-    _loadData();
-  }
-
-  Future<void> _loadData() async {
-    setState(() => _isLoading = true);
-    final content = await _discoveryEngine.getRawContent(_filters);
-    if (mounted) setState(() { _allContent = content; _applySearch(); _isLoading = false; });
-  }
-
-  void _applySearch() {
-    setState(() {
-      _filters = _filters.copyWith(query: _searchController.text);
-      _matchingContent = _discoveryEngine.applyFiltersAndSort(_allContent, _filters, widget.languageCode);
-
-      _filteredContent = _discoveryEngine.getVisibleContent(
-        _matchingContent,
-        widget.languageCode,
-        folderId: _filters.folderId,
-        rootOnly: _filters.folderId == null,
-        collectionFilter: _filters.collectionFilter,
-        myId: getIt<AuthService>().currentUser?.serverId,
-        query: _filters.query,
-      );
-    });
-  }
-
-  Future<void> _navigateToSubject(dynamic result) async {
-    if (result == null || result == true) return;
-
-    final lang = TranslationService().currentLocale.languageCode;
-
-    if (result is SubjectModel) {
-      final cards = await _cardService.getCardsBySubject(result.id);
-      if (mounted) {
-        await Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => SubjectLandingPage(
-              subject: result,
-              cards: cards,
-              languageCode: lang,
-            ),
-          ),
-        );
-        _loadData();
-      }
-    } else if (result is CollectionModel) {
-      final cards = await _cardService.getCollectionCards(result.subjectIds);
-      if (mounted) {
-        await Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => SubjectLandingPage(
-              collection: result,
-              cards: cards.map((sc) => sc.card).toList(),
-              languageCode: lang,
-            ),
-          ),
-        );
-        _loadData();
-      }
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {    final pillarColor = widget.pillar.getColor(getIt<ThemeService>().isDarkMode);
-    const appBarColor = Colors.white;
-    return ListenableBuilder(
-      listenable: TranslationService(),
-      builder: (context, _) {
-        return PopScope(
-          canPop: true,
-          onPopInvokedWithResult: (didPop, result) {},
-          child: AlioloScrollablePage(
-            title: Text(widget.pillar.getTranslatedName(widget.languageCode), style: const TextStyle(color: appBarColor, fontWeight: FontWeight.bold)),
-            appBarColor: pillarColor,
-            actions: [
-              IconButton(
-                icon: const Icon(Icons.school, color: appBarColor),
-                onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
-              ),
-              IconButton(icon: const Icon(Icons.arrow_back, color: appBarColor), onPressed: () => Navigator.pop(context, {'hasUpdated': _hasUpdated, 'ageFilter': _filters.ageGroup, 'collectionFilter': _filters.collectionFilter})),
-            ],
-            slivers: [
-              // Scrollable Header Section
-              SliverToBoxAdapter(
-                child: LayoutBuilder(builder: (context, constraints) {
-                  final isSmall = constraints.maxWidth < 600;
-                  final filterRow = Row(children: [
-                    Expanded(child: _buildCompactDropdown(value: _filters.collectionFilter, items: {'all': context.t('filter_all') ?? 'All', 'favorites': context.t('filter_dashboard'), 'mine': context.t('filter_my_subjects'), 'public': context.t('filter_public')}, onChanged: (val) { if (val != null) setState(() { _filters = _filters.copyWith(collectionFilter: val); _applySearch(); }); })),
-                    const SizedBox(width: 8),
-                    Expanded(child: _buildCompactDropdown(value: _filters.ageGroup, items: {'all': context.t('age_all'), '0_6': context.t('age_0_6'), '7_14': context.t('age_7_14'), '15_plus': context.t('age_15_plus')}, onChanged: (val) { if (val != null) setState(() { _filters = _filters.copyWith(ageGroup: val); _applySearch(); }); })),
-                    const SizedBox(width: 8),
-                    SizedBox(width: 48, child: PopupMenuButton<String>(
-                      icon: Icon(Icons.add_circle, color: pillarColor, size: 40),
-                      padding: EdgeInsets.zero,
-                      onSelected: (value) async {
-                        dynamic result;
-                        if (value == 'subject') result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: widget.pillar.id, initialAgeGroup: _filters.ageGroup)));
-                        else if (value == 'collection') result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: widget.pillar.id, isCollectionMode: true, initialAgeGroup: _filters.ageGroup)));
-                        else if (value == 'folder') result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: widget.pillar.id, isFolderMode: true)));
-                        
-                        if (result == true) {
-                          _loadData();
-                          _hasUpdated = true;
-                        } else if (result != null) {
-                          _loadData();
-                          _hasUpdated = true;
-                          await _navigateToSubject(result);
-                        }
-                      },
-                      itemBuilder: (context) => [
-                        PopupMenuItem(value: 'subject', child: ListTile(leading: Icon(Icons.description, color: pillarColor), title: Text(context.t('add_subject')), contentPadding: EdgeInsets.zero)),
-                        PopupMenuItem(value: 'collection', child: ListTile(leading: Icon(Icons.auto_awesome_motion, color: pillarColor), title: Text(context.t('add_collection')), contentPadding: EdgeInsets.zero)),
-                        PopupMenuItem(value: 'folder', child: ListTile(leading: Icon(Icons.folder, color: pillarColor), title: Text(context.t('add_folder')), contentPadding: EdgeInsets.zero)),
-                      ],
-                    )),
-                  ]);
-                  return Padding(
-                    padding: const EdgeInsets.only(top: 16, bottom: 24),
-                    child: isSmall 
-                      ? Column(children: [
-                          TextField(
-                            controller: _searchController,
-                            decoration: InputDecoration(
-                              hintText: context.t('search_subjects'),
-                              prefixIcon: const Icon(Icons.search),
-                              suffixIcon: ValueListenableBuilder<TextEditingValue>(
-                                valueListenable: _searchController,
-                                builder: (context, value, _) {
-                                  return value.text.isNotEmpty ? IconButton(icon: const Icon(Icons.clear), onPressed: () { _searchController.clear(); _applySearch(); }) : const SizedBox.shrink();
-                                },
-                              ),
-                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                              filled: true,
-                              fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
-                            ),
-                            onChanged: (_) => _applySearch(),
-                          ),
-                          const SizedBox(height: 12),
-                          filterRow,
-                        ])
-                      : Row(children: [
-                          Expanded(
-                            flex: 3,
-                            child: TextField(
-                              controller: _searchController,
-                              decoration: InputDecoration(
-                                hintText: context.t('search_subjects'),
-                                prefixIcon: const Icon(Icons.search),
-                                suffixIcon: ValueListenableBuilder<TextEditingValue>(
-                                  valueListenable: _searchController,
-                                  builder: (context, value, _) {
-                                    return value.text.isNotEmpty ? IconButton(icon: const Icon(Icons.clear), onPressed: () { _searchController.clear(); _applySearch(); }) : const SizedBox.shrink();
-                                  },
-                                ),
-                                border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                                contentPadding: const EdgeInsets.symmetric(horizontal: 12),
-                                filled: true,
-                                fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
-                              ),
-                              onChanged: (_) => _applySearch(),
-                            ),
-                          ),
-                          const SizedBox(width: 8),
-                          Expanded(flex: 5, child: filterRow),
-                        ]),
-                  );
-                }),
-              ),
-              if (_isLoading) const SliverFillRemaining(child: Center(child: CircularProgressIndicator()))
-              else if (_filteredContent.isEmpty) const SliverFillRemaining(child: Center(child: Text('No items found')))
-              else SliverPadding(
-                padding: const EdgeInsets.only(bottom: 32),
-                sliver: SliverList(delegate: SliverChildBuilderDelegate((context, index) {
-                  final item = _filteredContent[index];
-                  final pillar = pillars.firstWhere((p) => p.id == item.pillarId, orElse: () => pillars.first);
-                  if (item is FolderModel) {
-                    final myId = getIt<AuthService>().currentUser?.serverId;
-                    final folderCategoryTotal = _allContent.where((e) {
-                      if (e.folderId != item.id) return false;
-                      if (_filters.collectionFilter == 'mine') return e.ownerId == myId;
-                      if (_filters.collectionFilter == 'public') {
-                        if (e is SubjectModel) return e.isPublic;
-                        if (e is CollectionModel) return e.isPublic;
-                        return false;
-                      }
-                      if (_filters.collectionFilter == 'favorites') return e.isOnDashboard;
-                      return true;
-                    }).length;
-                    final matchingInFolder = _matchingContent.where((e) => e.folderId == item.id).length;
-                    return _FolderListTile(folder: item, matchingCount: matchingInFolder, totalCount: folderCategoryTotal, pillar: pillar, languageCode: widget.languageCode, initialAgeFilter: _filters.ageGroup, initialCollectionFilter: _filters.collectionFilter, onChanged: _loadData, onFilterChanged: (age, coll) { setState(() { _filters = _filters.copyWith(ageGroup: age, collectionFilter: coll); _applySearch(); }); });
-                  } else if (item is CollectionModel) {
-                    return _CollectionListTile(collection: item, pillar: pillar, languageCode: widget.languageCode, initialAgeFilter: _filters.ageGroup, initialCollectionFilter: _filters.collectionFilter, onChanged: _loadData, onFavoriteChanged: () { setState(() { item.isOnDashboard = !item.isOnDashboard; }); });
-                  } else if (item is SubjectModel) {
-                    return _SubjectListTile(subject: item, pillar: pillar, languageCode: widget.languageCode, initialAgeFilter: _filters.ageGroup, initialCollectionFilter: _filters.collectionFilter, onChanged: _loadData, onFavoriteChanged: () { setState(() { item.isOnDashboard = !item.isOnDashboard; }); });
-                  }
-                  return const SizedBox.shrink();
-                }, childCount: _filteredContent.length)),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  Widget _buildCompactDropdown({required String value, required Map<String, String> items, required ValueChanged<String?> onChanged}) {
-    final validatedValue = items.containsKey(value) ? value : items.keys.first;
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12),
-      decoration: BoxDecoration(color: Theme.of(context).cardColor.withValues(alpha: 0.5), borderRadius: BorderRadius.circular(12), border: Border.all(color: Colors.grey.withValues(alpha: 0.5))),
-      child: DropdownButtonHideUnderline(child: DropdownButton<String>(
-        value: validatedValue, isExpanded: true, icon: const Icon(Icons.arrow_drop_down, size: 20),
-        style: TextStyle(fontSize: 14, color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black87),
-        items: items.entries.map((e) => DropdownMenuItem(value: e.key, child: Text(e.value, overflow: TextOverflow.ellipsis))).toList(),
-        onChanged: onChanged,
-      )),
-    );
-  }
-}
-
-class _FolderListTile extends StatelessWidget {
-  final FolderModel folder;
-  final int matchingCount;
-  final int totalCount;
-  final Pillar pillar;
-  final String languageCode;
-  final String initialAgeFilter;
-  final String initialCollectionFilter;
-  final VoidCallback? onChanged;
-  final Function(String age, String collection)? onFilterChanged;
-
-  const _FolderListTile({required this.folder, required this.matchingCount, required this.totalCount, required this.pillar, required this.languageCode, required this.initialAgeFilter, required this.initialCollectionFilter, this.onChanged, this.onFilterChanged});
-
-  @override
-  Widget build(BuildContext context) {
-    final pillarColor = pillar.getColor(getIt<ThemeService>().isDarkMode);
-    final bool isEmpty = matchingCount == 0;
-    final isOwner = folder.ownerId == getIt<AuthService>().currentUser?.serverId;
-
-    return Opacity(
-      opacity: isEmpty ? 0.5 : 1.0,
-      child: Padding(
-        padding: const EdgeInsets.only(bottom: 16),
-        child: InkWell(
-          onTap: () async {
-            final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => FolderPage(folder: folder, pillar: pillar, languageCode: languageCode, initialAgeFilter: initialAgeFilter, initialCollectionFilter: initialCollectionFilter)));
-            if (result is Map) {
-              onFilterChanged?.call(result['ageFilter'] ?? initialAgeFilter, result['collectionFilter'] ?? initialCollectionFilter);
-              if (result['hasUpdated'] == true) onChanged?.call();
-            }
-          },
-          borderRadius: BorderRadius.circular(16),
-          child: Container(
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(color: Theme.of(context).cardColor, borderRadius: BorderRadius.circular(16), border: Border.all(color: pillarColor.withValues(alpha: 0.2), width: 1.5)),
-            child: Row(children: [
-              Icon(Icons.folder, color: pillarColor),
-              const SizedBox(width: 16),
-              Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Text(folder.getName(languageCode), style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
-                Row(
-                  children: [
-                    Text(matchingCount == totalCount ? '$totalCount ${context.plural('subject', totalCount)}' : '$matchingCount / $totalCount ${context.plural('subject', totalCount)}', style: TextStyle(color: Colors.grey[600], fontSize: 14, fontWeight: matchingCount > 0 ? FontWeight.bold : FontWeight.normal)),
-                    if (!isOwner && folder.ownerName != null) ...[
-                      const SizedBox(width: 8),
-                      Text('•', style: TextStyle(color: Colors.grey[400], fontSize: 14)),
-                      const SizedBox(width: 8),
-                      if (folder.ownerName == 'Aliolo') Icon(Icons.verified, color: Colors.grey[600], size: 16)
-                      else Flexible(child: Text(folder.ownerName!, style: TextStyle(color: Colors.grey[600], fontSize: 14, fontWeight: FontWeight.w500), overflow: TextOverflow.ellipsis)),
-                    ],
-                  ],
-                ),
-              ])),
-              const Icon(Icons.chevron_right, color: Colors.grey),
-            ]),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class FolderPage extends StatefulWidget {
-  final FolderModel folder;
-  final Pillar pillar;
-  final String languageCode;
-  final String initialAgeFilter;
-  final String initialCollectionFilter;
-
-  const FolderPage({super.key, required this.folder, required this.pillar, required this.languageCode, required this.initialAgeFilter, required this.initialCollectionFilter});
-
-  @override
-  State<FolderPage> createState() => _FolderPageState();
-}
-
-class _FolderPageState extends State<FolderPage> {
-  final _searchController = TextEditingController();
-  final _cardService = getIt<CardService>();
-  final _discoveryEngine = getIt<DiscoveryEngine>();
-  final _authService = getIt<AuthService>();
-
-  List<ContentItem> _allContent = [];
-  List<ContentItem> _matchingContent = [];
-  List<ContentItem> _filteredContent = [];
-  bool _isLoading = true;
-  late DiscoveryFilters _filters;
-  bool _hasUpdated = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _filters = DiscoveryFilters(
-      pillarId: widget.pillar.id,
-      folderId: widget.folder.id,
-      ageGroup: widget.initialAgeFilter,
-      collectionFilter: widget.initialCollectionFilter,
-      rootOnly: false,
-    );
-    _loadData();
-  }
-
-  Future<void> _loadData() async {
-    setState(() => _isLoading = true);
-    final content = await _discoveryEngine.getRawContent(_filters);
-    if (mounted) setState(() { _allContent = content; _applySearch(); _isLoading = false; });
-  }
-
-  void _applySearch() {
-    setState(() {
-      _filters = _filters.copyWith(query: _searchController.text);
-      _matchingContent = _discoveryEngine.applyFiltersAndSort(_allContent, _filters, widget.languageCode);
-
-      _filteredContent = _discoveryEngine.getVisibleContent(
-        _matchingContent,
-        widget.languageCode,
-        folderId: _filters.folderId,
-        rootOnly: _filters.folderId == null,
-        collectionFilter: _filters.collectionFilter,
-        myId: getIt<AuthService>().currentUser?.serverId,
-        query: _filters.query,
-      );
-    });
-  }
-
-  Future<void> _navigateToSubject(dynamic result) async {
-    if (result == null || result == true) return;
-
-    final lang = TranslationService().currentLocale.languageCode;
-
-    if (result is SubjectModel) {
-      final cards = await _cardService.getCardsBySubject(result.id);
-      if (mounted) {
-        await Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => SubjectLandingPage(
-              subject: result,
-              cards: cards,
-              languageCode: lang,
-            ),
-          ),
-        );
-        _loadData();
-      }
-    } else if (result is CollectionModel) {
-      final cards = await _cardService.getCollectionCards(result.subjectIds);
-      if (mounted) {
-        await Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => SubjectLandingPage(
-              collection: result,
-              cards: cards.map((sc) => sc.card).toList(),
-              languageCode: lang,
-            ),
-          ),
-        );
-        _loadData();
-      }
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {    final pillarColor = widget.pillar.getColor(getIt<ThemeService>().isDarkMode);
-    const appBarColor = Colors.white;
-    final isOwner = widget.folder.ownerId == _authService.currentUser?.serverId;
-
-    return ListenableBuilder(
-      listenable: TranslationService(),
-      builder: (context, _) {
-        return PopScope(
-          canPop: true,
-          onPopInvokedWithResult: (didPop, result) {},
-          child: AlioloScrollablePage(
-            title: Text(widget.folder.getName(widget.languageCode), style: const TextStyle(color: appBarColor, fontWeight: FontWeight.bold)),
-            appBarColor: pillarColor,
-            actions: [
-              IconButton(
-                icon: const Icon(Icons.school, color: appBarColor),
-                onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
-              ),
-              IconButton(icon: const Icon(Icons.arrow_back, color: appBarColor), onPressed: () => Navigator.pop(context, {'hasUpdated': _hasUpdated, 'ageFilter': _filters.ageGroup, 'collectionFilter': _filters.collectionFilter})),
-              if (isOwner) ...[
-                IconButton(icon: const Icon(Icons.edit, color: appBarColor), onPressed: () async {
-                  final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(existingFolder: widget.folder, isFolderMode: true)));
-                  if (result == true) { _loadData(); _hasUpdated = true; }
-                }),
-                IconButton(icon: const Icon(Icons.delete, color: appBarColor), onPressed: () async {
-                  final confirmed = await showDialog<bool>(context: context, builder: (context) => AlertDialog(title: Text(context.t('delete_folder')), content: const Text('Are you sure you want to delete this folder?'), actions: [TextButton(onPressed: () => Navigator.pop(context, false), child: Text(context.t('cancel'))), TextButton(onPressed: () => Navigator.pop(context, true), style: TextButton.styleFrom(foregroundColor: Colors.red), child: Text(context.t('delete')))]));
-                  if (confirmed == true && mounted) {
-                    try {
-                      await _cardService.deleteFolder(widget.folder.id);
-                      if (mounted) Navigator.pop(context, {'hasUpdated': true, 'ageFilter': _filters.ageGroup, 'collectionFilter': _filters.collectionFilter});
-                    } catch (e) {
-                      if (e.toString().contains('folder_not_empty') && mounted) {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(context.t('folder_not_empty_msg') ?? 'Cannot delete folder: it is not empty')));
-                      }
-                    }
-                  }
-                }),
-              ],
-              IconButton(icon: const Icon(Icons.feedback, color: appBarColor), onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => FeedbackPage(folderId: widget.folder.id, contextTitle: widget.folder.getName(widget.languageCode), appBarColor: pillarColor)))),
-            ],
-            slivers: [
-              // Scrollable Header Section
-              SliverToBoxAdapter(
-                child: LayoutBuilder(builder: (context, constraints) {
-                  final isSmall = constraints.maxWidth < 600;
-                  final filterRow = Row(children: [
-                    Expanded(child: _buildCompactDropdown(value: _filters.collectionFilter, items: {'all': context.t('filter_all') ?? 'All', 'favorites': context.t('filter_dashboard'), 'mine': context.t('filter_my_subjects'), 'public': context.t('filter_public')}, onChanged: (val) { if (val != null) setState(() { _filters = _filters.copyWith(collectionFilter: val); _applySearch(); }); })),
-                    const SizedBox(width: 8),
-                    Expanded(child: _buildCompactDropdown(value: _filters.ageGroup, items: {'all': context.t('age_all'), '0_6': context.t('age_0_6'), '7_14': context.t('age_7_14'), '15_plus': context.t('age_15_plus')}, onChanged: (val) { if (val != null) setState(() { _filters = _filters.copyWith(ageGroup: val); _applySearch(); }); })),
-                    const SizedBox(width: 8),
-                    SizedBox(width: 48, child: PopupMenuButton<String>(
-                      icon: Icon(Icons.add_circle, color: pillarColor, size: 40),
-                      padding: EdgeInsets.zero,
-                      onSelected: (value) async {
-                        dynamic result;
-                        if (value == 'subject') result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: widget.pillar.id, folderId: widget.folder.id, initialAgeGroup: _filters.ageGroup)));
-                        else if (value == 'collection') result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: widget.pillar.id, folderId: widget.folder.id, isCollectionMode: true, initialAgeGroup: _filters.ageGroup)));
-                        
-                        if (result == true) {
-                          _loadData();
-                          _hasUpdated = true;
-                        } else if (result != null) {
-                          _loadData();
-                          _hasUpdated = true;
-                          await _navigateToSubject(result);
-                        }
-                      },
-                      itemBuilder: (context) => [
-                        PopupMenuItem(value: 'subject', child: ListTile(leading: Icon(Icons.description, color: pillarColor), title: Text(context.t('add_subject')), contentPadding: EdgeInsets.zero)),
-                        PopupMenuItem(value: 'collection', child: ListTile(leading: Icon(Icons.auto_awesome_motion, color: pillarColor), title: Text(context.t('add_collection')), contentPadding: EdgeInsets.zero)),
-                      ],
-                    )),
-                  ]);
-
-                  final description = widget.folder.getDescription(widget.languageCode);
-
-                  return Padding(
-                    padding: const EdgeInsets.only(top: 16, bottom: 24),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        if (description.isNotEmpty) ...[
-                          Text(
-                            description,
-                            style: TextStyle(
-                              color: Colors.grey[600],
-                              fontSize: 14,
-                            ),
-                          ),
-                          const SizedBox(height: 16),
-                        ],
-                        isSmall 
-                          ? Column(children: [
-                              TextField(
-                                controller: _searchController,
-                                decoration: InputDecoration(
-                                  hintText: context.t('search_subjects'),
-                                  prefixIcon: const Icon(Icons.search),
-                                  suffixIcon: ValueListenableBuilder<TextEditingValue>(
-                                    valueListenable: _searchController,
-                                    builder: (context, value, _) {
-                                      return value.text.isNotEmpty ? IconButton(icon: const Icon(Icons.clear), onPressed: () { _searchController.clear(); _applySearch(); }) : const SizedBox.shrink();
-                                    },
-                                  ),
-                                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                                  filled: true,
-                                  fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
-                                ),
-                                onChanged: (_) => _applySearch(),
-                              ),
-                              const SizedBox(height: 12),
-                              filterRow,
-                            ])
-                          : Row(children: [
-                              Expanded(
-                                flex: 3,
-                                child: TextField(
-                                  controller: _searchController,
-                                  decoration: InputDecoration(
-                                    hintText: context.t('search_subjects'),
-                                    prefixIcon: const Icon(Icons.search),
-                                    suffixIcon: ValueListenableBuilder<TextEditingValue>(
-                                      valueListenable: _searchController,
-                                      builder: (context, value, _) {
-                                        return value.text.isNotEmpty ? IconButton(icon: const Icon(Icons.clear), onPressed: () { _searchController.clear(); _applySearch(); }) : const SizedBox.shrink();
-                                      },
-                                    ),
-                                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                                    contentPadding: const EdgeInsets.symmetric(horizontal: 12),
-                                    filled: true,
-                                    fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
-                                  ),
-                                  onChanged: (_) => _applySearch(),
-                                ),
-                              ),
-                              const SizedBox(width: 8),
-                              Expanded(flex: 5, child: filterRow),
-                            ]),
-                      ],
-                    ),
-                  );
-                }),
-              ),
-              if (_isLoading) const SliverFillRemaining(child: Center(child: CircularProgressIndicator()))
-              else if (_filteredContent.isEmpty) const SliverFillRemaining(child: Center(child: Text('No subjects found')))
-              else SliverPadding(padding: const EdgeInsets.only(bottom: 32), sliver: SliverList(delegate: SliverChildBuilderDelegate((context, index) {
-                final item = _filteredContent[index];
-                if (item is FolderModel) {
-                  final myId = getIt<AuthService>().currentUser?.serverId;
-                  final folderCategoryTotal = _allContent.where((e) {
-                    if (e.folderId != item.id) return false;
-                    if (_filters.collectionFilter == 'mine') return e.ownerId == myId;
-                    if (_filters.collectionFilter == 'public') {
-                      if (e is SubjectModel) return e.isPublic;
-                      if (e is CollectionModel) return e.isPublic;
-                      return false;
-                    }
-                    if (_filters.collectionFilter == 'favorites') return e.isOnDashboard;
-                    return true;
-                  }).length;
-                  final matchingInFolder = _matchingContent.where((e) => e.folderId == item.id).length;
-                  return _FolderListTile(folder: item, matchingCount: matchingInFolder, totalCount: folderCategoryTotal, pillar: widget.pillar, languageCode: widget.languageCode, initialAgeFilter: _filters.ageGroup, initialCollectionFilter: _filters.collectionFilter, onChanged: () { _loadData(); _hasUpdated = true; }, onFilterChanged: (age, coll) { setState(() { _filters = _filters.copyWith(ageGroup: age, collectionFilter: coll); _applySearch(); }); });
-                } else if (item is CollectionModel) {
-                  return _CollectionListTile(collection: item, pillar: widget.pillar, languageCode: widget.languageCode, initialAgeFilter: _filters.ageGroup, initialCollectionFilter: _filters.collectionFilter, onChanged: () { _loadData(); _hasUpdated = true; }, onFavoriteChanged: () { setState(() { item.isOnDashboard = !item.isOnDashboard; _hasUpdated = true; }); });
-                } else if (item is SubjectModel) {
-                  return _SubjectListTile(subject: item, pillar: widget.pillar, languageCode: widget.languageCode, initialAgeFilter: _filters.ageGroup, initialCollectionFilter: _filters.collectionFilter, onChanged: () { _loadData(); _hasUpdated = true; }, onFavoriteChanged: () { setState(() { item.isOnDashboard = !item.isOnDashboard; _hasUpdated = true; }); });
-                }
-                return const SizedBox.shrink();
-              }, childCount: _filteredContent.length))),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  Widget _buildCompactDropdown({required String value, required Map<String, String> items, required ValueChanged<String?> onChanged}) {
-    final validatedValue = items.containsKey(value) ? value : items.keys.first;
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12),
-      decoration: BoxDecoration(color: Theme.of(context).cardColor.withValues(alpha: 0.5), borderRadius: BorderRadius.circular(12), border: Border.all(color: Colors.grey.withValues(alpha: 0.5))),
-      child: DropdownButtonHideUnderline(child: DropdownButton<String>(
-        value: validatedValue, isExpanded: true, icon: const Icon(Icons.arrow_drop_down, size: 20),
-        style: TextStyle(fontSize: 14, color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black87),
-        items: items.entries.map((e) => DropdownMenuItem(value: e.key, child: Text(e.value, overflow: TextOverflow.ellipsis))).toList(),
-        onChanged: onChanged,
-      )),
     );
   }
 }

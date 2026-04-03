@@ -207,47 +207,49 @@ class _SettingsPageState extends State<SettingsPage> {
           ],
           body: Column(
             children: [
-              _buildSectionTitle(
-                'Aliolo Premium',
-                currentPrimaryColor,
-              ),
-              Card(
-                child: Column(
-                  children: [
-                    Consumer<SubscriptionService>(
-                      builder: (context, sub, _) {
-                        return ListTile(
-                          leading: Icon(
-                            sub.isPremium ? Icons.stars : Icons.stars_outlined,
-                            color: sub.isPremium ? Colors.orange : currentPrimaryColor,
-                          ),
-                          title: Text(sub.isPremium ? 'Premium Active' : 'Upgrade to Premium'),
-                          subtitle: Text(sub.isPremium 
-                            ? 'Enjoying unlimited access' 
-                            : 'Unlock all features and math engines'),
-                          trailing: sub.isPremium 
-                            ? const Icon(Icons.check_circle, color: Colors.green)
-                            : ElevatedButton(
+              Consumer<SubscriptionService>(
+                builder: (context, sub, _) {
+                  if (sub.isPremium) return const SizedBox.shrink();
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildSectionTitle(
+                        'Aliolo Premium',
+                        currentPrimaryColor,
+                      ),
+                      Card(
+                        child: Column(
+                          children: [
+                            ListTile(
+                              leading: Icon(
+                                Icons.stars_outlined,
+                                color: currentPrimaryColor,
+                              ),
+                              title: const Text('Upgrade to Premium'),
+                              subtitle: const Text('Unlock all features and math engines'),
+                              trailing: ElevatedButton(
                                 onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const PremiumUpgradePage())),
                                 style: ElevatedButton.styleFrom(backgroundColor: currentPrimaryColor, foregroundColor: Colors.white),
                                 child: const Text('Go Premium'),
                               ),
-                        );
-                      }
-                    ),
-                    if (!kIsWeb) ...[
-                      const Divider(height: 1, indent: 16, endIndent: 16),
-                      ListTile(
-                        leading: Icon(Icons.restore, color: currentPrimaryColor),
-                        title: const Text('Restore Purchases'),
-                        onTap: () async {
-                          await getIt<SubscriptionService>().checkSubscriptionStatus();
-                          _showSavedMsg();
-                        },
+                            ),
+                            if (!kIsWeb) ...[
+                              const Divider(height: 1, indent: 16, endIndent: 16),
+                              ListTile(
+                                leading: Icon(Icons.restore, color: currentPrimaryColor),
+                                title: const Text('Restore Purchases'),
+                                onTap: () async {
+                                  await getIt<SubscriptionService>().checkSubscriptionStatus();
+                                  _showSavedMsg();
+                                },
+                              ),
+                            ],
+                          ],
+                        ),
                       ),
                     ],
-                  ],
-                ),
+                  );
+                },
               ),
               _buildSectionTitle(
                 context.t('general_preferences'),
@@ -278,15 +280,34 @@ class _SettingsPageState extends State<SettingsPage> {
                       onChanged: _toggleSound,
                     ),
                     const Divider(height: 1, indent: 16, endIndent: 16),
-                    SwitchListTile(
-                      title: Text(context.t('public_profile')),
-                      subtitle: Text(context.t('public_profile_desc')),
-                      secondary: Icon(
-                        Icons.emoji_events,
-                        color: currentPrimaryColor,
-                      ),
-                      value: _showOnLeaderboard,
-                      onChanged: _toggleLeaderboard,
+                    Consumer<SubscriptionService>(
+                      builder: (context, sub, _) {
+                        final isPremium = sub.isPremium;
+                        return SwitchListTile(
+                          title: Row(
+                            children: [
+                              Text(context.t('public_profile')),
+                              if (!isPremium) ...[
+                                const SizedBox(width: 8),
+                                const Icon(Icons.stars, color: Colors.amber, size: 16),
+                              ],
+                            ],
+                          ),
+                          subtitle: Text(context.t('public_profile_desc')),
+                          secondary: Icon(
+                            Icons.emoji_events,
+                            color: currentPrimaryColor,
+                          ),
+                          value: isPremium ? _showOnLeaderboard : true,
+                          onChanged: (val) {
+                            if (!isPremium) {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => const PremiumUpgradePage()));
+                            } else {
+                              _toggleLeaderboard(val);
+                            }
+                          },
+                        );
+                      },
                     ),
                     const Divider(height: 1, indent: 16, endIndent: 16),
                     SwitchListTile(

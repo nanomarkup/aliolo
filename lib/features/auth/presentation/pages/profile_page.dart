@@ -5,6 +5,7 @@ import 'package:aliolo/core/widgets/aliolo_scrollable_page.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
+import 'package:aliolo/data/services/subscription_service.dart';
 import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/data/models/user_model.dart';
 import 'package:image_picker/image_picker.dart';
@@ -12,10 +13,12 @@ import 'package:aliolo/features/auth/presentation/pages/login_page.dart';
 import 'package:aliolo/features/subjects/presentation/pages/subject_page.dart';
 import 'package:aliolo/features/leaderboard/presentation/pages/leaderboard_page.dart';
 import 'package:aliolo/features/settings/presentation/pages/settings_page.dart';
+import 'package:aliolo/features/settings/presentation/pages/premium_upgrade_page.dart';
 import 'package:aliolo/features/documentation/presentation/pages/documentation_page.dart';
 import 'package:aliolo/features/auth/presentation/pages/manage_friends_page.dart';
 import 'package:aliolo/features/management/presentation/pages/feedback_management_page.dart';
 import 'package:aliolo/data/services/feedback_service.dart';
+import 'package:aliolo/core/widgets/premium_badge.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -305,7 +308,6 @@ class _ProfilePageState extends State<ProfilePage> {
                     hintText: context.t('confirm_password_required'),
                   ),
                   onSubmitted: (_) => _handlePasswordUpdate(
-                    oldPasswordController.text,
                     passwordController.text,
                     confirmController.text,
                   ),
@@ -319,7 +321,6 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               TextButton(
                 onPressed: () => _handlePasswordUpdate(
-                  oldPasswordController.text,
                   passwordController.text,
                   confirmController.text,
                 ),
@@ -331,11 +332,10 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   void _handlePasswordUpdate(
-    String oldPassword,
     String password,
     String confirm,
   ) async {
-    if (oldPassword.isEmpty || password.isEmpty || confirm.isEmpty) {
+    if (password.isEmpty || confirm.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(context.t('fill_all_fields'))),
       );
@@ -349,7 +349,7 @@ class _ProfilePageState extends State<ProfilePage> {
     }
 
     try {
-      await _authService.updatePassword(oldPassword, password);
+      await _authService.updatePassword(password);
       if (mounted) {
         Navigator.pop(context); // Close dialog
         ScaffoldMessenger.of(context).showSnackBar(
@@ -679,6 +679,10 @@ class _ProfilePageState extends State<ProfilePage> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
+                    if (user.isPremium) ...[
+                      const SizedBox(width: 8),
+                      const PremiumBadge(size: 20),
+                    ],
                     const SizedBox(width: 4),
                     IconButton(
                       icon: const Icon(Icons.edit, size: 18, color: Colors.grey),
@@ -753,6 +757,8 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget _buildSettingsCard(BuildContext context, Color color, UserModel user) {
+    final isPremium = getIt<SubscriptionService>().isPremium;
+
     return Card(
       elevation: 0,
       shape: RoundedRectangleBorder(
@@ -762,78 +768,130 @@ class _ProfilePageState extends State<ProfilePage> {
         children: [
           ListTile(
             leading: Icon(Icons.flag, color: color),
-            title: Text(context.t('next_daily_goal')),
+            title: Row(
+              children: [
+                Text(context.t('next_daily_goal')),
+                if (!isPremium) ...[
+                  const SizedBox(width: 8),
+                  const Icon(Icons.stars, color: Colors.amber, size: 16),
+                ],
+              ],
+            ),
             subtitle: Text(context.t('next_daily_goal_desc')),
             trailing: Text(
               '${user.nextDailyGoal}',
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
-            onTap:
-                () => _showValuePicker(
+            onTap: () {
+              if (!isPremium) {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const PremiumUpgradePage()));
+              } else {
+                _showValuePicker(
                   title: context.t('next_daily_goal'),
                   initialValue: user.nextDailyGoal,
                   min: 5,
                   max: 100,
                   defaultValue: 20,
                   onSelected: (val) => _authService.updateNextDailyGoal(val),
-                ),
+                );
+              }
+            },
           ),
           const Divider(height: 1, indent: 16, endIndent: 16),
           ListTile(
             leading: Icon(Icons.slow_motion_video, color: color),
-            title: Text(context.t('learn_session_size')),
+            title: Row(
+              children: [
+                Text(context.t('learn_session_size')),
+                if (!isPremium) ...[
+                  const SizedBox(width: 8),
+                  const Icon(Icons.stars, color: Colors.amber, size: 16),
+                ],
+              ],
+            ),
             subtitle: Text(context.t('learn_session_size_desc')),
             trailing: Text(
               '${user.learnSessionSize}',
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
-            onTap:
-                () => _showValuePicker(
+            onTap: () {
+              if (!isPremium) {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const PremiumUpgradePage()));
+              } else {
+                _showValuePicker(
                   title: context.t('learn_session_size'),
                   initialValue: user.learnSessionSize,
                   min: 5,
                   max: 50,
                   defaultValue: 10,
                   onSelected: (val) => _authService.updateLearnSessionSize(val),
-                ),
+                );
+              }
+            },
           ),
           const Divider(height: 1, indent: 16, endIndent: 16),
           ListTile(
             leading: Icon(Icons.quiz, color: color),
-            title: Text(context.t('test_session_size')),
+            title: Row(
+              children: [
+                Text(context.t('test_session_size')),
+                if (!isPremium) ...[
+                  const SizedBox(width: 8),
+                  const Icon(Icons.stars, color: Colors.amber, size: 16),
+                ],
+              ],
+            ),
             subtitle: Text(context.t('test_session_size_desc')),
             trailing: Text(
               '${user.testSessionSize}',
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
-            onTap:
-                () => _showValuePicker(
+            onTap: () {
+              if (!isPremium) {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const PremiumUpgradePage()));
+              } else {
+                _showValuePicker(
                   title: context.t('test_session_size'),
                   initialValue: user.testSessionSize,
                   min: 5,
                   max: 50,
                   defaultValue: 10,
                   onSelected: (val) => _authService.updateTestSessionSize(val),
-                ),
+                );
+              }
+            },
           ),
           const Divider(height: 1, indent: 16, endIndent: 16),
           ListTile(
             leading: Icon(Icons.view_list, color: color),
-            title: Text(context.t('options_count')),
+            title: Row(
+              children: [
+                Text(context.t('options_count')),
+                if (!isPremium) ...[
+                  const SizedBox(width: 8),
+                  const Icon(Icons.stars, color: Colors.amber, size: 16),
+                ],
+              ],
+            ),
             subtitle: Text(context.t('options_count_desc')),
             trailing: Text(
               '${user.optionsCount}',
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
-            onTap:
-                () => _showValuePicker(
+            onTap: () {
+              if (!isPremium) {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const PremiumUpgradePage()));
+              } else {
+                _showValuePicker(
                   title: context.t('options_count'),
                   initialValue: user.optionsCount,
                   min: 3,
                   max: 9,
                   defaultValue: 6,
                   onSelected: (val) => _authService.updateOptionsCount(val),
-                ),
+                );
+              }
+            },
           ),
         ],
       ),

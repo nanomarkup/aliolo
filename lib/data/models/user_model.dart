@@ -1,88 +1,90 @@
+import 'package:flutter/material.dart';
+
 class UserModel {
-  int id = 0;
+  String? serverId;
   late String username;
   late String email;
-  String? serverId;
-  DateTime? createdAt;
-  DateTime? updatedAt;
-
   late bool sidebarLeft;
   late String themeMode;
   late String uiLanguage;
   late bool soundEnabled;
-  late bool autoPlayEnabled;
-  late int mainPillarId; 
-
+  late bool showOnLeaderboard;
+  late int learnSessionSize;
+  late int testSessionSize;
+  String? avatarPath;
+  late String defaultLanguage;
+  DateTime? lastActiveDate;
   late int totalXp;
   late int currentStreak;
   late int maxStreak;
-  DateTime? lastActiveDate;
   late int dailyGoalCount;
+  late int optionsCount;
   late int nextDailyGoal;
   late double dailyCompletions;
-  late int learnSessionSize;
-  late int testSessionSize;
-  late int optionsCount;
-  late String defaultLanguage;
-  late String? avatarPath;
-  late bool showOnLeaderboard;
+  late bool autoPlayEnabled;
   late bool showDocumentation;
+  late int mainPillarId; 
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  bool isPremium;
 
   UserModel({
+    this.serverId,
     required this.username,
     required this.email,
-    this.sidebarLeft = true,
+    this.sidebarLeft = false,
     this.themeMode = 'system',
     this.uiLanguage = 'en',
     this.soundEnabled = true,
-    this.autoPlayEnabled = false,
-    this.mainPillarId = 6,
+    this.showOnLeaderboard = true,
+    this.learnSessionSize = 10,
+    this.testSessionSize = 10,
+    this.avatarPath,
+    this.defaultLanguage = 'EN',
+    this.lastActiveDate,
     this.totalXp = 0,
     this.currentStreak = 0,
     this.maxStreak = 0,
-    this.lastActiveDate,
     this.dailyGoalCount = 20,
-    this.nextDailyGoal = 20,
-    this.dailyCompletions = 0.0,
-    this.learnSessionSize = 20,
-    this.testSessionSize = 10,
     this.optionsCount = 6,
-    this.defaultLanguage = 'EN',
-    this.avatarPath,
-    this.showOnLeaderboard = true,
+    this.nextDailyGoal = 20,
+    this.dailyCompletions = 0,
+    this.autoPlayEnabled = false,
     this.showDocumentation = true,
-    this.serverId,
+    this.mainPillarId = 8,
     this.createdAt,
     this.updatedAt,
+    this.isPremium = false,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
+      serverId: json['id'],
       username: json['username'] ?? '',
       email: json['email'] ?? '',
-      serverId: json['id'],
+      sidebarLeft: json['sidebar_left'] ?? false,
+      themeMode: json['theme_mode'] ?? 'system',
+      uiLanguage: json['ui_language'] ?? 'en',
+      soundEnabled: json['sound_enabled'] ?? true,
+      showOnLeaderboard: json['show_on_leaderboard'] ?? true,
+      learnSessionSize: json['learn_session_size'] ?? 10,
+      testSessionSize: json['test_session_size'] ?? 10,
+      avatarPath: json['avatar_url'],
+      defaultLanguage: (json['default_language'] ?? 'EN').toString().toUpperCase(),
+      lastActiveDate: json['last_active_date'] != null ? DateTime.parse(json['last_active_date']) : null,
       totalXp: json['total_xp'] ?? 0,
       currentStreak: json['current_streak'] ?? 0,
       maxStreak: json['max_streak'] ?? 0,
-      themeMode: json['theme_mode'] ?? 'system',
-      uiLanguage: json['ui_language'] ?? 'en',
       dailyGoalCount: json['daily_goal_count'] ?? 20,
+      optionsCount: json['options_count'] ?? 6,
       nextDailyGoal: json['next_daily_goal'] ?? 20,
       dailyCompletions: (json['daily_completions'] ?? 0).toDouble(),
-      sidebarLeft: json['sidebar_left'] ?? false,
-      soundEnabled: json['sound_enabled'] ?? true,
       autoPlayEnabled: json['auto_play_enabled'] ?? false,
-      mainPillarId: json['main_pillar_id'] ?? 8,
-      showOnLeaderboard: json['show_on_leaderboard'] ?? true,
       showDocumentation: json['show_documentation'] ?? true,
-      learnSessionSize: json['learn_session_size'] ?? json['session_size'] ?? 20,
-      testSessionSize: json['test_session_size'] ?? json['session_size'] ?? 10,
-      optionsCount: json['options_count'] ?? 6,
-      defaultLanguage: (json['default_language'] ?? 'en').toString().toLowerCase(),
-      avatarPath: json['avatar_url'],
-      lastActiveDate: DateTime.tryParse(json['last_active_date'] ?? ''),
-      updatedAt: DateTime.tryParse(json['updated_at'] ?? ''),
-      createdAt: DateTime.tryParse(json['created_at'] ?? ''),
+      mainPillarId: json['main_pillar_id'] ?? 8,
+      createdAt: json['created_at'] != null ? DateTime.parse(json['created_at']) : null,
+      updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at']) : null,
+      isPremium: json['is_premium'] ?? false,
     );
   }
 
@@ -91,69 +93,38 @@ class UserModel {
       'id': serverId,
       'username': username,
       'email': email,
+      'sidebar_left': sidebarLeft,
+      'theme_mode': themeMode,
+      'ui_language': uiLanguage,
+      'sound_enabled': soundEnabled,
+      'show_on_leaderboard': showOnLeaderboard,
+      'learn_session_size': learnSessionSize,
+      'test_session_size': testSessionSize,
+      'avatar_url': avatarPath,
+      'default_language': defaultLanguage.toLowerCase(),
+      'last_active_date': lastActiveDate?.toUtc().toIso8601String(),
       'total_xp': totalXp,
       'current_streak': currentStreak,
       'max_streak': maxStreak,
-      'theme_mode': themeMode,
-      'ui_language': uiLanguage,
       'daily_goal_count': dailyGoalCount,
+      'options_count': optionsCount,
       'next_daily_goal': nextDailyGoal,
       'daily_completions': dailyCompletions,
-      'sidebar_left': sidebarLeft,
-      'sound_enabled': soundEnabled,
       'auto_play_enabled': autoPlayEnabled,
-      'main_pillar_id': mainPillarId,
-      'show_on_leaderboard': showOnLeaderboard,
       'show_documentation': showDocumentation,
-      'learn_session_size': learnSessionSize,
-      'test_session_size': testSessionSize,
-      'options_count': optionsCount,
-      'default_language': defaultLanguage.toLowerCase(),
-      'avatar_url': avatarPath,
-      'last_active_date': lastActiveDate?.toIso8601String(),
-      'updated_at': updatedAt?.toIso8601String(),
+      'main_pillar_id': mainPillarId,
+      'created_at': createdAt?.toUtc().toIso8601String(),
+      'updated_at': updatedAt?.toUtc().toIso8601String(),
     };
   }
-  UserModel.empty();
-}
 
-class ProgressRecord {
-  final String userServerId;
-  final String id; // This is the card's ID
-  int correctCount;
-  bool isHidden;
-  double easeFactor;
-  int interval;
-  int repetitionCount;
-  DateTime nextReview;
-  DateTime createdAt;
-  DateTime? updatedAt;
-
-  ProgressRecord({
-    required this.userServerId,
-    required this.id,
-    this.correctCount = 0,
-    this.isHidden = false,
-    this.easeFactor = 2.5,
-    this.interval = 0,
-    this.repetitionCount = 0,
-    required this.nextReview,
-    required this.createdAt,
-    this.updatedAt,
-  });
-
-  factory ProgressRecord.fromJson(Map<String, dynamic> json) {
-    return ProgressRecord(
-      userServerId: json['user_id'] ?? '',
-      id: json['card_id'] ?? '',
-      correctCount: json['correct_count'] ?? 0,
-      isHidden: json['is_hidden'] ?? false,
-      easeFactor: (json['ease_factor'] ?? 2.5).toDouble(),
-      interval: json['interval'] ?? 0,
-      repetitionCount: json['repetition_count'] ?? 0,
-      nextReview: DateTime.tryParse(json['next_review'] ?? '') ?? DateTime.now(),
-      createdAt: DateTime.tryParse(json['created_at'] ?? '') ?? DateTime.now(),
-      updatedAt: DateTime.tryParse(json['updated_at'] ?? '') ?? DateTime.now(),
-    );
+  Color getThemeColor(BuildContext context) {
+    if (themeMode == 'light') return Colors.white;
+    if (themeMode == 'dark') return const Color(0xFF1A1C1E);
+    return MediaQuery.of(context).platformBrightness == Brightness.dark
+        ? const Color(0xFF1A1C1E)
+        : Colors.white;
   }
+
+  static String capitalizeFirst(String s) => s.isEmpty ? s : s[0].toUpperCase() + s.substring(1);
 }

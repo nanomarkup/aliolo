@@ -9,6 +9,7 @@ import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/math_service.dart';
+import 'package:aliolo/data/services/subscription_service.dart';
 import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/core/widgets/aliolo_scrollable_page.dart';
 import 'package:aliolo/features/testing/presentation/pages/learn_page.dart';
@@ -16,6 +17,7 @@ import 'package:aliolo/features/testing/presentation/pages/test_page.dart';
 import 'package:aliolo/features/management/presentation/pages/subject_edit_page.dart';
 import 'package:aliolo/features/management/presentation/pages/add_card_page.dart';
 import 'package:aliolo/features/feedback/presentation/pages/feedback_page.dart';
+import 'package:aliolo/features/settings/presentation/pages/premium_upgrade_page.dart';
 import 'package:aliolo/core/widgets/aliolo_image.dart';
 import 'package:aliolo/core/widgets/counting_grid.dart';
 import 'package:aliolo/core/widgets/addition_grid.dart';
@@ -47,6 +49,7 @@ class SubjectLandingPage extends StatefulWidget {
 class _SubjectLandingPageState extends State<SubjectLandingPage> {
   final _cardService = getIt<CardService>();
   final _authService = getIt<AuthService>();
+  final _subService = getIt<SubscriptionService>();
   final _searchController = TextEditingController();
 
   SubjectModel? _currentSubject;
@@ -152,7 +155,6 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
     setState(() {
       if (_currentCollection != null) {
         _filteredSubjects = _allSubjects.where((s) {
-          // If not owner, only show subjects that are in the collection
           if (!isOwner && !_currentCollection!.subjectIds.contains(s.id)) {
             return false;
           }
@@ -288,7 +290,6 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
           );
         }
       } else if (_currentSubject != null) {
-        // Special logic for Math subjects that generate problems dynamically
         if (_currentSubject!.isMath && _allCards.isEmpty) {
           final mathService = getIt<MathService>();
           final size = isTest ? user.testSessionSize : user.learnSessionSize;
@@ -298,7 +299,6 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
             sessionCards.add(SubjectCard(card: card, subject: _currentSubject!));
           }
         } else {
-          // standard
           sessionCards =
               _allCards
                   .map((c) => SubjectCard(card: c, subject: _currentSubject!))
@@ -306,7 +306,6 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
         }
       }
 
-      // Filter and Shuffle logic (skip for generated math)
       final lang = widget.languageCode.toLowerCase();
       if (!(_currentSubject?.isMath ?? false)) {
         sessionCards =
@@ -372,24 +371,25 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
 
   @override
   Widget build(BuildContext context) {
-    final pillarId = _currentSubject?.pillarId ?? _currentFolder?.pillarId ?? _currentCollection?.pillarId ?? 1;
-    final pillar = pillars.firstWhere(
-      (p) => p.id == pillarId,
-      orElse: () => pillars.first,
-    );
-    final pillarColor = pillar.getColor(getIt<ThemeService>().isDarkMode);
-    const appBarColor = Colors.white;
-    final isOwner = (_currentSubject != null && _currentSubject!.ownerId == _authService.currentUser?.serverId) ||
-                  (_currentCollection != null && _currentCollection!.ownerId == _authService.currentUser?.serverId);
-    final displayLang = widget.languageCode;
-    final title = _currentSubject?.getName(displayLang) ?? 
-                 _currentFolder?.getName(displayLang) ?? 
-                 _currentCollection?.getName(displayLang) ?? 
-                 'Aliolo';
-
     return ListenableBuilder(
-      listenable: _cardService,
+      listenable: _subService,
       builder: (context, _) {
+        final isPremium = _subService.isPremium;
+        final pillarId = _currentSubject?.pillarId ?? _currentFolder?.pillarId ?? _currentCollection?.pillarId ?? 1;
+        final pillar = pillars.firstWhere(
+          (p) => p.id == pillarId,
+          orElse: () => pillars.first,
+        );
+        final pillarColor = pillar.getColor(getIt<ThemeService>().isDarkMode);
+        const appBarColor = Colors.white;
+        final isOwner = (_currentSubject != null && _currentSubject!.ownerId == _authService.currentUser?.serverId) ||
+                      (_currentCollection != null && _currentCollection!.ownerId == _authService.currentUser?.serverId);
+        final displayLang = widget.languageCode;
+        final title = _currentSubject?.getName(displayLang) ?? 
+                     _currentFolder?.getName(displayLang) ?? 
+                     _currentCollection?.getName(displayLang) ?? 
+                     'Aliolo';
+
         return PopScope(
           canPop: false,
           onPopInvokedWithResult: (didPop, result) {
@@ -495,6 +495,8 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                     title: context.t('learn_mode_title'),
                     icon: Icons.school,
                     color: pillarColor,
+                    isPremiumFeature: false,
+                    isUserPremium: isPremium,
                     onTap: () => _startSession(false),
                   ),
                 ),
@@ -505,7 +507,15 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                     title: context.t('test_mode_title'),
                     icon: Icons.quiz,
                     color: pillarColor,
-                    onTap: () => _startSession(true),
+                    isPremiumFeature: true,
+                    isUserPremium: isPremium,
+                    onTap: () {
+                      if (!isPremium) {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const PremiumUpgradePage()));
+                      } else {
+                        _startSession(true);
+                      }
+                    },
                   ),
                 ),
               ],
@@ -671,6 +681,10 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                                   icon: Icon(Icons.add_circle, color: pillarColor, size: 40),
                                   padding: EdgeInsets.zero,
                                   onPressed: () async {
+                                    if (!isPremium) {
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => const PremiumUpgradePage()));
+                                      return;
+                                    }
                                     final result = await Navigator.push(
                                       context,
                                       MaterialPageRoute(
@@ -946,6 +960,8 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
     required IconData icon,
     required Color color,
     required VoidCallback onTap,
+    bool isPremiumFeature = false,
+    bool isUserPremium = false,
   }) {
     return InkWell(
       onTap: onTap,
@@ -961,12 +977,21 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
           children: [
             Icon(icon, color: color, size: 28),
             const SizedBox(height: 4),
-            Text(
-              title,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: color.withValues(alpha: 0.9),
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: color.withValues(alpha: 0.9),
+                  ),
+                ),
+                if (isPremiumFeature && !isUserPremium) ...[
+                  const SizedBox(width: 4),
+                  const Icon(Icons.stars, color: Colors.amber, size: 16),
+                ],
+              ],
             ),
           ],
         ),

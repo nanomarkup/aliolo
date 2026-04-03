@@ -8,8 +8,8 @@ import 'auth_service.dart';
 class SubscriptionService extends ChangeNotifier {
   final InAppPurchase? _iap = kIsWeb ? null : InAppPurchase.instance;
   final SupabaseClient _supabase = Supabase.instance.client;
-  StreamSubscription<List<PurchaseDetails>>? _subscription;
-
+  StreamSubscription<List<PurchaseDetails>>? _purchaseSubscription;
+  
   bool _isPremium = false;
   bool get isPremium => _isPremium;
 
@@ -19,16 +19,28 @@ class SubscriptionService extends ChangeNotifier {
   List<ProductDetails> _products = [];
   List<ProductDetails> get products => _products;
 
+  String? _lastCheckedUserId;
+
   SubscriptionService() {
     if (!kIsWeb && _iap != null) {
       final purchaseUpdated = _iap!.purchaseStream;
-      _subscription = purchaseUpdated.listen(
+      _purchaseSubscription = purchaseUpdated.listen(
         _onPurchaseUpdate,
-        onDone: () => _subscription?.cancel(),
+        onDone: () => _purchaseSubscription?.cancel(),
         onError: (error) {
-          // handle error
+          debugPrint('Purchase stream error: $error');
         },
       );
+    }
+    
+    // Listen to Auth changes to refresh subscription status
+    getIt<AuthService>().addListener(_onAuthChanged);
+  }
+
+  void _onAuthChanged() {
+    final user = getIt<AuthService>().currentUser;
+    if (user?.serverId != _lastCheckedUserId) {
+      checkSubscriptionStatus();
     }
   }
 
@@ -41,8 +53,17 @@ class SubscriptionService extends ChangeNotifier {
 
   Future<void> checkSubscriptionStatus() async {
     final user = getIt<AuthService>().currentUser;
-    if (user == null) {
+    _lastCheckedUserId = user?.serverId;
+
+    if (user == null || user.serverId == null) {
       _isPremium = false;
+      notifyListeners();
+      return;
+    }
+
+    // Hardcoded Superuser Bypass
+    if (user.serverId == 'f2fb4c9c-169b-447d-b8a6-dce72c4ed5ac') {
+      _isPremium = true;
       notifyListeners();
       return;
     }
@@ -65,6 +86,7 @@ class SubscriptionService extends ChangeNotifier {
         _isPremium = false;
       }
     } catch (e) {
+      debugPrint('Error checking subscription: $e');
       _isPremium = false;
     }
     notifyListeners();
@@ -72,10 +94,14 @@ class SubscriptionService extends ChangeNotifier {
 
   Future<void> loadProducts() async {
     if (kIsWeb || _iap == null) return;
-    const Set<String> kIds = {'aliolo_premium_monthly', 'aliolo_premium_yearly'};
-    final response = await _iap!.queryProductDetails(kIds);
-    _products = response.productDetails;
-    notifyListeners();
+    try {
+      const Set<String> kIds = {'aliolo_premium_weekly', 'aliolo_premium_monthly', 'aliolo_premium_yearly'};
+      final response = await _iap!.queryProductDetails(kIds);
+      _products = response.productDetails;
+      notifyListeners();
+    } catch (e) {
+      debugPrint('Error loading products: $e');
+    }
   }
 
   Future<void> buySubscription(ProductDetails product) async {
@@ -96,7 +122,6 @@ class SubscriptionService extends ChangeNotifier {
         } else if (purchase.status == PurchaseStatus.purchased ||
             purchase.status == PurchaseStatus.restored) {
           
-          // Verify with Backend
           bool success = await _verifyPurchaseOnBackend(purchase);
           if (success) {
             _isPremium = true;
@@ -114,7 +139,6 @@ class SubscriptionService extends ChangeNotifier {
 
   Future<bool> _verifyPurchaseOnBackend(PurchaseDetails purchase) async {
     try {
-      // Call Supabase Edge Function to verify with Google Play API
       final response = await _supabase.functions.invoke(
         'verify-google-purchase',
         body: {
@@ -136,7 +160,8 @@ class SubscriptionService extends ChangeNotifier {
 
   @override
   void dispose() {
-    _subscription?.cancel();
+    _purchaseSubscription?.cancel();
+    getIt<AuthService>().removeListener(_onAuthChanged);
     super.dispose();
   }
 }
