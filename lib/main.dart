@@ -7,6 +7,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/data/services/auth_service.dart';
+import 'package:aliolo/data/services/subscription_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/data/services/testing_language_service.dart';
 import 'package:aliolo/features/auth/presentation/pages/login_page.dart';
@@ -110,6 +111,7 @@ class _AlioloAppState extends State<AlioloApp> {
   Future<void> _doInit() async {
     try {
       await setupLocator(initialUrl: widget.initialUrl);
+      await getIt<SubscriptionService>().init();
     } catch (e, stack) {
       print('Initialization failed: $e');
       print(stack);
@@ -202,6 +204,7 @@ class _AlioloAppState extends State<AlioloApp> {
             ChangeNotifierProvider.value(
               value: getIt<TestingLanguageService>(),
             ),
+            ChangeNotifierProvider.value(value: getIt<SubscriptionService>()),
             ListenableProvider.value(value: getIt<ThemeService>()),
           ],
           child: const AlioloMainApp(),

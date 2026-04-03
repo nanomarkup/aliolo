@@ -28,6 +28,13 @@ serve(async (req) => {
     const user = data.user
     if (!user) throw new Error('User creation failed')
 
+    // 1.1 Record invitation
+    await supabaseAdmin.from('invitations').insert({
+      user_id: user.id,
+      email: email.toLowerCase(),
+      invited_by: senderId // Can be null if system-invited
+    })
+
     // 2. Create profile
     const { error: profileError } = await supabaseAdmin
       .from('profiles')

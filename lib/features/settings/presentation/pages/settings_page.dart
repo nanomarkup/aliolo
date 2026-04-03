@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:provider/provider.dart';
 import 'package:aliolo/core/widgets/aliolo_scrollable_page.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -13,8 +14,10 @@ import 'package:aliolo/features/leaderboard/presentation/pages/leaderboard_page.
 import 'package:aliolo/features/subjects/presentation/pages/subject_page.dart';
 import 'package:aliolo/features/auth/presentation/pages/profile_page.dart';
 import 'package:aliolo/features/settings/presentation/pages/about_page.dart';
+import 'package:aliolo/features/settings/presentation/pages/premium_upgrade_page.dart';
 import 'package:aliolo/features/documentation/presentation/pages/documentation_page.dart';
 import 'package:aliolo/data/services/feedback_service.dart';
+import 'package:aliolo/data/services/subscription_service.dart';
 import 'package:aliolo/core/di/service_locator.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -204,6 +207,48 @@ class _SettingsPageState extends State<SettingsPage> {
           ],
           body: Column(
             children: [
+              _buildSectionTitle(
+                'Aliolo Premium',
+                currentPrimaryColor,
+              ),
+              Card(
+                child: Column(
+                  children: [
+                    Consumer<SubscriptionService>(
+                      builder: (context, sub, _) {
+                        return ListTile(
+                          leading: Icon(
+                            sub.isPremium ? Icons.stars : Icons.stars_outlined,
+                            color: sub.isPremium ? Colors.orange : currentPrimaryColor,
+                          ),
+                          title: Text(sub.isPremium ? 'Premium Active' : 'Upgrade to Premium'),
+                          subtitle: Text(sub.isPremium 
+                            ? 'Enjoying unlimited access' 
+                            : 'Unlock all features and math engines'),
+                          trailing: sub.isPremium 
+                            ? const Icon(Icons.check_circle, color: Colors.green)
+                            : ElevatedButton(
+                                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const PremiumUpgradePage())),
+                                style: ElevatedButton.styleFrom(backgroundColor: currentPrimaryColor, foregroundColor: Colors.white),
+                                child: const Text('Go Premium'),
+                              ),
+                        );
+                      }
+                    ),
+                    if (!kIsWeb) ...[
+                      const Divider(height: 1, indent: 16, endIndent: 16),
+                      ListTile(
+                        leading: Icon(Icons.restore, color: currentPrimaryColor),
+                        title: const Text('Restore Purchases'),
+                        onTap: () async {
+                          await getIt<SubscriptionService>().checkSubscriptionStatus();
+                          _showSavedMsg();
+                        },
+                      ),
+                    ],
+                  ],
+                ),
+              ),
               _buildSectionTitle(
                 context.t('general_preferences'),
                 currentPrimaryColor,

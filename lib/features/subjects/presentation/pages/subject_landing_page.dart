@@ -408,6 +408,10 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
             appBarColor: pillarColor,
             actions: [
               IconButton(
+                icon: const Icon(Icons.school, color: appBarColor),
+                onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
+              ),
+              IconButton(
                 icon: const Icon(Icons.arrow_back, color: appBarColor),
                 onPressed: () => Navigator.pop(context, _hasUpdated),
               ),
@@ -451,7 +455,6 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                   );
                   if (result == true) {
                     if (_currentSubject != null) _refreshData();
-                    // Just pop if collection updated so dashboard refreshes it
                     if (_currentCollection != null) {
                       if (context.mounted) Navigator.pop(context, true);
                     }
@@ -482,212 +485,215 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
               },
             ),
           ],
-          fixedBody: LayoutBuilder(
-            builder: (context, constraints) {
-              final isSmall = constraints.maxWidth < 600;
-              final filterRow = _currentCollection != null ? Row(children: [
-                Expanded(child: _buildCompactDropdown(value: _collectionFilter, items: {'all': context.t('filter_all'), 'favorites': context.t('filter_favorites'), 'mine': context.t('filter_my_subjects'), 'public': context.t('filter_public')}, onChanged: (val) { if (val != null) setState(() { _collectionFilter = val; _applyFilters(); }); })),
-                const SizedBox(width: 8),
-                Expanded(child: _buildCompactDropdown(value: _selectedAgeFilter, items: {'all': context.t('age_all'), '0_6': context.t('age_0_6'), '7_14': context.t('age_7_14'), '15_plus': context.t('age_15_plus')}, onChanged: (val) { if (val != null) setState(() { _selectedAgeFilter = val; _applyFilters(); }); })),
-              ]) : const SizedBox.shrink();
-
-              return Column(
-                children: [
-                  const SizedBox(height: 16),
-                  Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          color: pillarColor.withValues(alpha: 0.1),
-                          shape: BoxShape.circle,
-                        ),
-                        child: Icon(
-                          _currentFolder != null ? Icons.folder : 
-                          (_currentCollection != null ? Icons.collections : pillar.getIconData()),
-                          size: 40,
-                          color: pillarColor,
-                        ),
-                      ),
-                      const SizedBox(width: 20),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              title,
-                              style: const TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            if (_currentSubject?.getDescription(displayLang).isNotEmpty == true || 
-                                _currentFolder?.getDescription(displayLang).isNotEmpty == true ||
-                                _currentCollection?.getDescription(displayLang).isNotEmpty == true)
-                              Text(
-                                _currentSubject?.getDescription(displayLang) ?? 
-                                _currentFolder?.getDescription(displayLang) ?? 
-                                _currentCollection?.getDescription(displayLang) ?? '',
-                                style: TextStyle(
-                                  color: Colors.grey[600],
-                                  fontSize: 14,
-                                ),
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                          ],
-                        ),
-                      ),
-                    ],
+          fixedBody: Padding(
+            padding: const EdgeInsets.only(top: 16, bottom: 8),
+            child: Row(
+              children: [
+                Expanded(
+                  child: _buildActionButton(
+                    context: context,
+                    title: context.t('learn_mode_title'),
+                    icon: Icons.school,
+                    color: pillarColor,
+                    onTap: () => _startSession(false),
                   ),
-                  const SizedBox(height: 32),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: _buildActionButton(
-                          context: context,
-                          title: context.t('learn_mode_title'),
-                          icon: Icons.school,
-                          color: pillarColor,
-                          onTap: () => _startSession(false),
-                        ),
-                      ),
-                      const SizedBox(width: 16),
-                      Expanded(
-                        child: _buildActionButton(
-                          context: context,
-                          title: context.t('test_mode_title'),
-                          icon: Icons.quiz,
-                          color: pillarColor,
-                          onTap: () => _startSession(true),
-                        ),
-                      ),
-                    ],
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: _buildActionButton(
+                    context: context,
+                    title: context.t('test_mode_title'),
+                    icon: Icons.quiz,
+                    color: pillarColor,
+                    onTap: () => _startSession(true),
                   ),
-                  if (_currentSubject != null || _currentCollection != null) ...[
-                    const SizedBox(height: 32),
-                    if (_currentCollection != null && isSmall) ...[
-                      TextField(
-                        controller: _searchController,
-                        onChanged: (_) => _applyFilters(),
-                        decoration: InputDecoration(
-                          hintText: context.t('search_subjects'),
-                          prefixIcon: const Icon(Icons.search),
-                          suffixIcon: ValueListenableBuilder<TextEditingValue>(
-                            valueListenable: _searchController,
-                            builder: (context, value, _) {
-                              return value.text.isNotEmpty
-                                  ? IconButton(
-                                      icon: const Icon(Icons.clear),
-                                      onPressed: () {
-                                        _searchController.clear();
-                                        _applyFilters();
-                                      },
-                                    )
-                                  : const SizedBox.shrink();
-                            },
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                      filterRow,
-                    ] else if (_currentCollection != null && !isSmall) ...[
-                      Row(
-                        children: [
-                          Expanded(
-                            flex: 3,
-                            child: TextField(
-                              controller: _searchController,
-                              onChanged: (_) => _applyFilters(),
-                              decoration: InputDecoration(
-                                hintText: context.t('search_subjects'),
-                                prefixIcon: const Icon(Icons.search),
-                                suffixIcon: ValueListenableBuilder<TextEditingValue>(
-                                  valueListenable: _searchController,
-                                  builder: (context, value, _) {
-                                    return value.text.isNotEmpty
-                                        ? IconButton(
-                                            icon: const Icon(Icons.clear),
-                                            onPressed: () {
-                                              _searchController.clear();
-                                              _applyFilters();
-                                            },
-                                          )
-                                        : const SizedBox.shrink();
-                                  },
-                                ),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 8),
-                          Expanded(flex: 5, child: filterRow),
-                        ],
-                      ),
-                    ] else ...[
-                      Row(
-                        children: [
-                          Expanded(
-                            child: TextField(
-                              controller: _searchController,
-                              onChanged: (_) => _applyFilters(),
-                              decoration: InputDecoration(
-                                hintText: context.t('search_cards'),
-                                prefixIcon: const Icon(Icons.search),
-                                suffixIcon: ValueListenableBuilder<TextEditingValue>(
-                                  valueListenable: _searchController,
-                                  builder: (context, value, _) {
-                                    return value.text.isNotEmpty
-                                        ? IconButton(
-                                            icon: const Icon(Icons.clear),
-                                            onPressed: () {
-                                              _searchController.clear();
-                                              _applyFilters();
-                                            },
-                                          )
-                                        : const SizedBox.shrink();
-                                  },
-                                ),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                              ),
-                            ),
-                          ),
-                          if (isOwner && _currentSubject != null) ...[
-                            const SizedBox(width: 8),
-                            IconButton(
-                              icon: Icon(Icons.add_circle, color: pillarColor, size: 40),
-                              padding: EdgeInsets.zero,
-                              onPressed: () async {
-                                final result = await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => AddCardPage(
-                                      pillarId: pillarId,
-                                      initialSubjectId: _currentSubject!.id,
-                                    ),
-                                  ),
-                                );
-                                if (result == true) _refreshData();
-                              },
-                            ),
-                          ],
-                        ],
-                      ),
-                    ],
-                  ],
-                  const SizedBox(height: 24),
-                ],
-              );
-            },
+                ),
+              ],
+            ),
           ),
           slivers: [
+            // Scrollable Header Section
+            SliverToBoxAdapter(
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  final isSmall = constraints.maxWidth < 600;
+                  final filterRow = _currentCollection != null ? Row(children: [
+                    Expanded(child: _buildCompactDropdown(value: _collectionFilter, items: {'all': context.t('filter_all'), 'favorites': context.t('filter_favorites'), 'mine': context.t('filter_my_subjects'), 'public': context.t('filter_public')}, onChanged: (val) { if (val != null) setState(() { _collectionFilter = val; _applyFilters(); }); })),
+                    const SizedBox(width: 8),
+                    Expanded(child: _buildCompactDropdown(value: _selectedAgeFilter, items: {'all': context.t('age_all'), '0_6': context.t('age_0_6'), '7_14': context.t('age_7_14'), '15_plus': context.t('age_15_plus')}, onChanged: (val) { if (val != null) setState(() { _selectedAgeFilter = val; _applyFilters(); }); })),
+                  ]) : const SizedBox.shrink();
+
+                  return Column(
+                    children: [
+                      const SizedBox(height: 16),
+                      Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                              color: pillarColor.withValues(alpha: 0.1),
+                              shape: BoxShape.circle,
+                            ),
+                            child: Icon(
+                              _currentFolder != null ? Icons.folder : 
+                              (_currentCollection != null ? Icons.collections : pillar.getIconData()),
+                              size: 40,
+                              color: pillarColor,
+                            ),
+                          ),
+                          const SizedBox(width: 20),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  title,
+                                  style: const TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                if (_currentSubject?.getDescription(displayLang).isNotEmpty == true || 
+                                    _currentFolder?.getDescription(displayLang).isNotEmpty == true ||
+                                    _currentCollection?.getDescription(displayLang).isNotEmpty == true)
+                                  Text(
+                                    _currentSubject?.getDescription(displayLang) ?? 
+                                    _currentFolder?.getDescription(displayLang) ?? 
+                                    _currentCollection?.getDescription(displayLang) ?? '',
+                                    style: TextStyle(
+                                      color: Colors.grey[600],
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 24),
+                      if (_currentSubject != null || _currentCollection != null) ...[
+                        if (_currentCollection != null && isSmall) ...[
+                          TextField(
+                            controller: _searchController,
+                            onChanged: (_) => _applyFilters(),
+                            decoration: InputDecoration(
+                              hintText: context.t('search_subjects'),
+                              prefixIcon: const Icon(Icons.search),
+                              suffixIcon: ValueListenableBuilder<TextEditingValue>(
+                                valueListenable: _searchController,
+                                builder: (context, value, _) {
+                                  return value.text.isNotEmpty
+                                      ? IconButton(
+                                          icon: const Icon(Icons.clear),
+                                          onPressed: () {
+                                            _searchController.clear();
+                                            _applyFilters();
+                                          },
+                                        )
+                                      : const SizedBox.shrink();
+                                },
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 12),
+                          filterRow,
+                        ] else if (_currentCollection != null && !isSmall) ...[
+                          Row(
+                            children: [
+                              Expanded(
+                                flex: 3,
+                                child: TextField(
+                                  controller: _searchController,
+                                  onChanged: (_) => _applyFilters(),
+                                  decoration: InputDecoration(
+                                    hintText: context.t('search_subjects'),
+                                    prefixIcon: const Icon(Icons.search),
+                                    suffixIcon: ValueListenableBuilder<TextEditingValue>(
+                                      valueListenable: _searchController,
+                                      builder: (context, value, _) {
+                                        return value.text.isNotEmpty
+                                            ? IconButton(
+                                                icon: const Icon(Icons.clear),
+                                                onPressed: () {
+                                                  _searchController.clear();
+                                                  _applyFilters();
+                                                },
+                                              )
+                                            : const SizedBox.shrink();
+                                      },
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 8),
+                              Expanded(flex: 5, child: filterRow),
+                            ],
+                          ),
+                        ] else ...[
+                          Row(
+                            children: [
+                              Expanded(
+                                child: TextField(
+                                  controller: _searchController,
+                                  onChanged: (_) => _applyFilters(),
+                                  decoration: InputDecoration(
+                                    hintText: context.t('search_cards'),
+                                    prefixIcon: const Icon(Icons.search),
+                                    suffixIcon: ValueListenableBuilder<TextEditingValue>(
+                                      valueListenable: _searchController,
+                                      builder: (context, value, _) {
+                                        return value.text.isNotEmpty
+                                            ? IconButton(
+                                                icon: const Icon(Icons.clear),
+                                                onPressed: () {
+                                                  _searchController.clear();
+                                                  _applyFilters();
+                                                },
+                                              )
+                                            : const SizedBox.shrink();
+                                      },
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              if (isOwner && _currentSubject != null) ...[
+                                const SizedBox(width: 8),
+                                IconButton(
+                                  icon: Icon(Icons.add_circle, color: pillarColor, size: 40),
+                                  padding: EdgeInsets.zero,
+                                  onPressed: () async {
+                                    final result = await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => AddCardPage(
+                                          pillarId: pillarId,
+                                          initialSubjectId: _currentSubject!.id,
+                                        ),
+                                      ),
+                                    );
+                                    if (result == true) _refreshData();
+                                  },
+                                ),
+                              ],
+                            ],
+                          ),
+                        ],
+                      ],
+                      const SizedBox(height: 24),
+                    ],
+                  );
+                },
+              ),
+            ),
             if (_isLoading)
               const SliverFillRemaining(
                 child: Center(child: CircularProgressIndicator()),

@@ -886,6 +886,10 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
             title: Text(widget.pillar.getTranslatedName(widget.languageCode), style: const TextStyle(color: appBarColor, fontWeight: FontWeight.bold)),
             appBarColor: pillarColor,
             actions: [
+              IconButton(
+                icon: const Icon(Icons.school, color: appBarColor),
+                onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
+              ),
               IconButton(icon: const Icon(Icons.arrow_back, color: appBarColor), onPressed: () => Navigator.pop(context, {'hasUpdated': _hasUpdated, 'ageFilter': _filters.ageGroup, 'collectionFilter': _filters.collectionFilter})),
             ],
             fixedBody: LayoutBuilder(builder: (context, constraints) {
@@ -1201,6 +1205,10 @@ class _FolderPageState extends State<FolderPage> {
             title: Text(widget.folder.getName(widget.languageCode), style: const TextStyle(color: appBarColor, fontWeight: FontWeight.bold)),
             appBarColor: pillarColor,
             actions: [
+              IconButton(
+                icon: const Icon(Icons.school, color: appBarColor),
+                onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
+              ),
               IconButton(icon: const Icon(Icons.arrow_back, color: appBarColor), onPressed: () => Navigator.pop(context, {'hasUpdated': _hasUpdated, 'ageFilter': _filters.ageGroup, 'collectionFilter': _filters.collectionFilter})),
               if (isOwner) ...[
                 IconButton(icon: const Icon(Icons.edit, color: appBarColor), onPressed: () async {

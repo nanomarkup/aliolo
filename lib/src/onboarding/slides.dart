@@ -17,46 +17,103 @@ class OnboardingSlide extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 40),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Expanded(
-            flex: 5,
-            child: Center(child: visual),
-          ),
-          Expanded(
-            flex: 4,
-            child: Column(
-              children: [
-                Text(
-                  title,
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.poppins(
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                    color: const Color(0xFF1D4289),
-                  ),
+    final bgColor = Theme.of(context).scaffoldBackgroundColor;
+    
+    return Center(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 700),
+        child: Stack(
+          children: [
+            // 1. Scrollable Content (Limited to stop above bottom controls)
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 180, // Stops before reaching the bottom dots/button
+              child: SingleChildScrollView(
+                // Top padding clears the fixed header (~180px)
+                // Bottom padding for internal spacing
+                padding: const EdgeInsets.fromLTRB(40, 180, 40, 40),
+                child: Column(
+                  children: [
+                    visual,
+                    if (extra != null) ...[
+                      const SizedBox(height: 32),
+                      extra!,
+                    ],
+                  ],
                 ),
-                const SizedBox(height: 16),
-                Text(
-                  description,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    height: 1.5,
-                    color: Color(0xFF64748B),
-                  ),
-                ),
-                if (extra != null) ...[
-                  const SizedBox(height: 32),
-                  extra!,
-                ],
-              ],
+              ),
             ),
-          ),
-        ],
+            
+            // 2. Fixed Header (Title & Description)
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              child: Container(
+                padding: const EdgeInsets.fromLTRB(40, 60, 40, 24),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      bgColor,
+                      bgColor,
+                      bgColor.withValues(alpha: 0.9),
+                      bgColor.withValues(alpha: 0.0),
+                    ],
+                    stops: const [0.0, 0.8, 0.9, 1.0],
+                  ),
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      title,
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.poppins(
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold,
+                        color: const Color(0xFF1D4289),
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    Text(
+                      description,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        height: 1.4,
+                        color: Color(0xFF64748B),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            // 3. Bottom Fade (Prevents content from having a hard cut-off above buttons)
+            Positioned(
+              bottom: 180,
+              left: 0,
+              right: 0,
+              height: 40,
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      bgColor.withValues(alpha: 0.0),
+                      bgColor,
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
