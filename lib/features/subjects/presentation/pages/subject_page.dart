@@ -277,7 +277,6 @@ class _SubjectPageState extends State<SubjectPage> {
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
-                // This ensures the popup is wide even if the button is narrow
                 menuWidth: 250,
                 isExpanded: false,
                 selectedItemBuilder: (context) {
@@ -353,142 +352,146 @@ class _SubjectPageState extends State<SubjectPage> {
                   onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const DocumentationPage())),
                 ),
             ],
-            fixedBody: LayoutBuilder(
-              builder: (context, constraints) {
-                final isSmall = constraints.maxWidth < 600;
-                final filterRow = Row(
-                  children: [
-                    Expanded(
-                      child: _buildCompactDropdown(
-                        value: _filters.collectionFilter,
-                        items: {
-                          'all': context.t('filter_all') ?? 'All',
-                          'favorites': context.t('filter_dashboard'),
-                          'mine': context.t('filter_my_subjects'),
-                          'public': context.t('filter_public'),
-                        },
-                        onChanged: (val) async {
-                          if (val != null) {
-                            setState(() { 
-                              _filters = _filters.copyWith(collectionFilter: val); 
-                              _applySearch(); 
-                            });
-                            final prefs = await SharedPreferences.getInstance();
-                            await prefs.setString('last_collection_filter', val);
-                          }
-                        },
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: _buildCompactDropdown(
-                        value: _filters.ageGroup,
-                        items: {
-                          'all': context.t('age_all'),
-                          '0_6': context.t('age_0_6'),
-                          '7_14': context.t('age_7_14'),
-                          '15_plus': context.t('age_15_plus'),
-                        },
-                        onChanged: (val) async {
-                          if (val != null) {
-                            setState(() { 
-                              _filters = _filters.copyWith(ageGroup: val); 
-                              _applySearch(); 
-                            });
-                            final prefs = await SharedPreferences.getInstance();
-                            await prefs.setString('last_age_filter', val);
-                          }
-                        },
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    SizedBox(
-                      width: 48,
-                      child: PopupMenuButton<String>(
-                        icon: Icon(Icons.add_circle, color: currentSessionColor, size: 40),
-                        padding: EdgeInsets.zero,
-                        onSelected: (value) async {
-                          final defaultPillarId = pillars.isNotEmpty ? pillars.first.id : 8;
-                          dynamic result;
-                          if (value == 'subject') {
-                            result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: defaultPillarId)));
-                          } else if (value == 'collection') {
-                            result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: defaultPillarId, isCollectionMode: true)));
-                          } else if (value == 'folder') {
-                            result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: defaultPillarId, isFolderMode: true)));
-                          }
-                          
-                          if (result == true) {
-                            _loadDashboard();
-                          } else if (result != null) {
-                            await _navigateToSubject(result);
-                          }
-                        },
-                        itemBuilder: (context) => [
-                          PopupMenuItem(value: 'subject', child: ListTile(leading: const Icon(Icons.description, color: Colors.orange), title: Text(context.t('add_subject')), contentPadding: EdgeInsets.zero)),
-                          PopupMenuItem(value: 'collection', child: ListTile(leading: const Icon(Icons.collections, color: Colors.blue), title: Text(context.t('add_collection')), contentPadding: EdgeInsets.zero)),
-                          PopupMenuItem(value: 'folder', child: ListTile(leading: const Icon(Icons.folder, color: Colors.amber), title: Text(context.t('add_folder')), contentPadding: EdgeInsets.zero)),
-                        ],
-                      ),
-                    ),
-                  ],
-                );
-
-                return Padding(
-                  padding: const EdgeInsets.only(top: 16, bottom: 24),
-                  child: isSmall 
-                    ? Column(children: [
-                        TextField(
-                          controller: _searchController,
-                          decoration: InputDecoration(
-                            hintText: context.t('search_subjects'),
-                            prefixIcon: const Icon(Icons.search),
-                            suffixIcon: ValueListenableBuilder<TextEditingValue>(
-                              valueListenable: _searchController,
-                              builder: (context, value, _) {
-                                return value.text.isNotEmpty ? IconButton(icon: const Icon(Icons.clear), onPressed: () { _searchController.clear(); _applySearch(); }) : const SizedBox.shrink();
-                              },
-                            ),
-                            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                            filled: true,
-                            fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
-                          ),
-                          onChanged: (_) => _applySearch(),
-                        ),
-                        const SizedBox(height: 12),
-                        filterRow,
-                      ])
-                    : Row(children: [
+            slivers: [
+              // Scrollable Header Section
+              SliverToBoxAdapter(
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    final isSmall = constraints.maxWidth < 600;
+                    final filterRow = Row(
+                      children: [
                         Expanded(
-                          flex: 3,
-                          child: TextField(
-                            controller: _searchController,
-                            decoration: InputDecoration(
-                              hintText: context.t('search_subjects'),
-                              prefixIcon: const Icon(Icons.search),
-                              suffixIcon: ValueListenableBuilder<TextEditingValue>(
-                                valueListenable: _searchController,
-                                builder: (context, value, _) {
-                                  return value.text.isNotEmpty ? IconButton(icon: const Icon(Icons.clear), onPressed: () { _searchController.clear(); _applySearch(); }) : const SizedBox.shrink();
-                                },
-                              ),
-                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                              contentPadding: const EdgeInsets.symmetric(horizontal: 12),
-                              filled: true,
-                              fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
-                            ),
-                            onChanged: (_) => _applySearch(),
+                          child: _buildCompactDropdown(
+                            value: _filters.collectionFilter,
+                            items: {
+                              'all': context.t('filter_all') ?? 'All',
+                              'favorites': context.t('filter_dashboard'),
+                              'mine': context.t('filter_my_subjects'),
+                              'public': context.t('filter_public'),
+                            },
+                            onChanged: (val) async {
+                              if (val != null) {
+                                setState(() { 
+                                  _filters = _filters.copyWith(collectionFilter: val); 
+                                  _applySearch(); 
+                                });
+                                final prefs = await SharedPreferences.getInstance();
+                                await prefs.setString('last_collection_filter', val);
+                              }
+                            },
                           ),
                         ),
                         const SizedBox(width: 8),
-                        Expanded(flex: 5, child: filterRow),
-                      ]),
-                );
-              },
-            ),
-            slivers: _isLoading
-              ? [const SliverFillRemaining(child: Center(child: CircularProgressIndicator()))]
-              : [
+                        Expanded(
+                          child: _buildCompactDropdown(
+                            value: _filters.ageGroup,
+                            items: {
+                              'all': context.t('age_all'),
+                              '0_6': context.t('age_0_6'),
+                              '7_14': context.t('age_7_14'),
+                              '15_plus': context.t('age_15_plus'),
+                            },
+                            onChanged: (val) async {
+                              if (val != null) {
+                                setState(() { 
+                                  _filters = _filters.copyWith(ageGroup: val); 
+                                  _applySearch(); 
+                                });
+                                final prefs = await SharedPreferences.getInstance();
+                                await prefs.setString('last_age_filter', val);
+                              }
+                            },
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        SizedBox(
+                          width: 48,
+                          child: PopupMenuButton<String>(
+                            icon: Icon(Icons.add_circle, color: currentSessionColor, size: 40),
+                            padding: EdgeInsets.zero,
+                            onSelected: (value) async {
+                              final defaultPillarId = pillars.isNotEmpty ? pillars.first.id : 8;
+                              dynamic result;
+                              if (value == 'subject') {
+                                result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: defaultPillarId)));
+                              } else if (value == 'collection') {
+                                result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: defaultPillarId, isCollectionMode: true)));
+                              } else if (value == 'folder') {
+                                result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: defaultPillarId, isFolderMode: true)));
+                              }
+                              
+                              if (result == true) {
+                                _loadDashboard();
+                              } else if (result != null) {
+                                await _navigateToSubject(result);
+                              }
+                            },
+                            itemBuilder: (context) => [
+                              PopupMenuItem(value: 'subject', child: ListTile(leading: const Icon(Icons.description, color: Colors.orange), title: Text(context.t('add_subject')), contentPadding: EdgeInsets.zero)),
+                              PopupMenuItem(value: 'collection', child: ListTile(leading: const Icon(Icons.collections, color: Colors.blue), title: Text(context.t('add_collection')), contentPadding: EdgeInsets.zero)),
+                              PopupMenuItem(value: 'folder', child: ListTile(leading: const Icon(Icons.folder, color: Colors.amber), title: Text(context.t('add_folder')), contentPadding: EdgeInsets.zero)),
+                            ],
+                          ),
+                        ),
+                      ],
+                    );
+
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 16, bottom: 24),
+                      child: isSmall 
+                        ? Column(children: [
+                            TextField(
+                              controller: _searchController,
+                              decoration: InputDecoration(
+                                hintText: context.t('search_subjects'),
+                                prefixIcon: const Icon(Icons.search),
+                                suffixIcon: ValueListenableBuilder<TextEditingValue>(
+                                  valueListenable: _searchController,
+                                  builder: (context, value, _) {
+                                    return value.text.isNotEmpty ? IconButton(icon: const Icon(Icons.clear), onPressed: () { _searchController.clear(); _applySearch(); }) : const SizedBox.shrink();
+                                  },
+                                ),
+                                border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                                filled: true,
+                                fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
+                              ),
+                              onChanged: (_) => _applySearch(),
+                            ),
+                            const SizedBox(height: 12),
+                            filterRow,
+                          ])
+                        : Row(children: [
+                            Expanded(
+                              flex: 3,
+                              child: TextField(
+                                controller: _searchController,
+                                decoration: InputDecoration(
+                                  hintText: context.t('search_subjects'),
+                                  prefixIcon: const Icon(Icons.search),
+                                  suffixIcon: ValueListenableBuilder<TextEditingValue>(
+                                    valueListenable: _searchController,
+                                    builder: (context, value, _) {
+                                      return value.text.isNotEmpty ? IconButton(icon: const Icon(Icons.clear), onPressed: () { _searchController.clear(); _applySearch(); }) : const SizedBox.shrink();
+                                    },
+                                  ),
+                                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                                  contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+                                  filled: true,
+                                  fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
+                                ),
+                                onChanged: (_) => _applySearch(),
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            Expanded(flex: 5, child: filterRow),
+                          ]),
+                    );
+                  },
+                ),
+              ),
+              if (_isLoading)
+                const SliverFillRemaining(child: Center(child: CircularProgressIndicator()))
+              else ...[
                   if (_allContent.isEmpty)
                     const SliverFillRemaining(child: Center(child: Text('No subjects found')))
                   else if (isSearching)
@@ -566,6 +569,7 @@ class _SubjectPageState extends State<SubjectPage> {
                       },
                     ),
                 ],
+            ],
           ),
         );
       },
@@ -892,90 +896,93 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
               ),
               IconButton(icon: const Icon(Icons.arrow_back, color: appBarColor), onPressed: () => Navigator.pop(context, {'hasUpdated': _hasUpdated, 'ageFilter': _filters.ageGroup, 'collectionFilter': _filters.collectionFilter})),
             ],
-            fixedBody: LayoutBuilder(builder: (context, constraints) {
-              final isSmall = constraints.maxWidth < 600;
-              final filterRow = Row(children: [
-                Expanded(child: _buildCompactDropdown(value: _filters.collectionFilter, items: {'all': context.t('filter_all') ?? 'All', 'favorites': context.t('filter_dashboard'), 'mine': context.t('filter_my_subjects'), 'public': context.t('filter_public')}, onChanged: (val) { if (val != null) setState(() { _filters = _filters.copyWith(collectionFilter: val); _applySearch(); }); })),
-                const SizedBox(width: 8),
-                Expanded(child: _buildCompactDropdown(value: _filters.ageGroup, items: {'all': context.t('age_all'), '0_6': context.t('age_0_6'), '7_14': context.t('age_7_14'), '15_plus': context.t('age_15_plus')}, onChanged: (val) { if (val != null) setState(() { _filters = _filters.copyWith(ageGroup: val); _applySearch(); }); })),
-                const SizedBox(width: 8),
-                SizedBox(width: 48, child: PopupMenuButton<String>(
-                  icon: Icon(Icons.add_circle, color: pillarColor, size: 40),
-                  padding: EdgeInsets.zero,
-                  onSelected: (value) async {
-                    dynamic result;
-                    if (value == 'subject') result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: widget.pillar.id, initialAgeGroup: _filters.ageGroup)));
-                    else if (value == 'collection') result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: widget.pillar.id, isCollectionMode: true, initialAgeGroup: _filters.ageGroup)));
-                    else if (value == 'folder') result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: widget.pillar.id, isFolderMode: true)));
-                    
-                    if (result == true) {
-                      _loadData();
-                      _hasUpdated = true;
-                    } else if (result != null) {
-                      _loadData();
-                      _hasUpdated = true;
-                      await _navigateToSubject(result);
-                    }
-                  },
-                  itemBuilder: (context) => [
-                    PopupMenuItem(value: 'subject', child: ListTile(leading: Icon(Icons.description, color: pillarColor), title: Text(context.t('add_subject')), contentPadding: EdgeInsets.zero)),
-                    PopupMenuItem(value: 'collection', child: ListTile(leading: Icon(Icons.auto_awesome_motion, color: pillarColor), title: Text(context.t('add_collection')), contentPadding: EdgeInsets.zero)),
-                    PopupMenuItem(value: 'folder', child: ListTile(leading: Icon(Icons.folder, color: pillarColor), title: Text(context.t('add_folder')), contentPadding: EdgeInsets.zero)),
-                  ],
-                )),
-              ]);
-              return Padding(
-                padding: const EdgeInsets.only(top: 16, bottom: 24),
-                child: isSmall 
-                  ? Column(children: [
-                      TextField(
-                        controller: _searchController,
-                        decoration: InputDecoration(
-                          hintText: context.t('search_subjects'),
-                          prefixIcon: const Icon(Icons.search),
-                          suffixIcon: ValueListenableBuilder<TextEditingValue>(
-                            valueListenable: _searchController,
-                            builder: (context, value, _) {
-                              return value.text.isNotEmpty ? IconButton(icon: const Icon(Icons.clear), onPressed: () { _searchController.clear(); _applySearch(); }) : const SizedBox.shrink();
-                            },
-                          ),
-                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                          filled: true,
-                          fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
-                        ),
-                        onChanged: (_) => _applySearch(),
-                      ),
-                      const SizedBox(height: 12),
-                      filterRow,
-                    ])
-                  : Row(children: [
-                      Expanded(
-                        flex: 3,
-                        child: TextField(
-                          controller: _searchController,
-                          decoration: InputDecoration(
-                            hintText: context.t('search_subjects'),
-                            prefixIcon: const Icon(Icons.search),
-                            suffixIcon: ValueListenableBuilder<TextEditingValue>(
-                              valueListenable: _searchController,
-                              builder: (context, value, _) {
-                                return value.text.isNotEmpty ? IconButton(icon: const Icon(Icons.clear), onPressed: () { _searchController.clear(); _applySearch(); }) : const SizedBox.shrink();
-                              },
-                            ),
-                            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                            contentPadding: const EdgeInsets.symmetric(horizontal: 12),
-                            filled: true,
-                            fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
-                          ),
-                          onChanged: (_) => _applySearch(),
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      Expanded(flex: 5, child: filterRow),
-                    ]),
-              );
-            }),
             slivers: [
+              // Scrollable Header Section
+              SliverToBoxAdapter(
+                child: LayoutBuilder(builder: (context, constraints) {
+                  final isSmall = constraints.maxWidth < 600;
+                  final filterRow = Row(children: [
+                    Expanded(child: _buildCompactDropdown(value: _filters.collectionFilter, items: {'all': context.t('filter_all') ?? 'All', 'favorites': context.t('filter_dashboard'), 'mine': context.t('filter_my_subjects'), 'public': context.t('filter_public')}, onChanged: (val) { if (val != null) setState(() { _filters = _filters.copyWith(collectionFilter: val); _applySearch(); }); })),
+                    const SizedBox(width: 8),
+                    Expanded(child: _buildCompactDropdown(value: _filters.ageGroup, items: {'all': context.t('age_all'), '0_6': context.t('age_0_6'), '7_14': context.t('age_7_14'), '15_plus': context.t('age_15_plus')}, onChanged: (val) { if (val != null) setState(() { _filters = _filters.copyWith(ageGroup: val); _applySearch(); }); })),
+                    const SizedBox(width: 8),
+                    SizedBox(width: 48, child: PopupMenuButton<String>(
+                      icon: Icon(Icons.add_circle, color: pillarColor, size: 40),
+                      padding: EdgeInsets.zero,
+                      onSelected: (value) async {
+                        dynamic result;
+                        if (value == 'subject') result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: widget.pillar.id, initialAgeGroup: _filters.ageGroup)));
+                        else if (value == 'collection') result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: widget.pillar.id, isCollectionMode: true, initialAgeGroup: _filters.ageGroup)));
+                        else if (value == 'folder') result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: widget.pillar.id, isFolderMode: true)));
+                        
+                        if (result == true) {
+                          _loadData();
+                          _hasUpdated = true;
+                        } else if (result != null) {
+                          _loadData();
+                          _hasUpdated = true;
+                          await _navigateToSubject(result);
+                        }
+                      },
+                      itemBuilder: (context) => [
+                        PopupMenuItem(value: 'subject', child: ListTile(leading: Icon(Icons.description, color: pillarColor), title: Text(context.t('add_subject')), contentPadding: EdgeInsets.zero)),
+                        PopupMenuItem(value: 'collection', child: ListTile(leading: Icon(Icons.auto_awesome_motion, color: pillarColor), title: Text(context.t('add_collection')), contentPadding: EdgeInsets.zero)),
+                        PopupMenuItem(value: 'folder', child: ListTile(leading: Icon(Icons.folder, color: pillarColor), title: Text(context.t('add_folder')), contentPadding: EdgeInsets.zero)),
+                      ],
+                    )),
+                  ]);
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 16, bottom: 24),
+                    child: isSmall 
+                      ? Column(children: [
+                          TextField(
+                            controller: _searchController,
+                            decoration: InputDecoration(
+                              hintText: context.t('search_subjects'),
+                              prefixIcon: const Icon(Icons.search),
+                              suffixIcon: ValueListenableBuilder<TextEditingValue>(
+                                valueListenable: _searchController,
+                                builder: (context, value, _) {
+                                  return value.text.isNotEmpty ? IconButton(icon: const Icon(Icons.clear), onPressed: () { _searchController.clear(); _applySearch(); }) : const SizedBox.shrink();
+                                },
+                              ),
+                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                              filled: true,
+                              fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
+                            ),
+                            onChanged: (_) => _applySearch(),
+                          ),
+                          const SizedBox(height: 12),
+                          filterRow,
+                        ])
+                      : Row(children: [
+                          Expanded(
+                            flex: 3,
+                            child: TextField(
+                              controller: _searchController,
+                              decoration: InputDecoration(
+                                hintText: context.t('search_subjects'),
+                                prefixIcon: const Icon(Icons.search),
+                                suffixIcon: ValueListenableBuilder<TextEditingValue>(
+                                  valueListenable: _searchController,
+                                  builder: (context, value, _) {
+                                    return value.text.isNotEmpty ? IconButton(icon: const Icon(Icons.clear), onPressed: () { _searchController.clear(); _applySearch(); }) : const SizedBox.shrink();
+                                  },
+                                ),
+                                border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                                contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+                                filled: true,
+                                fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
+                              ),
+                              onChanged: (_) => _applySearch(),
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(flex: 5, child: filterRow),
+                        ]),
+                  );
+                }),
+              ),
               if (_isLoading) const SliverFillRemaining(child: Center(child: CircularProgressIndicator()))
               else if (_filteredContent.isEmpty) const SliverFillRemaining(child: Center(child: Text('No items found')))
               else SliverPadding(
@@ -1231,106 +1238,109 @@ class _FolderPageState extends State<FolderPage> {
               ],
               IconButton(icon: const Icon(Icons.feedback, color: appBarColor), onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => FeedbackPage(folderId: widget.folder.id, contextTitle: widget.folder.getName(widget.languageCode), appBarColor: pillarColor)))),
             ],
-            fixedBody: LayoutBuilder(builder: (context, constraints) {
-              final isSmall = constraints.maxWidth < 600;
-              final filterRow = Row(children: [
-                Expanded(child: _buildCompactDropdown(value: _filters.collectionFilter, items: {'all': context.t('filter_all') ?? 'All', 'favorites': context.t('filter_dashboard'), 'mine': context.t('filter_my_subjects'), 'public': context.t('filter_public')}, onChanged: (val) { if (val != null) setState(() { _filters = _filters.copyWith(collectionFilter: val); _applySearch(); }); })),
-                const SizedBox(width: 8),
-                Expanded(child: _buildCompactDropdown(value: _filters.ageGroup, items: {'all': context.t('age_all'), '0_6': context.t('age_0_6'), '7_14': context.t('age_7_14'), '15_plus': context.t('age_15_plus')}, onChanged: (val) { if (val != null) setState(() { _filters = _filters.copyWith(ageGroup: val); _applySearch(); }); })),
-                const SizedBox(width: 8),
-                SizedBox(width: 48, child: PopupMenuButton<String>(
-                  icon: Icon(Icons.add_circle, color: pillarColor, size: 40),
-                  padding: EdgeInsets.zero,
-                  onSelected: (value) async {
-                    dynamic result;
-                    if (value == 'subject') result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: widget.pillar.id, folderId: widget.folder.id, initialAgeGroup: _filters.ageGroup)));
-                    else if (value == 'collection') result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: widget.pillar.id, folderId: widget.folder.id, isCollectionMode: true, initialAgeGroup: _filters.ageGroup)));
-                    
-                    if (result == true) {
-                      _loadData();
-                      _hasUpdated = true;
-                    } else if (result != null) {
-                      _loadData();
-                      _hasUpdated = true;
-                      await _navigateToSubject(result);
-                    }
-                  },
-                  itemBuilder: (context) => [
-                    PopupMenuItem(value: 'subject', child: ListTile(leading: Icon(Icons.description, color: pillarColor), title: Text(context.t('add_subject')), contentPadding: EdgeInsets.zero)),
-                    PopupMenuItem(value: 'collection', child: ListTile(leading: Icon(Icons.auto_awesome_motion, color: pillarColor), title: Text(context.t('add_collection')), contentPadding: EdgeInsets.zero)),
-                  ],
-                )),
-              ]);
-
-              final description = widget.folder.getDescription(widget.languageCode);
-
-              return Padding(
-                padding: const EdgeInsets.only(top: 16, bottom: 24),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    if (description.isNotEmpty) ...[
-                      Text(
-                        description,
-                        style: TextStyle(
-                          color: Colors.grey[600],
-                          fontSize: 14,
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                    ],
-                    isSmall 
-                      ? Column(children: [
-                          TextField(
-                            controller: _searchController,
-                            decoration: InputDecoration(
-                              hintText: context.t('search_subjects'),
-                              prefixIcon: const Icon(Icons.search),
-                              suffixIcon: ValueListenableBuilder<TextEditingValue>(
-                                valueListenable: _searchController,
-                                builder: (context, value, _) {
-                                  return value.text.isNotEmpty ? IconButton(icon: const Icon(Icons.clear), onPressed: () { _searchController.clear(); _applySearch(); }) : const SizedBox.shrink();
-                                },
-                              ),
-                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                              filled: true,
-                              fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
-                            ),
-                            onChanged: (_) => _applySearch(),
-                          ),
-                          const SizedBox(height: 12),
-                          filterRow,
-                        ])
-                      : Row(children: [
-                          Expanded(
-                            flex: 3,
-                            child: TextField(
-                              controller: _searchController,
-                              decoration: InputDecoration(
-                                hintText: context.t('search_subjects'),
-                                prefixIcon: const Icon(Icons.search),
-                                suffixIcon: ValueListenableBuilder<TextEditingValue>(
-                                  valueListenable: _searchController,
-                                  builder: (context, value, _) {
-                                    return value.text.isNotEmpty ? IconButton(icon: const Icon(Icons.clear), onPressed: () { _searchController.clear(); _applySearch(); }) : const SizedBox.shrink();
-                                  },
-                                ),
-                                border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                                contentPadding: const EdgeInsets.symmetric(horizontal: 12),
-                                filled: true,
-                                fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
-                              ),
-                              onChanged: (_) => _applySearch(),
-                            ),
-                          ),
-                          const SizedBox(width: 8),
-                          Expanded(flex: 5, child: filterRow),
-                        ]),
-                  ],
-                ),
-              );
-            }),
             slivers: [
+              // Scrollable Header Section
+              SliverToBoxAdapter(
+                child: LayoutBuilder(builder: (context, constraints) {
+                  final isSmall = constraints.maxWidth < 600;
+                  final filterRow = Row(children: [
+                    Expanded(child: _buildCompactDropdown(value: _filters.collectionFilter, items: {'all': context.t('filter_all') ?? 'All', 'favorites': context.t('filter_dashboard'), 'mine': context.t('filter_my_subjects'), 'public': context.t('filter_public')}, onChanged: (val) { if (val != null) setState(() { _filters = _filters.copyWith(collectionFilter: val); _applySearch(); }); })),
+                    const SizedBox(width: 8),
+                    Expanded(child: _buildCompactDropdown(value: _filters.ageGroup, items: {'all': context.t('age_all'), '0_6': context.t('age_0_6'), '7_14': context.t('age_7_14'), '15_plus': context.t('age_15_plus')}, onChanged: (val) { if (val != null) setState(() { _filters = _filters.copyWith(ageGroup: val); _applySearch(); }); })),
+                    const SizedBox(width: 8),
+                    SizedBox(width: 48, child: PopupMenuButton<String>(
+                      icon: Icon(Icons.add_circle, color: pillarColor, size: 40),
+                      padding: EdgeInsets.zero,
+                      onSelected: (value) async {
+                        dynamic result;
+                        if (value == 'subject') result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: widget.pillar.id, folderId: widget.folder.id, initialAgeGroup: _filters.ageGroup)));
+                        else if (value == 'collection') result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: widget.pillar.id, folderId: widget.folder.id, isCollectionMode: true, initialAgeGroup: _filters.ageGroup)));
+                        
+                        if (result == true) {
+                          _loadData();
+                          _hasUpdated = true;
+                        } else if (result != null) {
+                          _loadData();
+                          _hasUpdated = true;
+                          await _navigateToSubject(result);
+                        }
+                      },
+                      itemBuilder: (context) => [
+                        PopupMenuItem(value: 'subject', child: ListTile(leading: Icon(Icons.description, color: pillarColor), title: Text(context.t('add_subject')), contentPadding: EdgeInsets.zero)),
+                        PopupMenuItem(value: 'collection', child: ListTile(leading: Icon(Icons.auto_awesome_motion, color: pillarColor), title: Text(context.t('add_collection')), contentPadding: EdgeInsets.zero)),
+                      ],
+                    )),
+                  ]);
+
+                  final description = widget.folder.getDescription(widget.languageCode);
+
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 16, bottom: 24),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        if (description.isNotEmpty) ...[
+                          Text(
+                            description,
+                            style: TextStyle(
+                              color: Colors.grey[600],
+                              fontSize: 14,
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                        ],
+                        isSmall 
+                          ? Column(children: [
+                              TextField(
+                                controller: _searchController,
+                                decoration: InputDecoration(
+                                  hintText: context.t('search_subjects'),
+                                  prefixIcon: const Icon(Icons.search),
+                                  suffixIcon: ValueListenableBuilder<TextEditingValue>(
+                                    valueListenable: _searchController,
+                                    builder: (context, value, _) {
+                                      return value.text.isNotEmpty ? IconButton(icon: const Icon(Icons.clear), onPressed: () { _searchController.clear(); _applySearch(); }) : const SizedBox.shrink();
+                                    },
+                                  ),
+                                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                                  filled: true,
+                                  fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
+                                ),
+                                onChanged: (_) => _applySearch(),
+                              ),
+                              const SizedBox(height: 12),
+                              filterRow,
+                            ])
+                          : Row(children: [
+                              Expanded(
+                                flex: 3,
+                                child: TextField(
+                                  controller: _searchController,
+                                  decoration: InputDecoration(
+                                    hintText: context.t('search_subjects'),
+                                    prefixIcon: const Icon(Icons.search),
+                                    suffixIcon: ValueListenableBuilder<TextEditingValue>(
+                                      valueListenable: _searchController,
+                                      builder: (context, value, _) {
+                                        return value.text.isNotEmpty ? IconButton(icon: const Icon(Icons.clear), onPressed: () { _searchController.clear(); _applySearch(); }) : const SizedBox.shrink();
+                                      },
+                                    ),
+                                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                                    contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+                                    filled: true,
+                                    fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
+                                  ),
+                                  onChanged: (_) => _applySearch(),
+                                ),
+                              ),
+                              const SizedBox(width: 8),
+                              Expanded(flex: 5, child: filterRow),
+                            ]),
+                      ],
+                    ),
+                  );
+                }),
+              ),
               if (_isLoading) const SliverFillRemaining(child: Center(child: CircularProgressIndicator()))
               else if (_filteredContent.isEmpty) const SliverFillRemaining(child: Center(child: Text('No subjects found')))
               else SliverPadding(padding: const EdgeInsets.only(bottom: 32), sliver: SliverList(delegate: SliverChildBuilderDelegate((context, index) {

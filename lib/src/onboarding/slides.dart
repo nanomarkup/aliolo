@@ -24,25 +24,37 @@ class OnboardingSlide extends StatelessWidget {
         constraints: const BoxConstraints(maxWidth: 700),
         child: Stack(
           children: [
-            // 1. Scrollable Content (Limited to stop above bottom controls)
+            // 1. Scrollable Content (Centered vertically in the middle section)
             Positioned(
-              top: 0,
+              top: 180, // Starts after the header
               left: 0,
               right: 0,
-              bottom: 180, // Stops before reaching the bottom dots/button
-              child: SingleChildScrollView(
-                // Top padding clears the fixed header (~180px)
-                // Bottom padding for internal spacing
-                padding: const EdgeInsets.fromLTRB(40, 180, 40, 40),
-                child: Column(
-                  children: [
-                    visual,
-                    if (extra != null) ...[
-                      const SizedBox(height: 32),
-                      extra!,
-                    ],
-                  ],
-                ),
+              bottom: 180, // Ends before the footer
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  return SingleChildScrollView(
+                    padding: const EdgeInsets.symmetric(horizontal: 40),
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        minHeight: constraints.maxHeight,
+                      ),
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            visual,
+                            if (extra != null) ...[
+                              const SizedBox(height: 32),
+                              extra!,
+                            ],
+                            // Extra bottom padding to ensure we don't hug the bottom fade
+                            const SizedBox(height: 40),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
               ),
             ),
             
@@ -93,7 +105,7 @@ class OnboardingSlide extends StatelessWidget {
               ),
             ),
 
-            // 3. Bottom Fade (Prevents content from having a hard cut-off above buttons)
+            // 3. Bottom Fade
             Positioned(
               bottom: 180,
               left: 0,
