@@ -13,6 +13,7 @@ import 'package:aliolo/data/services/progress_service.dart';
 import 'package:aliolo/data/services/sound_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
+import 'package:aliolo/data/services/subscription_service.dart';
 import 'package:aliolo/core/widgets/aliolo_image.dart';
 import 'package:aliolo/core/widgets/window_controls.dart';
 import 'package:aliolo/core/di/service_locator.dart';
@@ -24,6 +25,7 @@ import 'package:aliolo/core/widgets/number_grid.dart';
 import 'package:aliolo/core/widgets/multiplication_grid.dart';
 import 'package:aliolo/core/widgets/division_grid.dart';
 import 'package:aliolo/data/services/math_service.dart';
+import 'package:aliolo/features/settings/presentation/pages/premium_upgrade_page.dart';
 
 class TestOption {
   final String text;
@@ -80,7 +82,9 @@ class _TestPageState extends State<TestPage> {
   @override
   void initState() {
     super.initState();
-    _isAutoPlay = _authService.currentUser?.autoPlayEnabled ?? false;
+    final isPremium = getIt<SubscriptionService>().isPremium;
+    _isAutoPlay = isPremium && (_authService.currentUser?.autoPlayEnabled ?? false);
+    
     player = Player();
     controller = VideoController(player);
     _sessionQueue = List.from(widget.sessionCards)..shuffle();
@@ -439,8 +443,28 @@ class _TestPageState extends State<TestPage> {
                     },
                   ),
                 IconButton(
-                  icon: Icon(_isAutoPlay ? Icons.pause_circle : Icons.play_circle),
+                  icon: Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+                      Icon(_isAutoPlay ? Icons.pause_circle : Icons.play_circle),
+                      if (!getIt<SubscriptionService>().isPremium)
+                        Positioned(
+                          right: -4,
+                          top: -4,
+                          child: Container(
+                            padding: const EdgeInsets.all(2),
+                            decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
+                            child: const Icon(Icons.stars, color: Colors.amber, size: 12),
+                          ),
+                        ),
+                    ],
+                  ),
                   onPressed: () {
+                    final sub = getIt<SubscriptionService>();
+                    if (!sub.isPremium) {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const PremiumUpgradePage()));
+                      return;
+                    }
                     final newVal = !_isAutoPlay;
                     _authService.updateAutoPlayPreference(newVal);
                     setState(() {

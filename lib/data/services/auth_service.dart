@@ -152,7 +152,7 @@ class AuthService extends ChangeNotifier {
         }
 
         ThemeService().setThemeFromString(_currentUser!.themeMode);
-        ThemeService().setPrimaryColorFromPillar(_currentUser!.mainPillarId);
+        // Removed automatic color sync from pillar to keep global color stable
       } else {
         _currentUser = UserModel(
           username:

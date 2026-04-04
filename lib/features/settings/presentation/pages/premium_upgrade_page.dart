@@ -5,6 +5,7 @@ import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/core/widgets/aliolo_scrollable_page.dart';
 import 'package:aliolo/core/di/service_locator.dart';
+import 'package:aliolo/features/settings/presentation/pages/billing_page.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:flutter/foundation.dart';
 
@@ -28,9 +29,17 @@ class _PremiumUpgradePageState extends State<PremiumUpgradePage> {
     {'name': 'Unlimited daily XP goals', 'free': false},
     {'name': 'Create folders, subjects and collections', 'free': false},
     {'name': 'Test subjects and collections', 'free': false},
+    {'name': 'Auto-Play mode', 'free': false},
     {'name': 'Customize learning and testing', 'free': false},
     {'name': 'Private profile mode', 'free': false},
   ];
+
+  void _navigateToBilling(int index) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => BillingPage(selectedIndex: index)),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,44 +69,10 @@ class _PremiumUpgradePageState extends State<PremiumUpgradePage> {
               ),
               const SizedBox(height: 12),
               const Text(
-                'Get unlimited cards, AI-powered insights, and sync across all your devices.',
+                'Master subjects faster with advanced testing, creation tools, and unlimited goals.',
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 16, color: Colors.grey),
               ),
-              const SizedBox(height: 32),
-
-              // Always Visible Plan Comparison (Before payment options)
-              Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).cardColor,
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: Colors.black.withValues(alpha: 0.05)),
-                ),
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        const Expanded(child: SizedBox()),
-                        SizedBox(width: 50, child: Text('FREE', textAlign: TextAlign.center, style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.grey[600]))),
-                        SizedBox(width: 50, child: Text('PRO', textAlign: TextAlign.center, style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: currentPrimaryColor))),
-                      ],
-                    ),
-                    const Divider(),
-                    ..._features.map((f) => Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 6),
-                      child: Row(
-                        children: [
-                          Expanded(child: Text(f['name'], style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500))),
-                          SizedBox(width: 50, child: Icon(f['free'] ? Icons.check_circle : Icons.cancel, size: 16, color: f['free'] ? Colors.green : Colors.grey[300])),
-                          SizedBox(width: 50, child: Icon(Icons.check_circle, size: 16, color: currentPrimaryColor)),
-                        ],
-                      ),
-                    )),
-                  ],
-                ),
-              ),
-
               const SizedBox(height: 40),
               
               if (subService.isPremium)
@@ -137,23 +112,41 @@ class _PremiumUpgradePageState extends State<PremiumUpgradePage> {
                   originalPrice: r"$161.98",
                   extraInfo: r"($1.56 / Week)"
                 ),
-                const SizedBox(height: 32),
-                
-                ElevatedButton(
-                  onPressed: () => _handlePurchase(subService),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: currentPrimaryColor,
-                    foregroundColor: Colors.white,
-                    minimumSize: const Size(double.infinity, 56),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-                    elevation: 0,
-                  ),
-                  child: const Text(
-                    "Upgrade Now",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                ),
               ],
+
+              const SizedBox(height: 40),
+
+              // Always Visible Plan Comparison (After payment options)
+              Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).cardColor,
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(color: Colors.black.withValues(alpha: 0.05)),
+                ),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        const Expanded(child: SizedBox()),
+                        SizedBox(width: 50, child: Text('FREE', textAlign: TextAlign.center, style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.grey[600]))),
+                        SizedBox(width: 50, child: Text('PRO', textAlign: TextAlign.center, style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: currentPrimaryColor))),
+                      ],
+                    ),
+                    const Divider(),
+                    ..._features.map((f) => Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 6),
+                      child: Row(
+                        children: [
+                          Expanded(child: Text(f['name'], style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500))),
+                          SizedBox(width: 50, child: Icon(f['free'] ? Icons.check_circle : Icons.cancel, size: 16, color: f['free'] ? Colors.green : Colors.grey[300])),
+                          SizedBox(width: 50, child: Icon(Icons.check_circle, size: 16, color: currentPrimaryColor)),
+                        ],
+                      ),
+                    )),
+                  ],
+                ),
+              ),
 
               const SizedBox(height: 48),
             ],
@@ -164,34 +157,15 @@ class _PremiumUpgradePageState extends State<PremiumUpgradePage> {
     );
   }
 
-  void _handlePurchase(SubscriptionService subService) {
-    if (kIsWeb) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Payments are not yet integrated on Web. Please use the mobile app to upgrade.')),
-      );
-      return;
-    }
-
-    String productId = 'aliolo_premium_monthly';
-    if (_selectedOptionIndex == 2) productId = 'aliolo_premium_yearly';
-    else if (_selectedOptionIndex == 0) productId = 'aliolo_premium_weekly';
-
-    final product = subService.products.where((p) => p.id == productId).firstOrNull;
-    if (product != null) {
-      subService.buySubscription(product);
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Product not available in store.')),
-      );
-    }
-  }
-
   Widget _buildSubscriptionOption(int index, String title, String price, String sub, {String? originalPrice, String? extraInfo}) {
     final isSelected = _selectedOptionIndex == index;
     final currentPrimaryColor = ThemeService().primaryColor;
 
     return InkWell(
-      onTap: () => setState(() => _selectedOptionIndex = index),
+      onTap: () {
+        setState(() => _selectedOptionIndex = index);
+        _navigateToBilling(index);
+      },
       borderRadius: BorderRadius.circular(16),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),

@@ -9,9 +9,13 @@ import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
+import 'package:aliolo/data/services/subscription_service.dart';
 import 'package:aliolo/data/models/pillar_model.dart';
 import 'package:aliolo/features/subjects/presentation/pages/subject_page.dart';
 import 'package:aliolo/features/auth/presentation/pages/login_page.dart';
+import 'package:aliolo/features/settings/presentation/pages/billing_page.dart';
+import 'package:flutter/foundation.dart';
+import 'package:provider/provider.dart';
 import 'slides.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -29,6 +33,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   double _dailyGoal = 30;
   String? _selectedAge;
   int? _selectedPillarId;
+  int _selectedOptionIndex = 1; // Monthly by default
   bool _showFeatures = false;
 
   late final Player _player1;
@@ -56,6 +61,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     {'name': 'Unlimited daily XP goals', 'free': false},
     {'name': 'Create folders, subjects and collections', 'free': false},
     {'name': 'Test subjects and collections', 'free': false},
+    {'name': 'Auto-Play mode', 'free': false},
     {'name': 'Customize learning and testing', 'free': false},
     {'name': 'Private profile mode', 'free': false},
   ];
@@ -131,6 +137,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     final authService = getIt<AuthService>();
     if (authService.currentUser != null) {
       await authService.updateNextDailyGoal(_dailyGoal.toInt());
+      if (_selectedPillarId != null) {
+        await authService.updateMainPillar(_selectedPillarId!);
+      }
     }
 
     if (!mounted) return;
@@ -153,9 +162,17 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 
+  void _navigateToBilling(int index) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => BillingPage(selectedIndex: index)),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final String displayLang = getIt<TranslationService>().currentLocale.languageCode;
+    final subService = context.watch<SubscriptionService>();
     
     return Scaffold(
       backgroundColor: bgColor,
@@ -165,7 +182,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             controller: _pageController,
             onPageChanged: _handlePageChange,
             children: [
-              // Slide 1: Hook (Title below video)
+              // Slide 1: Hook
               OnboardingSlide(
                 useFixedHeader: false,
                 invertContent: true,
@@ -404,101 +421,69 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               OnboardingSlide(
                 useFixedHeader: false,
                 visual: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(Icons.workspace_premium, color: Colors.amber, size: 80),
-                      const SizedBox(height: 24),
-                      ConstrainedBox(
-                        constraints: const BoxConstraints(maxWidth: 400),
-                        child: Column(
-                          children: [
-                            _buildSubscriptionOption("Weekly Access", r"$2.99", "Best for quick goals", originalPrice: r"$5.98"),
-                            const SizedBox(height: 12),
-                            _buildSubscriptionOption(
-                              "Monthly Access", r"$8.99", "Most popular choice", 
-                              originalPrice: r"$17.98", isSelected: true, 
-                              extraInfo: r"($2.25 / Week)"
-                            ),
-                            const SizedBox(height: 12),
-                            _buildSubscriptionOption(
-                              "Yearly Access", r"$80.99", "Save 33% per month", 
-                              originalPrice: r"$161.98",
-                              extraInfo: r"($1.56 / Week)"
-                            ),
-                            const SizedBox(height: 24),
-                            // Collapsible Features List with Auto-Scroll
-                            TextButton.icon(
-                              onPressed: () {
-                                setState(() => _showFeatures = !_showFeatures);
-                                if (_showFeatures) {
-                                  WidgetsBinding.instance.addPostFrameCallback((_) {
-                                    final context = _featuresKey.currentContext;
-                                    if (context != null) {
-                                      Scrollable.ensureVisible(
-                                        context,
-                                        duration: const Duration(milliseconds: 500),
-                                        curve: Curves.easeInOut,
-                                      );
-                                    }
-                                  });
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 500),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(Icons.workspace_premium, color: Colors.amber, size: 80),
+                        const SizedBox(height: 24),
+                        if (subService.isPremium)
+                          _buildPremiumSuccess(primaryColor)
+                        else ...[
+                          _buildSubscriptionOption(0, "Weekly Access", r"$2.99", "Best for quick goals", originalPrice: r"$5.98"),
+                          const SizedBox(height: 12),
+                          _buildSubscriptionOption(
+                            1, "Monthly Access", r"$8.99", "Most popular choice", 
+                            originalPrice: r"$17.98", extraInfo: r"($2.25 / Week)"
+                          ),
+                          const SizedBox(height: 12),
+                          _buildSubscriptionOption(
+                            2, "Yearly Access", r"$80.99", "Save 33% per month", 
+                            originalPrice: r"$161.98", extraInfo: r"($1.56 / Week)"
+                          ),
+                        ],
+                        const SizedBox(height: 32),
+                        // Collapsible Features List with Auto-Scroll
+                        TextButton.icon(
+                          onPressed: () {
+                            setState(() => _showFeatures = !_showFeatures);
+                            if (_showFeatures) {
+                              WidgetsBinding.instance.addPostFrameCallback((_) {
+                                final context = _featuresKey.currentContext;
+                                if (context != null) {
+                                  Scrollable.ensureVisible(
+                                    context,
+                                    duration: const Duration(milliseconds: 500),
+                                    curve: Curves.easeInOut,
+                                  );
                                 }
-                              },
-                              icon: Icon(_showFeatures ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down, color: primaryColor),
-                              label: Text(
-                                _showFeatures ? "Hide Plan Comparison" : "Compare Free vs Premium",
-                                style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                            if (_showFeatures) ...[
-                              const SizedBox(height: 16),
-                              Container(
-                                key: _featuresKey,
-                                padding: const EdgeInsets.all(16),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(16),
-                                  border: Border.all(color: Colors.black.withValues(alpha: 0.05)),
-                                ),
-                                child: Column(
-                                  children: [
-                                    Row(
-                                      children: [
-                                        const Expanded(child: SizedBox()),
-                                        SizedBox(width: 50, child: Text('FREE', textAlign: TextAlign.center, style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.grey[600]))),
-                                        SizedBox(width: 50, child: Text('PRO', textAlign: TextAlign.center, style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: primaryColor))),
-                                      ],
-                                    ),
-                                    const Divider(),
-                                    ..._features.map((f) => Padding(
-                                      padding: const EdgeInsets.symmetric(vertical: 6),
-                                      child: Row(
-                                        children: [
-                                          Expanded(child: Text(f['name'], style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500))),
-                                          SizedBox(width: 50, child: Icon(f['free'] ? Icons.check_circle : Icons.cancel, size: 16, color: f['free'] ? Colors.green : Colors.grey[300])),
-                                          const SizedBox(width: 50, child: Icon(Icons.check_circle, size: 16, color: Color(0xFF1D4289))),
-                                        ],
-                                      ),
-                                    )),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ],
+                              });
+                            }
+                          },
+                          icon: Icon(_showFeatures ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down, color: primaryColor),
+                          label: Text(
+                            _showFeatures ? "Hide Plan Comparison" : "Compare Free vs Premium",
+                            style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold),
+                          ),
                         ),
-                      ),
-                    ],
+                        if (_showFeatures) ...[
+                          const SizedBox(height: 16),
+                          _buildFeatureComparison(primaryColor),
+                        ],
+                      ],
+                    ),
                   ),
                 ),
                 title: "Unlock Full Access",
-                description: "Get unlimited cards, AI-powered insights, and sync across all your devices.",
+                description: "Master subjects faster with advanced testing, creation tools, and unlimited goals.",
               ),
             ],
           ),
           // Top Overlay: Skip
           if (_currentPage < 6)
             Positioned(
-              top: 20,
+              top: 48,
               right: 20,
               child: TextButton(
                 onPressed: () => _finishOnboarding(skipped: true),
@@ -515,55 +500,67 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             right: 0,
             child: Column(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: List.generate(7, (index) {
-                    return AnimatedContainer(
-                      duration: const Duration(milliseconds: 300),
-                      margin: const EdgeInsets.symmetric(horizontal: 4),
-                      height: 8,
-                      width: _currentPage == index ? 24 : 8,
-                      decoration: BoxDecoration(
-                        color: _currentPage == index 
-                            ? primaryColor 
-                            : primaryColor.withValues(alpha: 0.3),
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                    );
-                  }),
-                ),
-                const SizedBox(height: 40),
+                if (_currentPage < 6)
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(7, (index) {
+                      return AnimatedContainer(
+                        duration: const Duration(milliseconds: 300),
+                        margin: const EdgeInsets.symmetric(horizontal: 4),
+                        height: 8,
+                        width: _currentPage == index ? 24 : 8,
+                        decoration: BoxDecoration(
+                          color: _currentPage == index 
+                              ? primaryColor 
+                              : primaryColor.withValues(alpha: 0.3),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                      );
+                    }),
+                  ),
+                if (_currentPage < 6) const SizedBox(height: 40),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 40),
                   child: ConstrainedBox(
                     constraints: const BoxConstraints(maxWidth: 320),
-                    child: ElevatedButton(
-                      onPressed: (_currentPage == 1 || _currentPage == 2) 
-                        ? null 
-                        : () {
-                        if (_currentPage == 6) {
-                          _finishOnboarding(skipped: false);
-                        } else {
-                          _pageController.nextPage(
-                            duration: const Duration(milliseconds: 300),
-                            curve: Curves.easeInOut,
-                          );
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: primaryColor,
-                        foregroundColor: Colors.white,
-                        minimumSize: const Size(double.infinity, 56),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        elevation: 0,
-                      ),
-                      child: Text(
-                        _currentPage == 6 ? "Get Started" : "Next",
-                        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                    ),
+                    child: _currentPage == 6
+                        ? TextButton(
+                            onPressed: () => _finishOnboarding(skipped: false),
+                            child: Text(
+                              context.t('maybe_later'),
+                              style: const TextStyle(
+                                color: Colors.grey,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          )
+                        : ElevatedButton(
+                            onPressed: (_currentPage == 1 || _currentPage == 2)
+                                ? null
+                                : () {
+                                    _pageController.nextPage(
+                                      duration: const Duration(milliseconds: 300),
+                                      curve: Curves.easeInOut,
+                                    );
+                                  },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: primaryColor,
+                              foregroundColor: Colors.white,
+                              minimumSize: const Size(double.infinity, 56),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                              elevation: 0,
+                            ),
+                            child: const Text(
+                              "Next",
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
                   ),
                 ),
               ],
@@ -574,60 +571,126 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 
-  Widget _buildSubscriptionOption(String title, String price, String sub, {bool isSelected = false, String? originalPrice, String? extraInfo}) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: isSelected ? primaryColor.withValues(alpha: 0.05) : Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: isSelected ? primaryColor : Colors.black.withValues(alpha: 0.1),
-          width: 2,
+  Widget _buildPremiumSuccess(Color pillarColor) {
+    return Card(
+      color: Colors.green,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      child: const Padding(
+        padding: EdgeInsets.all(24),
+        child: Row(
+          children: [
+            Icon(Icons.check_circle, color: Colors.white),
+            SizedBox(width: 16),
+            Expanded(
+              child: Text(
+                'You are an Aliolo Premium member! Enjoy unlimited access to all features.',
+                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              ),
+            ),
+          ],
         ),
       ),
-      child: Row(
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+    );
+  }
+
+  Widget _buildSubscriptionOption(int index, String title, String price, String sub, {String? originalPrice, String? extraInfo}) {
+    final isSelected = _selectedOptionIndex == index;
+
+    return InkWell(
+      onTap: () {
+        setState(() => _selectedOptionIndex = index);
+        _navigateToBilling(index);
+      },
+      borderRadius: BorderRadius.circular(16),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        width: double.infinity,
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: isSelected ? primaryColor.withValues(alpha: 0.05) : Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(
+            color: isSelected ? primaryColor : Colors.black.withValues(alpha: 0.1),
+            width: 2,
+          ),
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                  Text(sub, style: TextStyle(color: Colors.grey[600], fontSize: 12)),
+                ],
+              ),
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                Text(sub, style: TextStyle(color: Colors.grey[600], fontSize: 12)),
+                if (originalPrice != null)
+                  Text(
+                    originalPrice,
+                    style: TextStyle(
+                      color: Colors.grey[400],
+                      fontSize: 12,
+                      decoration: TextDecoration.lineThrough,
+                    ),
+                  ),
+                Text(
+                  price,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                    color: Color(0xFF1D4289),
+                  ),
+                ),
+                if (extraInfo != null)
+                  Text(
+                    extraInfo,
+                    style: TextStyle(
+                      color: primaryColor.withValues(alpha: 0.7),
+                      fontSize: 11,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
               ],
             ),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFeatureComparison(Color pillarColor) {
+    return Container(
+      key: _featuresKey,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: Colors.black.withValues(alpha: 0.05)),
+      ),
+      child: Column(
+        children: [
+          Row(
             children: [
-              if (originalPrice != null)
-                Text(
-                  originalPrice,
-                  style: TextStyle(
-                    color: Colors.grey[400],
-                    fontSize: 12,
-                    decoration: TextDecoration.lineThrough,
-                  ),
-                ),
-              Text(
-                price,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                  color: Color(0xFF1D4289),
-                ),
-              ),
-              if (extraInfo != null)
-                Text(
-                  extraInfo,
-                  style: TextStyle(
-                    color: primaryColor.withValues(alpha: 0.7),
-                    fontSize: 11,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
+              const Expanded(child: SizedBox()),
+              SizedBox(width: 50, child: Text('FREE', textAlign: TextAlign.center, style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.grey[600]))),
+              SizedBox(width: 50, child: Text('PRO', textAlign: TextAlign.center, style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: pillarColor))),
             ],
           ),
+          const Divider(),
+          ..._features.map((f) => Padding(
+            padding: const EdgeInsets.symmetric(vertical: 6),
+            child: Row(
+              children: [
+                Expanded(child: Text(f['name'], style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500))),
+                SizedBox(width: 50, child: Icon(f['free'] ? Icons.check_circle : Icons.cancel, size: 16, color: f['free'] ? Colors.green : Colors.grey[300])),
+                SizedBox(width: 50, child: Icon(Icons.check_circle, size: 16, color: pillarColor)),
+              ],
+            ),
+          )),
         ],
       ),
     );
