@@ -65,6 +65,17 @@ class ThemeService extends ChangeNotifier {
     _refreshPrimaryColor(brightness);
   }
 
+  void setPrimaryColorFromHex(String hex, [Brightness? brightness]) {
+    try {
+      final color = fromHex(hex);
+      _primaryColor = color;
+      sessionColorNotifier.value = color;
+      notifyListeners();
+    } catch (_) {
+      _refreshPrimaryColor(brightness);
+    }
+  }
+
   void _refreshPrimaryColor([Brightness? brightness]) {
     // Find the pillar in the global list
     final pillar = pillars.firstWhere(

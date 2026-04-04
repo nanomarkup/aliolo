@@ -5,6 +5,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:aliolo/core/utils/file_stub.dart' if (dart.library.html) 'dart:html' as html;
 import 'package:aliolo/data/models/user_model.dart';
+import 'package:aliolo/data/models/pillar_model.dart';
 import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/core/utils/logger.dart';
@@ -152,7 +153,8 @@ class AuthService extends ChangeNotifier {
         }
 
         ThemeService().setThemeFromString(_currentUser!.themeMode);
-        // Removed automatic color sync from pillar to keep global color stable
+        // Persist theme color using mainPillarId
+        ThemeService().setPrimaryColorFromPillar(_currentUser!.mainPillarId);
       } else {
         _currentUser = UserModel(
           username:

@@ -137,9 +137,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     final authService = getIt<AuthService>();
     if (authService.currentUser != null) {
       await authService.updateNextDailyGoal(_dailyGoal.toInt());
-      if (_selectedPillarId != null) {
-        await authService.updateMainPillar(_selectedPillarId!);
-      }
     }
 
     if (!mounted) return;
