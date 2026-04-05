@@ -408,14 +408,10 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
             appBarColor: pillarColor,
             actions: [
               IconButton(
-                icon: const Icon(Icons.school, color: appBarColor),
-                onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
-              ),
-              IconButton(
                 icon: const Icon(Icons.arrow_back, color: appBarColor),
                 onPressed: () => Navigator.pop(context, _hasUpdated),
               ),
-            if (_currentSubject != null || _currentCollection != null)
+            if (_currentSubject != null || _currentCollection != null) ...[
               IconButton(
                 icon: Icon(
                   (_currentSubject?.isOnDashboard ?? _currentCollection?.isOnDashboard ?? false)
@@ -425,6 +421,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                 ),
                 onPressed: _toggleFavorite,
               ),
+            ],
             if (isOwner) ...[
               IconButton(
                 icon: const Icon(Icons.edit, color: appBarColor),

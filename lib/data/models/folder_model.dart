@@ -126,8 +126,6 @@ class FolderModel implements ContentItem {
     return capitalizeFirst(name);
   }
 
-  String getDescription(String langCode) {
-    final desc = _getInherited(langCode, (d) => d.description) ?? '';
-    return capitalizeFirst(desc);
-  }
+  @override
+  String getDescription(String langCode) => '';
 }

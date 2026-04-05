@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class TestingLanguage {
   final String code;
@@ -69,11 +70,22 @@ class TestingLanguageService extends ChangeNotifier {
   List<String> _activeLanguageCodes = ['en'];
   List<String> get activeLanguageCodes => _activeLanguageCodes;
 
+  final ValueNotifier<String> currentLanguageCode = ValueNotifier<String>('en');
+
   late dynamic _settingsFile;
 
   Future<void> init() async {
     // 1. Fetch from DB
     await fetchLanguagesFromDb();
+
+    // 2. Load last used learning language
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final lastLang = prefs.getString('last_testing_lang') ?? 'en';
+      currentLanguageCode.value = lastLang;
+    } catch (e) {
+      debugPrint('Error loading SharedPreferences for testing language: $e');
+    }
 
     if (kIsWeb) return;
     
@@ -93,6 +105,17 @@ class TestingLanguageService extends ChangeNotifier {
       }
     } else {
       await _save();
+    }
+  }
+
+  Future<void> updateCurrentLanguage(String code) async {
+    if (currentLanguageCode.value == code) return;
+    currentLanguageCode.value = code;
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('last_testing_lang', code);
+    } catch (e) {
+      debugPrint('Error saving SharedPreferences for testing language: $e');
     }
   }
 

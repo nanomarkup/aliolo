@@ -381,13 +381,13 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
       final lang = entry.key;
       final draft = entry.value;
 
-      if (lang != 'global' && draft.name.isEmpty && draft.description.isEmpty) {
+      if (lang != 'global' && draft.name.isEmpty && (!_isFolderMode && draft.description.isEmpty)) {
         continue;
       }
 
       finalData[lang] = LocalizedSubjectData(
         name: draft.name.isEmpty ? null : draft.name,
-        description: draft.description.isEmpty ? null : draft.description,
+        description: (_isFolderMode || draft.description.isEmpty) ? null : draft.description,
       );
     }
 
@@ -737,17 +737,19 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
           ),
           enabled: isOwner,
         ),
-        const SizedBox(height: 16),
-        TextFormField(
-          controller: _descriptionController,
-          onChanged: (v) => draft.description = v,
-          decoration: InputDecoration(
-            labelText: context.t('description'),
-            border: const OutlineInputBorder(),
+        if (!_isFolderMode) ...[
+          const SizedBox(height: 16),
+          TextFormField(
+            controller: _descriptionController,
+            onChanged: (v) => draft.description = v,
+            decoration: InputDecoration(
+              labelText: context.t('description'),
+              border: const OutlineInputBorder(),
+            ),
+            maxLines: 2,
+            enabled: isOwner,
           ),
-          maxLines: 2,
-          enabled: isOwner,
-        ),
+        ],
         const SizedBox(height: 48),
       ],
     );
@@ -756,7 +758,8 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
   bool _hasUnsavedChanges() {
     if (widget.existingSubject == null && widget.existingFolder == null) {
       for (var draft in _drafts.values) {
-        if (draft.name.isNotEmpty || draft.description.isNotEmpty) return true;
+        if (draft.name.isNotEmpty) return true;
+        if (!_isFolderMode && draft.description.isNotEmpty) return true;
       }
       return false;
     }
@@ -766,8 +769,7 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
       if (_selectedPillar != original.pillarId) return true;
       final allLangs = {...original.localizedData.keys, ..._drafts.keys};
       for (var lang in allLangs) {
-        if ((_drafts[lang]?.name ?? '') != (original.localizedData[lang]?.name ?? '') || 
-            (_drafts[lang]?.description ?? '') != (original.localizedData[lang]?.description ?? '')) return true;
+        if ((_drafts[lang]?.name ?? '') != (original.localizedData[lang]?.name ?? '')) return true;
       }
       return false;
     }
