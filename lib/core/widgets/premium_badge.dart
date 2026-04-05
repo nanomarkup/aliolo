@@ -19,7 +19,7 @@ class PremiumBadge extends StatelessWidget {
         shape: BoxShape.circle,
       ),
       child: Icon(
-        Icons.stars,
+        Icons.workspace_premium,
         size: size,
         color: color ?? Colors.amber,
       ),

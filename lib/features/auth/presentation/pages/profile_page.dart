@@ -1,6 +1,7 @@
 import 'package:aliolo/core/utils/io_utils.dart' if (dart.library.html) 'package:aliolo/core/utils/file_stub.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:provider/provider.dart';
 import 'package:aliolo/core/widgets/aliolo_scrollable_page.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
@@ -523,7 +524,7 @@ class _ProfilePageState extends State<ProfilePage> {
               const SizedBox(height: 32),
               _buildSectionTitle(
                 context,
-                context.t('support_and_management'),
+                context.t('account_and_management'),
                 currentSessionColor,
               ),
               Card(
@@ -533,6 +534,48 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
                 child: Column(
                   children: [
+                    ListTile(
+                      leading: Icon(
+                        user.isPremium ? Icons.workspace_premium : Icons.workspace_premium_outlined, 
+                        color: user.isPremium ? Colors.amber : currentSessionColor,
+                      ),
+                      title: Text(user.isPremium ? context.t('manage_subscription') : context.t('premium_go')),
+                      trailing: const Icon(Icons.chevron_right),
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const PremiumUpgradePage()),
+                      ),
+                    ),
+                    const Divider(height: 1, indent: 16, endIndent: 16),
+                    Consumer<SubscriptionService>(
+                      builder: (context, sub, _) {
+                        final isPremium = sub.isPremium;
+                        return SwitchListTile(
+                          title: Row(
+                            children: [
+                              Text(context.t('public_profile')),
+                              if (!isPremium) ...[
+                                const SizedBox(width: 8),
+                                const Icon(Icons.workspace_premium, color: Colors.amber, size: 16),
+                              ],
+                            ],
+                          ),
+                          secondary: Icon(
+                            Icons.emoji_events,
+                            color: currentSessionColor,
+                          ),
+                          value: isPremium ? user.showOnLeaderboard : true,
+                          onChanged: (val) {
+                            if (!isPremium) {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => const PremiumUpgradePage()));
+                            } else {
+                              _authService.updateLeaderboardPreference(val);
+                            }
+                          },
+                        );
+                      },
+                    ),
+                    const Divider(height: 1, indent: 16, endIndent: 16),
                     ListTile(
                       leading: Icon(Icons.group, color: currentSessionColor),
                       title: Text(context.t('manage_friends')),
@@ -561,6 +604,22 @@ class _ProfilePageState extends State<ProfilePage> {
                       trailing: const Icon(Icons.chevron_right),
                       onTap: _showUpdatePasswordDialog,
                     ),
+                    if (!kIsWeb) ...[
+                      const Divider(height: 1, indent: 16, endIndent: 16),
+                      ListTile(
+                        leading: Icon(Icons.restore, color: currentSessionColor),
+                        title: const Text('Restore Purchases'),
+                        trailing: const Icon(Icons.chevron_right),
+                        onTap: () async {
+                          await getIt<SubscriptionService>().checkSubscriptionStatus();
+                          if (mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text(context.t('setting_saved'))),
+                            );
+                          }
+                        },
+                      ),
+                    ],
                   ],
                 ),
               ),
@@ -773,7 +832,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 Text(context.t('next_daily_goal')),
                 if (!isPremium) ...[
                   const SizedBox(width: 8),
-                  const Icon(Icons.stars, color: Colors.amber, size: 16),
+                  const Icon(Icons.workspace_premium, color: Colors.amber, size: 16),
                 ],
               ],
             ),
@@ -805,7 +864,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 Text(context.t('learn_session_size')),
                 if (!isPremium) ...[
                   const SizedBox(width: 8),
-                  const Icon(Icons.stars, color: Colors.amber, size: 16),
+                  const Icon(Icons.workspace_premium, color: Colors.amber, size: 16),
                 ],
               ],
             ),
@@ -837,7 +896,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 Text(context.t('test_session_size')),
                 if (!isPremium) ...[
                   const SizedBox(width: 8),
-                  const Icon(Icons.stars, color: Colors.amber, size: 16),
+                  const Icon(Icons.workspace_premium, color: Colors.amber, size: 16),
                 ],
               ],
             ),
@@ -869,7 +928,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 Text(context.t('options_count')),
                 if (!isPremium) ...[
                   const SizedBox(width: 8),
-                  const Icon(Icons.stars, color: Colors.amber, size: 16),
+                  const Icon(Icons.workspace_premium, color: Colors.amber, size: 16),
                 ],
               ],
             ),

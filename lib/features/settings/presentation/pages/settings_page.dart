@@ -207,50 +207,6 @@ class _SettingsPageState extends State<SettingsPage> {
           ],
           body: Column(
             children: [
-              Consumer<SubscriptionService>(
-                builder: (context, sub, _) {
-                  if (sub.isPremium) return const SizedBox.shrink();
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _buildSectionTitle(
-                        'Aliolo Premium',
-                        currentPrimaryColor,
-                      ),
-                      Card(
-                        child: Column(
-                          children: [
-                            ListTile(
-                              leading: Icon(
-                                Icons.stars_outlined,
-                                color: currentPrimaryColor,
-                              ),
-                              title: const Text('Upgrade to Premium'),
-                              subtitle: const Text('Unlock all features and math engines'),
-                              trailing: ElevatedButton(
-                                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const PremiumUpgradePage())),
-                                style: ElevatedButton.styleFrom(backgroundColor: currentPrimaryColor, foregroundColor: Colors.white),
-                                child: const Text('Go Premium'),
-                              ),
-                            ),
-                            if (!kIsWeb) ...[
-                              const Divider(height: 1, indent: 16, endIndent: 16),
-                              ListTile(
-                                leading: Icon(Icons.restore, color: currentPrimaryColor),
-                                title: const Text('Restore Purchases'),
-                                onTap: () async {
-                                  await getIt<SubscriptionService>().checkSubscriptionStatus();
-                                  _showSavedMsg();
-                                },
-                              ),
-                            ],
-                          ],
-                        ),
-                      ),
-                    ],
-                  );
-                },
-              ),
               _buildSectionTitle(
                 context.t('general_preferences'),
                 currentPrimaryColor,
@@ -278,36 +234,6 @@ class _SettingsPageState extends State<SettingsPage> {
                       ),
                       value: _soundEnabled,
                       onChanged: _toggleSound,
-                    ),
-                    const Divider(height: 1, indent: 16, endIndent: 16),
-                    Consumer<SubscriptionService>(
-                      builder: (context, sub, _) {
-                        final isPremium = sub.isPremium;
-                        return SwitchListTile(
-                          title: Row(
-                            children: [
-                              Text(context.t('public_profile')),
-                              if (!isPremium) ...[
-                                const SizedBox(width: 8),
-                                const Icon(Icons.stars, color: Colors.amber, size: 16),
-                              ],
-                            ],
-                          ),
-                          subtitle: Text(context.t('public_profile_desc')),
-                          secondary: Icon(
-                            Icons.emoji_events,
-                            color: currentPrimaryColor,
-                          ),
-                          value: isPremium ? _showOnLeaderboard : true,
-                          onChanged: (val) {
-                            if (!isPremium) {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => const PremiumUpgradePage()));
-                            } else {
-                              _toggleLeaderboard(val);
-                            }
-                          },
-                        );
-                      },
                     ),
                     const Divider(height: 1, indent: 16, endIndent: 16),
                     SwitchListTile(

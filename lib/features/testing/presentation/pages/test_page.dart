@@ -454,8 +454,7 @@ class _TestPageState extends State<TestPage> {
                           child: Container(
                             padding: const EdgeInsets.all(2),
                             decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
-                            child: const Icon(Icons.stars, color: Colors.amber, size: 12),
-                          ),
+                            child: const Icon(Icons.workspace_premium, color: Colors.amber, size: 12),                          ),
                         ),
                     ],
                   ),

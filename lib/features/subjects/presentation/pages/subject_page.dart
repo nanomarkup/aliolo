@@ -446,7 +446,7 @@ class _SubjectPageState extends State<SubjectPage> {
                                       Text(context.t('add_subject')),
                                       if (!isPremium) ...[
                                         const SizedBox(width: 8),
-                                        const Icon(Icons.stars, color: Colors.amber, size: 16),
+                                        const Icon(Icons.workspace_premium, color: Colors.amber, size: 16),
                                       ],
                                     ],
                                   ), 
@@ -462,7 +462,7 @@ class _SubjectPageState extends State<SubjectPage> {
                                       Text(context.t('add_collection')),
                                       if (!isPremium) ...[
                                         const SizedBox(width: 8),
-                                        const Icon(Icons.stars, color: Colors.amber, size: 16),
+                                        const Icon(Icons.workspace_premium, color: Colors.amber, size: 16),
                                       ],
                                     ],
                                   ), 
@@ -478,7 +478,7 @@ class _SubjectPageState extends State<SubjectPage> {
                                       Text(context.t('add_folder')),
                                       if (!isPremium) ...[
                                         const SizedBox(width: 8),
-                                        const Icon(Icons.stars, color: Colors.amber, size: 16),
+                                        const Icon(Icons.workspace_premium, color: Colors.amber, size: 16),
                                       ],
                                     ],
                                   ), 
@@ -807,7 +807,7 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
                                 Text(context.t('add_subject')),
                                 if (!isPremium) ...[
                                   const SizedBox(width: 8),
-                                  const Icon(Icons.stars, color: Colors.amber, size: 16),
+                                  const Icon(Icons.workspace_premium, color: Colors.amber, size: 16),
                                 ],
                               ],
                             ), 
@@ -823,7 +823,7 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
                                 Text(context.t('add_collection')),
                                 if (!isPremium) ...[
                                   const SizedBox(width: 8),
-                                  const Icon(Icons.stars, color: Colors.amber, size: 16),
+                                  const Icon(Icons.workspace_premium, color: Colors.amber, size: 16),
                                 ],
                               ],
                             ), 
@@ -839,7 +839,7 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
                                 Text(context.t('add_folder')),
                                 if (!isPremium) ...[
                                   const SizedBox(width: 8),
-                                  const Icon(Icons.stars, color: Colors.amber, size: 16),
+                                  const Icon(Icons.workspace_premium, color: Colors.amber, size: 16),
                                 ],
                               ],
                             ), 
@@ -1138,7 +1138,7 @@ class _FolderPageState extends State<FolderPage> {
                                 Text(context.t('add_subject')),
                                 if (!isPremium) ...[
                                   const SizedBox(width: 8),
-                                  const Icon(Icons.stars, color: Colors.amber, size: 16),
+                                  const Icon(Icons.workspace_premium, color: Colors.amber, size: 16),
                                 ],
                               ],
                             ), 
@@ -1154,7 +1154,7 @@ class _FolderPageState extends State<FolderPage> {
                                 Text(context.t('add_collection')),
                                 if (!isPremium) ...[
                                   const SizedBox(width: 8),
-                                  const Icon(Icons.stars, color: Colors.amber, size: 16),
+                                  const Icon(Icons.workspace_premium, color: Colors.amber, size: 16),
                                 ],
                               ],
                             ), 

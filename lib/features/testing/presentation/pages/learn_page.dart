@@ -360,7 +360,7 @@ class _LearnPageState extends State<LearnPage> {
                               shape: BoxShape.circle,
                             ),
                             child: const Icon(
-                              Icons.stars,
+                              Icons.workspace_premium,
                               color: Colors.amber,
                               size: 12,
                             ),

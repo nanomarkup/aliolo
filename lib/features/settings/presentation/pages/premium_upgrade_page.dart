@@ -75,7 +75,7 @@ class _PremiumUpgradePageState extends State<PremiumUpgradePage> {
               ),
               const SizedBox(height: 40),
               
-              if (subService.isPremium)
+              if (subService.isPremium) ...[
                 Card(
                   color: Colors.green,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
@@ -94,25 +94,26 @@ class _PremiumUpgradePageState extends State<PremiumUpgradePage> {
                       ],
                     ),
                   ),
-                )
-              else ...[
-                _buildSubscriptionOption(
-                  0, "Weekly Access", r"$2.99", "Best for quick goals", 
-                  originalPrice: r"$5.98"
                 ),
-                const SizedBox(height: 12),
-                _buildSubscriptionOption(
-                  1, "Monthly Access", r"$8.99", "Most popular choice", 
-                  originalPrice: r"$17.98", 
-                  extraInfo: r"($2.25 / Week)"
-                ),
-                const SizedBox(height: 12),
-                _buildSubscriptionOption(
-                  2, "Yearly Access", r"$80.99", "Save 33% per month", 
-                  originalPrice: r"$161.98",
-                  extraInfo: r"($1.56 / Week)"
-                ),
+                const SizedBox(height: 24),
               ],
+              
+              _buildSubscriptionOption(
+                0, "Weekly Access", r"$2.99", "Best for quick goals", 
+                originalPrice: r"$5.98"
+              ),
+              const SizedBox(height: 12),
+              _buildSubscriptionOption(
+                1, "Monthly Access", r"$8.99", "Most popular choice", 
+                originalPrice: r"$17.98", 
+                extraInfo: r"($2.25 / Week)"
+              ),
+              const SizedBox(height: 12),
+              _buildSubscriptionOption(
+                2, "Yearly Access", r"$80.99", "Save 33% per month", 
+                originalPrice: r"$161.98",
+                extraInfo: r"($1.56 / Week)"
+              ),
 
               const SizedBox(height: 40),
 

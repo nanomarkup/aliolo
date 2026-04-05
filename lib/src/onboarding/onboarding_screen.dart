@@ -480,7 +480,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           // Top Overlay: Skip
           if (_currentPage < 6)
             Positioned(
-              top: 48,
+              top: 20,
               right: 20,
               child: TextButton(
                 onPressed: () => _finishOnboarding(skipped: true),
@@ -492,12 +492,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             ),
           // Bottom Overlay: Dots and Button
           Positioned(
-            bottom: 60,
+            bottom: 32,
             left: 0,
             right: 0,
             child: Column(
               children: [
-                if (_currentPage < 6)
+                if (_currentPage < 6) ...[
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: List.generate(7, (index) {
@@ -515,7 +515,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       );
                     }),
                   ),
-                if (_currentPage < 6) const SizedBox(height: 40),
+                  const SizedBox(height: 40),
+                ],
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 40),
                   child: ConstrainedBox(

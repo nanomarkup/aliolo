@@ -989,7 +989,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                 ),
                 if (isPremiumFeature && !isUserPremium) ...[
                   const SizedBox(width: 4),
-                  const Icon(Icons.stars, color: Colors.amber, size: 16),
+                  const Icon(Icons.workspace_premium, color: Colors.amber, size: 16),
                 ],
               ],
             ),
