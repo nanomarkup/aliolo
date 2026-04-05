@@ -544,30 +544,16 @@ class _SubjectPageState extends State<SubjectPage> {
                       sliver: SliverList(
                         delegate: SliverChildBuilderDelegate((context, index) {
                           final item = _filteredContent[index];
-                          final pillar = pillars.firstWhere((p) => p.id == item.pillarId, orElse: () => pillars.first);
-                          if (item is FolderModel) {
-                            final myId = _authService.currentUser?.serverId;
-                            final folderCategoryTotal = _allContent.where((e) {
-                              if (e.folderId != item.id) return false;
-                              if (_filters.collectionFilter == 'mine') return e.ownerId == myId;
-                              if (_filters.collectionFilter == 'public') {
-                                if (e is SubjectModel) return e.isPublic;
-                                if (e is CollectionModel) return e.isPublic;
-                                return false;
-                              }
-                              if (_filters.collectionFilter == 'favorites') return e.isOnDashboard;
-                              return true;
-                            }).length;
-                            final matchingInFolder = _matchingContent.where((e) => e.folderId == item.id).length;
-                            return _FolderListTile(folder: item, matchingCount: matchingInFolder, totalCount: folderCategoryTotal, pillar: pillar, languageCode: currentLang, initialAgeFilter: _filters.ageGroup, initialCollectionFilter: _filters.collectionFilter, onChanged: _loadDashboard);
-                          } else if (item is CollectionModel) {
-                            final pillar = pillars.firstWhere((p) => p.id == item.pillarId, orElse: () => pillars.first);
-                            return _CollectionListTile(collection: item, pillar: pillar, languageCode: currentLang, initialAgeFilter: _filters.ageGroup, initialCollectionFilter: _filters.collectionFilter, onChanged: _loadDashboard, onFavoriteChanged: () { setState(() { item.isOnDashboard = !item.isOnDashboard; }); });
-                          } else if (item is SubjectModel) {
-                            final pillar = pillars.firstWhere((p) => p.id == item.pillarId, orElse: () => pillars.first);
-                            return _SubjectListTile(subject: item, pillar: pillar, languageCode: currentLang, initialAgeFilter: _filters.ageGroup, initialCollectionFilter: _filters.collectionFilter, onChanged: _loadDashboard, onFavoriteChanged: () { setState(() { item.isOnDashboard = !item.isOnDashboard; }); });
-                          }
-                          return const SizedBox.shrink();
+                          return _buildContentItem(
+                            item, 
+                            currentLang, 
+                            _allContent, 
+                            _matchingContent, 
+                            _filters, 
+                            _loadDashboard, 
+                            (age, coll) { setState(() { _filters = _filters.copyWith(ageGroup: age, collectionFilter: coll); _applySearch(); }); },
+                            null,
+                          );
                         }, childCount: _filteredContent.length),
                         ),
                       )
@@ -622,6 +608,72 @@ class _SubjectPageState extends State<SubjectPage> {
         );
       },
     );
+  }
+
+  Widget _buildContentItem(
+    ContentItem item, 
+    String currentLang, 
+    List<ContentItem> allContent,
+    List<ContentItem> matchingContent,
+    DiscoveryFilters filters,
+    VoidCallback onDataRefresh,
+    Function(String, String) onFilterChanged,
+    Pillar? forcedPillar,
+  ) {
+    final pillar = forcedPillar ?? pillars.firstWhere((p) => p.id == item.pillarId, orElse: () => pillars.first);
+    if (item is FolderModel) {
+      final myId = getIt<AuthService>().currentUser?.serverId;
+      final folderCategoryTotal = allContent.where((e) {
+        if (e.folderId != item.id) return false;
+        if (filters.collectionFilter == 'mine') return e.ownerId == myId;
+        if (filters.collectionFilter == 'public') {
+          if (e is SubjectModel) return e.isPublic;
+          if (e is CollectionModel) return e.isPublic;
+          return false;
+        }
+        if (filters.collectionFilter == 'favorites') return e.isOnDashboard;
+        return true;
+      }).length;
+      final matchingInFolder = matchingContent.where((e) => e.folderId == item.id).length;
+      return _FolderListTile(
+        folder: item, 
+        matchingCount: matchingInFolder, 
+        totalCount: folderCategoryTotal, 
+        pillar: pillar, 
+        languageCode: currentLang, 
+        initialAgeFilter: filters.ageGroup, 
+        initialCollectionFilter: filters.collectionFilter, 
+        onChanged: onDataRefresh,
+        onFilterChanged: onFilterChanged,
+      );
+    } else if (item is CollectionModel) {
+      return _CollectionListTile(
+        collection: item, 
+        pillar: pillar, 
+        languageCode: currentLang, 
+        initialAgeFilter: filters.ageGroup, 
+        initialCollectionFilter: filters.collectionFilter, 
+        onChanged: onDataRefresh, 
+        onFavoriteChanged: () {
+          item.isOnDashboard = !item.isOnDashboard;
+          onDataRefresh();
+        }
+      );
+    } else if (item is SubjectModel) {
+      return _SubjectListTile(
+        subject: item, 
+        pillar: pillar, 
+        languageCode: currentLang, 
+        initialAgeFilter: filters.ageGroup, 
+        initialCollectionFilter: filters.collectionFilter, 
+        onChanged: onDataRefresh, 
+        onFavoriteChanged: () {
+          item.isOnDashboard = !item.isOnDashboard;
+          onDataRefresh();
+        }
+      );
+    }
+    return const SizedBox.shrink();
   }
 
   Widget _buildCompactDropdown({
@@ -779,250 +831,314 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
           valueListenable: getIt<TestingLanguageService>().currentLanguageCode,
           builder: (context, currentLang, _) {
             return AlioloScrollablePage(
-            title: Text(widget.pillar.getTranslatedName(widget.languageCode), style: const TextStyle(color: appBarColor, fontWeight: FontWeight.bold)),
-            appBarColor: pillarColor,
-            actions: [
-              IconButton(
-                icon: const Icon(Icons.school, color: appBarColor),
-                onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
+              title: Text(
+                widget.pillar.getTranslatedName(currentLang),
+                style: const TextStyle(
+                  color: appBarColor,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-              IconButton(
-                icon: const Icon(Icons.emoji_events, color: appBarColor),
-                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const LeaderboardPage())),
-              ),
-              IconButton(
-                icon: ValueListenableBuilder<bool>(
-                  valueListenable: getIt<FeedbackService>().pendingNotifications,
-                  builder: (context, hasNotif, _) {
-                    return Badge(isLabelVisible: hasNotif, backgroundColor: Colors.amber, child: const Icon(Icons.person, color: appBarColor));
+              appBarColor: pillarColor,
+              actions: [
+                IconButton(
+                  icon: const Icon(Icons.school, color: appBarColor),
+                  onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.emoji_events, color: appBarColor),
+                  onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const LeaderboardPage())),
+                ),
+                IconButton(
+                  icon: ValueListenableBuilder<bool>(
+                    valueListenable: getIt<FeedbackService>().pendingNotifications,
+                    builder: (context, hasNotif, _) {
+                      return Badge(isLabelVisible: hasNotif, backgroundColor: Colors.amber, child: const Icon(Icons.person, color: appBarColor));
+                    },
+                  ),
+                  onPressed: () async {
+                    await Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfilePage()));
+                    _loadData();
                   },
                 ),
-                onPressed: () async {
-                  await Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfilePage()));
-                  _loadData();
-                },
-              ),
-              IconButton(
-                icon: const Icon(Icons.settings, color: appBarColor),
-                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const SettingsPage())),
-              ),
-              if (_authService.currentUser?.showDocumentation ?? true)
                 IconButton(
-                  icon: const Icon(Icons.help_outline, color: appBarColor),
-                  onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const DocumentationPage())),
+                  icon: const Icon(Icons.settings, color: appBarColor),
+                  onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const SettingsPage())),
                 ),
-            ],
-            slivers: [
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 16, bottom: 24),
-                  child: Column(
-                    children: [
-                      // Row 1: Language (Read-only info or selector) and Add Button
-                      Row(
-                        children: [
-                          Expanded(
-                            child: _buildCompactDropdown(
-                              value: widget.languageCode,
-                              items: {
-                                widget.languageCode: getIt<TestingLanguageService>().getLanguageName(widget.languageCode),
-                              },
-                              prefixIcon: Icons.language,
-                              onChanged: null, // Language is usually fixed in this view context
-                            ),
-                          ),
-                          const SizedBox(width: 12),
-                          PopupMenuButton<String>(
-                            icon: Icon(Icons.add_circle, color: pillarColor, size: 40),
-                            padding: EdgeInsets.zero,
-                            onSelected: (value) async {
-                              if (!isPremium) {
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => const PremiumUpgradePage()));
-                                return;
-                              }
-                              dynamic result;
-                              if (value == 'subject') result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: widget.pillar.id, initialAgeGroup: _filters.ageGroup)));
-                              else if (value == 'collection') result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: widget.pillar.id, isCollectionMode: true, initialAgeGroup: _filters.ageGroup)));
-                              else if (value == 'folder') result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: widget.pillar.id, isFolderMode: true)));
-                              
-                              if (result == true) {
-                                _loadData();
-                                _hasUpdated = true;
-                              } else if (result != null) {
-                                _loadData();
-                                _hasUpdated = true;
-                                await _navigateToSubject(result);
-                              }
-                            },
-                            itemBuilder: (context) => [
-                              PopupMenuItem(
-                                value: 'subject', 
-                                child: ListTile(
-                                  leading: Icon(Icons.description, color: pillarColor), 
-                                  title: Row(
-                                    children: [
-                                      Text(context.t('add_subject')),
-                                      if (!isPremium) ...[
-                                        const SizedBox(width: 8),
-                                        const Icon(Icons.workspace_premium, color: Colors.amber, size: 16),
-                                      ],
-                                    ],
-                                  ), 
-                                  contentPadding: EdgeInsets.zero,
+                if (_authService.currentUser?.showDocumentation ?? true)
+                  IconButton(
+                    icon: const Icon(Icons.help_outline, color: appBarColor),
+                    onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const DocumentationPage())),
+                  ),
+              ],
+              slivers: [
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 16, bottom: 24),
+                    child: Column(
+                      children: [
+                        // Row 1: Language and Add Button
+                        Row(
+                          children: [
+                            Expanded(
+                              child: _buildCompactDropdown(
+                                value: currentLang,
+                                items: Map.fromEntries(
+                                  getIt<TestingLanguageService>().activeLanguageCodes.map((l) => MapEntry(
+                                    l, 
+                                    getIt<TestingLanguageService>().getLanguageName(l)
+                                  ))
                                 ),
-                              ),
-                              PopupMenuItem(
-                                value: 'collection', 
-                                child: ListTile(
-                                  leading: Icon(Icons.auto_awesome_motion, color: pillarColor), 
-                                  title: Row(
-                                    children: [
-                                      Text(context.t('add_collection')),
-                                      if (!isPremium) ...[
-                                        const SizedBox(width: 8),
-                                        const Icon(Icons.workspace_premium, color: Colors.amber, size: 16),
-                                      ],
-                                    ],
-                                  ), 
-                                  contentPadding: EdgeInsets.zero,
-                                ),
-                              ),
-                              PopupMenuItem(
-                                value: 'folder', 
-                                child: ListTile(
-                                  leading: Icon(Icons.folder, color: pillarColor), 
-                                  title: Row(
-                                    children: [
-                                      Text(context.t('add_folder')),
-                                      if (!isPremium) ...[
-                                        const SizedBox(width: 8),
-                                        const Icon(Icons.workspace_premium, color: Colors.amber, size: 16),
-                                      ],
-                                    ],
-                                  ), 
-                                  contentPadding: EdgeInsets.zero,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 12),
-                      // Row 2: Search and Filters
-                      LayoutBuilder(
-                        builder: (context, constraints) {
-                          final isSmall = constraints.maxWidth < 600;
-                          final searchField = TextField(
-                            controller: _searchController,
-                            decoration: InputDecoration(
-                              hintText: context.t('search_subjects'),
-                              prefixIcon: const Icon(Icons.search),
-                              suffixIcon: ValueListenableBuilder<TextEditingValue>(
-                                valueListenable: _searchController,
-                                builder: (context, value, _) {
-                                  return value.text.isNotEmpty ? IconButton(icon: const Icon(Icons.clear), onPressed: () { _searchController.clear(); _applySearch(); }) : const SizedBox.shrink();
+                                prefixIcon: Icons.language,
+                                onChanged: (val) async {
+                                  if (val != null) {
+                                    await getIt<TestingLanguageService>().updateCurrentLanguage(val);
+                                    _loadData();
+                                  }
                                 },
                               ),
-                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                              contentPadding: const EdgeInsets.symmetric(horizontal: 12),
-                              filled: true,
-                              fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
                             ),
-                            onChanged: (_) => _applySearch(),
-                          );
+                            const SizedBox(width: 12),
+                            PopupMenuButton<String>(
+                              icon: Icon(Icons.add_circle, color: pillarColor, size: 40),
+                              padding: EdgeInsets.zero,
+                              onSelected: (value) async {
+                                if (!isPremium) {
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => const PremiumUpgradePage()));
+                                  return;
+                                }
+                                dynamic result;
+                                if (value == 'subject') result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: widget.pillar.id, initialAgeGroup: _filters.ageGroup)));
+                                else if (value == 'collection') result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: widget.pillar.id, isCollectionMode: true, initialAgeGroup: _filters.ageGroup)));
+                                else if (value == 'folder') result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: widget.pillar.id, isFolderMode: true)));
 
-                          final filters = Row(
-                            children: [
-                              Expanded(
-                                child: _buildCompactDropdown(
-                                  value: _filters.collectionFilter,
-                                  items: {
-                                    'all': context.t('filter_all') ?? 'All',
-                                    'favorites': context.t('filter_dashboard'),
-                                    'mine': context.t('filter_my_subjects'),
-                                    'public': context.t('filter_public'),
-                                  },
-                                  onChanged: (val) { if (val != null) setState(() { _filters = _filters.copyWith(collectionFilter: val); _applySearch(); }); },
+                                if (result == true) {
+                                  _loadData();
+                                  _hasUpdated = true;
+                                } else if (result != null) {
+                                  _loadData();
+                                  _hasUpdated = true;
+                                  await _navigateToSubject(result);
+                                }
+                              },
+                              itemBuilder: (context) => [
+                                PopupMenuItem(
+                                  value: 'subject', 
+                                  child: ListTile(
+                                    leading: Icon(Icons.description, color: pillarColor), 
+                                    title: Row(
+                                      children: [
+                                        Text(context.t('add_subject')),
+                                        if (!isPremium) ...[
+                                          const SizedBox(width: 8),
+                                          const Icon(Icons.workspace_premium, color: Colors.amber, size: 16),
+                                        ],
+                                      ],
+                                    ), 
+                                    contentPadding: EdgeInsets.zero,
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(width: 8),
-                              Expanded(
-                                child: _buildCompactDropdown(
-                                  value: _filters.ageGroup,
-                                  items: {
-                                    'all': context.t('age_all'),
-                                    '0_6': context.t('age_0_6'),
-                                    '7_14': context.t('age_7_14'),
-                                    '15_plus': context.t('age_15_plus'),
-                                  },
-                                  onChanged: (val) { if (val != null) setState(() { _filters = _filters.copyWith(ageGroup: val); _applySearch(); }); },
+                                PopupMenuItem(
+                                  value: 'collection', 
+                                  child: ListTile(
+                                    leading: Icon(Icons.auto_awesome_motion, color: pillarColor), 
+                                    title: Row(
+                                      children: [
+                                        Text(context.t('add_collection')),
+                                        if (!isPremium) ...[
+                                          const SizedBox(width: 8),
+                                          const Icon(Icons.workspace_premium, color: Colors.amber, size: 16),
+                                        ],
+                                      ],
+                                    ), 
+                                    contentPadding: EdgeInsets.zero,
+                                  ),
                                 ),
+                                PopupMenuItem(
+                                  value: 'folder', 
+                                  child: ListTile(
+                                    leading: Icon(Icons.folder, color: pillarColor), 
+                                    title: Row(
+                                      children: [
+                                        Text(context.t('add_folder')),
+                                        if (!isPremium) ...[
+                                          const SizedBox(width: 8),
+                                          const Icon(Icons.workspace_premium, color: Colors.amber, size: 16),
+                                        ],
+                                      ],
+                                    ), 
+                                    contentPadding: EdgeInsets.zero,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 12),
+                        // Row 2: Search and Filters
+                        LayoutBuilder(
+                          builder: (context, constraints) {
+                            final isSmall = constraints.maxWidth < 600;
+                            final searchField = TextField(
+                              controller: _searchController,
+                              decoration: InputDecoration(
+                                hintText: context.t('search_subjects'),
+                                prefixIcon: const Icon(Icons.search),
+                                suffixIcon: ValueListenableBuilder<TextEditingValue>(
+                                  valueListenable: _searchController,
+                                  builder: (context, value, _) {
+                                    return value.text.isNotEmpty ? IconButton(icon: const Icon(Icons.clear), onPressed: () { _searchController.clear(); _applySearch(); }) : const SizedBox.shrink();
+                                  },
+                                ),
+                                border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                                contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+                                filled: true,
+                                fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
                               ),
-                            ],
-                          );
+                              onChanged: (_) => _applySearch(),
+                            );
 
-                          if (isSmall) {
-                            return Column(
+                            final filters = Row(
                               children: [
-                                searchField,
-                                const SizedBox(height: 12),
-                                filters,
+                                Expanded(
+                                  child: _buildCompactDropdown(
+                                    value: _filters.collectionFilter,
+                                    items: {
+                                      'all': context.t('filter_all') ?? 'All',
+                                      'favorites': context.t('filter_dashboard'),
+                                      'mine': context.t('filter_my_subjects'),
+                                      'public': context.t('filter_public'),
+                                    },
+                                    onChanged: (val) { if (val != null) setState(() { _filters = _filters.copyWith(collectionFilter: val); _applySearch(); }); },
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                Expanded(
+                                  child: _buildCompactDropdown(
+                                    value: _filters.ageGroup,
+                                    items: {
+                                      'all': context.t('age_all'),
+                                      '0_6': context.t('age_0_6'),
+                                      '7_14': context.t('age_7_14'),
+                                      '15_plus': context.t('age_15_plus'),
+                                    },
+                                    onChanged: (val) { if (val != null) setState(() { _filters = _filters.copyWith(ageGroup: val); _applySearch(); }); },
+                                  ),
+                                ),
                               ],
                             );
-                          }
 
-                          return Row(
-                            children: [
-                              Expanded(flex: 3, child: searchField),
-                              const SizedBox(width: 12),
-                              Expanded(flex: 4, child: filters),
-                            ],
-                          );
-                        },
-                      ),
-                    ],
+                            if (isSmall) {
+                              return Column(
+                                children: [
+                                  searchField,
+                                  const SizedBox(height: 12),
+                                  filters,
+                                ],
+                              );
+                            }
+
+                            return Row(
+                              children: [
+                                Expanded(flex: 3, child: searchField),
+                                const SizedBox(width: 12),
+                                Expanded(flex: 4, child: filters),
+                              ],
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              if (_isLoading) const SliverFillRemaining(child: Center(child: CircularProgressIndicator()))
-              else if (_filteredContent.isEmpty) const SliverFillRemaining(child: Center(child: Text('No items found')))
-              else SliverPadding(
-                padding: const EdgeInsets.only(bottom: 32),
-                sliver: SliverList(delegate: SliverChildBuilderDelegate((context, index) {
-                  final item = _filteredContent[index];
-                  final pillar = pillars.firstWhere((p) => p.id == item.pillarId, orElse: () => pillars.first);
-                  if (item is FolderModel) {
-                    final myId = getIt<AuthService>().currentUser?.serverId;
-                    final folderCategoryTotal = _allContent.where((e) {
-                      if (e.folderId != item.id) return false;
-                      if (_filters.collectionFilter == 'mine') return e.ownerId == myId;
-                      if (_filters.collectionFilter == 'public') {
-                        if (e is SubjectModel) return e.isPublic;
-                        if (e is CollectionModel) return e.isPublic;
-                        return false;
-                      }
-                      if (_filters.collectionFilter == 'favorites') return e.isOnDashboard;
-                      return true;
-                    }).length;
-                    final matchingInFolder = _matchingContent.where((e) => e.folderId == item.id).length;
-                    return _FolderListTile(folder: item, matchingCount: matchingInFolder, totalCount: folderCategoryTotal, pillar: pillar, languageCode: widget.languageCode, initialAgeFilter: _filters.ageGroup, initialCollectionFilter: _filters.collectionFilter, onChanged: _loadData, onFilterChanged: (age, coll) { setState(() { _filters = _filters.copyWith(ageGroup: age, collectionFilter: coll); _applySearch(); }); });
-                  } else if (item is CollectionModel) {
-                    final pillar = pillars.firstWhere((p) => p.id == item.pillarId, orElse: () => pillars.first);
-                    return _CollectionListTile(collection: item, pillar: pillar, languageCode: widget.languageCode, initialAgeFilter: _filters.ageGroup, initialCollectionFilter: _filters.collectionFilter, onChanged: _loadData, onFavoriteChanged: () { setState(() { item.isOnDashboard = !item.isOnDashboard; }); });
-                  } else if (item is SubjectModel) {
-                    final pillar = pillars.firstWhere((p) => p.id == item.pillarId, orElse: () => pillars.first);
-                    return _SubjectListTile(subject: item, pillar: pillar, languageCode: widget.languageCode, initialAgeFilter: _filters.ageGroup, initialCollectionFilter: _filters.collectionFilter, onChanged: _loadData, onFavoriteChanged: () { setState(() { item.isOnDashboard = !item.isOnDashboard; }); });
-                  }
-                  return const SizedBox.shrink();
-                }, childCount: _filteredContent.length)),
-              ),
-            ],
-          );
-          },
+                if (_isLoading) const SliverFillRemaining(child: Center(child: CircularProgressIndicator()))
+                else if (_filteredContent.isEmpty) const SliverFillRemaining(child: Center(child: Text('No items found')))
+                else SliverPadding(
+                  padding: const EdgeInsets.only(bottom: 32),
+                  sliver: SliverList(delegate: SliverChildBuilderDelegate((context, index) {
+                    final item = _filteredContent[index];
+                    return _buildContentItem(
+                      item, 
+                      currentLang, 
+                      _allContent, 
+                      _matchingContent, 
+                      _filters, 
+                      _loadData, 
+                      (age, coll) { setState(() { _filters = _filters.copyWith(ageGroup: age, collectionFilter: coll); _applySearch(); }); },
+                      widget.pillar,
+                    );
+                  }, childCount: _filteredContent.length)),                ),
+              ],
+            );          },
           ),
         );
       },
     );
+  }
+
+  Widget _buildContentItem(
+    ContentItem item, 
+    String currentLang, 
+    List<ContentItem> allContent,
+    List<ContentItem> matchingContent,
+    DiscoveryFilters filters,
+    VoidCallback onDataRefresh,
+    Function(String, String) onFilterChanged,
+    Pillar? forcedPillar,
+  ) {
+    final pillar = forcedPillar ?? pillars.firstWhere((p) => p.id == item.pillarId, orElse: () => pillars.first);
+    if (item is FolderModel) {
+      final myId = getIt<AuthService>().currentUser?.serverId;
+      final folderCategoryTotal = allContent.where((e) {
+        if (e.folderId != item.id) return false;
+        if (filters.collectionFilter == 'mine') return e.ownerId == myId;
+        if (filters.collectionFilter == 'public') {
+          if (e is SubjectModel) return e.isPublic;
+          if (e is CollectionModel) return e.isPublic;
+          return false;
+        }
+        if (filters.collectionFilter == 'favorites') return e.isOnDashboard;
+        return true;
+      }).length;
+      final matchingInFolder = matchingContent.where((e) => e.folderId == item.id).length;
+      return _FolderListTile(
+        folder: item, 
+        matchingCount: matchingInFolder, 
+        totalCount: folderCategoryTotal, 
+        pillar: pillar, 
+        languageCode: currentLang, 
+        initialAgeFilter: filters.ageGroup, 
+        initialCollectionFilter: filters.collectionFilter, 
+        onChanged: onDataRefresh,
+        onFilterChanged: onFilterChanged,
+      );
+    } else if (item is CollectionModel) {
+      return _CollectionListTile(
+        collection: item, 
+        pillar: pillar, 
+        languageCode: currentLang, 
+        initialAgeFilter: filters.ageGroup, 
+        initialCollectionFilter: filters.collectionFilter, 
+        onChanged: onDataRefresh, 
+        onFavoriteChanged: () {
+          item.isOnDashboard = !item.isOnDashboard;
+          onDataRefresh();
+        }
+      );
+    } else if (item is SubjectModel) {
+      return _SubjectListTile(
+        subject: item, 
+        pillar: pillar, 
+        languageCode: currentLang, 
+        initialAgeFilter: filters.ageGroup, 
+        initialCollectionFilter: filters.collectionFilter, 
+        onChanged: onDataRefresh, 
+        onFavoriteChanged: () {
+          item.isOnDashboard = !item.isOnDashboard;
+          onDataRefresh();
+        }
+      );
+    }
+    return const SizedBox.shrink();
   }
 
   Widget _buildCompactDropdown({
@@ -1184,226 +1300,291 @@ class _FolderPageState extends State<FolderPage> {
           valueListenable: getIt<TestingLanguageService>().currentLanguageCode,
           builder: (context, currentLang, _) {
             return AlioloScrollablePage(
-            title: Text(widget.folder.getName(widget.languageCode), style: const TextStyle(color: appBarColor, fontWeight: FontWeight.bold)),
-            appBarColor: pillarColor,
-            actions: [
-              IconButton(
-                icon: const Icon(Icons.school, color: appBarColor),
-                onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
-              ),
-              IconButton(icon: const Icon(Icons.arrow_back, color: appBarColor), onPressed: () => Navigator.pop(context, {'hasUpdated': _hasUpdated, 'ageFilter': _filters.ageGroup, 'collectionFilter': _filters.collectionFilter})),
-              if (isOwner) ...[
-                IconButton(icon: const Icon(Icons.edit, color: appBarColor), onPressed: () async {
-                  final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(existingFolder: widget.folder, isFolderMode: true)));
-                  if (result == true) { _loadData(); _hasUpdated = true; }
-                }),
-                IconButton(icon: const Icon(Icons.delete, color: appBarColor), onPressed: () async {
-                  final confirmed = await showDialog<bool>(context: context, builder: (context) => AlertDialog(title: Text(context.t('delete_folder')), content: const Text('Are you sure you want to delete this folder?'), actions: [TextButton(onPressed: () => Navigator.pop(context, false), child: Text(context.t('cancel'))), TextButton(onPressed: () => Navigator.pop(context, true), style: TextButton.styleFrom(foregroundColor: Colors.red), child: Text(context.t('delete')))]));
-                  if (confirmed == true && mounted) {
-                    try {
-                      await _cardService.deleteFolder(widget.folder.id);
-                      if (mounted) Navigator.pop(context, {'hasUpdated': true, 'ageFilter': _filters.ageGroup, 'collectionFilter': _filters.collectionFilter});
-                    } catch (e) {
-                      if (e.toString().contains('folder_not_empty') && mounted) {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(context.t('folder_not_empty_msg') ?? 'Cannot delete folder: it is not empty')));
-                      }
-                    }
-                  }
-                }),
-              ],
-              IconButton(icon: const Icon(Icons.feedback, color: appBarColor), onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => FeedbackPage(folderId: widget.folder.id, contextTitle: widget.folder.getName(widget.languageCode), appBarColor: pillarColor)))),
-            ],
-            slivers: [
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 16, bottom: 24),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Row 1: Language and Add Button
-                      Row(
-                        children: [
-                          Expanded(
-                            child: _buildCompactDropdown(
-                              value: widget.languageCode,
-                              items: {
-                                widget.languageCode: getIt<TestingLanguageService>().getLanguageName(widget.languageCode),
-                              },
-                              prefixIcon: Icons.language,
-                              onChanged: null,
-                            ),
-                          ),
-                          const SizedBox(width: 12),
-                          PopupMenuButton<String>(
-                            icon: Icon(Icons.add_circle, color: pillarColor, size: 40),
-                            padding: EdgeInsets.zero,
-                            onSelected: (value) async {
-                              if (!isPremium) {
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => const PremiumUpgradePage()));
-                                return;
-                              }
-                              dynamic result;
-                              if (value == 'subject') result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: widget.pillar.id, folderId: widget.folder.id, initialAgeGroup: _filters.ageGroup)));
-                              else if (value == 'collection') result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: widget.pillar.id, folderId: widget.folder.id, isCollectionMode: true, initialAgeGroup: _filters.ageGroup)));
-                              
-                              if (result == true) {
-                                _loadData();
-                                _hasUpdated = true;
-                              } else if (result != null) {
-                                _loadData();
-                                _hasUpdated = true;
-                                await _navigateToSubject(result);
-                              }
-                            },
-                            itemBuilder: (context) => [
-                              PopupMenuItem(
-                                value: 'subject', 
-                                child: ListTile(
-                                  leading: Icon(Icons.description, color: pillarColor), 
-                                  title: Row(
-                                    children: [
-                                      Text(context.t('add_subject')),
-                                      if (!isPremium) ...[
-                                        const SizedBox(width: 8),
-                                        const Icon(Icons.workspace_premium, color: Colors.amber, size: 16),
-                                      ],
-                                    ],
-                                  ), 
-                                  contentPadding: EdgeInsets.zero,
-                                ),
-                              ),
-                              PopupMenuItem(
-                                value: 'collection', 
-                                child: ListTile(
-                                  leading: Icon(Icons.auto_awesome_motion, color: pillarColor), 
-                                  title: Row(
-                                    children: [
-                                      Text(context.t('add_collection')),
-                                      if (!isPremium) ...[
-                                        const SizedBox(width: 8),
-                                        const Icon(Icons.workspace_premium, color: Colors.amber, size: 16),
-                                      ],
-                                    ],
-                                  ), 
-                                  contentPadding: EdgeInsets.zero,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 12),
-                      // Row 2: Search and Filters
-                      LayoutBuilder(
-                        builder: (context, constraints) {
-                          final isSmall = constraints.maxWidth < 600;
-                          final searchField = TextField(
-                            controller: _searchController,
-                            decoration: InputDecoration(
-                              hintText: context.t('search_subjects'),
-                              prefixIcon: const Icon(Icons.search),
-                              suffixIcon: ValueListenableBuilder<TextEditingValue>(
-                                valueListenable: _searchController,
-                                builder: (context, value, _) {
-                                  return value.text.isNotEmpty ? IconButton(icon: const Icon(Icons.clear), onPressed: () { _searchController.clear(); _applySearch(); }) : const SizedBox.shrink();
-                                },
-                              ),
-                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                              contentPadding: const EdgeInsets.symmetric(horizontal: 12),
-                              filled: true,
-                              fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
-                            ),
-                            onChanged: (_) => _applySearch(),
-                          );
-
-                          final filters = Row(
-                            children: [
-                              Expanded(
-                                child: _buildCompactDropdown(
-                                  value: _filters.collectionFilter,
-                                  items: {
-                                    'all': context.t('filter_all') ?? 'All',
-                                    'favorites': context.t('filter_dashboard'),
-                                    'mine': context.t('filter_my_subjects'),
-                                    'public': context.t('filter_public'),
-                                  },
-                                  onChanged: (val) { if (val != null) setState(() { _filters = _filters.copyWith(collectionFilter: val); _applySearch(); }); },
-                                ),
-                              ),
-                              const SizedBox(width: 8),
-                              Expanded(
-                                child: _buildCompactDropdown(
-                                  value: _filters.ageGroup,
-                                  items: {
-                                    'all': context.t('age_all'),
-                                    '0_6': context.t('age_0_6'),
-                                    '7_14': context.t('age_7_14'),
-                                    '15_plus': context.t('age_15_plus'),
-                                  },
-                                  onChanged: (val) { if (val != null) setState(() { _filters = _filters.copyWith(ageGroup: val); _applySearch(); }); },
-                                ),
-                              ),
-                            ],
-                          );
-
-                          if (isSmall) {
-                            return Column(
-                              children: [
-                                searchField,
-                                const SizedBox(height: 12),
-                                filters,
-                              ],
-                            );
-                          }
-
-                          return Row(
-                            children: [
-                              Expanded(flex: 3, child: searchField),
-                              const SizedBox(width: 12),
-                              Expanded(flex: 4, child: filters),
-                            ],
-                          );
-                        },
-                      ),
-                    ],
-                  ),
+              title: Text(
+                widget.folder.getName(currentLang),
+                style: const TextStyle(
+                  color: appBarColor,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-              if (_isLoading) const SliverFillRemaining(child: Center(child: CircularProgressIndicator()))
-              else if (_filteredContent.isEmpty) const SliverFillRemaining(child: Center(child: Text('No subjects found')))
-              else SliverPadding(padding: const EdgeInsets.only(bottom: 32), sliver: SliverList(delegate: SliverChildBuilderDelegate((context, index) {
-                final item = _filteredContent[index];
-                if (item is FolderModel) {
-                  final myId = getIt<AuthService>().currentUser?.serverId;
-                  final folderCategoryTotal = _allContent.where((e) {
-                    if (e.folderId != item.id) return false;
-                    if (_filters.collectionFilter == 'mine') return e.ownerId == myId;
-                    if (_filters.collectionFilter == 'public') {
-                      if (e is SubjectModel) return e.isPublic;
-                      if (e is CollectionModel) return e.isPublic;
-                      return false;
+              appBarColor: pillarColor,
+              actions: [
+                IconButton(
+                  icon: const Icon(Icons.school, color: appBarColor),
+                  onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
+                ),
+                IconButton(icon: const Icon(Icons.arrow_back, color: appBarColor), onPressed: () => Navigator.pop(context, {'hasUpdated': _hasUpdated, 'ageFilter': _filters.ageGroup, 'collectionFilter': _filters.collectionFilter})),
+                if (isOwner) ...[
+                  IconButton(icon: const Icon(Icons.edit, color: appBarColor), onPressed: () async {
+                    final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(existingFolder: widget.folder, isFolderMode: true)));
+                    if (result == true) { _loadData(); _hasUpdated = true; }
+                  }),
+                  IconButton(icon: const Icon(Icons.delete, color: appBarColor), onPressed: () async {
+                    final confirmed = await showDialog<bool>(context: context, builder: (context) => AlertDialog(title: Text(context.t('delete_folder')), content: const Text('Are you sure you want to delete this folder?'), actions: [TextButton(onPressed: () => Navigator.pop(context, false), child: Text(context.t('cancel'))), TextButton(onPressed: () => Navigator.pop(context, true), style: TextButton.styleFrom(foregroundColor: Colors.red), child: Text(context.t('delete')))]));
+                    if (confirmed == true && mounted) {
+                      try {
+                        await _cardService.deleteFolder(widget.folder.id);
+                        if (mounted) Navigator.pop(context, {'hasUpdated': true, 'ageFilter': _filters.ageGroup, 'collectionFilter': _filters.collectionFilter});
+                      } catch (e) {
+                        if (e.toString().contains('folder_not_empty') && mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(context.t('folder_not_empty_msg') ?? 'Cannot delete folder: it is not empty')));
+                        }
+                      }
                     }
-                    if (_filters.collectionFilter == 'favorites') return e.isOnDashboard;
-                    return true;
-                  }).length;
-                  final matchingInFolder = _matchingContent.where((e) => e.folderId == item.id).length;
-                  return _FolderListTile(folder: item, matchingCount: matchingInFolder, totalCount: folderCategoryTotal, pillar: widget.pillar, languageCode: widget.languageCode, initialAgeFilter: _filters.ageGroup, initialCollectionFilter: _filters.collectionFilter, onChanged: () { _loadData(); _hasUpdated = true; }, onFilterChanged: (age, coll) { setState(() { _filters = _filters.copyWith(ageGroup: age, collectionFilter: coll); _applySearch(); }); });
-                } else if (item is CollectionModel) {
-                  final pillar = pillars.firstWhere((p) => p.id == item.pillarId, orElse: () => pillars.first);
-                  return _CollectionListTile(collection: item, pillar: pillar, languageCode: widget.languageCode, initialAgeFilter: _filters.ageGroup, initialCollectionFilter: _filters.collectionFilter, onChanged: () { _loadData(); _hasUpdated = true; }, onFavoriteChanged: () { setState(() { item.isOnDashboard = !item.isOnDashboard; _hasUpdated = true; }); });
-                } else if (item is SubjectModel) {
-                  final pillar = pillars.firstWhere((p) => p.id == item.pillarId, orElse: () => pillars.first);
-                  return _SubjectListTile(subject: item, pillar: pillar, languageCode: widget.languageCode, initialAgeFilter: _filters.ageGroup, initialCollectionFilter: _filters.collectionFilter, onChanged: () { _loadData(); _hasUpdated = true; }, onFavoriteChanged: () { setState(() { item.isOnDashboard = !item.isOnDashboard; _hasUpdated = true; }); });
-                }
-                return const SizedBox.shrink();
-              }, childCount: _filteredContent.length))),
-            ],
-          );
-          },
+                  }),
+                ],
+                IconButton(icon: const Icon(Icons.feedback, color: appBarColor), onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => FeedbackPage(folderId: widget.folder.id, contextTitle: widget.folder.getName(currentLang), appBarColor: pillarColor)))),
+              ],
+              slivers: [
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 16, bottom: 24),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Row 1: Language and Add Button
+                        Row(
+                          children: [
+                            Expanded(
+                              child: _buildCompactDropdown(
+                                value: currentLang,
+                                items: Map.fromEntries(
+                                  getIt<TestingLanguageService>().activeLanguageCodes.map((l) => MapEntry(
+                                    l, 
+                                    getIt<TestingLanguageService>().getLanguageName(l)
+                                  ))
+                                ),
+                                prefixIcon: Icons.language,
+                                onChanged: (val) async {
+                                  if (val != null) {
+                                    await getIt<TestingLanguageService>().updateCurrentLanguage(val);
+                                    _loadData();
+                                  }
+                                },
+                              ),
+                            ),
+                            const SizedBox(width: 12),
+                            PopupMenuButton<String>(
+                              icon: Icon(Icons.add_circle, color: pillarColor, size: 40),
+                              padding: EdgeInsets.zero,
+                              onSelected: (value) async {
+                                if (!isPremium) {
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => const PremiumUpgradePage()));
+                                  return;
+                                }
+                                dynamic result;
+                                if (value == 'subject') result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: widget.pillar.id, folderId: widget.folder.id, initialAgeGroup: _filters.ageGroup)));
+                                else if (value == 'collection') result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: widget.pillar.id, folderId: widget.folder.id, isCollectionMode: true, initialAgeGroup: _filters.ageGroup)));
+
+                                if (result == true) {
+                                  _loadData();
+                                  _hasUpdated = true;
+                                } else if (result != null) {
+                                  _loadData();
+                                  _hasUpdated = true;
+                                  await _navigateToSubject(result);
+                                }
+                              },
+                              itemBuilder: (context) => [
+                                PopupMenuItem(
+                                  value: 'subject', 
+                                  child: ListTile(
+                                    leading: Icon(Icons.description, color: pillarColor), 
+                                    title: Row(
+                                      children: [
+                                        Text(context.t('add_subject')),
+                                        if (!isPremium) ...[
+                                          const SizedBox(width: 8),
+                                          const Icon(Icons.workspace_premium, color: Colors.amber, size: 16),
+                                        ],
+                                      ],
+                                    ), 
+                                    contentPadding: EdgeInsets.zero,
+                                  ),
+                                ),
+                                PopupMenuItem(
+                                  value: 'collection', 
+                                  child: ListTile(
+                                    leading: Icon(Icons.auto_awesome_motion, color: pillarColor), 
+                                    title: Row(
+                                      children: [
+                                        Text(context.t('add_collection')),
+                                        if (!isPremium) ...[
+                                          const SizedBox(width: 8),
+                                          const Icon(Icons.workspace_premium, color: Colors.amber, size: 16),
+                                        ],
+                                      ],
+                                    ), 
+                                    contentPadding: EdgeInsets.zero,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 12),
+                        // Row 2: Search and Filters
+                        LayoutBuilder(
+                          builder: (context, constraints) {
+                            final isSmall = constraints.maxWidth < 600;
+                            final searchField = TextField(
+                              controller: _searchController,
+                              decoration: InputDecoration(
+                                hintText: context.t('search_subjects'),
+                                prefixIcon: const Icon(Icons.search),
+                                suffixIcon: ValueListenableBuilder<TextEditingValue>(
+                                  valueListenable: _searchController,
+                                  builder: (context, value, _) {
+                                    return value.text.isNotEmpty ? IconButton(icon: const Icon(Icons.clear), onPressed: () { _searchController.clear(); _applySearch(); }) : const SizedBox.shrink();
+                                  },
+                                ),
+                                border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                                contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+                                filled: true,
+                                fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
+                              ),
+                              onChanged: (_) => _applySearch(),
+                            );
+
+                            final filters = Row(
+                              children: [
+                                Expanded(
+                                  child: _buildCompactDropdown(
+                                    value: _filters.collectionFilter,
+                                    items: {
+                                      'all': context.t('filter_all') ?? 'All',
+                                      'favorites': context.t('filter_dashboard'),
+                                      'mine': context.t('filter_my_subjects'),
+                                      'public': context.t('filter_public'),
+                                    },
+                                    onChanged: (val) { if (val != null) setState(() { _filters = _filters.copyWith(collectionFilter: val); _applySearch(); }); },
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                Expanded(
+                                  child: _buildCompactDropdown(
+                                    value: _filters.ageGroup,
+                                    items: {
+                                      'all': context.t('age_all'),
+                                      '0_6': context.t('age_0_6'),
+                                      '7_14': context.t('age_7_14'),
+                                      '15_plus': context.t('age_15_plus'),
+                                    },
+                                    onChanged: (val) { if (val != null) setState(() { _filters = _filters.copyWith(ageGroup: val); _applySearch(); }); },
+                                  ),
+                                ),
+                              ],
+                            );
+
+                            if (isSmall) {
+                              return Column(
+                                children: [
+                                  searchField,
+                                  const SizedBox(height: 12),
+                                  filters,
+                                ],
+                              );
+                            }
+
+                            return Row(
+                              children: [
+                                Expanded(flex: 3, child: searchField),
+                                const SizedBox(width: 12),
+                                Expanded(flex: 4, child: filters),
+                              ],
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                if (_isLoading) const SliverFillRemaining(child: Center(child: CircularProgressIndicator()))
+                else if (_filteredContent.isEmpty) const SliverFillRemaining(child: Center(child: Text('No subjects found')))
+                else SliverPadding(padding: const EdgeInsets.only(bottom: 32), sliver: SliverList(delegate: SliverChildBuilderDelegate((context, index) {
+                  final item = _filteredContent[index];
+                  return _buildContentItem(
+                    item, 
+                    currentLang, 
+                    _allContent, 
+                    _matchingContent, 
+                    _filters, 
+                    () { _loadData(); _hasUpdated = true; }, 
+                    (age, coll) { setState(() { _filters = _filters.copyWith(ageGroup: age, collectionFilter: coll); _applySearch(); }); },
+                    widget.pillar,
+                  );
+                }, childCount: _filteredContent.length))),              ],
+            );          },
           ),
         );
       },
     );
+  }
+
+  Widget _buildContentItem(
+    ContentItem item, 
+    String currentLang, 
+    List<ContentItem> allContent,
+    List<ContentItem> matchingContent,
+    DiscoveryFilters filters,
+    VoidCallback onDataRefresh,
+    Function(String, String) onFilterChanged,
+    Pillar? forcedPillar,
+  ) {
+    final pillar = forcedPillar ?? pillars.firstWhere((p) => p.id == item.pillarId, orElse: () => pillars.first);
+    if (item is FolderModel) {
+      final myId = getIt<AuthService>().currentUser?.serverId;
+      final folderCategoryTotal = allContent.where((e) {
+        if (e.folderId != item.id) return false;
+        if (filters.collectionFilter == 'mine') return e.ownerId == myId;
+        if (filters.collectionFilter == 'public') {
+          if (e is SubjectModel) return e.isPublic;
+          if (e is CollectionModel) return e.isPublic;
+          return false;
+        }
+        if (filters.collectionFilter == 'favorites') return e.isOnDashboard;
+        return true;
+      }).length;
+      final matchingInFolder = matchingContent.where((e) => e.folderId == item.id).length;
+      return _FolderListTile(
+        folder: item, 
+        matchingCount: matchingInFolder, 
+        totalCount: folderCategoryTotal, 
+        pillar: pillar, 
+        languageCode: currentLang, 
+        initialAgeFilter: filters.ageGroup, 
+        initialCollectionFilter: filters.collectionFilter, 
+        onChanged: onDataRefresh,
+        onFilterChanged: onFilterChanged,
+      );
+    } else if (item is CollectionModel) {
+      return _CollectionListTile(
+        collection: item, 
+        pillar: pillar, 
+        languageCode: currentLang, 
+        initialAgeFilter: filters.ageGroup, 
+        initialCollectionFilter: filters.collectionFilter, 
+        onChanged: onDataRefresh, 
+        onFavoriteChanged: () {
+          item.isOnDashboard = !item.isOnDashboard;
+          onDataRefresh();
+        }
+      );
+    } else if (item is SubjectModel) {
+      return _SubjectListTile(
+        subject: item, 
+        pillar: pillar, 
+        languageCode: currentLang, 
+        initialAgeFilter: filters.ageGroup, 
+        initialCollectionFilter: filters.collectionFilter, 
+        onChanged: onDataRefresh, 
+        onFavoriteChanged: () {
+          item.isOnDashboard = !item.isOnDashboard;
+          onDataRefresh();
+        }
+      );
+    }
+    return const SizedBox.shrink();
   }
 
   Widget _buildCompactDropdown({
