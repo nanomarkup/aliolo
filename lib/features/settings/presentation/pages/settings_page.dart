@@ -16,6 +16,7 @@ import 'package:aliolo/features/auth/presentation/pages/profile_page.dart';
 import 'package:aliolo/features/settings/presentation/pages/about_page.dart';
 import 'package:aliolo/features/settings/presentation/pages/premium_upgrade_page.dart';
 import 'package:aliolo/features/documentation/presentation/pages/documentation_page.dart';
+import 'package:aliolo/features/management/presentation/pages/feedback_management_page.dart';
 import 'package:aliolo/data/services/feedback_service.dart';
 import 'package:aliolo/data/services/subscription_service.dart';
 import 'package:aliolo/core/di/service_locator.dart';
@@ -116,16 +117,19 @@ class _SettingsPageState extends State<SettingsPage> {
     }
   }
 
-  Widget _buildSectionTitle(String title, Color color) {
+  Widget _buildSectionTitle(BuildContext context, String title, Color color) {
     return Padding(
-      padding: const EdgeInsets.only(left: 8, bottom: 12, top: 16),
-      child: Text(
-        title.toUpperCase(),
-        style: TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.w900,
-          color: color,
-          letterSpacing: 1.5,
+      padding: const EdgeInsets.only(top: 32, bottom: 12, left: 4),
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: Text(
+          title.toUpperCase(),
+          style: TextStyle(
+            color: color,
+            fontWeight: FontWeight.bold,
+            fontSize: 12,
+            letterSpacing: 1.2,
+          ),
         ),
       ),
     );
@@ -208,6 +212,7 @@ class _SettingsPageState extends State<SettingsPage> {
           body: Column(
             children: [
               _buildSectionTitle(
+                context,
                 context.t('general_preferences'),
                 currentPrimaryColor,
               ),
@@ -445,12 +450,25 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
               ),
               _buildSectionTitle(
+                context,
                 context.t('support_and_management'),
                 currentPrimaryColor,
               ),
               Card(
                 child: Column(
                   children: [
+                    ListTile(
+                      leading: Icon(Icons.feedback, color: currentPrimaryColor),
+                      title: Text(context.t('feedback_management_title')),
+                      trailing: const Icon(Icons.chevron_right),
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const FeedbackManagementPage(),
+                        ),
+                      ),
+                    ),
+                    const Divider(height: 1, indent: 16, endIndent: 16),
                     ListTile(
                       leading: Icon(Icons.help_outline, color: currentPrimaryColor),
                       title: Text(context.t('documentation')),

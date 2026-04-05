@@ -124,6 +124,7 @@ class TranslationService extends ChangeNotifier {
       'correct_answers': 'Correct Answers',
       'failed_answers': 'Failed',
       'maybe_later': 'Maybe Later',
+      'finish': 'Finish',
       'dashboard_greeting': 'Hello',
       'billing_title': 'Checkout',
       'confirm_subscription': 'Confirm Subscription',

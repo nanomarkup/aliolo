@@ -26,7 +26,6 @@ class _PremiumUpgradePageState extends State<PremiumUpgradePage> {
     {'name': 'Favorite items on dashboard', 'free': true},
     {'name': 'Invite and connect with friends', 'free': true},
     {'name': 'Direct feedback and suggestions', 'free': true},
-    {'name': 'Unlimited daily XP goals', 'free': false},
     {'name': 'Create folders, subjects and collections', 'free': false},
     {'name': 'Test subjects and collections', 'free': false},
     {'name': 'Auto-Play mode', 'free': false},

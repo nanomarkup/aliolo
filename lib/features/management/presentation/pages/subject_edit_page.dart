@@ -134,8 +134,13 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
   Future<void> _loadFolders() async {
     final results = await _cardService.getFoldersByPillar(_selectedPillar);
     if (mounted) {
+      final myId = _authService.currentUser?.serverId;
+      const superUserId = 'f2fb4c9c-169b-447d-b8a6-dce72c4ed5ac';
+      
       setState(() {
-        _allFolders = results;
+        _allFolders = results.where((f) => 
+          f.ownerId == myId || f.ownerId == superUserId
+        ).toList();
       });
     }
   }

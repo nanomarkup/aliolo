@@ -75,6 +75,9 @@ VALUES
   ('en', 'learn_session_size_desc', 'Number of new cards to introduce in a single learning session.'),
   ('en', 'test_session_size_desc', 'Number of cards to review in a single testing session.'),
   ('en', 'options_count_desc', 'Number of multiple-choice answers displayed during tests.'),
+  ('en', 'support_and_management', 'Support & About'),
+  ('en', 'account_and_management', 'Account & Management'),
+  ('en', 'dashboard_greeting', 'Hello'),
   
   ('id', 'next_daily_goal_desc', 'Target jumlah kartu yang harus dikuasai setiap hari. Perubahan berlaku mulai besok.'),
   ('id', 'learn_session_size_desc', 'Jumlah kartu baru yang diperkenalkan dalam satu sesi belajar.'),

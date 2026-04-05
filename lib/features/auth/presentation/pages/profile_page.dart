@@ -587,18 +587,6 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     const Divider(height: 1, indent: 16, endIndent: 16),
                     ListTile(
-                      leading: Icon(Icons.feedback, color: currentSessionColor),
-                      title: Text(context.t('feedback_management_title')),
-                      trailing: const Icon(Icons.chevron_right),
-                      onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const FeedbackManagementPage(),
-                        ),
-                      ),
-                    ),
-                    const Divider(height: 1, indent: 16, endIndent: 16),
-                    ListTile(
                       leading: Icon(Icons.lock, color: currentSessionColor),
                       title: Text(context.t('change_password')),
                       trailing: const Icon(Icons.chevron_right),

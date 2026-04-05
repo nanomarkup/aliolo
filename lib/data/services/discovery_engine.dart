@@ -151,16 +151,21 @@ class DiscoveryEngine {
       visible = items;
     }
 
-    // Special folder logic: Only show folders if they have matching content or belong to user
+    // Special folder logic: Show folders if they have matching content, belong to user, or if we are in a high-level view (favorites/public)
     if (folderId == null && query.isEmpty) {
       final matchingFolderIds = items.where((e) => e.folderId != null).map((e) => e.folderId!).toSet();
       visible = visible.where((item) {
         if (item is! FolderModel) return true;
         final hasMatchingContent = matchingFolderIds.contains(item.id);
+        
         bool shouldShowEmptyFolder = false;
         if (collectionFilter == 'mine' || collectionFilter == 'all') {
           shouldShowEmptyFolder = item.ownerId == myId;
+        } else if (collectionFilter == 'public' || collectionFilter == 'favorites') {
+          // In public/favorites view, we show all folders matching the basic criteria (always true for folders currently)
+          shouldShowEmptyFolder = true;
         }
+        
         return hasMatchingContent || shouldShowEmptyFolder;
       }).toList();
     }

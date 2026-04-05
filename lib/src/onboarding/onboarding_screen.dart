@@ -58,7 +58,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     {'name': 'Favorite items on dashboard', 'free': true},
     {'name': 'Invite and connect with friends', 'free': true},
     {'name': 'Direct feedback and suggestions', 'free': true},
-    {'name': 'Unlimited daily XP goals', 'free': false},
     {'name': 'Create folders, subjects and collections', 'free': false},
     {'name': 'Test subjects and collections', 'free': false},
     {'name': 'Auto-Play mode', 'free': false},
@@ -522,17 +521,37 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   child: ConstrainedBox(
                     constraints: const BoxConstraints(maxWidth: 320),
                     child: _currentPage == 6
-                        ? TextButton(
-                            onPressed: () => _finishOnboarding(skipped: false),
-                            child: Text(
-                              context.t('maybe_later'),
-                              style: const TextStyle(
-                                color: Colors.grey,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          )
+                        ? (subService.isPremium 
+                            ? ElevatedButton(
+                                onPressed: () => _finishOnboarding(skipped: false),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.green,
+                                  foregroundColor: Colors.white,
+                                  minimumSize: const Size(double.infinity, 56),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(16),
+                                  ),
+                                  elevation: 0,
+                                ),
+                                child: Text(
+                                  context.t('finish'),
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              )
+                            : TextButton(
+                                onPressed: () => _finishOnboarding(skipped: false),
+                                child: Text(
+                                  context.t('maybe_later'),
+                                  style: const TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ))
                         : ElevatedButton(
                             onPressed: (_currentPage == 1 || _currentPage == 2)
                                 ? null
