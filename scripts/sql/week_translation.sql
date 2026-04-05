@@ -1,0 +1,40 @@
+-- SQL Script to add translations for 'price_per_week'
+-- Run this in your Supabase SQL Editor
+
+INSERT INTO ui_translations (lang, key, value)
+VALUES 
+  ('en', 'price_per_week', '({price} / Week)'),
+  ('id', 'price_per_week', '({price} / minggu)'),
+  ('bg', 'price_per_week', '({price} / седмица)'),
+  ('cs', 'price_per_week', '({price} / týden)'),
+  ('da', 'price_per_week', '({price} / uge)'),
+  ('de', 'price_per_week', '({price} / Woche)'),
+  ('et', 'price_per_week', '({price} / nädal)'),
+  ('es', 'price_per_week', '({price} / semana)'),
+  ('fr', 'price_per_week', '({price} / semaine)'),
+  ('ga', 'price_per_week', '({price} / seachtain)'),
+  ('hr', 'price_per_week', '({price} / tjedan)'),
+  ('it', 'price_per_week', '({price} / settimana)'),
+  ('lv', 'price_per_week', '({price} / nedēļā)'),
+  ('lt', 'price_per_week', '({price} / savaitę)'),
+  ('hu', 'price_per_week', '({price} / hét)'),
+  ('mt', 'price_per_week', '({price} / ġimgħa)'),
+  ('nl', 'price_per_week', '({price} / week)'),
+  ('pl', 'price_per_week', '({price} / tydzień)'),
+  ('pt', 'price_per_week', '({price} / semana)'),
+  ('ro', 'price_per_week', '({price} / săptămână)'),
+  ('sk', 'price_per_week', '({price} / týždeň)'),
+  ('sl', 'price_per_week', '({price} / teden)'),
+  ('fi', 'price_per_week', '({price} / viikko)'),
+  ('sv', 'price_per_week', '({price} / vecka)'),
+  ('tl', 'price_per_week', '({price} / linggo)'),
+  ('vi', 'price_per_week', '({price} / tuần)'),
+  ('tr', 'price_per_week', '({price} / hafta)'),
+  ('el', 'price_per_week', '({price} / εβδομάδα)'),
+  ('uk', 'price_per_week', '({price} / тиждень)'),
+  ('ar', 'price_per_week', '({price} / أسبوع)'),
+  ('hi', 'price_per_week', '({price} / सप्ताह)'),
+  ('zh', 'price_per_week', '({price} / 周)'),
+  ('ja', 'price_per_week', '({price} / 週)'),
+  ('ko', 'price_per_week', '({price} / 주)')
+ON CONFLICT (lang, key) DO UPDATE SET value = EXCLUDED.value;

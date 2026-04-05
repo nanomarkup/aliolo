@@ -439,95 +439,76 @@ class _SubjectPageState extends State<SubjectPage> {
                         ],
                       ),
                       const SizedBox(height: 12),
-                      // Row 2: Search and Filters
-                      LayoutBuilder(
-                        builder: (context, constraints) {
-                          final isSmall = constraints.maxWidth < 600;
-                          final searchField = TextField(
-                            controller: _searchController,
-                            decoration: InputDecoration(
-                              hintText: context.t('search_subjects'),
-                              prefixIcon: const Icon(Icons.search),
-                              suffixIcon: ValueListenableBuilder<TextEditingValue>(
-                                valueListenable: _searchController,
-                                builder: (context, value, _) {
-                                  return value.text.isNotEmpty ? IconButton(icon: const Icon(Icons.clear), onPressed: () { _searchController.clear(); _applySearch(); }) : const SizedBox.shrink();
-                                },
+                      // Row 2: Search and Filters (Always single row)
+                      Row(
+                        children: [
+                          Expanded(
+                            child: TextField(
+                              controller: _searchController,
+                              decoration: InputDecoration(
+                                hintText: context.t('search_subjects'),
+                                prefixIcon: const Icon(Icons.search),
+                                suffixIcon: ValueListenableBuilder<TextEditingValue>(
+                                  valueListenable: _searchController,
+                                  builder: (context, value, _) {
+                                    return value.text.isNotEmpty ? IconButton(icon: const Icon(Icons.clear), onPressed: () { _searchController.clear(); _applySearch(); }) : const SizedBox.shrink();
+                                  },
+                                ),
+                                border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                                contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+                                filled: true,
+                                fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
                               ),
-                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                              contentPadding: const EdgeInsets.symmetric(horizontal: 12),
-                              filled: true,
-                              fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
+                              onChanged: (_) => _applySearch(),
                             ),
-                            onChanged: (_) => _applySearch(),
-                          );
-
-                          final filters = Row(
-                            children: [
-                              Expanded(
-                                child: _buildCompactDropdown(
-                                  value: _filters.collectionFilter,
-                                  items: {
-                                    'all': context.t('filter_all') ?? 'All',
-                                    'favorites': context.t('filter_dashboard'),
-                                    'mine': context.t('filter_my_subjects'),
-                                    'public': context.t('filter_public'),
-                                  },
-                                  onChanged: (val) async {
-                                    if (val != null) {
-                                      setState(() { 
-                                        _filters = _filters.copyWith(collectionFilter: val); 
-                                        _applySearch(); 
-                                      });
-                                      final prefs = await SharedPreferences.getInstance();
-                                      await prefs.setString('last_collection_filter', val);
-                                    }
-                                  },
-                                ),
-                              ),
-                              const SizedBox(width: 8),
-                              Expanded(
-                                child: _buildCompactDropdown(
-                                  value: _filters.ageGroup,
-                                  items: {
-                                    'all': context.t('age_all'),
-                                    '0_6': context.t('age_0_6'),
-                                    '7_14': context.t('age_7_14'),
-                                    '15_plus': context.t('age_15_plus'),
-                                  },
-                                  onChanged: (val) async {
-                                    if (val != null) {
-                                      setState(() { 
-                                        _filters = _filters.copyWith(ageGroup: val); 
-                                        _applySearch(); 
-                                      });
-                                      final prefs = await SharedPreferences.getInstance();
-                                      await prefs.setString('last_age_filter', val);
-                                    }
-                                  },
-                                ),
-                              ),
-                            ],
-                          );
-
-                          if (isSmall) {
-                            return Column(
-                              children: [
-                                searchField,
-                                const SizedBox(height: 12),
-                                filters,
-                              ],
-                            );
-                          }
-
-                          return Row(
-                            children: [
-                              Expanded(flex: 3, child: searchField),
-                              const SizedBox(width: 12),
-                              Expanded(flex: 4, child: filters),
-                            ],
-                          );
-                        },
+                          ),
+                          const SizedBox(width: 8),
+                          SizedBox(
+                            width: 120,
+                            child: _buildCompactDropdown(
+                              value: _filters.collectionFilter,
+                              items: {
+                                'all': context.t('filter_all') ?? 'All',
+                                'favorites': context.t('filter_dashboard'),
+                                'mine': context.t('filter_my_subjects'),
+                                'public': context.t('filter_public'),
+                              },
+                              onChanged: (val) async {
+                                if (val != null) {
+                                  setState(() { 
+                                    _filters = _filters.copyWith(collectionFilter: val); 
+                                    _applySearch(); 
+                                  });
+                                  final prefs = await SharedPreferences.getInstance();
+                                  await prefs.setString('last_collection_filter', val);
+                                }
+                              },
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          SizedBox(
+                            width: 100,
+                            child: _buildCompactDropdown(
+                              value: _filters.ageGroup,
+                              items: {
+                                'all': context.t('age_all'),
+                                '0_6': context.t('age_0_6'),
+                                '7_14': context.t('age_7_14'),
+                                '15_plus': context.t('age_15_plus'),
+                              },
+                              onChanged: (val) async {
+                                if (val != null) {
+                                  setState(() { 
+                                    _filters = _filters.copyWith(ageGroup: val); 
+                                    _applySearch(); 
+                                  });
+                                  final prefs = await SharedPreferences.getInstance();
+                                  await prefs.setString('last_age_filter', val);
+                                }
+                              },
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -975,78 +956,58 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
                         ),
                         const SizedBox(height: 12),
                         // Row 2: Search and Filters
-                        LayoutBuilder(
-                          builder: (context, constraints) {
-                            final isSmall = constraints.maxWidth < 600;
-                            final searchField = TextField(
-                              controller: _searchController,
-                              decoration: InputDecoration(
-                                hintText: context.t('search_subjects'),
-                                prefixIcon: const Icon(Icons.search),
-                                suffixIcon: ValueListenableBuilder<TextEditingValue>(
-                                  valueListenable: _searchController,
-                                  builder: (context, value, _) {
-                                    return value.text.isNotEmpty ? IconButton(icon: const Icon(Icons.clear), onPressed: () { _searchController.clear(); _applySearch(); }) : const SizedBox.shrink();
-                                  },
+                        Row(
+                          children: [
+                            Expanded(
+                              child: TextField(
+                                controller: _searchController,
+                                decoration: InputDecoration(
+                                  hintText: context.t('search_subjects'),
+                                  prefixIcon: const Icon(Icons.search),
+                                  suffixIcon: ValueListenableBuilder<TextEditingValue>(
+                                    valueListenable: _searchController,
+                                    builder: (context, value, _) {
+                                      return value.text.isNotEmpty ? IconButton(icon: const Icon(Icons.clear), onPressed: () { _searchController.clear(); _applySearch(); }) : const SizedBox.shrink();
+                                    },
+                                  ),
+                                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                                  contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+                                  filled: true,
+                                  fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
                                 ),
-                                border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                                contentPadding: const EdgeInsets.symmetric(horizontal: 12),
-                                filled: true,
-                                fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
+                                onChanged: (_) => _applySearch(),
                               ),
-                              onChanged: (_) => _applySearch(),
-                            );
-
-                            final filters = Row(
-                              children: [
-                                Expanded(
-                                  child: _buildCompactDropdown(
-                                    value: _filters.collectionFilter,
-                                    items: {
-                                      'all': context.t('filter_all') ?? 'All',
-                                      'favorites': context.t('filter_dashboard'),
-                                      'mine': context.t('filter_my_subjects'),
-                                      'public': context.t('filter_public'),
-                                    },
-                                    onChanged: (val) { if (val != null) setState(() { _filters = _filters.copyWith(collectionFilter: val); _applySearch(); }); },
-                                  ),
-                                ),
-                                const SizedBox(width: 8),
-                                Expanded(
-                                  child: _buildCompactDropdown(
-                                    value: _filters.ageGroup,
-                                    items: {
-                                      'all': context.t('age_all'),
-                                      '0_6': context.t('age_0_6'),
-                                      '7_14': context.t('age_7_14'),
-                                      '15_plus': context.t('age_15_plus'),
-                                    },
-                                    onChanged: (val) { if (val != null) setState(() { _filters = _filters.copyWith(ageGroup: val); _applySearch(); }); },
-                                  ),
-                                ),
-                              ],
-                            );
-
-                            if (isSmall) {
-                              return Column(
-                                children: [
-                                  searchField,
-                                  const SizedBox(height: 12),
-                                  filters,
-                                ],
-                              );
-                            }
-
-                            return Row(
-                              children: [
-                                Expanded(flex: 3, child: searchField),
-                                const SizedBox(width: 12),
-                                Expanded(flex: 4, child: filters),
-                              ],
-                            );
-                          },
-                        ),
-                      ],
+                            ),
+                            const SizedBox(width: 8),
+                            SizedBox(
+                              width: 120,
+                              child: _buildCompactDropdown(
+                                value: _filters.collectionFilter,
+                                items: {
+                                  'all': context.t('filter_all') ?? 'All',
+                                  'favorites': context.t('filter_dashboard'),
+                                  'mine': context.t('filter_my_subjects'),
+                                  'public': context.t('filter_public'),
+                                },
+                                onChanged: (val) { if (val != null) setState(() { _filters = _filters.copyWith(collectionFilter: val); _applySearch(); }); },
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            SizedBox(
+                              width: 100,
+                              child: _buildCompactDropdown(
+                                value: _filters.ageGroup,
+                                items: {
+                                  'all': context.t('age_all'),
+                                  '0_6': context.t('age_0_6'),
+                                  '7_14': context.t('age_7_14'),
+                                  '15_plus': context.t('age_15_plus'),
+                                },
+                                onChanged: (val) { if (val != null) setState(() { _filters = _filters.copyWith(ageGroup: val); _applySearch(); }); },
+                              ),
+                            ),
+                          ],
+                        ),                      ],
                     ),
                   ),
                 ),
@@ -1424,78 +1385,58 @@ class _FolderPageState extends State<FolderPage> {
                         ),
                         const SizedBox(height: 12),
                         // Row 2: Search and Filters
-                        LayoutBuilder(
-                          builder: (context, constraints) {
-                            final isSmall = constraints.maxWidth < 600;
-                            final searchField = TextField(
-                              controller: _searchController,
-                              decoration: InputDecoration(
-                                hintText: context.t('search_subjects'),
-                                prefixIcon: const Icon(Icons.search),
-                                suffixIcon: ValueListenableBuilder<TextEditingValue>(
-                                  valueListenable: _searchController,
-                                  builder: (context, value, _) {
-                                    return value.text.isNotEmpty ? IconButton(icon: const Icon(Icons.clear), onPressed: () { _searchController.clear(); _applySearch(); }) : const SizedBox.shrink();
-                                  },
+                        Row(
+                          children: [
+                            Expanded(
+                              child: TextField(
+                                controller: _searchController,
+                                decoration: InputDecoration(
+                                  hintText: context.t('search_subjects'),
+                                  prefixIcon: const Icon(Icons.search),
+                                  suffixIcon: ValueListenableBuilder<TextEditingValue>(
+                                    valueListenable: _searchController,
+                                    builder: (context, value, _) {
+                                      return value.text.isNotEmpty ? IconButton(icon: const Icon(Icons.clear), onPressed: () { _searchController.clear(); _applySearch(); }) : const SizedBox.shrink();
+                                    },
+                                  ),
+                                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                                  contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+                                  filled: true,
+                                  fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
                                 ),
-                                border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                                contentPadding: const EdgeInsets.symmetric(horizontal: 12),
-                                filled: true,
-                                fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
+                                onChanged: (_) => _applySearch(),
                               ),
-                              onChanged: (_) => _applySearch(),
-                            );
-
-                            final filters = Row(
-                              children: [
-                                Expanded(
-                                  child: _buildCompactDropdown(
-                                    value: _filters.collectionFilter,
-                                    items: {
-                                      'all': context.t('filter_all') ?? 'All',
-                                      'favorites': context.t('filter_dashboard'),
-                                      'mine': context.t('filter_my_subjects'),
-                                      'public': context.t('filter_public'),
-                                    },
-                                    onChanged: (val) { if (val != null) setState(() { _filters = _filters.copyWith(collectionFilter: val); _applySearch(); }); },
-                                  ),
-                                ),
-                                const SizedBox(width: 8),
-                                Expanded(
-                                  child: _buildCompactDropdown(
-                                    value: _filters.ageGroup,
-                                    items: {
-                                      'all': context.t('age_all'),
-                                      '0_6': context.t('age_0_6'),
-                                      '7_14': context.t('age_7_14'),
-                                      '15_plus': context.t('age_15_plus'),
-                                    },
-                                    onChanged: (val) { if (val != null) setState(() { _filters = _filters.copyWith(ageGroup: val); _applySearch(); }); },
-                                  ),
-                                ),
-                              ],
-                            );
-
-                            if (isSmall) {
-                              return Column(
-                                children: [
-                                  searchField,
-                                  const SizedBox(height: 12),
-                                  filters,
-                                ],
-                              );
-                            }
-
-                            return Row(
-                              children: [
-                                Expanded(flex: 3, child: searchField),
-                                const SizedBox(width: 12),
-                                Expanded(flex: 4, child: filters),
-                              ],
-                            );
-                          },
-                        ),
-                      ],
+                            ),
+                            const SizedBox(width: 8),
+                            SizedBox(
+                              width: 120,
+                              child: _buildCompactDropdown(
+                                value: _filters.collectionFilter,
+                                items: {
+                                  'all': context.t('filter_all') ?? 'All',
+                                  'favorites': context.t('filter_dashboard'),
+                                  'mine': context.t('filter_my_subjects'),
+                                  'public': context.t('filter_public'),
+                                },
+                                onChanged: (val) { if (val != null) setState(() { _filters = _filters.copyWith(collectionFilter: val); _applySearch(); }); },
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            SizedBox(
+                              width: 100,
+                              child: _buildCompactDropdown(
+                                value: _filters.ageGroup,
+                                items: {
+                                  'all': context.t('age_all'),
+                                  '0_6': context.t('age_0_6'),
+                                  '7_14': context.t('age_7_14'),
+                                  '15_plus': context.t('age_15_plus'),
+                                },
+                                onChanged: (val) { if (val != null) setState(() { _filters = _filters.copyWith(ageGroup: val); _applySearch(); }); },
+                              ),
+                            ),
+                          ],
+                        ),                      ],
                     ),
                   ),
                 ),

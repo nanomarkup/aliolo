@@ -312,7 +312,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 useFixedHeader: false,
                 visual: Icon(Icons.groups, size: 120, color: primaryColor),
                 title: "Create & Share",
-                description: "Build your own deck or dive into cards shared by Aliolo learners worldwide.\n\nLearn at your pace, then test yourself when you're ready.",
+                description: "Build your own deck or dive into cards shared by Aliolo learners worldwide. Learn at your pace, then test yourself when you're ready.",
               ),
               // Slide 5: Sync
               OnboardingSlide(
@@ -416,6 +416,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               // Slide 7: Paywall
               OnboardingSlide(
                 useFixedHeader: false,
+                customBottomOffset: 100,
                 visual: Center(
                   child: ConstrainedBox(
                     constraints: const BoxConstraints(maxWidth: 500),

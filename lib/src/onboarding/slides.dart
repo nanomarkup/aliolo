@@ -9,6 +9,7 @@ class OnboardingSlide extends StatelessWidget {
   final Widget? extra;
   final bool useFixedHeader;
   final bool invertContent;
+  final double? customBottomOffset;
 
   const OnboardingSlide({
     super.key,
@@ -18,6 +19,7 @@ class OnboardingSlide extends StatelessWidget {
     this.extra,
     this.useFixedHeader = true,
     this.invertContent = false,
+    this.customBottomOffset,
   });
 
   @override
@@ -28,6 +30,7 @@ class OnboardingSlide extends StatelessWidget {
 
     final titleFontSize = isDesktop ? 32.0 : 22.0;
     final descFontSize = isDesktop ? 18.0 : 13.0;
+    final bottomOffset = customBottomOffset ?? 180.0;
     
     return Center(
       child: ConstrainedBox(
@@ -36,7 +39,7 @@ class OnboardingSlide extends StatelessWidget {
           children: [
             // 1. Scrollable Content
             Positioned.fill(
-              bottom: 180, // Ends before the footer
+              bottom: bottomOffset, // Ends before the footer
               child: LayoutBuilder(
                 builder: (context, constraints) {
                   return SingleChildScrollView(
@@ -162,7 +165,7 @@ class OnboardingSlide extends StatelessWidget {
               ),
 
             Positioned(
-              bottom: 180,
+              bottom: bottomOffset,
               left: 0,
               right: 0,
               height: 40,

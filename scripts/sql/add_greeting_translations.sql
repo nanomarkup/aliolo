@@ -1,0 +1,40 @@
+-- SQL Script to add 'dashboard_greeting' (Hello) translations for all supported languages
+-- Run this in your Supabase SQL Editor
+
+INSERT INTO ui_translations (lang, key, value)
+VALUES 
+  ('en', 'dashboard_greeting', 'Hello'),
+  ('id', 'dashboard_greeting', 'Halo'),
+  ('bg', 'dashboard_greeting', 'Здравей'),
+  ('cs', 'dashboard_greeting', 'Ahoj'),
+  ('da', 'dashboard_greeting', 'Hej'),
+  ('de', 'dashboard_greeting', 'Hallo'),
+  ('et', 'dashboard_greeting', 'Tere'),
+  ('es', 'dashboard_greeting', 'Hola'),
+  ('fr', 'dashboard_greeting', 'Bonjour'),
+  ('ga', 'dashboard_greeting', 'Dia duit'),
+  ('hr', 'dashboard_greeting', 'Zdravo'),
+  ('it', 'dashboard_greeting', 'Ciao'),
+  ('lv', 'dashboard_greeting', 'Sveiki'),
+  ('lt', 'dashboard_greeting', 'Labas'),
+  ('hu', 'dashboard_greeting', 'Szia'),
+  ('mt', 'dashboard_greeting', 'Bongu'),
+  ('nl', 'dashboard_greeting', 'Hallo'),
+  ('pl', 'dashboard_greeting', 'Cześć'),
+  ('pt', 'dashboard_greeting', 'Olá'),
+  ('ro', 'dashboard_greeting', 'Bună'),
+  ('sk', 'dashboard_greeting', 'Ahoj'),
+  ('sl', 'dashboard_greeting', 'Živjo'),
+  ('fi', 'dashboard_greeting', 'Hei'),
+  ('sv', 'dashboard_greeting', 'Hej'),
+  ('tl', 'dashboard_greeting', 'Halo'),
+  ('vi', 'dashboard_greeting', 'Xin chào'),
+  ('tr', 'dashboard_greeting', 'Merhaba'),
+  ('el', 'dashboard_greeting', 'Γεια σας'),
+  ('uk', 'dashboard_greeting', 'Привіт'),
+  ('ar', 'dashboard_greeting', 'مرحبا'),
+  ('hi', 'dashboard_greeting', 'नमस्ते'),
+  ('zh', 'dashboard_greeting', '你好'),
+  ('ja', 'dashboard_greeting', 'こんにちは'),
+  ('ko', 'dashboard_greeting', '안녕하세요')
+ON CONFLICT (lang, key) DO UPDATE SET value = EXCLUDED.value;

@@ -19,20 +19,6 @@ class PremiumUpgradePage extends StatefulWidget {
 class _PremiumUpgradePageState extends State<PremiumUpgradePage> {
   int _selectedOptionIndex = 1; // Monthly by default
 
-  final List<Map<String, dynamic>> _features = [
-    {'name': 'Learn any subject or collection', 'free': true},
-    {'name': 'Access to community subjects', 'free': true},
-    {'name': 'Spaced Repetition (SM-2)', 'free': true},
-    {'name': 'Favorite items on dashboard', 'free': true},
-    {'name': 'Invite and connect with friends', 'free': true},
-    {'name': 'Direct feedback and suggestions', 'free': true},
-    {'name': 'Create folders, subjects and collections', 'free': false},
-    {'name': 'Test subjects and collections', 'free': false},
-    {'name': 'Auto-Play mode', 'free': false},
-    {'name': 'Customize learning and testing', 'free': false},
-    {'name': 'Private profile mode', 'free': false},
-  ];
-
   void _navigateToBilling(int index) {
     Navigator.push(
       context,
@@ -45,8 +31,22 @@ class _PremiumUpgradePageState extends State<PremiumUpgradePage> {
     final subService = context.watch<SubscriptionService>();
     final currentPrimaryColor = ThemeService().primaryColor;
 
+    final List<Map<String, dynamic>> features = [
+      {'name': context.t('feature_learn_all'), 'free': true},
+      {'name': context.t('feature_community_access'), 'free': true},
+      {'name': context.t('feature_spaced_repetition'), 'free': true},
+      {'name': context.t('feature_favorites'), 'free': true},
+      {'name': context.t('feature_friends'), 'free': true},
+      {'name': context.t('feature_feedback'), 'free': true},
+      {'name': context.t('feature_creation'), 'free': false},
+      {'name': context.t('feature_testing'), 'free': false},
+      {'name': context.t('feature_autoplay'), 'free': false},
+      {'name': context.t('feature_customize'), 'free': false},
+      {'name': context.t('feature_private_mode'), 'free': false},
+    ];
+
     return AlioloScrollablePage(
-      title: const Text('Aliolo Premium', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+      title: Text(context.t('premium_title'), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
       appBarColor: currentPrimaryColor,
       actions: [
         IconButton(
@@ -62,15 +62,15 @@ class _PremiumUpgradePageState extends State<PremiumUpgradePage> {
               const SizedBox(height: 24),
               const Icon(Icons.workspace_premium, color: Colors.amber, size: 80),
               const SizedBox(height: 24),
-              const Text(
-                'Unlock Full Access',
-                style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+              Text(
+                context.t('premium_unlock_title'),
+                style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 12),
-              const Text(
-                'Master subjects faster with advanced testing, creation tools, and unlimited goals.',
+              Text(
+                context.t('premium_unlock_desc'),
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 16, color: Colors.grey),
+                style: const TextStyle(fontSize: 16, color: Colors.grey),
               ),
               const SizedBox(height: 40),
               
@@ -78,16 +78,16 @@ class _PremiumUpgradePageState extends State<PremiumUpgradePage> {
                 Card(
                   color: Colors.green,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-                  child: const Padding(
-                    padding: EdgeInsets.all(24),
+                  child: Padding(
+                    padding: const EdgeInsets.all(24),
                     child: Row(
                       children: [
-                        Icon(Icons.check_circle, color: Colors.white),
-                        SizedBox(width: 16),
+                        const Icon(Icons.check_circle, color: Colors.white),
+                        const SizedBox(width: 16),
                         Expanded(
                           child: Text(
-                            'You are an Aliolo Premium member! Enjoy unlimited access to all features.',
-                            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                            context.t('premium_status_active'),
+                            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                           ),
                         ),
                       ],
@@ -98,20 +98,20 @@ class _PremiumUpgradePageState extends State<PremiumUpgradePage> {
               ],
               
               _buildSubscriptionOption(
-                0, "Weekly Access", r"$2.99", "Best for quick goals", 
+                0, context.t('plan_weekly'), r"$2.99", context.t('plan_weekly_desc'), 
                 originalPrice: r"$5.98"
               ),
               const SizedBox(height: 12),
               _buildSubscriptionOption(
-                1, "Monthly Access", r"$8.99", "Most popular choice", 
+                1, context.t('plan_monthly'), r"$8.99", context.t('plan_monthly_desc'), 
                 originalPrice: r"$17.98", 
-                extraInfo: r"($2.25 / Week)"
+                extraInfo: context.t('price_per_week', args: {'price': r'$2.25'})
               ),
               const SizedBox(height: 12),
               _buildSubscriptionOption(
-                2, "Yearly Access", r"$80.99", "Save 33% per month", 
+                2, context.t('plan_yearly'), r"$80.99", context.t('plan_yearly_desc'), 
                 originalPrice: r"$161.98",
-                extraInfo: r"($1.56 / Week)"
+                extraInfo: context.t('price_per_week', args: {'price': r'$1.56'})
               ),
 
               const SizedBox(height: 40),
@@ -129,12 +129,12 @@ class _PremiumUpgradePageState extends State<PremiumUpgradePage> {
                     Row(
                       children: [
                         const Expanded(child: SizedBox()),
-                        SizedBox(width: 50, child: Text('FREE', textAlign: TextAlign.center, style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.grey[600]))),
-                        SizedBox(width: 50, child: Text('PRO', textAlign: TextAlign.center, style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: currentPrimaryColor))),
+                        SizedBox(width: 50, child: Text(context.t('feature_free'), textAlign: TextAlign.center, style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.grey[600]))),
+                        SizedBox(width: 50, child: Text(context.t('feature_pro'), textAlign: TextAlign.center, style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: currentPrimaryColor))),
                       ],
                     ),
                     const Divider(),
-                    ..._features.map((f) => Padding(
+                    ...features.map((f) => Padding(
                       padding: const EdgeInsets.symmetric(vertical: 6),
                       child: Row(
                         children: [
