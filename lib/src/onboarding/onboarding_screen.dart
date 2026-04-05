@@ -43,26 +43,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   final Color bgColor = const Color(0xFFF1F5F9);
 
   final List<String> ageOptions = [
-    'Under 14',
-    '15 - 18',
-    '19 - 25',
-    '26 - 35',
-    '36 - 50',
-    'Over 50',
-  ];
-
-  final List<Map<String, dynamic>> _features = [
-    {'name': 'Learn any subject or collection', 'free': true},
-    {'name': 'Access to community subjects', 'free': true},
-    {'name': 'Spaced Repetition (SM-2)', 'free': true},
-    {'name': 'Favorite items on dashboard', 'free': true},
-    {'name': 'Invite and connect with friends', 'free': true},
-    {'name': 'Direct feedback and suggestions', 'free': true},
-    {'name': 'Create folders, subjects and collections', 'free': false},
-    {'name': 'Test subjects and collections', 'free': false},
-    {'name': 'Auto-Play mode', 'free': false},
-    {'name': 'Customize learning and testing', 'free': false},
-    {'name': 'Private profile mode', 'free': false},
+    'age_under_14',
+    'age_15_18',
+    'age_19_25',
+    'age_26_35',
+    'age_36_50',
+    'age_over_50',
   ];
 
   @override
@@ -169,6 +155,20 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Widget build(BuildContext context) {
     final String displayLang = getIt<TranslationService>().currentLocale.languageCode;
     final subService = context.watch<SubscriptionService>();
+
+    final List<Map<String, dynamic>> features = [
+      {'name': context.t('feature_learn_all'), 'free': true},
+      {'name': context.t('feature_community_access'), 'free': true},
+      {'name': context.t('feature_spaced_repetition'), 'free': true},
+      {'name': context.t('feature_favorites'), 'free': true},
+      {'name': context.t('feature_friends'), 'free': true},
+      {'name': context.t('feature_feedback'), 'free': true},
+      {'name': context.t('feature_creation'), 'free': false},
+      {'name': context.t('feature_testing'), 'free': false},
+      {'name': context.t('feature_autoplay'), 'free': false},
+      {'name': context.t('feature_customize'), 'free': false},
+      {'name': context.t('feature_private_mode'), 'free': false},
+    ];
     
     return Scaffold(
       backgroundColor: bgColor,
@@ -193,8 +193,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ),
                   ),
                 ),
-                title: "Welcome to Aliolo",
-                description: "Learn Visually. Master Permanently. Your visual learning companion powered by SM-2 science.",
+                title: context.t('onboarding_1_title'),
+                description: context.t('onboarding_1_desc'),
               ),
               // Slide 2: Age Selection
               OnboardingSlide(
@@ -209,12 +209,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       crossAxisSpacing: 12,
                       childAspectRatio: 2.5,
                       physics: const NeverScrollableScrollPhysics(),
-                      children: ageOptions.map((age) {
-                        final bool isSelected = _selectedAge == age;
+                      children: ageOptions.map((ageKey) {
+                        final bool isSelected = _selectedAge == ageKey;
                         return InkWell(
                           onTap: () {
-                            setState(() => _selectedAge = age);
-                            _updateAnalytics(ageRange: age);
+                            setState(() => _selectedAge = ageKey);
+                            _updateAnalytics(ageRange: ageKey);
                             Future.delayed(const Duration(milliseconds: 300), () {
                               if (mounted) {
                                 _pageController.nextPage(
@@ -250,7 +250,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               ],
                             ),
                             child: Text(
-                              age,
+                              context.t(ageKey),
                               style: TextStyle(
                                 color: isSelected ? Colors.white : Colors.black87,
                                 fontWeight: FontWeight.bold,
@@ -263,8 +263,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ),
                   ),
                 ),
-                title: "How old are you?",
-                description: "This helps us personalize your learning experience and recommend the right subjects.",
+                title: context.t('onboarding_2_title'),
+                description: context.t('onboarding_2_desc'),
               ),
               // Slide 3: Pillar Selection
               OnboardingSlide(
@@ -304,22 +304,22 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       ),
                     ),
                   ),
-                title: "What do you want to master?",
-                description: "Select your primary interest to customize your initial dashboard.",
+                title: context.t('onboarding_3_title'),
+                description: context.t('onboarding_3_desc'),
               ),
               // Slide 4: Create & Share
               OnboardingSlide(
                 useFixedHeader: false,
                 visual: Icon(Icons.groups, size: 120, color: primaryColor),
-                title: "Create & Share",
-                description: "Build your own deck or dive into cards shared by Aliolo learners worldwide. Learn at your pace, then test yourself when you're ready.",
+                title: context.t('onboarding_4_title'),
+                description: context.t('onboarding_4_desc'),
               ),
               // Slide 5: Sync
               OnboardingSlide(
                 useFixedHeader: false,
                 visual: Icon(Icons.cloud_sync_outlined, size: 120, color: primaryColor),
-                title: "Master Anywhere",
-                description: "Your library stays in sync across all your devices. We’ll only nudge you when it’s time to protect your streak.",
+                title: context.t('onboarding_5_title'),
+                description: context.t('onboarding_5_desc'),
               ),
               // Slide 6: Social Proof
               OnboardingSlide(
@@ -343,14 +343,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               ),
                             ],
                           ),
-                          child: const Column(
+                          child: Column(
                             children: [
-                              Icon(Icons.format_quote, color: Color(0xFF1D4289), size: 40),
-                              SizedBox(height: 16),
+                              const Icon(Icons.format_quote, color: Color(0xFF1D4289), size: 40),
+                              const SizedBox(height: 16),
                               Text(
-                                "Aliolo has completely transformed the way my children and I master new topics. The visual cards and spaced repetition make learning feel like a game!",
+                                context.t('onboarding_7_quote'),
                                 textAlign: TextAlign.center,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 18,
                                   fontStyle: FontStyle.italic,
                                   color: Colors.black87,
@@ -373,9 +373,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           ),
                         ),
                         const SizedBox(height: 12),
-                        const Text(
-                          "Joined by thousands of learners",
-                          style: TextStyle(
+                        Text(
+                          context.t('onboarding_7_joined'),
+                          style: const TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
                             color: Color(0xFF64748B),
@@ -410,8 +410,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ),
                   ),
                 ),
-                title: "Join the Community",
-                description: "Start your journey today and master anything you set your mind to.",
+                title: context.t('onboarding_6_title'),
+                description: context.t('onboarding_6_desc'),
               ),
               // Slide 7: Paywall
               OnboardingSlide(
@@ -428,16 +428,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         if (subService.isPremium)
                           _buildPremiumSuccess(primaryColor)
                         else ...[
-                          _buildSubscriptionOption(0, "Weekly Access", r"$2.99", "Best for quick goals", originalPrice: r"$5.98"),
+                          _buildSubscriptionOption(0, context.t('plan_weekly'), r"$2.99", context.t('plan_weekly_desc'), originalPrice: r"$5.98"),
                           const SizedBox(height: 12),
                           _buildSubscriptionOption(
-                            1, "Monthly Access", r"$8.99", "Most popular choice", 
-                            originalPrice: r"$17.98", extraInfo: r"($2.25 / Week)"
+                            1, context.t('plan_monthly'), r"$8.99", context.t('plan_monthly_desc'), 
+                            originalPrice: r"$17.98", extraInfo: context.t('price_per_week', args: {'price': r'$2.25'})
                           ),
                           const SizedBox(height: 12),
                           _buildSubscriptionOption(
-                            2, "Yearly Access", r"$80.99", "Save 33% per month", 
-                            originalPrice: r"$161.98", extraInfo: r"($1.56 / Week)"
+                            2, context.t('plan_yearly'), r"$80.99", context.t('plan_yearly_desc'), 
+                            originalPrice: r"$161.98", extraInfo: context.t('price_per_week', args: {'price': r'$1.56'})
                           ),
                         ],
                         const SizedBox(height: 32),
@@ -460,20 +460,20 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           },
                           icon: Icon(_showFeatures ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down, color: primaryColor),
                           label: Text(
-                            _showFeatures ? "Hide Plan Comparison" : "Compare Free vs Premium",
+                            _showFeatures ? context.t('hide_comparison') : context.t('compare_plans'),
                             style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold),
                           ),
                         ),
                         if (_showFeatures) ...[
                           const SizedBox(height: 16),
-                          _buildFeatureComparison(primaryColor),
+                          _buildFeatureComparison(primaryColor, features),
                         ],
                       ],
                     ),
                   ),
                 ),
-                title: "Unlock Full Access",
-                description: "Master subjects faster with advanced testing, creation tools, and unlimited goals.",
+                title: context.t('premium_unlock_title'),
+                description: context.t('premium_unlock_desc'),
               ),
             ],
           ),
@@ -571,9 +571,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               ),
                               elevation: 0,
                             ),
-                            child: const Text(
-                              "Next",
-                              style: TextStyle(
+                            child: Text(
+                              context.t('onboarding_next'),
+                              style: const TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -593,16 +593,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     return Card(
       color: Colors.green,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      child: const Padding(
-        padding: EdgeInsets.all(24),
+      child: Padding(
+        padding: const EdgeInsets.all(24),
         child: Row(
           children: [
-            Icon(Icons.check_circle, color: Colors.white),
-            SizedBox(width: 16),
+            const Icon(Icons.check_circle, color: Colors.white),
+            const SizedBox(width: 16),
             Expanded(
               child: Text(
-                'You are an Aliolo Premium member! Enjoy unlimited access to all features.',
-                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                context.t('premium_status_active'),
+                style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
               ),
             ),
           ],
@@ -680,7 +680,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 
-  Widget _buildFeatureComparison(Color pillarColor) {
+  Widget _buildFeatureComparison(Color pillarColor, List<Map<String, dynamic>> features) {
     return Container(
       key: _featuresKey,
       padding: const EdgeInsets.all(16),
@@ -694,12 +694,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           Row(
             children: [
               const Expanded(child: SizedBox()),
-              SizedBox(width: 50, child: Text('FREE', textAlign: TextAlign.center, style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.grey[600]))),
-              SizedBox(width: 50, child: Text('PRO', textAlign: TextAlign.center, style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: pillarColor))),
+              SizedBox(width: 50, child: Text(context.t('feature_free'), textAlign: TextAlign.center, style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.grey[600]))),
+              SizedBox(width: 50, child: Text(context.t('feature_pro'), textAlign: TextAlign.center, style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: pillarColor))),
             ],
           ),
           const Divider(),
-          ..._features.map((f) => Padding(
+          ...features.map((f) => Padding(
             padding: const EdgeInsets.symmetric(vertical: 6),
             child: Row(
               children: [
