@@ -76,7 +76,8 @@ class _LearnPageState extends State<LearnPage> {
     if (!kIsWeb) windowManager.setResizable(true);
 
     final isPremium = getIt<SubscriptionService>().isPremium;
-    _isAutoPlay = isPremium && (_authService.currentUser?.autoPlayEnabled ?? false);
+    _isAutoPlay =
+        isPremium && (_authService.currentUser?.autoPlayEnabled ?? false);
 
     _sessionQueue = List.from(widget.sessionCards);
 
@@ -202,9 +203,7 @@ class _LearnPageState extends State<LearnPage> {
       builder:
           (context) => AlertDialog(
             title: Text(context.t('session_complete')),
-            content: const Text(
-              'You have finished reviewing all cards in this session.',
-            ),
+            content: Text(context.t('session_complete_description')),
             actions: [
               TextButton(
                 onPressed: () {
@@ -318,6 +317,7 @@ class _LearnPageState extends State<LearnPage> {
           autofocus: true,
           onKeyEvent: _onKeyEvent,
           child: Scaffold(
+            backgroundColor: Colors.white,
             appBar: AppBar(
               automaticallyImplyLeading: false,
               title: Text(
@@ -427,15 +427,6 @@ class _LearnPageState extends State<LearnPage> {
                     spacing: 12,
                     runSpacing: 8,
                     children: [
-                      Text(
-                        _currentCard.getPrompt(lang),
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.grey[700],
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      const SizedBox(width: 12),
                       ...(() {
                         final answers = _currentCard.getAnswerList(lang);
                         if (answers.isEmpty) return [const SizedBox.shrink()];
@@ -494,6 +485,7 @@ class _LearnPageState extends State<LearnPage> {
                       child: Card(
                         elevation: 4,
                         clipBehavior: Clip.antiAlias,
+                        color: headerColor.withValues(alpha: 0.05),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(24),
                           side: BorderSide(

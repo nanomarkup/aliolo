@@ -942,7 +942,15 @@ class _AddCardPageState extends State<AddCardPage> {
     // Ensure the current subject ID is in the list to avoid dropdown assertion error
     final List<DropdownMenuItem<String>> items =
         _mySubjects
-            .map((s) => DropdownMenuItem(value: s.id, child: Text(s.name)))
+            .map(
+              (s) => DropdownMenuItem(
+                value: s.id,
+                child: Text(
+                  s.name,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            )
             .toList();
 
     if (_selectedSubjectId != null &&
@@ -950,13 +958,17 @@ class _AddCardPageState extends State<AddCardPage> {
       items.add(
         DropdownMenuItem(
           value: _selectedSubjectId,
-          child: const Text('Public/Other Subject'),
+          child: const Text(
+            'Public/Other Subject',
+            overflow: TextOverflow.ellipsis,
+          ),
         ),
       );
     }
 
     return DropdownButtonFormField<String>(
       value: _selectedSubjectId,
+      isExpanded: true,
       decoration: InputDecoration(
         labelText: context.t('subject_label'),
         border: const OutlineInputBorder(),
@@ -1011,16 +1023,39 @@ class _AddCardPageState extends State<AddCardPage> {
           context.t('card_level', args: {'level': '$_cardLevel'}),
           style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
         ),
-        Slider(
-          value: _cardLevel.toDouble(),
-          min: 1,
-          max: 20,
-          divisions: 19,
-          activeColor: color,
-          onChanged:
-              widget.isReadOnly
-                  ? null
-                  : (v) => setState(() => _cardLevel = v.round()),
+        Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              decoration: BoxDecoration(
+                color: color.withValues(alpha: 0.1),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: color.withValues(alpha: 0.2)),
+              ),
+              child: Text(
+                '$_cardLevel',
+                style: TextStyle(
+                  color: color,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+            ),
+            Expanded(
+              child: Slider(
+                value: _cardLevel.toDouble(),
+                min: 1,
+                max: 20,
+                divisions: 19,
+                label: '$_cardLevel',
+                activeColor: color,
+                onChanged:
+                    widget.isReadOnly
+                        ? null
+                        : (v) => setState(() => _cardLevel = v.round()),
+              ),
+            ),
+          ],
         ),
       ],
     );

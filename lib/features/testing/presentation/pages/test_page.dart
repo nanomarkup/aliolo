@@ -39,7 +39,11 @@ class TestPage extends StatefulWidget {
   final List<SubjectCard> sessionCards;
   final String languageCode;
 
-  const TestPage({super.key, required this.sessionCards, required this.languageCode});
+  const TestPage({
+    super.key,
+    required this.sessionCards,
+    required this.languageCode,
+  });
 
   @override
   State<TestPage> createState() => _TestPageState();
@@ -83,8 +87,9 @@ class _TestPageState extends State<TestPage> {
   void initState() {
     super.initState();
     final isPremium = getIt<SubscriptionService>().isPremium;
-    _isAutoPlay = isPremium && (_authService.currentUser?.autoPlayEnabled ?? false);
-    
+    _isAutoPlay =
+        isPremium && (_authService.currentUser?.autoPlayEnabled ?? false);
+
     player = Player();
     controller = VideoController(player);
     _sessionQueue = List.from(widget.sessionCards)..shuffle();
@@ -135,15 +140,16 @@ class _TestPageState extends State<TestPage> {
     if (_subject.isMath && !_subject.isNumbers) {
       _correctAnswerId = _currentCard.numericalAnswer.toString();
       List<String> mathOpts = _currentCard.mathOptions ?? [];
-      
+
       if (mathOpts.isEmpty) {
         // Try to get options from other cards in the subject first
-        final otherAnswers = allInSubject
-            .map((c) => c.numericalAnswer.toString())
-            .where((v) => v != _correctAnswerId && v != '0')
-            .toSet()
-            .toList();
-        
+        final otherAnswers =
+            allInSubject
+                .map((c) => c.numericalAnswer.toString())
+                .where((v) => v != _correctAnswerId && v != '0')
+                .toSet()
+                .toList();
+
         if (otherAnswers.isNotEmpty) {
           otherAnswers.shuffle();
           final optCount = user?.optionsCount ?? 6;
@@ -154,39 +160,49 @@ class _TestPageState extends State<TestPage> {
         } else {
           // Purely dynamic (no cards in subject yet), fallback to generated
           final optCount = user?.optionsCount ?? 6;
-          mathOpts = MathService().generateDistractors(_currentCard.numericalAnswer, optCount);
+          mathOpts = MathService().generateDistractors(
+            _currentCard.numericalAnswer,
+            optCount,
+          );
         }
       }
       options = mathOpts.map((o) => TestOption(text: o, id: o)).toList();
     } else {
       final lang = widget.languageCode.toLowerCase();
-      final currentAnswers = _currentCard.getAnswerList(lang).map((e) => e.toLowerCase()).toSet();
+      final currentAnswers =
+          _currentCard.getAnswerList(lang).map((e) => e.toLowerCase()).toSet();
 
-      final distractors = allInSubject
-          .where((c) => c.id != _currentCard.id)
-          .where((c) {
-            final otherAnswers = c.getAnswerList(lang).map((e) => e.toLowerCase()).toSet();
+      final distractors =
+          allInSubject.where((c) => c.id != _currentCard.id).where((c) {
+            final otherAnswers =
+                c.getAnswerList(lang).map((e) => e.toLowerCase()).toSet();
             // Only include as distractor if there's no overlap in answers
             return otherAnswers.intersection(currentAnswers).isEmpty;
-          })
-          .toList();
+          }).toList();
       distractors.shuffle();
 
       final optCount = user?.optionsCount ?? 6;
       final selectedDistractors = distractors.take(optCount - 1).toList();
 
-      options = selectedDistractors.map((c) => TestOption(
-        text: _getDisplayAnswer(c),
-        imageUrl: c.primaryImageUrl,
-        id: c.id,
-      )).toList();
+      options =
+          selectedDistractors
+              .map(
+                (c) => TestOption(
+                  text: _getDisplayAnswer(c),
+                  imageUrl: c.primaryImageUrl,
+                  id: c.id,
+                ),
+              )
+              .toList();
 
-      options.add(TestOption(
-        text: _correctAnswerText,
-        imageUrl: _currentCard.primaryImageUrl,
-        id: _currentCard.id,
-      ));
-      
+      options.add(
+        TestOption(
+          text: _correctAnswerText,
+          imageUrl: _currentCard.primaryImageUrl,
+          id: _currentCard.id,
+        ),
+      );
+
       options.shuffle();
     }
 
@@ -204,7 +220,9 @@ class _TestPageState extends State<TestPage> {
     final lang = widget.languageCode.toLowerCase();
     final audio = _currentCard.getAudioUrl(lang);
     if (audio != null &&
-        !_subject.isAddition && !_subject.isSubtraction && !_subject.isCounting) {
+        !_subject.isAddition &&
+        !_subject.isSubtraction &&
+        !_subject.isCounting) {
       player.open(Media(audio));
       player.play();
     }
@@ -234,10 +252,10 @@ class _TestPageState extends State<TestPage> {
     final lang = widget.languageCode.toLowerCase();
     final list = card.getAnswerList(lang);
     if (list.isNotEmpty) return CardModel.capitalizeFirst(list.first);
-    
+
     final enList = card.getAnswerList('en');
     if (enList.isNotEmpty) return CardModel.capitalizeFirst(enList.first);
-    
+
     return '';
   }
 
@@ -321,12 +339,18 @@ class _TestPageState extends State<TestPage> {
 
   Widget _buildResultsView(Color headerColor) {
     final int failed = _completedInSession - _sessionCorrect;
-    final double percent = _completedInSession > 0 ? (_sessionCorrect / _completedInSession) * 100 : 0;
+    final double percent =
+        _completedInSession > 0
+            ? (_sessionCorrect / _completedInSession) * 100
+            : 0;
 
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Text(_subject.getName(widget.languageCode), style: const TextStyle(fontSize: 18)),
+        title: Text(
+          _subject.getName(widget.languageCode),
+          style: const TextStyle(fontSize: 18),
+        ),
         backgroundColor: headerColor,
         foregroundColor: Colors.white,
         actions: [
@@ -344,7 +368,9 @@ class _TestPageState extends State<TestPage> {
             constraints: const BoxConstraints(maxWidth: 600),
             child: Card(
               elevation: 8,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(24),
+              ),
               child: Padding(
                 padding: const EdgeInsets.all(48),
                 child: Column(
@@ -352,19 +378,36 @@ class _TestPageState extends State<TestPage> {
                   children: [
                     Text(
                       context.t('session_complete'),
-                      style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+                      style: const TextStyle(
+                        fontSize: 32,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     const SizedBox(height: 48),
-                    _buildResultRow(context.t('total_cards'), '$_completedInSession'),
-                    _buildResultRow(context.t('correct_answers'), '$_sessionCorrect', color: Colors.green),
-                    _buildResultRow(context.t('failed_answers'), '$failed', color: Colors.red),
+                    _buildResultRow(
+                      context.t('total_cards'),
+                      '$_completedInSession',
+                    ),
+                    _buildResultRow(
+                      context.t('correct_answers'),
+                      '$_sessionCorrect',
+                      color: Colors.green,
+                    ),
+                    _buildResultRow(
+                      context.t('failed_answers'),
+                      '$failed',
+                      color: Colors.red,
+                    ),
                     const Divider(height: 64),
                     Text(
                       '${percent.toStringAsFixed(0)}%',
                       style: TextStyle(
                         fontSize: 80,
                         fontWeight: FontWeight.bold,
-                        color: percent >= 70 ? Colors.green : (percent >= 40 ? Colors.orange : Colors.red),
+                        color:
+                            percent >= 70
+                                ? Colors.green
+                                : (percent >= 40 ? Colors.orange : Colors.red),
                       ),
                     ),
                     const SizedBox(height: 48),
@@ -376,12 +419,17 @@ class _TestPageState extends State<TestPage> {
                         icon: const Icon(Icons.school),
                         label: Text(
                           context.t('back_to_subjects'),
-                          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: headerColor,
                           foregroundColor: Colors.white,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
                         ),
                       ),
                     ),
@@ -419,9 +467,13 @@ class _TestPageState extends State<TestPage> {
           autofocus: true,
           onKeyEvent: _onKeyEvent,
           child: Scaffold(
+            backgroundColor: Colors.white,
             appBar: AppBar(
               automaticallyImplyLeading: false,
-              title: Text(_subject.getName(widget.languageCode), style: const TextStyle(fontSize: 18)),
+              title: Text(
+                _subject.getName(widget.languageCode),
+                style: const TextStyle(fontSize: 18),
+              ),
               backgroundColor: headerColor,
               foregroundColor: Colors.white,
               actions: [
@@ -429,9 +481,13 @@ class _TestPageState extends State<TestPage> {
                   icon: const Icon(Icons.arrow_back),
                   onPressed: () => Navigator.pop(context),
                 ),
-                if ((_currentCard.testMode == 'audio_to_text' || _currentCard.testMode == 'audio_to_image') &&
+                if ((_currentCard.testMode == 'audio_to_text' ||
+                        _currentCard.testMode == 'audio_to_image') &&
                     _currentCard.getAudioUrl(lang) != null &&
-                    !_subject.isNumbers && !_subject.isAddition && !_subject.isSubtraction && !_subject.isCounting)
+                    !_subject.isNumbers &&
+                    !_subject.isAddition &&
+                    !_subject.isSubtraction &&
+                    !_subject.isCounting)
                   IconButton(
                     icon: const Icon(Icons.volume_up),
                     onPressed: () async {
@@ -446,22 +502,37 @@ class _TestPageState extends State<TestPage> {
                   icon: Stack(
                     clipBehavior: Clip.none,
                     children: [
-                      Icon(_isAutoPlay ? Icons.pause_circle : Icons.play_circle),
+                      Icon(
+                        _isAutoPlay ? Icons.pause_circle : Icons.play_circle,
+                      ),
                       if (!getIt<SubscriptionService>().isPremium)
                         Positioned(
                           right: -4,
                           top: -4,
                           child: Container(
                             padding: const EdgeInsets.all(2),
-                            decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
-                            child: const Icon(Icons.workspace_premium, color: Colors.amber, size: 12),                          ),
+                            decoration: const BoxDecoration(
+                              color: Colors.white,
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Icon(
+                              Icons.workspace_premium,
+                              color: Colors.amber,
+                              size: 12,
+                            ),
+                          ),
                         ),
                     ],
                   ),
                   onPressed: () {
                     final sub = getIt<SubscriptionService>();
                     if (!sub.isPremium) {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => const PremiumUpgradePage()));
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const PremiumUpgradePage(),
+                        ),
+                      );
                       return;
                     }
                     final newVal = !_isAutoPlay;
@@ -477,359 +548,531 @@ class _TestPageState extends State<TestPage> {
                 if (!kIsWeb) const WindowControls(color: Colors.white),
               ],
             ),
-            floatingActionButton: _isAnswered 
-              ? FloatingActionButton.extended(
-                  onPressed: _nextCard,
-                  backgroundColor: headerColor,
-                  foregroundColor: Colors.white,
-                  icon: const Icon(Icons.arrow_forward),
-                  label: Text(context.t('next'), style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                )
-              : null,
-          body: Column(
-            children: [
-              // Integrated Header
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 32),
-                color: headerColor.withValues(alpha: 0.05),
-                child: Wrap(
-                  alignment: WrapAlignment.center,
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  spacing: 12,
-                  runSpacing: 8,
-                  children: [
-                    Text(
-                      _currentCard.getPrompt(lang),
-                      style: TextStyle(fontSize: 20, color: Colors.grey[700], fontWeight: FontWeight.w500),
-                    ),
-                    const SizedBox(width: 12),
-                    if (_isAnswered)
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: _currentCard.getAnswerList(lang).map((ans) => Text(
-                          CardModel.capitalizeFirst(ans),
-                          style: TextStyle(
-                            fontSize: _currentCard.getAnswerList(lang).length > 1 ? 24 : 32, 
-                            color: _isCorrect ? Colors.green : Colors.red, 
-                            fontWeight: FontWeight.bold
-                          ),
-                        )).toList(),
-                      )
-                    else
-                      Text(
-                        '???',
-                        style: TextStyle(fontSize: 32, color: headerColor.withValues(alpha: 0.3), fontWeight: FontWeight.bold),
-                      ),
-                  ],
-                ),
-              ),
-              LinearProgressIndicator(
-                value: progressValue,
-                minHeight: 4,
-                backgroundColor: headerColor.withValues(alpha: 0.1),
-                valueColor: AlwaysStoppedAnimation<Color>(headerColor),
-              ),
-              Expanded(
-                child: LayoutBuilder(
-                  builder: (context, constraints) {
-                    final isMobile = constraints.maxWidth < 800;
-                    final isAudioToText = _currentCard.testMode == 'audio_to_text';
-                    final isAudioToImage = _currentCard.testMode == 'audio_to_image';
-
-                    Widget mediaContent = Center(
-                      child: Padding(
-                        padding: EdgeInsets.all(isMobile ? 16 : 32),
-                        child: Card(
-                          elevation: 4,
-                          clipBehavior: Clip.antiAlias,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(24),
-                            side: BorderSide(color: headerColor.withValues(alpha: 0.1), width: 1),
-                          ),
-                          child: ConstrainedBox(
-                            constraints: BoxConstraints(
-                              minHeight: isMobile ? 300 : 0,
-                              maxHeight: (isMobile && !isAudioToImage) ? 450 : double.infinity,
-                            ),
-                            child: Stack(
-                              fit: isMobile ? StackFit.loose : StackFit.expand,
-                              alignment: Alignment.center,
-                              children: [
-                                if (_showingVideo)
-                                  Video(controller: controller)
-                                else if (isAudioToText)
-                                  Container(
-                                    color: headerColor.withValues(alpha: 0.05),
-                                    child: Center(
-                                      child: Icon(Icons.hearing, size: 120, color: headerColor.withValues(alpha: 0.5)),
-                                    ),
-                                  )
-                                else if (_subject.isDivision)
-                                  DivisionGrid(
-                                    a: _currentCard.divisionParts?[0] ?? 0,
-                                    b: _currentCard.divisionParts?[1] ?? 1,
-                                    languageCode: lang,
-                                    fontSize: isMobile ? 80 : 120,
-                                    color: headerColor,
-                                  )
-                                else if (_subject.isMultiplication)
-                                  MultiplicationGrid(
-                                    a: _currentCard.multiplicationParts?[0] ?? 1,
-                                    b: _currentCard.multiplicationParts?[1] ?? 0,
-                                    languageCode: lang,
-                                    fontSize: isMobile ? 80 : 120,
-                                    color: headerColor,
-                                  )
-                                else if (_subject.isSubtraction)
-                                  SubtractionGrid(
-                                    totalSum: _currentCard.numericalAnswer,
-                                    maxOperand: _subject.maxOperand,
-                                    iconSize: isMobile ? 40 : 60,
-                                  )
-                                else if (_subject.isAddition)
-                                  AdditionGrid(
-                                    totalSum: _currentCard.numericalAnswer,
-                                    maxOperand: _subject.maxOperand,
-                                    iconSize: isMobile ? 40 : 60,
-                                  )
-                                else if (_currentCard.subjectId == '68232807-b9cd-4cff-872c-c398444f85e2' ||
-                                    _currentCard.subjectId == 'c3548727-65f4-4e0c-939c-56135b4eb543')
-                                  CountingGrid(
-                                    count: _currentCard.numericalAnswer,
-                                    iconSize: isMobile ? 40 : 60,
-                                  )
-                                else if (isAudioToImage)
-                                  _buildAudioToImageGrid(headerColor, isMobile)
-                                else if (_subject.isNumbers)
-                                  NumberGrid(
-                                    displayChar: _currentCard.getNumericalChar(lang),
-                                    fontSize: isMobile ? 80 : 120,
-                                    color: headerColor,
-                                  )
-                                else if (_currentImages.isNotEmpty)
-                                  AlioloImage(imageUrl: _currentImages[_currentImageIndex], fit: BoxFit.contain)
-                                else
-                                  const Icon(Icons.image_not_supported, size: 100, color: Colors.grey),                              ],
-                            ),
-                          ),
+            floatingActionButton:
+                _isAnswered
+                    ? FloatingActionButton.extended(
+                      onPressed: _nextCard,
+                      backgroundColor: headerColor,
+                      foregroundColor: Colors.white,
+                      icon: const Icon(Icons.arrow_forward),
+                      label: Text(
+                        context.t('next'),
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
                         ),
                       ),
-                    );
-
-                    final optionsContent = (!isAudioToImage || (_subject.isMath && !_subject.isNumbers))
-                        ? Container(
-                            width: isMobile ? double.infinity : 350,
-                            padding: EdgeInsets.all(isMobile ? 24 : 32),
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).colorScheme.surface,
-                              boxShadow: isMobile ? [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 10, offset: const Offset(0, -5))] : null,
-                            ),
-                            child: Column(
-                              mainAxisSize: isMobile ? MainAxisSize.min : MainAxisSize.max,
-                              children: [
-                                Text(
-                                  context.t('select_an_answer'),
-                                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.grey[600], letterSpacing: 1.1),
-                                ),
-                                const SizedBox(height: 20),
-                                if (isMobile)
-                                  GridView.builder(
-                                    shrinkWrap: true,
-                                    physics: const NeverScrollableScrollPhysics(),
-                                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 2,
-                                      crossAxisSpacing: 12,
-                                      mainAxisSpacing: 12,
-                                      childAspectRatio: 2.5,
-                                    ),
-                                    itemCount: _options.length,
-                                    itemBuilder: (context, index) => _buildOptionButton(index, headerColor, isMobile),
-                                  )
-                                else
-                                  Expanded(
-                                    child: Center(
-                                      child: ListView.separated(
-                                        shrinkWrap: true,
-                                        physics: const BouncingScrollPhysics(),
-                                        itemCount: _options.length,
-                                        separatorBuilder: (_, __) => const SizedBox(height: 12),
-                                        itemBuilder: (context, index) => _buildOptionButton(index, headerColor, isMobile),
+                    )
+                    : null,
+            body: Column(
+              children: [
+                // Integrated Header
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 12,
+                    horizontal: 32,
+                  ),
+                  color: headerColor.withValues(alpha: 0.05),
+                  child: Wrap(
+                    alignment: WrapAlignment.center,
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    spacing: 12,
+                    runSpacing: 8,
+                    children: [
+                      Text(
+                        _currentCard.getPrompt(lang),
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.grey[700],
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      if (_isAnswered)
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children:
+                              _currentCard
+                                  .getAnswerList(lang)
+                                  .map(
+                                    (ans) => Text(
+                                      CardModel.capitalizeFirst(ans),
+                                      style: TextStyle(
+                                        fontSize:
+                                            _currentCard
+                                                        .getAnswerList(lang)
+                                                        .length >
+                                                    1
+                                                ? 24
+                                                : 32,
+                                        color:
+                                            _isCorrect
+                                                ? Colors.green
+                                                : Colors.red,
+                                        fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                  ),
-                              ],
+                                  )
+                                  .toList(),
+                        )
+                      else
+                        Text(
+                          '???',
+                          style: TextStyle(
+                            fontSize: 32,
+                            color: headerColor.withValues(alpha: 0.3),
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+                LinearProgressIndicator(
+                  value: progressValue,
+                  minHeight: 4,
+                  backgroundColor: headerColor.withValues(alpha: 0.1),
+                  valueColor: AlwaysStoppedAnimation<Color>(headerColor),
+                ),
+                Expanded(
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      final isMobile = constraints.maxWidth < 800;
+                      final isAudioToText =
+                          _currentCard.testMode == 'audio_to_text';
+                      final isAudioToImage =
+                          _currentCard.testMode == 'audio_to_image';
+
+                      Widget mediaContent = Center(
+                        child: Padding(
+                          padding: EdgeInsets.all(isMobile ? 16 : 32),
+                          child: Card(
+                            elevation: 4,
+                            clipBehavior: Clip.antiAlias,
+                            color: headerColor.withValues(alpha: 0.05),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(24),
+                              side: BorderSide(
+                                color: headerColor.withValues(alpha: 0.1),
+                                width: 1,
+                              ),
                             ),
-                          )
-                        : const SizedBox.shrink();
-
-                    if (isMobile) {
-                      // For Audio to Image on mobile, fill screen and let grid handle its own scroll
-                      if (isAudioToImage && !(_subject.isMath && !_subject.isNumbers)) {
-                        return mediaContent;
-                      }
-
-                      return SingleChildScrollView(
-                        controller: _scrollController,
-                        child: Column(
-                          children: [
-                            mediaContent,
-                            if (optionsContent is! SizedBox) optionsContent,
-                          ],
+                            child: ConstrainedBox(
+                              constraints: BoxConstraints(
+                                minHeight: isMobile ? 300 : 0,
+                                maxHeight:
+                                    (isMobile && !isAudioToImage)
+                                        ? 450
+                                        : double.infinity,
+                              ),
+                              child: Stack(
+                                fit:
+                                    isMobile ? StackFit.loose : StackFit.expand,
+                                alignment: Alignment.center,
+                                children: [
+                                  if (_showingVideo)
+                                    Video(controller: controller)
+                                  else if (isAudioToText)
+                                    Container(
+                                      color: headerColor.withValues(
+                                        alpha: 0.05,
+                                      ),
+                                      child: Center(
+                                        child: Icon(
+                                          Icons.hearing,
+                                          size: 120,
+                                          color: headerColor.withValues(
+                                            alpha: 0.5,
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  else if (_subject.isDivision)
+                                    DivisionGrid(
+                                      a: _currentCard.divisionParts?[0] ?? 0,
+                                      b: _currentCard.divisionParts?[1] ?? 1,
+                                      languageCode: lang,
+                                      fontSize: isMobile ? 80 : 120,
+                                      color: headerColor,
+                                    )
+                                  else if (_subject.isMultiplication)
+                                    MultiplicationGrid(
+                                      a:
+                                          _currentCard
+                                              .multiplicationParts?[0] ??
+                                          1,
+                                      b:
+                                          _currentCard
+                                              .multiplicationParts?[1] ??
+                                          0,
+                                      languageCode: lang,
+                                      fontSize: isMobile ? 80 : 120,
+                                      color: headerColor,
+                                    )
+                                  else if (_subject.isSubtraction)
+                                    SubtractionGrid(
+                                      totalSum: _currentCard.numericalAnswer,
+                                      maxOperand: _subject.maxOperand,
+                                      iconSize: isMobile ? 40 : 60,
+                                    )
+                                  else if (_subject.isAddition)
+                                    AdditionGrid(
+                                      totalSum: _currentCard.numericalAnswer,
+                                      maxOperand: _subject.maxOperand,
+                                      iconSize: isMobile ? 40 : 60,
+                                    )
+                                  else if (_currentCard.subjectId ==
+                                          '68232807-b9cd-4cff-872c-c398444f85e2' ||
+                                      _currentCard.subjectId ==
+                                          'c3548727-65f4-4e0c-939c-56135b4eb543')
+                                    CountingGrid(
+                                      count: _currentCard.numericalAnswer,
+                                      iconSize: isMobile ? 40 : 60,
+                                    )
+                                  else if (isAudioToImage)
+                                    _buildAudioToImageGrid(
+                                      headerColor,
+                                      isMobile,
+                                    )
+                                  else if (_subject.isNumbers)
+                                    NumberGrid(
+                                      displayChar: _currentCard
+                                          .getNumericalChar(lang),
+                                      fontSize: isMobile ? 80 : 120,
+                                      color: headerColor,
+                                    )
+                                  else if (_currentImages.isNotEmpty)
+                                    AlioloImage(
+                                      imageUrl:
+                                          _currentImages[_currentImageIndex],
+                                      fit: BoxFit.contain,
+                                      useBorder: true,
+                                      borderColor: Colors.black.withValues(
+                                        alpha: 0.1,
+                                      ),
+                                      backgroundColor: headerColor.withValues(
+                                        alpha: 0.05,
+                                      ),
+                                    )
+                                  else
+                                    const Icon(
+                                      Icons.image_not_supported,
+                                      size: 100,
+                                      color: Colors.grey,
+                                    ),
+                                ],
+                              ),
+                            ),
+                          ),
                         ),
                       );
-                    }
 
-                    bool isLeft = _authService.currentUser?.sidebarLeft ?? false;
-                    return Row(
-                      children: isLeft
-                          ? [optionsContent, Expanded(flex: 3, child: mediaContent)]
-                          : [Expanded(flex: 3, child: mediaContent), optionsContent],
-                    );
-                  },
-                ),
-              ),
-            ],
-          ),
-        ),
-      );
-    },
-  );
-}
+                      final optionsContent =
+                          (!isAudioToImage ||
+                                  (_subject.isMath && !_subject.isNumbers))
+                              ? Container(
+                                width: isMobile ? double.infinity : 350,
+                                padding: EdgeInsets.all(isMobile ? 24 : 32),
+                                decoration: BoxDecoration(
+                                  color: Theme.of(context).colorScheme.surface,
+                                  boxShadow:
+                                      isMobile
+                                          ? [
+                                            BoxShadow(
+                                              color: Colors.black.withValues(
+                                                alpha: 0.05,
+                                              ),
+                                              blurRadius: 10,
+                                              offset: const Offset(0, -5),
+                                            ),
+                                          ]
+                                          : null,
+                                ),
+                                child: Column(
+                                  mainAxisSize:
+                                      isMobile
+                                          ? MainAxisSize.min
+                                          : MainAxisSize.max,
+                                  children: [
+                                    Text(
+                                      context.t('select_an_answer'),
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.grey[600],
+                                        letterSpacing: 1.1,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 20),
+                                    if (isMobile)
+                                      GridView.builder(
+                                        shrinkWrap: true,
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        gridDelegate:
+                                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                              crossAxisCount: 2,
+                                              crossAxisSpacing: 12,
+                                              mainAxisSpacing: 12,
+                                              childAspectRatio: 2.5,
+                                            ),
+                                        itemCount: _options.length,
+                                        itemBuilder:
+                                            (context, index) =>
+                                                _buildOptionButton(
+                                                  index,
+                                                  headerColor,
+                                                  isMobile,
+                                                ),
+                                      )
+                                    else
+                                      Expanded(
+                                        child: Center(
+                                          child: ListView.separated(
+                                            shrinkWrap: true,
+                                            physics:
+                                                const BouncingScrollPhysics(),
+                                            itemCount: _options.length,
+                                            separatorBuilder:
+                                                (_, __) =>
+                                                    const SizedBox(height: 12),
+                                            itemBuilder:
+                                                (context, index) =>
+                                                    _buildOptionButton(
+                                                      index,
+                                                      headerColor,
+                                                      isMobile,
+                                                    ),
+                                          ),
+                                        ),
+                                      ),
+                                  ],
+                                ),
+                              )
+                              : const SizedBox.shrink();
 
-Widget _buildAudioToImageGrid(Color headerColor, bool isMobile) {
-  return LayoutBuilder(
-    builder: (context, gridConstraints) {
-      final n = _options.length;
-      if (n == 0) return const SizedBox.shrink();
+                      if (isMobile) {
+                        // For Audio to Image on mobile, fill screen and let grid handle its own scroll
+                        if (isAudioToImage &&
+                            !(_subject.isMath && !_subject.isNumbers)) {
+                          return mediaContent;
+                        }
 
-      final availWidth = gridConstraints.maxWidth - 32;
-      final availHeight = gridConstraints.maxHeight - 32;
+                        return SingleChildScrollView(
+                          controller: _scrollController,
+                          child: Column(
+                            children: [
+                              mediaContent,
+                              if (optionsContent is! SizedBox) optionsContent,
+                            ],
+                          ),
+                        );
+                      }
 
-      // Target a comfortable square size
-      final double targetSize = isMobile ? 140 : 180;
-      
-      // Calculate how many columns we can fit at target size
-      int cols = (availWidth / (targetSize + 16)).floor().clamp(1, isMobile ? 3 : 6);
-      
-      // If we have few options, don't use more columns than options
-      if (n < cols) cols = n;
-
-      // Balancing logic: if n is not divisible by cols, try to find a better divisor nearby
-      // This prevents cases like 4+2 for 6 options, turning it into 3+3.
-      if (cols > 1 && n % cols != 0) {
-        for (int c = cols - 1; c >= 2; c--) {
-          if (n % c == 0) {
-            cols = c;
-            break;
-          }
-        }
-      }
-
-      // Calculate how many rows this creates
-      final rows = (n / cols).ceil();
-      
-      // Calculate actual size to fit perfectly in width
-      final double actualSize = (availWidth - (cols - 1) * 16) / cols;
-      
-      // If total height with actualSize exceeds availHeight, we MUST scroll or shrink.
-      // But user wants "Adjustable", so we center it.
-      final totalGridHeight = (rows * actualSize) + ((rows - 1) * 16);
-      final bool needsScroll = totalGridHeight > availHeight;
-
-      return Container(
-        alignment: Alignment.center,
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: SizedBox(
-            // If it doesn't need scroll, constrain width so it doesn't stretch too much
-            width: !needsScroll ? (cols * actualSize) + ((cols - 1) * 16) : double.infinity,
-            child: GridView.builder(
-              controller: _gridScrollController,
-              shrinkWrap: !needsScroll,
-              physics: needsScroll ? const BouncingScrollPhysics() : const NeverScrollableScrollPhysics(),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: cols,
-                crossAxisSpacing: 16,
-                mainAxisSpacing: 16,
-                childAspectRatio: 1.0,
-              ),
-              itemCount: n,
-              itemBuilder: (context, index) {
-                final opt = _options[index];
-                final isSelected = _selectedIndex == index;
-                final isCorrect = opt.id == _correctAnswerId;
-                Color? borderColor;
-                if (_isAnswered) {
-                  borderColor = isCorrect ? getIt<ThemeService>().success : (isSelected ? getIt<ThemeService>().error : Colors.grey[300]);
-                } else if (isSelected) borderColor = headerColor;
-                return InkWell(
-                  onTap: () => _selectOption(index),
-                  borderRadius: BorderRadius.circular(16),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: borderColor ?? Colors.grey[300]!, width: isSelected || _isAnswered ? 4 : 2),
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(12),
-                      child: opt.imageUrl != null 
-                        ? AlioloImage(imageUrl: opt.imageUrl!, fit: BoxFit.cover)
-                        : Center(child: Text(opt.text, style: TextStyle(fontSize: isMobile ? 24 : 36, fontWeight: FontWeight.bold))),
-                    ),
+                      bool isLeft =
+                          _authService.currentUser?.sidebarLeft ?? false;
+                      return Row(
+                        children:
+                            isLeft
+                                ? [
+                                  optionsContent,
+                                  Expanded(flex: 3, child: mediaContent),
+                                ]
+                                : [
+                                  Expanded(flex: 3, child: mediaContent),
+                                  optionsContent,
+                                ],
+                      );
+                    },
                   ),
-                );
-              },
+                ),
+              ],
             ),
           ),
-        ),
-      );
-    },
-  );
-}
+        );
+      },
+    );
+  }
 
-Widget _buildOptionButton(int index, Color headerColor, bool isMobile) {
-  final opt = _options[index];
-  final isSelected = _selectedIndex == index;
-  final isCorrect = opt.id == _correctAnswerId;
-  Color? color;
-  if (_isAnswered) {
-    color = isCorrect ? getIt<ThemeService>().success : (isSelected ? getIt<ThemeService>().error : null);
-  } else if (isSelected) color = headerColor;
+  Widget _buildAudioToImageGrid(Color headerColor, bool isMobile) {
+    return LayoutBuilder(
+      builder: (context, gridConstraints) {
+        final n = _options.length;
+        if (n == 0) return const SizedBox.shrink();
 
-  // Dynamic font size based on text length
-  double fontSize = isMobile ? 16 : 18;
-  if (opt.text.length > 15) fontSize = isMobile ? 12 : 14;
-  else if (opt.text.length > 10) fontSize = isMobile ? 14 : 16;
+        final availWidth = gridConstraints.maxWidth - 32;
+        final availHeight = gridConstraints.maxHeight - 32;
 
-  return InkWell(
-    onTap: () => _selectOption(index),
-    borderRadius: BorderRadius.circular(12),
-    child: Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      decoration: BoxDecoration(
-        border: Border.all(color: color ?? Colors.grey[300]!, width: 2),
-        borderRadius: BorderRadius.circular(12),
-        color: color?.withValues(alpha: 0.1),
-      ),
-      child: Row(
-        children: [
-          Text('${index + 1}.', style: TextStyle(fontSize: fontSize * 0.8, color: Colors.grey[500], fontWeight: FontWeight.bold)),
-          const SizedBox(width: 4),
-          Expanded(
-            child: Text(
-              opt.text, 
-              style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.w600), 
-              textAlign: TextAlign.center,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            )
+        // Target a comfortable square size
+        final double targetSize = isMobile ? 140 : 180;
+
+        // Calculate how many columns we can fit at target size
+        int cols = (availWidth / (targetSize + 16)).floor().clamp(
+          1,
+          isMobile ? 3 : 6,
+        );
+
+        // If we have few options, don't use more columns than options
+        if (n < cols) cols = n;
+
+        // Balancing logic: if n is not divisible by cols, try to find a better divisor nearby
+        // This prevents cases like 4+2 for 6 options, turning it into 3+3.
+        if (cols > 1 && n % cols != 0) {
+          for (int c = cols - 1; c >= 2; c--) {
+            if (n % c == 0) {
+              cols = c;
+              break;
+            }
+          }
+        }
+
+        // Calculate how many rows this creates
+        final rows = (n / cols).ceil();
+
+        // Calculate actual size to fit perfectly in width
+        final double actualSize = (availWidth - (cols - 1) * 16) / cols;
+
+        // If total height with actualSize exceeds availHeight, we MUST scroll or shrink.
+        // But user wants "Adjustable", so we center it.
+        final totalGridHeight = (rows * actualSize) + ((rows - 1) * 16);
+        final bool needsScroll = totalGridHeight > availHeight;
+
+        return Container(
+          alignment: Alignment.center,
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: SizedBox(
+              // If it doesn't need scroll, constrain width so it doesn't stretch too much
+              width:
+                  !needsScroll
+                      ? (cols * actualSize) + ((cols - 1) * 16)
+                      : double.infinity,
+              child: GridView.builder(
+                controller: _gridScrollController,
+                shrinkWrap: !needsScroll,
+                physics:
+                    needsScroll
+                        ? const BouncingScrollPhysics()
+                        : const NeverScrollableScrollPhysics(),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: cols,
+                  crossAxisSpacing: 16,
+                  mainAxisSpacing: 16,
+                  childAspectRatio: 1.0,
+                ),
+                itemCount: n,
+                itemBuilder: (context, index) {
+                  final opt = _options[index];
+                  final isSelected = _selectedIndex == index;
+                  final isCorrect = opt.id == _correctAnswerId;
+                  Color? borderColor;
+                  if (_isAnswered) {
+                    borderColor =
+                        isCorrect
+                            ? getIt<ThemeService>().success
+                            : (isSelected
+                                ? getIt<ThemeService>().error
+                                : Colors.grey[300]);
+                  } else if (isSelected)
+                    borderColor = headerColor;
+                  return InkWell(
+                    onTap: () => _selectOption(index),
+                    borderRadius: BorderRadius.circular(16),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(
+                          color: borderColor ?? Colors.grey[300]!,
+                          width: isSelected || _isAnswered ? 4 : 2,
+                        ),
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child:
+                            opt.imageUrl != null
+                                ? AlioloImage(
+                                  imageUrl: opt.imageUrl!,
+                                  fit: BoxFit.cover,
+                                )
+                                : Center(
+                                  child: Text(
+                                    opt.text,
+                                    style: TextStyle(
+                                      fontSize: isMobile ? 24 : 36,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
           ),
-        ],
+        );
+      },
+    );
+  }
+
+  Widget _buildOptionButton(int index, Color headerColor, bool isMobile) {
+    final opt = _options[index];
+    final isSelected = _selectedIndex == index;
+    final isCorrect = opt.id == _correctAnswerId;
+    Color? color;
+    if (_isAnswered) {
+      color =
+          isCorrect
+              ? getIt<ThemeService>().success
+              : (isSelected ? getIt<ThemeService>().error : null);
+    } else if (isSelected)
+      color = headerColor;
+
+    // Dynamic font size based on text length
+    double fontSize = isMobile ? 16 : 18;
+    if (opt.text.length > 15)
+      fontSize = isMobile ? 12 : 14;
+    else if (opt.text.length > 10)
+      fontSize = isMobile ? 14 : 16;
+
+    return InkWell(
+      onTap: () => _selectOption(index),
+      borderRadius: BorderRadius.circular(12),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        decoration: BoxDecoration(
+          border: Border.all(color: color ?? Colors.grey[300]!, width: 2),
+          borderRadius: BorderRadius.circular(12),
+          color: color?.withValues(alpha: 0.1),
+        ),
+        child: Row(
+          children: [
+            Text(
+              '${index + 1}.',
+              style: TextStyle(
+                fontSize: fontSize * 0.8,
+                color: Colors.grey[500],
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(width: 4),
+            Expanded(
+              child: Text(
+                opt.text,
+                style: TextStyle(
+                  fontSize: fontSize,
+                  fontWeight: FontWeight.w600,
+                ),
+                textAlign: TextAlign.center,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ],
+        ),
       ),
-    ),
-  );
-}
+    );
+  }
 
   @override
   void dispose() {

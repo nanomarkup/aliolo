@@ -138,6 +138,7 @@ class TranslationService extends ChangeNotifier {
       'premium_go': 'Go Premium',
       'premium_member': 'Premium Member',
       'manage_subscription': 'Manage Subscription',
+      'session_complete_description': 'You have finished reviewing all cards in this session.',
     },
     'id': {
       'documentation': 'Dokumentasi',
@@ -161,6 +162,7 @@ class TranslationService extends ChangeNotifier {
       'premium_upgrade_desc': 'Buka semua fitur dan mesin matematika',
       'premium_manage': 'Kelola',
       'dashboard_greeting': 'Halo',
+      'session_complete_description': 'Anda telah selesai meninjau semua kartu dalam sesi ini.',
     },
     'bg': {
       'documentation': 'Документация',
@@ -184,6 +186,7 @@ class TranslationService extends ChangeNotifier {
       'premium_upgrade_desc': 'Отключете всички функции и математически двигатели',
       'premium_manage': 'Управление',
       'dashboard_greeting': 'Здравей',
+      'session_complete_description': 'Завършихте прегледа на всички карти в тази сесия.',
     },
     'cs': {
       'documentation': 'Dokumentace',
@@ -207,6 +210,7 @@ class TranslationService extends ChangeNotifier {
       'premium_upgrade_desc': 'Odemkněte všechny funkce a matematické moduly',
       'premium_manage': 'Spravovat',
       'dashboard_greeting': 'Ahoj',
+      'session_complete_description': 'Dokončili jste kontrolu všech karet v této lekci.',
     },
     'da': {
       'documentation': 'Dokumentation',
@@ -230,6 +234,7 @@ class TranslationService extends ChangeNotifier {
       'premium_upgrade_desc': 'Lås op for alle funktioner og matematikmotorer',
       'premium_manage': 'Administrer',
       'dashboard_greeting': 'Hej',
+      'session_complete_description': 'Du er færdig med at gennemse alle kort i denne session.',
     },
     'de': {
       'documentation': 'Dokumentation',
@@ -253,6 +258,7 @@ class TranslationService extends ChangeNotifier {
       'premium_upgrade_desc': 'Alle Funktionen und Mathe-Engines freischalten',
       'premium_manage': 'Verwalten',
       'dashboard_greeting': 'Hallo',
+      'session_complete_description': 'Du hast alle Karten in dieser Sitzung abgeschlossen.',
     },
     'et': {
       'documentation': 'Dokumentatsioon',
@@ -276,6 +282,7 @@ class TranslationService extends ChangeNotifier {
       'premium_upgrade_desc': 'Ava kõik funktsioonid ja matemaatikamootorid',
       'premium_manage': 'Halda',
       'dashboard_greeting': 'Tere',
+      'session_complete_description': 'Olete lõpetanud kõigi selle sessiooni kaartide läbivaatamise.',
     },
     'es': {
       'documentation': 'Documentación',
@@ -299,6 +306,7 @@ class TranslationService extends ChangeNotifier {
       'premium_upgrade_desc': 'Desbloquea todas las funciones y motores matemáticos',
       'premium_manage': 'Gestionar',
       'dashboard_greeting': 'Hola',
+      'session_complete_description': 'Has terminado de revisar todas las tarjetas de esta sesión.',
     },
     'fr': {
       'documentation': 'Documentation',
@@ -322,6 +330,7 @@ class TranslationService extends ChangeNotifier {
       'premium_upgrade_desc': 'Débloquez toutes les fonctionnalités et les moteurs de calcul',
       'premium_manage': 'Gérer',
       'dashboard_greeting': 'Bonjour',
+      'session_complete_description': 'Vous avez fini de réviser toutes les cartes de cette session.',
     },
     'ga': {
       'documentation': 'Doiciméadúchán',
@@ -345,6 +354,7 @@ class TranslationService extends ChangeNotifier {
       'premium_upgrade_desc': 'Díghlasáil gach gné agus inneall matamataice',
       'premium_manage': 'Bainistigh',
       'dashboard_greeting': 'Dia duit',
+      'session_complete_description': 'Tá athbhreithniú déanta agat ar gach cárta sa seisiún seo.',
     },
     'hr': {
       'documentation': 'Dokumentacija',
@@ -368,6 +378,7 @@ class TranslationService extends ChangeNotifier {
       'premium_upgrade_desc': 'Otključajte sve značajke i matematičke module',
       'premium_manage': 'Upravljaj',
       'dashboard_greeting': 'Zdravo',
+      'session_complete_description': 'Završili ste pregled svih kartica u ovoj sesiji.',
     },
     'it': {
       'documentation': 'Documentazione',
@@ -391,6 +402,7 @@ class TranslationService extends ChangeNotifier {
       'premium_upgrade_desc': 'Sblocca tutte le funzioni e i motori matematici',
       'premium_manage': 'Gestisci',
       'dashboard_greeting': 'Ciao',
+      'session_complete_description': 'Hai finito di rivedere tutte le carte in questa sessione.',
     },
     'lv': {
       'documentation': 'Dokumentācija',
@@ -414,6 +426,7 @@ class TranslationService extends ChangeNotifier {
       'premium_upgrade_desc': 'Atbloķējiet visas funkcijas un matemātikas moduļus',
       'premium_manage': 'Pārvaldīt',
       'dashboard_greeting': 'Sveiki',
+      'session_complete_description': 'Jūs esat pabeidzis visu šīs sesijas karšu pārskatīšanu.',
     },
     'lt': {
       'documentation': 'Dokumentacija',
@@ -437,6 +450,7 @@ class TranslationService extends ChangeNotifier {
       'premium_upgrade_desc': 'Atrakinkite visas funkcijas ir matematikos variklius',
       'premium_manage': 'Valdyti',
       'dashboard_greeting': 'Labas',
+      'session_complete_description': 'Baigėte peržiūrėti visas šios sesijos korteles.',
     },
     'hu': {
       'documentation': 'Dokumentáció',
@@ -460,6 +474,7 @@ class TranslationService extends ChangeNotifier {
       'premium_upgrade_desc': 'Oldja fel az összes funkciót és matematikai modult',
       'premium_manage': 'Kezelés',
       'dashboard_greeting': 'Szia',
+      'session_complete_description': 'Befejezte a szakasz összes kártyájának áttekintését.',
     },
     'mt': {
       'documentation': 'Dokumentazzjoni',
@@ -483,6 +498,7 @@ class TranslationService extends ChangeNotifier {
       'premium_upgrade_desc': 'Iftaħ il-karatteristiċi kollha u l-magni tal-matematika',
       'premium_manage': 'Immaniġġja',
       'dashboard_greeting': 'Bongu',
+      'session_complete_description': 'Lestiet ir-reviżjoni tal-kards kollha f\'din is-sessjoni.',
     },
     'nl': {
       'documentation': 'Documentatie',
@@ -506,6 +522,7 @@ class TranslationService extends ChangeNotifier {
       'premium_upgrade_desc': 'Ontgrendel alle functies en wiskundemotoren',
       'premium_manage': 'Beheren',
       'dashboard_greeting': 'Hallo',
+      'session_complete_description': 'Je hebt alle kaarten in deze sessie bekeken.',
     },
     'pl': {
       'documentation': 'Dokumentacja',
@@ -529,6 +546,7 @@ class TranslationService extends ChangeNotifier {
       'premium_upgrade_desc': 'Odblokuj wszystkie funkcje i silniki matematyczne',
       'premium_manage': 'Zarządzaj',
       'dashboard_greeting': 'Cześć',
+      'session_complete_description': 'Zakończyłeś przeglądanie wszystkich kart w tej sesji.',
     },
     'pt': {
       'documentation': 'Documentação',
@@ -552,6 +570,7 @@ class TranslationService extends ChangeNotifier {
       'premium_upgrade_desc': 'Desbloqueie todos os recursos e motores matemáticos',
       'premium_manage': 'Gerenciar',
       'dashboard_greeting': 'Olá',
+      'session_complete_description': 'Terminou de rever todos os cartões nesta sessão.',
     },
     'ro': {
       'documentation': 'Documentație',
@@ -575,6 +594,7 @@ class TranslationService extends ChangeNotifier {
       'premium_upgrade_desc': 'Deblochează toate funcțiile și motoarele matematice',
       'premium_manage': 'Gestionează',
       'dashboard_greeting': 'Bună',
+      'session_complete_description': 'Ați terminat de revizuit toate cardurile din această sesiune.',
     },
     'sk': {
       'documentation': 'Dokumentácia',
@@ -598,6 +618,7 @@ class TranslationService extends ChangeNotifier {
       'premium_upgrade_desc': 'Odomknite všetky funkcie a matematické moduly',
       'premium_manage': 'Spravovať',
       'dashboard_greeting': 'Ahoj',
+      'session_complete_description': 'Dokončili ste kontrolu všetkých kariet v tejto relácii.',
     },
     'sl': {
       'documentation': 'Dokumentacija',
@@ -621,6 +642,7 @@ class TranslationService extends ChangeNotifier {
       'premium_upgrade_desc': 'Odklenite vse funkcije in matematične mehanizme',
       'premium_manage': 'Upravljanje',
       'dashboard_greeting': 'Živjo',
+      'session_complete_description': 'Pregledali ste vse kartice v tej seji.',
     },
     'fi': {
       'documentation': 'Dokumentaatio',
@@ -644,6 +666,7 @@ class TranslationService extends ChangeNotifier {
       'premium_upgrade_desc': 'Avaa kaikki toiminnot ja matematiikkamoottorit',
       'premium_manage': 'Hallitse',
       'dashboard_greeting': 'Hei',
+      'session_complete_description': 'Olet käynyt läpi kaikki tämän istunnon kortit.',
     },
     'sv': {
       'documentation': 'Dokumentation',
@@ -667,6 +690,7 @@ class TranslationService extends ChangeNotifier {
       'premium_upgrade_desc': 'Lås upp alla funktioner och matematikmotorer',
       'premium_manage': 'Hantera',
       'dashboard_greeting': 'Hej',
+      'session_complete_description': 'Du har granskat klart alla kort i den här sessionen.',
     },
     'tl': {
       'documentation': 'Dokumentasyon',
@@ -690,6 +714,7 @@ class TranslationService extends ChangeNotifier {
       'premium_upgrade_desc': 'I-unlock ang lahat ng feature at math engine',
       'premium_manage': 'Pamahalaan',
       'dashboard_greeting': 'Halo',
+      'session_complete_description': 'Natapos mo nang suriin ang lahat ng mga card sa session na ito.',
     },
     'vi': {
       'documentation': 'Tài liệu',
@@ -713,6 +738,7 @@ class TranslationService extends ChangeNotifier {
       'premium_upgrade_desc': 'Mở khóa tất cả các tính năng και công cụ toán học',
       'premium_manage': 'Quản lý',
       'dashboard_greeting': 'Xin chào',
+      'session_complete_description': 'Bạn đã hoàn thành việc ôn tập tất cả các thẻ trong phiên này.',
     },
     'tr': {
       'documentation': 'Dokümantasyon',
@@ -736,6 +762,7 @@ class TranslationService extends ChangeNotifier {
       'premium_upgrade_desc': 'Tüm özellikleri ve matematik motorlarını açın',
       'premium_manage': 'Yönet',
       'dashboard_greeting': 'Merhaba',
+      'session_complete_description': 'Bu oturumdaki tüm kartları incelemeyi bitirdiniz.',
     },
     'el': {
       'documentation': 'Τεκμηρίωση',
@@ -759,6 +786,7 @@ class TranslationService extends ChangeNotifier {
       'premium_upgrade_desc': 'Ξεκλειδώστε όλες τις λειτουργίες και τις μαθηματικές μηχανές',
       'premium_manage': 'Διαχείριση',
       'dashboard_greeting': 'Γεια σας',
+      'session_complete_description': 'Ολοκληρώσατε την ανασκόπηση όλων των καρτών σε αυτήν τη συνεδρία.',
     },
     'uk': {
       'documentation': 'Документація',
@@ -782,6 +810,7 @@ class TranslationService extends ChangeNotifier {
       'premium_upgrade_desc': 'Розблокуйте всі функції та математичні двигуни',
       'premium_manage': 'Керувати',
       'dashboard_greeting': 'Привіт',
+      'session_complete_description': 'Ви закінчили перегляд усіх карток у цій сесії.',
     },
     'ar': {
       'documentation': 'التوثيق',
@@ -805,6 +834,7 @@ class TranslationService extends ChangeNotifier {
       'premium_upgrade_desc': 'فتح جميع الميزات والمحركات الرياضية',
       'premium_manage': 'إدارة',
       'dashboard_greeting': 'مرحبا',
+      'session_complete_description': 'لقد انتهيت من مراجعة جميع البطاقات في هذه الجلسة.',
     },
     'hi': {
       'documentation': 'दस्तावेज़ीकरण',
@@ -828,6 +858,7 @@ class TranslationService extends ChangeNotifier {
       'premium_upgrade_desc': 'सभी सुविधाओं और गणित इंजनों को अनलॉक करें',
       'premium_manage': 'प्रबंधित करें',
       'dashboard_greeting': 'नमस्ते',
+      'session_complete_description': 'आपने इस सत्र के सभी कार्डों की समीक्षा पूरी कर ली है।',
     },
     'zh': {
       'documentation': '文档',
@@ -851,6 +882,7 @@ class TranslationService extends ChangeNotifier {
       'premium_upgrade_desc': '解锁所有功能和数学引擎',
       'premium_manage': '管理',
       'dashboard_greeting': '你好',
+      'session_complete_description': '您已完成本环节中所有卡片的复习。',
     },
     'ja': {
       'documentation': 'ドキュメント',
@@ -874,6 +906,7 @@ class TranslationService extends ChangeNotifier {
       'premium_upgrade_desc': 'すべての機能と数学エンジンをアンロック',
       'premium_manage': '管理',
       'dashboard_greeting': 'こんにちは',
+      'session_complete_description': 'このセッションのすべてのカードの学習が完了しました。',
     },
     'ko': {
       'documentation': '문서',
@@ -897,6 +930,7 @@ class TranslationService extends ChangeNotifier {
       'premium_upgrade_desc': '모든 기능 및 수학 엔진 잠금 해제',
       'premium_manage': '관리',
       'dashboard_greeting': '안녕하세요',
+      'session_complete_description': '이 세션의 모든 카드를 검토하셨습니다.',
     },
   };
 

@@ -51,16 +51,20 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
   final _authService = getIt<AuthService>();
   final _subService = getIt<SubscriptionService>();
   final _searchController = TextEditingController();
+  final _searchFocusNode = FocusNode();
 
   SubjectModel? _currentSubject;
   FolderModel? _currentFolder;
   CollectionModel? _currentCollection;
+  List<SubjectModel> _allSubjects = [];
   List<CardModel> _allCards = [];
   List<CardModel> _filteredCards = [];
-  List<SubjectModel> _allSubjects = [];
+  int _startLevel = 1;
+  int _endLevel = 20;
   List<SubjectModel> _filteredSubjects = [];
   bool _isLoading = false;
   bool _hasUpdated = false;
+  bool _isSearchExpanded = false;
 
   String _collectionFilter = 'all';
   String _selectedAgeFilter = 'all';
@@ -72,7 +76,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
     _currentFolder = widget.folder;
     _currentCollection = widget.collection;
     _allCards = widget.cards;
-    
+
     if (_currentCollection != null) {
       _fetchCollectionSubjects();
     } else {
@@ -101,6 +105,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
   void dispose() {
     _cardService.removeListener(_onServiceChange);
     _searchController.dispose();
+    _searchFocusNode.dispose();
     super.dispose();
   }
 
@@ -116,7 +121,9 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
 
     if (_currentSubject != null) {
       final cards = await _cardService.getCardsBySubject(_currentSubject!.id);
-      final updatedSubject = await _cardService.getSubjectById(_currentSubject!.id);
+      final updatedSubject = await _cardService.getSubjectById(
+        _currentSubject!.id,
+      );
 
       if (mounted) {
         setState(() {
@@ -130,8 +137,12 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
         });
       }
     } else if (_currentCollection != null) {
-      final cards = await _cardService.getCollectionCards(_currentCollection!.subjectIds);
-      final updatedCollection = await _cardService.getCollectionById(_currentCollection!.id);
+      final cards = await _cardService.getCollectionCards(
+        _currentCollection!.subjectIds,
+      );
+      final updatedCollection = await _cardService.getCollectionById(
+        _currentCollection!.id,
+      );
 
       if (mounted) {
         setState(() {
@@ -151,49 +162,66 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
     final query = _searchController.text.toLowerCase();
     final myId = _authService.currentUser?.serverId;
     final isOwner = _currentCollection?.ownerId == myId;
-    
-    setState(() {
-      if (_currentCollection != null) {
-        _filteredSubjects = _allSubjects.where((s) {
-          if (!isOwner && !_currentCollection!.subjectIds.contains(s.id)) {
-            return false;
-          }
 
-          final matchesName = s.getName(widget.languageCode).toLowerCase().contains(query);
-          final matchesAge = _selectedAgeFilter == 'all' || s.ageGroup == _selectedAgeFilter;
-          bool matchesCollection = true;
-          if (_collectionFilter == 'mine') {
-            matchesCollection = s.ownerId == myId;
-          } else if (_collectionFilter == 'public') {
-            matchesCollection = s.isPublic;
-          } else if (_collectionFilter == 'favorites') {
-            matchesCollection = s.isOnDashboard;
-          }
-          return matchesName && matchesAge && matchesCollection;
-        }).toList();
+    setState(() {
+      // Always update _filteredCards for count and session consistency
+      _filteredCards = _allCards.where((c) {
+        final promptMatches = c
+            .getPrompt(widget.languageCode)
+            .toLowerCase()
+            .contains(query);
+        final answerMatches = c
+            .getAnswer(widget.languageCode)
+            .toLowerCase()
+            .contains(query);
+
+        final matchesLevel = c.level >= _startLevel && c.level <= _endLevel;
+
+        return (promptMatches || answerMatches) && matchesLevel;
+      }).toList();
+
+      if (_currentCollection != null) {
+        _filteredSubjects =
+            _allSubjects.where((s) {
+              if (!isOwner && !_currentCollection!.subjectIds.contains(s.id)) {
+                return false;
+              }
+
+              final matchesName = s
+                  .getName(widget.languageCode)
+                  .toLowerCase()
+                  .contains(query);
+              final matchesAge =
+                  _selectedAgeFilter == 'all' ||
+                  s.ageGroup == _selectedAgeFilter;
+              bool matchesCollection = true;
+              if (_collectionFilter == 'mine') {
+                matchesCollection = s.ownerId == myId;
+              } else if (_collectionFilter == 'public') {
+                matchesCollection = s.isPublic;
+              } else if (_collectionFilter == 'favorites') {
+                matchesCollection = s.isOnDashboard;
+              }
+              return matchesName && matchesAge && matchesCollection;
+            }).toList();
 
         _filteredSubjects.sort((a, b) {
           final aSelected = _currentCollection!.subjectIds.contains(a.id);
           final bSelected = _currentCollection!.subjectIds.contains(b.id);
           if (aSelected && !bSelected) return -1;
           if (!aSelected && bSelected) return 1;
-          return a.getName(widget.languageCode).toLowerCase().compareTo(b.getName(widget.languageCode).toLowerCase());
-        });
-      } else {
-        _filteredCards = _allCards.where((c) {
-          final matchesSearch = c
-              .getPrompt(widget.languageCode)
+          return a
+              .getName(widget.languageCode)
               .toLowerCase()
-              .contains(query);
-          return matchesSearch;
-        }).toList();
+              .compareTo(b.getName(widget.languageCode).toLowerCase());
+        });
       }
     });
   }
 
   Future<void> _toggleFavorite() async {
     if (_currentSubject == null && _currentCollection == null) return;
-    
+
     if (_currentSubject != null) {
       final newState = !_currentSubject!.isOnDashboard;
       setState(() {
@@ -201,11 +229,16 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
         _hasUpdated = true;
       });
       try {
-        await _cardService.toggleSubjectOnDashboard(_currentSubject!.id, newState);
+        await _cardService.toggleSubjectOnDashboard(
+          _currentSubject!.id,
+          newState,
+        );
       } catch (e) {
         if (mounted) {
           setState(() => _currentSubject!.isOnDashboard = !newState);
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error updating favorite: $e')));
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Error updating favorite: $e')),
+          );
         }
       }
     } else if (_currentCollection != null) {
@@ -215,11 +248,16 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
         _hasUpdated = true;
       });
       try {
-        await _cardService.toggleCollectionOnDashboard(_currentCollection!.id, newState);
+        await _cardService.toggleCollectionOnDashboard(
+          _currentCollection!.id,
+          newState,
+        );
       } catch (e) {
         if (mounted) {
           setState(() => _currentCollection!.isOnDashboard = !newState);
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error updating favorite: $e')));
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Error updating favorite: $e')),
+          );
         }
       }
     }
@@ -232,9 +270,13 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
       context: context,
       builder:
           (context) => AlertDialog(
-            title: Text(isCollection ? context.t('delete_collection') : context.t('delete_subject')),
+            title: Text(
+              isCollection
+                  ? context.t('delete_collection')
+                  : context.t('delete_subject'),
+            ),
             content: Text(
-              isCollection 
+              isCollection
                   ? context.t('delete_collection_confirm')
                   : 'This will permanently delete the subject and all its cards.',
             ),
@@ -255,7 +297,10 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                     Navigator.pop(context, true); // Go back to dashboard
                   }
                 },
-                child: Text(context.t('delete'), style: const TextStyle(color: Colors.red)),
+                child: Text(
+                  context.t('delete'),
+                  style: const TextStyle(color: Colors.red),
+                ),
               ),
             ],
           ),
@@ -296,11 +341,13 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
           for (int i = 0; i < size; i++) {
             final problem = mathService.generateProblem(_currentSubject!);
             final card = mathService.createVirtualCard(problem, 1);
-            sessionCards.add(SubjectCard(card: card, subject: _currentSubject!));
+            sessionCards.add(
+              SubjectCard(card: card, subject: _currentSubject!),
+            );
           }
         } else {
           sessionCards =
-              _allCards
+              _filteredCards
                   .map((c) => SubjectCard(card: c, subject: _currentSubject!))
                   .toList();
         }
@@ -308,10 +355,28 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
 
       final lang = widget.languageCode.toLowerCase();
       if (!(_currentSubject?.isMath ?? false)) {
+        final query = _searchController.text.toLowerCase();
         sessionCards =
             sessionCards.where((sc) {
-              return sc.card.getAnswer(lang).isNotEmpty ||
-                  sc.card.getAnswer('en').isNotEmpty;
+              final c = sc.card;
+              final promptMatches = c
+                  .getPrompt(widget.languageCode)
+                  .toLowerCase()
+                  .contains(query);
+              final answerMatches = c
+                  .getAnswer(widget.languageCode)
+                  .toLowerCase()
+                  .contains(query);
+              final matchesLevel =
+                  c.level >= _startLevel && c.level <= _endLevel;
+
+              final hasAnswer =
+                  c.getAnswer(lang).isNotEmpty ||
+                  c.getAnswer('en').isNotEmpty;
+
+              return (promptMatches || answerMatches) &&
+                  matchesLevel &&
+                  hasAnswer;
             }).toList();
         sessionCards.shuffle();
       }
@@ -356,16 +421,50 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
     }
   }
 
-  Widget _buildCompactDropdown({required String value, required Map<String, String> items, required ValueChanged<String?> onChanged}) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12),
-      decoration: BoxDecoration(color: Theme.of(context).cardColor.withValues(alpha: 0.5), borderRadius: BorderRadius.circular(12), border: Border.all(color: Colors.grey.withValues(alpha: 0.5))),
-      child: DropdownButtonHideUnderline(child: DropdownButton<String>(
-        value: value, isExpanded: true, icon: const Icon(Icons.arrow_drop_down, size: 20),
-        style: TextStyle(fontSize: 14, color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black87),
-        items: items.entries.map((e) => DropdownMenuItem(value: e.key, child: Text(e.value, overflow: TextOverflow.ellipsis))).toList(),
-        onChanged: onChanged,
-      )),
+  Widget _buildCompactDropdown({
+    required String value, 
+    required Map<String, String> items, 
+    ValueChanged<String?>? onChanged,
+    IconData? prefixIcon,
+    String? selectedLabel,
+  }) {
+    final validatedValue = items.containsKey(value) ? value : (items.isNotEmpty ? items.keys.first : '');
+    final label = selectedLabel ?? items[validatedValue] ?? '';
+    
+    return PopupMenuButton<String>(
+      onSelected: onChanged,
+      position: PopupMenuPosition.under,
+      itemBuilder: (context) => items.entries.map((e) => PopupMenuItem<String>(
+        value: e.key,
+        child: Text(e.value),
+      )).toList(),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+        decoration: BoxDecoration(
+          color: Theme.of(context).cardColor.withValues(alpha: 0.5), 
+          borderRadius: BorderRadius.circular(12), 
+          border: Border.all(color: Colors.grey.withValues(alpha: 0.5))
+        ),
+        child: Row(
+          children: [
+            if (prefixIcon != null) ...[
+              Icon(prefixIcon, size: 16, color: Colors.grey[600]),
+              const SizedBox(width: 8),
+            ],
+            Expanded(
+              child: Text(
+                label,
+                style: TextStyle(
+                  fontSize: 14, 
+                  color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black87
+                ),
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            Icon(Icons.arrow_drop_down, size: 20, color: Colors.grey[600]),
+          ],
+        ),
+      ),
     );
   }
 
@@ -375,20 +474,36 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
       listenable: _subService,
       builder: (context, _) {
         final isPremium = _subService.isPremium;
-        final pillarId = _currentSubject?.pillarId ?? _currentFolder?.pillarId ?? _currentCollection?.pillarId ?? 1;
+        final pillarId =
+            _currentSubject?.pillarId ??
+            _currentFolder?.pillarId ??
+            _currentCollection?.pillarId ??
+            1;
         final pillar = pillars.firstWhere(
           (p) => p.id == pillarId,
           orElse: () => pillars.first,
         );
         final pillarColor = pillar.getColor(getIt<ThemeService>().isDarkMode);
         const appBarColor = Colors.white;
-        final isOwner = (_currentSubject != null && _currentSubject!.ownerId == _authService.currentUser?.serverId) ||
-                      (_currentCollection != null && _currentCollection!.ownerId == _authService.currentUser?.serverId);
+        final isOwner =
+            (_currentSubject != null &&
+                _currentSubject!.ownerId ==
+                    _authService.currentUser?.serverId) ||
+            (_currentCollection != null &&
+                _currentCollection!.ownerId ==
+                    _authService.currentUser?.serverId);
         final displayLang = widget.languageCode;
-        final title = _currentSubject?.getName(displayLang) ?? 
-                     _currentFolder?.getName(displayLang) ?? 
-                     _currentCollection?.getName(displayLang) ?? 
-                     'Aliolo';
+        final title =
+            _currentSubject?.getName(displayLang) ??
+            _currentFolder?.getName(displayLang) ??
+            _currentCollection?.getName(displayLang) ??
+            'Aliolo';
+
+        final description =
+            _currentSubject?.getDescription(displayLang) ??
+            _currentFolder?.getDescription(displayLang) ??
+            _currentCollection?.getDescription(displayLang) ??
+            '';
 
         return PopScope(
           canPop: false,
@@ -402,6 +517,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
               style: const TextStyle(
                 color: appBarColor,
                 fontWeight: FontWeight.bold,
+                fontSize: 20,
               ),
               overflow: TextOverflow.ellipsis,
             ),
@@ -411,483 +527,639 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                 icon: const Icon(Icons.arrow_back, color: appBarColor),
                 onPressed: () => Navigator.pop(context, _hasUpdated),
               ),
-            if (_currentSubject != null || _currentCollection != null) ...[
-              IconButton(
-                icon: Icon(
-                  (_currentSubject?.isOnDashboard ?? _currentCollection?.isOnDashboard ?? false)
-                      ? Icons.star
-                      : Icons.star_border,
-                  color: appBarColor,
+              if (_currentSubject != null || _currentCollection != null) ...[
+                IconButton(
+                  icon: Icon(
+                    (_currentSubject?.isOnDashboard ??
+                            _currentCollection?.isOnDashboard ??
+                            false)
+                        ? Icons.star
+                        : Icons.star_border,
+                    color: appBarColor,
+                  ),
+                  onPressed: _toggleFavorite,
                 ),
-                onPressed: _toggleFavorite,
-              ),
-            ],
-            if (isOwner) ...[
+              ],
+              if (isOwner) ...[
+                IconButton(
+                  icon: const Icon(Icons.edit, color: appBarColor),
+                  onPressed: () async {
+                    final result = await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder:
+                            (context) => SubjectEditPage(
+                              existingSubject:
+                                  _currentSubject ??
+                                  SubjectModel(
+                                    id: _currentCollection!.id,
+                                    pillarId: _currentCollection!.pillarId,
+                                    ownerId: _currentCollection!.ownerId,
+                                    isPublic: _currentCollection!.isPublic,
+                                    createdAt: _currentCollection!.createdAt,
+                                    updatedAt: _currentCollection!.updatedAt,
+                                    localizedData:
+                                        _currentCollection!.localizedData,
+                                    folderId: _currentCollection!.folderId,
+                                    typeStr: 'collection',
+                                    linkedSubjectIds:
+                                        _currentCollection!.subjectIds,
+                                    isOnDashboard:
+                                        _currentCollection!.isOnDashboard,
+                                    ageGroup: _currentCollection!.ageGroup,
+                                  ),
+                              isCollectionMode: _currentCollection != null,
+                            ),
+                      ),
+                    );
+                    if (result == true) {
+                      if (_currentSubject != null) _refreshData();
+                      if (_currentCollection != null) {
+                        if (context.mounted) Navigator.pop(context, true);
+                      }
+                    }
+                  },
+                ),
+                IconButton(
+                  icon: const Icon(Icons.delete, color: appBarColor),
+                  onPressed: _confirmDeleteSubject,
+                ),
+              ],
               IconButton(
-                icon: const Icon(Icons.edit, color: appBarColor),
-                onPressed: () async {
-                  final result = await Navigator.push(
+                icon: const Icon(Icons.feedback, color: appBarColor),
+                onPressed: () {
+                  Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder:
-                          (context) =>
-                              SubjectEditPage(
-                                existingSubject: _currentSubject ?? SubjectModel(
-                                  id: _currentCollection!.id,
-                                  pillarId: _currentCollection!.pillarId,
-                                  ownerId: _currentCollection!.ownerId,
-                                  isPublic: _currentCollection!.isPublic,
-                                  createdAt: _currentCollection!.createdAt,
-                                  updatedAt: _currentCollection!.updatedAt,
-                                  localizedData: _currentCollection!.localizedData,
-                                  folderId: _currentCollection!.folderId,
-                                  typeStr: 'collection',
-                                  linkedSubjectIds: _currentCollection!.subjectIds,
-                                  isOnDashboard: _currentCollection!.isOnDashboard,
-                                  ageGroup: _currentCollection!.ageGroup,
-                                ),
-                                isCollectionMode: _currentCollection != null,
-                              ),
+                          (context) => FeedbackPage(
+                            subjectId: _currentSubject?.id,
+                            folderId: _currentFolder?.id,
+                            collectionId: _currentCollection?.id,
+                            contextTitle: title,
+                            appBarColor: pillarColor,
+                          ),
                     ),
                   );
-                  if (result == true) {
-                    if (_currentSubject != null) _refreshData();
-                    if (_currentCollection != null) {
-                      if (context.mounted) Navigator.pop(context, true);
-                    }
-                  }
                 },
-              ),
-              IconButton(
-                icon: const Icon(Icons.delete, color: appBarColor),
-                onPressed: _confirmDeleteSubject,
               ),
             ],
-            IconButton(
-              icon: const Icon(Icons.feedback, color: appBarColor),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder:
-                        (context) => FeedbackPage(
-                          subjectId: _currentSubject?.id,
-                          folderId: _currentFolder?.id,
-                          collectionId: _currentCollection?.id,
-                          contextTitle: title,
-                          appBarColor: pillarColor,
-                        ),
-                  ),
-                );
-              },
-            ),
-          ],
-          fixedBody: Padding(
-            padding: const EdgeInsets.only(top: 16, bottom: 8),
-            child: Row(
-              children: [
-                Expanded(
-                  child: _buildActionButton(
-                    context: context,
-                    title: context.t('learn_mode_title'),
-                    icon: Icons.school,
-                    color: pillarColor,
-                    isPremiumFeature: false,
-                    isUserPremium: isPremium,
-                    onTap: () => _startSession(false),
-                  ),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: _buildActionButton(
-                    context: context,
-                    title: context.t('test_mode_title'),
-                    icon: Icons.quiz,
-                    color: pillarColor,
-                    isPremiumFeature: true,
-                    isUserPremium: isPremium,
-                    onTap: () {
-                      if (!isPremium) {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => const PremiumUpgradePage()));
-                      } else {
-                        _startSession(true);
-                      }
-                    },
-                  ),
-                ),
-              ],
-            ),
-          ),
-          slivers: [
-            // Scrollable Header Section
-            SliverToBoxAdapter(
-              child: LayoutBuilder(
-                builder: (context, constraints) {
-                  final isSmall = constraints.maxWidth < 600;
-                  final filterRow = _currentCollection != null ? Row(children: [
-                    Expanded(child: _buildCompactDropdown(value: _collectionFilter, items: {'all': context.t('filter_all'), 'favorites': context.t('filter_favorites'), 'mine': context.t('filter_my_subjects'), 'public': context.t('filter_public')}, onChanged: (val) { if (val != null) setState(() { _collectionFilter = val; _applyFilters(); }); })),
-                    const SizedBox(width: 8),
-                    Expanded(child: _buildCompactDropdown(value: _selectedAgeFilter, items: {'all': context.t('age_all'), '0_6': context.t('age_0_6'), '7_14': context.t('age_7_14'), '15_plus': context.t('age_15_plus')}, onChanged: (val) { if (val != null) setState(() { _selectedAgeFilter = val; _applyFilters(); }); })),
-                  ]) : const SizedBox.shrink();
-
-                  return Column(
+            fixedBody: Padding(
+              padding: const EdgeInsets.only(top: 16, bottom: 8),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
                     children: [
-                      const SizedBox(height: 16),
-                      Row(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.all(16),
-                            decoration: BoxDecoration(
-                              color: pillarColor.withValues(alpha: 0.1),
-                              shape: BoxShape.circle,
-                            ),
-                            child: Icon(
-                              _currentFolder != null ? Icons.folder : 
-                              (_currentCollection != null ? Icons.collections : pillar.getIconData()),
-                              size: 40,
-                              color: pillarColor,
-                            ),
-                          ),
-                          const SizedBox(width: 20),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  title,
-                                  style: const TextStyle(
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                if (_currentSubject?.getDescription(displayLang).isNotEmpty == true || 
-                                    _currentFolder?.getDescription(displayLang).isNotEmpty == true ||
-                                    _currentCollection?.getDescription(displayLang).isNotEmpty == true)
-                                  Text(
-                                    _currentSubject?.getDescription(displayLang) ?? 
-                                    _currentFolder?.getDescription(displayLang) ?? 
-                                    _currentCollection?.getDescription(displayLang) ?? '',
-                                    style: TextStyle(
-                                      color: Colors.grey[600],
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                              ],
-                            ),
-                          ),
-                        ],
+                      Expanded(
+                        child: _buildActionButton(
+                          context: context,
+                          title: context.t('learn_mode_title'),
+                          icon: Icons.school,
+                          color: pillarColor,
+                          isPremiumFeature: false,
+                          isUserPremium: isPremium,
+                          onTap: () => _startSession(false),
+                        ),
                       ),
-                      const SizedBox(height: 24),
-                      if (_currentSubject != null || _currentCollection != null) ...[
-                        if (_currentCollection != null && isSmall) ...[
-                          TextField(
-                            controller: _searchController,
-                            onChanged: (_) => _applyFilters(),
-                            decoration: InputDecoration(
-                              hintText: context.t('search_subjects'),
-                              prefixIcon: const Icon(Icons.search),
-                              suffixIcon: ValueListenableBuilder<TextEditingValue>(
-                                valueListenable: _searchController,
-                                builder: (context, value, _) {
-                                  return value.text.isNotEmpty
-                                      ? IconButton(
-                                          icon: const Icon(Icons.clear),
-                                          onPressed: () {
-                                            _searchController.clear();
-                                            _applyFilters();
-                                          },
-                                        )
-                                      : const SizedBox.shrink();
-                                },
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 12),
-                          filterRow,
-                        ] else if (_currentCollection != null && !isSmall) ...[
-                          Row(
-                            children: [
-                              Expanded(
-                                flex: 3,
-                                child: TextField(
-                                  controller: _searchController,
-                                  onChanged: (_) => _applyFilters(),
-                                  decoration: InputDecoration(
-                                    hintText: context.t('search_subjects'),
-                                    prefixIcon: const Icon(Icons.search),
-                                    suffixIcon: ValueListenableBuilder<TextEditingValue>(
-                                      valueListenable: _searchController,
-                                      builder: (context, value, _) {
-                                        return value.text.isNotEmpty
-                                            ? IconButton(
-                                                icon: const Icon(Icons.clear),
-                                                onPressed: () {
-                                                  _searchController.clear();
-                                                  _applyFilters();
-                                                },
-                                              )
-                                            : const SizedBox.shrink();
-                                      },
-                                    ),
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                  ),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: _buildActionButton(
+                          context: context,
+                          title: context.t('test_mode_title'),
+                          icon: Icons.quiz,
+                          color: pillarColor,
+                          isPremiumFeature: true,
+                          isUserPremium: isPremium,
+                          onTap: () {
+                            if (!isPremium) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder:
+                                      (context) => const PremiumUpgradePage(),
                                 ),
-                              ),
-                              const SizedBox(width: 8),
-                              Expanded(flex: 5, child: filterRow),
-                            ],
-                          ),
-                        ] else ...[
-                          Row(
-                            children: [
-                              Expanded(
-                                child: TextField(
-                                  controller: _searchController,
-                                  onChanged: (_) => _applyFilters(),
-                                  decoration: InputDecoration(
-                                    hintText: context.t('search_cards'),
-                                    prefixIcon: const Icon(Icons.search),
-                                    suffixIcon: ValueListenableBuilder<TextEditingValue>(
-                                      valueListenable: _searchController,
-                                      builder: (context, value, _) {
-                                        return value.text.isNotEmpty
-                                            ? IconButton(
-                                                icon: const Icon(Icons.clear),
-                                                onPressed: () {
-                                                  _searchController.clear();
-                                                  _applyFilters();
-                                                },
-                                              )
-                                            : const SizedBox.shrink();
-                                      },
-                                    ),
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              if (isOwner && _currentSubject != null) ...[
-                                const SizedBox(width: 8),
-                                IconButton(
-                                  icon: Icon(Icons.add_circle, color: pillarColor, size: 40),
-                                  padding: EdgeInsets.zero,
-                                  onPressed: () async {
-                                    if (!isPremium) {
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => const PremiumUpgradePage()));
-                                      return;
-                                    }
-                                    final result = await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => AddCardPage(
-                                          pillarId: pillarId,
-                                          initialSubjectId: _currentSubject!.id,
-                                        ),
-                                      ),
-                                    );
-                                    if (result == true) _refreshData();
-                                  },
-                                ),
-                              ],
-                            ],
-                          ),
-                        ],
-                      ],
-                      const SizedBox(height: 24),
+                              );
+                            } else {
+                              _startSession(true);
+                            }
+                          },
+                        ),
+                      ),
                     ],
-                  );
-                },
+                  ),
+                ],
               ),
             ),
-            if (_isLoading)
-              const SliverFillRemaining(
-                child: Center(child: CircularProgressIndicator()),
-              )
-            else if (_currentSubject == null && _currentCollection == null)
-              const SliverFillRemaining(
-                child: Center(child: Text('This is a folder. You can use Learn/Test buttons above to practice all cards.')),
-              )
-            else if (_currentCollection != null)
-              if (_filteredSubjects.isEmpty)
+            slivers: [
+              // Scrollable Header Section
+              SliverToBoxAdapter(
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    final isSmall = constraints.maxWidth < 600;
+                    final filterRow =
+                        _currentCollection != null
+                            ? Row(
+                              children: [
+                                Expanded(
+                                  child: _buildCompactDropdown(
+                                    value: _collectionFilter,
+                                    items: {
+                                      'all': context.t('filter_all'),
+                                      'favorites': context.t(
+                                        'filter_favorites',
+                                      ),
+                                      'mine': context.t('filter_my_subjects'),
+                                      'public': context.t('filter_public'),
+                                    },
+                                    onChanged: (val) {
+                                      if (val != null)
+                                        setState(() {
+                                          _collectionFilter = val;
+                                          _applyFilters();
+                                        });
+                                    },
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                Expanded(
+                                  child: _buildCompactDropdown(
+                                    value: _selectedAgeFilter,
+                                    items: {
+                                      'all': context.t('age_all'),
+                                      '0_6': context.t('age_0_6'),
+                                      '7_14': context.t('age_7_14'),
+                                      '15_plus': context.t('age_15_plus'),
+                                    },
+                                    onChanged: (val) {
+                                      if (val != null)
+                                        setState(() {
+                                          _selectedAgeFilter = val;
+                                          _applyFilters();
+                                        });
+                                    },
+                                  ),
+                                ),
+                              ],
+                            )
+                            : const SizedBox.shrink();
+
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        if (description.isNotEmpty) ...[
+                          const SizedBox(height: 16),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 4),
+                            child: Text(
+                              description,
+                              style: TextStyle(
+                                color: Colors.grey[700],
+                                fontSize: 15,
+                                height: 1.4,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 24),
+                        ] else
+                          const SizedBox(height: 16),
+                        if (_currentSubject != null ||
+                            _currentCollection != null) ...[
+                          if (_currentCollection != null && isSmall) ...[
+                            Row(
+                              children: _buildLevelRangeWidgets(pillarColor),
+                            ),
+                            const SizedBox(height: 12),
+                            if (!_isSearchExpanded)
+                              Row(
+                                children: [
+                                  Expanded(child: filterRow),
+                                  const SizedBox(width: 8),
+                                  SizedBox(
+                                    height: 45,
+                                    child: IconButton(
+                                      icon: Icon(
+                                        Icons.search,
+                                        color: pillarColor,
+                                      ),
+                                      onPressed: () {
+                                        setState(() => _isSearchExpanded = true);
+                                        _searchFocusNode.requestFocus();
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              )
+                            else
+                              TextField(
+                                controller: _searchController,
+                                focusNode: _searchFocusNode,
+                                onChanged: (_) => _applyFilters(),
+                                decoration: InputDecoration(
+                                  hintText: context.t('search_subjects'),
+                                  prefixIcon: const Icon(Icons.search),
+                                  suffixIcon: IconButton(
+                                    icon: const Icon(Icons.close),
+                                    onPressed: () {
+                                      setState(() {
+                                        _isSearchExpanded = false;
+                                        _searchController.clear();
+                                        _applyFilters();
+                                      });
+                                    },
+                                  ),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                ),
+                              ),
+                            if (!_isSearchExpanded) const SizedBox(height: 12),
+                          ] else if (_currentCollection != null &&
+                              !isSmall) ...[
+                            Row(
+                              children: _buildLevelRangeWidgets(pillarColor),
+                            ),
+                            const SizedBox(height: 12),
+                            Row(
+                              children: [
+                                if (!_isSearchExpanded)
+                                  Expanded(flex: 3, child: filterRow),
+                                if (!_isSearchExpanded)
+                                  const SizedBox(width: 8),
+                                if (!_isSearchExpanded)
+                                  SizedBox(
+                                    height: 45,
+                                    child: IconButton(
+                                      icon: Icon(
+                                        Icons.search,
+                                        color: pillarColor,
+                                      ),
+                                      onPressed: () {
+                                        setState(() => _isSearchExpanded = true);
+                                        _searchFocusNode.requestFocus();
+                                      },
+                                    ),
+                                  )
+                                else
+                                  Expanded(
+                                    flex: 2,
+                                    child: TextField(
+                                      controller: _searchController,
+                                      focusNode: _searchFocusNode,
+                                      onChanged: (_) => _applyFilters(),
+                                      decoration: InputDecoration(
+                                        hintText: context.t('search_subjects'),
+                                        prefixIcon: const Icon(Icons.search),
+                                        suffixIcon: IconButton(
+                                          icon: const Icon(Icons.close),
+                                          onPressed: () {
+                                            setState(() {
+                                              _isSearchExpanded = false;
+                                              _searchController.clear();
+                                              _applyFilters();
+                                            });
+                                          },
+                                        ),
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(
+                                            12,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          ] else ...[
+                            Row(
+                              children: [
+                                if (_currentSubject != null &&
+                                    !(_currentSubject?.isMath ?? false)) ...[
+                                  ..._buildLevelRangeWidgets(pillarColor),
+                                ],
+                                if (!_isSearchExpanded) const Spacer(),
+                                if (!_isSearchExpanded)
+                                  SizedBox(
+                                    height: 45,
+                                    child: IconButton(
+                                      icon: Icon(
+                                        Icons.search,
+                                        color: pillarColor,
+                                      ),
+                                      onPressed: () {
+                                        setState(() => _isSearchExpanded = true);
+                                        _searchFocusNode.requestFocus();
+                                      },
+                                    ),
+                                  )
+                                else
+                                  Expanded(
+                                    child: TextField(
+                                      controller: _searchController,
+                                      focusNode: _searchFocusNode,
+                                      onChanged: (_) => _applyFilters(),
+                                      decoration: InputDecoration(
+                                        hintText: context.t('search_cards'),
+                                        prefixIcon: const Icon(Icons.search),
+                                        suffixIcon: IconButton(
+                                          icon: const Icon(Icons.close),
+                                          onPressed: () {
+                                            setState(() {
+                                              _isSearchExpanded = false;
+                                              _searchController.clear();
+                                              _applyFilters();
+                                            });
+                                          },
+                                        ),
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(
+                                            12,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                if (isOwner &&
+                                    _currentSubject != null &&
+                                    !_isSearchExpanded) ...[
+                                  const SizedBox(width: 8),
+                                  SizedBox(
+                                    height: 45,
+                                    child: IconButton(
+                                      icon: Icon(
+                                        Icons.add,
+                                        color: pillarColor,
+                                      ),
+                                      onPressed: () async {
+                                        if (!isPremium) {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder:
+                                                  (context) =>
+                                                      const PremiumUpgradePage(),
+                                            ),
+                                          );
+                                          return;
+                                        }
+                                        final result = await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder:
+                                                (context) => AddCardPage(
+                                                  pillarId: pillarId,
+                                                  initialSubjectId:
+                                                      _currentSubject!.id,
+                                                ),
+                                          ),
+                                        );
+                                        if (result == true) _refreshData();
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ],
+                            ),
+                          ],
+                        ],
+                        const SizedBox(height: 24),
+                      ],
+                    );
+                  },
+                ),
+              ),
+              if (_isLoading)
                 const SliverFillRemaining(
-                  child: Center(child: Text('No subjects found in this collection')),
+                  child: Center(child: CircularProgressIndicator()),
+                )
+              else if (_currentSubject == null && _currentCollection == null)
+                const SliverFillRemaining(
+                  child: Center(
+                    child: Text(
+                      'This is a folder. You can use Learn/Test buttons above to practice all cards.',
+                    ),
+                  ),
+                )
+              else if (_currentCollection != null)
+                if (_filteredSubjects.isEmpty)
+                  const SliverFillRemaining(
+                    child: Center(
+                      child: Text('No subjects found in this collection'),
+                    ),
+                  )
+                else
+                  SliverPadding(
+                    padding: const EdgeInsets.only(bottom: 32),
+                    sliver: SliverList(
+                      delegate: SliverChildBuilderDelegate((context, index) {
+                        final subject = _filteredSubjects[index];
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 16),
+                          child: InkWell(
+                            onTap: () async {
+                              final cards = await _cardService
+                                  .getCardsBySubject(subject.id);
+                              if (context.mounted) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder:
+                                        (context) => SubjectLandingPage(
+                                          subject: subject,
+                                          cards: cards,
+                                          languageCode: displayLang,
+                                        ),
+                                  ),
+                                );
+                              }
+                            },
+                            borderRadius: BorderRadius.circular(16),
+                            child: Container(
+                              padding: const EdgeInsets.all(20),
+                              decoration: BoxDecoration(
+                                color: Theme.of(context).cardColor,
+                                borderRadius: BorderRadius.circular(16),
+                                border: Border.all(
+                                  color: pillarColor.withValues(alpha: 0.2),
+                                  width: 1.5,
+                                ),
+                              ),
+                              child: Row(
+                                children: [
+                                  if (isOwner)
+                                    Checkbox(
+                                      value: _currentCollection!.subjectIds
+                                          .contains(subject.id),
+                                      activeColor: pillarColor,
+                                      onChanged: (val) async {
+                                        if (val == null) return;
+                                        setState(() {
+                                          if (val) {
+                                            _currentCollection!.subjectIds.add(
+                                              subject.id,
+                                            );
+                                          } else {
+                                            _currentCollection!.subjectIds
+                                                .remove(subject.id);
+                                          }
+                                          _hasUpdated = true;
+                                        });
+                                        await _cardService.addCollection(
+                                          _currentCollection!,
+                                          _currentCollection!.subjectIds,
+                                        );
+                                      },
+                                    )
+                                  else
+                                    Icon(Icons.description, color: pillarColor),
+                                  const SizedBox(width: 16),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          subject.getName(displayLang),
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18,
+                                          ),
+                                        ),
+                                        Text(
+                                          '${pillars.firstWhere((p) => p.id == subject.pillarId, orElse: () => pillars.first).getTranslatedName(displayLang)} • ${subject.cardCount} ${context.plural('card', subject.cardCount)}',
+                                          style: TextStyle(
+                                            color: Colors.grey[600],
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  const Icon(
+                                    Icons.chevron_right,
+                                    color: Colors.grey,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      }, childCount: _filteredSubjects.length),
+                    ),
+                  )
+              else if (_filteredCards.isEmpty)
+                const SliverFillRemaining(
+                  child: Center(child: Text('No cards found')),
                 )
               else
                 SliverPadding(
                   padding: const EdgeInsets.only(bottom: 32),
-                  sliver: SliverList(
+                  sliver: SliverGrid(
+                    gridDelegate:
+                        const SliverGridDelegateWithMaxCrossAxisExtent(
+                          maxCrossAxisExtent: 200,
+                          childAspectRatio: 0.8,
+                          crossAxisSpacing: 16,
+                          mainAxisSpacing: 16,
+                        ),
                     delegate: SliverChildBuilderDelegate((context, index) {
-                      final subject = _filteredSubjects[index];
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 16),
-                        child: InkWell(
-                          onTap: () async {
-                            final cards = await _cardService.getCardsBySubject(subject.id);
-                            if (context.mounted) {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => SubjectLandingPage(
-                                    subject: subject,
-                                    cards: cards,
-                                    languageCode: displayLang,
-                                  ),
+                      final card = _filteredCards[index];
+                      final isCardMine =
+                          card.ownerId == _authService.currentUser?.serverId;
+                      final answers = card.getAnswerList(displayLang);
+                      final answerText = answers
+                          .map((a) => CardModel.capitalizeFirst(a))
+                          .join(', ');
+
+                      return InkWell(
+                        onTap:
+                            isCardMine
+                                ? () async {
+                                  await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder:
+                                          (context) => AddCardPage(
+                                            existingCard: card,
+                                            isReadOnly: false,
+                                            pillarId: pillarId,
+                                          ),
+                                    ),
+                                  );
+                                  _refreshData(silent: true);
+                                }
+                                : null,
+                        child: Card(
+                          clipBehavior: Clip.antiAlias,
+                          elevation: 2,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              Expanded(
+                                flex: 3,
+                                child: _buildCardPreview(
+                                  card,
+                                  pillarColor,
+                                  displayLang,
                                 ),
-                              );
-                            }
-                          },
-                          borderRadius: BorderRadius.circular(16),
-                          child: Container(
-                            padding: const EdgeInsets.all(20),
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).cardColor,
-                              borderRadius: BorderRadius.circular(16),
-                              border: Border.all(color: pillarColor.withValues(alpha: 0.2), width: 1.5),
-                            ),
-                            child: Row(
-                              children: [
-                                if (isOwner)
-                                  Checkbox(
-                                    value: _currentCollection!.subjectIds.contains(subject.id),
-                                    activeColor: pillarColor,
-                                    onChanged: (val) async {
-                                      if (val == null) return;
-                                      setState(() {
-                                        if (val) {
-                                          _currentCollection!.subjectIds.add(subject.id);
-                                        } else {
-                                          _currentCollection!.subjectIds.remove(subject.id);
-                                        }
-                                        _hasUpdated = true;
-                                      });
-                                      await _cardService.addCollection(_currentCollection!, _currentCollection!.subjectIds);
-                                    },
-                                  )
-                                else
-                                  Icon(Icons.description, color: pillarColor),
-                                const SizedBox(width: 16),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        subject.getName(displayLang),
-                                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Stack(
+                                  children: [
+                                    Center(
+                                      child: Text(
+                                        answerText,
+                                        textAlign: TextAlign.center,
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12,
+                                        ),
                                       ),
-                                      Text(
-                                        '${pillars.firstWhere((p) => p.id == subject.pillarId, orElse: () => pillars.first).getTranslatedName(displayLang)} • ${subject.cardCount} ${context.plural('card', subject.cardCount)}',
-                                        style: TextStyle(color: Colors.grey[600], fontSize: 14),
+                                    ),
+                                    if (!isCardMine)
+                                      Positioned(
+                                        right: 0,
+                                        bottom: 0,
+                                        child: Tooltip(
+                                          message:
+                                              'You do not have permission to edit this card',
+                                          child: const Icon(
+                                            Icons.lock_outline,
+                                            size: 10,
+                                            color: Colors.grey,
+                                          ),
+                                        ),
                                       ),
-                                    ],
-                                  ),
+                                  ],
                                 ),
-                                const Icon(Icons.chevron_right, color: Colors.grey),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
                       );
-                    }, childCount: _filteredSubjects.length),
+                    }, childCount: _filteredCards.length),
                   ),
-                )
-            else if (_filteredCards.isEmpty)
-              const SliverFillRemaining(
-                child: Center(child: Text('No cards found')),
-              )
-            else
-              SliverPadding(
-                padding: const EdgeInsets.only(bottom: 32),
-                sliver: SliverGrid(
-                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: 200,
-                    childAspectRatio: 0.8,
-                    crossAxisSpacing: 16,
-                    mainAxisSpacing: 16,
-                  ),
-                  delegate: SliverChildBuilderDelegate((context, index) {
-                    final card = _filteredCards[index];
-                    final isCardMine = card.ownerId == _authService.currentUser?.serverId;
-                    final answers = card.getAnswerList(displayLang);
-                    final answerText = answers.map((a) => CardModel.capitalizeFirst(a)).join(', ');
-
-                    return InkWell(
-                      onTap: isCardMine ? () async {
-                        await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder:
-                                (context) => AddCardPage(
-                                  existingCard: card,
-                                  isReadOnly: false,
-                                  pillarId: pillarId,
-                                ),
-                          ),
-                        );
-                        _refreshData(silent: true);
-                      } : null,
-                      child: Card(
-                        clipBehavior: Clip.antiAlias,
-                        elevation: 2,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            Expanded(
-                              flex: 3,
-                              child: _buildCardPreview(card, pillarColor, displayLang),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Stack(
-                                children: [
-                                  Center(
-                                    child: Text(
-                                      answerText,
-                                      textAlign: TextAlign.center,
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                  ),
-                                  if (!isCardMine)
-                                    Positioned(
-                                      right: 0,
-                                      bottom: 0,
-                                      child: Tooltip(
-                                        message: 'You do not have permission to edit this card',
-                                        child: const Icon(Icons.lock_outline, size: 10, color: Colors.grey),
-                                      ),
-                                    ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  }, childCount: _filteredCards.length),
                 ),
-              ),
-          ],
-        ),
-      );
-    },
-  );
-}
+            ],
+          ),
+        );
+      },
+    );
+  }
 
-  Widget _buildCardPreview(CardModel card, Color pillarColor, String displayLang) {
-    if (_currentSubject == null && _currentCollection == null) return Container();
+  Widget _buildCardPreview(
+    CardModel card,
+    Color pillarColor,
+    String displayLang,
+  ) {
+    if (_currentSubject == null && _currentCollection == null)
+      return Container();
 
     if (_currentSubject != null) {
       if (_currentSubject!.isNumbers) {
@@ -927,27 +1199,17 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
           iconSize: 18,
         );
       } else if (_currentSubject!.isCounting) {
-        return CountingGrid(
-          count: card.numericalAnswer,
-          iconSize: 24,
-        );
+        return CountingGrid(count: card.numericalAnswer, iconSize: 24);
       }
     }
 
     final imageUrl = card.getImageUrls(displayLang).firstOrNull;
     if (imageUrl != null) {
-      return AlioloImage(
-        imageUrl: imageUrl,
-        fit: BoxFit.cover,
-      );
+      return AlioloImage(imageUrl: imageUrl, fit: BoxFit.cover);
     }
     return Container(
       color: pillarColor.withAlpha(25),
-      child: Icon(
-        Icons.image,
-        size: 32,
-        color: pillarColor,
-      ),
+      child: Icon(Icons.image, size: 32, color: pillarColor),
     );
   }
 
@@ -986,11 +1248,105 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                 ),
                 if (isPremiumFeature && !isUserPremium) ...[
                   const SizedBox(width: 4),
-                  const Icon(Icons.workspace_premium, color: Colors.amber, size: 16),
+                  const Icon(
+                    Icons.workspace_premium,
+                    color: Colors.amber,
+                    size: 16,
+                  ),
                 ],
               ],
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  List<Widget> _buildLevelRangeWidgets(Color color) {
+    return [
+        Text(
+          'Level: ',
+          style: TextStyle(
+            color: Colors.grey[700],
+            fontWeight: FontWeight.bold,
+            fontSize: 15,
+          ),
+        ),
+        const SizedBox(width: 8),
+        _buildLevelDropdown(_startLevel, (val) {
+          if (val != null) {
+            setState(() {
+              _startLevel = val;
+              if (_endLevel < _startLevel) _endLevel = _startLevel;
+              _applyFilters();
+            });
+          }
+        }),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: Text('-', style: TextStyle(color: Colors.grey[600])),
+        ),
+        _buildLevelDropdown(_endLevel, (val) {
+          if (val != null) {
+            setState(() {
+              _endLevel = val;
+              if (_startLevel > _endLevel) _startLevel = _endLevel;
+              _applyFilters();
+            });
+          }
+        }),
+        const SizedBox(width: 12),
+        TextButton(
+          onPressed: () {
+            setState(() {
+              _startLevel = 1;
+              _endLevel = 20;
+              _applyFilters();
+            });
+          },
+          style: TextButton.styleFrom(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            minimumSize: Size.zero,
+            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            foregroundColor: color,
+          ),
+          child: const Text('All', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+        ),
+        if (_allCards.isNotEmpty) ...[
+          const SizedBox(width: 12),
+          Text(
+            '${_filteredCards.length} ${context.plural('card', _filteredCards.length)}',
+            style: TextStyle(
+              color: Colors.grey[600],
+              fontSize: 15,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ],
+    ];
+  }
+
+  Widget _buildLevelDropdown(int value, ValueChanged<int?> onChanged) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: Colors.grey[300]!),
+      ),
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton<int>(
+          value: value,
+          isDense: true,
+          items:
+              List.generate(20, (i) => i + 1)
+                  .map(
+                    (lv) => DropdownMenuItem(
+                      value: lv,
+                      child: Text('$lv', style: const TextStyle(fontSize: 15)),
+                    ),
+                  )
+                  .toList(),
+          onChanged: onChanged,
         ),
       ),
     );
