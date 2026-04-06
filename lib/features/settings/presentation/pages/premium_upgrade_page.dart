@@ -46,7 +46,14 @@ class _PremiumUpgradePageState extends State<PremiumUpgradePage> {
     ];
 
     return AlioloScrollablePage(
-      title: Text(context.t('premium_title'), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+      title: Text(
+        context.t('premium_title'),
+        style: const TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          fontSize: 20,
+        ),
+      ),
       appBarColor: currentPrimaryColor,
       actions: [
         IconButton(

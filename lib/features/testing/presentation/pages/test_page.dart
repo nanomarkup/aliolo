@@ -649,7 +649,7 @@ class _TestPageState extends State<TestPage> {
                           child: Card(
                             elevation: 4,
                             clipBehavior: Clip.antiAlias,
-                            color: headerColor.withValues(alpha: 0.05),
+                            color: Colors.white,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(24),
                               side: BorderSide(
@@ -657,7 +657,9 @@ class _TestPageState extends State<TestPage> {
                                 width: 1,
                               ),
                             ),
-                            child: ConstrainedBox(
+                            child: Container(
+                              color: headerColor.withValues(alpha: 0.05),
+                              child: ConstrainedBox(
                               constraints: BoxConstraints(
                                 minHeight: isMobile ? 300 : 0,
                                 maxHeight:
@@ -742,16 +744,19 @@ class _TestPageState extends State<TestPage> {
                                       color: headerColor,
                                     )
                                   else if (_currentImages.isNotEmpty)
-                                    AlioloImage(
-                                      imageUrl:
-                                          _currentImages[_currentImageIndex],
-                                      fit: BoxFit.contain,
-                                      useBorder: true,
-                                      borderColor: Colors.black.withValues(
-                                        alpha: 0.1,
-                                      ),
-                                      backgroundColor: headerColor.withValues(
-                                        alpha: 0.05,
+                                    Container(
+                                      color: Colors.white,
+                                      child: AlioloImage(
+                                        imageUrl:
+                                            _currentImages[_currentImageIndex],
+                                        fit: BoxFit.contain,
+                                        useBorder: true,
+                                        borderColor: Colors.black.withValues(
+                                          alpha: 0.1,
+                                        ),
+                                        backgroundColor: headerColor.withValues(
+                                          alpha: 0.05,
+                                        ),
                                       ),
                                     )
                                   else
@@ -765,7 +770,8 @@ class _TestPageState extends State<TestPage> {
                             ),
                           ),
                         ),
-                      );
+                      ),
+                    );
 
                       final optionsContent =
                           (!isAudioToImage ||

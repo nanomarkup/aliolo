@@ -148,7 +148,11 @@ class _SettingsPageState extends State<SettingsPage> {
         return AlioloScrollablePage(
           title: Text(
             context.t('settings'),
-            style: const TextStyle(color: appBarColor),
+            style: const TextStyle(
+              color: appBarColor,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           appBarColor: currentPrimaryColor,
           actions: [

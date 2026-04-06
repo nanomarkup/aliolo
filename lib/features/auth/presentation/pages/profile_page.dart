@@ -450,7 +450,11 @@ class _ProfilePageState extends State<ProfilePage> {
         return AlioloScrollablePage(
           title: Text(
             context.t('profile'),
-            style: const TextStyle(color: appBarColor),
+            style: const TextStyle(
+              color: appBarColor,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           appBarColor: currentSessionColor,
           actions: [

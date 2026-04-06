@@ -287,7 +287,7 @@ class _SubjectPageState extends State<SubjectPage> {
                       '${context.t('dashboard_greeting')}, ${_authService.currentUser?.username ?? ''}',
                       style: const TextStyle(
                         color: appBarColor,
-                        fontSize: 18,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -402,7 +402,8 @@ class _SubjectPageState extends State<SubjectPage> {
                                     getIt<TestingLanguageService>().getLanguageName(l)
                                   ))
                                 ),
-                                selectedLabel: currentLang.toUpperCase(),
+                                selectedLabel: _currentTestingLang.toUpperCase(),
+                                matchAnchorWidth: false,
                                 onChanged: (val) async {
                                   if (val != null) {
                                     await getIt<TestingLanguageService>().updateCurrentLanguage(val);
@@ -443,7 +444,18 @@ class _SubjectPageState extends State<SubjectPage> {
                                       });
                                     },
                                   ),
-                                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                    borderSide: BorderSide(color: currentSessionColor.withValues(alpha: 0.5)),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                    borderSide: BorderSide(color: currentSessionColor.withValues(alpha: 0.5)),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                    borderSide: BorderSide(color: currentSessionColor, width: 2),
+                                  ),
                                   contentPadding: const EdgeInsets.symmetric(horizontal: 12),
                                   filled: true,
                                   fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
@@ -457,6 +469,8 @@ class _SubjectPageState extends State<SubjectPage> {
                             SizedBox(
                               height: 45,
                               child: PopupMenuButton<String>(
+                                tooltip: '',
+                                color: Colors.white,
                                 icon: Icon(Icons.add, color: currentSessionColor),
                                 onSelected: (value) async {
                                   if (!isPremium) {
@@ -686,19 +700,25 @@ class _SubjectPageState extends State<SubjectPage> {
     ValueChanged<String?>? onChanged,
     IconData? prefixIcon,
     String? selectedLabel,
+    bool matchAnchorWidth = true,
   }) {
     final validatedValue = items.containsKey(value) ? value : (items.isNotEmpty ? items.keys.first : '');
     final label = selectedLabel ?? items[validatedValue] ?? '';
     
-    return PopupMenuButton<String>(
-      onSelected: onChanged,
-      position: PopupMenuPosition.under,
-      offset: Offset.zero,
-      itemBuilder: (context) => items.entries.map((e) => PopupMenuItem<String>(
-        value: e.key,
-        child: Text(e.value),
-      )).toList(),
-      child: Container(
+    return LayoutBuilder(
+      builder: (context, box) {
+        return PopupMenuButton<String>(
+          constraints: matchAnchorWidth ? BoxConstraints(minWidth: box.maxWidth, maxWidth: box.maxWidth) : null,
+          onSelected: onChanged,
+          position: PopupMenuPosition.under,
+          offset: Offset.zero,
+          tooltip: '',
+          color: Colors.white,
+          itemBuilder: (context) => items.entries.map((e) => PopupMenuItem<String>(
+            value: e.key,
+            child: Text(e.value),
+          )).toList(),
+          child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
         decoration: BoxDecoration(
           color: Theme.of(context).cardColor.withValues(alpha: 0.5), 
@@ -726,6 +746,8 @@ class _SubjectPageState extends State<SubjectPage> {
         ),
       ),
     );
+  },
+);
   }
 }
 
@@ -859,6 +881,7 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
               style: const TextStyle(
                 color: appBarColor,
                 fontWeight: FontWeight.bold,
+                fontSize: 20,
               ),
             ),
             appBarColor: pillarColor,
@@ -942,6 +965,7 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
                               ))
                             ),
                             selectedLabel: currentLang.toUpperCase(),
+                            matchAnchorWidth: false,
                             onChanged: (val) async {
                               if (val != null) {
                                 await getIt<TestingLanguageService>().updateCurrentLanguage(val);
@@ -957,7 +981,7 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
                         SizedBox(
                           height: 45,
                           child: IconButton(
-                            icon: Icon(Icons.search, color: appBarColor),
+                            icon: Icon(Icons.search, color: pillarColor),
                             onPressed: () {
                               setState(() => _isSearchExpanded = true);
                               _searchFocusNode.requestFocus();
@@ -982,8 +1006,18 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
                                   });
                                 },
                               ),
-                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                              contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                borderSide: BorderSide(color: pillarColor.withValues(alpha: 0.5)),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                borderSide: BorderSide(color: pillarColor.withValues(alpha: 0.5)),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                borderSide: BorderSide(color: pillarColor, width: 2),
+                              ),                              contentPadding: const EdgeInsets.symmetric(horizontal: 12),
                               filled: true,
                               fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
                             ),
@@ -992,11 +1026,12 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
                         ),
                       if (!_isSearchExpanded) ...[
                         const SizedBox(width: 4),
-                        // Add
                         SizedBox(
                           height: 45,
                           child: PopupMenuButton<String>(
-                            icon: Icon(Icons.add, color: appBarColor),
+                            tooltip: '',
+                            color: Colors.white,
+                            icon: Icon(Icons.add, color: pillarColor),
                             onSelected: (value) async {
                               if (!isPremium) {
                                 Navigator.push(context, MaterialPageRoute(builder: (context) => const PremiumUpgradePage()));
@@ -1167,19 +1202,25 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
     ValueChanged<String?>? onChanged,
     IconData? prefixIcon,
     String? selectedLabel,
+    bool matchAnchorWidth = true,
   }) {
     final validatedValue = items.containsKey(value) ? value : (items.isNotEmpty ? items.keys.first : '');
     final label = selectedLabel ?? items[validatedValue] ?? '';
     
-    return PopupMenuButton<String>(
-      onSelected: onChanged,
-      position: PopupMenuPosition.under,
-      offset: Offset.zero,
-      itemBuilder: (context) => items.entries.map((e) => PopupMenuItem<String>(
-        value: e.key,
-        child: Text(e.value),
-      )).toList(),
-      child: Container(
+    return LayoutBuilder(
+      builder: (context, box) {
+        return PopupMenuButton<String>(
+          constraints: matchAnchorWidth ? BoxConstraints(minWidth: box.maxWidth, maxWidth: box.maxWidth) : null,
+          onSelected: onChanged,
+          position: PopupMenuPosition.under,
+          offset: Offset.zero,
+          tooltip: '',
+          color: Colors.white,
+          itemBuilder: (context) => items.entries.map((e) => PopupMenuItem<String>(
+            value: e.key,
+            child: Text(e.value),
+          )).toList(),
+          child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
         decoration: BoxDecoration(
           color: Theme.of(context).cardColor.withValues(alpha: 0.5), 
@@ -1207,6 +1248,8 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
         ),
       ),
     );
+  },
+);
   }
 }
 
@@ -1344,6 +1387,7 @@ class _FolderPageState extends State<FolderPage> {
               style: const TextStyle(
                 color: appBarColor,
                 fontWeight: FontWeight.bold,
+                fontSize: 20,
               ),
             ),
             appBarColor: pillarColor,
@@ -1423,6 +1467,7 @@ class _FolderPageState extends State<FolderPage> {
                               ))
                             ),
                             selectedLabel: currentLang.toUpperCase(),
+                            matchAnchorWidth: false,
                             onChanged: (val) async {
                               if (val != null) {
                                 await getIt<TestingLanguageService>().updateCurrentLanguage(val);
@@ -1438,7 +1483,7 @@ class _FolderPageState extends State<FolderPage> {
                         SizedBox(
                           height: 45,
                           child: IconButton(
-                            icon: Icon(Icons.search, color: appBarColor),
+                            icon: Icon(Icons.search, color: pillarColor),
                             onPressed: () {
                               setState(() => _isSearchExpanded = true);
                               _searchFocusNode.requestFocus();
@@ -1463,8 +1508,18 @@ class _FolderPageState extends State<FolderPage> {
                                   });
                                 },
                               ),
-                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                              contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                borderSide: BorderSide(color: pillarColor.withValues(alpha: 0.5)),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                borderSide: BorderSide(color: pillarColor.withValues(alpha: 0.5)),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                borderSide: BorderSide(color: pillarColor, width: 2),
+                              ),                              contentPadding: const EdgeInsets.symmetric(horizontal: 12),
                               filled: true,
                               fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
                             ),
@@ -1473,11 +1528,12 @@ class _FolderPageState extends State<FolderPage> {
                         ),
                       if (!_isSearchExpanded) ...[
                         const SizedBox(width: 4),
-                        // Add
                         SizedBox(
                           height: 45,
                           child: PopupMenuButton<String>(
-                            icon: Icon(Icons.add, color: appBarColor),
+                            tooltip: '',
+                            color: Colors.white,
+                            icon: Icon(Icons.add, color: pillarColor),
                             onSelected: (value) async {
                               if (!isPremium) {
                                 Navigator.push(context, MaterialPageRoute(builder: (context) => const PremiumUpgradePage()));
@@ -1631,19 +1687,25 @@ class _FolderPageState extends State<FolderPage> {
     ValueChanged<String?>? onChanged,
     IconData? prefixIcon,
     String? selectedLabel,
+    bool matchAnchorWidth = true,
   }) {
     final validatedValue = items.containsKey(value) ? value : (items.isNotEmpty ? items.keys.first : '');
     final label = selectedLabel ?? items[validatedValue] ?? '';
     
-    return PopupMenuButton<String>(
-      onSelected: onChanged,
-      position: PopupMenuPosition.under,
-      offset: Offset.zero,
-      itemBuilder: (context) => items.entries.map((e) => PopupMenuItem<String>(
-        value: e.key,
-        child: Text(e.value),
-      )).toList(),
-      child: Container(
+    return LayoutBuilder(
+      builder: (context, box) {
+        return PopupMenuButton<String>(
+          constraints: matchAnchorWidth ? BoxConstraints(minWidth: box.maxWidth, maxWidth: box.maxWidth) : null,
+          onSelected: onChanged,
+          position: PopupMenuPosition.under,
+          offset: Offset.zero,
+          tooltip: '',
+          color: Colors.white,
+          itemBuilder: (context) => items.entries.map((e) => PopupMenuItem<String>(
+            value: e.key,
+            child: Text(e.value),
+          )).toList(),
+          child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
         decoration: BoxDecoration(
           color: Theme.of(context).cardColor.withValues(alpha: 0.5), 
@@ -1671,6 +1733,8 @@ class _FolderPageState extends State<FolderPage> {
         ),
       ),
     );
+  },
+);
   }
 }
 

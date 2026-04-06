@@ -485,7 +485,7 @@ class _LearnPageState extends State<LearnPage> {
                       child: Card(
                         elevation: 4,
                         clipBehavior: Clip.antiAlias,
-                        color: headerColor.withValues(alpha: 0.05),
+                        color: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(24),
                           side: BorderSide(
@@ -493,7 +493,9 @@ class _LearnPageState extends State<LearnPage> {
                             width: 1,
                           ),
                         ),
-                        child: Stack(
+                        child: Container(
+                          color: headerColor.withValues(alpha: 0.05),
+                          child: Stack(
                           fit: StackFit.expand,
                           children: [
                             if (_showingVideo)
@@ -502,6 +504,9 @@ class _LearnPageState extends State<LearnPage> {
                               AlioloImage(
                                 imageUrl: _currentImages[_currentImageIndex],
                                 fit: BoxFit.contain,
+                                useBorder: true,
+                                borderColor: Colors.black.withValues(alpha: 0.1),
+                                backgroundColor: headerColor.withValues(alpha: 0.05),
                               )
                             else if (_subject.isDivision)
                               DivisionGrid(
@@ -601,6 +606,7 @@ class _LearnPageState extends State<LearnPage> {
                       ),
                     ),
                   ),
+                ),
                 ),
               ],
             ),
