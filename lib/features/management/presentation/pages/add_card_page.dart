@@ -630,7 +630,7 @@ class _AddCardPageState extends State<AddCardPage> {
 
         final backAction = IconButton(
           tooltip: context.t('back'),
-          icon: const Icon(Icons.arrow_back, color: appBarColor),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
         );
 
@@ -646,7 +646,7 @@ class _AddCardPageState extends State<AddCardPage> {
                       strokeWidth: 2,
                     ),
                   )
-                  : const Icon(Icons.save, color: appBarColor),
+                  : const Icon(Icons.save),
               onPressed: _isSaving ? null : _save,
             )
             : null;
@@ -654,7 +654,7 @@ class _AddCardPageState extends State<AddCardPage> {
         final jsonAction = !widget.isReadOnly
             ? IconButton(
               tooltip: 'JSON',
-              icon: const Icon(Icons.data_object, color: appBarColor),
+              icon: const Icon(Icons.data_object),
               onPressed: _showJsonDialog,
             )
             : null;
@@ -662,7 +662,7 @@ class _AddCardPageState extends State<AddCardPage> {
         final deleteAction = (widget.existingCard != null && !widget.isReadOnly)
             ? IconButton(
               tooltip: context.t('delete'),
-              icon: const Icon(Icons.delete, color: appBarColor),
+              icon: const Icon(Icons.delete),
               onPressed: () async {
                 final confirmed = await showDialog<bool>(
                   context: context,
@@ -693,7 +693,7 @@ class _AddCardPageState extends State<AddCardPage> {
         final feedbackAction = (widget.existingCard != null)
             ? IconButton(
               tooltip: context.t('feedback'),
-              icon: const Icon(Icons.feedback, color: appBarColor),
+              icon: const Icon(Icons.feedback),
               onPressed: () {
                 final pillar = pillars.firstWhere(
                   (p) => p.id == (_internalPillarId ?? 1),

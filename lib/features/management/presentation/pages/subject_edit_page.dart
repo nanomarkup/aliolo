@@ -851,7 +851,7 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
 
           final backAction = IconButton(
             tooltip: context.t('back'),
-            icon: const Icon(Icons.arrow_back, color: appBarColor),
+            icon: const Icon(Icons.arrow_back),
             onPressed: () async {
               final shouldPop = await _onWillPop();
               if (shouldPop && context.mounted) {
@@ -872,7 +872,7 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
                         strokeWidth: 2,
                       ),
                     )
-                    : const Icon(Icons.save, color: appBarColor),
+                    : const Icon(Icons.save),
                 onPressed: _isSaving ? null : _save,
               )
               : null;
@@ -880,7 +880,7 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
           final jsonAction = isOwner
               ? IconButton(
                 tooltip: 'JSON',
-                icon: const Icon(Icons.data_object, color: appBarColor),
+                icon: const Icon(Icons.data_object),
                 onPressed: _showJsonDialog,
               )
               : null;
@@ -888,7 +888,7 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
           final deleteAction = (isOwner && (widget.existingSubject != null || widget.existingFolder != null))
               ? IconButton(
                 tooltip: context.t('delete'),
-                icon: const Icon(Icons.delete, color: appBarColor),
+                icon: const Icon(Icons.delete),
                 onPressed: () async {
                   if (_isFolderMode) {
                     final confirmed = await showDialog<bool>(
@@ -972,7 +972,7 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
           final feedbackAction = (widget.existingSubject != null || widget.existingFolder != null)
               ? IconButton(
                 tooltip: context.t('feedback'),
-                icon: const Icon(Icons.feedback, color: appBarColor),
+                icon: const Icon(Icons.feedback),
                 onPressed: () {
                   Navigator.push(
                     context,

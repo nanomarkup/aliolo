@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:aliolo/data/models/subject_model.dart';
 import 'package:aliolo/data/models/card_model.dart';
 import 'package:aliolo/data/models/pillar_model.dart';
@@ -68,7 +69,6 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
   List<SubjectModel> _filteredSubjects = [];
   bool _isLoading = false;
   bool _hasUpdated = false;
-  bool _isSearchExpanded = false;
   late String _currentLanguageCode;
 
   String _collectionFilter = 'all';
@@ -448,31 +448,37 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
       builder: (context) {
         return StatefulBuilder(
           builder: (context, setBottomSheetState) {
-            final filterRow = _currentCollection != null
+            final isOwner = _currentCollection?.ownerId == _authService.currentUser?.serverId;
+            final isSmall = MediaQuery.sizeOf(context).width < 600;
+            final showSourceAndAge = _currentCollection != null && isOwner;
+
+            final filterRow = showSourceAndAge
                 ? Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(context.t('source'), style: const TextStyle(fontWeight: FontWeight.bold)),
-                      const SizedBox(height: 8),
-                      _buildCompactDropdown(
-                        value: _collectionFilter,
-                        items: {
-                          'all': context.t('filter_all'),
-                          'favorites': context.t('filter_favorites'),
-                          'mine': context.t('filter_my_subjects'),
-                          'public': context.t('filter_public_library'),
-                        },
-                        onChanged: (val) {
-                          if (val != null) {
-                            setState(() {
-                              _collectionFilter = val;
-                              _applyFilters();
-                            });
-                            setBottomSheetState(() {});
-                          }
-                        },
-                      ),
-                      const SizedBox(height: 20),
+                      if (isSmall) ...[
+                        Text(context.t('source'), style: const TextStyle(fontWeight: FontWeight.bold)),
+                        const SizedBox(height: 8),
+                        _buildCompactDropdown(
+                          value: _collectionFilter,
+                          items: {
+                            'all': context.t('filter_all'),
+                            'favorites': context.t('filter_favorites'),
+                            'mine': context.t('filter_my_subjects'),
+                            'public': context.t('filter_public_library'),
+                          },
+                          onChanged: (val) {
+                            if (val != null) {
+                              setState(() {
+                                _collectionFilter = val;
+                                _applyFilters();
+                              });
+                              setBottomSheetState(() {});
+                            }
+                          },
+                        ),
+                        const SizedBox(height: 20),
+                      ],
                       Text(context.t('age'), style: const TextStyle(fontWeight: FontWeight.bold)),
                       const SizedBox(height: 8),
                       _buildCompactDropdown(
@@ -565,26 +571,28 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                       const SizedBox(height: 20),
                     ],
                     filterRow,
-                    const SizedBox(height: 8),
-                    Text(context.t('language') ?? 'Language', style: const TextStyle(fontWeight: FontWeight.bold)),
-                    const SizedBox(height: 8),
-                    _buildCompactDropdown(
-                      value: _currentLanguageCode,
-                      items: Map.fromEntries(
-                        _langService.activeLanguageCodes.map((l) => MapEntry(
-                          l, 
-                          _langService.getLanguageName(l)
-                        ))
+                    if (MediaQuery.sizeOf(context).width < 600) ...[
+                      const SizedBox(height: 8),
+                      Text(context.t('language') ?? 'Language', style: const TextStyle(fontWeight: FontWeight.bold)),
+                      const SizedBox(height: 8),
+                      _buildCompactDropdown(
+                        value: _currentLanguageCode,
+                        items: Map.fromEntries(
+                          _langService.activeLanguageCodes.map((l) => MapEntry(
+                            l, 
+                            _langService.getLanguageName(l)
+                          ))
+                        ),
+                        matchAnchorWidth: true,
+                        onChanged: (val) async {
+                          if (val != null) {
+                            await _langService.updateCurrentLanguage(val);
+                            setBottomSheetState(() {});
+                          }
+                        },
                       ),
-                      matchAnchorWidth: true,
-                      onChanged: (val) async {
-                        if (val != null) {
-                          await _langService.updateCurrentLanguage(val);
-                          setBottomSheetState(() {});
-                        }
-                      },
-                    ),
-                    const SizedBox(height: 24),
+                      const SizedBox(height: 24),
+                    ],
                     if (_allCards.isNotEmpty) ...[
                       Center(
                         child: Text(
@@ -697,6 +705,99 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
             _currentCollection?.getDescription(_currentLanguageCode) ??
             '';
 
+        final isSmallScreen = MediaQuery.sizeOf(context).width < 600;
+
+        final backAction = IconButton(
+          tooltip: context.t('back'),
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Navigator.pop(context, _hasUpdated),
+        );
+
+        final favoriteAction = ((_currentSubject != null || _currentCollection != null) && !widget.isReadOnly)
+            ? IconButton(
+                tooltip: context.t('favorite'),
+                icon: Icon(
+                  (_currentSubject?.isOnDashboard ??
+                          _currentCollection?.isOnDashboard ??
+                          false)
+                      ? Icons.star
+                      : Icons.star_border,
+                ),
+                onPressed: _toggleFavorite,
+              )
+            : null;
+
+        final editAction = (isOwner && !widget.isReadOnly)
+            ? IconButton(
+                tooltip: context.t('edit'),
+                icon: const Icon(Icons.edit),
+                onPressed: () async {
+                  final result = await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder:
+                          (context) => SubjectEditPage(
+                            existingSubject:
+                                _currentSubject ??
+                                SubjectModel(
+                                  id: _currentCollection!.id,
+                                  pillarId: _currentCollection!.pillarId,
+                                  ownerId: _currentCollection!.ownerId,
+                                  isPublic: _currentCollection!.isPublic,
+                                  createdAt: _currentCollection!.createdAt,
+                                  updatedAt: _currentCollection!.updatedAt,
+                                  localizedData:
+                                      _currentCollection!.localizedData,
+                                  folderId: _currentCollection!.folderId,
+                                  typeStr: 'collection',
+                                  linkedSubjectIds:
+                                      _currentCollection!.subjectIds,
+                                  isOnDashboard:
+                                      _currentCollection!.isOnDashboard,
+                                  ageGroup: _currentCollection!.ageGroup,
+                                ),
+                            isCollectionMode: _currentCollection != null,
+                          ),
+                    ),
+                  );
+                  if (result == true) {
+                    if (_currentSubject != null) _refreshData();
+                    if (_currentCollection != null) {
+                      if (context.mounted) Navigator.pop(context, true);
+                    }
+                  }
+                },
+              )
+            : null;
+
+        final deleteAction = (isOwner && !widget.isReadOnly)
+            ? IconButton(
+                tooltip: context.t('delete'),
+                icon: const Icon(Icons.delete),
+                onPressed: _confirmDeleteSubject,
+              )
+            : null;
+
+        final feedbackAction = IconButton(
+          tooltip: context.t('feedback'),
+          icon: const Icon(Icons.feedback),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder:
+                    (context) => FeedbackPage(
+                      subjectId: _currentSubject?.id,
+                      folderId: _currentFolder?.id,
+                      collectionId: _currentCollection?.id,
+                      contextTitle: title,
+                      appBarColor: pillarColor,
+                    ),
+              ),
+            );
+          },
+        );
+
         return PopScope(
           canPop: false,
           onPopInvokedWithResult: (didPop, result) {
@@ -714,87 +815,25 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
               overflow: TextOverflow.ellipsis,
             ),
             appBarColor: pillarColor,
-            actions: [
-              IconButton(
-                icon: const Icon(Icons.arrow_back),
-                onPressed: () => Navigator.pop(context, _hasUpdated),
-              ),
-              if ((_currentSubject != null || _currentCollection != null) && !widget.isReadOnly) ...[
-                IconButton(
-                  icon: Icon(
-                    (_currentSubject?.isOnDashboard ??
-                            _currentCollection?.isOnDashboard ??
-                            false)
-                        ? Icons.star
-                        : Icons.star_border,
-                  ),
-                  onPressed: _toggleFavorite,
-                ),
-              ],
-              if (isOwner && !widget.isReadOnly) ...[
-                IconButton(
-                  icon: const Icon(Icons.edit),
-                  onPressed: () async {
-                    final result = await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder:
-                            (context) => SubjectEditPage(
-                              existingSubject:
-                                  _currentSubject ??
-                                  SubjectModel(
-                                    id: _currentCollection!.id,
-                                    pillarId: _currentCollection!.pillarId,
-                                    ownerId: _currentCollection!.ownerId,
-                                    isPublic: _currentCollection!.isPublic,
-                                    createdAt: _currentCollection!.createdAt,
-                                    updatedAt: _currentCollection!.updatedAt,
-                                    localizedData:
-                                        _currentCollection!.localizedData,
-                                    folderId: _currentCollection!.folderId,
-                                    typeStr: 'collection',
-                                    linkedSubjectIds:
-                                        _currentCollection!.subjectIds,
-                                    isOnDashboard:
-                                        _currentCollection!.isOnDashboard,
-                                    ageGroup: _currentCollection!.ageGroup,
-                                  ),
-                              isCollectionMode: _currentCollection != null,
-                            ),
-                      ),
-                    );
-                    if (result == true) {
-                      if (_currentSubject != null) _refreshData();
-                      if (_currentCollection != null) {
-                        if (context.mounted) Navigator.pop(context, true);
-                      }
-                    }
-                  },
-                ),
-                IconButton(
-                  icon: const Icon(Icons.delete),
-                  onPressed: _confirmDeleteSubject,
-                ),
-              ],
-              IconButton(
-                icon: const Icon(Icons.feedback),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder:
-                          (context) => FeedbackPage(
-                            subjectId: _currentSubject?.id,
-                            folderId: _currentFolder?.id,
-                            collectionId: _currentCollection?.id,
-                            contextTitle: title,
-                            appBarColor: pillarColor,
-                          ),
-                    ),
-                  );
-                },
-              ),
-            ],
+            actions: isSmallScreen
+                ? [
+                    backAction,
+                    if (favoriteAction != null) favoriteAction,
+                  ]
+                : [
+                    backAction,
+                    if (favoriteAction != null) favoriteAction,
+                    if (editAction != null) editAction,
+                    if (deleteAction != null) deleteAction,
+                    feedbackAction,
+                  ],
+            overflowActions: isSmallScreen
+                ? [
+                    if (editAction != null) editAction,
+                    if (deleteAction != null) deleteAction,
+                    feedbackAction,
+                  ]
+                : null,
             fixedBody: widget.isReadOnly ? null : Padding(
               padding: const EdgeInsets.only(top: 16, bottom: 8),
               child: Column(
@@ -847,53 +886,6 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
               SliverToBoxAdapter(
                 child: LayoutBuilder(
                   builder: (context, constraints) {
-                    final isSmall = constraints.maxWidth < 600;
-                    final filterRow =
-                        _currentCollection != null
-                            ? Row(
-                              children: [
-                                // Source
-                                Expanded(
-                                  child: _buildCompactDropdown(
-                                    value: _collectionFilter,
-                                    items: {
-                                      'all': context.t('filter_all'),
-                                      'favorites': context.t('filter_favorites'),
-                                      'mine': context.t('filter_my_subjects'),
-                                      'public': context.t('filter_public_library'),
-                                    },
-                                    onChanged: (val) {
-                                      if (val != null)
-                                        setState(() {
-                                          _collectionFilter = val;
-                                          _applyFilters();
-                                        });
-                                    },
-                                  ),
-                                ),
-                                const SizedBox(width: 8),
-                                // Age
-                                Expanded(
-                                  child: _buildCompactDropdown(
-                                    value: _selectedAgeFilter,
-                                    items: {
-                                      'all': context.t('age_all'),
-                                      '0_6': context.t('age_0_6'),
-                                      '7_14': context.t('age_7_14'),
-                                      '15_plus': context.t('age_15_plus'),
-                                    },
-                                    onChanged: (val) {
-                                      if (val != null)
-                                        setState(() {
-                                          _selectedAgeFilter = val;
-                                          _applyFilters();
-                                        });
-                                    },
-                                  ),
-                                ),
-                              ],
-                            )
-                            : const SizedBox.shrink();
 
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -916,9 +908,55 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                           const SizedBox(height: 16),
                         if (_currentSubject != null ||
                             _currentCollection != null) ...[
-                          if (isSmall) ...[
-                            Row(
+                          Row(
                               children: [
+                                if (_currentCollection != null && isOwner && constraints.maxWidth >= 600) ...[
+                                  SizedBox(
+                                    width: 160,
+                                    child: _buildCompactDropdown(
+                                      value: _collectionFilter,
+                                      items: {
+                                        'all': context.t('filter_all'),
+                                        'favorites': context.t('filter_favorites'),
+                                        'mine': context.t('filter_my_subjects'),
+                                        'public': context.t('filter_public_library'),
+                                      },
+                                      onChanged: (val) async {
+                                        if (val != null) {
+                                          setState(() {
+                                            _collectionFilter = val;
+                                            _applyFilters();
+                                          });
+                                          final prefs = await SharedPreferences.getInstance();
+                                          await prefs.setString('last_collection_filter', val);
+                                        }
+                                      },
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                ],
+                                if (constraints.maxWidth >= 600) ...[
+                                  SizedBox(
+                                    width: 100,
+                                    child: _buildCompactDropdown(
+                                      value: _currentLanguageCode,
+                                      items: Map.fromEntries(
+                                        _langService.activeLanguageCodes.map((l) => MapEntry(
+                                          l, 
+                                          _langService.getLanguageName(l)
+                                        ))
+                                      ),
+                                      selectedLabel: _langService.getLanguageName(_currentLanguageCode),
+                                      matchAnchorWidth: true,
+                                      onChanged: (val) async {
+                                        if (val != null) {
+                                          await _langService.updateCurrentLanguage(val);
+                                        }
+                                      },
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                ],
                                 Expanded(
                                   child: TextField(
                                     controller: _searchController,
@@ -991,90 +1029,6 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                                 ],
                               ],
                             ),
-                          ] else ...[
-                            Row(
-                              children: [
-                                if (_currentSubject != null && !(_currentSubject?.isMath ?? false) && !widget.isReadOnly) ...[
-                                  ..._buildLevelRangeWidgets(pillarColor),
-                                ],
-                                if (_currentCollection != null && !widget.isReadOnly) ...[
-                                  Expanded(flex: 3, child: filterRow),
-                                  const SizedBox(width: 8),
-                                ],
-                                if (!_isSearchExpanded) const Spacer(),
-                                if (!_isSearchExpanded)
-                                  SizedBox(
-                                    height: 45,
-                                    child: IconButton(
-                                      icon: Icon(
-                                        Icons.search,
-                                        color: pillarColor,
-                                      ),
-                                      onPressed: () {
-                                        setState(() => _isSearchExpanded = true);
-                                        _searchFocusNode.requestFocus();
-                                      },
-                                    ),
-                                  )
-                                else
-                                  Expanded(
-                                    flex: 2,
-                                    child: TextField(
-                                      controller: _searchController,
-                                      focusNode: _searchFocusNode,
-                                      onChanged: (_) => _applyFilters(),
-                                      decoration: InputDecoration(
-                                        hintText: _currentCollection != null ? context.t('search_subjects') : context.t('search_cards'),
-                                        prefixIcon: const Icon(Icons.search),
-                                        isDense: true,
-                                        suffixIcon: IconButton(
-                                          icon: const Icon(Icons.close),
-                                          onPressed: () {
-                                            setState(() {
-                                              _isSearchExpanded = false;
-                                              _searchController.clear();
-                                              _applyFilters();
-                                            });
-                                          },
-                                        ),
-                                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                                        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                                      ),
-                                    ),
-                                  ),
-                                if (isOwner && _currentSubject != null && !_isSearchExpanded && !widget.isReadOnly) ...[
-                                  const SizedBox(width: 8),
-                                  SizedBox(
-                                    height: 45,
-                                    child: IconButton(
-                                      icon: Icon(
-                                        Icons.add,
-                                        color: pillarColor,
-                                      ),
-                                      onPressed: () async {
-                                        if (!isPremium) {
-                                          Navigator.push(context, MaterialPageRoute(builder: (context) => const PremiumUpgradePage()));
-                                          return;
-                                        }
-                                        final result = await Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder:
-                                                (context) => AddCardPage(
-                                                  pillarId: pillarId,
-                                                  initialSubjectId:
-                                                      _currentSubject!.id,
-                                                ),
-                                          ),
-                                        );
-                                        if (result == true) _refreshData();
-                                      },
-                                    ),
-                                  ),
-                                ],
-                              ],
-                            ),
-                          ],
                         ],
                         const SizedBox(height: 24),
                       ],
@@ -1458,69 +1412,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
     );
   }
 
-  List<Widget> _buildLevelRangeWidgets(Color color) {
-    return [
-        Text(
-          'Level: ',
-          style: TextStyle(
-            color: Colors.grey[700],
-            fontWeight: FontWeight.bold,
-            fontSize: 15,
-          ),
-        ),
-        const SizedBox(width: 8),
-        _buildLevelDropdown(_startLevel, (val) {
-          if (val != null) {
-            setState(() {
-              _startLevel = val;
-              if (_endLevel < _startLevel) _endLevel = _startLevel;
-              _applyFilters();
-            });
-          }
-        }),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8),
-          child: Text('-', style: TextStyle(color: Colors.grey[600])),
-        ),
-        _buildLevelDropdown(_endLevel, (val) {
-          if (val != null) {
-            setState(() {
-              _endLevel = val;
-              if (_startLevel > _endLevel) _startLevel = _endLevel;
-              _applyFilters();
-            });
-          }
-        }),
-        const SizedBox(width: 12),
-        TextButton(
-          onPressed: () {
-            setState(() {
-              _startLevel = 1;
-              _endLevel = 20;
-              _applyFilters();
-            });
-          },
-          style: TextButton.styleFrom(
-            padding: const EdgeInsets.symmetric(horizontal: 12),
-            minimumSize: Size.zero,
-            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            foregroundColor: color,
-          ),
-          child: const Text('All', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
-        ),
-        if (_allCards.isNotEmpty) ...[
-          const SizedBox(width: 12),
-          Text(
-            '${_filteredCards.length} ${context.plural('card', _filteredCards.length)}',
-            style: TextStyle(
-              color: Colors.grey[600],
-              fontSize: 15,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ],
-    ];
-  }
+  
 
   Widget _buildLevelDropdown(int value, ValueChanged<int?> onChanged) {
     return Container(
