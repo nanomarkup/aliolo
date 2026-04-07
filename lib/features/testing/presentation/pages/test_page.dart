@@ -467,7 +467,7 @@ class _TestPageState extends State<TestPage> {
           autofocus: true,
           onKeyEvent: _onKeyEvent,
           child: Scaffold(
-            backgroundColor: Colors.white,
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             appBar: AppBar(
               automaticallyImplyLeading: false,
               title: Text(
@@ -584,7 +584,7 @@ class _TestPageState extends State<TestPage> {
                         _currentCard.getPrompt(lang),
                         style: TextStyle(
                           fontSize: 20,
-                          color: Colors.grey[700],
+                          color: Theme.of(context).textTheme.bodyLarge?.color?.withValues(alpha: 0.7),
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -649,7 +649,7 @@ class _TestPageState extends State<TestPage> {
                           child: Card(
                             elevation: 4,
                             clipBehavior: Clip.antiAlias,
-                            color: Colors.white,
+                            color: Theme.of(context).cardColor,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(24),
                               side: BorderSide(
@@ -745,15 +745,13 @@ class _TestPageState extends State<TestPage> {
                                     )
                                   else if (_currentImages.isNotEmpty)
                                     Container(
-                                      color: Colors.white,
+                                      color: Theme.of(context).cardColor,
                                       child: AlioloImage(
                                         imageUrl:
                                             _currentImages[_currentImageIndex],
                                         fit: BoxFit.contain,
                                         useBorder: true,
-                                        borderColor: Colors.black.withValues(
-                                          alpha: 0.1,
-                                        ),
+                                        borderColor: Theme.of(context).dividerColor,
                                         backgroundColor: headerColor.withValues(
                                           alpha: 0.05,
                                         ),
@@ -988,7 +986,7 @@ class _TestPageState extends State<TestPage> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(
-                          color: borderColor ?? Colors.grey[300]!,
+                          color: borderColor ?? Theme.of(context).dividerColor,
                           width: isSelected || _isAnswered ? 4 : 2,
                         ),
                       ),

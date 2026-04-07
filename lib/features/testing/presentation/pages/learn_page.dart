@@ -317,7 +317,7 @@ class _LearnPageState extends State<LearnPage> {
           autofocus: true,
           onKeyEvent: _onKeyEvent,
           child: Scaffold(
-            backgroundColor: Colors.white,
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             appBar: AppBar(
               automaticallyImplyLeading: false,
               title: Text(
@@ -483,10 +483,9 @@ class _LearnPageState extends State<LearnPage> {
                     child: Padding(
                       padding: const EdgeInsets.all(32),
                       child: Card(
-                        elevation: 4,
-                        clipBehavior: Clip.antiAlias,
-                        color: Colors.white,
-                        shape: RoundedRectangleBorder(
+                      elevation: 4,
+                      clipBehavior: Clip.antiAlias,
+                      color: Theme.of(context).cardColor,                        shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(24),
                           side: BorderSide(
                             color: headerColor.withValues(alpha: 0.1),
@@ -505,7 +504,7 @@ class _LearnPageState extends State<LearnPage> {
                                 imageUrl: _currentImages[_currentImageIndex],
                                 fit: BoxFit.contain,
                                 useBorder: true,
-                                borderColor: Colors.black.withValues(alpha: 0.1),
+                                borderColor: Theme.of(context).dividerColor,
                                 backgroundColor: headerColor.withValues(alpha: 0.05),
                               )
                             else if (_subject.isDivision)

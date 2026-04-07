@@ -528,6 +528,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.green,
                                   foregroundColor: Colors.white,
+                                  disabledBackgroundColor: Colors.green.withValues(alpha: 0.1),
+                                  disabledForegroundColor: Colors.green.withValues(alpha: 0.3),
                                   minimumSize: const Size(double.infinity, 56),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(16),
@@ -555,7 +557,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               ))
                         : ElevatedButton(
                             onPressed: (_currentPage == 1 || _currentPage == 2)
-                                ? null
+                                ? (_currentPage == 1 ? (_selectedAge != null ? () { _pageController.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.easeInOut); } : null) : (_selectedPillarId != null ? () { _pageController.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.easeInOut); } : null))
                                 : () {
                                     _pageController.nextPage(
                                       duration: const Duration(milliseconds: 300),
@@ -565,6 +567,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             style: ElevatedButton.styleFrom(
                               backgroundColor: primaryColor,
                               foregroundColor: Colors.white,
+                              disabledBackgroundColor: primaryColor.withValues(alpha: 0.1),
+                              disabledForegroundColor: primaryColor.withValues(alpha: 0.3),
                               minimumSize: const Size(double.infinity, 56),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(16),
