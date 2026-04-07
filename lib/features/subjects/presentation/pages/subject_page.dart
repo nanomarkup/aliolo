@@ -409,6 +409,15 @@ class _SubjectPageState extends State<SubjectPage> {
                                     hintText: context.t('search_subjects'),
                                     prefixIcon: const Icon(Icons.search),
                                     isDense: true,
+                                    suffixIcon: _searchController.text.isNotEmpty
+                                        ? IconButton(
+                                            icon: const Icon(Icons.clear),
+                                            onPressed: () {
+                                              _searchController.clear();
+                                              _applySearch();
+                                            },
+                                          )
+                                        : null,
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(12),
                                       borderSide: BorderSide(
@@ -1053,6 +1062,15 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
                                 hintText: context.t('search_subjects'),
                                 prefixIcon: const Icon(Icons.search),
                                 isDense: true,
+                                    suffixIcon: _searchController.text.isNotEmpty
+                                        ? IconButton(
+                                            icon: const Icon(Icons.clear),
+                                            onPressed: () {
+                                              _searchController.clear();
+                                              _applySearch();
+                                            },
+                                          )
+                                        : null,
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(12),
                                   borderSide: BorderSide(color: pillarColor.withValues(alpha: 0.5)),
@@ -1690,6 +1708,15 @@ class _FolderPageState extends State<FolderPage> {
                                 hintText: context.t('search_subjects'),
                                 prefixIcon: const Icon(Icons.search),
                                 isDense: true,
+                                    suffixIcon: _searchController.text.isNotEmpty
+                                        ? IconButton(
+                                            icon: const Icon(Icons.clear),
+                                            onPressed: () {
+                                              _searchController.clear();
+                                              _applySearch();
+                                            },
+                                          )
+                                        : null,
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(12),
                                   borderSide: BorderSide(color: pillarColor.withValues(alpha: 0.5)),

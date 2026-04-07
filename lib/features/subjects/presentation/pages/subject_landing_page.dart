@@ -965,6 +965,15 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                                       hintText: _currentCollection != null ? context.t('search_subjects') : context.t('search_cards'),
                                       prefixIcon: const Icon(Icons.search),
                                       isDense: true,
+                                    suffixIcon: _searchController.text.isNotEmpty
+                                        ? IconButton(
+                                            icon: const Icon(Icons.clear),
+                                            onPressed: () {
+                                              _searchController.clear();
+                                              _applyFilters();
+                                            },
+                                          )
+                                        : null,
                                       border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(12),
                                         borderSide: BorderSide(color: pillarColor.withValues(alpha: 0.5)),
