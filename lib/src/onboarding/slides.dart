@@ -30,7 +30,7 @@ class OnboardingSlide extends StatelessWidget {
 
     final titleFontSize = isDesktop ? 32.0 : 22.0;
     final descFontSize = isDesktop ? 18.0 : 13.0;
-    final bottomOffset = customBottomOffset ?? 180.0;
+    final bottomOffset = customBottomOffset ?? 128.0;
     
     return Center(
       child: ConstrainedBox(

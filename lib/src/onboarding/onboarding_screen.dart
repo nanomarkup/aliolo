@@ -416,7 +416,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               // Slide 7: Paywall
               OnboardingSlide(
                 useFixedHeader: false,
-                customBottomOffset: 100,
+                customBottomOffset: 104,
                 visual: Center(
                   child: ConstrainedBox(
                     constraints: const BoxConstraints(maxWidth: 500),
@@ -515,7 +515,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       );
                     }),
                   ),
-                  const SizedBox(height: 40),
+                  const SizedBox(height: 16),
                 ],
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 40),
