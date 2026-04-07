@@ -421,6 +421,156 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
     }
   }
 
+  void _showFilterBottomSheet(BuildContext context, Color pillarColor) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setBottomSheetState) {
+            final filterRow = _currentCollection != null
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(context.t('source'), style: const TextStyle(fontWeight: FontWeight.bold)),
+                      const SizedBox(height: 8),
+                      _buildCompactDropdown(
+                        value: _collectionFilter,
+                        items: {
+                          'all': context.t('filter_all'),
+                          'favorites': context.t('filter_favorites'),
+                          'mine': context.t('filter_my_subjects'),
+                          'public': context.t('filter_public_library'),
+                        },
+                        onChanged: (val) {
+                          if (val != null) {
+                            setState(() {
+                              _collectionFilter = val;
+                              _applyFilters();
+                            });
+                            setBottomSheetState(() {});
+                          }
+                        },
+                      ),
+                      const SizedBox(height: 20),
+                      Text(context.t('age'), style: const TextStyle(fontWeight: FontWeight.bold)),
+                      const SizedBox(height: 8),
+                      _buildCompactDropdown(
+                        value: _selectedAgeFilter,
+                        items: {
+                          'all': context.t('age_all'),
+                          '0_6': context.t('age_0_6'),
+                          '7_14': context.t('age_7_14'),
+                          '15_plus': context.t('age_15_plus'),
+                        },
+                        onChanged: (val) {
+                          if (val != null) {
+                            setState(() {
+                              _selectedAgeFilter = val;
+                              _applyFilters();
+                            });
+                            setBottomSheetState(() {});
+                          }
+                        },
+                      ),
+                      const SizedBox(height: 20),
+                    ],
+                  )
+                : const SizedBox.shrink();
+
+            return Container(
+              padding: EdgeInsets.fromLTRB(24, 24, 24, MediaQuery.of(context).viewInsets.bottom + 24),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          context.t('filters'),
+                          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.close),
+                          onPressed: () => Navigator.pop(context),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 24),
+                    if ((_currentSubject != null || _currentCollection != null) && !(_currentSubject?.isMath ?? false)) ...[
+                      Text(context.t('level') ?? 'Level', style: const TextStyle(fontWeight: FontWeight.bold)),
+                      const SizedBox(height: 12),
+                      Row(
+                        children: [
+                          _buildLevelDropdown(_startLevel, (val) {
+                            if (val != null) {
+                              setState(() {
+                                _startLevel = val;
+                                if (_endLevel < _startLevel) _endLevel = _startLevel;
+                                _applyFilters();
+                              });
+                              setBottomSheetState(() {});
+                            }
+                          }),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 16),
+                            child: Text('-'),
+                          ),
+                          _buildLevelDropdown(_endLevel, (val) {
+                            if (val != null) {
+                              setState(() {
+                                _endLevel = val;
+                                if (_startLevel > _endLevel) _startLevel = _endLevel;
+                                _applyFilters();
+                              });
+                              setBottomSheetState(() {});
+                            }
+                          }),
+                          const SizedBox(width: 16),
+                          TextButton(
+                            onPressed: () {
+                              setState(() {
+                                _startLevel = 1;
+                                _endLevel = 20;
+                                _applyFilters();
+                              });
+                              setBottomSheetState(() {});
+                            },
+                            child: Text(context.t('filter_all') ?? 'All'),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 20),
+                    ],
+                    filterRow,
+                    if (_allCards.isNotEmpty) ...[
+                      Center(
+                        child: Text(
+                          '${_filteredCards.length} ${context.plural('card', _filteredCards.length)}',
+                          style: TextStyle(
+                            color: Colors.grey[600],
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                    ],
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
   Widget _buildCompactDropdown({
     required String value, 
     required Map<String, String> items, 
@@ -524,7 +674,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
             appBarColor: pillarColor,
             actions: [
               IconButton(
-                icon: const Icon(Icons.arrow_back, color: appBarColor),
+                icon: const Icon(Icons.arrow_back),
                 onPressed: () => Navigator.pop(context, _hasUpdated),
               ),
               if (_currentSubject != null || _currentCollection != null) ...[
@@ -535,14 +685,13 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                             false)
                         ? Icons.star
                         : Icons.star_border,
-                    color: appBarColor,
                   ),
                   onPressed: _toggleFavorite,
                 ),
               ],
               if (isOwner) ...[
                 IconButton(
-                  icon: const Icon(Icons.edit, color: appBarColor),
+                  icon: const Icon(Icons.edit),
                   onPressed: () async {
                     final result = await Navigator.push(
                       context,
@@ -581,12 +730,12 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                   },
                 ),
                 IconButton(
-                  icon: const Icon(Icons.delete, color: appBarColor),
+                  icon: const Icon(Icons.delete),
                   onPressed: _confirmDeleteSubject,
                 ),
               ],
               IconButton(
-                icon: const Icon(Icons.feedback, color: appBarColor),
+                icon: const Icon(Icons.feedback),
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -661,16 +810,15 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                         _currentCollection != null
                             ? Row(
                               children: [
+                                // Source
                                 Expanded(
                                   child: _buildCompactDropdown(
                                     value: _collectionFilter,
                                     items: {
                                       'all': context.t('filter_all'),
-                                      'favorites': context.t(
-                                        'filter_favorites',
-                                      ),
+                                      'favorites': context.t('filter_favorites'),
                                       'mine': context.t('filter_my_subjects'),
-                                      'public': context.t('filter_public'),
+                                      'public': context.t('filter_public_library'),
                                     },
                                     onChanged: (val) {
                                       if (val != null)
@@ -682,6 +830,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                                   ),
                                 ),
                                 const SizedBox(width: 8),
+                                // Age
                                 Expanded(
                                   child: _buildCompactDropdown(
                                     value: _selectedAgeFilter,
@@ -725,67 +874,89 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                           const SizedBox(height: 16),
                         if (_currentSubject != null ||
                             _currentCollection != null) ...[
-                          if (_currentCollection != null && isSmall) ...[
+                          if (isSmall) ...[
                             Row(
-                              children: _buildLevelRangeWidgets(pillarColor),
-                            ),
-                            const SizedBox(height: 12),
-                            if (!_isSearchExpanded)
-                              Row(
-                                children: [
-                                  Expanded(child: filterRow),
-                                  const SizedBox(width: 8),
-                                  SizedBox(
-                                    height: 45,
-                                    child: IconButton(
-                                      icon: Icon(
-                                        Icons.search,
-                                        color: pillarColor,
+                              children: [
+                                Expanded(
+                                  child: TextField(
+                                    controller: _searchController,
+                                    focusNode: _searchFocusNode,
+                                    decoration: InputDecoration(
+                                      hintText: _currentCollection != null ? context.t('search_subjects') : context.t('search_cards'),
+                                      prefixIcon: const Icon(Icons.search),
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(12),
+                                        borderSide: BorderSide(color: pillarColor.withValues(alpha: 0.5)),
                                       ),
-                                      onPressed: () {
-                                        setState(() => _isSearchExpanded = true);
-                                        _searchFocusNode.requestFocus();
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(12),
+                                        borderSide: BorderSide(color: pillarColor.withValues(alpha: 0.5)),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(12),
+                                        borderSide: BorderSide(color: pillarColor, width: 2),
+                                      ),
+                                      contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+                                      filled: true,
+                                      fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
+                                    ),
+                                    onChanged: (_) => _applyFilters(),
+                                  ),
+                                ),
+                                if (isOwner && _currentSubject != null) ...[
+                                  const SizedBox(width: 8),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: pillarColor,
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    child: IconButton(
+                                      icon: const Icon(Icons.add, color: Colors.white),
+                                      onPressed: () async {
+                                        if (!isPremium) {
+                                          Navigator.push(context, MaterialPageRoute(builder: (context) => const PremiumUpgradePage()));
+                                          return;
+                                        }
+                                        final result = await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder:
+                                                (context) => AddCardPage(
+                                                  pillarId: pillarId,
+                                                  initialSubjectId:
+                                                      _currentSubject!.id,
+                                                ),
+                                          ),
+                                        );
+                                        if (result == true) _refreshData();
                                       },
                                     ),
                                   ),
                                 ],
-                              )
-                            else
-                              TextField(
-                                controller: _searchController,
-                                focusNode: _searchFocusNode,
-                                onChanged: (_) => _applyFilters(),
-                                decoration: InputDecoration(
-                                  hintText: context.t('search_subjects'),
-                                  prefixIcon: const Icon(Icons.search),
-                                  suffixIcon: IconButton(
-                                    icon: const Icon(Icons.close),
-                                    onPressed: () {
-                                      setState(() {
-                                        _isSearchExpanded = false;
-                                        _searchController.clear();
-                                        _applyFilters();
-                                      });
-                                    },
-                                  ),
-                                  border: OutlineInputBorder(
+                                const SizedBox(width: 8),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: pillarColor,
                                     borderRadius: BorderRadius.circular(12),
                                   ),
+                                  child: IconButton(
+                                    icon: const Icon(Icons.tune, color: Colors.white),
+                                    onPressed: () => _showFilterBottomSheet(context, pillarColor),
+                                  ),
                                 ),
-                              ),
-                            if (!_isSearchExpanded) const SizedBox(height: 12),
-                          ] else if (_currentCollection != null &&
-                              !isSmall) ...[
-                            Row(
-                              children: _buildLevelRangeWidgets(pillarColor),
+                              ],
                             ),
-                            const SizedBox(height: 12),
+                          ] else ...[
                             Row(
                               children: [
-                                if (!_isSearchExpanded)
+                                if (_currentSubject != null && !(_currentSubject?.isMath ?? false)) ...[
+                                  ..._buildLevelRangeWidgets(pillarColor),
+                                ],
+                                if (_currentCollection != null) ...[
                                   Expanded(flex: 3, child: filterRow),
-                                if (!_isSearchExpanded)
                                   const SizedBox(width: 8),
+                                ],
+                                if (!_isSearchExpanded) const Spacer(),
                                 if (!_isSearchExpanded)
                                   SizedBox(
                                     height: 45,
@@ -808,7 +979,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                                       focusNode: _searchFocusNode,
                                       onChanged: (_) => _applyFilters(),
                                       decoration: InputDecoration(
-                                        hintText: context.t('search_subjects'),
+                                        hintText: _currentCollection != null ? context.t('search_subjects') : context.t('search_cards'),
                                         prefixIcon: const Icon(Icons.search),
                                         suffixIcon: IconButton(
                                           icon: const Icon(Icons.close),
@@ -820,68 +991,11 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                                             });
                                           },
                                         ),
-                                        border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(
-                                            12,
-                                          ),
-                                        ),
+                                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                                       ),
                                     ),
                                   ),
-                              ],
-                            ),
-                          ] else ...[
-                            Row(
-                              children: [
-                                if (_currentSubject != null &&
-                                    !(_currentSubject?.isMath ?? false)) ...[
-                                  ..._buildLevelRangeWidgets(pillarColor),
-                                ],
-                                if (!_isSearchExpanded) const Spacer(),
-                                if (!_isSearchExpanded)
-                                  SizedBox(
-                                    height: 45,
-                                    child: IconButton(
-                                      icon: Icon(
-                                        Icons.search,
-                                        color: pillarColor,
-                                      ),
-                                      onPressed: () {
-                                        setState(() => _isSearchExpanded = true);
-                                        _searchFocusNode.requestFocus();
-                                      },
-                                    ),
-                                  )
-                                else
-                                  Expanded(
-                                    child: TextField(
-                                      controller: _searchController,
-                                      focusNode: _searchFocusNode,
-                                      onChanged: (_) => _applyFilters(),
-                                      decoration: InputDecoration(
-                                        hintText: context.t('search_cards'),
-                                        prefixIcon: const Icon(Icons.search),
-                                        suffixIcon: IconButton(
-                                          icon: const Icon(Icons.close),
-                                          onPressed: () {
-                                            setState(() {
-                                              _isSearchExpanded = false;
-                                              _searchController.clear();
-                                              _applyFilters();
-                                            });
-                                          },
-                                        ),
-                                        border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(
-                                            12,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                if (isOwner &&
-                                    _currentSubject != null &&
-                                    !_isSearchExpanded) ...[
+                                if (isOwner && _currentSubject != null && !_isSearchExpanded) ...[
                                   const SizedBox(width: 8),
                                   SizedBox(
                                     height: 45,
@@ -892,14 +1006,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                                       ),
                                       onPressed: () async {
                                         if (!isPremium) {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder:
-                                                  (context) =>
-                                                      const PremiumUpgradePage(),
-                                            ),
-                                          );
+                                          Navigator.push(context, MaterialPageRoute(builder: (context) => const PremiumUpgradePage()));
                                           return;
                                         }
                                         final result = await Navigator.push(
@@ -1208,7 +1315,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
       return AlioloImage(imageUrl: imageUrl, fit: BoxFit.cover);
     }
     return Container(
-      color: pillarColor.withAlpha(25),
+      color: pillarColor.withValues(alpha: 0.1),
       child: Icon(Icons.image, size: 32, color: pillarColor),
     );
   }

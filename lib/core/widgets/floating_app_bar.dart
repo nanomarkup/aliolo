@@ -102,7 +102,7 @@ class AlioloAppBar extends StatelessWidget implements PreferredSizeWidget {
                                         children: [
                                           IconTheme(
                                             data: IconThemeData(
-                                              color: Theme.of(context).textTheme.bodyLarge?.color,
+                                              color: backgroundColor,
                                             ),
                                             child: (e.value as IconButton).icon,
                                           ),

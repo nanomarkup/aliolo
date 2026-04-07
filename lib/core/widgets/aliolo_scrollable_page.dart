@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:aliolo/core/widgets/floating_app_bar.dart';
 import 'package:aliolo/core/widgets/resize_wrapper.dart';
+
 class AlioloScrollablePage extends StatelessWidget {
   final Widget title;
   final List<Widget>? actions;
@@ -53,8 +54,6 @@ class AlioloScrollablePage extends StatelessWidget {
           backgroundColor: appBarColor ?? Theme.of(context).primaryColor,
           maxWidth: appBarMaxWidth,
         ),
-...
-
         body: Center(
           child: ConstrainedBox(
             constraints: BoxConstraints(maxWidth: maxWidth),

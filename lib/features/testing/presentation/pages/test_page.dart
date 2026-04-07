@@ -750,8 +750,6 @@ class _TestPageState extends State<TestPage> {
                                         imageUrl:
                                             _currentImages[_currentImageIndex],
                                         fit: BoxFit.contain,
-                                        useBorder: true,
-                                        borderColor: Theme.of(context).dividerColor,
                                         backgroundColor: headerColor.withValues(
                                           alpha: 0.05,
                                         ),

@@ -503,8 +503,6 @@ class _LearnPageState extends State<LearnPage> {
                               AlioloImage(
                                 imageUrl: _currentImages[_currentImageIndex],
                                 fit: BoxFit.contain,
-                                useBorder: true,
-                                borderColor: Theme.of(context).dividerColor,
                                 backgroundColor: headerColor.withValues(alpha: 0.05),
                               )
                             else if (_subject.isDivision)

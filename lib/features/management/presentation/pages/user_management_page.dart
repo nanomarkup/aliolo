@@ -56,7 +56,7 @@ class _UserManagementPageState extends State<UserManagementPage> {
 
         final homeAction = IconButton(
           tooltip: context.t('home') ?? 'Home',
-          icon: const Icon(Icons.school, color: appBarColor),
+          icon: const Icon(Icons.school),
           onPressed: () => Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (context) => const SubjectPage()),
@@ -65,13 +65,13 @@ class _UserManagementPageState extends State<UserManagementPage> {
         );
         final leaderboardAction = IconButton(
           tooltip: context.t('leaderboard'),
-          icon: const Icon(Icons.emoji_events, color: appBarColor),
+          icon: const Icon(Icons.emoji_events),
           onPressed: () =>
               Navigator.push(context, MaterialPageRoute(builder: (context) => const LeaderboardPage())),
         );
         final editAction = IconButton(
           tooltip: context.t('edit'),
-          icon: const Icon(Icons.edit, color: appBarColor),
+          icon: const Icon(Icons.edit),
           onPressed: () => Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (context) => const SubjectPage()),
@@ -80,13 +80,13 @@ class _UserManagementPageState extends State<UserManagementPage> {
         );
         final profileAction = IconButton(
           tooltip: context.t('profile'),
-          icon: const Icon(Icons.person, color: appBarColor),
+          icon: const Icon(Icons.person),
           onPressed: () =>
               Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfilePage())),
         );
         final settingsAction = IconButton(
           tooltip: context.t('settings'),
-          icon: const Icon(Icons.settings, color: appBarColor),
+          icon: const Icon(Icons.settings),
           onPressed: () =>
               Navigator.push(context, MaterialPageRoute(builder: (context) => const SettingsPage())),
         );

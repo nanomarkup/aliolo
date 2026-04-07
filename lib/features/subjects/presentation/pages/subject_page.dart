@@ -283,7 +283,7 @@ class _SubjectPageState extends State<SubjectPage> {
 
               final homeAction = IconButton(
                 tooltip: context.t('home') ?? 'Home',
-                icon: const Icon(Icons.school, color: appBarColor),
+                icon: const Icon(Icons.school),
                 onPressed: () {
                   if (isSearching) {
                     _searchController.clear();
@@ -295,7 +295,7 @@ class _SubjectPageState extends State<SubjectPage> {
               );
               final leaderboardAction = IconButton(
                 tooltip: context.t('leaderboard'),
-                icon: const Icon(Icons.emoji_events, color: appBarColor),
+                icon: const Icon(Icons.emoji_events),
                 onPressed: () =>
                     Navigator.push(context, MaterialPageRoute(builder: (context) => const LeaderboardPage())),
               );
@@ -307,7 +307,7 @@ class _SubjectPageState extends State<SubjectPage> {
                     return Badge(
                       isLabelVisible: hasNotif,
                       backgroundColor: Colors.amber,
-                      child: const Icon(Icons.person, color: appBarColor),
+                      child: const Icon(Icons.person),
                     );
                   },
                 ),
@@ -318,14 +318,14 @@ class _SubjectPageState extends State<SubjectPage> {
               );
               final settingsAction = IconButton(
                 tooltip: context.t('settings'),
-                icon: const Icon(Icons.settings, color: appBarColor),
+                icon: const Icon(Icons.settings),
                 onPressed: () =>
                     Navigator.push(context, MaterialPageRoute(builder: (context) => const SettingsPage())),
               );
               final docAction = (_authService.currentUser?.showDocumentation ?? true)
                   ? IconButton(
                     tooltip: context.t('documentation'),
-                    icon: const Icon(Icons.help_outline, color: appBarColor),
+                    icon: const Icon(Icons.help_outline),
                     onPressed: () => Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => const DocumentationPage()),
@@ -339,9 +339,7 @@ class _SubjectPageState extends State<SubjectPage> {
                   children: [
                     Flexible(
                       child: Text(
-                        isSmallScreen
-                            ? '${context.t('dashboard_greeting')}!'
-                            : '${context.t('dashboard_greeting')}, ${_authService.currentUser?.username ?? ''}',
+                        '${context.t('dashboard_greeting')}, ${_authService.currentUser?.username ?? ''}',
                         style: const TextStyle(
                           color: appBarColor,
                           fontSize: 20,
@@ -377,129 +375,248 @@ class _SubjectPageState extends State<SubjectPage> {
                   SliverToBoxAdapter(
                     child: Padding(
                       padding: const EdgeInsets.only(top: 16, bottom: 24),
-                      child: Row(
-                        children: [
-                          if (!_isSearchExpanded) ...[
-                            // Category
-                            Expanded(
-                              flex: 1,
-                              child: _buildCompactDropdown(
-                                value: _filters.collectionFilter,
-                                items: {
-                                  'all': context.t('filter_all') ?? 'All',
-                                  'favorites': context.t('filter_dashboard'),
-                                  'mine': context.t('filter_my_subjects'),
-                                  'public': context.t('filter_public'),
-                                },
-                                onChanged: (val) async {
-                                  if (val != null) {
-                                    setState(() { 
-                                      _filters = _filters.copyWith(collectionFilter: val); 
-                                      _applySearch(); 
-                                    });
-                                    final prefs = await SharedPreferences.getInstance();
-                                    await prefs.setString('last_collection_filter', val);
-                                  }
-                                },
-                              ),
-                            ),
-                            const SizedBox(width: 8),
-                            // Age
-                            Expanded(
-                              flex: 1,
-                              child: _buildCompactDropdown(
-                                value: _filters.ageGroup,
-                                items: {
-                                  'all': context.t('age_all'),
-                                  '0_6': context.t('age_0_6'),
-                                  '7_14': context.t('age_7_14'),
-                                  '15_plus': context.t('age_15_plus'),
-                                },
-                                onChanged: (val) async {
-                                  if (val != null) {
-                                    setState(() { 
-                                      _filters = _filters.copyWith(ageGroup: val); 
-                                      _applySearch(); 
-                                    });
-                                    final prefs = await SharedPreferences.getInstance();
-                                    await prefs.setString('last_age_filter', val);
-                                  }
-                                },
-                              ),
-                            ),
-                            const SizedBox(width: 8),
-                            // Language
-                            SizedBox(
-                              width: 90,
-                              child: _buildCompactDropdown(
-                                value: currentLang,
-                                items: Map.fromEntries(
-                                  activeCodes.map((l) => MapEntry(
-                                    l, 
-                                    getIt<TestingLanguageService>().getLanguageName(l)
-                                  ))
+                      child: isSmallScreen
+                          ? Row(
+                            children: [
+                              Expanded(
+                                child: TextField(
+                                  controller: _searchController,
+                                  focusNode: _searchFocusNode,
+                                  decoration: InputDecoration(
+                                    hintText: context.t('search_subjects'),
+                                    prefixIcon: const Icon(Icons.search),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                      borderSide: BorderSide(
+                                        color: currentSessionColor.withValues(alpha: 0.5),
+                                      ),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                      borderSide: BorderSide(
+                                        color: currentSessionColor.withValues(alpha: 0.5),
+                                      ),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                      borderSide: BorderSide(color: currentSessionColor, width: 2),
+                                    ),
+                                    contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+                                    filled: true,
+                                    fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
+                                  ),
+                                  onChanged: (_) => _applySearch(),
                                 ),
-                                selectedLabel: _currentTestingLang.toUpperCase(),
-                                matchAnchorWidth: false,
-                                onChanged: (val) async {
-                                  if (val != null) {
-                                    await getIt<TestingLanguageService>().updateCurrentLanguage(val);
-                                    _applySearch();
-                                  }
-                                },
                               ),
-                            ),
-                            const SizedBox(width: 4),
-                          ],
-                          // Search
-                          if (!_isSearchExpanded)
-                            SizedBox(
-                              height: 45,
-                              child: IconButton(
-                                icon: Icon(Icons.search, color: currentSessionColor),
-                                onPressed: () {
-                                  setState(() => _isSearchExpanded = true);
-                                  _searchFocusNode.requestFocus();
-                                },
+                              const SizedBox(width: 8),
+                              // Add Button
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: currentSessionColor,
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: PopupMenuButton<String>(
+                                  tooltip: '',
+                                  icon: const Icon(Icons.add, color: Colors.white),
+                                  onSelected: (value) async {
+                                    if (!isPremium) {
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => const PremiumUpgradePage()));
+                                      return;
+                                    }
+                                    final defaultPillarId = pillars.isNotEmpty ? pillars.first.id : 8;
+                                    dynamic result;
+                                    if (value == 'subject') {
+                                      result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: defaultPillarId)));
+                                    } else if (value == 'collection') {
+                                      result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: defaultPillarId, isCollectionMode: true)));
+                                    } else if (value == 'folder') {
+                                      result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: defaultPillarId, isFolderMode: true)));
+                                    }
+                                    if (result == true) {
+                                      _loadDashboard();
+                                    } else if (result != null) {
+                                      await _navigateToSubject(result);
+                                    }
+                                  },
+                                  itemBuilder: (context) => [
+                                    PopupMenuItem(
+                                      value: 'subject', 
+                                      child: ListTile(
+                                        leading: Icon(Icons.description, color: currentSessionColor), 
+                                        title: Text(context.t('add_subject')),
+                                        contentPadding: EdgeInsets.zero,
+                                      ),
+                                    ),
+                                    PopupMenuItem(
+                                      value: 'collection', 
+                                      child: ListTile(
+                                        leading: Icon(Icons.collections, color: currentSessionColor), 
+                                        title: Text(context.t('add_collection')),
+                                        contentPadding: EdgeInsets.zero,
+                                      ),
+                                    ),
+                                    PopupMenuItem(
+                                      value: 'folder', 
+                                      child: ListTile(
+                                        leading: Icon(Icons.folder, color: currentSessionColor), 
+                                        title: Text(context.t('add_folder')),
+                                        contentPadding: EdgeInsets.zero,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            )
-                          else
-                            Expanded(
-                              child: TextField(
-                                controller: _searchController,
-                                focusNode: _searchFocusNode,
-                                decoration: InputDecoration(
-                                  hintText: context.t('search_subjects'),
-                                  prefixIcon: const Icon(Icons.search),
-                                  suffixIcon: IconButton(
-                                    icon: const Icon(Icons.close),
-                                    onPressed: () {
-                                      setState(() {
-                                        _isSearchExpanded = false;
-                                        _searchController.clear();
-                                        _applySearch();
-                                      });
+                              const SizedBox(width: 8),
+                              // Filter Button
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: currentSessionColor,
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: IconButton(
+                                  icon: const Icon(Icons.tune, color: Colors.white),
+                                  onPressed:
+                                      () => _showFilterBottomSheet(
+                                        context,
+                                        currentLang,
+                                        activeCodes,
+                                        currentSessionColor,
+                                      ),
+                                ),
+                              ),
+                            ],
+                          )
+                          : Row(
+                            children: [
+                              if (!_isSearchExpanded) ...[
+                                // Source
+                                Expanded(
+                                  flex: 1,
+                                  child: _buildCompactDropdown(
+                                    value: _filters.collectionFilter,
+                                    items: {
+                                      'all': context.t('filter_all'),
+                                      'favorites': context.t('filter_favorites'),
+                                      'mine': context.t('filter_my_subjects'),
+                                      'public': context.t('filter_public_library'),
+                                    },
+                                    onChanged: (val) async {
+                                      if (val != null) {
+                                        setState(() {
+                                          _filters = _filters.copyWith(collectionFilter: val);
+                                          _applySearch();
+                                        });
+                                        final prefs = await SharedPreferences.getInstance();
+                                        await prefs.setString('last_collection_filter', val);
+                                      }
                                     },
                                   ),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                    borderSide: BorderSide(color: currentSessionColor.withValues(alpha: 0.5)),
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                    borderSide: BorderSide(color: currentSessionColor.withValues(alpha: 0.5)),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                    borderSide: BorderSide(color: currentSessionColor, width: 2),
-                                  ),
-                                  contentPadding: const EdgeInsets.symmetric(horizontal: 12),
-                                  filled: true,
-                                  fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
                                 ),
-                                onChanged: (_) => _applySearch(),
-                              ),
-                            ),
+                                const SizedBox(width: 8),
+                                // Age
+                                Expanded(
+                                  flex: 1,
+                                  child: _buildCompactDropdown(
+                                    value: _filters.ageGroup,
+                                    items: {
+                                      'all': context.t('age_all'),
+                                      '0_6': context.t('age_0_6'),
+                                      '7_14': context.t('age_7_14'),
+                                      '15_plus': context.t('age_15_plus'),
+                                    },
+                                    onChanged: (val) async {
+                                      if (val != null) {
+                                        setState(() {
+                                          _filters = _filters.copyWith(ageGroup: val);
+                                          _applySearch();
+                                        });
+                                        final prefs = await SharedPreferences.getInstance();
+                                        await prefs.setString('last_age_filter', val);
+                                      }
+                                    },
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                // Language
+                                SizedBox(
+                                  width: 90,
+                                  child: _buildCompactDropdown(
+                                    value: currentLang,
+                                    items: Map.fromEntries(
+                                      activeCodes.map(
+                                        (l) => MapEntry(
+                                          l,
+                                          getIt<TestingLanguageService>().getLanguageName(l),
+                                        ),
+                                      ),
+                                    ),
+                                    selectedLabel: currentLang.toUpperCase(),
+                                    matchAnchorWidth: false,
+                                    onChanged: (val) async {
+                                      if (val != null) {
+                                        await getIt<TestingLanguageService>().updateCurrentLanguage(
+                                          val,
+                                        );
+                                        _applySearch();
+                                      }
+                                    },
+                                  ),
+                                ),
+                                const SizedBox(width: 4),
+                              ],
+                              // Search
+                              if (!_isSearchExpanded)
+                                SizedBox(
+                                  height: 45,
+                                  child: IconButton(
+                                    icon: Icon(Icons.search, color: currentSessionColor),
+                                    onPressed: () {
+                                      setState(() => _isSearchExpanded = true);
+                                      _searchFocusNode.requestFocus();
+                                    },
+                                  ),
+                                )
+                              else
+                                Expanded(
+                                  child: TextField(
+                                    controller: _searchController,
+                                    focusNode: _searchFocusNode,
+                                    decoration: InputDecoration(
+                                      hintText: context.t('search_subjects'),
+                                      prefixIcon: const Icon(Icons.search),
+                                      suffixIcon: IconButton(
+                                        icon: const Icon(Icons.close),
+                                        onPressed: () {
+                                          setState(() {
+                                            _isSearchExpanded = false;
+                                            _searchController.clear();
+                                            _applySearch();
+                                          });
+                                        },
+                                      ),
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(12),
+                                        borderSide: BorderSide(
+                                          color: currentSessionColor.withValues(alpha: 0.5),
+                                        ),
+                                      ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(12),
+                                        borderSide: BorderSide(
+                                          color: currentSessionColor.withValues(alpha: 0.5),
+                                        ),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(12),
+                                        borderSide: BorderSide(color: currentSessionColor, width: 2),
+                                      ),
+                                      contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+                                      filled: true,
+                                      fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
+                                    ),
+                                    onChanged: (_) => _applySearch(),
+                                  ),
+                                ),
                           if (!_isSearchExpanded) ...[
                             const SizedBox(width: 4),
                             // Add
@@ -535,7 +652,7 @@ class _SubjectPageState extends State<SubjectPage> {
                                   PopupMenuItem(
                                     value: 'subject', 
                                     child: ListTile(
-                                      leading: const Icon(Icons.description, color: Colors.orange), 
+                                      leading: Icon(Icons.description, color: currentSessionColor), 
                                       title: Row(
                                         children: [
                                           Text(context.t('add_subject')),
@@ -551,7 +668,7 @@ class _SubjectPageState extends State<SubjectPage> {
                                   PopupMenuItem(
                                     value: 'collection', 
                                     child: ListTile(
-                                      leading: const Icon(Icons.collections, color: Colors.blue), 
+                                      leading: Icon(Icons.collections, color: currentSessionColor), 
                                       title: Row(
                                         children: [
                                           Text(context.t('add_collection')),
@@ -567,7 +684,7 @@ class _SubjectPageState extends State<SubjectPage> {
                                   PopupMenuItem(
                                     value: 'folder', 
                                     child: ListTile(
-                                      leading: const Icon(Icons.folder, color: Colors.amber), 
+                                      leading: Icon(Icons.folder, color: currentSessionColor), 
                                       title: Row(
                                         children: [
                                           Text(context.t('add_folder')),
@@ -729,6 +846,111 @@ class _SubjectPageState extends State<SubjectPage> {
       );
     }
     return const SizedBox.shrink();
+  }
+
+  void _showFilterBottomSheet(BuildContext context, String currentLang, List<String> activeCodes, Color pillarColor) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setBottomSheetState) {
+            return Container(
+              padding: EdgeInsets.fromLTRB(24, 24, 24, MediaQuery.of(context).viewInsets.bottom + 24),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          context.t('filters'),
+                          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.close),
+                          onPressed: () => Navigator.pop(context),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 24),
+                    // Source
+                    Text(context.t('source'), style: const TextStyle(fontWeight: FontWeight.bold)),
+                    const SizedBox(height: 8),
+                    _buildCompactDropdown(
+                      value: _filters.collectionFilter,
+                      items: {
+                        'all': context.t('filter_all'),
+                        'favorites': context.t('filter_favorites'),
+                        'mine': context.t('filter_my_subjects'),
+                        'public': context.t('filter_public_library'),
+                      },
+                      onChanged: (val) async {
+                        if (val != null) {
+                          setState(() { _filters = _filters.copyWith(collectionFilter: val); _applySearch(); });
+                          setBottomSheetState(() {});
+                          final prefs = await SharedPreferences.getInstance();
+                          await prefs.setString('last_collection_filter', val);
+                        }
+                      },
+                    ),
+                    const SizedBox(height: 20),
+                    // Age
+                    Text(context.t('age'), style: const TextStyle(fontWeight: FontWeight.bold)),
+                    const SizedBox(height: 8),
+                    _buildCompactDropdown(
+                      value: _filters.ageGroup,
+                      items: {
+                        'all': context.t('age_all'),
+                        '0_6': context.t('age_0_6'),
+                        '7_14': context.t('age_7_14'),
+                        '15_plus': context.t('age_15_plus'),
+                      },
+                      onChanged: (val) async {
+                        if (val != null) {
+                          setState(() { _filters = _filters.copyWith(ageGroup: val); _applySearch(); });
+                          setBottomSheetState(() {});
+                          final prefs = await SharedPreferences.getInstance();
+                          await prefs.setString('last_age_filter', val);
+                        }
+                      },
+                    ),
+                    const SizedBox(height: 20),
+                    // Language
+                    Text(context.t('language'), style: const TextStyle(fontWeight: FontWeight.bold)),
+                    const SizedBox(height: 8),
+                    _buildCompactDropdown(
+                      value: currentLang,
+                      items: Map.fromEntries(
+                        activeCodes.map((l) => MapEntry(
+                          l, 
+                          getIt<TestingLanguageService>().getLanguageName(l)
+                        ))
+                      ),
+                      selectedLabel: currentLang.toUpperCase(),
+                      matchAnchorWidth: false,
+                      onChanged: (val) async {
+                        if (val != null) {
+                          await getIt<TestingLanguageService>().updateCurrentLanguage(val);
+                          _applySearch();
+                          setBottomSheetState(() {});
+                        }
+                      },
+                    ),
+                    const SizedBox(height: 32),
+                  ],
+                ),
+              ),
+            );
+          }
+        );
+      },
+    );
   }
 
   Widget _buildCompactDropdown({
@@ -913,12 +1135,12 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
 
         final homeAction = IconButton(
           tooltip: context.t('home') ?? 'Home',
-          icon: const Icon(Icons.school, color: appBarColor),
+          icon: const Icon(Icons.school),
           onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
         );
         final leaderboardAction = IconButton(
           tooltip: context.t('leaderboard'),
-          icon: const Icon(Icons.emoji_events, color: appBarColor),
+          icon: const Icon(Icons.emoji_events),
           onPressed: () =>
               Navigator.push(context, MaterialPageRoute(builder: (context) => const LeaderboardPage())),
         );
@@ -930,7 +1152,7 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
               return Badge(
                 isLabelVisible: hasNotif,
                 backgroundColor: Colors.amber,
-                child: const Icon(Icons.person, color: appBarColor),
+                child: const Icon(Icons.person),
               );
             },
           ),
@@ -941,14 +1163,14 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
         );
         final settingsAction = IconButton(
           tooltip: context.t('settings'),
-          icon: const Icon(Icons.settings, color: appBarColor),
+          icon: const Icon(Icons.settings),
           onPressed: () =>
               Navigator.push(context, MaterialPageRoute(builder: (context) => const SettingsPage())),
         );
         final docAction = (_authService.currentUser?.showDocumentation ?? true)
             ? IconButton(
               tooltip: context.t('documentation'),
-              icon: const Icon(Icons.help_outline, color: appBarColor),
+              icon: const Icon(Icons.help_outline),
               onPressed: () =>
                   Navigator.push(context, MaterialPageRoute(builder: (context) => const DocumentationPage())),
             )
@@ -979,110 +1201,240 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
               SliverToBoxAdapter(
                 child: Padding(
                   padding: const EdgeInsets.only(top: 16, bottom: 24),
-                  child: Row(
-                    children: [
-                      if (!_isSearchExpanded) ...[
-                        // Category
-                        Expanded(
-                          flex: 1,
-                          child: _buildCompactDropdown(
-                            value: _filters.collectionFilter,
-                            items: {
-                              'all': context.t('filter_all') ?? 'All',
-                              'favorites': context.t('filter_dashboard'),
-                              'mine': context.t('filter_my_subjects'),
-                              'public': context.t('filter_public'),
-                            },
-                            onChanged: (val) { if (val != null) setState(() { _filters = _filters.copyWith(collectionFilter: val); _applySearch(); }); },
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        // Age
-                        Expanded(
-                          flex: 1,
-                          child: _buildCompactDropdown(
-                            value: _filters.ageGroup,
-                            items: {
-                              'all': context.t('age_all'),
-                              '0_6': context.t('age_0_6'),
-                              '7_14': context.t('age_7_14'),
-                              '15_plus': context.t('age_15_plus'),
-                            },
-                            onChanged: (val) { if (val != null) setState(() { _filters = _filters.copyWith(ageGroup: val); _applySearch(); }); },
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        // Language
-                        SizedBox(
-                          width: 90,
-                          child: _buildCompactDropdown(
-                            value: currentLang,
-                            items: Map.fromEntries(
-                              activeCodes.map((l) => MapEntry(
-                                l, 
-                                getIt<TestingLanguageService>().getLanguageName(l)
-                              ))
+                  child: isSmallScreen
+                      ? Row(
+                        children: [
+                          Expanded(
+                            child: TextField(
+                              controller: _searchController,
+                              focusNode: _searchFocusNode,
+                              decoration: InputDecoration(
+                                hintText: context.t('search_subjects'),
+                                prefixIcon: const Icon(Icons.search),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                  borderSide: BorderSide(color: pillarColor.withValues(alpha: 0.5)),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                  borderSide: BorderSide(color: pillarColor.withValues(alpha: 0.5)),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                  borderSide: BorderSide(color: pillarColor, width: 2),
+                                ),
+                                contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+                                filled: true,
+                                fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
+                              ),
+                              onChanged: (_) => _applySearch(),
                             ),
-                            selectedLabel: currentLang.toUpperCase(),
-                            matchAnchorWidth: false,
-                            onChanged: (val) async {
-                              if (val != null) {
-                                await getIt<TestingLanguageService>().updateCurrentLanguage(val);
-                                _loadData();
-                              }
-                            },
                           ),
-                        ),
-                        const SizedBox(width: 4),
-                      ],
-                      // Search
-                      if (!_isSearchExpanded)
-                        SizedBox(
-                          height: 45,
-                          child: IconButton(
-                            icon: Icon(Icons.search, color: pillarColor),
-                            onPressed: () {
-                              setState(() => _isSearchExpanded = true);
-                              _searchFocusNode.requestFocus();
-                            },
+                          const SizedBox(width: 8),
+                          // Add Button
+                          Container(
+                            decoration: BoxDecoration(
+                              color: pillarColor,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: PopupMenuButton<String>(
+                              tooltip: '',
+                              icon: const Icon(Icons.add, color: Colors.white),
+                              onSelected: (value) async {
+                                if (!isPremium) {
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => const PremiumUpgradePage()));
+                                  return;
+                                }
+                                dynamic result;
+                                if (value == 'subject') result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: widget.pillar.id, initialAgeGroup: _filters.ageGroup)));
+                                else if (value == 'collection') result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: widget.pillar.id, isCollectionMode: true, initialAgeGroup: _filters.ageGroup)));
+                                else if (value == 'folder') result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: widget.pillar.id, isFolderMode: true)));
+
+                                if (result == true) {
+                                  _loadData();
+                                  _hasUpdated = true;
+                                } else if (result != null) {
+                                  _loadData();
+                                  _hasUpdated = true;
+                                  await _navigateToSubject(result);
+                                }
+                              },
+                              itemBuilder: (context) => [
+                                PopupMenuItem(
+                                  value: 'subject', 
+                                  child: ListTile(
+                                    leading: Icon(Icons.description, color: pillarColor), 
+                                    title: Text(context.t('add_subject')),
+                                    contentPadding: EdgeInsets.zero,
+                                  ),
+                                ),
+                                PopupMenuItem(
+                                  value: 'collection', 
+                                  child: ListTile(
+                                    leading: Icon(Icons.auto_awesome_motion, color: pillarColor), 
+                                    title: Text(context.t('add_collection')),
+                                    contentPadding: EdgeInsets.zero,
+                                  ),
+                                ),
+                                PopupMenuItem(
+                                  value: 'folder', 
+                                  child: ListTile(
+                                    leading: Icon(Icons.folder, color: pillarColor), 
+                                    title: Text(context.t('add_folder')),
+                                    contentPadding: EdgeInsets.zero,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        )
-                      else
-                        Expanded(
-                          child: TextField(
-                            controller: _searchController,
-                            focusNode: _searchFocusNode,
-                            decoration: InputDecoration(
-                              hintText: context.t('search_subjects'),
-                              prefixIcon: const Icon(Icons.search),
-                              suffixIcon: IconButton(
-                                icon: const Icon(Icons.close),
-                                onPressed: () {
-                                  setState(() {
-                                    _isSearchExpanded = false;
-                                    _searchController.clear();
-                                    _applySearch();
-                                  });
+                          const SizedBox(width: 8),
+                          // Filter Button
+                          Container(
+                            decoration: BoxDecoration(
+                              color: pillarColor,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: IconButton(
+                              icon: const Icon(Icons.tune, color: Colors.white),
+                              onPressed:
+                                  () => _showFilterBottomSheet(
+                                    context,
+                                    currentLang,
+                                    activeCodes,
+                                    pillarColor,
+                                  ),
+                            ),
+                          ),
+                        ],
+                      )
+
+                      : Row(
+                        children: [
+                          if (!_isSearchExpanded) ...[
+                            // Source
+                            Expanded(
+                              flex: 1,
+                              child: _buildCompactDropdown(
+                                value: _filters.collectionFilter,
+                                items: {
+                                  'all': context.t('filter_all'),
+                                  'favorites': context.t('filter_favorites'),
+                                  'mine': context.t('filter_my_subjects'),
+                                  'public': context.t('filter_public_library'),
+                                },
+                                onChanged: (val) {
+                                  if (val != null) {
+                                    setState(() {
+                                      _filters = _filters.copyWith(collectionFilter: val);
+                                      _applySearch();
+                                    });
+                                  }
                                 },
                               ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: BorderSide(color: pillarColor.withValues(alpha: 0.5)),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: BorderSide(color: pillarColor.withValues(alpha: 0.5)),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: BorderSide(color: pillarColor, width: 2),
-                              ),                              contentPadding: const EdgeInsets.symmetric(horizontal: 12),
-                              filled: true,
-                              fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
                             ),
-                            onChanged: (_) => _applySearch(),
-                          ),
-                        ),
+                            const SizedBox(width: 8),
+                            // Age
+                            Expanded(
+                              flex: 1,
+                              child: _buildCompactDropdown(
+                                value: _filters.ageGroup,
+                                items: {
+                                  'all': context.t('age_all'),
+                                  '0_6': context.t('age_0_6'),
+                                  '7_14': context.t('age_7_14'),
+                                  '15_plus': context.t('age_15_plus'),
+                                },
+                                onChanged: (val) {
+                                  if (val != null) {
+                                    setState(() {
+                                      _filters = _filters.copyWith(ageGroup: val);
+                                      _applySearch();
+                                    });
+                                  }
+                                },
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            // Language
+                            SizedBox(
+                              width: 90,
+                              child: _buildCompactDropdown(
+                                value: currentLang,
+                                items: Map.fromEntries(
+                                  activeCodes.map(
+                                    (l) => MapEntry(
+                                      l,
+                                      getIt<TestingLanguageService>().getLanguageName(l),
+                                    ),
+                                  ),
+                                ),
+                                selectedLabel: currentLang.toUpperCase(),
+                                matchAnchorWidth: false,
+                                onChanged: (val) async {
+                                  if (val != null) {
+                                    await getIt<TestingLanguageService>().updateCurrentLanguage(
+                                      val,
+                                    );
+                                    _loadData();
+                                  }
+                                },
+                              ),
+                            ),
+                            const SizedBox(width: 4),
+                          ],
+                          // Search
+                          if (!_isSearchExpanded)
+                            SizedBox(
+                              height: 45,
+                              child: IconButton(
+                                icon: Icon(Icons.search, color: pillarColor),
+                                onPressed: () {
+                                  setState(() => _isSearchExpanded = true);
+                                  _searchFocusNode.requestFocus();
+                                },
+                              ),
+                            )
+                          else
+                            Expanded(
+                              child: TextField(
+                                controller: _searchController,
+                                focusNode: _searchFocusNode,
+                                decoration: InputDecoration(
+                                  hintText: context.t('search_subjects'),
+                                  prefixIcon: const Icon(Icons.search),
+                                  suffixIcon: IconButton(
+                                    icon: const Icon(Icons.close),
+                                    onPressed: () {
+                                      setState(() {
+                                        _isSearchExpanded = false;
+                                        _searchController.clear();
+                                        _applySearch();
+                                      });
+                                    },
+                                  ),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                    borderSide: BorderSide(
+                                      color: pillarColor.withValues(alpha: 0.5),
+                                    ),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                    borderSide: BorderSide(
+                                      color: pillarColor.withValues(alpha: 0.5),
+                                    ),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                    borderSide: BorderSide(color: pillarColor, width: 2),
+                                  ),
+                                  contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+                                  filled: true,
+                                  fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
+                                ),
+                                onChanged: (_) => _applySearch(),
+                              ),
+                            ),
                       if (!_isSearchExpanded) ...[
                         const SizedBox(width: 4),
                         SizedBox(
@@ -1114,48 +1466,24 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
                               PopupMenuItem(
                                 value: 'subject', 
                                 child: ListTile(
-                                  leading: Icon(Icons.description, color: appBarColor), 
-                                  title: Row(
-                                    children: [
-                                      Text(context.t('add_subject')),
-                                      if (!isPremium) ...[
-                                        const SizedBox(width: 8),
-                                        const Icon(Icons.workspace_premium, color: Colors.amber, size: 16),
-                                      ],
-                                    ],
-                                  ), 
+                                  leading: Icon(Icons.description, color: pillarColor), 
+                                  title: Text(context.t('add_subject')),
                                   contentPadding: EdgeInsets.zero,
                                 ),
                               ),
                               PopupMenuItem(
                                 value: 'collection', 
                                 child: ListTile(
-                                  leading: Icon(Icons.auto_awesome_motion, color: appBarColor), 
-                                  title: Row(
-                                    children: [
-                                      Text(context.t('add_collection')),
-                                      if (!isPremium) ...[
-                                        const SizedBox(width: 8),
-                                        const Icon(Icons.workspace_premium, color: Colors.amber, size: 16),
-                                      ],
-                                    ],
-                                  ), 
+                                  leading: Icon(Icons.auto_awesome_motion, color: pillarColor), 
+                                  title: Text(context.t('add_collection')),
                                   contentPadding: EdgeInsets.zero,
                                 ),
                               ),
                               PopupMenuItem(
                                 value: 'folder', 
                                 child: ListTile(
-                                  leading: Icon(Icons.folder, color: appBarColor), 
-                                  title: Row(
-                                    children: [
-                                      Text(context.t('add_folder')),
-                                      if (!isPremium) ...[
-                                        const SizedBox(width: 8),
-                                        const Icon(Icons.workspace_premium, color: Colors.amber, size: 16),
-                                      ],
-                                    ],
-                                  ), 
+                                  leading: Icon(Icons.folder, color: pillarColor), 
+                                  title: Text(context.t('add_folder')),
                                   contentPadding: EdgeInsets.zero,
                                 ),
                               ),
@@ -1253,6 +1581,107 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
       );
     }
     return const SizedBox.shrink();
+  }
+
+  void _showFilterBottomSheet(BuildContext context, String currentLang, List<String> activeCodes, Color pillarColor) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setBottomSheetState) {
+            return Container(
+              padding: EdgeInsets.fromLTRB(24, 24, 24, MediaQuery.of(context).viewInsets.bottom + 24),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          context.t('filters'),
+                          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.close),
+                          onPressed: () => Navigator.pop(context),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 24),
+                    // Source
+                    Text(context.t('source'), style: const TextStyle(fontWeight: FontWeight.bold)),
+                    const SizedBox(height: 8),
+                    _buildCompactDropdown(
+                      value: _filters.collectionFilter,
+                      items: {
+                        'all': context.t('filter_all'),
+                        'favorites': context.t('filter_favorites'),
+                        'mine': context.t('filter_my_subjects'),
+                        'public': context.t('filter_public_library'),
+                      },
+                      onChanged: (val) {
+                        if (val != null) {
+                          setState(() { _filters = _filters.copyWith(collectionFilter: val); _applySearch(); });
+                          setBottomSheetState(() {});
+                        }
+                      },
+                    ),
+                    const SizedBox(height: 20),
+                    // Age
+                    Text(context.t('age'), style: const TextStyle(fontWeight: FontWeight.bold)),
+                    const SizedBox(height: 8),
+                    _buildCompactDropdown(
+                      value: _filters.ageGroup,
+                      items: {
+                        'all': context.t('age_all'),
+                        '0_6': context.t('age_0_6'),
+                        '7_14': context.t('age_7_14'),
+                        '15_plus': context.t('age_15_plus'),
+                      },
+                      onChanged: (val) {
+                        if (val != null) {
+                          setState(() { _filters = _filters.copyWith(ageGroup: val); _applySearch(); });
+                          setBottomSheetState(() {});
+                        }
+                      },
+                    ),
+                    const SizedBox(height: 20),
+                    // Language
+                    Text(context.t('language'), style: const TextStyle(fontWeight: FontWeight.bold)),
+                    const SizedBox(height: 8),
+                    _buildCompactDropdown(
+                      value: currentLang,
+                      items: Map.fromEntries(
+                        activeCodes.map((l) => MapEntry(
+                          l, 
+                          getIt<TestingLanguageService>().getLanguageName(l)
+                        ))
+                      ),
+                      selectedLabel: currentLang.toUpperCase(),
+                      matchAnchorWidth: false,
+                      onChanged: (val) async {
+                        if (val != null) {
+                          await getIt<TestingLanguageService>().updateCurrentLanguage(val);
+                          _loadData();
+                          setBottomSheetState(() {});
+                        }
+                      },
+                    ),
+                    const SizedBox(height: 32),
+                  ],
+                ),
+              ),
+            );
+          }
+        );
+      },
+    );
   }
 
   Widget _buildCompactDropdown({
@@ -1441,12 +1870,12 @@ class _FolderPageState extends State<FolderPage> {
 
         final homeAction = IconButton(
           tooltip: context.t('home') ?? 'Home',
-          icon: const Icon(Icons.school, color: appBarColor),
+          icon: const Icon(Icons.school),
           onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
         );
         final backAction = IconButton(
           tooltip: context.t('back'),
-          icon: const Icon(Icons.arrow_back, color: appBarColor),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context, {
             'hasUpdated': _hasUpdated,
             'ageFilter': _filters.ageGroup,
@@ -1456,7 +1885,7 @@ class _FolderPageState extends State<FolderPage> {
         final editAction = isOwner
             ? IconButton(
               tooltip: context.t('edit'),
-              icon: const Icon(Icons.edit, color: appBarColor),
+              icon: const Icon(Icons.edit),
               onPressed: () async {
                 final result = await Navigator.push(
                   context,
@@ -1474,7 +1903,7 @@ class _FolderPageState extends State<FolderPage> {
         final deleteAction = isOwner
             ? IconButton(
               tooltip: context.t('delete'),
-              icon: const Icon(Icons.delete, color: appBarColor),
+              icon: const Icon(Icons.delete),
               onPressed: () async {
                 final confirmed = await showDialog<bool>(
                   context: context,
@@ -1518,7 +1947,7 @@ class _FolderPageState extends State<FolderPage> {
             : null;
         final feedbackAction = IconButton(
           tooltip: context.t('feedback'),
-          icon: const Icon(Icons.feedback, color: appBarColor),
+          icon: const Icon(Icons.feedback),
           onPressed: () => Navigator.push(
             context,
             MaterialPageRoute(
@@ -1556,110 +1985,231 @@ class _FolderPageState extends State<FolderPage> {
               SliverToBoxAdapter(
                 child: Padding(
                   padding: const EdgeInsets.only(top: 16, bottom: 24),
-                  child: Row(
-                    children: [
-                      if (!_isSearchExpanded) ...[
-                        // Category
-                        Expanded(
-                          flex: 1,
-                          child: _buildCompactDropdown(
-                            value: _filters.collectionFilter,
-                            items: {
-                              'all': context.t('filter_all') ?? 'All',
-                              'favorites': context.t('filter_dashboard'),
-                              'mine': context.t('filter_my_subjects'),
-                              'public': context.t('filter_public'),
-                            },
-                            onChanged: (val) { if (val != null) setState(() { _filters = _filters.copyWith(collectionFilter: val); _applySearch(); }); },
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        // Age
-                        Expanded(
-                          flex: 1,
-                          child: _buildCompactDropdown(
-                            value: _filters.ageGroup,
-                            items: {
-                              'all': context.t('age_all'),
-                              '0_6': context.t('age_0_6'),
-                              '7_14': context.t('age_7_14'),
-                              '15_plus': context.t('age_15_plus'),
-                            },
-                            onChanged: (val) { if (val != null) setState(() { _filters = _filters.copyWith(ageGroup: val); _applySearch(); }); },
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        // Language
-                        SizedBox(
-                          width: 90,
-                          child: _buildCompactDropdown(
-                            value: currentLang,
-                            items: Map.fromEntries(
-                              activeCodes.map((l) => MapEntry(
-                                l, 
-                                getIt<TestingLanguageService>().getLanguageName(l)
-                              ))
+                  child: isSmallScreen
+                      ? Row(
+                        children: [
+                          Expanded(
+                            child: TextField(
+                              controller: _searchController,
+                              focusNode: _searchFocusNode,
+                              decoration: InputDecoration(
+                                hintText: context.t('search_subjects'),
+                                prefixIcon: const Icon(Icons.search),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                  borderSide: BorderSide(color: pillarColor.withValues(alpha: 0.5)),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                  borderSide: BorderSide(color: pillarColor.withValues(alpha: 0.5)),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                  borderSide: BorderSide(color: pillarColor, width: 2),
+                                ),
+                                contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+                                filled: true,
+                                fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
+                              ),
+                              onChanged: (_) => _applySearch(),
                             ),
-                            selectedLabel: currentLang.toUpperCase(),
-                            matchAnchorWidth: false,
-                            onChanged: (val) async {
-                              if (val != null) {
-                                await getIt<TestingLanguageService>().updateCurrentLanguage(val);
-                                _loadData();
-                              }
-                            },
                           ),
-                        ),
-                        const SizedBox(width: 4),
-                      ],
-                      // Search
-                      if (!_isSearchExpanded)
-                        SizedBox(
-                          height: 45,
-                          child: IconButton(
-                            icon: Icon(Icons.search, color: pillarColor),
-                            onPressed: () {
-                              setState(() => _isSearchExpanded = true);
-                              _searchFocusNode.requestFocus();
-                            },
+                          const SizedBox(width: 8),
+                          // Add Button
+                          Container(
+                            decoration: BoxDecoration(
+                              color: pillarColor,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: PopupMenuButton<String>(
+                              tooltip: '',
+                              icon: const Icon(Icons.add, color: Colors.white),
+                              onSelected: (value) async {
+                                if (!isPremium) {
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => const PremiumUpgradePage()));
+                                  return;
+                                }
+                                dynamic result;
+                                if (value == 'subject') result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: widget.pillar.id, folderId: widget.folder.id, initialAgeGroup: _filters.ageGroup)));
+                                else if (value == 'collection') result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: widget.pillar.id, folderId: widget.folder.id, isCollectionMode: true, initialAgeGroup: _filters.ageGroup)));
+
+                                if (result == true) {
+                                  _loadData();
+                                  _hasUpdated = true;
+                                } else if (result != null) {
+                                  _loadData();
+                                  _hasUpdated = true;
+                                  await _navigateToSubject(result);
+                                }
+                              },
+                              itemBuilder: (context) => [
+                                PopupMenuItem(
+                                  value: 'subject', 
+                                  child: ListTile(
+                                    leading: Icon(Icons.description, color: pillarColor), 
+                                    title: Text(context.t('add_subject')),
+                                    contentPadding: EdgeInsets.zero,
+                                  ),
+                                ),
+                                PopupMenuItem(
+                                  value: 'collection', 
+                                  child: ListTile(
+                                    leading: Icon(Icons.auto_awesome_motion, color: pillarColor), 
+                                    title: Text(context.t('add_collection')),
+                                    contentPadding: EdgeInsets.zero,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        )
-                      else
-                        Expanded(
-                          child: TextField(
-                            controller: _searchController,
-                            focusNode: _searchFocusNode,
-                            decoration: InputDecoration(
-                              hintText: context.t('search_subjects'),
-                              prefixIcon: const Icon(Icons.search),
-                              suffixIcon: IconButton(
-                                icon: const Icon(Icons.close),
-                                onPressed: () {
-                                  setState(() {
-                                    _isSearchExpanded = false;
-                                    _searchController.clear();
-                                    _applySearch();
-                                  });
+                          const SizedBox(width: 8),
+                          // Filter Button
+                          Container(
+                            decoration: BoxDecoration(
+                              color: pillarColor,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: IconButton(
+                              icon: const Icon(Icons.tune, color: Colors.white),
+                              onPressed:
+                                  () => _showFilterBottomSheet(
+                                    context,
+                                    currentLang,
+                                    activeCodes,
+                                    pillarColor,
+                                  ),
+                            ),
+                          ),
+                        ],
+                      )
+
+                      : Row(
+                        children: [
+                          if (!_isSearchExpanded) ...[
+                            // Source
+                            Expanded(
+                              flex: 1,
+                              child: _buildCompactDropdown(
+                                value: _filters.collectionFilter,
+                                items: {
+                                  'all': context.t('filter_all'),
+                                  'favorites': context.t('filter_favorites'),
+                                  'mine': context.t('filter_my_subjects'),
+                                  'public': context.t('filter_public_library'),
+                                },
+                                onChanged: (val) {
+                                  if (val != null) {
+                                    setState(() {
+                                      _filters = _filters.copyWith(collectionFilter: val);
+                                      _applySearch();
+                                    });
+                                  }
                                 },
                               ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: BorderSide(color: pillarColor.withValues(alpha: 0.5)),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: BorderSide(color: pillarColor.withValues(alpha: 0.5)),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: BorderSide(color: pillarColor, width: 2),
-                              ),                              contentPadding: const EdgeInsets.symmetric(horizontal: 12),
-                              filled: true,
-                              fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
                             ),
-                            onChanged: (_) => _applySearch(),
-                          ),
-                        ),
+                            const SizedBox(width: 8),
+                            // Age
+                            Expanded(
+                              flex: 1,
+                              child: _buildCompactDropdown(
+                                value: _filters.ageGroup,
+                                items: {
+                                  'all': context.t('age_all'),
+                                  '0_6': context.t('age_0_6'),
+                                  '7_14': context.t('age_7_14'),
+                                  '15_plus': context.t('age_15_plus'),
+                                },
+                                onChanged: (val) {
+                                  if (val != null) {
+                                    setState(() {
+                                      _filters = _filters.copyWith(ageGroup: val);
+                                      _applySearch();
+                                    });
+                                  }
+                                },
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            // Language
+                            SizedBox(
+                              width: 90,
+                              child: _buildCompactDropdown(
+                                value: currentLang,
+                                items: Map.fromEntries(
+                                  activeCodes.map(
+                                    (l) => MapEntry(
+                                      l,
+                                      getIt<TestingLanguageService>().getLanguageName(l),
+                                    ),
+                                  ),
+                                ),
+                                selectedLabel: currentLang.toUpperCase(),
+                                matchAnchorWidth: false,
+                                onChanged: (val) async {
+                                  if (val != null) {
+                                    await getIt<TestingLanguageService>().updateCurrentLanguage(
+                                      val,
+                                    );
+                                    _loadData();
+                                  }
+                                },
+                              ),
+                            ),
+                            const SizedBox(width: 4),
+                          ],
+                          // Search
+                          if (!_isSearchExpanded)
+                            SizedBox(
+                              height: 45,
+                              child: IconButton(
+                                icon: Icon(Icons.search, color: pillarColor),
+                                onPressed: () {
+                                  setState(() => _isSearchExpanded = true);
+                                  _searchFocusNode.requestFocus();
+                                },
+                              ),
+                            )
+                          else
+                            Expanded(
+                              child: TextField(
+                                controller: _searchController,
+                                focusNode: _searchFocusNode,
+                                decoration: InputDecoration(
+                                  hintText: context.t('search_subjects'),
+                                  prefixIcon: const Icon(Icons.search),
+                                  suffixIcon: IconButton(
+                                    icon: const Icon(Icons.close),
+                                    onPressed: () {
+                                      setState(() {
+                                        _isSearchExpanded = false;
+                                        _searchController.clear();
+                                        _applySearch();
+                                      });
+                                    },
+                                  ),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                    borderSide: BorderSide(
+                                      color: pillarColor.withValues(alpha: 0.5),
+                                    ),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                    borderSide: BorderSide(
+                                      color: pillarColor.withValues(alpha: 0.5),
+                                    ),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                    borderSide: BorderSide(color: pillarColor, width: 2),
+                                  ),
+                                  contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+                                  filled: true,
+                                  fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
+                                ),
+                                onChanged: (_) => _applySearch(),
+                              ),
+                            ),
                       if (!_isSearchExpanded) ...[
                         const SizedBox(width: 4),
                         SizedBox(
@@ -1690,32 +2240,16 @@ class _FolderPageState extends State<FolderPage> {
                               PopupMenuItem(
                                 value: 'subject', 
                                 child: ListTile(
-                                  leading: Icon(Icons.description, color: appBarColor), 
-                                  title: Row(
-                                    children: [
-                                      Text(context.t('add_subject')),
-                                      if (!isPremium) ...[
-                                        const SizedBox(width: 8),
-                                        const Icon(Icons.workspace_premium, color: Colors.amber, size: 16),
-                                      ],
-                                    ],
-                                  ), 
+                                  leading: Icon(Icons.description, color: pillarColor), 
+                                  title: Text(context.t('add_subject')),
                                   contentPadding: EdgeInsets.zero,
                                 ),
                               ),
                               PopupMenuItem(
                                 value: 'collection', 
                                 child: ListTile(
-                                  leading: Icon(Icons.auto_awesome_motion, color: appBarColor), 
-                                  title: Row(
-                                    children: [
-                                      Text(context.t('add_collection')),
-                                      if (!isPremium) ...[
-                                        const SizedBox(width: 8),
-                                        const Icon(Icons.workspace_premium, color: Colors.amber, size: 16),
-                                      ],
-                                    ],
-                                  ), 
+                                  leading: Icon(Icons.auto_awesome_motion, color: pillarColor), 
+                                  title: Text(context.t('add_collection')),
                                   contentPadding: EdgeInsets.zero,
                                 ),
                               ),
@@ -1747,6 +2281,163 @@ class _FolderPageState extends State<FolderPage> {
         );
       },
     );
+  }
+
+  void _showFilterBottomSheet(BuildContext context, String currentLang, List<String> activeCodes, Color pillarColor) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setBottomSheetState) {
+            return Container(
+              padding: EdgeInsets.fromLTRB(24, 24, 24, MediaQuery.of(context).viewInsets.bottom + 24),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          context.t('filters'),
+                          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.close),
+                          onPressed: () => Navigator.pop(context),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 24),
+                    // Source
+                    Text(context.t('source'), style: const TextStyle(fontWeight: FontWeight.bold)),
+                    const SizedBox(height: 8),
+                    _buildCompactDropdown(
+                      value: _filters.collectionFilter,
+                      items: {
+                        'all': context.t('filter_all'),
+                        'favorites': context.t('filter_favorites'),
+                        'mine': context.t('filter_my_subjects'),
+                        'public': context.t('filter_public_library'),
+                      },
+                      onChanged: (val) {
+                        if (val != null) {
+                          setState(() { _filters = _filters.copyWith(collectionFilter: val); _applySearch(); });
+                          setBottomSheetState(() {});
+                        }
+                      },
+                    ),
+                    const SizedBox(height: 20),
+                    // Age
+                    Text(context.t('age'), style: const TextStyle(fontWeight: FontWeight.bold)),
+                    const SizedBox(height: 8),
+                    _buildCompactDropdown(
+                      value: _filters.ageGroup,
+                      items: {
+                        'all': context.t('age_all'),
+                        '0_6': context.t('age_0_6'),
+                        '7_14': context.t('age_7_14'),
+                        '15_plus': context.t('age_15_plus'),
+                      },
+                      onChanged: (val) {
+                        if (val != null) {
+                          setState(() { _filters = _filters.copyWith(ageGroup: val); _applySearch(); });
+                          setBottomSheetState(() {});
+                        }
+                      },
+                    ),
+                    const SizedBox(height: 20),
+                    // Language
+                    Text(context.t('language'), style: const TextStyle(fontWeight: FontWeight.bold)),
+                    const SizedBox(height: 8),
+                    _buildCompactDropdown(
+                      value: currentLang,
+                      items: Map.fromEntries(
+                        activeCodes.map((l) => MapEntry(
+                          l, 
+                          getIt<TestingLanguageService>().getLanguageName(l)
+                        ))
+                      ),
+                      selectedLabel: currentLang.toUpperCase(),
+                      matchAnchorWidth: false,
+                      onChanged: (val) async {
+                        if (val != null) {
+                          await getIt<TestingLanguageService>().updateCurrentLanguage(val);
+                          _loadData();
+                          setBottomSheetState(() {});
+                        }
+                      },
+                    ),
+                    const SizedBox(height: 32),
+                  ],
+                ),
+              ),
+            );
+          }
+        );
+      },
+    );
+  }
+
+  Widget _buildCompactDropdown({
+    required String value, 
+    required Map<String, String> items, 
+    ValueChanged<String?>? onChanged,
+    IconData? prefixIcon,
+    String? selectedLabel,
+    bool matchAnchorWidth = true,
+  }) {
+    final validatedValue = items.containsKey(value) ? value : (items.isNotEmpty ? items.keys.first : '');
+    final label = selectedLabel ?? items[validatedValue] ?? '';
+    
+    return LayoutBuilder(
+      builder: (context, box) {
+        return PopupMenuButton<String>(
+          constraints: matchAnchorWidth ? BoxConstraints(minWidth: box.maxWidth, maxWidth: box.maxWidth) : null,
+          onSelected: onChanged,
+          position: PopupMenuPosition.under,
+          offset: Offset.zero,
+          tooltip: '',
+          color: Colors.white,
+          itemBuilder: (context) => items.entries.map((e) => PopupMenuItem<String>(
+            value: e.key,
+            child: Text(e.value),
+          )).toList(),
+          child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+        decoration: BoxDecoration(
+          color: Theme.of(context).cardColor.withValues(alpha: 0.5), 
+          borderRadius: BorderRadius.circular(12), 
+          border: Border.all(color: Colors.grey.withValues(alpha: 0.5))
+        ),
+        child: Row(
+          children: [
+            if (prefixIcon != null) ...[
+              Icon(prefixIcon, size: 16, color: Colors.grey[600]),
+              const SizedBox(width: 8),
+            ],
+            Expanded(
+              child: Text(
+                label,
+                style: TextStyle(
+                  fontSize: 14, 
+                  color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black87
+                ),
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            Icon(Icons.arrow_drop_down, size: 20, color: Colors.grey[600]),
+          ],
+        ),
+      ),
+    );
+  },
+);
   }
 
   Widget _buildContentItem(
@@ -1813,62 +2504,6 @@ class _FolderPageState extends State<FolderPage> {
       );
     }
     return const SizedBox.shrink();
-  }
-
-  Widget _buildCompactDropdown({
-    required String value, 
-    required Map<String, String> items, 
-    ValueChanged<String?>? onChanged,
-    IconData? prefixIcon,
-    String? selectedLabel,
-    bool matchAnchorWidth = true,
-  }) {
-    final validatedValue = items.containsKey(value) ? value : (items.isNotEmpty ? items.keys.first : '');
-    final label = selectedLabel ?? items[validatedValue] ?? '';
-    
-    return LayoutBuilder(
-      builder: (context, box) {
-        return PopupMenuButton<String>(
-          constraints: matchAnchorWidth ? BoxConstraints(minWidth: box.maxWidth, maxWidth: box.maxWidth) : null,
-          onSelected: onChanged,
-          position: PopupMenuPosition.under,
-          offset: Offset.zero,
-          tooltip: '',
-          color: Colors.white,
-          itemBuilder: (context) => items.entries.map((e) => PopupMenuItem<String>(
-            value: e.key,
-            child: Text(e.value),
-          )).toList(),
-          child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-        decoration: BoxDecoration(
-          color: Theme.of(context).cardColor.withValues(alpha: 0.5), 
-          borderRadius: BorderRadius.circular(12), 
-          border: Border.all(color: Colors.grey.withValues(alpha: 0.5))
-        ),
-        child: Row(
-          children: [
-            if (prefixIcon != null) ...[
-              Icon(prefixIcon, size: 16, color: Colors.grey[600]),
-              const SizedBox(width: 8),
-            ],
-            Expanded(
-              child: Text(
-                label,
-                style: TextStyle(
-                  fontSize: 14, 
-                  color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black87
-                ),
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-            Icon(Icons.arrow_drop_down, size: 20, color: Colors.grey[600]),
-          ],
-        ),
-      ),
-    );
-  },
-);
   }
 }
 

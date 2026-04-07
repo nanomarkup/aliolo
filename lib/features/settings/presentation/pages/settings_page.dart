@@ -140,79 +140,81 @@ class _SettingsPageState extends State<SettingsPage> {
     const appBarColor = Colors.white;
 
     return ListenableBuilder(
-      listenable: Listenable.merge([TranslationService(), ThemeService()]),
+      listenable: Listenable.merge([TranslationService(), ThemeService(), _authService]),
       builder: (context, _) {
         final currentPrimaryColor = ThemeService().primaryColor;
         final isDark = Theme.of(context).brightness == Brightness.dark;
+        final isSmallScreen = MediaQuery.of(context).size.width < 600;
+
+        final homeAction = IconButton(
+          tooltip: context.t('home') ?? 'Home',
+          icon: const Icon(Icons.school),
+          onPressed: () => Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => const SubjectPage()),
+            (route) => false,
+          ),
+        );
+        final leaderboardAction = IconButton(
+          tooltip: context.t('leaderboard'),
+          icon: const Icon(Icons.emoji_events),
+          onPressed: () =>
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const LeaderboardPage())),
+        );
+        final profileAction = IconButton(
+          tooltip: context.t('profile'),
+          icon: ValueListenableBuilder<bool>(
+            valueListenable: getIt<FeedbackService>().pendingNotifications,
+            builder: (context, hasNotif, _) {
+              return Badge(
+                isLabelVisible: hasNotif,
+                backgroundColor: Colors.amber,
+                child: const Icon(Icons.person),
+              );
+            },
+          ),
+          onPressed: () async {
+            await Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfilePage()));
+          },
+        );
+        final settingsAction = IconButton(
+          tooltip: context.t('settings'),
+          icon: const Icon(Icons.settings),
+          onPressed: () => setState(() {}),
+        );
+        final docAction = (_authService.currentUser?.showDocumentation ?? true)
+            ? IconButton(
+              tooltip: context.t('documentation'),
+              icon: const Icon(Icons.help_outline),
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const DocumentationPage()),
+              ),
+            )
+            : null;
 
         return AlioloScrollablePage(
           title: Text(
             context.t('settings'),
-            style: const TextStyle(
-              color: appBarColor,
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
+            style: const TextStyle(color: appBarColor, fontSize: 20, fontWeight: FontWeight.bold),
           ),
           appBarColor: currentPrimaryColor,
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.school, color: appBarColor),
-              onPressed:
-                  () => Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const SubjectPage(),
-                    ),
-                    (route) => false,
-                  ),
-            ),
-            IconButton(
-              icon: const Icon(Icons.emoji_events, color: appBarColor),
-              onPressed:
-                  () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const LeaderboardPage(),
-                    ),
-                  ),
-            ),
-            IconButton(
-              icon: ValueListenableBuilder<bool>(
-                valueListenable: getIt<FeedbackService>().pendingNotifications,
-                builder: (context, hasNotif, _) {
-                  return Badge(
-                    isLabelVisible: hasNotif,
-                    backgroundColor: Colors.amber,
-                    child: const Icon(Icons.person, color: appBarColor),
-                  );
-                },
-              ),
-              onPressed: () async {
-                await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const ProfilePage(),
-                  ),
-                );
-              },
-            ),
-            IconButton(
-              icon: const Icon(Icons.settings, color: appBarColor),
-              onPressed: () => setState(() {}),
-            ),
-            if (_authService.currentUser?.showDocumentation ?? true)
-              IconButton(
-                icon: const Icon(Icons.help_outline, color: appBarColor),
-                onPressed:
-                    () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const DocumentationPage(),
-                      ),
-                    ),
-              ),
-          ],
+          actions: isSmallScreen
+              ? [homeAction, profileAction]
+              : [
+                homeAction,
+                leaderboardAction,
+                profileAction,
+                settingsAction,
+                if (docAction != null) docAction,
+              ],
+          overflowActions: isSmallScreen
+              ? [
+                leaderboardAction,
+                settingsAction,
+                if (docAction != null) docAction,
+              ]
+              : null,
           body: Column(
             children: [
               _buildSectionTitle(
