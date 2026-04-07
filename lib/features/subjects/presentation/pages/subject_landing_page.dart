@@ -571,29 +571,8 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                       const SizedBox(height: 20),
                     ],
                     filterRow,
-                    if (MediaQuery.sizeOf(context).width < 600) ...[
-                      const SizedBox(height: 8),
-                      Text(context.t('language') ?? 'Language', style: const TextStyle(fontWeight: FontWeight.bold)),
-                      const SizedBox(height: 8),
-                      _buildCompactDropdown(
-                        value: _currentLanguageCode,
-                        items: Map.fromEntries(
-                          _langService.activeLanguageCodes.map((l) => MapEntry(
-                            l, 
-                            _langService.getLanguageName(l)
-                          ))
-                        ),
-                        matchAnchorWidth: true,
-                        onChanged: (val) async {
-                          if (val != null) {
-                            await _langService.updateCurrentLanguage(val);
-                            setBottomSheetState(() {});
-                          }
-                        },
-                      ),
-                      const SizedBox(height: 24),
-                    ],
                     if (_allCards.isNotEmpty) ...[
+                      const SizedBox(height: 24),
                       Center(
                         child: Text(
                           '${_filteredCards.length} ${context.plural('card', _filteredCards.length)}',
@@ -623,6 +602,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
     IconData? prefixIcon,
     String? selectedLabel,
     bool matchAnchorWidth = true,
+    double? menuWidth,
   }) {
     final validatedValue = items.containsKey(value) ? value : (items.isNotEmpty ? items.keys.first : '');
     final label = selectedLabel ?? items[validatedValue] ?? '';
@@ -630,7 +610,9 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
     return LayoutBuilder(
       builder: (context, box) {
         return PopupMenuButton<String>(
-          constraints: matchAnchorWidth ? BoxConstraints(minWidth: box.maxWidth, maxWidth: box.maxWidth) : null,
+          constraints: menuWidth != null 
+              ? BoxConstraints(minWidth: menuWidth, maxWidth: menuWidth)
+              : (matchAnchorWidth ? BoxConstraints(minWidth: box.maxWidth, maxWidth: box.maxWidth) : null),
           onSelected: onChanged,
           position: PopupMenuPosition.under,
           itemBuilder: (context) => items.entries.map((e) => PopupMenuItem<String>(
@@ -911,10 +893,9 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                           Row(
                               children: [
                                 if (_currentCollection != null && isOwner && constraints.maxWidth >= 600) ...[
-                                  SizedBox(
-                                    width: 160,
-                                    child: _buildCompactDropdown(
-                                      value: _collectionFilter,
+                                SizedBox(
+                                  width: 200,
+                                  child: _buildCompactDropdown(                                      value: _collectionFilter,
                                       items: {
                                         'all': context.t('filter_all'),
                                         'favorites': context.t('filter_favorites'),
@@ -935,28 +916,29 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                                   ),
                                   const SizedBox(width: 8),
                                 ],
-                                if (constraints.maxWidth >= 600) ...[
-                                  SizedBox(
-                                    width: 100,
-                                    child: _buildCompactDropdown(
-                                      value: _currentLanguageCode,
-                                      items: Map.fromEntries(
-                                        _langService.activeLanguageCodes.map((l) => MapEntry(
-                                          l, 
-                                          _langService.getLanguageName(l)
-                                        ))
-                                      ),
-                                      selectedLabel: _langService.getLanguageName(_currentLanguageCode),
-                                      matchAnchorWidth: true,
-                                      onChanged: (val) async {
-                                        if (val != null) {
-                                          await _langService.updateCurrentLanguage(val);
-                                        }
-                                      },
+                                SizedBox(
+                                  width: constraints.maxWidth >= 600 ? 160 : 70,
+                                  child: _buildCompactDropdown(
+                                    value: _currentLanguageCode,
+                                    items: Map.fromEntries(
+                                      _langService.activeLanguageCodes.map((l) => MapEntry(
+                                        l, 
+                                        _langService.getLanguageName(l)
+                                      ))
                                     ),
+                                    selectedLabel: constraints.maxWidth >= 600 
+                                        ? _langService.getLanguageName(_currentLanguageCode)
+                                        : _currentLanguageCode.toUpperCase(),
+                                    matchAnchorWidth: constraints.maxWidth >= 600,
+                                    menuWidth: 160,
+                                    onChanged: (val) async {
+                                      if (val != null) {
+                                        await _langService.updateCurrentLanguage(val);
+                                      }
+                                    },
                                   ),
-                                  const SizedBox(width: 8),
-                                ],
+                                ),
+                                const SizedBox(width: 8),
                                 Expanded(
                                   child: TextField(
                                     controller: _searchController,

@@ -378,7 +378,7 @@ class _SubjectPageState extends State<SubjectPage> {
                             children: [
                           if (!isSmallScreen) ...[
                             SizedBox(
-                              width: 160,
+                              width: 200,
                               child: _buildCompactDropdown(
                                 value: _filters.collectionFilter,
                                 items: {
@@ -1031,7 +1031,7 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
                         children: [
                           if (!isSmallScreen) ...[
                             SizedBox(
-                              width: 160,
+                              width: 200,
                               child: _buildCompactDropdown(
                                 value: _filters.collectionFilter,
                                 items: {
@@ -1677,7 +1677,7 @@ class _FolderPageState extends State<FolderPage> {
                         children: [
                           if (!isSmallScreen) ...[
                             SizedBox(
-                              width: 160,
+                              width: 200,
                               child: _buildCompactDropdown(
                                 value: _filters.collectionFilter,
                                 items: {

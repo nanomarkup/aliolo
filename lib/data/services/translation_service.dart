@@ -21,6 +21,13 @@ class TranslationService extends ChangeNotifier {
 
   static const Map<String, Map<String, String>> _localizedFallbacks = {
     'en': {
+      'home': 'Home',
+      'confirm': 'Confirm',
+      'cancel': 'Cancel',
+      'back': 'Back',
+      'delete': 'Delete',
+      'edit': 'Edit',
+      'feedback': 'Feedback',
       'documentation': 'Documentation',
       'show_documentation_btn': 'Show Documentation Button',
       'show_documentation_btn_desc': 'Display a help icon in the top navigation bar',
@@ -153,6 +160,13 @@ class TranslationService extends ChangeNotifier {
       'category': 'Category',
     },
     'id': {
+      'home': 'Beranda',
+      'confirm': 'Konfirmasi',
+      'cancel': 'Batal',
+      'back': 'Kembali',
+      'delete': 'Hapus',
+      'edit': 'Edit',
+      'feedback': 'Umpan balik',
       'documentation': 'Dokumentasi',
       'show_documentation_btn': 'Tampilkan Tombol Dokumentasi',
       'show_documentation_btn_desc': 'Menampilkan ikon bantuan di bilah navigasi atas',
@@ -177,6 +191,13 @@ class TranslationService extends ChangeNotifier {
       'session_complete_description': 'Anda telah selesai meninjau semua kartu dalam sesi ini.',
     },
     'bg': {
+      'home': 'Начало',
+      'confirm': 'Потвърждаване',
+      'cancel': 'Отказ',
+      'back': 'Назад',
+      'delete': 'Изтриване',
+      'edit': 'Редактиране',
+      'feedback': 'Обратна връзка',
       'documentation': 'Документация',
       'show_documentation_btn': 'Показване на бутона за документация',
       'show_documentation_btn_desc': 'Показване на икона за помощ в горната лента за навигация',
@@ -201,6 +222,13 @@ class TranslationService extends ChangeNotifier {
       'session_complete_description': 'Завършихте прегледа на всички карти в тази сесия.',
     },
     'cs': {
+      'home': 'Domů',
+      'confirm': 'Potvrdit',
+      'cancel': 'Zrušit',
+      'back': 'Zpět',
+      'delete': 'Smazat',
+      'edit': 'Upravit',
+      'feedback': 'Zpětná vazba',
       'documentation': 'Dokumentace',
       'show_documentation_btn': 'Zobrazit tlačítko dokumentace',
       'show_documentation_btn_desc': 'Zobrazit ikonu nápovědy v horní navigační liště',
@@ -225,6 +253,13 @@ class TranslationService extends ChangeNotifier {
       'session_complete_description': 'Dokončili jste kontrolu všech karet v této lekci.',
     },
     'da': {
+      'home': 'Hjem',
+      'confirm': 'Bekræft',
+      'cancel': 'Annuller',
+      'back': 'Tilbage',
+      'delete': 'Slet',
+      'edit': 'Rediger',
+      'feedback': 'Feedback',
       'documentation': 'Dokumentation',
       'show_documentation_btn': 'Vis dokumentationsknap',
       'show_documentation_btn_desc': 'Vis et hjælpeikon i den øverste navigationslinje',
@@ -249,6 +284,13 @@ class TranslationService extends ChangeNotifier {
       'session_complete_description': 'Du er færdig med at gennemse alle kort i denne session.',
     },
     'de': {
+      'home': 'Startseite',
+      'confirm': 'Bestätigen',
+      'cancel': 'Abbrechen',
+      'back': 'Zurück',
+      'delete': 'Löschen',
+      'edit': 'Bearbeiten',
+      'feedback': 'Feedback',
       'documentation': 'Dokumentation',
       'show_documentation_btn': 'Dokumentations-Schaltfläche anzeigen',
       'show_documentation_btn_desc': 'Ein Hilfe-Symbol in der oberen Navigationsleiste anzeigen',
@@ -273,6 +315,13 @@ class TranslationService extends ChangeNotifier {
       'session_complete_description': 'Du hast alle Karten in dieser Sitzung abgeschlossen.',
     },
     'et': {
+      'home': 'Avaleht',
+      'confirm': 'Kinnita',
+      'cancel': 'Tühista',
+      'back': 'Tagasi',
+      'delete': 'Kustuta',
+      'edit': 'Muuda',
+      'feedback': 'Tagasiside',
       'documentation': 'Dokumentatsioon',
       'show_documentation_btn': 'Näita dokumentatsiooni nuppu',
       'show_documentation_btn_desc': 'Kuva abiikoon ülemisel navigeerimisribal',
@@ -297,6 +346,13 @@ class TranslationService extends ChangeNotifier {
       'session_complete_description': 'Olete lõpetanud kõigi selle sessiooni kaartide läbivaatamise.',
     },
     'es': {
+      'home': 'Inicio',
+      'confirm': 'Confirmar',
+      'cancel': 'Cancelar',
+      'back': 'Atrás',
+      'delete': 'Eliminar',
+      'edit': 'Editar',
+      'feedback': 'Comentarios',
       'documentation': 'Documentación',
       'show_documentation_btn': 'Mostrar botón de documentación',
       'show_documentation_btn_desc': 'Mostrar un icono de ayuda en la barra de navegación superior',
@@ -321,6 +377,13 @@ class TranslationService extends ChangeNotifier {
       'session_complete_description': 'Has terminado de revisar todas las tarjetas de esta sesión.',
     },
     'fr': {
+      'home': 'Accueil',
+      'confirm': 'Confirmer',
+      'cancel': 'Annuler',
+      'back': 'Retour',
+      'delete': 'Supprimer',
+      'edit': 'Modifier',
+      'feedback': 'Commentaires',
       'documentation': 'Documentation',
       'show_documentation_btn': 'Afficher le bouton de documentation',
       'show_documentation_btn_desc': 'Afficher une icône d\'aide dans la barra de navigation supérieure',
@@ -345,6 +408,13 @@ class TranslationService extends ChangeNotifier {
       'session_complete_description': 'Vous avez fini de réviser toutes les cartes de cette session.',
     },
     'ga': {
+      'home': 'Baile',
+      'confirm': 'Deimhnigh',
+      'cancel': 'Cealaigh',
+      'back': 'Ar ais',
+      'delete': 'Scrios',
+      'edit': 'Cuir in eagar',
+      'feedback': 'Aiseolas',
       'documentation': 'Doiciméadúchán',
       'show_documentation_btn': 'Taispeáin Cnaipe Doiciméadúcháin',
       'show_documentation_btn_desc': 'Taispeáin deilbhín cabhrach sa bharra nascleanúna uachtarach',
@@ -369,6 +439,13 @@ class TranslationService extends ChangeNotifier {
       'session_complete_description': 'Tá athbhreithniú déanta agat ar gach cárta sa seisiún seo.',
     },
     'hr': {
+      'home': 'Početna',
+      'confirm': 'Potvrdi',
+      'cancel': 'Odustani',
+      'back': 'Natrag',
+      'delete': 'Obriši',
+      'edit': 'Uredi',
+      'feedback': 'Povratne informacije',
       'documentation': 'Dokumentacija',
       'show_documentation_btn': 'Prikaži gumb za dokumentaciju',
       'show_documentation_btn_desc': 'Prikaži ikону pomoći u gornjoj navigacijskoj traci',
@@ -393,6 +470,13 @@ class TranslationService extends ChangeNotifier {
       'session_complete_description': 'Završili ste pregled svih kartica u ovoj sesiji.',
     },
     'it': {
+      'home': 'Home',
+      'confirm': 'Conferma',
+      'cancel': 'Annulla',
+      'back': 'Indietro',
+      'delete': 'Elimina',
+      'edit': 'Modifica',
+      'feedback': 'Feedback',
       'documentation': 'Documentazione',
       'show_documentation_btn': 'Mostra pulsante documentazione',
       'show_documentation_btn_desc': 'Mostra un\'icona di aiuto nella barra di navigazione superiore',
@@ -417,6 +501,13 @@ class TranslationService extends ChangeNotifier {
       'session_complete_description': 'Hai finito di rivedere tutte le carte in questa sessione.',
     },
     'lv': {
+      'home': 'Sākums',
+      'confirm': 'Apstiprināt',
+      'cancel': 'Atcelt',
+      'back': 'Atpakaļ',
+      'delete': 'Dzēst',
+      'edit': 'Rediģēt',
+      'feedback': 'Atsauksmes',
       'documentation': 'Dokumentācija',
       'show_documentation_btn': 'Rādīt dokumentācijas pogu',
       'show_documentation_btn_desc': 'Rādīt palīdzības ikonu augšējā navigācijas joslā',
@@ -441,6 +532,13 @@ class TranslationService extends ChangeNotifier {
       'session_complete_description': 'Jūs esat pabeidzis visu šīs sesijas karšu pārskatīšanu.',
     },
     'lt': {
+      'home': 'Pagrindinis',
+      'confirm': 'Patvirtinti',
+      'cancel': 'Atšaukti',
+      'back': 'Atgal',
+      'delete': 'Ištrinti',
+      'edit': 'Redaguoti',
+      'feedback': 'Atsiliepimai',
       'documentation': 'Dokumentacija',
       'show_documentation_btn': 'Rodyti dokumentacijos mygtuką',
       'show_documentation_btn_desc': 'Rodyti pagalbos piktogramą viršutinėje navigacijos juostoje',
@@ -465,6 +563,13 @@ class TranslationService extends ChangeNotifier {
       'session_complete_description': 'Baigėte peržiūrėti visas šios sesijos korteles.',
     },
     'hu': {
+      'home': 'Kezdőlap',
+      'confirm': 'Megerősítés',
+      'cancel': 'Mégse',
+      'back': 'Vissza',
+      'delete': 'Törlés',
+      'edit': 'Szerkesztés',
+      'feedback': 'Visszajelzés',
       'documentation': 'Dokumentáció',
       'show_documentation_btn': 'Dokumentáció gomb megjelenítése',
       'show_documentation_btn_desc': 'Súgó ikon megjelenítése a felső navigációs sávban',
@@ -489,6 +594,13 @@ class TranslationService extends ChangeNotifier {
       'session_complete_description': 'Befejezte a szakasz összes kártyájának áttekintését.',
     },
     'mt': {
+      'home': 'Home',
+      'confirm': 'Ikkonferma',
+      'cancel': 'Ikkanċella',
+      'back': 'Lura',
+      'delete': 'Ħassar',
+      'edit': 'Editja',
+      'feedback': 'Feedback',
       'documentation': 'Dokumentazzjoni',
       'show_documentation_btn': 'Uri l-buttuna tad-dokumentazzjoni',
       'show_documentation_btn_desc': 'Uri ikona tal-għajnuna fil-bar tan-navigazzjoni ta\' fuq',
@@ -513,6 +625,13 @@ class TranslationService extends ChangeNotifier {
       'session_complete_description': 'Lestiet ir-reviżjoni tal-kards kollha f\'din is-sessjoni.',
     },
     'nl': {
+      'home': 'Home',
+      'confirm': 'Bevestigen',
+      'cancel': 'Annuleren',
+      'back': 'Terug',
+      'delete': 'Verwijderen',
+      'edit': 'Bewerken',
+      'feedback': 'Feedback',
       'documentation': 'Documentatie',
       'show_documentation_btn': 'Documentatieknop weergeven',
       'show_documentation_btn_desc': 'Help-icoon weergeven in de bovenste navigatiebalk',
@@ -537,6 +656,13 @@ class TranslationService extends ChangeNotifier {
       'session_complete_description': 'Je hebt alle kaarten in deze sessie bekeken.',
     },
     'pl': {
+      'home': 'Strona główna',
+      'confirm': 'Potwierdź',
+      'cancel': 'Anuluj',
+      'back': 'Wstecz',
+      'delete': 'Usuń',
+      'edit': 'Edytuj',
+      'feedback': 'Opinie',
       'documentation': 'Dokumentacja',
       'show_documentation_btn': 'Pokaż przycisk dokumentacji',
       'show_documentation_btn_desc': 'Wyświetl ikonę pomocy w górnym pasku nawigacyjnym',
@@ -561,6 +687,13 @@ class TranslationService extends ChangeNotifier {
       'session_complete_description': 'Zakończyłeś przeglądanie wszystkich kart w tej sesji.',
     },
     'pt': {
+      'home': 'Início',
+      'confirm': 'Confirmar',
+      'cancel': 'Cancelar',
+      'back': 'Voltar',
+      'delete': 'Excluir',
+      'edit': 'Editar',
+      'feedback': 'Feedback',
       'documentation': 'Documentação',
       'show_documentation_btn': 'Mostrar botón de documentación',
       'show_documentation_btn_desc': 'Exibir um ícone de ayuda en la barra de navigação superior',
@@ -585,6 +718,13 @@ class TranslationService extends ChangeNotifier {
       'session_complete_description': 'Terminou de rever todos os cartões nesta sessão.',
     },
     'ro': {
+      'home': 'Acasă',
+      'confirm': 'Confirmă',
+      'cancel': 'Anulează',
+      'back': 'Înapoi',
+      'delete': 'Șterge',
+      'edit': 'Editează',
+      'feedback': 'Feedback',
       'documentation': 'Documentație',
       'show_documentation_btn': 'Afișεază butonul de documentație',
       'show_documentation_btn_desc': 'Afișează o pictogramă de ajutor în bara de navigare superioară',
@@ -609,6 +749,13 @@ class TranslationService extends ChangeNotifier {
       'session_complete_description': 'Ați terminat de revizuit toate cardurile din această sesiune.',
     },
     'sk': {
+      'home': 'Domov',
+      'confirm': 'Potvrdiť',
+      'cancel': 'Zrušiť',
+      'back': 'Späť',
+      'delete': 'Odstrániť',
+      'edit': 'Upraviť',
+      'feedback': 'Spätná väzba',
       'documentation': 'Dokumentácia',
       'show_documentation_btn': 'Zobraziť tlačidlo dokumentácie',
       'show_documentation_btn_desc': 'Zobraziť ikonu pomocníka v hornej navigačnej lište',
@@ -633,6 +780,13 @@ class TranslationService extends ChangeNotifier {
       'session_complete_description': 'Dokončili ste kontrolu všetkých kariet v tejto relácii.',
     },
     'sl': {
+      'home': 'Domov',
+      'confirm': 'Potrdi',
+      'cancel': 'Prekliči',
+      'back': 'Nazaj',
+      'delete': 'Izbriši',
+      'edit': 'Uredi',
+      'feedback': 'Povratne informacije',
       'documentation': 'Dokumentacija',
       'show_documentation_btn': 'Prikaži gumb za dokumentacijo',
       'show_documentation_btn_desc': 'Prikaži ikonu pomoči v zgornji navigacijski vrstici',
@@ -657,6 +811,13 @@ class TranslationService extends ChangeNotifier {
       'session_complete_description': 'Pregledali ste vse kartice v tej seji.',
     },
     'fi': {
+      'home': 'Koti',
+      'confirm': 'Vahvista',
+      'cancel': 'Peruuta',
+      'back': 'Takaisin',
+      'delete': 'Poista',
+      'edit': 'Muokkaa',
+      'feedback': 'Palaute',
       'documentation': 'Dokumentaatio',
       'show_documentation_btn': 'Näytä dokumentaatiopainike',
       'show_documentation_btn_desc': 'Näytä ohjekuvake yläreunan navigointipalkissa',
@@ -681,6 +842,13 @@ class TranslationService extends ChangeNotifier {
       'session_complete_description': 'Olet käynyt läpi kaikki tämän istunnon kortit.',
     },
     'sv': {
+      'home': 'Hem',
+      'confirm': 'Bekräfta',
+      'cancel': 'Avbryt',
+      'back': 'Bakåt',
+      'delete': 'Radera',
+      'edit': 'Redigera',
+      'feedback': 'Feedback',
       'documentation': 'Dokumentation',
       'show_documentation_btn': 'Visa dokumentationsknapp',
       'show_documentation_btn_desc': 'Visa en hjälpikon i det övre navigeringsfältet',
@@ -705,6 +873,13 @@ class TranslationService extends ChangeNotifier {
       'session_complete_description': 'Du har granskat klart alla kort i den här sessionen.',
     },
     'tl': {
+      'home': 'Home',
+      'confirm': 'Kumpirmahin',
+      'cancel': 'Kanselahin',
+      'back': 'Bumalik',
+      'delete': 'Burahin',
+      'edit': 'I-edit',
+      'feedback': 'Feedback',
       'documentation': 'Dokumentasyon',
       'show_documentation_btn': 'Ipakita ang Button ng Dokumentasyon',
       'show_documentation_btn_desc': 'Ipakita ang icon ng tulong sa itaas na navigation bar',
@@ -729,6 +904,13 @@ class TranslationService extends ChangeNotifier {
       'session_complete_description': 'Natapos mo nang suriin ang lahat ng mga card sa session na ito.',
     },
     'vi': {
+      'home': 'Trang chủ',
+      'confirm': 'Xác nhận',
+      'cancel': 'Hủy',
+      'back': 'Quay lại',
+      'delete': 'Xóa',
+      'edit': 'Chỉnh sửa',
+      'feedback': 'Phản hồi',
       'documentation': 'Tài liệu',
       'show_documentation_btn': 'Hiển thị nút tài liệu',
       'show_documentation_btn_desc': 'Hiển thị biểu tượng trợ giúp trong thanh điều hướng trên cùng',
@@ -753,6 +935,13 @@ class TranslationService extends ChangeNotifier {
       'session_complete_description': 'Bạn đã hoàn thành việc ôn tập tất cả các thẻ trong phiên này.',
     },
     'tr': {
+      'home': 'Ana Sayfa',
+      'confirm': 'Onayla',
+      'cancel': 'İptal',
+      'back': 'Geri',
+      'delete': 'Sil',
+      'edit': 'Düzenle',
+      'feedback': 'Geri bildirim',
       'documentation': 'Dokümantasyon',
       'show_documentation_btn': 'Dokümantasyon Butonunu Göster',
       'show_documentation_btn_desc': 'Üst navigasyon çubuğunda bir yardım simgesi görüntüle',
@@ -777,6 +966,13 @@ class TranslationService extends ChangeNotifier {
       'session_complete_description': 'Bu oturumdaki tüm kartları incelemeyi bitirdiniz.',
     },
     'el': {
+      'home': 'Αρχική',
+      'confirm': 'Επιβεβαίωση',
+      'cancel': 'Ακύρωση',
+      'back': 'Πίσω',
+      'delete': 'Διαγραφή',
+      'edit': 'Επεξεργασία',
+      'feedback': 'Σχόλια',
       'documentation': 'Τεκμηρίωση',
       'show_documentation_btn': 'Εμφάνιση κουμπιού τεκμηρίωσης',
       'show_documentation_btn_desc': 'Εμφάνιση εικονιδίου βοήθειας στην επάνω γραμμή πλοήγησης',
@@ -801,6 +997,13 @@ class TranslationService extends ChangeNotifier {
       'session_complete_description': 'Ολοκληρώσατε την ανασκόπηση όλων των καρτών σε αυτήν τη συνεδρία.',
     },
     'uk': {
+      'home': 'Головна',
+      'confirm': 'Підтвердити',
+      'cancel': 'Скасувати',
+      'back': 'Назад',
+      'delete': 'Видалити',
+      'edit': 'Редагувати',
+      'feedback': 'Зворотний зв\'язок',
       'documentation': 'Документація',
       'show_documentation_btn': 'Показати кнопку документації',
       'show_documentation_btn_desc': 'Відображати іконку допомоги у верхній навігаційній панелі',
@@ -825,6 +1028,13 @@ class TranslationService extends ChangeNotifier {
       'session_complete_description': 'Ви закінчили перегляд усіх карток у цій сесії.',
     },
     'ar': {
+      'home': 'الرئيسية',
+      'confirm': 'تأكيد',
+      'cancel': 'إلغاء',
+      'back': 'عودة',
+      'delete': 'حذف',
+      'edit': 'تعديل',
+      'feedback': 'ملاحظات',
       'documentation': 'التوثيق',
       'show_documentation_btn': 'عرض زر التوثيق',
       'show_documentation_btn_desc': 'عرض أيقونة المساعدة في شريط التنقل العلوي',
@@ -849,6 +1059,13 @@ class TranslationService extends ChangeNotifier {
       'session_complete_description': 'لقد انتهيت من مراجعة جميع البطاقات في هذه الجلسة.',
     },
     'hi': {
+      'home': 'होम',
+      'confirm': 'पुष्टि करें',
+      'cancel': 'रद्द करें',
+      'back': 'वापस',
+      'delete': 'हटाएं',
+      'edit': 'संपादित करें',
+      'feedback': 'प्रतिक्रिया',
       'documentation': 'दस्तावेज़ीकरण',
       'show_documentation_btn': 'दस्तावेज़ीकरण बटन दिखाएं',
       'show_documentation_btn_desc': 'शीर्ष नेвиगेशन बार में सहायता आइकन प्रदर्शित करें',
@@ -873,6 +1090,13 @@ class TranslationService extends ChangeNotifier {
       'session_complete_description': 'आपने इस सत्र के सभी कार्डों की समीक्षा पूरी कर ली है।',
     },
     'zh': {
+      'home': '首页',
+      'confirm': '确认',
+      'cancel': '取消',
+      'back': '返回',
+      'delete': '删除',
+      'edit': '编辑',
+      'feedback': '反馈',
       'documentation': '文档',
       'show_documentation_btn': '显示文档按钮',
       'show_documentation_btn_desc': '在顶部导航栏显示帮助图标',
@@ -897,6 +1121,13 @@ class TranslationService extends ChangeNotifier {
       'session_complete_description': '您已完成本环节中所有卡片的复习。',
     },
     'ja': {
+      'home': 'ホーム',
+      'confirm': '確認',
+      'cancel': 'キャンセル',
+      'back': '戻る',
+      'delete': '削除',
+      'edit': '編集',
+      'feedback': 'フィードバック',
       'documentation': 'ドキュメント',
       'show_documentation_btn': 'ドキュメントボタンを表示',
       'show_documentation_btn_desc': '上部のナビゲーションバーにヘルプアイコンを表示',
@@ -921,6 +1152,13 @@ class TranslationService extends ChangeNotifier {
       'session_complete_description': 'このセッションのすべてのカードの学習が完了しました。',
     },
     'ko': {
+      'home': '홈',
+      'confirm': '확인',
+      'cancel': '취소',
+      'back': '뒤로',
+      'delete': '삭제',
+      'edit': '편집',
+      'feedback': '피드백',
       'documentation': '문서',
       'show_documentation_btn': '문서 버튼 표시',
       'show_documentation_btn_desc': '상단 내비게이션 바에 도움말 아이콘 표시',
@@ -1102,17 +1340,27 @@ class TranslationService extends ChangeNotifier {
 
   String translate(String key, {Map<String, String>? args}) {
     final lang = _currentLocale.languageCode.toLowerCase();
-    String value =
-        _translations[key] ??
-        _localizedFallbacks[lang]?[key] ??
-        _localizedFallbacks['en']?[key] ??
-        key;
+    
+    String? value = _translations[key];
+    if (value == null || value.trim().isEmpty) {
+      value = _englishFallbacks[key];
+    }
+    if (value == null || value.trim().isEmpty) {
+      value = _localizedFallbacks[lang]?[key];
+    }
+    if (value == null || value.trim().isEmpty) {
+      value = _localizedFallbacks['en']?[key];
+    }
+    if (value == null || value.trim().isEmpty) {
+      value = key;
+    }
+
     if (args != null) {
       args.forEach((k, v) {
-        value = value.replaceAll('{$k}', v);
+        value = value!.replaceAll('{$k}', v);
       });
     }
-    return value;
+    return value!;
   }
 
   /// Translates a key into a specific language code.
@@ -1130,7 +1378,18 @@ class TranslationService extends ChangeNotifier {
       final dbData = await _fetchFromDb(langCode);
       _languageMaps[langCode] = dbData;
     }
-    return _languageMaps[langCode]?[key] ?? _englishFallbacks[key] ?? key;
+    
+    String? value = _languageMaps[langCode]?[key];
+    if (value == null || value.trim().isEmpty) {
+      value = _englishFallbacks[key];
+    }
+    if (value == null || value.trim().isEmpty) {
+      value = _localizedFallbacks['en']?[key];
+    }
+    if (value == null || value.trim().isEmpty) {
+      value = key;
+    }
+    return value;
   }
 
   String getLanguageName(String code) {
