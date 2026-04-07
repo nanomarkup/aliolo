@@ -279,16 +279,75 @@ class _SubjectPageState extends State<SubjectPage> {
           child: ValueListenableBuilder<String>(
             valueListenable: getIt<TestingLanguageService>().currentLanguageCode,
             builder: (context, currentLang, _) {
+              final isSmallScreen = MediaQuery.of(context).size.width < 600;
+
+              final homeAction = IconButton(
+                tooltip: context.t('home') ?? 'Home',
+                icon: const Icon(Icons.school, color: appBarColor),
+                onPressed: () {
+                  if (isSearching) {
+                    _searchController.clear();
+                    _applySearch();
+                  } else {
+                    _loadDashboard();
+                  }
+                },
+              );
+              final leaderboardAction = IconButton(
+                tooltip: context.t('leaderboard'),
+                icon: const Icon(Icons.emoji_events, color: appBarColor),
+                onPressed: () =>
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const LeaderboardPage())),
+              );
+              final profileAction = IconButton(
+                tooltip: context.t('profile'),
+                icon: ValueListenableBuilder<bool>(
+                  valueListenable: getIt<FeedbackService>().pendingNotifications,
+                  builder: (context, hasNotif, _) {
+                    return Badge(
+                      isLabelVisible: hasNotif,
+                      backgroundColor: Colors.amber,
+                      child: const Icon(Icons.person, color: appBarColor),
+                    );
+                  },
+                ),
+                onPressed: () async {
+                  await Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfilePage()));
+                  _loadDashboard();
+                },
+              );
+              final settingsAction = IconButton(
+                tooltip: context.t('settings'),
+                icon: const Icon(Icons.settings, color: appBarColor),
+                onPressed: () =>
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const SettingsPage())),
+              );
+              final docAction = (_authService.currentUser?.showDocumentation ?? true)
+                  ? IconButton(
+                    tooltip: context.t('documentation'),
+                    icon: const Icon(Icons.help_outline, color: appBarColor),
+                    onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const DocumentationPage()),
+                    ),
+                  )
+                  : null;
+
               return AlioloScrollablePage(
                 title: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(
-                      '${context.t('dashboard_greeting')}, ${_authService.currentUser?.username ?? ''}',
-                      style: const TextStyle(
-                        color: appBarColor,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
+                    Flexible(
+                      child: Text(
+                        isSmallScreen
+                            ? '${context.t('dashboard_greeting')}!'
+                            : '${context.t('dashboard_greeting')}, ${_authService.currentUser?.username ?? ''}',
+                        style: const TextStyle(
+                          color: appBarColor,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                     if (isPremium) ...[
@@ -298,44 +357,22 @@ class _SubjectPageState extends State<SubjectPage> {
                   ],
                 ),
                 appBarColor: currentSessionColor,
-                actions: [
-                  IconButton(
-                    icon: const Icon(Icons.school, color: appBarColor),
-                    onPressed: () {
-                      if (isSearching) {
-                        _searchController.clear();
-                        _applySearch();
-                      } else {
-                        _loadDashboard();
-                      }
-                    },
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.emoji_events, color: appBarColor),
-                    onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const LeaderboardPage())),
-                  ),
-                  IconButton(
-                    icon: ValueListenableBuilder<bool>(
-                      valueListenable: getIt<FeedbackService>().pendingNotifications,
-                      builder: (context, hasNotif, _) {
-                        return Badge(isLabelVisible: hasNotif, backgroundColor: Colors.amber, child: const Icon(Icons.person, color: appBarColor));
-                      },
-                    ),
-                    onPressed: () async {
-                      await Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfilePage()));
-                      _loadDashboard();
-                    },
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.settings, color: appBarColor),
-                    onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const SettingsPage())),
-                  ),
-                  if (_authService.currentUser?.showDocumentation ?? true)
-                    IconButton(
-                      icon: const Icon(Icons.help_outline, color: appBarColor),
-                      onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const DocumentationPage())),
-                    ),
-                ],
+                actions: isSmallScreen
+                    ? [homeAction, profileAction]
+                    : [
+                      homeAction,
+                      leaderboardAction,
+                      profileAction,
+                      settingsAction,
+                      if (docAction != null) docAction,
+                    ],
+                overflowActions: isSmallScreen
+                    ? [
+                      leaderboardAction,
+                      settingsAction,
+                      if (docAction != null) docAction,
+                    ]
+                    : null,
                 slivers: [
                   SliverToBoxAdapter(
                     child: Padding(
@@ -872,50 +909,72 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
           activeCodes.add(currentLang);
         }
 
+        final isSmallScreen = MediaQuery.of(context).size.width < 600;
+
+        final homeAction = IconButton(
+          tooltip: context.t('home') ?? 'Home',
+          icon: const Icon(Icons.school, color: appBarColor),
+          onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
+        );
+        final leaderboardAction = IconButton(
+          tooltip: context.t('leaderboard'),
+          icon: const Icon(Icons.emoji_events, color: appBarColor),
+          onPressed: () =>
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const LeaderboardPage())),
+        );
+        final profileAction = IconButton(
+          tooltip: context.t('profile'),
+          icon: ValueListenableBuilder<bool>(
+            valueListenable: getIt<FeedbackService>().pendingNotifications,
+            builder: (context, hasNotif, _) {
+              return Badge(
+                isLabelVisible: hasNotif,
+                backgroundColor: Colors.amber,
+                child: const Icon(Icons.person, color: appBarColor),
+              );
+            },
+          ),
+          onPressed: () async {
+            await Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfilePage()));
+            _loadData();
+          },
+        );
+        final settingsAction = IconButton(
+          tooltip: context.t('settings'),
+          icon: const Icon(Icons.settings, color: appBarColor),
+          onPressed: () =>
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const SettingsPage())),
+        );
+        final docAction = (_authService.currentUser?.showDocumentation ?? true)
+            ? IconButton(
+              tooltip: context.t('documentation'),
+              icon: const Icon(Icons.help_outline, color: appBarColor),
+              onPressed: () =>
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const DocumentationPage())),
+            )
+            : null;
+
         return PopScope(
           canPop: true,
           onPopInvokedWithResult: (didPop, result) {},
           child: AlioloScrollablePage(
             title: Text(
               widget.pillar.getTranslatedName(currentLang),
-              style: const TextStyle(
-                color: appBarColor,
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-              ),
+              style: const TextStyle(color: appBarColor, fontWeight: FontWeight.bold, fontSize: 20),
             ),
             appBarColor: pillarColor,
-            actions: [
-              IconButton(
-                icon: const Icon(Icons.school, color: appBarColor),
-                onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
-              ),
-              IconButton(
-                icon: const Icon(Icons.emoji_events, color: appBarColor),
-                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const LeaderboardPage())),
-              ),
-              IconButton(
-                icon: ValueListenableBuilder<bool>(
-                  valueListenable: getIt<FeedbackService>().pendingNotifications,
-                  builder: (context, hasNotif, _) {
-                    return Badge(isLabelVisible: hasNotif, backgroundColor: Colors.amber, child: const Icon(Icons.person, color: appBarColor));
-                  },
-                ),
-                onPressed: () async {
-                  await Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfilePage()));
-                  _loadData();
-                },
-              ),
-              IconButton(
-                icon: const Icon(Icons.settings, color: appBarColor),
-                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const SettingsPage())),
-              ),
-              if (_authService.currentUser?.showDocumentation ?? true)
-                IconButton(
-                  icon: const Icon(Icons.help_outline, color: appBarColor),
-                  onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const DocumentationPage())),
-                ),
+            actions: isSmallScreen ? [homeAction, profileAction] : [
+              homeAction,
+              leaderboardAction,
+              profileAction,
+              settingsAction,
+              if (docAction != null) docAction,
             ],
+            overflowActions: isSmallScreen ? [
+              leaderboardAction,
+              settingsAction,
+              if (docAction != null) docAction,
+            ] : null,
             slivers: [
               SliverToBoxAdapter(
                 child: Padding(
@@ -1378,46 +1437,121 @@ class _FolderPageState extends State<FolderPage> {
           activeCodes.add(currentLang);
         }
 
+        final isSmallScreen = MediaQuery.of(context).size.width < 600;
+
+        final homeAction = IconButton(
+          tooltip: context.t('home') ?? 'Home',
+          icon: const Icon(Icons.school, color: appBarColor),
+          onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
+        );
+        final backAction = IconButton(
+          tooltip: context.t('back'),
+          icon: const Icon(Icons.arrow_back, color: appBarColor),
+          onPressed: () => Navigator.pop(context, {
+            'hasUpdated': _hasUpdated,
+            'ageFilter': _filters.ageGroup,
+            'collectionFilter': _filters.collectionFilter,
+          }),
+        );
+        final editAction = isOwner
+            ? IconButton(
+              tooltip: context.t('edit'),
+              icon: const Icon(Icons.edit, color: appBarColor),
+              onPressed: () async {
+                final result = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SubjectEditPage(existingFolder: widget.folder, isFolderMode: true),
+                  ),
+                );
+                if (result == true) {
+                  _loadData();
+                  _hasUpdated = true;
+                }
+              },
+            )
+            : null;
+        final deleteAction = isOwner
+            ? IconButton(
+              tooltip: context.t('delete'),
+              icon: const Icon(Icons.delete, color: appBarColor),
+              onPressed: () async {
+                final confirmed = await showDialog<bool>(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: Text(context.t('delete_folder')),
+                    content: const Text('Are you sure you want to delete this folder?'),
+                    actions: [
+                      TextButton(onPressed: () => Navigator.pop(context, false), child: Text(context.t('cancel'))),
+                      TextButton(
+                        onPressed: () => Navigator.pop(context, true),
+                        style: TextButton.styleFrom(foregroundColor: Colors.red),
+                        child: Text(context.t('delete')),
+                      ),
+                    ],
+                  ),
+                );
+                if (confirmed == true && mounted) {
+                  try {
+                    await _cardService.deleteFolder(widget.folder.id);
+                    if (mounted) {
+                      Navigator.pop(context, {
+                        'hasUpdated': true,
+                        'ageFilter': _filters.ageGroup,
+                        'collectionFilter': _filters.collectionFilter,
+                      });
+                    }
+                  } catch (e) {
+                    if (e.toString().contains('folder_not_empty') && mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            context.t('folder_not_empty_msg') ?? 'Cannot delete folder: it is not empty',
+                          ),
+                        ),
+                      );
+                    }
+                  }
+                }
+              },
+            )
+            : null;
+        final feedbackAction = IconButton(
+          tooltip: context.t('feedback'),
+          icon: const Icon(Icons.feedback, color: appBarColor),
+          onPressed: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => FeedbackPage(
+                folderId: widget.folder.id,
+                contextTitle: widget.folder.getName(currentLang),
+                appBarColor: pillarColor,
+              ),
+            ),
+          ),
+        );
+
         return PopScope(
           canPop: true,
           onPopInvokedWithResult: (didPop, result) {},
           child: AlioloScrollablePage(
             title: Text(
               widget.folder.getName(currentLang),
-              style: const TextStyle(
-                color: appBarColor,
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-              ),
+              style: const TextStyle(color: appBarColor, fontWeight: FontWeight.bold, fontSize: 20),
             ),
             appBarColor: pillarColor,
-            actions: [
-              IconButton(
-                icon: const Icon(Icons.school, color: appBarColor),
-                onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
-              ),
-              IconButton(icon: const Icon(Icons.arrow_back, color: appBarColor), onPressed: () => Navigator.pop(context, {'hasUpdated': _hasUpdated, 'ageFilter': _filters.ageGroup, 'collectionFilter': _filters.collectionFilter})),
-              if (isOwner) ...[
-                IconButton(icon: const Icon(Icons.edit, color: appBarColor), onPressed: () async {
-                  final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(existingFolder: widget.folder, isFolderMode: true)));
-                  if (result == true) { _loadData(); _hasUpdated = true; }
-                }),
-                IconButton(icon: const Icon(Icons.delete, color: appBarColor), onPressed: () async {
-                  final confirmed = await showDialog<bool>(context: context, builder: (context) => AlertDialog(title: Text(context.t('delete_folder')), content: const Text('Are you sure you want to delete this folder?'), actions: [TextButton(onPressed: () => Navigator.pop(context, false), child: Text(context.t('cancel'))), TextButton(onPressed: () => Navigator.pop(context, true), style: TextButton.styleFrom(foregroundColor: Colors.red), child: Text(context.t('delete')))]));
-                  if (confirmed == true && mounted) {
-                    try {
-                      await _cardService.deleteFolder(widget.folder.id);
-                      if (mounted) Navigator.pop(context, {'hasUpdated': true, 'ageFilter': _filters.ageGroup, 'collectionFilter': _filters.collectionFilter});
-                    } catch (e) {
-                      if (e.toString().contains('folder_not_empty') && mounted) {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(context.t('folder_not_empty_msg') ?? 'Cannot delete folder: it is not empty')));
-                      }
-                    }
-                  }
-                }),
-              ],
-              IconButton(icon: const Icon(Icons.feedback, color: appBarColor), onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => FeedbackPage(folderId: widget.folder.id, contextTitle: widget.folder.getName(currentLang), appBarColor: pillarColor)))),
-            ],
+            actions: isSmallScreen
+                ? [backAction, homeAction]
+                : [
+                  homeAction,
+                  backAction,
+                  if (editAction != null) editAction,
+                  if (deleteAction != null) deleteAction,
+                  feedbackAction,
+                ],
+            overflowActions: isSmallScreen
+                ? [if (editAction != null) editAction, if (deleteAction != null) deleteAction, feedbackAction]
+                : null,
             slivers: [
               SliverToBoxAdapter(
                 child: Padding(

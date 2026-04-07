@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:window_manager/window_manager.dart';
 import 'package:aliolo/data/services/testing_language_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
-import 'package:aliolo/core/widgets/window_controls.dart';
 import 'package:aliolo/core/widgets/resize_wrapper.dart';
 import 'package:aliolo/features/subjects/presentation/pages/subject_page.dart';
 import 'package:aliolo/features/leaderboard/presentation/pages/leaderboard_page.dart';
 import 'package:aliolo/features/auth/presentation/pages/profile_page.dart';
 import 'package:aliolo/features/settings/presentation/pages/settings_page.dart';
+import 'package:aliolo/core/widgets/floating_app_bar.dart';
 
 class ManageTestingLangsPage extends StatefulWidget {
   const ManageTestingLangsPage({super.key});
@@ -28,65 +27,50 @@ class _ManageTestingLangsPageState extends State<ManageTestingLangsPage> {
     return ListenableBuilder(
       listenable: Listenable.merge([TranslationService(), _langService]),
       builder: (context, _) {
+        final isSmallScreen = MediaQuery.of(context).size.width < 600;
+
+        final homeAction = IconButton(
+          tooltip: context.t('home') ?? 'Home',
+          icon: const Icon(Icons.school, color: appBarColor),
+          onPressed: () => Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => const SubjectPage()),
+            (route) => false,
+          ),
+        );
+        final leaderboardAction = IconButton(
+          tooltip: context.t('leaderboard'),
+          icon: const Icon(Icons.emoji_events, color: appBarColor),
+          onPressed: () =>
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const LeaderboardPage())),
+        );
+        final profileAction = IconButton(
+          tooltip: context.t('profile'),
+          icon: const Icon(Icons.person, color: appBarColor),
+          onPressed: () =>
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfilePage())),
+        );
+        final settingsAction = IconButton(
+          tooltip: context.t('settings'),
+          icon: const Icon(Icons.settings, color: appBarColor),
+          onPressed: () =>
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const SettingsPage())),
+        );
+
         return ResizeWrapper(
           child: Scaffold(
-            appBar: AppBar(
-              title: DragToMoveArea(
-                child: SizedBox(
-                  width: double.infinity,
-                  child: Text(
-                    context.t('manage_testing_langs'),
-                    style: const TextStyle(color: appBarColor),
-                  ),
-                ),
-              ),
+            extendBodyBehindAppBar: true,
+            appBar: AlioloAppBar(
+              title: Text(context.t('manage_testing_langs'), style: const TextStyle(color: appBarColor)),
               backgroundColor: currentSessionColor,
               foregroundColor: appBarColor,
-              automaticallyImplyLeading: false,
-              actions: [
-                IconButton(
-                  icon: const Icon(Icons.school, color: appBarColor),
-                  onPressed:
-                      () => Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const SubjectPage(),
-                        ),
-                        (route) => false,
-                      ),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.emoji_events, color: appBarColor),
-                  onPressed:
-                      () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const LeaderboardPage(),
-                        ),
-                      ),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.person, color: appBarColor),
-                  onPressed:
-                      () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const ProfilePage(),
-                        ),
-                      ),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.settings, color: appBarColor),
-                  onPressed:
-                      () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const SettingsPage(),
-                        ),
-                      ),
-                ),
-                const WindowControls(color: appBarColor, iconSize: 24),
+              actions: isSmallScreen ? [homeAction, profileAction] : [
+                homeAction,
+                leaderboardAction,
+                profileAction,
+                settingsAction,
               ],
+              overflowActions: isSmallScreen ? [leaderboardAction, settingsAction] : null,
             ),
             body: Center(
               child: Container(

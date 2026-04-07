@@ -5,6 +5,7 @@ import 'package:aliolo/core/widgets/window_controls.dart';
 class AlioloAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Widget title;
   final List<Widget>? actions;
+  final List<Widget>? overflowActions;
   final Widget? leading;
   final double? leadingWidth;
   final Color backgroundColor;
@@ -17,6 +18,7 @@ class AlioloAppBar extends StatelessWidget implements PreferredSizeWidget {
     super.key,
     required this.title,
     this.actions,
+    this.overflowActions,
     this.leading,
     this.leadingWidth,
     this.backgroundColor = Colors.blue,
@@ -52,10 +54,22 @@ class AlioloAppBar extends StatelessWidget implements PreferredSizeWidget {
               child: AppBar(
                 toolbarHeight: 64,
                 title: DragToMoveArea(
-                  child: SizedBox(
-                    width: double.infinity,
-                    height: 64,
-                    child: Align(alignment: titleAlignment, child: title),
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(minHeight: 64),
+                    child: Align(
+                      alignment: titleAlignment,
+                      child: DefaultTextStyle(
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: foregroundColor,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        maxLines: 1,
+                        softWrap: false,
+                        child: title,
+                      ),
+                    ),
                   ),
                 ),
                 backgroundColor: Colors.transparent,
@@ -68,6 +82,43 @@ class AlioloAppBar extends StatelessWidget implements PreferredSizeWidget {
                 titleSpacing: leading != null ? 0 : 20,
                 actions: [
                   if (actions != null) ...actions!,
+                  if (overflowActions != null && overflowActions!.isNotEmpty)
+                    PopupMenuButton<int>(
+                      icon: Icon(Icons.more_vert, color: foregroundColor),
+                      onSelected: (index) {
+                        final action = overflowActions![index];
+                        if (action is IconButton) {
+                          action.onPressed?.call();
+                        }
+                      },
+                      itemBuilder: (context) => overflowActions!
+                          .asMap()
+                          .entries
+                          .map((e) => PopupMenuItem<int>(
+                                value: e.key,
+                                child: e.value is IconButton
+                                    ? Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          IconTheme(
+                                            data: IconThemeData(
+                                              color: Theme.of(context).textTheme.bodyLarge?.color,
+                                            ),
+                                            child: (e.value as IconButton).icon,
+                                          ),
+                                          const SizedBox(width: 12),
+                                          Text(
+                                            (e.value as IconButton).tooltip ?? 'Action',
+                                            style: TextStyle(
+                                              color: Theme.of(context).textTheme.bodyLarge?.color,
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                    : e.value,
+                              ))
+                          .toList(),
+                    ),
                   const WindowControls(color: Colors.white, iconSize: 24),
                   const SizedBox(width: 8),
                 ],
