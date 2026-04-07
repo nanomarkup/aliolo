@@ -10,6 +10,7 @@ import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/math_service.dart';
 import 'package:aliolo/data/services/subscription_service.dart';
+import 'package:aliolo/data/services/testing_language_service.dart';
 import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/core/widgets/aliolo_scrollable_page.dart';
 import 'package:aliolo/features/testing/presentation/pages/learn_page.dart';
@@ -32,6 +33,7 @@ class SubjectLandingPage extends StatefulWidget {
   final CollectionModel? collection;
   final List<CardModel> cards;
   final String languageCode;
+  final bool isReadOnly;
 
   const SubjectLandingPage({
     super.key,
@@ -40,6 +42,7 @@ class SubjectLandingPage extends StatefulWidget {
     this.collection,
     required this.cards,
     required this.languageCode,
+    this.isReadOnly = false,
   });
 
   @override
@@ -50,6 +53,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
   final _cardService = getIt<CardService>();
   final _authService = getIt<AuthService>();
   final _subService = getIt<SubscriptionService>();
+  final _langService = getIt<TestingLanguageService>();
   final _searchController = TextEditingController();
   final _searchFocusNode = FocusNode();
 
@@ -65,6 +69,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
   bool _isLoading = false;
   bool _hasUpdated = false;
   bool _isSearchExpanded = false;
+  late String _currentLanguageCode;
 
   String _collectionFilter = 'all';
   String _selectedAgeFilter = 'all';
@@ -76,6 +81,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
     _currentFolder = widget.folder;
     _currentCollection = widget.collection;
     _allCards = widget.cards;
+    _currentLanguageCode = widget.languageCode;
 
     if (_currentCollection != null) {
       _fetchCollectionSubjects();
@@ -83,6 +89,16 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
       _applyFilters();
     }
     _cardService.addListener(_onServiceChange);
+    _langService.currentLanguageCode.addListener(_onLanguageChange);
+  }
+
+  void _onLanguageChange() {
+    if (mounted) {
+      setState(() {
+        _currentLanguageCode = _langService.currentLanguageCode.value;
+        _applyFilters();
+      });
+    }
   }
 
   Future<void> _fetchCollectionSubjects() async {
@@ -104,6 +120,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
   @override
   void dispose() {
     _cardService.removeListener(_onServiceChange);
+    _langService.currentLanguageCode.removeListener(_onLanguageChange);
     _searchController.dispose();
     _searchFocusNode.dispose();
     super.dispose();
@@ -167,11 +184,11 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
       // Always update _filteredCards for count and session consistency
       _filteredCards = _allCards.where((c) {
         final promptMatches = c
-            .getPrompt(widget.languageCode)
+            .getPrompt(_currentLanguageCode)
             .toLowerCase()
             .contains(query);
         final answerMatches = c
-            .getAnswer(widget.languageCode)
+            .getAnswer(_currentLanguageCode)
             .toLowerCase()
             .contains(query);
 
@@ -188,7 +205,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
               }
 
               final matchesName = s
-                  .getName(widget.languageCode)
+                  .getName(_currentLanguageCode)
                   .toLowerCase()
                   .contains(query);
               final matchesAge =
@@ -211,9 +228,9 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
           if (aSelected && !bSelected) return -1;
           if (!aSelected && bSelected) return 1;
           return a
-              .getName(widget.languageCode)
+              .getName(_currentLanguageCode)
               .toLowerCase()
-              .compareTo(b.getName(widget.languageCode).toLowerCase());
+              .compareTo(b.getName(_currentLanguageCode).toLowerCase());
         });
       }
     });
@@ -353,18 +370,18 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
         }
       }
 
-      final lang = widget.languageCode.toLowerCase();
+      final lang = _currentLanguageCode.toLowerCase();
       if (!(_currentSubject?.isMath ?? false)) {
         final query = _searchController.text.toLowerCase();
         sessionCards =
             sessionCards.where((sc) {
               final c = sc.card;
               final promptMatches = c
-                  .getPrompt(widget.languageCode)
+                  .getPrompt(_currentLanguageCode)
                   .toLowerCase()
                   .contains(query);
               final answerMatches = c
-                  .getAnswer(widget.languageCode)
+                  .getAnswer(_currentLanguageCode)
                   .toLowerCase()
                   .contains(query);
               final matchesLevel =
@@ -406,11 +423,11 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                     isTest
                         ? TestPage(
                           sessionCards: sessionCards,
-                          languageCode: widget.languageCode,
+                          languageCode: _currentLanguageCode,
                         )
                         : LearnPage(
                           sessionCards: sessionCards,
-                          languageCode: widget.languageCode,
+                          languageCode: _currentLanguageCode,
                         ),
           ),
         );
@@ -548,6 +565,26 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                       const SizedBox(height: 20),
                     ],
                     filterRow,
+                    const SizedBox(height: 8),
+                    Text(context.t('language') ?? 'Language', style: const TextStyle(fontWeight: FontWeight.bold)),
+                    const SizedBox(height: 8),
+                    _buildCompactDropdown(
+                      value: _currentLanguageCode,
+                      items: Map.fromEntries(
+                        _langService.activeLanguageCodes.map((l) => MapEntry(
+                          l, 
+                          _langService.getLanguageName(l)
+                        ))
+                      ),
+                      matchAnchorWidth: true,
+                      onChanged: (val) async {
+                        if (val != null) {
+                          await _langService.updateCurrentLanguage(val);
+                          setBottomSheetState(() {});
+                        }
+                      },
+                    ),
+                    const SizedBox(height: 24),
                     if (_allCards.isNotEmpty) ...[
                       Center(
                         child: Text(
@@ -577,44 +614,50 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
     ValueChanged<String?>? onChanged,
     IconData? prefixIcon,
     String? selectedLabel,
+    bool matchAnchorWidth = true,
   }) {
     final validatedValue = items.containsKey(value) ? value : (items.isNotEmpty ? items.keys.first : '');
     final label = selectedLabel ?? items[validatedValue] ?? '';
     
-    return PopupMenuButton<String>(
-      onSelected: onChanged,
-      position: PopupMenuPosition.under,
-      itemBuilder: (context) => items.entries.map((e) => PopupMenuItem<String>(
-        value: e.key,
-        child: Text(e.value),
-      )).toList(),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-        decoration: BoxDecoration(
-          color: Theme.of(context).cardColor.withValues(alpha: 0.5), 
-          borderRadius: BorderRadius.circular(12), 
-          border: Border.all(color: Colors.grey.withValues(alpha: 0.5))
-        ),
-        child: Row(
-          children: [
-            if (prefixIcon != null) ...[
-              Icon(prefixIcon, size: 16, color: Colors.grey[600]),
-              const SizedBox(width: 8),
-            ],
-            Expanded(
-              child: Text(
-                label,
-                style: TextStyle(
-                  fontSize: 14, 
-                  color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black87
-                ),
-                overflow: TextOverflow.ellipsis,
-              ),
+    return LayoutBuilder(
+      builder: (context, box) {
+        return PopupMenuButton<String>(
+          constraints: matchAnchorWidth ? BoxConstraints(minWidth: box.maxWidth, maxWidth: box.maxWidth) : null,
+          onSelected: onChanged,
+          position: PopupMenuPosition.under,
+          itemBuilder: (context) => items.entries.map((e) => PopupMenuItem<String>(
+            value: e.key,
+            child: Text(e.value),
+          )).toList(),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+            decoration: BoxDecoration(
+              color: Theme.of(context).cardColor.withValues(alpha: 0.5), 
+              borderRadius: BorderRadius.circular(12), 
+              border: Border.all(color: Colors.grey.withValues(alpha: 0.5))
             ),
-            Icon(Icons.arrow_drop_down, size: 20, color: Colors.grey[600]),
-          ],
-        ),
-      ),
+            child: Row(
+              children: [
+                if (prefixIcon != null) ...[
+                  Icon(prefixIcon, size: 16, color: Colors.grey[600]),
+                  const SizedBox(width: 8),
+                ],
+                Expanded(
+                  child: Text(
+                    label,
+                    style: TextStyle(
+                      fontSize: 14, 
+                      color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black87
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                Icon(Icons.arrow_drop_down, size: 20, color: Colors.grey[600]),
+              ],
+            ),
+          ),
+        );
+      }
     );
   }
 
@@ -642,17 +685,16 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
             (_currentCollection != null &&
                 _currentCollection!.ownerId ==
                     _authService.currentUser?.serverId);
-        final displayLang = widget.languageCode;
         final title =
-            _currentSubject?.getName(displayLang) ??
-            _currentFolder?.getName(displayLang) ??
-            _currentCollection?.getName(displayLang) ??
+            _currentSubject?.getName(_currentLanguageCode) ??
+            _currentFolder?.getName(_currentLanguageCode) ??
+            _currentCollection?.getName(_currentLanguageCode) ??
             'Aliolo';
 
         final description =
-            _currentSubject?.getDescription(displayLang) ??
-            _currentFolder?.getDescription(displayLang) ??
-            _currentCollection?.getDescription(displayLang) ??
+            _currentSubject?.getDescription(_currentLanguageCode) ??
+            _currentFolder?.getDescription(_currentLanguageCode) ??
+            _currentCollection?.getDescription(_currentLanguageCode) ??
             '';
 
         return PopScope(
@@ -677,7 +719,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                 icon: const Icon(Icons.arrow_back),
                 onPressed: () => Navigator.pop(context, _hasUpdated),
               ),
-              if (_currentSubject != null || _currentCollection != null) ...[
+              if ((_currentSubject != null || _currentCollection != null) && !widget.isReadOnly) ...[
                 IconButton(
                   icon: Icon(
                     (_currentSubject?.isOnDashboard ??
@@ -689,7 +731,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                   onPressed: _toggleFavorite,
                 ),
               ],
-              if (isOwner) ...[
+              if (isOwner && !widget.isReadOnly) ...[
                 IconButton(
                   icon: const Icon(Icons.edit),
                   onPressed: () async {
@@ -753,7 +795,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                 },
               ),
             ],
-            fixedBody: Padding(
+            fixedBody: widget.isReadOnly ? null : Padding(
               padding: const EdgeInsets.only(top: 16, bottom: 8),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -884,6 +926,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                                     decoration: InputDecoration(
                                       hintText: _currentCollection != null ? context.t('search_subjects') : context.t('search_cards'),
                                       prefixIcon: const Icon(Icons.search),
+                                      isDense: true,
                                       border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(12),
                                         borderSide: BorderSide(color: pillarColor.withValues(alpha: 0.5)),
@@ -896,14 +939,14 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                                         borderRadius: BorderRadius.circular(12),
                                         borderSide: BorderSide(color: pillarColor, width: 2),
                                       ),
-                                      contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+                                      contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                                       filled: true,
                                       fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
                                     ),
                                     onChanged: (_) => _applyFilters(),
                                   ),
                                 ),
-                                if (isOwner && _currentSubject != null) ...[
+                                if (isOwner && _currentSubject != null && !widget.isReadOnly) ...[
                                   const SizedBox(width: 8),
                                   Container(
                                     decoration: BoxDecoration(
@@ -933,26 +976,28 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                                     ),
                                   ),
                                 ],
-                                const SizedBox(width: 8),
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: pillarColor,
-                                    borderRadius: BorderRadius.circular(12),
+                                if (!widget.isReadOnly) ...[
+                                  const SizedBox(width: 8),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: pillarColor,
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    child: IconButton(
+                                      icon: const Icon(Icons.tune, color: Colors.white),
+                                      onPressed: () => _showFilterBottomSheet(context, pillarColor),
+                                    ),
                                   ),
-                                  child: IconButton(
-                                    icon: const Icon(Icons.tune, color: Colors.white),
-                                    onPressed: () => _showFilterBottomSheet(context, pillarColor),
-                                  ),
-                                ),
+                                ],
                               ],
                             ),
                           ] else ...[
                             Row(
                               children: [
-                                if (_currentSubject != null && !(_currentSubject?.isMath ?? false)) ...[
+                                if (_currentSubject != null && !(_currentSubject?.isMath ?? false) && !widget.isReadOnly) ...[
                                   ..._buildLevelRangeWidgets(pillarColor),
                                 ],
-                                if (_currentCollection != null) ...[
+                                if (_currentCollection != null && !widget.isReadOnly) ...[
                                   Expanded(flex: 3, child: filterRow),
                                   const SizedBox(width: 8),
                                 ],
@@ -981,6 +1026,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                                       decoration: InputDecoration(
                                         hintText: _currentCollection != null ? context.t('search_subjects') : context.t('search_cards'),
                                         prefixIcon: const Icon(Icons.search),
+                                        isDense: true,
                                         suffixIcon: IconButton(
                                           icon: const Icon(Icons.close),
                                           onPressed: () {
@@ -992,10 +1038,11 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                                           },
                                         ),
                                         border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                                        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                                       ),
                                     ),
                                   ),
-                                if (isOwner && _currentSubject != null && !_isSearchExpanded) ...[
+                                if (isOwner && _currentSubject != null && !_isSearchExpanded && !widget.isReadOnly) ...[
                                   const SizedBox(width: 8),
                                   SizedBox(
                                     height: 45,
@@ -1074,7 +1121,8 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                                         (context) => SubjectLandingPage(
                                           subject: subject,
                                           cards: cards,
-                                          languageCode: displayLang,
+                                          languageCode: _currentLanguageCode,
+                                          isReadOnly: true,
                                         ),
                                   ),
                                 );
@@ -1093,7 +1141,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                               ),
                               child: Row(
                                 children: [
-                                  if (isOwner)
+                                  if (isOwner && !widget.isReadOnly)
                                     Checkbox(
                                       value: _currentCollection!.subjectIds
                                           .contains(subject.id),
@@ -1126,14 +1174,14 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          subject.getName(displayLang),
+                                          subject.getName(_currentLanguageCode),
                                           style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 18,
                                           ),
                                         ),
                                         Text(
-                                          '${pillars.firstWhere((p) => p.id == subject.pillarId, orElse: () => pillars.first).getTranslatedName(displayLang)} • ${subject.cardCount} ${context.plural('card', subject.cardCount)}',
+                                          '${pillars.firstWhere((p) => p.id == subject.pillarId, orElse: () => pillars.first).getTranslatedName(_currentLanguageCode)} • ${subject.cardCount} ${context.plural('card', subject.cardCount)}',
                                           style: TextStyle(
                                             color: Colors.grey[600],
                                             fontSize: 14,
@@ -1173,14 +1221,14 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                       final card = _filteredCards[index];
                       final isCardMine =
                           card.ownerId == _authService.currentUser?.serverId;
-                      final answers = card.getAnswerList(displayLang);
+                      final answers = card.getAnswerList(_currentLanguageCode);
                       final answerText = answers
                           .map((a) => CardModel.capitalizeFirst(a))
                           .join(', ');
 
                       return InkWell(
                         onTap:
-                            isCardMine
+                            (isCardMine && !widget.isReadOnly)
                                 ? () async {
                                   await Navigator.push(
                                     context,
@@ -1195,7 +1243,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                                   );
                                   _refreshData(silent: true);
                                 }
-                                : null,
+                                : () => _showZoomedCard(context, card, pillarColor, _currentLanguageCode),
                         child: Card(
                           clipBehavior: Clip.antiAlias,
                           elevation: 2,
@@ -1210,40 +1258,22 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                                 child: _buildCardPreview(
                                   card,
                                   pillarColor,
-                                  displayLang,
+                                  _currentLanguageCode,
                                 ),
                               ),
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: Stack(
-                                  children: [
-                                    Center(
-                                      child: Text(
-                                        answerText,
-                                        textAlign: TextAlign.center,
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: const TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 12,
-                                        ),
-                                      ),
+                                child: Center(
+                                  child: Text(
+                                    answerText,
+                                    textAlign: TextAlign.center,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 12,
                                     ),
-                                    if (!isCardMine)
-                                      Positioned(
-                                        right: 0,
-                                        bottom: 0,
-                                        child: Tooltip(
-                                          message:
-                                              'You do not have permission to edit this card',
-                                          child: const Icon(
-                                            Icons.lock_outline,
-                                            size: 10,
-                                            color: Colors.grey,
-                                          ),
-                                        ),
-                                      ),
-                                  ],
+                                  ),
                                 ),
                               ),
                             ],
@@ -1257,6 +1287,65 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
           ),
         );
       },
+    );
+  }
+
+  void _showZoomedCard(BuildContext context, CardModel card, Color pillarColor, String displayLang) {
+    showDialog(
+      context: context,
+      builder: (context) => Dialog(
+        backgroundColor: Colors.transparent,
+        insetPadding: const EdgeInsets.all(16),
+        child: InkWell(
+          onTap: () => Navigator.pop(context),
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Container(
+                constraints: const BoxConstraints(maxWidth: 500, maxHeight: 600),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).cardColor,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                clipBehavior: Clip.antiAlias,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Flexible(
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: _buildCardPreview(card, pillarColor, displayLang),
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(20),
+                      width: double.infinity,
+                      color: pillarColor.withValues(alpha: 0.1),
+                      child: Text(
+                        card.getAnswerList(displayLang).map((a) => CardModel.capitalizeFirst(a)).join(', '),
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: pillarColor,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Positioned(
+                top: 8,
+                right: 8,
+                child: IconButton(
+                  icon: const Icon(Icons.close, color: Colors.grey, size: 30),
+                  onPressed: () => Navigator.pop(context),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 

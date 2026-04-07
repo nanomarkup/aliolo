@@ -99,7 +99,7 @@ class DocumentationPage extends StatelessWidget {
             body: Column(
               children: [
                 TabBar(
-                  tabAlignment: TabAlignment.center,
+                  tabAlignment: TabAlignment.fill,
                   labelColor: currentPrimaryColor,
                   unselectedLabelColor: Colors.grey,
                   indicatorColor: currentPrimaryColor,

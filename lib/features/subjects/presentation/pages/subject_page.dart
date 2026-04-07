@@ -385,6 +385,7 @@ class _SubjectPageState extends State<SubjectPage> {
                                   decoration: InputDecoration(
                                     hintText: context.t('search_subjects'),
                                     prefixIcon: const Icon(Icons.search),
+                                    isDense: true,
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(12),
                                       borderSide: BorderSide(
@@ -401,7 +402,7 @@ class _SubjectPageState extends State<SubjectPage> {
                                       borderRadius: BorderRadius.circular(12),
                                       borderSide: BorderSide(color: currentSessionColor, width: 2),
                                     ),
-                                    contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+                                    contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                                     filled: true,
                                     fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
                                   ),
@@ -584,6 +585,7 @@ class _SubjectPageState extends State<SubjectPage> {
                                     decoration: InputDecoration(
                                       hintText: context.t('search_subjects'),
                                       prefixIcon: const Icon(Icons.search),
+                                      isDense: true,
                                       suffixIcon: IconButton(
                                         icon: const Icon(Icons.close),
                                         onPressed: () {
@@ -610,7 +612,7 @@ class _SubjectPageState extends State<SubjectPage> {
                                         borderRadius: BorderRadius.circular(12),
                                         borderSide: BorderSide(color: currentSessionColor, width: 2),
                                       ),
-                                      contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+                                      contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                                       filled: true,
                                       fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
                                     ),
@@ -653,15 +655,7 @@ class _SubjectPageState extends State<SubjectPage> {
                                     value: 'subject', 
                                     child: ListTile(
                                       leading: Icon(Icons.description, color: currentSessionColor), 
-                                      title: Row(
-                                        children: [
-                                          Text(context.t('add_subject')),
-                                          if (!isPremium) ...[
-                                            const SizedBox(width: 8),
-                                            const Icon(Icons.workspace_premium, color: Colors.amber, size: 16),
-                                          ],
-                                        ],
-                                      ), 
+                                      title: Text(context.t('add_subject')),
                                       contentPadding: EdgeInsets.zero,
                                     ),
                                   ),
@@ -669,15 +663,7 @@ class _SubjectPageState extends State<SubjectPage> {
                                     value: 'collection', 
                                     child: ListTile(
                                       leading: Icon(Icons.collections, color: currentSessionColor), 
-                                      title: Row(
-                                        children: [
-                                          Text(context.t('add_collection')),
-                                          if (!isPremium) ...[
-                                            const SizedBox(width: 8),
-                                            const Icon(Icons.workspace_premium, color: Colors.amber, size: 16),
-                                          ],
-                                        ],
-                                      ), 
+                                      title: Text(context.t('add_collection')),
                                       contentPadding: EdgeInsets.zero,
                                     ),
                                   ),
@@ -685,15 +671,7 @@ class _SubjectPageState extends State<SubjectPage> {
                                     value: 'folder', 
                                     child: ListTile(
                                       leading: Icon(Icons.folder, color: currentSessionColor), 
-                                      title: Row(
-                                        children: [
-                                          Text(context.t('add_folder')),
-                                          if (!isPremium) ...[
-                                            const SizedBox(width: 8),
-                                            const Icon(Icons.workspace_premium, color: Colors.amber, size: 16),
-                                          ],
-                                        ],
-                                      ), 
+                                      title: Text(context.t('add_folder')),
                                       contentPadding: EdgeInsets.zero,
                                     ),
                                   ),
@@ -932,12 +910,18 @@ class _SubjectPageState extends State<SubjectPage> {
                           getIt<TestingLanguageService>().getLanguageName(l)
                         ))
                       ),
-                      selectedLabel: currentLang.toUpperCase(),
-                      matchAnchorWidth: false,
+                      selectedLabel: getIt<TestingLanguageService>().getLanguageName(currentLang),
+                      matchAnchorWidth: true,
                       onChanged: (val) async {
                         if (val != null) {
                           await getIt<TestingLanguageService>().updateCurrentLanguage(val);
-                          _applySearch();
+                          if (this is _SubjectPageState) {
+                            (this as _SubjectPageState)._loadDashboard();
+                          } else if (this is _PillarSubjectsPageState) {
+                            (this as _PillarSubjectsPageState)._loadData();
+                          } else if (this is _FolderPageState) {
+                            (this as _FolderPageState)._loadData();
+                          }
                           setBottomSheetState(() {});
                         }
                       },
@@ -1211,6 +1195,7 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
                               decoration: InputDecoration(
                                 hintText: context.t('search_subjects'),
                                 prefixIcon: const Icon(Icons.search),
+                                isDense: true,
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(12),
                                   borderSide: BorderSide(color: pillarColor.withValues(alpha: 0.5)),
@@ -1223,7 +1208,7 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
                                   borderRadius: BorderRadius.circular(12),
                                   borderSide: BorderSide(color: pillarColor, width: 2),
                                 ),
-                                contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+                                contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                                 filled: true,
                                 fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
                               ),
@@ -1402,6 +1387,7 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
                                 decoration: InputDecoration(
                                   hintText: context.t('search_subjects'),
                                   prefixIcon: const Icon(Icons.search),
+                                  isDense: true,
                                   suffixIcon: IconButton(
                                     icon: const Icon(Icons.close),
                                     onPressed: () {
@@ -1428,7 +1414,7 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
                                     borderRadius: BorderRadius.circular(12),
                                     borderSide: BorderSide(color: pillarColor, width: 2),
                                   ),
-                                  contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+                                  contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                                   filled: true,
                                   fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
                                 ),
@@ -1517,72 +1503,6 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
     );
   }
 
-  Widget _buildContentItem(
-    ContentItem item, 
-    String currentLang, 
-    List<ContentItem> allContent,
-    List<ContentItem> matchingContent,
-    DiscoveryFilters filters,
-    VoidCallback onDataRefresh,
-    Function(String, String) onFilterChanged,
-    Pillar? forcedPillar,
-  ) {
-    final pillar = forcedPillar ?? pillars.firstWhere((p) => p.id == item.pillarId, orElse: () => pillars.first);
-    if (item is FolderModel) {
-      final myId = getIt<AuthService>().currentUser?.serverId;
-      final folderCategoryTotal = allContent.where((e) {
-        if (e.folderId != item.id) return false;
-        if (filters.collectionFilter == 'mine') return e.ownerId == myId;
-        if (filters.collectionFilter == 'public') {
-          if (e is SubjectModel) return e.isPublic;
-          if (e is CollectionModel) return e.isPublic;
-          return false;
-        }
-        if (filters.collectionFilter == 'favorites') return e.isOnDashboard;
-        return true;
-      }).length;
-      final matchingInFolder = matchingContent.where((e) => e.folderId == item.id).length;
-      return _FolderListTile(
-        folder: item, 
-        matchingCount: matchingInFolder, 
-        totalCount: folderCategoryTotal, 
-        pillar: pillar, 
-        languageCode: currentLang, 
-        initialAgeFilter: filters.ageGroup, 
-        initialCollectionFilter: filters.collectionFilter, 
-        onChanged: onDataRefresh,
-        onFilterChanged: onFilterChanged,
-      );
-    } else if (item is CollectionModel) {
-      return _CollectionListTile(
-        collection: item, 
-        pillar: pillar, 
-        languageCode: currentLang, 
-        initialAgeFilter: filters.ageGroup, 
-        initialCollectionFilter: filters.collectionFilter, 
-        onChanged: onDataRefresh, 
-        onFavoriteChanged: () {
-          item.isOnDashboard = !item.isOnDashboard;
-          onDataRefresh();
-        }
-      );
-    } else if (item is SubjectModel) {
-      return _SubjectListTile(
-        subject: item, 
-        pillar: pillar, 
-        languageCode: currentLang, 
-        initialAgeFilter: filters.ageGroup, 
-        initialCollectionFilter: filters.collectionFilter, 
-        onChanged: onDataRefresh, 
-        onFavoriteChanged: () {
-          item.isOnDashboard = !item.isOnDashboard;
-          onDataRefresh();
-        }
-      );
-    }
-    return const SizedBox.shrink();
-  }
-
   void _showFilterBottomSheet(BuildContext context, String currentLang, List<String> activeCodes, Color pillarColor) {
     showModalBottomSheet(
       context: context,
@@ -1625,10 +1545,12 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
                         'mine': context.t('filter_my_subjects'),
                         'public': context.t('filter_public_library'),
                       },
-                      onChanged: (val) {
+                      onChanged: (val) async {
                         if (val != null) {
                           setState(() { _filters = _filters.copyWith(collectionFilter: val); _applySearch(); });
                           setBottomSheetState(() {});
+                          final prefs = await SharedPreferences.getInstance();
+                          await prefs.setString('last_collection_filter', val);
                         }
                       },
                     ),
@@ -1644,10 +1566,12 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
                         '7_14': context.t('age_7_14'),
                         '15_plus': context.t('age_15_plus'),
                       },
-                      onChanged: (val) {
+                      onChanged: (val) async {
                         if (val != null) {
                           setState(() { _filters = _filters.copyWith(ageGroup: val); _applySearch(); });
                           setBottomSheetState(() {});
+                          final prefs = await SharedPreferences.getInstance();
+                          await prefs.setString('last_age_filter', val);
                         }
                       },
                     ),
@@ -1663,12 +1587,18 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
                           getIt<TestingLanguageService>().getLanguageName(l)
                         ))
                       ),
-                      selectedLabel: currentLang.toUpperCase(),
-                      matchAnchorWidth: false,
+                      selectedLabel: getIt<TestingLanguageService>().getLanguageName(currentLang),
+                      matchAnchorWidth: true,
                       onChanged: (val) async {
                         if (val != null) {
                           await getIt<TestingLanguageService>().updateCurrentLanguage(val);
-                          _loadData();
+                          if (this is _SubjectPageState) {
+                            (this as _SubjectPageState)._loadDashboard();
+                          } else if (this is _PillarSubjectsPageState) {
+                            (this as _PillarSubjectsPageState)._loadData();
+                          } else if (this is _FolderPageState) {
+                            (this as _FolderPageState)._loadData();
+                          }
                           setBottomSheetState(() {});
                         }
                       },
@@ -1738,6 +1668,72 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
     );
   },
 );
+  }
+
+  Widget _buildContentItem(
+    ContentItem item, 
+    String currentLang, 
+    List<ContentItem> allContent,
+    List<ContentItem> matchingContent,
+    DiscoveryFilters filters,
+    VoidCallback onDataRefresh,
+    Function(String, String) onFilterChanged,
+    Pillar? forcedPillar,
+  ) {
+    final pillar = forcedPillar ?? pillars.firstWhere((p) => p.id == item.pillarId, orElse: () => pillars.first);
+    if (item is FolderModel) {
+      final myId = getIt<AuthService>().currentUser?.serverId;
+      final folderCategoryTotal = allContent.where((e) {
+        if (e.folderId != item.id) return false;
+        if (filters.collectionFilter == 'mine') return e.ownerId == myId;
+        if (filters.collectionFilter == 'public') {
+          if (e is SubjectModel) return e.isPublic;
+          if (e is CollectionModel) return e.isPublic;
+          return false;
+        }
+        if (filters.collectionFilter == 'favorites') return e.isOnDashboard;
+        return true;
+      }).length;
+      final matchingInFolder = matchingContent.where((e) => e.folderId == item.id).length;
+      return _FolderListTile(
+        folder: item, 
+        matchingCount: matchingInFolder, 
+        totalCount: folderCategoryTotal, 
+        pillar: pillar, 
+        languageCode: currentLang, 
+        initialAgeFilter: filters.ageGroup, 
+        initialCollectionFilter: filters.collectionFilter, 
+        onChanged: onDataRefresh,
+        onFilterChanged: onFilterChanged,
+      );
+    } else if (item is CollectionModel) {
+      return _CollectionListTile(
+        collection: item, 
+        pillar: pillar, 
+        languageCode: currentLang, 
+        initialAgeFilter: filters.ageGroup, 
+        initialCollectionFilter: filters.collectionFilter, 
+        onChanged: onDataRefresh, 
+        onFavoriteChanged: () {
+          item.isOnDashboard = !item.isOnDashboard;
+          onDataRefresh();
+        }
+      );
+    } else if (item is SubjectModel) {
+      return _SubjectListTile(
+        subject: item, 
+        pillar: pillar, 
+        languageCode: currentLang, 
+        initialAgeFilter: filters.ageGroup, 
+        initialCollectionFilter: filters.collectionFilter, 
+        onChanged: onDataRefresh, 
+        onFavoriteChanged: () {
+          item.isOnDashboard = !item.isOnDashboard;
+          onDataRefresh();
+        }
+      );
+    }
+    return const SizedBox.shrink();
   }
 }
 
@@ -1873,15 +1869,44 @@ class _FolderPageState extends State<FolderPage> {
           icon: const Icon(Icons.school),
           onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
         );
-        final backAction = IconButton(
-          tooltip: context.t('back'),
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context, {
-            'hasUpdated': _hasUpdated,
-            'ageFilter': _filters.ageGroup,
-            'collectionFilter': _filters.collectionFilter,
-          }),
+        final leaderboardAction = IconButton(
+          tooltip: context.t('leaderboard'),
+          icon: const Icon(Icons.emoji_events),
+          onPressed: () =>
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const LeaderboardPage())),
         );
+        final profileAction = IconButton(
+          tooltip: context.t('profile'),
+          icon: ValueListenableBuilder<bool>(
+            valueListenable: getIt<FeedbackService>().pendingNotifications,
+            builder: (context, hasNotif, _) {
+              return Badge(
+                isLabelVisible: hasNotif,
+                backgroundColor: Colors.amber,
+                child: const Icon(Icons.person),
+              );
+            },
+          ),
+          onPressed: () async {
+            await Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfilePage()));
+            _loadData();
+          },
+        );
+        final settingsAction = IconButton(
+          tooltip: context.t('settings'),
+          icon: const Icon(Icons.settings),
+          onPressed: () =>
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const SettingsPage())),
+        );
+        final docAction = (_authService.currentUser?.showDocumentation ?? true)
+            ? IconButton(
+              tooltip: context.t('documentation'),
+              icon: const Icon(Icons.help_outline),
+              onPressed: () =>
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const DocumentationPage())),
+            )
+            : null;
+
         final editAction = isOwner
             ? IconButton(
               tooltip: context.t('edit'),
@@ -1960,6 +1985,16 @@ class _FolderPageState extends State<FolderPage> {
           ),
         );
 
+        final backAction = IconButton(
+          tooltip: context.t('back'),
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Navigator.pop(context, {
+            'hasUpdated': _hasUpdated,
+            'ageFilter': _filters.ageGroup,
+            'collectionFilter': _filters.collectionFilter,
+          }),
+        );
+
         return PopScope(
           canPop: true,
           onPopInvokedWithResult: (didPop, result) {},
@@ -1969,18 +2004,18 @@ class _FolderPageState extends State<FolderPage> {
               style: const TextStyle(color: appBarColor, fontWeight: FontWeight.bold, fontSize: 20),
             ),
             appBarColor: pillarColor,
-            actions: isSmallScreen
-                ? [backAction, homeAction]
-                : [
-                  homeAction,
-                  backAction,
-                  if (editAction != null) editAction,
-                  if (deleteAction != null) deleteAction,
-                  feedbackAction,
-                ],
-            overflowActions: isSmallScreen
-                ? [if (editAction != null) editAction, if (deleteAction != null) deleteAction, feedbackAction]
-                : null,
+            actions: isSmallScreen ? [backAction, homeAction] : [
+              homeAction,
+              backAction,
+              if (editAction != null) editAction,
+              if (deleteAction != null) deleteAction,
+              feedbackAction,
+            ],
+            overflowActions: isSmallScreen ? [
+              if (editAction != null) editAction,
+              if (deleteAction != null) deleteAction,
+              feedbackAction,
+            ] : null,
             slivers: [
               SliverToBoxAdapter(
                 child: Padding(
@@ -1995,6 +2030,7 @@ class _FolderPageState extends State<FolderPage> {
                               decoration: InputDecoration(
                                 hintText: context.t('search_subjects'),
                                 prefixIcon: const Icon(Icons.search),
+                                isDense: true,
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(12),
                                   borderSide: BorderSide(color: pillarColor.withValues(alpha: 0.5)),
@@ -2007,7 +2043,7 @@ class _FolderPageState extends State<FolderPage> {
                                   borderRadius: BorderRadius.circular(12),
                                   borderSide: BorderSide(color: pillarColor, width: 2),
                                 ),
-                                contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+                                contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                                 filled: true,
                                 fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
                               ),
@@ -2177,6 +2213,7 @@ class _FolderPageState extends State<FolderPage> {
                                 decoration: InputDecoration(
                                   hintText: context.t('search_subjects'),
                                   prefixIcon: const Icon(Icons.search),
+                                  isDense: true,
                                   suffixIcon: IconButton(
                                     icon: const Icon(Icons.close),
                                     onPressed: () {
@@ -2203,7 +2240,7 @@ class _FolderPageState extends State<FolderPage> {
                                     borderRadius: BorderRadius.circular(12),
                                     borderSide: BorderSide(color: pillarColor, width: 2),
                                   ),
-                                  contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+                                  contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                                   filled: true,
                                   fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
                                 ),
@@ -2224,8 +2261,9 @@ class _FolderPageState extends State<FolderPage> {
                                 return;
                               }
                               dynamic result;
-                              if (value == 'subject') result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: widget.pillar.id, folderId: widget.folder.id, initialAgeGroup: _filters.ageGroup)));
-                              else if (value == 'collection') result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: widget.pillar.id, folderId: widget.folder.id, isCollectionMode: true, initialAgeGroup: _filters.ageGroup)));
+                              if (value == 'subject') result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: widget.pillar.id, initialAgeGroup: _filters.ageGroup)));
+                              else if (value == 'collection') result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: widget.pillar.id, isCollectionMode: true, initialAgeGroup: _filters.ageGroup)));
+                              else if (value == 'folder') result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectEditPage(pillarId: widget.pillar.id, isFolderMode: true)));
 
                               if (result == true) {
                                 _loadData();
@@ -2325,10 +2363,12 @@ class _FolderPageState extends State<FolderPage> {
                         'mine': context.t('filter_my_subjects'),
                         'public': context.t('filter_public_library'),
                       },
-                      onChanged: (val) {
+                      onChanged: (val) async {
                         if (val != null) {
                           setState(() { _filters = _filters.copyWith(collectionFilter: val); _applySearch(); });
                           setBottomSheetState(() {});
+                          final prefs = await SharedPreferences.getInstance();
+                          await prefs.setString('last_collection_filter', val);
                         }
                       },
                     ),
@@ -2344,10 +2384,12 @@ class _FolderPageState extends State<FolderPage> {
                         '7_14': context.t('age_7_14'),
                         '15_plus': context.t('age_15_plus'),
                       },
-                      onChanged: (val) {
+                      onChanged: (val) async {
                         if (val != null) {
                           setState(() { _filters = _filters.copyWith(ageGroup: val); _applySearch(); });
                           setBottomSheetState(() {});
+                          final prefs = await SharedPreferences.getInstance();
+                          await prefs.setString('last_age_filter', val);
                         }
                       },
                     ),
@@ -2363,12 +2405,18 @@ class _FolderPageState extends State<FolderPage> {
                           getIt<TestingLanguageService>().getLanguageName(l)
                         ))
                       ),
-                      selectedLabel: currentLang.toUpperCase(),
-                      matchAnchorWidth: false,
+                      selectedLabel: getIt<TestingLanguageService>().getLanguageName(currentLang),
+                      matchAnchorWidth: true,
                       onChanged: (val) async {
                         if (val != null) {
                           await getIt<TestingLanguageService>().updateCurrentLanguage(val);
-                          _loadData();
+                          if (this is _SubjectPageState) {
+                            (this as _SubjectPageState)._loadDashboard();
+                          } else if (this is _PillarSubjectsPageState) {
+                            (this as _PillarSubjectsPageState)._loadData();
+                          } else if (this is _FolderPageState) {
+                            (this as _FolderPageState)._loadData();
+                          }
                           setBottomSheetState(() {});
                         }
                       },

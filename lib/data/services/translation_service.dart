@@ -28,8 +28,8 @@ class TranslationService extends ChangeNotifier {
       'account_and_management': 'Account & Management',
       'about_tagline': 'Learn Visually. Master Permanently.',
       'doc_tab_general': 'General',
-      'doc_tab_learning': 'Learning & Testing',
-      'doc_tab_creator': 'Creator Guide',
+      'doc_tab_learning': 'Practice',
+      'doc_tab_creator': 'Creation',
       'doc_welcome_title': 'Welcome to Aliolo',
       'doc_welcome_desc':
           'Aliolo is a visual learning platform designed to help you master subjects through flashcards and interactive testing.',

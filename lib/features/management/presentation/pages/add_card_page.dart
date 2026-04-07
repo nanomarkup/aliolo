@@ -624,87 +624,122 @@ class _AddCardPageState extends State<AddCardPage> {
                 ? context.t('add_card')
                 : context.t('edit_card'));
 
-    return AlioloScrollablePage(
-      title: Text(pageTitle, style: const TextStyle(color: appBarColor)),
-      appBarColor: themeColor,
-      actions: [
-        IconButton(
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final isSmallScreen = constraints.maxWidth < 600;
+
+        final backAction = IconButton(
+          tooltip: context.t('back'),
           icon: const Icon(Icons.arrow_back, color: appBarColor),
           onPressed: () => Navigator.pop(context),
-        ),
-        if (!widget.isReadOnly)
-          IconButton(
-            icon:
-                _isSaving                    ? const SizedBox(
-                      width: 20,
-                      height: 20,
-                      child: CircularProgressIndicator(
-                        color: appBarColor,
-                        strokeWidth: 2,
-                      ),
-                    )
-                    : const Icon(Icons.save, color: appBarColor),
-            onPressed: _isSaving ? null : _save,
-          ),
-        if (!widget.isReadOnly)
-          IconButton(
-            icon: const Icon(Icons.data_object, color: appBarColor),
-            onPressed: _showJsonDialog,
-          ),
-        if (widget.existingCard != null && !widget.isReadOnly)
-          IconButton(
-            icon: const Icon(Icons.delete, color: appBarColor),
-            onPressed: () async {
-              final confirmed = await showDialog<bool>(
-                context: context,
-                builder:
-                    (context) => AlertDialog(
-                      title: Text(context.t('delete')),
-                      content: Text(context.t('delete_card_confirm')),
-                      actions: [
-                        TextButton(
-                          onPressed: () => Navigator.pop(context, false),
-                          child: Text(context.t('cancel')),
-                        ),
-                        TextButton(
-                          onPressed: () => Navigator.pop(context, true),
-                          child: Text(context.t('confirm')),
-                        ),
-                      ],
+        );
+
+        final saveAction = !widget.isReadOnly
+            ? IconButton(
+              tooltip: context.t('save'),
+              icon: _isSaving
+                  ? const SizedBox(
+                    width: 20,
+                    height: 20,
+                    child: CircularProgressIndicator(
+                      color: appBarColor,
+                      strokeWidth: 2,
                     ),
-              );
-              if (confirmed == true && mounted) {
-                await _cardService.deleteCard(widget.existingCard!);
-                if (mounted) Navigator.pop(context, true);
-              }
-            },
-          ),
-        if (widget.existingCard != null)
-          IconButton(
-            icon: const Icon(Icons.feedback, color: appBarColor),
-            onPressed: () {
-              final pillar = pillars.firstWhere(
-                (p) => p.id == (_internalPillarId ?? 1),
-                orElse: () => pillars.first,
-              );
-              Navigator.push(
-                context,
-                MaterialPageRoute(
+                  )
+                  : const Icon(Icons.save, color: appBarColor),
+              onPressed: _isSaving ? null : _save,
+            )
+            : null;
+
+        final jsonAction = !widget.isReadOnly
+            ? IconButton(
+              tooltip: 'JSON',
+              icon: const Icon(Icons.data_object, color: appBarColor),
+              onPressed: _showJsonDialog,
+            )
+            : null;
+
+        final deleteAction = (widget.existingCard != null && !widget.isReadOnly)
+            ? IconButton(
+              tooltip: context.t('delete'),
+              icon: const Icon(Icons.delete, color: appBarColor),
+              onPressed: () async {
+                final confirmed = await showDialog<bool>(
+                  context: context,
                   builder:
-                      (context) => FeedbackPage(
-                        subjectId: widget.existingCard?.subjectId ?? widget.initialSubjectId,
-                        cardId: widget.existingCard?.id,
-                        contextTitle: widget.existingCard != null 
-                          ? 'Card: ${widget.existingCard!.localizedData['global']?.answer}'
-                          : 'Card',
-                        appBarColor: pillar.getColor(themeService.isDarkMode),
+                      (context) => AlertDialog(
+                        title: Text(context.t('delete')),
+                        content: Text(context.t('delete_card_confirm')),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(context, false),
+                            child: Text(context.t('cancel')),
+                          ),
+                          TextButton(
+                            onPressed: () => Navigator.pop(context, true),
+                            child: Text(context.t('confirm')),
+                          ),
+                        ],
                       ),
-                ),
-              );
-            },
-          ),
-      ],
-      body: KeyboardListener(
+                );
+                if (confirmed == true && mounted) {
+                  await _cardService.deleteCard(widget.existingCard!);
+                  if (mounted) Navigator.pop(context, true);
+                }
+              },
+            )
+            : null;
+
+        final feedbackAction = (widget.existingCard != null)
+            ? IconButton(
+              tooltip: context.t('feedback'),
+              icon: const Icon(Icons.feedback, color: appBarColor),
+              onPressed: () {
+                final pillar = pillars.firstWhere(
+                  (p) => p.id == (_internalPillarId ?? 1),
+                  orElse: () => pillars.first,
+                );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder:
+                        (context) => FeedbackPage(
+                          subjectId: widget.existingCard?.subjectId ?? widget.initialSubjectId,
+                          cardId: widget.existingCard?.id,
+                          contextTitle: widget.existingCard != null 
+                            ? 'Card: ${widget.existingCard!.localizedData['global']?.answer}'
+                            : 'Card',
+                          appBarColor: pillar.getColor(themeService.isDarkMode),
+                        ),
+                  ),
+                );
+              },
+            )
+            : null;
+
+        return AlioloScrollablePage(
+          title: Text(pageTitle, style: const TextStyle(color: appBarColor)),
+          appBarColor: themeColor,
+          actions: isSmallScreen 
+              ? [
+                  backAction,
+                  if (saveAction != null) saveAction,
+                ]
+              : [
+                  backAction,
+                  if (saveAction != null) saveAction,
+                  if (jsonAction != null) jsonAction,
+                  if (deleteAction != null) deleteAction,
+                  if (feedbackAction != null) feedbackAction,
+                ],
+          overflowActions: isSmallScreen
+              ? [
+                  if (jsonAction != null) jsonAction,
+                  if (deleteAction != null) deleteAction,
+                  if (feedbackAction != null) feedbackAction,
+                ]
+              : null,
+          body: KeyboardListener(
         focusNode: _keyboardFocusNode,
         autofocus: true,
         onKeyEvent: _onKeyEvent,
@@ -758,8 +793,10 @@ class _AddCardPageState extends State<AddCardPage> {
           ),
         ),
       ),
-      );
-      }
+    );
+  },
+);
+}
   Widget _buildLangTile(
     String code,
     String label,
@@ -859,13 +896,27 @@ class _AddCardPageState extends State<AddCardPage> {
         if (isGlobal) ...[
           _buildSectionCaption(context.t('common_settings')),
           const SizedBox(height: 16),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(child: _buildSubjectPicker()),
-              const SizedBox(width: 16),
-              Expanded(child: _buildTestModePicker()),
-            ],
+          LayoutBuilder(
+            builder: (context, constraints) {
+              final isSmall = constraints.maxWidth < 600;
+              if (isSmall) {
+                return Column(
+                  children: [
+                    _buildSubjectPicker(),
+                    const SizedBox(height: 16),
+                    _buildTestModePicker(),
+                  ],
+                );
+              }
+              return Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(child: _buildSubjectPicker()),
+                  const SizedBox(width: 16),
+                  Expanded(child: _buildTestModePicker()),
+                ],
+              );
+            },
           ),
           const SizedBox(height: 20),
           _buildLevelPicker(color),

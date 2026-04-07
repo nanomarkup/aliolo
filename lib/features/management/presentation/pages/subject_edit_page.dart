@@ -667,7 +667,7 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
                       final items = [
                         DropdownMenuItem<String?>(
                           value: null,
-                          child: Text(context.t('no_folder')),
+                          child: const Text(''),
                         ),
                         ..._allFolders.map((f) => DropdownMenuItem(
                           value: f.id,
@@ -845,18 +845,12 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
           Navigator.pop(context);
         }
       },
-      child: AlioloScrollablePage(
-        title: Text(
-          _isFolderMode
-              ? (widget.existingFolder == null ? context.t('add_folder') : context.t('edit_folder'))
-              : _selectedType == 'collection'
-                  ? (widget.existingSubject == null ? context.t('add_collection') : context.t('edit_collection'))
-                  : (widget.existingSubject == null ? context.t('add_subject') : context.t('edit_subject')),
-          style: const TextStyle(color: appBarColor),
-        ),
-        appBarColor: currentSessionColor,
-        actions: [
-          IconButton(
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final isSmallScreen = constraints.maxWidth < 600;
+
+          final backAction = IconButton(
+            tooltip: context.t('back'),
             icon: const Icon(Icons.arrow_back, color: appBarColor),
             onPressed: () async {
               final shouldPop = await _onWillPop();
@@ -864,38 +858,87 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
                 Navigator.pop(context);
               }
             },
-          ),
-          if (isOwner)
-            IconButton(
-              icon:
-                  _isSaving
-                      ? const SizedBox(
-                        width: 20,
-                        height: 20,
-                        child: CircularProgressIndicator(
-                          color: appBarColor,
-                          strokeWidth: 2,
-                        ),
-                      )
-                      : const Icon(Icons.save, color: appBarColor),
-              onPressed: _isSaving ? null : _save,
-            ),
-          if (isOwner)
-            IconButton(
-              icon: const Icon(Icons.data_object, color: appBarColor),
-              onPressed: _showJsonDialog,
-            ),
-          if (isOwner && (widget.existingSubject != null || widget.existingFolder != null))
-            IconButton(
-              icon: const Icon(Icons.delete, color: appBarColor),
-              onPressed: () async {
-                if (_isFolderMode) {
+          );
+
+          final saveAction = isOwner
+              ? IconButton(
+                tooltip: context.t('save'),
+                icon: _isSaving
+                    ? const SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator(
+                        color: appBarColor,
+                        strokeWidth: 2,
+                      ),
+                    )
+                    : const Icon(Icons.save, color: appBarColor),
+                onPressed: _isSaving ? null : _save,
+              )
+              : null;
+
+          final jsonAction = isOwner
+              ? IconButton(
+                tooltip: 'JSON',
+                icon: const Icon(Icons.data_object, color: appBarColor),
+                onPressed: _showJsonDialog,
+              )
+              : null;
+
+          final deleteAction = (isOwner && (widget.existingSubject != null || widget.existingFolder != null))
+              ? IconButton(
+                tooltip: context.t('delete'),
+                icon: const Icon(Icons.delete, color: appBarColor),
+                onPressed: () async {
+                  if (_isFolderMode) {
+                    final confirmed = await showDialog<bool>(
+                      context: context,
+                      builder:
+                          (context) => AlertDialog(
+                            title: Text(context.t('delete_folder')),
+                            content: const Text('Are you sure you want to delete this folder?'),
+                            actions: [
+                              TextButton(
+                                onPressed: () => Navigator.pop(context, false),
+                                child: Text(context.t('cancel')),
+                              ),
+                              TextButton(
+                                onPressed: () => Navigator.pop(context, true),
+                                style: TextButton.styleFrom(
+                                  foregroundColor: Colors.red,
+                                ),
+                                child: Text(context.t('delete')),
+                              ),
+                            ],
+                          ),
+                    );
+                    if (confirmed == true && mounted) {
+                      try {
+                        await _cardService.deleteFolder(widget.existingFolder!.id);
+                        if (mounted) Navigator.pop(context, true);
+                      } catch (e) {
+                        if (e.toString().contains('folder_not_empty') && mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(context.t('folder_not_empty_msg') ?? 'Cannot delete folder: it is not empty')));
+                        }
+                      }
+                    }
+                    return;
+                  }
+
+                  final isCollection = _selectedType == 'collection';
+                  final cardCount = widget.existingSubject?.cardCount ?? 0;
                   final confirmed = await showDialog<bool>(
                     context: context,
                     builder:
                         (context) => AlertDialog(
-                          title: Text(context.t('delete_folder')),
-                          content: const Text('Are you sure you want to delete this folder?'),
+                          title: Text(isCollection ? context.t('delete_collection') : context.t('delete_subject')),
+                          content: Text(
+                            isCollection
+                                ? context.t('delete_collection_confirm')
+                                : (cardCount > 0
+                                    ? 'This subject contains $cardCount ${context.plural('card', cardCount)}. Deleting it will permanently remove all of them.'
+                                    : 'Delete this subject?'),
+                          ),
                           actions: [
                             TextButton(
                               onPressed: () => Navigator.pop(context, false),
@@ -912,83 +955,74 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
                         ),
                   );
                   if (confirmed == true && mounted) {
-                    try {
-                      await _cardService.deleteFolder(widget.existingFolder!.id);
-                      if (mounted) Navigator.pop(context, true);
-                    } catch (e) {
-                      if (e.toString().contains('folder_not_empty') && mounted) {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(context.t('folder_not_empty_msg') ?? 'Cannot delete folder: it is not empty')));
-                      }
+                    if (isCollection) {
+                      await _cardService.deleteCollection(widget.existingSubject!.id);
+                    } else {
+                      await _cardService.deleteSubjectById(widget.existingSubject!.id);
+                    }
+                    if (mounted) {
+                      Navigator.pop(context);
+                      Navigator.pop(context, true);
                     }
                   }
-                  return;
-                }
+                },
+              )
+              : null;
 
-                final isCollection = _selectedType == 'collection';
-                final cardCount = widget.existingSubject!.cardCount;
-                final confirmed = await showDialog<bool>(
-                  context: context,
-                  builder:
-                      (context) => AlertDialog(
-                        title: Text(isCollection ? context.t('delete_collection') : context.t('delete_subject')),
-                        content: Text(
-                          isCollection
-                              ? context.t('delete_collection_confirm')
-                              : (cardCount > 0
-                                  ? 'This subject contains $cardCount ${context.plural('card', cardCount)}. Deleting it will permanently remove all of them.'
-                                  : 'Delete this subject?'),
-                        ),
-                        actions: [
-                          TextButton(
-                            onPressed: () => Navigator.pop(context, false),
-                            child: Text(context.t('cancel')),
+          final feedbackAction = (widget.existingSubject != null || widget.existingFolder != null)
+              ? IconButton(
+                tooltip: context.t('feedback'),
+                icon: const Icon(Icons.feedback, color: appBarColor),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder:
+                          (context) => FeedbackPage(
+                            subjectId: widget.existingSubject?.id,
+                            folderId: widget.existingFolder?.id,
+                            contextTitle:
+                                _isFolderMode 
+                                  ? widget.existingFolder!.getName(currentLang)
+                                  : widget.existingSubject!.getName(currentLang),
+                            appBarColor: currentSessionColor,
                           ),
-                          TextButton(
-                            onPressed: () => Navigator.pop(context, true),
-                            style: TextButton.styleFrom(
-                              foregroundColor: Colors.red,
-                            ),
-                            child: Text(context.t('delete')),
-                          ),
-                        ],
-                      ),
-                );
-                if (confirmed == true && mounted) {
-                  if (isCollection) {
-                    await _cardService.deleteCollection(widget.existingSubject!.id);
-                  } else {
-                    await _cardService.deleteSubjectById(widget.existingSubject!.id);
-                  }
-                  if (mounted) {
-                    Navigator.pop(context);
-                    Navigator.pop(context, true);
-                  }
-                }
-              },
+                    ),
+                  );
+                },
+              )
+              : null;
+
+          return AlioloScrollablePage(
+            title: Text(
+              _isFolderMode
+                  ? (widget.existingFolder == null ? context.t('add_folder') : context.t('edit_folder'))
+                  : _selectedType == 'collection'
+                      ? (widget.existingSubject == null ? context.t('add_collection') : context.t('edit_collection'))
+                      : (widget.existingSubject == null ? context.t('add_subject') : context.t('edit_subject')),
+              style: const TextStyle(color: appBarColor),
             ),
-          if (widget.existingSubject != null || widget.existingFolder != null)
-            IconButton(
-              icon: const Icon(Icons.feedback, color: appBarColor),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder:
-                        (context) => FeedbackPage(
-                          subjectId: widget.existingSubject?.id,
-                          folderId: widget.existingFolder?.id,
-                          contextTitle:
-                              _isFolderMode 
-                                ? widget.existingFolder!.getName(currentLang)
-                                : widget.existingSubject!.getName(currentLang),
-                          appBarColor: currentSessionColor,
-                        ),
-                  ),
-                );
-              },
-            ),
-        ],
-        body: KeyboardListener(
+            appBarColor: currentSessionColor,
+            actions: isSmallScreen 
+                ? [
+                    backAction,
+                    if (saveAction != null) saveAction,
+                  ]
+                : [
+                    backAction,
+                    if (saveAction != null) saveAction,
+                    if (jsonAction != null) jsonAction,
+                    if (deleteAction != null) deleteAction,
+                    if (feedbackAction != null) feedbackAction,
+                  ],
+            overflowActions: isSmallScreen
+                ? [
+                    if (jsonAction != null) jsonAction,
+                    if (deleteAction != null) deleteAction,
+                    if (feedbackAction != null) feedbackAction,
+                  ]
+                : null,
+            body: KeyboardListener(
           focusNode: _keyboardFocusNode,
           autofocus: true,
           onKeyEvent: _onKeyEvent,
@@ -1044,9 +1078,11 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
             ],
           ),
         ),
-      ),
-    );
-  }
+      );
+    },
+  ),
+);
+}
 
   Widget _buildSectionCaption(String label) {
     return Text(
