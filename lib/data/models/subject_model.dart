@@ -88,6 +88,8 @@ class SubjectModel implements ContentItem {
       id == 'bc354f43-f9be-42a9-a7bc-ac400bd5e310' ||
       id == 'cb04da1c-9820-4e61-ae6b-bc7ed07eeb93';
 
+  bool get isColors => id == '0b84447d-3af3-4509-bdf6-c4e7fe822cc7';
+
   bool get isMath =>
       isCounting ||
       isAddition ||

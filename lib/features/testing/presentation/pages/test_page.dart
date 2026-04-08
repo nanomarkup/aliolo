@@ -736,6 +736,10 @@ class _TestPageState extends State<TestPage> {
                                       headerColor,
                                       isMobile,
                                     )
+                                  else if (_subject.isColors && _currentCard.hexColor != null)
+                                    Container(
+                                      color: Color(int.parse(_currentCard.hexColor!.replaceFirst('#', '0xFF'))),
+                                    )
                                   else if (_subject.isNumbers)
                                     NumberGrid(
                                       displayChar: _currentCard

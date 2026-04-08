@@ -190,6 +190,12 @@ class CardModel {
     return val.toString();
   }
 
+  String? get hexColor {
+    final ans = getAnswer('en');
+    final match = RegExp(r'[,(]\s*(#[0-9a-fA-F]{6})\s*[)]?').firstMatch(ans);
+    return match?.group(1);
+  }
+
   int get numericalAnswer {
     // Try global first as it's most likely to be a standard digit
     String? ans = localizedData['global']?.answer;
@@ -233,8 +239,17 @@ class CardModel {
 
   String? getAudioUrl(String lang) => _getInherited(lang, (d) => d.audioUrl);
   String? getVideoUrl(String lang) => _getInherited(lang, (d) => d.videoUrl);
-  List<String> getImageUrls(String lang) =>
-      _getInherited(lang, (d) => d.imageUrls) ?? [];
+  List<String> getImageUrls(String lang) {
+    final urls = _getInherited(lang, (d) => d.imageUrls) ?? [];
+    // Add cache buster timestamp to ensure we show the latest version if updated
+    final v = updatedAt.millisecondsSinceEpoch;
+    return urls.map((url) {
+      if (url.startsWith('http')) {
+        return url.contains('?') ? '$url&v=$v' : '$url?v=$v';
+      }
+      return url;
+    }).toList();
+  }
 
   String? get primaryImageUrl {
     final urls = getImageUrls('global');

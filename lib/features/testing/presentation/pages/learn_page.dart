@@ -541,6 +541,10 @@ class _LearnPageState extends State<LearnPage> {
                                 maxOperand: _subject.maxOperand,
                                 iconSize: 60,
                               )
+                            else if (_subject.isColors && _currentCard.hexColor != null)
+                              Container(
+                                color: Color(int.parse(_currentCard.hexColor!.replaceFirst('#', '0xFF'))),
+                              )
                             else if (_currentCard.subjectId ==
                                     '68232807-b9cd-4cff-872c-c398444f85e2' ||
                                 _currentCard.subjectId ==
