@@ -805,7 +805,7 @@ class _SubjectPageState extends State<SubjectPage> {
             child: Text(e.value),
           )).toList(),
           child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
           color: Theme.of(context).cardColor.withValues(alpha: 0.5), 
           borderRadius: BorderRadius.circular(12), 
@@ -1331,7 +1331,7 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
             child: Text(e.value),
           )).toList(),
           child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
           color: Theme.of(context).cardColor.withValues(alpha: 0.5), 
           borderRadius: BorderRadius.circular(12), 
@@ -1967,7 +1967,7 @@ class _FolderPageState extends State<FolderPage> {
             child: Text(e.value),
           )).toList(),
           child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
           color: Theme.of(context).cardColor.withValues(alpha: 0.5), 
           borderRadius: BorderRadius.circular(12), 
