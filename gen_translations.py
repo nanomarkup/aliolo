@@ -6,7 +6,7 @@ refs = [
     ('doc_welcome_title', 'Welcome to Aliolo'),
     ('doc_welcome_desc', 'Aliolo is a visual learning platform designed to help you master subjects through flashcards and interactive testing.'),
     ('doc_pillars_title', 'The 8 Core Pillars'),
-    ('doc_pillars_desc', 'All content in Aliolo is organized into 8 foundational pillars: Academic & Professional, World, Nature, Human Body, Humanities, Leisure, Engineering, and Other. These categories provide a structured framework for all subjects across the platform.'),
+    ('doc_pillars_desc', 'All content in Aliolo is organized into 8 foundational pillars: Academic & Professional, World, Nature, Health, Humanities, Leisure, Engineering, and Other. These categories provide a structured framework for all subjects across the platform.'),
     ('doc_leaderboard_title', 'Global Leaderboard'),
     ('doc_leaderboard_desc', 'Compete with learners worldwide! Earn XP by completing card sessions and climb the ranks. Your position is updated in real-time as you master new subjects.'),
     ('doc_friends_title', 'Friends & Invitations'),

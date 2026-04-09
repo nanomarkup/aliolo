@@ -42,7 +42,7 @@ class TranslationService extends ChangeNotifier {
           'Aliolo is a visual learning platform designed to help you master subjects through flashcards and interactive testing.',
       'doc_pillars_title': 'The 8 Core Pillars',
       'doc_pillars_desc':
-          'All content in Aliolo is organized into 8 foundational pillars: Academic & Professional, World, Nature, Human Body, Humanities, Leisure, Engineering, and Other. These categories provide a structured framework for all subjects across the platform.',
+          'All content in Aliolo is organized into 8 foundational pillars: Academic & Professional, World, Nature, Health, Humanities, Leisure, Engineering, and Other. These categories provide a structured framework for all subjects across the platform.',
       'doc_flashcards_desc':
           'Each subject contains a set of cards. While images and audio are supported, they are optional—content can be purely textual or dynamically generated.',
       'doc_testing_title': 'Interactive Testing',

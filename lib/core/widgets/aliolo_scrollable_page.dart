@@ -43,7 +43,6 @@ class AlioloScrollablePage extends StatelessWidget {
     return ResizeWrapper(
       child: Scaffold(
         extendBodyBehindAppBar: true,
-        floatingActionButton: floatingActionButton,
         appBar: AlioloAppBar(
           title: title,
           actions: actions,
@@ -59,23 +58,33 @@ class AlioloScrollablePage extends StatelessWidget {
             constraints: BoxConstraints(maxWidth: maxWidth),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
+              child: Stack(
                 children: [
-                  const SizedBox(height: standardTopGap),
-                  if (fixedBody != null) fixedBody!,
-                  Expanded(
-                    child: CustomScrollView(
-                      controller: controller,
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      slivers: [
-                        if (body != null) SliverToBoxAdapter(child: body!),
-                        if (slivers != null) ...slivers!,
-                        const SliverPadding(
-                          padding: EdgeInsets.only(bottom: 48),
+                  Column(
+                    children: [
+                      const SizedBox(height: standardTopGap),
+                      if (fixedBody != null) fixedBody!,
+                      Expanded(
+                        child: CustomScrollView(
+                          controller: controller,
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          slivers: [
+                            if (body != null) SliverToBoxAdapter(child: body!),
+                            if (slivers != null) ...slivers!,
+                            const SliverPadding(
+                              padding: EdgeInsets.only(bottom: 48),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
+                  if (floatingActionButton != null)
+                    Positioned(
+                      bottom: 16,
+                      right: 0,
+                      child: floatingActionButton!,
+                    ),
                 ],
               ),
             ),
