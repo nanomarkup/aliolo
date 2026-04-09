@@ -1172,11 +1172,9 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
         insetPadding: const EdgeInsets.all(16),
         child: StatefulBuilder(
           builder: (context, setState) {
-            // Listen to page changes to rebuild UI (for disabling arrows at ends)
-            void onPageChanged() {
-              if (pageController.hasClients) {
-                setState(() {});
-              }
+            int currentIndex = initialIndex;
+            if (pageController.hasClients) {
+              currentIndex = pageController.page?.round() ?? initialIndex;
             }
 
             return Stack(
@@ -1192,7 +1190,9 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                   child: PageView.builder(
                     controller: pageController,
                     itemCount: _filteredCards.length,
-                    onPageChanged: (_) => onPageChanged(),
+                    onPageChanged: (index) {
+                      setState(() {});
+                    },
                     itemBuilder: (context, index) {
                       final card = _filteredCards[index];
                       final audioUrl = card.getAudioUrl(displayLang);
@@ -1261,15 +1261,9 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                 Positioned(
                   top: 8,
                   right: 8,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.black.withValues(alpha: 0.3),
-                      shape: BoxShape.circle,
-                    ),
-                    child: IconButton(
-                      icon: const Icon(Icons.close, color: Colors.white, size: 24),
-                      onPressed: () => Navigator.pop(context),
-                    ),
+                  child: IconButton(
+                    icon: const Icon(Icons.close, color: Colors.grey, size: 28),
+                    onPressed: () => Navigator.pop(context),
                   ),
                 ),
                 // Left Arrow
@@ -1277,14 +1271,12 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                   Positioned(
                     left: 8,
                     child: Opacity(
-                      opacity: (pageController.hasClients && (pageController.page ?? initialIndex.toDouble()).round() <= 0) ? 0.3 : 1.0,
+                      opacity: currentIndex <= 0 ? 0.3 : 1.0,
                       child: IconButton(
                         icon: const Icon(Icons.chevron_left, color: Colors.white, size: 40),
                         style: IconButton.styleFrom(backgroundColor: Colors.black.withValues(alpha: 0.5)),
-                        onPressed: () {
-                          if (pageController.hasClients && pageController.page! > 0) {
-                            pageController.previousPage(duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
-                          }
+                        onPressed: currentIndex <= 0 ? null : () {
+                          pageController.previousPage(duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
                         },
                       ),
                     ),
@@ -1294,14 +1286,12 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                   Positioned(
                     right: 8,
                     child: Opacity(
-                      opacity: (pageController.hasClients && (pageController.page ?? initialIndex.toDouble()).round() >= _filteredCards.length - 1) ? 0.3 : 1.0,
+                      opacity: currentIndex >= _filteredCards.length - 1 ? 0.3 : 1.0,
                       child: IconButton(
                         icon: const Icon(Icons.chevron_right, color: Colors.white, size: 40),
                         style: IconButton.styleFrom(backgroundColor: Colors.black.withValues(alpha: 0.5)),
-                        onPressed: () {
-                          if (pageController.hasClients && pageController.page! < _filteredCards.length - 1) {
-                            pageController.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
-                          }
+                        onPressed: currentIndex >= _filteredCards.length - 1 ? null : () {
+                          pageController.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
                         },
                       ),
                     ),
