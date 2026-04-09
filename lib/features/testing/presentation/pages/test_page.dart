@@ -483,20 +483,26 @@ class _TestPageState extends State<TestPage> {
                 ),
                 if ((_currentCard.testMode == 'audio_to_text' ||
                         _currentCard.testMode == 'audio_to_image') &&
-                    _currentCard.getAudioUrl(lang) != null &&
                     !_subject.isNumbers &&
                     !_subject.isAddition &&
                     !_subject.isSubtraction &&
                     !_subject.isCounting)
                   IconButton(
-                    icon: const Icon(Icons.volume_up),
-                    onPressed: () async {
-                      final url = _currentCard.getAudioUrl(lang);
-                      if (url != null) {
-                        await player.open(Media(url));
-                        player.play();
-                      }
-                    },
+                    icon: Icon(
+                      Icons.volume_up,
+                      color: _currentCard.getAudioUrl(lang) != null
+                          ? Colors.white
+                          : Colors.white.withValues(alpha: 0.3),
+                    ),
+                    onPressed: _currentCard.getAudioUrl(lang) != null
+                        ? () async {
+                            final url = _currentCard.getAudioUrl(lang);
+                            if (url != null) {
+                              await player.open(Media(url));
+                              player.play();
+                            }
+                          }
+                        : null,
                   ),
                 IconButton(
                   icon: Stack(

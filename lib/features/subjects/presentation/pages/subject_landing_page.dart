@@ -603,6 +603,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
     String? selectedLabel,
     bool matchAnchorWidth = true,
     double? menuWidth,
+    double verticalPadding = 8,
   }) {
     final validatedValue = items.containsKey(value) ? value : (items.isNotEmpty ? items.keys.first : '');
     final label = selectedLabel ?? items[validatedValue] ?? '';
@@ -620,7 +621,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
             child: Text(e.value),
           )).toList(),
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            padding: EdgeInsets.symmetric(horizontal: 12, vertical: verticalPadding),
             decoration: BoxDecoration(
               color: Theme.of(context).cardColor.withValues(alpha: 0.5), 
               borderRadius: BorderRadius.circular(12), 
@@ -931,6 +932,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                                         : _currentLanguageCode.toUpperCase(),
                                     matchAnchorWidth: constraints.maxWidth >= 600,
                                     menuWidth: 160,
+                                    verticalPadding: constraints.maxWidth >= 600 ? 8 : 13,
                                     onChanged: (val) async {
                                       if (val != null) {
                                         await _langService.updateCurrentLanguage(val);
@@ -1188,7 +1190,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                                   );
                                   _refreshData(silent: true);
                                 }
-                                : () => _showZoomedCard(context, card, pillarColor, _currentLanguageCode),
+                                : () => _showZoomedCard(context, index, pillarColor, _currentLanguageCode),
                         child: Card(
                           clipBehavior: Clip.antiAlias,
                           elevation: 2,
@@ -1200,10 +1202,32 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                             children: [
                               Expanded(
                                 flex: 3,
-                                child: _buildCardPreview(
-                                  card,
-                                  pillarColor,
-                                  _currentLanguageCode,
+                                child: Stack(
+                                  fit: StackFit.expand,
+                                  children: [
+                                    _buildCardPreview(
+                                      card,
+                                      pillarColor,
+                                      _currentLanguageCode,
+                                    ),
+                                    Positioned(
+                                      top: 4,
+                                      right: 4,
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: Colors.black.withValues(alpha: 0.5),
+                                          shape: BoxShape.circle,
+                                        ),
+                                        child: IconButton(
+                                          icon: const Icon(Icons.fullscreen, color: Colors.white, size: 20),
+                                          constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
+                                          padding: EdgeInsets.zero,
+                                          onPressed: () => _showZoomedCard(context, index, pillarColor, _currentLanguageCode),
+                                          tooltip: context.t('zoom') ?? 'Zoom',
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                               Padding(
@@ -1235,60 +1259,96 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
     );
   }
 
-  void _showZoomedCard(BuildContext context, CardModel card, Color pillarColor, String displayLang) {
+  void _showZoomedCard(BuildContext context, int initialIndex, Color pillarColor, String displayLang) {
+    PageController pageController = PageController(initialPage: initialIndex);
+    
     showDialog(
       context: context,
       builder: (context) => Dialog(
         backgroundColor: Colors.transparent,
         insetPadding: const EdgeInsets.all(16),
-        child: InkWell(
-          onTap: () => Navigator.pop(context),
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              Container(
-                constraints: const BoxConstraints(maxWidth: 500, maxHeight: 600),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).cardColor,
-                  borderRadius: BorderRadius.circular(20),
+        child: StatefulBuilder(
+          builder: (context, setState) {
+            return Stack(
+              alignment: Alignment.center,
+              children: [
+                Container(
+                  constraints: const BoxConstraints(maxWidth: 500, maxHeight: 600),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).cardColor,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  clipBehavior: Clip.antiAlias,
+                  child: PageView.builder(
+                    controller: pageController,
+                    itemCount: _filteredCards.length,
+                    itemBuilder: (context, index) {
+                      final card = _filteredCards[index];
+                      return Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Flexible(
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: _buildCardPreview(card, pillarColor, displayLang),
+                            ),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.all(20),
+                            width: double.infinity,
+                            color: pillarColor.withValues(alpha: 0.1),
+                            child: Text(
+                              card.getAnswerList(displayLang).map((a) => CardModel.capitalizeFirst(a)).join(', '),
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: pillarColor,
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  ),
                 ),
-                clipBehavior: Clip.antiAlias,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Flexible(
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: _buildCardPreview(card, pillarColor, displayLang),
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.all(20),
-                      width: double.infinity,
-                      color: pillarColor.withValues(alpha: 0.1),
-                      child: Text(
-                        card.getAnswerList(displayLang).map((a) => CardModel.capitalizeFirst(a)).join(', '),
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: pillarColor,
-                        ),
-                      ),
-                    ),
-                  ],
+                Positioned(
+                  top: 8,
+                  right: 8,
+                  child: IconButton(
+                    icon: const Icon(Icons.close, color: Colors.grey, size: 30),
+                    onPressed: () => Navigator.pop(context),
+                  ),
                 ),
-              ),
-              Positioned(
-                top: 8,
-                right: 8,
-                child: IconButton(
-                  icon: const Icon(Icons.close, color: Colors.grey, size: 30),
-                  onPressed: () => Navigator.pop(context),
+                // Left Arrow
+                Positioned(
+                  left: 8,
+                  child: IconButton(
+                    icon: const Icon(Icons.chevron_left, color: Colors.white, size: 40),
+                    style: IconButton.styleFrom(backgroundColor: Colors.black.withValues(alpha: 0.5)),
+                    onPressed: () {
+                      if (pageController.page! > 0) {
+                        pageController.previousPage(duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+                      }
+                    },
+                  ),
                 ),
-              ),
-            ],
-          ),
+                // Right Arrow
+                Positioned(
+                  right: 8,
+                  child: IconButton(
+                    icon: const Icon(Icons.chevron_right, color: Colors.white, size: 40),
+                    style: IconButton.styleFrom(backgroundColor: Colors.black.withValues(alpha: 0.5)),
+                    onPressed: () {
+                      if (pageController.page! < _filteredCards.length - 1) {
+                        pageController.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+                      }
+                    },
+                  ),
+                ),
+              ],
+            );
+          }
         ),
       ),
     );

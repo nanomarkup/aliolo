@@ -331,16 +331,22 @@ class _LearnPageState extends State<LearnPage> {
                   icon: const Icon(Icons.arrow_back),
                   onPressed: () => Navigator.pop(context),
                 ),
-                if (_currentCard.getAudioUrl(lang) != null)
                   IconButton(
-                    icon: const Icon(Icons.volume_up),
-                    onPressed: () async {
-                      final url = _currentCard.getAudioUrl(lang);
-                      if (url != null) {
-                        await player.open(Media(url));
-                        player.play();
-                      }
-                    },
+                    icon: Icon(
+                      Icons.volume_up,
+                      color: _currentCard.getAudioUrl(lang) != null
+                          ? Colors.white
+                          : Colors.white.withValues(alpha: 0.3),
+                    ),
+                    onPressed: _currentCard.getAudioUrl(lang) != null
+                        ? () async {
+                            final url = _currentCard.getAudioUrl(lang);
+                            if (url != null) {
+                              await player.open(Media(url));
+                              player.play();
+                            }
+                          }
+                        : null,
                   ),
                 IconButton(
                   icon: Stack(
