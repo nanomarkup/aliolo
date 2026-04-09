@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:aliolo/data/models/subject_model.dart';
 import 'package:aliolo/data/models/card_model.dart';
@@ -1177,9 +1178,26 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
               currentIndex = pageController.page?.round() ?? initialIndex;
             }
 
-            return Stack(
-              alignment: Alignment.center,
-              children: [
+            return KeyboardListener(
+              focusNode: FocusNode()..requestFocus(),
+              onKeyEvent: (event) {
+                if (event is KeyDownEvent) {
+                  if (event.logicalKey == LogicalKeyboardKey.arrowRight) {
+                    if (currentIndex < _filteredCards.length - 1) {
+                      pageController.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+                    }
+                  } else if (event.logicalKey == LogicalKeyboardKey.arrowLeft) {
+                    if (currentIndex > 0) {
+                      pageController.previousPage(duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+                    }
+                  } else if (event.logicalKey == LogicalKeyboardKey.escape) {
+                    Navigator.pop(context);
+                  }
+                }
+              },
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
                 Container(
                   constraints: const BoxConstraints(maxWidth: 500, maxHeight: 600),
                   decoration: BoxDecoration(
@@ -1297,13 +1315,13 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                     ),
                   ),
               ],
-            );
-          }
-        ),
+            ),
+          );
+        },
       ),
-    ).then((_) => pageController.dispose());
-  }
-
+    ),
+  ).then((_) => pageController.dispose());
+}
   Widget _buildCardPreview(
     CardModel card,
     Color pillarColor,
