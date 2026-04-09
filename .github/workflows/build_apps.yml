@@ -1,6 +1,9 @@
 name: Multi-Platform Build
 
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
 
 env:
@@ -26,6 +29,14 @@ jobs:
         with:
           name: aliolo-web
           path: build/web/
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: aliolo
+          directory: build/web
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 
   build_android:
     name: Build Android
