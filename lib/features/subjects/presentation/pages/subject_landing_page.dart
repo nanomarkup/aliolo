@@ -1190,8 +1190,6 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                     if (currentIndex > 0) {
                       pageController.previousPage(duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
                     }
-                  } else if (event.logicalKey == LogicalKeyboardKey.escape) {
-                    Navigator.pop(context);
                   }
                 }
               },
