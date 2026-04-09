@@ -83,6 +83,7 @@ class _AddCardPageState extends State<AddCardPage> {
 
   bool _isLoading = true;
   bool _isSaving = false;
+  bool _showSidebar = false;
   String _selectedLang = 'global';
   int _cardLevel = 1;
   String _testMode = 'image_to_text';
@@ -724,6 +725,11 @@ class _AddCardPageState extends State<AddCardPage> {
               ? [
                   backAction,
                   if (saveAction != null) saveAction,
+                  IconButton(
+                    tooltip: context.t('languages') ?? 'Languages',
+                    icon: Icon(_showSidebar ? Icons.last_page : Icons.language),
+                    onPressed: () => setState(() => _showSidebar = !_showSidebar),
+                  ),
                 ]
               : [
                   backAction,
@@ -731,6 +737,11 @@ class _AddCardPageState extends State<AddCardPage> {
                   if (jsonAction != null) jsonAction,
                   if (deleteAction != null) deleteAction,
                   if (feedbackAction != null) feedbackAction,
+                  IconButton(
+                    tooltip: context.t('languages') ?? 'Languages',
+                    icon: Icon(_showSidebar ? Icons.last_page : Icons.language),
+                    onPressed: () => setState(() => _showSidebar = !_showSidebar),
+                  ),
                 ],
           overflowActions: isSmallScreen
               ? [
@@ -743,54 +754,47 @@ class _AddCardPageState extends State<AddCardPage> {
         focusNode: _keyboardFocusNode,
         autofocus: true,
         onKeyEvent: _onKeyEvent,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              LayoutBuilder(
-                builder: (context, constraints) {
-                  // Tile width 54 + spacing 8 = 62. Total padding 16*2 = 32.
-                  final availableWidth = constraints.maxWidth - 32;
-                  final items = (availableWidth + 8) ~/ 62;
-                  _itemsPerRow = items > 0 ? items : 1;
-
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    child: Wrap(
-                      spacing: 8,
-                      runSpacing: 8,
-                      children: [
-                        _buildLangTile(
-                          'global',
-                          'GLB',
-                          Icons.public,
-                          'Global / Fallback',
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      if (_showSidebar && isSmallScreen)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          child: _buildLangGrid(),
                         ),
-                        ...(() {
-                          final langs = TranslationService()
-                              .availableUILanguages
-                              .map((l) => l.toLowerCase())
-                              .toList();
-                          langs.sort();
-                          return langs.map((code) {
-                            return _buildLangTile(
-                              code,
-                              code.toUpperCase(),
-                              null,
-                              TranslationService().getLanguageName(code),
-                            );
-                          });
-                        })(),
-                      ],
-                    ),
-                  );
-                },
+                      const SizedBox(height: 16),
+                      _buildEditor(themeColor),
+                      const SizedBox(height: 32),
+                    ],
+                  ),
+                ),
               ),
-              const SizedBox(height: 16),
-              _buildEditor(themeColor),
-            ],
-          ),
+            ),
+            if (_showSidebar && !isSmallScreen)
+              Container(
+                width: 320,
+                decoration: BoxDecoration(
+                  border: Border(
+                    left: BorderSide(
+                      color: Theme.of(context).dividerColor,
+                    ),
+                  ),
+                ),
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: _buildLangGrid(),
+                  ),
+                ),
+              ),
+          ],
         ),
       ),
     );
@@ -1305,6 +1309,45 @@ class _AddCardPageState extends State<AddCardPage> {
             ),
         ],
       ),
+    );
+  }
+
+
+  Widget _buildLangGrid() {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final availableWidth = constraints.maxWidth;
+        final items = (availableWidth + 8) ~/ 62;
+        _itemsPerRow = items > 0 ? items : 1;
+
+        return Wrap(
+          spacing: 8,
+          runSpacing: 8,
+          children: [
+            _buildLangTile(
+              'global',
+              'GLB',
+              Icons.public,
+              'Global / Fallback',
+            ),
+            ...(() {
+              final langs = TranslationService()
+                  .availableUILanguages
+                  .map((l) => l.toLowerCase())
+                  .toList();
+              langs.sort();
+              return langs.map((code) {
+                return _buildLangTile(
+                  code,
+                  code.toUpperCase(),
+                  null,
+                  TranslationService().getLanguageName(code),
+                );
+              });
+            })(),
+          ],
+        );
+      },
     );
   }
 }

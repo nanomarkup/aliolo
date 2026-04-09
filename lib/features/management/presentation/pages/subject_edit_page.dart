@@ -68,6 +68,7 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
   String _selectedLang = 'global';
   late List<String> _linkedSubjectIds;
   bool _isSaving = false;
+  bool _showSidebar = false;
   int _itemsPerRow = 8;
   List<SubjectModel> _allSubjects = [];
   List<FolderModel> _allFolders = [];
@@ -652,65 +653,98 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
           ),
           if (!_isFolderMode) ...[
             const SizedBox(height: 20),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: DropdownButtonFormField<String?>(
-                    value: _selectedFolderId,
-                    decoration: InputDecoration(
-                      labelText: context.t('folder'),
-                      border: const OutlineInputBorder(),
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    ),
-                    items: (() {
-                      final items = [
-                        DropdownMenuItem<String?>(
-                          value: null,
-                          child: const Text(''),
+            (() {
+              final folderDropdown = DropdownButtonFormField<String?>(
+                value: _selectedFolderId,
+                decoration: InputDecoration(
+                  labelText: context.t('folder'),
+                  border: const OutlineInputBorder(),
+                  contentPadding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                ),
+                items: (() {
+                  final items = [
+                    DropdownMenuItem<String?>(value: null, child: const Text('')),
+                    ..._allFolders.map(
+                      (f) => DropdownMenuItem(
+                        value: f.id,
+                        child: Text(
+                          f.getName(currentLang),
+                          overflow: TextOverflow.ellipsis,
                         ),
-                        ..._allFolders.map((f) => DropdownMenuItem(
-                          value: f.id,
-                          child: Text(f.getName(currentLang), overflow: TextOverflow.ellipsis),
-                        )),
-                      ];
-
-                      // Safety: Ensure current selected ID is in the list to avoid assertion during initial load
-                      if (_selectedFolderId != null && !items.any((item) => item.value == _selectedFolderId)) {
-                        items.add(
-                          DropdownMenuItem(
-                            value: _selectedFolderId,
-                            child: const Text('Loading...'),
-                          ),
-                        );
-                      }
-                      return items;
-                    })(),
-                    onChanged: isOwner ? (val) => setState(() => _selectedFolderId = val) : null,
-                  ),
-                  ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                  child: DropdownButtonFormField<String>(
-                    value: _selectedAgeGroup,
-                    decoration: InputDecoration(
-                      labelText: context.t('age_group'),
-                      border: const OutlineInputBorder(),
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                      ),
                     ),
-                    items: [
-                      DropdownMenuItem(value: '0_6', child: Text(context.t('age_0_6'))),
-                      DropdownMenuItem(value: '7_14', child: Text(context.t('age_7_14'))),
-                      DropdownMenuItem(value: '15_plus', child: Text(context.t('age_15_plus'))),
-                    ],
-                    onChanged: isOwner ? (val) {
-                      if (val != null) setState(() => _selectedAgeGroup = val);
-                    } : null,
+                  ];
+
+                  if (_selectedFolderId != null &&
+                      !items.any((item) => item.value == _selectedFolderId)) {
+                    items.add(
+                      DropdownMenuItem(
+                        value: _selectedFolderId,
+                        child: const Text('Loading...'),
+                      ),
+                    );
+                  }
+                  return items;
+                })(),
+                onChanged:
+                    isOwner
+                        ? (val) => setState(() => _selectedFolderId = val)
+                        : null,
+              );
+
+              final ageDropdown = DropdownButtonFormField<String>(
+                value: _selectedAgeGroup,
+                decoration: InputDecoration(
+                  labelText: context.t('age_group'),
+                  border: const OutlineInputBorder(),
+                  contentPadding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                ),
+                items: [
+                  DropdownMenuItem(
+                    value: '0_6',
+                    child: Text(context.t('age_0_6')),
                   ),
+                  DropdownMenuItem(
+                    value: '7_14',
+                    child: Text(context.t('age_7_14')),
                   ),
+                  DropdownMenuItem(
+                    value: '15_plus',
+                    child: Text(context.t('age_15_plus')),
+                  ),
+                ],
+                onChanged:
+                    isOwner
+                        ? (val) {
+                          if (val != null) {
+                            setState(() => _selectedAgeGroup = val);
+                          }
+                        }
+                        : null,
+              );
+
+              if (_showSidebar) {
+                return Column(
+                  children: [
+                    folderDropdown,
+                    const SizedBox(height: 20),
+                    ageDropdown,
                   ],
-                  ),
+                );
+              } else {
+                return Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(child: folderDropdown),
+                    const SizedBox(width: 16),
+                    Expanded(child: ageDropdown),
                   ],
+                );
+              }
+            })(),
+          ],
           if (!_isFolderMode) ...[
             const SizedBox(height: 20),
             SwitchListTile(
@@ -1007,6 +1041,11 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
                 ? [
                     backAction,
                     if (saveAction != null) saveAction,
+                    IconButton(
+                      tooltip: context.t('toggle_languages') ?? 'Languages',
+                      icon: Icon(_showSidebar ? Icons.last_page : Icons.language),
+                      onPressed: () => setState(() => _showSidebar = !_showSidebar),
+                    ),
                   ]
                 : [
                     backAction,
@@ -1014,6 +1053,11 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
                     if (jsonAction != null) jsonAction,
                     if (deleteAction != null) deleteAction,
                     if (feedbackAction != null) feedbackAction,
+                    IconButton(
+                      tooltip: context.t('toggle_languages') ?? 'Languages',
+                      icon: Icon(_showSidebar ? Icons.last_page : Icons.language),
+                      onPressed: () => setState(() => _showSidebar = !_showSidebar),
+                    ),
                   ],
             overflowActions: isSmallScreen
                 ? [
@@ -1026,55 +1070,49 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
           focusNode: _keyboardFocusNode,
           autofocus: true,
           onKeyEvent: _onKeyEvent,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              LayoutBuilder(
-                builder: (context, constraints) {
-                  final availableWidth = constraints.maxWidth - 32;
-                  final items = (availableWidth + 8) ~/ 62;
-                  _itemsPerRow = items > 0 ? items : 1;
-
-                  return Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-                    child: Wrap(
-                      spacing: 8,
-                      runSpacing: 8,
-                      children: [
-                        _buildLangTile(
-                          'global',
-                          'GLB',
-                          Icons.public,
-                          'Global / Fallback',
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      if (_showSidebar && isSmallScreen)
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+                          child: _buildLangGrid(),
                         ),
-                        ...(() {
-                          final langs = TranslationService()
-                              .availableUILanguages
-                              .map((l) => l.toLowerCase())
-                              .toList();
-                          langs.sort();
-                          return langs.map((code) {
-                            return _buildLangTile(
-                              code,
-                              code.toUpperCase(),
-                              null,
-                              TranslationService().getLanguageName(code),
-                            );
-                          });
-                        })(),
-                      ],
-                    ),
-                  );
-                },
-              ),
-              const SizedBox(height: 32),
-              Form(
-                key: _formKey,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: _buildEditor(),
+                      const SizedBox(height: 32),
+                      Form(
+                        key: _formKey,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: _buildEditor(),
+                        ),
+                      ),
+                      const SizedBox(height: 32),
+                    ],
+                  ),
                 ),
               ),
+              if (_showSidebar && !isSmallScreen)
+                Container(
+                  width: 320,
+                  decoration: BoxDecoration(
+                    border: Border(
+                      left: BorderSide(
+                        color: Theme.of(context).dividerColor,
+                      ),
+                    ),
+                  ),
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: _buildLangGrid(),
+                    ),
+                  ),
+                ),
             ],
           ),
         ),
@@ -1093,6 +1131,45 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
         color: Colors.grey,
         letterSpacing: 1.2,
       ),
+    );
+  }
+
+
+  Widget _buildLangGrid() {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final availableWidth = constraints.maxWidth;
+        final items = (availableWidth + 8) ~/ 62;
+        _itemsPerRow = items > 0 ? items : 1;
+
+        return Wrap(
+          spacing: 8,
+          runSpacing: 8,
+          children: [
+            _buildLangTile(
+              'global',
+              'GLB',
+              Icons.public,
+              'Global / Fallback',
+            ),
+            ...(() {
+              final langs = TranslationService()
+                  .availableUILanguages
+                  .map((l) => l.toLowerCase())
+                  .toList();
+              langs.sort();
+              return langs.map((code) {
+                return _buildLangTile(
+                  code,
+                  code.toUpperCase(),
+                  null,
+                  TranslationService().getLanguageName(code),
+                );
+              });
+            })(),
+          ],
+        );
+      },
     );
   }
 }
