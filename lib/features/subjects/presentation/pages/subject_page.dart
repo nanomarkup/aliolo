@@ -421,18 +421,18 @@ class _SubjectPageState extends State<SubjectPage> {
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(12),
                                       borderSide: BorderSide(
-                                        color: currentSessionColor.withValues(alpha: 0.5),
+                                        color: Colors.grey.withValues(alpha: 0.5),
                                       ),
                                     ),
                                     enabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(12),
                                       borderSide: BorderSide(
-                                        color: currentSessionColor.withValues(alpha: 0.5),
+                                        color: Colors.grey.withValues(alpha: 0.5),
                                       ),
                                     ),
                                     focusedBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(12),
-                                      borderSide: BorderSide(color: currentSessionColor, width: 2),
+                                      borderSide: BorderSide(color: Colors.grey.withValues(alpha: 0.5)),
                                     ),
                                     contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                                     filled: true,
@@ -1073,15 +1073,15 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
                                         : null,
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(12),
-                                  borderSide: BorderSide(color: pillarColor.withValues(alpha: 0.5)),
+                                  borderSide: BorderSide(color: Colors.grey.withValues(alpha: 0.5)),
                                 ),
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(12),
-                                  borderSide: BorderSide(color: pillarColor.withValues(alpha: 0.5)),
+                                  borderSide: BorderSide(color: Colors.grey.withValues(alpha: 0.5)),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(12),
-                                  borderSide: BorderSide(color: pillarColor, width: 2),
+                                  borderSide: BorderSide(color: Colors.grey.withValues(alpha: 0.5)),
                                 ),
                                 contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                                 filled: true,
@@ -1719,15 +1719,15 @@ class _FolderPageState extends State<FolderPage> {
                                         : null,
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(12),
-                                  borderSide: BorderSide(color: pillarColor.withValues(alpha: 0.5)),
+                                  borderSide: BorderSide(color: Colors.grey.withValues(alpha: 0.5)),
                                 ),
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(12),
-                                  borderSide: BorderSide(color: pillarColor.withValues(alpha: 0.5)),
+                                  borderSide: BorderSide(color: Colors.grey.withValues(alpha: 0.5)),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(12),
-                                  borderSide: BorderSide(color: pillarColor, width: 2),
+                                  borderSide: BorderSide(color: Colors.grey.withValues(alpha: 0.5)),
                                 ),
                                 contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                                 filled: true,
