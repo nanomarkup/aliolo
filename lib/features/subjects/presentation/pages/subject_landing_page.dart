@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:aliolo/data/models/subject_model.dart';
 import 'package:aliolo/data/models/card_model.dart';
 import 'package:aliolo/data/models/pillar_model.dart';
@@ -6,7 +7,11 @@ import 'package:aliolo/data/models/folder_model.dart';
 import 'package:aliolo/data/models/collection_model.dart';
 import 'package:aliolo/data/services/card_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
+import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/data/services/auth_service.dart';
+import 'package:aliolo/data/services/math_service.dart';
+import 'package:aliolo/data/services/subscription_service.dart';
+import 'package:aliolo/data/services/testing_language_service.dart';
 import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/core/widgets/aliolo_scrollable_page.dart';
 import 'package:aliolo/features/testing/presentation/pages/learn_page.dart';
@@ -14,6 +19,7 @@ import 'package:aliolo/features/testing/presentation/pages/test_page.dart';
 import 'package:aliolo/features/management/presentation/pages/subject_edit_page.dart';
 import 'package:aliolo/features/management/presentation/pages/add_card_page.dart';
 import 'package:aliolo/features/feedback/presentation/pages/feedback_page.dart';
+import 'package:aliolo/features/settings/presentation/pages/premium_upgrade_page.dart';
 import 'package:aliolo/core/widgets/aliolo_image.dart';
 import 'package:aliolo/core/widgets/counting_grid.dart';
 import 'package:aliolo/core/widgets/addition_grid.dart';
@@ -28,6 +34,7 @@ class SubjectLandingPage extends StatefulWidget {
   final CollectionModel? collection;
   final List<CardModel> cards;
   final String languageCode;
+  final bool isReadOnly;
 
   const SubjectLandingPage({
     super.key,
@@ -36,6 +43,7 @@ class SubjectLandingPage extends StatefulWidget {
     this.collection,
     required this.cards,
     required this.languageCode,
+    this.isReadOnly = false,
   });
 
   @override
@@ -45,17 +53,23 @@ class SubjectLandingPage extends StatefulWidget {
 class _SubjectLandingPageState extends State<SubjectLandingPage> {
   final _cardService = getIt<CardService>();
   final _authService = getIt<AuthService>();
+  final _subService = getIt<SubscriptionService>();
+  final _langService = getIt<TestingLanguageService>();
   final _searchController = TextEditingController();
+  final _searchFocusNode = FocusNode();
 
   SubjectModel? _currentSubject;
   FolderModel? _currentFolder;
   CollectionModel? _currentCollection;
+  List<SubjectModel> _allSubjects = [];
   List<CardModel> _allCards = [];
   List<CardModel> _filteredCards = [];
-  List<SubjectModel> _allSubjects = [];
+  int _startLevel = 1;
+  int _endLevel = 20;
   List<SubjectModel> _filteredSubjects = [];
   bool _isLoading = false;
   bool _hasUpdated = false;
+  late String _currentLanguageCode;
 
   String _collectionFilter = 'all';
   String _selectedAgeFilter = 'all';
@@ -67,13 +81,24 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
     _currentFolder = widget.folder;
     _currentCollection = widget.collection;
     _allCards = widget.cards;
-    
+    _currentLanguageCode = widget.languageCode;
+
     if (_currentCollection != null) {
       _fetchCollectionSubjects();
     } else {
       _applyFilters();
     }
     _cardService.addListener(_onServiceChange);
+    _langService.currentLanguageCode.addListener(_onLanguageChange);
+  }
+
+  void _onLanguageChange() {
+    if (mounted) {
+      setState(() {
+        _currentLanguageCode = _langService.currentLanguageCode.value;
+        _applyFilters();
+      });
+    }
   }
 
   Future<void> _fetchCollectionSubjects() async {
@@ -95,7 +120,9 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
   @override
   void dispose() {
     _cardService.removeListener(_onServiceChange);
+    _langService.currentLanguageCode.removeListener(_onLanguageChange);
     _searchController.dispose();
+    _searchFocusNode.dispose();
     super.dispose();
   }
 
@@ -111,7 +138,9 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
 
     if (_currentSubject != null) {
       final cards = await _cardService.getCardsBySubject(_currentSubject!.id);
-      final updatedSubject = await _cardService.getSubjectById(_currentSubject!.id);
+      final updatedSubject = await _cardService.getSubjectById(
+        _currentSubject!.id,
+      );
 
       if (mounted) {
         setState(() {
@@ -125,8 +154,12 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
         });
       }
     } else if (_currentCollection != null) {
-      final cards = await _cardService.getCollectionCards(_currentCollection!.subjectIds);
-      final updatedCollection = await _cardService.getCollectionById(_currentCollection!.id);
+      final cards = await _cardService.getCollectionCards(
+        _currentCollection!.subjectIds,
+      );
+      final updatedCollection = await _cardService.getCollectionById(
+        _currentCollection!.id,
+      );
 
       if (mounted) {
         setState(() {
@@ -146,50 +179,66 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
     final query = _searchController.text.toLowerCase();
     final myId = _authService.currentUser?.serverId;
     final isOwner = _currentCollection?.ownerId == myId;
-    
-    setState(() {
-      if (_currentCollection != null) {
-        _filteredSubjects = _allSubjects.where((s) {
-          // If not owner, only show subjects that are in the collection
-          if (!isOwner && !_currentCollection!.subjectIds.contains(s.id)) {
-            return false;
-          }
 
-          final matchesName = s.getName(widget.languageCode).toLowerCase().contains(query);
-          final matchesAge = _selectedAgeFilter == 'all' || s.ageGroup == _selectedAgeFilter;
-          bool matchesCollection = true;
-          if (_collectionFilter == 'mine') {
-            matchesCollection = s.ownerId == myId;
-          } else if (_collectionFilter == 'public') {
-            matchesCollection = s.isPublic;
-          } else if (_collectionFilter == 'favorites') {
-            matchesCollection = s.isOnDashboard;
-          }
-          return matchesName && matchesAge && matchesCollection;
-        }).toList();
+    setState(() {
+      // Always update _filteredCards for count and session consistency
+      _filteredCards = _allCards.where((c) {
+        final promptMatches = c
+            .getPrompt(_currentLanguageCode)
+            .toLowerCase()
+            .contains(query);
+        final answerMatches = c
+            .getAnswer(_currentLanguageCode)
+            .toLowerCase()
+            .contains(query);
+
+        final matchesLevel = c.level >= _startLevel && c.level <= _endLevel;
+
+        return (promptMatches || answerMatches) && matchesLevel;
+      }).toList();
+
+      if (_currentCollection != null) {
+        _filteredSubjects =
+            _allSubjects.where((s) {
+              if (!isOwner && !_currentCollection!.subjectIds.contains(s.id)) {
+                return false;
+              }
+
+              final matchesName = s
+                  .getName(_currentLanguageCode)
+                  .toLowerCase()
+                  .contains(query);
+              final matchesAge =
+                  _selectedAgeFilter == 'all' ||
+                  s.ageGroup == _selectedAgeFilter;
+              bool matchesCollection = true;
+              if (_collectionFilter == 'mine') {
+                matchesCollection = s.ownerId == myId;
+              } else if (_collectionFilter == 'public') {
+                matchesCollection = s.isPublic;
+              } else if (_collectionFilter == 'favorites') {
+                matchesCollection = s.isOnDashboard;
+              }
+              return matchesName && matchesAge && matchesCollection;
+            }).toList();
 
         _filteredSubjects.sort((a, b) {
           final aSelected = _currentCollection!.subjectIds.contains(a.id);
           final bSelected = _currentCollection!.subjectIds.contains(b.id);
           if (aSelected && !bSelected) return -1;
           if (!aSelected && bSelected) return 1;
-          return a.getName(widget.languageCode).toLowerCase().compareTo(b.getName(widget.languageCode).toLowerCase());
-        });
-      } else {
-        _filteredCards = _allCards.where((c) {
-          final matchesSearch = c
-              .getPrompt(widget.languageCode)
+          return a
+              .getName(_currentLanguageCode)
               .toLowerCase()
-              .contains(query);
-          return matchesSearch;
-        }).toList();
+              .compareTo(b.getName(_currentLanguageCode).toLowerCase());
+        });
       }
     });
   }
 
   Future<void> _toggleFavorite() async {
     if (_currentSubject == null && _currentCollection == null) return;
-    
+
     if (_currentSubject != null) {
       final newState = !_currentSubject!.isOnDashboard;
       setState(() {
@@ -197,11 +246,16 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
         _hasUpdated = true;
       });
       try {
-        await _cardService.toggleSubjectOnDashboard(_currentSubject!.id, newState);
+        await _cardService.toggleSubjectOnDashboard(
+          _currentSubject!.id,
+          newState,
+        );
       } catch (e) {
         if (mounted) {
           setState(() => _currentSubject!.isOnDashboard = !newState);
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error updating favorite: $e')));
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Error updating favorite: $e')),
+          );
         }
       }
     } else if (_currentCollection != null) {
@@ -211,11 +265,16 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
         _hasUpdated = true;
       });
       try {
-        await _cardService.toggleCollectionOnDashboard(_currentCollection!.id, newState);
+        await _cardService.toggleCollectionOnDashboard(
+          _currentCollection!.id,
+          newState,
+        );
       } catch (e) {
         if (mounted) {
           setState(() => _currentCollection!.isOnDashboard = !newState);
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error updating favorite: $e')));
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Error updating favorite: $e')),
+          );
         }
       }
     }
@@ -228,9 +287,13 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
       context: context,
       builder:
           (context) => AlertDialog(
-            title: Text(isCollection ? context.t('delete_collection') : context.t('delete_subject')),
+            title: Text(
+              isCollection
+                  ? context.t('delete_collection')
+                  : context.t('delete_subject'),
+            ),
             content: Text(
-              isCollection 
+              isCollection
                   ? context.t('delete_collection_confirm')
                   : 'This will permanently delete the subject and all its cards.',
             ),
@@ -251,7 +314,10 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                     Navigator.pop(context, true); // Go back to dashboard
                   }
                 },
-                child: Text(context.t('delete'), style: const TextStyle(color: Colors.red)),
+                child: Text(
+                  context.t('delete'),
+                  style: const TextStyle(color: Colors.red),
+                ),
               ),
             ],
           ),
@@ -286,24 +352,56 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
           );
         }
       } else if (_currentSubject != null) {
-        // standard
-        sessionCards =
-            _allCards
-                .map((c) => SubjectCard(card: c, subject: _currentSubject!))
-                .toList();
+        if (_currentSubject!.isMath && _allCards.isEmpty) {
+          final mathService = getIt<MathService>();
+          final size = isTest ? user.testSessionSize : user.learnSessionSize;
+          for (int i = 0; i < size; i++) {
+            final problem = mathService.generateProblem(_currentSubject!);
+            final card = mathService.createVirtualCard(problem, 1);
+            sessionCards.add(
+              SubjectCard(card: card, subject: _currentSubject!),
+            );
+          }
+        } else {
+          sessionCards =
+              _filteredCards
+                  .map((c) => SubjectCard(card: c, subject: _currentSubject!))
+                  .toList();
+        }
       }
 
-      // Filter and Shuffle logic
-      final lang = widget.languageCode.toLowerCase();
-      sessionCards =
-          sessionCards.where((sc) {
-            return sc.card.getAnswer(lang).isNotEmpty ||
-                sc.card.getAnswer('en').isNotEmpty;
-          }).toList();
+      final lang = _currentLanguageCode.toLowerCase();
+      if (!(_currentSubject?.isMath ?? false)) {
+        final query = _searchController.text.toLowerCase();
+        sessionCards =
+            sessionCards.where((sc) {
+              final c = sc.card;
+              final promptMatches = c
+                  .getPrompt(_currentLanguageCode)
+                  .toLowerCase()
+                  .contains(query);
+              final answerMatches = c
+                  .getAnswer(_currentLanguageCode)
+                  .toLowerCase()
+                  .contains(query);
+              final matchesLevel =
+                  c.level >= _startLevel && c.level <= _endLevel;
 
-      sessionCards.shuffle();
+              final hasAnswer =
+                  c.getAnswer(lang).isNotEmpty ||
+                  c.getAnswer('en').isNotEmpty;
+
+              return (promptMatches || answerMatches) &&
+                  matchesLevel &&
+                  hasAnswer;
+            }).toList();
+        sessionCards.shuffle();
+      }
+
       final size = isTest ? user.testSessionSize : user.learnSessionSize;
-      sessionCards = sessionCards.take(size).toList();
+      if (sessionCards.length > size) {
+        sessionCards = sessionCards.take(size).toList();
+      }
 
       if (sessionCards.isEmpty) {
         if (mounted) {
@@ -325,11 +423,11 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                     isTest
                         ? TestPage(
                           sessionCards: sessionCards,
-                          languageCode: widget.languageCode,
+                          languageCode: _currentLanguageCode,
                         )
                         : LearnPage(
                           sessionCards: sessionCards,
-                          languageCode: widget.languageCode,
+                          languageCode: _currentLanguageCode,
                         ),
           ),
         );
@@ -340,39 +438,349 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
     }
   }
 
-  Widget _buildCompactDropdown({required String value, required Map<String, String> items, required ValueChanged<String?> onChanged}) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12),
-      decoration: BoxDecoration(color: Theme.of(context).cardColor.withValues(alpha: 0.5), borderRadius: BorderRadius.circular(12), border: Border.all(color: Colors.grey.withValues(alpha: 0.5))),
-      child: DropdownButtonHideUnderline(child: DropdownButton<String>(
-        value: value, isExpanded: true, icon: const Icon(Icons.arrow_drop_down, size: 20),
-        style: TextStyle(fontSize: 14, color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black87),
-        items: items.entries.map((e) => DropdownMenuItem(value: e.key, child: Text(e.value, overflow: TextOverflow.ellipsis))).toList(),
-        onChanged: onChanged,
-      )),
+  void _showFilterBottomSheet(BuildContext context, Color pillarColor) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setBottomSheetState) {
+            final isOwner = _currentCollection?.ownerId == _authService.currentUser?.serverId;
+            final isSmall = MediaQuery.sizeOf(context).width < 600;
+            final showSourceAndAge = _currentCollection != null && isOwner;
+
+            final filterRow = showSourceAndAge
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if (isSmall) ...[
+                        Text(context.t('source'), style: const TextStyle(fontWeight: FontWeight.bold)),
+                        const SizedBox(height: 8),
+                        _buildCompactDropdown(
+                          value: _collectionFilter,
+                          items: {
+                            'all': context.t('filter_all'),
+                            'favorites': context.t('filter_favorites'),
+                            'mine': context.t('filter_my_subjects'),
+                            'public': context.t('filter_public_library'),
+                          },
+                          onChanged: (val) {
+                            if (val != null) {
+                              setState(() {
+                                _collectionFilter = val;
+                                _applyFilters();
+                              });
+                              setBottomSheetState(() {});
+                            }
+                          },
+                        ),
+                        const SizedBox(height: 20),
+                      ],
+                      Text(context.t('age'), style: const TextStyle(fontWeight: FontWeight.bold)),
+                      const SizedBox(height: 8),
+                      _buildCompactDropdown(
+                        value: _selectedAgeFilter,
+                        items: {
+                          'all': context.t('age_all'),
+                          '0_6': context.t('age_0_6'),
+                          '7_14': context.t('age_7_14'),
+                          '15_plus': context.t('age_15_plus'),
+                        },
+                        onChanged: (val) {
+                          if (val != null) {
+                            setState(() {
+                              _selectedAgeFilter = val;
+                              _applyFilters();
+                            });
+                            setBottomSheetState(() {});
+                          }
+                        },
+                      ),
+                      const SizedBox(height: 20),
+                    ],
+                  )
+                : const SizedBox.shrink();
+
+            return Container(
+              padding: EdgeInsets.fromLTRB(24, 24, 24, MediaQuery.of(context).viewInsets.bottom + 24),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          context.t('filters'),
+                          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.close),
+                          onPressed: () => Navigator.pop(context),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 24),
+                    if ((_currentSubject != null || _currentCollection != null) && !(_currentSubject?.isMath ?? false)) ...[
+                      Text(context.t('level') ?? 'Level', style: const TextStyle(fontWeight: FontWeight.bold)),
+                      const SizedBox(height: 12),
+                      Row(
+                        children: [
+                          _buildLevelDropdown(_startLevel, (val) {
+                            if (val != null) {
+                              setState(() {
+                                _startLevel = val;
+                                if (_endLevel < _startLevel) _endLevel = _startLevel;
+                                _applyFilters();
+                              });
+                              setBottomSheetState(() {});
+                            }
+                          }),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 16),
+                            child: Text('-'),
+                          ),
+                          _buildLevelDropdown(_endLevel, (val) {
+                            if (val != null) {
+                              setState(() {
+                                _endLevel = val;
+                                if (_startLevel > _endLevel) _startLevel = _endLevel;
+                                _applyFilters();
+                              });
+                              setBottomSheetState(() {});
+                            }
+                          }),
+                          const SizedBox(width: 16),
+                          TextButton(
+                            onPressed: () {
+                              setState(() {
+                                _startLevel = 1;
+                                _endLevel = 20;
+                                _applyFilters();
+                              });
+                              setBottomSheetState(() {});
+                            },
+                            child: Text(context.t('filter_all') ?? 'All'),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 20),
+                    ],
+                    filterRow,
+                    if (_allCards.isNotEmpty) ...[
+                      const SizedBox(height: 24),
+                      Center(
+                        child: Text(
+                          '${_filteredCards.length} ${context.plural('card', _filteredCards.length)}',
+                          style: TextStyle(
+                            color: Colors.grey[600],
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                    ],
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  Widget _buildCompactDropdown({
+    required String value, 
+    required Map<String, String> items, 
+    ValueChanged<String?>? onChanged,
+    IconData? prefixIcon,
+    String? selectedLabel,
+    bool matchAnchorWidth = true,
+    double? menuWidth,
+    double verticalPadding = 8,
+  }) {
+    final validatedValue = items.containsKey(value) ? value : (items.isNotEmpty ? items.keys.first : '');
+    final label = selectedLabel ?? items[validatedValue] ?? '';
+    
+    return LayoutBuilder(
+      builder: (context, box) {
+        return PopupMenuButton<String>(
+          constraints: menuWidth != null 
+              ? BoxConstraints(minWidth: menuWidth, maxWidth: menuWidth)
+              : (matchAnchorWidth ? BoxConstraints(minWidth: box.maxWidth, maxWidth: box.maxWidth) : null),
+          onSelected: onChanged,
+          position: PopupMenuPosition.under,
+          itemBuilder: (context) => items.entries.map((e) => PopupMenuItem<String>(
+            value: e.key,
+            child: Text(e.value),
+          )).toList(),
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 12, vertical: verticalPadding),
+            decoration: BoxDecoration(
+              color: Theme.of(context).cardColor.withValues(alpha: 0.5), 
+              borderRadius: BorderRadius.circular(12), 
+              border: Border.all(color: Colors.grey.withValues(alpha: 0.5))
+            ),
+            child: Row(
+              children: [
+                if (prefixIcon != null) ...[
+                  Icon(prefixIcon, size: 16, color: Colors.grey[600]),
+                  const SizedBox(width: 8),
+                ],
+                Expanded(
+                  child: Text(
+                    label,
+                    style: TextStyle(
+                      fontSize: 14, 
+                      color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black87
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                Icon(Icons.arrow_drop_down, size: 20, color: Colors.grey[600]),
+              ],
+            ),
+          ),
+        );
+      }
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final pillarId = _currentSubject?.pillarId ?? _currentFolder?.pillarId ?? _currentCollection?.pillarId ?? 1;
-    final pillar = pillars.firstWhere(
-      (p) => p.id == pillarId,
-      orElse: () => pillars.first,
-    );
-    final pillarColor = pillar.getColor();
-    const appBarColor = Colors.white;
-    final isOwner = (_currentSubject != null && _currentSubject!.ownerId == _authService.currentUser?.serverId) ||
-                  (_currentCollection != null && _currentCollection!.ownerId == _authService.currentUser?.serverId);
-    final displayLang = widget.languageCode;
-    final title = _currentSubject?.getName(displayLang) ?? 
-                 _currentFolder?.getName(displayLang) ?? 
-                 _currentCollection?.getName(displayLang) ?? 
-                 'Aliolo';
-
     return ListenableBuilder(
-      listenable: _cardService,
+      listenable: _subService,
       builder: (context, _) {
+        final isPremium = _subService.isPremium;
+        final pillarId =
+            _currentSubject?.pillarId ??
+            _currentFolder?.pillarId ??
+            _currentCollection?.pillarId ??
+            1;
+        final pillar = pillars.firstWhere(
+          (p) => p.id == pillarId,
+          orElse: () => pillars.first,
+        );
+        final pillarColor = pillar.getColor(getIt<ThemeService>().isDarkMode);
+        const appBarColor = Colors.white;
+        final isOwner =
+            (_currentSubject != null &&
+                _currentSubject!.ownerId ==
+                    _authService.currentUser?.serverId) ||
+            (_currentCollection != null &&
+                _currentCollection!.ownerId ==
+                    _authService.currentUser?.serverId);
+        final title =
+            _currentSubject?.getName(_currentLanguageCode) ??
+            _currentFolder?.getName(_currentLanguageCode) ??
+            _currentCollection?.getName(_currentLanguageCode) ??
+            'Aliolo';
+
+        final description =
+            _currentSubject?.getDescription(_currentLanguageCode) ??
+            _currentFolder?.getDescription(_currentLanguageCode) ??
+            _currentCollection?.getDescription(_currentLanguageCode) ??
+            '';
+
+        final isSmallScreen = MediaQuery.sizeOf(context).width < 600;
+
+        final backAction = IconButton(
+          tooltip: context.t('back'),
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Navigator.pop(context, _hasUpdated),
+        );
+
+        final favoriteAction = ((_currentSubject != null || _currentCollection != null) && !widget.isReadOnly)
+            ? IconButton(
+                tooltip: context.t('favorite'),
+                icon: Icon(
+                  (_currentSubject?.isOnDashboard ??
+                          _currentCollection?.isOnDashboard ??
+                          false)
+                      ? Icons.star
+                      : Icons.star_border,
+                ),
+                onPressed: _toggleFavorite,
+              )
+            : null;
+
+        final editAction = (isOwner && !widget.isReadOnly)
+            ? IconButton(
+                tooltip: context.t('edit'),
+                icon: const Icon(Icons.edit),
+                onPressed: () async {
+                  final result = await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder:
+                          (context) => SubjectEditPage(
+                            existingSubject:
+                                _currentSubject ??
+                                SubjectModel(
+                                  id: _currentCollection!.id,
+                                  pillarId: _currentCollection!.pillarId,
+                                  ownerId: _currentCollection!.ownerId,
+                                  isPublic: _currentCollection!.isPublic,
+                                  createdAt: _currentCollection!.createdAt,
+                                  updatedAt: _currentCollection!.updatedAt,
+                                  localizedData:
+                                      _currentCollection!.localizedData,
+                                  folderId: _currentCollection!.folderId,
+                                  typeStr: 'collection',
+                                  linkedSubjectIds:
+                                      _currentCollection!.subjectIds,
+                                  isOnDashboard:
+                                      _currentCollection!.isOnDashboard,
+                                  ageGroup: _currentCollection!.ageGroup,
+                                ),
+                            isCollectionMode: _currentCollection != null,
+                          ),
+                    ),
+                  );
+                  if (result == true) {
+                    if (_currentSubject != null) _refreshData();
+                    if (_currentCollection != null) {
+                      if (context.mounted) Navigator.pop(context, true);
+                    }
+                  }
+                },
+              )
+            : null;
+
+        final deleteAction = (isOwner && !widget.isReadOnly)
+            ? IconButton(
+                tooltip: context.t('delete'),
+                icon: const Icon(Icons.delete),
+                onPressed: _confirmDeleteSubject,
+              )
+            : null;
+
+        final feedbackAction = IconButton(
+          tooltip: context.t('feedback'),
+          icon: const Icon(Icons.feedback),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder:
+                    (context) => FeedbackPage(
+                      subjectId: _currentSubject?.id,
+                      folderId: _currentFolder?.id,
+                      collectionId: _currentCollection?.id,
+                      contextTitle: title,
+                      appBarColor: pillarColor,
+                    ),
+              ),
+            );
+          },
+        );
+
         return PopScope(
           canPop: false,
           onPopInvokedWithResult: (didPop, result) {
@@ -385,145 +793,35 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
               style: const TextStyle(
                 color: appBarColor,
                 fontWeight: FontWeight.bold,
+                fontSize: 20,
               ),
               overflow: TextOverflow.ellipsis,
             ),
             appBarColor: pillarColor,
-            actions: [
-              IconButton(
-                icon: const Icon(Icons.arrow_back, color: appBarColor),
-                onPressed: () => Navigator.pop(context, _hasUpdated),
-              ),
-            if (_currentSubject != null || _currentCollection != null)
-              IconButton(
-                icon: Icon(
-                  (_currentSubject?.isOnDashboard ?? _currentCollection?.isOnDashboard ?? false)
-                      ? Icons.star
-                      : Icons.star_border,
-                  color: appBarColor,
-                ),
-                onPressed: _toggleFavorite,
-              ),
-            if (isOwner) ...[
-              IconButton(
-                icon: const Icon(Icons.edit, color: appBarColor),
-                onPressed: () async {
-                  final result = await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder:
-                          (context) =>
-                              SubjectEditPage(
-                                existingSubject: _currentSubject ?? SubjectModel(
-                                  id: _currentCollection!.id,
-                                  pillarId: _currentCollection!.pillarId,
-                                  ownerId: _currentCollection!.ownerId,
-                                  isPublic: _currentCollection!.isPublic,
-                                  createdAt: _currentCollection!.createdAt,
-                                  updatedAt: _currentCollection!.updatedAt,
-                                  localizedData: _currentCollection!.localizedData,
-                                  folderId: _currentCollection!.folderId,
-                                  typeStr: 'collection',
-                                  linkedSubjectIds: _currentCollection!.subjectIds,
-                                  isOnDashboard: _currentCollection!.isOnDashboard,
-                                  ageGroup: _currentCollection!.ageGroup,
-                                ),
-                                isCollectionMode: _currentCollection != null,
-                              ),
-                    ),
-                  );
-                  if (result == true) {
-                    if (_currentSubject != null) _refreshData();
-                    // Just pop if collection updated so dashboard refreshes it
-                    if (_currentCollection != null) {
-                      if (context.mounted) Navigator.pop(context, true);
-                    }
-                  }
-                },
-              ),
-              IconButton(
-                icon: const Icon(Icons.delete, color: appBarColor),
-                onPressed: _confirmDeleteSubject,
-              ),
-            ],
-            IconButton(
-              icon: const Icon(Icons.feedback, color: appBarColor),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder:
-                        (context) => FeedbackPage(
-                          subjectId: _currentSubject?.id,
-                          folderId: _currentFolder?.id,
-                          collectionId: _currentCollection?.id,
-                          contextTitle: title,
-                          appBarColor: pillarColor,
-                        ),
-                  ),
-                );
-              },
-            ),
-          ],
-          fixedBody: LayoutBuilder(
-            builder: (context, constraints) {
-              final isSmall = constraints.maxWidth < 600;
-              final filterRow = _currentCollection != null ? Row(children: [
-                Expanded(child: _buildCompactDropdown(value: _collectionFilter, items: {'all': context.t('filter_all'), 'favorites': context.t('filter_favorites'), 'mine': context.t('filter_my_subjects'), 'public': context.t('filter_public')}, onChanged: (val) { if (val != null) setState(() { _collectionFilter = val; _applyFilters(); }); })),
-                const SizedBox(width: 8),
-                Expanded(child: _buildCompactDropdown(value: _selectedAgeFilter, items: {'all': context.t('age_all'), '0_6': context.t('age_0_6'), '7_14': context.t('age_7_14'), '15_plus': context.t('age_15_plus')}, onChanged: (val) { if (val != null) setState(() { _selectedAgeFilter = val; _applyFilters(); }); })),
-              ]) : const SizedBox.shrink();
-
-              return Column(
+            actions: isSmallScreen
+                ? [
+                    backAction,
+                    if (favoriteAction != null) favoriteAction,
+                  ]
+                : [
+                    backAction,
+                    if (favoriteAction != null) favoriteAction,
+                    if (editAction != null) editAction,
+                    if (deleteAction != null) deleteAction,
+                    feedbackAction,
+                  ],
+            overflowActions: isSmallScreen
+                ? [
+                    if (editAction != null) editAction,
+                    if (deleteAction != null) deleteAction,
+                    feedbackAction,
+                  ]
+                : null,
+            fixedBody: widget.isReadOnly ? null : Padding(
+              padding: const EdgeInsets.only(top: 16, bottom: 8),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  const SizedBox(height: 16),
-                  Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          color: pillarColor.withValues(alpha: 0.1),
-                          shape: BoxShape.circle,
-                        ),
-                        child: Icon(
-                          _currentFolder != null ? Icons.folder : 
-                          (_currentCollection != null ? Icons.collections : pillar.getIconData()),
-                          size: 40,
-                          color: pillarColor,
-                        ),
-                      ),
-                      const SizedBox(width: 20),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              title,
-                              style: const TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            if (_currentSubject?.getDescription(displayLang).isNotEmpty == true || 
-                                _currentFolder?.getDescription(displayLang).isNotEmpty == true ||
-                                _currentCollection?.getDescription(displayLang).isNotEmpty == true)
-                              Text(
-                                _currentSubject?.getDescription(displayLang) ?? 
-                                _currentFolder?.getDescription(displayLang) ?? 
-                                _currentCollection?.getDescription(displayLang) ?? '',
-                                style: TextStyle(
-                                  color: Colors.grey[600],
-                                  fontSize: 14,
-                                ),
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 32),
                   Row(
                     children: [
                       Expanded(
@@ -532,6 +830,8 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                           title: context.t('learn_mode_title'),
                           icon: Icons.school,
                           color: pillarColor,
+                          isPremiumFeature: false,
+                          isUserPremium: isPremium,
                           onTap: () => _startSession(false),
                         ),
                       ),
@@ -542,302 +842,525 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                           title: context.t('test_mode_title'),
                           icon: Icons.quiz,
                           color: pillarColor,
-                          onTap: () => _startSession(true),
+                          isPremiumFeature: true,
+                          isUserPremium: isPremium,
+                          onTap: () {
+                            if (!isPremium) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder:
+                                      (context) => const PremiumUpgradePage(),
+                                ),
+                              );
+                            } else {
+                              _startSession(true);
+                            }
+                          },
                         ),
                       ),
                     ],
                   ),
-                  if (_currentSubject != null || _currentCollection != null) ...[
-                    const SizedBox(height: 32),
-                    if (_currentCollection != null && isSmall) ...[
-                      TextField(
-                        controller: _searchController,
-                        onChanged: (_) => _applyFilters(),
-                        decoration: InputDecoration(
-                          hintText: context.t('search_subjects'),
-                          prefixIcon: const Icon(Icons.search),
-                          suffixIcon: ValueListenableBuilder<TextEditingValue>(
-                            valueListenable: _searchController,
-                            builder: (context, value, _) {
-                              return value.text.isNotEmpty
-                                  ? IconButton(
-                                      icon: const Icon(Icons.clear),
-                                      onPressed: () {
-                                        _searchController.clear();
-                                        _applyFilters();
+                ],
+              ),
+            ),
+            slivers: [
+              // Scrollable Header Section
+              SliverToBoxAdapter(
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        if (description.isNotEmpty) ...[
+                          const SizedBox(height: 16),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 4),
+                            child: Text(
+                              description,
+                              style: TextStyle(
+                                color: Colors.grey[700],
+                                fontSize: 15,
+                                height: 1.4,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 24),
+                        ] else
+                          const SizedBox(height: 16),
+                        if (_currentSubject != null ||
+                            _currentCollection != null) ...[
+                          Row(
+                              children: [
+                                if (_currentCollection != null && isOwner && constraints.maxWidth >= 600) ...[
+                                SizedBox(
+                                  width: 200,
+                                  child: _buildCompactDropdown(                                      value: _collectionFilter,
+                                      items: {
+                                        'all': context.t('filter_all'),
+                                        'favorites': context.t('filter_favorites'),
+                                        'mine': context.t('filter_my_subjects'),
+                                        'public': context.t('filter_public_library'),
                                       },
-                                    )
-                                  : const SizedBox.shrink();
-                            },
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                      filterRow,
-                    ] else if (_currentCollection != null && !isSmall) ...[
-                      Row(
-                        children: [
-                          Expanded(
-                            flex: 3,
-                            child: TextField(
-                              controller: _searchController,
-                              onChanged: (_) => _applyFilters(),
-                              decoration: InputDecoration(
-                                hintText: context.t('search_subjects'),
-                                prefixIcon: const Icon(Icons.search),
-                                suffixIcon: ValueListenableBuilder<TextEditingValue>(
-                                  valueListenable: _searchController,
-                                  builder: (context, value, _) {
-                                    return value.text.isNotEmpty
-                                        ? IconButton(
-                                            icon: const Icon(Icons.clear),
-                                            onPressed: () {
-                                              _searchController.clear();
-                                              _applyFilters();
-                                            },
-                                          )
-                                        : const SizedBox.shrink();
-                                  },
-                                ),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 8),
-                          Expanded(flex: 5, child: filterRow),
-                        ],
-                      ),
-                    ] else ...[
-                      Row(
-                        children: [
-                          Expanded(
-                            child: TextField(
-                              controller: _searchController,
-                              onChanged: (_) => _applyFilters(),
-                              decoration: InputDecoration(
-                                hintText: 'Search cards...',
-                                prefixIcon: const Icon(Icons.search),
-                                suffixIcon: ValueListenableBuilder<TextEditingValue>(
-                                  valueListenable: _searchController,
-                                  builder: (context, value, _) {
-                                    return value.text.isNotEmpty
-                                        ? IconButton(
-                                            icon: const Icon(Icons.clear),
-                                            onPressed: () {
-                                              _searchController.clear();
-                                              _applyFilters();
-                                            },
-                                          )
-                                        : const SizedBox.shrink();
-                                  },
-                                ),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                              ),
-                            ),
-                          ),
-                          if (isOwner && _currentSubject != null) ...[
-                            const SizedBox(width: 8),
-                            IconButton(
-                              icon: Icon(Icons.add_circle, color: pillarColor, size: 40),
-                              padding: EdgeInsets.zero,
-                              onPressed: () async {
-                                final result = await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => AddCardPage(
-                                      pillarId: pillarId,
-                                      initialSubjectId: _currentSubject!.id,
+                                      onChanged: (val) async {
+                                        if (val != null) {
+                                          setState(() {
+                                            _collectionFilter = val;
+                                            _applyFilters();
+                                          });
+                                          final prefs = await SharedPreferences.getInstance();
+                                          await prefs.setString('last_collection_filter', val);
+                                        }
+                                      },
                                     ),
                                   ),
-                                );
-                                if (result == true) _refreshData();
-                              },
+                                  const SizedBox(width: 8),
+                                ],
+                                SizedBox(
+                                  width: constraints.maxWidth >= 600 ? 160 : 70,
+                                  child: _buildCompactDropdown(
+                                    value: _currentLanguageCode,
+                                    items: Map.fromEntries(
+                                      _langService.activeLanguageCodes.map((l) => MapEntry(
+                                        l, 
+                                        _langService.getLanguageName(l)
+                                      ))
+                                    ),
+                                    selectedLabel: constraints.maxWidth >= 600 
+                                        ? _langService.getLanguageName(_currentLanguageCode)
+                                        : _currentLanguageCode.toUpperCase(),
+                                    matchAnchorWidth: constraints.maxWidth >= 600,
+                                    menuWidth: 160,
+                                    verticalPadding: constraints.maxWidth >= 600 ? 8 : 13,
+                                    onChanged: (val) async {
+                                      if (val != null) {
+                                        await _langService.updateCurrentLanguage(val);
+                                      }
+                                    },
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                Expanded(
+                                  child: TextField(
+                                    controller: _searchController,
+                                    focusNode: _searchFocusNode,
+                                    decoration: InputDecoration(
+                                      hintText: _currentCollection != null ? context.t('search_subjects') : context.t('search_cards'),
+                                      prefixIcon: const Icon(Icons.search),
+                                      isDense: true,
+                                    suffixIcon: _searchController.text.isNotEmpty
+                                        ? IconButton(
+                                            icon: const Icon(Icons.clear),
+                                            onPressed: () {
+                                              _searchController.clear();
+                                              _applyFilters();
+                                            },
+                                          )
+                                        : null,
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(12),
+                                        borderSide: BorderSide(color: pillarColor.withValues(alpha: 0.5)),
+                                      ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(12),
+                                        borderSide: BorderSide(color: pillarColor.withValues(alpha: 0.5)),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(12),
+                                        borderSide: BorderSide(color: pillarColor, width: 2),
+                                      ),
+                                      contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                                      filled: true,
+                                      fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
+                                    ),
+                                    onChanged: (_) => _applyFilters(),
+                                  ),
+                                ),
+                                if (isOwner && _currentSubject != null && !widget.isReadOnly) ...[
+                                  const SizedBox(width: 8),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: pillarColor,
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    child: IconButton(
+                                      icon: const Icon(Icons.add, color: Colors.white),
+                                      onPressed: () async {
+                                        if (!isPremium) {
+                                          Navigator.push(context, MaterialPageRoute(builder: (context) => const PremiumUpgradePage()));
+                                          return;
+                                        }
+                                        final result = await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder:
+                                                (context) => AddCardPage(
+                                                  pillarId: pillarId,
+                                                  initialSubjectId:
+                                                      _currentSubject!.id,
+                                                ),
+                                          ),
+                                        );
+                                        if (result == true) _refreshData();
+                                      },
+                                    ),
+                                  ),
+                                ],
+                                if (!widget.isReadOnly) ...[
+                                  const SizedBox(width: 8),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: pillarColor,
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    child: IconButton(
+                                      icon: const Icon(Icons.tune, color: Colors.white),
+                                      onPressed: () => _showFilterBottomSheet(context, pillarColor),
+                                    ),
+                                  ),
+                                ],
+                              ],
                             ),
-                          ],
                         ],
-                      ),
-                    ],
-                  ],
-                  const SizedBox(height: 24),
-                ],
-              );
-            },
-          ),
-          slivers: [
-            if (_isLoading)
-              const SliverFillRemaining(
-                child: Center(child: CircularProgressIndicator()),
-              )
-            else if (_currentSubject == null && _currentCollection == null)
-              const SliverFillRemaining(
-                child: Center(child: Text('This is a folder. You can use Learn/Test buttons above to practice all cards.')),
-              )
-            else if (_currentCollection != null)
-              if (_filteredSubjects.isEmpty)
+                        const SizedBox(height: 24),
+                      ],
+                    );
+                  },
+                ),
+              ),
+              if (_isLoading)
                 const SliverFillRemaining(
-                  child: Center(child: Text('No subjects found in this collection')),
+                  child: Center(child: CircularProgressIndicator()),
+                )
+              else if (_currentSubject == null && _currentCollection == null)
+                const SliverFillRemaining(
+                  child: Center(
+                    child: Text(
+                      'This is a folder. You can use Learn/Test buttons above to practice all cards.',
+                    ),
+                  ),
+                )
+              else if (_currentCollection != null)
+                if (_filteredSubjects.isEmpty)
+                  const SliverFillRemaining(
+                    child: Center(
+                      child: Text('No subjects found in this collection'),
+                    ),
+                  )
+                else
+                  SliverPadding(
+                    padding: const EdgeInsets.only(bottom: 32),
+                    sliver: SliverList(
+                      delegate: SliverChildBuilderDelegate((context, index) {
+                        final subject = _filteredSubjects[index];
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 16),
+                          child: InkWell(
+                            onTap: () async {
+                              final cards = await _cardService
+                                  .getCardsBySubject(subject.id);
+                              if (context.mounted) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder:
+                                        (context) => SubjectLandingPage(
+                                          subject: subject,
+                                          cards: cards,
+                                          languageCode: _currentLanguageCode,
+                                          isReadOnly: true,
+                                        ),
+                                  ),
+                                );
+                              }
+                            },
+                            borderRadius: BorderRadius.circular(16),
+                            child: Container(
+                              padding: const EdgeInsets.all(20),
+                              decoration: BoxDecoration(
+                                color: Theme.of(context).cardColor,
+                                borderRadius: BorderRadius.circular(16),
+                                border: Border.all(
+                                  color: pillarColor.withValues(alpha: 0.2),
+                                  width: 1.5,
+                                ),
+                              ),
+                              child: Row(
+                                children: [
+                                  if (isOwner && !widget.isReadOnly)
+                                    Checkbox(
+                                      value: _currentCollection!.subjectIds
+                                          .contains(subject.id),
+                                      activeColor: pillarColor,
+                                      onChanged: (val) async {
+                                        if (val == null) return;
+                                        setState(() {
+                                          if (val) {
+                                            _currentCollection!.subjectIds.add(
+                                              subject.id,
+                                            );
+                                          } else {
+                                            _currentCollection!.subjectIds
+                                                .remove(subject.id);
+                                          }
+                                          _hasUpdated = true;
+                                        });
+                                        await _cardService.addCollection(
+                                          _currentCollection!,
+                                          _currentCollection!.subjectIds,
+                                        );
+                                      },
+                                    )
+                                  else
+                                    Icon(Icons.description, color: pillarColor),
+                                  const SizedBox(width: 16),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          subject.getName(_currentLanguageCode),
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18,
+                                          ),
+                                        ),
+                                        Text(
+                                          '${pillars.firstWhere((p) => p.id == subject.pillarId, orElse: () => pillars.first).getTranslatedName(_currentLanguageCode)} • ${subject.cardCount} ${context.plural('card', subject.cardCount)}',
+                                          style: TextStyle(
+                                            color: Colors.grey[600],
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  const Icon(
+                                    Icons.chevron_right,
+                                    color: Colors.grey,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      }, childCount: _filteredSubjects.length),
+                    ),
+                  )
+              else if (_filteredCards.isEmpty)
+                const SliverFillRemaining(
+                  child: Center(child: Text('No cards found')),
                 )
               else
                 SliverPadding(
                   padding: const EdgeInsets.only(bottom: 32),
-                  sliver: SliverList(
+                  sliver: SliverGrid(
+                    gridDelegate:
+                        const SliverGridDelegateWithMaxCrossAxisExtent(
+                          maxCrossAxisExtent: 200,
+                          childAspectRatio: 0.8,
+                          crossAxisSpacing: 16,
+                          mainAxisSpacing: 16,
+                        ),
                     delegate: SliverChildBuilderDelegate((context, index) {
-                      final subject = _filteredSubjects[index];
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 16),
-                        child: InkWell(
-                          onTap: () async {
-                            final cards = await _cardService.getCardsBySubject(subject.id);
-                            if (context.mounted) {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => SubjectLandingPage(
-                                    subject: subject,
-                                    cards: cards,
-                                    languageCode: displayLang,
+                      final card = _filteredCards[index];
+                      final isCardMine =
+                          card.ownerId == _authService.currentUser?.serverId;
+                      final answers = card.getAnswerList(_currentLanguageCode);
+                      final answerText = answers
+                          .map((a) => CardModel.capitalizeFirst(a))
+                          .join(', ');
+
+                      return InkWell(
+                        onTap:
+                            (isCardMine && !widget.isReadOnly)
+                                ? () async {
+                                  await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder:
+                                          (context) => AddCardPage(
+                                            existingCard: card,
+                                            isReadOnly: false,
+                                            pillarId: pillarId,
+                                          ),
+                                    ),
+                                  );
+                                  _refreshData(silent: true);
+                                }
+                                : () => _showZoomedCard(context, index, pillarColor, _currentLanguageCode),
+                        child: Card(
+                          clipBehavior: Clip.antiAlias,
+                          elevation: 2,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              Expanded(
+                                flex: 3,
+                                child: Stack(
+                                  fit: StackFit.expand,
+                                  children: [
+                                    _buildCardPreview(
+                                      card,
+                                      pillarColor,
+                                      _currentLanguageCode,
+                                    ),
+                                    Positioned(
+                                      top: 4,
+                                      right: 4,
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: Colors.black.withValues(alpha: 0.5),
+                                          shape: BoxShape.circle,
+                                        ),
+                                        child: IconButton(
+                                          icon: const Icon(Icons.fullscreen, color: Colors.white, size: 20),
+                                          constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
+                                          padding: EdgeInsets.zero,
+                                          onPressed: () => _showZoomedCard(context, index, pillarColor, _currentLanguageCode),
+                                          tooltip: context.t('zoom') ?? 'Zoom',
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Center(
+                                  child: Text(
+                                    answerText,
+                                    textAlign: TextAlign.center,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 12,
+                                    ),
                                   ),
                                 ),
-                              );
-                            }
-                          },
-                          borderRadius: BorderRadius.circular(16),
-                          child: Container(
-                            padding: const EdgeInsets.all(20),
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).cardColor,
-                              borderRadius: BorderRadius.circular(16),
-                              border: Border.all(color: pillarColor.withValues(alpha: 0.2), width: 1.5),
-                            ),
-                            child: Row(
-                              children: [
-                                if (isOwner)
-                                  Checkbox(
-                                    value: _currentCollection!.subjectIds.contains(subject.id),
-                                    activeColor: pillarColor,
-                                    onChanged: (val) async {
-                                      if (val == null) return;
-                                      setState(() {
-                                        if (val) {
-                                          _currentCollection!.subjectIds.add(subject.id);
-                                        } else {
-                                          _currentCollection!.subjectIds.remove(subject.id);
-                                        }
-                                        _hasUpdated = true;
-                                      });
-                                      await _cardService.addCollection(_currentCollection!, _currentCollection!.subjectIds);
-                                    },
-                                  )
-                                else
-                                  Icon(Icons.description, color: pillarColor),
-                                const SizedBox(width: 16),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        subject.getName(displayLang),
-                                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                                      ),
-                                      Text(
-                                        '${pillars.firstWhere((p) => p.id == subject.pillarId, orElse: () => pillars.first).getTranslatedName(displayLang)} • ${subject.cardCount} ${context.plural('card', subject.cardCount)}',
-                                        style: TextStyle(color: Colors.grey[600], fontSize: 14),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                const Icon(Icons.chevron_right, color: Colors.grey),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
                       );
-                    }, childCount: _filteredSubjects.length),
+                    }, childCount: _filteredCards.length),
                   ),
-                )
-            else if (_filteredCards.isEmpty)
-              const SliverFillRemaining(
-                child: Center(child: Text('No cards found')),
-              )
-            else
-              SliverPadding(
-                padding: const EdgeInsets.only(bottom: 32),
-                sliver: SliverGrid(
-                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: 200,
-                    childAspectRatio: 0.8,
-                    crossAxisSpacing: 16,
-                    mainAxisSpacing: 16,
-                  ),
-                  delegate: SliverChildBuilderDelegate((context, index) {
-                    final card = _filteredCards[index];
-                    final isCardMine = card.ownerId == _authService.currentUser?.serverId;
-                    final answer = card.getAnswer(displayLang);
+                ),
+            ],
+          ),
+        );
+      },
+    );
+  }
 
-                    return InkWell(
-                      onTap: () async {
-                        await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder:
-                                (context) => AddCardPage(
-                                  existingCard: card,
-                                  isReadOnly: !isCardMine,
-                                  pillarId: pillarId,
-                                ),
-                          ),
-                        );
-                        _refreshData(silent: true);
-                      },
-                      child: Card(
-                        clipBehavior: Clip.antiAlias,
-                        elevation: 2,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            Expanded(
-                              flex: 3,
+  void _showZoomedCard(BuildContext context, int initialIndex, Color pillarColor, String displayLang) {
+    PageController pageController = PageController(initialPage: initialIndex);
+    
+    showDialog(
+      context: context,
+      builder: (context) => Dialog(
+        backgroundColor: Colors.transparent,
+        insetPadding: const EdgeInsets.all(16),
+        child: StatefulBuilder(
+          builder: (context, setState) {
+            return Stack(
+              alignment: Alignment.center,
+              children: [
+                Container(
+                  constraints: const BoxConstraints(maxWidth: 500, maxHeight: 600),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).cardColor,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  clipBehavior: Clip.antiAlias,
+                  child: PageView.builder(
+                    controller: pageController,
+                    itemCount: _filteredCards.length,
+                    itemBuilder: (context, index) {
+                      final card = _filteredCards[index];
+                      return Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Flexible(
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
                               child: _buildCardPreview(card, pillarColor, displayLang),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                answer,
-                                textAlign: TextAlign.center,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 12,
-                                ),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.all(20),
+                            width: double.infinity,
+                            color: pillarColor.withValues(alpha: 0.1),
+                            child: Text(
+                              card.getAnswerList(displayLang).map((a) => CardModel.capitalizeFirst(a)).join(', '),
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: pillarColor,
                               ),
                             ),
-                          ],
-                        ),
-                      ),
-                    );
-                  }, childCount: _filteredCards.length),
+                          ),
+                        ],
+                      );
+                    },
+                  ),
                 ),
-              ),
-          ],
+                Positioned(
+                  top: 8,
+                  right: 8,
+                  child: IconButton(
+                    icon: const Icon(Icons.close, color: Colors.grey, size: 30),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                ),
+                // Left Arrow
+                Positioned(
+                  left: 8,
+                  child: IconButton(
+                    icon: const Icon(Icons.chevron_left, color: Colors.white, size: 40),
+                    style: IconButton.styleFrom(backgroundColor: Colors.black.withValues(alpha: 0.5)),
+                    onPressed: () {
+                      if (pageController.page! > 0) {
+                        pageController.previousPage(duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+                      }
+                    },
+                  ),
+                ),
+                // Right Arrow
+                Positioned(
+                  right: 8,
+                  child: IconButton(
+                    icon: const Icon(Icons.chevron_right, color: Colors.white, size: 40),
+                    style: IconButton.styleFrom(backgroundColor: Colors.black.withValues(alpha: 0.5)),
+                    onPressed: () {
+                      if (pageController.page! < _filteredCards.length - 1) {
+                        pageController.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+                      }
+                    },
+                  ),
+                ),
+              ],
+            );
+          }
         ),
-      );
-    },
-  );
-}
+      ),
+    );
+  }
 
-  Widget _buildCardPreview(CardModel card, Color pillarColor, String displayLang) {
-    if (_currentSubject == null && _currentCollection == null) return Container();
+  Widget _buildCardPreview(
+    CardModel card,
+    Color pillarColor,
+    String displayLang,
+  ) {
+    if (_currentSubject == null && _currentCollection == null)
+      return Container();
 
     if (_currentSubject != null) {
       if (_currentSubject!.isNumbers) {
@@ -877,27 +1400,21 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
           iconSize: 18,
         );
       } else if (_currentSubject!.isCounting) {
-        return CountingGrid(
-          count: card.numericalAnswer,
-          iconSize: 24,
+        return CountingGrid(count: card.numericalAnswer, iconSize: 24);
+      } else if (_currentSubject!.isColors && card.hexColor != null) {
+        return ColoredBox(
+          color: Color(int.parse(card.hexColor!.replaceFirst('#', '0xFF'))),
         );
       }
     }
 
     final imageUrl = card.getImageUrls(displayLang).firstOrNull;
     if (imageUrl != null) {
-      return AlioloImage(
-        imageUrl: imageUrl,
-        fit: BoxFit.cover,
-      );
+      return AlioloImage(imageUrl: imageUrl, fit: BoxFit.cover);
     }
     return Container(
-      color: pillarColor.withAlpha(25),
-      child: Icon(
-        Icons.image,
-        size: 32,
-        color: pillarColor,
-      ),
+      color: pillarColor.withValues(alpha: 0.1),
+      child: Icon(Icons.image, size: 32, color: pillarColor),
     );
   }
 
@@ -907,6 +1424,8 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
     required IconData icon,
     required Color color,
     required VoidCallback onTap,
+    bool isPremiumFeature = false,
+    bool isUserPremium = false,
   }) {
     return InkWell(
       onTap: onTap,
@@ -922,14 +1441,55 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
           children: [
             Icon(icon, color: color, size: 28),
             const SizedBox(height: 4),
-            Text(
-              title,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: color.withValues(alpha: 0.9),
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: color.withValues(alpha: 0.9),
+                  ),
+                ),
+                if (isPremiumFeature && !isUserPremium) ...[
+                  const SizedBox(width: 4),
+                  const Icon(
+                    Icons.workspace_premium,
+                    color: Colors.amber,
+                    size: 16,
+                  ),
+                ],
+              ],
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  
+
+  Widget _buildLevelDropdown(int value, ValueChanged<int?> onChanged) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: Colors.grey[300]!),
+      ),
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton<int>(
+          value: value,
+          isDense: true,
+          items:
+              List.generate(20, (i) => i + 1)
+                  .map(
+                    (lv) => DropdownMenuItem(
+                      value: lv,
+                      child: Text('$lv', style: const TextStyle(fontSize: 15)),
+                    ),
+                  )
+                  .toList(),
+          onChanged: onChanged,
         ),
       ),
     );

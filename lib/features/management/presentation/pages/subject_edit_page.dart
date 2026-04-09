@@ -10,8 +10,10 @@ import 'package:aliolo/data/models/collection_model.dart';
 import 'package:aliolo/data/services/card_service.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
-
+import 'package:aliolo/data/services/theme_service.dart';
+import 'package:aliolo/data/services/subscription_service.dart';
 import 'package:aliolo/features/feedback/presentation/pages/feedback_page.dart';
+import 'package:aliolo/features/settings/presentation/pages/premium_upgrade_page.dart';
 
 class SubjectEditPage extends StatefulWidget {
   final SubjectModel? existingSubject;
@@ -80,6 +82,22 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
   @override
   void initState() {
     super.initState();
+
+    // Premium Locking: Redirect if creating new and not premium
+    if (widget.existingSubject == null && widget.existingFolder == null) {
+      final sub = getIt<SubscriptionService>();
+      if (!sub.isPremium) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (mounted) {
+            Navigator.pushReplacement(
+              context, 
+              MaterialPageRoute(builder: (context) => const PremiumUpgradePage())
+            );
+          }
+        });
+      }
+    }
+
     _isFolderMode = widget.isFolderMode || widget.existingFolder != null;
     _selectedPillar = widget.existingSubject?.pillarId ?? widget.existingFolder?.pillarId ?? widget.pillarId ?? 1;
     _isPublic = widget.existingSubject?.isPublic ?? false;
@@ -116,8 +134,13 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
   Future<void> _loadFolders() async {
     final results = await _cardService.getFoldersByPillar(_selectedPillar);
     if (mounted) {
+      final myId = _authService.currentUser?.serverId;
+      const superUserId = 'f2fb4c9c-169b-447d-b8a6-dce72c4ed5ac';
+      
       setState(() {
-        _allFolders = results;
+        _allFolders = results.where((f) => 
+          f.ownerId == myId || f.ownerId == superUserId
+        ).toList();
       });
     }
   }
@@ -206,18 +229,12 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
   }
 
   void _showJsonDialog() {
-    final Map<String, dynamic> data = {
-      'pillarId': _selectedPillar,
-      'isPublic': _isPublic,
-      'ageGroup': _selectedAgeGroup,
-      'type': _selectedType,
-      'localizedData': _drafts.map(
-        (key, value) => MapEntry(key, {
-          if (value.name.isNotEmpty) 'name': value.name,
-          if (value.description.isNotEmpty) 'description': value.description,
-        }),
-      ),
-    };
+    final Map<String, dynamic> data = _drafts.map(
+      (key, value) => MapEntry(key, {
+        if (value.name.isNotEmpty) 'name': value.name,
+        if (value.description.isNotEmpty) 'description': value.description,
+      }),
+    );
 
     final encoder = const JsonEncoder.withIndent('  ');
     final String jsonTemplate = encoder.convert(data);
@@ -289,30 +306,17 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
                               textController.text,
                             );
                             setState(() {
-                              if (parsed['pillarId'] is int) {
-                                _selectedPillar = parsed['pillarId'];
-                              }
-                              if (parsed['isPublic'] is bool) {
-                                _isPublic = parsed['isPublic'];
-                              }
-                              if (parsed['ageGroup'] is String) {
-                                _selectedAgeGroup = parsed['ageGroup'];
-                              }
-                              if (parsed['type'] is String) {
-                                _selectedType = parsed['type'];
-                              }
-                              if (parsed['localizedData'] is Map) {
-                                final locData = parsed['localizedData'] as Map;
-                                locData.forEach((lang, val) {
-                                  final l = lang.toString().toLowerCase();
-                                  _ensureDraftExists(l);
+                              parsed.forEach((lang, val) {
+                                final l = lang.toString().toLowerCase();
+                                _ensureDraftExists(l);
+                                if (val is Map) {
                                   final d = val as Map<String, dynamic>;
-                                  _drafts[l]!.name = d['name'] ?? '';
+                                  _drafts[l]!.name = d['name']?.toString() ?? '';
                                   _drafts[l]!.description =
-                                      d['description'] ?? '';
-                                });
-                                _updateControllers();
-                              }
+                                      d['description']?.toString() ?? '';
+                                }
+                              });
+                              _updateControllers();
                             });
                             Navigator.pop(context);
                           } catch (e) {
@@ -334,7 +338,7 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
               return Dialog.fullscreen(
                 child: Scaffold(
                   appBar: AppBar(
-                    title: const Text('JSON Data'),
+                    title: const Text('Localized Data'),
                     automaticallyImplyLeading: false,
                     actions: [
                       IconButton(
@@ -354,7 +358,7 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
             return AlertDialog(
               title: Row(
                 children: [
-                  const Text('JSON Data'),
+                  const Text('Localized Data'),
                   const Spacer(),
                   IconButton(
                     icon: const Icon(Icons.close),
@@ -382,13 +386,13 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
       final lang = entry.key;
       final draft = entry.value;
 
-      if (lang != 'global' && draft.name.isEmpty && draft.description.isEmpty) {
+      if (lang != 'global' && draft.name.isEmpty && (!_isFolderMode && draft.description.isEmpty)) {
         continue;
       }
 
       finalData[lang] = LocalizedSubjectData(
         name: draft.name.isEmpty ? null : draft.name,
-        description: draft.description.isEmpty ? null : draft.description,
+        description: (_isFolderMode || draft.description.isEmpty) ? null : draft.description,
       );
     }
 
@@ -441,6 +445,13 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
           localizedData: finalData,
         );
         await _cardService.addFolder(folder);
+        
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(context.t('save_success') ?? 'Saved successfully')),
+          );
+          Navigator.pop(context, true);
+        }
       } else if (_selectedType == 'collection') {
         final collectionId = widget.existingSubject?.id ?? _cardService.generateId();
         final collection = CollectionModel(
@@ -454,9 +465,21 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
           subjectIds: _linkedSubjectIds,
           isPublic: _isPublic,
           folderId: _selectedFolderId,
-          isOnDashboard: widget.existingSubject?.isOnDashboard ?? false,
+          isOnDashboard: widget.existingSubject?.isOnDashboard ?? true,
         );
         await _cardService.addCollection(collection, _linkedSubjectIds);
+
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(context.t('save_success') ?? 'Saved successfully')),
+          );
+          // If it's a new collection, return the object so we can navigate to it
+          if (widget.existingSubject == null) {
+            Navigator.pop(context, collection);
+          } else {
+            Navigator.pop(context, true);
+          }
+        }
       } else {
         final subjectId = widget.existingSubject?.id ?? _cardService.generateId();
         final subject = SubjectModel(
@@ -480,13 +503,18 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
           linkedSubjectIds: [],
         );
         await _cardService.addSubject(subject);
-      }
-      
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(context.t('save_success') ?? 'Saved successfully')),
-        );
-        Navigator.pop(context, true);
+
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(context.t('save_success') ?? 'Saved successfully')),
+          );
+          // If it's a new subject, return the object so we can navigate to it
+          if (widget.existingSubject == null) {
+            Navigator.pop(context, subject);
+          } else {
+            Navigator.pop(context, true);
+          }
+        }
       }
     } catch (e) {
       if (mounted) {
@@ -639,7 +667,7 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
                       final items = [
                         DropdownMenuItem<String?>(
                           value: null,
-                          child: Text(context.t('no_folder')),
+                          child: const Text(''),
                         ),
                         ..._allFolders.map((f) => DropdownMenuItem(
                           value: f.id,
@@ -714,17 +742,19 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
           ),
           enabled: isOwner,
         ),
-        const SizedBox(height: 16),
-        TextFormField(
-          controller: _descriptionController,
-          onChanged: (v) => draft.description = v,
-          decoration: InputDecoration(
-            labelText: context.t('description'),
-            border: const OutlineInputBorder(),
+        if (!_isFolderMode) ...[
+          const SizedBox(height: 16),
+          TextFormField(
+            controller: _descriptionController,
+            onChanged: (v) => draft.description = v,
+            decoration: InputDecoration(
+              labelText: context.t('description'),
+              border: const OutlineInputBorder(),
+            ),
+            maxLines: 2,
+            enabled: isOwner,
           ),
-          maxLines: 2,
-          enabled: isOwner,
-        ),
+        ],
         const SizedBox(height: 48),
       ],
     );
@@ -733,7 +763,8 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
   bool _hasUnsavedChanges() {
     if (widget.existingSubject == null && widget.existingFolder == null) {
       for (var draft in _drafts.values) {
-        if (draft.name.isNotEmpty || draft.description.isNotEmpty) return true;
+        if (draft.name.isNotEmpty) return true;
+        if (!_isFolderMode && draft.description.isNotEmpty) return true;
       }
       return false;
     }
@@ -743,8 +774,7 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
       if (_selectedPillar != original.pillarId) return true;
       final allLangs = {...original.localizedData.keys, ..._drafts.keys};
       for (var lang in allLangs) {
-        if ((_drafts[lang]?.name ?? '') != (original.localizedData[lang]?.name ?? '') || 
-            (_drafts[lang]?.description ?? '') != (original.localizedData[lang]?.description ?? '')) return true;
+        if ((_drafts[lang]?.name ?? '') != (original.localizedData[lang]?.name ?? '')) return true;
       }
       return false;
     }
@@ -797,7 +827,8 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
       (p) => p.id == _selectedPillar,
       orElse: () => pillars.first,
     );
-    final currentSessionColor = pillar.getColor();
+    final isDarkMode = getIt<ThemeService>().isDarkMode;
+    final currentSessionColor = pillar.getColor(isDarkMode);
     final isOwner =
         (widget.existingSubject == null && widget.existingFolder == null) ||
         widget.existingSubject?.ownerId == _authService.currentUser?.serverId ||
@@ -814,57 +845,100 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
           Navigator.pop(context);
         }
       },
-      child: AlioloScrollablePage(
-        title: Text(
-          _isFolderMode
-              ? (widget.existingFolder == null ? context.t('add_folder') : context.t('edit_folder'))
-              : _selectedType == 'collection'
-                  ? (widget.existingSubject == null ? context.t('add_collection') : context.t('edit_collection'))
-                  : (widget.existingSubject == null ? context.t('add_subject') : context.t('edit_subject')),
-          style: const TextStyle(color: appBarColor),
-        ),
-        appBarColor: currentSessionColor,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.arrow_back, color: appBarColor),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final isSmallScreen = constraints.maxWidth < 600;
+
+          final backAction = IconButton(
+            tooltip: context.t('back'),
+            icon: const Icon(Icons.arrow_back),
             onPressed: () async {
               final shouldPop = await _onWillPop();
               if (shouldPop && context.mounted) {
                 Navigator.pop(context);
               }
             },
-          ),
-          if (isOwner)
-            IconButton(
-              icon:
-                  _isSaving
-                      ? const SizedBox(
-                        width: 20,
-                        height: 20,
-                        child: CircularProgressIndicator(
-                          color: appBarColor,
-                          strokeWidth: 2,
-                        ),
-                      )
-                      : const Icon(Icons.save, color: appBarColor),
-              onPressed: _isSaving ? null : _save,
-            ),
-          if (isOwner)
-            IconButton(
-              icon: const Icon(Icons.data_object, color: appBarColor),
-              onPressed: _showJsonDialog,
-            ),
-          if (isOwner && (widget.existingSubject != null || widget.existingFolder != null))
-            IconButton(
-              icon: const Icon(Icons.delete, color: appBarColor),
-              onPressed: () async {
-                if (_isFolderMode) {
+          );
+
+          final saveAction = isOwner
+              ? IconButton(
+                tooltip: context.t('save'),
+                icon: _isSaving
+                    ? const SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator(
+                        color: appBarColor,
+                        strokeWidth: 2,
+                      ),
+                    )
+                    : const Icon(Icons.save),
+                onPressed: _isSaving ? null : _save,
+              )
+              : null;
+
+          final jsonAction = isOwner
+              ? IconButton(
+                tooltip: 'JSON',
+                icon: const Icon(Icons.data_object),
+                onPressed: _showJsonDialog,
+              )
+              : null;
+
+          final deleteAction = (isOwner && (widget.existingSubject != null || widget.existingFolder != null))
+              ? IconButton(
+                tooltip: context.t('delete'),
+                icon: const Icon(Icons.delete),
+                onPressed: () async {
+                  if (_isFolderMode) {
+                    final confirmed = await showDialog<bool>(
+                      context: context,
+                      builder:
+                          (context) => AlertDialog(
+                            title: Text(context.t('delete_folder')),
+                            content: const Text('Are you sure you want to delete this folder?'),
+                            actions: [
+                              TextButton(
+                                onPressed: () => Navigator.pop(context, false),
+                                child: Text(context.t('cancel')),
+                              ),
+                              TextButton(
+                                onPressed: () => Navigator.pop(context, true),
+                                style: TextButton.styleFrom(
+                                  foregroundColor: Colors.red,
+                                ),
+                                child: Text(context.t('delete')),
+                              ),
+                            ],
+                          ),
+                    );
+                    if (confirmed == true && mounted) {
+                      try {
+                        await _cardService.deleteFolder(widget.existingFolder!.id);
+                        if (mounted) Navigator.pop(context, true);
+                      } catch (e) {
+                        if (e.toString().contains('folder_not_empty') && mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(context.t('folder_not_empty_msg') ?? 'Cannot delete folder: it is not empty')));
+                        }
+                      }
+                    }
+                    return;
+                  }
+
+                  final isCollection = _selectedType == 'collection';
+                  final cardCount = widget.existingSubject?.cardCount ?? 0;
                   final confirmed = await showDialog<bool>(
                     context: context,
                     builder:
                         (context) => AlertDialog(
-                          title: Text(context.t('delete_folder')),
-                          content: const Text('Are you sure you want to delete this folder?'),
+                          title: Text(isCollection ? context.t('delete_collection') : context.t('delete_subject')),
+                          content: Text(
+                            isCollection
+                                ? context.t('delete_collection_confirm')
+                                : (cardCount > 0
+                                    ? 'This subject contains $cardCount ${context.plural('card', cardCount)}. Deleting it will permanently remove all of them.'
+                                    : 'Delete this subject?'),
+                          ),
                           actions: [
                             TextButton(
                               onPressed: () => Navigator.pop(context, false),
@@ -881,98 +955,89 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
                         ),
                   );
                   if (confirmed == true && mounted) {
-                    try {
-                      await _cardService.deleteFolder(widget.existingFolder!.id);
-                      if (mounted) Navigator.pop(context, true);
-                    } catch (e) {
-                      if (e.toString().contains('folder_not_empty') && mounted) {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(context.t('folder_not_empty_msg') ?? 'Cannot delete folder: it is not empty')));
-                      }
+                    if (isCollection) {
+                      await _cardService.deleteCollection(widget.existingSubject!.id);
+                    } else {
+                      await _cardService.deleteSubjectById(widget.existingSubject!.id);
+                    }
+                    if (mounted) {
+                      Navigator.pop(context);
+                      Navigator.pop(context, true);
                     }
                   }
-                  return;
-                }
+                },
+              )
+              : null;
 
-                final isCollection = _selectedType == 'collection';
-                final cardCount = widget.existingSubject!.cardCount;
-                final confirmed = await showDialog<bool>(
-                  context: context,
-                  builder:
-                      (context) => AlertDialog(
-                        title: Text(isCollection ? context.t('delete_collection') : context.t('delete_subject')),
-                        content: Text(
-                          isCollection
-                              ? context.t('delete_collection_confirm')
-                              : (cardCount > 0
-                                  ? 'This subject contains $cardCount ${context.plural('card', cardCount)}. Deleting it will permanently remove all of them.'
-                                  : 'Delete this subject?'),
-                        ),
-                        actions: [
-                          TextButton(
-                            onPressed: () => Navigator.pop(context, false),
-                            child: Text(context.t('cancel')),
+          final feedbackAction = (widget.existingSubject != null || widget.existingFolder != null)
+              ? IconButton(
+                tooltip: context.t('feedback'),
+                icon: const Icon(Icons.feedback),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder:
+                          (context) => FeedbackPage(
+                            subjectId: widget.existingSubject?.id,
+                            folderId: widget.existingFolder?.id,
+                            contextTitle:
+                                _isFolderMode 
+                                  ? widget.existingFolder!.getName(currentLang)
+                                  : widget.existingSubject!.getName(currentLang),
+                            appBarColor: currentSessionColor,
                           ),
-                          TextButton(
-                            onPressed: () => Navigator.pop(context, true),
-                            style: TextButton.styleFrom(
-                              foregroundColor: Colors.red,
-                            ),
-                            child: Text(context.t('delete')),
-                          ),
-                        ],
-                      ),
-                );
-                if (confirmed == true && mounted) {
-                  if (isCollection) {
-                    await _cardService.deleteCollection(widget.existingSubject!.id);
-                  } else {
-                    await _cardService.deleteSubjectById(widget.existingSubject!.id);
-                  }
-                  if (mounted) {
-                    Navigator.pop(context);
-                    Navigator.pop(context, true);
-                  }
-                }
-              },
+                    ),
+                  );
+                },
+              )
+              : null;
+
+          return AlioloScrollablePage(
+            title: Text(
+              _isFolderMode
+                  ? (widget.existingFolder == null ? context.t('add_folder') : context.t('edit_folder'))
+                  : _selectedType == 'collection'
+                      ? (widget.existingSubject == null ? context.t('add_collection') : context.t('edit_collection'))
+                      : (widget.existingSubject == null ? context.t('add_subject') : context.t('edit_subject')),
+              style: const TextStyle(color: appBarColor),
             ),
-          if (widget.existingSubject != null || widget.existingFolder != null)
-            IconButton(
-              icon: const Icon(Icons.feedback, color: appBarColor),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder:
-                        (context) => FeedbackPage(
-                          subjectId: widget.existingSubject?.id,
-                          folderId: widget.existingFolder?.id,
-                          contextTitle:
-                              _isFolderMode 
-                                ? widget.existingFolder!.getName(currentLang)
-                                : widget.existingSubject!.getName(currentLang),
-                          appBarColor: currentSessionColor,
-                        ),
-                  ),
-                );
-              },
-            ),
-        ],
-        fixedBody: KeyboardListener(
+            appBarColor: currentSessionColor,
+            actions: isSmallScreen 
+                ? [
+                    backAction,
+                    if (saveAction != null) saveAction,
+                  ]
+                : [
+                    backAction,
+                    if (saveAction != null) saveAction,
+                    if (jsonAction != null) jsonAction,
+                    if (deleteAction != null) deleteAction,
+                    if (feedbackAction != null) feedbackAction,
+                  ],
+            overflowActions: isSmallScreen
+                ? [
+                    if (jsonAction != null) jsonAction,
+                    if (deleteAction != null) deleteAction,
+                    if (feedbackAction != null) feedbackAction,
+                  ]
+                : null,
+            body: KeyboardListener(
           focusNode: _keyboardFocusNode,
           autofocus: true,
           onKeyEvent: _onKeyEvent,
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              final availableWidth = constraints.maxWidth - 32;
-              final items = (availableWidth + 8) ~/ 62;
-              _itemsPerRow = items > 0 ? items : 1;
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              LayoutBuilder(
+                builder: (context, constraints) {
+                  final availableWidth = constraints.maxWidth - 32;
+                  final items = (availableWidth + 8) ~/ 62;
+                  _itemsPerRow = items > 0 ? items : 1;
 
-              return Padding(
-                padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Wrap(
+                  return Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+                    child: Wrap(
                       spacing: 8,
                       runSpacing: 8,
                       children: [
@@ -996,25 +1061,28 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
                               TranslationService().getLanguageName(code),
                             );
                           });
-                        })(),                      ],
+                        })(),
+                      ],
                     ),
-                    const SizedBox(height: 32),
-                  ],
+                  );
+                },
+              ),
+              const SizedBox(height: 32),
+              Form(
+                key: _formKey,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: _buildEditor(),
                 ),
-              );
-            },
+              ),
+            ],
           ),
         ),
-        body: Form(
-          key: _formKey,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: _buildEditor(),
-          ),
-        ),
-      ),
-    );
-  }
+      );
+    },
+  ),
+);
+}
 
   Widget _buildSectionCaption(String label) {
     return Text(

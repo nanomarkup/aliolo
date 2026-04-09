@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:aliolo/core/widgets/window_controls.dart';
 import 'package:aliolo/features/settings/presentation/pages/licenses_page.dart';
-import 'package:aliolo/features/onboarding/presentation/pages/onboarding_page.dart';
+import 'package:aliolo/src/onboarding/onboarding_screen.dart';
 
 class AboutPage extends StatefulWidget {
   const AboutPage({super.key});
@@ -17,50 +19,35 @@ class AboutPage extends StatefulWidget {
 }
 
 class _AboutPageState extends State<AboutPage> {
-  String _version = '1.0.0';
+  String _version = '...';
 
   @override
   void initState() {
     super.initState();
-    HardwareKeyboard.instance.addHandler(_handleGlobalKeyEvent);
-    _loadPackageInfo();
+    _loadVersion();
   }
 
-  @override
-  void dispose() {
-    HardwareKeyboard.instance.removeHandler(_handleGlobalKeyEvent);
-    super.dispose();
-  }
-
-  bool _handleGlobalKeyEvent(KeyEvent event) {
-    if (!ModalRoute.of(context)!.isCurrent) return false;
-    if (event is KeyDownEvent &&
-        event.logicalKey == LogicalKeyboardKey.escape) {
-      if (mounted) Navigator.pop(context);
-      return true;
-    }
-    return false;
-  }
-
-  Future<void> _loadPackageInfo() async {
+  Future<void> _loadVersion() async {
     final info = await PackageInfo.fromPlatform();
-    setState(() {
-      _version = info.version;
-    });
+    if (mounted) {
+      setState(() {
+        _version = info.version;
+      });
+    }
   }
 
-  Widget _buildSectionTitle(BuildContext context, String title) {
+  Widget _buildSectionTitle(BuildContext context, String title, Color color) {
     return Padding(
       padding: const EdgeInsets.only(top: 32, bottom: 20),
       child: Row(
         children: [
           Text(
             title,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w900,
               letterSpacing: 2.0,
-              color: Colors.orange,
+              color: color,
             ),
           ),
           const SizedBox(width: 16),
@@ -75,6 +62,7 @@ class _AboutPageState extends State<AboutPage> {
     IconData icon,
     String title,
     String description,
+    Color color,
   ) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return Padding(
@@ -82,7 +70,7 @@ class _AboutPageState extends State<AboutPage> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, size: 28, color: Colors.orange),
+          Icon(icon, size: 28, color: color),
           const SizedBox(width: 20),
           Expanded(
             child: Column(
@@ -90,9 +78,10 @@ class _AboutPageState extends State<AboutPage> {
               children: [
                 Text(
                   title,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
+                    color: color,
                   ),
                 ),
                 const SizedBox(height: 6),
@@ -114,14 +103,27 @@ class _AboutPageState extends State<AboutPage> {
 
   @override
   Widget build(BuildContext context) {
-    final currentPrimaryColor = ThemeService().primaryColor;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final themeService = getIt<ThemeService>();
 
     return ListenableBuilder(
-      listenable: TranslationService(),
+      listenable: Listenable.merge([TranslationService(), themeService]),
       builder: (context, _) {
-        return Scaffold(
-          body: LayoutBuilder(
+        final mainColor = themeService.getSystemColor(Brightness.light);
+
+        return Theme(
+          data: ThemeData(
+            useMaterial3: true,
+            brightness: Brightness.light,
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: mainColor,
+              brightness: Brightness.light,
+            ),
+            scaffoldBackgroundColor: const Color(0xFFF1F5F9),
+            fontFamily: 'Roboto',
+          ),
+          child: Scaffold(
+            backgroundColor: const Color(0xFFF1F5F9),
+            body: LayoutBuilder(
             builder: (context, constraints) {
               final isMobile = constraints.maxWidth < 800;
 
@@ -133,119 +135,112 @@ class _AboutPageState extends State<AboutPage> {
                         children: [
                           const SizedBox(height: 60),
                           // Brand Section (Mobile)
-                          const Icon(Icons.school, size: 80, color: Colors.orange),
-                          const SizedBox(height: 12),
-                          const Text(
-                            'Aliolo',
-                            style: TextStyle(
-                              fontSize: 40,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.orange,
-                            ),
+                          Image.asset(
+                            'assets/app_icon.png',
+                            height: 120,
+                            fit: BoxFit.contain,
                           ),
-                          const SizedBox(height: 8),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 10,
-                              vertical: 4,
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.amber,
-                              borderRadius: BorderRadius.circular(6),
-                            ),
-                            child: Text(
-                              context.t('pro_label'),
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                                letterSpacing: 1.1,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            '${context.t('version')} $_version',
-                            style: const TextStyle(fontSize: 14, color: Colors.grey),
-                          ),
-
-                          // Features Section (Mobile)
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+                          Transform.translate(
+                            offset: const Offset(0, -14),
                             child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  context.t('our_mission'),
-                                  style: const TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w900,
-                                    letterSpacing: 2.0,
-                                    color: Colors.orange,
+                                  'aliolo',
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 72,
+                                    fontWeight: FontWeight.w500,
+                                    color: mainColor,
+                                    letterSpacing: 4.0,
                                   ),
                                 ),
-                                const SizedBox(height: 16),
+                                Transform.translate(
+                                  offset: const Offset(0, -16),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                                    child: Text(
+                                      context.t('about_tagline'),
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.roboto(
+                                        fontSize: 14,
+                                        color: mainColor,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 12),
+                          Text(
+                            '${context.t('version')} $_version',
+                            style: TextStyle(fontSize: 14, color: mainColor.withValues(alpha: 0.7)),
+                          ),
+                          const SizedBox(height: 16),
+                          Padding(
+                            padding: const EdgeInsets.all(24.0),
+                            child: Column(
+                              children: [
+                                _buildSectionTitle(context, context.t('our_mission'), mainColor),
                                 Text(
                                   context.t('mission_desc'),
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    color: isDark ? Colors.grey.shade200 : Colors.grey.shade900,
-                                    fontWeight: FontWeight.w600,
-                                    height: 1.4,
-                                  ),
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(fontSize: 16, height: 1.6),
                                 ),
-                                _buildSectionTitle(context, context.t('core_features')),
-                                _buildInfoRow(context, Icons.play_circle_fill, context.t('feat_multimedia_title'), context.t('feat_multimedia_desc')),
-                                _buildInfoRow(context, Icons.family_restroom, context.t('feat_ages_title'), context.t('feat_ages_desc')),
-                                _buildInfoRow(context, Icons.military_tech, context.t('feat_gamified_title'), context.t('feat_gamified_desc')),
-
-                                _buildSectionTitle(context, context.t('the_science')),
-                                _buildInfoRow(context, Icons.auto_graph, context.t('feat_science_spacing_title'), context.t('feat_science_spacing_desc')),
-                                _buildInfoRow(context, Icons.insights, context.t('feat_science_adaptive_title'), context.t('feat_science_adaptive_desc')),
-
-                                _buildSectionTitle(context, context.t('trust_privacy')),
-                                _buildInfoRow(context, Icons.cloud_done, context.t('trust_cloud_title'), context.t('trust_cloud_desc')),
-                                _buildInfoRow(context, Icons.sync_lock, context.t('trust_sync_title'), context.t('trust_sync_desc')),
+                                _buildSectionTitle(context, context.t('core_features'), mainColor),
+                                _buildInfoRow(context, Icons.collections, context.t('feat_multimedia_title'), context.t('feat_multimedia_desc'), mainColor),
+                                _buildInfoRow(context, Icons.add_circle_outline, context.t('feat_create_share_title'), context.t('feat_create_share_desc'), mainColor),
+                                _buildInfoRow(context, Icons.play_circle_outline, context.t('feat_autoplay_title'), context.t('feat_autoplay_desc'), mainColor),
+                                _buildInfoRow(context, Icons.child_care, context.t('feat_ages_title'), context.t('feat_ages_desc'), mainColor),
+                                _buildInfoRow(context, Icons.emoji_events, context.t('feat_gamified_title'), context.t('feat_gamified_desc'), mainColor),
+                                
+                                _buildSectionTitle(context, context.t('the_science'), mainColor),
+                                _buildInfoRow(context, Icons.psychology, context.t('feat_science_spacing_title'), context.t('feat_science_spacing_desc'), mainColor),
+                                _buildInfoRow(context, Icons.auto_graph, context.t('feat_science_smart_review_title'), context.t('feat_science_smart_review_desc'), mainColor),
+                                
+                                _buildSectionTitle(context, context.t('trust_privacy'), mainColor),
+                                _buildInfoRow(context, Icons.sync, context.t('trust_ecosystem_title'), context.t('trust_ecosystem_desc'), mainColor),
+                                _buildInfoRow(context, Icons.sync_lock, context.t('trust_sync_title'), context.t('trust_sync_desc'), mainColor),
 
                                 const SizedBox(height: 32),
-                                // Buttons (Mobile)
+                                // Buttons
                                 OutlinedButton.icon(
-                                  onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const CustomLicensesPage())),
-                                  icon: const Icon(Icons.description_outlined),
-                                  label: Text(context.t('licenses')),
+                                  onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const OnboardingScreen())),
+                                  icon: Icon(Icons.auto_awesome, color: mainColor),
+                                  label: Text(context.t('view_onboarding')),
                                   style: OutlinedButton.styleFrom(
                                     minimumSize: const Size(double.infinity, 50),
-                                    foregroundColor: Colors.orange,
-                                    side: const BorderSide(color: Colors.orange),
+                                    foregroundColor: mainColor,
+                                    side: BorderSide(color: mainColor),
                                   ),
                                 ),
                                 const SizedBox(height: 12),
                                 OutlinedButton.icon(
-                                  onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const OnboardingPage())),
-                                  icon: const Icon(Icons.auto_awesome),
-                                  label: Text(context.t('view_onboarding')),
+                                  onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const CustomLicensesPage())),
+                                  icon: Icon(Icons.description_outlined, color: mainColor),
+                                  label: Text(context.t('licenses')),
                                   style: OutlinedButton.styleFrom(
                                     minimumSize: const Size(double.infinity, 50),
-                                    foregroundColor: Colors.orange,
-                                    side: const BorderSide(color: Colors.orange),
+                                    foregroundColor: mainColor,
+                                    side: BorderSide(color: mainColor),
                                   ),
                                 ),
                                 const SizedBox(height: 12),
                                 OutlinedButton.icon(
                                   onPressed: () => Navigator.pop(context),
-                                  icon: const Icon(Icons.arrow_back),
+                                  icon: Icon(Icons.arrow_back, color: mainColor),
                                   label: Text(context.t('back')),
                                   style: OutlinedButton.styleFrom(
                                     minimumSize: const Size(double.infinity, 50),
-                                    foregroundColor: Colors.orange,
-                                    side: const BorderSide(color: Colors.orange),
+                                    foregroundColor: mainColor,
+                                    side: BorderSide(color: mainColor),
                                   ),
                                 ),
                                 const SizedBox(height: 32),
                                 Center(
                                   child: Text(
                                     context.t('all_rights_reserved'),
-                                    style: const TextStyle(fontSize: 12, color: Colors.grey),
+                                    style: TextStyle(fontSize: 12, color: mainColor.withValues(alpha: 0.7)),
                                   ),
                                 ),
                                 const SizedBox(height: 40),
@@ -260,7 +255,7 @@ class _AboutPageState extends State<AboutPage> {
                       top: 12,
                       left: 12,
                       child: IconButton(
-                        icon: const Icon(Icons.arrow_back, color: Colors.orange),
+                        icon: Icon(Icons.arrow_back, color: mainColor),
                         onPressed: () => Navigator.pop(context),
                       ),
                     ),
@@ -274,7 +269,7 @@ class _AboutPageState extends State<AboutPage> {
                             WindowControls(
                               onlyClose: true,
                               showSeparator: false,
-                              color: currentPrimaryColor,
+                              color: mainColor,
                               iconSize: 28,
                               padding: false,
                             ),
@@ -311,49 +306,74 @@ class _AboutPageState extends State<AboutPage> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 const Spacer(flex: 3),
-                                const Icon(
-                                  Icons.school,
-                                  size: 100,
-                                  color: Colors.orange,
+                                Image.asset(
+                                  'assets/app_icon.png',
+                                  height: 150,
+                                  fit: BoxFit.contain,
+                                ),
+                                Transform.translate(
+                                  offset: const Offset(0, -20),
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        'aliolo',
+                                        style: GoogleFonts.poppins(
+                                          fontSize: 80,
+                                          fontWeight: FontWeight.w500,
+                                          color: mainColor,
+                                          letterSpacing: 4.0,
+                                        ),
+                                      ),
+                                      Transform.translate(
+                                        offset: const Offset(0, -24),
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(horizontal: 24),
+                                          child: Text(
+                                            context.t('about_tagline'),
+                                            textAlign: TextAlign.center,
+                                            style: GoogleFonts.roboto(
+                                              fontSize: 14,
+                                              color: mainColor,
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                                 const SizedBox(height: 16),
-                                const Text(
-                                  'Aliolo',
-                                  style: TextStyle(
-                                    fontSize: 48,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.orange,
-                                  ),
-                                ),
-                                const SizedBox(height: 8),
-                                Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 12,
-                                    vertical: 6,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: Colors.amber,
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  child: Text(
-                                    context.t('pro_label'),
-                                    style: const TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black,
-                                      letterSpacing: 1.2,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(height: 12),
                                 Text(
                                   '${context.t('version')} $_version',
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontSize: 16,
-                                    color: Colors.grey,
+                                    color: mainColor.withValues(alpha: 0.7),
                                   ),
                                 ),
                                 const SizedBox(height: 48),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 24.0,
+                                  ),
+                                  child: OutlinedButton.icon(
+                                    onPressed:
+                                        () => Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder:
+                                                (context) => const OnboardingScreen(),
+                                          ),
+                                        ),
+                                    icon: Icon(Icons.auto_awesome, color: mainColor),
+                                    label: Text(context.t('view_onboarding')),
+                                    style: OutlinedButton.styleFrom(
+                                      minimumSize: const Size(double.infinity, 50),
+                                      foregroundColor: mainColor,
+                                      side: BorderSide(color: mainColor),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 16),
                                 Padding(
                                   padding: const EdgeInsets.symmetric(
                                     horizontal: 24.0,
@@ -368,35 +388,12 @@ class _AboutPageState extends State<AboutPage> {
                                                     const CustomLicensesPage(),
                                           ),
                                         ),
-                                    icon: const Icon(Icons.description_outlined),
+                                    icon: Icon(Icons.description_outlined, color: mainColor),
                                     label: Text(context.t('licenses')),
                                     style: OutlinedButton.styleFrom(
                                       minimumSize: const Size(double.infinity, 50),
-                                      foregroundColor: Colors.orange,
-                                      side: const BorderSide(color: Colors.orange),
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(height: 16),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 24.0,
-                                  ),
-                                  child: OutlinedButton.icon(
-                                    onPressed:
-                                        () => Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder:
-                                                (context) => const OnboardingPage(),
-                                          ),
-                                        ),
-                                    icon: const Icon(Icons.auto_awesome),
-                                    label: Text(context.t('view_onboarding')),
-                                    style: OutlinedButton.styleFrom(
-                                      minimumSize: const Size(double.infinity, 50),
-                                      foregroundColor: Colors.orange,
-                                      side: const BorderSide(color: Colors.orange),
+                                      foregroundColor: mainColor,
+                                      side: BorderSide(color: mainColor),
                                     ),
                                   ),
                                 ),
@@ -407,21 +404,21 @@ class _AboutPageState extends State<AboutPage> {
                                   ),
                                   child: OutlinedButton.icon(
                                     onPressed: () => Navigator.pop(context),
-                                    icon: const Icon(Icons.arrow_back),
+                                    icon: Icon(Icons.arrow_back, color: mainColor),
                                     label: Text(context.t('back')),
                                     style: OutlinedButton.styleFrom(
                                       minimumSize: const Size(double.infinity, 50),
-                                      foregroundColor: Colors.orange,
-                                      side: const BorderSide(color: Colors.orange),
+                                      foregroundColor: mainColor,
+                                      side: BorderSide(color: mainColor),
                                     ),
                                   ),
                                 ),
-                                const Spacer(flex: 2),
+                                const Spacer(flex: 4),
                                 Text(
                                   context.t('all_rights_reserved'),
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontSize: 12,
-                                    color: Colors.grey,
+                                    color: mainColor.withValues(alpha: 0.7),
                                   ),
                                 ),
                                 const SizedBox(height: 24),
@@ -430,96 +427,33 @@ class _AboutPageState extends State<AboutPage> {
                           ),
                         ),
                       ),
-                      // Right side: Features & Details
+                      // Right side: Content
                       Expanded(
                         child: SingleChildScrollView(
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(64, 48, 64, 64),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  context.t('our_mission'),
-                                  style: const TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w900,
-                                    letterSpacing: 2.0,
-                                    color: Colors.orange,
-                                  ),
-                                ),
-                                const SizedBox(height: 24),
-                                Text(
-                                  context.t('mission_desc'),
-                                  style: TextStyle(
-                                    fontSize: 22,
-                                    color:
-                                        isDark
-                                            ? Colors.grey.shade200
-                                            : Colors.grey.shade900,
-                                    fontWeight: FontWeight.w600,
-                                    height: 1.4,
-                                  ),
-                                ),
-
-                                _buildSectionTitle(
-                                  context,
-                                  context.t('core_features'),
-                                ),
-                                _buildInfoRow(
-                                  context,
-                                  Icons.play_circle_fill,
-                                  context.t('feat_multimedia_title'),
-                                  context.t('feat_multimedia_desc'),
-                                ),
-                                _buildInfoRow(
-                                  context,
-                                  Icons.family_restroom,
-                                  context.t('feat_ages_title'),
-                                  context.t('feat_ages_desc'),
-                                ),
-                                _buildInfoRow(
-                                  context,
-                                  Icons.military_tech,
-                                  context.t('feat_gamified_title'),
-                                  context.t('feat_gamified_desc'),
-                                ),
-
-                                _buildSectionTitle(
-                                  context,
-                                  context.t('the_science'),
-                                ),
-                                _buildInfoRow(
-                                  context,
-                                  Icons.auto_graph,
-                                  context.t('feat_science_spacing_title'),
-                                  context.t('feat_science_spacing_desc'),
-                                ),
-                                _buildInfoRow(
-                                  context,
-                                  Icons.insights,
-                                  context.t('feat_science_adaptive_title'),
-                                  context.t('feat_science_adaptive_desc'),
-                                ),
-
-                                _buildSectionTitle(
-                                  context,
-                                  context.t('trust_privacy'),
-                                ),
-                                _buildInfoRow(
-                                  context,
-                                  Icons.cloud_done,
-                                  context.t('trust_cloud_title'),
-                                  context.t('trust_cloud_desc'),
-                                ),
-                                _buildInfoRow(
-                                  context,
-                                  Icons.sync_lock,
-                                  context.t('trust_sync_title'),
-                                  context.t('trust_sync_desc'),
-                                ),
-                                const SizedBox(height: 48),
-                              ],
-                            ),
+                          padding: const EdgeInsets.all(48),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              _buildSectionTitle(context, context.t('our_mission'), mainColor),
+                              Text(
+                                context.t('mission_desc'),
+                                style: const TextStyle(fontSize: 18, height: 1.6),
+                              ),
+                              _buildSectionTitle(context, context.t('core_features'), mainColor),
+                              _buildInfoRow(context, Icons.collections, context.t('feat_multimedia_title'), context.t('feat_multimedia_desc'), mainColor),
+                              _buildInfoRow(context, Icons.add_circle_outline, context.t('feat_create_share_title'), context.t('feat_create_share_desc'), mainColor),
+                              _buildInfoRow(context, Icons.play_circle_outline, context.t('feat_autoplay_title'), context.t('feat_autoplay_desc'), mainColor),
+                              _buildInfoRow(context, Icons.child_care, context.t('feat_ages_title'), context.t('feat_ages_desc'), mainColor),
+                              _buildInfoRow(context, Icons.emoji_events, context.t('feat_gamified_title'), context.t('feat_gamified_desc'), mainColor),
+                              
+                              _buildSectionTitle(context, context.t('the_science'), mainColor),
+                              _buildInfoRow(context, Icons.psychology, context.t('feat_science_spacing_title'), context.t('feat_science_spacing_desc'), mainColor),
+                              _buildInfoRow(context, Icons.auto_graph, context.t('feat_science_smart_review_title'), context.t('feat_science_smart_review_desc'), mainColor),
+                              
+                              _buildSectionTitle(context, context.t('trust_privacy'), mainColor),
+                              _buildInfoRow(context, Icons.sync, context.t('trust_ecosystem_title'), context.t('trust_ecosystem_desc'), mainColor),
+                              _buildInfoRow(context, Icons.sync_lock, context.t('trust_sync_title'), context.t('trust_sync_desc'), mainColor),
+                            ],
                           ),
                         ),
                       ),
@@ -530,13 +464,12 @@ class _AboutPageState extends State<AboutPage> {
                     right: 12,
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         if (!kIsWeb)
                           WindowControls(
                             onlyClose: true,
                             showSeparator: false,
-                            color: currentPrimaryColor,
+                            color: mainColor,
                             iconSize: 28,
                             padding: false,
                           ),
@@ -547,8 +480,9 @@ class _AboutPageState extends State<AboutPage> {
               );
             },
           ),
-        );
-      },
-    );
-  }
+        ),
+      );
+    },
+  );
+}
 }

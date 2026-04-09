@@ -116,11 +116,16 @@ class FolderModel implements ContentItem {
     return null;
   }
 
-  String getName(String langCode) {
-    return _getInherited(langCode, (d) => d.name) ?? 'Unnamed Folder';
+  static String capitalizeFirst(String s) {
+    if (s.isEmpty) return s;
+    return s[0].toUpperCase() + s.substring(1);
   }
 
-  String getDescription(String langCode) {
-    return _getInherited(langCode, (d) => d.description) ?? '';
+  String getName(String langCode) {
+    final name = _getInherited(langCode, (d) => d.name) ?? 'Unnamed Folder';
+    return capitalizeFirst(name);
   }
+
+  @override
+  String getDescription(String langCode) => '';
 }

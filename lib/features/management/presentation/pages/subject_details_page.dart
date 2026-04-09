@@ -7,6 +7,7 @@ import 'package:aliolo/data/models/pillar_model.dart';
 import 'package:aliolo/data/services/card_service.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
+import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/features/management/presentation/pages/add_card_page.dart';
 import 'package:aliolo/features/management/presentation/pages/subject_edit_page.dart';
 
@@ -122,7 +123,8 @@ class _SubjectDetailsPageState extends State<SubjectDetailsPage> {
       (p) => p.id == _currentSubject.pillarId,
       orElse: () => pillars.first,
     );
-    final currentSessionColor = pillar.getColor();
+    final isDarkMode = getIt<ThemeService>().isDarkMode;
+    final currentSessionColor = pillar.getColor(isDarkMode);
     const appBarColor = Colors.white;
     final lang =
         _authService.currentUser?.defaultLanguage.toLowerCase() ?? 'en';
@@ -259,22 +261,23 @@ class _SubjectDetailsPageState extends State<SubjectDetailsPage> {
                 final imageUrl = card.primaryImageUrl;
 
                 return InkWell(
-                  onTap: () async {
-                    await Navigator.push(
+                  onTap: isCardMine ? () async {
+                    final result = await Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder:
                             (context) => AddCardPage(
                               existingCard: card,
-                              isReadOnly: !isCardMine,
+                              isReadOnly: false,
                               pillarId: _currentSubject.pillarId,
                             ),
                       ),
-                    );                    _loadCards();
-                  },
+                    );
+                    if (result == true) _loadCards();
+                  } : null,
                   child: Card(
                     clipBehavior: Clip.antiAlias,
-                    elevation: 4,
+                    elevation: 2,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
@@ -283,36 +286,48 @@ class _SubjectDetailsPageState extends State<SubjectDetailsPage> {
                       children: [
                         Expanded(
                           flex: 3,
-                          child:
-                              imageUrl != null
-                                  ? Image.network(imageUrl, fit: BoxFit.cover)
-                                  : Container(
-                                    color: pillar.getColor().withValues(
-                                      alpha: 0.1,
-                                    ),
-                                    child: Icon(
-                                      Icons.image,
-                                      size: 48,
-                                      color: pillar.getColor(),
-                                    ),
-                                  ),
+                          child: imageUrl != null
+                              ? Image.network(imageUrl, fit: BoxFit.cover)
+                              : Container(
+                                color: pillar.getColor(isDarkMode).withValues(
+                                  alpha: 0.1,
+                                ),
+                                child: Icon(
+                                  Icons.image,
+                                  size: 48,
+                                  color: pillar.getColor(isDarkMode),
+                                ),
+                              ),
                         ),
                         Expanded(
                           flex: 1,
                           child: Container(
                             padding: const EdgeInsets.all(8.0),
                             color: Theme.of(context).cardColor,
-                            child: Center(
-                              child: Text(
-                                answer,
-                                textAlign: TextAlign.center,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14,
+                            child: Stack(
+                              children: [
+                                Center(
+                                  child: Text(
+                                    answer,
+                                    textAlign: TextAlign.center,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14,
+                                    ),
+                                  ),
                                 ),
-                              ),
+                                if (!isCardMine)
+                                  Positioned(
+                                    right: 0,
+                                    bottom: 0,
+                                    child: Tooltip(
+                                      message: 'You do not have permission to edit this card',
+                                      child: const Icon(Icons.lock_outline, size: 12, color: Colors.grey),
+                                    ),
+                                  ),
+                              ],
                             ),
                           ),
                         ),

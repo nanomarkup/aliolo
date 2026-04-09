@@ -131,8 +131,30 @@ class CardModel {
     return null;
   }
 
-  String getPrompt(String lang) => _getInherited(lang, (d) => d.prompt) ?? '';
+  String getPrompt(String lang) {
+    final prompt = _getInherited(lang, (d) => d.prompt) ?? '';
+    return capitalizeFirst(prompt);
+  }
+
   String getAnswer(String lang) => _getInherited(lang, (d) => d.answer) ?? '';
+
+  static String capitalizeFirst(String s) {
+    if (s.isEmpty) return s;
+    return s[0].toUpperCase() + s.substring(1);
+  }
+
+  List<String> getAnswerList(String lang) {
+    final ans = getAnswer(lang);
+    if (ans.isEmpty) return [];
+    return ans.split(';').map((s) => s.trim()).where((s) => s.isNotEmpty).toList();
+  }
+
+  bool isCorrectAnswer(String lang, String input) {
+    final answers = getAnswerList(lang);
+    if (answers.isEmpty) return false;
+    final normalizedInput = input.trim().toLowerCase();
+    return answers.any((a) => a.toLowerCase() == normalizedInput);
+  }
 
   String getNumericalChar(String lang) {
     final int val = numericalAnswer;
@@ -166,6 +188,12 @@ class CardModel {
       return specialNums[val]![lang] ?? val.toString();
     }
     return val.toString();
+  }
+
+  String? get hexColor {
+    final ans = getAnswer('en');
+    final match = RegExp(r'[,(]\s*(#[0-9a-fA-F]{6})\s*[)]?').firstMatch(ans);
+    return match?.group(1);
   }
 
   int get numericalAnswer {
@@ -211,8 +239,17 @@ class CardModel {
 
   String? getAudioUrl(String lang) => _getInherited(lang, (d) => d.audioUrl);
   String? getVideoUrl(String lang) => _getInherited(lang, (d) => d.videoUrl);
-  List<String> getImageUrls(String lang) =>
-      _getInherited(lang, (d) => d.imageUrls) ?? [];
+  List<String> getImageUrls(String lang) {
+    final urls = _getInherited(lang, (d) => d.imageUrls) ?? [];
+    // Add cache buster timestamp to ensure we show the latest version if updated
+    final v = updatedAt.millisecondsSinceEpoch;
+    return urls.map((url) {
+      if (url.startsWith('http')) {
+        return url.contains('?') ? '$url&v=$v' : '$url?v=$v';
+      }
+      return url;
+    }).toList();
+  }
 
   String? get primaryImageUrl {
     final urls = getImageUrls('global');

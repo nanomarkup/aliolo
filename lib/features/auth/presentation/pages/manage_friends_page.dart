@@ -7,6 +7,8 @@ import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
 
+import 'package:aliolo/features/subjects/presentation/pages/subject_page.dart';
+
 class ManageFriendsPage extends StatefulWidget {
   const ManageFriendsPage({super.key});
 
@@ -131,18 +133,71 @@ class _ManageFriendsPageState extends State<ManageFriendsPage> {
     final emailTrimmed = email.trim();
     if (emailTrimmed.isEmpty) return;
 
-    final result = await _friendshipService.sendFriendRequest(emailTrimmed);
-    if (mounted) {
-      Navigator.pop(context);
-      if (result == 'success') {
+    try {
+      final result = await _friendshipService.sendFriendRequest(emailTrimmed);
+      if (mounted) {
+        if (result == 'user_not_found') {
+          // Close the "Add Friend By Email" dialog BEFORE showing the "Invite" confirmation
+          Navigator.pop(context);
+
+          final invite = await showDialog<bool>(
+            context: context,
+            builder:
+                (context) => AlertDialog(
+                  title: Text(context.t('invite_user_title')),
+                  content: Text(
+                    context.t('invite_user_content', args: {'email': emailTrimmed}),
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context, false),
+                      child: Text(context.t('cancel')),
+                    ),
+                    TextButton(
+                      onPressed: () => Navigator.pop(context, true),
+                      child: Text(context.t('invite')),
+                    ),
+                  ],
+                ),
+          );
+
+          if (invite == true) {
+            try {
+              final senderId = _authService.currentUser?.serverId;
+              await _authService.inviteUserByEmail(emailTrimmed, senderId: senderId);
+
+              if (mounted) {
+                ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(const SnackBar(content: Text('Invited and request sent!')));
+                _loadFriendships();
+              }
+            } catch (e) {
+              if (mounted) {
+                ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(SnackBar(content: Text('Error: $e')));
+              }
+            }
+          }
+        } else if (result == 'success') {
+          Navigator.pop(context); // Close the "Add Friend" dialog
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(context.t('request_sent'))));
+          _loadFriendships();
+        } else {
+          // Keep the dialog open on other errors (like "Cannot add yourself")
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(result)));
+        }
+      }
+    } catch (e) {
+      if (mounted) {
         ScaffoldMessenger.of(
           context,
-        ).showSnackBar(SnackBar(content: Text(context.t('request_sent'))));
-        _loadFriendships();
-      } else {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(result)));
+        ).showSnackBar(SnackBar(content: Text('Error: $e')));
       }
     }
   }
@@ -161,7 +216,16 @@ class _ManageFriendsPageState extends State<ManageFriendsPage> {
       actions: [
         IconButton(
           icon: const Icon(Icons.arrow_back, color: appBarColor),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () {
+            if (Navigator.canPop(context)) {
+              Navigator.pop(context);
+            } else {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const SubjectPage()),
+              );
+            }
+          },
         ),
         IconButton(
           icon: const Icon(Icons.person_add, color: appBarColor),
@@ -184,6 +248,16 @@ class _ManageFriendsPageState extends State<ManageFriendsPage> {
               final isSender =
                   f['sender_id'] == _authService.currentUser?.serverId;
               final otherUser = isSender ? f['receiver'] : f['sender'];
+              
+              if (otherUser == null) {
+                return const Card(
+                  margin: EdgeInsets.only(bottom: 12),
+                  child: ListTile(
+                    title: Text('Unknown User (Profile missing)'),
+                  ),
+                );
+              }
+
               final status = f['status'];
               final id = f['id'];
               final avatarUrl = otherUser['avatar_url'] as String?;

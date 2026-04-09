@@ -46,7 +46,12 @@ This file serves as the primary context bridge for Gemini CLI.
 - **Filter Style:** `ChoiceChip` with `showCheckmark: false`, highlighted by the active theme color.
 
 ## 🛠️ Build Instructions
-- **Web Build:** Must run `python3 fix_web_build_v2.py` from the home directory before `flutter build web` to clean the manifest and fix asset paths.
+- **Web Build:** 
+    ```bash
+    flutter build web --release \
+      --dart-define=SUPABASE_URL=$SUPABASE_URL \
+      --dart-define=SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY
+    ```
 - **Environment:** Linux (Primary dev environment).
 
 ## 🚀 Ongoing / Next Steps

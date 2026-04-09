@@ -7,13 +7,14 @@ import 'package:aliolo/data/services/testing_language_service.dart';
 import 'package:aliolo/data/services/sound_service.dart';
 import 'package:aliolo/data/services/math_service.dart';
 import 'package:aliolo/data/services/progress_service.dart';
+import 'package:aliolo/data/services/subscription_service.dart';
 import 'package:aliolo/data/services/feedback_service.dart';
 import 'package:aliolo/data/services/discovery_engine.dart';
 
 
 final getIt = GetIt.instance;
 
-Future<void> setupLocator() async {
+Future<void> setupLocator({String? initialUrl}) async {
   try {
     // 1. Register base singleton services
     getIt.registerSingleton<CardService>(CardService());
@@ -29,7 +30,7 @@ Future<void> setupLocator() async {
       (e) => print('CardService init error: $e'),
     );
 
-    await getIt<AuthService>().init().catchError(
+    await getIt<AuthService>().init(manualUrl: initialUrl).catchError(
       (e) => print('AuthService init error: $e'),
     );
 
@@ -52,6 +53,7 @@ Future<void> setupLocator() async {
     getIt.registerLazySingleton<ThemeService>(() => ThemeService());
     getIt.registerLazySingleton<MathService>(() => MathService());
     getIt.registerLazySingleton<ProgressService>(() => ProgressService());
+    getIt.registerLazySingleton<SubscriptionService>(() => SubscriptionService());
 
     print('All services initialized in remote-only mode.');
   } catch (e, stack) {

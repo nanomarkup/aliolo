@@ -4,6 +4,8 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:uuid/uuid.dart';
 import 'package:path/path.dart' as p;
+import 'package:device_info_plus/device_info_plus.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:aliolo/data/models/feedback_model.dart';
 import 'package:aliolo/data/models/feedback_reply_model.dart';
 
@@ -21,6 +23,40 @@ class FeedbackService {
     try {
       final userId = _supabase.auth.currentUser?.id;
       if (userId == null) throw Exception('User not authenticated');
+
+      // 1. Gather Rich Metadata
+      final packageInfo = await PackageInfo.fromPlatform();
+      final deviceInfo = DeviceInfoPlugin();
+      final Map<String, dynamic> extraMetadata = {
+        'app_version': packageInfo.version,
+        'build_number': packageInfo.buildNumber,
+        'platform': kIsWeb ? 'web' : (Platform.isAndroid ? 'android' : (Platform.isIOS ? 'ios' : (Platform.isLinux ? 'linux' : (Platform.isWindows ? 'windows' : 'macos')))),
+        'timestamp': DateTime.now().toIso8601String(),
+      };
+
+      try {
+        if (kIsWeb) {
+          final webInfo = await deviceInfo.webBrowserInfo;
+          extraMetadata['user_agent'] = webInfo.userAgent;
+          extraMetadata['browser'] = webInfo.browserName.name;
+          extraMetadata['platform_version'] = webInfo.platform;
+        } else if (Platform.isAndroid) {
+          final androidInfo = await deviceInfo.androidInfo;
+          extraMetadata['os_version'] = androidInfo.version.release;
+          extraMetadata['device_model'] = androidInfo.model;
+          extraMetadata['brand'] = androidInfo.brand;
+        } else if (Platform.isIOS) {
+          final iosInfo = await deviceInfo.iosInfo;
+          extraMetadata['os_version'] = iosInfo.systemVersion;
+          extraMetadata['device_model'] = iosInfo.utsname.machine;
+        } else if (Platform.isLinux) {
+          final linuxInfo = await deviceInfo.linuxInfo;
+          extraMetadata['distro'] = linuxInfo.name;
+          extraMetadata['kernel'] = linuxInfo.versionId;
+        }
+      } catch (e) {
+        debugPrint('Error gathering device info: $e');
+      }
 
       List<String> uploadedUrls = [];
 
@@ -66,6 +102,11 @@ class FeedbackService {
       final feedbackData = feedback.toJson();
       feedbackData['user_id'] = userId;
       feedbackData['attachment_urls'] = uploadedUrls;
+      
+      // Merge existing metadata (like context) with our new rich metadata
+      final Map<String, dynamic> finalMetadata = Map.from(feedback.metadata);
+      finalMetadata.addAll(extraMetadata);
+      feedbackData['metadata'] = finalMetadata;
 
       await _supabase.from('feedbacks').insert(feedbackData);
     } catch (e) {

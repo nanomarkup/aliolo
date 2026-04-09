@@ -7,8 +7,10 @@ import 'package:aliolo/data/models/card_model.dart';
 import 'package:aliolo/data/models/subject_model.dart';
 import 'package:aliolo/data/services/card_service.dart';
 import 'package:aliolo/data/services/auth_service.dart';
+import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/data/services/sound_service.dart';
+import 'package:aliolo/data/services/subscription_service.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:aliolo/data/models/pillar_model.dart';
@@ -18,6 +20,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:path/path.dart' as p;
 
 import 'package:aliolo/features/feedback/presentation/pages/feedback_page.dart';
+import 'package:aliolo/features/settings/presentation/pages/premium_upgrade_page.dart';
 
 class AddCardPage extends StatefulWidget {
   final String? initialSubjectId;
@@ -97,6 +100,22 @@ class _AddCardPageState extends State<AddCardPage> {
   @override
   void initState() {
     super.initState();
+
+    // Premium Locking: Redirect if creating new and not premium
+    if (widget.existingCard == null) {
+      final sub = getIt<SubscriptionService>();
+      if (!sub.isPremium) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (mounted) {
+            Navigator.pushReplacement(
+              context, 
+              MaterialPageRoute(builder: (context) => const PremiumUpgradePage())
+            );
+          }
+        });
+      }
+    }
+
     _selectedSubjectId =
         widget.initialSubjectId ?? widget.existingCard?.subjectId;
     _internalPillarId = widget.pillarId;
@@ -315,14 +334,9 @@ class _AddCardPageState extends State<AddCardPage> {
   }
 
   void _showJsonDialog() {
-    final Map<String, dynamic> data = {
-      'subjectId': _selectedSubjectId,
-      'testMode': _testMode,
-      'level': _cardLevel,
-      'localizedData': _drafts.map(
-        (key, value) => MapEntry(key, value.toJson()),
-      ),
-    };
+    final Map<String, dynamic> data = _drafts.map(
+      (key, value) => MapEntry(key, value.toJson()),
+    );
 
     final encoder = const JsonEncoder.withIndent('  ');
     final String jsonTemplate = encoder.convert(data);
@@ -394,33 +408,23 @@ class _AddCardPageState extends State<AddCardPage> {
                               textController.text,
                             );
                             setState(() {
-                              if (parsed['subjectId'] is String) {
-                                _selectedSubjectId = parsed['subjectId'];
-                              }
-                              if (parsed['testMode'] is String) {
-                                _testMode = parsed['testMode'];
-                              }
-                              if (parsed['level'] is int) {
-                                _cardLevel = parsed['level'];
-                              }
-                              if (parsed['localizedData'] is Map) {
-                                final locData = parsed['localizedData'] as Map;
-                                locData.forEach((lang, val) {
-                                  final l = lang.toString().toLowerCase();
-                                  _ensureDraftExists(l);
+                              parsed.forEach((lang, val) {
+                                final l = lang.toString().toLowerCase();
+                                _ensureDraftExists(l);
+                                if (val is Map) {
                                   final d = val as Map<String, dynamic>;
-                                  _drafts[l]!.prompt = d['prompt'] ?? '';
-                                  _drafts[l]!.answer = d['answer'] ?? '';
-                                  _drafts[l]!.audioUrl = d['audio_url'];
-                                  _drafts[l]!.videoUrl = d['video_url'];
+                                  _drafts[l]!.prompt = d['prompt']?.toString() ?? '';
+                                  _drafts[l]!.answer = d['answer']?.toString() ?? '';
+                                  _drafts[l]!.audioUrl = d['audio_url']?.toString();
+                                  _drafts[l]!.videoUrl = d['video_url']?.toString();
                                   if (d['image_urls'] != null) {
                                     _drafts[l]!.imageUrls = List<String>.from(
                                       d['image_urls'],
                                     );
                                   }
-                                });
-                                _updateControllers();
-                              }
+                                }
+                              });
+                              _updateControllers();
                             });
                             Navigator.pop(context);
                           } catch (e) {
@@ -442,7 +446,7 @@ class _AddCardPageState extends State<AddCardPage> {
               return Dialog.fullscreen(
                 child: Scaffold(
                   appBar: AppBar(
-                    title: const Text('JSON Data'),
+                    title: const Text('Localized Data'),
                     automaticallyImplyLeading: false,
                     actions: [
                       IconButton(
@@ -462,7 +466,7 @@ class _AddCardPageState extends State<AddCardPage> {
             return AlertDialog(
               title: Row(
                 children: [
-                  const Text('JSON Data'),
+                  const Text('Localized Data'),
                   const Spacer(),
                   IconButton(
                     icon: const Icon(Icons.close),
@@ -583,6 +587,21 @@ class _AddCardPageState extends State<AddCardPage> {
       return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
 
+    final myId = _authService.currentUser?.serverId;
+    final isOwner = widget.existingCard == null || widget.existingCard!.ownerId == myId;
+
+    if (!isOwner) {
+      return Scaffold(
+        appBar: AppBar(title: Text(context.t('view_card'))),
+        body: const Center(
+          child: Padding(
+            padding: EdgeInsets.all(32.0),
+            child: Text('You do not have permission to view this card details.', textAlign: TextAlign.center),
+          ),
+        ),
+      );
+    }
+
     final selectedSubject = _mySubjects.firstWhere(
       (s) => s.id == _selectedSubjectId,
       orElse:
@@ -594,7 +613,8 @@ class _AddCardPageState extends State<AddCardPage> {
       (p) => p.id == (widget.pillarId ?? selectedSubject.pillarId),
       orElse: () => pillars.first,
     );
-    final themeColor = pillar.getColor();
+    final themeService = getIt<ThemeService>();
+    final themeColor = pillar.getColor(themeService.isDarkMode);
     const appBarColor = Colors.white;
 
     final String pageTitle =
@@ -604,143 +624,179 @@ class _AddCardPageState extends State<AddCardPage> {
                 ? context.t('add_card')
                 : context.t('edit_card'));
 
-    return AlioloScrollablePage(
-      title: Text(pageTitle, style: const TextStyle(color: appBarColor)),
-      appBarColor: themeColor,
-      actions: [
-        IconButton(
-          icon: const Icon(Icons.arrow_back, color: appBarColor),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final isSmallScreen = constraints.maxWidth < 600;
+
+        final backAction = IconButton(
+          tooltip: context.t('back'),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
-        ),
-        if (!widget.isReadOnly)
-          IconButton(
-            icon:
-                _isSaving                    ? const SizedBox(
-                      width: 20,
-                      height: 20,
-                      child: CircularProgressIndicator(
-                        color: appBarColor,
-                        strokeWidth: 2,
-                      ),
-                    )
-                    : const Icon(Icons.save, color: appBarColor),
-            onPressed: _isSaving ? null : _save,
-          ),
-        if (!widget.isReadOnly)
-          IconButton(
-            icon: const Icon(Icons.data_object, color: appBarColor),
-            onPressed: _showJsonDialog,
-          ),
-        if (widget.existingCard != null && !widget.isReadOnly)
-          IconButton(
-            icon: const Icon(Icons.delete, color: appBarColor),
-            onPressed: () async {
-              final confirmed = await showDialog<bool>(
-                context: context,
-                builder:
-                    (context) => AlertDialog(
-                      title: Text(context.t('delete')),
-                      content: Text(context.t('delete_card_confirm')),
-                      actions: [
-                        TextButton(
-                          onPressed: () => Navigator.pop(context, false),
-                          child: Text(context.t('cancel')),
-                        ),
-                        TextButton(
-                          onPressed: () => Navigator.pop(context, true),
-                          child: Text(context.t('confirm')),
-                        ),
-                      ],
+        );
+
+        final saveAction = !widget.isReadOnly
+            ? IconButton(
+              tooltip: context.t('save'),
+              icon: _isSaving
+                  ? const SizedBox(
+                    width: 20,
+                    height: 20,
+                    child: CircularProgressIndicator(
+                      color: appBarColor,
+                      strokeWidth: 2,
                     ),
-              );
-              if (confirmed == true && mounted) {
-                await _cardService.deleteCard(widget.existingCard!);
-                if (mounted) Navigator.pop(context, true);
-              }
-            },
-          ),
-        if (widget.existingCard != null)
-          IconButton(
-            icon: const Icon(Icons.feedback, color: appBarColor),
-            onPressed: () {
-              final pillar = pillars.firstWhere(
-                (p) => p.id == (_internalPillarId ?? 1),
-                orElse: () => pillars.first,
-              );
-              Navigator.push(
-                context,
-                MaterialPageRoute(
+                  )
+                  : const Icon(Icons.save),
+              onPressed: _isSaving ? null : _save,
+            )
+            : null;
+
+        final jsonAction = !widget.isReadOnly
+            ? IconButton(
+              tooltip: 'JSON',
+              icon: const Icon(Icons.data_object),
+              onPressed: _showJsonDialog,
+            )
+            : null;
+
+        final deleteAction = (widget.existingCard != null && !widget.isReadOnly)
+            ? IconButton(
+              tooltip: context.t('delete'),
+              icon: const Icon(Icons.delete),
+              onPressed: () async {
+                final confirmed = await showDialog<bool>(
+                  context: context,
                   builder:
-                      (context) => FeedbackPage(
-                        subjectId: widget.existingCard?.subjectId ?? widget.initialSubjectId,
-                        cardId: widget.existingCard?.id,
-                        contextTitle: widget.existingCard != null 
-                          ? 'Card: ${widget.existingCard!.localizedData['global']?.answer}'
-                          : 'Card',
-                        appBarColor: pillar.getColor(),
+                      (context) => AlertDialog(
+                        title: Text(context.t('delete')),
+                        content: Text(context.t('delete_card_confirm')),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(context, false),
+                            child: Text(context.t('cancel')),
+                          ),
+                          TextButton(
+                            onPressed: () => Navigator.pop(context, true),
+                            child: Text(context.t('confirm')),
+                          ),
+                        ],
                       ),
-                ),
-              );
-            },
-          ),
-      ],
-      fixedBody: KeyboardListener(
+                );
+                if (confirmed == true && mounted) {
+                  await _cardService.deleteCard(widget.existingCard!);
+                  if (mounted) Navigator.pop(context, true);
+                }
+              },
+            )
+            : null;
+
+        final feedbackAction = (widget.existingCard != null)
+            ? IconButton(
+              tooltip: context.t('feedback'),
+              icon: const Icon(Icons.feedback),
+              onPressed: () {
+                final pillar = pillars.firstWhere(
+                  (p) => p.id == (_internalPillarId ?? 1),
+                  orElse: () => pillars.first,
+                );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder:
+                        (context) => FeedbackPage(
+                          subjectId: widget.existingCard?.subjectId ?? widget.initialSubjectId,
+                          cardId: widget.existingCard?.id,
+                          contextTitle: widget.existingCard != null 
+                            ? 'Card: ${widget.existingCard!.localizedData['global']?.answer}'
+                            : 'Card',
+                          appBarColor: pillar.getColor(themeService.isDarkMode),
+                        ),
+                  ),
+                );
+              },
+            )
+            : null;
+
+        return AlioloScrollablePage(
+          title: Text(pageTitle, style: const TextStyle(color: appBarColor)),
+          appBarColor: themeColor,
+          actions: isSmallScreen 
+              ? [
+                  backAction,
+                  if (saveAction != null) saveAction,
+                ]
+              : [
+                  backAction,
+                  if (saveAction != null) saveAction,
+                  if (jsonAction != null) jsonAction,
+                  if (deleteAction != null) deleteAction,
+                  if (feedbackAction != null) feedbackAction,
+                ],
+          overflowActions: isSmallScreen
+              ? [
+                  if (jsonAction != null) jsonAction,
+                  if (deleteAction != null) deleteAction,
+                  if (feedbackAction != null) feedbackAction,
+                ]
+              : null,
+          body: KeyboardListener(
         focusNode: _keyboardFocusNode,
         autofocus: true,
         onKeyEvent: _onKeyEvent,
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            // Tile width 54 + spacing 8 = 62. Total padding 16*2 = 32.
-            final availableWidth = constraints.maxWidth - 32;
-            final items = (availableWidth + 8) ~/ 62;
-            _itemsPerRow = items > 0 ? items : 1;
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              LayoutBuilder(
+                builder: (context, constraints) {
+                  // Tile width 54 + spacing 8 = 62. Total padding 16*2 = 32.
+                  final availableWidth = constraints.maxWidth - 32;
+                  final items = (availableWidth + 8) ~/ 62;
+                  _itemsPerRow = items > 0 ? items : 1;
 
-            return Padding(
-              padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Wrap(
-                    spacing: 8,
-                    runSpacing: 8,
-                    children: [
-                      _buildLangTile(
-                        'global',
-                        'GLB',
-                        Icons.public,
-                        'Global / Fallback',
-                      ),
-                      ...(() {
-                        final langs = TranslationService()
-                            .availableUILanguages
-                            .map((l) => l.toLowerCase())
-                            .toList();
-                        langs.sort();
-                        return langs.map((code) {
-                          return _buildLangTile(
-                            code,
-                            code.toUpperCase(),
-                            null,
-                            TranslationService().getLanguageName(code),
-                          );
-                        });
-                      })(),
-                    ],
-                  ),
-                  const SizedBox(height: 32),
-                ],
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    child: Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
+                      children: [
+                        _buildLangTile(
+                          'global',
+                          'GLB',
+                          Icons.public,
+                          'Global / Fallback',
+                        ),
+                        ...(() {
+                          final langs = TranslationService()
+                              .availableUILanguages
+                              .map((l) => l.toLowerCase())
+                              .toList();
+                          langs.sort();
+                          return langs.map((code) {
+                            return _buildLangTile(
+                              code,
+                              code.toUpperCase(),
+                              null,
+                              TranslationService().getLanguageName(code),
+                            );
+                          });
+                        })(),
+                      ],
+                    ),
+                  );
+                },
               ),
-            );
-          },
+              const SizedBox(height: 16),
+              _buildEditor(themeColor),
+            ],
+          ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: _buildEditor(themeColor),
-      ),
     );
-  }
-
+  },
+);
+}
   Widget _buildLangTile(
     String code,
     String label,
@@ -840,13 +896,27 @@ class _AddCardPageState extends State<AddCardPage> {
         if (isGlobal) ...[
           _buildSectionCaption(context.t('common_settings')),
           const SizedBox(height: 16),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(child: _buildSubjectPicker()),
-              const SizedBox(width: 16),
-              Expanded(child: _buildTestModePicker()),
-            ],
+          LayoutBuilder(
+            builder: (context, constraints) {
+              final isSmall = constraints.maxWidth < 600;
+              if (isSmall) {
+                return Column(
+                  children: [
+                    _buildSubjectPicker(),
+                    const SizedBox(height: 16),
+                    _buildTestModePicker(),
+                  ],
+                );
+              }
+              return Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(child: _buildSubjectPicker()),
+                  const SizedBox(width: 16),
+                  Expanded(child: _buildTestModePicker()),
+                ],
+              );
+            },
           ),
           const SizedBox(height: 20),
           _buildLevelPicker(color),
@@ -923,7 +993,15 @@ class _AddCardPageState extends State<AddCardPage> {
     // Ensure the current subject ID is in the list to avoid dropdown assertion error
     final List<DropdownMenuItem<String>> items =
         _mySubjects
-            .map((s) => DropdownMenuItem(value: s.id, child: Text(s.name)))
+            .map(
+              (s) => DropdownMenuItem(
+                value: s.id,
+                child: Text(
+                  s.name,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            )
             .toList();
 
     if (_selectedSubjectId != null &&
@@ -931,13 +1009,17 @@ class _AddCardPageState extends State<AddCardPage> {
       items.add(
         DropdownMenuItem(
           value: _selectedSubjectId,
-          child: const Text('Public/Other Subject'),
+          child: const Text(
+            'Public/Other Subject',
+            overflow: TextOverflow.ellipsis,
+          ),
         ),
       );
     }
 
     return DropdownButtonFormField<String>(
       value: _selectedSubjectId,
+      isExpanded: true,
       decoration: InputDecoration(
         labelText: context.t('subject_label'),
         border: const OutlineInputBorder(),
@@ -992,16 +1074,39 @@ class _AddCardPageState extends State<AddCardPage> {
           context.t('card_level', args: {'level': '$_cardLevel'}),
           style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
         ),
-        Slider(
-          value: _cardLevel.toDouble(),
-          min: 1,
-          max: 20,
-          divisions: 19,
-          activeColor: color,
-          onChanged:
-              widget.isReadOnly
-                  ? null
-                  : (v) => setState(() => _cardLevel = v.round()),
+        Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              decoration: BoxDecoration(
+                color: color.withValues(alpha: 0.1),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: color.withValues(alpha: 0.2)),
+              ),
+              child: Text(
+                '$_cardLevel',
+                style: TextStyle(
+                  color: color,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+            ),
+            Expanded(
+              child: Slider(
+                value: _cardLevel.toDouble(),
+                min: 1,
+                max: 20,
+                divisions: 19,
+                label: '$_cardLevel',
+                activeColor: color,
+                onChanged:
+                    widget.isReadOnly
+                        ? null
+                        : (v) => setState(() => _cardLevel = v.round()),
+              ),
+            ),
+          ],
         ),
       ],
     );

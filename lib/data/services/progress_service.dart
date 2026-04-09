@@ -194,7 +194,6 @@ class ProgressService {
   }
 
   Future<int> getMathLevelCount() async => 0;
-  Future<List<ProgressRecord>> getMathRecords() async => [];
   Future<Map<String, int>> getSubjectCrowns() async {
     return {}; // Stub for now
   }

@@ -88,6 +88,8 @@ class SubjectModel implements ContentItem {
       id == 'bc354f43-f9be-42a9-a7bc-ac400bd5e310' ||
       id == 'cb04da1c-9820-4e61-ae6b-bc7ed07eeb93';
 
+  bool get isColors => id == '0b84447d-3af3-4509-bdf6-c4e7fe822cc7';
+
   bool get isMath =>
       isCounting ||
       isAddition ||
@@ -151,12 +153,19 @@ class SubjectModel implements ContentItem {
     return null;
   }
 
+  static String capitalizeFirst(String s) {
+    if (s.isEmpty) return s;
+    return s[0].toUpperCase() + s.substring(1);
+  }
+
   String getName(String langCode) {
-    return _getInherited(langCode, (d) => d.name) ?? 'Unnamed Subject';
+    final name = _getInherited(langCode, (d) => d.name) ?? 'Unnamed Subject';
+    return capitalizeFirst(name);
   }
 
   String getDescription(String langCode) {
-    return _getInherited(langCode, (d) => d.description) ?? '';
+    final desc = _getInherited(langCode, (d) => d.description) ?? '';
+    return capitalizeFirst(desc);
   }
 
   // Legacy support for code that expects a single string name
@@ -205,7 +214,7 @@ class SubjectModel implements ContentItem {
     final List<dynamic>? activeCards =
         allCards?.where((c) => c['is_deleted'] != true).toList();
 
-    final Map<String, dynamic>? profile = json['profiles'];
+    final Map<String, dynamic>? profile = json['profiles'] ?? json['profiles!fk_subjects_owner'];
 
     var locData = json['localized_data'];
     Map<String, dynamic> locMap = {};
@@ -217,12 +226,16 @@ class SubjectModel implements ContentItem {
       } catch (_) {}
     }
 
-    Map<String, LocalizedSubjectData> localized = locMap.map(
-      (key, value) => MapEntry(
-        key.toLowerCase(),
-        LocalizedSubjectData.fromJson(value as Map<String, dynamic>),
-      ),
-    );
+    Map<String, LocalizedSubjectData> localized = {};
+    try {
+      locMap.forEach((key, value) {
+        if (value is Map) {
+          localized[key.toLowerCase()] = LocalizedSubjectData.fromJson(Map<String, dynamic>.from(value));
+        }
+      });
+    } catch (e) {
+      print('Error parsing localized_data for subject ${json['id']}: $e');
+    }
 
     // Fallback migration logic in app just in case
     if (localized.isEmpty) {

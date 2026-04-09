@@ -25,7 +25,8 @@ class LocalizedPillarData {
 class Pillar {
   final int id;
   final String icon;
-  final String color;
+  final String lightColor;
+  final String? darkColor;
   final int sortOrder;
 
   /// Map of language code to its specific data.
@@ -35,31 +36,38 @@ class Pillar {
   const Pillar({
     required this.id,
     required this.icon,
-    required this.color,
+    required this.lightColor,
+    this.darkColor,
     this.sortOrder = 0,
     this.localizedData = const {},
   });
 
   factory Pillar.fromJson(Map<String, dynamic> json) {
     final Map<String, dynamic> locMap = json['localized_data'] ?? {};
-    final localized = locMap.map(
-      (key, value) => MapEntry(
-        key.toLowerCase(),
-        LocalizedPillarData.fromJson(value as Map<String, dynamic>),
-      ),
-    );
+    Map<String, LocalizedPillarData> localized = {};
+    try {
+      locMap.forEach((key, value) {
+        if (value is Map) {
+          localized[key.toLowerCase()] = LocalizedPillarData.fromJson(Map<String, dynamic>.from(value));
+        }
+      });
+    } catch (e) {
+      print('Error parsing localized_data for pillar ${json['id']}: $e');
+    }
 
     return Pillar(
       id: (json['id'] as num).toInt(),
       icon: json['icon'] ?? 'category',
-      color: json['color'] ?? '#9E9E9E',
+      lightColor: json['light_color'] ?? json['color'] ?? '#9E9E9E',
+      darkColor: json['dark_color'],
       sortOrder: (json['sort_order'] as num? ?? 0).toInt(),
       localizedData: localized,
     );
   }
 
-  Color getColor() {
-    return Color(int.parse(color.replaceFirst('#', '0xFF')));
+  Color getColor([bool isDarkMode = false]) {
+    final hex = (isDarkMode && darkColor != null) ? darkColor! : lightColor;
+    return Color(int.parse(hex.replaceFirst('#', '0xFF')));
   }
 
   IconData getIconData() {

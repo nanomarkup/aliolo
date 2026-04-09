@@ -63,8 +63,8 @@ class _AdditionGridState extends State<AdditionGrid> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
+      child: FittedBox(
+        fit: BoxFit.contain,
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -101,18 +101,34 @@ class _AdditionGridState extends State<AdditionGrid> {
         ),
       );
     }
-    return Wrap(
-      spacing: 8,
-      runSpacing: 8,
-      alignment: WrapAlignment.center,
-      crossAxisAlignment: WrapCrossAlignment.center,
-      children: List.generate(
-        count,
-        (index) => Text(
-          _selectedEmoji,
-          style: TextStyle(fontSize: widget.iconSize * 0.8),
+
+    Widget buildWrap(int items) {
+      return Wrap(
+        spacing: 8,
+        runSpacing: 8,
+        alignment: WrapAlignment.center,
+        crossAxisAlignment: WrapCrossAlignment.center,
+        children: List.generate(
+          items,
+          (index) => Text(
+            _selectedEmoji,
+            style: TextStyle(fontSize: widget.iconSize * 0.8),
+          ),
         ),
-      ),
-    );
+      );
+    }
+
+    if (count < 10) {
+      return buildWrap(count);
+    } else {
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          buildWrap((count / 2).ceil()),
+          const SizedBox(height: 4),
+          buildWrap((count / 2).floor()),
+        ],
+      );
+    }
   }
 }

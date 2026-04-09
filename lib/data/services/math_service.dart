@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:aliolo/data/models/card_model.dart';
+import 'package:aliolo/data/models/subject_model.dart';
 
 class MathService {
   static final MathService _instance = MathService._internal();
@@ -7,22 +8,82 @@ class MathService {
   MathService._internal();
 
   ({String question, String answer, List<String> options}) generateProblem(
+    SubjectModel subject,
+  ) {
+    final random = Random();
+    int a = 0;
+    int b = 0;
+    String op = '+';
+    int ans = 0;
+
+    final maxVal = subject.maxOperand;
+
+    if (subject.isAddition) {
+      a = random.nextInt(maxVal + 1);
+      b = random.nextInt(maxVal + 1);
+      ans = a + b;
+      op = '+';
+    } else if (subject.isSubtraction) {
+      a = random.nextInt(maxVal) + 1;
+      b = random.nextInt(a + 1);
+      ans = a - b;
+      op = '-';
+    } else if (subject.isMultiplication) {
+      a = random.nextInt(maxVal + 1);
+      b = random.nextInt(11); // standard 0-10
+      ans = a * b;
+      op = '×';
+    } else if (subject.isDivision) {
+      b = random.nextInt(maxVal) + 1;
+      ans = random.nextInt(11);
+      a = ans * b;
+      op = '÷';
+    } else {
+      // Fallback
+      return (question: '0 + 0', answer: '0', options: ['0', '1', '2', '3']);
+    }
+
+    final question = '$a $op $b';
+    final answer = ans.toString();
+    final options = generateDistractors(ans, 6);
+
+    return (question: question, answer: answer, options: options);
+  }
+
+  CardModel createVirtualCard(
+    ({String question, String answer, List<String> options}) problem,
     int level,
   ) {
-    // Logic for generating math problems...
-    return (question: '2 + 2', answer: '4', options: ['3', '4', '5', '6']);
+    final now = DateTime.now();
+    // Unique ID to avoid issues
+    final card = CardModel(
+      id: 'math_${now.microsecondsSinceEpoch}_${Random().nextInt(1000)}',
+      subjectId: 'Math',
+      level: level,
+      ownerId: 'system',
+      isPublic: true,
+      createdAt: now,
+      updatedAt: now,
+      localizedData: {
+        'en': LocalizedCardData(
+          prompt: problem.question,
+          answer: problem.answer,
+        ),
+      },
+    );
+    card.mathQuestion = problem.question;
+    card.mathOptions = problem.options;
+    return card;
   }
 
   List<String> generateDistractors(int correct, int count) {
     final List<int> distractors = [];
     final random = Random();
     
-    // Attempt to generate unique distractors near the correct answer
     int attempts = 0;
     while (distractors.length < count - 1 && attempts < 100) {
       attempts++;
-      // Range depends on the size of the answer
-      int range = correct < 10 ? 5 : 10;
+      int range = correct < 10 ? 5 : (correct < 50 ? 10 : 20);
       int offset = random.nextInt(range * 2) - range; 
       int val = correct + offset;
       
@@ -31,7 +92,6 @@ class MathService {
       }
     }
     
-    // If we still need more, just add some
     int fallback = 0;
     while (distractors.length < count - 1) {
       if (fallback != correct && !distractors.contains(fallback)) {

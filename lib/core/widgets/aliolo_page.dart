@@ -5,6 +5,7 @@ import 'package:aliolo/core/widgets/resize_wrapper.dart';
 class AlioloPage extends StatelessWidget {
   final Widget title;
   final List<Widget>? actions;
+  final List<Widget>? overflowActions;
   final Widget body;
   final Color? appBarColor;
   final double maxWidth;
@@ -14,6 +15,7 @@ class AlioloPage extends StatelessWidget {
     required this.title,
     required this.body,
     this.actions,
+    this.overflowActions,
     this.appBarColor,
     this.maxWidth = 640,
   });
@@ -28,6 +30,7 @@ class AlioloPage extends StatelessWidget {
         appBar: AlioloAppBar(
           title: title,
           actions: actions,
+          overflowActions: overflowActions,
           backgroundColor: appBarColor ?? Theme.of(context).primaryColor,
         ),
         body: Center(

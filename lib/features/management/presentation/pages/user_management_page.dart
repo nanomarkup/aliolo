@@ -52,71 +52,60 @@ class _UserManagementPageState extends State<UserManagementPage> {
     return ListenableBuilder(
       listenable: TranslationService(),
       builder: (context, _) {
+        final isSmallScreen = MediaQuery.of(context).size.width < 600;
+
+        final homeAction = IconButton(
+          tooltip: context.t('home') ?? 'Home',
+          icon: const Icon(Icons.school),
+          onPressed: () => Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => const SubjectPage()),
+            (route) => false,
+          ),
+        );
+        final leaderboardAction = IconButton(
+          tooltip: context.t('leaderboard'),
+          icon: const Icon(Icons.emoji_events),
+          onPressed: () =>
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const LeaderboardPage())),
+        );
+        final editAction = IconButton(
+          tooltip: context.t('edit'),
+          icon: const Icon(Icons.edit),
+          onPressed: () => Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => const SubjectPage()),
+            (route) => false,
+          ),
+        );
+        final profileAction = IconButton(
+          tooltip: context.t('profile'),
+          icon: const Icon(Icons.person),
+          onPressed: () =>
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfilePage())),
+        );
+        final settingsAction = IconButton(
+          tooltip: context.t('settings'),
+          icon: const Icon(Icons.settings),
+          onPressed: () =>
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const SettingsPage())),
+        );
+
         return ResizeWrapper(
           child: Scaffold(
             extendBodyBehindAppBar: true,
             appBar: AlioloAppBar(
-              title: Text(
-                context.t('manage_users'),
-                style: const TextStyle(color: appBarColor),
-              ),
+              title: Text(context.t('manage_users'), style: const TextStyle(color: appBarColor)),
               backgroundColor: currentSessionColor,
               foregroundColor: appBarColor,
-              actions: [
-                IconButton(
-                  icon: const Icon(Icons.school, color: appBarColor),
-                  onPressed:
-                      () => Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const SubjectPage(),
-                        ),
-                        (route) => false,
-                      ),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.emoji_events, color: appBarColor),
-                  onPressed:
-                      () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const LeaderboardPage(),
-                        ),
-                      ),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.edit, color: appBarColor),
-                  onPressed:
-                      () => Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const SubjectPage(),
-                        ),
-                        (route) => false,
-                      ),
-                ),
-
-                IconButton(
-                  icon: const Icon(Icons.person, color: appBarColor),
-                  onPressed:
-                      () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const ProfilePage(),
-                        ),
-                      ),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.settings, color: appBarColor),
-                  onPressed:
-                      () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const SettingsPage(),
-                        ),
-                      ),
-                ),
+              actions: isSmallScreen ? [homeAction, profileAction] : [
+                homeAction,
+                leaderboardAction,
+                editAction,
+                profileAction,
+                settingsAction,
               ],
+              overflowActions: isSmallScreen ? [leaderboardAction, editAction, settingsAction] : null,
             ),
             body:
                 _isLoading

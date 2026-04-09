@@ -63,10 +63,8 @@ class CardService with ChangeNotifier {
     try {
       final List<dynamic> subjectsData = await _supabase!
           .from('subjects')
-          .select(
-            '*, profiles(username), cards(id, is_deleted, localized_data)',
-          )
-          .or('owner_id.eq."${user.serverId}",is_public.eq.true');
+          .select('*, profiles!fk_subjects_owner(username), cards(id, is_deleted, localized_data)')
+          .or('owner_id.eq.${user.serverId},is_public.eq.true');
 
       for (var json in subjectsData) {
         final s = SubjectModel.fromJson(json);
@@ -242,7 +240,8 @@ class CardService with ChangeNotifier {
       var query = _supabase!
           .from('collections')
           .select('*, profiles(username), collection_items(subject_id)')
-          .or('owner_id.eq."${user.serverId}",is_public.eq.true');
+          .or('owner_id.eq.${user.serverId},is_public.eq.true');
+
       
       if (rootOnly) {
         query = query.filter('folder_id', 'is', null);
@@ -280,7 +279,8 @@ class CardService with ChangeNotifier {
           .from('collections')
           .select('*, profiles(username), collection_items(subject_id)')
           .eq('pillar_id', pillarId)
-          .or('owner_id.eq."${user.serverId}",is_public.eq.true');
+          .or('owner_id.eq.${user.serverId},is_public.eq.true');
+
       
       if (folderId != null) {
         query = query.eq('folder_id', folderId);
@@ -520,7 +520,7 @@ class CardService with ChangeNotifier {
       var query = _supabase!
           .from('subjects')
           .select(
-            '*, profiles(username), cards(id, is_deleted, localized_data)',
+            '*, profiles!fk_subjects_owner(username), cards(id, is_deleted, localized_data)',
           );
       
       if (folderId != null) {
@@ -531,7 +531,8 @@ class CardService with ChangeNotifier {
         query = query.eq('pillar_id', pillarId);
       }
 
-      query = query.or('is_public.eq.true,owner_id.eq."${user.serverId}"');
+      query = query.or('is_public.eq.true,owner_id.eq.${user.serverId}');
+
 
       final List<dynamic> data = await query;
 
@@ -592,7 +593,7 @@ class CardService with ChangeNotifier {
       final List<dynamic> data = await _supabase!
           .from('subjects')
           .select(
-            '*, profiles(username), cards(id, is_deleted, localized_data)',
+            '*, profiles!fk_subjects_owner(username), cards(id, is_deleted, localized_data)',
           )
           .inFilter('id', ids);
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:provider/provider.dart';
 import 'package:aliolo/core/widgets/aliolo_scrollable_page.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -12,7 +13,12 @@ import 'package:aliolo/data/models/pillar_model.dart';
 import 'package:aliolo/features/leaderboard/presentation/pages/leaderboard_page.dart';
 import 'package:aliolo/features/subjects/presentation/pages/subject_page.dart';
 import 'package:aliolo/features/auth/presentation/pages/profile_page.dart';
+import 'package:aliolo/features/settings/presentation/pages/about_page.dart';
+import 'package:aliolo/features/settings/presentation/pages/premium_upgrade_page.dart';
+import 'package:aliolo/features/documentation/presentation/pages/documentation_page.dart';
+import 'package:aliolo/features/management/presentation/pages/feedback_management_page.dart';
 import 'package:aliolo/data/services/feedback_service.dart';
+import 'package:aliolo/data/services/subscription_service.dart';
 import 'package:aliolo/core/di/service_locator.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -28,6 +34,7 @@ class _SettingsPageState extends State<SettingsPage> {
   late String _themeMode;
   late bool _soundEnabled;
   late bool _showOnLeaderboard;
+  late bool _showDocumentation;
   late String _defaultLanguage;
 
   String _version = '1.0.0';
@@ -43,6 +50,7 @@ class _SettingsPageState extends State<SettingsPage> {
     _themeMode = user?.themeMode ?? 'system';
     _soundEnabled = user?.soundEnabled ?? true;
     _showOnLeaderboard = user?.showOnLeaderboard ?? true;
+    _showDocumentation = user?.showDocumentation ?? true;
     _defaultLanguage = user?.defaultLanguage ?? 'EN';
     _loadPackageInfo();
 
@@ -85,6 +93,12 @@ class _SettingsPageState extends State<SettingsPage> {
     _showSavedMsg();
   }
 
+  Future<void> _toggleDocumentation(bool val) async {
+    await _authService.updateDocumentationPreference(val);
+    setState(() => _showDocumentation = val);
+    _showSavedMsg();
+  }
+
   Future<void> _updateDefaultLanguage(String lang) async {
     await _authService.updateDefaultLanguage(lang);
     setState(() => _defaultLanguage = lang);
@@ -103,16 +117,19 @@ class _SettingsPageState extends State<SettingsPage> {
     }
   }
 
-  Widget _buildSectionTitle(String title, Color color) {
+  Widget _buildSectionTitle(BuildContext context, String title, Color color) {
     return Padding(
-      padding: const EdgeInsets.only(left: 8, bottom: 12, top: 16),
-      child: Text(
-        title.toUpperCase(),
-        style: TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.w900,
-          color: color,
-          letterSpacing: 1.5,
+      padding: const EdgeInsets.only(top: 32, bottom: 12, left: 4),
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: Text(
+          title.toUpperCase(),
+          style: TextStyle(
+            color: color,
+            fontWeight: FontWeight.bold,
+            fontSize: 12,
+            letterSpacing: 1.2,
+          ),
         ),
       ),
     );
@@ -123,67 +140,85 @@ class _SettingsPageState extends State<SettingsPage> {
     const appBarColor = Colors.white;
 
     return ListenableBuilder(
-      listenable: Listenable.merge([TranslationService(), ThemeService()]),
+      listenable: Listenable.merge([TranslationService(), ThemeService(), _authService]),
       builder: (context, _) {
         final currentPrimaryColor = ThemeService().primaryColor;
         final isDark = Theme.of(context).brightness == Brightness.dark;
+        final isSmallScreen = MediaQuery.of(context).size.width < 600;
+
+        final homeAction = IconButton(
+          tooltip: context.t('home') ?? 'Home',
+          icon: const Icon(Icons.school),
+          onPressed: () => Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => const SubjectPage()),
+            (route) => false,
+          ),
+        );
+        final leaderboardAction = IconButton(
+          tooltip: context.t('leaderboard'),
+          icon: const Icon(Icons.emoji_events),
+          onPressed: () =>
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const LeaderboardPage())),
+        );
+        final profileAction = IconButton(
+          tooltip: context.t('profile'),
+          icon: ValueListenableBuilder<bool>(
+            valueListenable: getIt<FeedbackService>().pendingNotifications,
+            builder: (context, hasNotif, _) {
+              return Badge(
+                isLabelVisible: hasNotif,
+                backgroundColor: Colors.amber,
+                child: const Icon(Icons.person),
+              );
+            },
+          ),
+          onPressed: () async {
+            await Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfilePage()));
+          },
+        );
+        final settingsAction = IconButton(
+          tooltip: context.t('settings'),
+          icon: const Icon(Icons.settings),
+          onPressed: () => setState(() {}),
+        );
+        final docAction = (_authService.currentUser?.showDocumentation ?? true)
+            ? IconButton(
+              tooltip: context.t('documentation'),
+              icon: const Icon(Icons.help_outline),
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const DocumentationPage()),
+              ),
+            )
+            : null;
 
         return AlioloScrollablePage(
           title: Text(
             context.t('settings'),
-            style: const TextStyle(color: appBarColor),
+            style: const TextStyle(color: appBarColor, fontSize: 20, fontWeight: FontWeight.bold),
           ),
           appBarColor: currentPrimaryColor,
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.school, color: appBarColor),
-              onPressed:
-                  () => Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const SubjectPage(),
-                    ),
-                    (route) => false,
-                  ),
-            ),
-            IconButton(
-              icon: const Icon(Icons.emoji_events, color: appBarColor),
-              onPressed:
-                  () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const LeaderboardPage(),
-                    ),
-                  ),
-            ),
-            IconButton(
-              icon: ValueListenableBuilder<bool>(
-                valueListenable: getIt<FeedbackService>().pendingNotifications,
-                builder: (context, hasNotif, _) {
-                  return Badge(
-                    isLabelVisible: hasNotif,
-                    backgroundColor: Colors.amber,
-                    child: const Icon(Icons.person, color: appBarColor),
-                  );
-                },
-              ),
-              onPressed: () async {
-                await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const ProfilePage(),
-                  ),
-                );
-              },
-            ),
-            IconButton(
-              icon: const Icon(Icons.settings, color: appBarColor),
-              onPressed: () => setState(() {}),
-            ),
-          ],
+          actions: isSmallScreen
+              ? [homeAction, profileAction]
+              : [
+                homeAction,
+                leaderboardAction,
+                profileAction,
+                settingsAction,
+                if (docAction != null) docAction,
+              ],
+          overflowActions: isSmallScreen
+              ? [
+                leaderboardAction,
+                settingsAction,
+                if (docAction != null) docAction,
+              ]
+              : null,
           body: Column(
             children: [
               _buildSectionTitle(
+                context,
                 context.t('general_preferences'),
                 currentPrimaryColor,
               ),
@@ -213,14 +248,14 @@ class _SettingsPageState extends State<SettingsPage> {
                     ),
                     const Divider(height: 1, indent: 16, endIndent: 16),
                     SwitchListTile(
-                      title: Text(context.t('public_profile')),
-                      subtitle: Text(context.t('public_profile_desc')),
+                      title: Text(context.t('show_documentation_btn')),
+                      subtitle: Text(context.t('show_documentation_btn_desc')),
                       secondary: Icon(
-                        Icons.emoji_events,
+                        Icons.help_outline,
                         color: currentPrimaryColor,
                       ),
-                      value: _showOnLeaderboard,
-                      onChanged: _toggleLeaderboard,
+                      value: _showDocumentation,
+                      onChanged: _toggleDocumentation,
                     ),
                     const Divider(height: 1, indent: 16, endIndent: 16),
                     ListTile(
@@ -377,18 +412,11 @@ class _SettingsPageState extends State<SettingsPage> {
                         alignment: WrapAlignment.center,
                         children:
                             pillars.map((p) {
-                              final color = p.getColor();
-                              final isSelected =
-                                  ThemeService.toHexStatic(color) ==
-                                  ThemeService.toHexStatic(
-                                    ThemeService().primaryColor,
-                                  );
+                              final color = p.getColor(getIt<ThemeService>().isDarkMode);
+                              final isSelected = _authService.currentUser?.mainPillarId == p.id;
 
                               return GestureDetector(
-                                onTap:
-                                    () => _authService.updateMainColor(
-                                      ThemeService.toHexStatic(color),
-                                    ),
+                                onTap: () => _authService.updateMainColorFromPillar(p.id),
                                 child: Container(
                                   width: 44,
                                   height: 44,
@@ -398,7 +426,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                     border: Border.all(
                                       color:
                                           isSelected
-                                              ? Colors.white
+                                              ? (isDark ? Colors.white : Colors.black54)
                                               : Colors.transparent,
                                       width: 3,
                                     ),
@@ -422,6 +450,50 @@ class _SettingsPageState extends State<SettingsPage> {
                                 ),
                               );
                             }).toList(),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              _buildSectionTitle(
+                context,
+                context.t('support_and_management'),
+                currentPrimaryColor,
+              ),
+              Card(
+                child: Column(
+                  children: [
+                    ListTile(
+                      leading: Icon(Icons.feedback, color: currentPrimaryColor),
+                      title: Text(context.t('feedback_management_title')),
+                      trailing: const Icon(Icons.chevron_right),
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const FeedbackManagementPage(),
+                        ),
+                      ),
+                    ),
+                    const Divider(height: 1, indent: 16, endIndent: 16),
+                    ListTile(
+                      leading: Icon(Icons.help_outline, color: currentPrimaryColor),
+                      title: Text(context.t('documentation')),
+                      trailing: const Icon(Icons.chevron_right),
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const DocumentationPage(),
+                        ),
+                      ),
+                    ),
+                    const Divider(height: 1, indent: 16, endIndent: 16),
+                    ListTile(
+                      leading: Icon(Icons.info_outline, color: currentPrimaryColor),
+                      title: Text(context.t('about')),
+                      trailing: const Icon(Icons.chevron_right),
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const AboutPage()),
                       ),
                     ),
                   ],

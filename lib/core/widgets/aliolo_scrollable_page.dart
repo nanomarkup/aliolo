@@ -5,6 +5,7 @@ import 'package:aliolo/core/widgets/resize_wrapper.dart';
 class AlioloScrollablePage extends StatelessWidget {
   final Widget title;
   final List<Widget>? actions;
+  final List<Widget>? overflowActions;
   final Widget? leading;
   final double? leadingWidth;
   final List<Widget>? slivers;
@@ -21,6 +22,7 @@ class AlioloScrollablePage extends StatelessWidget {
     super.key,
     required this.title,
     this.actions,
+    this.overflowActions,
     this.leading,
     this.leadingWidth,
     this.slivers,
@@ -45,6 +47,7 @@ class AlioloScrollablePage extends StatelessWidget {
         appBar: AlioloAppBar(
           title: title,
           actions: actions,
+          overflowActions: overflowActions,
           leading: leading,
           leadingWidth: leadingWidth,
           titleAlignment: titleAlignment,

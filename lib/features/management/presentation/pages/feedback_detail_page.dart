@@ -296,6 +296,45 @@ class _FeedbackDetailPageState extends State<FeedbackDetailPage> {
               if (widget.feedback.metadata['card_id'] != null)
                 _buildDetailRow(Icons.layers_outlined, 'Card ID',
                     widget.feedback.metadata['card_id'], subColor),
+              
+              // Rich Metadata for Admins
+              const SizedBox(height: 8),
+              const Divider(),
+              const SizedBox(height: 8),
+              Text('TECHNICAL CONTEXT', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: subColor, letterSpacing: 1.1)),
+              const SizedBox(height: 8),
+              _buildDetailRow(Icons.computer, 'Platform', 
+                  '${widget.feedback.metadata['platform'] ?? 'Unknown'} (v${widget.feedback.metadata['app_version'] ?? '?'})', subColor),
+              
+              if (widget.feedback.metadata['browser'] != null)
+                _buildDetailRow(Icons.language, 'Browser', widget.feedback.metadata['browser'], subColor),
+              
+              if (widget.feedback.metadata['os_version'] != null)
+                _buildDetailRow(Icons.settings_applications, 'OS Version', widget.feedback.metadata['os_version'], subColor),
+              
+              if (widget.feedback.metadata['device_model'] != null)
+                _buildDetailRow(Icons.phone_android, 'Device', widget.feedback.metadata['device_model'], subColor),
+              
+              if (widget.feedback.metadata['distro'] != null)
+                _buildDetailRow(Icons.terminal, 'Linux Distro', widget.feedback.metadata['distro'], subColor),
+
+              if (widget.feedback.metadata['user_agent'] != null)
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 2.0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Icon(Icons.info_outline, size: 14, color: subColor),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          'UA: ${widget.feedback.metadata['user_agent']}',
+                          style: TextStyle(fontSize: 10, color: subColor, fontStyle: FontStyle.italic),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
             ] else ...[
               if (widget.feedback.metadata['context'] != null)
                 _buildDetailRow(Icons.folder_outlined, 'Context',

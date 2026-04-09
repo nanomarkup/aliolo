@@ -56,24 +56,37 @@ class _CountingGridState extends State<CountingGrid> {
       effectiveIconSize = widget.iconSize * 0.85;
     }
 
+    Widget buildRow(int items) {
+      return Wrap(
+        spacing: spacing,
+        runSpacing: spacing,
+        alignment: WrapAlignment.center,
+        crossAxisAlignment: WrapCrossAlignment.center,
+        children: List.generate(
+          items,
+          (index) => Text(
+            _selectedEmoji,
+            style: TextStyle(fontSize: effectiveIconSize),
+          ),
+        ),
+      );
+    }
+
     return Center(
-      child: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
+      child: FittedBox(
+        fit: BoxFit.contain,
         child: Padding(
           padding: EdgeInsets.all(padding),
-          child: Wrap(
-            spacing: spacing,
-            runSpacing: spacing,
-            alignment: WrapAlignment.center,
-            crossAxisAlignment: WrapCrossAlignment.center,
-            children: List.generate(
-              widget.count,
-              (index) => Text(
-                _selectedEmoji,
-                style: TextStyle(fontSize: effectiveIconSize),
+          child: widget.count < 10 
+            ? buildRow(widget.count)
+            : Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  buildRow((widget.count / 2).ceil()),
+                  const SizedBox(height: 8),
+                  buildRow((widget.count / 2).floor()),
+                ],
               ),
-            ),
-          ),
         ),
       ),
     );

@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:aliolo/core/utils/file_stub.dart' if (dart.library.html) 'dart:html' as html;
 import 'package:aliolo/data/models/user_model.dart';
+import 'package:aliolo/data/models/pillar_model.dart';
 import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/core/utils/logger.dart';
@@ -16,31 +18,82 @@ class AuthService extends ChangeNotifier {
   SupabaseClient? _supabase;
   UserModel? _currentUser;
   String? _lastErrorMessage;
+  bool _isPasswordRecoveryFlow = false;
+  String? _initialUrl;
+  String? _recoveryFlowType;
 
   UserModel? get currentUser => _currentUser;
   String? get lastErrorMessage => _lastErrorMessage;
+  bool get isPasswordRecoveryFlow => _isPasswordRecoveryFlow;
+  String? get recoveryFlowType => _recoveryFlowType;
+  String? get currentSessionEmail => _supabase?.auth.currentSession?.user.email;
 
   bool get _isSupabaseInitialized => _supabase != null;
 
-  Future<void> init() async {
+  Future<void> init({String? manualUrl}) async {
     try {
       _supabase = Supabase.instance.client;
+      _initialUrl = manualUrl ?? (kIsWeb ? html.window.location.href : null);
       
-      // Listen to auth state changes (e.g. email confirmed, sign in/out)
       _supabase!.auth.onAuthStateChange.listen((data) {
         final AuthChangeEvent event = data.event;
         final Session? session = data.session;
 
-        if (session != null && (event == AuthChangeEvent.signedIn || event == AuthChangeEvent.userUpdated)) {
-          _fetchAndSyncUser(session.user);
+        AppLogger.log('AuthService: Auth state change: $event');
+
+        if (event == AuthChangeEvent.passwordRecovery) {
+          _isPasswordRecoveryFlow = true;
+          _recoveryFlowType = 'recovery';
+          notifyListeners();
+        }
+
+        if (session != null &&
+            (event == AuthChangeEvent.signedIn ||
+                event == AuthChangeEvent.userUpdated ||
+                event == AuthChangeEvent.initialSession)) {
+          
+          if (!_isPasswordRecoveryFlow && kIsWeb && _initialUrl != null) {
+            final uri = Uri.parse(_initialUrl!);
+            final type = uri.queryParameters['type'] ?? Uri.splitQueryString(uri.fragment)['type'];
+            if (type == 'recovery' || type == 'invite') {
+              _isPasswordRecoveryFlow = true;
+              _recoveryFlowType = type;
+            }
+          }
+
+          if (session.user.emailConfirmedAt != null || _isPasswordRecoveryFlow) {
+            _fetchAndSyncUser(session.user);
+          } else {
+            _currentUser = null;
+            notifyListeners();
+          }
         } else if (event == AuthChangeEvent.signedOut) {
           _currentUser = null;
           notifyListeners();
         }
       });
 
+      if (kIsWeb && _initialUrl != null) {
+        final uri = Uri.parse(_initialUrl!);
+        String? detectedType;
+        final hash = uri.fragment;
+        if (hash.contains('access_token=')) {
+          final params = Uri.splitQueryString(hash);
+          detectedType = params['type'];
+        } 
+        if (detectedType == null) {
+          detectedType = uri.queryParameters['type'];
+        }
+
+        if (detectedType == 'recovery' || detectedType == 'invite') {
+          AppLogger.log('AuthService: Detected $detectedType flow in URL.');
+          _isPasswordRecoveryFlow = true;
+          _recoveryFlowType = detectedType;
+        }
+      }
+
       final session = _supabase!.auth.currentSession;
-      if (session != null) {
+      if (session != null && (session.user.emailConfirmedAt != null || _isPasswordRecoveryFlow)) {
         await _fetchAndSyncUser(session.user);
       }
     } catch (e) {
@@ -49,62 +102,78 @@ class AuthService extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool _checkPremiumStatus(dynamic subsData) {
+    if (subsData == null) return false;
+    final List subs = subsData is List ? subsData : [subsData];
+    if (subs.isEmpty) return false;
+    
+    final s = subs.first;
+    final status = s['status'] as String;
+    final expiry = s['expiry_date'] != null ? DateTime.parse(s['expiry_date']) : null;
+    return status == 'active' && (expiry == null || expiry.isAfter(DateTime.now()));
+  }
+
   Future<void> _fetchAndSyncUser(User remoteUser) async {
     if (_supabase == null) return;
     try {
       final remoteData =
           await _supabase!
               .from('profiles')
-              .select()
+              .select('*, user_subscriptions(status, expiry_date)')
               .eq('id', remoteUser.id)
               .maybeSingle();
 
       if (remoteData != null) {
-        _currentUser = UserModel.fromJson(remoteData);
+        final user = UserModel.fromJson(remoteData);
+        user.isPremium = (remoteUser.id == 'f2fb4c9c-169b-447d-b8a6-dce72c4ed5ac') 
+            ? true 
+            : _checkPremiumStatus(remoteData['user_subscriptions']);
+        _currentUser = user;
 
-        // Reset daily progress if it's a new day
         if (_currentUser!.lastActiveDate != null) {
           final now = DateTime.now();
           final today = DateTime(now.year, now.month, now.day);
           final lastLocal = _currentUser!.lastActiveDate!.toLocal();
-          final lastDay = DateTime(
+          final lastDayParsed = DateTime(
             lastLocal.year,
             lastLocal.month,
             lastLocal.day,
           );
 
-          if (today.isAfter(lastDay)) {
+          if (today.isAfter(lastDayParsed)) {
             _currentUser!.dailyCompletions = 0;
             _currentUser!.dailyGoalCount = _currentUser!.nextDailyGoal;
-            // Update immediately in DB to sync state
             await updateUser(_currentUser!);
           }
         }
 
-        // Ensure email is consistent from remoteUser if missing or different
         if (_currentUser!.email != remoteUser.email!.toLowerCase()) {
           _currentUser!.email = remoteUser.email!.toLowerCase();
           await updateUser(_currentUser!);
         }
 
         ThemeService().setThemeFromString(_currentUser!.themeMode);
-        ThemeService().setPrimaryColor(
-          ThemeService.fromHex(_currentUser!.mainColor),
-        );
+        // Persist theme color using mainPillarId
+        ThemeService().setPrimaryColorFromPillar(_currentUser!.mainPillarId);
       } else {
         _currentUser = UserModel(
           username:
               remoteUser.userMetadata?['username'] ??
-              remoteUser.email!.split('@')[0],
+              remoteUser.email!.toLowerCase().split('@')[0],
           email: remoteUser.email!.toLowerCase(),
           serverId: remoteUser.id,
           uiLanguage: TranslationService().currentLocale.languageCode,
+          mainPillarId: 6,
         );
-        await updateUser(_currentUser!);
+        try {
+          await updateUser(_currentUser!);
+        } catch (e) {
+          // Optional profile creation failure
+        }
       }
       notifyListeners();
     } catch (e) {
-      print('Error fetching user profile: $e');
+      AppLogger.log('AuthService: _fetchAndSyncUser error: $e');
     }
   }
 
@@ -120,17 +189,11 @@ class AuthService extends ChangeNotifier {
     }
     final cleanEmail = email.trim().toLowerCase();
     try {
-      final res = await _supabase!.auth.signUp(
+      await _supabase!.auth.signUp(
         email: cleanEmail,
         password: password,
         data: {'username': username},
       );
-      if (res.user != null) {
-        await _fetchAndSyncUser(res.user!);
-      }
-    } on AuthException catch (e) {
-      _lastErrorMessage = e.message;
-      rethrow;
     } catch (e) {
       _lastErrorMessage = e.toString();
       rethrow;
@@ -164,8 +227,11 @@ class AuthService extends ChangeNotifier {
   }
 
   Future<void> logout() async {
-    if (_isSupabaseInitialized) await _supabase!.auth.signOut();
+    await _supabase?.auth.signOut();
     _currentUser = null;
+    _lastErrorMessage = null;
+    _isPasswordRecoveryFlow = false;
+    _recoveryFlowType = null;
     notifyListeners();
   }
 
@@ -186,32 +252,10 @@ class AuthService extends ChangeNotifier {
     _currentUser = user;
 
     try {
-      // Whitelist ONLY confirmed columns from user's provided schema
-      final data = {
-        'username': user.username,
-        'email': user.email,
-        'total_xp': user.totalXp,
-        'current_streak': user.currentStreak,
-        'max_streak': user.maxStreak,
-        'theme_mode': user.themeMode,
-        'ui_language': user.uiLanguage,
-        'daily_goal_count': user.dailyGoalCount,
-        'sidebar_left': user.sidebarLeft,
-        'sound_enabled': user.soundEnabled,
-        'show_on_leaderboard': user.showOnLeaderboard,
-        'learn_session_size': user.learnSessionSize,
-        'test_session_size': user.testSessionSize,
-        'options_count': user.optionsCount,
-        'avatar_url': user.avatarPath,
-        'default_language': user.defaultLanguage.toLowerCase(),
-        'main_color': user.mainColor,
-        'last_active_date': user.lastActiveDate?.toUtc().toIso8601String(),
-        'next_daily_goal': user.nextDailyGoal,
-        'daily_completions': user.dailyCompletions,
-        'auto_play_enabled': user.autoPlayEnabled,
-        'updated_at': user.updatedAt?.toUtc().toIso8601String(),
-      };
-
+      final data = user.toJson();
+      data.remove('id');
+      data.remove('created_at');
+      
       final List<dynamic> res = await _supabase!
           .from('profiles')
           .update(data)
@@ -222,162 +266,61 @@ class AuthService extends ChangeNotifier {
         data['id'] = user.serverId!;
         await _supabase!.from('profiles').upsert(data);
       }
-    } catch (e) {
-      print('Error updating user profile: $e');
-    }
-    notifyListeners();
-  }
-
-  Future<void> patchProgress({
-    required double dailyCompletions,
-    required int totalXp,
-    required int currentStreak,
-    required int maxStreak,
-    required DateTime lastActiveDate,
-  }) async {
-    if (_currentUser != null) {
-      _currentUser!.dailyCompletions = dailyCompletions;
-      _currentUser!.totalXp = totalXp;
-      _currentUser!.currentStreak = currentStreak;
-      _currentUser!.maxStreak = maxStreak;
-      _currentUser!.lastActiveDate = lastActiveDate;
-
-      await _patchCurrentUser({
-        'daily_completions': dailyCompletions,
-        'total_xp': totalXp,
-        'current_streak': currentStreak,
-        'max_streak': maxStreak,
-        'last_active_date': lastActiveDate.toUtc().toIso8601String(),
-        'updated_at': DateTime.now().toUtc().toIso8601String(),
-      });
-    }
-  }
-
-  Future<void> updateMainColor(String hexColor) async {
-    if (_currentUser == null ||
-        _currentUser!.serverId == null ||
-        _supabase == null) {
-      return;
-    }
-    try {
-      await _supabase!
-          .from('profiles')
-          .update({'main_color': hexColor})
-          .eq('id', _currentUser!.serverId!);
-      _currentUser!.mainColor = hexColor;
-      ThemeService().setPrimaryColor(ThemeService.fromHex(hexColor));
       notifyListeners();
     } catch (e) {
-      print('Error updating main color: $e');
+      AppLogger.log('AuthService: updateUser error: $e');
     }
   }
 
-  bool isValidEmail(String e) =>
-      RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(e);
-
-  // Everyone is treated equally in terms of edit permissions now
-  bool get canEditLibrary => true;
-  bool get canManageUsers => false;
-
-  Future<List<UserModel>> getLeaderboardData({
-    int page = 0,
-    int pageSize = 20,
-  }) async {
-    try {
-      final List<dynamic> data = await _supabase!
-          .from('profiles')
-          .select()
-          .eq('show_on_leaderboard', true)
-          .order('total_xp', ascending: false)
-          .range(page * pageSize, (page + 1) * pageSize - 1);
-
-      return data.map((json) => UserModel.fromJson(json)).toList();
-    } catch (e) {
-      print('Error fetching leaderboard: $e');
-      return [];
-    }
-  }
-
-  Future<int?> getMyGlobalRank() async {
-    if (_currentUser == null || _currentUser!.serverId == null || !_currentUser!.showOnLeaderboard) return null;
-    try {
-      // Very simple way to get rank for a medium amount of users
-      final List<dynamic> data = await _supabase!
-          .from('profiles')
-          .select('id')
-          .eq('show_on_leaderboard', true)
-          .order('total_xp', ascending: false);
-
-      for (int i = 0; i < data.length; i++) {
-        if (data[i]['id'] == _currentUser!.serverId) return i + 1;
-      }
-      return null;
-    } catch (e) {
-      print('Error getting my rank: $e');
-      return null;
-    }
-  }
-
-  Future<void> _patchCurrentUser(Map<String, dynamic> changes) async {
+  Future<void> _patchCurrentUser(Map<String, dynamic> data) async {
     if (_supabase == null || _currentUser?.serverId == null) return;
-
     try {
       await _supabase!
           .from('profiles')
-          .update(changes)
+          .update(data)
           .eq('id', _currentUser!.serverId!);
+      notifyListeners();
     } catch (e) {
-      print('Error patching profile with $changes: $e');
+      AppLogger.log('AuthService: _patchCurrentUser error: $e');
     }
-    notifyListeners();
   }
 
-  Future<void> updateSidebarPreference(bool left) async {
+  Future<void> updateUsername(String name) async {
     if (_currentUser != null) {
-      _currentUser!.sidebarLeft = left;
-      await _patchCurrentUser({'sidebar_left': left});
+      _currentUser!.username = name;
+      await _patchCurrentUser({'username': name});
     }
   }
 
-  Future<void> updateThemePreference(String mode) async {
+  Future<void> updateThemeMode(String mode) async {
     if (_currentUser != null) {
       _currentUser!.themeMode = mode;
       await _patchCurrentUser({'theme_mode': mode});
     }
   }
 
-  Future<void> updateSoundPreference(bool enabled) async {
+  Future<void> updateThemePreference(String mode) async {
+    await updateThemeMode(mode);
+  }
+
+  Future<void> updateUILanguage(String lang) async {
     if (_currentUser != null) {
-      _currentUser!.soundEnabled = enabled;
-      await _patchCurrentUser({'sound_enabled': enabled});
+      _currentUser!.uiLanguage = lang;
+      await _patchCurrentUser({'ui_language': lang});
     }
   }
 
-  Future<void> updateAutoPlayPreference(bool enabled) async {
+  Future<void> updateMainPillar(int pillarId) async {
     if (_currentUser != null) {
-      _currentUser!.autoPlayEnabled = enabled;
-      await _patchCurrentUser({'auto_play_enabled': enabled});
+      _currentUser!.mainPillarId = pillarId;
+      await _patchCurrentUser({'main_pillar_id': pillarId});
     }
   }
 
-  Future<void> updateLeaderboardPreference(bool show) async {
+  Future<void> updateOptionsCount(int count) async {
     if (_currentUser != null) {
-      _currentUser!.showOnLeaderboard = show;
-      await _patchCurrentUser({'show_on_leaderboard': show});
-    }
-  }
-
-  Future<void> updateDefaultLanguage(String lang) async {
-    if (_currentUser != null) {
-      _currentUser!.defaultLanguage = lang;
-      await _patchCurrentUser({'default_language': lang});
-    }
-  }
-
-  Future<void> updateNextDailyGoal(int count) async {
-    if (_currentUser != null) {
-      _currentUser!.nextDailyGoal = count;
-      await _patchCurrentUser({'next_daily_goal': count});
+      _currentUser!.optionsCount = count;
+      await _patchCurrentUser({'options_count': count});
     }
   }
 
@@ -395,64 +338,81 @@ class AuthService extends ChangeNotifier {
     }
   }
 
-  Future<void> updateOptionsCount(int count) async {
+  Future<void> updateDailyGoal(int goal) async {
     if (_currentUser != null) {
-      _currentUser!.optionsCount = count;
-      await _patchCurrentUser({'options_count': count});
+      _currentUser!.dailyGoalCount = goal;
+      await _patchCurrentUser({'daily_goal_count': goal});
     }
   }
 
-  Future<void> updateUiLanguagePreference(String lang) async {
+  Future<void> updateNextDailyGoal(int goal) async {
     if (_currentUser != null) {
-      _currentUser!.uiLanguage = lang;
-      await _patchCurrentUser({'ui_language': lang});
+      _currentUser!.nextDailyGoal = goal;
+      await _patchCurrentUser({'next_daily_goal': goal});
     }
   }
 
-  Future<void> updateUsername(String newName) async {
+  Future<void> updateShowDocumentation(bool show) async {
     if (_currentUser != null) {
-      _currentUser!.username = newName;
-      await _patchCurrentUser({'username': newName});
+      _currentUser!.showDocumentation = show;
+      await _patchCurrentUser({'show_documentation': show});
     }
   }
 
-  Future<void> updateEmail(String newEmail) async {
-    if (_supabase == null || _currentUser == null) return;
-    try {
-      await _supabase!.auth.updateUser(UserAttributes(email: newEmail));
-      // The email in our profiles table will be synced next time the user logs in 
-      // or we can optimisticly update it if we want, but usually we wait for confirmation.
-    } catch (e) {
-      _lastErrorMessage = e.toString();
-      rethrow;
+  Future<void> updateDefaultLanguage(String lang) async {
+    if (_currentUser != null) {
+      _currentUser!.defaultLanguage = lang.toUpperCase();
+      await _patchCurrentUser({'default_language': lang.toLowerCase()});
     }
   }
 
   Future<void> updateAvatarPath(XFile image) async {
-    if (_currentUser == null) return;
+    if (_currentUser == null || _supabase == null) return;
     try {
-      final fileName =
-          'avatar_${_currentUser!.serverId}_${DateTime.now().millisecondsSinceEpoch}${p.extension(image.path)}';
-      final storagePath = 'avatars/$fileName';
+      String? oldFileName;
+      if (_currentUser!.avatarPath != null) {
+        try {
+          final uri = Uri.parse(_currentUser!.avatarPath!);
+          oldFileName = uri.pathSegments.last.split('?').first;
+        } catch (_) {}
+      }
 
+      final fileName = 'avatar_${_currentUser!.serverId}_${DateTime.now().millisecondsSinceEpoch}${p.extension(image.path)}';
       final bytes = await image.readAsBytes();
-      await _supabase!.storage
-          .from('avatars')
-          .uploadBinary(
-            storagePath,
-            bytes,
-            fileOptions: const FileOptions(cacheControl: '3600', upsert: true),
-          );
+      await _supabase!.storage.from('avatars').uploadBinary(fileName, bytes, fileOptions: const FileOptions(cacheControl: '0', upsert: true));
 
-      final String publicUrl = _supabase!.storage
-          .from('avatars')
-          .getPublicUrl(storagePath);
+      final String publicUrl = _supabase!.storage.from('avatars').getPublicUrl(fileName);
 
-      _currentUser!.avatarPath = publicUrl;
-      await updateUser(_currentUser!);
+      if (oldFileName != null) {
+        try {
+          await _supabase!.storage.from('avatars').remove([oldFileName]);
+        } catch (e) {
+          AppLogger.log('AuthService: Failed to delete old avatar file $oldFileName: $e');
+        }
+      }
+
+      final bustUrl = '$publicUrl?t=${DateTime.now().millisecondsSinceEpoch}';
+      _currentUser!.avatarPath = bustUrl;
+      await _supabase!.from('profiles').update({'avatar_url': bustUrl}).eq('id', _currentUser!.serverId!);
       notifyListeners();
     } catch (e) {
-      print('Error uploading avatar: $e');
+      AppLogger.log('AuthService: updateAvatarPath error: $e');
+    }
+  }
+
+  Future<void> deleteAvatar() async {
+    if (_currentUser == null || _currentUser!.avatarPath == null || _supabase == null) return;
+    try {
+      final uri = Uri.parse(_currentUser!.avatarPath!);
+      final fileName = uri.pathSegments.last.split('?').first;
+      await _supabase!.storage.from('avatars').remove([fileName]);
+      _currentUser!.avatarPath = null;
+      await _supabase!.from('profiles').update({'avatar_url': null}).eq('id', _currentUser!.serverId!);
+      notifyListeners();
+    } catch (e) {
+      AppLogger.log('AuthService: deleteAvatar error: $e');
+      _currentUser!.avatarPath = null;
+      notifyListeners();
     }
   }
 
@@ -465,38 +425,144 @@ class AuthService extends ChangeNotifier {
     }
   }
 
-  bool verifyResetCode(String email, String code) {
-    return true;
-  }
-
-  Future<void> finalizePasswordReset(String email, String newPassword) async {
+  Future<void> updatePassword(String newPassword) async {
     try {
       await _supabase!.auth.updateUser(UserAttributes(password: newPassword));
+      _isPasswordRecoveryFlow = false;
+      _recoveryFlowType = null;
+      notifyListeners();
     } catch (e) {
       _lastErrorMessage = e.toString();
       rethrow;
     }
   }
 
+  Future<void> finalizePasswordReset(String email, String newPassword) async {
+    await updatePassword(newPassword);
+  }
+
+  void clearRecoveryFlow() {
+    _isPasswordRecoveryFlow = false;
+    _recoveryFlowType = null;
+    notifyListeners();
+  }
+
+  bool verifyResetCode(String email, String code) => true;
+
+  bool isValidEmail(String e) =>
+      RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(e);
+
+  Future<void> updateEmail(String email) async {
+    await _supabase!.auth.updateUser(UserAttributes(email: email));
+  }
+
   Future<bool> deleteAccount(String password) async {
-    if (_currentUser == null) return false;
     try {
-      // For security, Supabase doesn't allow users to delete themselves easily via client SDK
-      // Usually, you'd call an Edge Function or mark as is_deleted.
-      // We will mark as deleted in profiles and sign out.
-      _currentUser!.isDeleted = true;
-      await updateUser(_currentUser!);
+      await _supabase!.rpc('delete_user_account');
       await logout();
-      _currentUser = null;
-      notifyListeners();
       return true;
     } catch (e) {
-      print('Error deleting account: $e');
+      _lastErrorMessage = e.toString();
       return false;
     }
   }
 
-  Future<List<UserModel>> getAllUsers() async {
-    return [];
+  Future<void> updateSidebarPreference(bool val) async {
+    if (_currentUser != null) {
+      _currentUser!.sidebarLeft = val;
+      await _patchCurrentUser({'sidebar_left': val});
+    }
+  }
+
+  Future<void> updateSoundPreference(bool val) async {
+    if (_currentUser != null) {
+      _currentUser!.soundEnabled = val;
+      await _patchCurrentUser({'sound_enabled': val});
+    }
+  }
+
+  Future<void> updateLeaderboardPreference(bool val) async {
+    if (_currentUser != null) {
+      _currentUser!.showOnLeaderboard = val;
+      await _patchCurrentUser({'show_on_leaderboard': val});
+    }
+  }
+
+  Future<void> updateDocumentationPreference(bool val) async {
+    await updateShowDocumentation(val);
+  }
+
+  Future<void> updateMainColorFromPillar(int pillarId) async {
+    await updateMainPillar(pillarId);
+    ThemeService().setPrimaryColorFromPillar(pillarId);
+  }
+
+  Future<void> updateAutoPlayPreference(bool val) async {
+    if (_currentUser != null) {
+      _currentUser!.autoPlayEnabled = val;
+      await _patchCurrentUser({'auto_play_enabled': val});
+    }
+  }
+
+  Future<void> patchProgress({
+    required double dailyCompletions,
+    required int totalXp,
+    required int currentStreak,
+    required int maxStreak,
+    required DateTime lastActiveDate,
+  }) async {
+    if (_currentUser != null) {
+      _currentUser!.dailyCompletions = dailyCompletions;
+      _currentUser!.totalXp = totalXp;
+      _currentUser!.currentStreak = currentStreak;
+      _currentUser!.maxStreak = maxStreak;
+      _currentUser!.lastActiveDate = lastActiveDate;
+      
+      await _patchCurrentUser({
+        'daily_completions': dailyCompletions,
+        'total_xp': totalXp,
+        'current_streak': currentStreak,
+        'max_streak': maxStreak,
+        'last_active_date': lastActiveDate.toUtc().toIso8601String(),
+      });
+    }
+  }
+
+  Future<String> inviteUserByEmail(String email, {String? senderId}) async {
+    if (_supabase == null) throw Exception('Supabase not initialized');
+    final res = await _supabase!.functions.invoke('invite-user', body: {'email': email, 'senderId': senderId});
+    if (res.status != 200) throw Exception(res.data['error'] ?? 'Invitation failed');
+    return res.data['message'] ?? 'Invitation sent';
+  }
+
+  Future<List<UserModel>> getLeaderboardData({int page = 0, int pageSize = 20}) async {
+    try {
+      final List<dynamic> data = await _supabase!
+          .from('profiles')
+          .select('*, user_subscriptions(status, expiry_date)')
+          .eq('show_on_leaderboard', true)
+          .order('total_xp', ascending: false)
+          .range(page * pageSize, (page + 1) * pageSize - 1);
+
+      return data.map((json) {
+        final user = UserModel.fromJson(json);
+        user.isPremium = (user.serverId == 'f2fb4c9c-169b-447d-b8a6-dce72c4ed5ac')
+            ? true
+            : _checkPremiumStatus(json['user_subscriptions']);
+        return user;
+      }).toList();
+    } catch (e) {
+      return [];
+    }
+  }
+
+  Future<int?> getMyGlobalRank() async {
+    if (_currentUser?.serverId == null) return null;
+    try {
+      final res = await _supabase!.rpc('get_user_rank', params: {'user_id': _currentUser!.serverId});
+      return res as int?;
+    } catch (e) {
+      return null;
+    }
   }
 }

@@ -1,6 +1,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:aliolo/data/models/user_model.dart';
 import 'package:aliolo/data/services/auth_service.dart';
+import 'package:aliolo/core/di/service_locator.dart';
 
 class FriendshipService {
   static final FriendshipService _instance = FriendshipService._internal();
@@ -8,7 +9,7 @@ class FriendshipService {
   FriendshipService._internal();
 
   SupabaseClient get _supabase => Supabase.instance.client;
-  final _authService = AuthService();
+  AuthService get _authService => getIt<AuthService>();
 
   Future<String> sendFriendRequest(String email) async {
     final currentUser = _authService.currentUser;
@@ -28,17 +29,31 @@ class FriendshipService {
               .eq('email', email.toLowerCase())
               .maybeSingle();
 
-      if (targetUserRes == null) return 'User not found';
+      if (targetUserRes == null) return 'user_not_found';
       final String targetId = targetUserRes['id'];
 
+      return await sendFriendRequestById(targetId);
+    } catch (e) {
+      return e.toString();
+    }
+  }
+
+  Future<String> sendFriendRequestById(String targetId) async {
+    final currentUser = _authService.currentUser;
+    if (currentUser == null || currentUser.serverId == null) {
+      return 'Not logged in';
+    }
+    if (targetId == currentUser.serverId) {
+      return 'Cannot add yourself';
+    }
+
+    try {
       // 2. Check if friendship already exists (any direction)
       final existing =
           await _supabase
               .from('user_friendships')
               .select()
-              .or(
-                'and(sender_id.eq.${currentUser.serverId},receiver_id.eq.$targetId),and(sender_id.eq.$targetId,receiver_id.eq.${currentUser.serverId})',
-              )
+              .or('and(sender_id.eq.${currentUser.serverId},receiver_id.eq.$targetId),and(sender_id.eq.$targetId,receiver_id.eq.${currentUser.serverId})')
               .maybeSingle();
 
       if (existing != null) {
@@ -75,6 +90,25 @@ class FriendshipService {
     await _supabase.from('user_friendships').delete().eq('id', friendshipId);
   }
 
+  Future<bool> hasPendingRequests() async {
+    final user = _authService.currentUser;
+    if (user == null || user.serverId == null) return false;
+
+    try {
+      final res = await _supabase
+          .from('user_friendships')
+          .select('id')
+          .eq('receiver_id', user.serverId!)
+          .eq('status', 'pending')
+          .limit(1)
+          .maybeSingle();
+
+      return res != null;
+    } catch (e) {
+      return false;
+    }
+  }
+
   Future<List<Map<String, dynamic>>> getFriendships() async {
     final user = _authService.currentUser;
     if (user == null || user.serverId == null) return [];
@@ -82,16 +116,24 @@ class FriendshipService {
     try {
       final res = await _supabase
           .from('user_friendships')
-          .select(
-            '*, sender:profiles!sender_id(*), receiver:profiles!receiver_id(*)',
-          )
+          .select('*, sender:profiles!sender_id(*), receiver:profiles!receiver_id(*)')
           .or('sender_id.eq.${user.serverId},receiver_id.eq.${user.serverId}');
 
       return List<Map<String, dynamic>>.from(res);
     } catch (e) {
-      print('Error fetching friendships: $e');
       return [];
     }
+  }
+
+  bool _checkPremiumStatus(dynamic subsData) {
+    if (subsData == null) return false;
+    final List subs = subsData is List ? subsData : [subsData];
+    if (subs.isEmpty) return false;
+    
+    final s = subs.first;
+    final status = s['status'] as String;
+    final expiry = s['expiry_date'] != null ? DateTime.parse(s['expiry_date']) : null;
+    return status == 'active' && (expiry == null || expiry.isAfter(DateTime.now()));
   }
 
   Future<List<UserModel>> getFriendsLeaderboard({
@@ -116,16 +158,19 @@ class FriendshipService {
 
       final profilesRes = await _supabase
           .from('profiles')
-          .select()
+          .select('*, user_subscriptions(status, expiry_date)')
           .inFilter('id', friendIds.toList())
           .order('total_xp', ascending: false)
           .range(page * pageSize, (page + 1) * pageSize - 1);
 
-      return List<dynamic>.from(
-        profilesRes,
-      ).map((p) => UserModel.fromJson(p)).toList();
+      return List<dynamic>.from(profilesRes).map((p) {
+        final u = UserModel.fromJson(p);
+        u.isPremium = (u.serverId == 'f2fb4c9c-169b-447d-b8a6-dce72c4ed5ac')
+            ? true
+            : _checkPremiumStatus(p['user_subscriptions']);
+        return u;
+      }).toList();
     } catch (e) {
-      print('Error fetching friends leaderboard: $e');
       return [];
     }
   }

@@ -10,9 +10,11 @@ import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/features/auth/presentation/pages/profile_page.dart';
 import 'package:aliolo/features/settings/presentation/pages/settings_page.dart';
+import 'package:aliolo/features/documentation/presentation/pages/documentation_page.dart';
 import 'package:aliolo/features/subjects/presentation/pages/subject_page.dart';
 import 'package:aliolo/data/services/feedback_service.dart';
 import 'package:aliolo/core/di/service_locator.dart';
+import 'package:aliolo/core/widgets/premium_badge.dart';
 
 class LeaderboardPage extends StatefulWidget {
   const LeaderboardPage({super.key});
@@ -111,70 +113,87 @@ class _LeaderboardPageState extends State<LeaderboardPage>
 
   @override
   Widget build(BuildContext context) {
-    final currentSessionColor = ThemeService().primaryColor;
     const appBarColor = Colors.white;
 
     return ListenableBuilder(
-      listenable: TranslationService(),
+      listenable: Listenable.merge([TranslationService(), _authService]),
       builder: (context, _) {
         final isGlobalTab = _tabController.index == 0;
-        final currentPage =
-            isGlobalTab ? _currentGlobalPage : _currentFriendsPage;
+        final currentPage = isGlobalTab ? _currentGlobalPage : _currentFriendsPage;
         final currentList = isGlobalTab ? _globalUsers : _friendUsers;
+
+        final isSmallScreen = MediaQuery.of(context).size.width < 600;
+        final currentSessionColor = ThemeService().primaryColor;
+
+        final homeAction = IconButton(
+          tooltip: context.t('home') ?? 'Home',
+          icon: const Icon(Icons.school),
+          onPressed: () => Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => const SubjectPage()),
+            (route) => false,
+          ),
+        );
+        final leaderboardAction = IconButton(
+          tooltip: context.t('leaderboard'),
+          icon: const Icon(Icons.emoji_events),
+          onPressed: () => _loadData(),
+        );
+        final profileAction = IconButton(
+          tooltip: context.t('profile'),
+          icon: ValueListenableBuilder<bool>(
+            valueListenable: getIt<FeedbackService>().pendingNotifications,
+            builder: (context, hasNotif, _) {
+              return Badge(
+                isLabelVisible: hasNotif,
+                backgroundColor: Colors.amber,
+                child: const Icon(Icons.person),
+              );
+            },
+          ),
+          onPressed: () async {
+            await Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfilePage()));
+          },
+        );
+        final settingsAction = IconButton(
+          tooltip: context.t('settings'),
+          icon: const Icon(Icons.settings),
+          onPressed: () =>
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const SettingsPage())),
+        );
+        final docAction = (_authService.currentUser?.showDocumentation ?? true)
+            ? IconButton(
+              tooltip: context.t('documentation'),
+              icon: const Icon(Icons.help_outline),
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const DocumentationPage()),
+              ),
+            )
+            : null;
 
         return AlioloPage(
           title: Text(
             context.t('leaderboard'),
-            style: const TextStyle(color: appBarColor),
+            style: const TextStyle(color: appBarColor, fontSize: 20, fontWeight: FontWeight.bold),
           ),
           appBarColor: currentSessionColor,
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.school, color: appBarColor),
-              onPressed:
-                  () => Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const SubjectPage(),
-                    ),
-                    (route) => false,
-                  ),
-            ),
-            IconButton(
-              icon: const Icon(Icons.emoji_events, color: appBarColor),
-              onPressed: () => _loadData(),
-            ),
-            IconButton(
-              icon: ValueListenableBuilder<bool>(
-                valueListenable: getIt<FeedbackService>().pendingNotifications,
-                builder: (context, hasNotif, _) {
-                  return Badge(
-                    isLabelVisible: hasNotif,
-                    backgroundColor: Colors.amber,
-                    child: const Icon(Icons.person, color: appBarColor),
-                  );
-                },
-              ),
-              onPressed: () async {
-                await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const ProfilePage(),
-                  ),
-                );
-              },
-            ),
-            IconButton(
-              icon: const Icon(Icons.settings, color: appBarColor),
-              onPressed:
-                  () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const SettingsPage(),
-                    ),
-                  ),
-            ),
-          ],
+          actions: isSmallScreen
+              ? [homeAction, profileAction]
+              : [
+                homeAction,
+                leaderboardAction,
+                profileAction,
+                settingsAction,
+                if (docAction != null) docAction,
+              ],
+          overflowActions: isSmallScreen
+              ? [
+                leaderboardAction,
+                settingsAction,
+                if (docAction != null) docAction,
+              ]
+              : null,
           body: Column(
             children: [
               const SizedBox(height: 24),
@@ -307,22 +326,27 @@ class _LeaderboardPageState extends State<LeaderboardPage>
                 CircleAvatar(
                   backgroundImage:
                       user.avatarPath != null
-                          ? (user.avatarPath!.startsWith('http') || kIsWeb
-                                  ? NetworkImage(user.avatarPath!)
-                                  : FileImage(dynamicFile(user.avatarPath!)))
-                              as ImageProvider
+                          ? NetworkImage(user.avatarPath!)
                           : null,
                   child:
                       user.avatarPath == null ? const Icon(Icons.person) : null,
                 ),
               ],
             ),
-            title: Text(
-              user.username + (isMe ? ' (${context.t('you')})' : ''),
-              style: TextStyle(
-                fontWeight: isMe ? FontWeight.bold : FontWeight.normal,
-                fontSize: rank < 3 ? 18 : 16,
-              ),
+            title: Row(
+              children: [
+                Text(
+                  user.username + (isMe ? ' (${context.t('you')})' : ''),
+                  style: TextStyle(
+                    fontWeight: isMe ? FontWeight.bold : FontWeight.normal,
+                    fontSize: rank < 3 ? 18 : 16,
+                  ),
+                ),
+                if (user.isPremium) ...[
+                  const SizedBox(width: 6),
+                  const PremiumBadge(size: 14),
+                ],
+              ],
             ),
             subtitle: Text('${user.totalXp} XP'),
             trailing: trailing,
