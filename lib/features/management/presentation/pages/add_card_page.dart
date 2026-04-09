@@ -942,7 +942,7 @@ class _AddCardPageState extends State<AddCardPage> {
             labelText: context.t('prompt_label'),
             border: const OutlineInputBorder(),
           ),
-          maxLines: 2,
+          maxLines: 1,
           enabled: !widget.isReadOnly,
         ),
         const SizedBox(height: 16),
