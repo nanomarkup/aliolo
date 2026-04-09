@@ -29,6 +29,8 @@ jobs:
         with:
           name: aliolo-web
           path: build/web/
+      - name: Verify Build
+        run: ls -R build/web
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/pages-action@v1
         with:
