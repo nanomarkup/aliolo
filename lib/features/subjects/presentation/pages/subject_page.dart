@@ -269,7 +269,7 @@ class _SubjectPageState extends State<SubjectPage> {
         final activePillars =
             pillars
                 .where(
-                  (p) => _filteredContent.any(
+                  (p) => _matchingContent.any(
                     (item) =>
                         item.pillarId == p.id && item is! FolderModel,
                   ),
