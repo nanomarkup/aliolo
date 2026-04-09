@@ -25,7 +25,8 @@ This file serves as the primary context bridge for Gemini CLI.
 - **Card Audio:** 10 MB (Planned)
 - **Card Video:** 50 MB (Planned)
 
-## 💾 Database Schema Updates (Supabase)
+## 💾 Database Schema (Supabase)
+- **Live Schema:** The complete, live database schema is maintained in `DB_SCHEMA.md`. Always refer to it for the most accurate table and column definitions.
 - **`profiles` table:**
     - `last_active_date` (TIMESTAMPTZ)
     - `daily_completions` (FLOAT)

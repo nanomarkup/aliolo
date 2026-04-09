@@ -1,115 +1,213 @@
-# Aliolo Database Schema (Supabase)
+# Aliolo Database Schema (Live Supabase)
 
-This file documents the current state of the Supabase database schema as of March 2026.
-
-## Tables
-
-### `profiles`
-- `id` (UUID, PK) - Links to `auth.users`
-- `username` (Text)
-- `email` (Text)
-- `total_xp` (Int, default 0)
-- `current_streak` (Int, default 0)
-- `max_streak` (Int, default 0)
-- `theme_mode` (Text, default 'system')
-- `ui_language` (Text, default 'en')
-- `daily_goal_count` (Int, default 20)
-- `next_daily_goal` (Int, default 20)
-- `daily_completions` (Float, default 0)
-- `sidebar_left` (Bool, default false)
-- `sound_enabled` (Bool, default true)
-- `auto_play_enabled` (Bool, default false)
-- `show_on_leaderboard` (Bool, default true)
-- `learn_session_size` (Int, default 20)
-- `test_session_size` (Int, default 10)
-- `options_count` (Int, default 6)
-- `default_language` (Text, default 'en')
-- `last_active_date` (Timestamptz)
-- `main_pillar_id` (Int, default 8, FK -> `pillars.id`)
-- `avatar_url` (Text)
-- `created_at` (Timestamptz)
-- `updated_at` (Timestamptz)
-
-### `pillars`
-- `id` (Int, PK)
-- `icon` (Text)
-- `light_color` (Text)
-- `dark_color` (Text)
-- `sort_order` (Int, default 10)
-- `localized_data` (JSONB)
+Generated dynamically from the remote Supabase API.
 
 ### `folders`
-- `id` (UUID, PK)
-- `pillar_id` (Int, FK -> `pillars.id`)
-- `owner_id` (UUID, FK -> `profiles.id`)
-- `localized_data` (JSONB)
-- `created_at` (Timestamptz)
-- `updated_at` (Timestamptz)
+- `id` (string) (Required): Note:
+This is a Primary Key.<pk/>
+- `pillar_id` (integer) (Required): Note:
+This is a Foreign Key to `pillars.id`.<fk table='pillars' column='id'/>
+- `owner_id` (string) (Required): Note:
+This is a Foreign Key to `profiles.id`.<fk table='profiles' column='id'/>
+- `localized_data` (jsonb)
+- `created_at` (string)
+- `updated_at` (string)
+
+### `collections`
+- `id` (string) (Required): Note:
+This is a Primary Key.<pk/>
+- `pillar_id` (integer) (Required): Note:
+This is a Foreign Key to `pillars.id`.<fk table='pillars' column='id'/>
+- `folder_id` (string): Note:
+This is a Foreign Key to `folders.id`.<fk table='folders' column='id'/>
+- `owner_id` (string) (Required): Note:
+This is a Foreign Key to `profiles.id`.<fk table='profiles' column='id'/>
+- `localized_data` (jsonb)
+- `age_group` (string)
+- `is_public` (boolean)
+- `created_at` (string)
+- `updated_at` (string)
+
+### `feedback_replies`
+- `id` (string) (Required): Note:
+This is a Primary Key.<pk/>
+- `created_at` (string)
+- `feedback_id` (string): Note:
+This is a Foreign Key to `feedbacks.id`.<fk table='feedbacks' column='id'/>
+- `user_id` (string): Note:
+This is a Foreign Key to `profiles.id`.<fk table='profiles' column='id'/>
+- `content` (string) (Required)
+- `attachment_urls` (array)
 
 ### `subjects`
-- `id` (UUID, PK)
-- `pillar_id` (Int, FK -> `pillars.id`)
-- `folder_id` (UUID, FK -> `folders.id`)
-- `owner_id` (UUID, FK -> `profiles.id`)
-- `is_public` (Bool, default false)
-- `age_group` (Text, default 'advanced')
-- `localized_data` (JSONB)
-- `created_at` (Timestamptz)
-- `updated_at` (Timestamptz)
+- `id` (string) (Required): Note:
+This is a Primary Key.<pk/>
+- `pillar_id` (integer) (Required): Note:
+This is a Foreign Key to `pillars.id`.<fk table='pillars' column='id'/>
+- `owner_id` (string) (Required): Note:
+This is a Foreign Key to `profiles.id`.<fk table='profiles' column='id'/>
+- `is_public` (boolean)
+- `updated_at` (string)
+- `created_at` (string)
+- `age_group` (string)
+- `localized_data` (jsonb)
+- `folder_id` (string): Note:
+This is a Foreign Key to `folders.id`.<fk table='folders' column='id'/>
 
-### `cards`
-- `id` (UUID, PK)
-- `subject_id` (UUID, FK -> `subjects.id`)
-- `level` (Int, default 1)
-- `owner_id` (UUID)
-- `is_public` (Bool, default false)
-- `is_deleted` (Bool, default false)
-- `test_mode` (Text, default 'image_to_text')
-- `localized_data` (JSONB)
-- `created_at` (Timestamptz)
-- `updated_at` (Timestamptz)
+### `user_subscriptions`
+- `id` (string) (Required): Note:
+This is a Primary Key.<pk/>
+- `user_id` (string) (Required): Note:
+This is a Foreign Key to `profiles.id`.<fk table='profiles' column='id'/>
+- `status` (string) (Required)
+- `provider` (string) (Required)
+- `expiry_date` (string)
+- `purchase_token` (string)
+- `order_id` (string)
+- `product_id` (string)
+- `updated_at` (string)
+- `created_at` (string)
 
-### `user_friendships`
-- `id` (BigInt, PK)
-- `sender_id` (UUID, FK -> `profiles.id`)
-- `receiver_id` (UUID, FK -> `profiles.id`)
-- `status` (Text, default 'pending')
-- `created_at` (Timestamptz)
-
-### `progress`
-- `id` (BigInt, PK)
-- `user_id` (UUID, FK -> `profiles.id`)
-- `card_id` (UUID, FK -> `cards.id`)
-- `subject_id` (UUID, FK -> `subjects.id`)
-- `correct_count` (Int)
-- `ease_factor` (Float)
-- `interval` (Int)
-- `repetition_count` (Int)
-- `next_review` (Timestamptz)
-- `is_hidden` (Bool)
-- `created_at` (Timestamptz)
-- `updated_at` (Timestamptz)
-
-### `ui_translations`
-- `key` (Text, PK)
-- `lang` (Text, PK)
-- `value` (Text)
-- `updated_at` (Timestamptz)
-
-## Missing Tables (Required for some features)
+### `profiles`
+- `id` (string) (Required): Note:
+This is a Primary Key.<pk/>
+- `username` (string)
+- `email` (string)
+- `total_xp` (integer)
+- `current_streak` (integer)
+- `max_streak` (integer)
+- `theme_mode` (string)
+- `ui_language` (string)
+- `daily_goal_count` (integer)
+- `updated_at` (string)
+- `sidebar_left` (boolean)
+- `sound_enabled` (boolean)
+- `show_on_leaderboard` (boolean)
+- `learn_session_size` (integer)
+- `options_count` (integer)
+- `created_at` (string)
+- `avatar_url` (string)
+- `default_language` (string)
+- `last_active_date` (string)
+- `next_daily_goal` (integer)
+- `daily_completions` (number)
+- `auto_play_enabled` (boolean)
+- `test_session_size` (integer)
+- `main_pillar_id` (integer)
+- `show_documentation` (boolean)
 
 ### `invitations`
-Required by the `inviteUserByEmail` flow if database triggers/logging are enabled.
-```sql
-CREATE TABLE public.invitations (
-  id BIGINT GENERATED BY DEFAULT AS IDENTITY PRIMARY KEY,
-  user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
-  email TEXT NOT NULL,
-  invited_by UUID REFERENCES auth.users(id),
-  created_at TIMESTAMPTZ DEFAULT NOW()
-);
-```
+- `id` (integer) (Required): Note:
+This is a Primary Key.<pk/>
+- `user_id` (string)
+- `email` (string) (Required)
+- `invited_by` (string)
+- `created_at` (string)
+- `inviter_id` (string)
+- `invited_email` (string)
 
-## RPCs
-- `delete_user_account`: Deletes current user auth and data.
-- `delete_user_data`: Deletes user records without deleting auth.
+### `cards`
+- `id` (string) (Required): Note:
+This is a Primary Key.<pk/>
+- `subject_id` (string) (Required): Note:
+This is a Foreign Key to `subjects.id`.<fk table='subjects' column='id'/>
+- `level` (integer)
+- `owner_id` (string)
+- `is_public` (boolean)
+- `is_deleted` (boolean)
+- `created_at` (string)
+- `updated_at` (string)
+- `test_mode` (string)
+- `localized_data` (jsonb)
+
+### `languages`
+- `id` (string) (Required): Note:
+This is a Primary Key.<pk/>
+- `name` (string) (Required)
+
+### `user_subjects`
+- `id` (integer) (Required): Note:
+This is a Primary Key.<pk/>
+- `user_id` (string) (Required): Note:
+This is a Foreign Key to `profiles.id`.<fk table='profiles' column='id'/>
+- `subject_id` (string)
+- `created_at` (string)
+- `collection_id` (string): Note:
+This is a Foreign Key to `collections.id`.<fk table='collections' column='id'/>
+
+### `collection_items`
+- `id` (string) (Required): Note:
+This is a Primary Key.<pk/>
+- `collection_id` (string) (Required): Note:
+This is a Foreign Key to `collections.id`.<fk table='collections' column='id'/>
+- `subject_id` (string) (Required): Note:
+This is a Foreign Key to `subjects.id`.<fk table='subjects' column='id'/>
+- `created_at` (string)
+
+### `feedbacks`
+- `id` (string) (Required): Note:
+This is a Primary Key.<pk/>
+- `created_at` (string)
+- `user_id` (string): Note:
+This is a Foreign Key to `profiles.id`.<fk table='profiles' column='id'/>
+- `type` (string) (Required)
+- `title` (string) (Required)
+- `content` (string) (Required)
+- `attachment_urls` (array)
+- `status` (string)
+- `metadata` (jsonb)
+
+### `ui_translations`
+- `key` (string) (Required): Note:
+This is a Primary Key.<pk/>
+- `lang` (string) (Required): Note:
+This is a Primary Key.<pk/>
+- `value` (string) (Required)
+- `updated_at` (string) (Required)
+
+### `user_friendships`
+- `id` (integer) (Required): Note:
+This is a Primary Key.<pk/>
+- `sender_id` (string) (Required): Note:
+This is a Foreign Key to `profiles.id`.<fk table='profiles' column='id'/>
+- `receiver_id` (string) (Required): Note:
+This is a Foreign Key to `profiles.id`.<fk table='profiles' column='id'/>
+- `status` (string) (Required)
+- `created_at` (string)
+
+### `progress`
+- `id` (integer) (Required): Note:
+This is a Primary Key.<pk/>
+- `user_id` (string) (Required): Note:
+This is a Foreign Key to `profiles.id`.<fk table='profiles' column='id'/>
+- `card_id` (string): Note:
+This is a Foreign Key to `cards.id`.<fk table='cards' column='id'/>
+- `subject_id` (string): Note:
+This is a Foreign Key to `subjects.id`.<fk table='subjects' column='id'/>
+- `correct_count` (integer)
+- `ease_factor` (number)
+- `interval` (integer)
+- `repetition_count` (integer)
+- `next_review` (string)
+- `updated_at` (string)
+- `is_hidden` (boolean)
+- `created_at` (string)
+
+### `pillars`
+- `id` (integer) (Required): Note:
+This is a Primary Key.<pk/>
+- `light_color` (string)
+- `icon` (string)
+- `sort_order` (integer)
+- `localized_data` (jsonb)
+- `dark_color` (string)
+
+### `onboarding_analytics`
+- `id` (string) (Required): Note:
+This is a Primary Key.<pk/>
+- `session_id` (string) (Required)
+- `age_range` (string)
+- `pillar_id` (integer)
+- `created_at` (string)
+- `last_slide_index` (integer)
+

@@ -559,9 +559,16 @@ class AuthService extends ChangeNotifier {
   Future<int?> getMyGlobalRank() async {
     if (_currentUser?.serverId == null) return null;
     try {
-      final res = await _supabase!.rpc('get_user_rank', params: {'user_id': _currentUser!.serverId});
-      return res as int?;
+      final res = await _supabase!
+          .from('profiles')
+          .select('id')
+          .eq('show_on_leaderboard', true)
+          .gt('total_xp', _currentUser!.totalXp)
+          .count(CountOption.exact);
+      
+      return (res.count ?? 0) + 1;
     } catch (e) {
+      AppLogger.log('AuthService: getMyGlobalRank error: $e');
       return null;
     }
   }

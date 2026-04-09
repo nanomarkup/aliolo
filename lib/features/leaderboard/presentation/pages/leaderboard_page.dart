@@ -35,7 +35,7 @@ class _LeaderboardPageState extends State<LeaderboardPage>
 
   int _currentGlobalPage = 0;
   int _currentFriendsPage = 0;
-  final int _pageSize = 20;
+  final int _pageSize = 50;
 
   @override
   void initState() {
@@ -52,7 +52,9 @@ class _LeaderboardPageState extends State<LeaderboardPage>
 
   Future<void> _loadInitialData() async {
     await _loadData();
-    await _jumpToMe();
+    if (_authService.currentUser?.showOnLeaderboard ?? false) {
+      await _jumpToMe();
+    }
   }
 
   @override

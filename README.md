@@ -35,8 +35,6 @@ flutter build linux --release
 
 #### Web
 ```bash
-python3 fix_web_build_v2.py
-cd aliolo
 flutter build web --release
 ```
 
