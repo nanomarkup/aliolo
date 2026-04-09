@@ -1172,6 +1172,13 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
         insetPadding: const EdgeInsets.all(16),
         child: StatefulBuilder(
           builder: (context, setState) {
+            // Listen to page changes to rebuild UI (for disabling arrows at ends)
+            void onPageChanged() {
+              if (pageController.hasClients) {
+                setState(() {});
+              }
+            }
+
             return Stack(
               alignment: Alignment.center,
               children: [
@@ -1185,6 +1192,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                   child: PageView.builder(
                     controller: pageController,
                     itemCount: _filteredCards.length,
+                    onPageChanged: (_) => onPageChanged(),
                     itemBuilder: (context, index) {
                       final card = _filteredCards[index];
                       final audioUrl = card.getAudioUrl(displayLang);
@@ -1265,37 +1273,45 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                   ),
                 ),
                 // Left Arrow
-                Positioned(
-                  left: 8,
-                  child: IconButton(
-                    icon: const Icon(Icons.chevron_left, color: Colors.white, size: 40),
-                    style: IconButton.styleFrom(backgroundColor: Colors.black.withValues(alpha: 0.5)),
-                    onPressed: () {
-                      if (pageController.hasClients && pageController.page! > 0) {
-                        pageController.previousPage(duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
-                      }
-                    },
+                if (_filteredCards.length > 1)
+                  Positioned(
+                    left: 8,
+                    child: Opacity(
+                      opacity: (pageController.hasClients && (pageController.page ?? initialIndex.toDouble()).round() <= 0) ? 0.3 : 1.0,
+                      child: IconButton(
+                        icon: const Icon(Icons.chevron_left, color: Colors.white, size: 40),
+                        style: IconButton.styleFrom(backgroundColor: Colors.black.withValues(alpha: 0.5)),
+                        onPressed: () {
+                          if (pageController.hasClients && pageController.page! > 0) {
+                            pageController.previousPage(duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+                          }
+                        },
+                      ),
+                    ),
                   ),
-                ),
                 // Right Arrow
-                Positioned(
-                  right: 8,
-                  child: IconButton(
-                    icon: const Icon(Icons.chevron_right, color: Colors.white, size: 40),
-                    style: IconButton.styleFrom(backgroundColor: Colors.black.withValues(alpha: 0.5)),
-                    onPressed: () {
-                      if (pageController.hasClients && pageController.page! < _filteredCards.length - 1) {
-                        pageController.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
-                      }
-                    },
+                if (_filteredCards.length > 1)
+                  Positioned(
+                    right: 8,
+                    child: Opacity(
+                      opacity: (pageController.hasClients && (pageController.page ?? initialIndex.toDouble()).round() >= _filteredCards.length - 1) ? 0.3 : 1.0,
+                      child: IconButton(
+                        icon: const Icon(Icons.chevron_right, color: Colors.white, size: 40),
+                        style: IconButton.styleFrom(backgroundColor: Colors.black.withValues(alpha: 0.5)),
+                        onPressed: () {
+                          if (pageController.hasClients && pageController.page! < _filteredCards.length - 1) {
+                            pageController.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+                          }
+                        },
+                      ),
+                    ),
                   ),
-                ),
               ],
             );
           }
         ),
       ),
-    );
+    ).then((_) => pageController.dispose());
   }
 
   Widget _buildCardPreview(
