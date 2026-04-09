@@ -1367,8 +1367,10 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
     } else if (card.isCounting) {
       return CountingGrid(count: card.numericalAnswer, iconSize: 24);
     } else if (card.isColors && card.hexColor != null) {
-      return ColoredBox(
-        color: Color(int.parse(card.hexColor!.replaceFirst('#', '0xFF'))),
+      return SizedBox.expand(
+        child: ColoredBox(
+          color: Color(int.parse(card.hexColor!.replaceFirst('#', '0xFF'))),
+        ),
       );
     }
 
