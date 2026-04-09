@@ -1326,53 +1326,50 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
     String displayLang, {
     BoxFit fit = BoxFit.cover,
   }) {
-    if (_currentSubject == null && _currentCollection == null)
-      return Container();
-
-    if (_currentSubject != null) {
-      if (_currentSubject!.isNumbers) {
-        return NumberGrid(
-          displayChar: card.getNumericalChar(displayLang),
-          fontSize: 40,
-          color: pillarColor,
-        );
-      } else if (_currentSubject!.isDivision) {
-        final parts = card.divisionParts ?? [0, 1];
-        return DivisionGrid(
-          a: parts[0],
-          b: parts[1],
-          languageCode: displayLang,
-          fontSize: 24,
-          color: pillarColor,
-        );
-      } else if (_currentSubject!.isMultiplication) {
-        final parts = card.multiplicationParts ?? [1, 0];
-        return MultiplicationGrid(
-          a: parts[0],
-          b: parts[1],
-          languageCode: displayLang,
-          fontSize: 24,
-          color: pillarColor,
-        );
-      } else if (_currentSubject!.isSubtraction) {
-        return SubtractionGrid(
-          totalSum: card.numericalAnswer,
-          maxOperand: _currentSubject!.maxOperand,
-          iconSize: 18,
-        );
-      } else if (_currentSubject!.isAddition) {
-        return AdditionGrid(
-          totalSum: card.numericalAnswer,
-          maxOperand: _currentSubject!.maxOperand,
-          iconSize: 18,
-        );
-      } else if (_currentSubject!.isCounting) {
-        return CountingGrid(count: card.numericalAnswer, iconSize: 24);
-      } else if (_currentSubject!.isColors && card.hexColor != null) {
-        return ColoredBox(
-          color: Color(int.parse(card.hexColor!.replaceFirst('#', '0xFF'))),
-        );
-      }
+    // Detect special card types directly from the card properties
+    // This ensures collections (where _currentSubject is null) still render correctly.
+    if (card.isNumbers) {
+      return NumberGrid(
+        displayChar: card.getNumericalChar(displayLang),
+        fontSize: 40,
+        color: pillarColor,
+      );
+    } else if (card.isDivision) {
+      final parts = card.divisionParts ?? [0, 1];
+      return DivisionGrid(
+        a: parts[0],
+        b: parts[1],
+        languageCode: displayLang,
+        fontSize: 24,
+        color: pillarColor,
+      );
+    } else if (card.isMultiplication) {
+      final parts = card.multiplicationParts ?? [1, 0];
+      return MultiplicationGrid(
+        a: parts[0],
+        b: parts[1],
+        languageCode: displayLang,
+        fontSize: 24,
+        color: pillarColor,
+      );
+    } else if (card.isSubtraction) {
+      return SubtractionGrid(
+        totalSum: card.numericalAnswer,
+        maxOperand: _currentSubject?.maxOperand ?? 20,
+        iconSize: 18,
+      );
+    } else if (card.isAddition) {
+      return AdditionGrid(
+        totalSum: card.numericalAnswer,
+        maxOperand: _currentSubject?.maxOperand ?? 20,
+        iconSize: 18,
+      );
+    } else if (card.isCounting) {
+      return CountingGrid(count: card.numericalAnswer, iconSize: 24);
+    } else if (card.isColors && card.hexColor != null) {
+      return ColoredBox(
+        color: Color(int.parse(card.hexColor!.replaceFirst('#', '0xFF'))),
+      );
     }
 
     final imageUrl = card.getImageUrls(displayLang).firstOrNull;

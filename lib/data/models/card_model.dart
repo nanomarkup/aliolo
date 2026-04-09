@@ -196,6 +196,15 @@ class CardModel {
     return match?.group(1);
   }
 
+  bool get isColors => testMode == 'colors' || hexColor != null;
+
+  bool get isNumbers => testMode == 'numbers';
+  bool get isAddition => testMode == 'addition';
+  bool get isSubtraction => testMode == 'subtraction';
+  bool get isMultiplication => testMode == 'multiplication';
+  bool get isDivision => testMode == 'division';
+  bool get isCounting => testMode == 'counting';
+
   int get numericalAnswer {
     // Try global first as it's most likely to be a standard digit
     String? ans = localizedData['global']?.answer;
