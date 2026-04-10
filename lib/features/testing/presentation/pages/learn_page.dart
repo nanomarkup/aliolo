@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:aliolo/data/services/testing_language_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:window_manager/window_manager.dart';
@@ -70,9 +71,12 @@ class _LearnPageState extends State<LearnPage> {
   late final Player player = Player();
   late final VideoController controller = VideoController(player);
 
+  late String _languageCode;
+
   @override
   void initState() {
     super.initState();
+    _languageCode = getIt<TestingLanguageService>().currentLanguageCode.value;
     if (!kIsWeb) windowManager.setResizable(true);
 
     final isPremium = getIt<SubscriptionService>().isPremium;
@@ -122,7 +126,7 @@ class _LearnPageState extends State<LearnPage> {
       if (mounted) setState(() => _canGoNext = true);
     });
 
-    final lang = widget.languageCode.toLowerCase();
+    final lang = _languageCode.toLowerCase();
     final images = _currentCard.getImageUrls(lang);
     final video = _currentCard.getVideoUrl(lang);
 
@@ -137,7 +141,7 @@ class _LearnPageState extends State<LearnPage> {
 
   Future<void> _playInitialMedia() async {
     await player.stop();
-    final lang = widget.languageCode.toLowerCase();
+    final lang = _languageCode.toLowerCase();
     final audioUrl = _currentCard.getAudioUrl(lang);
     final videoUrl = _currentCard.getVideoUrl(lang);
 
@@ -218,7 +222,7 @@ class _LearnPageState extends State<LearnPage> {
   }
 
   void _showPeekSheet() {
-    final lang = widget.languageCode.toLowerCase();
+    final lang = _languageCode.toLowerCase();
     showModalBottomSheet(
       context: context,
       builder: (context) {
@@ -299,7 +303,7 @@ class _LearnPageState extends State<LearnPage> {
 
   @override
   Widget build(BuildContext context) {
-    final lang = widget.languageCode.toLowerCase();
+    final lang = _languageCode.toLowerCase();
     final pillar = pillars.firstWhere(
       (p) => p.id == _subject.pillarId,
       orElse: () => pillars.first,
@@ -321,7 +325,7 @@ class _LearnPageState extends State<LearnPage> {
             appBar: AppBar(
               automaticallyImplyLeading: false,
               title: Text(
-                _subject.getName(widget.languageCode),
+                _subject.getName(_languageCode),
                 style: const TextStyle(fontSize: 18),
               ),
               backgroundColor: headerColor,

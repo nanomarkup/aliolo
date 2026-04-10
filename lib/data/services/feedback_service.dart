@@ -166,6 +166,25 @@ class FeedbackService {
 
   Future<void> deleteReply(String replyId) async {
     try {
+      // 1. Fetch reply to get attachment URLs
+      final res = await _supabase.from('feedback_replies').select('attachment_urls').eq('id', replyId).maybeSingle();
+      if (res != null && res['attachment_urls'] != null) {
+        final List<String> urls = List<String>.from(res['attachment_urls']);
+        final List<String> paths = [];
+        for (var url in urls) {
+          try {
+            final uri = Uri.parse(url);
+            final segments = uri.pathSegments;
+            if (segments.length >= 8) {
+              paths.add(segments.sublist(5).join('/'));
+            }
+          } catch (_) {}
+        }
+        if (paths.isNotEmpty) {
+          await _supabase.storage.from('feedback_attachments').remove(paths);
+        }
+      }
+
       await _supabase.from('feedback_replies').delete().eq('id', replyId);
       await hasPendingNotifications(); // Update global badge state
     } catch (e) {

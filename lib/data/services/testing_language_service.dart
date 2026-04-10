@@ -111,6 +111,7 @@ class TestingLanguageService extends ChangeNotifier {
   Future<void> updateCurrentLanguage(String code) async {
     if (currentLanguageCode.value == code) return;
     currentLanguageCode.value = code;
+    notifyListeners();
     try {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('last_testing_lang', code);

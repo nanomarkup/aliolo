@@ -32,13 +32,33 @@ class LocalizedCardData {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      if (prompt != null) 'prompt': prompt,
-      if (answer != null) 'answer': answer,
-      if (audioUrl != null) 'audio_url': audioUrl,
-      if (videoUrl != null) 'video_url': videoUrl,
-      if (imageUrls != null) 'image_urls': imageUrls,
-    };
+    final map = Map<String, dynamic>.from(rawData);
+    if (prompt != null) {
+      map['prompt'] = prompt;
+    } else {
+      map.remove('prompt');
+    }
+    if (answer != null) {
+      map['answer'] = answer;
+    } else {
+      map.remove('answer');
+    }
+    if (audioUrl != null) {
+      map['audio_url'] = audioUrl;
+    } else {
+      map.remove('audio_url');
+    }
+    if (videoUrl != null) {
+      map['video_url'] = videoUrl;
+    } else {
+      map.remove('video_url');
+    }
+    if (imageUrls != null) {
+      map['image_urls'] = imageUrls;
+    } else {
+      map.remove('image_urls');
+    }
+    return map;
   }
 }
 

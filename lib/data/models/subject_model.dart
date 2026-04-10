@@ -4,21 +4,35 @@ import 'content_item.dart';
 class LocalizedSubjectData {
   final String? name;
   final String? description;
+  final Map<String, dynamic> rawData;
 
-  LocalizedSubjectData({this.name, this.description});
+  LocalizedSubjectData({
+    this.name,
+    this.description,
+    this.rawData = const {},
+  });
 
   factory LocalizedSubjectData.fromJson(Map<String, dynamic> json) {
     return LocalizedSubjectData(
       name: json['name'],
       description: json['description'],
+      rawData: json,
     );
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      if (name != null) 'name': name,
-      if (description != null) 'description': description,
-    };
+    final map = Map<String, dynamic>.from(rawData);
+    if (name != null) {
+      map['name'] = name;
+    } else {
+      map.remove('name');
+    }
+    if (description != null) {
+      map['description'] = description;
+    } else {
+      map.remove('description');
+    }
+    return map;
   }
 }
 

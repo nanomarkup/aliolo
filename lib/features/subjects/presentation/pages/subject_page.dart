@@ -215,7 +215,7 @@ class _SubjectPageState extends State<SubjectPage> {
   Future<void> _navigateToSubject(dynamic result) async {
     if (result == null || result == true) return;
 
-    final lang = TranslationService().currentLocale.languageCode;
+    final lang = getIt<TestingLanguageService>().currentLanguageCode.value;
 
     if (result is SubjectModel) {
       final cards = await _cardService.getCardsBySubject(result.id);
@@ -1209,7 +1209,7 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
   Future<void> _navigateToSubject(dynamic result) async {
     if (result == null || result == true) return;
 
-    final lang = TranslationService().currentLocale.languageCode;
+    final lang = getIt<TestingLanguageService>().currentLanguageCode.value;
 
     if (result is SubjectModel) {
       final cards = await _cardService.getCardsBySubject(result.id);
@@ -2037,7 +2037,7 @@ class _FolderPageState extends State<FolderPage> {
   Future<void> _navigateToSubject(dynamic result) async {
     if (result == null || result == true) return;
 
-    final lang = TranslationService().currentLocale.languageCode;
+    final lang = getIt<TestingLanguageService>().currentLanguageCode.value;
 
     if (result is SubjectModel) {
       final cards = await _cardService.getCardsBySubject(result.id);

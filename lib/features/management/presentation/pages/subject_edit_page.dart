@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/services.dart';
 import 'package:aliolo/core/widgets/aliolo_scrollable_page.dart';
 import 'package:aliolo/core/di/service_locator.dart';
@@ -42,6 +43,7 @@ class SubjectEditPage extends StatefulWidget {
 class DraftLocalizedSubjectData {
   String name = '';
   String description = '';
+  Map<String, dynamic> rawData = {};
 
   DraftLocalizedSubjectData();
 
@@ -49,6 +51,7 @@ class DraftLocalizedSubjectData {
     final d = DraftLocalizedSubjectData();
     d.name = data.name ?? '';
     d.description = data.description ?? '';
+    d.rawData = Map.from(data.rawData);
     return d;
   }
 }
@@ -83,6 +86,7 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
   @override
   void initState() {
     super.initState();
+    _loadSidebarState();
 
     // Premium Locking: Redirect if creating new and not premium
     if (widget.existingSubject == null && widget.existingFolder == null) {
@@ -221,6 +225,22 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
     _descriptionController.text = draft.description;
   }
 
+  Future<void> _loadSidebarState() async {
+    final prefs = await SharedPreferences.getInstance();
+    if (mounted) {
+      setState(() {
+        _showSidebar = prefs.getBool('show_localization_sidebar') ?? false;
+      });
+    }
+  }
+
+  Future<void> _toggleSidebar() async {
+    final newState = !_showSidebar;
+    setState(() => _showSidebar = newState);
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('show_localization_sidebar', newState);
+  }
+
   @override
   void dispose() {
     _nameController.dispose();
@@ -232,8 +252,8 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
   void _showJsonDialog() {
     final Map<String, dynamic> data = _drafts.map(
       (key, value) => MapEntry(key, {
-        if (value.name.isNotEmpty) 'name': value.name,
-        if (value.description.isNotEmpty) 'description': value.description,
+        'name': value.name,
+        'description': value.description,
       }),
     );
 
@@ -312,9 +332,12 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
                                 _ensureDraftExists(l);
                                 if (val is Map) {
                                   final d = val as Map<String, dynamic>;
-                                  _drafts[l]!.name = d['name']?.toString() ?? '';
-                                  _drafts[l]!.description =
-                                      d['description']?.toString() ?? '';
+                                  if (d.containsKey('name')) {
+                                    _drafts[l]!.name = d['name']?.toString() ?? '';
+                                  }
+                                  if (d.containsKey('description')) {
+                                    _drafts[l]!.description = d['description']?.toString() ?? '';
+                                  }
                                 }
                               });
                               _updateControllers();
@@ -394,6 +417,7 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
       finalData[lang] = LocalizedSubjectData(
         name: draft.name.isEmpty ? null : draft.name,
         description: (_isFolderMode || draft.description.isEmpty) ? null : draft.description,
+        rawData: draft.rawData,
       );
     }
 
@@ -1044,7 +1068,7 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
                     IconButton(
                       tooltip: context.t('toggle_languages') ?? 'Languages',
                       icon: Icon(_showSidebar ? Icons.last_page : Icons.language),
-                      onPressed: () => setState(() => _showSidebar = !_showSidebar),
+                      onPressed: _toggleSidebar,
                     ),
                   ]
                 : [
@@ -1056,7 +1080,7 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
                     IconButton(
                       tooltip: context.t('toggle_languages') ?? 'Languages',
                       icon: Icon(_showSidebar ? Icons.last_page : Icons.language),
-                      onPressed: () => setState(() => _showSidebar = !_showSidebar),
+                      onPressed: _toggleSidebar,
                     ),
                   ],
             overflowActions: isSmallScreen

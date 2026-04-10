@@ -85,7 +85,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
     _currentFolder = widget.folder;
     _currentCollection = widget.collection;
     _allCards = widget.cards;
-    _currentLanguageCode = widget.languageCode;
+    _currentLanguageCode = _langService.currentLanguageCode.value;
 
     if (_currentCollection != null) {
       _fetchCollectionSubjects();

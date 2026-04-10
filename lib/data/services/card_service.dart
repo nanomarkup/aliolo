@@ -107,12 +107,77 @@ class CardService with ChangeNotifier {
 
   String generateId() => _uuid.v4();
 
+  // --- Media Deletion Helpers ---
+
+  String? _extractFilePathFromUrl(String url) {
+    try {
+      final uri = Uri.parse(url);
+      final pathSegments = uri.pathSegments;
+      // URLs look like: .../storage/v1/object/public/bucket_id/user_id/lang/filename.ext
+      // pathSegments[0] = storage, [1] = v1, [2] = object, [3] = public, [4] = bucket_id, [5] = user_id, [6] = lang, [7] = filename
+      if (pathSegments.length >= 8) {
+        return pathSegments.sublist(5).join('/');
+      }
+    } catch (_) {}
+    return null;
+  }
+
+  Future<void> deleteMediaForCard(CardModel card) async {
+    final Map<String, List<String>> bucketFiles = {
+      'card_images': [],
+      'card_audio': [],
+      'card_videos': [],
+    };
+
+    void addUrl(String? url, String bucket) {
+      if (url == null || url.isEmpty) return;
+      final path = _extractFilePathFromUrl(url);
+      if (path != null) bucketFiles[bucket]!.add(path);
+    }
+
+    for (var loc in card.localizedData.values) {
+      if (loc.imageUrls != null) {
+        for (var url in loc.imageUrls!) {
+          addUrl(url, 'card_images');
+        }
+      }
+      addUrl(loc.audioUrl, 'card_audio');
+      addUrl(loc.videoUrl, 'card_videos');
+    }
+
+    for (var entry in bucketFiles.entries) {
+      if (entry.value.isNotEmpty) {
+        try {
+          await _supabase!.storage.from(entry.key).remove(entry.value);
+        } catch (e) {
+          print('Error deleting media from ${entry.key}: $e');
+        }
+      }
+    }
+  }
+
+  Future<void> deleteCardMediaFile(String bucket, String url) async {
+    final path = _extractFilePathFromUrl(url);
+    if (path != null) {
+      try {
+        await _supabase!.storage.from(bucket).remove([path]);
+      } catch (e) {
+        print('Error deleting media file from $bucket: $e');
+      }
+    }
+  }
+
   Future<void> deleteCard(CardModel card) async {
-    await _supabase!
-        .from('cards')
-        .update({'is_deleted': true})
-        .eq('id', card.id);
-    notifyListeners();
+    try {
+      await deleteMediaForCard(card);
+      await _supabase!
+          .from('cards')
+          .update({'is_deleted': true})
+          .eq('id', card.id);
+      notifyListeners();
+    } catch (e) {
+      print('Error deleting card: $e');
+    }
   }
 
   Future<void> addCard(CardModel card) async {
@@ -620,6 +685,19 @@ class CardService with ChangeNotifier {
 
   Future<void> deleteSubjectById(String id) async {
     try {
+      // 1. Fetch all cards for this subject to delete their media
+      final cardsData = await _supabase!
+          .from('cards')
+          .select('*')
+          .eq('subject_id', id);
+      
+      final cards = (cardsData as List).map((c) => CardModel.fromJson(c)).toList();
+      
+      for (var card in cards) {
+        await deleteMediaForCard(card);
+      }
+
+      // 2. Delete rows
       await _supabase!.from('cards').delete().eq('subject_id', id);
       await _supabase!.from('subjects').delete().eq('id', id);
       notifyListeners();

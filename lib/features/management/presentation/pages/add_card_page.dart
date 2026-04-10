@@ -1,6 +1,7 @@
 import 'package:aliolo/core/utils/io_utils.dart' if (dart.library.html) 'package:aliolo/core/utils/file_stub.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/services.dart';
 import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/data/models/card_model.dart';
@@ -49,6 +50,8 @@ class DraftLocalizedData {
   XFile? newVideoFile;
   List<String> imageUrls = [];
   List<XFile> newImageFiles = [];
+  Map<String, dynamic> rawData = {};
+  List<String> deletedUrls = [];
 
   DraftLocalizedData();
 
@@ -59,16 +62,17 @@ class DraftLocalizedData {
     d.audioUrl = data.audioUrl;
     d.videoUrl = data.videoUrl;
     d.imageUrls = List.from(data.imageUrls ?? []);
+    d.rawData = Map.from(data.rawData);
     return d;
   }
 
   Map<String, dynamic> toJson() {
     return {
-      if (prompt.isNotEmpty) 'prompt': prompt,
-      if (answer.isNotEmpty) 'answer': answer,
-      if (audioUrl != null) 'audio_url': audioUrl,
-      if (videoUrl != null) 'video_url': videoUrl,
-      if (imageUrls.isNotEmpty) 'image_urls': imageUrls,
+      'prompt': prompt,
+      'answer': answer,
+      'audio_url': audioUrl ?? '',
+      'video_url': videoUrl ?? '',
+      'image_urls': imageUrls,
     };
   }
 }
@@ -101,6 +105,7 @@ class _AddCardPageState extends State<AddCardPage> {
   @override
   void initState() {
     super.initState();
+    _loadSidebarState();
 
     // Premium Locking: Redirect if creating new and not premium
     if (widget.existingCard == null) {
@@ -123,6 +128,22 @@ class _AddCardPageState extends State<AddCardPage> {
     _initDrafts();
     _loadData();
     _updateControllers();
+  }
+
+  Future<void> _loadSidebarState() async {
+    final prefs = await SharedPreferences.getInstance();
+    if (mounted) {
+      setState(() {
+        _showSidebar = prefs.getBool('show_localization_sidebar') ?? false;
+      });
+    }
+  }
+
+  Future<void> _toggleSidebar() async {
+    final newState = !_showSidebar;
+    setState(() => _showSidebar = newState);
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('show_localization_sidebar', newState);
   }
 
   void _onKeyEvent(KeyEvent event) {
@@ -336,7 +357,10 @@ class _AddCardPageState extends State<AddCardPage> {
 
   void _showJsonDialog() {
     final Map<String, dynamic> data = _drafts.map(
-      (key, value) => MapEntry(key, value.toJson()),
+      (key, value) => MapEntry(key, {
+        'prompt': value.prompt,
+        'answer': value.answer,
+      }),
     );
 
     final encoder = const JsonEncoder.withIndent('  ');
@@ -414,14 +438,11 @@ class _AddCardPageState extends State<AddCardPage> {
                                 _ensureDraftExists(l);
                                 if (val is Map) {
                                   final d = val as Map<String, dynamic>;
-                                  _drafts[l]!.prompt = d['prompt']?.toString() ?? '';
-                                  _drafts[l]!.answer = d['answer']?.toString() ?? '';
-                                  _drafts[l]!.audioUrl = d['audio_url']?.toString();
-                                  _drafts[l]!.videoUrl = d['video_url']?.toString();
-                                  if (d['image_urls'] != null) {
-                                    _drafts[l]!.imageUrls = List<String>.from(
-                                      d['image_urls'],
-                                    );
+                                  if (d.containsKey('prompt')) {
+                                    _drafts[l]!.prompt = d['prompt']?.toString() ?? '';
+                                  }
+                                  if (d.containsKey('answer')) {
+                                    _drafts[l]!.answer = d['answer']?.toString() ?? '';
                                   }
                                 }
                               });
@@ -526,6 +547,7 @@ class _AddCardPageState extends State<AddCardPage> {
 
         String? audioUrl = draft.audioUrl;
         if (draft.newAudioFile != null) {
+          if (draft.audioUrl != null) draft.deletedUrls.add(draft.audioUrl!);
           audioUrl = await _cardService.uploadCardAudio(
             cardId,
             draft.newAudioFile!,
@@ -540,6 +562,7 @@ class _AddCardPageState extends State<AddCardPage> {
 
         String? videoUrl = draft.videoUrl;
         if (draft.newVideoFile != null) {
+          if (draft.videoUrl != null) draft.deletedUrls.add(draft.videoUrl!);
           videoUrl = await _cardService.uploadCardVideo(
             cardId,
             draft.newVideoFile!,
@@ -552,12 +575,25 @@ class _AddCardPageState extends State<AddCardPage> {
           }
         }
 
+        // Cleanup storage for explicitly removed or replaced files
+        for (var url in draft.deletedUrls) {
+          String bucket = 'card_images';
+          if (url.contains('/card_audio/')) {
+            bucket = 'card_audio';
+          } else if (url.contains('/card_videos/')) {
+            bucket = 'card_videos';
+          }
+          await _cardService.deleteCardMediaFile(bucket, url);
+        }
+        draft.deletedUrls.clear();
+
         finalData[lang] = LocalizedCardData(
           prompt: draft.prompt.isEmpty ? null : draft.prompt,
           answer: draft.answer.isEmpty ? null : draft.answer,
           audioUrl: audioUrl,
           videoUrl: videoUrl,
           imageUrls: imageUrls.isEmpty ? null : imageUrls,
+          rawData: draft.rawData,
         );
       }
 
@@ -728,7 +764,7 @@ class _AddCardPageState extends State<AddCardPage> {
                   IconButton(
                     tooltip: context.t('languages') ?? 'Languages',
                     icon: Icon(_showSidebar ? Icons.last_page : Icons.language),
-                    onPressed: () => setState(() => _showSidebar = !_showSidebar),
+                    onPressed: _toggleSidebar,
                   ),
                 ]
               : [
@@ -740,7 +776,7 @@ class _AddCardPageState extends State<AddCardPage> {
                   IconButton(
                     tooltip: context.t('languages') ?? 'Languages',
                     icon: Icon(_showSidebar ? Icons.last_page : Icons.language),
-                    onPressed: () => setState(() => _showSidebar = !_showSidebar),
+                    onPressed: _toggleSidebar,
                   ),
                 ],
           overflowActions: isSmallScreen
@@ -1168,7 +1204,10 @@ class _AddCardPageState extends State<AddCardPage> {
           ...draft.imageUrls.map(
             (url) => _buildThumbnail(
               url: url,
-              onRemove: () => setState(() => draft.imageUrls.remove(url)),
+              onRemove: () => setState(() {
+                draft.imageUrls.remove(url);
+                draft.deletedUrls.add(url);
+              }),
             ),
           ),
           ...draft.newImageFiles.map(
@@ -1256,11 +1295,13 @@ class _AddCardPageState extends State<AddCardPage> {
           if (!widget.isReadOnly)
             IconButton(
               icon: const Icon(Icons.delete, size: 16),
-              onPressed:
-                  () => setState(() {
-                    draft.audioUrl = null;
-                    draft.newAudioFile = null;
-                  }),
+              onPressed: () => setState(() {
+                if (draft.audioUrl != null) {
+                  draft.deletedUrls.add(draft.audioUrl!);
+                }
+                draft.audioUrl = null;
+                draft.newAudioFile = null;
+              }),
             ),
         ],
       ),
@@ -1301,11 +1342,13 @@ class _AddCardPageState extends State<AddCardPage> {
           if (!widget.isReadOnly)
             IconButton(
               icon: const Icon(Icons.delete, size: 16),
-              onPressed:
-                  () => setState(() {
-                    draft.videoUrl = null;
-                    draft.newVideoFile = null;
-                  }),
+              onPressed: () => setState(() {
+                if (draft.videoUrl != null) {
+                  draft.deletedUrls.add(draft.videoUrl!);
+                }
+                draft.videoUrl = null;
+                draft.newVideoFile = null;
+              }),
             ),
         ],
       ),

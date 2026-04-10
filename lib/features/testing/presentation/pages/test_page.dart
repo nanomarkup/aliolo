@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:aliolo/data/services/testing_language_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:window_manager/window_manager.dart';
@@ -83,9 +84,12 @@ class _TestPageState extends State<TestPage> {
   bool _isAutoPlay = false;
   bool _isAutoPlayWaiting = false;
 
+  late String _languageCode;
+
   @override
   void initState() {
     super.initState();
+    _languageCode = getIt<TestingLanguageService>().currentLanguageCode.value;
     final isPremium = getIt<SubscriptionService>().isPremium;
     _isAutoPlay =
         isPremium && (_authService.currentUser?.autoPlayEnabled ?? false);
@@ -168,7 +172,7 @@ class _TestPageState extends State<TestPage> {
       }
       options = mathOpts.map((o) => TestOption(text: o, id: o)).toList();
     } else {
-      final lang = widget.languageCode.toLowerCase();
+      final lang = _languageCode.toLowerCase();
       final currentAnswers =
           _currentCard.getAnswerList(lang).map((e) => e.toLowerCase()).toSet();
 
@@ -209,7 +213,7 @@ class _TestPageState extends State<TestPage> {
     if (mounted) {
       setState(() {
         _options = options;
-        final lang = widget.languageCode.toLowerCase();
+        final lang = _languageCode.toLowerCase();
         _currentImages = _currentCard.getImageUrls(lang);
         _currentImageIndex = 0;
         final video = _currentCard.getVideoUrl(lang);
@@ -217,7 +221,7 @@ class _TestPageState extends State<TestPage> {
       });
     }
 
-    final lang = widget.languageCode.toLowerCase();
+    final lang = _languageCode.toLowerCase();
     final audio = _currentCard.getAudioUrl(lang);
     if (audio != null &&
         !_subject.isAddition &&
@@ -249,7 +253,7 @@ class _TestPageState extends State<TestPage> {
   }
 
   String _getDisplayAnswer(CardModel card) {
-    final lang = widget.languageCode.toLowerCase();
+    final lang = _languageCode.toLowerCase();
     final list = card.getAnswerList(lang);
     if (list.isNotEmpty) return CardModel.capitalizeFirst(list.first);
 
@@ -348,7 +352,7 @@ class _TestPageState extends State<TestPage> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Text(
-          _subject.getName(widget.languageCode),
+          _subject.getName(_languageCode),
           style: const TextStyle(fontSize: 18),
         ),
         backgroundColor: headerColor,
@@ -445,7 +449,7 @@ class _TestPageState extends State<TestPage> {
 
   @override
   Widget build(BuildContext context) {
-    final lang = widget.languageCode.toLowerCase();
+    final lang = _languageCode.toLowerCase();
     final pillar = pillars.firstWhere(
       (p) => p.id == _subject.pillarId,
       orElse: () => pillars.first,
@@ -471,7 +475,7 @@ class _TestPageState extends State<TestPage> {
             appBar: AppBar(
               automaticallyImplyLeading: false,
               title: Text(
-                _subject.getName(widget.languageCode),
+                _subject.getName(_languageCode),
                 style: const TextStyle(fontSize: 18),
               ),
               backgroundColor: headerColor,
