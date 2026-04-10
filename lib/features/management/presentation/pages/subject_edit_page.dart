@@ -82,6 +82,7 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
 
   final _nameController = TextEditingController();
   final _descriptionController = TextEditingController();
+  final _editorFocusNode = FocusNode();
 
   @override
   void initState() {
@@ -152,6 +153,10 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
 
   void _onKeyEvent(KeyEvent event) {
     if (event is! KeyDownEvent) return;
+    if (!_showSidebar) return;
+
+    // Do not navigate languages if user is typing in a text field
+    if (_editorFocusNode.hasFocus) return;
 
     final sortedLangs = TranslationService()
         .availableUILanguages
@@ -246,6 +251,7 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
     _nameController.dispose();
     _descriptionController.dispose();
     _keyboardFocusNode.dispose();
+    _editorFocusNode.dispose();
     super.dispose();
   }
 
@@ -645,9 +651,11 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
 
     final currentLang = TranslationService().currentLocale.languageCode;
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+    return Focus(
+      focusNode: _editorFocusNode,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
         if (isGlobal) ...[
           _buildSectionCaption(context.t('common_settings')),
           const SizedBox(height: 16),
@@ -815,8 +823,9 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
         ],
         const SizedBox(height: 48),
       ],
-    );
-  }
+    ),
+  );
+}
 
   bool _hasUnsavedChanges() {
     if (widget.existingSubject == null && widget.existingFolder == null) {

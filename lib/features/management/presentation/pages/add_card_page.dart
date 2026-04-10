@@ -101,6 +101,7 @@ class _AddCardPageState extends State<AddCardPage> {
   String? _selectedSubjectId;
   int? _internalPillarId;
   final _keyboardFocusNode = FocusNode();
+  final _editorFocusNode = FocusNode();
 
   @override
   void initState() {
@@ -148,6 +149,10 @@ class _AddCardPageState extends State<AddCardPage> {
 
   void _onKeyEvent(KeyEvent event) {
     if (event is! KeyDownEvent) return;
+    if (!_showSidebar) return;
+
+    // Do not navigate languages if user is typing in a text field
+    if (_editorFocusNode.hasFocus) return;
 
     final sortedLangs = TranslationService()
         .availableUILanguages
@@ -220,6 +225,7 @@ class _AddCardPageState extends State<AddCardPage> {
     _promptController.dispose();
     _answerController.dispose();
     _keyboardFocusNode.dispose();
+    _editorFocusNode.dispose();
     super.dispose();
   }
 
@@ -930,9 +936,11 @@ class _AddCardPageState extends State<AddCardPage> {
     final draft = _drafts[_selectedLang]!;
     final isGlobal = _selectedLang == 'global';
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+    return Focus(
+      focusNode: _editorFocusNode,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
         if (isGlobal) ...[
           _buildSectionCaption(context.t('common_settings')),
           const SizedBox(height: 16),
@@ -1014,8 +1022,9 @@ class _AddCardPageState extends State<AddCardPage> {
         ),
         const SizedBox(height: 100),
       ],
-    );
-  }
+    ),
+  );
+}
 
   Widget _buildSectionCaption(String label) {
     return Text(
