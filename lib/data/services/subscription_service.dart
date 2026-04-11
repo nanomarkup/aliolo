@@ -13,6 +13,9 @@ class SubscriptionService extends ChangeNotifier {
   bool _isPremium = false;
   bool get isPremium => _isPremium;
 
+  DateTime? _expiryDate;
+  DateTime? get expiryDate => _expiryDate;
+
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
@@ -64,6 +67,7 @@ class SubscriptionService extends ChangeNotifier {
     // Hardcoded Superuser Bypass
     if (user.serverId == 'f2fb4c9c-169b-447d-b8a6-dce72c4ed5ac') {
       _isPremium = true;
+      _expiryDate = null; // Lifetime for superuser
       notifyListeners();
       return;
     }
@@ -81,13 +85,16 @@ class SubscriptionService extends ChangeNotifier {
             ? DateTime.parse(response['expiry_date']) 
             : null;
         
+        _expiryDate = expiry;
         _isPremium = status == 'active' && (expiry == null || expiry.isAfter(DateTime.now()));
       } else {
         _isPremium = false;
+        _expiryDate = null;
       }
     } catch (e) {
       debugPrint('Error checking subscription: $e');
       _isPremium = false;
+      _expiryDate = null;
     }
     notifyListeners();
   }

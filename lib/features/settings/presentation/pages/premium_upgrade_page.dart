@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 import 'package:aliolo/data/services/subscription_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
@@ -84,7 +85,9 @@ class _PremiumUpgradePageState extends State<PremiumUpgradePage> {
               if (subService.isPremium) ...[
                 Card(
                   color: Colors.green,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
                   child: Padding(
                     padding: const EdgeInsets.all(24),
                     child: Row(
@@ -92,9 +95,35 @@ class _PremiumUpgradePageState extends State<PremiumUpgradePage> {
                         const Icon(Icons.check_circle, color: Colors.white),
                         const SizedBox(width: 16),
                         Expanded(
-                          child: Text(
-                            context.t('premium_status_active'),
-                            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                context.t('premium_status_active'),
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                subService.expiryDate != null
+                                    ? context.t(
+                                      'premium_expires_at',
+                                      args: {
+                                        'date': DateFormat.yMMMMd().format(
+                                          subService.expiryDate!,
+                                        ),
+                                      },
+                                    )
+                                    : context.t('premium_lifetime'),
+                                style: TextStyle(
+                                  color: Colors.white.withValues(alpha: 0.9),
+                                  fontSize: 13,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ],
