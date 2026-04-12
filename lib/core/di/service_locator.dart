@@ -10,12 +10,17 @@ import 'package:aliolo/data/services/progress_service.dart';
 import 'package:aliolo/data/services/subscription_service.dart';
 import 'package:aliolo/data/services/feedback_service.dart';
 import 'package:aliolo/data/services/discovery_engine.dart';
+import 'package:aliolo/data/services/filter_service.dart';
+import 'package:aliolo/core/network/cloudflare_client.dart';
 
 
 final getIt = GetIt.instance;
 
 Future<void> setupLocator({String? initialUrl}) async {
   try {
+    // 0. Network
+    getIt.registerSingleton<CloudflareHttpClient>(CloudflareHttpClient());
+
     // 1. Register base singleton services
     getIt.registerSingleton<CardService>(CardService());
     getIt.registerSingleton<AuthService>(AuthService());
@@ -24,6 +29,7 @@ Future<void> setupLocator({String? initialUrl}) async {
     getIt.registerSingleton<SoundService>(SoundService());
     getIt.registerSingleton<FeedbackService>(FeedbackService());
     getIt.registerSingleton<DiscoveryEngine>(DiscoveryEngine());
+    getIt.registerSingleton<FilterService>(FilterService());
 
     // 2. Initialize critical services in order
     await getIt<CardService>().init().catchError(
@@ -32,6 +38,10 @@ Future<void> setupLocator({String? initialUrl}) async {
 
     await getIt<AuthService>().init(manualUrl: initialUrl).catchError(
       (e) => print('AuthService init error: $e'),
+    );
+
+    await getIt<FilterService>().init().catchError(
+      (e) => print('FilterService init error: $e'),
     );
 
     print('Initializing TranslationService...');

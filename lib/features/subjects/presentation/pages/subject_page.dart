@@ -25,6 +25,7 @@ import 'package:aliolo/features/management/presentation/pages/subject_edit_page.
 import 'package:aliolo/data/services/feedback_service.dart';
 import 'package:aliolo/data/models/content_item.dart';
 import 'package:aliolo/data/services/discovery_engine.dart';
+import 'package:aliolo/data/services/filter_service.dart';
 import 'package:aliolo/features/feedback/presentation/pages/feedback_page.dart';
 import 'package:aliolo/core/widgets/premium_badge.dart';
 
@@ -44,6 +45,7 @@ class _SubjectPageState extends State<SubjectPage> {
   bool _showBackToTop = false;
   final _authService = getIt<AuthService>();
   final _subService = getIt<SubscriptionService>();
+  final _filterService = getIt<FilterService>();
 
   String _currentTestingLang = 'en';
   bool _isLangInitialized = false;
@@ -54,8 +56,6 @@ class _SubjectPageState extends State<SubjectPage> {
   bool _isLoading = true;
 
   DiscoveryFilters _filters = DiscoveryFilters(
-    ageGroup: 'all',
-    collectionFilter: 'favorites',
     rootOnly: true,
   );
 
@@ -67,8 +67,18 @@ class _SubjectPageState extends State<SubjectPage> {
       windowManager.setResizable(true);
     }
     _initLanguage();
+    _cardService.getPillars(); // Load pillars once
+    
+    // Sync filters from service
+    _filters = _filters.copyWith(
+      ageGroup: _filterService.ageGroup,
+      collectionFilter: _filterService.sourceFilter,
+    );
+    
     _loadDashboard();
     _cardService.addListener(_loadDashboard);
+    _filterService.addListener(_onGlobalFilterChanged);
+
     _scrollController.addListener(() {
       if (_scrollController.offset > 400) {
         if (!_showBackToTop) setState(() => _showBackToTop = true);
@@ -82,25 +92,31 @@ class _SubjectPageState extends State<SubjectPage> {
   void dispose() {
     _authService.removeListener(_onAuthChanged);
     _cardService.removeListener(_loadDashboard);
+    _filterService.removeListener(_onGlobalFilterChanged);
     _searchController.dispose();
     _searchFocusNode.dispose();
     _scrollController.dispose();
     super.dispose();
   }
 
+  void _onGlobalFilterChanged() {
+    if (mounted) {
+      setState(() {
+        _filters = _filters.copyWith(
+          ageGroup: _filterService.ageGroup,
+          collectionFilter: _filterService.sourceFilter,
+        );
+      });
+      _loadDashboard();
+      _cardService.getPillars(filter: _filterService.sourceFilter);
+    }
+  }
+
   void _initLanguage() async {
     final prefs = await SharedPreferences.getInstance();
     final savedLang = prefs.getString('last_testing_lang');
-    final savedAgeFilter = prefs.getString('last_age_filter');
-    final savedCollectionFilter = prefs.getString('last_collection_filter');
 
     if (mounted) {
-      final validCollectionFilters = {'all', 'favorites', 'mine', 'public'};
-      final validatedCollectionFilter =
-          validCollectionFilters.contains(savedCollectionFilter)
-              ? savedCollectionFilter
-              : 'favorites';
-
       setState(() {
         if (savedLang != null) {
           _currentTestingLang = savedLang;
@@ -112,11 +128,6 @@ class _SubjectPageState extends State<SubjectPage> {
             _isLangInitialized = true;
           }
         }
-
-        _filters = _filters.copyWith(
-          ageGroup: savedAgeFilter ?? 'all',
-          collectionFilter: validatedCollectionFilter,
-        );
       });
     }
     _authService.addListener(_onAuthChanged);
@@ -145,8 +156,13 @@ class _SubjectPageState extends State<SubjectPage> {
   }
 
   Future<void> _loadDashboard() async {
+    if (_isLoading && _allContent.isNotEmpty) return; // Already loading
+    
+    // We don't call getPillars() here anymore because it notifies listeners,
+    // which triggers this method again since we are listening to _cardService.
+    // Instead, we assume pillars are loaded at app start or externally.
+    
     setState(() => _isLoading = true);
-    await _cardService.getPillars();
 
     final content = await _discoveryEngine.getRawContent(_filters);
 
@@ -266,15 +282,7 @@ class _SubjectPageState extends State<SubjectPage> {
       builder: (context, _) {
         final isSearching = _searchController.text.isNotEmpty;
         final currentSessionColor = ThemeService().primaryColor;
-        final activePillars =
-            pillars
-                .where(
-                  (p) => _matchingContent.any(
-                    (item) =>
-                        item.pillarId == p.id && item is! FolderModel,
-                  ),
-                )
-                .toList();
+        final activePillars = pillars;
 
         final activeCodes =
             getIt<TestingLanguageService>().activeLanguageCodes
@@ -451,18 +459,7 @@ class _SubjectPageState extends State<SubjectPage> {
                             onChanged:
                                 (val) async {
                                   if (val != null) {
-                                    setState(() {
-                                      _filters = _filters.copyWith(
-                                        collectionFilter: val,
-                                      );
-                                      _applySearch();
-                                    });
-                                    final prefs =
-                                        await SharedPreferences.getInstance();
-                                    await prefs.setString(
-                                      'last_collection_filter',
-                                      val,
-                                    );
+                                    _filterService.updateSourceFilter(val);
                                   }
                                 },
                           ),
@@ -721,43 +718,12 @@ class _SubjectPageState extends State<SubjectPage> {
                             ) {
                               final pillar = activePillars[index];
                               final myId = _authService.currentUser?.serverId;
-                              final pillarCategoryTotal =
-                                  _allContent.where((item) {
-                                    if (item.pillarId != pillar.id)
-                                      return false;
-                                    if (item is FolderModel) return false;
-                                    if (_filters.collectionFilter == 'mine')
-                                      return item.ownerId == myId;
-                                    if (_filters.collectionFilter == 'public') {
-                                      if (item is SubjectModel)
-                                        return item.isPublic;
-                                      if (item is CollectionModel)
-                                        return item.isPublic;
-                                      return false;
-                                    }
-                                    if (_filters.collectionFilter ==
-                                        'favorites')
-                                      return item.isOnDashboard;
-                                    return true;
-                                  }).length;
-                              final matchingCount =
-                                  _discoveryEngine
-                                      .applyFiltersAndSort(
-                                        _allContent
-                                            .where(
-                                              (e) => e.pillarId == pillar.id,
-                                            )
-                                            .toList(),
-                                        _filters.copyWith(rootOnly: false),
-                                        currentLang,
-                                      )
-                                      .where((e) => e is! FolderModel)
-                                      .length;
-                              final folderCount =
-                                  _allContent
-                                      .whereType<FolderModel>()
-                                      .where((f) => f.pillarId == pillar.id)
-                                      .length;
+                              
+                              // Use counts directly from Pillar model (populated by backend)
+                              final matchingCount = pillar.subjectCount;
+                              final pillarCategoryTotal = pillar.subjectCount;
+                              final folderCount = pillar.folderCount;
+
                               final bool isFilteringBeyondCategory =
                                   _filters.ageGroup != 'all' ||
                                   _searchController.text.isNotEmpty;
@@ -948,18 +914,8 @@ class _SubjectPageState extends State<SubjectPage> {
                         },
                         onChanged: (val) async {
                           if (val != null) {
-                            setState(() {
-                              _filters = _filters.copyWith(
-                                collectionFilter: val,
-                              );
-                              _applySearch();
-                            });
+                            _filterService.updateSourceFilter(val);
                             setBottomSheetState(() {});
-                            final prefs = await SharedPreferences.getInstance();
-                            await prefs.setString(
-                              'last_collection_filter',
-                              val,
-                            );
                           }
                         },
                       ),
@@ -981,13 +937,8 @@ class _SubjectPageState extends State<SubjectPage> {
                       },
                       onChanged: (val) async {
                         if (val != null) {
-                          setState(() {
-                            _filters = _filters.copyWith(ageGroup: val);
-                            _applySearch();
-                          });
+                          _filterService.updateAgeGroup(val);
                           setBottomSheetState(() {});
-                          final prefs = await SharedPreferences.getInstance();
-                          await prefs.setString('last_age_filter', val);
                         }
                       },
                     ),
@@ -1139,6 +1090,7 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
   final _discoveryEngine = getIt<DiscoveryEngine>();
   final _subService = getIt<SubscriptionService>();
   final _authService = getIt<AuthService>();
+  final _filterService = getIt<FilterService>();
 
   List<ContentItem> _allContent = [];
   List<ContentItem> _matchingContent = [];
@@ -1152,11 +1104,12 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
     super.initState();
     _filters = DiscoveryFilters(
       pillarId: widget.pillar.id,
-      ageGroup: widget.initialAgeFilter,
-      collectionFilter: widget.initialCollectionFilter,
+      ageGroup: _filterService.ageGroup,
+      collectionFilter: _filterService.sourceFilter,
       rootOnly: false,
     );
     _loadData();
+    _filterService.addListener(_onGlobalFilterChanged);
     _scrollController.addListener(() {
       if (_scrollController.offset > 400) {
         if (!_showBackToTop) setState(() => _showBackToTop = true);
@@ -1168,10 +1121,23 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
 
   @override
   void dispose() {
+    _filterService.removeListener(_onGlobalFilterChanged);
     _searchController.dispose();
     _searchFocusNode.dispose();
     _scrollController.dispose();
     super.dispose();
+  }
+
+  void _onGlobalFilterChanged() {
+    if (mounted) {
+      setState(() {
+        _filters = _filters.copyWith(
+          ageGroup: _filterService.ageGroup,
+          collectionFilter: _filterService.sourceFilter,
+        );
+      });
+      _loadData();
+    }
   }
 
   Future<void> _loadData() async {
@@ -1333,9 +1299,27 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
                 )
                 : null;
 
+        final backAction = IconButton(
+          tooltip: context.t('back'),
+          icon: const Icon(Icons.arrow_back),
+          onPressed:
+              () => Navigator.pop(context, {
+                'hasUpdated': _hasUpdated,
+                'ageFilter': _filters.ageGroup,
+                'collectionFilter': _filters.collectionFilter,
+              }),
+        );
+
         return PopScope(
-          canPop: true,
-          onPopInvokedWithResult: (didPop, result) {},
+          canPop: false,
+          onPopInvokedWithResult: (didPop, result) {
+            if (didPop) return;
+            Navigator.pop(context, {
+              'hasUpdated': _hasUpdated,
+              'ageFilter': _filters.ageGroup,
+              'collectionFilter': _filters.collectionFilter,
+            });
+          },
           child: AlioloScrollablePage(
             title: Text(
               widget.pillar.getTranslatedName(currentLang),
@@ -1395,17 +1379,7 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
                         },
                         onChanged: (val) async {
                           if (val != null) {
-                            setState(() {
-                              _filters = _filters.copyWith(
-                                collectionFilter: val,
-                              );
-                              _applySearch();
-                            });
-                            final prefs = await SharedPreferences.getInstance();
-                            await prefs.setString(
-                              'last_collection_filter',
-                              val,
-                            );
+                            _filterService.updateSourceFilter(val);
                           }
                         },
                       ),
@@ -1700,18 +1674,8 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
                         },
                         onChanged: (val) async {
                           if (val != null) {
-                            setState(() {
-                              _filters = _filters.copyWith(
-                                collectionFilter: val,
-                              );
-                              _applySearch();
-                            });
+                            _filterService.updateSourceFilter(val);
                             setBottomSheetState(() {});
-                            final prefs = await SharedPreferences.getInstance();
-                            await prefs.setString(
-                              'last_collection_filter',
-                              val,
-                            );
                           }
                         },
                       ),
@@ -1733,13 +1697,8 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
                       },
                       onChanged: (val) async {
                         if (val != null) {
-                          setState(() {
-                            _filters = _filters.copyWith(ageGroup: val);
-                            _applySearch();
-                          });
+                          _filterService.updateAgeGroup(val);
                           setBottomSheetState(() {});
-                          final prefs = await SharedPreferences.getInstance();
-                          await prefs.setString('last_age_filter', val);
                         }
                       },
                     ),
@@ -1966,6 +1925,7 @@ class _FolderPageState extends State<FolderPage> {
   final _discoveryEngine = getIt<DiscoveryEngine>();
   final _authService = getIt<AuthService>();
   final _subService = getIt<SubscriptionService>();
+  final _filterService = getIt<FilterService>();
 
   List<ContentItem> _allContent = [];
   List<ContentItem> _matchingContent = [];
@@ -1980,11 +1940,12 @@ class _FolderPageState extends State<FolderPage> {
     _filters = DiscoveryFilters(
       pillarId: widget.pillar.id,
       folderId: widget.folder.id,
-      ageGroup: widget.initialAgeFilter,
-      collectionFilter: widget.initialCollectionFilter,
+      ageGroup: _filterService.ageGroup,
+      collectionFilter: _filterService.sourceFilter,
       rootOnly: false,
     );
     _loadData();
+    _filterService.addListener(_onGlobalFilterChanged);
     _scrollController.addListener(() {
       if (_scrollController.offset > 400) {
         if (!_showBackToTop) setState(() => _showBackToTop = true);
@@ -1996,10 +1957,23 @@ class _FolderPageState extends State<FolderPage> {
 
   @override
   void dispose() {
+    _filterService.removeListener(_onGlobalFilterChanged);
     _searchController.dispose();
     _searchFocusNode.dispose();
     _scrollController.dispose();
     super.dispose();
+  }
+
+  void _onGlobalFilterChanged() {
+    if (mounted) {
+      setState(() {
+        _filters = _filters.copyWith(
+          ageGroup: _filterService.ageGroup,
+          collectionFilter: _filterService.sourceFilter,
+        );
+      });
+      _loadData();
+    }
   }
 
   Future<void> _loadData() async {
@@ -2216,8 +2190,15 @@ class _FolderPageState extends State<FolderPage> {
         );
 
         return PopScope(
-          canPop: true,
-          onPopInvokedWithResult: (didPop, result) {},
+          canPop: false,
+          onPopInvokedWithResult: (didPop, result) {
+            if (didPop) return;
+            Navigator.pop(context, {
+              'hasUpdated': _hasUpdated,
+              'ageFilter': _filters.ageGroup,
+              'collectionFilter': _filters.collectionFilter,
+            });
+          },
           child: AlioloScrollablePage(
             title: Text(
               widget.folder.getName(currentLang),
@@ -2244,7 +2225,7 @@ class _FolderPageState extends State<FolderPage> {
                 : null,
             actions:
                 isSmallScreen
-                    ? [backAction, homeAction]
+                    ? [homeAction, backAction]
                     : [
                       homeAction,
                       backAction,
@@ -2277,17 +2258,7 @@ class _FolderPageState extends State<FolderPage> {
                         },
                         onChanged: (val) async {
                           if (val != null) {
-                            setState(() {
-                              _filters = _filters.copyWith(
-                                collectionFilter: val,
-                              );
-                              _applySearch();
-                            });
-                            final prefs = await SharedPreferences.getInstance();
-                            await prefs.setString(
-                              'last_collection_filter',
-                              val,
-                            );
+                            _filterService.updateSourceFilter(val);
                           }
                         },
                       ),
@@ -2561,18 +2532,8 @@ class _FolderPageState extends State<FolderPage> {
                         },
                         onChanged: (val) async {
                           if (val != null) {
-                            setState(() {
-                              _filters = _filters.copyWith(
-                                collectionFilter: val,
-                              );
-                              _applySearch();
-                            });
+                            _filterService.updateSourceFilter(val);
                             setBottomSheetState(() {});
-                            final prefs = await SharedPreferences.getInstance();
-                            await prefs.setString(
-                              'last_collection_filter',
-                              val,
-                            );
                           }
                         },
                       ),
@@ -2594,13 +2555,8 @@ class _FolderPageState extends State<FolderPage> {
                       },
                       onChanged: (val) async {
                         if (val != null) {
-                          setState(() {
-                            _filters = _filters.copyWith(ageGroup: val);
-                            _applySearch();
-                          });
+                          _filterService.updateAgeGroup(val);
                           setBottomSheetState(() {});
-                          final prefs = await SharedPreferences.getInstance();
-                          await prefs.setString('last_age_filter', val);
                         }
                       },
                     ),

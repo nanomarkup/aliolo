@@ -9,7 +9,7 @@ import 'package:aliolo/data/services/theme_service.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:aliolo/core/widgets/window_controls.dart';
 import 'package:aliolo/features/settings/presentation/pages/licenses_page.dart';
-import 'package:aliolo/src/onboarding/onboarding_screen.dart';
+import 'package:aliolo/features/onboarding/presentation/onboarding_screen.dart';
 
 class AboutPage extends StatefulWidget {
   const AboutPage({super.key});

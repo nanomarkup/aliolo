@@ -21,7 +21,7 @@ class LoginPage extends StatefulWidget {
   State<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> with WindowListener {
+class _LoginPageState extends State<LoginPage> {
   final _authService = getIt<AuthService>();
   final _emailController = TextEditingController();
   final _usernameController = TextEditingController();
@@ -41,7 +41,6 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
   @override
   void initState() {
     super.initState();
-    if (!kIsWeb) windowManager.addListener(this);
     HardwareKeyboard.instance.addHandler(_handleGlobalKeyEvent);
     _clearFields();
     _focusEmail();
@@ -596,7 +595,6 @@ class _LoginPageState extends State<LoginPage> with WindowListener {
   @override
   void dispose() {
     _authService.removeListener(_syncWithServiceState);
-    if (!kIsWeb) windowManager.removeListener(this);
     HardwareKeyboard.instance.removeHandler(_handleGlobalKeyEvent);
     _emailFocusNode.dispose();
     _emailController.dispose();

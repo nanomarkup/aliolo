@@ -1,13 +1,14 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:aliolo/core/di/service_locator.dart';
+import 'package:aliolo/core/network/cloudflare_client.dart';
+import 'package:aliolo/core/utils/logger.dart';
 import 'auth_service.dart';
 
 class SubscriptionService extends ChangeNotifier {
   final InAppPurchase? _iap = kIsWeb ? null : InAppPurchase.instance;
-  final SupabaseClient _supabase = Supabase.instance.client;
+  final _cfClient = getIt<CloudflareHttpClient>();
   StreamSubscription<List<PurchaseDetails>>? _purchaseSubscription;
   
   bool _isPremium = false;
@@ -31,12 +32,11 @@ class SubscriptionService extends ChangeNotifier {
         _onPurchaseUpdate,
         onDone: () => _purchaseSubscription?.cancel(),
         onError: (error) {
-          debugPrint('Purchase stream error: $error');
+          AppLogger.log('Purchase stream error: $error');
         },
       );
     }
     
-    // Listen to Auth changes to refresh subscription status
     getIt<AuthService>().addListener(_onAuthChanged);
   }
 
@@ -64,25 +64,20 @@ class SubscriptionService extends ChangeNotifier {
       return;
     }
 
-    // Hardcoded Superuser Bypass
     if (user.serverId == 'f2fb4c9c-169b-447d-b8a6-dce72c4ed5ac') {
       _isPremium = true;
-      _expiryDate = null; // Lifetime for superuser
+      _expiryDate = null;
       notifyListeners();
       return;
     }
 
     try {
-      final response = await _supabase
-          .from('user_subscriptions')
-          .select()
-          .eq('user_id', user.serverId!)
-          .maybeSingle();
-
-      if (response != null) {
-        final status = response['status'] as String;
-        final expiry = response['expiry_date'] != null 
-            ? DateTime.parse(response['expiry_date']) 
+      final response = await _cfClient.client.get('/api/subscriptions');
+      if (response.statusCode == 200 && response.data != null) {
+        final data = response.data;
+        final status = data['status'] as String;
+        final expiry = data['expiry_date'] != null 
+            ? DateTime.parse(data['expiry_date']) 
             : null;
         
         _expiryDate = expiry;
@@ -92,7 +87,7 @@ class SubscriptionService extends ChangeNotifier {
         _expiryDate = null;
       }
     } catch (e) {
-      debugPrint('Error checking subscription: $e');
+      AppLogger.log('Error checking subscription: $e');
       _isPremium = false;
       _expiryDate = null;
     }
@@ -107,7 +102,7 @@ class SubscriptionService extends ChangeNotifier {
       _products = response.productDetails;
       notifyListeners();
     } catch (e) {
-      debugPrint('Error loading products: $e');
+      AppLogger.log('Error loading products: $e');
     }
   }
 
@@ -146,21 +141,21 @@ class SubscriptionService extends ChangeNotifier {
 
   Future<bool> _verifyPurchaseOnBackend(PurchaseDetails purchase) async {
     try {
-      final response = await _supabase.functions.invoke(
-        'verify-google-purchase',
-        body: {
+      final response = await _cfClient.client.post(
+        '/api/subscriptions/verify',
+        data: {
           'purchaseToken': purchase.verificationData.serverVerificationData,
           'productId': purchase.productID,
           'orderId': purchase.purchaseID,
         },
       );
 
-      if (response.status == 200) {
+      if (response.statusCode == 200) {
         await checkSubscriptionStatus();
         return true;
       }
     } catch (e) {
-      debugPrint('Error verifying purchase: $e');
+      AppLogger.log('Error verifying purchase: $e');
     }
     return false;
   }

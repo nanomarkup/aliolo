@@ -3,16 +3,16 @@ import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:media_kit/media_kit.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/data/services/theme_service.dart';
+import 'package:aliolo/data/services/card_service.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/subscription_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/data/services/testing_language_service.dart';
 import 'package:aliolo/features/auth/presentation/pages/login_page.dart';
 import 'package:aliolo/features/subjects/presentation/pages/subject_page.dart';
-import 'package:aliolo/src/onboarding/onboarding_screen.dart';
+import 'package:aliolo/features/onboarding/presentation/onboarding_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:aliolo/core/utils/file_stub.dart' if (dart.library.html) 'dart:html' as html;
@@ -31,12 +31,6 @@ void main() async {
     usePathUrlStrategy();
     WidgetsFlutterBinding.ensureInitialized();
     await AppLogger.init();
-
-    // Initialize Supabase
-    const String supabaseUrl = 'https://mltdjjszycfmokwqsqxm.supabase.co';
-    const String supabaseKey = 'sb_publishable_DCMw0z92Lr2nzC83sOQJXw_G1fYdEb3';
-
-    await Supabase.initialize(url: supabaseUrl, anonKey: supabaseKey);
 
     LicenseRegistry.addLicense(() {
       return Stream<LicenseEntry>.fromIterable([
@@ -63,7 +57,9 @@ OTHER LIABILITY.
       ]);
     });
 
-    MediaKit.ensureInitialized();
+    if (!kIsWeb) {
+      MediaKit.ensureInitialized();
+    }
 
     if (!kIsWeb) {
       if (defaultTargetPlatform == TargetPlatform.linux ||
@@ -205,6 +201,7 @@ class _AlioloAppState extends State<AlioloApp> {
               value: getIt<TestingLanguageService>(),
             ),
             ChangeNotifierProvider.value(value: getIt<SubscriptionService>()),
+            ChangeNotifierProvider.value(value: getIt<CardService>()),
             ListenableProvider.value(value: getIt<ThemeService>()),
           ],
           child: const AlioloMainApp(),

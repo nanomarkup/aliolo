@@ -1,177 +1,100 @@
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:aliolo/data/models/user_model.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/core/di/service_locator.dart';
+import 'package:aliolo/core/network/cloudflare_client.dart';
+import 'package:aliolo/core/utils/logger.dart';
 
 class FriendshipService {
   static final FriendshipService _instance = FriendshipService._internal();
   factory FriendshipService() => _instance;
   FriendshipService._internal();
 
-  SupabaseClient get _supabase => Supabase.instance.client;
+  final _cfClient = getIt<CloudflareHttpClient>();
   AuthService get _authService => getIt<AuthService>();
 
   Future<String> sendFriendRequest(String email) async {
-    final currentUser = _authService.currentUser;
-    if (currentUser == null || currentUser.serverId == null) {
-      return 'Not logged in';
-    }
-    if (email.toLowerCase() == currentUser.email.toLowerCase()) {
-      return 'Cannot add yourself';
-    }
-
     try {
-      // 1. Find user by email
-      final targetUserRes =
-          await _supabase
-              .from('profiles')
-              .select('id')
-              .eq('email', email.toLowerCase())
-              .maybeSingle();
-
-      if (targetUserRes == null) return 'user_not_found';
-      final String targetId = targetUserRes['id'];
-
-      return await sendFriendRequestById(targetId);
+      final response = await _cfClient.client.post('/api/friendships/request', data: {
+        'email': email,
+      });
+      if (response.statusCode == 200) return 'success';
+      return response.data['error'] ?? 'Request failed';
     } catch (e) {
-      return e.toString();
+      return 'user_not_found';
     }
   }
 
   Future<String> sendFriendRequestById(String targetId) async {
-    final currentUser = _authService.currentUser;
-    if (currentUser == null || currentUser.serverId == null) {
-      return 'Not logged in';
-    }
-    if (targetId == currentUser.serverId) {
-      return 'Cannot add yourself';
-    }
-
     try {
-      // 2. Check if friendship already exists (any direction)
-      final existing =
-          await _supabase
-              .from('user_friendships')
-              .select()
-              .or('and(sender_id.eq.${currentUser.serverId},receiver_id.eq.$targetId),and(sender_id.eq.$targetId,receiver_id.eq.${currentUser.serverId})')
-              .maybeSingle();
-
-      if (existing != null) {
-        if (existing['status'] == 'accepted') return 'You are already friends';
-        return 'Request already pending';
-      }
-
-      // 3. Send request
-      await _supabase.from('user_friendships').insert({
-        'sender_id': currentUser.serverId,
-        'receiver_id': targetId,
-        'status': 'pending',
+      final response = await _cfClient.client.post('/api/friendships/request', data: {
+        'target_id': targetId,
       });
-
-      return 'success';
-    } on PostgrestException catch (e) {
-      if (e.message.contains('unique_friendship')) {
-        return 'Request already exists';
-      }
-      return e.message;
+      if (response.statusCode == 200) return 'success';
+      return response.data['error'] ?? 'Request failed';
     } catch (e) {
       return e.toString();
     }
   }
 
   Future<void> acceptFriendRequest(int friendshipId) async {
-    await _supabase
-        .from('user_friendships')
-        .update({'status': 'accepted'})
-        .eq('id', friendshipId);
+    try {
+      await _cfClient.client.post('/api/friendships/accept/$friendshipId');
+    } catch (e) {
+      AppLogger.log('Error accepting friend request: $e');
+    }
   }
 
   Future<void> cancelFriendship(int friendshipId) async {
-    await _supabase.from('user_friendships').delete().eq('id', friendshipId);
+    try {
+      await _cfClient.client.delete('/api/friendships/$friendshipId');
+    } catch (e) {
+      AppLogger.log('Error canceling friendship: $e');
+    }
   }
 
   Future<bool> hasPendingRequests() async {
-    final user = _authService.currentUser;
-    if (user == null || user.serverId == null) return false;
-
     try {
-      final res = await _supabase
-          .from('user_friendships')
-          .select('id')
-          .eq('receiver_id', user.serverId!)
-          .eq('status', 'pending')
-          .limit(1)
-          .maybeSingle();
-
-      return res != null;
+      final res = await getFriendships();
+      final user = _authService.currentUser;
+      if (user == null) return false;
+      
+      return res.any((f) => f['status'] == 'pending' && f['receiver_id'] == user.serverId);
     } catch (e) {
       return false;
     }
   }
 
   Future<List<Map<String, dynamic>>> getFriendships() async {
-    final user = _authService.currentUser;
-    if (user == null || user.serverId == null) return [];
-
     try {
-      final res = await _supabase
-          .from('user_friendships')
-          .select('*, sender:profiles!sender_id(*), receiver:profiles!receiver_id(*)')
-          .or('sender_id.eq.${user.serverId},receiver_id.eq.${user.serverId}');
-
-      return List<Map<String, dynamic>>.from(res);
+      final response = await _cfClient.client.get('/api/friendships');
+      if (response.statusCode == 200) {
+        final List<dynamic> data = response.data;
+        // Transform to match legacy format if needed, but index.ts joins already
+        return data.map((f) => {
+          ...f as Map<String, dynamic>,
+          'sender': {'username': f['sender_username'], 'avatar_url': f['sender_avatar']},
+          'receiver': {'username': f['receiver_username'], 'avatar_url': f['receiver_avatar']},
+        }).toList();
+      }
     } catch (e) {
-      return [];
+      AppLogger.log('Error fetching friendships: $e');
     }
-  }
-
-  bool _checkPremiumStatus(dynamic subsData) {
-    if (subsData == null) return false;
-    final List subs = subsData is List ? subsData : [subsData];
-    if (subs.isEmpty) return false;
-    
-    final s = subs.first;
-    final status = s['status'] as String;
-    final expiry = s['expiry_date'] != null ? DateTime.parse(s['expiry_date']) : null;
-    return status == 'active' && (expiry == null || expiry.isAfter(DateTime.now()));
+    return [];
   }
 
   Future<List<UserModel>> getFriendsLeaderboard({
     int page = 0,
     int pageSize = 20,
   }) async {
-    final user = _authService.currentUser;
-    if (user == null || user.serverId == null) return [];
-
     try {
-      final friendships = await _supabase
-          .from('user_friendships')
-          .select('sender_id, receiver_id')
-          .eq('status', 'accepted')
-          .or('sender_id.eq.${user.serverId},receiver_id.eq.${user.serverId}');
-
-      final Set<String> friendIds = {user.serverId!};
-      for (var f in friendships) {
-        friendIds.add(f['sender_id']);
-        friendIds.add(f['receiver_id']);
+      final response = await _cfClient.client.get('/api/friendships/leaderboard');
+      if (response.statusCode == 200) {
+        final List<dynamic> data = response.data;
+        return data.map((p) => UserModel.fromJson(p)).toList();
       }
-
-      final profilesRes = await _supabase
-          .from('profiles')
-          .select('*, user_subscriptions(status, expiry_date)')
-          .inFilter('id', friendIds.toList())
-          .order('total_xp', ascending: false)
-          .range(page * pageSize, (page + 1) * pageSize - 1);
-
-      return List<dynamic>.from(profilesRes).map((p) {
-        final u = UserModel.fromJson(p);
-        u.isPremium = (u.serverId == 'f2fb4c9c-169b-447d-b8a6-dce72c4ed5ac')
-            ? true
-            : _checkPremiumStatus(p['user_subscriptions']);
-        return u;
-      }).toList();
     } catch (e) {
-      return [];
+      AppLogger.log('Error fetching friends leaderboard: $e');
     }
+    return [];
   }
 }

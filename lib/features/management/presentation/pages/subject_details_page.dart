@@ -258,7 +258,7 @@ class _SubjectDetailsPageState extends State<SubjectDetailsPage> {
                 final answer = card.getAnswer(lang);
                 final isCardMine =
                     card.ownerId == _authService.currentUser?.serverId;
-                final imageUrl = card.primaryImageUrl;
+                final imageUrl = card.primaryImageUrl(lang);
 
                 return InkWell(
                   onTap: isCardMine ? () async {

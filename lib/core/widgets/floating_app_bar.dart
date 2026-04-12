@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:aliolo/core/widgets/window_controls.dart';
 
@@ -30,6 +31,24 @@ class AlioloAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    final titleWidget = ConstrainedBox(
+      constraints: const BoxConstraints(minHeight: 64),
+      child: Align(
+        alignment: titleAlignment,
+        child: DefaultTextStyle(
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: foregroundColor,
+            overflow: TextOverflow.ellipsis,
+          ),
+          maxLines: 1,
+          softWrap: false,
+          child: title,
+        ),
+      ),
+    );
+
     return PreferredSize(
       preferredSize: const Size.fromHeight(80), // 16 top padding + 64 container
       child: Center(
@@ -53,25 +72,7 @@ class AlioloAppBar extends StatelessWidget implements PreferredSizeWidget {
               clipBehavior: Clip.antiAlias,
               child: AppBar(
                 toolbarHeight: 64,
-                title: DragToMoveArea(
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(minHeight: 64),
-                    child: Align(
-                      alignment: titleAlignment,
-                      child: DefaultTextStyle(
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: foregroundColor,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        maxLines: 1,
-                        softWrap: false,
-                        child: title,
-                      ),
-                    ),
-                  ),
-                ),
+                title: kIsWeb ? titleWidget : DragToMoveArea(child: titleWidget),
                 backgroundColor: Colors.transparent,
                 foregroundColor: foregroundColor,
                 elevation: 0,

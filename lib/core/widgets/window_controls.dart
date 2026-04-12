@@ -28,7 +28,10 @@ class _WindowControlsState extends State<WindowControls> with WindowListener {
   @override
   void initState() {
     super.initState();
-    if (!kIsWeb) {
+    if (!kIsWeb &&
+        (defaultTargetPlatform == TargetPlatform.windows ||
+            defaultTargetPlatform == TargetPlatform.linux ||
+            defaultTargetPlatform == TargetPlatform.macOS)) {
       windowManager.addListener(this);
       _checkMaximized();
     }
@@ -36,7 +39,10 @@ class _WindowControlsState extends State<WindowControls> with WindowListener {
 
   @override
   void dispose() {
-    if (!kIsWeb) {
+    if (!kIsWeb &&
+        (defaultTargetPlatform == TargetPlatform.windows ||
+            defaultTargetPlatform == TargetPlatform.linux ||
+            defaultTargetPlatform == TargetPlatform.macOS)) {
       windowManager.removeListener(this);
     }
     super.dispose();

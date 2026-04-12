@@ -47,10 +47,10 @@ class SubjectModel implements ContentItem {
   final DateTime createdAt;
   @override
   final DateTime updatedAt;
-  final int cardCount;
+  int cardCount;
   final List<Map<String, dynamic>>? rawCards;
   @override
-  final String? ownerName;
+  String? ownerName;
   final String ageGroup;
   @override
   final String? folderId;
@@ -189,7 +189,19 @@ class SubjectModel implements ContentItem {
     if (rawCards == null) return cardCount;
     final lang = langCode.toLowerCase();
     return rawCards!.where((c) {
-      final locData = c['localized_data'] as Map<String, dynamic>?;
+      var rawLoc = c['localized_data'];
+      Map<String, dynamic>? locData;
+      if (rawLoc is Map) {
+        locData = Map<String, dynamic>.from(rawLoc);
+      } else if (rawLoc is String && rawLoc.isNotEmpty) {
+        try {
+          final decoded = jsonDecode(rawLoc);
+          if (decoded is Map) {
+            locData = Map<String, dynamic>.from(decoded);
+          }
+        } catch (_) {}
+      }
+
       if (locData == null) return false;
 
       final specificData = locData[lang] as Map<String, dynamic>?;
@@ -298,6 +310,7 @@ class SubjectModel implements ContentItem {
       folderId: json['folder_id'],
       typeStr: json['type'] ?? 'standard',
       linkedSubjectIds: List<String>.from(json['linked_subject_ids'] ?? []),
+      isOnDashboard: json['is_on_dashboard'] == true || json['is_on_dashboard'] == 1,
     );
   }
 

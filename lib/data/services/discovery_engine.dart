@@ -56,17 +56,37 @@ class DiscoveryEngine {
     List<ContentItem> items = [];
 
     if (filters.pillarId != null) {
-      final subjects = await _cardService.getSubjectsByPillar(filters.pillarId!, folderId: filters.folderId, rootOnly: filters.rootOnly);
-      final collections = await _cardService.getCollectionsByPillar(filters.pillarId!, folderId: filters.folderId, rootOnly: filters.rootOnly);
-      final folders = filters.folderId == null ? await _cardService.getFoldersByPillar(filters.pillarId!) : <FolderModel>[];
-      
+      final subjects = await _cardService.getSubjectsByPillar(
+        filters.pillarId!,
+        folderId: filters.folderId,
+        rootOnly: filters.rootOnly,
+        filter: filters.collectionFilter,
+      );
+      final collections = await _cardService.getCollectionsByPillar(
+        filters.pillarId!,
+        folderId: filters.folderId,
+        rootOnly: filters.rootOnly,
+        filter: filters.collectionFilter,
+      );
+      final folders =
+          filters.folderId == null
+              ? await _cardService.getFoldersByPillar(filters.pillarId!)
+              : <FolderModel>[];
+
       items.addAll(subjects);
       items.addAll(collections);
       items.addAll(folders);
     } else {
-      // For dashboard or global view, fetch all accessible content
-      final subjects = await _cardService.getDashboardSubjects();
-      final collections = await _cardService.getAllCollections(rootOnly: false);
+      // For dashboard or global view, fetch content based on the source filter
+      final subjects = await _cardService.getSubjectsByPillar(
+        -1, // Dummy or handled by backend to mean "all pillars" if pillarId is omitted
+        rootOnly: false,
+        filter: filters.collectionFilter,
+      );
+      final collections = await _cardService.getAllCollections(
+        rootOnly: false,
+        filter: filters.collectionFilter,
+      );
       final folders = await _cardService.getAllFolders();
 
       items.addAll(subjects);
@@ -80,6 +100,8 @@ class DiscoveryEngine {
   List<ContentItem> applyFiltersAndSort(List<ContentItem> items, DiscoveryFilters filters, String langCode) {
     final myId = _authService.currentUser?.serverId;
     final query = filters.query.toLowerCase();
+    
+    print('DiscoveryEngine.applyFiltersAndSort: items=${items.length}, filter=${filters.collectionFilter}, myId=$myId, lang=$langCode');
 
     // 1. First pass: Basic filtering (Age, Collection Category, Search Query)
     var filtered = items.where((item) {
@@ -109,6 +131,11 @@ class DiscoveryEngine {
         }
       }
 
+      final match = nameMatch && collectionMatch;
+      if (items.length < 20 && !match) {
+         // print('DiscoveryEngine: item ${item.id} (${item.getName(langCode)}) filtered out: nameMatch=$nameMatch, collectionMatch=$collectionMatch');
+      }
+
       // Age Filter (for subjects and collections)
       bool ageMatch = true;
       if (filters.ageGroup != 'all') {
@@ -119,8 +146,10 @@ class DiscoveryEngine {
         }
       }
 
-      return nameMatch && collectionMatch && ageMatch;
+      return match && ageMatch;
     }).toList();
+
+    print('DiscoveryEngine.applyFiltersAndSort: filtered=${filtered.length}');
 
     // 2. Structural Filtering (Pillar/Folder hierarchy)
     // We only apply structural filtering if we are NOT searching.
@@ -134,21 +163,45 @@ class DiscoveryEngine {
   }
 
   /// Helper to get only the items that should be visible at a specific level (root or folder)
-  List<ContentItem> getVisibleContent(List<ContentItem> items, String langCode, {String? folderId, bool rootOnly = false, String collectionFilter = 'all', String? myId, String query = ''}) {
+  List<ContentItem> getVisibleContent(
+    List<ContentItem> items,
+    String langCode, {
+    String? folderId,
+    bool rootOnly = false,
+    String collectionFilter = 'all',
+    String? myId,
+    String query = '',
+  }) {
     List<ContentItem> visible;
-    
+
     if (query.isNotEmpty) {
       visible = items; // If searching, show everything
     } else if (folderId != null) {
       visible = items.where((item) => item.folderId == folderId).toList();
     } else if (rootOnly) {
       final folderIds = items.whereType<FolderModel>().map((f) => f.id).toSet();
-      visible = items.where((item) {
-        if (item is FolderModel) return true;
-        return item.folderId == null || !folderIds.contains(item.folderId);
-      }).toList();
+      visible =
+          items.where((item) {
+            if (item is FolderModel) return true;
+            return item.folderId == null || !folderIds.contains(item.folderId);
+          }).toList();
     } else {
       visible = items;
+    }
+
+    // Apply the source filter locally as well to ensure UI consistency
+    if (collectionFilter != 'all') {
+      visible =
+          visible.where((item) {
+            if (item is FolderModel) return true; // Folders are handled by special logic below
+            if (collectionFilter == 'mine') return item.ownerId == myId;
+            if (collectionFilter == 'favorites') return item.isOnDashboard;
+            if (collectionFilter == 'public') {
+              if (item is SubjectModel) return item.isPublic;
+              if (item is CollectionModel) return item.isPublic;
+            }
+            return true;
+          }).toList();
     }
 
     // Special folder logic: Show folders if they have matching content, belong to user, or if we are in a high-level view (favorites/public)

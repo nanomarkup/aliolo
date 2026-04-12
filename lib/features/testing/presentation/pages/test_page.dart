@@ -193,7 +193,7 @@ class _TestPageState extends State<TestPage> {
               .map(
                 (c) => TestOption(
                   text: _getDisplayAnswer(c),
-                  imageUrl: c.primaryImageUrl,
+                  imageUrl: c.primaryImageUrl(widget.languageCode),
                   id: c.id,
                 ),
               )
@@ -202,7 +202,7 @@ class _TestPageState extends State<TestPage> {
       options.add(
         TestOption(
           text: _correctAnswerText,
-          imageUrl: _currentCard.primaryImageUrl,
+          imageUrl: _currentCard.primaryImageUrl(widget.languageCode),
           id: _currentCard.id,
         ),
       );

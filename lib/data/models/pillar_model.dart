@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:aliolo/data/services/translation_service.dart';
 import 'package:flutter/material.dart';
 
@@ -28,6 +29,8 @@ class Pillar {
   final String lightColor;
   final String? darkColor;
   final int sortOrder;
+  final int subjectCount;
+  final int folderCount;
 
   /// Map of language code to its specific data.
   /// Key 'global' is used for primary fallback.
@@ -39,20 +42,35 @@ class Pillar {
     required this.lightColor,
     this.darkColor,
     this.sortOrder = 0,
+    this.subjectCount = 0,
+    this.folderCount = 0,
     this.localizedData = const {},
   });
 
   factory Pillar.fromJson(Map<String, dynamic> json) {
-    final Map<String, dynamic> locMap = json['localized_data'] ?? {};
+    final dynamic rawLoc = json['localized_data'];
+    Map<String, dynamic> locMap = {};
+    
+    if (rawLoc is Map) {
+      locMap = Map<String, dynamic>.from(rawLoc);
+    } else if (rawLoc is String && rawLoc.isNotEmpty) {
+      try {
+        final decoded = jsonDecode(rawLoc);
+        if (decoded is Map) {
+          locMap = Map<String, dynamic>.from(decoded);
+        }
+      } catch (e) {
+        print('Error decoding localized_data string for pillar ${json['id']}: $e');
+      }
+    }
+
     Map<String, LocalizedPillarData> localized = {};
-    try {
+    if (locMap.isNotEmpty) {
       locMap.forEach((key, value) {
         if (value is Map) {
-          localized[key.toLowerCase()] = LocalizedPillarData.fromJson(Map<String, dynamic>.from(value));
+          localized[key.toString().toLowerCase()] = LocalizedPillarData.fromJson(Map<String, dynamic>.from(value));
         }
       });
-    } catch (e) {
-      print('Error parsing localized_data for pillar ${json['id']}: $e');
     }
 
     return Pillar(
@@ -61,6 +79,8 @@ class Pillar {
       lightColor: json['light_color'] ?? json['color'] ?? '#9E9E9E',
       darkColor: json['dark_color'],
       sortOrder: (json['sort_order'] as num? ?? 0).toInt(),
+      subjectCount: (json['subject_count'] as num? ?? 0).toInt(),
+      folderCount: (json['folder_count'] as num? ?? 0).toInt(),
       localizedData: localized,
     );
   }

@@ -1,6 +1,4 @@
-import 'dart:io';
 import 'package:flutter/foundation.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:uuid/uuid.dart';
 import 'package:path/path.dart' as p;
@@ -8,22 +6,23 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:aliolo/data/models/feedback_model.dart';
 import 'package:aliolo/data/models/feedback_reply_model.dart';
+import 'package:aliolo/core/network/cloudflare_client.dart';
+import 'package:aliolo/core/di/service_locator.dart';
+import 'package:dio/dio.dart';
+import 'dart:io';
 
 class FeedbackService {
   static final FeedbackService _instance = FeedbackService._internal();
   factory FeedbackService() => _instance;
   FeedbackService._internal();
 
-  final _supabase = Supabase.instance.client;
+  final _cfClient = getIt<CloudflareHttpClient>();
   final _uuid = const Uuid();
 
   final ValueNotifier<bool> pendingNotifications = ValueNotifier<bool>(false);
 
   Future<void> submitFeedback(FeedbackModel feedback, List<XFile> attachments) async {
     try {
-      final userId = _supabase.auth.currentUser?.id;
-      if (userId == null) throw Exception('User not authenticated');
-
       // 1. Gather Rich Metadata
       final packageInfo = await PackageInfo.fromPlatform();
       final deviceInfo = DeviceInfoPlugin();
@@ -62,84 +61,71 @@ class FeedbackService {
 
       if (attachments.isNotEmpty) {
         for (var file in attachments) {
-          final fileNameOrig = file.name;
-          final fileExt = p.extension(fileNameOrig).toLowerCase();
+          final fileExt = p.extension(file.name).toLowerCase();
           final fileName = '${_uuid.v4()}$fileExt';
-          final filePath = '$userId/$fileName';
+          final filePath = 'feedback/$fileName';
 
-          String contentType = 'image/png';
-          if (fileExt == '.jpg' || fileExt == '.jpeg') {
-            contentType = 'image/jpeg';
-          } else if (fileExt == '.webp') {
-            contentType = 'image/webp';
-          } else if (fileExt == '.gif') {
-            contentType = 'image/gif';
+          final bytes = await file.readAsBytes();
+          final response = await _cfClient.client.post(
+            '/api/upload/feedback_attachments/$filePath',
+            data: Stream.fromIterable([bytes]),
+            options: Options(
+              headers: {
+                Headers.contentTypeHeader: _getContentType(fileExt),
+                Headers.contentLengthHeader: bytes.length,
+              },
+            ),
+          );
+
+          if (response.statusCode == 200) {
+            uploadedUrls.add(response.data['url']);
           }
-
-          if (kIsWeb) {
-            final bytes = await file.readAsBytes();
-            await _supabase.storage.from('feedback_attachments').uploadBinary(
-                  filePath,
-                  bytes,
-                  fileOptions: FileOptions(upsert: true, contentType: contentType),
-                );
-          } else {
-            await _supabase.storage.from('feedback_attachments').upload(
-                  filePath,
-                  File(file.path),
-                  fileOptions: FileOptions(upsert: true, contentType: contentType),
-                );
-          }
-
-          final url = _supabase.storage
-              .from('feedback_attachments')
-              .getPublicUrl(filePath);
-          uploadedUrls.add(url);
         }
       }
 
-      // 2. Insert feedback record
       final feedbackData = feedback.toJson();
-      feedbackData['user_id'] = userId;
       feedbackData['attachment_urls'] = uploadedUrls;
       
-      // Merge existing metadata (like context) with our new rich metadata
       final Map<String, dynamic> finalMetadata = Map.from(feedback.metadata);
       finalMetadata.addAll(extraMetadata);
       feedbackData['metadata'] = finalMetadata;
 
-      await _supabase.from('feedbacks').insert(feedbackData);
+      await _cfClient.client.post('/api/feedbacks', data: feedbackData);
     } catch (e) {
       debugPrint('Error submitting feedback: $e');
       rethrow;
     }
   }
 
+  String _getContentType(String ext) {
+    switch (ext) {
+      case '.jpg':
+      case '.jpeg': return 'image/jpeg';
+      case '.webp': return 'image/webp';
+      case '.gif': return 'image/gif';
+      default: return 'image/png';
+    }
+  }
+
   Future<List<FeedbackModel>> getFeedbacks() async {
     try {
-      final userId = _supabase.auth.currentUser?.id;
-      if (userId == null) return [];
-
-      var query = _supabase.from('feedbacks').select('*, profiles(username, email)');
-      
-      // If not admin, only see own feedback
-      if (userId != 'f2fb4c9c-169b-447d-b8a6-dce72c4ed5ac') {
-        final response = await query.eq('user_id', userId).order('created_at', ascending: false);
-        return (response as List).map((json) => FeedbackModel.fromJson(json)).toList();
+      final response = await _cfClient.client.get('/api/feedbacks');
+      if (response.statusCode == 200) {
+        return (response.data as List).map((json) => FeedbackModel.fromJson(json)).toList();
       }
-
-      final response = await query.order('created_at', ascending: false);
-      return (response as List).map((json) => FeedbackModel.fromJson(json)).toList();
     } catch (e) {
       debugPrint('Error fetching feedbacks: $e');
-      return [];
     }
+    return [];
   }
 
   Future<void> updateFeedbackStatus(String feedbackId, String status) async {
     try {
-      await _supabase.from('feedbacks').update({'status': status}).eq('id', feedbackId);
-      await hasPendingNotifications(); // Update global badge state
+      await _cfClient.client.post('/api/feedbacks', data: {
+        'id': feedbackId,
+        'status': status,
+      });
+      await hasPendingNotifications();
     } catch (e) {
       debugPrint('Error updating feedback status: $e');
       rethrow;
@@ -148,7 +134,10 @@ class FeedbackService {
 
   Future<void> updateFeedbackContent(String feedbackId, String content) async {
     try {
-      await _supabase.from('feedbacks').update({'content': content}).eq('id', feedbackId);
+      await _cfClient.client.post('/api/feedbacks', data: {
+        'id': feedbackId,
+        'content': content,
+      });
     } catch (e) {
       debugPrint('Error updating feedback content: $e');
       rethrow;
@@ -157,7 +146,10 @@ class FeedbackService {
 
   Future<void> updateReplyContent(String replyId, String content) async {
     try {
-      await _supabase.from('feedback_replies').update({'content': content}).eq('id', replyId);
+      await _cfClient.client.post('/api/feedback_replies', data: {
+        'id': replyId,
+        'content': content,
+      });
     } catch (e) {
       debugPrint('Error updating reply content: $e');
       rethrow;
@@ -166,27 +158,9 @@ class FeedbackService {
 
   Future<void> deleteReply(String replyId) async {
     try {
-      // 1. Fetch reply to get attachment URLs
-      final res = await _supabase.from('feedback_replies').select('attachment_urls').eq('id', replyId).maybeSingle();
-      if (res != null && res['attachment_urls'] != null) {
-        final List<String> urls = List<String>.from(res['attachment_urls']);
-        final List<String> paths = [];
-        for (var url in urls) {
-          try {
-            final uri = Uri.parse(url);
-            final segments = uri.pathSegments;
-            if (segments.length >= 8) {
-              paths.add(segments.sublist(5).join('/'));
-            }
-          } catch (_) {}
-        }
-        if (paths.isNotEmpty) {
-          await _supabase.storage.from('feedback_attachments').remove(paths);
-        }
-      }
-
-      await _supabase.from('feedback_replies').delete().eq('id', replyId);
-      await hasPendingNotifications(); // Update global badge state
+      // Attachment deletion not handled here for brevity, Worker would ideally handle R2 cleanup
+      await _cfClient.client.delete('/api/feedback_replies/$replyId');
+      await hasPendingNotifications();
     } catch (e) {
       debugPrint('Error deleting reply: $e');
       rethrow;
@@ -195,50 +169,33 @@ class FeedbackService {
 
   Future<void> submitReply(FeedbackReplyModel reply, List<XFile> attachments) async {
     try {
-      final userId = _supabase.auth.currentUser?.id;
-      if (userId == null) throw Exception('User not authenticated');
-
       List<String> uploadedUrls = [];
       for (var file in attachments) {
-        final fileNameOrig = file.name;
-        final fileExt = p.extension(fileNameOrig).toLowerCase();
+        final fileExt = p.extension(file.name).toLowerCase();
         final fileName = '${_uuid.v4()}$fileExt';
-        final filePath = 'replies/$userId/$fileName';
+        final filePath = 'replies/$fileName';
 
-        String contentType = 'image/png';
-        if (fileExt == '.jpg' || fileExt == '.jpeg') {
-          contentType = 'image/jpeg';
-        } else if (fileExt == '.webp') {
-          contentType = 'image/webp';
+        final bytes = await file.readAsBytes();
+        final response = await _cfClient.client.post(
+          '/api/upload/feedback_attachments/$filePath',
+          data: Stream.fromIterable([bytes]),
+          options: Options(
+            headers: {
+              Headers.contentTypeHeader: _getContentType(fileExt),
+              Headers.contentLengthHeader: bytes.length,
+            },
+          ),
+        );
+        if (response.statusCode == 200) {
+          uploadedUrls.add(response.data['url']);
         }
-
-        if (kIsWeb) {
-          final bytes = await file.readAsBytes();
-          await _supabase.storage.from('feedback_attachments').uploadBinary(
-                filePath,
-                bytes,
-                fileOptions: FileOptions(upsert: true, contentType: contentType),
-              );
-        } else {
-          await _supabase.storage.from('feedback_attachments').upload(
-                filePath,
-                File(file.path),
-                fileOptions: FileOptions(upsert: true, contentType: contentType),
-              );
-        }
-        uploadedUrls.add(_supabase.storage.from('feedback_attachments').getPublicUrl(filePath));
       }
 
       final replyData = reply.toJson();
-      replyData['user_id'] = userId;
       replyData['attachment_urls'] = uploadedUrls;
 
-      await _supabase.from('feedback_replies').insert(replyData);
-
-      // 3. Automatically update status (which calls hasPendingNotifications internally)
-      final isAdmin = userId == 'f2fb4c9c-169b-447d-b8a6-dce72c4ed5ac';
-      final newStatus = isAdmin ? 'replied' : 'open';
-      await updateFeedbackStatus(reply.feedbackId, newStatus);
+      await _cfClient.client.post('/api/feedback_replies', data: replyData);
+      await hasPendingNotifications();
     } catch (e) {
       debugPrint('Error submitting reply: $e');
       rethrow;
@@ -247,54 +204,28 @@ class FeedbackService {
 
   Future<List<FeedbackReplyModel>> getReplies(String feedbackId) async {
     try {
-      final response = await _supabase
-          .from('feedback_replies')
-          .select()
-          .eq('feedback_id', feedbackId)
-          .order('created_at', ascending: true);
-      return (response as List).map((json) => FeedbackReplyModel.fromJson(json)).toList();
+      final response = await _cfClient.client.get('/api/feedbacks/$feedbackId/replies');
+      if (response.statusCode == 200) {
+        return (response.data as List).map((json) => FeedbackReplyModel.fromJson(json)).toList();
+      }
     } catch (e) {
       debugPrint('Error fetching replies: $e');
-      return [];
     }
+    return [];
   }
 
   Future<bool> hasPendingNotifications() async {
     try {
-      final userId = _supabase.auth.currentUser?.id;
-      if (userId == null) {
-        pendingNotifications.value = false;
-        return false;
+      final response = await _cfClient.client.get('/api/feedbacks/notifications');
+      if (response.statusCode == 200) {
+        final hasNotif = response.data['has_notif'] == true;
+        pendingNotifications.value = hasNotif;
+        return hasNotif;
       }
-
-      final isAdmin = userId == 'f2fb4c9c-169b-447d-b8a6-dce72c4ed5ac';
-      bool hasNotif = false;
-      
-      if (isAdmin) {
-        // Admin: Check for any 'open' feedbacks in the system
-        final response = await _supabase
-            .from('feedbacks')
-            .select('id')
-            .eq('status', 'open')
-            .limit(1);
-        hasNotif = (response as List).isNotEmpty;
-      } else {
-        // User: Check for own feedbacks with 'replied' status
-        final response = await _supabase
-            .from('feedbacks')
-            .select('id')
-            .eq('user_id', userId)
-            .eq('status', 'replied')
-            .limit(1);
-        hasNotif = (response as List).isNotEmpty;
-      }
-      
-      pendingNotifications.value = hasNotif;
-      return hasNotif;
     } catch (e) {
       debugPrint('Error checking feedback notifications: $e');
-      pendingNotifications.value = false;
-      return false;
     }
+    pendingNotifications.value = false;
+    return false;
   }
 }

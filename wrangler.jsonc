@@ -1,14 +1,32 @@
 {
-  "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "aliolo",
-  "compatibility_date": "2025-09-27",
-  "observability": {
-    "enabled": true
-  },
-  "assets": {
-    "directory": "build/web"
-  },
-  "compatibility_flags": [
-    "nodejs_compat"
-  ]
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "aliolo",
+	"main": "api/src/index.ts",
+	"compatibility_date": "2025-09-27",
+	"observability": {
+		"enabled": true
+	},
+	"assets": {
+		"directory": "build/web"
+	},
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "aliolo-db",
+			"database_id": "fb2060e8-6fcc-44ac-b477-1eb62c0c335a"
+		}
+	],
+	"r2_buckets": [
+		{
+			"bucket_name": "aliolo-media",
+			"binding": "MEDIA"
+		},
+		{
+			"bucket_name": "aliolo-avatars",
+			"binding": "AVATARS"
+		}
+	]
 }

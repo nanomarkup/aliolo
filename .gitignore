@@ -50,3 +50,42 @@ app.*.map.json
 !.dev.vars.example
 .env*
 !.env.example
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Python
+venv/
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Project specific
+*.bak
+*.json.bak
+all_cards_fixed.json
+fix_media_paths.sql
+update_all_media.sql
+update_subjects_media.sql
+broken_image_links.json
+storage_audit_report.json
+RESTORATION_PLAN.json
+MISSING_MEDIA_REPORT.json
+all_local_audio.txt
+cards_to_translate.json
+translation_log.txt
+folder_block.txt
+main_block.txt
+pillar_block.txt
+/card_images/
+/card_audio/
+/assets/cards/
+/assets/aliolo_images_*/
+*.jpg
+*.png
+*.html
+
+

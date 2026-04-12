@@ -1,0 +1,63 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "aliolo-api",
+  "main": "src/index.ts",
+  "compatibility_date": "2024-04-03",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "vars": {
+    "ENVIRONMENT": "development"
+  },
+  "assets": {
+    "directory": "../build/web"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "aliolo-db",
+      "database_id": "fb2060e8-6fcc-44ac-b477-1eb62c0c335a"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "MEDIA",
+      "bucket_name": "aliolo-media"
+    },
+    {
+      "binding": "AVATARS",
+      "bucket_name": "aliolo-avatars"
+    }
+  ],
+  "observability": {
+    "enabled": true
+  },
+  "env": {
+    "production": {
+      "name": "aliolo-api",
+      "vars": {
+        "ENVIRONMENT": "production"
+      },
+      "assets": {
+        "directory": "../build/web"
+      },
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_name": "aliolo-db",
+          "database_id": "fb2060e8-6fcc-44ac-b477-1eb62c0c335a"
+        }
+      ],
+      "r2_buckets": [
+        {
+          "binding": "MEDIA",
+          "bucket_name": "aliolo-media"
+        },
+        {
+          "binding": "AVATARS",
+          "bucket_name": "aliolo-avatars"
+        }
+      ]
+    }
+  }
+}

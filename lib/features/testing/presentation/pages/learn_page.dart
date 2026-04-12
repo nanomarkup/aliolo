@@ -93,8 +93,11 @@ class _LearnPageState extends State<LearnPage> {
     }
 
     _playerSubscription = player.stream.completed.listen((completed) {
-      if (completed && _isAutoPlay && !_isAutoPlayWaiting) {
-        _scheduleAutoNext(afterMedia: true);
+      if (completed) {
+        print('LearnPage: Player completed. autoPlay: $_isAutoPlay, waiting: $_isAutoPlayWaiting');
+        if (_isAutoPlay && !_isAutoPlayWaiting) {
+          _scheduleAutoNext(afterMedia: true);
+        }
       }
     });
 
@@ -145,12 +148,14 @@ class _LearnPageState extends State<LearnPage> {
     final audioUrl = _currentCard.getAudioUrl(lang);
     final videoUrl = _currentCard.getVideoUrl(lang);
 
+    print('LearnPage: playInitialMedia. audio: $audioUrl, video: $videoUrl, showingVideo: $_showingVideo');
+
     bool hasMedia = false;
-    if (_showingVideo && videoUrl != null) {
+    if (_showingVideo && videoUrl != null && videoUrl.isNotEmpty) {
       await player.open(Media(videoUrl));
       player.play();
       hasMedia = true;
-    } else if (audioUrl != null) {
+    } else if (audioUrl != null && audioUrl.isNotEmpty) {
       await player.open(Media(audioUrl));
       player.play();
       hasMedia = true;
@@ -163,17 +168,20 @@ class _LearnPageState extends State<LearnPage> {
 
   void _scheduleAutoNext({required bool afterMedia}) {
     if (!_isAutoPlay || _isAutoPlayWaiting) return;
+    print('LearnPage: Scheduling auto-next. afterMedia: $afterMedia');
     setState(() => _isAutoPlayWaiting = true);
     final delay =
         afterMedia ? const Duration(seconds: 2) : const Duration(seconds: 4);
     _autoNextTimer?.cancel();
     _autoNextTimer = Timer(delay, () {
+      print('LearnPage: Auto-next timer fired. mounted: $mounted, waiting: $_isAutoPlayWaiting');
       if (mounted && _isAutoPlay && _isAutoPlayWaiting) _nextCard();
     });
   }
 
   Future<void> _nextCard() async {
     if (!_canGoNext) return;
+    print('LearnPage: Moving to next card');
     _autoNextTimer?.cancel();
     _cooldownTimer?.cancel();
     setState(() => _isAutoPlayWaiting = false);
@@ -338,14 +346,14 @@ class _LearnPageState extends State<LearnPage> {
                   IconButton(
                     icon: Icon(
                       Icons.volume_up,
-                      color: _currentCard.getAudioUrl(lang) != null
+                      color: (_currentCard.getAudioUrl(lang)?.isNotEmpty ?? false)
                           ? Colors.white
                           : Colors.white.withValues(alpha: 0.3),
                     ),
-                    onPressed: _currentCard.getAudioUrl(lang) != null
+                    onPressed: (_currentCard.getAudioUrl(lang)?.isNotEmpty ?? false)
                         ? () async {
                             final url = _currentCard.getAudioUrl(lang);
-                            if (url != null) {
+                            if (url != null && url.isNotEmpty) {
                               await player.open(Media(url));
                               player.play();
                             }

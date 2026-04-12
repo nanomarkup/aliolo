@@ -14,6 +14,7 @@ import 'package:aliolo/data/services/math_service.dart';
 import 'package:aliolo/data/services/subscription_service.dart';
 import 'package:aliolo/data/services/testing_language_service.dart';
 import 'package:aliolo/data/services/sound_service.dart';
+import 'package:aliolo/data/services/filter_service.dart';
 import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/core/widgets/aliolo_scrollable_page.dart';
 import 'package:aliolo/features/testing/presentation/pages/learn_page.dart';
@@ -57,6 +58,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
   final _authService = getIt<AuthService>();
   final _subService = getIt<SubscriptionService>();
   final _langService = getIt<TestingLanguageService>();
+  final _filterService = getIt<FilterService>();
   final _searchController = TextEditingController();
   final _searchFocusNode = FocusNode();
   final _scrollController = ScrollController();
@@ -75,9 +77,6 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
   bool _hasUpdated = false;
   late String _currentLanguageCode;
 
-  String _collectionFilter = 'all';
-  String _selectedAgeFilter = 'all';
-
   @override
   void initState() {
     super.initState();
@@ -94,6 +93,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
     }
     _cardService.addListener(_onServiceChange);
     _langService.currentLanguageCode.addListener(_onLanguageChange);
+    _filterService.addListener(_onGlobalFilterChanged);
     _scrollController.addListener(() {
       if (_scrollController.offset > 400) {
         if (!_showBackToTop) setState(() => _showBackToTop = true);
@@ -112,11 +112,38 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
     }
   }
 
+  void _onGlobalFilterChanged() {
+    if (mounted) {
+      setState(() {
+        _applyFilters();
+      });
+    }
+  }
+
   Future<void> _fetchCollectionSubjects() async {
     if (_currentCollection == null) return;
     setState(() => _isLoading = true);
     try {
-      final subjects = await _cardService.getDashboardSubjects();
+      final myId = _authService.currentUser?.serverId;
+      final isOwner = _currentCollection?.ownerId == myId;
+
+      List<SubjectModel> subjects = [];
+
+      // 1. Always fetch the subjects actually IN the collection
+      if (_currentCollection!.subjectIds.isNotEmpty) {
+        subjects = await _cardService.getSubjectsByIds(_currentCollection!.subjectIds);
+      }
+
+      // 2. If owner, also fetch dashboard subjects so they can add/remove from the collection
+      if (isOwner) {
+        final dashboardSubjects = await _cardService.getDashboardSubjects();
+        for (var s in dashboardSubjects) {
+          if (!subjects.any((existing) => existing.id == s.id)) {
+            subjects.add(s);
+          }
+        }
+      }
+
       if (mounted) {
         setState(() {
           _allSubjects = subjects;
@@ -132,6 +159,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
   void dispose() {
     _cardService.removeListener(_onServiceChange);
     _langService.currentLanguageCode.removeListener(_onLanguageChange);
+    _filterService.removeListener(_onGlobalFilterChanged);
     _searchController.dispose();
     _searchFocusNode.dispose();
     _scrollController.dispose();
@@ -221,14 +249,14 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                   .toLowerCase()
                   .contains(query);
               final matchesAge =
-                  _selectedAgeFilter == 'all' ||
-                  s.ageGroup == _selectedAgeFilter;
+                  _filterService.ageGroup == 'all' ||
+                  s.ageGroup == _filterService.ageGroup;
               bool matchesCollection = true;
-              if (_collectionFilter == 'mine') {
+              if (_filterService.sourceFilter == 'mine') {
                 matchesCollection = s.ownerId == myId;
-              } else if (_collectionFilter == 'public') {
+              } else if (_filterService.sourceFilter == 'public') {
                 matchesCollection = s.isPublic;
-              } else if (_collectionFilter == 'favorites') {
+              } else if (_filterService.sourceFilter == 'favorites') {
                 matchesCollection = s.isOnDashboard;
               }
               return matchesName && matchesAge && matchesCollection;
@@ -472,7 +500,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                         Text(context.t('source'), style: const TextStyle(fontWeight: FontWeight.bold)),
                         const SizedBox(height: 8),
                         _buildCompactDropdown(
-                          value: _collectionFilter,
+                          value: _filterService.sourceFilter,
                           items: {
                             'all': context.t('filter_all'),
                             'favorites': context.t('filter_favorites'),
@@ -481,10 +509,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                           },
                           onChanged: (val) {
                             if (val != null) {
-                              setState(() {
-                                _collectionFilter = val;
-                                _applyFilters();
-                              });
+                              _filterService.updateSourceFilter(val);
                               setBottomSheetState(() {});
                             }
                           },
@@ -494,7 +519,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                       Text(context.t('age'), style: const TextStyle(fontWeight: FontWeight.bold)),
                       const SizedBox(height: 8),
                       _buildCompactDropdown(
-                        value: _selectedAgeFilter,
+                        value: _filterService.ageGroup,
                         items: {
                           'all': context.t('age_all'),
                           '0_6': context.t('age_0_6'),
@@ -503,10 +528,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                         },
                         onChanged: (val) {
                           if (val != null) {
-                            setState(() {
-                              _selectedAgeFilter = val;
-                              _applyFilters();
-                            });
+                            _filterService.updateAgeGroup(val);
                             setBottomSheetState(() {});
                           }
                         },
@@ -1374,10 +1396,17 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
       );
     }
 
-    final imageUrl = card.getImageUrls(displayLang).firstOrNull;
+    final imageUrl = card.primaryImageUrl(displayLang) ?? card.primaryImageUrl('global') ?? card.primaryImageUrl('en');
     if (imageUrl != null) {
       return AlioloImage(imageUrl: imageUrl, fit: fit);
     }
+    
+    // Debug info for missing images
+    if (card.localizedData.containsKey('global') && 
+        (card.localizedData['global']!.imageUrls?.isNotEmpty ?? false)) {
+       print('Card ${card.id} has global images but none found for $displayLang. This should not happen with the new fallback logic.');
+    }
+
     return Container(
       color: pillarColor.withValues(alpha: 0.1),
       child: Icon(Icons.image, size: 32, color: pillarColor),
@@ -1442,7 +1471,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
           SizedBox(
             width: 200,
             child: _buildCompactDropdown(
-              value: _collectionFilter,
+              value: _filterService.sourceFilter,
               items: {
                 'all': context.t('filter_all'),
                 'favorites': context.t('filter_favorites'),
@@ -1451,12 +1480,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
               },
               onChanged: (val) async {
                 if (val != null) {
-                  setState(() {
-                    _collectionFilter = val;
-                    _applyFilters();
-                  });
-                  final prefs = await SharedPreferences.getInstance();
-                  await prefs.setString('last_collection_filter', val);
+                  _filterService.updateSourceFilter(val);
                 }
               },
             ),

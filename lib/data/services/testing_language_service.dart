@@ -3,8 +3,11 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:aliolo/core/network/cloudflare_client.dart';
+import 'package:aliolo/data/services/auth_service.dart';
+import 'package:aliolo/core/di/service_locator.dart';
+import 'package:aliolo/core/utils/logger.dart';
 
 class TestingLanguage {
   final String code;
@@ -24,7 +27,7 @@ class TestingLanguageService extends ChangeNotifier {
   factory TestingLanguageService() => _instance;
   TestingLanguageService._internal();
 
-  SupabaseClient get _supabase => Supabase.instance.client;
+  final _cfClient = getIt<CloudflareHttpClient>();
 
   // Hardcoded fallback list
   static const List<TestingLanguage> _fallbackLanguages = [
@@ -75,10 +78,8 @@ class TestingLanguageService extends ChangeNotifier {
   late dynamic _settingsFile;
 
   Future<void> init() async {
-    // 1. Fetch from DB
-    await fetchLanguagesFromDb();
+    await fetchLanguagesFromCloudflare();
 
-    // 2. Load last used learning language
     try {
       final prefs = await SharedPreferences.getInstance();
       final lastLang = prefs.getString('last_testing_lang') ?? 'en';
@@ -89,22 +90,22 @@ class TestingLanguageService extends ChangeNotifier {
 
     if (kIsWeb) return;
     
-    final dir = await getApplicationDocumentsDirectory();
-    final alioloDir = dynamicDirectory(p.join(dir.path, '.aliolo'));
-    if (!await alioloDir.exists()) await alioloDir.create(recursive: true);
+    try {
+      final dir = await getApplicationDocumentsDirectory();
+      final alioloDir = dynamicDirectory(p.join(dir.path, '.aliolo'));
+      if (!await alioloDir.exists()) await alioloDir.create(recursive: true);
 
-    _settingsFile = dynamicFile(p.join(alioloDir.path, 'content_langs.json'));
+      _settingsFile = dynamicFile(p.join(alioloDir.path, 'content_langs.json'));
 
-    if (await _settingsFile.exists()) {
-      try {
+      if (await _settingsFile.exists()) {
         final content = await _settingsFile.readAsString();
         final List<dynamic> data = jsonDecode(content);
         _activeLanguageCodes = data.map((e) => e.toString()).toList();
-      } catch (e) {
-        print('Error loading content languages: $e');
+      } else {
+        await _save();
       }
-    } else {
-      await _save();
+    } catch (e) {
+      AppLogger.log('Error initializing TestingLanguageService files: $e');
     }
   }
 
@@ -115,28 +116,31 @@ class TestingLanguageService extends ChangeNotifier {
     try {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('last_testing_lang', code);
+
+      final auth = getIt<AuthService>();
+      if (auth.currentUser != null) {
+        await auth.updateDefaultLanguage(code);
+      }
     } catch (e) {
-      debugPrint('Error saving SharedPreferences for testing language: $e');
+      debugPrint('Error saving SharedPreferences or syncing for testing language: $e');
     }
   }
 
-  Future<void> fetchLanguagesFromDb() async {
+
+  Future<void> fetchLanguagesFromCloudflare() async {
     try {
-      final List<dynamic> data = await _supabase
-          .from('languages')
-          .select('id, name')
-          .order('name');
-      
-      if (data.isNotEmpty) {
+      final response = await _cfClient.client.get('/api/languages');
+      if (response.statusCode == 200) {
+        final List<dynamic> data = response.data;
         _allLanguages = data.map((e) => TestingLanguage(
           code: e['id'].toString().toLowerCase(),
-          name: e['name'].toString(), // We use nativeName as primary name in DB
+          name: e['name'].toString(),
           nativeName: e['name'].toString(),
         )).toList();
         notifyListeners();
       }
     } catch (e) {
-      print('TestingLanguageService: DB fetch failed: $e');
+      AppLogger.log('TestingLanguageService: Cloudflare fetch failed: $e');
     }
   }
 
@@ -173,7 +177,11 @@ class TestingLanguageService extends ChangeNotifier {
 
   Future<void> _save() async {
     if (kIsWeb) return;
-    await _settingsFile.writeAsString(jsonEncode(_activeLanguageCodes));
+    try {
+      await _settingsFile.writeAsString(jsonEncode(_activeLanguageCodes));
+    } catch (e) {
+      AppLogger.log('Error saving active languages: $e');
+    }
   }
 
   Future<void> resetToDefault() async {

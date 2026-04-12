@@ -1,10 +1,11 @@
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:aliolo/data/models/user_model.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/core/di/service_locator.dart';
+import 'package:aliolo/core/network/cloudflare_client.dart';
+import 'package:aliolo/core/utils/logger.dart';
 
 class ProgressService {
-  final SupabaseClient _supabase = Supabase.instance.client;
+  final _cfClient = getIt<CloudflareHttpClient>();
   final AuthService _authService = getIt<AuthService>();
 
   Future<void> recordProgress({
@@ -21,26 +22,18 @@ class ProgressService {
     final today = DateTime(now.year, now.month, now.day);
 
     try {
-      // 1. Update card specific progress in DB
-      final remoteRes =
-          await _supabase
-              .from('progress')
-              .select()
-              .eq('user_id', userServerId)
-              .eq('card_id', cardId)
-              .maybeSingle();
+      // 1. Update card specific progress in D1
+      final getRes = await _cfClient.client.get('/api/progress/card/$cardId');
       int currentCorrect = 0;
-      if (remoteRes != null) {
-        currentCorrect = remoteRes['correct_count'] ?? 0;
+      if (getRes.statusCode == 200 && getRes.data != null) {
+        currentCorrect = getRes.data['correct_count'] ?? 0;
       }
 
-      await _supabase.from('progress').upsert({
-        'user_id': userServerId,
+      await _cfClient.client.post('/api/progress', data: {
         'card_id': cardId,
         'subject_id': subjectId,
         'correct_count': (quality >= 3) ? currentCorrect + 1 : currentCorrect,
-        'updated_at': now.toIso8601String(),
-      }, onConflict: 'user_id, card_id');
+      });
 
       // 2. XP Gain
       int xpGain = 1; // Incorrect
@@ -58,7 +51,6 @@ class ProgressService {
       _handleNewDayReset(user, today);
 
       // 4. Update Daily Completions & Streak
-      // Only count correct/hesitant answers toward daily goal
       if (quality >= 2) {
         final wasGoalReachedBefore = user.dailyCompletions >= user.dailyGoalCount;
         user.dailyCompletions += 1.0;
@@ -81,29 +73,25 @@ class ProgressService {
         maxStreak: user.maxStreak,
         lastActiveDate: now,
       );
-      } catch (e) {
-      print('Progress Sync Error: $e');
-      }
-      }
+    } catch (e) {
+      AppLogger.log('Progress Sync Error: $e');
+    }
+  }
 
-      Future<void> recordLearnProgress({
-      required String cardId,
-      required String subjectId,
-      }) async {
-      final user = _authService.currentUser;
-      if (user == null || user.serverId == null) return;
+  Future<void> recordLearnProgress({
+    required String cardId,
+    required String subjectId,
+  }) async {
+    final user = _authService.currentUser;
+    if (user == null || user.serverId == null) return;
 
-      final now = DateTime.now();
-      final today = DateTime(now.year, now.month, now.day);
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
 
-      try {
-      // 1. XP Gain for Learn Mode: 2
+    try {
       user.totalXp += 2;
-
-      // 2. New Day Detection & Reset
       _handleNewDayReset(user, today);
 
-      // 3. Daily Goal Logic
       final wasGoalReachedBefore = user.dailyCompletions >= user.dailyGoalCount;
       user.dailyCompletions += 0.25;
       final isGoalReachedNow = user.dailyCompletions >= user.dailyGoalCount;
@@ -125,13 +113,11 @@ class ProgressService {
         maxStreak: user.maxStreak,
         lastActiveDate: now,
       );
-      } catch (e) {
-      print('Learn Progress Error: $e');
-      }
-      }
+    } catch (e) {
+      AppLogger.log('Learn Progress Error: $e');
+    }
+  }
 
-
-  /// Consolidates new day reset logic for completions and streaks.
   void _handleNewDayReset(UserModel user, DateTime today) {
     if (user.lastActiveDate == null) return;
 
@@ -144,11 +130,10 @@ class ProgressService {
     final dayDifference = today.difference(lastDay).inDays;
 
     if (dayDifference > 0) {
-      // New day detected: reset completions and sync goal
       user.dailyCompletions = 0.0;
       user.dailyGoalCount = user.nextDailyGoal;
       if (dayDifference > 1) {
-        user.currentStreak = 0; // Broke streak (missed at least one full day)
+        user.currentStreak = 0;
       }
     }
   }
@@ -156,49 +141,35 @@ class ProgressService {
   Future<void> awardSubjectCompletionBonus(int cardCount) async {
     final user = _authService.currentUser;
     if (user == null) return;
-    // Bonus equal to number of cards in the session
     user.totalXp += cardCount;
     await _authService.updateUser(user);
   }
 
   Future<void> hideCard(String cardId, bool hidden) async {
-    final user = _authService.currentUser;
-    if (user == null || user.serverId == null) return;
     try {
-      await _supabase.from('progress').upsert({
-        'user_id': user.serverId,
+      await _cfClient.client.post('/api/progress', data: {
         'card_id': cardId,
         'is_hidden': hidden,
-        'updated_at': DateTime.now().toIso8601String(),
-      }, onConflict: 'user_id, card_id');
-    } catch (_) {}
-  }
-
-  Future<List<String>> getHiddenCardIds() async {
-    final user = _authService.currentUser;
-    if (user == null || user.serverId == null) return [];
-    try {
-      final List<dynamic> res = await _supabase
-          .from('progress')
-          .select('card_id')
-          .eq('user_id', user.serverId!)
-          .eq('is_hidden', true);
-      return res.map((e) => e['card_id'] as String).toList();
-    } catch (_) {
-      return [];
+      });
+    } catch (e) {
+      AppLogger.log('Error hiding card: $e');
     }
   }
 
-  Future<double> getSubjectProgress(String subjectId) async {
-    return 0.0;
+  Future<List<String>> getHiddenCardIds() async {
+    try {
+      final response = await _cfClient.client.get('/api/progress/hidden');
+      if (response.statusCode == 200) {
+        return List<String>.from(response.data);
+      }
+    } catch (e) {
+      AppLogger.log('Error getting hidden cards: $e');
+    }
+    return [];
   }
 
+  Future<double> getSubjectProgress(String subjectId) async => 0.0;
   Future<int> getMathLevelCount() async => 0;
-  Future<Map<String, int>> getSubjectCrowns() async {
-    return {}; // Stub for now
-  }
-
-  Future<double> getDailyProgress() async {
-    return _authService.currentUser?.dailyCompletions ?? 0.0;
-  }
+  Future<Map<String, int>> getSubjectCrowns() async => {};
+  Future<double> getDailyProgress() async => _authService.currentUser?.dailyCompletions ?? 0.0;
 }

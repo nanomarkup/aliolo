@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'subject_model.dart';
 import 'content_item.dart';
 
@@ -9,7 +10,7 @@ class FolderModel implements ContentItem {
   @override
   final String ownerId;
   @override
-  final String? ownerName;
+  String? ownerName;
   final DateTime createdAt;
   @override
   final DateTime updatedAt;
@@ -36,13 +37,25 @@ class FolderModel implements ContentItem {
   });
 
   factory FolderModel.fromJson(Map<String, dynamic> json) {
-    final Map<String, dynamic> locMap = json['localized_data'] ?? {};
-    final localized = locMap.map(
-      (key, value) => MapEntry(
-        key.toLowerCase(),
-        LocalizedSubjectData.fromJson(value as Map<String, dynamic>),
-      ),
-    );
+    var locData = json['localized_data'];
+    Map<String, dynamic> locMap = {};
+    if (locData is Map) {
+      locMap = Map<String, dynamic>.from(locData);
+    } else if (locData is String && locData.isNotEmpty) {
+      try {
+        final decoded = jsonDecode(locData);
+        if (decoded is Map) {
+          locMap = Map<String, dynamic>.from(decoded);
+        }
+      } catch (_) {}
+    }
+
+    final Map<String, LocalizedSubjectData> localized = {};
+    locMap.forEach((key, value) {
+      if (value is Map) {
+        localized[key.toLowerCase()] = LocalizedSubjectData.fromJson(Map<String, dynamic>.from(value));
+      }
+    });
 
     final Map<String, dynamic>? profile = json['profiles'];
 

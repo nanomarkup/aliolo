@@ -1,21 +1,22 @@
 import 'package:path/path.dart' as p;
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:aliolo/core/utils/file_stub.dart' if (dart.library.html) 'dart:html' as html;
 import 'package:aliolo/data/models/user_model.dart';
-import 'package:aliolo/data/models/pillar_model.dart';
 import 'package:aliolo/data/services/theme_service.dart';
-import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/core/utils/logger.dart';
+import 'package:dio/dio.dart';
+
+import 'package:aliolo/core/network/cloudflare_client.dart';
+import 'package:aliolo/core/di/service_locator.dart';
 
 class AuthService extends ChangeNotifier {
   static final AuthService _instance = AuthService._internal();
   factory AuthService() => _instance;
   AuthService._internal();
 
-  SupabaseClient? _supabase;
+  final _cfClient = getIt<CloudflareHttpClient>();
   UserModel? _currentUser;
   String? _lastErrorMessage;
   bool _isPasswordRecoveryFlow = false;
@@ -26,155 +27,48 @@ class AuthService extends ChangeNotifier {
   String? get lastErrorMessage => _lastErrorMessage;
   bool get isPasswordRecoveryFlow => _isPasswordRecoveryFlow;
   String? get recoveryFlowType => _recoveryFlowType;
-  String? get currentSessionEmail => _supabase?.auth.currentSession?.user.email;
-
-  bool get _isSupabaseInitialized => _supabase != null;
+  String? get currentSessionEmail => _currentUser?.email;
 
   Future<void> init({String? manualUrl}) async {
     try {
-      _supabase = Supabase.instance.client;
       _initialUrl = manualUrl ?? (kIsWeb ? html.window.location.href : null);
       
-      _supabase!.auth.onAuthStateChange.listen((data) {
-        final AuthChangeEvent event = data.event;
-        final Session? session = data.session;
-
-        AppLogger.log('AuthService: Auth state change: $event');
-
-        if (event == AuthChangeEvent.passwordRecovery) {
-          _isPasswordRecoveryFlow = true;
-          _recoveryFlowType = 'recovery';
-          notifyListeners();
-        }
-
-        if (session != null &&
-            (event == AuthChangeEvent.signedIn ||
-                event == AuthChangeEvent.userUpdated ||
-                event == AuthChangeEvent.initialSession)) {
+      // Initial session check from Cloudflare
+      final profileRes = await _cfClient.client.get('/api/auth/me');
+      if (profileRes.statusCode == 200 && profileRes.data['user'] != null) {
+          _currentUser = UserModel.fromJson(profileRes.data['user']);
           
-          if (!_isPasswordRecoveryFlow && kIsWeb && _initialUrl != null) {
-            final uri = Uri.parse(_initialUrl!);
-            final type = uri.queryParameters['type'] ?? Uri.splitQueryString(uri.fragment)['type'];
-            if (type == 'recovery' || type == 'invite') {
-              _isPasswordRecoveryFlow = true;
-              _recoveryFlowType = type;
+          // Daily completion reset logic (moved to client side but synced to D1)
+          if (_currentUser!.lastActiveDate != null) {
+            final now = DateTime.now();
+            final today = DateTime(now.year, now.month, now.day);
+            final lastLocal = _currentUser!.lastActiveDate!.toLocal();
+            final lastDayParsed = DateTime(
+              lastLocal.year,
+              lastLocal.month,
+              lastLocal.day,
+            );
+
+            if (today.isAfter(lastDayParsed)) {
+              _currentUser!.dailyCompletions = 0;
+              _currentUser!.dailyGoalCount = _currentUser!.nextDailyGoal;
+              await updateUser(_currentUser!);
             }
           }
 
-          if (session.user.emailConfirmedAt != null || _isPasswordRecoveryFlow) {
-            _fetchAndSyncUser(session.user);
-          } else {
-            _currentUser = null;
-            notifyListeners();
-          }
-        } else if (event == AuthChangeEvent.signedOut) {
-          _currentUser = null;
+          ThemeService().setThemeFromString(_currentUser!.themeMode);
+          ThemeService().setPrimaryColorFromPillar(_currentUser!.mainPillarId);
           notifyListeners();
-        }
-      });
+      }
 
       if (kIsWeb && _initialUrl != null) {
         final uri = Uri.parse(_initialUrl!);
-        String? detectedType;
-        final hash = uri.fragment;
-        if (hash.contains('access_token=')) {
-          final params = Uri.splitQueryString(hash);
-          detectedType = params['type'];
-        } 
-        if (detectedType == null) {
-          detectedType = uri.queryParameters['type'];
-        }
-
-        if (detectedType == 'recovery' || detectedType == 'invite') {
-          AppLogger.log('AuthService: Detected $detectedType flow in URL.');
-          _isPasswordRecoveryFlow = true;
-          _recoveryFlowType = detectedType;
-        }
-      }
-
-      final session = _supabase!.auth.currentSession;
-      if (session != null && (session.user.emailConfirmedAt != null || _isPasswordRecoveryFlow)) {
-        await _fetchAndSyncUser(session.user);
+        // Handle potential recovery/invite types from URL if needed
       }
     } catch (e) {
       AppLogger.log('AuthService.init() failed: $e');
     }
     notifyListeners();
-  }
-
-  bool _checkPremiumStatus(dynamic subsData) {
-    if (subsData == null) return false;
-    final List subs = subsData is List ? subsData : [subsData];
-    if (subs.isEmpty) return false;
-    
-    final s = subs.first;
-    final status = s['status'] as String;
-    final expiry = s['expiry_date'] != null ? DateTime.parse(s['expiry_date']) : null;
-    return status == 'active' && (expiry == null || expiry.isAfter(DateTime.now()));
-  }
-
-  Future<void> _fetchAndSyncUser(User remoteUser) async {
-    if (_supabase == null) return;
-    try {
-      final remoteData =
-          await _supabase!
-              .from('profiles')
-              .select('*, user_subscriptions(status, expiry_date)')
-              .eq('id', remoteUser.id)
-              .maybeSingle();
-
-      if (remoteData != null) {
-        final user = UserModel.fromJson(remoteData);
-        user.isPremium = (remoteUser.id == 'f2fb4c9c-169b-447d-b8a6-dce72c4ed5ac') 
-            ? true 
-            : _checkPremiumStatus(remoteData['user_subscriptions']);
-        _currentUser = user;
-
-        if (_currentUser!.lastActiveDate != null) {
-          final now = DateTime.now();
-          final today = DateTime(now.year, now.month, now.day);
-          final lastLocal = _currentUser!.lastActiveDate!.toLocal();
-          final lastDayParsed = DateTime(
-            lastLocal.year,
-            lastLocal.month,
-            lastLocal.day,
-          );
-
-          if (today.isAfter(lastDayParsed)) {
-            _currentUser!.dailyCompletions = 0;
-            _currentUser!.dailyGoalCount = _currentUser!.nextDailyGoal;
-            await updateUser(_currentUser!);
-          }
-        }
-
-        if (_currentUser!.email != remoteUser.email!.toLowerCase()) {
-          _currentUser!.email = remoteUser.email!.toLowerCase();
-          await updateUser(_currentUser!);
-        }
-
-        ThemeService().setThemeFromString(_currentUser!.themeMode);
-        // Persist theme color using mainPillarId
-        ThemeService().setPrimaryColorFromPillar(_currentUser!.mainPillarId);
-      } else {
-        _currentUser = UserModel(
-          username:
-              remoteUser.userMetadata?['username'] ??
-              remoteUser.email!.toLowerCase().split('@')[0],
-          email: remoteUser.email!.toLowerCase(),
-          serverId: remoteUser.id,
-          uiLanguage: TranslationService().currentLocale.languageCode,
-          mainPillarId: 6,
-        );
-        try {
-          await updateUser(_currentUser!);
-        } catch (e) {
-          // Optional profile creation failure
-        }
-      }
-      notifyListeners();
-    } catch (e) {
-      AppLogger.log('AuthService: _fetchAndSyncUser error: $e');
-    }
   }
 
   Future<void> createUser(
@@ -183,17 +77,23 @@ class AuthService extends ChangeNotifier {
     String password,
   ) async {
     _lastErrorMessage = null;
-    if (_supabase == null) {
-      _lastErrorMessage = "Supabase not initialized";
-      return;
-    }
     final cleanEmail = email.trim().toLowerCase();
     try {
-      await _supabase!.auth.signUp(
-        email: cleanEmail,
-        password: password,
-        data: {'username': username},
-      );
+      final response = await _cfClient.client.post('/api/auth/signup', data: {
+        'username': username,
+        'email': cleanEmail,
+        'password': password,
+      });
+
+      if (response.statusCode == 200) {
+        final data = response.data;
+        final String sessionId = data['session_id'];
+        await _cfClient.setSession(sessionId);
+        await refreshUser();
+      } else {
+        _lastErrorMessage = response.data['error'] ?? 'Signup failed';
+        throw Exception(_lastErrorMessage);
+      }
     } catch (e) {
       _lastErrorMessage = e.toString();
       rethrow;
@@ -202,32 +102,39 @@ class AuthService extends ChangeNotifier {
 
   Future<bool> login(String identifier, String password) async {
     _lastErrorMessage = null;
-    if (_supabase == null) {
-      _lastErrorMessage = "Supabase not initialized";
-      return false;
-    }
     final String email = identifier.trim().toLowerCase();
+
     try {
-      final res = await _supabase!.auth.signInWithPassword(
-        email: email,
-        password: password,
-      );
-      if (res.user != null) {
-        await _fetchAndSyncUser(res.user!);
+      final response = await _cfClient.client.post('/api/auth/login', data: {
+        'email': email,
+        'password': password,
+      });
+
+      if (response.statusCode == 200) {
+        final data = response.data;
+        final String sessionId = data['session_id'];
+        await _cfClient.setSession(sessionId);
+        await refreshUser();
         return true;
+      } else {
+        _lastErrorMessage = response.data['error'] ?? 'Login failed';
+        return false;
       }
-    } on AuthException catch (e) {
-      _lastErrorMessage = e.message;
-      return false;
     } catch (e) {
+      AppLogger.log('Cloudflare login failed: $e');
       _lastErrorMessage = e.toString();
       return false;
     }
-    return false;
   }
 
   Future<void> logout() async {
-    await _supabase?.auth.signOut();
+    try {
+      await _cfClient.client.post('/api/auth/logout');
+      await _cfClient.clearSession();
+    } catch (e) {
+      AppLogger.log('Cloudflare logout error: $e');
+    }
+
     _currentUser = null;
     _lastErrorMessage = null;
     _isPasswordRecoveryFlow = false;
@@ -236,15 +143,19 @@ class AuthService extends ChangeNotifier {
   }
 
   Future<void> refreshUser() async {
-    if (_supabase == null) return;
-    final user = _supabase!.auth.currentUser;
-    if (user != null) {
-      await _fetchAndSyncUser(user);
+    try {
+      final profileRes = await _cfClient.client.get('/api/auth/me');
+      if (profileRes.statusCode == 200 && profileRes.data['user'] != null) {
+          _currentUser = UserModel.fromJson(profileRes.data['user']);
+          notifyListeners();
+      }
+    } catch (e) {
+      AppLogger.log('AuthService: refreshUser error: $e');
     }
   }
 
   Future<void> updateUser(UserModel user) async {
-    if (_supabase == null || user.serverId == null) return;
+    if (user.serverId == null) return;
 
     final now = DateTime.now();
     user.updatedAt = now;
@@ -253,19 +164,7 @@ class AuthService extends ChangeNotifier {
 
     try {
       final data = user.toJson();
-      data.remove('id');
-      data.remove('created_at');
-      
-      final List<dynamic> res = await _supabase!
-          .from('profiles')
-          .update(data)
-          .eq('id', user.serverId!)
-          .select('id');
-
-      if (res.isEmpty) {
-        data['id'] = user.serverId!;
-        await _supabase!.from('profiles').upsert(data);
-      }
+      await _cfClient.client.post('/api/auth/update', data: data);
       notifyListeners();
     } catch (e) {
       AppLogger.log('AuthService: updateUser error: $e');
@@ -273,12 +172,9 @@ class AuthService extends ChangeNotifier {
   }
 
   Future<void> _patchCurrentUser(Map<String, dynamic> data) async {
-    if (_supabase == null || _currentUser?.serverId == null) return;
+    if (_currentUser?.serverId == null) return;
     try {
-      await _supabase!
-          .from('profiles')
-          .update(data)
-          .eq('id', _currentUser!.serverId!);
+      await _cfClient.client.post('/api/auth/update', data: data);
       notifyListeners();
     } catch (e) {
       AppLogger.log('AuthService: _patchCurrentUser error: $e');
@@ -295,12 +191,9 @@ class AuthService extends ChangeNotifier {
   Future<void> updateThemeMode(String mode) async {
     if (_currentUser != null) {
       _currentUser!.themeMode = mode;
+      ThemeService().setThemeFromString(mode);
       await _patchCurrentUser({'theme_mode': mode});
     }
-  }
-
-  Future<void> updateThemePreference(String mode) async {
-    await updateThemeMode(mode);
   }
 
   Future<void> updateUILanguage(String lang) async {
@@ -313,6 +206,7 @@ class AuthService extends ChangeNotifier {
   Future<void> updateMainPillar(int pillarId) async {
     if (_currentUser != null) {
       _currentUser!.mainPillarId = pillarId;
+      ThemeService().setPrimaryColorFromPillar(pillarId);
       await _patchCurrentUser({'main_pillar_id': pillarId});
     }
   }
@@ -366,79 +260,75 @@ class AuthService extends ChangeNotifier {
     }
   }
 
-  Future<void> updateAvatarPath(XFile image) async {
-    if (_currentUser == null || _supabase == null) return;
-    try {
-      String? oldFileName;
-      if (_currentUser!.avatarPath != null) {
-        try {
-          final uri = Uri.parse(_currentUser!.avatarPath!);
-          oldFileName = uri.pathSegments.last.split('?').first;
-        } catch (_) {}
-      }
+  Future<void> updateThemePreference(String mode) async {
+    await updateThemeMode(mode);
+  }
 
+  Future<void> updateDocumentationPreference(bool val) async {
+    await updateShowDocumentation(val);
+  }
+
+  Future<void> updateMainColorFromPillar(int pillarId) async {
+    await updateMainPillar(pillarId);
+  }
+
+  Future<void> finalizePasswordReset(String email, String newPassword) async {
+     // Placeholder
+     AppLogger.log('AuthService: finalizePasswordReset not implemented yet.');
+  }
+
+  Future<void> updateAvatarPath(XFile image) async {
+    if (_currentUser == null) return;
+    try {
       final fileName = 'avatar_${_currentUser!.serverId}_${DateTime.now().millisecondsSinceEpoch}${p.extension(image.path)}';
       final bytes = await image.readAsBytes();
-      await _supabase!.storage.from('avatars').uploadBinary(fileName, bytes, fileOptions: const FileOptions(cacheControl: '0', upsert: true));
+      
+      final response = await _cfClient.client.post(
+        '/api/upload/avatars/$fileName',
+        data: Stream.fromIterable([bytes]),
+        options: Options(
+          headers: {
+            Headers.contentTypeHeader: 'image/${p.extension(image.path).replaceAll('.', '')}',
+            Headers.contentLengthHeader: bytes.length,
+          },
+        ),
+      );
 
-      final String publicUrl = _supabase!.storage.from('avatars').getPublicUrl(fileName);
-
-      if (oldFileName != null) {
-        try {
-          await _supabase!.storage.from('avatars').remove([oldFileName]);
-        } catch (e) {
-          AppLogger.log('AuthService: Failed to delete old avatar file $oldFileName: $e');
-        }
+      if (response.statusCode == 200) {
+        final String publicUrl = response.data['url'];
+        final bustUrl = '$publicUrl?t=${DateTime.now().millisecondsSinceEpoch}';
+        
+        await _patchCurrentUser({'avatar_url': bustUrl});
+        _currentUser!.avatarPath = bustUrl;
+        notifyListeners();
       }
-
-      final bustUrl = '$publicUrl?t=${DateTime.now().millisecondsSinceEpoch}';
-      _currentUser!.avatarPath = bustUrl;
-      await _supabase!.from('profiles').update({'avatar_url': bustUrl}).eq('id', _currentUser!.serverId!);
-      notifyListeners();
     } catch (e) {
       AppLogger.log('AuthService: updateAvatarPath error: $e');
     }
   }
 
   Future<void> deleteAvatar() async {
-    if (_currentUser == null || _currentUser!.avatarPath == null || _supabase == null) return;
+    if (_currentUser == null || _currentUser!.avatarPath == null) return;
     try {
       final uri = Uri.parse(_currentUser!.avatarPath!);
       final fileName = uri.pathSegments.last.split('?').first;
-      await _supabase!.storage.from('avatars').remove([fileName]);
+      
+      await _cfClient.client.delete('/api/storage/avatars/$fileName');
+      
+      await _patchCurrentUser({'avatar_url': null});
       _currentUser!.avatarPath = null;
-      await _supabase!.from('profiles').update({'avatar_url': null}).eq('id', _currentUser!.serverId!);
       notifyListeners();
     } catch (e) {
       AppLogger.log('AuthService: deleteAvatar error: $e');
-      _currentUser!.avatarPath = null;
-      notifyListeners();
     }
   }
 
   Future<void> sendResetCode(String email) async {
-    try {
-      await _supabase!.auth.resetPasswordForEmail(email);
-    } catch (e) {
-      _lastErrorMessage = e.toString();
-      rethrow;
-    }
+    AppLogger.log('AuthService: sendResetCode not implemented on Cloudflare yet.');
   }
 
   Future<void> updatePassword(String newPassword) async {
-    try {
-      await _supabase!.auth.updateUser(UserAttributes(password: newPassword));
-      _isPasswordRecoveryFlow = false;
-      _recoveryFlowType = null;
-      notifyListeners();
-    } catch (e) {
-      _lastErrorMessage = e.toString();
-      rethrow;
-    }
-  }
-
-  Future<void> finalizePasswordReset(String email, String newPassword) async {
-    await updatePassword(newPassword);
+    AppLogger.log('AuthService: updatePassword not implemented on Cloudflare yet.');
   }
 
   void clearRecoveryFlow() {
@@ -453,14 +343,13 @@ class AuthService extends ChangeNotifier {
       RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(e);
 
   Future<void> updateEmail(String email) async {
-    await _supabase!.auth.updateUser(UserAttributes(email: email));
+    await _patchCurrentUser({'email': email});
   }
 
   Future<bool> deleteAccount(String password) async {
     try {
-      await _supabase!.rpc('delete_user_account');
-      await logout();
-      return true;
+      // Would require /api/auth/delete-account
+      return false;
     } catch (e) {
       _lastErrorMessage = e.toString();
       return false;
@@ -486,15 +375,6 @@ class AuthService extends ChangeNotifier {
       _currentUser!.showOnLeaderboard = val;
       await _patchCurrentUser({'show_on_leaderboard': val});
     }
-  }
-
-  Future<void> updateDocumentationPreference(bool val) async {
-    await updateShowDocumentation(val);
-  }
-
-  Future<void> updateMainColorFromPillar(int pillarId) async {
-    await updateMainPillar(pillarId);
-    ThemeService().setPrimaryColorFromPillar(pillarId);
   }
 
   Future<void> updateAutoPlayPreference(bool val) async {
@@ -529,47 +409,35 @@ class AuthService extends ChangeNotifier {
   }
 
   Future<String> inviteUserByEmail(String email, {String? senderId}) async {
-    if (_supabase == null) throw Exception('Supabase not initialized');
-    final res = await _supabase!.functions.invoke('invite-user', body: {'email': email, 'senderId': senderId});
-    if (res.status != 200) throw Exception(res.data['error'] ?? 'Invitation failed');
-    return res.data['message'] ?? 'Invitation sent';
+    return "Not implemented on Cloudflare yet.";
   }
 
   Future<List<UserModel>> getLeaderboardData({int page = 0, int pageSize = 20}) async {
     try {
-      final List<dynamic> data = await _supabase!
-          .from('profiles')
-          .select('*, user_subscriptions(status, expiry_date)')
-          .eq('show_on_leaderboard', true)
-          .order('total_xp', ascending: false)
-          .range(page * pageSize, (page + 1) * pageSize - 1);
-
-      return data.map((json) {
-        final user = UserModel.fromJson(json);
-        user.isPremium = (user.serverId == 'f2fb4c9c-169b-447d-b8a6-dce72c4ed5ac')
-            ? true
-            : _checkPremiumStatus(json['user_subscriptions']);
-        return user;
-      }).toList();
+      final response = await _cfClient.client.get('/api/leaderboard', queryParameters: {
+        'page': page,
+        'pageSize': pageSize,
+      });
+      if (response.statusCode == 200) {
+        final List<dynamic> data = response.data;
+        return data.map((json) => UserModel.fromJson(json)).toList();
+      }
     } catch (e) {
-      return [];
+      AppLogger.log('AuthService: getLeaderboardData error: $e');
     }
+    return [];
   }
 
   Future<int?> getMyGlobalRank() async {
     if (_currentUser?.serverId == null) return null;
     try {
-      final res = await _supabase!
-          .from('profiles')
-          .select('id')
-          .eq('show_on_leaderboard', true)
-          .gt('total_xp', _currentUser!.totalXp)
-          .count(CountOption.exact);
-      
-      return (res.count ?? 0) + 1;
+      final response = await _cfClient.client.get('/api/leaderboard/rank');
+      if (response.statusCode == 200) {
+        return response.data['rank'];
+      }
     } catch (e) {
       AppLogger.log('AuthService: getMyGlobalRank error: $e');
-      return null;
     }
+    return null;
   }
 }

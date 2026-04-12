@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:aliolo/core/network/media_url_resolver.dart';
 
 class UserModel {
   String? serverId;
@@ -24,6 +25,8 @@ class UserModel {
   late bool autoPlayEnabled;
   late bool showDocumentation;
   late int mainPillarId; 
+  late String lastAgeGroup;
+  late String lastSourceFilter;
   DateTime? createdAt;
   DateTime? updatedAt;
   bool isPremium;
@@ -52,26 +55,35 @@ class UserModel {
     this.autoPlayEnabled = false,
     this.showDocumentation = true,
     this.mainPillarId = 8,
+    this.lastAgeGroup = 'all',
+    this.lastSourceFilter = 'all',
     this.createdAt,
     this.updatedAt,
     this.isPremium = false,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
+    bool toBool(dynamic val, bool fallback) {
+      if (val == null) return fallback;
+      if (val is bool) return val;
+      if (val is int) return val == 1;
+      return fallback;
+    }
+
     return UserModel(
       serverId: json['id'],
       username: json['username'] ?? '',
       email: json['email'] ?? '',
-      sidebarLeft: json['sidebar_left'] ?? false,
+      sidebarLeft: toBool(json['sidebar_left'], false),
       themeMode: json['theme_mode'] ?? 'system',
       uiLanguage: json['ui_language'] ?? 'en',
-      soundEnabled: json['sound_enabled'] ?? true,
-      showOnLeaderboard: json['show_on_leaderboard'] ?? true,
+      soundEnabled: toBool(json['sound_enabled'], true),
+      showOnLeaderboard: toBool(json['show_on_leaderboard'], true),
       learnSessionSize: json['learn_session_size'] ?? 10,
       testSessionSize: json['test_session_size'] ?? 10,
-      avatarPath: json['avatar_url'],
+      avatarPath: MediaUrlResolver.resolve(json['avatar_url']),
       defaultLanguage: (json['default_language'] ?? 'EN').toString().toUpperCase(),
-      lastActiveDate: json['last_active_date'] != null ? DateTime.parse(json['last_active_date']) : null,
+      lastActiveDate: json['last_active_date'] != null ? DateTime.tryParse(json['last_active_date']) : null,
       totalXp: json['total_xp'] ?? 0,
       currentStreak: json['current_streak'] ?? 0,
       maxStreak: json['max_streak'] ?? 0,
@@ -79,12 +91,14 @@ class UserModel {
       optionsCount: json['options_count'] ?? 6,
       nextDailyGoal: json['next_daily_goal'] ?? 20,
       dailyCompletions: (json['daily_completions'] ?? 0).toDouble(),
-      autoPlayEnabled: json['auto_play_enabled'] ?? false,
-      showDocumentation: json['show_documentation'] ?? true,
+      autoPlayEnabled: toBool(json['auto_play_enabled'], false),
+      showDocumentation: toBool(json['show_documentation'], true),
       mainPillarId: json['main_pillar_id'] ?? 8,
-      createdAt: json['created_at'] != null ? DateTime.parse(json['created_at']) : null,
-      updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at']) : null,
-      isPremium: json['is_premium'] ?? false,
+      lastAgeGroup: json['last_age_group'] ?? 'all',
+      lastSourceFilter: json['last_source_filter'] ?? 'all',
+      createdAt: json['created_at'] != null ? DateTime.tryParse(json['created_at']) : null,
+      updatedAt: json['updated_at'] != null ? DateTime.tryParse(json['updated_at']) : null,
+      isPremium: toBool(json['is_premium'], false),
     );
   }
 
@@ -113,6 +127,8 @@ class UserModel {
       'auto_play_enabled': autoPlayEnabled,
       'show_documentation': showDocumentation,
       'main_pillar_id': mainPillarId,
+      'last_age_group': lastAgeGroup,
+      'last_source_filter': lastSourceFilter,
       'created_at': createdAt?.toUtc().toIso8601String(),
       'updated_at': updatedAt?.toUtc().toIso8601String(),
     };

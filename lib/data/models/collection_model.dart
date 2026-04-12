@@ -12,7 +12,7 @@ class CollectionModel implements ContentItem {
   @override
   final String ownerId;
   @override
-  final String? ownerName;
+  String? ownerName;
   final bool isPublic;
   final String ageGroup;
   final DateTime createdAt;
@@ -52,12 +52,12 @@ class CollectionModel implements ContentItem {
       } catch (_) {}
     }
 
-    final localized = locMap.map(
-      (key, value) => MapEntry(
-        key.toLowerCase(),
-        LocalizedSubjectData.fromJson(value as Map<String, dynamic>),
-      ),
-    );
+    final Map<String, LocalizedSubjectData> localized = {};
+    locMap.forEach((key, value) {
+      if (value is Map) {
+        localized[key.toLowerCase()] = LocalizedSubjectData.fromJson(Map<String, dynamic>.from(value));
+      }
+    });
 
     final Map<String, dynamic>? profile = json['profiles'];
 
@@ -82,6 +82,7 @@ class CollectionModel implements ContentItem {
       updatedAt: DateTime.tryParse(json['updated_at'] ?? '') ?? DateTime.now(),
       localizedData: localized,
       subjectIds: subjects,
+      isOnDashboard: json['is_on_dashboard'] == true || json['is_on_dashboard'] == 1,
     );
   }
 

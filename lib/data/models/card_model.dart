@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'subject_model.dart';
+import 'package:aliolo/core/network/media_url_resolver.dart';
 
 class LocalizedCardData {
   final String? prompt;
@@ -94,13 +96,25 @@ class CardModel {
   });
 
   factory CardModel.fromJson(Map<String, dynamic> json) {
-    final Map<String, dynamic> locMap = json['localized_data'] ?? {};
-    final localized = locMap.map(
-      (key, value) => MapEntry(
-        key.toLowerCase(),
-        LocalizedCardData.fromJson(value as Map<String, dynamic>),
-      ),
-    );
+    var locData = json['localized_data'];
+    Map<String, dynamic> locMap = {};
+    if (locData is Map) {
+      locMap = Map<String, dynamic>.from(locData);
+    } else if (locData is String && locData.isNotEmpty) {
+      try {
+        final decoded = jsonDecode(locData);
+        if (decoded is Map) {
+          locMap = Map<String, dynamic>.from(decoded);
+        }
+      } catch (_) {}
+    }
+
+    final Map<String, LocalizedCardData> localized = {};
+    locMap.forEach((key, value) {
+      if (value is Map) {
+        localized[key.toLowerCase()] = LocalizedCardData.fromJson(Map<String, dynamic>.from(value));
+      }
+    });
 
     return CardModel(
       id: json['id'],
@@ -266,10 +280,24 @@ class CardModel {
     return null;
   }
 
-  String? getAudioUrl(String lang) => _getInherited(lang, (d) => d.audioUrl);
-  String? getVideoUrl(String lang) => _getInherited(lang, (d) => d.videoUrl);
+  String? getAudioUrl(String lang) =>
+      MediaUrlResolver.resolve(_getInherited(
+        lang,
+        (d) => (d.audioUrl?.isEmpty ?? true) ? null : d.audioUrl,
+      ));
+  String? getVideoUrl(String lang) =>
+      MediaUrlResolver.resolve(_getInherited(
+        lang,
+        (d) => (d.videoUrl?.isEmpty ?? true) ? null : d.videoUrl,
+      ));
   List<String> getImageUrls(String lang) {
-    final urls = _getInherited(lang, (d) => d.imageUrls) ?? [];
+    final rawUrls =
+        _getInherited(
+          lang,
+          (d) => (d.imageUrls?.isEmpty ?? true) ? null : d.imageUrls,
+        ) ??
+        [];
+    final urls = MediaUrlResolver.resolveList(rawUrls);
     // Add cache buster timestamp to ensure we show the latest version if updated
     final v = updatedAt.millisecondsSinceEpoch;
     return urls.map((url) {
@@ -280,8 +308,8 @@ class CardModel {
     }).toList();
   }
 
-  String? get primaryImageUrl {
-    final urls = getImageUrls('global');
+  String? primaryImageUrl(String lang) {
+    final urls = getImageUrls(lang);
     return urls.isNotEmpty ? urls.first : null;
   }
 
