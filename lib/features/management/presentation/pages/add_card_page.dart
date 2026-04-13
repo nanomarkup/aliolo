@@ -667,15 +667,29 @@ class _AddCardPageState extends State<AddCardPage> {
                 ? context.t('add_card')
                 : context.t('edit_card'));
 
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final isSmallScreen = constraints.maxWidth < 600;
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) async {
+        if (didPop) return;
+        final shouldPop = await _onWillPop();
+        if (shouldPop && context.mounted) {
+          Navigator.pop(context);
+        }
+      },
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final isSmallScreen = constraints.maxWidth < 600;
 
-        final backAction = IconButton(
-          tooltip: context.t('back'),
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context),
-        );
+          final backAction = IconButton(
+            tooltip: context.t('back'),
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () async {
+              final shouldPop = await _onWillPop();
+              if (shouldPop && context.mounted) {
+                Navigator.pop(context);
+              }
+            },
+          );
 
         final saveAction = !widget.isReadOnly
             ? IconButton(
@@ -841,6 +855,7 @@ class _AddCardPageState extends State<AddCardPage> {
       ),
     );
   },
+),
 );
 }
   Widget _buildLangTile(
@@ -1401,5 +1416,68 @@ class _AddCardPageState extends State<AddCardPage> {
         );
       },
     );
+  }
+
+  bool _hasUnsavedChanges() {
+    if (widget.existingCard == null) {
+      for (var draft in _drafts.values) {
+        if (draft.prompt.trim().isNotEmpty) return true;
+        if (draft.answer.trim().isNotEmpty) return true;
+        if (draft.newImageFiles.isNotEmpty) return true;
+        if (draft.newAudioFile != null) return true;
+        if (draft.newVideoFile != null) return true;
+      }
+      return false;
+    }
+
+    final original = widget.existingCard!;
+    if (_selectedSubjectId != original.subjectId) return true;
+    if (_cardLevel != original.level) return true;
+    if (_testMode != original.testMode) return true;
+
+    final allLangs = {...original.localizedData.keys, ..._drafts.keys};
+    for (var lang in allLangs) {
+      final draft = _drafts[lang];
+      final orig = original.localizedData[lang];
+
+      if (draft?.newImageFiles.isNotEmpty == true) return true;
+      if (draft?.newAudioFile != null) return true;
+      if (draft?.newVideoFile != null) return true;
+      if (draft?.deletedUrls.isNotEmpty == true) return true;
+
+      final draftPrompt = draft?.prompt.trim() ?? '';
+      final origPrompt = orig?.prompt?.trim() ?? '';
+      if (draftPrompt != origPrompt) return true;
+
+      final draftAnswer = draft?.answer.trim() ?? '';
+      final origAnswer = orig?.answer?.trim() ?? '';
+      if (draftAnswer != origAnswer) return true;
+    }
+
+    return false;
+  }
+
+  Future<bool> _onWillPop() async {
+    if (_isSaving || !_hasUnsavedChanges()) return true;
+
+    final result = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(context.t('discard_changes')),
+        content: Text(context.t('unsaved_changes_msg')),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: Text(context.t('cancel')),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            style: TextButton.styleFrom(foregroundColor: Colors.red),
+            child: Text(context.t('discard')),
+          ),
+        ],
+      ),
+    );
+    return result ?? false;
   }
 }

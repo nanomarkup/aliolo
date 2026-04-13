@@ -67,7 +67,7 @@ class _SubjectPageState extends State<SubjectPage> {
       windowManager.setResizable(true);
     }
     _initLanguage();
-    _cardService.getPillars(); // Load pillars once
+    _cardService.getPillars(filter: _filterService.sourceFilter); // Load pillars with correct filter
     
     // Sync filters from service
     _filters = _filters.copyWith(
@@ -3213,7 +3213,7 @@ class _PillarGridTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final pillarColor = pillar.getColor(getIt<ThemeService>().isDarkMode);
-    final bool isEmpty = subjectCount == 0 && folderCount == 0;
+    final bool isEmpty = subjectCount == 0;
     return Opacity(
       opacity: isEmpty ? 0.5 : 1.0,
       child: Card(

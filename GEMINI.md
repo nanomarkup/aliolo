@@ -22,7 +22,7 @@ This file serves as the primary context bridge for Gemini CLI.
 
 ## 📁 Media Storage (Cloudflare R2)
 - **Worker Proxy:** Media is served through `/storage/v1/object/public/:bucket/:path`
-- **Buckets:** `aliolo-media` (cards), `aliolo-avatars` (profiles).
+- **Buckets:** `aliolo-media` (cards, profiles).
 - **Upload Restrictions:**
     - Profile Avatars: 1 MB
     - Card Images: 5 MB
@@ -56,6 +56,11 @@ This file serves as the primary context bridge for Gemini CLI.
     flutter build web --release --dart-define=API_URL=https://aliolo.com
     ```
 - **Environment:** Linux (Primary dev environment).
+
+## 🧪 Testing & AI Rules
+- **Strict Linting**: The codebase enforces strict Dart rules in `analysis_options.yaml` and strict TypeScript in `api/tsconfig.json`. Ensure all generated code adheres to strong typing, prefers `const` constructors, and avoids `dynamic` types.
+- **Golden Tests**: For any core UI component modification, a Golden Test (`golden_toolkit`) must be written or updated in `test/widget/` to prevent visual regressions. To update goldens, run `flutter test --update-goldens`.
+- **E2E Tests**: Core user flows should be tested using the `patrol` package in `integration_test/`. Patrol provides a highly readable, English-like syntax for navigation and assertion.
 
 ## 🚀 Ongoing / Next Steps
 - Continue refining the "Recent Subjects" row on the dashboard.

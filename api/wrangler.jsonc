@@ -23,10 +23,6 @@
     {
       "binding": "MEDIA",
       "bucket_name": "aliolo-media"
-    },
-    {
-      "binding": "AVATARS",
-      "bucket_name": "aliolo-avatars"
     }
   ],
   "observability": {
@@ -52,10 +48,6 @@
         {
           "binding": "MEDIA",
           "bucket_name": "aliolo-media"
-        },
-        {
-          "binding": "AVATARS",
-          "bucket_name": "aliolo-avatars"
         }
       ]
     }

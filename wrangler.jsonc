@@ -23,10 +23,6 @@
 		{
 			"bucket_name": "aliolo-media",
 			"binding": "MEDIA"
-		},
-		{
-			"bucket_name": "aliolo-avatars",
-			"binding": "AVATARS"
 		}
 	]
 }

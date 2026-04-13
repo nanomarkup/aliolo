@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "vitest",
-    "test:run": "vitest run",
-    "test:e2e": "vitest run test/e2e"
+    "test": "vitest --exclude test/e2e",
+    "test:run": "vitest run --exclude test/e2e",
+    "test:e2e": "vitest run --config vitest.e2e.config.ts"
   },
   "keywords": [],
   "author": "",

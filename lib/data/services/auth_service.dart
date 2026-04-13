@@ -280,7 +280,19 @@ class AuthService extends ChangeNotifier {
   Future<void> updateAvatarPath(XFile image) async {
     if (_currentUser == null) return;
     try {
-      final fileName = 'avatar_${_currentUser!.serverId}_${DateTime.now().millisecondsSinceEpoch}${p.extension(image.path)}';
+      // Delete old avatar if it exists
+      if (_currentUser!.avatarPath != null) {
+        try {
+          final oldUri = Uri.parse(_currentUser!.avatarPath!);
+          final oldFileName = oldUri.pathSegments.last.split('?').first;
+          await _cfClient.client.delete('/api/storage/avatars/$oldFileName');
+        } catch (e) {
+          AppLogger.log('AuthService: error deleting old avatar during update: $e');
+        }
+      }
+
+      final ext = p.extension(image.name).toLowerCase();
+      final fileName = '${_currentUser!.serverId}$ext';
       final bytes = await image.readAsBytes();
       
       final response = await _cfClient.client.post(
@@ -288,7 +300,7 @@ class AuthService extends ChangeNotifier {
         data: Stream.fromIterable([bytes]),
         options: Options(
           headers: {
-            Headers.contentTypeHeader: 'image/${p.extension(image.path).replaceAll('.', '')}',
+            Headers.contentTypeHeader: 'image/${ext.replaceAll('.', '')}',
             Headers.contentLengthHeader: bytes.length,
           },
         ),

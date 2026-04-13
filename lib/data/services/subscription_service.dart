@@ -64,7 +64,7 @@ class SubscriptionService extends ChangeNotifier {
       return;
     }
 
-    if (user.serverId == 'f2fb4c9c-169b-447d-b8a6-dce72c4ed5ac') {
+    if (user.serverId == 'usyeo7d2yzf2773') {
       _isPremium = true;
       _expiryDate = null;
       notifyListeners();

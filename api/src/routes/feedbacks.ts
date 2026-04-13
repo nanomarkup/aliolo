@@ -11,7 +11,7 @@ router.get('/feedbacks', async (c) => {
         let query = 'SELECT f.*, p.username as owner_name, p.email as owner_email FROM feedbacks f LEFT JOIN profiles p ON f.user_id = p.id';
         const params: any[] = [];
 
-        if (user.id !== 'f2fb4c9c-169b-447d-b8a6-dce72c4ed5ac') {
+        if (user.id !== 'usyeo7d2yzf2773') {
             query += ' WHERE f.user_id = ?';
             params.push(user.id);
         }
@@ -82,7 +82,7 @@ router.post('/feedback_replies', async (c) => {
         `).bind(id, feedback_id || null, user.id, content, JSON.stringify(attachment_urls || [])).run();
         
         if (feedback_id) {
-            const isAdmin = user.id === 'f2fb4c9c-169b-447d-b8a6-dce72c4ed5ac';
+            const isAdmin = user.id === 'usyeo7d2yzf2773';
             const newStatus = isAdmin ? 'replied' : 'open';
             await c.env.DB.prepare(
                 'UPDATE feedbacks SET status = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?'
@@ -115,7 +115,7 @@ router.get('/feedbacks/notifications', async (c) => {
     const user = c.get("user");
     if (!user) return c.json({ error: 'Unauthorized' }, 401);
 
-    const isAdmin = user.id === 'f2fb4c9c-169b-447d-b8a6-dce72c4ed5ac';
+    const isAdmin = user.id === 'usyeo7d2yzf2773';
     try {
         let countRes: any;
         if (isAdmin) {

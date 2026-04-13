@@ -141,7 +141,7 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
     final results = await _cardService.getFoldersByPillar(_selectedPillar);
     if (mounted) {
       final myId = _authService.currentUser?.serverId;
-      const superUserId = 'f2fb4c9c-169b-447d-b8a6-dce72c4ed5ac';
+      const superUserId = 'usyeo7d2yzf2773';
       
       setState(() {
         _allFolders = results.where((f) => 
@@ -830,8 +830,8 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
   bool _hasUnsavedChanges() {
     if (widget.existingSubject == null && widget.existingFolder == null) {
       for (var draft in _drafts.values) {
-        if (draft.name.isNotEmpty) return true;
-        if (!_isFolderMode && draft.description.isNotEmpty) return true;
+        if (draft.name.trim().isNotEmpty) return true;
+        if (!_isFolderMode && draft.description.trim().isNotEmpty) return true;
       }
       return false;
     }
@@ -839,9 +839,12 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
     if (_isFolderMode) {
       final original = widget.existingFolder!;
       if (_selectedPillar != original.pillarId) return true;
+      
       final allLangs = {...original.localizedData.keys, ..._drafts.keys};
       for (var lang in allLangs) {
-        if ((_drafts[lang]?.name ?? '') != (original.localizedData[lang]?.name ?? '')) return true;
+        final draftName = _drafts[lang]?.name.trim() ?? '';
+        final origName = original.localizedData[lang]?.name?.trim() ?? '';
+        if (draftName != origName) return true;
       }
       return false;
     }
@@ -851,13 +854,20 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
     if (_selectedAgeGroup != original.ageGroup) return true;
     if (_isPublic != original.isPublic) return true;
     if (_selectedType != original.typeStr) return true;
-    if (_selectedFolderId != original.folderId) return true;
+    if ((_selectedFolderId ?? '') != (original.folderId ?? '')) return true;
 
     final allLangs = {...original.localizedData.keys, ..._drafts.keys};
     for (var lang in allLangs) {
       final draft = _drafts[lang];
       final orig = original.localizedData[lang];
-      if ((draft?.name ?? '') != (orig?.name ?? '') || (draft?.description ?? '') != (orig?.description ?? '')) return true;
+      
+      final draftName = draft?.name.trim() ?? '';
+      final origName = orig?.name?.trim() ?? '';
+      if (draftName != origName) return true;
+
+      final draftDesc = draft?.description.trim() ?? '';
+      final origDesc = orig?.description?.trim() ?? '';
+      if (draftDesc != origDesc) return true;
     }
 
     return false;

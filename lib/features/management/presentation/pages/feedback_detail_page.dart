@@ -33,7 +33,7 @@ class _FeedbackDetailPageState extends State<FeedbackDetailPage> {
   late String _originalContent;
   final List<XFile> _attachments = [];
 
-  bool get _isAdmin => _authService.currentUser?.serverId == 'f2fb4c9c-169b-447d-b8a6-dce72c4ed5ac';
+  bool get _isAdmin => _authService.currentUser?.serverId == 'usyeo7d2yzf2773';
   
   bool get _canReply {
     if (_isAdmin) return true;
@@ -140,7 +140,7 @@ class _FeedbackDetailPageState extends State<FeedbackDetailPage> {
         _currentStatus = 'open'; // Original feedback
       } else {
         final lastReply = _replies.last;
-        _currentStatus = (lastReply.userId == 'f2fb4c9c-169b-447d-b8a6-dce72c4ed5ac') ? 'replied' : 'open';
+        _currentStatus = (lastReply.userId == 'usyeo7d2yzf2773') ? 'replied' : 'open';
       }
       await _feedbackService.updateFeedbackStatus(widget.feedback.id!, _currentStatus);
     } catch (e) {
@@ -181,7 +181,7 @@ class _FeedbackDetailPageState extends State<FeedbackDetailPage> {
         newStatus = 'open'; // Original message from user
       } else {
         final lastReply = _replies.last;
-        newStatus = (lastReply.userId == 'f2fb4c9c-169b-447d-b8a6-dce72c4ed5ac') ? 'replied' : 'open';
+        newStatus = (lastReply.userId == 'usyeo7d2yzf2773') ? 'replied' : 'open';
       }
     }
 

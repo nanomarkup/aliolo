@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS pillars (
 
 CREATE TABLE IF NOT EXISTS profiles (
   id TEXT PRIMARY KEY, -- UUID
+  old_id TEXT,
   username TEXT,
   email TEXT UNIQUE,
   total_xp INTEGER DEFAULT 0,

@@ -24,10 +24,11 @@ android {
         applicationId = "com.nanomarkup.aliolo"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdk = 21
+        minSdk = 24
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+        testInstrumentationRunner = "pl.leancode.patrol.PatrolJUnitRunner"
     }
 
     buildTypes {
@@ -37,8 +38,22 @@ android {
             signingConfig = signingConfigs.getByName("debug")
         }
     }
+
+    packaging {
+        resources {
+            excludes += "/META-INF/LICENSE.md"
+            excludes += "/META-INF/LICENSE-notice.md"
+        }
+    }
 }
 
 flutter {
     source = "../.."
+}
+
+dependencies {
+    androidTestImplementation("androidx.test:runner:1.5.1")
+    androidTestImplementation("androidx.test:rules:1.2.0")
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("junit:junit:4.13.2")
 }

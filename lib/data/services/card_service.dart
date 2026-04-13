@@ -100,9 +100,9 @@ class CardService with ChangeNotifier {
     try {
       final uri = Uri.parse(url);
       final pathSegments = uri.pathSegments;
-      // URLs look like: /storage/v1/object/public/bucket_id/user_id/lang/filename.ext
-      if (pathSegments.length >= 4) {
-        return pathSegments.sublist(4).join('/');
+      // URLs look like: /storage/v1/object/public/bucket_id/relative/path/to/file.ext
+      if (pathSegments.length >= 5) {
+        return pathSegments.sublist(5).join('/');
       }
     } catch (_) {}
     return null;
@@ -399,7 +399,7 @@ class CardService with ChangeNotifier {
     if (user == null || user.serverId == null) return null;
 
     try {
-      final fileExt = p.extension(file.path);
+      final fileExt = p.extension(file.name).toLowerCase();
       final timestamp = DateTime.now().millisecondsSinceEpoch;
       // New flatter structure: cards/{card_id}/{lang}_{timestamp}.{ext}
       final path = 'cards/$cardId/${lang}_$timestamp$fileExt';

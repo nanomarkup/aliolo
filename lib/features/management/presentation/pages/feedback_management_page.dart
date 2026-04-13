@@ -26,7 +26,7 @@ class _FeedbackManagementPageState extends State<FeedbackManagementPage> {
 
   bool get _isAdmin =>
       _authService.currentUser?.serverId ==
-      'f2fb4c9c-169b-447d-b8a6-dce72c4ed5ac';
+      'usyeo7d2yzf2773';
 
   @override
   void initState() {

@@ -76,7 +76,7 @@ class CollectionModel implements ContentItem {
       folderId: json['folder_id'],
       ownerId: json['owner_id'] ?? '',
       ownerName: profile != null ? profile['username'] : null,
-      isPublic: json['is_public'] ?? false,
+      isPublic: json['is_public'] == true || json['is_public'] == 1,
       ageGroup: json['age_group'] ?? '15_plus',
       createdAt: DateTime.tryParse(json['created_at'] ?? '') ?? DateTime.now(),
       updatedAt: DateTime.tryParse(json['updated_at'] ?? '') ?? DateTime.now(),

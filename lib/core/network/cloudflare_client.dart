@@ -8,12 +8,17 @@ class CloudflareHttpClient {
   
   static const String productionUrl = 'https://aliolo.com';
   // Use 10.0.2.2 for Android Emulator, localhost for Web/Linux
-  static const String developmentUrl = kIsWeb ? 'http://localhost:8787' : 'http://127.0.0.1:8787';
+  static String get developmentUrl {
+    if (kIsWeb) return 'http://localhost:8787';
+    if (defaultTargetPlatform == TargetPlatform.android) return 'http://10.0.2.2:8787';
+    return 'http://127.0.0.1:8787';
+  }
 
-  static String get baseUrl => const String.fromEnvironment(
-        'API_URL',
-        defaultValue: kReleaseMode ? productionUrl : developmentUrl,
-      );
+  static String get baseUrl {
+    const fromEnv = String.fromEnvironment('API_URL');
+    if (fromEnv.isNotEmpty) return fromEnv;
+    return kReleaseMode ? productionUrl : developmentUrl;
+  }
 
   CloudflareHttpClient() {
     _dio = Dio(BaseOptions(

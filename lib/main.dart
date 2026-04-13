@@ -57,7 +57,10 @@ OTHER LIABILITY.
       ]);
     });
 
-    if (!kIsWeb) {
+    if (!kIsWeb &&
+        (defaultTargetPlatform == TargetPlatform.linux ||
+            defaultTargetPlatform == TargetPlatform.macOS ||
+            defaultTargetPlatform == TargetPlatform.windows)) {
       MediaKit.ensureInitialized();
     }
 

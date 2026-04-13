@@ -39,6 +39,8 @@ dependencies:
   dio: ^5.9.2
 
 dev_dependencies:
+  integration_test:
+    sdk: flutter
   flutter_test:
     sdk: flutter
   flutter_lints: ^5.0.0
@@ -47,6 +49,8 @@ dev_dependencies:
   flutter_launcher_icons: ^0.13.1
   mocktail: ^1.0.5
   http_mock_adapter: ^0.6.1
+  golden_toolkit: ^0.15.0
+  patrol: ^3.15.2
 
 flutter_launcher_icons:
   android: "launcher_icon"

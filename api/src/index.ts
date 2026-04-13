@@ -73,8 +73,7 @@ app.route('/', storageRouter);
 const protectDocs = async (c: any, next: any) => {
   const url = new URL(c.req.url);
   const isLocal = url.hostname === 'localhost' || url.hostname === '127.0.0.1';
-  const isDev = c.env.ENVIRONMENT === 'development';
-  if (!isLocal && !isDev) {
+  if (!isLocal) {
     return c.text('Not Found', 404);
   }
   await next();

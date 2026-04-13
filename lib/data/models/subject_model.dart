@@ -296,7 +296,7 @@ class SubjectModel implements ContentItem {
       pillarId: json['pillar_id'] ?? 1,
       ownerId: json['owner_id'] ?? '',
       ownerName: profile != null ? profile['username'] : null,
-      isPublic: json['is_public'] ?? false,
+      isPublic: json['is_public'] == true || json['is_public'] == 1,
       createdAt: DateTime.tryParse(json['created_at'] ?? '') ?? DateTime.now(),
       updatedAt: DateTime.tryParse(json['updated_at'] ?? '') ?? DateTime.now(),
       cardCount:

@@ -85,6 +85,8 @@ You can use these scripts from the project root:
 - **Run E2E (Production) Tests**: `./scripts/test_e2e.sh`
 - **Run Backend Tests**: `./scripts/test_backend.sh`
 - **Run Frontend Tests**: `./scripts/test_frontend.sh`
+- **Run Integration Tests**: `./scripts/test_integration.sh`
+- **Run Golden Tests**: `./scripts/test_goldens.sh` (use `--update` to refresh baselines)
 - **Deploy Backend**: `./scripts/deploy_backend.sh`
 - **Build Frontend**: `./scripts/build_frontend.sh`
 

@@ -3,7 +3,7 @@ import type { AppEnv } from '../types';
 
 const router = new Hono<AppEnv>();
 
-const ADMIN_ID = 'f2fb4c9c-169b-447d-b8a6-dce72c4ed5ac';
+const ADMIN_ID = 'usyeo7d2yzf2773';
 
 router.post('/api/upload/:bucket/:path{.+}', async (c) => {
     const user = c.get("user");
@@ -40,17 +40,13 @@ router.post('/api/upload/:bucket/:path{.+}', async (c) => {
     }
 
     let bucket: R2Bucket;
-    if (bucketName === 'card_images' || bucketName === 'card_audio' || bucketName === 'card_videos' || bucketName === 'feedback_attachments' || bucketName === 'aliolo-media') {
+    if (bucketName === 'card_images' || bucketName === 'card_audio' || bucketName === 'card_videos' || bucketName === 'feedback_attachments' || bucketName === 'aliolo-media' || bucketName === 'avatars') {
         bucket = c.env.MEDIA;
-    } else if (bucketName === 'avatars') {
-        bucket = c.env.AVATARS;
     } else {
         return c.json({ error: 'Bucket not found' }, 404);
     }
 
-    // New logic: if it's already a full path (like cards/...), we use it as is.
-    // Legacy support: if it's just a file in a sub-bucket, we prepend the bucket name.
-    const r2Path = filePath.startsWith('cards/') || bucketName === 'avatars' ? filePath : `${bucketName}/${filePath}`;
+    const r2Path = filePath.startsWith('cards/') ? filePath : (bucketName === 'avatars' ? `avatars/${filePath}` : `${bucketName}/${filePath}`);
     
     const body = await c.req.arrayBuffer();
     const contentType = c.req.header('Content-Type') || 'application/octet-stream';
@@ -97,15 +93,13 @@ router.delete('/api/storage/:bucket/:path{.+}', async (c) => {
     }
 
     let bucket: R2Bucket;
-    if (bucketName === 'card_images' || bucketName === 'card_audio' || bucketName === 'card_videos' || bucketName === 'feedback_attachments' || bucketName === 'aliolo-media') {
+    if (bucketName === 'card_images' || bucketName === 'card_audio' || bucketName === 'card_videos' || bucketName === 'feedback_attachments' || bucketName === 'aliolo-media' || bucketName === 'avatars') {
         bucket = c.env.MEDIA;
-    } else if (bucketName === 'avatars') {
-        bucket = c.env.AVATARS;
     } else {
         return c.json({ error: 'Bucket not found' }, 404);
     }
 
-    const r2Path = filePath.startsWith('cards/') || bucketName === 'avatars' ? filePath : `${bucketName}/${filePath}`;
+    const r2Path = filePath.startsWith('cards/') ? filePath : (bucketName === 'avatars' ? `avatars/${filePath}` : `${bucketName}/${filePath}`);
 
     try {
         await bucket.delete(r2Path);
@@ -121,15 +115,13 @@ router.get('/storage/v1/object/public/:bucket/:path{.+}', async (c) => {
   const path = c.req.param('path');
   
   let bucket: R2Bucket;
-  if (bucketName === 'card_images' || bucketName === 'card_audio' || bucketName === 'card_videos' || bucketName === 'feedback_attachments' || bucketName === 'aliolo-media') {
+  if (bucketName === 'card_images' || bucketName === 'card_audio' || bucketName === 'card_videos' || bucketName === 'feedback_attachments' || bucketName === 'aliolo-media' || bucketName === 'avatars') {
     bucket = c.env.MEDIA;
-  } else if (bucketName === 'avatars') {
-    bucket = c.env.AVATARS;
   } else {
     return c.text('Bucket not found', 404);
   }
 
-  const r2Path = path.startsWith('cards/') || bucketName === 'avatars' ? path : `${bucketName}/${path}`;
+  const r2Path = path.startsWith('cards/') ? path : (bucketName === 'avatars' ? `avatars/${path}` : `${bucketName}/${path}`);
   
   const object = await bucket.get(r2Path);
   if (!object) return c.text('Object not found', 404);

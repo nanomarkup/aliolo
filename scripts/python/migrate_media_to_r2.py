@@ -51,7 +51,7 @@ def get_referenced_files():
     for p in res.json():
         url = p.get('avatar_url')
         if url and "/avatars/" in url:
-            files.append(("avatars", "aliolo-avatars", url.split("/avatars/")[1].split('?')[0]))
+            files.append(("avatars", "aliolo-media", url.split("/avatars/")[1].split('?')[0]))
             
     return list(set(files))
 
