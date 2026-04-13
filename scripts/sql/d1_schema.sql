@@ -33,6 +33,8 @@ CREATE TABLE IF NOT EXISTS profiles (
   avatar_url TEXT,
   password_hash TEXT,
   main_pillar_id INTEGER REFERENCES pillars(id),
+  last_age_group TEXT DEFAULT 'all',
+  last_source_filter TEXT DEFAULT 'all',
   created_at TEXT DEFAULT CURRENT_TIMESTAMP,
   updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
   is_premium INTEGER DEFAULT 0 -- Boolean
