@@ -5,7 +5,7 @@ This file serves as the primary context bridge for Gemini CLI.
 ## 🏗️ Core Architecture
 - **Framework:** Flutter (Mobile, Linux, Web)
 - **Backend:** Cloudflare Stack (D1 Database, R2 Storage, Workers, Lucia Auth)
-- **API Base:** `https://aliolo-backend.vitalii-e07.workers.dev`
+- **API Base:** `https://aliolo.vitalii-e07.workers.dev`
 - **Local State:** `ListenableBuilder` and `ValueListenableBuilder` used for UI reactivity.
 - **Primary Features:** Visual flashcards, MCQ testing, Video/Audio support, Streak system, Age-based content filtering.
 

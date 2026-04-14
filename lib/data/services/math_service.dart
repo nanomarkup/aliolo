@@ -64,12 +64,8 @@ class MathService {
       isPublic: true,
       createdAt: now,
       updatedAt: now,
-      localizedData: {
-        'en': LocalizedCardData(
-          prompt: problem.question,
-          answer: problem.answer,
-        ),
-      },
+      answer: problem.answer,
+      prompt: problem.question,
     );
     card.mathQuestion = problem.question;
     card.mathOptions = problem.options;

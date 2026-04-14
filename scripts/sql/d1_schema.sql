@@ -5,7 +5,10 @@ CREATE TABLE IF NOT EXISTS pillars (
   light_color TEXT,
   dark_color TEXT,
   icon TEXT,
-  localized_data TEXT -- JSON
+  name TEXT NOT NULL,
+  names TEXT, -- JSON
+  description TEXT,
+  descriptions TEXT -- JSON
 );
 
 CREATE TABLE IF NOT EXISTS profiles (
@@ -33,7 +36,7 @@ CREATE TABLE IF NOT EXISTS profiles (
   options_count INTEGER DEFAULT 6,
   avatar_url TEXT,
   password_hash TEXT,
-  main_pillar_id INTEGER REFERENCES pillars(id),
+  main_pillar_id INTEGER DEFAULT 6 REFERENCES pillars(id),
   last_age_group TEXT DEFAULT 'all',
   last_source_filter TEXT DEFAULT 'all',
   created_at TEXT DEFAULT CURRENT_TIMESTAMP,
@@ -45,7 +48,8 @@ CREATE TABLE IF NOT EXISTS folders (
   id TEXT PRIMARY KEY,
   pillar_id INTEGER REFERENCES pillars(id) NOT NULL,
   owner_id TEXT REFERENCES profiles(id) NOT NULL,
-  localized_data TEXT, -- JSON
+  name TEXT NOT NULL,
+  names TEXT, -- JSON
   created_at TEXT DEFAULT CURRENT_TIMESTAMP,
   updated_at TEXT DEFAULT CURRENT_TIMESTAMP
 );
@@ -56,8 +60,11 @@ CREATE TABLE IF NOT EXISTS collections (
   folder_id TEXT REFERENCES folders(id),
   owner_id TEXT REFERENCES profiles(id) NOT NULL,
   age_group TEXT DEFAULT 'advanced',
-  is_public INTEGER DEFAULT 0, -- Boolean
-  localized_data TEXT, -- JSON
+  is_public INTEGER DEFAULT 0,
+  name TEXT NOT NULL,
+  names TEXT, -- JSON
+  description TEXT,
+  descriptions TEXT, -- JSON
   created_at TEXT DEFAULT CURRENT_TIMESTAMP,
   updated_at TEXT DEFAULT CURRENT_TIMESTAMP
 );
@@ -68,8 +75,11 @@ CREATE TABLE IF NOT EXISTS subjects (
   folder_id TEXT REFERENCES folders(id),
   owner_id TEXT REFERENCES profiles(id) NOT NULL,
   age_group TEXT DEFAULT 'advanced',
-  is_public INTEGER DEFAULT 0, -- Boolean
-  localized_data TEXT, -- JSON
+  is_public INTEGER DEFAULT 0,
+  name TEXT NOT NULL,
+  names TEXT, -- JSON
+  description TEXT,
+  descriptions TEXT, -- JSON
   created_at TEXT DEFAULT CURRENT_TIMESTAMP,
   updated_at TEXT DEFAULT CURRENT_TIMESTAMP
 );
@@ -80,9 +90,17 @@ CREATE TABLE IF NOT EXISTS cards (
   owner_id TEXT REFERENCES profiles(id),
   level INTEGER DEFAULT 1,
   test_mode TEXT DEFAULT 'standard',
-  is_public INTEGER DEFAULT 0, -- Boolean
-  is_deleted INTEGER DEFAULT 0, -- Boolean
-  localized_data TEXT, -- JSON
+  is_public INTEGER DEFAULT 1,
+  answer TEXT,
+  answers TEXT, -- JSON
+  prompt TEXT,
+  prompts TEXT, -- JSON
+  images_base TEXT, -- JSON array
+  images_local TEXT, -- JSON map
+  audio TEXT,
+  audios TEXT, -- JSON map
+  video TEXT,
+  videos TEXT, -- JSON map
   created_at TEXT DEFAULT CURRENT_TIMESTAMP,
   updated_at TEXT DEFAULT CURRENT_TIMESTAMP
 );
@@ -199,3 +217,18 @@ CREATE TABLE IF NOT EXISTS languages (
   name TEXT NOT NULL,
   created_at TEXT DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE IF NOT EXISTS email_verification_codes (
+  email TEXT PRIMARY KEY,
+  code TEXT NOT NULL,
+  expires_at INTEGER NOT NULL,
+  is_verified INTEGER DEFAULT 0 -- Boolean
+);
+
+CREATE TABLE IF NOT EXISTS invitations (
+  token TEXT PRIMARY KEY,
+  email TEXT NOT NULL,
+  inviter_id TEXT NOT NULL,
+  expires_at INTEGER NOT NULL
+);
+

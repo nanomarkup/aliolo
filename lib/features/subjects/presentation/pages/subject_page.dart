@@ -170,7 +170,7 @@ class _SubjectPageState extends State<SubjectPage> {
       final Set<String> detectedLangs = {};
       for (var item in content) {
         detectedLangs.addAll(
-          item.localizedData.keys.map((k) => k.toLowerCase()),
+          item.names.keys.map((k) => k.toLowerCase()),
         );
         if (item is SubjectModel && item.rawCards != null) {
           for (var c in item.rawCards!) {

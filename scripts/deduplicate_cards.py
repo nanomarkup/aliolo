@@ -41,17 +41,15 @@ def main():
     print(f"Found subject ID: {subject_id}")
     
     # Fetch cards for this subject
-    res = requests.get(f"{URL}/rest/v1/cards?select=id,localized_data,is_deleted&subject_id=eq.{subject_id}", headers=headers)
+    res = requests.get(f"{URL}/rest/v1/cards?select=id,localized_data&subject_id=eq.{subject_id}", headers=headers)
     if res.status_code != 200:
         print(f"Failed to fetch cards. Error: {res.text}")
         sys.exit(1)
-        
+
     cards = res.json()
-    # Exclude soft-deleted cards
-    active_cards = [c for c in cards if not c.get("is_deleted")]
-    
-    print(f"Fetched {len(cards)} total cards ({len(active_cards)} active).")
-    
+    active_cards = cards
+
+    print(f"Fetched {len(cards)} total cards.")    
     # Group by the global answer
     cards_by_answer = {}
     for card in active_cards:

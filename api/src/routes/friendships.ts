@@ -1,14 +1,14 @@
-import { Hono } from 'hono';
+import { OpenAPIHono } from '@hono/zod-openapi';
 import type { AppEnv } from '../types';
 
-const router = new Hono<AppEnv>();
+const router = new OpenAPIHono<AppEnv>();
 
 router.get('/', async (c) => {
     const user = c.get("user");
     if (!user) return c.json({ error: 'Unauthorized' }, 401);
 
     try {
-        const { results } = await c.env.DB.prepare(`
+        const { results: friendships } = await c.env.DB.prepare(`
             SELECT f.*, 
             s.username as sender_username, s.avatar_url as sender_avatar,
             r.username as receiver_username, r.avatar_url as receiver_avatar
@@ -17,8 +17,25 @@ router.get('/', async (c) => {
             JOIN profiles r ON f.receiver_id = r.id
             WHERE f.sender_id = ? OR f.receiver_id = ?
         `).bind(user.id, user.id).all();
+
+        // Also fetch pending invitations sent by this user
+        const { results: invitations } = await c.env.DB.prepare(`
+            SELECT token as id, inviter_id as sender_id, email as receiver_username, 
+            'invited' as status, datetime(expires_at, 'unixepoch') as created_at
+            FROM invitations
+            WHERE inviter_id = ?
+        `).bind(user.id).all();
+
+        // Transform invitations to match friendship format
+        const invitationFriendships = invitations.map((inv: any) => ({
+            ...inv,
+            receiver_id: null,
+            sender_username: user.username || 'Me',
+            sender_avatar: null,
+            receiver_avatar: null
+        }));
         
-        return c.json(results);
+        return c.json([...friendships, ...invitationFriendships]);
     } catch (e: any) {
         return c.json({ error: e.message }, 500);
     }
@@ -81,9 +98,18 @@ router.delete('/:id', async (c) => {
     const id = c.req.param('id');
 
     try {
-        await c.env.DB.prepare(
+        // Try deleting from friendships (id is integer)
+        const result = await c.env.DB.prepare(
             "DELETE FROM user_friendships WHERE id = ? AND (sender_id = ? OR receiver_id = ?)"
         ).bind(id, user.id, user.id).run();
+
+        if (result.meta.changes === 0) {
+            // Try deleting from invitations (id is token string)
+            await c.env.DB.prepare(
+                "DELETE FROM invitations WHERE token = ? AND inviter_id = ?"
+            ).bind(id, user.id).run();
+        }
+        
         return c.json({ success: true });
     } catch (e: any) {
         return c.json({ error: e.message }, 500);

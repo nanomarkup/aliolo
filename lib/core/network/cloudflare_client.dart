@@ -17,6 +17,13 @@ class CloudflareHttpClient {
   static String get baseUrl {
     const fromEnv = String.fromEnvironment('API_URL');
     if (fromEnv.isNotEmpty) return fromEnv;
+    
+    if (kIsWeb) {
+      // On web, if no API_URL is provided, use relative paths.
+      // This ensures the app works on aliolo.com, workers.dev, etc.
+      return '';
+    }
+    
     return kReleaseMode ? productionUrl : developmentUrl;
   }
 

@@ -46,14 +46,6 @@ class DraftLocalizedSubjectData {
   Map<String, dynamic> rawData = {};
 
   DraftLocalizedSubjectData();
-
-  factory DraftLocalizedSubjectData.fromModel(LocalizedSubjectData data) {
-    final d = DraftLocalizedSubjectData();
-    d.name = data.name ?? '';
-    d.description = data.description ?? '';
-    d.rawData = Map.from(data.rawData);
-    return d;
-  }
 }
 
 class _SubjectEditPageState extends State<SubjectEditPage> {
@@ -207,12 +199,27 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
     }
 
     if (widget.existingSubject != null) {
-      widget.existingSubject!.localizedData.forEach((lang, data) {
-        _drafts[lang] = DraftLocalizedSubjectData.fromModel(data);
+      final s = widget.existingSubject!;
+      _drafts['global'] = DraftLocalizedSubjectData()
+        ..name = s.name
+        ..description = s.description;
+      
+      s.names.forEach((lang, name) {
+        _ensureDraftExists(lang);
+        _drafts[lang]!.name = name;
+      });
+      s.descriptions.forEach((lang, desc) {
+        _ensureDraftExists(lang);
+        _drafts[lang]!.description = desc;
       });
     } else if (widget.existingFolder != null) {
-      widget.existingFolder!.localizedData.forEach((lang, data) {
-        _drafts[lang] = DraftLocalizedSubjectData.fromModel(data);
+      final f = widget.existingFolder!;
+      _drafts['global'] = DraftLocalizedSubjectData()
+        ..name = f.name;
+
+      f.names.forEach((lang, name) {
+        _ensureDraftExists(lang);
+        _drafts[lang]!.name = name;
       });
     }
   }
@@ -410,31 +417,39 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
   Future<void> _save() async {
     if (!_formKey.currentState!.validate()) return;
 
-    final Map<String, LocalizedSubjectData> finalData = {};
+    String? globalName;
+    String? globalDescription;
+    final Map<String, String> finalNames = {};
+    final Map<String, String> finalDescriptions = {};
 
     for (var entry in _drafts.entries) {
       final lang = entry.key;
       final draft = entry.value;
 
-      if (lang != 'global' && draft.name.isEmpty && (!_isFolderMode && draft.description.isEmpty)) {
+      if (lang == 'global') {
+        globalName = draft.name.isEmpty ? null : draft.name;
+        globalDescription = draft.description.isEmpty ? null : draft.description;
         continue;
       }
 
-      finalData[lang] = LocalizedSubjectData(
-        name: draft.name.isEmpty ? null : draft.name,
-        description: (_isFolderMode || draft.description.isEmpty) ? null : draft.description,
-        rawData: draft.rawData,
-      );
+      if (draft.name.isNotEmpty) {
+        finalNames[lang] = draft.name;
+      }
+      if (draft.description.isNotEmpty) {
+        finalDescriptions[lang] = draft.description;
+      }
     }
 
-    if (finalData.isEmpty ||
-        (finalData.length == 1 &&
-            finalData.containsKey('global') &&
-            finalData['global']!.name == null)) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(context.t('provide_at_least_one_name'))),
-      );
-      return;
+    // Ensure global name is never null for the database NOT NULL constraint
+    if (globalName == null || globalName!.trim().isEmpty) {
+      if (finalNames.isNotEmpty) {
+        globalName = finalNames.values.first;
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(context.t('provide_at_least_one_name'))),
+        );
+        return;
+      }
     }
 
     setState(() => _isSaving = true);
@@ -444,9 +459,8 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
       final myId = _authService.currentUser?.serverId;
       
       if (_isFolderMode) {
-        // Validation: Prevent duplicate folder names for this user in this pillar
-        final newName = finalData['global']?.name?.trim().toLowerCase() ?? 
-                        finalData.values.firstWhere((d) => d.name != null, orElse: () => LocalizedSubjectData()).name?.trim().toLowerCase();
+        final newName = globalName?.trim().toLowerCase() ?? 
+                        finalNames.values.firstOrNull?.trim().toLowerCase();
         
         if (newName != null) {
           final isDuplicate = _allFolders.any((f) => 
@@ -473,7 +487,8 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
           ownerId: widget.existingFolder?.ownerId ?? _authService.currentUser!.serverId!,
           createdAt: widget.existingFolder?.createdAt ?? now,
           updatedAt: now,
-          localizedData: finalData,
+          name: globalName ?? '',
+          names: finalNames,
         );
         await _cardService.addFolder(folder);
         
@@ -492,7 +507,10 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
           ownerId: widget.existingSubject?.ownerId ?? _authService.currentUser!.serverId!,
           createdAt: widget.existingSubject?.createdAt ?? now,
           updatedAt: now,
-          localizedData: finalData,
+          name: globalName ?? '',
+          names: finalNames,
+          description: globalDescription ?? '',
+          descriptions: finalDescriptions,
           subjectIds: _linkedSubjectIds,
           isPublic: _isPublic,
           folderId: _selectedFolderId,
@@ -528,7 +546,10 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
           cardCount: widget.existingSubject?.cardCount ?? 0,
           createdAt: widget.existingSubject?.createdAt ?? now,
           updatedAt: now,
-          localizedData: finalData,
+          name: globalName ?? '',
+          names: finalNames,
+          description: globalDescription ?? '',
+          descriptions: finalDescriptions,
           typeStr: 'standard',
           folderId: _selectedFolderId,
           linkedSubjectIds: [],
@@ -782,7 +803,6 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
             SwitchListTile(
               contentPadding: EdgeInsets.zero,
               title: Text(context.t('public_subject')),
-              subtitle: Text(context.t('public_subject_desc')),
               value: _isPublic,
               onChanged: isOwner ? (val) => setState(() => _isPublic = val) : null,
             ),
@@ -807,6 +827,12 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
             border: const OutlineInputBorder(),
           ),
           enabled: isOwner,
+          validator: (v) {
+            if (v == null || v.trim().isEmpty) {
+              return context.t('provide_at_least_one_name');
+            }
+            return null;
+          },
         ),
         if (!_isFolderMode) ...[
           const SizedBox(height: 16),
@@ -840,11 +866,16 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
       final original = widget.existingFolder!;
       if (_selectedPillar != original.pillarId) return true;
       
-      final allLangs = {...original.localizedData.keys, ..._drafts.keys};
+      final allLangs = {'global', ...original.names.keys, ..._drafts.keys};
       for (var lang in allLangs) {
-        final draftName = _drafts[lang]?.name.trim() ?? '';
-        final origName = original.localizedData[lang]?.name?.trim() ?? '';
-        if (draftName != origName) return true;
+        final draft = _drafts[lang];
+        final draftName = draft?.name.trim() ?? '';
+
+        if (lang == 'global') {
+          if (draftName != original.name.trim()) return true;
+        } else {
+          if (draftName != (original.names[lang]?.trim() ?? '')) return true;
+        }
       }
       return false;
     }
@@ -856,18 +887,19 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
     if (_selectedType != original.typeStr) return true;
     if ((_selectedFolderId ?? '') != (original.folderId ?? '')) return true;
 
-    final allLangs = {...original.localizedData.keys, ..._drafts.keys};
+    final allLangs = {'global', ...original.names.keys, ...original.descriptions.keys, ..._drafts.keys};
     for (var lang in allLangs) {
       final draft = _drafts[lang];
-      final orig = original.localizedData[lang];
-      
       final draftName = draft?.name.trim() ?? '';
-      final origName = orig?.name?.trim() ?? '';
-      if (draftName != origName) return true;
-
       final draftDesc = draft?.description.trim() ?? '';
-      final origDesc = orig?.description?.trim() ?? '';
-      if (draftDesc != origDesc) return true;
+
+      if (lang == 'global') {
+        if (draftName != original.name.trim()) return true;
+        if (draftDesc != original.description.trim()) return true;
+      } else {
+        if (draftName != (original.names[lang]?.trim() ?? '')) return true;
+        if (draftDesc != (original.descriptions[lang]?.trim() ?? '')) return true;
+      }
     }
 
     return false;

@@ -35,7 +35,7 @@ router.openapi(listSubjectsRoute, async (c) => {
 
   let query = `
     SELECT s.*, p.username as owner_name, 
-    (SELECT COUNT(*) FROM cards c WHERE c.subject_id = s.id AND c.is_deleted = 0) as card_count
+    (SELECT COUNT(*) FROM cards c WHERE c.subject_id = s.id) as card_count
     FROM subjects s 
     LEFT JOIN profiles p ON s.owner_id = p.id`;
   
@@ -120,20 +120,34 @@ router.openapi(createSubjectRoute, async (c) => {
     const user = c.get("user");
     if (!user) return c.json({ error: 'Unauthorized' } as any, 401);
 
-    const { id, pillar_id, folder_id, is_public, age_group, localized_data } = c.req.valid('json');
+    const { id, pillar_id, folder_id, is_public, age_group, name, names, description, descriptions } = c.req.valid('json');
 
     try {
         await c.env.DB.prepare(`
-            INSERT INTO subjects (id, pillar_id, folder_id, owner_id, is_public, age_group, localized_data, updated_at)
-            VALUES (?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+            INSERT INTO subjects (id, pillar_id, folder_id, owner_id, is_public, age_group, name, names, description, descriptions, updated_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
             ON CONFLICT(id) DO UPDATE SET
                 pillar_id = excluded.pillar_id,
                 folder_id = excluded.folder_id,
                 is_public = excluded.is_public,
                 age_group = excluded.age_group,
-                localized_data = excluded.localized_data,
+                name = excluded.name,
+                names = excluded.names,
+                description = excluded.description,
+                descriptions = excluded.descriptions,
                 updated_at = CURRENT_TIMESTAMP
-        `).bind(id, pillar_id, folder_id, user.id, is_public ? 1 : 0, age_group, JSON.stringify(localized_data)).run();
+        `).bind(
+            id, 
+            pillar_id, 
+            folder_id, 
+            user.id, 
+            is_public ? 1 : 0, 
+            age_group, 
+            name, 
+            JSON.stringify(names), 
+            description, 
+            JSON.stringify(descriptions)
+        ).run();
         
         return c.json({ success: true }, 200);
     } catch (e: any) {
@@ -191,7 +205,7 @@ router.openapi(dashboardSubjectsRoute, async (c) => {
     try {
         const { results } = await c.env.DB.prepare(`
             SELECT s.*, p.username as owner_name,
-            (SELECT COUNT(*) FROM cards c WHERE c.subject_id = s.id AND c.is_deleted = 0) as card_count
+            (SELECT COUNT(*) FROM cards c WHERE c.subject_id = s.id) as card_count
             FROM subjects s
             INNER JOIN user_subjects us ON s.id = us.subject_id
             LEFT JOIN profiles p ON s.owner_id = p.id

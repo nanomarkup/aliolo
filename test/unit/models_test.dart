@@ -47,13 +47,12 @@ void main() {
       expect(model.isOnDashboard, isTrue);
     });
 
-    test('CardModel correctly parses is_public and is_deleted from int', () {
+    test('CardModel correctly parses is_public from int', () {
       final json = {
         'id': 'test_card',
         'subject_id': 'subj_1',
         'owner_id': 'user_1',
         'is_public': 1,
-        'is_deleted': 1,
         'localized_data': '{}',
         'created_at': '2026-04-13T12:00:00Z',
         'updated_at': '2026-04-13T12:00:00Z',
@@ -61,7 +60,6 @@ void main() {
       
       final model = CardModel.fromJson(json);
       expect(model.isPublic, isTrue);
-      expect(model.isDeleted, isTrue);
     });
   });
 }

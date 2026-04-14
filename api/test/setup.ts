@@ -8,7 +8,10 @@ CREATE TABLE IF NOT EXISTS pillars (
   light_color TEXT,
   dark_color TEXT,
   icon TEXT,
-  localized_data TEXT
+  name TEXT,
+  names TEXT,
+  description TEXT,
+  descriptions TEXT
 );
 
 CREATE TABLE IF NOT EXISTS profiles (
@@ -45,7 +48,8 @@ CREATE TABLE IF NOT EXISTS folders (
   id TEXT PRIMARY KEY,
   pillar_id INTEGER REFERENCES pillars(id) NOT NULL,
   owner_id TEXT REFERENCES profiles(id) NOT NULL,
-  localized_data TEXT,
+  name TEXT,
+  names TEXT,
   created_at TEXT DEFAULT CURRENT_TIMESTAMP,
   updated_at TEXT DEFAULT CURRENT_TIMESTAMP
 );
@@ -57,7 +61,10 @@ CREATE TABLE IF NOT EXISTS collections (
   owner_id TEXT REFERENCES profiles(id) NOT NULL,
   age_group TEXT DEFAULT 'advanced',
   is_public INTEGER DEFAULT 0,
-  localized_data TEXT,
+  name TEXT,
+  names TEXT,
+  description TEXT,
+  descriptions TEXT,
   created_at TEXT DEFAULT CURRENT_TIMESTAMP,
   updated_at TEXT DEFAULT CURRENT_TIMESTAMP
 );
@@ -69,7 +76,10 @@ CREATE TABLE IF NOT EXISTS subjects (
   owner_id TEXT REFERENCES profiles(id) NOT NULL,
   age_group TEXT DEFAULT 'advanced',
   is_public INTEGER DEFAULT 0,
-  localized_data TEXT,
+  name TEXT,
+  names TEXT,
+  description TEXT,
+  descriptions TEXT,
   created_at TEXT DEFAULT CURRENT_TIMESTAMP,
   updated_at TEXT DEFAULT CURRENT_TIMESTAMP
 );
@@ -80,9 +90,17 @@ CREATE TABLE IF NOT EXISTS cards (
   owner_id TEXT REFERENCES profiles(id),
   level INTEGER DEFAULT 1,
   test_mode TEXT DEFAULT 'standard',
-  is_public INTEGER DEFAULT 0,
-  is_deleted INTEGER DEFAULT 0,
-  localized_data TEXT,
+  is_public INTEGER DEFAULT 1,
+  answer TEXT,
+  answers TEXT,
+  prompt TEXT,
+  prompts TEXT,
+  images_base TEXT,
+  images_local TEXT,
+  audio TEXT,
+  audios TEXT,
+  video TEXT,
+  videos TEXT,
   created_at TEXT DEFAULT CURRENT_TIMESTAMP,
   updated_at TEXT DEFAULT CURRENT_TIMESTAMP
 );
@@ -193,6 +211,20 @@ CREATE TABLE IF NOT EXISTS languages (
   name TEXT NOT NULL,
   created_at TEXT DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE IF NOT EXISTS email_verification_codes (
+  email TEXT PRIMARY KEY,
+  code TEXT NOT NULL,
+  expires_at INTEGER NOT NULL,
+  is_verified INTEGER DEFAULT 0
+);
+
+CREATE TABLE IF NOT EXISTS invitations (
+  token TEXT PRIMARY KEY,
+  email TEXT NOT NULL,
+  inviter_id TEXT NOT NULL,
+  expires_at INTEGER NOT NULL
+);
 `;
 
 beforeAll(async () => {
@@ -205,4 +237,7 @@ beforeAll(async () => {
       console.error('Failed to execute statement:', statement, e);
     }
   }
+
+  // Add default pillar
+  await env.DB.prepare("INSERT OR IGNORE INTO pillars (id, sort_order) VALUES (6, 6)").run();
 });

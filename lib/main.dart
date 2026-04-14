@@ -25,8 +25,11 @@ import 'package:aliolo/core/utils/logger.dart';
 void main() async {
   try {
     String? initialUrl;
+    String? inviteToken;
     if (kIsWeb) {
       initialUrl = html.window.location.href;
+      final uri = Uri.parse(initialUrl);
+      inviteToken = uri.queryParameters['invite'];
     }
     usePathUrlStrategy();
     WidgetsFlutterBinding.ensureInitialized();
@@ -83,7 +86,7 @@ OTHER LIABILITY.
       }
     }
 
-    runApp(AlioloApp(initialUrl: initialUrl));
+    runApp(AlioloApp(initialUrl: initialUrl, inviteToken: inviteToken));
   } catch (e, stack) {
     print('CRITICAL MAIN ERROR: $e');
     print(stack);
@@ -92,7 +95,8 @@ OTHER LIABILITY.
 
 class AlioloApp extends StatefulWidget {
   final String? initialUrl;
-  const AlioloApp({super.key, this.initialUrl});
+  final String? inviteToken;
+  const AlioloApp({super.key, this.initialUrl, this.inviteToken});
 
   @override
   State<AlioloApp> createState() => _AlioloAppState();
@@ -109,7 +113,10 @@ class _AlioloAppState extends State<AlioloApp> {
 
   Future<void> _doInit() async {
     try {
-      await setupLocator(initialUrl: widget.initialUrl);
+      await setupLocator(
+        initialUrl: widget.initialUrl,
+        inviteToken: widget.inviteToken,
+      );
       await getIt<SubscriptionService>().init();
     } catch (e, stack) {
       print('Initialization failed: $e');
@@ -372,19 +379,11 @@ class _AlioloMainAppState extends State<AlioloMainApp> {
 
               final hasSeenOnboarding = onboardingSnapshot.data ?? false;
 
-              print('--- DEBUG: MAIN APP HOME BUILD ---');
-              print(
-                'AuthService isPasswordRecoveryFlow: ${authService.isPasswordRecoveryFlow}',
-              );
-              print('CurrentUser: ${user?.email}');
-              print('HasSeenOnboarding: $hasSeenOnboarding');
-
               if (!hasSeenOnboarding) {
                 return const OnboardingScreen();
               }
 
-              if (authService.isPasswordRecoveryFlow) {
-                print('MainApp: Showing LoginPage due to recovery flow');
+              if (authService.isPasswordRecoveryFlow || authService.isInviteFlow) {
                 return const LoginPage();
               }
 

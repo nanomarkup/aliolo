@@ -13,7 +13,10 @@ describe('Pillars API', () => {
           light_color TEXT,
           dark_color TEXT,
           icon TEXT,
-          localized_data TEXT
+          name TEXT,
+          names TEXT,
+          description TEXT,
+          descriptions TEXT
         );
       `).run();
 
@@ -52,8 +55,8 @@ describe('Pillars API', () => {
 
       // Insert dummy data
       await env.DB.prepare(`
-        INSERT OR REPLACE INTO pillars (id, sort_order, light_color, dark_color, icon, localized_data)
-        VALUES (1, 1, '#ffffff', '#000000', 'home', '{"en": {"name": "Test Pillar"}}');
+        INSERT OR REPLACE INTO pillars (id, sort_order, light_color, dark_color, icon, name, names, description, descriptions)
+        VALUES (1, 1, '#ffffff', '#000000', 'home', 'Test Pillar', '{}', 'Test Description', '{}');
       `).run();
     } catch (e) {
       console.error('Setup failed', e);
@@ -69,6 +72,6 @@ describe('Pillars API', () => {
     
     const data = await res.json() as any[];
     expect(data.length).toBeGreaterThan(0);
-    expect(JSON.stringify(data[0].localized_data)).toContain('Test Pillar');
+    expect(data[0].name).toBe('Test Pillar');
   });
 });

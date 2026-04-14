@@ -25,7 +25,7 @@ router.openapi(listCardsRoute, async (c) => {
   const { subject_id: subjectId } = c.req.valid('query');
   
   try {
-    const { results } = await c.env.DB.prepare('SELECT * FROM cards WHERE subject_id = ? AND is_deleted = 0')
+    const { results } = await c.env.DB.prepare('SELECT * FROM cards WHERE subject_id = ?')
       .bind(subjectId)
       .all();
     return c.json(results as any, 200);
@@ -52,20 +52,43 @@ router.openapi(createCardRoute, async (c) => {
     const user = c.get("user");
     if (!user) return c.json({ error: 'Unauthorized' } as any, 401);
 
-    const { id, subject_id, level, test_mode, is_public, localized_data } = c.req.valid('json');
+    const { 
+        id, subject_id, level, test_mode, is_public, 
+        answer, answers, prompt, prompts, 
+        images_base, images_local, audio, audios, video, videos 
+    } = c.req.valid('json');
 
     try {
         await c.env.DB.prepare(`
-            INSERT INTO cards (id, subject_id, owner_id, level, test_mode, is_public, localized_data, updated_at)
-            VALUES (?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+            INSERT INTO cards (
+                id, subject_id, owner_id, level, test_mode, is_public, 
+                answer, answers, prompt, prompts, 
+                images_base, images_local, audio, audios, video, videos,
+                updated_at
+            )
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
             ON CONFLICT(id) DO UPDATE SET
                 subject_id = excluded.subject_id,
                 level = excluded.level,
                 test_mode = excluded.test_mode,
                 is_public = excluded.is_public,
-                localized_data = excluded.localized_data,
+                answer = excluded.answer,
+                answers = excluded.answers,
+                prompt = excluded.prompt,
+                prompts = excluded.prompts,
+                images_base = excluded.images_base,
+                images_local = excluded.images_local,
+                audio = excluded.audio,
+                audios = excluded.audios,
+                video = excluded.video,
+                videos = excluded.videos,
                 updated_at = CURRENT_TIMESTAMP
-        `).bind(id, subject_id, user.id, level || 1, test_mode || 'standard', is_public ? 1 : 0, JSON.stringify(localized_data)).run();
+        `).bind(
+            id, subject_id, user.id, level || 1, test_mode || 'standard', is_public ? 1 : 0,
+            answer, JSON.stringify(answers), prompt, JSON.stringify(prompts),
+            JSON.stringify(images_base), JSON.stringify(images_local),
+            audio, JSON.stringify(audios), video, JSON.stringify(videos)
+        ).run();
         
         return c.json({ success: true }, 200);
     } catch (e: any) {
@@ -97,7 +120,21 @@ router.openapi(deleteCardRoute, async (c) => {
         const card: any = await c.env.DB.prepare("SELECT owner_id FROM cards WHERE id = ?").bind(id).first();
         if (!card || card.owner_id !== user.id) return c.json({ error: 'Forbidden' } as any, 403);
 
-        await c.env.DB.prepare("UPDATE cards SET is_deleted = 1, updated_at = CURRENT_TIMESTAMP WHERE id = ?").bind(id).run();
+        await c.env.DB.prepare("DELETE FROM cards WHERE id = ?").bind(id).run();
+
+        const prefix = `cards/${id}/`;
+        let listed = await c.env.MEDIA.list({ prefix });
+        let objectsToDelete = listed.objects.map((obj: any) => obj.key);
+        while (objectsToDelete.length > 0) {
+            await c.env.MEDIA.delete(objectsToDelete);
+            if (listed.truncated) {
+                listed = await c.env.MEDIA.list({ prefix, cursor: listed.cursor });
+                objectsToDelete = listed.objects.map((obj: any) => obj.key);
+            } else {
+                break;
+            }
+        }
+
         return c.json({ success: true }, 200);
     } catch (e: any) {
         return c.json({ error: e.message } as any, 500);

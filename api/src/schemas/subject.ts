@@ -8,7 +8,16 @@ export const SubjectSchema = z.object({
   owner_name: z.string().nullable().optional().openapi({ example: 'Aliolo' }),
   is_public: z.number().openapi({ example: 1 }),
   age_group: z.string().openapi({ example: 'primary' }),
-  localized_data: z.string().openapi({ description: 'JSON string' }),
+  name: z.string().openapi({ example: 'Sports' }),
+  names: z.string().openapi({ 
+    description: 'JSON string containing localized names',
+    example: '{"es": "Deportes"}' 
+  }),
+  description: z.string().openapi({ example: 'Master the names and rules of popular athletic games.' }),
+  descriptions: z.string().openapi({ 
+    description: 'JSON string containing localized descriptions',
+    example: '{"es": "Domina los nombres y reglas de los juegos atléticos populares."}' 
+  }),
   created_at: z.string().openapi({ example: '2026-04-12T00:00:00Z' }),
   updated_at: z.string().openapi({ example: '2026-04-12T00:00:00Z' }),
   card_count: z.number().openapi({ example: 50 }),
@@ -23,9 +32,10 @@ export const CreateSubjectSchema = z.object({
   folder_id: z.string().nullable().optional().openapi({ example: 'fold_456' }),
   is_public: z.boolean().optional().openapi({ example: true }),
   age_group: z.string().openapi({ example: 'primary' }),
-  localized_data: z.record(z.any()).openapi({ 
-    example: { en: { name: 'New Subject', description: 'Desc' } } 
-  }),
+  name: z.string().openapi({ example: 'New Subject' }),
+  names: z.record(z.string()).openapi({ example: { es: 'Nueva Materia' } }),
+  description: z.string().openapi({ example: 'Desc' }),
+  descriptions: z.record(z.string()).openapi({ example: { es: 'Desc' } }),
 }).openapi('CreateSubject');
 
 export const ToggleDashboardSchema = z.object({

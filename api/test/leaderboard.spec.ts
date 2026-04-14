@@ -1,18 +1,14 @@
 import { describe, it, expect, beforeAll } from 'vitest';
 import { env } from 'cloudflare:test';
 import app from '../src/index';
+import { signupUser } from './test-utils';
 
 describe('Leaderboard API', () => {
   let sessionId: string;
 
   beforeAll(async () => {
     const timestamp = Date.now();
-    const res = await app.request('/api/auth/signup', {
-      method: 'POST',
-      body: JSON.stringify({ email: `leader_${timestamp}@test.com`, password: 'password123' }),
-      headers: { 'Content-Type': 'application/json' }
-    }, env);
-    const data = await res.json() as any;
+    const data = await signupUser({ email: `leader_${timestamp}@test.com`, password: 'password123' });
     sessionId = data.session_id;
   });
 

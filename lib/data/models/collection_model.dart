@@ -18,10 +18,17 @@ class CollectionModel implements ContentItem {
   final DateTime createdAt;
   @override
   final DateTime updatedAt;
-  @override
-  final Map<String, LocalizedSubjectData> localizedData;
   final List<String> subjectIds;
   bool isOnDashboard;
+
+  /// Base name
+  final String name;
+  /// Map of language code to its specific name.
+  final Map<String, String> names;
+  /// Base description
+  final String description;
+  /// Map of language code to its specific description.
+  final Map<String, String> descriptions;
 
   @override
   ContentType get type => ContentType.collection;
@@ -36,31 +43,67 @@ class CollectionModel implements ContentItem {
     this.ageGroup = '15_plus',
     required this.createdAt,
     required this.updatedAt,
-    this.localizedData = const {},
     this.subjectIds = const [],
     this.isOnDashboard = false,
+    required this.name,
+    this.names = const {},
+    required this.description,
+    this.descriptions = const {},
   });
 
   factory CollectionModel.fromJson(Map<String, dynamic> json) {
-    var locData = json['localized_data'];
-    Map<String, dynamic> locMap = {};
-    if (locData is Map) {
-      locMap = Map<String, dynamic>.from(locData);
-    } else if (locData is String && locData.isNotEmpty) {
+    Map<String, String> namesMap = {};
+    final dynamic rawNames = json['names'];
+    if (rawNames is Map) {
+      namesMap = Map<String, String>.from(rawNames);
+    } else if (rawNames is String && rawNames.isNotEmpty) {
       try {
-        locMap = Map<String, dynamic>.from(jsonDecode(locData));
+        final decoded = jsonDecode(rawNames);
+        if (decoded is Map) {
+          namesMap = Map<String, String>.from(decoded);
+        }
       } catch (_) {}
     }
 
-    final Map<String, LocalizedSubjectData> localized = {};
-    locMap.forEach((key, value) {
-      if (value is Map) {
-        localized[key.toLowerCase()] = LocalizedSubjectData.fromJson(Map<String, dynamic>.from(value));
+    Map<String, String> descriptionsMap = {};
+    final dynamic rawDescriptions = json['descriptions'];
+    if (rawDescriptions is Map) {
+      descriptionsMap = Map<String, String>.from(rawDescriptions);
+    } else if (rawDescriptions is String && rawDescriptions.isNotEmpty) {
+      try {
+        final decoded = jsonDecode(rawDescriptions);
+        if (decoded is Map) {
+          descriptionsMap = Map<String, String>.from(decoded);
+        }
+      } catch (_) {}
+    }
+
+    // Fallback migration logic in app just in case (legacy data in localized_data)
+    String baseName = json['name'] ?? '';
+    String baseDesc = json['description'] ?? '';
+
+    if (baseName.isEmpty && json['localized_data'] != null) {
+      var locData = json['localized_data'];
+      Map<String, dynamic> locMap = {};
+      if (locData is Map) {
+        locMap = Map<String, dynamic>.from(locData);
+      } else if (locData is String && locData.isNotEmpty) {
+        try { locMap = Map<String, dynamic>.from(jsonDecode(locData)); } catch (_) {}
       }
-    });
+      final global = locMap['global'];
+      if (global is Map) {
+        baseName = global['name'] ?? '';
+        baseDesc = global['description'] ?? '';
+      }
+      locMap.forEach((k, v) {
+        if (k != 'global' && v is Map) {
+          if (namesMap[k] == null) namesMap[k] = v['name'] ?? '';
+          if (descriptionsMap[k] == null) descriptionsMap[k] = v['description'] ?? '';
+        }
+      });
+    }
 
     final Map<String, dynamic>? profile = json['profiles'];
-
     final List<String> subjects = [];
     if (json['collection_items'] is List) {
       for (var item in json['collection_items']) {
@@ -80,9 +123,12 @@ class CollectionModel implements ContentItem {
       ageGroup: json['age_group'] ?? '15_plus',
       createdAt: DateTime.tryParse(json['created_at'] ?? '') ?? DateTime.now(),
       updatedAt: DateTime.tryParse(json['updated_at'] ?? '') ?? DateTime.now(),
-      localizedData: localized,
       subjectIds: subjects,
       isOnDashboard: json['is_on_dashboard'] == true || json['is_on_dashboard'] == 1,
+      name: baseName,
+      names: namesMap,
+      description: baseDesc,
+      descriptions: descriptionsMap,
     );
   }
 
@@ -94,31 +140,13 @@ class CollectionModel implements ContentItem {
       'owner_id': ownerId,
       'is_public': isPublic,
       'age_group': ageGroup,
-      'localized_data': localizedData.map((k, v) => MapEntry(k, v.toJson())),
+      'name': name,
+      'names': names,
+      'description': description,
+      'descriptions': descriptions,
       'updated_at': updatedAt.toIso8601String(),
       'created_at': createdAt.toIso8601String(),
     };
-  }
-
-  T? _getInherited<T>(String langCode, T? Function(LocalizedSubjectData) getter) {
-    final lang = langCode.toLowerCase();
-    if (localizedData.containsKey(lang)) {
-      final val = getter(localizedData[lang]!);
-      if (val != null) return val;
-    }
-    if (localizedData.containsKey('global')) {
-      final val = getter(localizedData['global']!);
-      if (val != null) return val;
-    }
-    if (localizedData.containsKey('en')) {
-      final val = getter(localizedData['en']!);
-      if (val != null) return val;
-    }
-    if (localizedData.isNotEmpty) {
-      final val = getter(localizedData.values.first);
-      if (val != null) return val;
-    }
-    return null;
   }
 
   static String capitalizeFirst(String s) {
@@ -127,12 +155,18 @@ class CollectionModel implements ContentItem {
   }
 
   String getName(String langCode) {
-    final name = _getInherited(langCode, (d) => d.name) ?? 'Unnamed Collection';
-    return capitalizeFirst(name);
+    final lc = langCode.toLowerCase();
+    if (names.containsKey(lc) && names[lc]!.isNotEmpty) {
+      return capitalizeFirst(names[lc]!);
+    }
+    return capitalizeFirst(name.isNotEmpty ? name : 'Unnamed Collection');
   }
 
   String getDescription(String langCode) {
-    final desc = _getInherited(langCode, (d) => d.description) ?? '';
-    return capitalizeFirst(desc);
+    final lc = langCode.toLowerCase();
+    if (descriptions.containsKey(lc) && descriptions[lc]!.isNotEmpty) {
+      return capitalizeFirst(descriptions[lc]!);
+    }
+    return capitalizeFirst(description);
   }
 }

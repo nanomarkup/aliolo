@@ -2,68 +2,6 @@ import 'dart:convert';
 import 'subject_model.dart';
 import 'package:aliolo/core/network/media_url_resolver.dart';
 
-class LocalizedCardData {
-  final String? prompt;
-  final String? answer;
-  final String? audioUrl;
-  final String? videoUrl;
-  final List<String>? imageUrls;
-  final Map<String, dynamic> rawData;
-
-  LocalizedCardData({
-    this.prompt,
-    this.answer,
-    this.audioUrl,
-    this.videoUrl,
-    this.imageUrls,
-    this.rawData = const {},
-  });
-
-  factory LocalizedCardData.fromJson(Map<String, dynamic> json) {
-    return LocalizedCardData(
-      prompt: json['prompt'],
-      answer: json['answer'],
-      audioUrl: json['audio_url'],
-      videoUrl: json['video_url'],
-      imageUrls:
-          json['image_urls'] != null
-              ? List<String>.from(json['image_urls'])
-              : null,
-      rawData: json,
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    final map = Map<String, dynamic>.from(rawData);
-    if (prompt != null) {
-      map['prompt'] = prompt;
-    } else {
-      map.remove('prompt');
-    }
-    if (answer != null) {
-      map['answer'] = answer;
-    } else {
-      map.remove('answer');
-    }
-    if (audioUrl != null) {
-      map['audio_url'] = audioUrl;
-    } else {
-      map.remove('audio_url');
-    }
-    if (videoUrl != null) {
-      map['video_url'] = videoUrl;
-    } else {
-      map.remove('video_url');
-    }
-    if (imageUrls != null) {
-      map['image_urls'] = imageUrls;
-    } else {
-      map.remove('image_urls');
-    }
-    return map;
-  }
-}
-
 class CardModel {
   final String id;
   final String subjectId;
@@ -71,13 +9,24 @@ class CardModel {
   final String testMode;
   final String ownerId;
   final bool isPublic;
-  final bool isDeleted;
   final DateTime createdAt;
   final DateTime updatedAt;
 
-  /// Map of language code to its specific data.
-  /// Key 'global' is used for fallback assets (image/video).
-  final Map<String, LocalizedCardData> localizedData;
+  /// Base text fields
+  final String answer;
+  final String prompt;
+  
+  /// Base media fields (URLs)
+  final List<String> imagesBase;
+  final String audio;
+  final String video;
+
+  /// Localized maps
+  final Map<String, String> answers;
+  final Map<String, String> prompts;
+  final Map<String, List<String>> imagesLocal;
+  final Map<String, String> audios;
+  final Map<String, String> videos;
 
   String? mathQuestion;
   List<String>? mathOptions;
@@ -89,32 +38,106 @@ class CardModel {
     this.testMode = 'image_to_text',
     required this.ownerId,
     required this.isPublic,
-    this.isDeleted = false,
     required this.createdAt,
     required this.updatedAt,
-    this.localizedData = const {},
+    required this.answer,
+    this.answers = const {},
+    required this.prompt,
+    this.prompts = const {},
+    this.imagesBase = const [],
+    this.imagesLocal = const {},
+    this.audio = '',
+    this.audios = const {},
+    this.video = '',
+    this.videos = const {},
   });
 
   factory CardModel.fromJson(Map<String, dynamic> json) {
-    var locData = json['localized_data'];
-    Map<String, dynamic> locMap = {};
-    if (locData is Map) {
-      locMap = Map<String, dynamic>.from(locData);
-    } else if (locData is String && locData.isNotEmpty) {
+    Map<String, String> answersMap = {};
+    final rawAnswers = json['answers'];
+    if (rawAnswers is Map) answersMap = Map<String, String>.from(rawAnswers);
+    else if (rawAnswers is String && rawAnswers.isNotEmpty) {
+      try { answersMap = Map<String, String>.from(jsonDecode(rawAnswers)); } catch (_) {}
+    }
+
+    Map<String, String> promptsMap = {};
+    final rawPrompts = json['prompts'];
+    if (rawPrompts is Map) promptsMap = Map<String, String>.from(rawPrompts);
+    else if (rawPrompts is String && rawPrompts.isNotEmpty) {
+      try { promptsMap = Map<String, String>.from(jsonDecode(rawPrompts)); } catch (_) {}
+    }
+
+    List<String> imagesBaseList = [];
+    final rawImgBase = json['images_base'];
+    if (rawImgBase is List) imagesBaseList = List<String>.from(rawImgBase);
+    else if (rawImgBase is String && rawImgBase.isNotEmpty) {
+      try { imagesBaseList = List<String>.from(jsonDecode(rawImgBase)); } catch (_) {}
+    }
+
+    Map<String, List<String>> imagesLocalMap = {};
+    final rawImgLocal = json['images_local'];
+    if (rawImgLocal is Map) {
+      rawImgLocal.forEach((k, v) {
+        if (v is List) imagesLocalMap[k] = List<String>.from(v);
+      });
+    } else if (rawImgLocal is String && rawImgLocal.isNotEmpty) {
       try {
-        final decoded = jsonDecode(locData);
-        if (decoded is Map) {
-          locMap = Map<String, dynamic>.from(decoded);
-        }
+        final decoded = jsonDecode(rawImgLocal) as Map;
+        decoded.forEach((k, v) {
+          if (v is List) imagesLocalMap[k] = List<String>.from(v);
+        });
       } catch (_) {}
     }
 
-    final Map<String, LocalizedCardData> localized = {};
-    locMap.forEach((key, value) {
-      if (value is Map) {
-        localized[key.toLowerCase()] = LocalizedCardData.fromJson(Map<String, dynamic>.from(value));
+    Map<String, String> audiosMap = {};
+    final rawAudios = json['audios'];
+    if (rawAudios is Map) audiosMap = Map<String, String>.from(rawAudios);
+    else if (rawAudios is String && rawAudios.isNotEmpty) {
+      try { audiosMap = Map<String, String>.from(jsonDecode(rawAudios)); } catch (_) {}
+    }
+
+    Map<String, String> videosMap = {};
+    final rawVideos = json['videos'];
+    if (rawVideos is Map) videosMap = Map<String, String>.from(rawVideos);
+    else if (rawVideos is String && rawVideos.isNotEmpty) {
+      try { videosMap = Map<String, String>.from(jsonDecode(rawVideos)); } catch (_) {}
+    }
+
+    // Fallback migration logic
+    String bAnswer = json['answer'] ?? '';
+    String bPrompt = json['prompt'] ?? '';
+    String bAudio = json['audio'] ?? '';
+    String bVideo = json['video'] ?? '';
+
+    if (bAnswer.isEmpty && json['localized_data'] != null) {
+      var locData = json['localized_data'];
+      Map<String, dynamic> locMap = {};
+      if (locData is Map) locMap = Map<String, dynamic>.from(locData);
+      else if (locData is String && locData.isNotEmpty) {
+        try { locMap = Map<String, dynamic>.from(jsonDecode(locData)); } catch (_) {}
       }
-    });
+      final global = locMap['global'];
+      if (global is Map) {
+        bAnswer = global['answer'] ?? '';
+        bPrompt = global['prompt'] ?? '';
+        bAudio = global['audio_url'] ?? '';
+        bVideo = global['video_url'] ?? '';
+        if (imagesBaseList.isEmpty && global['image_urls'] is List) {
+          imagesBaseList = List<String>.from(global['image_urls']);
+        }
+      }
+      locMap.forEach((k, v) {
+        if (k != 'global' && v is Map) {
+          if (answersMap[k] == null) answersMap[k] = v['answer'] ?? '';
+          if (promptsMap[k] == null) promptsMap[k] = v['prompt'] ?? '';
+          if (audiosMap[k] == null) audiosMap[k] = v['audio_url'] ?? '';
+          if (videosMap[k] == null) videosMap[k] = v['video_url'] ?? '';
+          if (imagesLocalMap[k] == null && v['image_urls'] is List) {
+            imagesLocalMap[k] = List<String>.from(v['image_urls']);
+          }
+        }
+      });
+    }
 
     return CardModel(
       id: json['id'],
@@ -123,10 +146,18 @@ class CardModel {
       testMode: json['test_mode'] ?? json['kind'] ?? 'image_to_text',
       ownerId: json['owner_id'] ?? '',
       isPublic: json['is_public'] == true || json['is_public'] == 1,
-      isDeleted: json['is_deleted'] == true || json['is_deleted'] == 1,
       createdAt: DateTime.tryParse(json['created_at'] ?? '') ?? DateTime.now(),
       updatedAt: DateTime.tryParse(json['updated_at'] ?? '') ?? DateTime.now(),
-      localizedData: localized,
+      answer: bAnswer,
+      answers: answersMap,
+      prompt: bPrompt,
+      prompts: promptsMap,
+      imagesBase: imagesBaseList,
+      imagesLocal: imagesLocalMap,
+      audio: bAudio,
+      audios: audiosMap,
+      video: bVideo,
+      videos: videosMap,
     );
   }
 
@@ -138,39 +169,36 @@ class CardModel {
       'test_mode': testMode,
       'owner_id': ownerId,
       'is_public': isPublic,
-      'is_deleted': isDeleted,
       'created_at': createdAt.toIso8601String(),
       'updated_at': updatedAt.toIso8601String(),
-      'localized_data': localizedData.map((k, v) => MapEntry(k, v.toJson())),
+      'answer': answer,
+      'answers': answers,
+      'prompt': prompt,
+      'prompts': prompts,
+      'images_base': imagesBase,
+      'images_local': imagesLocal,
+      'audio': audio,
+      'audios': audios,
+      'video': video,
+      'videos': videos,
     };
   }
 
-  /// Helper to get an attribute with smart inheritance
-  T? _getInherited<T>(String lang, T? Function(LocalizedCardData) getter) {
-    // 1. Try requested language
-    if (localizedData.containsKey(lang)) {
-      final val = getter(localizedData[lang]!);
-      if (val != null) return val;
-    }
-    // 2. Try 'global'
-    if (localizedData.containsKey('global')) {
-      final val = getter(localizedData['global']!);
-      if (val != null) return val;
-    }
-    // 3. Try 'en'
-    if (localizedData.containsKey('en')) {
-      final val = getter(localizedData['en']!);
-      if (val != null) return val;
-    }
-    return null;
-  }
-
   String getPrompt(String lang) {
-    final prompt = _getInherited(lang, (d) => d.prompt) ?? '';
+    final lc = lang.toLowerCase();
+    if (prompts.containsKey(lc) && prompts[lc]!.isNotEmpty) {
+      return capitalizeFirst(prompts[lc]!);
+    }
     return capitalizeFirst(prompt);
   }
 
-  String getAnswer(String lang) => _getInherited(lang, (d) => d.answer) ?? '';
+  String getAnswer(String lang) {
+    final lc = lang.toLowerCase();
+    if (answers.containsKey(lc) && answers[lc]!.isNotEmpty) {
+      return answers[lc]!;
+    }
+    return answer;
+  }
 
   static String capitalizeFirst(String s) {
     if (s.isEmpty) return s;
@@ -184,16 +212,15 @@ class CardModel {
   }
 
   bool isCorrectAnswer(String lang, String input) {
-    final answers = getAnswerList(lang);
-    if (answers.isEmpty) return false;
+    final answersList = getAnswerList(lang);
+    if (answersList.isEmpty) return false;
     final normalizedInput = input.trim().toLowerCase();
-    return answers.any((a) => a.toLowerCase() == normalizedInput);
+    return answersList.any((a) => a.toLowerCase() == normalizedInput);
   }
 
   String getNumericalChar(String lang) {
     final int val = numericalAnswer;
     
-    // Map for special numeral systems
     const Map<int, Map<String, String>> specialNums = {
       0: {'ar': '٠', 'hi': '०', 'zh': '零', 'ja': '零', 'ko': '영'},
       1: {'ar': '١', 'hi': '१', 'zh': '一', 'ja': '一', 'ko': '일'},
@@ -208,8 +235,8 @@ class CardModel {
       10: {'ar': '١٠', 'hi': '१०', 'zh': '十', 'ja': '十', 'ko': '십'},
       11: {'ar': '١١', 'hi': '११', 'zh': '十一', 'ja': '十一', 'ko': '십일'},
       12: {'ar': '١٢', 'hi': '१२', 'zh': '十二', 'ja': '十二', 'ko': '십이'},
-      13: {'ar': '١٣', 'hi': '१३', 'zh': '十三', 'ja': '十三', 'ko': '십삼'},
-      14: {'ar': '١٤', 'hi': '१٤', 'zh': '十四', 'ja': '十四', 'ko': '십사'},
+      13: {'ar': '١٣', 'hi': '१十三', 'zh': '十三', 'ja': '十三', 'ko': '십삼'},
+      14: {'ar': '١٤', 'hi': '१४', 'zh': '十四', 'ja': '十四', 'ko': '십사'},
       15: {'ar': '١٥', 'hi': '१५', 'zh': '十五', 'ja': '十五', 'ko': '십오'},
       16: {'ar': '١٦', 'hi': '१६', 'zh': '十六', 'ja': '十六', 'ko': '십육'},
       17: {'ar': '١٧', 'hi': '१७', 'zh': '十七', 'ja': '十七', 'ko': '십칠'},
@@ -231,7 +258,6 @@ class CardModel {
   }
 
   bool get isColors => testMode == 'colors' || hexColor != null;
-
   bool get isNumbers => testMode == 'numbers';
   bool get isAddition => testMode == 'addition';
   bool get isSubtraction => testMode == 'subtraction';
@@ -240,65 +266,70 @@ class CardModel {
   bool get isCounting => testMode == 'counting';
 
   int get numericalAnswer {
-    // Try global first as it's most likely to be a standard digit
-    String? ans = localizedData['global']?.answer;
-    ans ??= localizedData['en']?.answer;
-    ans ??= getAnswer('en');
+    String ans = getAnswer('en');
+    if (ans.isEmpty) ans = answer;
     return int.tryParse(ans) ?? 0;
   }
 
+  String? getAudioUrl(String lang) {
+    final lc = lang.toLowerCase();
+    String? url;
+    if (audios.containsKey(lc) && audios[lc]!.isNotEmpty) {
+      url = audios[lc];
+    } else {
+      url = audio;
+    }
+    return MediaUrlResolver.resolve(url == null || url.isEmpty ? null : url);
+  }
+
+  String? getVideoUrl(String lang) {
+    final lc = lang.toLowerCase();
+    String? url;
+    if (videos.containsKey(lc) && videos[lc]!.isNotEmpty) {
+      url = videos[lc];
+    } else {
+      url = video;
+    }
+    return MediaUrlResolver.resolve(url == null || url.isEmpty ? null : url);
+  }
+
   List<int>? get additionParts {
-    final data = localizedData['global'] ?? localizedData['en'] ?? localizedData.values.firstOrNull;
-    if (data == null) return null;
-    
-    final parts = data.rawData['parts'];
-    if (parts is List) {
-      return parts.map((e) => int.tryParse(e.toString()) ?? 0).toList();
+    final ans = getAnswer('en');
+    final match = RegExp(r'(\d+)\s*\+\s*(\d+)').firstMatch(ans);
+    if (match != null) {
+      return [int.parse(match.group(1)!), int.parse(match.group(2)!)];
     }
     return null;
   }
 
   List<int>? get multiplicationParts {
-    final data = localizedData['global'] ?? localizedData['en'] ?? localizedData.values.firstOrNull;
-    if (data == null) return null;
-    
-    final parts = data.rawData['parts'];
-    if (parts is List) {
-      return parts.map((e) => int.tryParse(e.toString()) ?? 0).toList();
+    final ans = getAnswer('en');
+    final match = RegExp(r'(\d+)\s*[×*]\s*(\d+)').firstMatch(ans);
+    if (match != null) {
+      return [int.parse(match.group(1)!), int.parse(match.group(2)!)];
     }
     return null;
   }
 
   List<int>? get divisionParts {
-    final data = localizedData['global'] ?? localizedData['en'] ?? localizedData.values.firstOrNull;
-    if (data == null) return null;
-    
-    final parts = data.rawData['parts'];
-    if (parts is List) {
-      return parts.map((e) => int.tryParse(e.toString()) ?? 0).toList();
+    final ans = getAnswer('en');
+    final match = RegExp(r'(\d+)\s*[÷/]\s*(\d+)').firstMatch(ans);
+    if (match != null) {
+      return [int.parse(match.group(1)!), int.parse(match.group(2)!)];
     }
     return null;
   }
 
-  String? getAudioUrl(String lang) =>
-      MediaUrlResolver.resolve(_getInherited(
-        lang,
-        (d) => (d.audioUrl?.isEmpty ?? true) ? null : d.audioUrl,
-      ));
-  String? getVideoUrl(String lang) =>
-      MediaUrlResolver.resolve(_getInherited(
-        lang,
-        (d) => (d.videoUrl?.isEmpty ?? true) ? null : d.videoUrl,
-      ));
   List<String> getImageUrls(String lang) {
-    final rawUrls =
-        _getInherited(
-          lang,
-          (d) => (d.imageUrls?.isEmpty ?? true) ? null : d.imageUrls,
-        ) ??
-        [];
+    final lc = lang.toLowerCase();
+    List<String> rawUrls = [];
+    if (imagesLocal.containsKey(lc) && imagesLocal[lc]!.isNotEmpty) {
+      rawUrls = imagesLocal[lc]!;
+    } else {
+      rawUrls = imagesBase;
+    }
+    
     final urls = MediaUrlResolver.resolveList(rawUrls);
-    // Add cache buster timestamp to ensure we show the latest version if updated
     final v = updatedAt.millisecondsSinceEpoch;
     return urls.map((url) {
       if (url.startsWith('http')) {
@@ -331,10 +362,18 @@ class CardModel {
       testMode = 'image_to_text',
       ownerId = '',
       isPublic = false,
-      isDeleted = false,
       createdAt = DateTime.now(),
       updatedAt = DateTime.now(),
-      localizedData = const {};
+      answer = '',
+      answers = const {},
+      prompt = '',
+      prompts = const {},
+      imagesBase = const [],
+      imagesLocal = const {},
+      audio = '',
+      audios = const {},
+      video = '',
+      videos = const {};
 }
 
 class SubjectCard {

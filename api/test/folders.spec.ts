@@ -1,18 +1,14 @@
 import { describe, it, expect, beforeAll } from 'vitest';
 import { env } from 'cloudflare:test';
 import app from '../src/index';
+import { signupUser } from './test-utils';
 
 describe('Folders API', () => {
   let sessionId: string;
 
   beforeAll(async () => {
     const timestamp = Date.now();
-    const res = await app.request('/api/auth/signup', {
-      method: 'POST',
-      body: JSON.stringify({ email: `folders_${timestamp}@test.com`, password: 'password123' }),
-      headers: { 'Content-Type': 'application/json' }
-    }, env);
-    const data = await res.json() as any;
+    const data = await signupUser({ email: `folder_${timestamp}@test.com`, password: 'password123' });
     sessionId = data.session_id;
 
     await env.DB.prepare("INSERT INTO pillars (id, sort_order) VALUES (1, 1)").run();
@@ -22,7 +18,8 @@ describe('Folders API', () => {
     const folder = {
       id: 'test-folder',
       pillar_id: 1,
-      localized_data: { en: { name: 'My Folder' } }
+      name: 'My Folder',
+      names: { en: 'My Folder' }
     };
 
     const res = await app.request('/api/folders', {

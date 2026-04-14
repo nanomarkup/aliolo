@@ -9,7 +9,8 @@ This is a Primary Key.<pk/>
 This is a Foreign Key to `pillars.id`.<fk table='pillars' column='id'/>
 - `owner_id` (string) (Required): Note:
 This is a Foreign Key to `profiles.id`.<fk table='profiles' column='id'/>
-- `localized_data` (jsonb)
+- `name` (string) (Required)
+- `names` (jsonb)
 - `created_at` (string)
 - `updated_at` (string)
 
@@ -22,7 +23,10 @@ This is a Foreign Key to `pillars.id`.<fk table='pillars' column='id'/>
 This is a Foreign Key to `folders.id`.<fk table='folders' column='id'/>
 - `owner_id` (string) (Required): Note:
 This is a Foreign Key to `profiles.id`.<fk table='profiles' column='id'/>
-- `localized_data` (jsonb)
+- `name` (string) (Required)
+- `names` (jsonb)
+- `description` (string)
+- `descriptions` (jsonb)
 - `age_group` (string)
 - `is_public` (boolean)
 - `created_at` (string)
@@ -50,7 +54,10 @@ This is a Foreign Key to `profiles.id`.<fk table='profiles' column='id'/>
 - `updated_at` (string)
 - `created_at` (string)
 - `age_group` (string)
-- `localized_data` (jsonb)
+- `name` (string) (Required)
+- `names` (jsonb)
+- `description` (string)
+- `descriptions` (jsonb)
 - `folder_id` (string): Note:
 This is a Foreign Key to `folders.id`.<fk table='folders' column='id'/>
 
@@ -114,11 +121,19 @@ This is a Foreign Key to `subjects.id`.<fk table='subjects' column='id'/>
 - `level` (integer)
 - `owner_id` (string)
 - `is_public` (boolean)
-- `is_deleted` (boolean)
+- `answer` (string)
+- `answers` (jsonb)
+- `prompt` (string)
+- `prompts` (jsonb)
+- `images_base` (jsonb)
+- `images_local` (jsonb)
+- `audio` (string)
+- `audios` (jsonb)
+- `video` (string)
+- `videos` (jsonb)
 - `created_at` (string)
 - `updated_at` (string)
 - `test_mode` (string)
-- `localized_data` (jsonb)
 
 ### `languages`
 - `id` (string) (Required): Note:
@@ -197,10 +212,13 @@ This is a Foreign Key to `subjects.id`.<fk table='subjects' column='id'/>
 - `id` (integer) (Required): Note:
 This is a Primary Key.<pk/>
 - `light_color` (string)
+- `dark_color` (string)
 - `icon` (string)
 - `sort_order` (integer)
-- `localized_data` (jsonb)
-- `dark_color` (string)
+- `name` (string) (Required)
+- `names` (jsonb)
+- `description` (string)
+- `descriptions` (jsonb)
 
 ### `onboarding_analytics`
 - `id` (string) (Required): Note:

@@ -12,7 +12,16 @@ export const CollectionSchema = z.object({
   owner_name: z.string().nullable().optional().openapi({ example: 'Aliolo' }),
   is_public: z.number().openapi({ example: 1 }),
   age_group: z.string().openapi({ example: 'primary' }),
-  localized_data: z.string().openapi({ description: 'JSON string' }),
+  name: z.string().openapi({ example: 'My Collection' }),
+  names: z.string().openapi({ 
+    description: 'JSON string containing localized names',
+    example: '{"es": "Mi Colección"}' 
+  }),
+  description: z.string().openapi({ example: 'Collection description' }),
+  descriptions: z.string().openapi({ 
+    description: 'JSON string containing localized descriptions',
+    example: '{"es": "Descripción de la colección"}' 
+  }),
   created_at: z.string().openapi({ example: '2026-04-12T00:00:00Z' }),
   updated_at: z.string().openapi({ example: '2026-04-12T00:00:00Z' }),
   collection_items: z.array(CollectionItemSchema).optional(),
@@ -27,8 +36,9 @@ export const CreateCollectionSchema = z.object({
   folder_id: z.string().nullable().optional().openapi({ example: 'fold_456' }),
   is_public: z.boolean().optional().openapi({ example: true }),
   age_group: z.string().openapi({ example: 'primary' }),
-  localized_data: z.record(z.any()).openapi({ 
-    example: { en: { name: 'My Collection' } } 
-  }),
+  name: z.string().openapi({ example: 'My Collection' }),
+  names: z.record(z.string()).openapi({ example: { es: 'Mi Colección' } }),
+  description: z.string().openapi({ example: 'Collection description' }),
+  descriptions: z.record(z.string()).openapi({ example: { es: 'Descripción de la colección' } }),
   subject_ids: z.array(z.string()).optional().openapi({ example: ['subj_1', 'subj_2'] }),
 }).openapi('CreateCollection');

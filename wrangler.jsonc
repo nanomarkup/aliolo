@@ -3,6 +3,17 @@
 	"name": "aliolo",
 	"main": "api/src/index.ts",
 	"compatibility_date": "2025-09-27",
+	"workers_dev": true,
+	"routes": [
+		{
+			"pattern": "aliolo.com",
+			"custom_domain": true
+		},
+		{
+			"pattern": "www.aliolo.com",
+			"custom_domain": true
+		}
+	],
 	"observability": {
 		"enabled": true
 	},

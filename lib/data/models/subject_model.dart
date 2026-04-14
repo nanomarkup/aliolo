@@ -1,41 +1,6 @@
 import 'dart:convert';
 import 'content_item.dart';
 
-class LocalizedSubjectData {
-  final String? name;
-  final String? description;
-  final Map<String, dynamic> rawData;
-
-  LocalizedSubjectData({
-    this.name,
-    this.description,
-    this.rawData = const {},
-  });
-
-  factory LocalizedSubjectData.fromJson(Map<String, dynamic> json) {
-    return LocalizedSubjectData(
-      name: json['name'],
-      description: json['description'],
-      rawData: json,
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    final map = Map<String, dynamic>.from(rawData);
-    if (name != null) {
-      map['name'] = name;
-    } else {
-      map.remove('name');
-    }
-    if (description != null) {
-      map['description'] = description;
-    } else {
-      map.remove('description');
-    }
-    return map;
-  }
-}
-
 class SubjectModel implements ContentItem {
   @override
   final String id;
@@ -61,6 +26,17 @@ class SubjectModel implements ContentItem {
   ContentType get type => ContentType.subject;
 
   bool isOnDashboard;
+
+  /// Base name
+  final String name;
+  /// Map of language code to its specific name.
+  final Map<String, String> names;
+  /// Base description
+  final String description;
+  /// Map of language code to its specific description.
+  final Map<String, String> descriptions;
+
+  bool get isAlphabet => folderId == '1c85e6e5-195e-4251-bbbd-b84637427977';
 
   bool get isCounting =>
       id == '68232807-b9cd-4cff-872c-c398444f85e2' ||
@@ -120,10 +96,6 @@ class SubjectModel implements ContentItem {
     return 0;
   }
 
-  /// Map of language code to its specific data.
-  /// Key 'global' is used for fallback assets (if any).
-  final Map<String, LocalizedSubjectData> localizedData;
-
   SubjectModel({
     required this.id,
     required this.pillarId,
@@ -136,36 +108,14 @@ class SubjectModel implements ContentItem {
     this.rawCards,
     this.isOnDashboard = false,
     this.ageGroup = '15_plus',
-    this.localizedData = const {},
+    required this.name,
+    this.names = const {},
+    required this.description,
+    this.descriptions = const {},
     this.folderId,
     this.typeStr = 'standard',
     this.linkedSubjectIds = const [],
   });
-
-  T? _getInherited<T>(String langCode, T? Function(LocalizedSubjectData) getter) {
-    final lang = langCode.toLowerCase();
-    // 1. Try requested language
-    if (localizedData.containsKey(lang)) {
-      final val = getter(localizedData[lang]!);
-      if (val != null) return val;
-    }
-    // 2. Try 'global'
-    if (localizedData.containsKey('global')) {
-      final val = getter(localizedData['global']!);
-      if (val != null) return val;
-    }
-    // 3. Try 'en'
-    if (localizedData.containsKey('en')) {
-      final val = getter(localizedData['en']!);
-      if (val != null) return val;
-    }
-    // 4. Fallback to any available name
-    if (localizedData.isNotEmpty) {
-      final val = getter(localizedData.values.first);
-      if (val != null) return val;
-    }
-    return null;
-  }
 
   static String capitalizeFirst(String s) {
     if (s.isEmpty) return s;
@@ -173,17 +123,20 @@ class SubjectModel implements ContentItem {
   }
 
   String getName(String langCode) {
-    final name = _getInherited(langCode, (d) => d.name) ?? 'Unnamed Subject';
-    return capitalizeFirst(name);
+    final lc = langCode.toLowerCase();
+    if (names.containsKey(lc) && names[lc]!.isNotEmpty) {
+      return capitalizeFirst(names[lc]!);
+    }
+    return capitalizeFirst(name.isNotEmpty ? name : 'Unnamed Subject');
   }
 
   String getDescription(String langCode) {
-    final desc = _getInherited(langCode, (d) => d.description) ?? '';
-    return capitalizeFirst(desc);
+    final lc = langCode.toLowerCase();
+    if (descriptions.containsKey(lc) && descriptions[lc]!.isNotEmpty) {
+      return capitalizeFirst(descriptions[lc]!);
+    }
+    return capitalizeFirst(description);
   }
-
-  // Legacy support for code that expects a single string name
-  String get name => getName('en');
 
   int getCardCountForLanguage(String langCode) {
     if (rawCards == null) return cardCount;
@@ -227,7 +180,10 @@ class SubjectModel implements ContentItem {
       'age_group': ageGroup,
       'updated_at': updatedAt.toIso8601String(),
       'created_at': createdAt.toIso8601String(),
-      'localized_data': localizedData.map((k, v) => MapEntry(k, v.toJson())),
+      'name': name,
+      'names': names,
+      'description': description,
+      'descriptions': descriptions,
       'folder_id': folderId,
       if (typeStr != 'standard') 'type': typeStr,
       if (linkedSubjectIds.isNotEmpty) 'linked_subject_ids': linkedSubjectIds,
@@ -237,58 +193,60 @@ class SubjectModel implements ContentItem {
   factory SubjectModel.fromJson(Map<String, dynamic> json) {
     final List<dynamic>? allCards =
         json['cards'] is List ? json['cards'] : null;
-    final List<dynamic>? activeCards =
-        allCards?.where((c) => c['is_deleted'] != true).toList();
 
     final Map<String, dynamic>? profile = json['profiles'] ?? json['profiles!fk_subjects_owner'];
 
-    var locData = json['localized_data'];
-    Map<String, dynamic> locMap = {};
-    if (locData is Map) {
-      locMap = Map<String, dynamic>.from(locData);
-    } else if (locData is String && locData.isNotEmpty) {
+    Map<String, String> namesMap = {};
+    final dynamic rawNames = json['names'];
+    if (rawNames is Map) {
+      namesMap = Map<String, String>.from(rawNames);
+    } else if (rawNames is String && rawNames.isNotEmpty) {
       try {
-        locMap = Map<String, dynamic>.from(jsonDecode(locData));
+        final decoded = jsonDecode(rawNames);
+        if (decoded is Map) {
+          namesMap = Map<String, String>.from(decoded);
+        }
       } catch (_) {}
     }
 
-    Map<String, LocalizedSubjectData> localized = {};
-    try {
-      locMap.forEach((key, value) {
-        if (value is Map) {
-          localized[key.toLowerCase()] = LocalizedSubjectData.fromJson(Map<String, dynamic>.from(value));
+    Map<String, String> descriptionsMap = {};
+    final dynamic rawDescriptions = json['descriptions'];
+    if (rawDescriptions is Map) {
+      descriptionsMap = Map<String, String>.from(rawDescriptions);
+    } else if (rawDescriptions is String && rawDescriptions.isNotEmpty) {
+      try {
+        final decoded = jsonDecode(rawDescriptions);
+        if (decoded is Map) {
+          descriptionsMap = Map<String, String>.from(decoded);
         }
-      });
-    } catch (e) {
-      print('Error parsing localized_data for subject ${json['id']}: $e');
+      } catch (_) {}
     }
 
-    // Fallback migration logic in app just in case
-    if (localized.isEmpty) {
-      final Map<String, String> parsedNames = {};
-      final Map<String, String> parsedDescriptions = {};
+    // Fallback migration logic in app just in case (legacy data in localized_data)
+    String baseName = json['name'] ?? '';
+    String baseDesc = json['description'] ?? '';
 
-      if (json['names'] is Map) {
-        Map<String, String>.from(
-          json['names'],
-        ).forEach((k, v) => parsedNames[k] = v);
+    if (baseName.isEmpty && json['localized_data'] != null) {
+      var locData = json['localized_data'];
+      Map<String, dynamic> locMap = {};
+      if (locData is Map) {
+        locMap = Map<String, dynamic>.from(locData);
+      } else if (locData is String && locData.isNotEmpty) {
+        try { locMap = Map<String, dynamic>.from(jsonDecode(locData)); } catch (_) {}
       }
-      if (json['descriptions'] is Map) {
-        Map<String, String>.from(
-          json['descriptions'],
-        ).forEach((k, v) => parsedDescriptions[k] = v);
+      
+      final global = locMap['global'];
+      if (global is Map) {
+        baseName = global['name'] ?? '';
+        baseDesc = global['description'] ?? '';
       }
-
-      final Set<String> allLangs = {
-        ...parsedNames.keys,
-        ...parsedDescriptions.keys,
-      };
-      for (var lang in allLangs) {
-        localized[lang] = LocalizedSubjectData(
-          name: parsedNames[lang],
-          description: parsedDescriptions[lang],
-        );
-      }
+      
+      locMap.forEach((k, v) {
+        if (k != 'global' && v is Map) {
+          if (namesMap[k] == null) namesMap[k] = v['name'] ?? '';
+          if (descriptionsMap[k] == null) descriptionsMap[k] = v['description'] ?? '';
+        }
+      });
     }
 
     return SubjectModel(
@@ -300,13 +258,16 @@ class SubjectModel implements ContentItem {
       createdAt: DateTime.tryParse(json['created_at'] ?? '') ?? DateTime.now(),
       updatedAt: DateTime.tryParse(json['updated_at'] ?? '') ?? DateTime.now(),
       cardCount:
-          activeCards != null ? activeCards.length : (json['card_count'] ?? 0),
+          allCards != null ? allCards.length : (json['card_count'] ?? 0),
       rawCards:
-          activeCards != null
-              ? List<Map<String, dynamic>>.from(activeCards)
+          allCards != null
+              ? List<Map<String, dynamic>>.from(allCards)
               : null,
       ageGroup: json['age_group'] ?? '15_plus',
-      localizedData: localized,
+      name: baseName,
+      names: namesMap,
+      description: baseDesc,
+      descriptions: descriptionsMap,
       folderId: json['folder_id'],
       typeStr: json['type'] ?? 'standard',
       linkedSubjectIds: List<String>.from(json['linked_subject_ids'] ?? []),
@@ -324,6 +285,8 @@ class SubjectModel implements ContentItem {
       updatedAt: DateTime.now(),
       typeStr: 'standard',
       linkedSubjectIds: [],
+      name: '',
+      description: '',
     );
   }
 }

@@ -249,59 +249,67 @@ class _LearnPageState extends State<LearnPage> {
                 ),
               ),
               const SizedBox(height: 16),
-              ..._currentCard.localizedData.entries
-                  .where((e) => e.key != lang)
-                  .map((e) {
-                    return Padding(
-                      padding: const EdgeInsets.only(bottom: 16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            e.key.toUpperCase(),
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 12,
-                              color: Colors.orange,
-                            ),
+              ...(() {
+                final otherLangs = {
+                  ..._currentCard.prompts.keys,
+                  ..._currentCard.answers.keys,
+                  ..._currentCard.audios.keys,
+                  ..._currentCard.videos.keys,
+                  ..._currentCard.imagesLocal.keys
+                }.where((l) => l != lang).toList();
+                
+                return otherLangs.map((l) {
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          l.toUpperCase(),
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12,
+                            color: Colors.orange,
                           ),
-                          Text(
-                            e.value.prompt ?? '-',
-                            style: const TextStyle(fontSize: 16),
-                          ),
-                          ...(() {
-                            final ansRaw = e.value.answer ?? '-';
-                            final answers =
-                                ansRaw
-                                    .split(';')
-                                    .map((s) => s.trim())
-                                    .where((s) => s.isNotEmpty)
-                                    .toList();
-                            if (answers.isEmpty)
-                              return [
-                                const Text(
-                                  '-',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ];
-
-                            return answers.map(
-                              (a) => Text(
-                                CardModel.capitalizeFirst(a),
-                                style: const TextStyle(
+                        ),
+                        Text(
+                          _currentCard.getPrompt(l).isEmpty ? '-' : _currentCard.getPrompt(l),
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                        ...(() {
+                          final ansRaw = _currentCard.getAnswer(l).isEmpty ? '-' : _currentCard.getAnswer(l);
+                          final answers =
+                              ansRaw
+                                  .split(';')
+                                  .map((s) => s.trim())
+                                  .where((s) => s.isNotEmpty)
+                                  .toList();
+                          if (answers.isEmpty)
+                            return [
+                              const Text(
+                                '-',
+                                style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                            );
-                          })(),
-                        ],
-                      ),
-                    );
-                  }),
+                            ];
+
+                          return answers.map(
+                            (a) => Text(
+                              CardModel.capitalizeFirst(a),
+                              style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          );
+                        })(),
+                      ],
+                    ),
+                  );
+                });
+              })(),
             ],
           ),
         );
@@ -558,6 +566,18 @@ class _LearnPageState extends State<LearnPage> {
                                 totalSum: _currentCard.numericalAnswer,
                                 maxOperand: _subject.maxOperand,
                                 iconSize: 60,
+                              )
+                            else if (_subject.isAlphabet)
+                              Center(
+                                child: Text(
+                                  _currentCard.getAnswer(lang).isNotEmpty ? _currentCard.getAnswer(lang) : _currentCard.getAnswer('global'),
+                                  style: const TextStyle(
+                                    fontSize: 180,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.black87,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
                               )
                             else if (_subject.isColors && _currentCard.hexColor != null)
                               Container(

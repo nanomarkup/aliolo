@@ -6,6 +6,13 @@ export const SignupRequestSchema = z.object({
   username: z.string().optional().openapi({ example: 'johndoe' }),
 }).openapi('SignupRequest');
 
+export const SignupInviteRequestSchema = z.object({
+  email: z.string().email().openapi({ example: 'user@example.com' }),
+  password: z.string().min(6).openapi({ example: 'securepassword123' }),
+  username: z.string().optional().openapi({ example: 'johndoe' }),
+  invite_token: z.string().openapi({ example: 'abc123token' }),
+}).openapi('SignupInviteRequest');
+
 export const LoginRequestSchema = z.object({
   email: z.string().email().openapi({ example: 'user@example.com' }),
   password: z.string().openapi({ example: 'securepassword123' }),
@@ -89,3 +96,40 @@ export const SuccessResponseSchema = z.object({
 export const ErrorResponseSchema = z.object({
   error: z.string().openapi({ example: 'Error message' }),
 }).openapi('ErrorResponse');
+
+export const RequestOtpSchema = z.object({
+  email: z.string().email().openapi({ example: 'user@example.com' }),
+}).openapi('RequestOtp');
+
+export const VerifyOtpSchema = z.object({
+  email: z.string().email().openapi({ example: 'user@example.com' }),
+  code: z.string().length(6).openapi({ example: '123456' }),
+}).openapi('VerifyOtp');
+
+export const ResetPasswordSchema = z.object({
+  email: z.string().email().openapi({ example: 'user@example.com' }),
+  code: z.string().length(6).openapi({ example: '123456' }),
+  password: z.string().min(6).openapi({ example: 'newpassword123' }),
+}).openapi('ResetPassword');
+
+export const DeleteAccountSchema = z.object({
+  password: z.string().openapi({ example: 'securepassword123' }),
+}).openapi('DeleteAccount');
+
+export const UpdatePasswordSchema = z.object({
+  new_password: z.string().min(6).openapi({ example: 'newsecurepassword123' }),
+}).openapi('UpdatePassword');
+
+export const RequestEmailChangeSchema = z.object({
+  new_email: z.string().email().openapi({ example: 'newuser@example.com' }),
+  password: z.string().openapi({ example: 'securepassword123' }),
+}).openapi('RequestEmailChange');
+
+export const VerifyEmailChangeSchema = z.object({
+  new_email: z.string().email().openapi({ example: 'newuser@example.com' }),
+  code: z.string().length(6).openapi({ example: '123456' }),
+}).openapi('VerifyEmailChange');
+
+export const InviteUserSchema = z.object({
+  email: z.string().email().openapi({ example: 'friend@example.com' }),
+}).openapi('InviteUser');

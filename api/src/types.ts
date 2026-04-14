@@ -5,6 +5,9 @@ export type Bindings = {
   MEDIA: R2Bucket;
   ASSETS: Fetcher;
   ENVIRONMENT?: string;
+  GMAIL_APP_PASSWORD?: string;
+  SMTP_USER?: string;
+  EMAIL_SENDER?: string;
 };
 
 export type AppEnv = { Bindings: Bindings; Variables: { user: User | null; session: Session | null } };

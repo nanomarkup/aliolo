@@ -144,64 +144,107 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   void _showEditEmailDialog(String currentEmail) {
-    final emailController = TextEditingController(text: currentEmail);
+    final emailController = TextEditingController();
+    final passwordController = TextEditingController();
+    final codeController = TextEditingController();
+    int step = 0; // 0: Input New Email & Password, 1: Input OTP
+    bool isLoading = false;
+
     showDialog(
       context: context,
-      builder:
-          (context) => StatefulBuilder(
-            builder:
-                (context, setDialogState) => AlertDialog(
-                  title: Text(context.t('edit_email')),
-                  content: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      TextField(
-                        controller: emailController,
-                        autofocus: true,
-                        keyboardType: TextInputType.emailAddress,
-                        decoration: InputDecoration(
-                          hintText: context.t('enter_new_email'),
-                        ),
-                        onChanged: (val) => setDialogState(() {}),
-                      ),
-                      const SizedBox(height: 16),
-                      Text(
-                        context.t('email_change_notice'),
-                        style: const TextStyle(fontSize: 12, color: Colors.grey),
-                      ),
-                    ],
+      barrierDismissible: false,
+      builder: (context) => StatefulBuilder(
+        builder: (context, setDialogState) {
+          return AlertDialog(
+            title: Text(step == 0 ? context.t('edit_email') : 'Verify Email Change'),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (step == 0) ...[
+                  TextField(
+                    controller: emailController,
+                    autofocus: true,
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: InputDecoration(
+                      labelText: 'New Email',
+                      hintText: context.t('enter_new_email'),
+                    ),
                   ),
-                  actions: [
-                    TextButton(
-                      onPressed: () => Navigator.pop(context),
-                      child: Text(context.t('cancel')),
+                  const SizedBox(height: 16),
+                  TextField(
+                    controller: passwordController,
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      labelText: context.t('password'),
+                      hintText: 'Enter current password',
                     ),
-                    TextButton(
-                      onPressed: () async {
-                        final newEmail = emailController.text.trim().toLowerCase();
-                        if (newEmail.isNotEmpty && _authService.isValidEmail(newEmail)) {
-                          try {
-                            await _authService.updateEmail(newEmail);
-                            if (mounted) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text(context.t('email_update_sent'))),
-                              );
-                              Navigator.pop(context);
-                            }
-                          } catch (e) {
-                            if (mounted) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('Error: $e')),
-                              );
-                            }
-                          }
-                        }
-                      },
-                      child: Text(context.t('save')),
+                  ),
+                ] else ...[
+                  Text('Enter the 6-digit code sent to ${emailController.text.trim()}'),
+                  const SizedBox(height: 16),
+                  TextField(
+                    controller: codeController,
+                    keyboardType: TextInputType.number,
+                    maxLength: 6,
+                    decoration: const InputDecoration(
+                      labelText: 'Verification Code',
+                      counterText: '',
                     ),
-                  ],
-                ),
-          ),
+                  ),
+                ],
+                if (isLoading) ...[
+                  const SizedBox(height: 16),
+                  const CircularProgressIndicator(),
+                ],
+              ],
+            ),
+            actions: [
+              TextButton(
+                onPressed: isLoading ? null : () => Navigator.pop(context),
+                child: Text(context.t('cancel')),
+              ),
+              ElevatedButton(
+                onPressed: isLoading ? null : () async {
+                  final newEmail = emailController.text.trim().toLowerCase();
+                  if (step == 0) {
+                    final pass = passwordController.text.trim();
+                    if (newEmail.isEmpty || pass.isEmpty) return;
+                    if (!_authService.isValidEmail(newEmail)) {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Invalid email address')));
+                      return;
+                    }
+                    
+                    setDialogState(() => isLoading = true);
+                    final success = await _authService.requestEmailChange(newEmail, pass);
+                    setDialogState(() => isLoading = false);
+                    
+                    if (success) {
+                      setDialogState(() => step = 1);
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(_authService.lastErrorMessage ?? 'Failed to request change')));
+                    }
+                  } else {
+                    final code = codeController.text.trim();
+                    if (code.length != 6) return;
+                    
+                    setDialogState(() => isLoading = true);
+                    final success = await _authService.verifyEmailChange(newEmail, code);
+                    setDialogState(() => isLoading = false);
+                    
+                    if (success && mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Email updated successfully!')));
+                      Navigator.pop(context);
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(_authService.lastErrorMessage ?? 'Invalid code')));
+                    }
+                  }
+                },
+                child: Text(step == 0 ? 'Next' : 'Verify'),
+              ),
+            ],
+          );
+        },
+      ),
     );
   }
 

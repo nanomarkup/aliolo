@@ -169,20 +169,34 @@ router.openapi(createCollectionRoute, async (c) => {
     const user = c.get("user");
     if (!user) return c.json({ error: 'Unauthorized' } as any, 401);
 
-    const { id, pillar_id, folder_id, is_public, age_group, localized_data, subject_ids } = c.req.valid('json');
+    const { id, pillar_id, folder_id, is_public, age_group, name, names, description, descriptions, subject_ids } = c.req.valid('json');
 
     try {
         await c.env.DB.prepare(`
-            INSERT INTO collections (id, pillar_id, folder_id, owner_id, is_public, age_group, localized_data, updated_at)
-            VALUES (?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+            INSERT INTO collections (id, pillar_id, folder_id, owner_id, is_public, age_group, name, names, description, descriptions, updated_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
             ON CONFLICT(id) DO UPDATE SET
                 pillar_id = excluded.pillar_id,
                 folder_id = excluded.folder_id,
                 is_public = excluded.is_public,
                 age_group = excluded.age_group,
-                localized_data = excluded.localized_data,
+                name = excluded.name,
+                names = excluded.names,
+                description = excluded.description,
+                descriptions = excluded.descriptions,
                 updated_at = CURRENT_TIMESTAMP
-        `).bind(id, pillar_id, folder_id, user.id, is_public ? 1 : 0, age_group, JSON.stringify(localized_data)).run();
+        `).bind(
+            id, 
+            pillar_id, 
+            folder_id, 
+            user.id, 
+            is_public ? 1 : 0, 
+            age_group, 
+            name, 
+            JSON.stringify(names), 
+            description, 
+            JSON.stringify(descriptions)
+        ).run();
         
         await c.env.DB.prepare("DELETE FROM collection_items WHERE collection_id = ?").bind(id).run();
         if (subject_ids && Array.isArray(subject_ids) && subject_ids.length > 0) {

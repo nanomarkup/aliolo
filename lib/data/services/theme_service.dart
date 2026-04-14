@@ -77,6 +77,12 @@ class ThemeService extends ChangeNotifier {
   }
 
   void _refreshPrimaryColor([Brightness? brightness]) {
+    if (pillars.isEmpty) {
+      _primaryColor = orange;
+      sessionColorNotifier.value = orange;
+      notifyListeners();
+      return;
+    }
     // Find the pillar in the global list
     final pillar = pillars.firstWhere(
       (p) => p.id == _currentPillarId,
@@ -87,13 +93,24 @@ class ThemeService extends ChangeNotifier {
                 () =>
                     pillars.isNotEmpty
                         ? pillars.first
-                        : Pillar(id: 8, icon: '', lightColor: '#FF9800'),
+                        : const Pillar(
+                          id: 8,
+                          icon: '',
+                          lightColor: '#FF9800',
+                          name: 'Other',
+                          description: 'General knowledge',
+                        ),
           ),
     );
 
     // Set primary based on the pillar's theme-aware color
     _primaryColor = pillar.getColor(resolveIsDarkMode(brightness));
+    sessionColorNotifier.value = _primaryColor;
     notifyListeners();
+  }
+
+  void forceRefresh() {
+    _refreshPrimaryColor();
   }
 
   void setTheme(ThemeMode mode) {

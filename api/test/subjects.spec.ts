@@ -1,20 +1,14 @@
 import { describe, it, expect, beforeAll } from 'vitest';
 import { env } from 'cloudflare:test';
 import app from '../src/index';
+import { signupUser } from './test-utils';
 
 describe('Subjects API', () => {
-  let userId: string;
   let sessionId: string;
 
   beforeAll(async () => {
     const timestamp = Date.now();
-    const res = await app.request('/api/auth/signup', {
-      method: 'POST',
-      body: JSON.stringify({ email: `subj_${timestamp}@test.com`, password: 'password123' }),
-      headers: { 'Content-Type': 'application/json' }
-    }, env);
-    const data = await res.json() as any;
-    userId = data.user.id;
+    const data = await signupUser({ email: `subjects_${timestamp}@test.com`, password: 'password123' });
     sessionId = data.session_id;
 
     await env.DB.prepare("INSERT INTO pillars (id, sort_order) VALUES (1, 1)").run();
@@ -27,7 +21,10 @@ describe('Subjects API', () => {
       folder_id: null,
       is_public: true,
       age_group: 'primary',
-      localized_data: { en: { name: 'Test Subject' } }
+      name: 'Test Subject',
+      names: { en: 'Test Subject' },
+      description: 'Test Desc',
+      descriptions: { en: 'Test Desc' }
     };
 
     const res = await app.request('/api/subjects', {

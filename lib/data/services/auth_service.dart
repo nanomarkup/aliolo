@@ -20,19 +20,68 @@ class AuthService extends ChangeNotifier {
   UserModel? _currentUser;
   String? _lastErrorMessage;
   bool _isPasswordRecoveryFlow = false;
+  bool _isInviteFlow = false;
+  String? _inviteToken;
   String? _initialUrl;
   String? _recoveryFlowType;
+  String? _currentSessionEmail;
 
   UserModel? get currentUser => _currentUser;
   String? get lastErrorMessage => _lastErrorMessage;
   bool get isPasswordRecoveryFlow => _isPasswordRecoveryFlow;
+  bool get isInviteFlow => _isInviteFlow;
+  String? get inviteToken => _inviteToken;
   String? get recoveryFlowType => _recoveryFlowType;
-  String? get currentSessionEmail => _currentUser?.email;
+  String? get currentSessionEmail => _currentSessionEmail ?? _currentUser?.email;
 
-  Future<void> init({String? manualUrl}) async {
+  Future<void> init({String? manualUrl, String? inviteToken}) async {
     try {
       _initialUrl = manualUrl ?? (kIsWeb ? html.window.location.href : null);
-      
+
+      if (inviteToken != null) {
+        _isInviteFlow = true;
+        _inviteToken = inviteToken;
+        // Verify token and get email before showing UI
+        final data = await verifyInvite(inviteToken);
+        _currentSessionEmail = data?['email'];
+
+        // Clear the URL parameter so it doesn't re-trigger on logout/refresh
+        if (kIsWeb) {
+          html.window.history.replaceState({}, '', '/');
+        }
+
+        await _cfClient.clearSession();
+        _currentUser = null;
+        notifyListeners();
+        return;
+      }
+
+      if (kIsWeb && _initialUrl != null) {
+        final uri = Uri.parse(_initialUrl!);
+        
+        if (uri.queryParameters.containsKey('type')) {
+          _isPasswordRecoveryFlow = true;
+          _recoveryFlowType = uri.queryParameters['type'];
+          _currentSessionEmail = uri.queryParameters['email'];
+          // Clear URL
+          html.window.history.replaceState({}, '', '/');
+        }
+        
+        // Backup check if invite was missed in main()
+        if (uri.queryParameters.containsKey('invite')) {
+          _isInviteFlow = true;
+          _inviteToken = uri.queryParameters['invite'];
+          print('Invite token detected via URL query: $_inviteToken');
+          // Clear URL
+          html.window.history.replaceState({}, '', '/');
+          
+          await _cfClient.clearSession();
+          _currentUser = null;
+          notifyListeners();
+          return;
+        }
+      }
+
       // Initial session check from Cloudflare
       final profileRes = await _cfClient.client.get('/api/auth/me');
       if (profileRes.statusCode == 200 && profileRes.data['user'] != null) {
@@ -71,6 +120,69 @@ class AuthService extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<bool> requestOtp(String email) async {
+    _lastErrorMessage = null;
+    try {
+      final response = await _cfClient.client.post('/api/auth/request-otp', data: {'email': email});
+      return response.statusCode == 200;
+    } catch (e) {
+      _lastErrorMessage = e.toString();
+      return false;
+    }
+  }
+
+  Future<bool> verifyOtp(String email, String code) async {
+    _lastErrorMessage = null;
+    try {
+      final response = await _cfClient.client.post('/api/auth/verify-otp', data: {'email': email, 'code': code});
+      return response.statusCode == 200;
+    } catch (e) {
+      _lastErrorMessage = e.toString();
+      return false;
+    }
+  }
+
+  Future<Map<String, String>?> verifyInvite(String token) async {
+    _lastErrorMessage = null;
+    try {
+      final response = await _cfClient.client.get('/api/auth/verify-invite', queryParameters: {'token': token});
+      if (response.statusCode == 200) {
+        return {
+          'email': response.data['email'],
+          'token': response.data['token'],
+        };
+      }
+      return null;
+    } catch (e) {
+      _lastErrorMessage = e.toString();
+      return null;
+    }
+  }
+
+  Future<void> createUserWithInvite(String username, String email, String password, String inviteToken) async {
+    _lastErrorMessage = null;
+    try {
+      final response = await _cfClient.client.post('/api/auth/signup-invite', data: {
+        'username': username,
+        'email': email,
+        'password': password,
+        'invite_token': inviteToken,
+      });
+
+      if (response.statusCode == 200) {
+        if (response.data['session_id'] != null) {
+          await _cfClient.setSession(response.data['session_id']);
+        }
+        _isInviteFlow = false;
+        _inviteToken = null;
+        await refreshUser();
+      }
+    } catch (e) {
+      _lastErrorMessage = e.toString();
+      rethrow;
+    }
+  }
+
   Future<void> createUser(
     String username,
     String email,
@@ -99,6 +211,7 @@ class AuthService extends ChangeNotifier {
       rethrow;
     }
   }
+
 
   Future<bool> login(String identifier, String password) async {
     _lastErrorMessage = null;
@@ -138,6 +251,8 @@ class AuthService extends ChangeNotifier {
     _currentUser = null;
     _lastErrorMessage = null;
     _isPasswordRecoveryFlow = false;
+    _isInviteFlow = false;
+    _inviteToken = null;
     _recoveryFlowType = null;
     notifyListeners();
   }
@@ -147,6 +262,8 @@ class AuthService extends ChangeNotifier {
       final profileRes = await _cfClient.client.get('/api/auth/me');
       if (profileRes.statusCode == 200 && profileRes.data['user'] != null) {
           _currentUser = UserModel.fromJson(profileRes.data['user']);
+          ThemeService().setThemeFromString(_currentUser!.themeMode);
+          ThemeService().setPrimaryColorFromPillar(_currentUser!.mainPillarId);
           notifyListeners();
       }
     } catch (e) {
@@ -272,11 +389,6 @@ class AuthService extends ChangeNotifier {
     await updateMainPillar(pillarId);
   }
 
-  Future<void> finalizePasswordReset(String email, String newPassword) async {
-     // Placeholder
-     AppLogger.log('AuthService: finalizePasswordReset not implemented yet.');
-  }
-
   Future<void> updateAvatarPath(XFile image) async {
     if (_currentUser == null) return;
     try {
@@ -335,12 +447,45 @@ class AuthService extends ChangeNotifier {
     }
   }
 
-  Future<void> sendResetCode(String email) async {
-    AppLogger.log('AuthService: sendResetCode not implemented on Cloudflare yet.');
+  Future<bool> sendResetCode(String email) async {
+    _lastErrorMessage = null;
+    try {
+      final response = await _cfClient.client.post('/api/auth/request-password-reset', data: {'email': email});
+      return response.statusCode == 200;
+    } catch (e) {
+      _lastErrorMessage = e.toString();
+      return false;
+    }
+  }
+
+  Future<bool> finalizePasswordReset(String email, String code, String newPassword) async {
+    _lastErrorMessage = null;
+    try {
+      final response = await _cfClient.client.post('/api/auth/reset-password', data: {
+        'email': email,
+        'code': code,
+        'password': newPassword,
+      });
+      return response.statusCode == 200;
+    } catch (e) {
+      _lastErrorMessage = e.toString();
+      return false;
+    }
   }
 
   Future<void> updatePassword(String newPassword) async {
-    AppLogger.log('AuthService: updatePassword not implemented on Cloudflare yet.');
+    _lastErrorMessage = null;
+    try {
+      final response = await _cfClient.client.post('/api/auth/update-password', data: {
+        'new_password': newPassword,
+      });
+      if (response.statusCode != 200) {
+        throw Exception(response.data['error'] ?? 'Failed to update password');
+      }
+    } catch (e) {
+      _lastErrorMessage = e.toString();
+      rethrow;
+    }
   }
 
   void clearRecoveryFlow() {
@@ -358,12 +503,51 @@ class AuthService extends ChangeNotifier {
     await _patchCurrentUser({'email': email});
   }
 
-  Future<bool> deleteAccount(String password) async {
+  Future<bool> requestEmailChange(String newEmail, String password) async {
+    _lastErrorMessage = null;
     try {
-      // Would require /api/auth/delete-account
+      final response = await _cfClient.client.post('/api/auth/request-email-change', data: {
+        'new_email': newEmail,
+        'password': password,
+      });
+      return response.statusCode == 200;
+    } catch (e) {
+      _lastErrorMessage = _handleDioError(e);
+      return false;
+    }
+  }
+
+  Future<bool> verifyEmailChange(String newEmail, String code) async {
+    _lastErrorMessage = null;
+    try {
+      final response = await _cfClient.client.post('/api/auth/verify-email-change', data: {
+        'new_email': newEmail,
+        'code': code,
+      });
+      if (response.statusCode == 200) {
+        await refreshUser();
+        return true;
+      }
       return false;
     } catch (e) {
-      _lastErrorMessage = e.toString();
+      _lastErrorMessage = _handleDioError(e);
+      return false;
+    }
+  }
+
+  Future<bool> deleteAccount(String password) async {
+    _lastErrorMessage = null;
+    try {
+      final response = await _cfClient.client.post('/api/auth/delete', data: {'password': password});
+      if (response.statusCode == 200) {
+        _currentUser = null;
+        await _cfClient.clearSession();
+        notifyListeners();
+        return true;
+      }
+      return false;
+    } catch (e) {
+      _lastErrorMessage = _handleDioError(e);
       return false;
     }
   }
@@ -421,7 +605,15 @@ class AuthService extends ChangeNotifier {
   }
 
   Future<String> inviteUserByEmail(String email, {String? senderId}) async {
-    return "Not implemented on Cloudflare yet.";
+    try {
+      final response = await _cfClient.client.post('/api/auth/invite', data: {'email': email});
+      if (response.statusCode == 200) {
+        return response.data['message'] ?? 'Invitation sent!';
+      }
+      return 'Failed to send invitation';
+    } catch (e) {
+      return _handleDioError(e);
+    }
   }
 
   Future<List<UserModel>> getLeaderboardData({int page = 0, int pageSize = 20}) async {
@@ -451,5 +643,15 @@ class AuthService extends ChangeNotifier {
       AppLogger.log('AuthService: getMyGlobalRank error: $e');
     }
     return null;
+  }
+
+  String _handleDioError(dynamic e) {
+    if (e is DioException) {
+      if (e.response != null && e.response!.data is Map) {
+        return e.response!.data['error'] ?? e.message ?? 'An error occurred';
+      }
+      return e.message ?? 'Connection error';
+    }
+    return e.toString();
   }
 }

@@ -763,8 +763,10 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                                   isPublic: _currentCollection!.isPublic,
                                   createdAt: _currentCollection!.createdAt,
                                   updatedAt: _currentCollection!.updatedAt,
-                                  localizedData:
-                                      _currentCollection!.localizedData,
+                                  name: _currentCollection!.name,
+                                  names: _currentCollection!.names,
+                                  description: _currentCollection!.description,
+                                  descriptions: _currentCollection!.descriptions,
                                   folderId: _currentCollection!.folderId,
                                   typeStr: 'collection',
                                   linkedSubjectIds:
@@ -1388,6 +1390,21 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
       );
     } else if (card.isCounting) {
       return CountingGrid(count: card.numericalAnswer, iconSize: 24);
+    } else if (_currentSubject?.isAlphabet == true) {
+      return Container(
+        color: Colors.white,
+        child: Center(
+          child: Text(
+            card.getAnswer(displayLang).isNotEmpty ? card.getAnswer(displayLang) : card.getAnswer('global'),
+            style: TextStyle(
+              fontSize: 64,
+              fontWeight: FontWeight.w700,
+              color: Colors.black87,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ),
+      );
     } else if (card.isColors && card.hexColor != null) {
       return SizedBox.expand(
         child: ColoredBox(
@@ -1402,8 +1419,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
     }
     
     // Debug info for missing images
-    if (card.localizedData.containsKey('global') && 
-        (card.localizedData['global']!.imageUrls?.isNotEmpty ?? false)) {
+    if (card.imagesBase.isNotEmpty || card.imagesLocal.values.any((list) => list.isNotEmpty)) {
        print('Card ${card.id} has global images but none found for $displayLang. This should not happen with the new fallback logic.');
     }
 

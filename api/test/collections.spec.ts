@@ -1,18 +1,14 @@
 import { describe, it, expect, beforeAll } from 'vitest';
 import { env } from 'cloudflare:test';
 import app from '../src/index';
+import { signupUser } from './test-utils';
 
 describe('Collections API', () => {
   let sessionId: string;
 
   beforeAll(async () => {
     const timestamp = Date.now();
-    const res = await app.request('/api/auth/signup', {
-      method: 'POST',
-      body: JSON.stringify({ email: `coll_${timestamp}@test.com`, password: 'password123' }),
-      headers: { 'Content-Type': 'application/json' }
-    }, env);
-    const data = await res.json() as any;
+    const data = await signupUser({ email: `coll_${timestamp}@test.com`, password: 'password123' });
     sessionId = data.session_id;
 
     await env.DB.prepare("INSERT INTO pillars (id, sort_order) VALUES (1, 1)").run();
@@ -25,7 +21,10 @@ describe('Collections API', () => {
       folder_id: null,
       is_public: true,
       age_group: 'advanced',
-      localized_data: { en: { name: 'My Collection' } }
+      name: 'My Collection',
+      names: { en: 'My Collection' },
+      description: 'My Desc',
+      descriptions: { en: 'My Desc' }
     };
 
     const res = await app.request('/api/collections', {

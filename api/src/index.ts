@@ -56,17 +56,17 @@ app.use("*", async (c, next) => {
 
 app.route('/api/auth', authRouter);
 app.route('/api/pillars', pillarsRouter);
-app.route('/api', subjectsRouter);
+app.route('/api/friendships', friendshipsRouter);
 app.route('/api/cards', cardsRouter);
 app.route('/api/folders', foldersRouter);
 app.route('/api/collections', collectionsRouter);
 app.route('/api/leaderboard', leaderboardRouter);
 app.route('/api/progress', progressRouter);
-app.route('/api', feedbacksRouter);
-app.route('/api/friendships', friendshipsRouter);
 app.route('/api/subscriptions', subscriptionsRouter);
-app.route('/api', localizationRouter);
 app.route('/api/analytics', analyticsRouter);
+app.route('/api', subjectsRouter);
+app.route('/api', feedbacksRouter);
+app.route('/api', localizationRouter);
 app.route('/', storageRouter);
 
 // Protect OpenAPI documentation
@@ -96,10 +96,14 @@ app.doc('/openapi.json', {
 app.get('/api/docs', swaggerUI({ url: '/openapi.json' }));
 
 // Fallback to Static Assets or SPA index.html
-app.all('*', async (c) => {
+app.get('*', async (c) => {
     const url = new URL(c.req.url);
     
-    // If ASSETS binding is missing (e.g. local dev without assets), return 404
+    // Ignore API routes for asset serving
+    if (url.pathname.startsWith('/api')) {
+        return c.text('Not Found', 404);
+    }
+
     if (!c.env.ASSETS) {
         return c.text('Not Found', 404);
     }
@@ -111,7 +115,12 @@ app.all('*', async (c) => {
     // serve index.html for SPA routing.
     if (assetResponse.status === 404 && !url.pathname.includes('.')) {
         const indexRequest = new Request(new URL('/', url).toString(), c.req.raw);
-        return await c.env.ASSETS.fetch(indexRequest);
+        const indexResponse = await c.env.ASSETS.fetch(indexRequest);
+        // Ensure index.html is returned with 200 even if original request was 404
+        return new Response(indexResponse.body, {
+            status: 200,
+            headers: indexResponse.headers,
+        });
     }
     
     return assetResponse;

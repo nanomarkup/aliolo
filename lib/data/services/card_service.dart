@@ -9,6 +9,7 @@ import 'package:aliolo/data/models/pillar_model.dart';
 import 'package:aliolo/data/models/folder_model.dart';
 import 'package:aliolo/data/models/collection_model.dart';
 import 'package:aliolo/data/services/auth_service.dart';
+import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/core/utils/logger.dart';
 import 'package:dio/dio.dart';
 
@@ -47,6 +48,7 @@ class CardService with ChangeNotifier {
           pillars.clear();
           pillars.addAll(dbPillars);
           pillars_list = dbPillars;
+          ThemeService().forceRefresh();
           notifyListeners();
           return pillars;
         }
@@ -121,14 +123,24 @@ class CardService with ChangeNotifier {
       if (path != null) bucketFiles[bucket]!.add(path);
     }
 
-    for (var loc in card.localizedData.values) {
-      if (loc.imageUrls != null) {
-        for (var url in loc.imageUrls!) {
-          addUrl(url, 'card_images');
-        }
+    // Add base media
+    for (var url in card.imagesBase) {
+      addUrl(url, 'card_images');
+    }
+    addUrl(card.audio, 'card_audio');
+    addUrl(card.video, 'card_videos');
+
+    // Add localized media
+    for (var urls in card.imagesLocal.values) {
+      for (var url in urls) {
+        addUrl(url, 'card_images');
       }
-      addUrl(loc.audioUrl, 'card_audio');
-      addUrl(loc.videoUrl, 'card_videos');
+    }
+    for (var url in card.audios.values) {
+      addUrl(url, 'card_audio');
+    }
+    for (var url in card.videos.values) {
+      addUrl(url, 'card_videos');
     }
 
     for (var entry in bucketFiles.entries) {

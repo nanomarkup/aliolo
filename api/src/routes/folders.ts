@@ -57,17 +57,18 @@ router.openapi(createFolderRoute, async (c) => {
     const user = c.get("user");
     if (!user) return c.json({ error: 'Unauthorized' } as any, 401);
 
-    const { id, pillar_id, localized_data } = c.req.valid('json');
+    const { id, pillar_id, name, names } = c.req.valid('json');
 
     try {
         await c.env.DB.prepare(`
-            INSERT INTO folders (id, pillar_id, owner_id, localized_data, updated_at)
-            VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP)
+            INSERT INTO folders (id, pillar_id, owner_id, name, names, updated_at)
+            VALUES (?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
             ON CONFLICT(id) DO UPDATE SET
                 pillar_id = excluded.pillar_id,
-                localized_data = excluded.localized_data,
+                name = excluded.name,
+                names = excluded.names,
                 updated_at = CURRENT_TIMESTAMP
-        `).bind(id, pillar_id, user.id, JSON.stringify(localized_data)).run();
+        `).bind(id, pillar_id, user.id, name, JSON.stringify(names)).run();
         
         return c.json({ success: true }, 200);
     } catch (e: any) {

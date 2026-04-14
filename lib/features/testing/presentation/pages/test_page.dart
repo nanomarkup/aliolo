@@ -733,6 +733,18 @@ class _TestPageState extends State<TestPage> {
                                       maxOperand: _subject.maxOperand,
                                       iconSize: isMobile ? 40 : 60,
                                     )
+                                  else if (_subject.isAlphabet)
+                                    Center(
+                                      child: Text(
+                                        _currentCard.getAnswer(lang).isNotEmpty ? _currentCard.getAnswer(lang) : _currentCard.getAnswer('global'),
+                                        style: TextStyle(
+                                          fontSize: isMobile ? 120 : 180,
+                                          fontWeight: FontWeight.w700,
+                                          color: Colors.black87,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    )
                                   else if (_currentCard.subjectId ==
                                           '68232807-b9cd-4cff-872c-c398444f85e2' ||
                                       _currentCard.subjectId ==
@@ -1014,7 +1026,7 @@ class _TestPageState extends State<TestPage> {
                                   child: Text(
                                     opt.text,
                                     style: TextStyle(
-                                      fontSize: isMobile ? 24 : 36,
+                                      fontSize: _subject.isAlphabet ? (isMobile ? 80 : 120) : (isMobile ? 24 : 36),
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),

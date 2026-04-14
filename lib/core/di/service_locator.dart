@@ -16,7 +16,7 @@ import 'package:aliolo/core/network/cloudflare_client.dart';
 
 final getIt = GetIt.instance;
 
-Future<void> setupLocator({String? initialUrl}) async {
+Future<void> setupLocator({String? initialUrl, String? inviteToken}) async {
   try {
     // 0. Network
     getIt.registerSingleton<CloudflareHttpClient>(CloudflareHttpClient());
@@ -36,7 +36,10 @@ Future<void> setupLocator({String? initialUrl}) async {
       (e) => print('CardService init error: $e'),
     );
 
-    await getIt<AuthService>().init(manualUrl: initialUrl).catchError(
+    await getIt<AuthService>().init(
+      manualUrl: initialUrl,
+      inviteToken: inviteToken,
+    ).catchError(
       (e) => print('AuthService init error: $e'),
     );
 

@@ -1,8 +1,8 @@
-import { Hono } from 'hono';
+import { OpenAPIHono } from '@hono/zod-openapi';
 import { generateId } from 'lucia';
 import type { AppEnv } from '../types';
 
-const router = new Hono<AppEnv>();
+const router = new OpenAPIHono<AppEnv>();
 
 router.get('/', async (c) => {
     const user = c.get("user");

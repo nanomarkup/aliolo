@@ -54,27 +54,6 @@ class DraftLocalizedData {
   List<String> deletedUrls = [];
 
   DraftLocalizedData();
-
-  factory DraftLocalizedData.fromModel(LocalizedCardData data) {
-    final d = DraftLocalizedData();
-    d.prompt = data.prompt ?? '';
-    d.answer = data.answer ?? '';
-    d.audioUrl = data.audioUrl;
-    d.videoUrl = data.videoUrl;
-    d.imageUrls = List.from(data.imageUrls ?? []);
-    d.rawData = Map.from(data.rawData);
-    return d;
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'prompt': prompt,
-      'answer': answer,
-      'audio_url': audioUrl ?? '',
-      'video_url': videoUrl ?? '',
-      'image_urls': imageUrls,
-    };
-  }
 }
 
 class _AddCardPageState extends State<AddCardPage> {
@@ -199,11 +178,32 @@ class _AddCardPageState extends State<AddCardPage> {
 
   void _initDrafts() {
     if (widget.existingCard != null) {
-      _cardLevel = widget.existingCard!.level;
-      _testMode = widget.existingCard!.testMode;
-      widget.existingCard!.localizedData.forEach((lang, data) {
-        _drafts[lang] = DraftLocalizedData.fromModel(data);
-      });
+      final c = widget.existingCard!;
+      _cardLevel = c.level;
+      _testMode = c.testMode;
+      
+      _drafts['global'] = DraftLocalizedData()
+        ..prompt = c.prompt
+        ..answer = c.answer
+        ..audioUrl = c.audio
+        ..videoUrl = c.video
+        ..imageUrls = List.from(c.imagesBase);
+
+      final allLangs = {
+        ...c.prompts.keys, 
+        ...c.answers.keys, 
+        ...c.audios.keys, 
+        ...c.videos.keys, 
+        ...c.imagesLocal.keys
+      };
+      for (var lang in allLangs) {
+        _ensureDraftExists(lang);
+        _drafts[lang]!.prompt = c.prompts[lang] ?? '';
+        _drafts[lang]!.answer = c.answers[lang] ?? '';
+        _drafts[lang]!.audioUrl = c.audios[lang];
+        _drafts[lang]!.videoUrl = c.videos[lang];
+        _drafts[lang]!.imageUrls = List.from(c.imagesLocal[lang] ?? []);
+      }
     }
   }
 
@@ -519,25 +519,22 @@ class _AddCardPageState extends State<AddCardPage> {
 
     try {
       final cardId = widget.existingCard?.id ?? _cardService.generateId();
-      final Map<String, LocalizedCardData> finalData = {};
+      
+      String baseAnswer = '';
+      String basePrompt = '';
+      List<String> baseImages = [];
+      String baseAudio = '';
+      String baseVideo = '';
+
+      final Map<String, String> finalAnswers = {};
+      final Map<String, String> finalPrompts = {};
+      final Map<String, List<String>> finalImagesLocal = {};
+      final Map<String, String> finalAudios = {};
+      final Map<String, String> finalVideos = {};
 
       for (var entry in _drafts.entries) {
         final lang = entry.key;
         final draft = entry.value;
-
-        bool hasContent =
-            draft.prompt.isNotEmpty ||
-            draft.answer.isNotEmpty ||
-            draft.newAudioFile != null ||
-            draft.audioUrl != null ||
-            draft.imageUrls.isNotEmpty ||
-            draft.newImageFiles.isNotEmpty ||
-            draft.newVideoFile != null ||
-            draft.videoUrl != null;
-
-        if (lang != 'global' && !hasContent) {
-          continue;
-        }
 
         final List<String> imageUrls = List.from(draft.imageUrls);
         for (var file in draft.newImageFiles) {
@@ -545,9 +542,7 @@ class _AddCardPageState extends State<AddCardPage> {
           if (url != null) {
             imageUrls.add(url);
           } else {
-            throw Exception(
-              'Failed to upload image. Please check your internet connection and Supabase storage buckets (card_images).',
-            );
+            throw Exception('Failed to upload image.');
           }
         }
 
@@ -560,9 +555,7 @@ class _AddCardPageState extends State<AddCardPage> {
             lang,
           );
           if (audioUrl == null) {
-            throw Exception(
-              'Failed to upload audio. Please check your internet connection and Supabase storage buckets (card_audio).',
-            );
+            throw Exception('Failed to upload audio.');
           }
         }
 
@@ -575,9 +568,7 @@ class _AddCardPageState extends State<AddCardPage> {
             lang,
           );
           if (videoUrl == null) {
-            throw Exception(
-              'Failed to upload video. Please check your internet connection and Supabase storage buckets (card_videos).',
-            );
+            throw Exception('Failed to upload video.');
           }
         }
 
@@ -593,14 +584,26 @@ class _AddCardPageState extends State<AddCardPage> {
         }
         draft.deletedUrls.clear();
 
-        finalData[lang] = LocalizedCardData(
-          prompt: draft.prompt.isEmpty ? null : draft.prompt,
-          answer: draft.answer.isEmpty ? null : draft.answer,
-          audioUrl: audioUrl,
-          videoUrl: videoUrl,
-          imageUrls: imageUrls.isEmpty ? null : imageUrls,
-          rawData: draft.rawData,
-        );
+        if (lang == 'global') {
+          baseAnswer = draft.answer;
+          basePrompt = draft.prompt;
+          baseImages = imageUrls;
+          baseAudio = audioUrl ?? '';
+          baseVideo = videoUrl ?? '';
+        } else {
+          bool hasAny = draft.answer.isNotEmpty || 
+                        draft.prompt.isNotEmpty || 
+                        imageUrls.isNotEmpty || 
+                        (audioUrl != null && audioUrl.isNotEmpty) || 
+                        (videoUrl != null && videoUrl.isNotEmpty);
+          if (hasAny) {
+            if (draft.answer.isNotEmpty) finalAnswers[lang] = draft.answer;
+            if (draft.prompt.isNotEmpty) finalPrompts[lang] = draft.prompt;
+            if (imageUrls.isNotEmpty) finalImagesLocal[lang] = imageUrls;
+            if (audioUrl != null && audioUrl.isNotEmpty) finalAudios[lang] = audioUrl;
+            if (videoUrl != null && videoUrl.isNotEmpty) finalVideos[lang] = videoUrl;
+          }
+        }
       }
 
       final card = CardModel(
@@ -612,7 +615,16 @@ class _AddCardPageState extends State<AddCardPage> {
         isPublic: widget.existingCard?.isPublic ?? false,
         createdAt: widget.existingCard?.createdAt ?? DateTime.now(),
         updatedAt: DateTime.now(),
-        localizedData: finalData,
+        answer: baseAnswer,
+        answers: finalAnswers,
+        prompt: basePrompt,
+        prompts: finalPrompts,
+        imagesBase: baseImages,
+        imagesLocal: finalImagesLocal,
+        audio: baseAudio,
+        audios: finalAudios,
+        video: baseVideo,
+        videos: finalVideos,
       );
 
       await _cardService.addCard(card);
@@ -764,7 +776,7 @@ class _AddCardPageState extends State<AddCardPage> {
                           subjectId: widget.existingCard?.subjectId ?? widget.initialSubjectId,
                           cardId: widget.existingCard?.id,
                           contextTitle: widget.existingCard != null 
-                            ? 'Card: ${widget.existingCard!.localizedData['global']?.answer}'
+                            ? 'Card: ${widget.existingCard!.answer}'
                             : 'Card',
                           appBarColor: pillar.getColor(themeService.isDarkMode),
                         ),
@@ -1435,23 +1447,41 @@ class _AddCardPageState extends State<AddCardPage> {
     if (_cardLevel != original.level) return true;
     if (_testMode != original.testMode) return true;
 
-    final allLangs = {...original.localizedData.keys, ..._drafts.keys};
+    final allLangs = {
+      'global', 
+      ...original.prompts.keys, 
+      ...original.answers.keys, 
+      ...original.audios.keys, 
+      ...original.videos.keys, 
+      ...original.imagesLocal.keys, 
+      ..._drafts.keys
+    };
     for (var lang in allLangs) {
       final draft = _drafts[lang];
-      final orig = original.localizedData[lang];
-
       if (draft?.newImageFiles.isNotEmpty == true) return true;
       if (draft?.newAudioFile != null) return true;
       if (draft?.newVideoFile != null) return true;
       if (draft?.deletedUrls.isNotEmpty == true) return true;
 
       final draftPrompt = draft?.prompt.trim() ?? '';
-      final origPrompt = orig?.prompt?.trim() ?? '';
-      if (draftPrompt != origPrompt) return true;
-
       final draftAnswer = draft?.answer.trim() ?? '';
-      final origAnswer = orig?.answer?.trim() ?? '';
-      if (draftAnswer != origAnswer) return true;
+      final draftAudio = draft?.audioUrl ?? '';
+      final draftVideo = draft?.videoUrl ?? '';
+      final draftImages = draft?.imageUrls ?? [];
+
+      if (lang == 'global') {
+        if (draftPrompt != original.prompt.trim()) return true;
+        if (draftAnswer != original.answer.trim()) return true;
+        if (draftAudio != original.audio) return true;
+        if (draftVideo != original.video) return true;
+        if (draftImages.length != original.imagesBase.length) return true;
+      } else {
+        if (draftPrompt != (original.prompts[lang]?.trim() ?? '')) return true;
+        if (draftAnswer != (original.answers[lang]?.trim() ?? '')) return true;
+        if (draftAudio != (original.audios[lang] ?? '')) return true;
+        if (draftVideo != (original.videos[lang] ?? '')) return true;
+        if (draftImages.length != (original.imagesLocal[lang]?.length ?? 0)) return true;
+      }
     }
 
     return false;

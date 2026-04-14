@@ -32,10 +32,12 @@ class _ManageFriendsPageState extends State<ManageFriendsPage> {
     setState(() => _isLoading = true);
     final data = await _friendshipService.getFriendships();
 
-    // Sort: pending requests first
+    // Sort: pending/invited requests first
     data.sort((a, b) {
-      if (a['status'] == 'pending' && b['status'] != 'pending') return -1;
-      if (a['status'] != 'pending' && b['status'] == 'pending') return 1;
+      final sA = a['status'];
+      final sB = b['status'];
+      if ((sA == 'pending' || sA == 'invited') && (sB != 'pending' && sB != 'invited')) return -1;
+      if ((sA != 'pending' && sA != 'invited') && (sB == 'pending' || sB == 'invited')) return 1;
       return 0;
     });
 
@@ -48,11 +50,11 @@ class _ManageFriendsPageState extends State<ManageFriendsPage> {
   }
 
   Future<void> _confirmCancelFriendship(
-    int id,
+    dynamic id,
     String username,
     String status,
   ) async {
-    final isPending = status == 'pending';
+    final isPending = status == 'pending' || status == 'invited';
     final confirmed = await showDialog<bool>(
       context: context,
       builder:
@@ -245,11 +247,15 @@ class _ManageFriendsPageState extends State<ManageFriendsPage> {
           SliverList(
             delegate: SliverChildBuilderDelegate((context, index) {
               final f = _friendships[index];
+              final status = f['status'];
+              final id = f['id'];
+              final isInvited = status == 'invited';
+              
               final isSender =
                   f['sender_id'] == _authService.currentUser?.serverId;
               final otherUser = isSender ? f['receiver'] : f['sender'];
               
-              if (otherUser == null) {
+              if (otherUser == null && !isInvited) {
                 return const Card(
                   margin: EdgeInsets.only(bottom: 12),
                   child: ListTile(
@@ -258,10 +264,9 @@ class _ManageFriendsPageState extends State<ManageFriendsPage> {
                 );
               }
 
-              final status = f['status'];
-              final id = f['id'];
-              final avatarUrl = otherUser['avatar_url'] as String?;
-              final email = otherUser['email'] ?? '';
+              final avatarUrl = isInvited ? null : otherUser?['avatar_url'] as String?;
+              final email = isInvited ? (f['receiver_username'] ?? '') : (otherUser?['email'] ?? '');
+              final username = isInvited ? (f['receiver_username'] ?? 'Invited User') : (otherUser?['username'] ?? 'User');
 
               return Card(
                 margin: const EdgeInsets.only(bottom: 12),
@@ -277,16 +282,16 @@ class _ManageFriendsPageState extends State<ManageFriendsPage> {
                                     : FileImage(dynamicFile(avatarUrl)))
                                 as ImageProvider
                             : null,
-                    child: avatarUrl == null ? const Icon(Icons.person) : null,
+                    child: avatarUrl == null ? Icon(isInvited ? Icons.mail_outline : Icons.person) : null,
                   ),
                   title: Text(
-                    otherUser['username'] ?? 'User',
+                    username,
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      if (email.isNotEmpty)
+                      if (email.isNotEmpty && email != username)
                         Text(email, style: const TextStyle(fontSize: 12)),
                       if (status == 'pending')
                         Text(
@@ -294,6 +299,8 @@ class _ManageFriendsPageState extends State<ManageFriendsPage> {
                               ? context.t('request_sent_waiting')
                               : context.t('wants_to_be_friend'),
                         ),
+                      if (status == 'invited')
+                        const Text('Invitation sent (awaiting registration)', style: TextStyle(fontStyle: FontStyle.italic)),
                     ],
                   ),
                   trailing: Row(
@@ -312,7 +319,7 @@ class _ManageFriendsPageState extends State<ManageFriendsPage> {
                         onPressed:
                             () => _confirmCancelFriendship(
                               id,
-                              otherUser['username'] ?? 'User',
+                              username,
                               status,
                             ),
                       ),

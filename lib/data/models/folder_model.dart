@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'subject_model.dart';
 import 'content_item.dart';
 
 class FolderModel implements ContentItem {
@@ -14,14 +13,25 @@ class FolderModel implements ContentItem {
   final DateTime createdAt;
   @override
   final DateTime updatedAt;
-  @override
-  final Map<String, LocalizedSubjectData> localizedData;
   final int childCount;
+
+  /// Base name
+  @override
+  final String name;
+  /// Map of language code to its specific name.
+  @override
+  final Map<String, String> names;
+
+  // Folders do not have descriptions in the database
+  @override
+  String get description => '';
+  @override
+  Map<String, String> get descriptions => const {};
   
   @override
   ContentType get type => ContentType.folder;
   @override
-  String? get folderId => null; // Folders are top-level or in pillar, not in folders (yet?)
+  String? get folderId => null; 
   @override
   bool get isOnDashboard => false;
 
@@ -32,36 +42,49 @@ class FolderModel implements ContentItem {
     this.ownerName,
     required this.createdAt,
     required this.updatedAt,
-    this.localizedData = const {},
     this.childCount = 0,
+    required this.name,
+    this.names = const {},
   });
 
   factory FolderModel.fromJson(Map<String, dynamic> json) {
-    var locData = json['localized_data'];
-    Map<String, dynamic> locMap = {};
-    if (locData is Map) {
-      locMap = Map<String, dynamic>.from(locData);
-    } else if (locData is String && locData.isNotEmpty) {
+    Map<String, String> namesMap = {};
+    final dynamic rawNames = json['names'];
+    if (rawNames is Map) {
+      namesMap = Map<String, String>.from(rawNames);
+    } else if (rawNames is String && rawNames.isNotEmpty) {
       try {
-        final decoded = jsonDecode(locData);
+        final decoded = jsonDecode(rawNames);
         if (decoded is Map) {
-          locMap = Map<String, dynamic>.from(decoded);
+          namesMap = Map<String, String>.from(decoded);
         }
       } catch (_) {}
     }
 
-    final Map<String, LocalizedSubjectData> localized = {};
-    locMap.forEach((key, value) {
-      if (value is Map) {
-        localized[key.toLowerCase()] = LocalizedSubjectData.fromJson(Map<String, dynamic>.from(value));
+    // Fallback migration logic in app just in case (legacy data in localized_data)
+    String baseName = json['name'] ?? '';
+
+    if (baseName.isEmpty && json['localized_data'] != null) {
+      var locData = json['localized_data'];
+      Map<String, dynamic> locMap = {};
+      if (locData is Map) {
+        locMap = Map<String, dynamic>.from(locData);
+      } else if (locData is String && locData.isNotEmpty) {
+        try { locMap = Map<String, dynamic>.from(jsonDecode(locData)); } catch (_) {}
       }
-    });
+      final global = locMap['global'];
+      if (global is Map) {
+        baseName = global['name'] ?? '';
+      }
+      locMap.forEach((k, v) {
+        if (k != 'global' && v is Map) {
+          if (namesMap[k] == null) namesMap[k] = v['name'] ?? '';
+        }
+      });
+    }
 
     final Map<String, dynamic>? profile = json['profiles'];
-
     int count = 0;
-    
-    // Sum subject counts
     if (json['subjects'] is List) {
       final subjectsList = json['subjects'] as List;
       if (subjectsList.isNotEmpty && subjectsList.first is Map && subjectsList.first['count'] != null) {
@@ -72,8 +95,6 @@ class FolderModel implements ContentItem {
     } else if (json['subjects'] is Map && json['subjects']['count'] != null) {
       count += (json['subjects']['count'] as num).toInt();
     }
-
-    // Sum collection counts
     if (json['collections'] is List) {
       final collectionsList = json['collections'] as List;
       if (collectionsList.isNotEmpty && collectionsList.first is Map && collectionsList.first['count'] != null) {
@@ -92,8 +113,9 @@ class FolderModel implements ContentItem {
       ownerName: profile != null ? profile['username'] : null,
       createdAt: DateTime.tryParse(json['created_at'] ?? '') ?? DateTime.now(),
       updatedAt: DateTime.tryParse(json['updated_at'] ?? '') ?? DateTime.now(),
-      localizedData: localized,
       childCount: count,
+      name: baseName,
+      names: namesMap,
     );
   }
 
@@ -102,31 +124,11 @@ class FolderModel implements ContentItem {
       'id': id,
       'pillar_id': pillarId,
       'owner_id': ownerId,
-      'localized_data': localizedData.map((k, v) => MapEntry(k, v.toJson())),
+      'name': name,
+      'names': names,
       'created_at': createdAt.toIso8601String(),
       'updated_at': updatedAt.toIso8601String(),
     };
-  }
-
-  T? _getInherited<T>(String langCode, T? Function(LocalizedSubjectData) getter) {
-    final lang = langCode.toLowerCase();
-    if (localizedData.containsKey(lang)) {
-      final val = getter(localizedData[lang]!);
-      if (val != null) return val;
-    }
-    if (localizedData.containsKey('global')) {
-      final val = getter(localizedData['global']!);
-      if (val != null) return val;
-    }
-    if (localizedData.containsKey('en')) {
-      final val = getter(localizedData['en']!);
-      if (val != null) return val;
-    }
-    if (localizedData.isNotEmpty) {
-      final val = getter(localizedData.values.first);
-      if (val != null) return val;
-    }
-    return null;
   }
 
   static String capitalizeFirst(String s) {
@@ -135,8 +137,11 @@ class FolderModel implements ContentItem {
   }
 
   String getName(String langCode) {
-    final name = _getInherited(langCode, (d) => d.name) ?? 'Unnamed Folder';
-    return capitalizeFirst(name);
+    final lc = langCode.toLowerCase();
+    if (names.containsKey(lc) && names[lc]!.isNotEmpty) {
+      return capitalizeFirst(names[lc]!);
+    }
+    return capitalizeFirst(name.isNotEmpty ? name : 'Unnamed Folder');
   }
 
   @override

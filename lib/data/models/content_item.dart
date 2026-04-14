@@ -7,7 +7,10 @@ abstract class ContentItem {
   int get pillarId;
   String get ownerId;
   String? get folderId;
-  Map<String, LocalizedSubjectData> get localizedData;
+  String get name;
+  Map<String, String> get names;
+  String get description;
+  Map<String, String> get descriptions;
   DateTime get updatedAt;
   ContentType get type;
   String? get ownerName;

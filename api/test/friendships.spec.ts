@@ -1,6 +1,7 @@
 import { describe, it, expect, beforeAll } from 'vitest';
 import { env } from 'cloudflare:test';
 import app from '../src/index';
+import { signupUser } from './test-utils';
 
 describe('Friendships API', () => {
   let user1: any;
@@ -9,19 +10,9 @@ describe('Friendships API', () => {
   beforeAll(async () => {
     const timestamp = Date.now();
     
-    const res1 = await app.request('/api/auth/signup', {
-      method: 'POST',
-      body: JSON.stringify({ email: `f1_${timestamp}@test.com`, password: 'password123' }),
-      headers: { 'Content-Type': 'application/json' }
-    }, env);
-    user1 = await res1.json();
+    user1 = await signupUser({ email: `f1_${timestamp}@test.com`, password: 'password123' });
 
-    const res2 = await app.request('/api/auth/signup', {
-      method: 'POST',
-      body: JSON.stringify({ email: `f2_${timestamp}@test.com`, password: 'password123', username: 'friend' }),
-      headers: { 'Content-Type': 'application/json' }
-    }, env);
-    user2 = await res2.json();
+    user2 = await signupUser({ email: `f2_${timestamp}@test.com`, password: 'password123', username: 'friend' });
   });
 
   it('should send a friend request', async () => {

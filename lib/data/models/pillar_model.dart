@@ -1,27 +1,5 @@
 import 'dart:convert';
-import 'package:aliolo/data/services/translation_service.dart';
 import 'package:flutter/material.dart';
-
-class LocalizedPillarData {
-  final String? name;
-  final String? description;
-
-  LocalizedPillarData({this.name, this.description});
-
-  factory LocalizedPillarData.fromJson(Map<String, dynamic> json) {
-    return LocalizedPillarData(
-      name: json['name'],
-      description: json['description'],
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      if (name != null) 'name': name,
-      if (description != null) 'description': description,
-    };
-  }
-}
 
 class Pillar {
   final int id;
@@ -31,10 +9,15 @@ class Pillar {
   final int sortOrder;
   final int subjectCount;
   final int folderCount;
-
-  /// Map of language code to its specific data.
-  /// Key 'global' is used for primary fallback.
-  final Map<String, LocalizedPillarData> localizedData;
+  
+  /// Base name (previously from 'global')
+  final String name;
+  /// Map of language code to its specific name.
+  final Map<String, String> names;
+  /// Base description (previously from 'global')
+  final String description;
+  /// Map of language code to its specific description.
+  final Map<String, String> descriptions;
 
   const Pillar({
     required this.id,
@@ -44,33 +27,37 @@ class Pillar {
     this.sortOrder = 0,
     this.subjectCount = 0,
     this.folderCount = 0,
-    this.localizedData = const {},
+    required this.name,
+    this.names = const {},
+    required this.description,
+    this.descriptions = const {},
   });
 
   factory Pillar.fromJson(Map<String, dynamic> json) {
-    final dynamic rawLoc = json['localized_data'];
-    Map<String, dynamic> locMap = {};
-    
-    if (rawLoc is Map) {
-      locMap = Map<String, dynamic>.from(rawLoc);
-    } else if (rawLoc is String && rawLoc.isNotEmpty) {
+    Map<String, String> namesMap = {};
+    final dynamic rawNames = json['names'];
+    if (rawNames is Map) {
+      namesMap = Map<String, String>.from(rawNames);
+    } else if (rawNames is String && rawNames.isNotEmpty) {
       try {
-        final decoded = jsonDecode(rawLoc);
+        final decoded = jsonDecode(rawNames);
         if (decoded is Map) {
-          locMap = Map<String, dynamic>.from(decoded);
+          namesMap = Map<String, String>.from(decoded);
         }
-      } catch (e) {
-        print('Error decoding localized_data string for pillar ${json['id']}: $e');
-      }
+      } catch (_) {}
     }
 
-    Map<String, LocalizedPillarData> localized = {};
-    if (locMap.isNotEmpty) {
-      locMap.forEach((key, value) {
-        if (value is Map) {
-          localized[key.toString().toLowerCase()] = LocalizedPillarData.fromJson(Map<String, dynamic>.from(value));
+    Map<String, String> descriptionsMap = {};
+    final dynamic rawDescriptions = json['descriptions'];
+    if (rawDescriptions is Map) {
+      descriptionsMap = Map<String, String>.from(rawDescriptions);
+    } else if (rawDescriptions is String && rawDescriptions.isNotEmpty) {
+      try {
+        final decoded = jsonDecode(rawDescriptions);
+        if (decoded is Map) {
+          descriptionsMap = Map<String, String>.from(decoded);
         }
-      });
+      } catch (_) {}
     }
 
     return Pillar(
@@ -81,7 +68,10 @@ class Pillar {
       sortOrder: (json['sort_order'] as num? ?? 0).toInt(),
       subjectCount: (json['subject_count'] as num? ?? 0).toInt(),
       folderCount: (json['folder_count'] as num? ?? 0).toInt(),
-      localizedData: localized,
+      name: json['name'] ?? '',
+      names: namesMap,
+      description: json['description'] ?? '',
+      descriptions: descriptionsMap,
     );
   }
 
@@ -127,33 +117,22 @@ class Pillar {
     }
   }
 
-  /// Helper to get an attribute with smart inheritance
-  T? _getInherited<T>(String lang, T? Function(LocalizedPillarData) getter) {
-    final lc = lang.toLowerCase();
-    // 1. Try requested language
-    if (localizedData.containsKey(lc)) {
-      final val = getter(localizedData[lc]!);
-      if (val != null && val.toString().isNotEmpty) return val;
-    }
-    // 2. Try 'global'
-    if (localizedData.containsKey('global')) {
-      final val = getter(localizedData['global']!);
-      if (val != null && val.toString().isNotEmpty) return val;
-    }
-    // 3. Try 'en'
-    if (localizedData.containsKey('en')) {
-      final val = getter(localizedData['en']!);
-      if (val != null && val.toString().isNotEmpty) return val;
-    }
-    return null;
-  }
-
   String getTranslatedName(String langCode) {
-    return _getInherited(langCode, (d) => d.name) ?? 'Pillar $id';
+    final lc = langCode.toLowerCase();
+    if (names.containsKey(lc) && names[lc]!.isNotEmpty) {
+      return names[lc]!;
+    }
+    // Fallback to base name
+    return name.isNotEmpty ? name : 'Pillar $id';
   }
 
   String getTranslatedDescription(String langCode) {
-    return _getInherited(langCode, (d) => d.description) ?? '';
+    final lc = langCode.toLowerCase();
+    if (descriptions.containsKey(lc) && descriptions[lc]!.isNotEmpty) {
+      return descriptions[lc]!;
+    }
+    // Fallback to base description
+    return description;
   }
 }
 

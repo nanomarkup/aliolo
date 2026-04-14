@@ -44,9 +44,9 @@ class FriendshipService {
     }
   }
 
-  Future<void> cancelFriendship(int friendshipId) async {
+  Future<void> cancelFriendship(dynamic id) async {
     try {
-      await _cfClient.client.delete('/api/friendships/$friendshipId');
+      await _cfClient.client.delete('/api/friendships/$id');
     } catch (e) {
       AppLogger.log('Error canceling friendship: $e');
     }
