@@ -197,8 +197,7 @@ CREATE TABLE IF NOT EXISTS feedback_replies (
   user_id TEXT REFERENCES profiles(id) NOT NULL,
   content TEXT NOT NULL,
   attachment_urls TEXT,
-  created_at TEXT DEFAULT CURRENT_TIMESTAMP,
-  updated_at TEXT DEFAULT CURRENT_TIMESTAMP
+  created_at TEXT DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS sessions (

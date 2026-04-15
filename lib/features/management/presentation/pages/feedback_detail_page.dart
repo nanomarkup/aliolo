@@ -6,7 +6,6 @@ import 'package:aliolo/data/models/feedback_model.dart';
 import 'package:aliolo/data/models/feedback_reply_model.dart';
 import 'package:aliolo/data/services/feedback_service.dart';
 import 'package:aliolo/data/services/auth_service.dart';
-import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/core/widgets/aliolo_scrollable_page.dart';
 
@@ -24,7 +23,7 @@ class _FeedbackDetailPageState extends State<FeedbackDetailPage> {
   final _authService = getIt<AuthService>();
   final _replyController = TextEditingController();
   final _editController = TextEditingController();
-  
+
   List<FeedbackReplyModel> _replies = [];
   bool _isLoading = true;
   bool _isSending = false;
@@ -34,16 +33,17 @@ class _FeedbackDetailPageState extends State<FeedbackDetailPage> {
   final List<XFile> _attachments = [];
 
   bool get _isAdmin => _authService.currentUser?.serverId == 'usyeo7d2yzf2773';
-  
+
   bool get _canReply {
     if (_isAdmin) return true;
     if (_currentStatus == 'closed') return false;
-    
+
     // User can only reply if the status is 'replied' (meaning admin spoke last)
     return _currentStatus == 'replied';
   }
 
-  bool get _isOwner => widget.feedback.userId == _authService.currentUser?.serverId;
+  bool get _isOwner =>
+      widget.feedback.userId == _authService.currentUser?.serverId;
 
   @override
   void initState() {
@@ -90,16 +90,28 @@ class _FeedbackDetailPageState extends State<FeedbackDetailPage> {
       _currentStatus = _isAdmin ? 'replied' : 'open';
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error: $e')));
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Error: $e')));
       }
     } finally {
       if (mounted) setState(() => _isSending = false);
     }
   }
 
+  Future<void> _pickReplyImages() async {
+    final picker = ImagePicker();
+    final images = await picker.pickMultiImage(imageQuality: 70);
+    if (images.isEmpty || !mounted) return;
+
+    setState(() => _attachments.addAll(images));
+  }
+
   Future<void> _saveEdit() async {
     final newContent = _editController.text.trim();
-    if (newContent.isEmpty || newContent == (_replies.isEmpty ? _originalContent : _replies.last.content)) {
+    if (newContent.isEmpty ||
+        newContent ==
+            (_replies.isEmpty ? _originalContent : _replies.last.content)) {
       setState(() => _isEditingLast = false);
       return;
     }
@@ -107,44 +119,60 @@ class _FeedbackDetailPageState extends State<FeedbackDetailPage> {
     setState(() => _isSending = true);
     try {
       if (_replies.isEmpty) {
-        await _feedbackService.updateFeedbackContent(widget.feedback.id!, newContent);
+        await _feedbackService.updateFeedbackContent(
+          widget.feedback.id!,
+          newContent,
+        );
         setState(() {
           _originalContent = newContent;
           _isEditingLast = false;
         });
       } else {
-        await _feedbackService.updateReplyContent(_replies.last.id!, newContent);
+        await _feedbackService.updateReplyContent(
+          _replies.last.id!,
+          newContent,
+        );
         await _loadReplies();
         setState(() {
           _isEditingLast = false;
         });
       }
     } catch (e) {
-      if (mounted) ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error: $e')));
+      if (mounted)
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Error: $e')));
     } finally {
       if (mounted) setState(() => _isSending = false);
     }
   }
 
   Future<void> _deleteLastReply() async {
-    if (_replies.isEmpty) return; 
+    if (_replies.isEmpty) return;
 
     setState(() => _isSending = true);
     try {
       await _feedbackService.deleteReply(_replies.last.id!);
       await _loadReplies();
       setState(() => _isEditingLast = false);
-      
+
       // Update local status based on who is now the last speaker
       if (_replies.isEmpty) {
         _currentStatus = 'open'; // Original feedback
       } else {
         final lastReply = _replies.last;
-        _currentStatus = (lastReply.userId == 'usyeo7d2yzf2773') ? 'replied' : 'open';
+        _currentStatus =
+            (lastReply.userId == 'usyeo7d2yzf2773') ? 'replied' : 'open';
       }
-      await _feedbackService.updateFeedbackStatus(widget.feedback.id!, _currentStatus);
+      await _feedbackService.updateFeedbackStatus(
+        widget.feedback.id!,
+        _currentStatus,
+      );
     } catch (e) {
-      if (mounted) ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error: $e')));
+      if (mounted)
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Error: $e')));
     } finally {
       if (mounted) setState(() => _isSending = false);
     }
@@ -157,21 +185,24 @@ class _FeedbackDetailPageState extends State<FeedbackDetailPage> {
     if (isClosing) {
       final confirmed = await showDialog<bool>(
         context: context,
-        builder: (context) => AlertDialog(
-          title: const Text('Close Request?'),
-          content: const Text('Are you sure you want to close this feedback request?'),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context, false),
-              child: const Text('Cancel'),
+        builder:
+            (context) => AlertDialog(
+              title: const Text('Close Request?'),
+              content: const Text(
+                'Are you sure you want to close this feedback request?',
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context, false),
+                  child: const Text('Cancel'),
+                ),
+                TextButton(
+                  onPressed: () => Navigator.pop(context, true),
+                  style: TextButton.styleFrom(foregroundColor: Colors.red),
+                  child: const Text('Close'),
+                ),
+              ],
             ),
-            TextButton(
-              onPressed: () => Navigator.pop(context, true),
-              style: TextButton.styleFrom(foregroundColor: Colors.red),
-              child: const Text('Close'),
-            ),
-          ],
-        ),
       );
       if (confirmed != true) return;
       newStatus = 'closed';
@@ -181,15 +212,22 @@ class _FeedbackDetailPageState extends State<FeedbackDetailPage> {
         newStatus = 'open'; // Original message from user
       } else {
         final lastReply = _replies.last;
-        newStatus = (lastReply.userId == 'usyeo7d2yzf2773') ? 'replied' : 'open';
+        newStatus =
+            (lastReply.userId == 'usyeo7d2yzf2773') ? 'replied' : 'open';
       }
     }
 
     try {
-      await _feedbackService.updateFeedbackStatus(widget.feedback.id!, newStatus);
+      await _feedbackService.updateFeedbackStatus(
+        widget.feedback.id!,
+        newStatus,
+      );
       setState(() => _currentStatus = newStatus);
     } catch (e) {
-      if (mounted) ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error: $e')));
+      if (mounted)
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Error: $e')));
     }
   }
 
@@ -199,7 +237,10 @@ class _FeedbackDetailPageState extends State<FeedbackDetailPage> {
     const appBarColor = Colors.white;
 
     return AlioloScrollablePage(
-      title: Text(widget.feedback.title, style: const TextStyle(color: appBarColor, fontWeight: FontWeight.bold)),
+      title: Text(
+        widget.feedback.title,
+        style: const TextStyle(color: appBarColor, fontWeight: FontWeight.bold),
+      ),
       appBarColor: themeColor,
       actions: [
         IconButton(
@@ -210,8 +251,13 @@ class _FeedbackDetailPageState extends State<FeedbackDetailPage> {
           TextButton(
             onPressed: _toggleStatus,
             child: Text(
-              (_currentStatus == 'open' || _currentStatus == 'replied') ? 'CLOSE' : 'REOPEN',
-              style: const TextStyle(color: appBarColor, fontWeight: FontWeight.bold),
+              (_currentStatus == 'open' || _currentStatus == 'replied')
+                  ? 'CLOSE'
+                  : 'REOPEN',
+              style: const TextStyle(
+                color: appBarColor,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
       ],
@@ -222,14 +268,26 @@ class _FeedbackDetailPageState extends State<FeedbackDetailPage> {
           if (_isLoading)
             const Center(child: CircularProgressIndicator())
           else
-            ..._replies.asMap().entries.map((entry) => _buildReplyCard(entry.value, entry.key == _replies.length - 1)),
+            ..._replies.asMap().entries.map(
+              (entry) => _buildReplyCard(
+                entry.value,
+                entry.key == _replies.length - 1,
+              ),
+            ),
           if (_canReply && !_isEditingLast) _buildReplyInput(),
-          if (!_canReply && _currentStatus != 'closed' && !_isAdmin && !_isLoading)
+          if (!_canReply &&
+              _currentStatus != 'closed' &&
+              !_isAdmin &&
+              !_isLoading)
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
                 'Please wait for a response before replying again.',
-                style: TextStyle(color: Colors.grey[600], fontStyle: FontStyle.italic, fontSize: 13),
+                style: TextStyle(
+                  color: Colors.grey[600],
+                  fontStyle: FontStyle.italic,
+                  fontSize: 13,
+                ),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -244,7 +302,8 @@ class _FeedbackDetailPageState extends State<FeedbackDetailPage> {
     final isDark = theme.brightness == Brightness.dark;
     final subColor = isDark ? Colors.white70 : Colors.black54;
     final isLastMessage = _replies.isEmpty;
-    final isMyMessage = widget.feedback.userId == _authService.currentUser?.serverId;
+    final isMyMessage =
+        widget.feedback.userId == _authService.currentUser?.serverId;
 
     return Card(
       child: Padding(
@@ -256,7 +315,10 @@ class _FeedbackDetailPageState extends State<FeedbackDetailPage> {
               children: [
                 _StatusBadge(status: _currentStatus),
                 const Spacer(),
-                if (isLastMessage && isMyMessage && !_isEditingLast && _currentStatus != 'closed')
+                if (isLastMessage &&
+                    isMyMessage &&
+                    !_isEditingLast &&
+                    _currentStatus != 'closed')
                   IconButton(
                     icon: const Icon(Icons.edit, size: 16, color: Colors.grey),
                     onPressed: () {
@@ -264,8 +326,10 @@ class _FeedbackDetailPageState extends State<FeedbackDetailPage> {
                       setState(() => _isEditingLast = true);
                     },
                   ),
-                Text(widget.feedback.type.toUpperCase(),
-                    style: const TextStyle(fontSize: 10, color: Colors.grey)),
+                Text(
+                  widget.feedback.type.toUpperCase(),
+                  style: const TextStyle(fontSize: 10, color: Colors.grey),
+                ),
               ],
             ),
             const SizedBox(height: 12),
@@ -277,46 +341,106 @@ class _FeedbackDetailPageState extends State<FeedbackDetailPage> {
               _buildAttachments(widget.feedback.attachmentUrls),
             const Divider(height: 32),
             if (_isAdmin) ...[
-              _buildDetailRow(Icons.person_outline, 'User',
-                  '${widget.feedback.userName} (${widget.feedback.userEmail})', subColor),
-              _buildDetailRow(Icons.badge_outlined, 'User ID',
-                  widget.feedback.userId, subColor),
+              _buildDetailRow(
+                Icons.person_outline,
+                'User',
+                '${widget.feedback.userName} (${widget.feedback.userEmail})',
+                subColor,
+              ),
+              _buildDetailRow(
+                Icons.badge_outlined,
+                'User ID',
+                widget.feedback.userId,
+                subColor,
+              ),
               if (widget.feedback.metadata['context'] != null)
-                _buildDetailRow(Icons.folder_outlined, 'Context',
-                    widget.feedback.metadata['context'], subColor),
+                _buildDetailRow(
+                  Icons.folder_outlined,
+                  'Context',
+                  widget.feedback.metadata['context'],
+                  subColor,
+                ),
               if (widget.feedback.metadata['subject_id'] != null)
-                _buildDetailRow(Icons.tag, 'Subject ID',
-                    widget.feedback.metadata['subject_id'], subColor),
+                _buildDetailRow(
+                  Icons.tag,
+                  'Subject ID',
+                  widget.feedback.metadata['subject_id'],
+                  subColor,
+                ),
               if (widget.feedback.metadata['folder_id'] != null)
-                _buildDetailRow(Icons.tag, 'Folder ID',
-                    widget.feedback.metadata['folder_id'], subColor),
+                _buildDetailRow(
+                  Icons.tag,
+                  'Folder ID',
+                  widget.feedback.metadata['folder_id'],
+                  subColor,
+                ),
               if (widget.feedback.metadata['collection_id'] != null)
-                _buildDetailRow(Icons.tag, 'Collection ID',
-                    widget.feedback.metadata['collection_id'], subColor),
+                _buildDetailRow(
+                  Icons.tag,
+                  'Collection ID',
+                  widget.feedback.metadata['collection_id'],
+                  subColor,
+                ),
               if (widget.feedback.metadata['card_id'] != null)
-                _buildDetailRow(Icons.layers_outlined, 'Card ID',
-                    widget.feedback.metadata['card_id'], subColor),
-              
+                _buildDetailRow(
+                  Icons.layers_outlined,
+                  'Card ID',
+                  widget.feedback.metadata['card_id'],
+                  subColor,
+                ),
+
               // Rich Metadata for Admins
               const SizedBox(height: 8),
               const Divider(),
               const SizedBox(height: 8),
-              Text('TECHNICAL CONTEXT', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: subColor, letterSpacing: 1.1)),
+              Text(
+                'TECHNICAL CONTEXT',
+                style: TextStyle(
+                  fontSize: 10,
+                  fontWeight: FontWeight.bold,
+                  color: subColor,
+                  letterSpacing: 1.1,
+                ),
+              ),
               const SizedBox(height: 8),
-              _buildDetailRow(Icons.computer, 'Platform', 
-                  '${widget.feedback.metadata['platform'] ?? 'Unknown'} (v${widget.feedback.metadata['app_version'] ?? '?'})', subColor),
-              
+              _buildDetailRow(
+                Icons.computer,
+                'Platform',
+                '${widget.feedback.metadata['platform'] ?? 'Unknown'} (v${widget.feedback.metadata['app_version'] ?? '?'})',
+                subColor,
+              ),
+
               if (widget.feedback.metadata['browser'] != null)
-                _buildDetailRow(Icons.language, 'Browser', widget.feedback.metadata['browser'], subColor),
-              
+                _buildDetailRow(
+                  Icons.language,
+                  'Browser',
+                  widget.feedback.metadata['browser'],
+                  subColor,
+                ),
+
               if (widget.feedback.metadata['os_version'] != null)
-                _buildDetailRow(Icons.settings_applications, 'OS Version', widget.feedback.metadata['os_version'], subColor),
-              
+                _buildDetailRow(
+                  Icons.settings_applications,
+                  'OS Version',
+                  widget.feedback.metadata['os_version'],
+                  subColor,
+                ),
+
               if (widget.feedback.metadata['device_model'] != null)
-                _buildDetailRow(Icons.phone_android, 'Device', widget.feedback.metadata['device_model'], subColor),
-              
+                _buildDetailRow(
+                  Icons.phone_android,
+                  'Device',
+                  widget.feedback.metadata['device_model'],
+                  subColor,
+                ),
+
               if (widget.feedback.metadata['distro'] != null)
-                _buildDetailRow(Icons.terminal, 'Linux Distro', widget.feedback.metadata['distro'], subColor),
+                _buildDetailRow(
+                  Icons.terminal,
+                  'Linux Distro',
+                  widget.feedback.metadata['distro'],
+                  subColor,
+                ),
 
               if (widget.feedback.metadata['user_agent'] != null)
                 Padding(
@@ -329,7 +453,11 @@ class _FeedbackDetailPageState extends State<FeedbackDetailPage> {
                       Expanded(
                         child: Text(
                           'UA: ${widget.feedback.metadata['user_agent']}',
-                          style: TextStyle(fontSize: 10, color: subColor, fontStyle: FontStyle.italic),
+                          style: TextStyle(
+                            fontSize: 10,
+                            color: subColor,
+                            fontStyle: FontStyle.italic,
+                          ),
                         ),
                       ),
                     ],
@@ -337,8 +465,12 @@ class _FeedbackDetailPageState extends State<FeedbackDetailPage> {
                 ),
             ] else ...[
               if (widget.feedback.metadata['context'] != null)
-                _buildDetailRow(Icons.folder_outlined, 'Context',
-                    widget.feedback.metadata['context'], subColor),
+                _buildDetailRow(
+                  Icons.folder_outlined,
+                  'Context',
+                  widget.feedback.metadata['context'],
+                  subColor,
+                ),
             ],
           ],
         ),
@@ -360,9 +492,16 @@ class _FeedbackDetailPageState extends State<FeedbackDetailPage> {
           children: [
             if (isReply)
               TextButton.icon(
-                icon: const Icon(Icons.delete_outline, size: 16, color: Colors.red),
+                icon: const Icon(
+                  Icons.delete_outline,
+                  size: 16,
+                  color: Colors.red,
+                ),
                 onPressed: _isSending ? null : _deleteLastReply,
-                label: const Text('Delete', style: TextStyle(color: Colors.red)),
+                label: const Text(
+                  'Delete',
+                  style: TextStyle(color: Colors.red),
+                ),
               ),
             const Spacer(),
             TextButton(
@@ -371,7 +510,14 @@ class _FeedbackDetailPageState extends State<FeedbackDetailPage> {
             ),
             ElevatedButton(
               onPressed: _isSending ? null : _saveEdit,
-              child: _isSending ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2)) : const Text('Save'),
+              child:
+                  _isSending
+                      ? const SizedBox(
+                        width: 16,
+                        height: 16,
+                        child: CircularProgressIndicator(strokeWidth: 2),
+                      )
+                      : const Text('Save'),
             ),
           ],
         ),
@@ -379,7 +525,12 @@ class _FeedbackDetailPageState extends State<FeedbackDetailPage> {
     );
   }
 
-  Widget _buildDetailRow(IconData icon, String label, String value, Color color) {
+  Widget _buildDetailRow(
+    IconData icon,
+    String label,
+    String value,
+    Color color,
+  ) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 2.0),
       child: Row(
@@ -387,9 +538,14 @@ class _FeedbackDetailPageState extends State<FeedbackDetailPage> {
         children: [
           Icon(icon, size: 14, color: color),
           const SizedBox(width: 8),
-          Text('$label: ',
-              style: TextStyle(
-                  fontSize: 12, fontWeight: FontWeight.bold, color: color)),
+          Text(
+            '$label: ',
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
+              color: color,
+            ),
+          ),
           Expanded(
             child: Text(value, style: TextStyle(fontSize: 12, color: color)),
           ),
@@ -406,7 +562,10 @@ class _FeedbackDetailPageState extends State<FeedbackDetailPage> {
         margin: const EdgeInsets.symmetric(vertical: 4),
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: isMe ? ThemeService().primaryColor.withValues(alpha: 0.1) : Colors.grey.withValues(alpha: 0.1),
+          color:
+              isMe
+                  ? ThemeService().primaryColor.withValues(alpha: 0.1)
+                  : Colors.grey.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(12),
         ),
         child: Column(
@@ -433,7 +592,8 @@ class _FeedbackDetailPageState extends State<FeedbackDetailPage> {
               _buildEditInput(isReply: true)
             else
               Text(reply.content),
-            if (reply.attachmentUrls.isNotEmpty) _buildAttachments(reply.attachmentUrls),
+            if (reply.attachmentUrls.isNotEmpty)
+              _buildAttachments(reply.attachmentUrls),
           ],
         ),
       ),
@@ -443,21 +603,59 @@ class _FeedbackDetailPageState extends State<FeedbackDetailPage> {
   Widget _buildReplyInput() {
     return Padding(
       padding: const EdgeInsets.only(top: 16),
-      child: Row(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(
-            child: TextField(
-              controller: _replyController,
-              decoration: const InputDecoration(
-                hintText: 'Type your reply...',
-                border: OutlineInputBorder(),
-              ),
-              onSubmitted: (_) => _sendReply(),
+          if (_attachments.isNotEmpty) ...[
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children:
+                  _attachments.map((file) {
+                    return InputChip(
+                      avatar: const Icon(Icons.image_outlined, size: 18),
+                      label: ConstrainedBox(
+                        constraints: const BoxConstraints(maxWidth: 180),
+                        child: Text(file.name, overflow: TextOverflow.ellipsis),
+                      ),
+                      onDeleted:
+                          _isSending
+                              ? null
+                              : () => setState(() => _attachments.remove(file)),
+                    );
+                  }).toList(),
             ),
-          ),
-          IconButton(
-            icon: _isSending ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2)) : const Icon(Icons.send),
-            onPressed: _sendReply,
+            const SizedBox(height: 8),
+          ],
+          Row(
+            children: [
+              IconButton(
+                tooltip: 'Attach image',
+                icon: const Icon(Icons.attach_file),
+                onPressed: _isSending ? null : _pickReplyImages,
+              ),
+              Expanded(
+                child: TextField(
+                  controller: _replyController,
+                  decoration: const InputDecoration(
+                    hintText: 'Type your reply...',
+                    border: OutlineInputBorder(),
+                  ),
+                  onSubmitted: (_) => _sendReply(),
+                ),
+              ),
+              IconButton(
+                icon:
+                    _isSending
+                        ? const SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        )
+                        : const Icon(Icons.send),
+                onPressed: _isSending ? null : _sendReply,
+              ),
+            ],
           ),
         ],
       ),
@@ -469,16 +667,30 @@ class _FeedbackDetailPageState extends State<FeedbackDetailPage> {
       padding: const EdgeInsets.only(top: 12),
       child: Wrap(
         spacing: 8,
-        children: urls.map((url) => GestureDetector(
-          onTap: () => launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication),
-          child: Tooltip(
-            message: 'Click to view original',
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: Image.network(url, width: 60, height: 60, fit: BoxFit.cover),
-            ),
-          ),
-        )).toList(),
+        children:
+            urls
+                .map(
+                  (url) => GestureDetector(
+                    onTap:
+                        () => launchUrl(
+                          Uri.parse(url),
+                          mode: LaunchMode.externalApplication,
+                        ),
+                    child: Tooltip(
+                      message: 'Click to view original',
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Image.network(
+                          url,
+                          width: 60,
+                          height: 60,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ),
+                )
+                .toList(),
       ),
     );
   }
@@ -491,18 +703,28 @@ class _StatusBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Color color = Colors.grey;
-    if (status == 'open') color = Colors.green;
-    else if (status == 'replied') color = Colors.blue;
-    else if (status == 'closed') color = Colors.red;
+    if (status == 'open')
+      color = Colors.green;
+    else if (status == 'replied')
+      color = Colors.blue;
+    else if (status == 'closed')
+      color = Colors.red;
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.1), 
+        color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(4),
         border: Border.all(color: color.withValues(alpha: 0.5), width: 0.5),
       ),
-      child: Text(status.toUpperCase(), style: TextStyle(color: color, fontSize: 10, fontWeight: FontWeight.bold)),
+      child: Text(
+        status.toUpperCase(),
+        style: TextStyle(
+          color: color,
+          fontSize: 10,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
     );
   }
 }

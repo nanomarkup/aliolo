@@ -79,7 +79,7 @@ router.post('/feedback_replies', async (c) => {
             VALUES (?, ?, ?, ?, ?)
             ON CONFLICT(id) DO UPDATE SET
                 content = excluded.content,
-                updated_at = CURRENT_TIMESTAMP
+                attachment_urls = excluded.attachment_urls
         `).bind(id, feedback_id || null, user.id, content, JSON.stringify(attachment_urls || [])).run();
         
         if (feedback_id) {

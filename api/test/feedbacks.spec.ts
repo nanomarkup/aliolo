@@ -105,5 +105,27 @@ describe('Feedbacks API', () => {
     const reply = replies.find((item) => item.id === replyId);
     expect(reply).toBeDefined();
     expect(reply.attachment_urls).toContain(`/feedbacks/${feedbackId}/${replyId}/`);
+
+    const editReplyRes = await app.request('/api/feedback_replies', {
+      method: 'POST',
+      body: JSON.stringify({
+        id: replyId,
+        content: 'Edited reply content',
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Session-Id': sessionId,
+      },
+    }, env);
+    expect(editReplyRes.status).toBe(200);
+
+    const editedRepliesRes = await app.request(`/api/feedbacks/${feedbackId}/replies`, {
+      headers: { 'X-Session-Id': sessionId },
+    }, env);
+    expect(editedRepliesRes.status).toBe(200);
+
+    const editedReplies = await editedRepliesRes.json() as any[];
+    const editedReply = editedReplies.find((item) => item.id === replyId);
+    expect(editedReply.content).toBe('Edited reply content');
   });
 });
