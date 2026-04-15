@@ -182,6 +182,7 @@ CREATE TABLE IF NOT EXISTS feedbacks (
   id TEXT PRIMARY KEY,
   user_id TEXT REFERENCES profiles(id) NOT NULL,
   type TEXT NOT NULL,
+  title TEXT NOT NULL,
   content TEXT NOT NULL,
   status TEXT DEFAULT 'open',
   attachment_urls TEXT,

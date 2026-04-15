@@ -30,18 +30,19 @@ router.post('/feedbacks', async (c) => {
     if (!user) return c.json({ error: 'Unauthorized' }, 401);
 
     const body = await c.req.json();
-    const { id, type, content, attachment_urls, metadata, status } = body;
+    const { id, type, title, content, attachment_urls, metadata, status } = body;
 
     try {
         await c.env.DB.prepare(`
-            INSERT INTO feedbacks (id, user_id, type, content, attachment_urls, metadata, status, updated_at)
-            VALUES (?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+            INSERT INTO feedbacks (id, user_id, type, title, content, attachment_urls, metadata, status, updated_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
             ON CONFLICT(id) DO UPDATE SET
+                title = COALESCE(excluded.title, feedbacks.title),
                 content = excluded.content,
                 status = excluded.status,
                 updated_at = CURRENT_TIMESTAMP
         `).bind(
-            id, user.id, type, content, 
+            id, user.id, type, title, content,
             JSON.stringify(attachment_urls || []), 
             JSON.stringify(metadata || {}),
             status || 'open'

@@ -17,6 +17,7 @@ describe('Feedbacks API', () => {
     const feedback = {
       id: 'test-feedback-id',
       type: 'bug',
+      title: 'Test bug',
       content: 'Test bug report'
     };
 
@@ -59,6 +60,7 @@ describe('Feedbacks API', () => {
       body: JSON.stringify({
         id: feedbackId,
         type: 'bug',
+        title: 'Feedback title',
         content: 'Feedback with attachment',
         attachment_urls: [feedbackAttachment],
       }),
