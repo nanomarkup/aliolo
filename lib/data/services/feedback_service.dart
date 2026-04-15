@@ -21,15 +21,44 @@ class FeedbackService {
 
   final ValueNotifier<bool> pendingNotifications = ValueNotifier<bool>(false);
 
-  Future<void> submitFeedback(FeedbackModel feedback, List<XFile> attachments) async {
+  static String feedbackAttachmentPath(String feedbackId, String fileName) {
+    return 'feedbacks/$feedbackId/$fileName';
+  }
+
+  static String replyAttachmentPath(
+    String feedbackId,
+    String replyId,
+    String fileName,
+  ) {
+    return 'feedbacks/$feedbackId/$replyId/$fileName';
+  }
+
+  Future<void> submitFeedback(
+    FeedbackModel feedback,
+    List<XFile> attachments,
+  ) async {
     try {
+      final feedbackId =
+          feedback.id == null || feedback.id!.isEmpty
+              ? _uuid.v4()
+              : feedback.id!;
+
       // 1. Gather Rich Metadata
       final packageInfo = await PackageInfo.fromPlatform();
       final deviceInfo = DeviceInfoPlugin();
       final Map<String, dynamic> extraMetadata = {
         'app_version': packageInfo.version,
         'build_number': packageInfo.buildNumber,
-        'platform': kIsWeb ? 'web' : (Platform.isAndroid ? 'android' : (Platform.isIOS ? 'ios' : (Platform.isLinux ? 'linux' : (Platform.isWindows ? 'windows' : 'macos')))),
+        'platform':
+            kIsWeb
+                ? 'web'
+                : (Platform.isAndroid
+                    ? 'android'
+                    : (Platform.isIOS
+                        ? 'ios'
+                        : (Platform.isLinux
+                            ? 'linux'
+                            : (Platform.isWindows ? 'windows' : 'macos')))),
         'timestamp': DateTime.now().toIso8601String(),
       };
 
@@ -63,11 +92,11 @@ class FeedbackService {
         for (var file in attachments) {
           final fileExt = p.extension(file.name).toLowerCase();
           final fileName = '${_uuid.v4()}$fileExt';
-          final filePath = 'feedback/$fileName';
+          final filePath = feedbackAttachmentPath(feedbackId, fileName);
 
           final bytes = await file.readAsBytes();
           final response = await _cfClient.client.post(
-            '/api/upload/feedback_attachments/$filePath',
+            '/api/upload/aliolo-media/$filePath',
             data: Stream.fromIterable([bytes]),
             options: Options(
               headers: {
@@ -84,8 +113,9 @@ class FeedbackService {
       }
 
       final feedbackData = feedback.toJson();
+      feedbackData['id'] = feedbackId;
       feedbackData['attachment_urls'] = uploadedUrls;
-      
+
       final Map<String, dynamic> finalMetadata = Map.from(feedback.metadata);
       finalMetadata.addAll(extraMetadata);
       feedbackData['metadata'] = finalMetadata;
@@ -100,10 +130,14 @@ class FeedbackService {
   String _getContentType(String ext) {
     switch (ext) {
       case '.jpg':
-      case '.jpeg': return 'image/jpeg';
-      case '.webp': return 'image/webp';
-      case '.gif': return 'image/gif';
-      default: return 'image/png';
+      case '.jpeg':
+        return 'image/jpeg';
+      case '.webp':
+        return 'image/webp';
+      case '.gif':
+        return 'image/gif';
+      default:
+        return 'image/png';
     }
   }
 
@@ -111,7 +145,9 @@ class FeedbackService {
     try {
       final response = await _cfClient.client.get('/api/feedbacks');
       if (response.statusCode == 200) {
-        return (response.data as List).map((json) => FeedbackModel.fromJson(json)).toList();
+        return (response.data as List)
+            .map((json) => FeedbackModel.fromJson(json))
+            .toList();
       }
     } catch (e) {
       debugPrint('Error fetching feedbacks: $e');
@@ -121,10 +157,10 @@ class FeedbackService {
 
   Future<void> updateFeedbackStatus(String feedbackId, String status) async {
     try {
-      await _cfClient.client.post('/api/feedbacks', data: {
-        'id': feedbackId,
-        'status': status,
-      });
+      await _cfClient.client.post(
+        '/api/feedbacks',
+        data: {'id': feedbackId, 'status': status},
+      );
       await hasPendingNotifications();
     } catch (e) {
       debugPrint('Error updating feedback status: $e');
@@ -134,10 +170,10 @@ class FeedbackService {
 
   Future<void> updateFeedbackContent(String feedbackId, String content) async {
     try {
-      await _cfClient.client.post('/api/feedbacks', data: {
-        'id': feedbackId,
-        'content': content,
-      });
+      await _cfClient.client.post(
+        '/api/feedbacks',
+        data: {'id': feedbackId, 'content': content},
+      );
     } catch (e) {
       debugPrint('Error updating feedback content: $e');
       rethrow;
@@ -146,10 +182,10 @@ class FeedbackService {
 
   Future<void> updateReplyContent(String replyId, String content) async {
     try {
-      await _cfClient.client.post('/api/feedback_replies', data: {
-        'id': replyId,
-        'content': content,
-      });
+      await _cfClient.client.post(
+        '/api/feedback_replies',
+        data: {'id': replyId, 'content': content},
+      );
     } catch (e) {
       debugPrint('Error updating reply content: $e');
       rethrow;
@@ -167,17 +203,30 @@ class FeedbackService {
     }
   }
 
-  Future<void> submitReply(FeedbackReplyModel reply, List<XFile> attachments) async {
+  Future<void> submitReply(
+    FeedbackReplyModel reply,
+    List<XFile> attachments,
+  ) async {
     try {
+      final feedbackId = reply.feedbackId;
+      if (feedbackId.isEmpty) {
+        throw ArgumentError(
+          'feedbackId is required to upload reply attachments.',
+        );
+      }
+
+      final replyId =
+          reply.id == null || reply.id!.isEmpty ? _uuid.v4() : reply.id!;
+
       List<String> uploadedUrls = [];
       for (var file in attachments) {
         final fileExt = p.extension(file.name).toLowerCase();
         final fileName = '${_uuid.v4()}$fileExt';
-        final filePath = 'replies/$fileName';
+        final filePath = replyAttachmentPath(feedbackId, replyId, fileName);
 
         final bytes = await file.readAsBytes();
         final response = await _cfClient.client.post(
-          '/api/upload/feedback_attachments/$filePath',
+          '/api/upload/aliolo-media/$filePath',
           data: Stream.fromIterable([bytes]),
           options: Options(
             headers: {
@@ -192,6 +241,7 @@ class FeedbackService {
       }
 
       final replyData = reply.toJson();
+      replyData['id'] = replyId;
       replyData['attachment_urls'] = uploadedUrls;
 
       await _cfClient.client.post('/api/feedback_replies', data: replyData);
@@ -204,9 +254,13 @@ class FeedbackService {
 
   Future<List<FeedbackReplyModel>> getReplies(String feedbackId) async {
     try {
-      final response = await _cfClient.client.get('/api/feedbacks/$feedbackId/replies');
+      final response = await _cfClient.client.get(
+        '/api/feedbacks/$feedbackId/replies',
+      );
       if (response.statusCode == 200) {
-        return (response.data as List).map((json) => FeedbackReplyModel.fromJson(json)).toList();
+        return (response.data as List)
+            .map((json) => FeedbackReplyModel.fromJson(json))
+            .toList();
       }
     } catch (e) {
       debugPrint('Error fetching replies: $e');
@@ -216,7 +270,9 @@ class FeedbackService {
 
   Future<bool> hasPendingNotifications() async {
     try {
-      final response = await _cfClient.client.get('/api/feedbacks/notifications');
+      final response = await _cfClient.client.get(
+        '/api/feedbacks/notifications',
+      );
       if (response.statusCode == 200) {
         final hasNotif = response.data['has_notif'] == true;
         pendingNotifications.value = hasNotif;

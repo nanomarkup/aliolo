@@ -71,7 +71,8 @@ class CardService with ChangeNotifier {
           final s = SubjectModel.fromJson(json);
           if (json['owner_name'] != null) s.ownerName = json['owner_name'];
           if (json['card_count'] != null) s.cardCount = json['card_count'];
-          if (json['is_on_dashboard'] != null) s.isOnDashboard = json['is_on_dashboard'] == true;
+          if (json['is_on_dashboard'] != null)
+            s.isOnDashboard = json['is_on_dashboard'] == true;
           return s;
         }).toList();
       }
@@ -83,7 +84,10 @@ class CardService with ChangeNotifier {
 
   Future<List<CardModel>> getCardsBySubject(String subjectId) async {
     try {
-      final response = await _cfClient.client.get('/api/cards', queryParameters: {'subject_id': subjectId});
+      final response = await _cfClient.client.get(
+        '/api/cards',
+        queryParameters: {'subject_id': subjectId},
+      );
       if (response.statusCode == 200 && response.data != null) {
         final List<dynamic> data = response.data;
         return data.map((json) => CardModel.fromJson(json)).toList();
@@ -111,36 +115,32 @@ class CardService with ChangeNotifier {
   }
 
   Future<void> deleteMediaForCard(CardModel card) async {
-    final Map<String, List<String>> bucketFiles = {
-      'card_images': [],
-      'card_audio': [],
-      'card_videos': [],
-    };
+    final Map<String, List<String>> bucketFiles = {'aliolo-media': []};
 
-    void addUrl(String? url, String bucket) {
+    void addUrl(String? url) {
       if (url == null || url.isEmpty) return;
       final path = _extractFilePathFromUrl(url);
-      if (path != null) bucketFiles[bucket]!.add(path);
+      if (path != null) bucketFiles['aliolo-media']!.add(path);
     }
 
     // Add base media
     for (var url in card.imagesBase) {
-      addUrl(url, 'card_images');
+      addUrl(url);
     }
-    addUrl(card.audio, 'card_audio');
-    addUrl(card.video, 'card_videos');
+    addUrl(card.audio);
+    addUrl(card.video);
 
     // Add localized media
     for (var urls in card.imagesLocal.values) {
       for (var url in urls) {
-        addUrl(url, 'card_images');
+        addUrl(url);
       }
     }
     for (var url in card.audios.values) {
-      addUrl(url, 'card_audio');
+      addUrl(url);
     }
     for (var url in card.videos.values) {
-      addUrl(url, 'card_videos');
+      addUrl(url);
     }
 
     for (var entry in bucketFiles.entries) {
@@ -149,21 +149,25 @@ class CardService with ChangeNotifier {
           try {
             await _cfClient.client.delete('/api/storage/${entry.key}/$path');
           } catch (e) {
-            AppLogger.log('Error deleting media from Cloudflare ${entry.key}: $e');
+            AppLogger.log(
+              'Error deleting media from Cloudflare ${entry.key}: $e',
+            );
           }
         }
       }
     }
   }
 
-  Future<void> deleteCardMediaFile(String bucket, String url) async {
+  Future<void> deleteCardMediaFile(String url) async {
     final path = _extractFilePathFromUrl(url);
     if (path == null) return;
 
     try {
-      await _cfClient.client.delete('/api/storage/$bucket/$path');
+      await _cfClient.client.delete('/api/storage/aliolo-media/$path');
     } catch (e) {
-      AppLogger.log('Error deleting media file from Cloudflare $bucket: $e');
+      AppLogger.log(
+        'Error deleting media file from Cloudflare aliolo-media: $e',
+      );
     }
   }
 
@@ -181,7 +185,10 @@ class CardService with ChangeNotifier {
 
   Future<void> addCard(CardModel card) async {
     try {
-      final response = await _cfClient.client.post('/api/cards', data: card.toJson());
+      final response = await _cfClient.client.post(
+        '/api/cards',
+        data: card.toJson(),
+      );
       if (response.statusCode == 200) {
         notifyListeners();
         return;
@@ -195,7 +202,10 @@ class CardService with ChangeNotifier {
 
   Future<List<FolderModel>> getFoldersByPillar(int pillarId) async {
     try {
-      final response = await _cfClient.client.get('/api/folders', queryParameters: {'pillar_id': pillarId.toString()});
+      final response = await _cfClient.client.get(
+        '/api/folders',
+        queryParameters: {'pillar_id': pillarId.toString()},
+      );
       if (response.statusCode == 200 && response.data != null) {
         final List<dynamic> data = response.data;
         return data.map((json) {
@@ -230,7 +240,10 @@ class CardService with ChangeNotifier {
   Future<List<FolderModel>> getFoldersByIds(List<String> ids) async {
     if (ids.isEmpty) return [];
     try {
-      final response = await _cfClient.client.get('/api/folders', queryParameters: {'ids': ids.join(',')});
+      final response = await _cfClient.client.get(
+        '/api/folders',
+        queryParameters: {'ids': ids.join(',')},
+      );
       if (response.statusCode == 200 && response.data != null) {
         final List<dynamic> data = response.data;
         return data.map((json) {
@@ -247,7 +260,10 @@ class CardService with ChangeNotifier {
 
   Future<void> addFolder(FolderModel folder) async {
     try {
-      final response = await _cfClient.client.post('/api/folders', data: folder.toJson());
+      final response = await _cfClient.client.post(
+        '/api/folders',
+        data: folder.toJson(),
+      );
       if (response.statusCode == 200) {
         notifyListeners();
         return;
@@ -282,19 +298,26 @@ class CardService with ChangeNotifier {
 
   // --- Collections ---
 
-  Future<List<CollectionModel>> getAllCollections({bool rootOnly = true, String? filter}) async {
+  Future<List<CollectionModel>> getAllCollections({
+    bool rootOnly = true,
+    String? filter,
+  }) async {
     try {
       final queryParams = {
         'root_only': rootOnly.toString(),
         if (filter != null) 'filter': filter,
       };
-      final response = await _cfClient.client.get('/api/collections', queryParameters: queryParams);
+      final response = await _cfClient.client.get(
+        '/api/collections',
+        queryParameters: queryParams,
+      );
       if (response.statusCode == 200 && response.data != null) {
         final List<dynamic> data = response.data;
         return data.map((json) {
           final c = CollectionModel.fromJson(json);
           if (json['owner_name'] != null) c.ownerName = json['owner_name'];
-          if (json['is_on_dashboard'] != null) c.isOnDashboard = json['is_on_dashboard'] == true;
+          if (json['is_on_dashboard'] != null)
+            c.isOnDashboard = json['is_on_dashboard'] == true;
           return c;
         }).toList();
       }
@@ -304,7 +327,12 @@ class CardService with ChangeNotifier {
     return [];
   }
 
-  Future<List<CollectionModel>> getCollectionsByPillar(int pillarId, {String? folderId, bool rootOnly = true, String? filter}) async {
+  Future<List<CollectionModel>> getCollectionsByPillar(
+    int pillarId, {
+    String? folderId,
+    bool rootOnly = true,
+    String? filter,
+  }) async {
     try {
       final queryParams = {
         'pillar_id': pillarId.toString(),
@@ -312,15 +340,19 @@ class CardService with ChangeNotifier {
         'root_only': rootOnly.toString(),
         if (filter != null) 'filter': filter,
       };
-      
-      final response = await _cfClient.client.get('/api/collections', queryParameters: queryParams);
-      
+
+      final response = await _cfClient.client.get(
+        '/api/collections',
+        queryParameters: queryParams,
+      );
+
       if (response.statusCode == 200 && response.data != null) {
         final List<dynamic> data = response.data;
         return data.map((json) {
           final c = CollectionModel.fromJson(json);
           if (json['owner_name'] != null) c.ownerName = json['owner_name'];
-          if (json['is_on_dashboard'] != null) c.isOnDashboard = json['is_on_dashboard'] == true;
+          if (json['is_on_dashboard'] != null)
+            c.isOnDashboard = json['is_on_dashboard'] == true;
           return c;
         }).toList();
       }
@@ -330,12 +362,18 @@ class CardService with ChangeNotifier {
     return [];
   }
 
-  Future<void> addCollection(CollectionModel collection, List<String> subjectIds) async {
+  Future<void> addCollection(
+    CollectionModel collection,
+    List<String> subjectIds,
+  ) async {
     try {
       final body = collection.toJson();
       body['subject_ids'] = subjectIds;
-      
-      final response = await _cfClient.client.post('/api/collections', data: body);
+
+      final response = await _cfClient.client.post(
+        '/api/collections',
+        data: body,
+      );
       if (response.statusCode == 200) {
         notifyListeners();
         return;
@@ -346,12 +384,15 @@ class CardService with ChangeNotifier {
     }
   }
 
-  Future<void> toggleCollectionOnDashboard(String collectionId, bool show) async {
+  Future<void> toggleCollectionOnDashboard(
+    String collectionId,
+    bool show,
+  ) async {
     try {
-      final response = await _cfClient.client.post('/api/dashboard/toggle', data: {
-        'collection_id': collectionId,
-        'show': show,
-      });
+      final response = await _cfClient.client.post(
+        '/api/dashboard/toggle',
+        data: {'collection_id': collectionId, 'show': show},
+      );
       if (response.statusCode == 200) {
         notifyListeners();
         return;
@@ -381,7 +422,8 @@ class CardService with ChangeNotifier {
         final json = response.data;
         final c = CollectionModel.fromJson(json);
         if (json['owner_name'] != null) c.ownerName = json['owner_name'];
-        if (json['is_on_dashboard'] != null) c.isOnDashboard = json['is_on_dashboard'] == true;
+        if (json['is_on_dashboard'] != null)
+          c.isOnDashboard = json['is_on_dashboard'] == true;
         return c;
       }
     } catch (e) {
@@ -392,17 +434,25 @@ class CardService with ChangeNotifier {
 
   // --- Localized Media Uploads ---
 
-  Future<String?> uploadCardImage(String cardId, XFile file, String lang) async => 
-      _uploadFile(bucket: 'card_images', cardId: cardId, file: file, lang: lang);
+  Future<String?> uploadCardImage(
+    String cardId,
+    XFile file,
+    String lang,
+  ) async => _uploadFile(cardId: cardId, file: file, lang: lang);
 
-  Future<String?> uploadCardAudio(String cardId, XFile file, String lang) async => 
-      _uploadFile(bucket: 'card_audio', cardId: cardId, file: file, lang: lang);
+  Future<String?> uploadCardAudio(
+    String cardId,
+    XFile file,
+    String lang,
+  ) async => _uploadFile(cardId: cardId, file: file, lang: lang);
 
-  Future<String?> uploadCardVideo(String cardId, XFile file, String lang) async => 
-      _uploadFile(bucket: 'card_videos', cardId: cardId, file: file, lang: lang);
+  Future<String?> uploadCardVideo(
+    String cardId,
+    XFile file,
+    String lang,
+  ) async => _uploadFile(cardId: cardId, file: file, lang: lang);
 
   Future<String?> _uploadFile({
-    required String bucket,
     required String cardId,
     required XFile file,
     required String lang,
@@ -418,7 +468,7 @@ class CardService with ChangeNotifier {
 
       final bytes = await file.readAsBytes();
       final response = await _cfClient.client.post(
-        '/api/upload/$bucket/$path',
+        '/api/upload/aliolo-media/$path',
         data: Stream.fromIterable([bytes]),
         options: Options(
           headers: {
@@ -432,32 +482,42 @@ class CardService with ChangeNotifier {
         return response.data['url'];
       }
     } catch (e) {
-      AppLogger.log('Error uploading file to Cloudflare $bucket: $e');
+      AppLogger.log('Error uploading file to Cloudflare aliolo-media: $e');
     }
     return null;
   }
 
   String _getContentType(String ext) {
     switch (ext.toLowerCase()) {
-      case '.jpg': case '.jpeg': return 'image/jpeg';
-      case '.png': return 'image/png';
-      case '.mp3': return 'audio/mpeg';
-      case '.mp4': return 'video/mp4';
-      case '.webm': return 'video/webm';
-      case '.wav': return 'audio/wav';
-      default: return 'application/octet-stream';
+      case '.jpg':
+      case '.jpeg':
+        return 'image/jpeg';
+      case '.png':
+        return 'image/png';
+      case '.mp3':
+        return 'audio/mpeg';
+      case '.mp4':
+        return 'video/mp4';
+      case '.webm':
+        return 'video/webm';
+      case '.wav':
+        return 'audio/wav';
+      default:
+        return 'application/octet-stream';
     }
   }
 
-  Future<void> addToDashboard(String subjectId) async => toggleSubjectOnDashboard(subjectId, true);
-  Future<void> removeFromDashboard(String subjectId) async => toggleSubjectOnDashboard(subjectId, false);
+  Future<void> addToDashboard(String subjectId) async =>
+      toggleSubjectOnDashboard(subjectId, true);
+  Future<void> removeFromDashboard(String subjectId) async =>
+      toggleSubjectOnDashboard(subjectId, false);
 
   Future<void> toggleSubjectOnDashboard(String subjectId, bool show) async {
     try {
-      final response = await _cfClient.client.post('/api/dashboard/toggle', data: {
-        'subject_id': subjectId,
-        'show': show,
-      });
+      final response = await _cfClient.client.post(
+        '/api/dashboard/toggle',
+        data: {'subject_id': subjectId, 'show': show},
+      );
       if (response.statusCode == 200) {
         notifyListeners();
         return;
@@ -468,7 +528,12 @@ class CardService with ChangeNotifier {
     }
   }
 
-  Future<List<SubjectModel>> getSubjectsByPillar(int pillarId, {String? folderId, bool rootOnly = true, String? filter}) async {
+  Future<List<SubjectModel>> getSubjectsByPillar(
+    int pillarId, {
+    String? folderId,
+    bool rootOnly = true,
+    String? filter,
+  }) async {
     try {
       final queryParams = {
         if (pillarId >= 0) 'pillar_id': pillarId.toString(),
@@ -476,16 +541,20 @@ class CardService with ChangeNotifier {
         'root_only': rootOnly.toString(),
         if (filter != null) 'filter': filter,
       };
-      
-      final response = await _cfClient.client.get('/api/subjects', queryParameters: queryParams);
-      
+
+      final response = await _cfClient.client.get(
+        '/api/subjects',
+        queryParameters: queryParams,
+      );
+
       if (response.statusCode == 200 && response.data != null) {
         final List<dynamic> data = response.data;
         return data.map((json) {
           final s = SubjectModel.fromJson(json);
           if (json['owner_name'] != null) s.ownerName = json['owner_name'];
           if (json['card_count'] != null) s.cardCount = json['card_count'];
-          if (json['is_on_dashboard'] != null) s.isOnDashboard = json['is_on_dashboard'] == true;
+          if (json['is_on_dashboard'] != null)
+            s.isOnDashboard = json['is_on_dashboard'] == true;
           return s;
         }).toList();
       }
@@ -497,7 +566,10 @@ class CardService with ChangeNotifier {
 
   Future<void> addSubject(SubjectModel subject) async {
     try {
-      final response = await _cfClient.client.post('/api/subjects', data: subject.toJson());
+      final response = await _cfClient.client.post(
+        '/api/subjects',
+        data: subject.toJson(),
+      );
       if (response.statusCode == 200) {
         notifyListeners();
         return;
@@ -511,14 +583,18 @@ class CardService with ChangeNotifier {
   Future<List<SubjectModel>> getSubjectsByIds(List<String> ids) async {
     if (ids.isEmpty) return [];
     try {
-      final response = await _cfClient.client.get('/api/subjects', queryParameters: {'ids': ids.join(',')});
+      final response = await _cfClient.client.get(
+        '/api/subjects',
+        queryParameters: {'ids': ids.join(',')},
+      );
       if (response.statusCode == 200 && response.data != null) {
         final List<dynamic> data = response.data;
         return data.map((json) {
           final s = SubjectModel.fromJson(json);
           if (json['owner_name'] != null) s.ownerName = json['owner_name'];
           if (json['card_count'] != null) s.cardCount = json['card_count'];
-          if (json['is_on_dashboard'] != null) s.isOnDashboard = json['is_on_dashboard'] == true;
+          if (json['is_on_dashboard'] != null)
+            s.isOnDashboard = json['is_on_dashboard'] == true;
           return s;
         }).toList();
       }
@@ -543,14 +619,20 @@ class CardService with ChangeNotifier {
 
   Future<SubjectModel?> getSubjectById(String id) async {
     try {
-      final response = await _cfClient.client.get('/api/subjects', queryParameters: {'ids': id});
+      final response = await _cfClient.client.get(
+        '/api/subjects',
+        queryParameters: {'ids': id},
+      );
       if (response.statusCode == 200 && response.data != null) {
         final List<dynamic> data = response.data;
         if (data.isNotEmpty) {
           final s = SubjectModel.fromJson(data.first);
-          if (data.first['owner_name'] != null) s.ownerName = data.first['owner_name'];
-          if (data.first['card_count'] != null) s.cardCount = data.first['card_count'];
-          if (data.first['is_on_dashboard'] != null) s.isOnDashboard = data.first['is_on_dashboard'] == true;
+          if (data.first['owner_name'] != null)
+            s.ownerName = data.first['owner_name'];
+          if (data.first['card_count'] != null)
+            s.cardCount = data.first['card_count'];
+          if (data.first['is_on_dashboard'] != null)
+            s.isOnDashboard = data.first['is_on_dashboard'] == true;
           return s;
         }
       }
@@ -560,7 +642,10 @@ class CardService with ChangeNotifier {
     return null;
   }
 
-  Future<List<SubjectCard>> getSubjectCards(String subjectId, {SubjectModel? subject}) async {
+  Future<List<SubjectCard>> getSubjectCards(
+    String subjectId, {
+    SubjectModel? subject,
+  }) async {
     final s = subject ?? await getSubjectById(subjectId);
     if (s == null) return [];
     final cards = await getCardsBySubject(subjectId);

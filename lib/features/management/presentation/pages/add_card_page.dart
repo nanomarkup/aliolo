@@ -1,4 +1,5 @@
-import 'package:aliolo/core/utils/io_utils.dart' if (dart.library.html) 'package:aliolo/core/utils/file_stub.dart';
+import 'package:aliolo/core/utils/io_utils.dart'
+    if (dart.library.html) 'package:aliolo/core/utils/file_stub.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -94,8 +95,10 @@ class _AddCardPageState extends State<AddCardPage> {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           if (mounted) {
             Navigator.pushReplacement(
-              context, 
-              MaterialPageRoute(builder: (context) => const PremiumUpgradePage())
+              context,
+              MaterialPageRoute(
+                builder: (context) => const PremiumUpgradePage(),
+              ),
             );
           }
         });
@@ -133,16 +136,13 @@ class _AddCardPageState extends State<AddCardPage> {
     // Do not navigate languages if user is typing in a text field
     if (_editorFocusNode.hasFocus) return;
 
-    final sortedLangs = TranslationService()
-        .availableUILanguages
-        .map((l) => l.toLowerCase())
-        .toList();
+    final sortedLangs =
+        TranslationService().availableUILanguages
+            .map((l) => l.toLowerCase())
+            .toList();
     sortedLangs.sort();
 
-    final availableLangs = [
-      'global',
-      ...sortedLangs,
-    ];
+    final availableLangs = ['global', ...sortedLangs];
     final currentIndex = availableLangs.indexOf(_selectedLang);
     if (currentIndex == -1) return;
 
@@ -181,20 +181,21 @@ class _AddCardPageState extends State<AddCardPage> {
       final c = widget.existingCard!;
       _cardLevel = c.level;
       _testMode = c.testMode;
-      
-      _drafts['global'] = DraftLocalizedData()
-        ..prompt = c.prompt
-        ..answer = c.answer
-        ..audioUrl = c.audio
-        ..videoUrl = c.video
-        ..imageUrls = List.from(c.imagesBase);
+
+      _drafts['global'] =
+          DraftLocalizedData()
+            ..prompt = c.prompt
+            ..answer = c.answer
+            ..audioUrl = c.audio
+            ..videoUrl = c.video
+            ..imageUrls = List.from(c.imagesBase);
 
       final allLangs = {
-        ...c.prompts.keys, 
-        ...c.answers.keys, 
-        ...c.audios.keys, 
-        ...c.videos.keys, 
-        ...c.imagesLocal.keys
+        ...c.prompts.keys,
+        ...c.answers.keys,
+        ...c.audios.keys,
+        ...c.videos.keys,
+        ...c.imagesLocal.keys,
       };
       for (var lang in allLangs) {
         _ensureDraftExists(lang);
@@ -243,7 +244,10 @@ class _AddCardPageState extends State<AddCardPage> {
         if (_internalPillarId == null && _selectedSubjectId != null) {
           final s = subjects.firstWhere(
             (s) => s.id == _selectedSubjectId,
-            orElse: () => subjects.firstWhere((s) => true), // just a dummy or keep null
+            orElse:
+                () => subjects.firstWhere(
+                  (s) => true,
+                ), // just a dummy or keep null
           );
           if (s.id == _selectedSubjectId) {
             _internalPillarId = s.pillarId;
@@ -333,10 +337,12 @@ class _AddCardPageState extends State<AddCardPage> {
 
   Future<void> _playUrl(String? url) async {
     if (url == null || url.isEmpty) return;
-    
+
     // If it's an audio file, use SoundService to play it in-app
     final lowerUrl = url.toLowerCase();
-    if (lowerUrl.endsWith('.mp3') || lowerUrl.endsWith('.wav') || lowerUrl.endsWith('.m4a')) {
+    if (lowerUrl.endsWith('.mp3') ||
+        lowerUrl.endsWith('.wav') ||
+        lowerUrl.endsWith('.m4a')) {
       await SoundService().playUrl(url);
       return;
     }
@@ -363,10 +369,8 @@ class _AddCardPageState extends State<AddCardPage> {
 
   void _showJsonDialog() {
     final Map<String, dynamic> data = _drafts.map(
-      (key, value) => MapEntry(key, {
-        'prompt': value.prompt,
-        'answer': value.answer,
-      }),
+      (key, value) =>
+          MapEntry(key, {'prompt': value.prompt, 'answer': value.answer}),
     );
 
     final encoder = const JsonEncoder.withIndent('  ');
@@ -410,9 +414,7 @@ class _AddCardPageState extends State<AddCardPage> {
                             ClipboardData(text: textController.text),
                           );
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(context.t('info_copied')),
-                            ),
+                            SnackBar(content: Text(context.t('info_copied'))),
                           );
                         },
                         icon: const Icon(Icons.copy, size: 18),
@@ -445,10 +447,12 @@ class _AddCardPageState extends State<AddCardPage> {
                                 if (val is Map) {
                                   final d = val as Map<String, dynamic>;
                                   if (d.containsKey('prompt')) {
-                                    _drafts[l]!.prompt = d['prompt']?.toString() ?? '';
+                                    _drafts[l]!.prompt =
+                                        d['prompt']?.toString() ?? '';
                                   }
                                   if (d.containsKey('answer')) {
-                                    _drafts[l]!.answer = d['answer']?.toString() ?? '';
+                                    _drafts[l]!.answer =
+                                        d['answer']?.toString() ?? '';
                                   }
                                 }
                               });
@@ -503,7 +507,10 @@ class _AddCardPageState extends State<AddCardPage> {
                 ],
               ),
               content: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 700, maxHeight: 500),
+                constraints: const BoxConstraints(
+                  maxWidth: 700,
+                  maxHeight: 500,
+                ),
                 child: content,
               ),
             );
@@ -519,7 +526,7 @@ class _AddCardPageState extends State<AddCardPage> {
 
     try {
       final cardId = widget.existingCard?.id ?? _cardService.generateId();
-      
+
       String baseAnswer = '';
       String basePrompt = '';
       List<String> baseImages = [];
@@ -574,13 +581,7 @@ class _AddCardPageState extends State<AddCardPage> {
 
         // Cleanup storage for explicitly removed or replaced files
         for (var url in draft.deletedUrls) {
-          String bucket = 'card_images';
-          if (url.contains('/card_audio/')) {
-            bucket = 'card_audio';
-          } else if (url.contains('/card_videos/')) {
-            bucket = 'card_videos';
-          }
-          await _cardService.deleteCardMediaFile(bucket, url);
+          await _cardService.deleteCardMediaFile(url);
         }
         draft.deletedUrls.clear();
 
@@ -591,17 +592,20 @@ class _AddCardPageState extends State<AddCardPage> {
           baseAudio = audioUrl ?? '';
           baseVideo = videoUrl ?? '';
         } else {
-          bool hasAny = draft.answer.isNotEmpty || 
-                        draft.prompt.isNotEmpty || 
-                        imageUrls.isNotEmpty || 
-                        (audioUrl != null && audioUrl.isNotEmpty) || 
-                        (videoUrl != null && videoUrl.isNotEmpty);
+          bool hasAny =
+              draft.answer.isNotEmpty ||
+              draft.prompt.isNotEmpty ||
+              imageUrls.isNotEmpty ||
+              (audioUrl != null && audioUrl.isNotEmpty) ||
+              (videoUrl != null && videoUrl.isNotEmpty);
           if (hasAny) {
             if (draft.answer.isNotEmpty) finalAnswers[lang] = draft.answer;
             if (draft.prompt.isNotEmpty) finalPrompts[lang] = draft.prompt;
             if (imageUrls.isNotEmpty) finalImagesLocal[lang] = imageUrls;
-            if (audioUrl != null && audioUrl.isNotEmpty) finalAudios[lang] = audioUrl;
-            if (videoUrl != null && videoUrl.isNotEmpty) finalVideos[lang] = videoUrl;
+            if (audioUrl != null && audioUrl.isNotEmpty)
+              finalAudios[lang] = audioUrl;
+            if (videoUrl != null && videoUrl.isNotEmpty)
+              finalVideos[lang] = videoUrl;
           }
         }
       }
@@ -643,7 +647,8 @@ class _AddCardPageState extends State<AddCardPage> {
     }
 
     final myId = _authService.currentUser?.serverId;
-    final isOwner = widget.existingCard == null || widget.existingCard!.ownerId == myId;
+    final isOwner =
+        widget.existingCard == null || widget.existingCard!.ownerId == myId;
 
     if (!isOwner) {
       return Scaffold(
@@ -651,7 +656,10 @@ class _AddCardPageState extends State<AddCardPage> {
         body: const Center(
           child: Padding(
             padding: EdgeInsets.all(32.0),
-            child: Text('You do not have permission to view this card details.', textAlign: TextAlign.center),
+            child: Text(
+              'You do not have permission to view this card details.',
+              textAlign: TextAlign.center,
+            ),
           ),
         ),
       );
@@ -703,173 +711,193 @@ class _AddCardPageState extends State<AddCardPage> {
             },
           );
 
-        final saveAction = !widget.isReadOnly
-            ? IconButton(
-              tooltip: context.t('save'),
-              icon: _isSaving
-                  ? const SizedBox(
-                    width: 20,
-                    height: 20,
-                    child: CircularProgressIndicator(
-                      color: appBarColor,
-                      strokeWidth: 2,
-                    ),
+          final saveAction =
+              !widget.isReadOnly
+                  ? IconButton(
+                    tooltip: context.t('save'),
+                    icon:
+                        _isSaving
+                            ? const SizedBox(
+                              width: 20,
+                              height: 20,
+                              child: CircularProgressIndicator(
+                                color: appBarColor,
+                                strokeWidth: 2,
+                              ),
+                            )
+                            : const Icon(Icons.save),
+                    onPressed: _isSaving ? null : _save,
                   )
-                  : const Icon(Icons.save),
-              onPressed: _isSaving ? null : _save,
-            )
-            : null;
+                  : null;
 
-        final jsonAction = !widget.isReadOnly
-            ? IconButton(
-              tooltip: 'JSON',
-              icon: const Icon(Icons.data_object),
-              onPressed: _showJsonDialog,
-            )
-            : null;
+          final jsonAction =
+              !widget.isReadOnly
+                  ? IconButton(
+                    tooltip: 'JSON',
+                    icon: const Icon(Icons.data_object),
+                    onPressed: _showJsonDialog,
+                  )
+                  : null;
 
-        final deleteAction = (widget.existingCard != null && !widget.isReadOnly)
-            ? IconButton(
-              tooltip: context.t('delete'),
-              icon: const Icon(Icons.delete),
-              onPressed: () async {
-                final confirmed = await showDialog<bool>(
-                  context: context,
-                  builder:
-                      (context) => AlertDialog(
-                        title: Text(context.t('delete')),
-                        content: Text(context.t('delete_card_confirm')),
-                        actions: [
-                          TextButton(
-                            onPressed: () => Navigator.pop(context, false),
-                            child: Text(context.t('cancel')),
-                          ),
-                          TextButton(
-                            onPressed: () => Navigator.pop(context, true),
-                            child: Text(context.t('confirm')),
-                          ),
-                        ],
-                      ),
-                );
-                if (confirmed == true && mounted) {
-                  await _cardService.deleteCard(widget.existingCard!);
-                  if (mounted) Navigator.pop(context, true);
-                }
-              },
-            )
-            : null;
+          final deleteAction =
+              (widget.existingCard != null && !widget.isReadOnly)
+                  ? IconButton(
+                    tooltip: context.t('delete'),
+                    icon: const Icon(Icons.delete),
+                    onPressed: () async {
+                      final confirmed = await showDialog<bool>(
+                        context: context,
+                        builder:
+                            (context) => AlertDialog(
+                              title: Text(context.t('delete')),
+                              content: Text(context.t('delete_card_confirm')),
+                              actions: [
+                                TextButton(
+                                  onPressed:
+                                      () => Navigator.pop(context, false),
+                                  child: Text(context.t('cancel')),
+                                ),
+                                TextButton(
+                                  onPressed: () => Navigator.pop(context, true),
+                                  child: Text(context.t('confirm')),
+                                ),
+                              ],
+                            ),
+                      );
+                      if (confirmed == true && mounted) {
+                        await _cardService.deleteCard(widget.existingCard!);
+                        if (mounted) Navigator.pop(context, true);
+                      }
+                    },
+                  )
+                  : null;
 
-        final feedbackAction = (widget.existingCard != null)
-            ? IconButton(
-              tooltip: context.t('feedback'),
-              icon: const Icon(Icons.feedback),
-              onPressed: () {
-                final pillar = pillars.firstWhere(
-                  (p) => p.id == (_internalPillarId ?? 1),
-                  orElse: () => pillars.first,
-                );
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder:
-                        (context) => FeedbackPage(
-                          subjectId: widget.existingCard?.subjectId ?? widget.initialSubjectId,
-                          cardId: widget.existingCard?.id,
-                          contextTitle: widget.existingCard != null 
-                            ? 'Card: ${widget.existingCard!.answer}'
-                            : 'Card',
-                          appBarColor: pillar.getColor(themeService.isDarkMode),
+          final feedbackAction =
+              (widget.existingCard != null)
+                  ? IconButton(
+                    tooltip: context.t('feedback'),
+                    icon: const Icon(Icons.feedback),
+                    onPressed: () {
+                      final pillar = pillars.firstWhere(
+                        (p) => p.id == (_internalPillarId ?? 1),
+                        orElse: () => pillars.first,
+                      );
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder:
+                              (context) => FeedbackPage(
+                                subjectId:
+                                    widget.existingCard?.subjectId ??
+                                    widget.initialSubjectId,
+                                cardId: widget.existingCard?.id,
+                                contextTitle:
+                                    widget.existingCard != null
+                                        ? 'Card: ${widget.existingCard!.answer}'
+                                        : 'Card',
+                                appBarColor: pillar.getColor(
+                                  themeService.isDarkMode,
+                                ),
+                              ),
                         ),
-                  ),
-                );
-              },
-            )
-            : null;
+                      );
+                    },
+                  )
+                  : null;
 
-        return AlioloScrollablePage(
-          title: Text(pageTitle, style: const TextStyle(color: appBarColor)),
-          appBarColor: themeColor,
-          actions: isSmallScreen 
-              ? [
-                  backAction,
-                  if (saveAction != null) saveAction,
-                  IconButton(
-                    tooltip: context.t('languages') ?? 'Languages',
-                    icon: Icon(_showSidebar ? Icons.last_page : Icons.language),
-                    onPressed: _toggleSidebar,
+          return AlioloScrollablePage(
+            title: Text(pageTitle, style: const TextStyle(color: appBarColor)),
+            appBarColor: themeColor,
+            actions:
+                isSmallScreen
+                    ? [
+                      backAction,
+                      if (saveAction != null) saveAction,
+                      IconButton(
+                        tooltip: context.t('languages') ?? 'Languages',
+                        icon: Icon(
+                          _showSidebar ? Icons.last_page : Icons.language,
+                        ),
+                        onPressed: _toggleSidebar,
+                      ),
+                    ]
+                    : [
+                      backAction,
+                      if (saveAction != null) saveAction,
+                      if (jsonAction != null) jsonAction,
+                      if (deleteAction != null) deleteAction,
+                      if (feedbackAction != null) feedbackAction,
+                      IconButton(
+                        tooltip: context.t('languages') ?? 'Languages',
+                        icon: Icon(
+                          _showSidebar ? Icons.last_page : Icons.language,
+                        ),
+                        onPressed: _toggleSidebar,
+                      ),
+                    ],
+            overflowActions:
+                isSmallScreen
+                    ? [
+                      if (jsonAction != null) jsonAction,
+                      if (deleteAction != null) deleteAction,
+                      if (feedbackAction != null) feedbackAction,
+                    ]
+                    : null,
+            body: KeyboardListener(
+              focusNode: _keyboardFocusNode,
+              autofocus: true,
+              onKeyEvent: _onKeyEvent,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            if (_showSidebar && isSmallScreen)
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 16,
+                                ),
+                                child: _buildLangGrid(),
+                              ),
+                            const SizedBox(height: 16),
+                            _buildEditor(themeColor),
+                            const SizedBox(height: 32),
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
-                ]
-              : [
-                  backAction,
-                  if (saveAction != null) saveAction,
-                  if (jsonAction != null) jsonAction,
-                  if (deleteAction != null) deleteAction,
-                  if (feedbackAction != null) feedbackAction,
-                  IconButton(
-                    tooltip: context.t('languages') ?? 'Languages',
-                    icon: Icon(_showSidebar ? Icons.last_page : Icons.language),
-                    onPressed: _toggleSidebar,
-                  ),
-                ],
-          overflowActions: isSmallScreen
-              ? [
-                  if (jsonAction != null) jsonAction,
-                  if (deleteAction != null) deleteAction,
-                  if (feedbackAction != null) feedbackAction,
-                ]
-              : null,
-          body: KeyboardListener(
-        focusNode: _keyboardFocusNode,
-        autofocus: true,
-        onKeyEvent: _onKeyEvent,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      if (_showSidebar && isSmallScreen)
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 16),
+                  if (_showSidebar && !isSmallScreen)
+                    Container(
+                      width: 320,
+                      decoration: BoxDecoration(
+                        border: Border(
+                          left: BorderSide(
+                            color: Theme.of(context).dividerColor,
+                          ),
+                        ),
+                      ),
+                      child: SingleChildScrollView(
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
                           child: _buildLangGrid(),
                         ),
-                      const SizedBox(height: 16),
-                      _buildEditor(themeColor),
-                      const SizedBox(height: 32),
-                    ],
-                  ),
-                ),
+                      ),
+                    ),
+                ],
               ),
             ),
-            if (_showSidebar && !isSmallScreen)
-              Container(
-                width: 320,
-                decoration: BoxDecoration(
-                  border: Border(
-                    left: BorderSide(
-                      color: Theme.of(context).dividerColor,
-                    ),
-                  ),
-                ),
-                child: SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: _buildLangGrid(),
-                  ),
-                ),
-              ),
-          ],
-        ),
+          );
+        },
       ),
     );
-  },
-),
-);
-}
+  }
+
   Widget _buildLangTile(
     String code,
     String label,
@@ -968,90 +996,90 @@ class _AddCardPageState extends State<AddCardPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-        if (isGlobal) ...[
-          _buildSectionCaption(context.t('common_settings')),
-          const SizedBox(height: 16),
-          LayoutBuilder(
-            builder: (context, constraints) {
-              final isSmall = constraints.maxWidth < 600;
-              if (isSmall) {
-                return Column(
+          if (isGlobal) ...[
+            _buildSectionCaption(context.t('common_settings')),
+            const SizedBox(height: 16),
+            LayoutBuilder(
+              builder: (context, constraints) {
+                final isSmall = constraints.maxWidth < 600;
+                if (isSmall) {
+                  return Column(
+                    children: [
+                      _buildSubjectPicker(),
+                      const SizedBox(height: 16),
+                      _buildTestModePicker(),
+                    ],
+                  );
+                }
+                return Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _buildSubjectPicker(),
-                    const SizedBox(height: 16),
-                    _buildTestModePicker(),
+                    Expanded(child: _buildSubjectPicker()),
+                    const SizedBox(width: 16),
+                    Expanded(child: _buildTestModePicker()),
                   ],
                 );
-              }
-              return Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(child: _buildSubjectPicker()),
-                  const SizedBox(width: 16),
-                  Expanded(child: _buildTestModePicker()),
-                ],
-              );
-            },
+              },
+            ),
+            const SizedBox(height: 20),
+            _buildLevelPicker(color),
+            const SizedBox(height: 32),
+            const Divider(),
+            const SizedBox(height: 32),
+          ],
+          _buildSectionCaption(
+            context.t(
+              'content_label',
+              args: {'lang': _selectedLang.toUpperCase()},
+            ),
           ),
-          const SizedBox(height: 20),
-          _buildLevelPicker(color),
+          const SizedBox(height: 24),
+          TextFormField(
+            controller: _promptController,
+            onChanged: (v) => draft.prompt = v,
+            decoration: InputDecoration(
+              labelText: context.t('prompt_label'),
+              border: const OutlineInputBorder(),
+            ),
+            maxLines: 1,
+            enabled: !widget.isReadOnly,
+          ),
+          const SizedBox(height: 16),
+          TextFormField(
+            controller: _answerController,
+            onChanged: (v) => draft.answer = v,
+            decoration: InputDecoration(
+              labelText: context.t('answer'),
+              border: const OutlineInputBorder(),
+            ),
+            enabled: !widget.isReadOnly,
+          ),
           const SizedBox(height: 32),
-          const Divider(),
-          const SizedBox(height: 32),
+          _buildMediaSection(
+            context.t('images'),
+            Icons.image,
+            _pickImage,
+            _buildImageList(draft),
+          ),
+          const SizedBox(height: 24),
+          _buildMediaSection(
+            context.t('audio'),
+            Icons.audiotrack,
+            _pickAudio,
+            _buildAudioPreview(draft),
+          ),
+          const SizedBox(height: 24),
+          _buildMediaSection(
+            context.t('video'),
+            Icons.videocam,
+            _pickVideo,
+            _buildVideoPreview(draft),
+          ),
+          const SizedBox(height: 100),
         ],
-        _buildSectionCaption(
-          context.t(
-            'content_label',
-            args: {'lang': _selectedLang.toUpperCase()},
-          ),
-        ),
-        const SizedBox(height: 24),
-        TextFormField(
-          controller: _promptController,
-          onChanged: (v) => draft.prompt = v,
-          decoration: InputDecoration(
-            labelText: context.t('prompt_label'),
-            border: const OutlineInputBorder(),
-          ),
-          maxLines: 1,
-          enabled: !widget.isReadOnly,
-        ),
-        const SizedBox(height: 16),
-        TextFormField(
-          controller: _answerController,
-          onChanged: (v) => draft.answer = v,
-          decoration: InputDecoration(
-            labelText: context.t('answer'),
-            border: const OutlineInputBorder(),
-          ),
-          enabled: !widget.isReadOnly,
-        ),
-        const SizedBox(height: 32),
-        _buildMediaSection(
-          context.t('images'),
-          Icons.image,
-          _pickImage,
-          _buildImageList(draft),
-        ),
-        const SizedBox(height: 24),
-        _buildMediaSection(
-          context.t('audio'),
-          Icons.audiotrack,
-          _pickAudio,
-          _buildAudioPreview(draft),
-        ),
-        const SizedBox(height: 24),
-        _buildMediaSection(
-          context.t('video'),
-          Icons.videocam,
-          _pickVideo,
-          _buildVideoPreview(draft),
-        ),
-        const SizedBox(height: 100),
-      ],
-    ),
-  );
-}
+      ),
+    );
+  }
 
   Widget _buildSectionCaption(String label) {
     return Text(
@@ -1072,10 +1100,7 @@ class _AddCardPageState extends State<AddCardPage> {
             .map(
               (s) => DropdownMenuItem(
                 value: s.id,
-                child: Text(
-                  s.name,
-                  overflow: TextOverflow.ellipsis,
-                ),
+                child: Text(s.name, overflow: TextOverflow.ellipsis),
               ),
             )
             .toList();
@@ -1240,10 +1265,11 @@ class _AddCardPageState extends State<AddCardPage> {
           ...draft.imageUrls.map(
             (url) => _buildThumbnail(
               url: url,
-              onRemove: () => setState(() {
-                draft.imageUrls.remove(url);
-                draft.deletedUrls.add(url);
-              }),
+              onRemove:
+                  () => setState(() {
+                    draft.imageUrls.remove(url);
+                    draft.deletedUrls.add(url);
+                  }),
             ),
           ),
           ...draft.newImageFiles.map(
@@ -1331,13 +1357,14 @@ class _AddCardPageState extends State<AddCardPage> {
           if (!widget.isReadOnly)
             IconButton(
               icon: const Icon(Icons.delete, size: 16),
-              onPressed: () => setState(() {
-                if (draft.audioUrl != null) {
-                  draft.deletedUrls.add(draft.audioUrl!);
-                }
-                draft.audioUrl = null;
-                draft.newAudioFile = null;
-              }),
+              onPressed:
+                  () => setState(() {
+                    if (draft.audioUrl != null) {
+                      draft.deletedUrls.add(draft.audioUrl!);
+                    }
+                    draft.audioUrl = null;
+                    draft.newAudioFile = null;
+                  }),
             ),
         ],
       ),
@@ -1378,19 +1405,19 @@ class _AddCardPageState extends State<AddCardPage> {
           if (!widget.isReadOnly)
             IconButton(
               icon: const Icon(Icons.delete, size: 16),
-              onPressed: () => setState(() {
-                if (draft.videoUrl != null) {
-                  draft.deletedUrls.add(draft.videoUrl!);
-                }
-                draft.videoUrl = null;
-                draft.newVideoFile = null;
-              }),
+              onPressed:
+                  () => setState(() {
+                    if (draft.videoUrl != null) {
+                      draft.deletedUrls.add(draft.videoUrl!);
+                    }
+                    draft.videoUrl = null;
+                    draft.newVideoFile = null;
+                  }),
             ),
         ],
       ),
     );
   }
-
 
   Widget _buildLangGrid() {
     return LayoutBuilder(
@@ -1403,17 +1430,12 @@ class _AddCardPageState extends State<AddCardPage> {
           spacing: 8,
           runSpacing: 8,
           children: [
-            _buildLangTile(
-              'global',
-              'GLB',
-              Icons.public,
-              'Global / Fallback',
-            ),
+            _buildLangTile('global', 'GLB', Icons.public, 'Global / Fallback'),
             ...(() {
-              final langs = TranslationService()
-                  .availableUILanguages
-                  .map((l) => l.toLowerCase())
-                  .toList();
+              final langs =
+                  TranslationService().availableUILanguages
+                      .map((l) => l.toLowerCase())
+                      .toList();
               langs.sort();
               return langs.map((code) {
                 return _buildLangTile(
@@ -1448,13 +1470,13 @@ class _AddCardPageState extends State<AddCardPage> {
     if (_testMode != original.testMode) return true;
 
     final allLangs = {
-      'global', 
-      ...original.prompts.keys, 
-      ...original.answers.keys, 
-      ...original.audios.keys, 
-      ...original.videos.keys, 
-      ...original.imagesLocal.keys, 
-      ..._drafts.keys
+      'global',
+      ...original.prompts.keys,
+      ...original.answers.keys,
+      ...original.audios.keys,
+      ...original.videos.keys,
+      ...original.imagesLocal.keys,
+      ..._drafts.keys,
     };
     for (var lang in allLangs) {
       final draft = _drafts[lang];
@@ -1480,7 +1502,8 @@ class _AddCardPageState extends State<AddCardPage> {
         if (draftAnswer != (original.answers[lang]?.trim() ?? '')) return true;
         if (draftAudio != (original.audios[lang] ?? '')) return true;
         if (draftVideo != (original.videos[lang] ?? '')) return true;
-        if (draftImages.length != (original.imagesLocal[lang]?.length ?? 0)) return true;
+        if (draftImages.length != (original.imagesLocal[lang]?.length ?? 0))
+          return true;
       }
     }
 
@@ -1492,21 +1515,22 @@ class _AddCardPageState extends State<AddCardPage> {
 
     final result = await showDialog<bool>(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text(context.t('discard_changes')),
-        content: Text(context.t('unsaved_changes_msg')),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context, false),
-            child: Text(context.t('cancel')),
+      builder:
+          (context) => AlertDialog(
+            title: Text(context.t('discard_changes')),
+            content: Text(context.t('unsaved_changes_msg')),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context, false),
+                child: Text(context.t('cancel')),
+              ),
+              TextButton(
+                onPressed: () => Navigator.pop(context, true),
+                style: TextButton.styleFrom(foregroundColor: Colors.red),
+                child: Text(context.t('discard')),
+              ),
+            ],
           ),
-          TextButton(
-            onPressed: () => Navigator.pop(context, true),
-            style: TextButton.styleFrom(foregroundColor: Colors.red),
-            child: Text(context.t('discard')),
-          ),
-        ],
-      ),
     );
     return result ?? false;
   }

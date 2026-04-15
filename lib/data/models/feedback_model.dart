@@ -46,19 +46,45 @@ class FeedbackModel {
   }
 
   factory FeedbackModel.fromJson(Map<String, dynamic> json) {
+    final metadata = _parseMap(json['metadata']);
     return FeedbackModel(
       id: json['id'],
-      createdAt: json['created_at'] != null ? DateTime.parse(json['created_at']) : null,
+      createdAt:
+          json['created_at'] != null
+              ? DateTime.parse(json['created_at'])
+              : null,
       userId: json['user_id'] ?? '',
       type: json['type'] ?? 'suggestion',
       title: json['title'] ?? '',
       content: json['content'] ?? '',
-      attachmentUrls: List<String>.from(json['attachment_urls'] ?? []),
+      attachmentUrls: _parseStringList(json['attachment_urls']),
       status: json['status'] ?? 'open',
-      metadata: json['metadata'] ?? {},
-      userName: json['profiles']?['username'],
-      userEmail: json['profiles']?['email'],
-      subjectName: json['metadata']?['context'],
+      metadata: metadata,
+      userName: json['owner_name'] ?? json['profiles']?['username'],
+      userEmail: json['owner_email'] ?? json['profiles']?['email'],
+      subjectName: metadata['context'],
     );
   }
+}
+
+List<String> _parseStringList(dynamic value) {
+  if (value is List) return List<String>.from(value);
+  if (value is String && value.isNotEmpty) {
+    try {
+      final decoded = jsonDecode(value);
+      if (decoded is List) return List<String>.from(decoded);
+    } catch (_) {}
+  }
+  return [];
+}
+
+Map<String, dynamic> _parseMap(dynamic value) {
+  if (value is Map) return Map<String, dynamic>.from(value);
+  if (value is String && value.isNotEmpty) {
+    try {
+      final decoded = jsonDecode(value);
+      if (decoded is Map) return Map<String, dynamic>.from(decoded);
+    } catch (_) {}
+  }
+  return {};
 }

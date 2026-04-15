@@ -2,7 +2,9 @@ import 'package:path/path.dart' as p;
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:aliolo/core/utils/file_stub.dart' if (dart.library.html) 'dart:html' as html;
+import 'package:aliolo/core/utils/file_stub.dart'
+    if (dart.library.html) 'dart:html'
+    as html;
 import 'package:aliolo/data/models/user_model.dart';
 import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/core/utils/logger.dart';
@@ -32,7 +34,8 @@ class AuthService extends ChangeNotifier {
   bool get isInviteFlow => _isInviteFlow;
   String? get inviteToken => _inviteToken;
   String? get recoveryFlowType => _recoveryFlowType;
-  String? get currentSessionEmail => _currentSessionEmail ?? _currentUser?.email;
+  String? get currentSessionEmail =>
+      _currentSessionEmail ?? _currentUser?.email;
 
   Future<void> init({String? manualUrl, String? inviteToken}) async {
     try {
@@ -58,7 +61,7 @@ class AuthService extends ChangeNotifier {
 
       if (kIsWeb && _initialUrl != null) {
         final uri = Uri.parse(_initialUrl!);
-        
+
         if (uri.queryParameters.containsKey('type')) {
           _isPasswordRecoveryFlow = true;
           _recoveryFlowType = uri.queryParameters['type'];
@@ -66,7 +69,7 @@ class AuthService extends ChangeNotifier {
           // Clear URL
           html.window.history.replaceState({}, '', '/');
         }
-        
+
         // Backup check if invite was missed in main()
         if (uri.queryParameters.containsKey('invite')) {
           _isInviteFlow = true;
@@ -74,7 +77,7 @@ class AuthService extends ChangeNotifier {
           print('Invite token detected via URL query: $_inviteToken');
           // Clear URL
           html.window.history.replaceState({}, '', '/');
-          
+
           await _cfClient.clearSession();
           _currentUser = null;
           notifyListeners();
@@ -85,29 +88,29 @@ class AuthService extends ChangeNotifier {
       // Initial session check from Cloudflare
       final profileRes = await _cfClient.client.get('/api/auth/me');
       if (profileRes.statusCode == 200 && profileRes.data['user'] != null) {
-          _currentUser = UserModel.fromJson(profileRes.data['user']);
-          
-          // Daily completion reset logic (moved to client side but synced to D1)
-          if (_currentUser!.lastActiveDate != null) {
-            final now = DateTime.now();
-            final today = DateTime(now.year, now.month, now.day);
-            final lastLocal = _currentUser!.lastActiveDate!.toLocal();
-            final lastDayParsed = DateTime(
-              lastLocal.year,
-              lastLocal.month,
-              lastLocal.day,
-            );
+        _currentUser = UserModel.fromJson(profileRes.data['user']);
 
-            if (today.isAfter(lastDayParsed)) {
-              _currentUser!.dailyCompletions = 0;
-              _currentUser!.dailyGoalCount = _currentUser!.nextDailyGoal;
-              await updateUser(_currentUser!);
-            }
+        // Daily completion reset logic (moved to client side but synced to D1)
+        if (_currentUser!.lastActiveDate != null) {
+          final now = DateTime.now();
+          final today = DateTime(now.year, now.month, now.day);
+          final lastLocal = _currentUser!.lastActiveDate!.toLocal();
+          final lastDayParsed = DateTime(
+            lastLocal.year,
+            lastLocal.month,
+            lastLocal.day,
+          );
+
+          if (today.isAfter(lastDayParsed)) {
+            _currentUser!.dailyCompletions = 0;
+            _currentUser!.dailyGoalCount = _currentUser!.nextDailyGoal;
+            await updateUser(_currentUser!);
           }
+        }
 
-          ThemeService().setThemeFromString(_currentUser!.themeMode);
-          ThemeService().setPrimaryColorFromPillar(_currentUser!.mainPillarId);
-          notifyListeners();
+        ThemeService().setThemeFromString(_currentUser!.themeMode);
+        ThemeService().setPrimaryColorFromPillar(_currentUser!.mainPillarId);
+        notifyListeners();
       }
 
       if (kIsWeb && _initialUrl != null) {
@@ -123,7 +126,10 @@ class AuthService extends ChangeNotifier {
   Future<bool> requestOtp(String email) async {
     _lastErrorMessage = null;
     try {
-      final response = await _cfClient.client.post('/api/auth/request-otp', data: {'email': email});
+      final response = await _cfClient.client.post(
+        '/api/auth/request-otp',
+        data: {'email': email},
+      );
       return response.statusCode == 200;
     } catch (e) {
       _lastErrorMessage = e.toString();
@@ -134,7 +140,10 @@ class AuthService extends ChangeNotifier {
   Future<bool> verifyOtp(String email, String code) async {
     _lastErrorMessage = null;
     try {
-      final response = await _cfClient.client.post('/api/auth/verify-otp', data: {'email': email, 'code': code});
+      final response = await _cfClient.client.post(
+        '/api/auth/verify-otp',
+        data: {'email': email, 'code': code},
+      );
       return response.statusCode == 200;
     } catch (e) {
       _lastErrorMessage = e.toString();
@@ -145,7 +154,10 @@ class AuthService extends ChangeNotifier {
   Future<Map<String, String>?> verifyInvite(String token) async {
     _lastErrorMessage = null;
     try {
-      final response = await _cfClient.client.get('/api/auth/verify-invite', queryParameters: {'token': token});
+      final response = await _cfClient.client.get(
+        '/api/auth/verify-invite',
+        queryParameters: {'token': token},
+      );
       if (response.statusCode == 200) {
         return {
           'email': response.data['email'],
@@ -159,15 +171,23 @@ class AuthService extends ChangeNotifier {
     }
   }
 
-  Future<void> createUserWithInvite(String username, String email, String password, String inviteToken) async {
+  Future<void> createUserWithInvite(
+    String username,
+    String email,
+    String password,
+    String inviteToken,
+  ) async {
     _lastErrorMessage = null;
     try {
-      final response = await _cfClient.client.post('/api/auth/signup-invite', data: {
-        'username': username,
-        'email': email,
-        'password': password,
-        'invite_token': inviteToken,
-      });
+      final response = await _cfClient.client.post(
+        '/api/auth/signup-invite',
+        data: {
+          'username': username,
+          'email': email,
+          'password': password,
+          'invite_token': inviteToken,
+        },
+      );
 
       if (response.statusCode == 200) {
         if (response.data['session_id'] != null) {
@@ -191,11 +211,10 @@ class AuthService extends ChangeNotifier {
     _lastErrorMessage = null;
     final cleanEmail = email.trim().toLowerCase();
     try {
-      final response = await _cfClient.client.post('/api/auth/signup', data: {
-        'username': username,
-        'email': cleanEmail,
-        'password': password,
-      });
+      final response = await _cfClient.client.post(
+        '/api/auth/signup',
+        data: {'username': username, 'email': cleanEmail, 'password': password},
+      );
 
       if (response.statusCode == 200) {
         final data = response.data;
@@ -212,16 +231,15 @@ class AuthService extends ChangeNotifier {
     }
   }
 
-
   Future<bool> login(String identifier, String password) async {
     _lastErrorMessage = null;
     final String email = identifier.trim().toLowerCase();
 
     try {
-      final response = await _cfClient.client.post('/api/auth/login', data: {
-        'email': email,
-        'password': password,
-      });
+      final response = await _cfClient.client.post(
+        '/api/auth/login',
+        data: {'email': email, 'password': password},
+      );
 
       if (response.statusCode == 200) {
         final data = response.data;
@@ -261,10 +279,10 @@ class AuthService extends ChangeNotifier {
     try {
       final profileRes = await _cfClient.client.get('/api/auth/me');
       if (profileRes.statusCode == 200 && profileRes.data['user'] != null) {
-          _currentUser = UserModel.fromJson(profileRes.data['user']);
-          ThemeService().setThemeFromString(_currentUser!.themeMode);
-          ThemeService().setPrimaryColorFromPillar(_currentUser!.mainPillarId);
-          notifyListeners();
+        _currentUser = UserModel.fromJson(profileRes.data['user']);
+        ThemeService().setThemeFromString(_currentUser!.themeMode);
+        ThemeService().setPrimaryColorFromPillar(_currentUser!.mainPillarId);
+        notifyListeners();
       }
     } catch (e) {
       AppLogger.log('AuthService: refreshUser error: $e');
@@ -397,18 +415,22 @@ class AuthService extends ChangeNotifier {
         try {
           final oldUri = Uri.parse(_currentUser!.avatarPath!);
           final oldFileName = oldUri.pathSegments.last.split('?').first;
-          await _cfClient.client.delete('/api/storage/avatars/$oldFileName');
+          await _cfClient.client.delete(
+            '/api/storage/aliolo-media/avatars/$oldFileName',
+          );
         } catch (e) {
-          AppLogger.log('AuthService: error deleting old avatar during update: $e');
+          AppLogger.log(
+            'AuthService: error deleting old avatar during update: $e',
+          );
         }
       }
 
       final ext = p.extension(image.name).toLowerCase();
       final fileName = '${_currentUser!.serverId}$ext';
       final bytes = await image.readAsBytes();
-      
+
       final response = await _cfClient.client.post(
-        '/api/upload/avatars/$fileName',
+        '/api/upload/aliolo-media/avatars/$fileName',
         data: Stream.fromIterable([bytes]),
         options: Options(
           headers: {
@@ -421,7 +443,7 @@ class AuthService extends ChangeNotifier {
       if (response.statusCode == 200) {
         final String publicUrl = response.data['url'];
         final bustUrl = '$publicUrl?t=${DateTime.now().millisecondsSinceEpoch}';
-        
+
         await _patchCurrentUser({'avatar_url': bustUrl});
         _currentUser!.avatarPath = bustUrl;
         notifyListeners();
@@ -436,9 +458,11 @@ class AuthService extends ChangeNotifier {
     try {
       final uri = Uri.parse(_currentUser!.avatarPath!);
       final fileName = uri.pathSegments.last.split('?').first;
-      
-      await _cfClient.client.delete('/api/storage/avatars/$fileName');
-      
+
+      await _cfClient.client.delete(
+        '/api/storage/aliolo-media/avatars/$fileName',
+      );
+
       await _patchCurrentUser({'avatar_url': null});
       _currentUser!.avatarPath = null;
       notifyListeners();
@@ -450,7 +474,10 @@ class AuthService extends ChangeNotifier {
   Future<bool> sendResetCode(String email) async {
     _lastErrorMessage = null;
     try {
-      final response = await _cfClient.client.post('/api/auth/request-password-reset', data: {'email': email});
+      final response = await _cfClient.client.post(
+        '/api/auth/request-password-reset',
+        data: {'email': email},
+      );
       return response.statusCode == 200;
     } catch (e) {
       _lastErrorMessage = e.toString();
@@ -458,14 +485,17 @@ class AuthService extends ChangeNotifier {
     }
   }
 
-  Future<bool> finalizePasswordReset(String email, String code, String newPassword) async {
+  Future<bool> finalizePasswordReset(
+    String email,
+    String code,
+    String newPassword,
+  ) async {
     _lastErrorMessage = null;
     try {
-      final response = await _cfClient.client.post('/api/auth/reset-password', data: {
-        'email': email,
-        'code': code,
-        'password': newPassword,
-      });
+      final response = await _cfClient.client.post(
+        '/api/auth/reset-password',
+        data: {'email': email, 'code': code, 'password': newPassword},
+      );
       return response.statusCode == 200;
     } catch (e) {
       _lastErrorMessage = e.toString();
@@ -476,9 +506,10 @@ class AuthService extends ChangeNotifier {
   Future<void> updatePassword(String newPassword) async {
     _lastErrorMessage = null;
     try {
-      final response = await _cfClient.client.post('/api/auth/update-password', data: {
-        'new_password': newPassword,
-      });
+      final response = await _cfClient.client.post(
+        '/api/auth/update-password',
+        data: {'new_password': newPassword},
+      );
       if (response.statusCode != 200) {
         throw Exception(response.data['error'] ?? 'Failed to update password');
       }
@@ -506,10 +537,10 @@ class AuthService extends ChangeNotifier {
   Future<bool> requestEmailChange(String newEmail, String password) async {
     _lastErrorMessage = null;
     try {
-      final response = await _cfClient.client.post('/api/auth/request-email-change', data: {
-        'new_email': newEmail,
-        'password': password,
-      });
+      final response = await _cfClient.client.post(
+        '/api/auth/request-email-change',
+        data: {'new_email': newEmail, 'password': password},
+      );
       return response.statusCode == 200;
     } catch (e) {
       _lastErrorMessage = _handleDioError(e);
@@ -520,10 +551,10 @@ class AuthService extends ChangeNotifier {
   Future<bool> verifyEmailChange(String newEmail, String code) async {
     _lastErrorMessage = null;
     try {
-      final response = await _cfClient.client.post('/api/auth/verify-email-change', data: {
-        'new_email': newEmail,
-        'code': code,
-      });
+      final response = await _cfClient.client.post(
+        '/api/auth/verify-email-change',
+        data: {'new_email': newEmail, 'code': code},
+      );
       if (response.statusCode == 200) {
         await refreshUser();
         return true;
@@ -538,7 +569,10 @@ class AuthService extends ChangeNotifier {
   Future<bool> deleteAccount(String password) async {
     _lastErrorMessage = null;
     try {
-      final response = await _cfClient.client.post('/api/auth/delete', data: {'password': password});
+      final response = await _cfClient.client.post(
+        '/api/auth/delete',
+        data: {'password': password},
+      );
       if (response.statusCode == 200) {
         _currentUser = null;
         await _cfClient.clearSession();
@@ -593,7 +627,7 @@ class AuthService extends ChangeNotifier {
       _currentUser!.currentStreak = currentStreak;
       _currentUser!.maxStreak = maxStreak;
       _currentUser!.lastActiveDate = lastActiveDate;
-      
+
       await _patchCurrentUser({
         'daily_completions': dailyCompletions,
         'total_xp': totalXp,
@@ -606,7 +640,10 @@ class AuthService extends ChangeNotifier {
 
   Future<String> inviteUserByEmail(String email, {String? senderId}) async {
     try {
-      final response = await _cfClient.client.post('/api/auth/invite', data: {'email': email});
+      final response = await _cfClient.client.post(
+        '/api/auth/invite',
+        data: {'email': email},
+      );
       if (response.statusCode == 200) {
         return response.data['message'] ?? 'Invitation sent!';
       }
@@ -616,12 +653,15 @@ class AuthService extends ChangeNotifier {
     }
   }
 
-  Future<List<UserModel>> getLeaderboardData({int page = 0, int pageSize = 20}) async {
+  Future<List<UserModel>> getLeaderboardData({
+    int page = 0,
+    int pageSize = 20,
+  }) async {
     try {
-      final response = await _cfClient.client.get('/api/leaderboard', queryParameters: {
-        'page': page,
-        'pageSize': pageSize,
-      });
+      final response = await _cfClient.client.get(
+        '/api/leaderboard',
+        queryParameters: {'page': page, 'pageSize': pageSize},
+      );
       if (response.statusCode == 200) {
         final List<dynamic> data = response.data;
         return data.map((json) => UserModel.fromJson(json)).toList();

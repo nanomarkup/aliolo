@@ -31,11 +31,25 @@ class FeedbackReplyModel {
   factory FeedbackReplyModel.fromJson(Map<String, dynamic> json) {
     return FeedbackReplyModel(
       id: json['id'],
-      createdAt: json['created_at'] != null ? DateTime.parse(json['created_at']) : null,
+      createdAt:
+          json['created_at'] != null
+              ? DateTime.parse(json['created_at'])
+              : null,
       feedbackId: json['feedback_id'] ?? '',
       userId: json['user_id'] ?? '',
       content: json['content'] ?? '',
-      attachmentUrls: List<String>.from(json['attachment_urls'] ?? []),
+      attachmentUrls: _parseStringList(json['attachment_urls']),
     );
   }
+}
+
+List<String> _parseStringList(dynamic value) {
+  if (value is List) return List<String>.from(value);
+  if (value is String && value.isNotEmpty) {
+    try {
+      final decoded = jsonDecode(value);
+      if (decoded is List) return List<String>.from(decoded);
+    } catch (_) {}
+  }
+  return [];
 }

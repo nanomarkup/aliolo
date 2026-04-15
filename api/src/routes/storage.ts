@@ -39,14 +39,12 @@ router.post('/api/upload/:bucket/:path{.+}', async (c) => {
         }
     }
 
-    let bucket: R2Bucket;
-    if (bucketName === 'card_images' || bucketName === 'card_audio' || bucketName === 'card_videos' || bucketName === 'feedback_attachments' || bucketName === 'aliolo-media' || bucketName === 'avatars') {
-        bucket = c.env.MEDIA;
-    } else {
+    if (bucketName !== 'aliolo-media') {
         return c.json({ error: 'Bucket not found' }, 404);
     }
 
-    const r2Path = filePath.startsWith('cards/') ? filePath : (bucketName === 'avatars' ? `avatars/${filePath}` : `${bucketName}/${filePath}`);
+    const bucket = c.env.MEDIA;
+    const r2Path = filePath;
     
     const body = await c.req.arrayBuffer();
     const contentType = c.req.header('Content-Type') || 'application/octet-stream';
@@ -92,14 +90,12 @@ router.delete('/api/storage/:bucket/:path{.+}', async (c) => {
         }
     }
 
-    let bucket: R2Bucket;
-    if (bucketName === 'card_images' || bucketName === 'card_audio' || bucketName === 'card_videos' || bucketName === 'feedback_attachments' || bucketName === 'aliolo-media' || bucketName === 'avatars') {
-        bucket = c.env.MEDIA;
-    } else {
+    if (bucketName !== 'aliolo-media') {
         return c.json({ error: 'Bucket not found' }, 404);
     }
 
-    const r2Path = filePath.startsWith('cards/') ? filePath : (bucketName === 'avatars' ? `avatars/${filePath}` : `${bucketName}/${filePath}`);
+    const bucket = c.env.MEDIA;
+    const r2Path = filePath;
 
     try {
         await bucket.delete(r2Path);
@@ -114,14 +110,12 @@ router.get('/storage/v1/object/public/:bucket/:path{.+}', async (c) => {
   const bucketName = c.req.param('bucket');
   const path = c.req.param('path');
   
-  let bucket: R2Bucket;
-  if (bucketName === 'card_images' || bucketName === 'card_audio' || bucketName === 'card_videos' || bucketName === 'feedback_attachments' || bucketName === 'aliolo-media' || bucketName === 'avatars') {
-    bucket = c.env.MEDIA;
-  } else {
+  if (bucketName !== 'aliolo-media') {
     return c.text('Bucket not found', 404);
   }
 
-  const r2Path = path.startsWith('cards/') ? path : (bucketName === 'avatars' ? `avatars/${path}` : `${bucketName}/${path}`);
+  const bucket = c.env.MEDIA;
+  const r2Path = path;
   
   const object = await bucket.get(r2Path);
   if (!object) return c.text('Object not found', 404);
