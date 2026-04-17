@@ -221,7 +221,9 @@ class _TestPageState extends State<TestPage> {
     if (audio != null &&
         !_currentCard.isSpecialRenderer &&
         !_subject.usesEmojiAdditionRenderer &&
+        !_subject.usesNumberAdditionRenderer &&
         !_subject.usesEmojiSubtractionRenderer &&
+        !_subject.usesNumberSubtractionRenderer &&
         !_currentCard.isCountingRenderer) {
       player.open(Media(audio));
       player.play();
@@ -746,11 +748,25 @@ class _TestPageState extends State<TestPage> {
                                         maxOperand: _subject.maxOperand,
                                         iconSize: isMobile ? 40 : 60,
                                       )
+                                    else if (_subject.usesNumberSubtractionRenderer)
+                                      SubtractionGrid(
+                                        totalSum: _currentCard.numericalAnswer,
+                                        maxOperand: _subject.maxOperand,
+                                        iconSize: isMobile ? 40 : 60,
+                                        useNumbers: true,
+                                      )
                                     else if (_subject.usesEmojiAdditionRenderer)
                                       AdditionGrid(
                                         totalSum: _currentCard.numericalAnswer,
                                         maxOperand: _subject.maxOperand,
                                         iconSize: isMobile ? 40 : 60,
+                                      )
+                                    else if (_subject.usesNumberAdditionRenderer)
+                                      AdditionGrid(
+                                        totalSum: _currentCard.numericalAnswer,
+                                        maxOperand: _subject.maxOperand,
+                                        iconSize: isMobile ? 40 : 60,
+                                        useNumbers: true,
                                       )
                                     else if (_subject.isAlphabet)
                                       Center(

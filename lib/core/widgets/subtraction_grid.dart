@@ -5,12 +5,14 @@ class SubtractionGrid extends StatefulWidget {
   final int totalSum;
   final int maxOperand;
   final double iconSize;
+  final bool useNumbers;
 
   const SubtractionGrid({
     super.key,
     required this.totalSum,
     required this.maxOperand,
     this.iconSize = 40,
+    this.useNumbers = false,
   });
 
   @override
@@ -18,7 +20,7 @@ class SubtractionGrid extends StatefulWidget {
 }
 
 class _SubtractionGridState extends State<SubtractionGrid> {
-  late String _selectedEmoji;
+  late String _selectedSymbol;
   late int _part1;
   late int _part2;
 
@@ -37,14 +39,18 @@ class _SubtractionGridState extends State<SubtractionGrid> {
   @override
   void didUpdateWidget(covariant SubtractionGrid oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.totalSum != widget.totalSum) {
+    if (oldWidget.totalSum != widget.totalSum ||
+        oldWidget.useNumbers != widget.useNumbers) {
       _generateExercise();
     }
   }
 
   void _generateExercise() {
     final random = Random();
-    _selectedEmoji = _emojis[random.nextInt(_emojis.length)];
+    _selectedSymbol =
+        widget.useNumbers
+            ? ''
+            : _emojis[random.nextInt(_emojis.length)];
     
     // Logic: A - B = totalSum where A, B <= maxOperand
     // Range for A is [totalSum, maxOperand]
@@ -103,6 +109,17 @@ class _SubtractionGridState extends State<SubtractionGrid> {
       );
     }
 
+    if (widget.useNumbers) {
+      return Text(
+        count.toString(),
+        style: TextStyle(
+          fontSize: widget.iconSize * 1.4,
+          fontWeight: FontWeight.bold,
+          color: Colors.black87,
+        ),
+      );
+    }
+
     Widget buildWrap(int items) {
       return Wrap(
         spacing: 8,
@@ -112,7 +129,7 @@ class _SubtractionGridState extends State<SubtractionGrid> {
         children: List.generate(
           items,
           (index) => Text(
-            _selectedEmoji,
+            _selectedSymbol,
             style: TextStyle(fontSize: widget.iconSize * 0.8),
           ),
         ),

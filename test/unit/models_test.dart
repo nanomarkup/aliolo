@@ -54,6 +54,38 @@ void main() {
       expect(model.toJson().containsKey('visual_template'), isFalse);
     });
 
+    test('SubjectModel maps numeric addition and subtraction renderers', () {
+      final additionJson = {
+        'id': '5e81da1f-f92c-44d2-b3cd-f921d05425df',
+        'pillar_id': 1,
+        'owner_id': 'user_1',
+        'is_public': 1,
+        'name': 'Addition 11-20',
+        'localized_data': '{}',
+        'created_at': '2026-04-13T12:00:00Z',
+        'updated_at': '2026-04-13T12:00:00Z',
+      };
+
+      final subtractionJson = {
+        'id': 'f59a0f9c-5d6d-4f2d-b426-eb9ca6bf2782',
+        'pillar_id': 1,
+        'owner_id': 'user_1',
+        'is_public': 1,
+        'name': 'Subtraction 11-20',
+        'localized_data': '{}',
+        'created_at': '2026-04-13T12:00:00Z',
+        'updated_at': '2026-04-13T12:00:00Z',
+      };
+
+      final addition = SubjectModel.fromJson(additionJson);
+      final subtraction = SubjectModel.fromJson(subtractionJson);
+
+      expect(addition.usesNumberAdditionRenderer, isTrue);
+      expect(addition.usesEmojiAdditionRenderer, isFalse);
+      expect(subtraction.usesNumberSubtractionRenderer, isTrue);
+      expect(subtraction.usesEmojiSubtractionRenderer, isFalse);
+    });
+
     test(
       'CollectionModel correctly parses is_public and is_on_dashboard from int',
       () {

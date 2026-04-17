@@ -88,11 +88,29 @@ class CardRenderer extends StatelessWidget {
       );
     }
 
+    if (subject?.usesNumberSubtractionRenderer == true) {
+      return SubtractionGrid(
+        totalSum: card.numericalAnswer,
+        maxOperand: subject?.maxOperand ?? 20,
+        iconSize: (textFontSize ?? 24).clamp(12, 64).toDouble(),
+        useNumbers: true,
+      );
+    }
+
     if (subject?.usesEmojiAdditionRenderer == true) {
       return AdditionGrid(
         totalSum: card.numericalAnswer,
         maxOperand: subject?.maxOperand ?? 20,
         iconSize: (textFontSize ?? 24).clamp(12, 64).toDouble(),
+      );
+    }
+
+    if (subject?.usesNumberAdditionRenderer == true) {
+      return AdditionGrid(
+        totalSum: card.numericalAnswer,
+        maxOperand: subject?.maxOperand ?? 20,
+        iconSize: (textFontSize ?? 24).clamp(12, 64).toDouble(),
+        useNumbers: true,
       );
     }
 

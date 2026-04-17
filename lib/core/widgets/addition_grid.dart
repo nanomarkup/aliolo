@@ -5,12 +5,14 @@ class AdditionGrid extends StatefulWidget {
   final int totalSum;
   final int maxOperand;
   final double iconSize;
+  final bool useNumbers;
 
   const AdditionGrid({
     super.key,
     required this.totalSum,
     required this.maxOperand,
     this.iconSize = 40,
+    this.useNumbers = false,
   });
 
   @override
@@ -18,7 +20,7 @@ class AdditionGrid extends StatefulWidget {
 }
 
 class _AdditionGridState extends State<AdditionGrid> {
-  late String _selectedEmoji;
+  late String _selectedSymbol;
   late int _part1;
   late int _part2;
 
@@ -37,14 +39,18 @@ class _AdditionGridState extends State<AdditionGrid> {
   @override
   void didUpdateWidget(covariant AdditionGrid oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.totalSum != widget.totalSum) {
+    if (oldWidget.totalSum != widget.totalSum ||
+        oldWidget.useNumbers != widget.useNumbers) {
       _generateExercise();
     }
   }
 
   void _generateExercise() {
     final random = Random();
-    _selectedEmoji = _emojis[random.nextInt(_emojis.length)];
+    _selectedSymbol =
+        widget.useNumbers
+            ? ''
+            : _emojis[random.nextInt(_emojis.length)];
     
     // Logic: A + B = totalSum where A, B <= maxOperand
     final int minA = max(0, widget.totalSum - widget.maxOperand);
@@ -102,6 +108,17 @@ class _AdditionGridState extends State<AdditionGrid> {
       );
     }
 
+    if (widget.useNumbers) {
+      return Text(
+        count.toString(),
+        style: TextStyle(
+          fontSize: widget.iconSize * 1.4,
+          fontWeight: FontWeight.bold,
+          color: Colors.black87,
+        ),
+      );
+    }
+
     Widget buildWrap(int items) {
       return Wrap(
         spacing: 8,
@@ -111,7 +128,7 @@ class _AdditionGridState extends State<AdditionGrid> {
         children: List.generate(
           items,
           (index) => Text(
-            _selectedEmoji,
+            _selectedSymbol,
             style: TextStyle(fontSize: widget.iconSize * 0.8),
           ),
         ),

@@ -45,6 +45,9 @@ class SubjectModel implements ContentItem {
   bool get usesEmojiAdditionRenderer =>
       id == 'de04da1c-9820-4e61-ae6b-bc7ed07eeb93';
 
+  bool get usesNumberAdditionRenderer =>
+      id == '5e81da1f-f92c-44d2-b3cd-f921d05425df';
+
   bool get isEditableType => cardCount == 0;
 
   bool get isSubtraction =>
@@ -53,6 +56,9 @@ class SubjectModel implements ContentItem {
 
   bool get usesEmojiSubtractionRenderer =>
       id == 'ce04da1c-9820-4e61-ae6b-bc7ed07eeb93';
+
+  bool get usesNumberSubtractionRenderer =>
+      id == 'f59a0f9c-5d6d-4f2d-b426-eb9ca6bf2782';
 
   bool get isMultiplication =>
       id == 'e104da1c-9820-4e61-ae6b-bc7ed07eeb93' ||

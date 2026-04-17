@@ -486,11 +486,25 @@ class _LearnPageState extends State<LearnPage> {
                                         maxOperand: _subject.maxOperand,
                                         iconSize: 60,
                                       )
+                                    else if (_subject.usesNumberSubtractionRenderer)
+                                      SubtractionGrid(
+                                        totalSum: _currentCard.numericalAnswer,
+                                        maxOperand: _subject.maxOperand,
+                                        iconSize: 60,
+                                        useNumbers: true,
+                                      )
                                     else if (_subject.usesEmojiAdditionRenderer)
                                       AdditionGrid(
                                         totalSum: _currentCard.numericalAnswer,
                                         maxOperand: _subject.maxOperand,
                                         iconSize: 60,
+                                      )
+                                    else if (_subject.usesNumberAdditionRenderer)
+                                      AdditionGrid(
+                                        totalSum: _currentCard.numericalAnswer,
+                                        maxOperand: _subject.maxOperand,
+                                        iconSize: 60,
+                                        useNumbers: true,
                                       )
                                     else if (_subject.isAlphabet)
                                       Center(
