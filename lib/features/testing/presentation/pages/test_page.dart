@@ -220,7 +220,7 @@ class _TestPageState extends State<TestPage> {
     final audio = _currentCard.getAudioUrl(lang);
     if (audio != null &&
         !_currentCard.isSpecialRenderer &&
-        !_subject.isAddition &&
+        !_subject.usesEmojiAdditionRenderer &&
         !_subject.isSubtraction &&
         !_currentCard.isCountingRenderer) {
       player.open(Media(audio));
@@ -746,7 +746,7 @@ class _TestPageState extends State<TestPage> {
                                         maxOperand: _subject.maxOperand,
                                         iconSize: isMobile ? 40 : 60,
                                       )
-                                    else if (_subject.isAddition)
+                                    else if (_subject.usesEmojiAdditionRenderer)
                                       AdditionGrid(
                                         totalSum: _currentCard.numericalAnswer,
                                         maxOperand: _subject.maxOperand,

@@ -88,7 +88,7 @@ class CardRenderer extends StatelessWidget {
       );
     }
 
-    if (subject?.isAddition == true) {
+    if (subject?.usesEmojiAdditionRenderer == true) {
       return AdditionGrid(
         totalSum: card.numericalAnswer,
         maxOperand: subject?.maxOperand ?? 20,

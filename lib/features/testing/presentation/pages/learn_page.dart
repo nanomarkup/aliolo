@@ -486,7 +486,7 @@ class _LearnPageState extends State<LearnPage> {
                                         maxOperand: _subject.maxOperand,
                                         iconSize: 60,
                                       )
-                                    else if (_subject.isAddition)
+                                    else if (_subject.usesEmojiAdditionRenderer)
                                       AdditionGrid(
                                         totalSum: _currentCard.numericalAnswer,
                                         maxOperand: _subject.maxOperand,

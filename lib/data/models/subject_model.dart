@@ -42,6 +42,9 @@ class SubjectModel implements ContentItem {
       id == 'de04da1c-9820-4e61-ae6b-bc7ed07eeb93' ||
       id == '5e81da1f-f92c-44d2-b3cd-f921d05425df';
 
+  bool get usesEmojiAdditionRenderer =>
+      id == 'de04da1c-9820-4e61-ae6b-bc7ed07eeb93';
+
   bool get isEditableType => cardCount == 0;
 
   bool get isSubtraction =>
