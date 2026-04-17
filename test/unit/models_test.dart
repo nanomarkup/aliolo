@@ -36,12 +36,13 @@ void main() {
       },
     );
 
-    test('SubjectModel reads visual_template and serializes it', () {
+    test('SubjectModel ignores visual_template and serializes without it', () {
       final json = {
         'id': 'test_subj_template',
         'pillar_id': 1,
         'owner_id': 'user_1',
         'is_public': 1,
+        'name': 'Counting',
         'visual_template': 'counting',
         'localized_data': '{}',
         'created_at': '2026-04-13T12:00:00Z',
@@ -49,10 +50,8 @@ void main() {
       };
 
       final model = SubjectModel.fromJson(json);
-      expect(model.visualTemplate, 'counting');
-      expect(model.isCounting, isTrue);
-      expect(model.isMath, isFalse);
-      expect(model.toJson()['visual_template'], 'counting');
+      expect(model.name, 'Counting');
+      expect(model.toJson().containsKey('visual_template'), isFalse);
     });
 
     test(
@@ -90,12 +89,12 @@ void main() {
       expect(model.isPublic, isTrue);
     });
 
-    test('CardModel reads renderer from json and omits test_mode', () {
+    test('CardModel reads renderer from json and supports counting', () {
       final json = {
         'id': 'test_card_math',
         'subject_id': 'subj_1',
         'owner_id': 'user_1',
-        'renderer': 'math',
+        'renderer': 'counting',
         'display_text': '1 + 1',
         'display_texts': '{"es":"1 + 1"}',
         'localized_data': '{}',
@@ -104,7 +103,8 @@ void main() {
       };
 
       final model = CardModel.fromJson(json);
-      expect(model.renderer, 'math');
+      expect(model.renderer, 'counting');
+      expect(model.isCountingRenderer, isTrue);
       expect(model.displayText, '1 + 1');
       expect(model.getDisplayText('es'), '1 + 1');
       expect(model.toJson().containsKey('test_mode'), isFalse);

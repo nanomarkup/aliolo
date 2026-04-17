@@ -1,6 +1,5 @@
 UPDATE subjects
 SET name = 'Numbers',
-    visual_template = 'generic',
     updated_at = CURRENT_TIMESTAMP
 WHERE id = 'bc354f43-f9be-42a9-a7bc-ac400bd5e310';
 

@@ -35,7 +35,7 @@ class CardRenderer extends StatelessWidget {
       return _buildAlphabetRenderer(lang);
     }
 
-    if (subject?.isCounting == true) {
+    if (card.isCountingRenderer) {
       return CountingGrid(
         count: card.numericalAnswer,
         iconSize: textFontSize ?? 40,

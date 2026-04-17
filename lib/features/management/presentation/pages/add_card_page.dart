@@ -259,8 +259,22 @@ class _AddCardPageState extends State<AddCardPage> {
           }
         }
 
+        _applyDefaultRendererForSelectedSubject();
+
         _isLoading = false;
       });
+    }
+  }
+
+  void _applyDefaultRendererForSelectedSubject() {
+    if (widget.existingCard != null || _selectedSubjectId == null) return;
+    if (_renderer != 'generic') return;
+    final subject = _mySubjects.firstWhere(
+      (s) => s.id == _selectedSubjectId,
+      orElse: () => SubjectModel.empty(),
+    );
+    if (subject.name.toLowerCase() == 'counting') {
+      _renderer = 'counting';
     }
   }
 
@@ -1161,7 +1175,10 @@ class _AddCardPageState extends State<AddCardPage> {
       onChanged:
           widget.isReadOnly
               ? null
-              : (v) => setState(() => _selectedSubjectId = v),
+              : (v) => setState(() {
+                _selectedSubjectId = v;
+                _applyDefaultRendererForSelectedSubject();
+              }),
     );
   }
 
@@ -1175,6 +1192,7 @@ class _AddCardPageState extends State<AddCardPage> {
       ),
       items: [
         DropdownMenuItem(value: 'generic', child: const Text('Generic')),
+        DropdownMenuItem(value: 'counting', child: const Text('Counting')),
         DropdownMenuItem(value: 'math', child: const Text('Math')),
       ],
       onChanged:

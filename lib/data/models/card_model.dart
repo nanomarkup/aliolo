@@ -281,6 +281,7 @@ class CardModel {
 
   bool get isColors => renderer == 'colors' || hexColor != null;
   bool get isSpecialRenderer => renderer != 'generic';
+  bool get isCountingRenderer => renderer == 'counting';
   bool get isMathRenderer => renderer == 'math';
   bool get isMath => isMathRenderer;
 

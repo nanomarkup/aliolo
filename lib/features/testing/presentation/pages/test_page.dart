@@ -222,7 +222,7 @@ class _TestPageState extends State<TestPage> {
         !_currentCard.isSpecialRenderer &&
         !_subject.isAddition &&
         !_subject.isSubtraction &&
-        !_subject.isCounting) {
+        !_currentCard.isCountingRenderer) {
       player.open(Media(audio));
       player.play();
     }
@@ -651,7 +651,7 @@ class _TestPageState extends State<TestPage> {
                           _currentImages.isNotEmpty ||
                           _showingVideo ||
                           displayText.isNotEmpty ||
-                          _subject.isCounting;
+                          _currentCard.isSpecialRenderer;
                       final showAudioPrompt =
                           !_currentCard.isSpecialRenderer &&
                           hasAudio &&
@@ -695,7 +695,7 @@ class _TestPageState extends State<TestPage> {
                                   children: [
                                     if (_showingVideo)
                                       Video(controller: controller)
-                                    else if (_subject.isCounting)
+                                    else if (_currentCard.isCountingRenderer)
                                       CountingGrid(
                                         count: _currentCard.numericalAnswer,
                                         iconSize: isMobile ? 40 : 60,

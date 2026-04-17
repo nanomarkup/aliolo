@@ -9,6 +9,22 @@ import { SuccessResponseSchema, ErrorResponseSchema } from '../schemas/shared';
 
 const router = new OpenAPIHono<AppEnv>();
 
+const subjectSelectColumns = `
+  s.id,
+  s.pillar_id,
+  s.folder_id,
+  s.owner_id,
+  s.age_group,
+  s.is_public,
+  s.created_at,
+  s.updated_at,
+  s.names,
+  s.description,
+  s.descriptions,
+  s.name,
+  s.type
+`;
+
 const listSubjectsRoute = createRoute({
   method: 'get',
   path: '/subjects',
@@ -33,8 +49,8 @@ router.openapi(listSubjectsRoute, async (c) => {
   const isRootOnly = root_only === 'true';
   const userId = c.get("user")?.id;
 
-  let query = `
-    SELECT s.*, p.username as owner_name, 
+    let query = `
+    SELECT ${subjectSelectColumns}, p.username as owner_name, 
     (SELECT COUNT(*) FROM cards c WHERE c.subject_id = s.id) as card_count
     FROM subjects s 
     LEFT JOIN profiles p ON s.owner_id = p.id`;
@@ -120,12 +136,12 @@ router.openapi(createSubjectRoute, async (c) => {
     const user = c.get("user");
     if (!user) return c.json({ error: 'Unauthorized' } as any, 401);
 
-    const { id, pillar_id, folder_id, is_public, age_group, name, names, description, descriptions, visual_template } = c.req.valid('json');
+    const { id, pillar_id, folder_id, is_public, age_group, name, names, description, descriptions } = c.req.valid('json');
 
     try {
         await c.env.DB.prepare(`
-            INSERT INTO subjects (id, pillar_id, folder_id, owner_id, is_public, age_group, name, names, description, descriptions, visual_template, updated_at)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+            INSERT INTO subjects (id, pillar_id, folder_id, owner_id, is_public, age_group, name, names, description, descriptions, updated_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
             ON CONFLICT(id) DO UPDATE SET
                 pillar_id = excluded.pillar_id,
                 folder_id = excluded.folder_id,
@@ -135,7 +151,6 @@ router.openapi(createSubjectRoute, async (c) => {
                 names = excluded.names,
                 description = excluded.description,
                 descriptions = excluded.descriptions,
-                visual_template = excluded.visual_template,
                 updated_at = CURRENT_TIMESTAMP
         `).bind(
             id, 
@@ -147,8 +162,7 @@ router.openapi(createSubjectRoute, async (c) => {
             name, 
             JSON.stringify(names), 
             description, 
-            JSON.stringify(descriptions),
-            visual_template ?? 'generic'
+            JSON.stringify(descriptions)
         ).run();
         
         return c.json({ success: true }, 200);
@@ -206,7 +220,7 @@ router.openapi(dashboardSubjectsRoute, async (c) => {
 
     try {
         const { results } = await c.env.DB.prepare(`
-            SELECT s.*, p.username as owner_name,
+            SELECT ${subjectSelectColumns}, p.username as owner_name,
             (SELECT COUNT(*) FROM cards c WHERE c.subject_id = s.id) as card_count
             FROM subjects s
             INNER JOIN user_subjects us ON s.id = us.subject_id

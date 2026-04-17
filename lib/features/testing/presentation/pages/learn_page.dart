@@ -451,7 +451,7 @@ class _LearnPageState extends State<LearnPage> {
                                   children: [
                                     if (_showingVideo)
                                       Video(controller: controller)
-                                    else if (_subject.isCounting)
+                                    else if (_currentCard.isCountingRenderer)
                                       CountingGrid(
                                         count: _currentCard.numericalAnswer,
                                         iconSize: 60,
