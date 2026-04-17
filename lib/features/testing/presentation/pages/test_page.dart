@@ -20,9 +20,6 @@ import 'package:media_kit_video/media_kit_video.dart';
 import 'package:aliolo/core/widgets/addition_grid.dart';
 import 'package:aliolo/core/widgets/subtraction_grid.dart';
 import 'package:aliolo/core/widgets/counting_grid.dart';
-import 'package:aliolo/core/widgets/number_grid.dart';
-import 'package:aliolo/core/widgets/multiplication_grid.dart';
-import 'package:aliolo/core/widgets/division_grid.dart';
 import 'package:aliolo/data/services/math_service.dart';
 import 'package:aliolo/features/settings/presentation/pages/premium_upgrade_page.dart';
 
@@ -139,7 +136,7 @@ class _TestPageState extends State<TestPage> {
       _currentCard.subjectId,
     );
 
-    if (_currentCard.isMath && !_subject.isNumbers) {
+    if (_currentCard.isMath) {
       _correctAnswerId = _currentCard.numericalAnswer.toString();
       List<String> mathOpts = _currentCard.mathOptions ?? [];
 
@@ -653,7 +650,8 @@ class _TestPageState extends State<TestPage> {
                           _currentCard.primaryImageUrl(lang) != null ||
                           _currentImages.isNotEmpty ||
                           _showingVideo ||
-                          displayText.isNotEmpty;
+                          displayText.isNotEmpty ||
+                          _subject.isCounting;
                       final showAudioPrompt =
                           !_currentCard.isSpecialRenderer &&
                           hasAudio &&
@@ -697,6 +695,11 @@ class _TestPageState extends State<TestPage> {
                                   children: [
                                     if (_showingVideo)
                                       Video(controller: controller)
+                                    else if (_subject.isCounting)
+                                      CountingGrid(
+                                        count: _currentCard.numericalAnswer,
+                                        iconSize: isMobile ? 40 : 60,
+                                      )
                                     else if (showAudioPrompt)
                                       Container(
                                         color: headerColor.withValues(
@@ -737,28 +740,6 @@ class _TestPageState extends State<TestPage> {
                                           textAlign: TextAlign.center,
                                         ),
                                       )
-                                    else if (_subject.isDivision)
-                                      DivisionGrid(
-                                        a: _currentCard.divisionParts?[0] ?? 0,
-                                        b: _currentCard.divisionParts?[1] ?? 1,
-                                        languageCode: lang,
-                                        fontSize: isMobile ? 80 : 120,
-                                        color: headerColor,
-                                      )
-                                    else if (_subject.isMultiplication)
-                                      MultiplicationGrid(
-                                        a:
-                                            _currentCard
-                                                .multiplicationParts?[0] ??
-                                            1,
-                                        b:
-                                            _currentCard
-                                                .multiplicationParts?[1] ??
-                                            0,
-                                        languageCode: lang,
-                                        fontSize: isMobile ? 80 : 120,
-                                        color: headerColor,
-                                      )
                                     else if (_subject.isSubtraction)
                                       SubtractionGrid(
                                         totalSum: _currentCard.numericalAnswer,
@@ -789,14 +770,6 @@ class _TestPageState extends State<TestPage> {
                                           textAlign: TextAlign.center,
                                         ),
                                       )
-                                    else if (_currentCard.subjectId ==
-                                            '68232807-b9cd-4cff-872c-c398444f85e2' ||
-                                        _currentCard.subjectId ==
-                                            'c3548727-65f4-4e0c-939c-56135b4eb543')
-                                      CountingGrid(
-                                        count: _currentCard.numericalAnswer,
-                                        iconSize: isMobile ? 40 : 60,
-                                      )
                                     else if (isAudioToImage)
                                       _buildAudioToImageGrid(
                                         headerColor,
@@ -814,13 +787,6 @@ class _TestPageState extends State<TestPage> {
                                           ),
                                         ),
                                       )
-                                    else if (_subject.isNumbers)
-                                      NumberGrid(
-                                        displayChar: _currentCard
-                                            .getNumericalChar(lang),
-                                        fontSize: isMobile ? 80 : 120,
-                                        color: headerColor,
-                                      )
                                     else
                                       const Icon(
                                         Icons.image_not_supported,
@@ -836,8 +802,7 @@ class _TestPageState extends State<TestPage> {
                       );
 
                       final optionsContent =
-                          (!isAudioToImage ||
-                                  (_currentCard.isMath && !_subject.isNumbers))
+                          (!isAudioToImage || _currentCard.isMath)
                               ? Container(
                                 width: isMobile ? double.infinity : 350,
                                 padding: EdgeInsets.all(isMobile ? 24 : 32),
@@ -921,8 +886,7 @@ class _TestPageState extends State<TestPage> {
 
                       if (isMobile) {
                         // For Audio to Image on mobile, fill screen and let grid handle its own scroll
-                        if (isAudioToImage &&
-                            !(_currentCard.isMath && !_subject.isNumbers)) {
+                        if (isAudioToImage && !_currentCard.isMath) {
                           return mediaContent;
                         }
 

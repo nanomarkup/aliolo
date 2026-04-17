@@ -23,9 +23,6 @@ import 'package:aliolo/core/widgets/aliolo_image.dart';
 import 'package:aliolo/core/widgets/counting_grid.dart';
 import 'package:aliolo/core/widgets/addition_grid.dart';
 import 'package:aliolo/core/widgets/subtraction_grid.dart';
-import 'package:aliolo/core/widgets/number_grid.dart';
-import 'package:aliolo/core/widgets/multiplication_grid.dart';
-import 'package:aliolo/core/widgets/division_grid.dart';
 import 'package:aliolo/features/settings/presentation/pages/premium_upgrade_page.dart';
 
 class LearnPage extends StatefulWidget {
@@ -454,6 +451,11 @@ class _LearnPageState extends State<LearnPage> {
                                   children: [
                                     if (_showingVideo)
                                       Video(controller: controller)
+                                    else if (_subject.isCounting)
+                                      CountingGrid(
+                                        count: _currentCard.numericalAnswer,
+                                        iconSize: 60,
+                                      )
                                     else if (_currentImages.isNotEmpty)
                                       AlioloImage(
                                         imageUrl:
@@ -477,35 +479,6 @@ class _LearnPageState extends State<LearnPage> {
                                           ),
                                           textAlign: TextAlign.center,
                                         ),
-                                      )
-                                    else if (_subject.isDivision)
-                                      DivisionGrid(
-                                        a: _currentCard.divisionParts?[0] ?? 0,
-                                        b: _currentCard.divisionParts?[1] ?? 1,
-                                        languageCode: lang,
-                                        fontSize: 120,
-                                        color: headerColor,
-                                      )
-                                    else if (_subject.isMultiplication)
-                                      MultiplicationGrid(
-                                        a:
-                                            _currentCard
-                                                .multiplicationParts?[0] ??
-                                            1,
-                                        b:
-                                            _currentCard
-                                                .multiplicationParts?[1] ??
-                                            0,
-                                        languageCode: lang,
-                                        fontSize: 120,
-                                        color: headerColor,
-                                      )
-                                    else if (_subject.isNumbers)
-                                      NumberGrid(
-                                        displayChar: _currentCard
-                                            .getNumericalChar(lang),
-                                        fontSize: 120,
-                                        color: headerColor,
                                       )
                                     else if (_subject.isSubtraction)
                                       SubtractionGrid(
@@ -546,14 +519,6 @@ class _LearnPageState extends State<LearnPage> {
                                             ),
                                           ),
                                         ),
-                                      )
-                                    else if (_currentCard.subjectId ==
-                                            '68232807-b9cd-4cff-872c-c398444f85e2' ||
-                                        _currentCard.subjectId ==
-                                            'c3548727-65f4-4e0c-939c-56135b4eb543')
-                                      CountingGrid(
-                                        count: _currentCard.numericalAnswer,
-                                        iconSize: 60,
                                       )
                                     else
                                       const Icon(

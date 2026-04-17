@@ -273,39 +273,6 @@ class CardModel {
     return answersList.any((a) => a.toLowerCase() == normalizedInput);
   }
 
-  String getNumericalChar(String lang) {
-    final int val = numericalAnswer;
-
-    const Map<int, Map<String, String>> specialNums = {
-      0: {'ar': '٠', 'hi': '०', 'zh': '零', 'ja': '零', 'ko': '영'},
-      1: {'ar': '١', 'hi': '१', 'zh': '一', 'ja': '一', 'ko': '일'},
-      2: {'ar': '٢', 'hi': '२', 'zh': '二', 'ja': '二', 'ko': '이'},
-      3: {'ar': '٣', 'hi': '३', 'zh': '三', 'ja': '三', 'ko': '삼'},
-      4: {'ar': '٤', 'hi': '४', 'zh': '四', 'ja': '四', 'ko': '사'},
-      5: {'ar': '٥', 'hi': '५', 'zh': '五', 'ja': '五', 'ko': '오'},
-      6: {'ar': '٦', 'hi': '६', 'zh': '六', 'ja': '六', 'ko': '육'},
-      7: {'ar': '٧', 'hi': '७', 'zh': '七', 'ja': '七', 'ko': '칠'},
-      8: {'ar': '٨', 'hi': '८', 'zh': '八', 'ja': '八', 'ko': '팔'},
-      9: {'ar': '٩', 'hi': '९', 'zh': '九', 'ja': '九', 'ko': '구'},
-      10: {'ar': '١٠', 'hi': '१०', 'zh': '十', 'ja': '十', 'ko': '십'},
-      11: {'ar': '١١', 'hi': '११', 'zh': '十一', 'ja': '十一', 'ko': '십일'},
-      12: {'ar': '١٢', 'hi': '१२', 'zh': '十二', 'ja': '十二', 'ko': '십이'},
-      13: {'ar': '١٣', 'hi': '१十三', 'zh': '十三', 'ja': '十三', 'ko': '십삼'},
-      14: {'ar': '١٤', 'hi': '१४', 'zh': '十四', 'ja': '十四', 'ko': '십사'},
-      15: {'ar': '١٥', 'hi': '१५', 'zh': '十五', 'ja': '十五', 'ko': '십오'},
-      16: {'ar': '١٦', 'hi': '१६', 'zh': '十六', 'ja': '十六', 'ko': '십육'},
-      17: {'ar': '١٧', 'hi': '१७', 'zh': '十七', 'ja': '十七', 'ko': '십칠'},
-      18: {'ar': '١٨', 'hi': '१८', 'zh': '十八', 'ja': '十八', 'ko': '십팔'},
-      19: {'ar': '١٩', 'hi': '१९', 'zh': '十九', 'ja': '十九', 'ko': '십구'},
-      20: {'ar': '٢٠', 'hi': '२०', 'zh': '二十', 'ja': '二十', 'ko': '이십'},
-    };
-
-    if (specialNums.containsKey(val)) {
-      return specialNums[val]![lang] ?? val.toString();
-    }
-    return val.toString();
-  }
-
   String? get hexColor {
     final ans = getAnswer('en');
     final match = RegExp(r'[,(]\s*(#[0-9a-fA-F]{6})\s*[)]?').firstMatch(ans);
@@ -348,24 +315,6 @@ class CardModel {
   List<int>? get additionParts {
     final ans = getAnswer('en');
     final match = RegExp(r'(\d+)\s*\+\s*(\d+)').firstMatch(ans);
-    if (match != null) {
-      return [int.parse(match.group(1)!), int.parse(match.group(2)!)];
-    }
-    return null;
-  }
-
-  List<int>? get multiplicationParts {
-    final ans = getAnswer('en');
-    final match = RegExp(r'(\d+)\s*[×*]\s*(\d+)').firstMatch(ans);
-    if (match != null) {
-      return [int.parse(match.group(1)!), int.parse(match.group(2)!)];
-    }
-    return null;
-  }
-
-  List<int>? get divisionParts {
-    final ans = getAnswer('en');
-    final match = RegExp(r'(\d+)\s*[÷/]\s*(\d+)').firstMatch(ans);
     if (match != null) {
       return [int.parse(match.group(1)!), int.parse(match.group(2)!)];
     }

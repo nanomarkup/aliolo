@@ -35,12 +35,11 @@ class SubjectModel implements ContentItem {
   final String description;
   /// Map of language code to its specific description.
   final Map<String, String> descriptions;
+  final String visualTemplate;
 
   bool get isAlphabet => folderId == '1c85e6e5-195e-4251-bbbd-b84637427977';
 
-  bool get isCounting =>
-      id == '68232807-b9cd-4cff-872c-c398444f85e2' ||
-      id == 'c3548727-65f4-4e0c-939c-56135b4eb543';
+  bool get isCounting => visualTemplate == 'counting';
 
   bool get isAddition =>
       id == 'de04da1c-9820-4e61-ae6b-bc7ed07eeb93' ||
@@ -74,19 +73,13 @@ class SubjectModel implements ContentItem {
       id == 'd804da1c-9820-4e61-ae6b-bc7ed07eeb93' ||
       id == 'd904da1c-9820-4e61-ae6b-bc7ed07eeb93';
 
-  bool get isNumbers =>
-      id == 'bc354f43-f9be-42a9-a7bc-ac400bd5e310' ||
-      id == 'cb04da1c-9820-4e61-ae6b-bc7ed07eeb93';
-
   bool get isColors => id == '0b84447d-3af3-4509-bdf6-c4e7fe822cc7';
 
   bool get isMath =>
-      isCounting ||
       isAddition ||
       isSubtraction ||
       isMultiplication ||
-      isDivision ||
-      isNumbers;
+      isDivision;
 
   int get maxOperand {
     if (id == 'de04da1c-9820-4e61-ae6b-bc7ed07eeb93') return 5;
@@ -112,6 +105,7 @@ class SubjectModel implements ContentItem {
     this.names = const {},
     required this.description,
     this.descriptions = const {},
+    this.visualTemplate = 'generic',
     this.folderId,
     this.typeStr = 'standard',
     this.linkedSubjectIds = const [],
@@ -184,6 +178,7 @@ class SubjectModel implements ContentItem {
       'names': names,
       'description': description,
       'descriptions': descriptions,
+      'visual_template': visualTemplate,
       'folder_id': folderId,
       if (typeStr != 'standard') 'type': typeStr,
       if (linkedSubjectIds.isNotEmpty) 'linked_subject_ids': linkedSubjectIds,
@@ -221,6 +216,8 @@ class SubjectModel implements ContentItem {
         }
       } catch (_) {}
     }
+
+    final rawVisualTemplate = (json['visual_template'] ?? '').toString().trim();
 
     // Fallback migration logic in app just in case (legacy data in localized_data)
     String baseName = json['name'] ?? '';
@@ -268,6 +265,7 @@ class SubjectModel implements ContentItem {
       names: namesMap,
       description: baseDesc,
       descriptions: descriptionsMap,
+      visualTemplate: rawVisualTemplate.isNotEmpty ? rawVisualTemplate : 'generic',
       folderId: json['folder_id'],
       typeStr: json['type'] ?? 'standard',
       linkedSubjectIds: List<String>.from(json['linked_subject_ids'] ?? []),

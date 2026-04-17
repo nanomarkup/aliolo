@@ -58,6 +58,7 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
   late bool _isPublic;
   late String _selectedAgeGroup;
   late String _selectedType;
+  late String _selectedVisualTemplate;
   late bool _isFolderMode;
   String? _selectedFolderId;
   String _selectedLang = 'global';
@@ -65,7 +66,6 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
   bool _isSaving = false;
   bool _showSidebar = false;
   int _itemsPerRow = 8;
-  List<SubjectModel> _allSubjects = [];
   List<FolderModel> _allFolders = [];
 
   final Map<String, DraftLocalizedSubjectData> _drafts = {
@@ -105,6 +105,8 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
             : '15_plus');
     _selectedType = widget.existingSubject?.typeStr ?? 
         (widget.isCollectionMode ? 'collection' : 'standard');
+    _selectedVisualTemplate =
+        widget.existingSubject?.visualTemplate ?? 'generic';
     _selectedFolderId = widget.existingSubject?.folderId ?? widget.folderId;
     _linkedSubjectIds = List.from(widget.existingSubject?.linkedSubjectIds ?? []);
 
@@ -121,12 +123,7 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
   }
 
   Future<void> _loadAllSubjects() async {
-    final results = await _cardService.getDashboardSubjects();
-    if (mounted) {
-      setState(() {
-        _allSubjects = results;
-      });
-    }
+    await _cardService.getDashboardSubjects();
   }
 
   Future<void> _loadFolders() async {
@@ -222,6 +219,33 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
         _drafts[lang]!.name = name;
       });
     }
+  }
+
+  Widget _buildVisualTemplatePicker() {
+    return DropdownButtonFormField<String>(
+      value: _selectedVisualTemplate,
+      decoration: const InputDecoration(
+        labelText: 'Visual Template',
+        border: OutlineInputBorder(),
+        contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      ),
+      items: const [
+        DropdownMenuItem(value: 'generic', child: Text('Generic')),
+        DropdownMenuItem(value: 'counting', child: Text('Counting')),
+      ],
+      onChanged:
+          (widget.existingSubject != null || widget.existingFolder != null)
+              ? (val) {
+                if (val != null) {
+                  setState(() => _selectedVisualTemplate = val);
+                }
+              }
+              : (val) {
+                if (val != null) {
+                  setState(() => _selectedVisualTemplate = val);
+                }
+              },
+    );
   }
 
   void _ensureDraftExists(String lang) {
@@ -441,7 +465,7 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
     }
 
     // Ensure global name is never null for the database NOT NULL constraint
-    if (globalName == null || globalName!.trim().isEmpty) {
+    if (globalName == null || globalName.trim().isEmpty) {
       if (finalNames.isNotEmpty) {
         globalName = finalNames.values.first;
       } else {
@@ -550,6 +574,7 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
           names: finalNames,
           description: globalDescription ?? '',
           descriptions: finalDescriptions,
+          visualTemplate: _selectedVisualTemplate,
           typeStr: 'standard',
           folderId: _selectedFolderId,
           linkedSubjectIds: [],
@@ -784,6 +809,8 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
                     folderDropdown,
                     const SizedBox(height: 20),
                     ageDropdown,
+                    const SizedBox(height: 20),
+                    _buildVisualTemplatePicker(),
                   ],
                 );
               } else {
@@ -792,7 +819,15 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
                   children: [
                     Expanded(child: folderDropdown),
                     const SizedBox(width: 16),
-                    Expanded(child: ageDropdown),
+                    Expanded(
+                      child: Column(
+                        children: [
+                          ageDropdown,
+                          const SizedBox(height: 20),
+                          _buildVisualTemplatePicker(),
+                        ],
+                      ),
+                    ),
                   ],
                 );
               }
@@ -885,6 +920,7 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
     if (_selectedAgeGroup != original.ageGroup) return true;
     if (_isPublic != original.isPublic) return true;
     if (_selectedType != original.typeStr) return true;
+    if (_selectedVisualTemplate != original.visualTemplate) return true;
     if ((_selectedFolderId ?? '') != (original.folderId ?? '')) return true;
 
     final allLangs = {'global', ...original.names.keys, ...original.descriptions.keys, ..._drafts.keys};

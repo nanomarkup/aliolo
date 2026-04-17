@@ -4,9 +4,6 @@ import 'package:aliolo/data/models/subject_model.dart';
 import 'package:aliolo/core/widgets/aliolo_image.dart';
 import 'package:aliolo/core/widgets/addition_grid.dart';
 import 'package:aliolo/core/widgets/counting_grid.dart';
-import 'package:aliolo/core/widgets/division_grid.dart';
-import 'package:aliolo/core/widgets/multiplication_grid.dart';
-import 'package:aliolo/core/widgets/number_grid.dart';
 import 'package:aliolo/core/widgets/subtraction_grid.dart';
 
 class CardRenderer extends StatelessWidget {
@@ -36,6 +33,13 @@ class CardRenderer extends StatelessWidget {
 
     if (subject?.isAlphabet == true) {
       return _buildAlphabetRenderer(lang);
+    }
+
+    if (subject?.isCounting == true) {
+      return CountingGrid(
+        count: card.numericalAnswer,
+        iconSize: textFontSize ?? 40,
+      );
     }
 
     final imageUrl =
@@ -76,36 +80,6 @@ class CardRenderer extends StatelessWidget {
       return null;
     }
 
-    if (subject?.isDivision == true) {
-      final parts = card.divisionParts ?? [0, 1];
-      return DivisionGrid(
-        a: parts[0],
-        b: parts[1],
-        languageCode: lang,
-        fontSize: textFontSize ?? 40,
-        color: fallbackColor,
-      );
-    }
-
-    if (subject?.isMultiplication == true) {
-      final parts = card.multiplicationParts ?? [1, 0];
-      return MultiplicationGrid(
-        a: parts[0],
-        b: parts[1],
-        languageCode: lang,
-        fontSize: textFontSize ?? 40,
-        color: fallbackColor,
-      );
-    }
-
-    if (subject?.isNumbers == true) {
-      return NumberGrid(
-        displayChar: card.getNumericalChar(lang),
-        fontSize: textFontSize ?? 40,
-        color: fallbackColor,
-      );
-    }
-
     if (subject?.isSubtraction == true) {
       return SubtractionGrid(
         totalSum: card.numericalAnswer,
@@ -118,13 +92,6 @@ class CardRenderer extends StatelessWidget {
       return AdditionGrid(
         totalSum: card.numericalAnswer,
         maxOperand: subject?.maxOperand ?? 20,
-        iconSize: (textFontSize ?? 24).clamp(12, 64).toDouble(),
-      );
-    }
-
-    if (subject?.isCounting == true) {
-      return CountingGrid(
-        count: card.numericalAnswer,
         iconSize: (textFontSize ?? 24).clamp(12, 64).toDouble(),
       );
     }

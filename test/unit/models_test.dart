@@ -36,6 +36,25 @@ void main() {
       },
     );
 
+    test('SubjectModel reads visual_template and serializes it', () {
+      final json = {
+        'id': 'test_subj_template',
+        'pillar_id': 1,
+        'owner_id': 'user_1',
+        'is_public': 1,
+        'visual_template': 'counting',
+        'localized_data': '{}',
+        'created_at': '2026-04-13T12:00:00Z',
+        'updated_at': '2026-04-13T12:00:00Z',
+      };
+
+      final model = SubjectModel.fromJson(json);
+      expect(model.visualTemplate, 'counting');
+      expect(model.isCounting, isTrue);
+      expect(model.isMath, isFalse);
+      expect(model.toJson()['visual_template'], 'counting');
+    });
+
     test(
       'CollectionModel correctly parses is_public and is_on_dashboard from int',
       () {

@@ -18,6 +18,7 @@ export const SubjectSchema = z.object({
     description: 'JSON string containing localized descriptions',
     example: '{"es": "Domina los nombres y reglas de los juegos atléticos populares."}' 
   }),
+  visual_template: z.string().openapi({ example: 'generic' }),
   created_at: z.string().openapi({ example: '2026-04-12T00:00:00Z' }),
   updated_at: z.string().openapi({ example: '2026-04-12T00:00:00Z' }),
   card_count: z.number().openapi({ example: 50 }),
@@ -36,6 +37,7 @@ export const CreateSubjectSchema = z.object({
   names: z.record(z.string()).openapi({ example: { es: 'Nueva Materia' } }),
   description: z.string().openapi({ example: 'Desc' }),
   descriptions: z.record(z.string()).openapi({ example: { es: 'Desc' } }),
+  visual_template: z.string().optional().openapi({ example: 'generic' }),
 }).openapi('CreateSubject');
 
 export const ToggleDashboardSchema = z.object({
