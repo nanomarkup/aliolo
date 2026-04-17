@@ -9,7 +9,6 @@ import 'package:media_kit_video/media_kit_video.dart';
 import 'package:aliolo/data/models/card_model.dart';
 import 'package:aliolo/data/models/pillar_model.dart';
 import 'package:aliolo/data/models/subject_model.dart';
-import 'package:aliolo/data/services/card_service.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/sound_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
@@ -17,6 +16,8 @@ import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/data/services/progress_service.dart';
 import 'package:aliolo/data/services/subscription_service.dart';
 import 'package:aliolo/core/di/service_locator.dart';
+import 'package:aliolo/core/utils/session_bucket_sampler.dart';
+import 'package:aliolo/core/widgets/card_renderer.dart';
 import 'package:aliolo/core/widgets/window_controls.dart';
 import 'package:aliolo/core/widgets/aliolo_image.dart';
 import 'package:aliolo/core/widgets/counting_grid.dart';
@@ -88,8 +89,11 @@ class _LearnPageState extends State<LearnPage> {
     _totalInSession = _sessionQueue.length;
 
     if (_sessionQueue.isNotEmpty) {
-      _currentSubjectCard = _sessionQueue.first;
-      _completedInSession++;
+      final firstCard = SessionBucketSampler.takeRandom(_sessionQueue);
+      if (firstCard != null) {
+        _currentSubjectCard = firstCard;
+        _completedInSession = 1;
+      }
     }
 
     _playerSubscription = player.stream.completed.listen((completed) {
@@ -101,7 +105,7 @@ class _LearnPageState extends State<LearnPage> {
       }
     });
 
-    if (_sessionQueue.isNotEmpty) {
+    if (_completedInSession > 0) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         _setupMedia();
       });
@@ -192,19 +196,17 @@ class _LearnPageState extends State<LearnPage> {
       subjectId: _currentCard.subjectId,
     );
 
-    if (_sessionQueue.isNotEmpty) {
-      _sessionQueue.removeAt(0);
+    final nextCard = SessionBucketSampler.takeRandom(_sessionQueue);
+    if (nextCard != null) {
+      _completedInSession++;
+      setState(() => _currentSubjectCard = nextCard);
+      _setupMedia();
+      return;
     }
 
-    if (_sessionQueue.isNotEmpty) {
-      _completedInSession++;
-      setState(() => _currentSubjectCard = _sessionQueue.first);
-      _setupMedia();
-    } else {
-      _progressService.awardSubjectCompletionBonus(_totalInSession);
-      _soundService.playCompleted();
-      _showCompletionDialog();
-    }
+    _progressService.awardSubjectCompletionBonus(_totalInSession);
+    _soundService.playCompleted();
+    _showCompletionDialog();
   }
 
   void _showCompletionDialog() {
@@ -226,94 +228,6 @@ class _LearnPageState extends State<LearnPage> {
               ),
             ],
           ),
-    );
-  }
-
-  void _showPeekSheet() {
-    final lang = _languageCode.toLowerCase();
-    showModalBottomSheet(
-      context: context,
-      builder: (context) {
-        return Container(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'TRANSLATIONS',
-                style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.grey,
-                ),
-              ),
-              const SizedBox(height: 16),
-              ...(() {
-                final otherLangs = {
-                  ..._currentCard.prompts.keys,
-                  ..._currentCard.answers.keys,
-                  ..._currentCard.audios.keys,
-                  ..._currentCard.videos.keys,
-                  ..._currentCard.imagesLocal.keys
-                }.where((l) => l != lang).toList();
-                
-                return otherLangs.map((l) {
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          l.toUpperCase(),
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12,
-                            color: Colors.orange,
-                          ),
-                        ),
-                        Text(
-                          _currentCard.getPrompt(l).isEmpty ? '-' : _currentCard.getPrompt(l),
-                          style: const TextStyle(fontSize: 16),
-                        ),
-                        ...(() {
-                          final ansRaw = _currentCard.getAnswer(l).isEmpty ? '-' : _currentCard.getAnswer(l);
-                          final answers =
-                              ansRaw
-                                  .split(';')
-                                  .map((s) => s.trim())
-                                  .where((s) => s.isNotEmpty)
-                                  .toList();
-                          if (answers.isEmpty)
-                            return [
-                              const Text(
-                                '-',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ];
-
-                          return answers.map(
-                            (a) => Text(
-                              CardModel.capitalizeFirst(a),
-                              style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          );
-                        })(),
-                      ],
-                    ),
-                  );
-                });
-              })(),
-            ],
-          ),
-        );
-      },
     );
   }
 
@@ -509,9 +423,10 @@ class _LearnPageState extends State<LearnPage> {
                     child: Padding(
                       padding: const EdgeInsets.all(32),
                       child: Card(
-                      elevation: 4,
-                      clipBehavior: Clip.antiAlias,
-                      color: Theme.of(context).cardColor,                        shape: RoundedRectangleBorder(
+                        elevation: 4,
+                        clipBehavior: Clip.antiAlias,
+                        color: Theme.of(context).cardColor,
+                        shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(24),
                           side: BorderSide(
                             color: headerColor.withValues(alpha: 0.1),
@@ -520,132 +435,164 @@ class _LearnPageState extends State<LearnPage> {
                         ),
                         child: Container(
                           color: headerColor.withValues(alpha: 0.05),
-                          child: Stack(
-                          fit: StackFit.expand,
-                          children: [
-                            if (_showingVideo)
-                              Video(controller: controller)
-                            else if (_currentImages.isNotEmpty)
-                              AlioloImage(
-                                imageUrl: _currentImages[_currentImageIndex],
-                                fit: BoxFit.contain,
-                                backgroundColor: headerColor.withValues(alpha: 0.05),
-                              )
-                            else if (_subject.isDivision)
-                              DivisionGrid(
-                                a: _currentCard.divisionParts?[0] ?? 0,
-                                b: _currentCard.divisionParts?[1] ?? 1,
-                                languageCode: lang,
-                                fontSize: 120,
-                                color: headerColor,
-                              )
-                            else if (_subject.isMultiplication)
-                              MultiplicationGrid(
-                                a: _currentCard.multiplicationParts?[0] ?? 1,
-                                b: _currentCard.multiplicationParts?[1] ?? 0,
-                                languageCode: lang,
-                                fontSize: 120,
-                                color: headerColor,
-                              )
-                            else if (_subject.isNumbers)
-                              NumberGrid(
-                                displayChar: _currentCard.getNumericalChar(
-                                  lang,
-                                ),
-                                fontSize: 120,
-                                color: headerColor,
-                              )
-                            else if (_subject.isSubtraction)
-                              SubtractionGrid(
-                                totalSum: _currentCard.numericalAnswer,
-                                maxOperand: _subject.maxOperand,
-                                iconSize: 60,
-                              )
-                            else if (_subject.isAddition)
-                              AdditionGrid(
-                                totalSum: _currentCard.numericalAnswer,
-                                maxOperand: _subject.maxOperand,
-                                iconSize: 60,
-                              )
-                            else if (_subject.isAlphabet)
-                              Center(
-                                child: Text(
-                                  _currentCard.getAnswer(lang).isNotEmpty ? _currentCard.getAnswer(lang) : _currentCard.getAnswer('global'),
-                                  style: const TextStyle(
-                                    fontSize: 180,
-                                    fontWeight: FontWeight.w700,
-                                    color: Colors.black87,
+                          child: _currentCard.isSpecialRenderer
+                              ? Center(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(24),
+                                    child: CardRenderer(
+                                      card: _currentCard,
+                                      subject: _subject,
+                                      languageCode: lang,
+                                      fallbackColor: headerColor,
+                                      fit: BoxFit.contain,
+                                      textFontSize: 120,
+                                    ),
                                   ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              )
-                            else if (_subject.isColors && _currentCard.hexColor != null)
-                              Container(
-                                color: Color(int.parse(_currentCard.hexColor!.replaceFirst('#', '0xFF'))),
-                              )
-                            else if (_currentCard.subjectId ==
-                                    '68232807-b9cd-4cff-872c-c398444f85e2' ||
-                                _currentCard.subjectId ==
-                                    'c3548727-65f4-4e0c-939c-56135b4eb543')
-                              CountingGrid(
-                                count: _currentCard.numericalAnswer,
-                                iconSize: 60,
-                              )
-                            else
-                              const Icon(
-                                Icons.image_not_supported,
-                                size: 100,
-                                color: Colors.grey,
-                              ),
-                            if (!_showingVideo &&
-                                _currentImages.length > 1) ...[
-                              Positioned(
-                                left: 10,
-                                top: 0,
-                                bottom: 0,
-                                child: IconButton(
-                                  icon: const Icon(
-                                    Icons.chevron_left,
-                                    color: Colors.black26,
-                                    size: 40,
-                                  ),
-                                  onPressed:
-                                      () => setState(
-                                        () =>
-                                            _currentImageIndex =
-                                                (_currentImageIndex -
-                                                    1 +
-                                                    _currentImages.length) %
-                                                _currentImages.length,
+                                )
+                              : Stack(
+                                  fit: StackFit.expand,
+                                  children: [
+                                    if (_showingVideo)
+                                      Video(controller: controller)
+                                    else if (_currentImages.isNotEmpty)
+                                      AlioloImage(
+                                        imageUrl:
+                                            _currentImages[_currentImageIndex],
+                                        fit: BoxFit.contain,
+                                        backgroundColor: headerColor.withValues(
+                                          alpha: 0.05,
+                                        ),
+                                      )
+                                    else if (_subject.isDivision)
+                                      DivisionGrid(
+                                        a: _currentCard.divisionParts?[0] ?? 0,
+                                        b: _currentCard.divisionParts?[1] ?? 1,
+                                        languageCode: lang,
+                                        fontSize: 120,
+                                        color: headerColor,
+                                      )
+                                    else if (_subject.isMultiplication)
+                                      MultiplicationGrid(
+                                        a:
+                                            _currentCard
+                                                .multiplicationParts?[0] ??
+                                            1,
+                                        b:
+                                            _currentCard
+                                                .multiplicationParts?[1] ??
+                                            0,
+                                        languageCode: lang,
+                                        fontSize: 120,
+                                        color: headerColor,
+                                      )
+                                    else if (_subject.isNumbers)
+                                      NumberGrid(
+                                        displayChar: _currentCard
+                                            .getNumericalChar(lang),
+                                        fontSize: 120,
+                                        color: headerColor,
+                                      )
+                                    else if (_subject.isSubtraction)
+                                      SubtractionGrid(
+                                        totalSum: _currentCard.numericalAnswer,
+                                        maxOperand: _subject.maxOperand,
+                                        iconSize: 60,
+                                      )
+                                    else if (_subject.isAddition)
+                                      AdditionGrid(
+                                        totalSum: _currentCard.numericalAnswer,
+                                        maxOperand: _subject.maxOperand,
+                                        iconSize: 60,
+                                      )
+                                    else if (_subject.isAlphabet)
+                                      Center(
+                                        child: Text(
+                                          _currentCard.getAnswer(lang).isNotEmpty
+                                              ? _currentCard.getAnswer(lang)
+                                              : _currentCard.getAnswer(
+                                                'global',
+                                              ),
+                                          style: const TextStyle(
+                                            fontSize: 180,
+                                            fontWeight: FontWeight.w700,
+                                            color: Colors.black87,
+                                          ),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      )
+                                    else if (_subject.isColors &&
+                                        _currentCard.hexColor != null)
+                                      Container(
+                                        color: Color(
+                                          int.parse(
+                                            _currentCard.hexColor!.replaceFirst(
+                                              '#',
+                                              '0xFF',
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    else if (_currentCard.subjectId ==
+                                            '68232807-b9cd-4cff-872c-c398444f85e2' ||
+                                        _currentCard.subjectId ==
+                                            'c3548727-65f4-4e0c-939c-56135b4eb543')
+                                      CountingGrid(
+                                        count: _currentCard.numericalAnswer,
+                                        iconSize: 60,
+                                      )
+                                    else
+                                      const Icon(
+                                        Icons.image_not_supported,
+                                        size: 100,
+                                        color: Colors.grey,
                                       ),
-                                ),
-                              ),
-                              Positioned(
-                                right: 10,
-                                top: 0,
-                                bottom: 0,
-                                child: IconButton(
-                                  icon: const Icon(
-                                    Icons.chevron_right,
-                                    color: Colors.black26,
-                                    size: 40,
-                                  ),
-                                  onPressed:
-                                      () => setState(
-                                        () =>
-                                            _currentImageIndex =
-                                                (_currentImageIndex + 1) %
-                                                _currentImages.length,
+                                    if (!_showingVideo &&
+                                        _currentImages.length > 1) ...[
+                                      Positioned(
+                                        left: 10,
+                                        top: 0,
+                                        bottom: 0,
+                                        child: IconButton(
+                                          icon: const Icon(
+                                            Icons.chevron_left,
+                                            color: Colors.black26,
+                                            size: 40,
+                                          ),
+                                          onPressed: () => setState(
+                                            () =>
+                                                _currentImageIndex =
+                                                    (_currentImageIndex -
+                                                        1 +
+                                                        _currentImages.length) %
+                                                    _currentImages.length,
+                                          ),
+                                        ),
                                       ),
+                                      Positioned(
+                                        right: 10,
+                                        top: 0,
+                                        bottom: 0,
+                                        child: IconButton(
+                                          icon: const Icon(
+                                            Icons.chevron_right,
+                                            color: Colors.black26,
+                                            size: 40,
+                                          ),
+                                          onPressed: () => setState(
+                                            () =>
+                                                _currentImageIndex =
+                                                    (_currentImageIndex + 1) %
+                                                    _currentImages.length,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ],
                                 ),
-                              ),
-                            ],
-                          ],
                         ),
                       ),
                     ),
                   ),
-                ),
                 ),
               ],
             ),

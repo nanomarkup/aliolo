@@ -1,9 +1,7 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:aliolo/data/services/testing_language_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:window_manager/window_manager.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:aliolo/data/models/card_model.dart';
 import 'package:aliolo/data/models/subject_model.dart';
@@ -141,7 +139,7 @@ class _TestPageState extends State<TestPage> {
       _currentCard.subjectId,
     );
 
-    if (_subject.isMath && !_subject.isNumbers) {
+    if (_currentCard.isMath && !_subject.isNumbers) {
       _correctAnswerId = _currentCard.numericalAnswer.toString();
       List<String> mathOpts = _currentCard.mathOptions ?? [];
 
@@ -224,6 +222,7 @@ class _TestPageState extends State<TestPage> {
     final lang = _languageCode.toLowerCase();
     final audio = _currentCard.getAudioUrl(lang);
     if (audio != null &&
+        !_currentCard.isSpecialRenderer &&
         !_subject.isAddition &&
         !_subject.isSubtraction &&
         !_subject.isCounting) {
@@ -485,28 +484,26 @@ class _TestPageState extends State<TestPage> {
                   icon: const Icon(Icons.arrow_back),
                   onPressed: () => Navigator.pop(context),
                 ),
-                if ((_currentCard.testMode == 'audio_to_text' ||
-                        _currentCard.testMode == 'audio_to_image') &&
-                    !_subject.isNumbers &&
-                    !_subject.isAddition &&
-                    !_subject.isSubtraction &&
-                    !_subject.isCounting)
+                if (!_currentCard.isSpecialRenderer &&
+                    _currentCard.getAudioUrl(lang) != null)
                   IconButton(
                     icon: Icon(
                       Icons.volume_up,
-                      color: _currentCard.getAudioUrl(lang) != null
-                          ? Colors.white
-                          : Colors.white.withValues(alpha: 0.3),
+                      color:
+                          _currentCard.getAudioUrl(lang) != null
+                              ? Colors.white
+                              : Colors.white.withValues(alpha: 0.3),
                     ),
-                    onPressed: _currentCard.getAudioUrl(lang) != null
-                        ? () async {
-                            final url = _currentCard.getAudioUrl(lang);
-                            if (url != null) {
-                              await player.open(Media(url));
-                              player.play();
+                    onPressed:
+                        _currentCard.getAudioUrl(lang) != null
+                            ? () async {
+                              final url = _currentCard.getAudioUrl(lang);
+                              if (url != null) {
+                                await player.open(Media(url));
+                                player.play();
+                              }
                             }
-                          }
-                        : null,
+                            : null,
                   ),
                 IconButton(
                   icon: Stack(
@@ -594,7 +591,9 @@ class _TestPageState extends State<TestPage> {
                         _currentCard.getPrompt(lang),
                         style: TextStyle(
                           fontSize: 20,
-                          color: Theme.of(context).textTheme.bodyLarge?.color?.withValues(alpha: 0.7),
+                          color: Theme.of(
+                            context,
+                          ).textTheme.bodyLarge?.color?.withValues(alpha: 0.7),
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -648,10 +647,19 @@ class _TestPageState extends State<TestPage> {
                   child: LayoutBuilder(
                     builder: (context, constraints) {
                       final isMobile = constraints.maxWidth < 800;
-                      final isAudioToText =
-                          _currentCard.testMode == 'audio_to_text';
+                      final hasAudio = _currentCard.getAudioUrl(lang) != null;
+                      final hasVisual =
+                          _currentCard.primaryImageUrl(lang) != null ||
+                          _showingVideo;
+                      final showAudioPrompt =
+                          !_currentCard.isSpecialRenderer &&
+                          hasAudio &&
+                          !hasVisual;
                       final isAudioToImage =
-                          _currentCard.testMode == 'audio_to_image';
+                          !_currentCard.isSpecialRenderer &&
+                          hasAudio &&
+                          _currentImages.isNotEmpty &&
+                          !showAudioPrompt;
 
                       Widget mediaContent = Center(
                         child: Padding(
@@ -670,134 +678,149 @@ class _TestPageState extends State<TestPage> {
                             child: Container(
                               color: headerColor.withValues(alpha: 0.05),
                               child: ConstrainedBox(
-                              constraints: BoxConstraints(
-                                minHeight: isMobile ? 300 : 0,
-                                maxHeight:
-                                    (isMobile && !isAudioToImage)
-                                        ? 450
-                                        : double.infinity,
-                              ),
-                              child: Stack(
-                                fit:
-                                    isMobile ? StackFit.loose : StackFit.expand,
-                                alignment: Alignment.center,
-                                children: [
-                                  if (_showingVideo)
-                                    Video(controller: controller)
-                                  else if (isAudioToText)
-                                    Container(
-                                      color: headerColor.withValues(
-                                        alpha: 0.05,
-                                      ),
-                                      child: Center(
-                                        child: Icon(
-                                          Icons.hearing,
-                                          size: 120,
-                                          color: headerColor.withValues(
-                                            alpha: 0.5,
-                                          ),
-                                        ),
-                                      ),
-                                    )
-                                  else if (_subject.isDivision)
-                                    DivisionGrid(
-                                      a: _currentCard.divisionParts?[0] ?? 0,
-                                      b: _currentCard.divisionParts?[1] ?? 1,
-                                      languageCode: lang,
-                                      fontSize: isMobile ? 80 : 120,
-                                      color: headerColor,
-                                    )
-                                  else if (_subject.isMultiplication)
-                                    MultiplicationGrid(
-                                      a:
-                                          _currentCard
-                                              .multiplicationParts?[0] ??
-                                          1,
-                                      b:
-                                          _currentCard
-                                              .multiplicationParts?[1] ??
-                                          0,
-                                      languageCode: lang,
-                                      fontSize: isMobile ? 80 : 120,
-                                      color: headerColor,
-                                    )
-                                  else if (_subject.isSubtraction)
-                                    SubtractionGrid(
-                                      totalSum: _currentCard.numericalAnswer,
-                                      maxOperand: _subject.maxOperand,
-                                      iconSize: isMobile ? 40 : 60,
-                                    )
-                                  else if (_subject.isAddition)
-                                    AdditionGrid(
-                                      totalSum: _currentCard.numericalAnswer,
-                                      maxOperand: _subject.maxOperand,
-                                      iconSize: isMobile ? 40 : 60,
-                                    )
-                                  else if (_subject.isAlphabet)
-                                    Center(
-                                      child: Text(
-                                        _currentCard.getAnswer(lang).isNotEmpty ? _currentCard.getAnswer(lang) : _currentCard.getAnswer('global'),
-                                        style: TextStyle(
-                                          fontSize: isMobile ? 120 : 180,
-                                          fontWeight: FontWeight.w700,
-                                          color: Colors.black87,
-                                        ),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    )
-                                  else if (_currentCard.subjectId ==
-                                          '68232807-b9cd-4cff-872c-c398444f85e2' ||
-                                      _currentCard.subjectId ==
-                                          'c3548727-65f4-4e0c-939c-56135b4eb543')
-                                    CountingGrid(
-                                      count: _currentCard.numericalAnswer,
-                                      iconSize: isMobile ? 40 : 60,
-                                    )
-                                  else if (isAudioToImage)
-                                    _buildAudioToImageGrid(
-                                      headerColor,
-                                      isMobile,
-                                    )
-                                  else if (_subject.isColors && _currentCard.hexColor != null)
-                                    Container(
-                                      color: Color(int.parse(_currentCard.hexColor!.replaceFirst('#', '0xFF'))),
-                                    )
-                                  else if (_subject.isNumbers)
-                                    NumberGrid(
-                                      displayChar: _currentCard
-                                          .getNumericalChar(lang),
-                                      fontSize: isMobile ? 80 : 120,
-                                      color: headerColor,
-                                    )
-                                  else if (_currentImages.isNotEmpty)
-                                    Container(
-                                      color: Theme.of(context).cardColor,
-                                      child: AlioloImage(
-                                        imageUrl:
-                                            _currentImages[_currentImageIndex],
-                                        fit: BoxFit.contain,
-                                        backgroundColor: headerColor.withValues(
+                                constraints: BoxConstraints(
+                                  minHeight: isMobile ? 300 : 0,
+                                  maxHeight:
+                                      isMobile && !hasVisual
+                                          ? 450
+                                          : double.infinity,
+                                ),
+                                child: Stack(
+                                  fit:
+                                      isMobile
+                                          ? StackFit.loose
+                                          : StackFit.expand,
+                                  alignment: Alignment.center,
+                                  children: [
+                                    if (_showingVideo)
+                                      Video(controller: controller)
+                                    else if (showAudioPrompt)
+                                      Container(
+                                        color: headerColor.withValues(
                                           alpha: 0.05,
                                         ),
+                                        child: Center(
+                                          child: Icon(
+                                            Icons.hearing,
+                                            size: 120,
+                                            color: headerColor.withValues(
+                                              alpha: 0.5,
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    else if (_subject.isDivision)
+                                      DivisionGrid(
+                                        a: _currentCard.divisionParts?[0] ?? 0,
+                                        b: _currentCard.divisionParts?[1] ?? 1,
+                                        languageCode: lang,
+                                        fontSize: isMobile ? 80 : 120,
+                                        color: headerColor,
+                                      )
+                                    else if (_subject.isMultiplication)
+                                      MultiplicationGrid(
+                                        a:
+                                            _currentCard
+                                                .multiplicationParts?[0] ??
+                                            1,
+                                        b:
+                                            _currentCard
+                                                .multiplicationParts?[1] ??
+                                            0,
+                                        languageCode: lang,
+                                        fontSize: isMobile ? 80 : 120,
+                                        color: headerColor,
+                                      )
+                                    else if (_subject.isSubtraction)
+                                      SubtractionGrid(
+                                        totalSum: _currentCard.numericalAnswer,
+                                        maxOperand: _subject.maxOperand,
+                                        iconSize: isMobile ? 40 : 60,
+                                      )
+                                    else if (_subject.isAddition)
+                                      AdditionGrid(
+                                        totalSum: _currentCard.numericalAnswer,
+                                        maxOperand: _subject.maxOperand,
+                                        iconSize: isMobile ? 40 : 60,
+                                      )
+                                    else if (_subject.isAlphabet)
+                                      Center(
+                                        child: Text(
+                                          _currentCard
+                                                  .getAnswer(lang)
+                                                  .isNotEmpty
+                                              ? _currentCard.getAnswer(lang)
+                                              : _currentCard.getAnswer(
+                                                'global',
+                                              ),
+                                          style: TextStyle(
+                                            fontSize: isMobile ? 120 : 180,
+                                            fontWeight: FontWeight.w700,
+                                            color: Colors.black87,
+                                          ),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      )
+                                    else if (_currentCard.subjectId ==
+                                            '68232807-b9cd-4cff-872c-c398444f85e2' ||
+                                        _currentCard.subjectId ==
+                                            'c3548727-65f4-4e0c-939c-56135b4eb543')
+                                      CountingGrid(
+                                        count: _currentCard.numericalAnswer,
+                                        iconSize: isMobile ? 40 : 60,
+                                      )
+                                    else if (isAudioToImage)
+                                      _buildAudioToImageGrid(
+                                        headerColor,
+                                        isMobile,
+                                      )
+                                    else if (_subject.isColors &&
+                                        _currentCard.hexColor != null)
+                                      Container(
+                                        color: Color(
+                                          int.parse(
+                                            _currentCard.hexColor!.replaceFirst(
+                                              '#',
+                                              '0xFF',
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    else if (_subject.isNumbers)
+                                      NumberGrid(
+                                        displayChar: _currentCard
+                                            .getNumericalChar(lang),
+                                        fontSize: isMobile ? 80 : 120,
+                                        color: headerColor,
+                                      )
+                                    else if (_currentImages.isNotEmpty)
+                                      Container(
+                                        color: Theme.of(context).cardColor,
+                                        child: AlioloImage(
+                                          imageUrl:
+                                              _currentImages[_currentImageIndex],
+                                          fit: BoxFit.contain,
+                                          backgroundColor: headerColor
+                                              .withValues(alpha: 0.05),
+                                        ),
+                                      )
+                                    else
+                                      const Icon(
+                                        Icons.image_not_supported,
+                                        size: 100,
+                                        color: Colors.grey,
                                       ),
-                                    )
-                                  else
-                                    const Icon(
-                                      Icons.image_not_supported,
-                                      size: 100,
-                                      color: Colors.grey,
-                                    ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                    );
+                      );
 
                       final optionsContent =
                           (!isAudioToImage ||
-                                  (_subject.isMath && !_subject.isNumbers))
+                                  (_currentCard.isMath && !_subject.isNumbers))
                               ? Container(
                                 width: isMobile ? double.infinity : 350,
                                 padding: EdgeInsets.all(isMobile ? 24 : 32),
@@ -882,7 +905,7 @@ class _TestPageState extends State<TestPage> {
                       if (isMobile) {
                         // For Audio to Image on mobile, fill screen and let grid handle its own scroll
                         if (isAudioToImage &&
-                            !(_subject.isMath && !_subject.isNumbers)) {
+                            !(_currentCard.isMath && !_subject.isNumbers)) {
                           return mediaContent;
                         }
 
@@ -1026,7 +1049,10 @@ class _TestPageState extends State<TestPage> {
                                   child: Text(
                                     opt.text,
                                     style: TextStyle(
-                                      fontSize: _subject.isAlphabet ? (isMobile ? 80 : 120) : (isMobile ? 24 : 36),
+                                      fontSize:
+                                          _subject.isAlphabet
+                                              ? (isMobile ? 80 : 120)
+                                              : (isMobile ? 24 : 36),
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),

@@ -20,6 +20,7 @@ describe('Cards API', () => {
     const card = {
       id: 'test-card',
       subject_id: subjectId,
+      renderer: 'generic',
       answer: 'A',
       answers: { es: 'A' },
       prompt: 'Q',
@@ -52,6 +53,7 @@ describe('Cards API', () => {
     expect(res.status).toBe(200);
     const data = await res.json() as any[];
     expect(data.length).toBeGreaterThan(0);
+    expect(data[0]).toHaveProperty('renderer');
   });
 
   it('should delete a card', async () => {

@@ -70,6 +70,22 @@ void main() {
       final model = CardModel.fromJson(json);
       expect(model.isPublic, isTrue);
     });
+
+    test('CardModel reads renderer from json and omits test_mode', () {
+      final json = {
+        'id': 'test_card_math',
+        'subject_id': 'subj_1',
+        'owner_id': 'user_1',
+        'renderer': 'math',
+        'localized_data': '{}',
+        'created_at': '2026-04-13T12:00:00Z',
+        'updated_at': '2026-04-13T12:00:00Z',
+      };
+
+      final model = CardModel.fromJson(json);
+      expect(model.renderer, 'math');
+      expect(model.toJson().containsKey('test_mode'), isFalse);
+    });
   });
 
   group('Feedback media parsing and paths', () {

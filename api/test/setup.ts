@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS cards (
   subject_id TEXT REFERENCES subjects(id) NOT NULL,
   owner_id TEXT REFERENCES profiles(id),
   level INTEGER DEFAULT 1,
-  test_mode TEXT DEFAULT 'standard',
+  renderer TEXT DEFAULT 'generic',
   is_public INTEGER DEFAULT 1,
   answer TEXT,
   answers TEXT,

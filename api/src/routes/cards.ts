@@ -53,7 +53,7 @@ router.openapi(createCardRoute, async (c) => {
     if (!user) return c.json({ error: 'Unauthorized' } as any, 401);
 
     const { 
-        id, subject_id, level, test_mode, is_public, 
+        id, subject_id, level, renderer, is_public, 
         answer, answers, prompt, prompts, 
         images_base, images_local, audio, audios, video, videos 
     } = c.req.valid('json');
@@ -61,7 +61,7 @@ router.openapi(createCardRoute, async (c) => {
     try {
         await c.env.DB.prepare(`
             INSERT INTO cards (
-                id, subject_id, owner_id, level, test_mode, is_public, 
+                id, subject_id, owner_id, level, renderer, is_public, 
                 answer, answers, prompt, prompts, 
                 images_base, images_local, audio, audios, video, videos,
                 updated_at
@@ -70,7 +70,7 @@ router.openapi(createCardRoute, async (c) => {
             ON CONFLICT(id) DO UPDATE SET
                 subject_id = excluded.subject_id,
                 level = excluded.level,
-                test_mode = excluded.test_mode,
+                renderer = excluded.renderer,
                 is_public = excluded.is_public,
                 answer = excluded.answer,
                 answers = excluded.answers,
@@ -84,7 +84,7 @@ router.openapi(createCardRoute, async (c) => {
                 videos = excluded.videos,
                 updated_at = CURRENT_TIMESTAMP
         `).bind(
-            id, subject_id, user.id, level || 1, test_mode || 'standard', is_public ? 1 : 0,
+            id, subject_id, user.id, level || 1, renderer || 'generic', is_public ? 1 : 0,
             answer, JSON.stringify(answers), prompt, JSON.stringify(prompts),
             JSON.stringify(images_base), JSON.stringify(images_local),
             audio, JSON.stringify(audios), video, JSON.stringify(videos)

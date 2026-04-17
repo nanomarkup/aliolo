@@ -6,7 +6,7 @@ class CardModel {
   final String id;
   final String subjectId;
   final int level;
-  final String testMode;
+  final String renderer;
   final String ownerId;
   final bool isPublic;
   final DateTime createdAt;
@@ -15,7 +15,7 @@ class CardModel {
   /// Base text fields
   final String answer;
   final String prompt;
-  
+
   /// Base media fields (URLs)
   final List<String> imagesBase;
   final String audio;
@@ -35,7 +35,7 @@ class CardModel {
     required this.id,
     required this.subjectId,
     this.level = 1,
-    this.testMode = 'image_to_text',
+    this.renderer = 'generic',
     required this.ownerId,
     required this.isPublic,
     required this.createdAt,
@@ -55,23 +55,32 @@ class CardModel {
   factory CardModel.fromJson(Map<String, dynamic> json) {
     Map<String, String> answersMap = {};
     final rawAnswers = json['answers'];
-    if (rawAnswers is Map) answersMap = Map<String, String>.from(rawAnswers);
+    if (rawAnswers is Map)
+      answersMap = Map<String, String>.from(rawAnswers);
     else if (rawAnswers is String && rawAnswers.isNotEmpty) {
-      try { answersMap = Map<String, String>.from(jsonDecode(rawAnswers)); } catch (_) {}
+      try {
+        answersMap = Map<String, String>.from(jsonDecode(rawAnswers));
+      } catch (_) {}
     }
 
     Map<String, String> promptsMap = {};
     final rawPrompts = json['prompts'];
-    if (rawPrompts is Map) promptsMap = Map<String, String>.from(rawPrompts);
+    if (rawPrompts is Map)
+      promptsMap = Map<String, String>.from(rawPrompts);
     else if (rawPrompts is String && rawPrompts.isNotEmpty) {
-      try { promptsMap = Map<String, String>.from(jsonDecode(rawPrompts)); } catch (_) {}
+      try {
+        promptsMap = Map<String, String>.from(jsonDecode(rawPrompts));
+      } catch (_) {}
     }
 
     List<String> imagesBaseList = [];
     final rawImgBase = json['images_base'];
-    if (rawImgBase is List) imagesBaseList = List<String>.from(rawImgBase);
+    if (rawImgBase is List)
+      imagesBaseList = List<String>.from(rawImgBase);
     else if (rawImgBase is String && rawImgBase.isNotEmpty) {
-      try { imagesBaseList = List<String>.from(jsonDecode(rawImgBase)); } catch (_) {}
+      try {
+        imagesBaseList = List<String>.from(jsonDecode(rawImgBase));
+      } catch (_) {}
     }
 
     Map<String, List<String>> imagesLocalMap = {};
@@ -91,16 +100,22 @@ class CardModel {
 
     Map<String, String> audiosMap = {};
     final rawAudios = json['audios'];
-    if (rawAudios is Map) audiosMap = Map<String, String>.from(rawAudios);
+    if (rawAudios is Map)
+      audiosMap = Map<String, String>.from(rawAudios);
     else if (rawAudios is String && rawAudios.isNotEmpty) {
-      try { audiosMap = Map<String, String>.from(jsonDecode(rawAudios)); } catch (_) {}
+      try {
+        audiosMap = Map<String, String>.from(jsonDecode(rawAudios));
+      } catch (_) {}
     }
 
     Map<String, String> videosMap = {};
     final rawVideos = json['videos'];
-    if (rawVideos is Map) videosMap = Map<String, String>.from(rawVideos);
+    if (rawVideos is Map)
+      videosMap = Map<String, String>.from(rawVideos);
     else if (rawVideos is String && rawVideos.isNotEmpty) {
-      try { videosMap = Map<String, String>.from(jsonDecode(rawVideos)); } catch (_) {}
+      try {
+        videosMap = Map<String, String>.from(jsonDecode(rawVideos));
+      } catch (_) {}
     }
 
     // Fallback migration logic
@@ -112,9 +127,12 @@ class CardModel {
     if (bAnswer.isEmpty && json['localized_data'] != null) {
       var locData = json['localized_data'];
       Map<String, dynamic> locMap = {};
-      if (locData is Map) locMap = Map<String, dynamic>.from(locData);
+      if (locData is Map)
+        locMap = Map<String, dynamic>.from(locData);
       else if (locData is String && locData.isNotEmpty) {
-        try { locMap = Map<String, dynamic>.from(jsonDecode(locData)); } catch (_) {}
+        try {
+          locMap = Map<String, dynamic>.from(jsonDecode(locData));
+        } catch (_) {}
       }
       final global = locMap['global'];
       if (global is Map) {
@@ -139,11 +157,13 @@ class CardModel {
       });
     }
 
+    final rawRenderer = (json['renderer'] ?? '').toString().trim();
+
     return CardModel(
       id: json['id'],
       subjectId: json['subject_id'] ?? '',
       level: json['level'] ?? 1,
-      testMode: json['test_mode'] ?? json['kind'] ?? 'image_to_text',
+      renderer: rawRenderer.isNotEmpty ? rawRenderer : 'generic',
       ownerId: json['owner_id'] ?? '',
       isPublic: json['is_public'] == true || json['is_public'] == 1,
       createdAt: DateTime.tryParse(json['created_at'] ?? '') ?? DateTime.now(),
@@ -166,7 +186,7 @@ class CardModel {
       'id': id,
       'subject_id': subjectId,
       'level': level,
-      'test_mode': testMode,
+      'renderer': renderer,
       'owner_id': ownerId,
       'is_public': isPublic,
       'created_at': createdAt.toIso8601String(),
@@ -208,7 +228,11 @@ class CardModel {
   List<String> getAnswerList(String lang) {
     final ans = getAnswer(lang);
     if (ans.isEmpty) return [];
-    return ans.split(';').map((s) => s.trim()).where((s) => s.isNotEmpty).toList();
+    return ans
+        .split(';')
+        .map((s) => s.trim())
+        .where((s) => s.isNotEmpty)
+        .toList();
   }
 
   bool isCorrectAnswer(String lang, String input) {
@@ -220,7 +244,7 @@ class CardModel {
 
   String getNumericalChar(String lang) {
     final int val = numericalAnswer;
-    
+
     const Map<int, Map<String, String>> specialNums = {
       0: {'ar': '٠', 'hi': '०', 'zh': '零', 'ja': '零', 'ko': '영'},
       1: {'ar': '١', 'hi': '१', 'zh': '一', 'ja': '一', 'ko': '일'},
@@ -257,13 +281,10 @@ class CardModel {
     return match?.group(1);
   }
 
-  bool get isColors => testMode == 'colors' || hexColor != null;
-  bool get isNumbers => testMode == 'numbers';
-  bool get isAddition => testMode == 'addition';
-  bool get isSubtraction => testMode == 'subtraction';
-  bool get isMultiplication => testMode == 'multiplication';
-  bool get isDivision => testMode == 'division';
-  bool get isCounting => testMode == 'counting';
+  bool get isColors => renderer == 'colors' || hexColor != null;
+  bool get isSpecialRenderer => renderer != 'generic';
+  bool get isMathRenderer => renderer == 'math';
+  bool get isMath => isMathRenderer;
 
   int get numericalAnswer {
     String ans = getAnswer('en');
@@ -328,7 +349,7 @@ class CardModel {
     } else {
       rawUrls = imagesBase;
     }
-    
+
     final urls = MediaUrlResolver.resolveList(rawUrls);
     final v = updatedAt.millisecondsSinceEpoch;
     return urls.map((url) {
@@ -359,7 +380,7 @@ class CardModel {
     : id = '',
       subjectId = '',
       level = 1,
-      testMode = 'image_to_text',
+      renderer = 'generic',
       ownerId = '',
       isPublic = false,
       createdAt = DateTime.now(),
@@ -374,6 +395,7 @@ class CardModel {
       audios = const {},
       video = '',
       videos = const {};
+
 }
 
 class SubjectCard {

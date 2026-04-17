@@ -34,13 +34,23 @@ void main() {
 
       expect(distractors.length, equals(count));
       expect(distractors.contains(correct.toString()), isTrue);
-      // Ensure all distractors are non-negative
       for (var d in distractors) {
         expect(int.parse(d) >= 0, isTrue);
       }
     });
-   group('generateProblem', () {
-      // We can add more tests here for generateProblem by mocking SubjectModel
+
+    test('createVirtualCard should mark renderer as math', () {
+      final card = mathService.createVirtualCard(
+        (
+          question: '1 + 1',
+          answer: '2',
+          options: ['1', '2', '3'],
+        ),
+        1,
+      );
+
+      expect(card.renderer, 'math');
+      expect(card.isMathRenderer, isTrue);
     });
   });
 }

@@ -68,7 +68,7 @@ class _AddCardPageState extends State<AddCardPage> {
   bool _showSidebar = false;
   String _selectedLang = 'global';
   int _cardLevel = 1;
-  String _testMode = 'image_to_text';
+  String _renderer = 'generic';
   int _itemsPerRow = 8;
 
   final Map<String, DraftLocalizedData> _drafts = {
@@ -178,7 +178,7 @@ class _AddCardPageState extends State<AddCardPage> {
     if (widget.existingCard != null) {
       final c = widget.existingCard!;
       _cardLevel = c.level;
-      _testMode = c.testMode;
+      _renderer = c.renderer;
 
       _drafts['global'] =
           DraftLocalizedData()
@@ -612,7 +612,7 @@ class _AddCardPageState extends State<AddCardPage> {
         id: cardId,
         subjectId: _selectedSubjectId!,
         level: _cardLevel,
-        testMode: _testMode,
+        renderer: _renderer,
         ownerId: _authService.currentUser!.serverId!,
         isPublic: widget.existingCard?.isPublic ?? false,
         createdAt: widget.existingCard?.createdAt ?? DateTime.now(),
@@ -1005,7 +1005,7 @@ class _AddCardPageState extends State<AddCardPage> {
                     children: [
                       _buildSubjectPicker(),
                       const SizedBox(height: 16),
-                      _buildTestModePicker(),
+                      _buildRendererPicker(),
                     ],
                   );
                 }
@@ -1014,7 +1014,7 @@ class _AddCardPageState extends State<AddCardPage> {
                   children: [
                     Expanded(child: _buildSubjectPicker()),
                     const SizedBox(width: 16),
-                    Expanded(child: _buildTestModePicker()),
+                    Expanded(child: _buildRendererPicker()),
                   ],
                 );
               },
@@ -1132,36 +1132,22 @@ class _AddCardPageState extends State<AddCardPage> {
     );
   }
 
-  Widget _buildTestModePicker() {
+  Widget _buildRendererPicker() {
     return DropdownButtonFormField<String>(
-      value: _testMode,
+      value: _renderer,
       decoration: InputDecoration(
-        labelText: context.t('test_mode_label'),
+        labelText: 'Renderer',
         border: const OutlineInputBorder(),
         contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       ),
       items: [
-        DropdownMenuItem(
-          value: 'image_to_text',
-          child: Text(context.t('mode_image_to_text')),
-        ),
-        DropdownMenuItem(
-          value: 'audio_to_text',
-          child: Text(context.t('mode_audio_to_text')),
-        ),
-        DropdownMenuItem(
-          value: 'audio_to_image',
-          child: Text(context.t('mode_audio_to_image')),
-        ),
-        DropdownMenuItem(
-          value: 'text_to_text',
-          child: Text(context.t('mode_text_to_text')),
-        ),
+        DropdownMenuItem(value: 'generic', child: const Text('Generic')),
+        DropdownMenuItem(value: 'math', child: const Text('Math')),
       ],
       onChanged:
           widget.isReadOnly
               ? null
-              : (v) => setState(() => _testMode = v ?? 'image_to_text'),
+              : (v) => setState(() => _renderer = v ?? 'generic'),
     );
   }
 
@@ -1183,11 +1169,7 @@ class _AddCardPageState extends State<AddCardPage> {
         const SizedBox(height: 4),
         Text(
           context.t('level_help_text'),
-          style: TextStyle(
-            color: Colors.grey[600],
-            fontSize: 12,
-            height: 1.35,
-          ),
+          style: TextStyle(color: Colors.grey[600], fontSize: 12, height: 1.35),
         ),
         const SizedBox(height: 10),
         Row(
@@ -1482,7 +1464,7 @@ class _AddCardPageState extends State<AddCardPage> {
     final original = widget.existingCard!;
     if (_selectedSubjectId != original.subjectId) return true;
     if (_cardLevel != original.level) return true;
-    if (_testMode != original.testMode) return true;
+    if (_renderer != original.renderer) return true;
 
     final allLangs = {
       'global',

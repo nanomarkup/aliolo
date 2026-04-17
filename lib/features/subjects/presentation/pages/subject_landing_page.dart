@@ -15,20 +15,15 @@ import 'package:aliolo/data/services/testing_language_service.dart';
 import 'package:aliolo/data/services/sound_service.dart';
 import 'package:aliolo/data/services/filter_service.dart';
 import 'package:aliolo/core/di/service_locator.dart';
+import 'package:aliolo/core/utils/session_bucket_sampler.dart';
 import 'package:aliolo/core/widgets/aliolo_scrollable_page.dart';
+import 'package:aliolo/core/widgets/card_renderer.dart';
 import 'package:aliolo/features/testing/presentation/pages/learn_page.dart';
 import 'package:aliolo/features/testing/presentation/pages/test_page.dart';
 import 'package:aliolo/features/management/presentation/pages/subject_edit_page.dart';
 import 'package:aliolo/features/management/presentation/pages/add_card_page.dart';
 import 'package:aliolo/features/feedback/presentation/pages/feedback_page.dart';
 import 'package:aliolo/features/settings/presentation/pages/premium_upgrade_page.dart';
-import 'package:aliolo/core/widgets/aliolo_image.dart';
-import 'package:aliolo/core/widgets/counting_grid.dart';
-import 'package:aliolo/core/widgets/addition_grid.dart';
-import 'package:aliolo/core/widgets/subtraction_grid.dart';
-import 'package:aliolo/core/widgets/number_grid.dart';
-import 'package:aliolo/core/widgets/multiplication_grid.dart';
-import 'package:aliolo/core/widgets/division_grid.dart';
 
 class SubjectLandingPage extends StatefulWidget {
   final SubjectModel? subject;
@@ -462,13 +457,10 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                   matchesLevel &&
                   hasAnswer;
             }).toList();
-        sessionCards.shuffle();
       }
 
       final size = isTest ? user.testSessionSize : user.learnSessionSize;
-      if (sessionCards.length > size) {
-        sessionCards = sessionCards.take(size).toList();
-      }
+      sessionCards = SessionBucketSampler.sampleBucket(sessionCards, size);
 
       if (sessionCards.isEmpty) {
         if (mounted) {
@@ -1376,82 +1368,12 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
     String displayLang, {
     BoxFit fit = BoxFit.cover,
   }) {
-    // Detect special card types directly from the card properties
-    // This ensures collections (where _currentSubject is null) still render correctly.
-    if (card.isNumbers) {
-      return NumberGrid(
-        displayChar: card.getNumericalChar(displayLang),
-        fontSize: 40,
-        color: pillarColor,
-      );
-    } else if (card.isDivision) {
-      final parts = card.divisionParts ?? [0, 1];
-      return DivisionGrid(
-        a: parts[0],
-        b: parts[1],
-        languageCode: displayLang,
-        fontSize: 24,
-        color: pillarColor,
-      );
-    } else if (card.isMultiplication) {
-      final parts = card.multiplicationParts ?? [1, 0];
-      return MultiplicationGrid(
-        a: parts[0],
-        b: parts[1],
-        languageCode: displayLang,
-        fontSize: 24,
-        color: pillarColor,
-      );
-    } else if (card.isSubtraction) {
-      return SubtractionGrid(
-        totalSum: card.numericalAnswer,
-        maxOperand: _currentSubject?.maxOperand ?? 20,
-        iconSize: 18,
-      );
-    } else if (card.isAddition) {
-      return AdditionGrid(
-        totalSum: card.numericalAnswer,
-        maxOperand: _currentSubject?.maxOperand ?? 20,
-        iconSize: 18,
-      );
-    } else if (card.isCounting) {
-      return CountingGrid(count: card.numericalAnswer, iconSize: 24);
-    } else if (_currentSubject?.isAlphabet == true) {
-      return Container(
-        color: Colors.white,
-        child: Center(
-          child: Text(
-            card.getAnswer(displayLang).isNotEmpty ? card.getAnswer(displayLang) : card.getAnswer('global'),
-            style: TextStyle(
-              fontSize: 64,
-              fontWeight: FontWeight.w700,
-              color: Colors.black87,
-            ),
-            textAlign: TextAlign.center,
-          ),
-        ),
-      );
-    } else if (card.isColors && card.hexColor != null) {
-      return SizedBox.expand(
-        child: ColoredBox(
-          color: Color(int.parse(card.hexColor!.replaceFirst('#', '0xFF'))),
-        ),
-      );
-    }
-
-    final imageUrl = card.primaryImageUrl(displayLang) ?? card.primaryImageUrl('global') ?? card.primaryImageUrl('en');
-    if (imageUrl != null) {
-      return AlioloImage(imageUrl: imageUrl, fit: fit);
-    }
-    
-    // Debug info for missing images
-    if (card.imagesBase.isNotEmpty || card.imagesLocal.values.any((list) => list.isNotEmpty)) {
-       print('Card ${card.id} has global images but none found for $displayLang. This should not happen with the new fallback logic.');
-    }
-
-    return Container(
-      color: pillarColor.withValues(alpha: 0.1),
-      child: Icon(Icons.image, size: 32, color: pillarColor),
+    return CardRenderer(
+      card: card,
+      subject: _currentSubject,
+      languageCode: displayLang,
+      fallbackColor: pillarColor,
+      fit: fit,
     );
   }
 

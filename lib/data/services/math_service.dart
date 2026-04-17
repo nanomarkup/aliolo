@@ -60,6 +60,7 @@ class MathService {
       id: 'math_${now.microsecondsSinceEpoch}_${Random().nextInt(1000)}',
       subjectId: 'Math',
       level: level,
+      renderer: 'math',
       ownerId: 'system',
       isPublic: true,
       createdAt: now,
