@@ -55,9 +55,7 @@ class _SubjectPageState extends State<SubjectPage> {
   List<ContentItem> _filteredContent = [];
   bool _isLoading = true;
 
-  DiscoveryFilters _filters = DiscoveryFilters(
-    rootOnly: true,
-  );
+  DiscoveryFilters _filters = DiscoveryFilters(rootOnly: true);
 
   @override
   void initState() {
@@ -67,14 +65,16 @@ class _SubjectPageState extends State<SubjectPage> {
       windowManager.setResizable(true);
     }
     _initLanguage();
-    _cardService.getPillars(filter: _filterService.sourceFilter); // Load pillars with correct filter
-    
+    _cardService.getPillars(
+      filter: _filterService.sourceFilter,
+    ); // Load pillars with correct filter
+
     // Sync filters from service
     _filters = _filters.copyWith(
       ageGroup: _filterService.ageGroup,
       collectionFilter: _filterService.sourceFilter,
     );
-    
+
     _loadDashboard();
     _cardService.addListener(_loadDashboard);
     _filterService.addListener(_onGlobalFilterChanged);
@@ -157,11 +157,11 @@ class _SubjectPageState extends State<SubjectPage> {
 
   Future<void> _loadDashboard() async {
     if (_isLoading && _allContent.isNotEmpty) return; // Already loading
-    
+
     // We don't call getPillars() here anymore because it notifies listeners,
     // which triggers this method again since we are listening to _cardService.
     // Instead, we assume pillars are loaded at app start or externally.
-    
+
     setState(() => _isLoading = true);
 
     final content = await _discoveryEngine.getRawContent(_filters);
@@ -169,9 +169,7 @@ class _SubjectPageState extends State<SubjectPage> {
     if (mounted) {
       final Set<String> detectedLangs = {};
       for (var item in content) {
-        detectedLangs.addAll(
-          item.names.keys.map((k) => k.toLowerCase()),
-        );
+        detectedLangs.addAll(item.names.keys.map((k) => k.toLowerCase()));
         if (item is SubjectModel && item.rawCards != null) {
           for (var c in item.rawCards!) {
             final locData = c['localized_data'] as Map?;
@@ -456,12 +454,11 @@ class _SubjectPageState extends State<SubjectPage> {
                               'mine': context.t('filter_my_subjects'),
                               'public': context.t('filter_public_library'),
                             },
-                            onChanged:
-                                (val) async {
-                                  if (val != null) {
-                                    _filterService.updateSourceFilter(val);
-                                  }
-                                },
+                            onChanged: (val) async {
+                              if (val != null) {
+                                _filterService.updateSourceFilter(val);
+                              }
+                            },
                           ),
                         ),
                         const SizedBox(width: 8),
@@ -649,15 +646,23 @@ class _SubjectPageState extends State<SubjectPage> {
                   ),
                 ),
                 controller: _scrollController,
-                floatingActionButton: _showBackToTop 
-                    ? FloatingActionButton(
-                        onPressed: () {
-                          _scrollController.animateTo(0, duration: const Duration(milliseconds: 500), curve: Curves.easeInOut);
-                        },
-                        backgroundColor: currentSessionColor,
-                        child: const Icon(Icons.arrow_upward, color: Colors.white),
-                      )
-                    : null,
+                floatingActionButton:
+                    _showBackToTop
+                        ? FloatingActionButton(
+                          onPressed: () {
+                            _scrollController.animateTo(
+                              0,
+                              duration: const Duration(milliseconds: 500),
+                              curve: Curves.easeInOut,
+                            );
+                          },
+                          backgroundColor: currentSessionColor,
+                          child: const Icon(
+                            Icons.arrow_upward,
+                            color: Colors.white,
+                          ),
+                        )
+                        : null,
                 slivers: [
                   if (_isLoading)
                     const SliverFillRemaining(
@@ -718,7 +723,7 @@ class _SubjectPageState extends State<SubjectPage> {
                             ) {
                               final pillar = activePillars[index];
                               final myId = _authService.currentUser?.serverId;
-                              
+
                               // Use counts directly from Pillar model (populated by backend)
                               final matchingCount = pillar.subjectCount;
                               final pillarCategoryTotal = pillar.subjectCount;
@@ -832,8 +837,9 @@ class _SubjectPageState extends State<SubjectPage> {
         initialCollectionFilter: filters.collectionFilter,
         onChanged: onDataRefresh,
         onFavoriteChanged: () {
-          item.isOnDashboard = !item.isOnDashboard;
-          onDataRefresh();
+          setState(() {
+            item.isOnDashboard = !item.isOnDashboard;
+          });
         },
       );
     } else if (item is SubjectModel) {
@@ -845,8 +851,9 @@ class _SubjectPageState extends State<SubjectPage> {
         initialCollectionFilter: filters.collectionFilter,
         onChanged: onDataRefresh,
         onFavoriteChanged: () {
-          item.isOnDashboard = !item.isOnDashboard;
-          onDataRefresh();
+          setState(() {
+            item.isOnDashboard = !item.isOnDashboard;
+          });
         },
       );
     }
@@ -1331,19 +1338,23 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
             ),
             appBarColor: pillarColor,
             controller: _scrollController,
-            floatingActionButton: _showBackToTop 
-                ? FloatingActionButton(
-                    onPressed: () {
-                      _scrollController.animateTo(
-                        0,
-                        duration: const Duration(milliseconds: 500),
-                        curve: Curves.easeInOut,
-                      );
-                    },
-                    backgroundColor: pillarColor,
-                    child: const Icon(Icons.arrow_upward, color: Colors.white),
-                  )
-                : null,
+            floatingActionButton:
+                _showBackToTop
+                    ? FloatingActionButton(
+                      onPressed: () {
+                        _scrollController.animateTo(
+                          0,
+                          duration: const Duration(milliseconds: 500),
+                          curve: Curves.easeInOut,
+                        );
+                      },
+                      backgroundColor: pillarColor,
+                      child: const Icon(
+                        Icons.arrow_upward,
+                        color: Colors.white,
+                      ),
+                    )
+                    : null,
             actions:
                 isSmallScreen
                     ? [homeAction, profileAction]
@@ -1874,8 +1885,10 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
         initialCollectionFilter: filters.collectionFilter,
         onChanged: onDataRefresh,
         onFavoriteChanged: () {
-          item.isOnDashboard = !item.isOnDashboard;
-          onDataRefresh();
+          setState(() {
+            item.isOnDashboard = !item.isOnDashboard;
+            _hasUpdated = true;
+          });
         },
       );
     } else if (item is SubjectModel) {
@@ -1887,8 +1900,10 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
         initialCollectionFilter: filters.collectionFilter,
         onChanged: onDataRefresh,
         onFavoriteChanged: () {
-          item.isOnDashboard = !item.isOnDashboard;
-          onDataRefresh();
+          setState(() {
+            item.isOnDashboard = !item.isOnDashboard;
+            _hasUpdated = true;
+          });
         },
       );
     }
@@ -2210,19 +2225,23 @@ class _FolderPageState extends State<FolderPage> {
             ),
             appBarColor: pillarColor,
             controller: _scrollController,
-            floatingActionButton: _showBackToTop 
-                ? FloatingActionButton(
-                    onPressed: () {
-                      _scrollController.animateTo(
-                        0,
-                        duration: const Duration(milliseconds: 500),
-                        curve: Curves.easeInOut,
-                      );
-                    },
-                    backgroundColor: pillarColor,
-                    child: const Icon(Icons.arrow_upward, color: Colors.white),
-                  )
-                : null,
+            floatingActionButton:
+                _showBackToTop
+                    ? FloatingActionButton(
+                      onPressed: () {
+                        _scrollController.animateTo(
+                          0,
+                          duration: const Duration(milliseconds: 500),
+                          curve: Curves.easeInOut,
+                        );
+                      },
+                      backgroundColor: pillarColor,
+                      child: const Icon(
+                        Icons.arrow_upward,
+                        color: Colors.white,
+                      ),
+                    )
+                    : null,
             actions:
                 isSmallScreen
                     ? [homeAction, backAction]
@@ -2732,8 +2751,10 @@ class _FolderPageState extends State<FolderPage> {
         initialCollectionFilter: filters.collectionFilter,
         onChanged: onDataRefresh,
         onFavoriteChanged: () {
-          item.isOnDashboard = !item.isOnDashboard;
-          onDataRefresh();
+          setState(() {
+            item.isOnDashboard = !item.isOnDashboard;
+            _hasUpdated = true;
+          });
         },
       );
     } else if (item is SubjectModel) {
@@ -2745,8 +2766,10 @@ class _FolderPageState extends State<FolderPage> {
         initialCollectionFilter: filters.collectionFilter,
         onChanged: onDataRefresh,
         onFavoriteChanged: () {
-          item.isOnDashboard = !item.isOnDashboard;
-          onDataRefresh();
+          setState(() {
+            item.isOnDashboard = !item.isOnDashboard;
+            _hasUpdated = true;
+          });
         },
       );
     }

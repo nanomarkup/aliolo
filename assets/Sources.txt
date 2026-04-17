@@ -1,7 +1,82 @@
 
+Wiki images 
+https://commons.wikimedia.org/w/index.php
+
+
 World
     Flags of International Organizations
         https://en.wikipedia.org/wiki/Flags_of_international_organizations
+
+    Flags of the World
+        https://www.countryflags.com/
+
+    World Bridges
+        https://www.novatr.com/blog/famous-bridges-in-the-world
+
+
+Nature
+    Dog breeds
+        https://commons.wikimedia.org/wiki/List_of_dog_breeds
+
+    Domesticated Animals
+        -
+
+    Most Colorful Insects
+        https://www.color-meanings.com/colorful-insects/
+
+    Types of Sea Animals
+        -
+
+
+Health
+    Bones of the Human Skeleton
+        https://en.wikipedia.org/wiki/List_of_bones_of_the_human_skeleton
+
+    Human Organ Systems
+        https://en.wikipedia.org/wiki/List_of_systems_of_the_human_body
+
+    Human Parts
+        https://en.wikipedia.org/wiki/Human_anatomy
+
+
+Humanities
+    Architectural Styles
+        https://simplykalaa.com/architectural-styles/
+
+    Famous Paintings
+        https://www.topofart.com/top-100-art-reproductions.php
+
+    Historical Figures
+        https://www.discoverwalks.com/blog/world/100-most-famous-historical-figures-you-should-know-about/
+
+
+Leisure
+    Food & Cuisines
+        https://aroundtheworldin80cuisinesblog.wordpress.com/category/01-southern-france-and-monaco/
+
+    Musical Instruments
+        https://richmondmom.com/popular-musical-instruments-around-the-world/
+
+    Sports
+        AI
+
+    Unusual Musical Instruments
+        https://www.carvedculture.co.uk/blogs/articles/unusual-musical-instruments
+
+    World Landmarks
+        https://tourismteacher.com/famous-landmarks/
+
+
+Engineering
+    Vehicles
+        Car Brands
+            Manual work
+
+        Cars Body Style
+            https://www.theengineeringchoice.org/types-of-cars/
+
+        Heavy Construction Machinery
+            https://www.bigrentz.com/blog/construction-equipment-names
 
 
 Other

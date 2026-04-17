@@ -60,8 +60,6 @@ class DraftLocalizedData {
 class _AddCardPageState extends State<AddCardPage> {
   final _cardService = getIt<CardService>();
   final _authService = getIt<AuthService>();
-  final _imagePicker = ImagePicker();
-
   final _promptController = TextEditingController();
   final _answerController = TextEditingController();
 
@@ -814,7 +812,7 @@ class _AddCardPageState extends State<AddCardPage> {
                       backAction,
                       if (saveAction != null) saveAction,
                       IconButton(
-                        tooltip: context.t('languages') ?? 'Languages',
+                        tooltip: context.t('languages'),
                         icon: Icon(
                           _showSidebar ? Icons.last_page : Icons.language,
                         ),
@@ -828,7 +826,7 @@ class _AddCardPageState extends State<AddCardPage> {
                       if (deleteAction != null) deleteAction,
                       if (feedbackAction != null) feedbackAction,
                       IconButton(
-                        tooltip: context.t('languages') ?? 'Languages',
+                        tooltip: context.t('languages'),
                         icon: Icon(
                           _showSidebar ? Icons.last_page : Icons.language,
                         ),
@@ -1168,13 +1166,30 @@ class _AddCardPageState extends State<AddCardPage> {
   }
 
   Widget _buildLevelPicker(Color color) {
+    final tierLabel = switch (_cardLevel) {
+      1 => context.t('level_tier_1'),
+      2 => context.t('level_tier_2'),
+      3 => context.t('level_tier_3'),
+      _ => '${context.t('level')} $_cardLevel',
+    };
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          context.t('card_level', args: {'level': '$_cardLevel'}),
+          context.t('card_level'),
           style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
         ),
+        const SizedBox(height: 4),
+        Text(
+          context.t('level_help_text'),
+          style: TextStyle(
+            color: Colors.grey[600],
+            fontSize: 12,
+            height: 1.35,
+          ),
+        ),
+        const SizedBox(height: 10),
         Row(
           children: [
             Container(
@@ -1185,11 +1200,11 @@ class _AddCardPageState extends State<AddCardPage> {
                 border: Border.all(color: color.withValues(alpha: 0.2)),
               ),
               child: Text(
-                '$_cardLevel',
+                tierLabel,
                 style: TextStyle(
                   color: color,
                   fontWeight: FontWeight.bold,
-                  fontSize: 16,
+                  fontSize: 14,
                 ),
               ),
             ),
@@ -1197,9 +1212,9 @@ class _AddCardPageState extends State<AddCardPage> {
               child: Slider(
                 value: _cardLevel.toDouble(),
                 min: 1,
-                max: 20,
-                divisions: 19,
-                label: '$_cardLevel',
+                max: 3,
+                divisions: 2,
+                label: tierLabel,
                 activeColor: color,
                 onChanged:
                     widget.isReadOnly

@@ -1,46 +1,60 @@
 # Aliolo - Your Logic Ally
 
-Aliolo is a visual learning platform designed to help users master various subjects through interactive flashcards, multi-image prompts, and video content. It features a robust categorization system (Pillars), cloud synchronization via Supabase, and a competitive leaderboard.
+Aliolo is a visual learning platform designed to help users master various subjects through interactive flashcards, multi-image prompts, and video content. It features a robust categorization system (Pillars), cloud synchronization, and a competitive leaderboard.
 
 ## Key Features
 
 - **Pillar-Based Learning**: Subjects are organized into high-level categories (Pillars) for structured learning.
 - **Multilingual Support**: Learn in multiple languages with dynamic UI translation and content filtering.
-- **Interactive Flashcards**: Support for multiple-choice questions (MCQ), multiple images per card, and video playback.
-- **Manage Subjects**: Create, edit, and share your own subjects and cards.
-- **Cloud Sync**: Seamlessly sync progress and content across devices using Supabase.
-- **Competitive Leaderboard**: Compete globally or with friends based on total XP.
-- **Cross-Platform**: Built with Flutter for Linux, Web, and other supported platforms.
+- **Interactive Flashcards**: Support for multiple-choice questions (MCQ), multiple images per card, and video/audio playback.
+- **Manage Subjects**: Create, edit, and share your own subjects, collections, and cards.
+- **Age-Based Content Filtering**: Tailored learning paths for different age brackets (`0-6`, `7-14`, `15+`).
+- **Cloud Sync**: Seamlessly sync progress and content across devices.
+- **Competitive Leaderboard**: Compete globally based on total XP and streaks.
+- **Cross-Platform**: Built with Flutter for Linux, Web, and Mobile.
 
 ## Tech Stack
 
-- **Framework**: [Flutter](https://flutter.dev/)
-- **Backend**: [Supabase](https://supabase.com/) (Auth, Database, Storage)
-- **Local Cache**: [Isar](https://isar.dev/)
-- **Media**: [media_kit](https://pub.dev/packages/media_kit) for high-performance video playback.
+- **Framework**: [Flutter](https://flutter.dev/) (Mobile, Linux, Web)
+- **Backend**: [Cloudflare Stack](https://workers.cloudflare.com/) (Workers, D1 Database, R2 Storage)
+- **Authentication**: [Lucia Auth](https://lucia-auth.com/)
+- **API**: [Hono](https://hono.dev/) with Zod-OpenAPI for type-safe routes.
+- **Media**: [media_kit](https://pub.dev/packages/media_kit) for high-performance video/audio playback.
 
 ## Development
 
 ### Prerequisites
 
 - Flutter SDK
-- Supabase Project
+- Node.js & npm (for backend development)
+- [Wrangler CLI](https://developers.cloudflare.com/workers/wrangler/install-and-update/)
 
 ### Building
 
-#### Linux
+#### Backend (Cloudflare Worker)
 ```bash
-flutter build linux --release
+cd api
+npx wrangler dev --remote # Local development
+npx wrangler deploy --env production # Deployment
 ```
 
-#### Web
+#### Frontend (Flutter)
 ```bash
-flutter build web --release
+# Linux
+flutter build linux --release
+
+# Web
+flutter build web --release --dart-define=API_URL=https://aliolo.com
 ```
 
 ## Directory Structure
 
-- `lib/core`: Dependency injection, widgets, and utilities.
-- `lib/data`: Models and services (Supabase, Progress, Sound, etc.).
-- `lib/features`: UI features (Auth, Testing, Leaderboard, Management).
-- `assets/lang`: UI translation files.
+- `lib/core`: Dependency injection, shared widgets, and utilities.
+- `lib/data`: Models and services (Auth, Progress, Card service, etc.).
+- `lib/features`: UI features (Auth, Testing, Leaderboard, Management, Subjects).
+- `api/src`: Backend implementation (Hono routes, Zod schemas, Auth logic).
+- `scripts/`: Convenience scripts for testing and deployment.
+
+## Documentation
+
+For more detailed engineering standards and project context, refer to `GEMINI.md` and `DEVELOPMENT.md`.

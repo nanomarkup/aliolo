@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:aliolo/data/models/subject_model.dart';
 import 'package:aliolo/data/models/card_model.dart';
 import 'package:aliolo/data/models/pillar_model.dart';
@@ -71,7 +70,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
   List<CardModel> _allCards = [];
   List<CardModel> _filteredCards = [];
   int _startLevel = 1;
-  int _endLevel = 20;
+  int _endLevel = CardService.maxLevel;
   List<SubjectModel> _filteredSubjects = [];
   bool _isLoading = false;
   bool _hasUpdated = false;
@@ -84,6 +83,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
     _currentFolder = widget.folder;
     _currentCollection = widget.collection;
     _allCards = widget.cards;
+    _resetLevelFilter();
     _currentLanguageCode = _langService.currentLanguageCode.value;
 
     if (_currentCollection != null) {
@@ -118,6 +118,31 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
         _applyFilters();
       });
     }
+  }
+
+  int get _minAvailableLevel {
+    if (_allCards.isEmpty) return CardService.minLevel;
+    return _allCards
+        .map((card) => card.level)
+        .reduce((value, element) => value < element ? value : element);
+  }
+
+  int get _maxAvailableLevel {
+    if (_allCards.isEmpty) return CardService.maxLevel;
+    return _allCards
+        .map((card) => card.level)
+        .reduce((value, element) => value > element ? value : element);
+  }
+
+  bool get _showLevelFilter =>
+      (_currentSubject != null || _currentCollection != null) &&
+      !(_currentSubject?.isMath ?? false) &&
+      _allCards.isNotEmpty &&
+      _minAvailableLevel < _maxAvailableLevel;
+
+  void _resetLevelFilter() {
+    _startLevel = _minAvailableLevel;
+    _endLevel = _maxAvailableLevel;
   }
 
   Future<void> _fetchCollectionSubjects() async {
@@ -189,6 +214,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
             _currentSubject = updatedSubject;
             _hasUpdated = true;
           }
+          _resetLevelFilter();
           _isLoading = false;
           _applyFilters();
         });
@@ -208,6 +234,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
             _currentCollection = updatedCollection;
             _hasUpdated = true;
           }
+          _resetLevelFilter();
           _isLoading = false;
           _applyFilters();
         });
@@ -559,8 +586,8 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                       ],
                     ),
                     const SizedBox(height: 24),
-                    if ((_currentSubject != null || _currentCollection != null) && !(_currentSubject?.isMath ?? false)) ...[
-                      Text(context.t('level') ?? 'Level', style: const TextStyle(fontWeight: FontWeight.bold)),
+                    if (_showLevelFilter) ...[
+                      Text(context.t('level'), style: const TextStyle(fontWeight: FontWeight.bold)),
                       const SizedBox(height: 12),
                       Row(
                         children: [
@@ -592,13 +619,12 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                           TextButton(
                             onPressed: () {
                               setState(() {
-                                _startLevel = 1;
-                                _endLevel = 20;
+                                _resetLevelFilter();
                                 _applyFilters();
                               });
                               setBottomSheetState(() {});
                             },
-                            child: Text(context.t('filter_all') ?? 'All'),
+                            child: Text(context.t('filter_all')),
                           ),
                         ],
                       ),
@@ -1151,7 +1177,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                                           constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
                                           padding: EdgeInsets.zero,
                                           onPressed: () => _showZoomedCard(context, index, pillarColor, _currentLanguageCode),
-                                          tooltip: context.t('zoom') ?? 'Zoom',
+                                          tooltip: context.t('zoom'),
                                         ),
                                       ),
                                     ),
@@ -1612,6 +1638,11 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
   }
 
   Widget _buildLevelDropdown(int value, ValueChanged<int?> onChanged) {
+    final levels = List.generate(
+      _maxAvailableLevel - _minAvailableLevel + 1,
+      (i) => _minAvailableLevel + i,
+    );
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       decoration: BoxDecoration(
@@ -1622,15 +1653,22 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
         child: DropdownButton<int>(
           value: value,
           isDense: true,
-          items:
-              List.generate(20, (i) => i + 1)
-                  .map(
-                    (lv) => DropdownMenuItem(
-                      value: lv,
-                      child: Text('$lv', style: const TextStyle(fontSize: 15)),
-                    ),
-                  )
-                  .toList(),
+          items: levels
+              .map(
+                (lv) => DropdownMenuItem(
+                  value: lv,
+                  child: Text(
+                    switch (lv) {
+                      1 => context.t('level_tier_1'),
+                      2 => context.t('level_tier_2'),
+                      3 => context.t('level_tier_3'),
+                      _ => '$lv',
+                    },
+                    style: const TextStyle(fontSize: 15),
+                  ),
+                ),
+              )
+              .toList(),
           onChanged: onChanged,
         ),
       ),

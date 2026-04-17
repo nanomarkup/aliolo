@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:path/path.dart' as p;
 import 'package:flutter/foundation.dart';
 import 'package:image_picker/image_picker.dart';
@@ -26,7 +25,7 @@ class CardService with ChangeNotifier {
   final _uuid = const Uuid();
 
   static const int minLevel = 1;
-  static const int maxLevel = 20;
+  static const int maxLevel = 3;
 
   List<Pillar> pillars_list = []; // Renamed to avoid shadowing global pillars
 
@@ -394,7 +393,6 @@ class CardService with ChangeNotifier {
         data: {'collection_id': collectionId, 'show': show},
       );
       if (response.statusCode == 200) {
-        notifyListeners();
         return;
       }
     } catch (e) {
@@ -519,7 +517,6 @@ class CardService with ChangeNotifier {
         data: {'subject_id': subjectId, 'show': show},
       );
       if (response.statusCode == 200) {
-        notifyListeners();
         return;
       }
     } catch (e) {

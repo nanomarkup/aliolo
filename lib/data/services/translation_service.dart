@@ -2,7 +2,6 @@ import 'package:aliolo/core/utils/io_utils.dart' if (dart.library.html) 'package
 import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:aliolo/core/network/cloudflare_client.dart';
 import 'package:aliolo/core/di/service_locator.dart';
@@ -152,6 +151,13 @@ class TranslationService extends ChangeNotifier {
       'manage_subscription': 'Manage Subscription',
       'session_complete_description': 'You have finished reviewing all cards in this session.',
       'source': 'Source',
+      'level': 'Level',
+      'card_level': 'Card Level',
+      'level_help_text':
+          'Tier 1 is most common/core, Tier 2 is well-known/secondary, and Tier 3 is niche/extended.',
+      'level_tier_1': 'Tier 1',
+      'level_tier_2': 'Tier 2',
+      'level_tier_3': 'Tier 3',
       'filter_all': 'All',
       'filter_favorites': 'Favorites',
       'filter_my_subjects': 'My Subjects',

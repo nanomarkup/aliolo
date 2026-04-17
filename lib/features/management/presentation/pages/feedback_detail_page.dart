@@ -61,6 +61,7 @@ class _FeedbackDetailPageState extends State<FeedbackDetailPage> {
   }
 
   Future<void> _loadReplies() async {
+    if (mounted) setState(() => _isLoading = true);
     final results = await _feedbackService.getReplies(widget.feedback.id!);
     if (mounted) {
       setState(() {
@@ -246,6 +247,11 @@ class _FeedbackDetailPageState extends State<FeedbackDetailPage> {
         IconButton(
           icon: const Icon(Icons.arrow_back, color: appBarColor),
           onPressed: () => Navigator.pop(context),
+        ),
+        IconButton(
+          tooltip: 'Refresh conversation',
+          icon: const Icon(Icons.refresh, color: appBarColor),
+          onPressed: _isLoading ? null : _loadReplies,
         ),
         if (_isAdmin || _isOwner)
           TextButton(

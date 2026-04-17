@@ -9,6 +9,12 @@ Aliolo uses a unified data approach for simplicity in this solo-developer phase.
 - **Shared Resources**: Both Development and Production environments connect to the same Cloudflare D1 Database and R2 Buckets.
 - **Isolation Strategy**: Use a dedicated "Test User" account for all development activities to avoid polluting production metrics (streaks, progress).
 
+## ⚠️ Operational Constraints
+
+- **Sandbox networking**: The local sandbox shell does not have outbound internet access. Network work that depends on external hosts must use an escalated command or run in the Cloudflare environment.
+- **Card image storage convention**: Card media is stored in the `aliolo-media` bucket under `cards/<card_id>/global_<timestamp>.<ext>`.
+- **Card image URL format**: `images_base` stores a JSON array of public URLs, typically like `["https://aliolo.com/storage/v1/object/public/aliolo-media/cards/<card_id>/global_<timestamp>.<ext>"]`.
+
 ---
 
 ## 💻 Local Development
@@ -89,4 +95,3 @@ You can use these scripts from the project root:
 - **Run Golden Tests**: `./scripts/test_goldens.sh` (use `--update` to refresh baselines)
 - **Deploy Backend**: `./scripts/deploy_backend.sh`
 - **Build Frontend**: `./scripts/build_frontend.sh`
-

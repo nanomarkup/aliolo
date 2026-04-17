@@ -39,8 +39,13 @@ class LocationStub {
   String get href => '';
 }
 
+class HistoryStub {
+  void replaceState(dynamic data, String title, String? url) {}
+}
+
 class WindowStub {
   final LocationStub location = LocationStub();
+  final HistoryStub history = HistoryStub();
 }
 
 final window = WindowStub();
