@@ -284,6 +284,10 @@ class CardModel {
   bool get isCountingRenderer => renderer == 'counting';
   bool get isMathRenderer => renderer == 'math';
   bool get isMath => isMathRenderer;
+  bool get isAdditionEmojiRenderer => renderer == 'addition_emoji';
+  bool get isAdditionNumberRenderer => renderer == 'addition_number';
+  bool get isSubtractionEmojiRenderer => renderer == 'subtraction_emoji';
+  bool get isSubtractionNumberRenderer => renderer == 'subtraction_number';
 
   int get numericalAnswer {
     String ans = getAnswer('en');

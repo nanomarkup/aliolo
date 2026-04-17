@@ -54,7 +54,7 @@ void main() {
       expect(model.toJson().containsKey('visual_template'), isFalse);
     });
 
-    test('SubjectModel maps numeric addition and subtraction renderers', () {
+    test('SubjectModel maps addition and subtraction subjects', () {
       final additionJson = {
         'id': '5e81da1f-f92c-44d2-b3cd-f921d05425df',
         'pillar_id': 1,
@@ -80,10 +80,10 @@ void main() {
       final addition = SubjectModel.fromJson(additionJson);
       final subtraction = SubjectModel.fromJson(subtractionJson);
 
-      expect(addition.usesNumberAdditionRenderer, isTrue);
-      expect(addition.usesEmojiAdditionRenderer, isFalse);
-      expect(subtraction.usesNumberSubtractionRenderer, isTrue);
-      expect(subtraction.usesEmojiSubtractionRenderer, isFalse);
+      expect(addition.isAddition, isTrue);
+      expect(addition.isSubtraction, isFalse);
+      expect(subtraction.isSubtraction, isTrue);
+      expect(subtraction.isAddition, isFalse);
     });
 
     test(
@@ -121,26 +121,27 @@ void main() {
       expect(model.isPublic, isTrue);
     });
 
-    test('CardModel reads renderer from json and supports counting', () {
+    test('CardModel reads renderer from json and supports special renderers', () {
       final json = {
         'id': 'test_card_math',
         'subject_id': 'subj_1',
         'owner_id': 'user_1',
-        'renderer': 'counting',
-        'display_text': '1 + 1',
-        'display_texts': '{"es":"1 + 1"}',
+        'renderer': 'addition_number',
+        'display_text': '',
+        'display_texts': '{"es":""}',
         'localized_data': '{}',
         'created_at': '2026-04-13T12:00:00Z',
         'updated_at': '2026-04-13T12:00:00Z',
       };
 
       final model = CardModel.fromJson(json);
-      expect(model.renderer, 'counting');
-      expect(model.isCountingRenderer, isTrue);
-      expect(model.displayText, '1 + 1');
-      expect(model.getDisplayText('es'), '1 + 1');
+      expect(model.renderer, 'addition_number');
+      expect(model.isSpecialRenderer, isTrue);
+      expect(model.isAdditionNumberRenderer, isTrue);
+      expect(model.isCountingRenderer, isFalse);
+      expect(model.isAdditionEmojiRenderer, isFalse);
       expect(model.toJson().containsKey('test_mode'), isFalse);
-      expect(model.toJson()['display_text'], '1 + 1');
+      expect(model.toJson()['renderer'], 'addition_number');
     });
   });
 

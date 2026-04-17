@@ -21,8 +21,6 @@ import 'package:aliolo/core/widgets/card_renderer.dart';
 import 'package:aliolo/core/widgets/window_controls.dart';
 import 'package:aliolo/core/widgets/aliolo_image.dart';
 import 'package:aliolo/core/widgets/counting_grid.dart';
-import 'package:aliolo/core/widgets/addition_grid.dart';
-import 'package:aliolo/core/widgets/subtraction_grid.dart';
 import 'package:aliolo/features/settings/presentation/pages/premium_upgrade_page.dart';
 
 class LearnPage extends StatefulWidget {
@@ -465,6 +463,15 @@ class _LearnPageState extends State<LearnPage> {
                                           alpha: 0.05,
                                         ),
                                       )
+                                    else if (_currentCard.isSpecialRenderer)
+                                      CardRenderer(
+                                        card: _currentCard,
+                                        subject: _subject,
+                                        languageCode: lang,
+                                        fallbackColor: headerColor,
+                                        fit: BoxFit.contain,
+                                        textFontSize: 120,
+                                      )
                                     else if (_currentCard
                                             .getDisplayText(lang)
                                             .trim()
@@ -479,32 +486,6 @@ class _LearnPageState extends State<LearnPage> {
                                           ),
                                           textAlign: TextAlign.center,
                                         ),
-                                      )
-                                    else if (_subject.usesEmojiSubtractionRenderer)
-                                      SubtractionGrid(
-                                        totalSum: _currentCard.numericalAnswer,
-                                        maxOperand: _subject.maxOperand,
-                                        iconSize: 60,
-                                      )
-                                    else if (_subject.usesNumberSubtractionRenderer)
-                                      SubtractionGrid(
-                                        totalSum: _currentCard.numericalAnswer,
-                                        maxOperand: _subject.maxOperand,
-                                        iconSize: 60,
-                                        useNumbers: true,
-                                      )
-                                    else if (_subject.usesEmojiAdditionRenderer)
-                                      AdditionGrid(
-                                        totalSum: _currentCard.numericalAnswer,
-                                        maxOperand: _subject.maxOperand,
-                                        iconSize: 60,
-                                      )
-                                    else if (_subject.usesNumberAdditionRenderer)
-                                      AdditionGrid(
-                                        totalSum: _currentCard.numericalAnswer,
-                                        maxOperand: _subject.maxOperand,
-                                        iconSize: 60,
-                                        useNumbers: true,
                                       )
                                     else if (_subject.isAlphabet)
                                       Center(

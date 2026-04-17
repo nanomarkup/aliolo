@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:aliolo/data/models/card_model.dart';
 import 'package:aliolo/data/models/subject_model.dart';
 import 'package:aliolo/core/widgets/aliolo_image.dart';
-import 'package:aliolo/core/widgets/addition_grid.dart';
 import 'package:aliolo/core/widgets/counting_grid.dart';
+import 'package:aliolo/core/widgets/addition_grid.dart';
 import 'package:aliolo/core/widgets/subtraction_grid.dart';
 
 class CardRenderer extends StatelessWidget {
@@ -42,6 +42,9 @@ class CardRenderer extends StatelessWidget {
       );
     }
 
+    final specialRenderer = _buildSpecialRenderer(lang);
+    if (specialRenderer != null) return specialRenderer;
+
     final imageUrl =
         card.primaryImageUrl(lang) ??
         card.primaryImageUrl('global') ??
@@ -69,55 +72,55 @@ class CardRenderer extends StatelessWidget {
       );
     }
 
-    final mathRenderer = _buildMathRenderer(lang);
-    if (mathRenderer != null) return mathRenderer;
-
     return _buildFallback();
   }
 
-  Widget? _buildMathRenderer(String lang) {
-    if (!(card.isMathRenderer || card.isMath || subject?.isMath == true)) {
-      return null;
-    }
-
-    if (subject?.usesEmojiSubtractionRenderer == true) {
-      return SubtractionGrid(
+  Widget? _buildSpecialRenderer(String lang) {
+    if (card.isAdditionEmojiRenderer) {
+      return AdditionGrid(
         totalSum: card.numericalAnswer,
-        maxOperand: subject?.maxOperand ?? 20,
+        maxOperand: 20,
         iconSize: (textFontSize ?? 24).clamp(12, 64).toDouble(),
       );
     }
 
-    if (subject?.usesNumberSubtractionRenderer == true) {
-      return SubtractionGrid(
+    if (card.isAdditionNumberRenderer) {
+      return AdditionGrid(
         totalSum: card.numericalAnswer,
-        maxOperand: subject?.maxOperand ?? 20,
+        maxOperand: 20,
         iconSize: (textFontSize ?? 24).clamp(12, 64).toDouble(),
         useNumbers: true,
       );
     }
 
-    if (subject?.usesEmojiAdditionRenderer == true) {
-      return AdditionGrid(
+    if (card.isSubtractionEmojiRenderer) {
+      return SubtractionGrid(
         totalSum: card.numericalAnswer,
-        maxOperand: subject?.maxOperand ?? 20,
+        maxOperand: 20,
         iconSize: (textFontSize ?? 24).clamp(12, 64).toDouble(),
       );
     }
 
-    if (subject?.usesNumberAdditionRenderer == true) {
-      return AdditionGrid(
+    if (card.isSubtractionNumberRenderer) {
+      return SubtractionGrid(
         totalSum: card.numericalAnswer,
-        maxOperand: subject?.maxOperand ?? 20,
+        maxOperand: 20,
         iconSize: (textFontSize ?? 24).clamp(12, 64).toDouble(),
         useNumbers: true,
       );
     }
 
-    if (card.mathQuestion != null && card.mathQuestion!.isNotEmpty) {
+    if (card.isMathRenderer || card.mathQuestion != null) {
+      final text = card.mathQuestion?.isNotEmpty == true
+          ? card.mathQuestion!
+          : (card.getDisplayText(lang).isNotEmpty
+              ? card.getDisplayText(lang)
+              : card.getAnswer(lang).isNotEmpty
+                  ? card.getAnswer(lang)
+                  : card.getAnswer('global'));
       return Center(
         child: Text(
-          card.mathQuestion!,
+          text,
           style: TextStyle(
             fontSize: textFontSize ?? 48,
             fontWeight: FontWeight.w700,
@@ -128,23 +131,11 @@ class CardRenderer extends StatelessWidget {
       );
     }
 
-    return Center(
-      child: Text(
-        card.getAnswer(lang).isNotEmpty
-            ? card.getAnswer(lang)
-            : card.getAnswer('global'),
-        style: TextStyle(
-          fontSize: textFontSize ?? 48,
-          fontWeight: FontWeight.w700,
-          color: Colors.black87,
-        ),
-        textAlign: TextAlign.center,
-      ),
-    );
+    return null;
   }
 
   Widget? _buildColorRenderer() {
-    if (!(card.isColors || subject?.isColors == true)) return null;
+    if (!card.isColors) return null;
     if (card.hexColor == null) return null;
 
     return SizedBox.expand(

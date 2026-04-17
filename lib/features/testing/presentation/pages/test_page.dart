@@ -13,12 +13,11 @@ import 'package:aliolo/data/services/sound_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/data/services/subscription_service.dart';
+import 'package:aliolo/core/widgets/card_renderer.dart';
 import 'package:aliolo/core/widgets/aliolo_image.dart';
 import 'package:aliolo/core/widgets/window_controls.dart';
 import 'package:aliolo/core/di/service_locator.dart';
 import 'package:media_kit_video/media_kit_video.dart';
-import 'package:aliolo/core/widgets/addition_grid.dart';
-import 'package:aliolo/core/widgets/subtraction_grid.dart';
 import 'package:aliolo/core/widgets/counting_grid.dart';
 import 'package:aliolo/data/services/math_service.dart';
 import 'package:aliolo/features/settings/presentation/pages/premium_upgrade_page.dart';
@@ -220,10 +219,6 @@ class _TestPageState extends State<TestPage> {
     final audio = _currentCard.getAudioUrl(lang);
     if (audio != null &&
         !_currentCard.isSpecialRenderer &&
-        !_subject.usesEmojiAdditionRenderer &&
-        !_subject.usesNumberAdditionRenderer &&
-        !_subject.usesEmojiSubtractionRenderer &&
-        !_subject.usesNumberSubtractionRenderer &&
         !_currentCard.isCountingRenderer) {
       player.open(Media(audio));
       player.play();
@@ -730,6 +725,15 @@ class _TestPageState extends State<TestPage> {
                                               ),
                                         ),
                                       )
+                                    else if (_currentCard.isSpecialRenderer)
+                                      CardRenderer(
+                                        card: _currentCard,
+                                        subject: _subject,
+                                        languageCode: lang,
+                                        fallbackColor: headerColor,
+                                        fit: BoxFit.contain,
+                                        textFontSize: isMobile ? 80 : 120,
+                                      )
                                     else if (displayText.isNotEmpty)
                                       Center(
                                         child: Text(
@@ -741,32 +745,6 @@ class _TestPageState extends State<TestPage> {
                                           ),
                                           textAlign: TextAlign.center,
                                         ),
-                                      )
-                                    else if (_subject.usesEmojiSubtractionRenderer)
-                                      SubtractionGrid(
-                                        totalSum: _currentCard.numericalAnswer,
-                                        maxOperand: _subject.maxOperand,
-                                        iconSize: isMobile ? 40 : 60,
-                                      )
-                                    else if (_subject.usesNumberSubtractionRenderer)
-                                      SubtractionGrid(
-                                        totalSum: _currentCard.numericalAnswer,
-                                        maxOperand: _subject.maxOperand,
-                                        iconSize: isMobile ? 40 : 60,
-                                        useNumbers: true,
-                                      )
-                                    else if (_subject.usesEmojiAdditionRenderer)
-                                      AdditionGrid(
-                                        totalSum: _currentCard.numericalAnswer,
-                                        maxOperand: _subject.maxOperand,
-                                        iconSize: isMobile ? 40 : 60,
-                                      )
-                                    else if (_subject.usesNumberAdditionRenderer)
-                                      AdditionGrid(
-                                        totalSum: _currentCard.numericalAnswer,
-                                        maxOperand: _subject.maxOperand,
-                                        iconSize: isMobile ? 40 : 60,
-                                        useNumbers: true,
                                       )
                                     else if (_subject.isAlphabet)
                                       Center(

@@ -275,6 +275,16 @@ class _AddCardPageState extends State<AddCardPage> {
     );
     if (subject.name.toLowerCase() == 'counting') {
       _renderer = 'counting';
+    } else if (subject.id == 'de04da1c-9820-4e61-ae6b-bc7ed07eeb93') {
+      _renderer = 'addition_emoji';
+    } else if (subject.id == '5e81da1f-f92c-44d2-b3cd-f921d05425df') {
+      _renderer = 'addition_number';
+    } else if (subject.id == 'ce04da1c-9820-4e61-ae6b-bc7ed07eeb93') {
+      _renderer = 'subtraction_emoji';
+    } else if (subject.id == 'f59a0f9c-5d6d-4f2d-b426-eb9ca6bf2782') {
+      _renderer = 'subtraction_number';
+    } else if (subject.isColors) {
+      _renderer = 'colors';
     }
   }
 
@@ -1193,6 +1203,23 @@ class _AddCardPageState extends State<AddCardPage> {
       items: [
         DropdownMenuItem(value: 'generic', child: const Text('Generic')),
         DropdownMenuItem(value: 'counting', child: const Text('Counting')),
+        DropdownMenuItem(
+          value: 'addition_emoji',
+          child: const Text('Addition Emoji'),
+        ),
+        DropdownMenuItem(
+          value: 'addition_number',
+          child: const Text('Addition Numbers'),
+        ),
+        DropdownMenuItem(
+          value: 'subtraction_emoji',
+          child: const Text('Subtraction Emoji'),
+        ),
+        DropdownMenuItem(
+          value: 'subtraction_number',
+          child: const Text('Subtraction Numbers'),
+        ),
+        DropdownMenuItem(value: 'colors', child: const Text('Colors')),
         DropdownMenuItem(value: 'math', child: const Text('Math')),
       ],
       onChanged:
