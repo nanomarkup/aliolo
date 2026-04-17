@@ -237,6 +237,10 @@ router.openapi(deleteCollectionRoute, async (c) => {
         const coll: any = await c.env.DB.prepare("SELECT owner_id FROM collections WHERE id = ?").bind(id).first();
         if (!coll || coll.owner_id !== user.id) return c.json({ error: 'Forbidden' } as any, 403);
 
+        await c.env.DB.batch([
+            c.env.DB.prepare("DELETE FROM collection_items WHERE collection_id = ?").bind(id),
+            c.env.DB.prepare("DELETE FROM user_subjects WHERE collection_id = ?").bind(id),
+        ]);
         await c.env.DB.prepare("DELETE FROM collections WHERE id = ?").bind(id).run();
         return c.json({ success: true }, 200);
     } catch (e: any) {
