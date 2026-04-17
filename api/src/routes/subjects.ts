@@ -21,8 +21,7 @@ const subjectSelectColumns = `
   s.names,
   s.description,
   s.descriptions,
-  s.name,
-  s.type
+  s.name
 `;
 
 const listSubjectsRoute = createRoute({
