@@ -79,7 +79,7 @@ class CardRenderer extends StatelessWidget {
     if (card.isAdditionEmojiRenderer) {
       return AdditionGrid(
         totalSum: card.numericalAnswer,
-        maxOperand: 20,
+        maxOperand: subject?.maxOperand ?? 20,
         iconSize: (textFontSize ?? 24).clamp(12, 64).toDouble(),
       );
     }
@@ -87,7 +87,7 @@ class CardRenderer extends StatelessWidget {
     if (card.isAdditionNumberRenderer) {
       return AdditionGrid(
         totalSum: card.numericalAnswer,
-        maxOperand: 20,
+        maxOperand: subject?.maxOperand ?? 20,
         iconSize: (textFontSize ?? 24).clamp(12, 64).toDouble(),
         useNumbers: true,
       );
@@ -96,7 +96,7 @@ class CardRenderer extends StatelessWidget {
     if (card.isSubtractionEmojiRenderer) {
       return SubtractionGrid(
         totalSum: card.numericalAnswer,
-        maxOperand: 20,
+        maxOperand: subject?.maxOperand ?? 20,
         iconSize: (textFontSize ?? 24).clamp(12, 64).toDouble(),
       );
     }
@@ -104,7 +104,7 @@ class CardRenderer extends StatelessWidget {
     if (card.isSubtractionNumberRenderer) {
       return SubtractionGrid(
         totalSum: card.numericalAnswer,
-        maxOperand: 20,
+        maxOperand: subject?.maxOperand ?? 20,
         iconSize: (textFontSize ?? 24).clamp(12, 64).toDouble(),
         useNumbers: true,
       );

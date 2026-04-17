@@ -55,6 +55,17 @@ void main() {
     });
 
     test('SubjectModel maps addition and subtraction subjects', () {
+      final additionSmallJson = {
+        'id': 'de04da1c-9820-4e61-ae6b-bc7ed07eeb93',
+        'pillar_id': 1,
+        'owner_id': 'user_1',
+        'is_public': 1,
+        'name': 'Addition 0-10',
+        'localized_data': '{}',
+        'created_at': '2026-04-13T12:00:00Z',
+        'updated_at': '2026-04-13T12:00:00Z',
+      };
+
       final additionJson = {
         'id': '5e81da1f-f92c-44d2-b3cd-f921d05425df',
         'pillar_id': 1,
@@ -77,13 +88,30 @@ void main() {
         'updated_at': '2026-04-13T12:00:00Z',
       };
 
+      final subtractionSmallJson = {
+        'id': 'ce04da1c-9820-4e61-ae6b-bc7ed07eeb93',
+        'pillar_id': 1,
+        'owner_id': 'user_1',
+        'is_public': 1,
+        'name': 'Subtraction 0-10',
+        'localized_data': '{}',
+        'created_at': '2026-04-13T12:00:00Z',
+        'updated_at': '2026-04-13T12:00:00Z',
+      };
+
       final addition = SubjectModel.fromJson(additionJson);
+      final additionSmall = SubjectModel.fromJson(additionSmallJson);
+      final subtractionSmall = SubjectModel.fromJson(subtractionSmallJson);
       final subtraction = SubjectModel.fromJson(subtractionJson);
 
+      expect(additionSmall.maxOperand, 5);
       expect(addition.isAddition, isTrue);
       expect(addition.isSubtraction, isFalse);
+      expect(addition.maxOperand, 10);
+      expect(subtractionSmall.maxOperand, 10);
       expect(subtraction.isSubtraction, isTrue);
       expect(subtraction.isAddition, isFalse);
+      expect(subtraction.maxOperand, 20);
     });
 
     test(
