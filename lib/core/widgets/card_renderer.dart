@@ -110,27 +110,6 @@ class CardRenderer extends StatelessWidget {
       );
     }
 
-    if (card.isMathRenderer || card.mathQuestion != null) {
-      final text = card.mathQuestion?.isNotEmpty == true
-          ? card.mathQuestion!
-          : (card.getDisplayText(lang).isNotEmpty
-              ? card.getDisplayText(lang)
-              : card.getAnswer(lang).isNotEmpty
-                  ? card.getAnswer(lang)
-                  : card.getAnswer('global'));
-      return Center(
-        child: Text(
-          text,
-          style: TextStyle(
-            fontSize: textFontSize ?? 48,
-            fontWeight: FontWeight.w700,
-            color: Colors.black87,
-          ),
-          textAlign: TextAlign.center,
-        ),
-      );
-    }
-
     return null;
   }
 

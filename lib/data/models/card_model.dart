@@ -30,7 +30,6 @@ class CardModel {
   final Map<String, String> audios;
   final Map<String, String> videos;
 
-  String? mathQuestion;
   List<String>? mathOptions;
 
   CardModel({
@@ -282,8 +281,6 @@ class CardModel {
   bool get isColors => renderer == 'colors' || hexColor != null;
   bool get isSpecialRenderer => renderer != 'generic';
   bool get isCountingRenderer => renderer == 'counting';
-  bool get isMathRenderer => renderer == 'math';
-  bool get isMath => isMathRenderer;
   bool get isAdditionEmojiRenderer => renderer == 'addition_emoji';
   bool get isAdditionNumberRenderer => renderer == 'addition_number';
   bool get isSubtractionEmojiRenderer => renderer == 'subtraction_emoji';

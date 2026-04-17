@@ -49,11 +49,11 @@ void main() {
         1,
       );
 
-      expect(card.renderer, 'math');
-      expect(card.isMathRenderer, isTrue);
+      expect(card.renderer, 'generic');
       expect(card.prompt, isEmpty);
       expect(card.displayText, '1 + 1');
       expect(card.getDisplayText('en'), '1 + 1');
+      expect(card.mathOptions, containsAll(['1', '2', '3']));
     });
   });
 }

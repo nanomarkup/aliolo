@@ -135,7 +135,7 @@ class _TestPageState extends State<TestPage> {
       _currentCard.subjectId,
     );
 
-    if (_currentCard.isMath) {
+    if (_currentCard.mathOptions != null) {
       _correctAnswerId = _currentCard.numericalAnswer.toString();
       List<String> mathOpts = _currentCard.mathOptions ?? [];
 
@@ -796,7 +796,7 @@ class _TestPageState extends State<TestPage> {
                       );
 
                       final optionsContent =
-                          (!isAudioToImage || _currentCard.isMath)
+                          (!isAudioToImage || _currentCard.mathOptions != null)
                               ? Container(
                                 width: isMobile ? double.infinity : 350,
                                 padding: EdgeInsets.all(isMobile ? 24 : 32),
@@ -880,7 +880,7 @@ class _TestPageState extends State<TestPage> {
 
                       if (isMobile) {
                         // For Audio to Image on mobile, fill screen and let grid handle its own scroll
-                        if (isAudioToImage && !_currentCard.isMath) {
+                        if (isAudioToImage && _currentCard.mathOptions == null) {
                           return mediaContent;
                         }
 

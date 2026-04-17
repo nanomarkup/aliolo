@@ -60,7 +60,7 @@ class MathService {
       id: 'math_${now.microsecondsSinceEpoch}_${Random().nextInt(1000)}',
       subjectId: 'Math',
       level: level,
-      renderer: 'math',
+      renderer: 'generic',
       ownerId: 'system',
       isPublic: true,
       createdAt: now,
@@ -69,7 +69,6 @@ class MathService {
       prompt: '',
       displayText: problem.question,
     );
-    card.mathQuestion = problem.question;
     card.mathOptions = problem.options;
     return card;
   }
