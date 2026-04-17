@@ -480,7 +480,7 @@ class _LearnPageState extends State<LearnPage> {
                                           textAlign: TextAlign.center,
                                         ),
                                       )
-                                    else if (_subject.isSubtraction)
+                                    else if (_subject.usesEmojiSubtractionRenderer)
                                       SubtractionGrid(
                                         totalSum: _currentCard.numericalAnswer,
                                         maxOperand: _subject.maxOperand,

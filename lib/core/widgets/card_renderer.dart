@@ -80,7 +80,7 @@ class CardRenderer extends StatelessWidget {
       return null;
     }
 
-    if (subject?.isSubtraction == true) {
+    if (subject?.usesEmojiSubtractionRenderer == true) {
       return SubtractionGrid(
         totalSum: card.numericalAnswer,
         maxOperand: subject?.maxOperand ?? 20,

@@ -221,7 +221,7 @@ class _TestPageState extends State<TestPage> {
     if (audio != null &&
         !_currentCard.isSpecialRenderer &&
         !_subject.usesEmojiAdditionRenderer &&
-        !_subject.isSubtraction &&
+        !_subject.usesEmojiSubtractionRenderer &&
         !_currentCard.isCountingRenderer) {
       player.open(Media(audio));
       player.play();
@@ -740,7 +740,7 @@ class _TestPageState extends State<TestPage> {
                                           textAlign: TextAlign.center,
                                         ),
                                       )
-                                    else if (_subject.isSubtraction)
+                                    else if (_subject.usesEmojiSubtractionRenderer)
                                       SubtractionGrid(
                                         totalSum: _currentCard.numericalAnswer,
                                         maxOperand: _subject.maxOperand,

@@ -51,6 +51,9 @@ class SubjectModel implements ContentItem {
       id == 'ce04da1c-9820-4e61-ae6b-bc7ed07eeb93' ||
       id == 'f59a0f9c-5d6d-4f2d-b426-eb9ca6bf2782';
 
+  bool get usesEmojiSubtractionRenderer =>
+      id == 'ce04da1c-9820-4e61-ae6b-bc7ed07eeb93';
+
   bool get isMultiplication =>
       id == 'e104da1c-9820-4e61-ae6b-bc7ed07eeb93' ||
       id == 'e204da1c-9820-4e61-ae6b-bc7ed07eeb93' ||
