@@ -66,7 +66,8 @@ class MathService {
       createdAt: now,
       updatedAt: now,
       answer: problem.answer,
-      prompt: problem.question,
+      prompt: '',
+      displayText: problem.question,
     );
     card.mathQuestion = problem.question;
     card.mathOptions = problem.options;

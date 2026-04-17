@@ -15,6 +15,7 @@ class CardModel {
   /// Base text fields
   final String answer;
   final String prompt;
+  final String displayText;
 
   /// Base media fields (URLs)
   final List<String> imagesBase;
@@ -24,6 +25,7 @@ class CardModel {
   /// Localized maps
   final Map<String, String> answers;
   final Map<String, String> prompts;
+  final Map<String, String> displayTexts;
   final Map<String, List<String>> imagesLocal;
   final Map<String, String> audios;
   final Map<String, String> videos;
@@ -44,6 +46,8 @@ class CardModel {
     this.answers = const {},
     required this.prompt,
     this.prompts = const {},
+    this.displayText = '',
+    this.displayTexts = const {},
     this.imagesBase = const [],
     this.imagesLocal = const {},
     this.audio = '',
@@ -70,6 +74,16 @@ class CardModel {
     else if (rawPrompts is String && rawPrompts.isNotEmpty) {
       try {
         promptsMap = Map<String, String>.from(jsonDecode(rawPrompts));
+      } catch (_) {}
+    }
+
+    Map<String, String> displayTextsMap = {};
+    final rawDisplayTexts = json['display_texts'];
+    if (rawDisplayTexts is Map) {
+      displayTextsMap = Map<String, String>.from(rawDisplayTexts);
+    } else if (rawDisplayTexts is String && rawDisplayTexts.isNotEmpty) {
+      try {
+        displayTextsMap = Map<String, String>.from(jsonDecode(rawDisplayTexts));
       } catch (_) {}
     }
 
@@ -121,6 +135,7 @@ class CardModel {
     // Fallback migration logic
     String bAnswer = json['answer'] ?? '';
     String bPrompt = json['prompt'] ?? '';
+    String bDisplayText = json['display_text'] ?? '';
     String bAudio = json['audio'] ?? '';
     String bVideo = json['video'] ?? '';
 
@@ -138,6 +153,7 @@ class CardModel {
       if (global is Map) {
         bAnswer = global['answer'] ?? '';
         bPrompt = global['prompt'] ?? '';
+        bDisplayText = global['display_text'] ?? global['text'] ?? '';
         bAudio = global['audio_url'] ?? '';
         bVideo = global['video_url'] ?? '';
         if (imagesBaseList.isEmpty && global['image_urls'] is List) {
@@ -148,6 +164,9 @@ class CardModel {
         if (k != 'global' && v is Map) {
           if (answersMap[k] == null) answersMap[k] = v['answer'] ?? '';
           if (promptsMap[k] == null) promptsMap[k] = v['prompt'] ?? '';
+          if (displayTextsMap[k] == null) {
+            displayTextsMap[k] = v['display_text'] ?? v['text'] ?? '';
+          }
           if (audiosMap[k] == null) audiosMap[k] = v['audio_url'] ?? '';
           if (videosMap[k] == null) videosMap[k] = v['video_url'] ?? '';
           if (imagesLocalMap[k] == null && v['image_urls'] is List) {
@@ -172,6 +191,8 @@ class CardModel {
       answers: answersMap,
       prompt: bPrompt,
       prompts: promptsMap,
+      displayText: bDisplayText,
+      displayTexts: displayTextsMap,
       imagesBase: imagesBaseList,
       imagesLocal: imagesLocalMap,
       audio: bAudio,
@@ -195,6 +216,8 @@ class CardModel {
       'answers': answers,
       'prompt': prompt,
       'prompts': prompts,
+      'display_text': displayText,
+      'display_texts': displayTexts,
       'images_base': imagesBase,
       'images_local': imagesLocal,
       'audio': audio,
@@ -218,6 +241,14 @@ class CardModel {
       return answers[lc]!;
     }
     return answer;
+  }
+
+  String getDisplayText(String lang) {
+    final lc = lang.toLowerCase();
+    if (displayTexts.containsKey(lc) && displayTexts[lc]!.isNotEmpty) {
+      return displayTexts[lc]!;
+    }
+    return displayText;
   }
 
   static String capitalizeFirst(String s) {
@@ -389,6 +420,8 @@ class CardModel {
       answers = const {},
       prompt = '',
       prompts = const {},
+      displayText = '',
+      displayTexts = const {},
       imagesBase = const [],
       imagesLocal = const {},
       audio = '',

@@ -25,6 +25,8 @@ describe('Cards API', () => {
       answers: { es: 'A' },
       prompt: 'Q',
       prompts: { es: 'Q' },
+      display_text: '1 + 1',
+      display_texts: { es: '1 + 1' },
       images_base: [],
       images_local: {},
       audio: '',
@@ -54,6 +56,7 @@ describe('Cards API', () => {
     const data = await res.json() as any[];
     expect(data.length).toBeGreaterThan(0);
     expect(data[0]).toHaveProperty('renderer');
+    expect(data[0]).toHaveProperty('display_text');
   });
 
   it('should delete a card', async () => {

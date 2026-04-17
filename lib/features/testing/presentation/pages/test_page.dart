@@ -209,15 +209,15 @@ class _TestPageState extends State<TestPage> {
     }
 
     if (mounted) {
-      setState(() {
-        _options = options;
-        final lang = _languageCode.toLowerCase();
-        _currentImages = _currentCard.getImageUrls(lang);
-        _currentImageIndex = 0;
-        final video = _currentCard.getVideoUrl(lang);
-        _showingVideo = _currentImages.isEmpty && (video?.isNotEmpty ?? false);
-      });
-    }
+        setState(() {
+          _options = options;
+          final lang = _languageCode.toLowerCase();
+          _currentImages = _currentCard.getImageUrls(lang);
+          _currentImageIndex = 0;
+          final video = _currentCard.getVideoUrl(lang);
+          _showingVideo = video?.isNotEmpty ?? false;
+        });
+      }
 
     final lang = _languageCode.toLowerCase();
     final audio = _currentCard.getAudioUrl(lang);
@@ -647,10 +647,13 @@ class _TestPageState extends State<TestPage> {
                   child: LayoutBuilder(
                     builder: (context, constraints) {
                       final isMobile = constraints.maxWidth < 800;
+                      final displayText = _currentCard.getDisplayText(lang).trim();
                       final hasAudio = _currentCard.getAudioUrl(lang) != null;
                       final hasVisual =
                           _currentCard.primaryImageUrl(lang) != null ||
-                          _showingVideo;
+                          _currentImages.isNotEmpty ||
+                          _showingVideo ||
+                          displayText.isNotEmpty;
                       final showAudioPrompt =
                           !_currentCard.isSpecialRenderer &&
                           hasAudio &&
@@ -707,6 +710,31 @@ class _TestPageState extends State<TestPage> {
                                               alpha: 0.5,
                                             ),
                                           ),
+                                        ),
+                                      )
+                                    else if (_currentImages.isNotEmpty)
+                                      Container(
+                                        color: Theme.of(context).cardColor,
+                                        child: AlioloImage(
+                                          imageUrl:
+                                              _currentImages[_currentImageIndex],
+                                          fit: BoxFit.contain,
+                                          backgroundColor:
+                                              headerColor.withValues(
+                                                alpha: 0.05,
+                                              ),
+                                        ),
+                                      )
+                                    else if (displayText.isNotEmpty)
+                                      Center(
+                                        child: Text(
+                                          displayText,
+                                          style: TextStyle(
+                                            fontSize: isMobile ? 80 : 120,
+                                            fontWeight: FontWeight.w700,
+                                            color: Colors.black87,
+                                          ),
+                                          textAlign: TextAlign.center,
                                         ),
                                       )
                                     else if (_subject.isDivision)
@@ -792,17 +820,6 @@ class _TestPageState extends State<TestPage> {
                                             .getNumericalChar(lang),
                                         fontSize: isMobile ? 80 : 120,
                                         color: headerColor,
-                                      )
-                                    else if (_currentImages.isNotEmpty)
-                                      Container(
-                                        color: Theme.of(context).cardColor,
-                                        child: AlioloImage(
-                                          imageUrl:
-                                              _currentImages[_currentImageIndex],
-                                          fit: BoxFit.contain,
-                                          backgroundColor: headerColor
-                                              .withValues(alpha: 0.05),
-                                        ),
                                       )
                                     else
                                       const Icon(

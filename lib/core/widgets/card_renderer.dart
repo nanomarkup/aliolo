@@ -31,9 +31,6 @@ class CardRenderer extends StatelessWidget {
   Widget build(BuildContext context) {
     final lang = languageCode.toLowerCase();
 
-    final mathRenderer = _buildMathRenderer(lang);
-    if (mathRenderer != null) return mathRenderer;
-
     final colorRenderer = _buildColorRenderer();
     if (colorRenderer != null) return colorRenderer;
 
@@ -52,6 +49,24 @@ class CardRenderer extends StatelessWidget {
         backgroundColor: fallbackColor.withValues(alpha: 0.05),
       );
     }
+
+    final displayText = card.getDisplayText(lang);
+    if (displayText.trim().isNotEmpty) {
+      return Center(
+        child: Text(
+          displayText,
+          style: TextStyle(
+            fontSize: textFontSize ?? 48,
+            fontWeight: FontWeight.w700,
+            color: Colors.black87,
+          ),
+          textAlign: TextAlign.center,
+        ),
+      );
+    }
+
+    final mathRenderer = _buildMathRenderer(lang);
+    if (mathRenderer != null) return mathRenderer;
 
     return _buildFallback();
   }

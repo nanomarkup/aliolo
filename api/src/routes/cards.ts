@@ -54,7 +54,7 @@ router.openapi(createCardRoute, async (c) => {
 
     const { 
         id, subject_id, level, renderer, is_public, 
-        answer, answers, prompt, prompts, 
+        answer, answers, prompt, prompts, display_text, display_texts,
         images_base, images_local, audio, audios, video, videos 
     } = c.req.valid('json');
 
@@ -62,11 +62,11 @@ router.openapi(createCardRoute, async (c) => {
         await c.env.DB.prepare(`
             INSERT INTO cards (
                 id, subject_id, owner_id, level, renderer, is_public, 
-                answer, answers, prompt, prompts, 
+                answer, answers, prompt, prompts, display_text, display_texts,
                 images_base, images_local, audio, audios, video, videos,
                 updated_at
             )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
             ON CONFLICT(id) DO UPDATE SET
                 subject_id = excluded.subject_id,
                 level = excluded.level,
@@ -76,6 +76,8 @@ router.openapi(createCardRoute, async (c) => {
                 answers = excluded.answers,
                 prompt = excluded.prompt,
                 prompts = excluded.prompts,
+                display_text = excluded.display_text,
+                display_texts = excluded.display_texts,
                 images_base = excluded.images_base,
                 images_local = excluded.images_local,
                 audio = excluded.audio,
@@ -86,6 +88,7 @@ router.openapi(createCardRoute, async (c) => {
         `).bind(
             id, subject_id, user.id, level || 1, renderer || 'generic', is_public ? 1 : 0,
             answer, JSON.stringify(answers), prompt, JSON.stringify(prompts),
+            display_text ?? '', JSON.stringify(display_texts ?? {}),
             JSON.stringify(images_base), JSON.stringify(images_local),
             audio, JSON.stringify(audios), video, JSON.stringify(videos)
         ).run();

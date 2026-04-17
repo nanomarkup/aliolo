@@ -39,7 +39,7 @@ void main() {
       }
     });
 
-    test('createVirtualCard should mark renderer as math', () {
+    test('createVirtualCard should set displayText for the expression', () {
       final card = mathService.createVirtualCard(
         (
           question: '1 + 1',
@@ -51,6 +51,9 @@ void main() {
 
       expect(card.renderer, 'math');
       expect(card.isMathRenderer, isTrue);
+      expect(card.prompt, isEmpty);
+      expect(card.displayText, '1 + 1');
+      expect(card.getDisplayText('en'), '1 + 1');
     });
   });
 }

@@ -95,6 +95,8 @@ CREATE TABLE IF NOT EXISTS cards (
   answers TEXT,
   prompt TEXT,
   prompts TEXT,
+  display_text TEXT DEFAULT '',
+  display_texts TEXT DEFAULT '{}',
   images_base TEXT,
   images_local TEXT,
   audio TEXT,

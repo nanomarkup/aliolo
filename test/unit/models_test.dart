@@ -77,6 +77,8 @@ void main() {
         'subject_id': 'subj_1',
         'owner_id': 'user_1',
         'renderer': 'math',
+        'display_text': '1 + 1',
+        'display_texts': '{"es":"1 + 1"}',
         'localized_data': '{}',
         'created_at': '2026-04-13T12:00:00Z',
         'updated_at': '2026-04-13T12:00:00Z',
@@ -84,7 +86,10 @@ void main() {
 
       final model = CardModel.fromJson(json);
       expect(model.renderer, 'math');
+      expect(model.displayText, '1 + 1');
+      expect(model.getDisplayText('es'), '1 + 1');
       expect(model.toJson().containsKey('test_mode'), isFalse);
+      expect(model.toJson()['display_text'], '1 + 1');
     });
   });
 

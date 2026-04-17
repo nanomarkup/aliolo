@@ -45,6 +45,7 @@ class AddCardPage extends StatefulWidget {
 class DraftLocalizedData {
   String prompt = '';
   String answer = '';
+  String displayText = '';
   String? audioUrl;
   XFile? newAudioFile;
   String? videoUrl;
@@ -62,6 +63,7 @@ class _AddCardPageState extends State<AddCardPage> {
   final _authService = getIt<AuthService>();
   final _promptController = TextEditingController();
   final _answerController = TextEditingController();
+  final _displayTextController = TextEditingController();
 
   bool _isLoading = true;
   bool _isSaving = false;
@@ -184,6 +186,7 @@ class _AddCardPageState extends State<AddCardPage> {
           DraftLocalizedData()
             ..prompt = c.prompt
             ..answer = c.answer
+            ..displayText = c.displayText
             ..audioUrl = c.audio
             ..videoUrl = c.video
             ..imageUrls = List.from(c.imagesBase);
@@ -191,6 +194,7 @@ class _AddCardPageState extends State<AddCardPage> {
       final allLangs = {
         ...c.prompts.keys,
         ...c.answers.keys,
+        ...c.displayTexts.keys,
         ...c.audios.keys,
         ...c.videos.keys,
         ...c.imagesLocal.keys,
@@ -199,6 +203,7 @@ class _AddCardPageState extends State<AddCardPage> {
         _ensureDraftExists(lang);
         _drafts[lang]!.prompt = c.prompts[lang] ?? '';
         _drafts[lang]!.answer = c.answers[lang] ?? '';
+        _drafts[lang]!.displayText = c.displayTexts[lang] ?? '';
         _drafts[lang]!.audioUrl = c.audios[lang];
         _drafts[lang]!.videoUrl = c.videos[lang];
         _drafts[lang]!.imageUrls = List.from(c.imagesLocal[lang] ?? []);
@@ -217,12 +222,14 @@ class _AddCardPageState extends State<AddCardPage> {
     final draft = _drafts[_selectedLang]!;
     _promptController.text = draft.prompt;
     _answerController.text = draft.answer;
+    _displayTextController.text = draft.displayText;
   }
 
   @override
   void dispose() {
     _promptController.dispose();
     _answerController.dispose();
+    _displayTextController.dispose();
     _keyboardFocusNode.dispose();
     _editorFocusNode.dispose();
     super.dispose();
@@ -367,8 +374,11 @@ class _AddCardPageState extends State<AddCardPage> {
 
   void _showJsonDialog() {
     final Map<String, dynamic> data = _drafts.map(
-      (key, value) =>
-          MapEntry(key, {'prompt': value.prompt, 'answer': value.answer}),
+      (key, value) => MapEntry(key, {
+        'prompt': value.prompt,
+        'answer': value.answer,
+        'displayText': value.displayText,
+      }),
     );
 
     final encoder = const JsonEncoder.withIndent('  ');
@@ -452,6 +462,10 @@ class _AddCardPageState extends State<AddCardPage> {
                                     _drafts[l]!.answer =
                                         d['answer']?.toString() ?? '';
                                   }
+                                  if (d.containsKey('displayText')) {
+                                    _drafts[l]!.displayText =
+                                        d['displayText']?.toString() ?? '';
+                                  }
                                 }
                               });
                               _updateControllers();
@@ -527,12 +541,14 @@ class _AddCardPageState extends State<AddCardPage> {
 
       String baseAnswer = '';
       String basePrompt = '';
+      String baseDisplayText = '';
       List<String> baseImages = [];
       String baseAudio = '';
       String baseVideo = '';
 
       final Map<String, String> finalAnswers = {};
       final Map<String, String> finalPrompts = {};
+      final Map<String, String> finalDisplayTexts = {};
       final Map<String, List<String>> finalImagesLocal = {};
       final Map<String, String> finalAudios = {};
       final Map<String, String> finalVideos = {};
@@ -586,6 +602,7 @@ class _AddCardPageState extends State<AddCardPage> {
         if (lang == 'global') {
           baseAnswer = draft.answer;
           basePrompt = draft.prompt;
+          baseDisplayText = draft.displayText;
           baseImages = imageUrls;
           baseAudio = audioUrl ?? '';
           baseVideo = videoUrl ?? '';
@@ -593,12 +610,15 @@ class _AddCardPageState extends State<AddCardPage> {
           bool hasAny =
               draft.answer.isNotEmpty ||
               draft.prompt.isNotEmpty ||
+              draft.displayText.isNotEmpty ||
               imageUrls.isNotEmpty ||
               (audioUrl != null && audioUrl.isNotEmpty) ||
               (videoUrl != null && videoUrl.isNotEmpty);
           if (hasAny) {
             if (draft.answer.isNotEmpty) finalAnswers[lang] = draft.answer;
             if (draft.prompt.isNotEmpty) finalPrompts[lang] = draft.prompt;
+            if (draft.displayText.isNotEmpty)
+              finalDisplayTexts[lang] = draft.displayText;
             if (imageUrls.isNotEmpty) finalImagesLocal[lang] = imageUrls;
             if (audioUrl != null && audioUrl.isNotEmpty)
               finalAudios[lang] = audioUrl;
@@ -621,6 +641,8 @@ class _AddCardPageState extends State<AddCardPage> {
         answers: finalAnswers,
         prompt: basePrompt,
         prompts: finalPrompts,
+        displayText: baseDisplayText,
+        displayTexts: finalDisplayTexts,
         imagesBase: baseImages,
         imagesLocal: finalImagesLocal,
         audio: baseAudio,
@@ -908,6 +930,7 @@ class _AddCardPageState extends State<AddCardPage> {
         draft != null &&
         (draft.prompt.isNotEmpty ||
             draft.answer.isNotEmpty ||
+            draft.displayText.isNotEmpty ||
             draft.newImageFiles.isNotEmpty ||
             draft.imageUrls.isNotEmpty ||
             draft.newAudioFile != null ||
@@ -1049,6 +1072,16 @@ class _AddCardPageState extends State<AddCardPage> {
             decoration: InputDecoration(
               labelText: context.t('answer'),
               border: const OutlineInputBorder(),
+            ),
+            enabled: !widget.isReadOnly,
+          ),
+          const SizedBox(height: 16),
+          TextFormField(
+            controller: _displayTextController,
+            onChanged: (v) => draft.displayText = v,
+            decoration: const InputDecoration(
+              labelText: 'Text',
+              border: OutlineInputBorder(),
             ),
             enabled: !widget.isReadOnly,
           ),
@@ -1454,6 +1487,7 @@ class _AddCardPageState extends State<AddCardPage> {
       for (var draft in _drafts.values) {
         if (draft.prompt.trim().isNotEmpty) return true;
         if (draft.answer.trim().isNotEmpty) return true;
+        if (draft.displayText.trim().isNotEmpty) return true;
         if (draft.newImageFiles.isNotEmpty) return true;
         if (draft.newAudioFile != null) return true;
         if (draft.newVideoFile != null) return true;
@@ -1470,6 +1504,7 @@ class _AddCardPageState extends State<AddCardPage> {
       'global',
       ...original.prompts.keys,
       ...original.answers.keys,
+      ...original.displayTexts.keys,
       ...original.audios.keys,
       ...original.videos.keys,
       ...original.imagesLocal.keys,
@@ -1484,6 +1519,7 @@ class _AddCardPageState extends State<AddCardPage> {
 
       final draftPrompt = draft?.prompt.trim() ?? '';
       final draftAnswer = draft?.answer.trim() ?? '';
+      final draftDisplayText = draft?.displayText.trim() ?? '';
       final draftAudio = draft?.audioUrl ?? '';
       final draftVideo = draft?.videoUrl ?? '';
       final draftImages = draft?.imageUrls ?? [];
@@ -1491,12 +1527,15 @@ class _AddCardPageState extends State<AddCardPage> {
       if (lang == 'global') {
         if (draftPrompt != original.prompt.trim()) return true;
         if (draftAnswer != original.answer.trim()) return true;
+        if (draftDisplayText != original.displayText.trim()) return true;
         if (draftAudio != original.audio) return true;
         if (draftVideo != original.video) return true;
         if (draftImages.length != original.imagesBase.length) return true;
       } else {
         if (draftPrompt != (original.prompts[lang]?.trim() ?? '')) return true;
         if (draftAnswer != (original.answers[lang]?.trim() ?? '')) return true;
+        if (draftDisplayText != (original.displayTexts[lang]?.trim() ?? ''))
+          return true;
         if (draftAudio != (original.audios[lang] ?? '')) return true;
         if (draftVideo != (original.videos[lang] ?? '')) return true;
         if (draftImages.length != (original.imagesLocal[lang]?.length ?? 0))

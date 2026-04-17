@@ -137,11 +137,11 @@ class _LearnPageState extends State<LearnPage> {
     final images = _currentCard.getImageUrls(lang);
     final video = _currentCard.getVideoUrl(lang);
 
-    setState(() {
-      _currentImages = images;
-      _currentImageIndex = 0;
-      _showingVideo = images.isEmpty && (video?.isNotEmpty ?? false);
-    });
+      setState(() {
+        _currentImages = images;
+        _currentImageIndex = 0;
+        _showingVideo = video?.isNotEmpty ?? false;
+      });
 
     _playInitialMedia();
   }
@@ -461,6 +461,21 @@ class _LearnPageState extends State<LearnPage> {
                                         fit: BoxFit.contain,
                                         backgroundColor: headerColor.withValues(
                                           alpha: 0.05,
+                                        ),
+                                      )
+                                    else if (_currentCard
+                                            .getDisplayText(lang)
+                                            .trim()
+                                            .isNotEmpty)
+                                      Center(
+                                        child: Text(
+                                          _currentCard.getDisplayText(lang),
+                                          style: const TextStyle(
+                                            fontSize: 120,
+                                            fontWeight: FontWeight.w700,
+                                            color: Colors.black87,
+                                          ),
+                                          textAlign: TextAlign.center,
                                         ),
                                       )
                                     else if (_subject.isDivision)
