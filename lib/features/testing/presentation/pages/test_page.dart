@@ -732,7 +732,8 @@ class _TestPageState extends State<TestPage> {
                                         languageCode: lang,
                                         fallbackColor: headerColor,
                                         fit: BoxFit.contain,
-                                        textFontSize: isMobile ? 80 : 120,
+                                        textFontSize:
+                                            isMobile ? 80 : 120,
                                       )
                                     else if (displayText.isNotEmpty)
                                       Center(
@@ -740,24 +741,6 @@ class _TestPageState extends State<TestPage> {
                                           displayText,
                                           style: TextStyle(
                                             fontSize: isMobile ? 80 : 120,
-                                            fontWeight: FontWeight.w700,
-                                            color: Colors.black87,
-                                          ),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      )
-                                    else if (_subject.isAlphabet)
-                                      Center(
-                                        child: Text(
-                                          _currentCard
-                                                  .getAnswer(lang)
-                                                  .isNotEmpty
-                                              ? _currentCard.getAnswer(lang)
-                                              : _currentCard.getAnswer(
-                                                'global',
-                                              ),
-                                          style: TextStyle(
-                                            fontSize: isMobile ? 120 : 180,
                                             fontWeight: FontWeight.w700,
                                             color: Colors.black87,
                                           ),
@@ -1024,10 +1007,7 @@ class _TestPageState extends State<TestPage> {
                                   child: Text(
                                     opt.text,
                                     style: TextStyle(
-                                      fontSize:
-                                          _subject.isAlphabet
-                                              ? (isMobile ? 80 : 120)
-                                              : (isMobile ? 24 : 36),
+                                      fontSize: isMobile ? 24 : 36,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),

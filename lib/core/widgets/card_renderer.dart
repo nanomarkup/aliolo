@@ -31,10 +31,6 @@ class CardRenderer extends StatelessWidget {
     final colorRenderer = _buildColorRenderer();
     if (colorRenderer != null) return colorRenderer;
 
-    if (subject?.isAlphabet == true) {
-      return _buildAlphabetRenderer(lang);
-    }
-
     if (card.isCountingRenderer) {
       return CountingGrid(
         count: card.numericalAnswer,
@@ -120,22 +116,6 @@ class CardRenderer extends StatelessWidget {
     return SizedBox.expand(
       child: ColoredBox(
         color: Color(int.parse(card.hexColor!.replaceFirst('#', '0xFF'))),
-      ),
-    );
-  }
-
-  Widget _buildAlphabetRenderer(String lang) {
-    return Center(
-      child: Text(
-        card.getAnswer(lang).isNotEmpty
-            ? card.getAnswer(lang)
-            : card.getAnswer('global'),
-        style: TextStyle(
-          fontSize: textFontSize ?? 64,
-          fontWeight: FontWeight.w700,
-          color: Colors.black87,
-        ),
-        textAlign: TextAlign.center,
       ),
     );
   }

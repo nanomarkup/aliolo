@@ -36,41 +36,25 @@ class SubjectModel implements ContentItem {
   /// Map of language code to its specific description.
   final Map<String, String> descriptions;
 
-  bool get isAlphabet => folderId == '1c85e6e5-195e-4251-bbbd-b84637427977';
+  String get _normalizedName => name.trim().toLowerCase();
 
-  bool get isAddition =>
-      id == 'de04da1c-9820-4e61-ae6b-bc7ed07eeb93' ||
-      id == '5e81da1f-f92c-44d2-b3cd-f921d05425df';
+  bool get isAddition => _normalizedName.startsWith('addition');
 
   bool get isEditableType => cardCount == 0;
 
-  bool get isSubtraction =>
-      id == 'ce04da1c-9820-4e61-ae6b-bc7ed07eeb93' ||
-      id == 'f59a0f9c-5d6d-4f2d-b426-eb9ca6bf2782';
+  bool get isSubtraction => _normalizedName.startsWith('subtraction');
 
   bool get isMultiplication =>
-      id == 'e104da1c-9820-4e61-ae6b-bc7ed07eeb93' ||
-      id == 'e204da1c-9820-4e61-ae6b-bc7ed07eeb93' ||
-      id == 'e304da1c-9820-4e61-ae6b-bc7ed07eeb93' ||
-      id == 'e404da1c-9820-4e61-ae6b-bc7ed07eeb93' ||
-      id == 'e504da1c-9820-4e61-ae6b-bc7ed07eeb93' ||
-      id == 'e604da1c-9820-4e61-ae6b-bc7ed07eeb93' ||
-      id == 'e704da1c-9820-4e61-ae6b-bc7ed07eeb93' ||
-      id == 'e804da1c-9820-4e61-ae6b-bc7ed07eeb93' ||
-      id == 'e904da1c-9820-4e61-ae6b-bc7ed07eeb93';
+      _normalizedName.startsWith('multiply') ||
+      _normalizedName.startsWith('multiplication');
 
   bool get isDivision =>
-      id == 'd104da1c-9820-4e61-ae6b-bc7ed07eeb93' ||
-      id == 'd204da1c-9820-4e61-ae6b-bc7ed07eeb93' ||
-      id == 'd304da1c-9820-4e61-ae6b-bc7ed07eeb93' ||
-      id == 'd404da1c-9820-4e61-ae6b-bc7ed07eeb93' ||
-      id == 'd504da1c-9820-4e61-ae6b-bc7ed07eeb93' ||
-      id == 'd604da1c-9820-4e61-ae6b-bc7ed07eeb93' ||
-      id == 'd704da1c-9820-4e61-ae6b-bc7ed07eeb93' ||
-      id == 'd804da1c-9820-4e61-ae6b-bc7ed07eeb93' ||
-      id == 'd904da1c-9820-4e61-ae6b-bc7ed07eeb93';
+      _normalizedName.startsWith('divide') ||
+      _normalizedName.startsWith('division');
 
-  bool get isColors => id == '0b84447d-3af3-4509-bdf6-c4e7fe822cc7';
+  bool get isColors => _normalizedName == 'colors';
+
+  bool get isCounting => _normalizedName == 'counting';
 
   bool get isMath =>
       isAddition ||
@@ -79,10 +63,16 @@ class SubjectModel implements ContentItem {
       isDivision;
 
   int get maxOperand {
-    if (id == 'de04da1c-9820-4e61-ae6b-bc7ed07eeb93') return 5;
-    if (id == '5e81da1f-f92c-44d2-b3cd-f921d05425df') return 10;
-    if (id == 'ce04da1c-9820-4e61-ae6b-bc7ed07eeb93') return 10;
-    if (id == 'f59a0f9c-5d6d-4f2d-b426-eb9ca6bf2782') return 20;
+    final nameLower = name.toLowerCase();
+    final trailingNumber = RegExp(r'(\d+)\s*$').firstMatch(nameLower);
+    if (isMultiplication || isDivision) {
+      return int.tryParse(trailingNumber?.group(1) ?? '') ?? 0;
+    }
+    if (isAddition || isSubtraction) {
+      if (nameLower.contains('0-5')) return 5;
+      if (nameLower.contains('0-10')) return 10;
+      if (nameLower.contains('11-20')) return 20;
+    }
     return 0;
   }
 

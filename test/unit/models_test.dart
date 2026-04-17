@@ -36,14 +36,13 @@ void main() {
       },
     );
 
-    test('SubjectModel ignores visual_template and serializes without it', () {
+    test('SubjectModel derives type helpers from subject name', () {
       final json = {
         'id': 'test_subj_template',
         'pillar_id': 1,
         'owner_id': 'user_1',
         'is_public': 1,
         'name': 'Counting',
-        'visual_template': 'counting',
         'localized_data': '{}',
         'created_at': '2026-04-13T12:00:00Z',
         'updated_at': '2026-04-13T12:00:00Z',
@@ -51,7 +50,8 @@ void main() {
 
       final model = SubjectModel.fromJson(json);
       expect(model.name, 'Counting');
-      expect(model.toJson().containsKey('visual_template'), isFalse);
+      expect(model.isCounting, isTrue);
+      expect(model.isMath, isFalse);
     });
 
     test('SubjectModel maps addition and subtraction subjects', () {
@@ -104,10 +104,10 @@ void main() {
       final subtractionSmall = SubjectModel.fromJson(subtractionSmallJson);
       final subtraction = SubjectModel.fromJson(subtractionJson);
 
-      expect(additionSmall.maxOperand, 5);
+      expect(additionSmall.maxOperand, 10);
       expect(addition.isAddition, isTrue);
       expect(addition.isSubtraction, isFalse);
-      expect(addition.maxOperand, 10);
+      expect(addition.maxOperand, 20);
       expect(subtractionSmall.maxOperand, 10);
       expect(subtraction.isSubtraction, isTrue);
       expect(subtraction.isAddition, isFalse);

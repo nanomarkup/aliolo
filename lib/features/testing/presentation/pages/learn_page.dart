@@ -487,22 +487,6 @@ class _LearnPageState extends State<LearnPage> {
                                           textAlign: TextAlign.center,
                                         ),
                                       )
-                                    else if (_subject.isAlphabet)
-                                      Center(
-                                        child: Text(
-                                          _currentCard.getAnswer(lang).isNotEmpty
-                                              ? _currentCard.getAnswer(lang)
-                                              : _currentCard.getAnswer(
-                                                'global',
-                                              ),
-                                          style: const TextStyle(
-                                            fontSize: 180,
-                                            fontWeight: FontWeight.w700,
-                                            color: Colors.black87,
-                                          ),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      )
                                     else if (_subject.isColors &&
                                         _currentCard.hexColor != null)
                                       Container(
