@@ -59,6 +59,8 @@ class DraftLocalizedData {
 }
 
 class _AddCardPageState extends State<AddCardPage> {
+  static const String _adminUserId = 'usyeo7d2yzf2773';
+
   final _cardService = getIt<CardService>();
   final _authService = getIt<AuthService>();
   final _promptController = TextEditingController();
@@ -82,6 +84,9 @@ class _AddCardPageState extends State<AddCardPage> {
   int? _internalPillarId;
   final _keyboardFocusNode = FocusNode();
   final _editorFocusNode = FocusNode();
+
+  bool get _isAdmin =>
+      _authService.currentUser?.serverId == _adminUserId;
 
   @override
   void initState() {
@@ -1052,7 +1057,7 @@ class _AddCardPageState extends State<AddCardPage> {
                     children: [
                       _buildSubjectPicker(),
                       const SizedBox(height: 16),
-                      _buildRendererPicker(),
+                      if (_isAdmin) _buildRendererPicker(),
                     ],
                   );
                 }
@@ -1061,7 +1066,7 @@ class _AddCardPageState extends State<AddCardPage> {
                   children: [
                     Expanded(child: _buildSubjectPicker()),
                     const SizedBox(width: 16),
-                    Expanded(child: _buildRendererPicker()),
+                    if (_isAdmin) Expanded(child: _buildRendererPicker()),
                   ],
                 );
               },
