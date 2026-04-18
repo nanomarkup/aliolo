@@ -2810,7 +2810,7 @@ class _FolderListTile extends StatelessWidget {
     return Opacity(
       opacity: isEmpty ? 0.5 : 1.0,
       child: Padding(
-        padding: const EdgeInsets.only(bottom: 12),
+        padding: const EdgeInsets.only(bottom: 8),
         child: InkWell(
           onTap: () async {
             final result = await Navigator.push(
@@ -2836,7 +2836,7 @@ class _FolderListTile extends StatelessWidget {
           },
           borderRadius: BorderRadius.circular(16),
           child: Container(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
               color: Theme.of(context).cardColor,
               borderRadius: BorderRadius.circular(16),
@@ -2845,10 +2845,10 @@ class _FolderListTile extends StatelessWidget {
                 width: 1.5,
               ),
             ),
-            child: Row(
-              children: [
-                Icon(Icons.folder, color: pillarColor, size: 22),
-                const SizedBox(width: 12),
+          child: Row(
+            children: [
+                Icon(Icons.folder, color: pillarColor, size: 20),
+                const SizedBox(width: 10),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -2857,7 +2857,7 @@ class _FolderListTile extends StatelessWidget {
                         folder.getName(languageCode),
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 16,
+                          fontSize: 15,
                         ),
                       ),
                       const SizedBox(height: 2),
@@ -2866,10 +2866,10 @@ class _FolderListTile extends StatelessWidget {
                           Text(
                             matchingCount == totalCount
                                 ? '$totalCount ${context.plural('subject', totalCount)}'
-                                : '$matchingCount / $totalCount ${context.plural('subject', totalCount)}',
+                            : '$matchingCount / $totalCount ${context.plural('subject', totalCount)}',
                             style: TextStyle(
                               color: Colors.grey[600],
-                              fontSize: 13,
+                              fontSize: 12,
                               fontWeight:
                                   matchingCount > 0
                                       ? FontWeight.bold
@@ -2878,13 +2878,13 @@ class _FolderListTile extends StatelessWidget {
                           ),
                           if (!isOwner && folder.ownerName != null) ...[
                             const SizedBox(width: 8),
-                            Text(
-                              '•',
-                              style: TextStyle(
-                                color: Colors.grey[400],
-                                fontSize: 13,
+                              Text(
+                                '•',
+                                style: TextStyle(
+                                  color: Colors.grey[400],
+                                  fontSize: 12,
+                                ),
                               ),
-                            ),
                             const SizedBox(width: 8),
                             if (folder.ownerName == 'Aliolo')
                               Icon(
@@ -2894,14 +2894,14 @@ class _FolderListTile extends StatelessWidget {
                               )
                             else
                               Flexible(
-                                child: Text(
-                                  folder.ownerName!,
-                                  style: TextStyle(
-                                    color: Colors.grey[600],
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                  overflow: TextOverflow.ellipsis,
+                                  child: Text(
+                                    folder.ownerName!,
+                                    style: TextStyle(
+                                      color: Colors.grey[600],
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
                                 ),
                               ),
                           ],
@@ -2947,7 +2947,7 @@ class _SubjectListTile extends StatelessWidget {
         subject.ownerId == getIt<AuthService>().currentUser?.serverId;
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.only(bottom: 8),
       child: InkWell(
         onTap: () async {
           final cards = await CardService().getCardsBySubject(subject.id);
@@ -2968,7 +2968,7 @@ class _SubjectListTile extends StatelessWidget {
         },
         borderRadius: BorderRadius.circular(16),
         child: Container(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
             color: Theme.of(context).cardColor,
             borderRadius: BorderRadius.circular(16),
@@ -2979,8 +2979,8 @@ class _SubjectListTile extends StatelessWidget {
           ),
           child: Row(
             children: [
-              Icon(pillar.getIconData(), color: pillarColor, size: 22),
-              const SizedBox(width: 12),
+              Icon(pillar.getIconData(), color: pillarColor, size: 20),
+              const SizedBox(width: 10),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -2989,7 +2989,7 @@ class _SubjectListTile extends StatelessWidget {
                       subject.getName(languageCode),
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 16,
+                        fontSize: 15,
                       ),
                     ),
                     const SizedBox(height: 2),
@@ -2999,7 +2999,7 @@ class _SubjectListTile extends StatelessWidget {
                           '$cardCount ${context.plural('card', cardCount)}',
                           style: TextStyle(
                             color: Colors.grey[600],
-                            fontSize: 13,
+                            fontSize: 12,
                           ),
                         ),
                         if (!isOwner && subject.ownerName != null) ...[
@@ -3022,11 +3022,11 @@ class _SubjectListTile extends StatelessWidget {
                             Flexible(
                               child: Text(
                                 subject.ownerName!,
-                                style: TextStyle(
-                                  color: Colors.grey[600],
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w500,
-                                ),
+                            style: TextStyle(
+                              color: Colors.grey[600],
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                            ),
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
@@ -3094,7 +3094,7 @@ class _CollectionListTile extends StatelessWidget {
         collection.ownerId == getIt<AuthService>().currentUser?.serverId;
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.only(bottom: 8),
       child: InkWell(
         onTap: () async {
           final cards = await CardService().getCollectionCards(
@@ -3117,7 +3117,7 @@ class _CollectionListTile extends StatelessWidget {
         },
         borderRadius: BorderRadius.circular(16),
         child: Container(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
             color: Theme.of(context).cardColor,
             borderRadius: BorderRadius.circular(16),
@@ -3128,8 +3128,8 @@ class _CollectionListTile extends StatelessWidget {
           ),
           child: Row(
             children: [
-              Icon(Icons.auto_awesome_motion, color: pillarColor, size: 22),
-              const SizedBox(width: 12),
+              Icon(Icons.auto_awesome_motion, color: pillarColor, size: 20),
+              const SizedBox(width: 10),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -3138,7 +3138,7 @@ class _CollectionListTile extends StatelessWidget {
                       collection.getName(languageCode),
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 16,
+                        fontSize: 15,
                       ),
                     ),
                     const SizedBox(height: 2),
@@ -3148,7 +3148,7 @@ class _CollectionListTile extends StatelessWidget {
                           '${collection.subjectIds.length} ${context.plural('subject', collection.subjectIds.length)}',
                           style: TextStyle(
                             color: Colors.grey[600],
-                            fontSize: 13,
+                            fontSize: 12,
                           ),
                         ),
                         if (!isOwner && collection.ownerName != null) ...[
@@ -3171,11 +3171,11 @@ class _CollectionListTile extends StatelessWidget {
                             Flexible(
                               child: Text(
                                 collection.ownerName!,
-                                style: TextStyle(
-                                  color: Colors.grey[600],
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w500,
-                                ),
+                            style: TextStyle(
+                              color: Colors.grey[600],
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                            ),
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
@@ -3244,7 +3244,7 @@ class _PillarGridTile extends StatelessWidget {
       opacity: isEmpty ? 0.5 : 1.0,
       child: Card(
         clipBehavior: Clip.antiAlias,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
         elevation: isEmpty ? 1 : 4,
         child: InkWell(
           onTap: onTap,
@@ -3259,16 +3259,16 @@ class _PillarGridTile extends StatelessWidget {
             child: Stack(
               children: [
                 Positioned(
-                  right: -20,
-                  bottom: -20,
+                  right: -16,
+                  bottom: -16,
                   child: Icon(
                     pillar.getIconData(),
-                    size: 120,
+                    size: 88,
                     color: Colors.white.withValues(alpha: 0.15),
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(12),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -3278,15 +3278,15 @@ class _PillarGridTile extends StatelessWidget {
                           Icon(
                             pillar.getIconData(),
                             color: Colors.white,
-                            size: 28,
+                            size: 22,
                           ),
-                          const SizedBox(width: 12),
+                          const SizedBox(width: 8),
                           Expanded(
                             child: Text(
                               pillar.getTranslatedName(languageCode),
                               style: const TextStyle(
                                 color: Colors.white,
-                                fontSize: 22,
+                                fontSize: 18,
                                 fontWeight: FontWeight.bold,
                                 height: 1.1,
                               ),
@@ -3294,12 +3294,12 @@ class _PillarGridTile extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 12),
+                      const SizedBox(height: 8),
                       Text(
                         pillar.getTranslatedDescription(languageCode),
                         style: TextStyle(
                           color: Colors.white.withValues(alpha: 0.8),
-                          fontSize: 14,
+                          fontSize: 12,
                           fontWeight: FontWeight.w500,
                         ),
                         maxLines: 2,
@@ -3312,7 +3312,7 @@ class _PillarGridTile extends StatelessWidget {
                             : '$subjectCount / $totalSubjectCount ${context.plural('subject', totalSubjectCount)}',
                         style: TextStyle(
                           color: Colors.white.withValues(alpha: 0.9),
-                          fontSize: 14,
+                          fontSize: 12,
                           fontWeight:
                               subjectCount > 0
                                   ? FontWeight.bold

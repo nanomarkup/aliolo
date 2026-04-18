@@ -194,12 +194,12 @@ class _UsersPageState extends State<UsersPage> {
 
   Widget _buildInfoRow(String label, String value) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
+      padding: const EdgeInsets.symmetric(vertical: 2),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            width: 130,
+            width: 120,
             child: Text(
               label,
               style: const TextStyle(fontWeight: FontWeight.w600),
@@ -212,67 +212,58 @@ class _UsersPageState extends State<UsersPage> {
   }
 
   Widget _buildHeaderControls(BuildContext context) {
-    return Card(
-      elevation: 0,
-      margin: EdgeInsets.zero,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              '${_filteredUsers.length} / ${_users.length}',
-              style: TextStyle(
-                color: Theme.of(context).textTheme.bodySmall?.color,
-                fontWeight: FontWeight.w600,
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 6),
+      child: Row(
+        children: [
+          Text(
+            '${_filteredUsers.length} / ${_users.length}',
+            style: TextStyle(
+              color: Theme.of(context).textTheme.bodySmall?.color,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          const SizedBox(width: 12),
+          SizedBox(
+            width: 190,
+            child: _buildCompactDropdown(
+              value: _filter.name,
+              items: {
+                for (final filter in AdminUsersFilter.values)
+                  filter.name: _filterLabel(filter),
+              },
+              onChanged: (value) {
+                setState(() {
+                  _filter = AdminUsersFilter.values.firstWhere(
+                    (filter) => filter.name == value,
+                    orElse: () => AdminUsersFilter.all,
+                  );
+                });
+              },
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: TextField(
+              controller: _searchController,
+              decoration: InputDecoration(
+                labelText: context.t('search_users'),
+                hintText: context.t('search_users'),
+                border: const OutlineInputBorder(),
+                prefixIcon: const Icon(Icons.search),
+                suffixIcon: _searchController.text.isEmpty
+                    ? null
+                    : IconButton(
+                        tooltip: context.t('clear'),
+                        icon: const Icon(Icons.clear),
+                        onPressed: () {
+                          _searchController.clear();
+                        },
+                      ),
+                ),
               ),
-            ),
-            const SizedBox(height: 8),
-            Row(
-              children: [
-                SizedBox(
-                  width: 190,
-                  child: _buildCompactDropdown(
-                    value: _filter.name,
-                    items: {
-                      for (final filter in AdminUsersFilter.values)
-                        filter.name: _filterLabel(filter),
-                    },
-                    onChanged: (value) {
-                      setState(() {
-                        _filter = AdminUsersFilter.values.firstWhere(
-                          (filter) => filter.name == value,
-                          orElse: () => AdminUsersFilter.all,
-                        );
-                      });
-                    },
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: TextField(
-                    controller: _searchController,
-                    decoration: InputDecoration(
-                      labelText: context.t('search_users'),
-                      hintText: context.t('search_users'),
-                      border: const OutlineInputBorder(),
-                      prefixIcon: const Icon(Icons.search),
-                      suffixIcon: _searchController.text.isEmpty
-                          ? null
-                          : IconButton(
-                              tooltip: context.t('clear'),
-                              icon: const Icon(Icons.clear),
-                              onPressed: () {
-                                _searchController.clear();
-                              },
-                            ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -432,12 +423,14 @@ class _UsersPageState extends State<UsersPage> {
   Widget _buildUserCard(AdminUserModel user, Color currentSessionColor) {
     return Card(
       elevation: 1,
-      margin: const EdgeInsets.only(bottom: 6),
+      margin: const EdgeInsets.only(bottom: 4),
       child: ExpansionTile(
+        minTileHeight: 40,
         dense: true,
         visualDensity: VisualDensity.compact,
-        tilePadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
+        tilePadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
         leading: CircleAvatar(
+          radius: 14,
           backgroundColor: currentSessionColor.withValues(alpha: 0.1),
           child: Icon(Icons.person, color: currentSessionColor),
         ),
@@ -448,7 +441,7 @@ class _UsersPageState extends State<UsersPage> {
                 user.displayName,
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 15,
+                  fontSize: 14,
                 ),
                 overflow: TextOverflow.ellipsis,
               ),
@@ -463,12 +456,12 @@ class _UsersPageState extends State<UsersPage> {
         subtitle: Text(
           user.email,
           style: TextStyle(
-            fontSize: 12,
+            fontSize: 11,
             color: Theme.of(context).textTheme.bodySmall?.color,
           ),
           overflow: TextOverflow.ellipsis,
         ),
-        childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+        childrenPadding: const EdgeInsets.fromLTRB(12, 0, 12, 10),
         children: [
           Align(
             alignment: Alignment.centerLeft,
@@ -480,7 +473,7 @@ class _UsersPageState extends State<UsersPage> {
               ),
             ),
           ),
-          const SizedBox(height: 6),
+          const SizedBox(height: 4),
           _buildInfoRow(
             context.t('username'),
             user.username.isNotEmpty ? user.username : context.t('not_available'),
@@ -493,7 +486,7 @@ class _UsersPageState extends State<UsersPage> {
           _buildInfoRow(context.t('default_language'), user.profile.defaultLanguage),
           _buildInfoRow(context.t('created_at'), _formatDate(user.profile.createdAt)),
           _buildInfoRow(context.t('updated_at'), _formatDate(user.profile.updatedAt)),
-          const SizedBox(height: 10),
+          const SizedBox(height: 8),
           Align(
             alignment: Alignment.centerLeft,
             child: Text(
@@ -504,7 +497,7 @@ class _UsersPageState extends State<UsersPage> {
               ),
             ),
           ),
-          const SizedBox(height: 6),
+          const SizedBox(height: 4),
           _buildInfoRow(context.t('status'), _subscriptionStatusLabel(user)),
           _buildInfoRow(
             context.t('provider'),
