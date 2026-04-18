@@ -159,13 +159,6 @@ router.openapi(updateUserSubscriptionRoute, async (c) => {
         updated_at = CURRENT_TIMESTAMP
     `).bind(generateId(15), userId, body.status, expiryDate).run();
 
-    await c.env.DB.prepare(`
-      UPDATE profiles
-      SET is_premium = CASE WHEN ? = 'active' THEN 1 ELSE 0 END,
-          updated_at = CURRENT_TIMESTAMP
-      WHERE id = ?
-    `).bind(body.status, userId).run();
-
     return c.json({ success: true } as any, 200);
   } catch (e: any) {
     console.error('Admin subscription update failed:', e);
