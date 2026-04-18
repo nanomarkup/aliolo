@@ -65,7 +65,9 @@ class _UsersPageState extends State<UsersPage> {
 
     try {
       final users = await _usersService.getAllUsers();
-      users.sort((a, b) => a.displayName.toLowerCase().compareTo(b.displayName.toLowerCase()));
+      users.sort(
+        (a, b) => a.displayName.toLowerCase().compareTo(b.displayName.toLowerCase()),
+      );
       if (!mounted) return;
       setState(() {
         _users = users;
@@ -80,15 +82,16 @@ class _UsersPageState extends State<UsersPage> {
     }
   }
 
-  List<AdminUserModel> get _filteredUsers =>
-      _users.where((user) {
-        final query = _searchController.text.trim().toLowerCase();
-        final matchesSearch = query.isEmpty
-            || user.displayName.toLowerCase().contains(query)
-            || user.username.toLowerCase().contains(query)
-            || user.email.toLowerCase().contains(query);
-        return user.matchesFilter(_filter) && matchesSearch;
-      }).toList();
+  List<AdminUserModel> get _filteredUsers {
+    final query = _searchController.text.trim().toLowerCase();
+    return _users.where((user) {
+      final matchesSearch = query.isEmpty ||
+          user.displayName.toLowerCase().contains(query) ||
+          user.username.toLowerCase().contains(query) ||
+          user.email.toLowerCase().contains(query);
+      return user.matchesFilter(_filter) && matchesSearch;
+    }).toList();
+  }
 
   String _formatDate(DateTime? date) {
     if (date == null) return context.t('not_available');
@@ -137,57 +140,260 @@ class _UsersPageState extends State<UsersPage> {
     );
   }
 
+  Widget _buildHeaderControls(BuildContext context) {
+    return Card(
+      elevation: 0,
+      margin: EdgeInsets.zero,
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              '${_filteredUsers.length} / ${_users.length}',
+              style: TextStyle(
+                color: Theme.of(context).textTheme.bodySmall?.color,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            const SizedBox(height: 10),
+            Row(
+              children: [
+                SizedBox(
+                  width: 180,
+                  child: DropdownButtonFormField<AdminUsersFilter>(
+                    value: _filter,
+                    isExpanded: true,
+                    decoration: InputDecoration(
+                      labelText: context.t('users_filter'),
+                      border: const OutlineInputBorder(),
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+                    ),
+                    items: AdminUsersFilter.values
+                        .map(
+                          (filter) => DropdownMenuItem<AdminUsersFilter>(
+                            value: filter,
+                            child: Text(_filterLabel(filter)),
+                          ),
+                        )
+                        .toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        _filter = value ?? AdminUsersFilter.all;
+                      });
+                    },
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: TextField(
+                    controller: _searchController,
+                    decoration: InputDecoration(
+                      labelText: context.t('search_users'),
+                      hintText: context.t('search_users'),
+                      border: const OutlineInputBorder(),
+                      prefixIcon: const Icon(Icons.search),
+                      suffixIcon: _searchController.text.isEmpty
+                          ? null
+                          : IconButton(
+                              tooltip: context.t('clear'),
+                              icon: const Icon(Icons.clear),
+                              onPressed: () {
+                                _searchController.clear();
+                              },
+                            ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Future<void> _showEditSubscriptionDialog(AdminUserModel user) async {
+    String status = user.subscription?.status?.toLowerCase() == 'active' ? 'active' : 'inactive';
+    DateTime? expiryDate = user.subscription?.expiryDate;
+
+    final result = await showDialog<_SubscriptionEditResult>(
+      context: context,
+      builder: (dialogContext) {
+        return StatefulBuilder(
+          builder: (context, setDialogState) {
+            final expiryLabel = expiryDate == null
+                ? context.t('not_available')
+                : _formatDate(expiryDate);
+
+            return AlertDialog(
+              title: Text(context.t('edit_subscription')),
+              content: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      user.displayName,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(user.email),
+                    const SizedBox(height: 16),
+                    DropdownButtonFormField<String>(
+                      value: status,
+                      decoration: InputDecoration(
+                        labelText: context.t('status'),
+                        border: const OutlineInputBorder(),
+                      ),
+                      items: [
+                        DropdownMenuItem(
+                          value: 'active',
+                          child: Text(context.t('active')),
+                        ),
+                        DropdownMenuItem(
+                          value: 'inactive',
+                          child: Text(context.t('inactive')),
+                        ),
+                      ],
+                      onChanged: (value) {
+                        if (value == null) return;
+                        setDialogState(() {
+                          status = value;
+                        });
+                      },
+                    ),
+                    const SizedBox(height: 16),
+                    InputDecorator(
+                      decoration: InputDecoration(
+                        labelText: context.t('expiry_date'),
+                        border: const OutlineInputBorder(),
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              expiryLabel,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          TextButton(
+                            onPressed: () async {
+                              final picked = await showDatePicker(
+                                context: context,
+                                initialDate: expiryDate ?? DateTime.now().add(const Duration(days: 365)),
+                                firstDate: DateTime(2000),
+                                lastDate: DateTime(2100),
+                              );
+                              if (picked != null) {
+                                setDialogState(() {
+                                  expiryDate = picked;
+                                });
+                              }
+                            },
+                            child: Text(context.t('pick_date')),
+                          ),
+                          if (expiryDate != null)
+                            IconButton(
+                              tooltip: context.t('clear'),
+                              onPressed: () {
+                                setDialogState(() {
+                                  expiryDate = null;
+                                });
+                              },
+                              icon: const Icon(Icons.clear),
+                            ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    InputDecorator(
+                      decoration: InputDecoration(
+                        labelText: context.t('provider'),
+                        border: const OutlineInputBorder(),
+                      ),
+                      child: const Text('aliolo'),
+                    ),
+                  ],
+                ),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(dialogContext),
+                  child: Text(context.t('cancel')),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    final normalizedExpiry =
+                        status == 'active'
+                            ? (expiryDate ?? DateTime.now().add(const Duration(days: 365)))
+                            : expiryDate;
+                    Navigator.pop(
+                      dialogContext,
+                      _SubscriptionEditResult(status: status, expiryDate: normalizedExpiry),
+                    );
+                  },
+                  child: Text(context.t('save')),
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
+
+    if (result == null) return;
+
+    try {
+      await _usersService.updateSubscription(
+        userId: user.id,
+        status: result.status,
+        expiryDate: result.expiryDate,
+      );
+      await _loadUsers();
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(context.t('subscription_updated'))),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('$e')),
+        );
+      }
+    }
+  }
+
   Widget _buildUserCard(AdminUserModel user, Color currentSessionColor) {
-    final isFake = user.isFake;
-    final isPremium = user.isPremium;
-
-    final badgeColor = isFake
-        ? Colors.orange
-        : isPremium
-            ? Colors.amber
-            : Colors.blueGrey;
-
-    final badgeLabel = isFake
-        ? context.t('fake_only')
-        : isPremium
-            ? context.t('premium_only')
-            : context.t('free_only');
-
     return Card(
       elevation: 1,
-      margin: const EdgeInsets.symmetric(vertical: 8),
+      margin: const EdgeInsets.only(bottom: 8),
       child: ExpansionTile(
         leading: CircleAvatar(
           backgroundColor: currentSessionColor.withValues(alpha: 0.1),
           child: Icon(Icons.person, color: currentSessionColor),
         ),
-        title: Wrap(
-          crossAxisAlignment: WrapCrossAlignment.center,
-          spacing: 8,
-          runSpacing: 4,
+        title: Row(
           children: [
-            Text(
-              user.displayName,
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-              decoration: BoxDecoration(
-                color: badgeColor.withValues(alpha: 0.15),
-                borderRadius: BorderRadius.circular(999),
-              ),
+            Expanded(
               child: Text(
-                badgeLabel,
-                style: TextStyle(
-                  color: badgeColor,
-                  fontSize: 11,
-                  fontWeight: FontWeight.w700,
-                ),
+                user.displayName,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+                overflow: TextOverflow.ellipsis,
               ),
+            ),
+            IconButton(
+              tooltip: context.t('edit_subscription'),
+              onPressed: () => _showEditSubscriptionDialog(user),
+              icon: const Icon(Icons.edit_outlined),
             ),
           ],
         ),
-        subtitle: Text(user.email),
+        subtitle: Text(
+          user.email,
+          overflow: TextOverflow.ellipsis,
+        ),
         childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
         children: [
           Align(
@@ -201,7 +407,10 @@ class _UsersPageState extends State<UsersPage> {
             ),
           ),
           const SizedBox(height: 8),
-          _buildInfoRow(context.t('username'), user.username.isNotEmpty ? user.username : context.t('not_available')),
+          _buildInfoRow(
+            context.t('username'),
+            user.username.isNotEmpty ? user.username : context.t('not_available'),
+          ),
           _buildInfoRow(context.t('email'), user.email),
           _buildInfoRow(context.t('total_xp'), '${user.profile.totalXp}'),
           _buildInfoRow(context.t('current_streak'), '${user.profile.currentStreak}'),
@@ -307,112 +516,69 @@ class _UsersPageState extends State<UsersPage> {
               ),
             ),
           ],
-          body: !_isAdmin
-              ? Center(
-                  child: Text(
-                    context.t('not_available'),
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                )
-              : Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    const SizedBox(height: 24),
-                    DropdownButtonFormField<AdminUsersFilter>(
-                      value: _filter,
-                      decoration: InputDecoration(
-                        labelText: context.t('users_filter'),
-                        border: const OutlineInputBorder(),
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
-                      ),
-                      items: AdminUsersFilter.values
-                          .map(
-                            (filter) => DropdownMenuItem<AdminUsersFilter>(
-                              value: filter,
-                              child: Text(_filterLabel(filter)),
-                            ),
-                          )
-                          .toList(),
-                      onChanged: (value) {
-                        setState(() {
-                          _filter = value ?? AdminUsersFilter.all;
-                        });
-                      },
-                    ),
-                    const SizedBox(height: 12),
-                    TextField(
-                      controller: _searchController,
-                      decoration: InputDecoration(
-                        labelText: context.t('search_users'),
-                        hintText: context.t('search_users'),
-                        border: const OutlineInputBorder(),
-                        prefixIcon: const Icon(Icons.search),
-                        suffixIcon: _searchController.text.isEmpty
-                            ? null
-                            : IconButton(
-                                tooltip: context.t('clear'),
-                                icon: const Icon(Icons.clear),
-                                onPressed: () {
-                                  _searchController.clear();
-                                },
-                              ),
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    Align(
-                      alignment: Alignment.centerLeft,
+          fixedBody: !_isAdmin ? const SizedBox.shrink() : _buildHeaderControls(context),
+          slivers: !_isAdmin
+              ? [
+                  SliverFillRemaining(
+                    child: Center(
                       child: Text(
-                        '${_filteredUsers.length} / ${_users.length}',
-                        style: TextStyle(
-                          color: Theme.of(context).textTheme.bodySmall?.color,
-                          fontWeight: FontWeight.w600,
-                        ),
+                        context.t('not_available'),
+                        style: const TextStyle(fontSize: 16),
                       ),
                     ),
-                    const SizedBox(height: 12),
-                    if (_isLoading)
-                      const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 32),
-                        child: Center(child: CircularProgressIndicator()),
-                      )
-                    else if (_errorMessage != null)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 32),
-                        child: Center(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(_errorMessage!),
-                              const SizedBox(height: 12),
-                              ElevatedButton(
-                                onPressed: _loadUsers,
-                                child: Text(context.t('confirm')),
-                              ),
-                            ],
-                          ),
+                  ),
+                ]
+              : [
+                  const SliverToBoxAdapter(child: SizedBox(height: 4)),
+                  if (_isLoading)
+                    const SliverFillRemaining(
+                      child: Center(child: CircularProgressIndicator()),
+                    )
+                  else if (_errorMessage != null)
+                    SliverFillRemaining(
+                      child: Center(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(_errorMessage!),
+                            const SizedBox(height: 12),
+                            ElevatedButton(
+                              onPressed: _loadUsers,
+                              child: Text(context.t('confirm')),
+                            ),
+                          ],
                         ),
-                      )
-                    else if (_filteredUsers.isEmpty)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 32),
-                        child: Center(child: Text(context.t('no_users_found'))),
-                      )
-                    else
-                      ListView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: _filteredUsers.length,
-                        itemBuilder: (context, index) {
+                      ),
+                    )
+                  else if (_filteredUsers.isEmpty)
+                    SliverFillRemaining(
+                      child: Center(child: Text(context.t('no_users_found'))),
+                    )
+                  else
+                    SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                        (context, index) {
                           return _buildUserCard(
                             _filteredUsers[index],
                             currentSessionColor,
                           );
                         },
+                        childCount: _filteredUsers.length,
                       ),
-                  ],
-                ),
+                    ),
+                ],
         );
       },
     );
   }
+}
+
+class _SubscriptionEditResult {
+  final String status;
+  final DateTime? expiryDate;
+
+  const _SubscriptionEditResult({
+    required this.status,
+    this.expiryDate,
+  });
 }

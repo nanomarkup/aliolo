@@ -8,6 +8,7 @@ describe('Admin Users API', () => {
   const adminSessionId = 'admin-session';
   const premiumSessionId = 'premium-session';
   const normalSessionId = 'normal-session';
+  let premiumUserId = '';
 
   beforeAll(async () => {
     await env.DB.prepare(`
@@ -57,6 +58,7 @@ describe('Admin Users API', () => {
       password: 'password123',
       username: 'PremiumUser',
     });
+    premiumUserId = premium.user.id;
     await env.DB.prepare(`
       INSERT OR REPLACE INTO sessions (id, user_id, expires_at)
       VALUES (?, ?, ?)
@@ -100,5 +102,29 @@ describe('Admin Users API', () => {
     }, env);
 
     expect(res.status).toBe(403);
+  });
+
+  it('should update a user subscription as admin', async () => {
+    const res = await app.request(`/api/admin/users/${premiumUserId}/subscription`, {
+      method: 'PATCH',
+      body: JSON.stringify({
+        status: 'inactive',
+        expiry_date: '2027-01-01T00:00:00Z',
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Session-Id': adminSessionId,
+      },
+    }, env);
+
+    expect(res.status).toBe(200);
+
+    const subscription = await env.DB.prepare(
+      'SELECT status, provider, expiry_date FROM user_subscriptions WHERE user_id = ?'
+    ).bind(premiumUserId).first() as any;
+
+    expect(subscription.status).toBe('inactive');
+    expect(subscription.provider).toBe('aliolo');
+    expect(subscription.expiry_date).toBe('2027-01-01T00:00:00Z');
   });
 });

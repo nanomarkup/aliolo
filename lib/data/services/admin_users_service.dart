@@ -24,4 +24,27 @@ class AdminUsersService {
     }
     return [];
   }
+
+  Future<void> updateSubscription({
+    required String userId,
+    required String status,
+    DateTime? expiryDate,
+  }) async {
+    try {
+      final response = await _cfClient.client.patch(
+        '/api/admin/users/$userId/subscription',
+        data: {
+          'status': status,
+          'expiry_date': expiryDate?.toUtc().toIso8601String(),
+        },
+      );
+
+      if (response.statusCode != 200) {
+        throw Exception('Failed to update subscription');
+      }
+    } catch (e) {
+      AppLogger.log('AdminUsersService: failed to update subscription: $e');
+      rethrow;
+    }
+  }
 }
