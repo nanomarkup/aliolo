@@ -121,6 +121,77 @@ class _UsersPageState extends State<UsersPage> {
     }
   }
 
+  Widget _buildCompactDropdown({
+    required String value,
+    required Map<String, String> items,
+    required ValueChanged<String?> onChanged,
+    bool matchAnchorWidth = true,
+  }) {
+    final validatedValue =
+        items.containsKey(value)
+            ? value
+            : (items.isNotEmpty ? items.keys.first : '');
+    final label = items[validatedValue] ?? '';
+
+    return LayoutBuilder(
+      builder: (context, box) {
+        return PopupMenuButton<String>(
+          constraints:
+              matchAnchorWidth
+                  ? BoxConstraints(
+                    minWidth: box.maxWidth,
+                    maxWidth: box.maxWidth,
+                  )
+                  : null,
+          onSelected: onChanged,
+          position: PopupMenuPosition.under,
+          tooltip: '',
+          color: Theme.of(context).colorScheme.surface,
+          itemBuilder:
+              (context) =>
+                  items.entries
+                      .map(
+                        (e) => PopupMenuItem<String>(
+                          value: e.key,
+                          child: Text(e.value),
+                        ),
+                      )
+                      .toList(),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.surfaceContainerHighest
+                  .withValues(alpha: 0.9),
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(
+                color: Theme.of(context).colorScheme.outlineVariant,
+              ),
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    label,
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                Icon(
+                  Icons.arrow_drop_down,
+                  size: 20,
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   Widget _buildInfoRow(String label, String value) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
@@ -145,7 +216,7 @@ class _UsersPageState extends State<UsersPage> {
       elevation: 0,
       margin: EdgeInsets.zero,
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -156,30 +227,23 @@ class _UsersPageState extends State<UsersPage> {
                 fontWeight: FontWeight.w600,
               ),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 8),
             Row(
               children: [
                 SizedBox(
-                  width: 180,
-                  child: DropdownButtonFormField<AdminUsersFilter>(
-                    value: _filter,
-                    isExpanded: true,
-                    decoration: InputDecoration(
-                      labelText: context.t('users_filter'),
-                      border: const OutlineInputBorder(),
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
-                    ),
-                    items: AdminUsersFilter.values
-                        .map(
-                          (filter) => DropdownMenuItem<AdminUsersFilter>(
-                            value: filter,
-                            child: Text(_filterLabel(filter)),
-                          ),
-                        )
-                        .toList(),
+                  width: 190,
+                  child: _buildCompactDropdown(
+                    value: _filter.name,
+                    items: {
+                      for (final filter in AdminUsersFilter.values)
+                        filter.name: _filterLabel(filter),
+                    },
                     onChanged: (value) {
                       setState(() {
-                        _filter = value ?? AdminUsersFilter.all;
+                        _filter = AdminUsersFilter.values.firstWhere(
+                          (filter) => filter.name == value,
+                          orElse: () => AdminUsersFilter.all,
+                        );
                       });
                     },
                   ),
@@ -368,8 +432,11 @@ class _UsersPageState extends State<UsersPage> {
   Widget _buildUserCard(AdminUserModel user, Color currentSessionColor) {
     return Card(
       elevation: 1,
-      margin: const EdgeInsets.only(bottom: 8),
+      margin: const EdgeInsets.only(bottom: 6),
       child: ExpansionTile(
+        dense: true,
+        visualDensity: VisualDensity.compact,
+        tilePadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
         leading: CircleAvatar(
           backgroundColor: currentSessionColor.withValues(alpha: 0.1),
           child: Icon(Icons.person, color: currentSessionColor),
@@ -379,7 +446,10 @@ class _UsersPageState extends State<UsersPage> {
             Expanded(
               child: Text(
                 user.displayName,
-                style: const TextStyle(fontWeight: FontWeight.bold),
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                ),
                 overflow: TextOverflow.ellipsis,
               ),
             ),
@@ -392,9 +462,13 @@ class _UsersPageState extends State<UsersPage> {
         ),
         subtitle: Text(
           user.email,
+          style: TextStyle(
+            fontSize: 12,
+            color: Theme.of(context).textTheme.bodySmall?.color,
+          ),
           overflow: TextOverflow.ellipsis,
         ),
-        childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+        childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
         children: [
           Align(
             alignment: Alignment.centerLeft,
@@ -406,7 +480,7 @@ class _UsersPageState extends State<UsersPage> {
               ),
             ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 6),
           _buildInfoRow(
             context.t('username'),
             user.username.isNotEmpty ? user.username : context.t('not_available'),
@@ -419,7 +493,7 @@ class _UsersPageState extends State<UsersPage> {
           _buildInfoRow(context.t('default_language'), user.profile.defaultLanguage),
           _buildInfoRow(context.t('created_at'), _formatDate(user.profile.createdAt)),
           _buildInfoRow(context.t('updated_at'), _formatDate(user.profile.updatedAt)),
-          const SizedBox(height: 12),
+          const SizedBox(height: 10),
           Align(
             alignment: Alignment.centerLeft,
             child: Text(
@@ -430,7 +504,7 @@ class _UsersPageState extends State<UsersPage> {
               ),
             ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 6),
           _buildInfoRow(context.t('status'), _subscriptionStatusLabel(user)),
           _buildInfoRow(
             context.t('provider'),

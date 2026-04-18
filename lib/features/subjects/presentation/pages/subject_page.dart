@@ -2810,7 +2810,7 @@ class _FolderListTile extends StatelessWidget {
     return Opacity(
       opacity: isEmpty ? 0.5 : 1.0,
       child: Padding(
-        padding: const EdgeInsets.only(bottom: 16),
+        padding: const EdgeInsets.only(bottom: 12),
         child: InkWell(
           onTap: () async {
             final result = await Navigator.push(
@@ -2836,7 +2836,7 @@ class _FolderListTile extends StatelessWidget {
           },
           borderRadius: BorderRadius.circular(16),
           child: Container(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
               color: Theme.of(context).cardColor,
               borderRadius: BorderRadius.circular(16),
@@ -2847,8 +2847,8 @@ class _FolderListTile extends StatelessWidget {
             ),
             child: Row(
               children: [
-                Icon(Icons.folder, color: pillarColor),
-                const SizedBox(width: 16),
+                Icon(Icons.folder, color: pillarColor, size: 22),
+                const SizedBox(width: 12),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -2857,9 +2857,10 @@ class _FolderListTile extends StatelessWidget {
                         folder.getName(languageCode),
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 18,
+                          fontSize: 16,
                         ),
                       ),
+                      const SizedBox(height: 2),
                       Row(
                         children: [
                           Text(
@@ -2868,7 +2869,7 @@ class _FolderListTile extends StatelessWidget {
                                 : '$matchingCount / $totalCount ${context.plural('subject', totalCount)}',
                             style: TextStyle(
                               color: Colors.grey[600],
-                              fontSize: 14,
+                              fontSize: 13,
                               fontWeight:
                                   matchingCount > 0
                                       ? FontWeight.bold
@@ -2881,7 +2882,7 @@ class _FolderListTile extends StatelessWidget {
                               '•',
                               style: TextStyle(
                                 color: Colors.grey[400],
-                                fontSize: 14,
+                                fontSize: 13,
                               ),
                             ),
                             const SizedBox(width: 8),
@@ -2889,7 +2890,7 @@ class _FolderListTile extends StatelessWidget {
                               Icon(
                                 Icons.verified,
                                 color: Colors.grey[600],
-                                size: 16,
+                                size: 15,
                               )
                             else
                               Flexible(
@@ -2897,7 +2898,7 @@ class _FolderListTile extends StatelessWidget {
                                   folder.ownerName!,
                                   style: TextStyle(
                                     color: Colors.grey[600],
-                                    fontSize: 14,
+                                    fontSize: 13,
                                     fontWeight: FontWeight.w500,
                                   ),
                                   overflow: TextOverflow.ellipsis,
@@ -2946,7 +2947,7 @@ class _SubjectListTile extends StatelessWidget {
         subject.ownerId == getIt<AuthService>().currentUser?.serverId;
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: 16),
+      padding: const EdgeInsets.only(bottom: 12),
       child: InkWell(
         onTap: () async {
           final cards = await CardService().getCardsBySubject(subject.id);
@@ -2967,7 +2968,7 @@ class _SubjectListTile extends StatelessWidget {
         },
         borderRadius: BorderRadius.circular(16),
         child: Container(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
             color: Theme.of(context).cardColor,
             borderRadius: BorderRadius.circular(16),
@@ -2978,8 +2979,8 @@ class _SubjectListTile extends StatelessWidget {
           ),
           child: Row(
             children: [
-              Icon(pillar.getIconData(), color: pillarColor),
-              const SizedBox(width: 16),
+              Icon(pillar.getIconData(), color: pillarColor, size: 22),
+              const SizedBox(width: 12),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -2988,16 +2989,17 @@ class _SubjectListTile extends StatelessWidget {
                       subject.getName(languageCode),
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 18,
+                        fontSize: 16,
                       ),
                     ),
+                    const SizedBox(height: 2),
                     Row(
                       children: [
                         Text(
                           '$cardCount ${context.plural('card', cardCount)}',
                           style: TextStyle(
                             color: Colors.grey[600],
-                            fontSize: 14,
+                            fontSize: 13,
                           ),
                         ),
                         if (!isOwner && subject.ownerName != null) ...[
@@ -3006,7 +3008,7 @@ class _SubjectListTile extends StatelessWidget {
                             '•',
                             style: TextStyle(
                               color: Colors.grey[400],
-                              fontSize: 14,
+                              fontSize: 13,
                             ),
                           ),
                           const SizedBox(width: 8),
@@ -3014,7 +3016,7 @@ class _SubjectListTile extends StatelessWidget {
                             Icon(
                               Icons.verified,
                               color: Colors.grey[600],
-                              size: 16,
+                              size: 15,
                             )
                           else
                             Flexible(
@@ -3022,7 +3024,7 @@ class _SubjectListTile extends StatelessWidget {
                                 subject.ownerName!,
                                 style: TextStyle(
                                   color: Colors.grey[600],
-                                  fontSize: 14,
+                                  fontSize: 13,
                                   fontWeight: FontWeight.w500,
                                 ),
                                 overflow: TextOverflow.ellipsis,
@@ -3092,7 +3094,7 @@ class _CollectionListTile extends StatelessWidget {
         collection.ownerId == getIt<AuthService>().currentUser?.serverId;
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: 16),
+      padding: const EdgeInsets.only(bottom: 12),
       child: InkWell(
         onTap: () async {
           final cards = await CardService().getCollectionCards(
@@ -3115,7 +3117,7 @@ class _CollectionListTile extends StatelessWidget {
         },
         borderRadius: BorderRadius.circular(16),
         child: Container(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
             color: Theme.of(context).cardColor,
             borderRadius: BorderRadius.circular(16),
@@ -3126,8 +3128,8 @@ class _CollectionListTile extends StatelessWidget {
           ),
           child: Row(
             children: [
-              Icon(Icons.auto_awesome_motion, color: pillarColor),
-              const SizedBox(width: 16),
+              Icon(Icons.auto_awesome_motion, color: pillarColor, size: 22),
+              const SizedBox(width: 12),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -3136,16 +3138,17 @@ class _CollectionListTile extends StatelessWidget {
                       collection.getName(languageCode),
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 18,
+                        fontSize: 16,
                       ),
                     ),
+                    const SizedBox(height: 2),
                     Row(
                       children: [
                         Text(
                           '${collection.subjectIds.length} ${context.plural('subject', collection.subjectIds.length)}',
                           style: TextStyle(
                             color: Colors.grey[600],
-                            fontSize: 14,
+                            fontSize: 13,
                           ),
                         ),
                         if (!isOwner && collection.ownerName != null) ...[
@@ -3154,7 +3157,7 @@ class _CollectionListTile extends StatelessWidget {
                             '•',
                             style: TextStyle(
                               color: Colors.grey[400],
-                              fontSize: 14,
+                              fontSize: 13,
                             ),
                           ),
                           const SizedBox(width: 8),
@@ -3162,7 +3165,7 @@ class _CollectionListTile extends StatelessWidget {
                             Icon(
                               Icons.verified,
                               color: Colors.grey[600],
-                              size: 16,
+                              size: 15,
                             )
                           else
                             Flexible(
@@ -3170,7 +3173,7 @@ class _CollectionListTile extends StatelessWidget {
                                 collection.ownerName!,
                                 style: TextStyle(
                                   color: Colors.grey[600],
-                                  fontSize: 14,
+                                  fontSize: 13,
                                   fontWeight: FontWeight.w500,
                                 ),
                                 overflow: TextOverflow.ellipsis,
