@@ -2,8 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:aliolo/core/di/service_locator.dart';
-import 'package:aliolo/core/widgets/floating_app_bar.dart';
-import 'package:aliolo/core/widgets/resize_wrapper.dart';
+import 'package:aliolo/core/widgets/aliolo_scrollable_page.dart';
 import 'package:aliolo/data/models/admin_user_model.dart';
 import 'package:aliolo/data/services/admin_users_service.dart';
 import 'package:aliolo/data/services/auth_service.dart';
@@ -26,6 +25,7 @@ class _UsersPageState extends State<UsersPage> {
 
   final _authService = getIt<AuthService>();
   final _usersService = getIt<AdminUsersService>();
+  final _searchController = TextEditingController();
 
   List<AdminUserModel> _users = [];
   bool _isLoading = true;
@@ -40,7 +40,21 @@ class _UsersPageState extends State<UsersPage> {
     if (!kIsWeb) {
       windowManager.setResizable(true);
     }
+    _searchController.addListener(_onSearchChanged);
     _loadUsers();
+  }
+
+  @override
+  void dispose() {
+    _searchController.removeListener(_onSearchChanged);
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  void _onSearchChanged() {
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   Future<void> _loadUsers() async {
@@ -67,7 +81,14 @@ class _UsersPageState extends State<UsersPage> {
   }
 
   List<AdminUserModel> get _filteredUsers =>
-      _users.where((user) => user.matchesFilter(_filter)).toList();
+      _users.where((user) {
+        final query = _searchController.text.trim().toLowerCase();
+        final matchesSearch = query.isEmpty
+            || user.displayName.toLowerCase().contains(query)
+            || user.username.toLowerCase().contains(query)
+            || user.email.toLowerCase().contains(query);
+        return user.matchesFilter(_filter) && matchesSearch;
+      }).toList();
 
   String _formatDate(DateTime? date) {
     if (date == null) return context.t('not_available');
@@ -84,15 +105,17 @@ class _UsersPageState extends State<UsersPage> {
     return subscription.status ?? context.t('not_available');
   }
 
-  Widget _buildFilterChip(AdminUsersFilter filter, String label) {
-    final isSelected = _filter == filter;
-    return ChoiceChip(
-      selected: isSelected,
-      label: Text(label),
-      onSelected: (_) {
-        setState(() => _filter = filter);
-      },
-    );
+  String _filterLabel(AdminUsersFilter filter) {
+    switch (filter) {
+      case AdminUsersFilter.all:
+        return context.t('filter_all');
+      case AdminUsersFilter.premium:
+        return context.t('premium_only');
+      case AdminUsersFilter.fake:
+        return context.t('fake_only');
+      case AdminUsersFilter.free:
+        return context.t('free_only');
+    }
   }
 
   Widget _buildInfoRow(String label, String value) {
@@ -236,131 +259,158 @@ class _UsersPageState extends State<UsersPage> {
   @override
   Widget build(BuildContext context) {
     const appBarColor = Colors.white;
-    const Color currentSessionColor = ThemeService.mainColor;
+    final currentSessionColor = ThemeService().primaryColor;
 
     return ListenableBuilder(
       listenable: TranslationService(),
       builder: (context, _) {
-        final isSmallScreen = MediaQuery.of(context).size.width < 600;
-
-        final homeAction = IconButton(
-          tooltip: context.t('home'),
-          icon: const Icon(Icons.school),
-          onPressed: () => Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (context) => const SubjectPage()),
-            (route) => false,
+        return AlioloScrollablePage(
+          title: Text(
+            context.t('users'),
+            style: const TextStyle(color: appBarColor),
           ),
-        );
-        final leaderboardAction = IconButton(
-          tooltip: context.t('leaderboard'),
-          icon: const Icon(Icons.emoji_events),
-          onPressed: () => Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const LeaderboardPage()),
-          ),
-        );
-        final profileAction = IconButton(
-          tooltip: context.t('profile'),
-          icon: const Icon(Icons.person),
-          onPressed: () => Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const ProfilePage()),
-          ),
-        );
-        final settingsAction = IconButton(
-          tooltip: context.t('settings'),
-          icon: const Icon(Icons.settings),
-          onPressed: () => Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const SettingsPage()),
-          ),
-        );
-
-        return ResizeWrapper(
-          child: Scaffold(
-            extendBodyBehindAppBar: true,
-            appBar: AlioloAppBar(
-              title: Text(context.t('users'), style: const TextStyle(color: appBarColor)),
-              backgroundColor: currentSessionColor,
-              foregroundColor: appBarColor,
-              actions: isSmallScreen
-                  ? [homeAction, profileAction]
-                  : [homeAction, leaderboardAction, profileAction, settingsAction],
-              overflowActions: isSmallScreen ? [leaderboardAction, settingsAction] : null,
+          appBarColor: currentSessionColor,
+          actions: [
+            IconButton(
+              tooltip: context.t('profile'),
+              icon: const Icon(Icons.person, color: appBarColor),
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const ProfilePage()),
+              ),
             ),
-            body: _isLoading
-                ? const Center(child: CircularProgressIndicator())
-                : !_isAdmin
-                    ? Center(
-                        child: Text(
-                          context.t('not_available'),
-                          style: const TextStyle(fontSize: 16),
-                        ),
-                      )
-                    : Center(
-                        child: ConstrainedBox(
-                          constraints: const BoxConstraints(maxWidth: 980),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16),
-                            child: Column(
-                              children: [
-                                const SizedBox(height: 24),
-                                Wrap(
-                                  spacing: 8,
-                                  runSpacing: 8,
-                                  children: [
-                                    _buildFilterChip(AdminUsersFilter.all, context.t('filter_all')),
-                                    _buildFilterChip(AdminUsersFilter.premium, context.t('premium_only')),
-                                    _buildFilterChip(AdminUsersFilter.fake, context.t('fake_only')),
-                                    _buildFilterChip(AdminUsersFilter.free, context.t('free_only')),
-                                  ],
-                                ),
-                                const SizedBox(height: 12),
-                                Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    '${_filteredUsers.length} / ${_users.length}',
-                                    style: TextStyle(
-                                      color: Theme.of(context).textTheme.bodySmall?.color,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(height: 12),
-                                Expanded(
-                                  child: _errorMessage != null
-                                      ? Center(
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              Text(_errorMessage!),
-                                              const SizedBox(height: 12),
-                                              ElevatedButton(
-                                                onPressed: _loadUsers,
-                                                child: Text(context.t('confirm')),
-                                              ),
-                                            ],
-                                          ),
-                                        )
-                                      : _filteredUsers.isEmpty
-                                          ? Center(child: Text(context.t('no_users_found')))
-                                          : ListView.builder(
-                                              itemCount: _filteredUsers.length,
-                                              itemBuilder: (context, index) {
-                                                return _buildUserCard(
-                                                  _filteredUsers[index],
-                                                  currentSessionColor,
-                                                );
-                                              },
-                                            ),
-                                ),
-                              ],
+            IconButton(
+              tooltip: context.t('settings'),
+              icon: const Icon(Icons.settings, color: appBarColor),
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const SettingsPage()),
+              ),
+            ),
+          ],
+          overflowActions: [
+            IconButton(
+              tooltip: context.t('home'),
+              icon: const Icon(Icons.school, color: appBarColor),
+              onPressed: () => Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => const SubjectPage()),
+                (route) => false,
+              ),
+            ),
+            IconButton(
+              tooltip: context.t('leaderboard'),
+              icon: const Icon(Icons.emoji_events, color: appBarColor),
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const LeaderboardPage()),
+              ),
+            ),
+          ],
+          body: !_isAdmin
+              ? Center(
+                  child: Text(
+                    context.t('not_available'),
+                    style: const TextStyle(fontSize: 16),
+                  ),
+                )
+              : Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const SizedBox(height: 24),
+                    DropdownButtonFormField<AdminUsersFilter>(
+                      value: _filter,
+                      decoration: InputDecoration(
+                        labelText: context.t('users_filter'),
+                        border: const OutlineInputBorder(),
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+                      ),
+                      items: AdminUsersFilter.values
+                          .map(
+                            (filter) => DropdownMenuItem<AdminUsersFilter>(
+                              value: filter,
+                              child: Text(_filterLabel(filter)),
                             ),
-                          ),
+                          )
+                          .toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          _filter = value ?? AdminUsersFilter.all;
+                        });
+                      },
+                    ),
+                    const SizedBox(height: 12),
+                    TextField(
+                      controller: _searchController,
+                      decoration: InputDecoration(
+                        labelText: context.t('search_users'),
+                        hintText: context.t('search_users'),
+                        border: const OutlineInputBorder(),
+                        prefixIcon: const Icon(Icons.search),
+                        suffixIcon: _searchController.text.isEmpty
+                            ? null
+                            : IconButton(
+                                tooltip: context.t('clear'),
+                                icon: const Icon(Icons.clear),
+                                onPressed: () {
+                                  _searchController.clear();
+                                },
+                              ),
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        '${_filteredUsers.length} / ${_users.length}',
+                        style: TextStyle(
+                          color: Theme.of(context).textTheme.bodySmall?.color,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
-          ),
+                    ),
+                    const SizedBox(height: 12),
+                    if (_isLoading)
+                      const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 32),
+                        child: Center(child: CircularProgressIndicator()),
+                      )
+                    else if (_errorMessage != null)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 32),
+                        child: Center(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(_errorMessage!),
+                              const SizedBox(height: 12),
+                              ElevatedButton(
+                                onPressed: _loadUsers,
+                                child: Text(context.t('confirm')),
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
+                    else if (_filteredUsers.isEmpty)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 32),
+                        child: Center(child: Text(context.t('no_users_found'))),
+                      )
+                    else
+                      ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: _filteredUsers.length,
+                        itemBuilder: (context, index) {
+                          return _buildUserCard(
+                            _filteredUsers[index],
+                            currentSessionColor,
+                          );
+                        },
+                      ),
+                  ],
+                ),
         );
       },
     );

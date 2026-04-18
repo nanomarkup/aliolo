@@ -1,5 +1,8 @@
 INSERT INTO ui_translations (key, lang, value, updated_at) VALUES
   ('users', 'en', 'Users', CURRENT_TIMESTAMP),
+  ('users_filter', 'en', 'Filter users', CURRENT_TIMESTAMP),
+  ('search_users', 'en', 'Search users', CURRENT_TIMESTAMP),
+  ('clear', 'en', 'Clear', CURRENT_TIMESTAMP),
   ('premium_only', 'en', 'Premium only', CURRENT_TIMESTAMP),
   ('fake_only', 'en', 'Fake only', CURRENT_TIMESTAMP),
   ('free_only', 'en', 'Free users', CURRENT_TIMESTAMP),
