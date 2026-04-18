@@ -126,7 +126,8 @@ router.openapi(updateUserSubscriptionRoute, async (c) => {
 
   try {
     const { userId } = c.req.valid('param');
-    const body = c.req.valid('json');
+    const rawBody = await c.req.json().catch(() => ({}));
+    const body = subscriptionUpdateSchema.parse(rawBody);
 
     const profile = await c.env.DB.prepare(
       'SELECT id FROM profiles WHERE id = ?'
@@ -167,6 +168,7 @@ router.openapi(updateUserSubscriptionRoute, async (c) => {
 
     return c.json({ success: true } as any, 200);
   } catch (e: any) {
+    console.error('Admin subscription update failed:', e);
     return c.json({ error: e.message } as any, 500);
   }
 });
