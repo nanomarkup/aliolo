@@ -429,15 +429,26 @@ class _TestPageState extends State<TestPage> {
         _isReverseMode
             ? _correctAnswerText
             : _currentCard.getPrompt(lang).trim();
+    final headerAudioUrl = _isReverseMode
+        ? _currentCard.getAudioUrl(lang)
+        : null;
+    final primaryTextColor =
+        _isReverseMode && _isAnswered
+            ? (_isCorrect ? Colors.green : Colors.red)
+            : Theme.of(
+              context,
+            ).textTheme.bodyLarge?.color?.withValues(alpha: 0.7);
+    final primaryTextFontSize =
+        _isReverseMode ? (_isAnswered ? 32.0 : 32.0) : 20.0;
+    final primaryTextFontWeight =
+        _isReverseMode && _isAnswered
+            ? FontWeight.bold
+            : FontWeight.w500;
 
     final secondaryWidget =
         _isAnswered
             ? (_isReverseMode
-                ? Icon(
-                  _isCorrect ? Icons.check_circle : Icons.cancel,
-                  color: _isCorrect ? Colors.green : Colors.red,
-                  size: 32,
-                )
+                ? const SizedBox.shrink()
                 : Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children:
@@ -459,14 +470,34 @@ class _TestPageState extends State<TestPage> {
                           )
                           .toList(),
                 ))
-            : Text(
-              _isReverseMode ? 'Select the matching card' : '???',
-              style: TextStyle(
-                fontSize: _isReverseMode ? 20 : 32,
-                color: headerColor.withValues(alpha: 0.3),
-                fontWeight: FontWeight.bold,
+            : (_isReverseMode
+                ? const SizedBox.shrink()
+                : Text(
+                  '???',
+                  style: TextStyle(
+                    fontSize: 32,
+                    color: headerColor.withValues(alpha: 0.3),
+                    fontWeight: FontWeight.bold,
+                  ),
+                ));
+    final audioWidget =
+        (headerAudioUrl?.isNotEmpty ?? false)
+            ? IconButton(
+              icon: Icon(
+                Icons.volume_up,
+                color: headerColor,
+                size: 24,
               ),
-            );
+              tooltip: context.t('play_audio'),
+              onPressed: () async {
+                final url = headerAudioUrl;
+                if (url != null && url.isNotEmpty) {
+                  await player.open(Media(url));
+                  player.play();
+                }
+              },
+            )
+            : const SizedBox.shrink();
 
     return Container(
       width: double.infinity,
@@ -481,76 +512,15 @@ class _TestPageState extends State<TestPage> {
           Text(
             primaryText.isNotEmpty ? primaryText : ' ',
             style: TextStyle(
-              fontSize: _isReverseMode ? 24 : 20,
-              color: Theme.of(
-                context,
-              ).textTheme.bodyLarge?.color?.withValues(alpha: 0.7),
-              fontWeight: FontWeight.w500,
+              fontSize: primaryTextFontSize,
+              color: primaryTextColor,
+              fontWeight: primaryTextFontWeight,
             ),
           ),
+          audioWidget,
           const SizedBox(width: 12),
           secondaryWidget,
         ],
-      ),
-    );
-  }
-
-  Widget _buildReverseMediaContent({
-    required BuildContext context,
-    required bool isMobile,
-    required Color headerColor,
-  }) {
-    return Center(
-      child: Padding(
-        padding: EdgeInsets.all(isMobile ? 16 : 32),
-        child: Card(
-          elevation: 4,
-          clipBehavior: Clip.antiAlias,
-          color: Theme.of(context).cardColor,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(24),
-            side: BorderSide(
-              color: headerColor.withValues(alpha: 0.1),
-              width: 1,
-            ),
-          ),
-          child: Container(
-            width: double.infinity,
-            constraints: BoxConstraints(
-              minHeight: isMobile ? 300 : 380,
-            ),
-            color: headerColor.withValues(alpha: 0.05),
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.all(24),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      context.t('select_an_answer'),
-                      style: TextStyle(
-                        fontSize: isMobile ? 14 : 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.grey[600],
-                        letterSpacing: 1.1,
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    Text(
-                      _correctAnswerText,
-                      style: TextStyle(
-                        fontSize: isMobile ? 56 : 80,
-                        fontWeight: FontWeight.w800,
-                        color: Colors.black87,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
       ),
     );
   }
@@ -811,27 +781,6 @@ class _TestPageState extends State<TestPage> {
                   icon: const Icon(Icons.arrow_back),
                   onPressed: () => Navigator.pop(context),
                 ),
-                if (!_currentCard.isSpecialRenderer &&
-                    _currentCard.getAudioUrl(lang) != null)
-                  IconButton(
-                    icon: Icon(
-                      Icons.volume_up,
-                      color:
-                          _currentCard.getAudioUrl(lang) != null
-                              ? Colors.white
-                              : Colors.white.withValues(alpha: 0.3),
-                    ),
-                    onPressed:
-                        _currentCard.getAudioUrl(lang) != null
-                            ? () async {
-                              final url = _currentCard.getAudioUrl(lang);
-                              if (url != null) {
-                                await player.open(Media(url));
-                                player.play();
-                              }
-                        }
-                            : null,
-                  ),
                 IconButton(
                   icon: Stack(
                     clipBehavior: Clip.none,
@@ -916,22 +865,23 @@ class _TestPageState extends State<TestPage> {
                   child: LayoutBuilder(
                     builder: (context, constraints) {
                       final isMobile = constraints.maxWidth < 800;
-                      final mediaContent =
-                          _isReverseMode
-                              ? _buildReverseMediaContent(
-                                context: context,
-                                isMobile: isMobile,
-                                headerColor: headerColor,
-                              )
-                              : _buildForwardMediaContent(
+                      final mediaContent = _buildForwardMediaContent(
                                 context: context,
                                 isMobile: isMobile,
                                 headerColor: headerColor,
                                 lang: lang,
                               );
 
+                      final optionsTitle =
+                          _isReverseMode
+                              ? 'Select the matching card'
+                              : context.t('select_an_answer');
+
                       final optionsContent = Container(
-                        width: isMobile ? double.infinity : 350,
+                        width:
+                            _isReverseMode || isMobile
+                                ? double.infinity
+                                : 350,
                         padding: EdgeInsets.all(isMobile ? 24 : 32),
                         decoration: BoxDecoration(
                           color: Theme.of(context).colorScheme.surface,
@@ -947,11 +897,10 @@ class _TestPageState extends State<TestPage> {
                                   : null,
                         ),
                         child: Column(
-                          mainAxisSize:
-                              isMobile ? MainAxisSize.min : MainAxisSize.max,
+                          mainAxisSize: MainAxisSize.max,
                           children: [
                             Text(
-                              context.t('select_an_answer'),
+                              optionsTitle,
                               style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
@@ -967,6 +916,29 @@ class _TestPageState extends State<TestPage> {
                                   child: CircularProgressIndicator(),
                                 ),
                               )
+                            else if (_isReverseMode)
+                              Expanded(
+                                child: GridView.builder(
+                                  shrinkWrap: true,
+                                  physics: const BouncingScrollPhysics(),
+                                  gridDelegate:
+                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount:
+                                            isMobile ? 2 : 2,
+                                        crossAxisSpacing: 12,
+                                        mainAxisSpacing: 12,
+                                        childAspectRatio: 1.0,
+                                      ),
+                                  itemCount: _options.length,
+                                  itemBuilder:
+                                      (context, index) =>
+                                          _buildOptionButton(
+                                            index,
+                                            headerColor,
+                                            isMobile,
+                                          ),
+                                ),
+                              )
                             else if (isMobile)
                               GridView.builder(
                                 shrinkWrap: true,
@@ -976,8 +948,7 @@ class _TestPageState extends State<TestPage> {
                                       crossAxisCount: 2,
                                       crossAxisSpacing: 12,
                                       mainAxisSpacing: 12,
-                                      childAspectRatio:
-                                          _isReverseMode ? 1.0 : 2.5,
+                                      childAspectRatio: 2.5,
                                     ),
                                 itemCount: _options.length,
                                 itemBuilder:
@@ -990,50 +961,33 @@ class _TestPageState extends State<TestPage> {
                             else
                               Expanded(
                                 child: Center(
-                                  child:
-                                      _isReverseMode
-                                          ? GridView.builder(
-                                            shrinkWrap: true,
-                                            physics:
-                                                const BouncingScrollPhysics(),
-                                            gridDelegate:
-                                                const SliverGridDelegateWithFixedCrossAxisCount(
-                                                  crossAxisCount: 2,
-                                                  crossAxisSpacing: 12,
-                                                  mainAxisSpacing: 12,
-                                                  childAspectRatio: 1.0,
-                                                ),
-                                            itemCount: _options.length,
-                                            itemBuilder:
-                                                (context, index) =>
-                                                    _buildOptionButton(
-                                                      index,
-                                                      headerColor,
-                                                      isMobile,
-                                                    ),
-                                          )
-                                          : ListView.separated(
-                                            shrinkWrap: true,
-                                            physics:
-                                                const BouncingScrollPhysics(),
-                                            itemCount: _options.length,
-                                            separatorBuilder:
-                                                (_, __) => const SizedBox(
-                                                  height: 12,
-                                                ),
-                                            itemBuilder:
-                                                (context, index) =>
-                                                    _buildOptionButton(
-                                                      index,
-                                                      headerColor,
-                                                      isMobile,
-                                                    ),
-                                          ),
+                                  child: ListView.separated(
+                                    shrinkWrap: true,
+                                    physics: const BouncingScrollPhysics(),
+                                    itemCount: _options.length,
+                                    separatorBuilder:
+                                        (_, __) => const SizedBox(
+                                          height: 12,
+                                        ),
+                                    itemBuilder:
+                                        (context, index) => _buildOptionButton(
+                                          index,
+                                          headerColor,
+                                          isMobile,
+                                        ),
+                                  ),
                                 ),
                               ),
                           ],
                         ),
                       );
+
+                      if (_isReverseMode) {
+                        return Padding(
+                          padding: EdgeInsets.all(isMobile ? 16 : 32),
+                          child: optionsContent,
+                        );
+                      }
 
                       if (isMobile) {
                         return SingleChildScrollView(
@@ -1099,16 +1053,13 @@ class _TestPageState extends State<TestPage> {
           child: Stack(
             children: [
               Positioned.fill(
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 18),
-                  child: CardRenderer(
-                    card: opt.card!,
-                    subject: _subject,
-                    languageCode: _languageCode,
-                    fallbackColor: headerColor,
-                    fit: BoxFit.contain,
-                    textFontSize: isMobile ? 24 : 32,
-                  ),
+                child: CardRenderer(
+                  card: opt.card!,
+                  subject: _subject,
+                  languageCode: _languageCode,
+                  fallbackColor: headerColor,
+                  fit: BoxFit.contain,
+                  textFontSize: isMobile ? 24 : 32,
                 ),
               ),
               Positioned(

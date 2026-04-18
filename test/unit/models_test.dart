@@ -206,6 +206,18 @@ void main() {
       expect(model.testMode, 'random');
       expect(model.toJson()['test_mode'], 'random');
     });
+
+    test('UserModel parses and serializes learn autoplay delay', () {
+      final model = UserModel.fromJson({
+        'id': 'user_1',
+        'username': 'Test User',
+        'email': 'test@example.com',
+        'learn_autoplay_delay_seconds': 4,
+      });
+
+      expect(model.learnAutoplayDelaySeconds, 4);
+      expect(model.toJson()['learn_autoplay_delay_seconds'], 4);
+    });
   });
 
   group('Feedback media parsing and paths', () {

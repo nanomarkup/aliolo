@@ -36,6 +36,7 @@ CREATE TABLE IF NOT EXISTS profiles (
   learn_session_size INTEGER DEFAULT 10,
   test_session_size INTEGER DEFAULT 10,
   test_mode TEXT DEFAULT 'question_to_answer',
+  learn_autoplay_delay_seconds INTEGER DEFAULT 3,
   options_count INTEGER DEFAULT 6,
   avatar_url TEXT,
   password_hash TEXT,

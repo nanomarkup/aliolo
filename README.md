@@ -5,7 +5,7 @@ Aliolo is a visual learning platform designed to help users master various subje
 ## Key Features
 
 - **Pillar-Based Learning**: Subjects are organized into high-level categories (Pillars) for structured learning.
-- **Multilingual Support**: Learn in multiple languages with dynamic UI translation and content filtering.
+- **Multilingual Support**: Learn in multiple languages with backend-driven UI translation and separate content localization.
 - **Interactive Flashcards**: Support for multiple-choice questions (MCQ), multiple images per card, and video/audio playback.
 - **Manage Subjects**: Create, edit, and share your own subjects, collections, and cards.
 - **Age-Based Content Filtering**: Tailored learning paths for different age brackets (`0-6`, `7-14`, `15+`).

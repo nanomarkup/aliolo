@@ -140,6 +140,12 @@ This is a Foreign Key to `subjects.id`.<fk table='subjects' column='id'/>
 This is a Primary Key.<pk/>
 - `name` (string) (Required)
 
+UI chrome translation strings are stored in the backend only:
+- `languages` defines the available UI locales.
+- `ui_translations` stores the actual key/value strings for each locale.
+
+Card and subject content localization is separate and lives on the content models themselves (`prompts`, `answers`, `display_texts`, localized media, etc.).
+
 ### `user_subjects`
 - `id` (integer) (Required): Note:
 This is a Primary Key.<pk/>
@@ -228,4 +234,3 @@ This is a Primary Key.<pk/>
 - `pillar_id` (integer)
 - `created_at` (string)
 - `last_slide_index` (integer)
-

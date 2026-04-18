@@ -13,6 +13,7 @@ class UserModel {
   late int learnSessionSize;
   late int testSessionSize;
   late String testMode;
+  late int learnAutoplayDelaySeconds;
   String? avatarPath;
   late String defaultLanguage;
   DateTime? lastActiveDate;
@@ -44,6 +45,7 @@ class UserModel {
     this.learnSessionSize = 10,
     this.testSessionSize = 10,
     this.testMode = 'question_to_answer',
+    this.learnAutoplayDelaySeconds = 3,
     this.avatarPath,
     this.defaultLanguage = 'EN',
     this.lastActiveDate,
@@ -84,6 +86,7 @@ class UserModel {
       learnSessionSize: json['learn_session_size'] ?? 10,
       testSessionSize: json['test_session_size'] ?? 10,
       testMode: (json['test_mode'] ?? 'question_to_answer').toString(),
+      learnAutoplayDelaySeconds: json['learn_autoplay_delay_seconds'] ?? 3,
       avatarPath: MediaUrlResolver.resolve(json['avatar_url']),
       defaultLanguage: (json['default_language'] ?? 'EN').toString().toUpperCase(),
       lastActiveDate: json['last_active_date'] != null ? DateTime.tryParse(json['last_active_date']) : null,
@@ -118,6 +121,7 @@ class UserModel {
       'learn_session_size': learnSessionSize,
       'test_session_size': testSessionSize,
       'test_mode': testMode,
+      'learn_autoplay_delay_seconds': learnAutoplayDelaySeconds,
       'avatar_url': avatarPath,
       'default_language': defaultLanguage.toLowerCase(),
       'last_active_date': lastActiveDate?.toUtc().toIso8601String(),

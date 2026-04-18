@@ -38,6 +38,8 @@ class LearnPage extends StatefulWidget {
 }
 
 class _LearnPageState extends State<LearnPage> {
+  static const List<int> _autoPlayDelayOptions = <int>[1, 2, 3, 4, 5];
+
   late SubjectCard _currentSubjectCard;
   CardModel get _currentCard => _currentSubjectCard.card;
   SubjectModel get _subject => _currentSubjectCard.subject;
@@ -56,6 +58,7 @@ class _LearnPageState extends State<LearnPage> {
   bool _isAutoPlayWaiting = false;
   bool _canGoNext = false;
   bool _isAdvancing = false;
+  int _learnAutoplayDelaySeconds = 3;
   Timer? _autoNextTimer;
   Timer? _cooldownTimer;
   StreamSubscription? _playerSubscription;
@@ -79,6 +82,8 @@ class _LearnPageState extends State<LearnPage> {
     final isPremium = getIt<SubscriptionService>().isPremium;
     _isAutoPlay =
         isPremium && (_authService.currentUser?.autoPlayEnabled ?? false);
+    _learnAutoplayDelaySeconds =
+        _authService.currentUser?.learnAutoplayDelaySeconds ?? 3;
 
     _sessionQueue = List.from(widget.sessionCards);
 
@@ -96,7 +101,7 @@ class _LearnPageState extends State<LearnPage> {
       if (completed) {
         print('LearnPage: Player completed. autoPlay: $_isAutoPlay, waiting: $_isAutoPlayWaiting');
         if (_isAutoPlay && !_isAutoPlayWaiting) {
-          _scheduleAutoNext(afterMedia: true);
+          _scheduleAutoNext();
         }
       }
     });
@@ -165,21 +170,153 @@ class _LearnPageState extends State<LearnPage> {
     }
 
     if (_isAutoPlay && !hasMedia) {
-      _scheduleAutoNext(afterMedia: false);
+      _scheduleAutoNext();
     }
   }
 
-  void _scheduleAutoNext({required bool afterMedia}) {
-    if (!_isAutoPlay || _isAutoPlayWaiting) return;
-    print('LearnPage: Scheduling auto-next. afterMedia: $afterMedia');
+  void _scheduleAutoNext({bool restart = false}) {
+    if (!_isAutoPlay) return;
+    if (_isAutoPlayWaiting && !restart) return;
+    if (restart) {
+      _autoNextTimer?.cancel();
+      setState(() => _isAutoPlayWaiting = false);
+    }
+    print('LearnPage: Scheduling auto-next with delay $_learnAutoplayDelaySeconds s');
     setState(() => _isAutoPlayWaiting = true);
-    final delay =
-        afterMedia ? const Duration(seconds: 2) : const Duration(seconds: 4);
+    final delay = Duration(seconds: _learnAutoplayDelaySeconds);
     _autoNextTimer?.cancel();
     _autoNextTimer = Timer(delay, () {
       print('LearnPage: Auto-next timer fired. mounted: $mounted, waiting: $_isAutoPlayWaiting');
       if (mounted && _isAutoPlay && _isAutoPlayWaiting) _nextCard();
     });
+  }
+
+  Future<void> _setLearnAutoplayDelay(int seconds) async {
+    if (_learnAutoplayDelaySeconds == seconds) return;
+    setState(() => _learnAutoplayDelaySeconds = seconds);
+    await _authService.updateLearnAutoplayDelay(seconds);
+
+    if (mounted && _isAutoPlay && _isAutoPlayWaiting) {
+      _scheduleAutoNext(restart: true);
+    }
+  }
+
+  void _toggleAutoPlay() {
+    final sub = getIt<SubscriptionService>();
+    if (!sub.isPremium) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const PremiumUpgradePage(),
+        ),
+      );
+      return;
+    }
+
+    final newVal = !_isAutoPlay;
+    _authService.updateAutoPlayPreference(newVal);
+    setState(() {
+      _isAutoPlay = newVal;
+      if (_isAutoPlay) {
+        _scheduleAutoNext(restart: true);
+      } else {
+        _autoNextTimer?.cancel();
+        _isAutoPlayWaiting = false;
+      }
+    });
+  }
+
+  Future<void> _showAutoplayDelayMenu(Offset globalPosition) async {
+    final sub = getIt<SubscriptionService>();
+    if (!sub.isPremium) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const PremiumUpgradePage(),
+        ),
+      );
+      return;
+    }
+
+    final overlay = Overlay.of(context).context.findRenderObject() as RenderBox;
+    final selected = await showMenu<int>(
+      context: context,
+      position: RelativeRect.fromRect(
+        Rect.fromPoints(globalPosition, globalPosition),
+        Offset.zero & overlay.size,
+      ),
+      items:
+          _autoPlayDelayOptions
+              .map(
+                (seconds) => PopupMenuItem<int>(
+                  value: seconds,
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.timer_outlined,
+                        size: 18,
+                        color:
+                            seconds == _learnAutoplayDelaySeconds
+                                ? Theme.of(context).colorScheme.primary
+                                : Colors.grey[700],
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(child: Text('${seconds}s')),
+                      if (seconds == _learnAutoplayDelaySeconds)
+                        Icon(
+                          Icons.check,
+                          size: 18,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                    ],
+                  ),
+                ),
+              )
+              .toList(),
+    );
+
+    if (selected != null) {
+      await _setLearnAutoplayDelay(selected);
+    }
+  }
+
+  Widget _buildAutoplayControl() {
+    final isPremium = getIt<SubscriptionService>().isPremium;
+
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: _toggleAutoPlay,
+      onLongPressStart: (details) => _showAutoplayDelayMenu(details.globalPosition),
+      child: Padding(
+        padding: const EdgeInsets.all(8),
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            Icon(
+              _isAutoPlay ? Icons.pause_circle : Icons.play_circle,
+              color: Colors.white,
+            ),
+            if (!isPremium)
+              Positioned(
+                right: -4,
+                top: -4,
+                child: Container(
+                  padding: const EdgeInsets.all(2),
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Icon(
+                    Icons.workspace_premium,
+                    color: Colors.amber,
+                    size: 12,
+                  ),
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
   }
 
   Future<void> _nextCard() async {
@@ -234,6 +371,7 @@ class _LearnPageState extends State<LearnPage> {
   @override
   Widget build(BuildContext context) {
     final lang = _languageCode.toLowerCase();
+    final currentAudioUrl = _currentCard.getAudioUrl(lang);
     final pillar = pillars.firstWhere(
       (p) => p.id == _subject.pillarId,
       orElse: () => pillars.first,
@@ -265,73 +403,7 @@ class _LearnPageState extends State<LearnPage> {
                   icon: const Icon(Icons.arrow_back),
                   onPressed: () => Navigator.pop(context),
                 ),
-                  IconButton(
-                    icon: Icon(
-                      Icons.volume_up,
-                      color: (_currentCard.getAudioUrl(lang)?.isNotEmpty ?? false)
-                          ? Colors.white
-                          : Colors.white.withValues(alpha: 0.3),
-                    ),
-                    onPressed: (_currentCard.getAudioUrl(lang)?.isNotEmpty ?? false)
-                        ? () async {
-                            final url = _currentCard.getAudioUrl(lang);
-                            if (url != null && url.isNotEmpty) {
-                              await player.open(Media(url));
-                              player.play();
-                            }
-                          }
-                        : null,
-                  ),
-                IconButton(
-                  icon: Stack(
-                    clipBehavior: Clip.none,
-                    children: [
-                      Icon(
-                        _isAutoPlay ? Icons.pause_circle : Icons.play_circle,
-                      ),
-                      if (!getIt<SubscriptionService>().isPremium)
-                        Positioned(
-                          right: -4,
-                          top: -4,
-                          child: Container(
-                            padding: const EdgeInsets.all(2),
-                            decoration: const BoxDecoration(
-                              color: Colors.white,
-                              shape: BoxShape.circle,
-                            ),
-                            child: const Icon(
-                              Icons.workspace_premium,
-                              color: Colors.amber,
-                              size: 12,
-                            ),
-                          ),
-                        ),
-                    ],
-                  ),
-                  onPressed: () {
-                    final sub = getIt<SubscriptionService>();
-                    if (!sub.isPremium) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const PremiumUpgradePage(),
-                        ),
-                      );
-                      return;
-                    }
-                    final newVal = !_isAutoPlay;
-                    _authService.updateAutoPlayPreference(newVal);
-                    setState(() {
-                      _isAutoPlay = newVal;
-                      if (_isAutoPlay) {
-                        _scheduleAutoNext(afterMedia: false);
-                      } else {
-                        _autoNextTimer?.cancel();
-                        _isAutoPlayWaiting = false;
-                      }
-                    });
-                  },
-                ),
+                _buildAutoplayControl(),
                 if (!kIsWeb) const WindowControls(color: Colors.white),
               ],
             ),
@@ -374,6 +446,8 @@ class _LearnPageState extends State<LearnPage> {
                         final answers = _currentCard.getAnswerList(lang);
                         if (answers.isEmpty) return [const SizedBox.shrink()];
 
+                        final hasAudio = currentAudioUrl?.isNotEmpty ?? false;
+
                         return [
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -410,6 +484,19 @@ class _LearnPageState extends State<LearnPage> {
                                     )
                                     .toList(),
                           ),
+                          if (hasAudio)
+                            IconButton(
+                              icon: const Icon(Icons.volume_up),
+                              color: headerColor,
+                              tooltip: context.t('play_audio'),
+                              onPressed: () async {
+                                final url = currentAudioUrl;
+                                if (url != null && url.isNotEmpty) {
+                                  await player.open(Media(url));
+                                  player.play();
+                                }
+                              },
+                            ),
                         ];
                       })(),
                     ],
