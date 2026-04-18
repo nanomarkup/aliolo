@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:aliolo/data/models/subject_model.dart';
 import 'package:aliolo/data/models/card_model.dart';
+import 'package:aliolo/data/models/user_model.dart';
 import 'package:aliolo/data/models/collection_model.dart';
 import 'package:aliolo/data/models/feedback_model.dart';
 import 'package:aliolo/data/models/feedback_reply_model.dart';
@@ -192,6 +193,18 @@ void main() {
       legacyJson['display_text'] = '';
       final legacyModel = CardModel.fromJson(legacyJson);
       expect(legacyModel.hexColor, isNull);
+    });
+
+    test('UserModel parses and serializes test_mode', () {
+      final model = UserModel.fromJson({
+        'id': 'user_1',
+        'username': 'Test User',
+        'email': 'test@example.com',
+        'test_mode': 'random',
+      });
+
+      expect(model.testMode, 'random');
+      expect(model.toJson()['test_mode'], 'random');
     });
   });
 

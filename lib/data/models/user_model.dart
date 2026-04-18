@@ -12,6 +12,7 @@ class UserModel {
   late bool showOnLeaderboard;
   late int learnSessionSize;
   late int testSessionSize;
+  late String testMode;
   String? avatarPath;
   late String defaultLanguage;
   DateTime? lastActiveDate;
@@ -42,6 +43,7 @@ class UserModel {
     this.showOnLeaderboard = true,
     this.learnSessionSize = 10,
     this.testSessionSize = 10,
+    this.testMode = 'question_to_answer',
     this.avatarPath,
     this.defaultLanguage = 'EN',
     this.lastActiveDate,
@@ -81,6 +83,7 @@ class UserModel {
       showOnLeaderboard: toBool(json['show_on_leaderboard'], true),
       learnSessionSize: json['learn_session_size'] ?? 10,
       testSessionSize: json['test_session_size'] ?? 10,
+      testMode: (json['test_mode'] ?? 'question_to_answer').toString(),
       avatarPath: MediaUrlResolver.resolve(json['avatar_url']),
       defaultLanguage: (json['default_language'] ?? 'EN').toString().toUpperCase(),
       lastActiveDate: json['last_active_date'] != null ? DateTime.tryParse(json['last_active_date']) : null,
@@ -114,6 +117,7 @@ class UserModel {
       'show_on_leaderboard': showOnLeaderboard,
       'learn_session_size': learnSessionSize,
       'test_session_size': testSessionSize,
+      'test_mode': testMode,
       'avatar_url': avatarPath,
       'default_language': defaultLanguage.toLowerCase(),
       'last_active_date': lastActiveDate?.toUtc().toIso8601String(),

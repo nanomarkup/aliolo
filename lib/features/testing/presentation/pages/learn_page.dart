@@ -55,6 +55,7 @@ class _LearnPageState extends State<LearnPage> {
   bool _isAutoPlay = false;
   bool _isAutoPlayWaiting = false;
   bool _canGoNext = false;
+  bool _isAdvancing = false;
   Timer? _autoNextTimer;
   Timer? _cooldownTimer;
   StreamSubscription? _playerSubscription;
@@ -112,7 +113,7 @@ class _LearnPageState extends State<LearnPage> {
 
     if (event.logicalKey == LogicalKeyboardKey.space ||
         event.logicalKey == LogicalKeyboardKey.enter) {
-      if (_canGoNext) {
+      if (_canGoNext && !_isAdvancing) {
         _nextCard();
       }
     }
@@ -122,7 +123,10 @@ class _LearnPageState extends State<LearnPage> {
     _autoNextTimer?.cancel();
     _cooldownTimer?.cancel();
     _isAutoPlayWaiting = false;
-    setState(() => _canGoNext = false);
+    setState(() {
+      _canGoNext = false;
+      _isAdvancing = false;
+    });
 
     _cooldownTimer = Timer(const Duration(seconds: 1), () {
       if (mounted) setState(() => _canGoNext = true);
@@ -179,8 +183,9 @@ class _LearnPageState extends State<LearnPage> {
   }
 
   Future<void> _nextCard() async {
-    if (!_canGoNext) return;
+    if (!_canGoNext || _isAdvancing) return;
     print('LearnPage: Moving to next card');
+    setState(() => _isAdvancing = true);
     _autoNextTimer?.cancel();
     _cooldownTimer?.cancel();
     setState(() => _isAutoPlayWaiting = false);
@@ -331,21 +336,24 @@ class _LearnPageState extends State<LearnPage> {
               ],
             ),
             floatingActionButton:
-                _canGoNext
-                    ? FloatingActionButton.extended(
-                      onPressed: _nextCard,
-                      backgroundColor: headerColor,
-                      foregroundColor: Colors.white,
-                      icon: const Icon(Icons.arrow_forward),
-                      label: Text(
-                        context.t('next'),
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
+                AnimatedOpacity(
+                  duration: const Duration(milliseconds: 120),
+                  opacity: (_canGoNext && !_isAdvancing) ? 1.0 : 0.45,
+                  child: FloatingActionButton.extended(
+                    onPressed:
+                        (_canGoNext && !_isAdvancing) ? _nextCard : null,
+                    backgroundColor: headerColor,
+                    foregroundColor: Colors.white,
+                    icon: const Icon(Icons.arrow_forward),
+                    label: Text(
+                      context.t('next'),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
                       ),
-                    )
-                    : null,
+                    ),
+                  ),
+                ),
             body: Column(
               children: [
                 // Integrated Header
@@ -454,6 +462,15 @@ class _LearnPageState extends State<LearnPage> {
                                         count: _currentCard.numericalAnswer,
                                         iconSize: 60,
                                       )
+                                    else if (_currentCard.isColors)
+                                      CardRenderer(
+                                        card: _currentCard,
+                                        subject: _subject,
+                                        languageCode: lang,
+                                        fallbackColor: headerColor,
+                                        fit: BoxFit.contain,
+                                        textFontSize: 120,
+                                      )
                                     else if (_currentImages.isNotEmpty)
                                       AlioloImage(
                                         imageUrl:
@@ -486,15 +503,6 @@ class _LearnPageState extends State<LearnPage> {
                                           ),
                                           textAlign: TextAlign.center,
                                         ),
-                                      )
-                                    else if (_currentCard.isColors)
-                                      CardRenderer(
-                                        card: _currentCard,
-                                        subject: _subject,
-                                        languageCode: lang,
-                                        fallbackColor: headerColor,
-                                        fit: BoxFit.contain,
-                                        textFontSize: 120,
                                       )
                                     else
                                       const Icon(

@@ -35,6 +35,7 @@ CREATE TABLE IF NOT EXISTS profiles (
   show_documentation INTEGER DEFAULT 1,
   learn_session_size INTEGER DEFAULT 10,
   test_session_size INTEGER DEFAULT 10,
+  test_mode TEXT DEFAULT 'question_to_answer',
   options_count INTEGER DEFAULT 6,
   avatar_url TEXT,
   password_hash TEXT,

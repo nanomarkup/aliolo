@@ -1,5 +1,4 @@
 import 'package:path/path.dart' as p;
-import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:aliolo/core/utils/file_stub.dart'
@@ -114,7 +113,6 @@ class AuthService extends ChangeNotifier {
       }
 
       if (kIsWeb && _initialUrl != null) {
-        final uri = Uri.parse(_initialUrl!);
         // Handle potential recovery/invite types from URL if needed
       }
     } catch (e) {
@@ -364,6 +362,13 @@ class AuthService extends ChangeNotifier {
     if (_currentUser != null) {
       _currentUser!.testSessionSize = size;
       await _patchCurrentUser({'test_session_size': size});
+    }
+  }
+
+  Future<void> updateTestMode(String mode) async {
+    if (_currentUser != null) {
+      _currentUser!.testMode = mode;
+      await _patchCurrentUser({'test_mode': mode});
     }
   }
 
