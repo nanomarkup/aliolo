@@ -29,9 +29,10 @@ router.post('/verify', async (c) => {
     try {
         await c.env.DB.prepare(`
             INSERT INTO user_subscriptions (id, user_id, status, provider, expiry_date, purchase_token, order_id, product_id, updated_at)
-            VALUES (?, ?, 'active', 'manual', DATE(CURRENT_TIMESTAMP, '+1 year'), ?, ?, ?, CURRENT_TIMESTAMP)
+            VALUES (?, ?, 'active', 'aliolo', DATE(CURRENT_TIMESTAMP, '+1 year'), ?, ?, ?, CURRENT_TIMESTAMP)
             ON CONFLICT(user_id) DO UPDATE SET
                 status = 'active',
+                provider = 'aliolo',
                 expiry_date = DATE(CURRENT_TIMESTAMP, '+1 year'),
                 purchase_token = excluded.purchase_token,
                 order_id = excluded.order_id,

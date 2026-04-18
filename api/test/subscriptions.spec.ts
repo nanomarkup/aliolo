@@ -37,5 +37,6 @@ describe('Subscriptions API', () => {
     expect(res.status).toBe(200);
     const data = await res.json() as any;
     expect(data.status).toBe('active');
+    expect(data.provider).toBe('aliolo');
   });
 });

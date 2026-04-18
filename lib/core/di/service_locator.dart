@@ -8,6 +8,7 @@ import 'package:aliolo/data/services/sound_service.dart';
 import 'package:aliolo/data/services/math_service.dart';
 import 'package:aliolo/data/services/progress_service.dart';
 import 'package:aliolo/data/services/subscription_service.dart';
+import 'package:aliolo/data/services/admin_users_service.dart';
 import 'package:aliolo/data/services/feedback_service.dart';
 import 'package:aliolo/data/services/discovery_engine.dart';
 import 'package:aliolo/data/services/filter_service.dart';
@@ -67,6 +68,7 @@ Future<void> setupLocator({String? initialUrl, String? inviteToken}) async {
     getIt.registerLazySingleton<MathService>(() => MathService());
     getIt.registerLazySingleton<ProgressService>(() => ProgressService());
     getIt.registerLazySingleton<SubscriptionService>(() => SubscriptionService());
+    getIt.registerLazySingleton<AdminUsersService>(() => AdminUsersService());
 
     print('All services initialized in remote-only mode.');
   } catch (e, stack) {

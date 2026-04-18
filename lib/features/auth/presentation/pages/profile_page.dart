@@ -1,4 +1,3 @@
-import 'package:aliolo/core/utils/io_utils.dart' if (dart.library.html) 'package:aliolo/core/utils/file_stub.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +16,7 @@ import 'package:aliolo/features/settings/presentation/pages/settings_page.dart';
 import 'package:aliolo/features/settings/presentation/pages/premium_upgrade_page.dart';
 import 'package:aliolo/features/documentation/presentation/pages/documentation_page.dart';
 import 'package:aliolo/features/auth/presentation/pages/manage_friends_page.dart';
-import 'package:aliolo/features/management/presentation/pages/feedback_management_page.dart';
+import 'package:aliolo/features/management/presentation/pages/users_page.dart';
 import 'package:aliolo/data/services/feedback_service.dart';
 import 'package:aliolo/core/widgets/premium_badge.dart';
 
@@ -29,6 +28,8 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  static const String _adminUserId = 'usyeo7d2yzf2773';
+
   final _authService = getIt<AuthService>();
 
   Future<void> _pickAndUploadAvatar() async {
@@ -493,7 +494,7 @@ class _ProfilePageState extends State<ProfilePage> {
         final currentSessionColor = ThemeService().primaryColor;
 
         final homeAction = IconButton(
-          tooltip: context.t('home') ?? 'Home',
+          tooltip: context.t('home'),
           icon: const Icon(Icons.school),
           onPressed: () => Navigator.pushAndRemoveUntil(
             context,
@@ -636,6 +637,18 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                     ),
                     const Divider(height: 1, indent: 16, endIndent: 16),
+                    if (_authService.currentUser?.serverId == _adminUserId) ...[
+                      ListTile(
+                        leading: Icon(Icons.people_alt, color: currentSessionColor),
+                        title: Text(context.t('users')),
+                        trailing: const Icon(Icons.chevron_right),
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const UsersPage()),
+                        ),
+                      ),
+                      const Divider(height: 1, indent: 16, endIndent: 16),
+                    ],
                     ListTile(
                       leading: Icon(Icons.lock, color: currentSessionColor),
                       title: Text(context.t('change_password')),
