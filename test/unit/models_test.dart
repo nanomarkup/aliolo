@@ -171,6 +171,28 @@ void main() {
       expect(model.toJson().containsKey('test_mode'), isFalse);
       expect(model.toJson()['renderer'], 'addition_number');
     });
+
+    test('CardModel parses colors from display_text only', () {
+      final json = {
+        'id': 'color_card',
+        'subject_id': 'subj_1',
+        'owner_id': 'user_1',
+        'renderer': 'colors',
+        'answer': 'Sky Blue, #87CEEB',
+        'display_text': '#87CEEB',
+        'localized_data': '{}',
+        'created_at': '2026-04-13T12:00:00Z',
+        'updated_at': '2026-04-13T12:00:00Z',
+      };
+
+      final model = CardModel.fromJson(json);
+      expect(model.hexColor, '#87CEEB');
+
+      final legacyJson = Map<String, dynamic>.from(json);
+      legacyJson['display_text'] = '';
+      final legacyModel = CardModel.fromJson(legacyJson);
+      expect(legacyModel.hexColor, isNull);
+    });
   });
 
   group('Feedback media parsing and paths', () {

@@ -752,17 +752,14 @@ class _TestPageState extends State<TestPage> {
                                         headerColor,
                                         isMobile,
                                       )
-                                    else if (_subject.isColors &&
-                                        _currentCard.hexColor != null)
-                                      Container(
-                                        color: Color(
-                                          int.parse(
-                                            _currentCard.hexColor!.replaceFirst(
-                                              '#',
-                                              '0xFF',
-                                            ),
-                                          ),
-                                        ),
+                                    else if (_currentCard.isColors)
+                                      CardRenderer(
+                                        card: _currentCard,
+                                        subject: _subject,
+                                        languageCode: lang,
+                                        fallbackColor: headerColor,
+                                        fit: BoxFit.contain,
+                                        textFontSize: 120,
                                       )
                                     else
                                       const Icon(

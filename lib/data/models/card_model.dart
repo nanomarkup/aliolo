@@ -273,9 +273,31 @@ class CardModel {
   }
 
   String? get hexColor {
-    final ans = getAnswer('en');
-    final match = RegExp(r'[,(]\s*(#[0-9a-fA-F]{6})\s*[)]?').firstMatch(ans);
-    return match?.group(1);
+    return hexColorFor('global');
+  }
+
+  String? hexColorFor(String lang) {
+    final lc = lang.toLowerCase();
+    final localizedDisplayText =
+        displayTexts.containsKey(lc) && displayTexts[lc]!.isNotEmpty
+            ? displayTexts[lc]!
+            : null;
+
+    final candidates = <String>[
+      if (localizedDisplayText != null) localizedDisplayText,
+      displayText,
+      ...displayTexts.values,
+    ];
+
+    for (final candidate in candidates) {
+      final match = RegExp(
+        r'(^|[,\s])(#(?:[0-9a-fA-F]{6}))\s*$',
+      ).firstMatch(candidate.trim());
+      if (match != null) {
+        return match.group(2);
+      }
+    }
+    return null;
   }
 
   bool get isColors => renderer == 'colors' || hexColor != null;

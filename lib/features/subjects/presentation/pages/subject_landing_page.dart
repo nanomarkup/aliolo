@@ -16,6 +16,7 @@ import 'package:aliolo/data/services/sound_service.dart';
 import 'package:aliolo/data/services/filter_service.dart';
 import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/core/utils/session_bucket_sampler.dart';
+import 'package:aliolo/core/utils/card_sorting.dart';
 import 'package:aliolo/core/widgets/aliolo_scrollable_page.dart';
 import 'package:aliolo/core/widgets/card_renderer.dart';
 import 'package:aliolo/features/testing/presentation/pages/learn_page.dart';
@@ -258,6 +259,8 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
 
         return (promptMatches || answerMatches) && matchesLevel;
       }).toList();
+
+      sortCardsByLevelThenAnswer(_filteredCards, _currentLanguageCode);
 
       if (_currentCollection != null) {
         _filteredSubjects =

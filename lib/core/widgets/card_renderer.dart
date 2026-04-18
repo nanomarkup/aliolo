@@ -111,12 +111,38 @@ class CardRenderer extends StatelessWidget {
 
   Widget? _buildColorRenderer() {
     if (!card.isColors) return null;
-    if (card.hexColor == null) return null;
+    final colorCode = card.hexColorFor(languageCode) ?? card.hexColor;
+    if (colorCode == null) return null;
 
-    return SizedBox.expand(
-      child: ColoredBox(
-        color: Color(int.parse(card.hexColor!.replaceFirst('#', '0xFF'))),
-      ),
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        ColoredBox(
+          color: Color(int.parse(colorCode.replaceFirst('#', '0xFF'))),
+        ),
+        Positioned(
+          top: 8,
+          right: 8,
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              color: Colors.black.withValues(alpha: 0.55),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+              child: Text(
+                colorCode,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: 0.3,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 
