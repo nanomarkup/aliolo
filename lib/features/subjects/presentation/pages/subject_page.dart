@@ -1023,7 +1023,7 @@ class _SubjectPageState extends State<SubjectPage> {
           position: PopupMenuPosition.under,
           offset: Offset.zero,
           tooltip: '',
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.surface,
           itemBuilder:
               (context) =>
                   items.entries
@@ -1037,9 +1037,9 @@ class _SubjectPageState extends State<SubjectPage> {
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             decoration: BoxDecoration(
-              color: Theme.of(context).cardColor.withValues(alpha: 0.5),
+              color: Theme.of(context).colorScheme.surfaceContainerHighest.withValues(alpha: 0.9),
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: Colors.grey.withValues(alpha: 0.5)),
+              border: Border.all(color: Theme.of(context).colorScheme.outlineVariant),
             ),
             child: Row(
               children: [

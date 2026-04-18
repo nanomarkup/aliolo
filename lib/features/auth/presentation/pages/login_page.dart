@@ -8,6 +8,7 @@ import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
+import 'package:aliolo/core/theme/aliolo_theme.dart';
 import 'package:aliolo/core/widgets/window_controls.dart';
 import 'package:aliolo/features/subjects/presentation/pages/subject_page.dart';
 import 'package:aliolo/features/settings/presentation/pages/about_page.dart';
@@ -116,7 +117,6 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  @override
   void onWindowClose() {
     if (!kIsWeb) windowManager.destroy();
   }
@@ -380,15 +380,9 @@ class _LoginPageState extends State<LoginPage> {
         final mainColor = themeService.getSystemColor(Brightness.light);
 
         return Theme(
-          data: ThemeData(
-            useMaterial3: true,
+          data: AlioloTheme.build(
+            seedColor: mainColor,
             brightness: Brightness.light,
-            colorScheme: ColorScheme.fromSeed(
-              seedColor: mainColor,
-              brightness: Brightness.light,
-            ),
-            scaffoldBackgroundColor: const Color(0xFFF1F5F9),
-            fontFamily: 'Roboto',
           ),
           child: Scaffold(
             backgroundColor: const Color(0xFFF1F5F9),

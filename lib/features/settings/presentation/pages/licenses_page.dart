@@ -6,6 +6,7 @@ import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/core/widgets/window_controls.dart';
+import 'package:aliolo/core/theme/aliolo_theme.dart';
 
 class GroupedLicense {
   final String name;
@@ -117,15 +118,9 @@ class _CustomLicensesPageState extends State<CustomLicensesPage> {
         final mainColor = themeService.getSystemColor(Brightness.light);
 
         return Theme(
-          data: ThemeData(
-            useMaterial3: true,
+          data: AlioloTheme.build(
+            seedColor: mainColor,
             brightness: Brightness.light,
-            colorScheme: ColorScheme.fromSeed(
-              seedColor: mainColor,
-              brightness: Brightness.light,
-            ),
-            scaffoldBackgroundColor: const Color(0xFFF1F5F9),
-            fontFamily: 'Roboto',
           ),
           child: Scaffold(
             backgroundColor: const Color(0xFFF1F5F9),
@@ -327,15 +322,9 @@ class LicenseDetailScreen extends StatelessWidget {
     final themeService = getIt<ThemeService>();
     final mainColor = themeService.getSystemColor(Brightness.light);
     return Theme(
-      data: ThemeData(
-        useMaterial3: true,
+      data: AlioloTheme.build(
+        seedColor: mainColor,
         brightness: Brightness.light,
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: mainColor,
-          brightness: Brightness.light,
-        ),
-        scaffoldBackgroundColor: const Color(0xFFF1F5F9),
-        fontFamily: 'Roboto',
       ),
       child: Scaffold(
         backgroundColor: const Color(0xFFF1F5F9),

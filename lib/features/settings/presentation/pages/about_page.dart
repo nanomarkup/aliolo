@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:aliolo/core/di/service_locator.dart';
@@ -8,6 +7,7 @@ import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:aliolo/core/widgets/window_controls.dart';
+import 'package:aliolo/core/theme/aliolo_theme.dart';
 import 'package:aliolo/features/settings/presentation/pages/licenses_page.dart';
 import 'package:aliolo/features/onboarding/presentation/onboarding_screen.dart';
 
@@ -111,15 +111,9 @@ class _AboutPageState extends State<AboutPage> {
         final mainColor = themeService.getSystemColor(Brightness.light);
 
         return Theme(
-          data: ThemeData(
-            useMaterial3: true,
+          data: AlioloTheme.build(
+            seedColor: mainColor,
             brightness: Brightness.light,
-            colorScheme: ColorScheme.fromSeed(
-              seedColor: mainColor,
-              brightness: Brightness.light,
-            ),
-            scaffoldBackgroundColor: const Color(0xFFF1F5F9),
-            fontFamily: 'Roboto',
           ),
           child: Scaffold(
             backgroundColor: const Color(0xFFF1F5F9),

@@ -5,6 +5,7 @@ import 'package:window_manager/window_manager.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/data/services/theme_service.dart';
+import 'package:aliolo/core/theme/aliolo_theme.dart';
 import 'package:aliolo/data/services/card_service.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/subscription_service.dart';
@@ -287,86 +288,13 @@ class _AlioloMainAppState extends State<AlioloMainApp> {
           debugShowCheckedModeBanner: false,
           locale: translationService.currentLocale,
           themeMode: currentMode,
-          theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(
-              seedColor: themeService.getAdjustedPrimary(brightness: brightness),
-              surface: Colors.white,
-              surfaceContainerHighest: const Color(
-                0xFFE2E8F0,
-              ), // Subtle divider/dropdown color
-            ),
-            scaffoldBackgroundColor: const Color(0xFFF1F5F9), // Slate-grey background
-            cardTheme: CardThemeData(
-              color: Colors.white,
-              surfaceTintColor: Colors.white,
-              elevation: 0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
-                side: BorderSide(
-                  color: Colors.black.withValues(alpha: 0.05),
-                  width: 1,
-                ),
-              ),
-            ),
-            dividerTheme: DividerThemeData(
-              color: Colors.black.withValues(alpha: 0.05),
-            ),
-            useMaterial3: true,
-            fontFamily: 'Roboto',
-            pageTransitionsTheme: const PageTransitionsTheme(
-              builders: {
-                TargetPlatform.android: InstantPageTransitionsBuilder(),
-                TargetPlatform.iOS: InstantPageTransitionsBuilder(),
-                TargetPlatform.linux: InstantPageTransitionsBuilder(),
-                TargetPlatform.macOS: InstantPageTransitionsBuilder(),
-                TargetPlatform.windows: InstantPageTransitionsBuilder(),
-              },
-            ),
+          theme: AlioloTheme.build(
+            seedColor: themeService.getAdjustedPrimary(brightness: brightness),
+            brightness: brightness,
           ),
-          darkTheme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(
-              seedColor: themeService.getAdjustedPrimary(),
-              brightness: Brightness.dark,
-              surface: const Color(0xFF1E293B), // Deep slate surface
-              surfaceContainerHighest: const Color(0xFF334155),
-              shadow: Colors.transparent,
-            ),
-            shadowColor: Colors.transparent,
-            scaffoldBackgroundColor: const Color(
-              0xFF0F172A,
-            ), // Very deep navy/slate background
-            cardTheme: CardThemeData(
-              color: const Color(0xFF1E293B),
-              surfaceTintColor: const Color(0xFF1E293B),
-              elevation: 0,
-              shadowColor: Colors.transparent,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
-                side: BorderSide(
-                  color: Colors.white.withValues(alpha: 0.05),
-                  width: 1,
-                ),
-              ),
-            ),
-            appBarTheme: const AppBarTheme(
-              elevation: 0,
-              scrolledUnderElevation: 0,
-              shadowColor: Colors.transparent,
-            ),
-            dividerTheme: DividerThemeData(
-              color: Colors.white.withValues(alpha: 0.05),
-            ),
-            useMaterial3: true,
-            fontFamily: 'Roboto',
-            pageTransitionsTheme: const PageTransitionsTheme(
-              builders: {
-                TargetPlatform.android: InstantPageTransitionsBuilder(),
-                TargetPlatform.iOS: InstantPageTransitionsBuilder(),
-                TargetPlatform.linux: InstantPageTransitionsBuilder(),
-                TargetPlatform.macOS: InstantPageTransitionsBuilder(),
-                TargetPlatform.windows: InstantPageTransitionsBuilder(),
-              },
-            ),
+          darkTheme: AlioloTheme.build(
+            seedColor: themeService.getAdjustedPrimary(),
+            brightness: Brightness.dark,
           ),
           home: FutureBuilder<bool>(
             future: _onboardingFuture,

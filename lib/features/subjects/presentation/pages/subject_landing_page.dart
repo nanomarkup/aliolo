@@ -671,6 +671,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
               : (matchAnchorWidth ? BoxConstraints(minWidth: box.maxWidth, maxWidth: box.maxWidth) : null),
           onSelected: onChanged,
           position: PopupMenuPosition.under,
+          color: Theme.of(context).colorScheme.surface,
           itemBuilder: (context) => items.entries.map((e) => PopupMenuItem<String>(
             value: e.key,
             child: Text(e.value),
@@ -678,9 +679,9 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 12, vertical: verticalPadding),
             decoration: BoxDecoration(
-              color: Theme.of(context).cardColor.withValues(alpha: 0.5), 
+              color: Theme.of(context).colorScheme.surfaceContainerHighest.withValues(alpha: 0.9),
               borderRadius: BorderRadius.circular(12), 
-              border: Border.all(color: Colors.grey.withValues(alpha: 0.5))
+              border: Border.all(color: Theme.of(context).colorScheme.outlineVariant)
             ),
             child: Row(
               children: [
@@ -1466,7 +1467,6 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                 ? _langService.getLanguageName(_currentLanguageCode)
                 : _currentLanguageCode.toUpperCase(),
             matchAnchorWidth: constraints.maxWidth >= 600,
-            menuWidth: 160,
             verticalPadding: constraints.maxWidth >= 600 ? 8 : 13,
             onChanged: (val) async {
               if (val != null) {
