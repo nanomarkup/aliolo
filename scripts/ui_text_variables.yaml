@@ -1,0 +1,1868 @@
+version: 1
+entries:
+- key: a_folder_with_this_name_already_exists_in_this_pillar
+  english: A folder with this name already exists in this pillar
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/management/presentation/pages/subject_edit_page.dart
+    line: 469
+    kind: helper
+- key: about
+  english: About
+  translate: true
+  notes: []
+  sources:
+  - file: scripts/generate_ui_translations.py
+    line: 0
+    kind: explicit
+- key: about_intro_audience_desc
+  english: Aliolo supports learners who want structured review, parents and teachers who need approachable study content,
+    and creators who organize and publish their own learning materials.
+  translate: true
+  notes:
+  - key=about_intro_audience_desc
+  sources:
+  - file: scripts/sql/add_about_page_translations.sql
+    line: 7
+    kind: sql_seed
+- key: about_intro_audience_title
+  english: Who It Is For
+  translate: true
+  notes:
+  - key=about_intro_audience_title
+  sources:
+  - file: scripts/sql/add_about_page_translations.sql
+    line: 6
+    kind: sql_seed
+- key: about_intro_desc
+  english: Aliolo is a visual learning app built around simple study flows, flexible content organization, and steady progress
+    over time.
+  translate: true
+  notes:
+  - key=about_intro_desc
+  sources:
+  - file: scripts/sql/add_about_page_translations.sql
+    line: 3
+    kind: sql_seed
+- key: about_intro_start_desc
+  english: Begin on the dashboard, choose a pillar, open a subject, and start with Learn. Save useful content to favorites
+    so it is easier to revisit later.
+  translate: true
+  notes:
+  - key=about_intro_start_desc
+  sources:
+  - file: scripts/sql/add_about_page_translations.sql
+    line: 5
+    kind: sql_seed
+- key: about_intro_start_title
+  english: How to Start
+  translate: true
+  notes:
+  - key=about_intro_start_title
+  sources:
+  - file: scripts/sql/add_about_page_translations.sql
+    line: 4
+    kind: sql_seed
+- key: about_intro_title
+  english: About Aliolo
+  translate: true
+  notes:
+  - key=about_intro_title
+  sources:
+  - file: scripts/sql/add_about_page_translations.sql
+    line: 2
+    kind: sql_seed
+- key: about_learn_discovery_desc
+  english: Search, age filters, and source filters such as favorites, mine, and public library help you find the right content
+    quickly.
+  translate: true
+  notes:
+  - key=about_learn_discovery_desc
+  sources:
+  - file: scripts/sql/add_about_page_translations.sql
+    line: 16
+    kind: sql_seed
+- key: about_learn_discovery_title
+  english: Discovery and Filtering
+  translate: true
+  notes:
+  - key=about_learn_discovery_title
+  sources:
+  - file: scripts/sql/add_about_page_translations.sql
+    line: 15
+    kind: sql_seed
+- key: about_learn_language_desc
+  english: You can study content in different languages and adjust session settings in your profile to match your pace and
+    current goals.
+  translate: true
+  notes:
+  - key=about_learn_language_desc
+  sources:
+  - file: scripts/sql/add_about_page_translations.sql
+    line: 12
+    kind: sql_seed
+- key: about_learn_language_title
+  english: Language and Mode Flexibility
+  translate: true
+  notes:
+  - key=about_learn_language_title
+  sources:
+  - file: scripts/sql/add_about_page_translations.sql
+    line: 11
+    kind: sql_seed
+- key: about_learn_media_desc
+  english: Images, audio, and video can support recognition, pronunciation, and context when they are available in the learning
+    content.
+  translate: true
+  notes:
+  - key=about_learn_media_desc
+  sources:
+  - file: scripts/sql/add_about_page_translations.sql
+    line: 14
+    kind: sql_seed
+- key: about_learn_media_title
+  english: Media Support
+  translate: true
+  notes:
+  - key=about_learn_media_title
+  sources:
+  - file: scripts/sql/add_about_page_translations.sql
+    line: 13
+    kind: sql_seed
+- key: about_learn_modes_desc
+  english: Use Learn to build recognition and confidence, then switch to Test when you want stricter recall and faster review.
+  translate: true
+  notes:
+  - key=about_learn_modes_desc
+  sources:
+  - file: scripts/sql/add_about_page_translations.sql
+    line: 10
+    kind: sql_seed
+- key: about_learn_modes_title
+  english: Learn and Test
+  translate: true
+  notes:
+  - key=about_learn_modes_title
+  sources:
+  - file: scripts/sql/add_about_page_translations.sql
+    line: 9
+    kind: sql_seed
+- key: about_learn_title
+  english: How You Learn
+  translate: true
+  notes:
+  - key=about_learn_title
+  sources:
+  - file: scripts/sql/add_about_page_translations.sql
+    line: 8
+    kind: sql_seed
+- key: about_organize_collections_desc
+  english: Collections combine multiple subjects into one study flow, which is useful for mixed review and curated sets.
+  translate: true
+  notes:
+  - key=about_organize_collections_desc
+  sources:
+  - file: scripts/sql/add_about_page_translations.sql
+    line: 23
+    kind: sql_seed
+- key: about_organize_collections_title
+  english: Collections
+  translate: true
+  notes:
+  - key=about_organize_collections_title
+  sources:
+  - file: scripts/sql/add_about_page_translations.sql
+    line: 22
+    kind: sql_seed
+- key: about_organize_creation_desc
+  english: Creators can organize their own content, keep it private while working, or expose it through the public library
+    when it is ready.
+  translate: true
+  notes:
+  - key=about_organize_creation_desc
+  sources:
+  - file: scripts/sql/add_about_page_translations.sql
+    line: 25
+    kind: sql_seed
+- key: about_organize_creation_title
+  english: Ownership and Visibility
+  translate: true
+  notes:
+  - key=about_organize_creation_title
+  sources:
+  - file: scripts/sql/add_about_page_translations.sql
+    line: 24
+    kind: sql_seed
+- key: about_organize_folders_desc
+  english: Folders group related subjects inside a pillar so larger content sets stay manageable.
+  translate: true
+  notes:
+  - key=about_organize_folders_desc
+  sources:
+  - file: scripts/sql/add_about_page_translations.sql
+    line: 21
+    kind: sql_seed
+- key: about_organize_folders_title
+  english: Folders
+  translate: true
+  notes:
+  - key=about_organize_folders_title
+  sources:
+  - file: scripts/sql/add_about_page_translations.sql
+    line: 20
+    kind: sql_seed
+- key: about_organize_subjects_desc
+  english: Subjects are the main unit of study. They hold the cards you open in Learn and Test sessions.
+  translate: true
+  notes:
+  - key=about_organize_subjects_desc
+  sources:
+  - file: scripts/sql/add_about_page_translations.sql
+    line: 19
+    kind: sql_seed
+- key: about_organize_subjects_title
+  english: Subjects
+  translate: true
+  notes:
+  - key=about_organize_subjects_title
+  sources:
+  - file: scripts/sql/add_about_page_translations.sql
+    line: 18
+    kind: sql_seed
+- key: about_organize_title
+  english: How Content Is Organized
+  translate: true
+  notes:
+  - key=about_organize_title
+  sources:
+  - file: scripts/sql/add_about_page_translations.sql
+    line: 17
+    kind: sql_seed
+- key: about_progress_goals_desc
+  english: Your profile lets you tune daily goal targets, learn session size, test session size, and number of answers.
+  translate: true
+  notes:
+  - key=about_progress_goals_desc
+  sources:
+  - file: scripts/sql/add_about_page_translations.sql
+    line: 30
+    kind: sql_seed
+- key: about_progress_goals_title
+  english: Daily Goals and Session Settings
+  translate: true
+  notes:
+  - key=about_progress_goals_title
+  sources:
+  - file: scripts/sql/add_about_page_translations.sql
+    line: 29
+    kind: sql_seed
+- key: about_progress_social_desc
+  english: Friends and leaderboard features make progress social without changing the core learning flow.
+  translate: true
+  notes:
+  - key=about_progress_social_desc
+  sources:
+  - file: scripts/sql/add_about_page_translations.sql
+    line: 32
+    kind: sql_seed
+- key: about_progress_social_title
+  english: Friends and Leaderboard
+  translate: true
+  notes:
+  - key=about_progress_social_title
+  sources:
+  - file: scripts/sql/add_about_page_translations.sql
+    line: 31
+    kind: sql_seed
+- key: about_progress_title
+  english: Progress, Friends, and Leaderboard
+  translate: true
+  notes:
+  - key=about_progress_title
+  sources:
+  - file: scripts/sql/add_about_page_translations.sql
+    line: 26
+    kind: sql_seed
+- key: about_progress_xp_desc
+  english: Aliolo tracks total XP, current streak, and max streak so progress feels visible across short and long study periods.
+  translate: true
+  notes:
+  - key=about_progress_xp_desc
+  sources:
+  - file: scripts/sql/add_about_page_translations.sql
+    line: 28
+    kind: sql_seed
+- key: about_progress_xp_title
+  english: XP and Streaks
+  translate: true
+  notes:
+  - key=about_progress_xp_title
+  sources:
+  - file: scripts/sql/add_about_page_translations.sql
+    line: 27
+    kind: sql_seed
+- key: about_support_docs_desc
+  english: The in-app documentation page explains how the dashboard, study flows, and creator tools work today.
+  translate: true
+  notes:
+  - key=about_support_docs_desc
+  sources:
+  - file: scripts/sql/add_about_page_translations.sql
+    line: 37
+    kind: sql_seed
+- key: about_support_docs_title
+  english: Documentation
+  translate: true
+  notes:
+  - key=about_support_docs_title
+  sources:
+  - file: scripts/sql/add_about_page_translations.sql
+    line: 36
+    kind: sql_seed
+- key: about_support_feedback_desc
+  english: Use feedback entry points across the app to report bugs, suggest improvements, or flag specific content issues
+    with context.
+  translate: true
+  notes:
+  - key=about_support_feedback_desc
+  sources:
+  - file: scripts/sql/add_about_page_translations.sql
+    line: 39
+    kind: sql_seed
+- key: about_support_feedback_title
+  english: Feedback and Reporting
+  translate: true
+  notes:
+  - key=about_support_feedback_title
+  sources:
+  - file: scripts/sql/add_about_page_translations.sql
+    line: 38
+    kind: sql_seed
+- key: about_support_licenses_desc
+  english: The licenses page lists Aliolo's commercial license first and then the bundled third-party package licenses.
+  translate: true
+  notes:
+  - key=about_support_licenses_desc
+  sources:
+  - file: scripts/sql/add_about_page_translations.sql
+    line: 43
+    kind: sql_seed
+- key: about_support_licenses_title
+  english: Licenses
+  translate: true
+  notes:
+  - key=about_support_licenses_title
+  sources:
+  - file: scripts/sql/add_about_page_translations.sql
+    line: 42
+    kind: sql_seed
+- key: about_support_onboarding_desc
+  english: You can revisit onboarding at any time to review the app's main ideas and setup flow.
+  translate: true
+  notes:
+  - key=about_support_onboarding_desc
+  sources:
+  - file: scripts/sql/add_about_page_translations.sql
+    line: 41
+    kind: sql_seed
+- key: about_support_onboarding_title
+  english: Onboarding
+  translate: true
+  notes:
+  - key=about_support_onboarding_title
+  sources:
+  - file: scripts/sql/add_about_page_translations.sql
+    line: 40
+    kind: sql_seed
+- key: about_support_settings_desc
+  english: UI language, theme mode, theme color, sound, sidebar placement, and documentation visibility can all be adjusted
+    from settings.
+  translate: true
+  notes:
+  - key=about_support_settings_desc
+  sources:
+  - file: scripts/sql/add_about_page_translations.sql
+    line: 35
+    kind: sql_seed
+- key: about_support_settings_title
+  english: Personalization
+  translate: true
+  notes:
+  - key=about_support_settings_title
+  sources:
+  - file: scripts/sql/add_about_page_translations.sql
+    line: 34
+    kind: sql_seed
+- key: about_support_title
+  english: Settings, Feedback, and Support
+  translate: true
+  notes:
+  - key=about_support_title
+  sources:
+  - file: scripts/sql/add_about_page_translations.sql
+    line: 33
+    kind: sql_seed
+- key: addition_emoji
+  english: Addition Emoji
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/management/presentation/pages/add_card_page.dart
+    line: 1213
+    kind: Text
+- key: addition_numbers
+  english: Addition Numbers
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/management/presentation/pages/add_card_page.dart
+    line: 1217
+    kind: Text
+- key: aliolo
+  english: aliolo
+  translate: false
+  notes: []
+  sources:
+  - file: lib/features/auth/presentation/pages/login_page.dart
+    line: 418
+    kind: Text
+  - file: lib/features/management/presentation/pages/users_page.dart
+    line: 397
+    kind: Text
+  - file: lib/features/settings/presentation/pages/about_page.dart
+    line: 323
+    kind: Text
+- key: all_rights_reserved
+  english: All rights reserved
+  translate: true
+  notes: []
+  sources:
+  - file: scripts/generate_ui_translations.py
+    line: 0
+    kind: explicit
+- key: are_you_sure_you_want_to_close_this_feedback_request
+  english: Are you sure you want to close this feedback request?
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/management/presentation/pages/feedback_detail_page.dart
+    line: 192
+    kind: Text
+- key: are_you_sure_you_want_to_delete_this_folder
+  english: Are you sure you want to delete this folder?
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/management/presentation/pages/subject_edit_page.dart
+    line: 1002
+    kind: Text
+  - file: lib/features/subjects/presentation/pages/subject_page.dart
+    line: 2139
+    kind: Text
+- key: attach_image
+  english: Attach image
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/management/presentation/pages/feedback_detail_page.dart
+    line: 639
+    kind: prop
+- key: back
+  english: Back
+  translate: true
+  notes: []
+  sources:
+  - file: scripts/generate_ui_translations.py
+    line: 0
+    kind: explicit
+- key: best_for_quick_goals
+  english: Best for quick goals
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/settings/presentation/pages/billing_page.dart
+    line: 72
+    kind: helper
+- key: browser
+  english: Browser
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/management/presentation/pages/feedback_detail_page.dart
+    line: 420
+    kind: detail_row
+- key: cancel
+  english: Cancel
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/management/presentation/pages/feedback_detail_page.dart
+    line: 198
+    kind: Text
+  - file: lib/features/management/presentation/pages/feedback_detail_page.dart
+    line: 515
+    kind: Text
+- key: cannot_delete_folder_it_is_not_empty
+  english: 'Cannot delete folder: it is not empty'
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/management/presentation/pages/subject_edit_page.dart
+    line: 1024
+    kind: helper
+- key: card_id
+  english: Card ID
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/management/presentation/pages/feedback_detail_page.dart
+    line: 391
+    kind: detail_row
+- key: check_your_email_for_code
+  english: Check your email for code
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/auth/presentation/pages/login_page.dart
+    line: 471
+    kind: Text
+- key: clear
+  english: Clear
+  translate: true
+  notes:
+  - key=clear
+  sources:
+  - file: scripts/sql/add_users_admin_translations.sql
+    line: 5
+    kind: sql_seed
+- key: click_to_view_original
+  english: Click to view original
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/management/presentation/pages/feedback_detail_page.dart
+    line: 686
+    kind: prop
+- key: close
+  english: Close
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/management/presentation/pages/feedback_detail_page.dart
+    line: 203
+    kind: Text
+- key: close_request
+  english: Close Request?
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/management/presentation/pages/feedback_detail_page.dart
+    line: 191
+    kind: Text
+- key: collection_id
+  english: Collection ID
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/management/presentation/pages/feedback_detail_page.dart
+    line: 384
+    kind: detail_row
+- key: colors
+  english: Colors
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/management/presentation/pages/add_card_page.dart
+    line: 1227
+    kind: Text
+- key: context
+  english: Context
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/management/presentation/pages/feedback_detail_page.dart
+    line: 363
+    kind: detail_row
+  - file: lib/features/management/presentation/pages/feedback_detail_page.dart
+    line: 474
+    kind: detail_row
+  - file: lib/features/management/presentation/pages/feedback_management_page.dart
+    line: 288
+    kind: manual
+- key: could_not_launch
+  english: Could not launch $url
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/management/presentation/pages/add_card_page.dart
+    line: 388
+    kind: helper
+- key: counting
+  english: Counting
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/management/presentation/pages/add_card_page.dart
+    line: 1210
+    kind: Text
+- key: delete
+  english: Delete
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/management/presentation/pages/feedback_detail_page.dart
+    line: 507
+    kind: Text
+- key: device
+  english: Device
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/management/presentation/pages/feedback_detail_page.dart
+    line: 436
+    kind: detail_row
+- key: doc_create_intro_desc
+  english: This tab covers how creators organize content, localize it, and publish useful study material without overcomplicating
+    the workflow.
+  translate: true
+  notes:
+  - key=doc_create_intro_desc
+  sources:
+  - file: scripts/sql/add_documentation_page_translations.sql
+    line: 10
+    kind: sql_seed
+- key: doc_create_intro_title
+  english: Create
+  translate: true
+  notes:
+  - key=doc_create_intro_title
+  sources:
+  - file: scripts/sql/add_documentation_page_translations.sql
+    line: 9
+    kind: sql_seed
+- key: doc_create_json_desc
+  english: JSON-based creation is an advanced workflow for structured bulk content. It should remain optional; most creators
+    should be able to build and edit content through the standard forms.
+  translate: true
+  notes:
+  - key=doc_create_json_desc
+  sources:
+  - file: scripts/sql/add_documentation_page_translations.sql
+    line: 38
+    kind: sql_seed
+- key: doc_create_json_title
+  english: Advanced JSON Import
+  translate: true
+  notes:
+  - key=doc_create_json_title
+  sources:
+  - file: scripts/sql/add_documentation_page_translations.sql
+    line: 37
+    kind: sql_seed
+- key: doc_create_localization_desc
+  english: 'Localize content where it matters most: names, descriptions, prompts, and answers. Keep labels consistent across
+    languages so users can switch study language without losing structure.'
+  translate: true
+  notes:
+  - key=doc_create_localization_desc
+  sources:
+  - file: scripts/sql/add_documentation_page_translations.sql
+    line: 34
+    kind: sql_seed
+- key: doc_create_localization_title
+  english: Localization
+  translate: true
+  notes:
+  - key=doc_create_localization_title
+  sources:
+  - file: scripts/sql/add_documentation_page_translations.sql
+    line: 33
+    kind: sql_seed
+- key: doc_create_media_desc
+  english: Images, audio, and video should support the learning goal, not distract from it. Add media when it improves recognition,
+    pronunciation, or context, and keep cards usable even when media is missing.
+  translate: true
+  notes:
+  - key=doc_create_media_desc
+  sources:
+  - file: scripts/sql/add_documentation_page_translations.sql
+    line: 36
+    kind: sql_seed
+- key: doc_create_media_title
+  english: Media Workflow
+  translate: true
+  notes:
+  - key=doc_create_media_title
+  sources:
+  - file: scripts/sql/add_documentation_page_translations.sql
+    line: 35
+    kind: sql_seed
+- key: doc_create_model_desc
+  english: Creators work inside pillars and organize material with folders, subjects, collections, and cards. Build the structure
+    first, then fill it with localized prompts, answers, and optional media.
+  translate: true
+  notes:
+  - key=doc_create_model_desc
+  sources:
+  - file: scripts/sql/add_documentation_page_translations.sql
+    line: 30
+    kind: sql_seed
+- key: doc_create_model_title
+  english: Content Model
+  translate: true
+  notes:
+  - key=doc_create_model_title
+  sources:
+  - file: scripts/sql/add_documentation_page_translations.sql
+    line: 29
+    kind: sql_seed
+- key: doc_create_visibility_desc
+  english: Use "mine" to work on your own content, favorites to pin useful items, and public library to browse shared material.
+    Public visibility affects discovery, while ownership affects what you can edit or delete.
+  translate: true
+  notes:
+  - key=doc_create_visibility_desc
+  sources:
+  - file: scripts/sql/add_documentation_page_translations.sql
+    line: 32
+    kind: sql_seed
+- key: doc_create_visibility_title
+  english: Ownership and Visibility
+  translate: true
+  notes:
+  - key=doc_create_visibility_title
+  sources:
+  - file: scripts/sql/add_documentation_page_translations.sql
+    line: 31
+    kind: sql_seed
+- key: doc_start_dashboard_desc
+  english: The dashboard is your main library. Use search to find content quickly, then combine source filters such as favorites,
+    mine, and public library with age filters to reduce noise.
+  translate: true
+  notes:
+  - key=doc_start_dashboard_desc
+  sources:
+  - file: scripts/sql/add_documentation_page_translations.sql
+    line: 14
+    kind: sql_seed
+- key: doc_start_dashboard_title
+  english: Dashboard, Search, and Filters
+  translate: true
+  notes:
+  - key=doc_start_dashboard_title
+  sources:
+  - file: scripts/sql/add_documentation_page_translations.sql
+    line: 13
+    kind: sql_seed
+- key: doc_start_feedback_desc
+  english: Use the feedback entry points across the app when something is wrong or unclear. Reports can include the current
+    context, which makes content issues easier to review and fix.
+  translate: true
+  notes:
+  - key=doc_start_feedback_desc
+  sources:
+  - file: scripts/sql/add_documentation_page_translations.sql
+    line: 20
+    kind: sql_seed
+- key: doc_start_feedback_title
+  english: Feedback and Help
+  translate: true
+  notes:
+  - key=doc_start_feedback_title
+  sources:
+  - file: scripts/sql/add_documentation_page_translations.sql
+    line: 19
+    kind: sql_seed
+- key: doc_start_intro_desc
+  english: Use this tab when you are learning how the dashboard, library, progress, and social features fit together.
+  translate: true
+  notes:
+  - key=doc_start_intro_desc
+  sources:
+  - file: scripts/sql/add_documentation_page_translations.sql
+    line: 6
+    kind: sql_seed
+- key: doc_start_intro_title
+  english: Getting Started
+  translate: true
+  notes:
+  - key=doc_start_intro_title
+  sources:
+  - file: scripts/sql/add_documentation_page_translations.sql
+    line: 5
+    kind: sql_seed
+- key: doc_start_progress_desc
+  english: Your profile shows total XP, current streak, max streak, and daily goal progress. Session size and number of answers
+    are also managed from the profile page.
+  translate: true
+  notes:
+  - key=doc_start_progress_desc
+  sources:
+  - file: scripts/sql/add_documentation_page_translations.sql
+    line: 18
+    kind: sql_seed
+- key: doc_start_progress_title
+  english: Progress and Goals
+  translate: true
+  notes:
+  - key=doc_start_progress_title
+  sources:
+  - file: scripts/sql/add_documentation_page_translations.sql
+    line: 17
+    kind: sql_seed
+- key: doc_start_quick_desc
+  english: Pick a pillar on the dashboard, open a subject, and start with Learn. Use favorites and filters to narrow the library,
+    then review your XP, streaks, and daily goal from your profile.
+  translate: true
+  notes:
+  - key=doc_start_quick_desc
+  sources:
+  - file: scripts/sql/add_documentation_page_translations.sql
+    line: 12
+    kind: sql_seed
+- key: doc_start_quick_title
+  english: Quick Start
+  translate: true
+  notes:
+  - key=doc_start_quick_title
+  sources:
+  - file: scripts/sql/add_documentation_page_translations.sql
+    line: 11
+    kind: sql_seed
+- key: doc_start_structure_desc
+  english: Subjects hold cards. Folders group related content inside a pillar. Collections are curated sets that can combine
+    multiple subjects for study and sharing.
+  translate: true
+  notes:
+  - key=doc_start_structure_desc
+  sources:
+  - file: scripts/sql/add_documentation_page_translations.sql
+    line: 16
+    kind: sql_seed
+- key: doc_start_structure_title
+  english: Subjects, Folders, and Collections
+  translate: true
+  notes:
+  - key=doc_start_structure_title
+  sources:
+  - file: scripts/sql/add_documentation_page_translations.sql
+    line: 15
+    kind: sql_seed
+- key: doc_study_how_desc
+  english: Start with Learn when you are building recognition, then switch to Test when you want faster recall and stricter
+    checking. Use shorter sessions for focused review and larger sessions for broader coverage.
+  translate: true
+  notes:
+  - key=doc_study_how_desc
+  sources:
+  - file: scripts/sql/add_documentation_page_translations.sql
+    line: 22
+    kind: sql_seed
+- key: doc_study_how_title
+  english: How to Study
+  translate: true
+  notes:
+  - key=doc_study_how_title
+  sources:
+  - file: scripts/sql/add_documentation_page_translations.sql
+    line: 21
+    kind: sql_seed
+- key: doc_study_intro_desc
+  english: This tab explains how to move through content, choose the right mode, and tune your sessions for review or recall.
+  translate: true
+  notes:
+  - key=doc_study_intro_desc
+  sources:
+  - file: scripts/sql/add_documentation_page_translations.sql
+    line: 8
+    kind: sql_seed
+- key: doc_study_intro_title
+  english: Study
+  translate: true
+  notes:
+  - key=doc_study_intro_title
+  sources:
+  - file: scripts/sql/add_documentation_page_translations.sql
+    line: 7
+    kind: sql_seed
+- key: doc_study_media_desc
+  english: When media is available, use it to reinforce pronunciation and recognition. Autoplay is most useful for passive
+    review or repeated listening during shorter sessions.
+  translate: true
+  notes:
+  - key=doc_study_media_desc
+  sources:
+  - file: scripts/sql/add_documentation_page_translations.sql
+    line: 28
+    kind: sql_seed
+- key: doc_study_media_title
+  english: Audio, Autoplay, and Media
+  translate: true
+  notes:
+  - key=doc_study_media_title
+  sources:
+  - file: scripts/sql/add_documentation_page_translations.sql
+    line: 27
+    kind: sql_seed
+- key: doc_study_modes_desc
+  english: Learn and Test are the core study modes. They use the same content but support different pacing and answer expectations,
+    so switch modes based on whether you are exploring or checking retention.
+  translate: true
+  notes:
+  - key=doc_study_modes_desc
+  sources:
+  - file: scripts/sql/add_documentation_page_translations.sql
+    line: 24
+    kind: sql_seed
+- key: doc_study_modes_title
+  english: Learn and Test Modes
+  translate: true
+  notes:
+  - key=doc_study_modes_title
+  sources:
+  - file: scripts/sql/add_documentation_page_translations.sql
+    line: 23
+    kind: sql_seed
+- key: doc_study_scope_desc
+  english: Study can start from a single subject, a folder view, or a collection. Collections are useful when you want a mixed
+    session across several subjects without leaving the current flow.
+  translate: true
+  notes:
+  - key=doc_study_scope_desc
+  sources:
+  - file: scripts/sql/add_documentation_page_translations.sql
+    line: 26
+    kind: sql_seed
+- key: doc_study_scope_title
+  english: Subjects, Folders, and Collections in Study
+  translate: true
+  notes:
+  - key=doc_study_scope_title
+  sources:
+  - file: scripts/sql/add_documentation_page_translations.sql
+    line: 25
+    kind: sql_seed
+- key: doc_tab_create
+  english: Create
+  translate: true
+  notes:
+  - key=doc_tab_create
+  sources:
+  - file: scripts/sql/add_documentation_page_translations.sql
+    line: 4
+    kind: sql_seed
+- key: doc_tab_start
+  english: Start
+  translate: true
+  notes:
+  - key=doc_tab_start
+  sources:
+  - file: scripts/sql/add_documentation_page_translations.sql
+    line: 2
+    kind: sql_seed
+- key: doc_tab_study
+  english: Study
+  translate: true
+  notes:
+  - key=doc_tab_study
+  sources:
+  - file: scripts/sql/add_documentation_page_translations.sql
+    line: 3
+    kind: sql_seed
+- key: documentation
+  english: Documentation
+  translate: true
+  notes: []
+  sources:
+  - file: scripts/generate_ui_translations.py
+    line: 0
+    kind: explicit
+- key: edit_subscription
+  english: Edit subscription
+  translate: true
+  notes:
+  - key=edit_subscription
+  sources:
+  - file: scripts/sql/add_users_admin_translations.sql
+    line: 6
+    kind: sql_seed
+- key: email_updated_successfully
+  english: Email updated successfully!
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/auth/presentation/pages/profile_page.dart
+    line: 263
+    kind: Text
+- key: enter_current_password
+  english: Enter current password
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/auth/presentation/pages/profile_page.dart
+    line: 186
+    kind: prop
+- key: error
+  english: 'Error: $e'
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/auth/presentation/pages/manage_friends_page.dart
+    line: 181
+    kind: Text
+  - file: lib/features/auth/presentation/pages/manage_friends_page.dart
+    line: 181
+    kind: helper
+  - file: lib/features/auth/presentation/pages/manage_friends_page.dart
+    line: 202
+    kind: Text
+  - file: lib/features/auth/presentation/pages/manage_friends_page.dart
+    line: 202
+    kind: helper
+  - file: lib/features/management/presentation/pages/feedback_detail_page.dart
+    line: 96
+    kind: Text
+  - file: lib/features/management/presentation/pages/feedback_detail_page.dart
+    line: 96
+    kind: helper
+  - file: lib/features/management/presentation/pages/feedback_detail_page.dart
+    line: 145
+    kind: Text
+  - file: lib/features/management/presentation/pages/feedback_detail_page.dart
+    line: 145
+    kind: helper
+  - file: lib/features/management/presentation/pages/feedback_detail_page.dart
+    line: 176
+    kind: Text
+  - file: lib/features/management/presentation/pages/feedback_detail_page.dart
+    line: 176
+    kind: helper
+  - file: lib/features/management/presentation/pages/feedback_detail_page.dart
+    line: 231
+    kind: Text
+  - file: lib/features/management/presentation/pages/feedback_detail_page.dart
+    line: 231
+    kind: helper
+- key: error_deleting
+  english: 'Error deleting: $e'
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/management/presentation/pages/subject_details_page.dart
+    line: 114
+    kind: Text
+  - file: lib/features/management/presentation/pages/subject_details_page.dart
+    line: 114
+    kind: helper
+- key: error_saving
+  english: 'Error saving: $e'
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/management/presentation/pages/subject_edit_page.dart
+    line: 569
+    kind: Text
+  - file: lib/features/management/presentation/pages/subject_edit_page.dart
+    line: 569
+    kind: helper
+- key: error_saving_card
+  english: 'Error saving card: $e'
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/management/presentation/pages/add_card_page.dart
+    line: 686
+    kind: helper
+- key: error_updating_favorite
+  english: 'Error updating favorite: $e'
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/subjects/presentation/pages/subject_landing_page.dart
+    line: 323
+    kind: Text
+  - file: lib/features/subjects/presentation/pages/subject_landing_page.dart
+    line: 323
+    kind: helper
+  - file: lib/features/subjects/presentation/pages/subject_landing_page.dart
+    line: 342
+    kind: Text
+  - file: lib/features/subjects/presentation/pages/subject_landing_page.dart
+    line: 342
+    kind: helper
+  - file: lib/features/subjects/presentation/pages/subject_page.dart
+    line: 3065
+    kind: Text
+  - file: lib/features/subjects/presentation/pages/subject_page.dart
+    line: 3065
+    kind: helper
+  - file: lib/features/subjects/presentation/pages/subject_page.dart
+    line: 3215
+    kind: Text
+  - file: lib/features/subjects/presentation/pages/subject_page.dart
+    line: 3215
+    kind: helper
+- key: failed_to_send_reset_code
+  english: Failed to send reset code
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/auth/presentation/pages/login_page.dart
+    line: 330
+    kind: helper
+- key: failed_to_send_verification_code
+  english: Failed to send verification code
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/auth/presentation/pages/login_page.dart
+    line: 214
+    kind: helper
+- key: fake_only
+  english: Fake only
+  translate: true
+  notes:
+  - key=fake_only
+  sources:
+  - file: scripts/sql/add_users_admin_translations.sql
+    line: 10
+    kind: sql_seed
+- key: folder_id
+  english: Folder ID
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/management/presentation/pages/feedback_detail_page.dart
+    line: 377
+    kind: detail_row
+- key: free_only
+  english: Free users
+  translate: true
+  notes:
+  - key=free_only
+  sources:
+  - file: scripts/sql/add_users_admin_translations.sql
+    line: 11
+    kind: sql_seed
+- key: generic
+  english: Generic
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/management/presentation/pages/add_card_page.dart
+    line: 1209
+    kind: Text
+- key: home
+  english: Home
+  translate: true
+  notes: []
+  sources:
+  - file: scripts/generate_ui_translations.py
+    line: 0
+    kind: explicit
+- key: invalid_code
+  english: Invalid code
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/auth/presentation/pages/login_page.dart
+    line: 232
+    kind: helper
+- key: invalid_email_address
+  english: Invalid email address
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/auth/presentation/pages/profile_page.dart
+    line: 228
+    kind: Text
+- key: invalid_json
+  english: 'Invalid JSON: $e'
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/management/presentation/pages/add_card_page.dart
+    line: 505
+    kind: Text
+  - file: lib/features/management/presentation/pages/add_card_page.dart
+    line: 505
+    kind: helper
+  - file: lib/features/management/presentation/pages/subject_edit_page.dart
+    line: 355
+    kind: Text
+  - file: lib/features/management/presentation/pages/subject_edit_page.dart
+    line: 355
+    kind: helper
+- key: invalid_or_expired_invitation_link
+  english: Invalid or expired invitation link.
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/auth/presentation/pages/login_page.dart
+    line: 94
+    kind: helper
+- key: invalid_or_expired_reset_code
+  english: Invalid or expired reset code.
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/auth/presentation/pages/login_page.dart
+    line: 352
+    kind: helper
+- key: invitation_sent_awaiting_registration
+  english: Invitation sent (awaiting registration)
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/auth/presentation/pages/manage_friends_page.dart
+    line: 303
+    kind: Text
+- key: invited_and_request_sent
+  english: Invited and request sent!
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/auth/presentation/pages/manage_friends_page.dart
+    line: 174
+    kind: Text
+  - file: lib/features/auth/presentation/pages/manage_friends_page.dart
+    line: 174
+    kind: helper
+- key: json
+  english: JSON
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/management/presentation/pages/add_card_page.dart
+    line: 785
+    kind: prop
+  - file: lib/features/management/presentation/pages/subject_edit_page.dart
+    line: 985
+    kind: prop
+- key: label_suffix
+  english: '$label:'
+  translate: false
+  notes: []
+  sources:
+  - file: lib/features/management/presentation/pages/feedback_detail_page.dart
+    line: 547
+    kind: Text
+- key: leaderboard
+  english: Leaderboard
+  translate: true
+  notes: []
+  sources:
+  - file: scripts/generate_ui_translations.py
+    line: 0
+    kind: explicit
+- key: licenses
+  english: Licenses
+  translate: true
+  notes: []
+  sources:
+  - file: scripts/generate_ui_translations.py
+    line: 0
+    kind: explicit
+- key: licenses_aliolo_section_title
+  english: Aliolo Commercial License
+  translate: true
+  notes:
+  - key=licenses_aliolo_section_title
+  sources:
+  - file: scripts/sql/add_licenses_page_translations.sql
+    line: 4
+    kind: sql_seed
+- key: licenses_aliolo_subtitle
+  english: Proprietary software and premium access terms
+  translate: true
+  notes:
+  - key=licenses_aliolo_subtitle
+  sources:
+  - file: scripts/sql/add_licenses_page_translations.sql
+    line: 5
+    kind: sql_seed
+- key: licenses_intro_desc
+  english: Aliolo's commercial license appears first. Third-party package licenses follow below.
+  translate: true
+  notes:
+  - key=licenses_intro_desc
+  sources:
+  - file: scripts/sql/add_licenses_page_translations.sql
+    line: 3
+    kind: sql_seed
+- key: licenses_intro_title
+  english: Aliolo License and Package Notices
+  translate: true
+  notes:
+  - key=licenses_intro_title
+  sources:
+  - file: scripts/sql/add_licenses_page_translations.sql
+    line: 2
+    kind: sql_seed
+- key: licenses_third_party_section_title
+  english: Third-Party Package Licenses
+  translate: true
+  notes:
+  - key=licenses_third_party_section_title
+  sources:
+  - file: scripts/sql/add_licenses_page_translations.sql
+    line: 6
+    kind: sql_seed
+- key: linux_distro
+  english: Linux Distro
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/management/presentation/pages/feedback_detail_page.dart
+    line: 444
+    kind: detail_row
+- key: loading
+  english: Loading...
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/management/presentation/pages/subject_edit_page.dart
+    line: 731
+    kind: Text
+- key: localized_data
+  english: Localized Data
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/management/presentation/pages/add_card_page.dart
+    line: 522
+    kind: Text
+  - file: lib/features/management/presentation/pages/add_card_page.dart
+    line: 542
+    kind: Text
+  - file: lib/features/management/presentation/pages/subject_edit_page.dart
+    line: 372
+    kind: Text
+  - file: lib/features/management/presentation/pages/subject_edit_page.dart
+    line: 392
+    kind: Text
+- key: monthly_access
+  english: Monthly Access
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/settings/presentation/pages/billing_page.dart
+    line: 63
+    kind: helper
+- key: most_popular_choice
+  english: Most popular choice
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/settings/presentation/pages/billing_page.dart
+    line: 65
+    kind: helper
+- key: new_email
+  english: New Email
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/auth/presentation/pages/profile_page.dart
+    line: 176
+    kind: prop
+- key: no_cards_available_for_this_session
+  english: No cards available for this session.
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/subjects/presentation/pages/subject_landing_page.dart
+    line: 473
+    kind: Text
+- key: no_cards_found
+  english: No cards found
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/subjects/presentation/pages/subject_landing_page.dart
+    line: 1105
+    kind: Text
+- key: no_subjects_found
+  english: No subjects found
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/subjects/presentation/pages/subject_page.dart
+    line: 675
+    kind: Text
+  - file: lib/features/subjects/presentation/pages/subject_page.dart
+    line: 1593
+    kind: Text
+  - file: lib/features/subjects/presentation/pages/subject_page.dart
+    line: 2459
+    kind: Text
+- key: no_subjects_found_in_this_collection
+  english: No subjects found in this collection
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/subjects/presentation/pages/subject_landing_page.dart
+    line: 999
+    kind: Text
+- key: no_users_found
+  english: No users found
+  translate: true
+  notes:
+  - key=no_users_found
+  sources:
+  - file: scripts/sql/add_users_admin_translations.sql
+    line: 14
+    kind: sql_seed
+- key: os_version
+  english: OS Version
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/management/presentation/pages/feedback_detail_page.dart
+    line: 428
+    kind: detail_row
+- key: password_updated_successfully
+  english: Password updated successfully!
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/auth/presentation/pages/login_page.dart
+    line: 348
+    kind: helper
+- key: payments_are_not_yet_integrated_on_web_please_use_the_mobile_app_to_upgrade
+  english: Payments are not yet integrated on Web. Please use the mobile app to upgrade.
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/settings/presentation/pages/billing_page.dart
+    line: 25
+    kind: Text
+  - file: lib/features/settings/presentation/pages/billing_page.dart
+    line: 25
+    kind: helper
+- key: personal_data
+  english: Personal data
+  translate: true
+  notes:
+  - key=personal_data
+  sources:
+  - file: scripts/sql/add_users_admin_translations.sql
+    line: 12
+    kind: sql_seed
+- key: pick_date
+  english: Pick date
+  translate: true
+  notes:
+  - key=pick_date
+  sources:
+  - file: scripts/sql/add_users_admin_translations.sql
+    line: 7
+    kind: sql_seed
+- key: platform
+  english: Platform
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/management/presentation/pages/feedback_detail_page.dart
+    line: 412
+    kind: detail_row
+- key: play
+  english: Play
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/management/presentation/pages/add_card_page.dart
+    line: 1434
+    kind: prop
+  - file: lib/features/management/presentation/pages/add_card_page.dart
+    line: 1482
+    kind: prop
+- key: please_enter_the_6_digit_code
+  english: Please enter the 6-digit code
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/auth/presentation/pages/login_page.dart
+    line: 223
+    kind: helper
+- key: please_wait_for_a_response_before_replying_again
+  english: Please wait for a response before replying again.
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/management/presentation/pages/feedback_detail_page.dart
+    line: 290
+    kind: Text
+- key: premium_only
+  english: Premium only
+  translate: true
+  notes:
+  - key=premium_only
+  sources:
+  - file: scripts/sql/add_users_admin_translations.sql
+    line: 9
+    kind: sql_seed
+- key: product_not_available_in_store
+  english: Product not available in store.
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/settings/presentation/pages/billing_page.dart
+    line: 50
+    kind: Text
+  - file: lib/features/settings/presentation/pages/billing_page.dart
+    line: 50
+    kind: helper
+- key: profile
+  english: Profile
+  translate: true
+  notes: []
+  sources:
+  - file: scripts/generate_ui_translations.py
+    line: 0
+    kind: explicit
+- key: public_other_subject
+  english: Public/Other Subject
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/management/presentation/pages/add_card_page.dart
+    line: 1173
+    kind: Text
+- key: purchase_failed
+  english: 'Purchase failed: $e'
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/settings/presentation/pages/billing_page.dart
+    line: 43
+    kind: Text
+  - file: lib/features/settings/presentation/pages/billing_page.dart
+    line: 43
+    kind: helper
+- key: recovery_error
+  english: 'Recovery error: $e'
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/auth/presentation/pages/login_page.dart
+    line: 356
+    kind: helper
+- key: refresh_conversation
+  english: Refresh conversation
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/management/presentation/pages/feedback_detail_page.dart
+    line: 252
+    kind: prop
+- key: renderer
+  english: Renderer
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/management/presentation/pages/add_card_page.dart
+    line: 1204
+    kind: prop
+- key: reset_code
+  english: Reset Code
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/auth/presentation/pages/login_page.dart
+    line: 639
+    kind: prop
+- key: reset_code_sent_to_please_check_your_inbox
+  english: Reset code sent to $email. Please check your inbox.
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/auth/presentation/pages/login_page.dart
+    line: 327
+    kind: helper
+- key: restore_purchases
+  english: Restore Purchases
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/auth/presentation/pages/profile_page.dart
+    line: 757
+    kind: Text
+- key: save
+  english: Save
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/management/presentation/pages/feedback_detail_page.dart
+    line: 526
+    kind: Text
+- key: save_33_per_month
+  english: Save 33% per month
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/settings/presentation/pages/billing_page.dart
+    line: 78
+    kind: helper
+- key: saved_successfully
+  english: Saved successfully
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/management/presentation/pages/subject_edit_page.dart
+    line: 491
+    kind: helper
+  - file: lib/features/management/presentation/pages/subject_edit_page.dart
+    line: 517
+    kind: helper
+  - file: lib/features/management/presentation/pages/subject_edit_page.dart
+    line: 555
+    kind: helper
+- key: search_users
+  english: Search users
+  translate: true
+  notes:
+  - key=search_users
+  sources:
+  - file: scripts/sql/add_users_admin_translations.sql
+    line: 4
+    kind: sql_seed
+- key: settings
+  english: Settings
+  translate: true
+  notes: []
+  sources:
+  - file: scripts/generate_ui_translations.py
+    line: 0
+    kind: explicit
+- key: show_documentation_btn
+  english: Show documentation button
+  translate: true
+  notes: []
+  sources:
+  - file: scripts/generate_ui_translations.py
+    line: 0
+    kind: explicit
+- key: show_documentation_btn_desc
+  english: Display the documentation button in the app bar.
+  translate: true
+  notes: []
+  sources:
+  - file: scripts/generate_ui_translations.py
+    line: 0
+    kind: explicit
+- key: subject_id
+  english: Subject ID
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/management/presentation/pages/feedback_detail_page.dart
+    line: 370
+    kind: detail_row
+- key: subscription_data
+  english: Subscription data
+  translate: true
+  notes:
+  - key=subscription_data
+  sources:
+  - file: scripts/sql/add_users_admin_translations.sql
+    line: 13
+    kind: sql_seed
+- key: subscription_updated
+  english: Subscription updated
+  translate: true
+  notes:
+  - key=subscription_updated
+  sources:
+  - file: scripts/sql/add_users_admin_translations.sql
+    line: 8
+    kind: sql_seed
+- key: subtraction_emoji
+  english: Subtraction Emoji
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/management/presentation/pages/add_card_page.dart
+    line: 1221
+    kind: Text
+- key: subtraction_numbers
+  english: Subtraction Numbers
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/management/presentation/pages/add_card_page.dart
+    line: 1225
+    kind: Text
+- key: technical_context
+  english: TECHNICAL CONTEXT
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/management/presentation/pages/feedback_detail_page.dart
+    line: 402
+    kind: Text
+- key: testing_mode
+  english: Testing mode
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/testing/presentation/pages/test_page.dart
+    line: 278
+    kind: prop
+- key: text
+  english: Text
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/management/presentation/pages/add_card_page.dart
+    line: 1112
+    kind: prop
+- key: this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards
+  english: This is a folder. You can use Learn/Test buttons above to practice all cards.
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/subjects/presentation/pages/subject_landing_page.dart
+    line: 990
+    kind: Text
+- key: type_your_reply
+  english: Type your reply...
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/management/presentation/pages/feedback_detail_page.dart
+    line: 647
+    kind: prop
+- key: ua
+  english: UA
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/management/presentation/pages/feedback_detail_page.dart
+    line: 461
+    kind: manual
+- key: unknown_user_profile_missing
+  english: Unknown User (Profile missing)
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/auth/presentation/pages/manage_friends_page.dart
+    line: 262
+    kind: Text
+- key: user
+  english: User
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/management/presentation/pages/feedback_detail_page.dart
+    line: 350
+    kind: detail_row
+- key: user_id
+  english: User ID
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/management/presentation/pages/feedback_detail_page.dart
+    line: 356
+    kind: detail_row
+- key: user_with_this_email_already_exists_please_log_in_instead
+  english: User with this email already exists. Please log in instead.
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/auth/presentation/pages/login_page.dart
+    line: 212
+    kind: helper
+- key: users
+  english: Users
+  translate: true
+  notes:
+  - key=users
+  sources:
+  - file: scripts/sql/add_users_admin_translations.sql
+    line: 2
+    kind: sql_seed
+- key: users_filter
+  english: Filter users
+  translate: true
+  notes:
+  - key=users_filter
+  sources:
+  - file: scripts/sql/add_users_admin_translations.sql
+    line: 3
+    kind: sql_seed
+- key: verification_code
+  english: Verification Code
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/auth/presentation/pages/login_page.dart
+    line: 483
+    kind: prop
+  - file: lib/features/auth/presentation/pages/profile_page.dart
+    line: 199
+    kind: prop
+- key: verification_code_sent_to
+  english: Verification code sent to $email
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/auth/presentation/pages/login_page.dart
+    line: 208
+    kind: helper
+- key: version
+  english: Version
+  translate: true
+  notes: []
+  sources:
+  - file: scripts/generate_ui_translations.py
+    line: 0
+    kind: explicit
+- key: view_onboarding
+  english: View onboarding
+  translate: true
+  notes: []
+  sources:
+  - file: scripts/generate_ui_translations.py
+    line: 0
+    kind: explicit
+- key: weekly_access
+  english: Weekly Access
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/settings/presentation/pages/billing_page.dart
+    line: 70
+    kind: helper
+- key: welcome_complete_your_profile_to_join_aliolo
+  english: Welcome! Complete your profile to join aliolo.
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/auth/presentation/pages/login_page.dart
+    line: 92
+    kind: helper
+- key: yearly_access
+  english: Yearly Access
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/settings/presentation/pages/billing_page.dart
+    line: 76
+    kind: helper
+- key: you_do_not_have_permission_to_edit_this_card
+  english: You do not have permission to edit this card
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/management/presentation/pages/subject_details_page.dart
+    line: 326
+    kind: prop
+- key: you_do_not_have_permission_to_view_this_card_details
+  english: You do not have permission to view this card details.
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/management/presentation/pages/add_card_page.dart
+    line: 708
+    kind: Text

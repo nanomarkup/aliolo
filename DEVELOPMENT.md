@@ -95,3 +95,4 @@ You can use these scripts from the project root:
 - **Run Golden Tests**: `./scripts/test_goldens.sh` (use `--update` to refresh baselines)
 - **Build**: `./scripts/build.sh`
 - **Deploy**: `./scripts/deploy.sh`
+- **Generate UI Translations**: `python3 scripts/generate_ui_translations.py scan|sql|refresh`

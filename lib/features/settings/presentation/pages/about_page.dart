@@ -159,23 +159,16 @@ class _AboutPageState extends State<AboutPage> {
   Widget _buildSectionCard(
     BuildContext context,
     _AboutSection section,
-    Color color,
-  ) {
+    Color color, {
+    required Color backgroundColor,
+  }) {
     final bodyColor = Theme.of(context).textTheme.bodyMedium?.color;
     return Container(
       margin: const EdgeInsets.only(bottom: 18),
-      padding: const EdgeInsets.all(18),
+      padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Theme.of(context).cardColor,
-        borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: Theme.of(context).dividerColor),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.03),
-            blurRadius: 14,
-            offset: const Offset(0, 5),
-          ),
-        ],
+        color: backgroundColor,
+        borderRadius: BorderRadius.circular(22),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -200,71 +193,13 @@ class _AboutPageState extends State<AboutPage> {
               ),
             ),
           ],
-          const SizedBox(height: 16),
-          ...section.items.asMap().entries.map(
-            (entry) => Column(
-              children: [
-                if (entry.key != 0) ...[
-                  Divider(height: 24, color: Theme.of(context).dividerColor),
-                ],
-                _buildAboutItemRow(context, entry.value, color),
-              ],
-            ),
+          const SizedBox(height: 18),
+          ...section.items.asMap().entries.expand(
+            (entry) => [
+              if (entry.key != 0) const SizedBox(height: 16),
+              _buildAboutItemRow(context, entry.value, color),
+            ],
           ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildIntroPanel(
-    BuildContext context,
-    _AboutSection section,
-    Color color,
-  ) {
-    final bodyColor = Theme.of(context).textTheme.bodyMedium?.color;
-    return Container(
-      margin: const EdgeInsets.only(bottom: 18),
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.08),
-        borderRadius: BorderRadius.circular(22),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            section.title,
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: color,
-            ),
-          ),
-          if (section.description != null &&
-              section.description!.trim().isNotEmpty) ...[
-            const SizedBox(height: 10),
-            Text(
-              section.description!,
-              style: TextStyle(
-                fontSize: 15,
-                height: 1.55,
-                color: bodyColor?.withValues(alpha: 0.82),
-              ),
-            ),
-          ],
-          if (section.items.isNotEmpty) ...[
-            const SizedBox(height: 18),
-            ...section.items.asMap().entries.map(
-              (entry) => Column(
-                children: [
-                  if (entry.key != 0) ...[
-                    Divider(height: 24, color: color.withValues(alpha: 0.16)),
-                  ],
-                  _buildAboutItemRow(context, entry.value, color),
-                ],
-              ),
-            ),
-          ],
         ],
       ),
     );
@@ -432,13 +367,28 @@ class _AboutPageState extends State<AboutPage> {
       return const SizedBox.shrink();
     }
 
+    final neutralBackground = Theme.of(context).colorScheme.surface;
+    final introBackground = color.withValues(alpha: 0.08);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildIntroPanel(context, sections.first, color),
+        _buildSectionCard(
+          context,
+          sections.first,
+          color,
+          backgroundColor: introBackground,
+        ),
         ...sections
             .skip(1)
-            .map((section) => _buildSectionCard(context, section, color)),
+            .map(
+              (section) => _buildSectionCard(
+                context,
+                section,
+                color,
+                backgroundColor: neutralBackground,
+              ),
+            ),
       ],
     );
   }

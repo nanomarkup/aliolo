@@ -72,6 +72,15 @@ class DocumentationPage extends StatelessWidget {
                 MaterialPageRoute(builder: (context) => const SettingsPage()),
               ),
         );
+        final docAction = IconButton(
+          tooltip: context.t('documentation'),
+          icon: const Icon(Icons.help_outline),
+          onPressed:
+              () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const DocumentationPage()),
+              ),
+        );
 
         final gettingStartedSections = [
           _Section(
@@ -211,19 +220,29 @@ class DocumentationPage extends StatelessWidget {
             appBarColor: currentPrimaryColor,
             actions:
                 isSmallScreen
-                    ? [homeAction, profileAction]
+                    ? [homeAction, profileAction, docAction]
                     : [
                       homeAction,
                       leaderboardAction,
                       profileAction,
                       settingsAction,
+                      docAction,
                     ],
             overflowActions:
                 isSmallScreen ? [leaderboardAction, settingsAction] : null,
             body: Column(
               children: [
+                const SizedBox(height: 14),
                 TabBar(
                   tabAlignment: TabAlignment.fill,
+                  labelStyle: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  unselectedLabelStyle: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.normal,
+                  ),
                   labelColor: currentPrimaryColor,
                   unselectedLabelColor: Colors.grey,
                   indicatorColor: currentPrimaryColor,
@@ -234,26 +253,24 @@ class DocumentationPage extends StatelessWidget {
                     Tab(text: context.t('doc_tab_create')),
                   ],
                 ),
+                const SizedBox(height: 18),
                 Expanded(
                   child: TabBarView(
                     children: [
                       _buildTabContent(
                         context: context,
-                        title: context.t('doc_start_intro_title'),
                         summary: context.t('doc_start_intro_desc'),
                         sections: gettingStartedSections,
                         color: currentPrimaryColor,
                       ),
                       _buildTabContent(
                         context: context,
-                        title: context.t('doc_study_intro_title'),
                         summary: context.t('doc_study_intro_desc'),
                         sections: studySections,
                         color: currentPrimaryColor,
                       ),
                       _buildTabContent(
                         context: context,
-                        title: context.t('doc_create_intro_title'),
                         summary: context.t('doc_create_intro_desc'),
                         sections: creatorSections,
                         color: currentPrimaryColor,
@@ -271,7 +288,6 @@ class DocumentationPage extends StatelessWidget {
 
   Widget _buildTabContent({
     required BuildContext context,
-    required String title,
     required String summary,
     required List<_Section> sections,
     required Color color,
@@ -281,80 +297,22 @@ class DocumentationPage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildTabIntro(context, title, summary, color),
-          const SizedBox(height: 16),
-          _buildTabItemsCard(context, sections, color),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildTabIntro(
-    BuildContext context,
-    String title,
-    String summary,
-    Color color,
-  ) {
-    final bodyColor = Theme.of(context).textTheme.bodyMedium?.color;
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 4),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-              color: color,
-            ),
-          ),
-          const SizedBox(height: 8),
           Text(
             summary,
             style: TextStyle(
               fontSize: 15,
-              height: 1.5,
-              color: bodyColor?.withValues(alpha: 0.8),
+              height: 1.55,
+              color: Theme.of(
+                context,
+              ).textTheme.bodyMedium?.color?.withValues(alpha: 0.8),
             ),
           ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildTabItemsCard(
-    BuildContext context,
-    List<_Section> sections,
-    Color color,
-  ) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(18),
-      decoration: BoxDecoration(
-        color: Theme.of(context).cardColor,
-        borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: Theme.of(context).dividerColor),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.03),
-            blurRadius: 14,
-            offset: const Offset(0, 5),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ...sections.asMap().entries.map(
-            (entry) => Column(
-              children: [
-                if (entry.key != 0) ...[
-                  Divider(height: 24, color: Theme.of(context).dividerColor),
-                ],
-                _buildTabItemRow(context, entry.value, color),
-              ],
-            ),
+          const SizedBox(height: 20),
+          ...sections.asMap().entries.expand(
+            (entry) => [
+              if (entry.key != 0) const SizedBox(height: 18),
+              _buildTabItemRow(context, entry.value, color),
+            ],
           ),
         ],
       ),

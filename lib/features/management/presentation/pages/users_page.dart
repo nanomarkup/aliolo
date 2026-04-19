@@ -458,12 +458,12 @@ class _UsersPageState extends State<UsersPage> {
         bottom: AlioloLayoutTokens.compactTileBottomSpacing / 2,
       ),
       child: ExpansionTile(
-        minTileHeight: 42,
+        minTileHeight: 38,
         dense: true,
         visualDensity: VisualDensity.compact,
         tilePadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
         leading: CircleAvatar(
-          radius: 15,
+          radius: 14,
           backgroundColor: currentSessionColor.withValues(alpha: 0.1),
           child: Icon(Icons.person, color: currentSessionColor),
         ),
@@ -476,19 +476,18 @@ class _UsersPageState extends State<UsersPage> {
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: AlioloLayoutTokens.compactTileTitleSize,
+                  height: 1.0,
                 ),
                 overflow: TextOverflow.ellipsis,
               ),
             ),
-            SizedBox(
-              height: 40,
-              child: Center(
-                child: IconButton(
-                  tooltip: context.t('edit_subscription'),
-                  onPressed: () => _showEditSubscriptionDialog(user),
-                  icon: const Icon(Icons.edit_outlined),
-                ),
-              ),
+            IconButton(
+              tooltip: context.t('edit_subscription'),
+              onPressed: () => _showEditSubscriptionDialog(user),
+              icon: const Icon(Icons.edit_outlined),
+              visualDensity: VisualDensity.compact,
+              padding: EdgeInsets.zero,
+              constraints: const BoxConstraints.tightFor(width: 36, height: 36),
             ),
           ],
         ),
@@ -497,6 +496,7 @@ class _UsersPageState extends State<UsersPage> {
           style: TextStyle(
             fontSize: AlioloLayoutTokens.compactTileMetaSize,
             color: Theme.of(context).textTheme.bodySmall?.color,
+            height: 1.0,
           ),
           overflow: TextOverflow.ellipsis,
         ),

@@ -8,7 +8,7 @@ import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/core/widgets/window_controls.dart';
 import 'package:aliolo/core/theme/aliolo_theme.dart';
 
-const String _alioloCommercialLicenseName = 'Aliolo Commercial License';
+const String _alioloCommercialLicenseName = 'Aliolo';
 
 class GroupedLicense {
   final String name;
@@ -87,70 +87,12 @@ class _CustomLicensesPageState extends State<CustomLicensesPage> {
     });
 
     if (_groupedLicenses.isNotEmpty) {
-      _selectedLicense = _groupedLicenses.first;
+      _selectedLicense = _groupedLicenses.firstWhere(
+        (license) => license.isAliolo,
+        orElse: () => _groupedLicenses.first,
+      );
     }
     setState(() => _isLoading = false);
-  }
-
-  Widget _buildIntroCard(BuildContext context, Color color) {
-    final bodyColor = Theme.of(context).textTheme.bodyMedium?.color;
-    return Container(
-      margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-      padding: const EdgeInsets.all(18),
-      decoration: BoxDecoration(
-        color: Theme.of(context).cardColor,
-        borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: Theme.of(context).dividerColor),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.03),
-            blurRadius: 14,
-            offset: const Offset(0, 5),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            context.t('licenses_intro_title'),
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: color,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            context.t('licenses_intro_desc'),
-            style: TextStyle(
-              fontSize: 15,
-              height: 1.5,
-              color: bodyColor?.withValues(alpha: 0.82),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildLicenseSectionTitle(
-    BuildContext context,
-    String title,
-    Color color,
-  ) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 6, 16, 10),
-      child: Text(
-        title,
-        style: TextStyle(
-          fontSize: 12,
-          fontWeight: FontWeight.w700,
-          letterSpacing: 1.1,
-          color: color.withValues(alpha: 0.74),
-        ),
-      ),
-    );
   }
 
   Widget _buildLicenseTile(
@@ -161,12 +103,13 @@ class _CustomLicensesPageState extends State<CustomLicensesPage> {
   }) {
     final isSelected = _selectedLicense == license;
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       child: ListTile(
         selected: !isMobile && isSelected,
         selectedTileColor: color.withValues(alpha: 0.1),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
         tileColor: Theme.of(context).cardColor,
+        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
         leading: Container(
           width: 36,
           height: 36,
@@ -199,7 +142,7 @@ class _CustomLicensesPageState extends State<CustomLicensesPage> {
         subtitle:
             license.isAliolo
                 ? Padding(
-                  padding: const EdgeInsets.only(top: 4),
+                  padding: const EdgeInsets.only(top: 2),
                   child: Text(
                     context.t('licenses_aliolo_subtitle'),
                     maxLines: 2,
@@ -216,7 +159,6 @@ class _CustomLicensesPageState extends State<CustomLicensesPage> {
   Widget _buildLicenseSection(
     BuildContext context,
     Color color,
-    String title,
     List<GroupedLicense> licenses, {
     required bool isMobile,
   }) {
@@ -224,13 +166,20 @@ class _CustomLicensesPageState extends State<CustomLicensesPage> {
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _buildLicenseSectionTitle(context, title, color),
-        ...licenses.map(
-          (license) =>
-              _buildLicenseTile(context, license, color, isMobile: isMobile),
-        ),
-      ],
+      children:
+          licenses
+              .map(
+                (license) => Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: _buildLicenseTile(
+                    context,
+                    license,
+                    color,
+                    isMobile: isMobile,
+                  ),
+                ),
+              )
+              .toList(),
     );
   }
 
@@ -250,7 +199,6 @@ class _CustomLicensesPageState extends State<CustomLicensesPage> {
         _buildLicenseSection(
           context,
           color,
-          context.t('licenses_aliolo_section_title'),
           alioloLicenses,
           isMobile: isMobile,
         ),
@@ -259,7 +207,6 @@ class _CustomLicensesPageState extends State<CustomLicensesPage> {
           _buildLicenseSection(
             context,
             color,
-            context.t('licenses_third_party_section_title'),
             thirdPartyLicenses,
             isMobile: isMobile,
           ),
@@ -360,7 +307,6 @@ class _CustomLicensesPageState extends State<CustomLicensesPage> {
                           ],
                         ),
                         const Divider(),
-                        _buildIntroCard(context, mainColor),
                         Expanded(
                           child:
                               _isLoading
@@ -394,12 +340,6 @@ class _CustomLicensesPageState extends State<CustomLicensesPage> {
                                                     Theme.of(context).cardColor,
                                                 borderRadius:
                                                     BorderRadius.circular(18),
-                                                border: Border.all(
-                                                  color:
-                                                      Theme.of(
-                                                        context,
-                                                      ).dividerColor,
-                                                ),
                                               ),
                                               child: _buildLicenseCatalog(
                                                 context,
@@ -541,34 +481,9 @@ class LicenseDetailView extends StatelessWidget {
                 children: [
                   for (int i = 0; i < license.licenseSections.length; i++) ...[
                     if (i > 0) ...[
-                      const SizedBox(height: 32),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Divider(
-                              color: Colors.grey.withValues(alpha: 0.5),
-                            ),
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 16.0),
-                            child: Text(
-                              'ADDITIONAL LICENSE',
-                              style: TextStyle(
-                                fontSize: 10,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.grey,
-                                letterSpacing: 1.2,
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: Divider(
-                              color: Colors.grey.withValues(alpha: 0.5),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 32),
+                      const SizedBox(height: 28),
+                      Divider(color: Colors.grey.withValues(alpha: 0.5)),
+                      const SizedBox(height: 28),
                     ],
                     ...license.licenseSections[i].map((p) {
                       return Padding(
