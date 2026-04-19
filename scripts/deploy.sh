@@ -3,5 +3,6 @@
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd "$SCRIPT_DIR/.."
 
-# Deploy backend to production environment
+# Build the frontend and deploy the worker with the bundled web assets
+"$SCRIPT_DIR/build.sh"
 cd api && npx wrangler deploy --env production

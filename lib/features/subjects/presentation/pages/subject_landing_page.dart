@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:aliolo/core/theme/aliolo_layout_tokens.dart';
 import 'package:aliolo/data/models/subject_model.dart';
 import 'package:aliolo/data/models/card_model.dart';
 import 'package:aliolo/data/models/pillar_model.dart';
@@ -633,7 +634,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                           '${_filteredCards.length} ${context.plural('card', _filteredCards.length)}',
                           style: TextStyle(
                             color: Colors.grey[600],
-                            fontSize: 15,
+                            fontSize: AlioloLayoutTokens.compactTileTitleSize,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -961,7 +962,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                               description,
                               style: TextStyle(
                                 color: Colors.grey[700],
-                                fontSize: 15,
+                                fontSize: AlioloLayoutTokens.compactTileTitleSize,
                                 height: 1.4,
                               ),
                             ),
@@ -1190,7 +1191,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                                     overflow: TextOverflow.ellipsis,
                                     style: const TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 12,
+                                      fontSize: AlioloLayoutTokens.compactTileMetaSize,
                                     ),
                                   ),
                                 ),
@@ -1589,7 +1590,9 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                       3 => context.t('level_tier_3'),
                       _ => '$lv',
                     },
-                    style: const TextStyle(fontSize: 15),
+                    style: const TextStyle(
+                      fontSize: AlioloLayoutTokens.appBarSubtitleSize,
+                    ),
                   ),
                 ),
               )

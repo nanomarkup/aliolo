@@ -16,7 +16,9 @@ import 'package:aliolo/features/subjects/presentation/pages/subject_page.dart';
 import 'package:aliolo/features/onboarding/presentation/onboarding_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
-import 'package:aliolo/core/utils/file_stub.dart' if (dart.library.html) 'dart:html' as html;
+import 'package:aliolo/core/utils/file_stub.dart'
+    if (dart.library.html) 'dart:html'
+    as html;
 
 import 'package:aliolo/data/services/friendship_service.dart';
 import 'package:aliolo/features/auth/presentation/pages/manage_friends_page.dart';
@@ -39,19 +41,25 @@ void main() async {
     LicenseRegistry.addLicense(() {
       return Stream<LicenseEntry>.fromIterable([
         const LicenseEntryWithLineBreaks(
-          ['Aliolo'],
+          ['Aliolo Commercial License'],
           """
-Aliolo - Commercial License
+Aliolo Commercial Software License
 
 Copyright (c) 2026 Aliolo Team. All Rights Reserved.
 
-This software and all associated files, source code, and assets are the sole
-property of the Aliolo Team. Unauthorized copying, modification, distribution,
-or decompilation of this software is strictly prohibited.
+This software and all associated files, source code, and assets are proprietary
+to the Aliolo Team and are licensed, not sold.
 
-Use of this software is subject to a valid, active subscription agreement.
-Failure to maintain a subscription will result in the termination of access to
-the software's features and services.
+This license governs the software distribution itself. Access to premium
+features, services, or other paid functionality may require a separate,
+valid subscription agreement.
+
+If a subscription ends, premium access may be suspended, limited, or removed
+in accordance with the applicable subscription terms. Free features, if any,
+remain subject to the same license and product terms.
+
+Unauthorized copying, modification, distribution, or decompilation of this
+software is strictly prohibited.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED. IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
@@ -189,7 +197,11 @@ class _AlioloAppState extends State<AlioloApp> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(Icons.school, size: 80, color: Color(0xFF1D4289)),
+                    const Icon(
+                      Icons.school,
+                      size: 80,
+                      color: Color(0xFF1D4289),
+                    ),
                     const SizedBox(height: 24),
                     const CircularProgressIndicator(color: Color(0xFF1D4289)),
                     const SizedBox(height: 16),
@@ -279,9 +291,12 @@ class _AlioloMainAppState extends State<AlioloMainApp> {
     return ValueListenableBuilder<ThemeMode>(
       valueListenable: themeService.themeNotifier,
       builder: (context, currentMode, _) {
-        final brightness = currentMode == ThemeMode.system
-            ? View.of(context).platformDispatcher.platformBrightness
-            : (currentMode == ThemeMode.dark ? Brightness.dark : Brightness.light);
+        final brightness =
+            currentMode == ThemeMode.system
+                ? View.of(context).platformDispatcher.platformBrightness
+                : (currentMode == ThemeMode.dark
+                    ? Brightness.dark
+                    : Brightness.light);
 
         return MaterialApp(
           title: 'Aliolo',
@@ -311,7 +326,8 @@ class _AlioloMainAppState extends State<AlioloMainApp> {
                 return const OnboardingScreen();
               }
 
-              if (authService.isPasswordRecoveryFlow || authService.isInviteFlow) {
+              if (authService.isPasswordRecoveryFlow ||
+                  authService.isInviteFlow) {
                 return const LoginPage();
               }
 

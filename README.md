@@ -47,13 +47,19 @@ flutter build linux --release
 flutter build web --release --dart-define=API_URL=https://aliolo.com
 ```
 
+#### Convenience Scripts
+```bash
+./scripts/build.sh   # Build the production web app
+./scripts/deploy.sh  # Build the web app and deploy the Worker
+```
+
 ## Directory Structure
 
 - `lib/core`: Dependency injection, shared widgets, and utilities.
 - `lib/data`: Models and services (Auth, Progress, Card service, etc.).
 - `lib/features`: UI features (Auth, Testing, Leaderboard, Management, Subjects).
 - `api/src`: Backend implementation (Hono routes, Zod schemas, Auth logic).
-- `scripts/`: Convenience scripts for testing and deployment.
+- `scripts/`: Convenience scripts for testing, building, and deployment.
 
 ## Documentation
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:aliolo/core/widgets/window_controls.dart';
+import 'package:aliolo/core/theme/aliolo_layout_tokens.dart';
 
 class AlioloAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Widget title;
@@ -32,12 +33,12 @@ class AlioloAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     final titleWidget = ConstrainedBox(
-      constraints: const BoxConstraints(minHeight: 64),
+      constraints: const BoxConstraints(minHeight: AlioloLayoutTokens.appBarContentHeight),
       child: Align(
         alignment: titleAlignment,
         child: DefaultTextStyle(
           style: TextStyle(
-            fontSize: 20,
+            fontSize: AlioloLayoutTokens.appBarTitleSize,
             fontWeight: FontWeight.bold,
             color: foregroundColor,
             overflow: TextOverflow.ellipsis,
@@ -50,14 +51,19 @@ class AlioloAppBar extends StatelessWidget implements PreferredSizeWidget {
     );
 
     return PreferredSize(
-      preferredSize: const Size.fromHeight(80), // 16 top padding + 64 container
+      preferredSize: const Size.fromHeight(AlioloLayoutTokens.appBarPreferredHeight),
       child: Center(
         child: ConstrainedBox(
           constraints: BoxConstraints(maxWidth: maxWidth),
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+            padding: const EdgeInsets.fromLTRB(
+              AlioloLayoutTokens.appBarOuterTopPadding,
+              AlioloLayoutTokens.appBarOuterTopPadding,
+              AlioloLayoutTokens.appBarOuterTopPadding,
+              0,
+            ),
             child: Container(
-              height: 64,
+              height: AlioloLayoutTokens.appBarContentHeight,
               decoration: BoxDecoration(
                 color: backgroundColor,
                 borderRadius: BorderRadius.circular(16),
@@ -71,7 +77,7 @@ class AlioloAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
               clipBehavior: Clip.antiAlias,
               child: AppBar(
-                toolbarHeight: 64,
+                toolbarHeight: AlioloLayoutTokens.appBarContentHeight,
                 title: kIsWeb ? titleWidget : DragToMoveArea(child: titleWidget),
                 backgroundColor: Colors.transparent,
                 foregroundColor: foregroundColor,
@@ -132,5 +138,6 @@ class AlioloAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(80);
+  Size get preferredSize =>
+      const Size.fromHeight(AlioloLayoutTokens.appBarPreferredHeight);
 }

@@ -13,8 +13,8 @@ Use the root scripts when possible:
 - `./scripts/test_goldens.sh` runs widget goldens; add `--update` to refresh baselines.
 - `./scripts/test_integration.sh` runs Patrol tests; requires a connected device/emulator.
 - `./scripts/test_all.sh` runs the full test suite.
-- `./scripts/build_frontend.sh` builds the production web app.
-- `./scripts/deploy_backend.sh` deploys the Worker to production.
+- `./scripts/build.sh` builds the production web app.
+- `./scripts/deploy.sh` deploys the Worker and bundled web assets to production.
 
 ## Coding Style & Naming Conventions
 Follow standard Flutter and TypeScript conventions. Use 2-space indentation in Dart and keep files `snake_case.dart`; classes, enums, and widgets use `PascalCase`; methods and variables use `camelCase`. Backend route and schema files are lowercase by domain, for example `api/src/routes/cards.ts` and `api/src/schemas/card.ts`. Prefer small services and focused route modules. Use `dart format .` and keep Dart code compatible with `flutter_lints`; keep TypeScript ESM-friendly and consistent with existing Hono route structure.

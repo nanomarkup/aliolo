@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:aliolo/core/widgets/floating_app_bar.dart';
 import 'package:aliolo/core/widgets/resize_wrapper.dart';
+import 'package:aliolo/core/theme/aliolo_layout_tokens.dart';
 
 class AlioloPage extends StatelessWidget {
   final Widget title;
@@ -22,8 +23,6 @@ class AlioloPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const double standardTopGap = 92.0;
-
     return ResizeWrapper(
       child: Scaffold(
         extendBodyBehindAppBar: true,
@@ -37,7 +36,7 @@ class AlioloPage extends StatelessWidget {
           child: ConstrainedBox(
             constraints: BoxConstraints(maxWidth: maxWidth),
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(16, standardTopGap, 16, 32),
+              padding: AlioloLayoutTokens.pageBodyPadding,
               child: body,
             ),
           ),

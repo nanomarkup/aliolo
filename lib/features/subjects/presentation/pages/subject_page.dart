@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:aliolo/core/theme/aliolo_layout_tokens.dart';
 import 'package:aliolo/core/widgets/aliolo_scrollable_page.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -1037,9 +1038,13 @@ class _SubjectPageState extends State<SubjectPage> {
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.surfaceContainerHighest.withValues(alpha: 0.9),
+              color: Theme.of(
+                context,
+              ).colorScheme.surfaceContainerHighest.withValues(alpha: 0.9),
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: Theme.of(context).colorScheme.outlineVariant),
+              border: Border.all(
+                color: Theme.of(context).colorScheme.outlineVariant,
+              ),
             ),
             child: Row(
               children: [
@@ -2810,7 +2815,7 @@ class _FolderListTile extends StatelessWidget {
     return Opacity(
       opacity: isEmpty ? 0.5 : 1.0,
       child: Padding(
-        padding: const EdgeInsets.only(bottom: 8),
+        padding: AlioloLayoutTokens.compactTileBottomPadding,
         child: InkWell(
           onTap: () async {
             final result = await Navigator.push(
@@ -2836,7 +2841,7 @@ class _FolderListTile extends StatelessWidget {
           },
           borderRadius: BorderRadius.circular(16),
           child: Container(
-            padding: const EdgeInsets.all(12),
+            padding: AlioloLayoutTokens.compactTilePaddingAll,
             decoration: BoxDecoration(
               color: Theme.of(context).cardColor,
               borderRadius: BorderRadius.circular(16),
@@ -2845,8 +2850,8 @@ class _FolderListTile extends StatelessWidget {
                 width: 1.5,
               ),
             ),
-          child: Row(
-            children: [
+            child: Row(
+              children: [
                 Icon(Icons.folder, color: pillarColor, size: 20),
                 const SizedBox(width: 10),
                 Expanded(
@@ -2857,7 +2862,7 @@ class _FolderListTile extends StatelessWidget {
                         folder.getName(languageCode),
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 15,
+                          fontSize: AlioloLayoutTokens.compactTileTitleSize,
                         ),
                       ),
                       const SizedBox(height: 2),
@@ -2866,10 +2871,10 @@ class _FolderListTile extends StatelessWidget {
                           Text(
                             matchingCount == totalCount
                                 ? '$totalCount ${context.plural('subject', totalCount)}'
-                            : '$matchingCount / $totalCount ${context.plural('subject', totalCount)}',
+                                : '$matchingCount / $totalCount ${context.plural('subject', totalCount)}',
                             style: TextStyle(
                               color: Colors.grey[600],
-                              fontSize: 12,
+                              fontSize: AlioloLayoutTokens.compactTileMetaSize,
                               fontWeight:
                                   matchingCount > 0
                                       ? FontWeight.bold
@@ -2878,13 +2883,14 @@ class _FolderListTile extends StatelessWidget {
                           ),
                           if (!isOwner && folder.ownerName != null) ...[
                             const SizedBox(width: 8),
-                              Text(
-                                '•',
-                                style: TextStyle(
-                                  color: Colors.grey[400],
-                                  fontSize: 12,
-                                ),
+                            Text(
+                              '•',
+                              style: TextStyle(
+                                color: Colors.grey[400],
+                                fontSize:
+                                    AlioloLayoutTokens.compactTileMetaSize,
                               ),
+                            ),
                             const SizedBox(width: 8),
                             if (folder.ownerName == 'Aliolo')
                               Icon(
@@ -2894,14 +2900,15 @@ class _FolderListTile extends StatelessWidget {
                               )
                             else
                               Flexible(
-                                  child: Text(
-                                    folder.ownerName!,
-                                    style: TextStyle(
-                                      color: Colors.grey[600],
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                    overflow: TextOverflow.ellipsis,
+                                child: Text(
+                                  folder.ownerName!,
+                                  style: TextStyle(
+                                    color: Colors.grey[600],
+                                    fontSize:
+                                        AlioloLayoutTokens.compactTileMetaSize,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
                                 ),
                               ),
                           ],
@@ -2947,7 +2954,7 @@ class _SubjectListTile extends StatelessWidget {
         subject.ownerId == getIt<AuthService>().currentUser?.serverId;
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: 8),
+      padding: AlioloLayoutTokens.compactTileBottomPadding,
       child: InkWell(
         onTap: () async {
           final cards = await CardService().getCardsBySubject(subject.id);
@@ -2968,7 +2975,7 @@ class _SubjectListTile extends StatelessWidget {
         },
         borderRadius: BorderRadius.circular(16),
         child: Container(
-          padding: const EdgeInsets.all(12),
+          padding: AlioloLayoutTokens.compactTilePaddingAll,
           decoration: BoxDecoration(
             color: Theme.of(context).cardColor,
             borderRadius: BorderRadius.circular(16),
@@ -2989,7 +2996,7 @@ class _SubjectListTile extends StatelessWidget {
                       subject.getName(languageCode),
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 15,
+                        fontSize: AlioloLayoutTokens.compactTileTitleSize,
                       ),
                     ),
                     const SizedBox(height: 2),
@@ -2999,7 +3006,7 @@ class _SubjectListTile extends StatelessWidget {
                           '$cardCount ${context.plural('card', cardCount)}',
                           style: TextStyle(
                             color: Colors.grey[600],
-                            fontSize: 12,
+                            fontSize: AlioloLayoutTokens.compactTileMetaSize,
                           ),
                         ),
                         if (!isOwner && subject.ownerName != null) ...[
@@ -3008,7 +3015,7 @@ class _SubjectListTile extends StatelessWidget {
                             '•',
                             style: TextStyle(
                               color: Colors.grey[400],
-                              fontSize: 13,
+                              fontSize: AlioloLayoutTokens.compactTileMetaSize,
                             ),
                           ),
                           const SizedBox(width: 8),
@@ -3022,11 +3029,12 @@ class _SubjectListTile extends StatelessWidget {
                             Flexible(
                               child: Text(
                                 subject.ownerName!,
-                            style: TextStyle(
-                              color: Colors.grey[600],
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                            ),
+                                style: TextStyle(
+                                  color: Colors.grey[600],
+                                  fontSize:
+                                      AlioloLayoutTokens.compactTileMetaSize,
+                                  fontWeight: FontWeight.w500,
+                                ),
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
@@ -3094,7 +3102,7 @@ class _CollectionListTile extends StatelessWidget {
         collection.ownerId == getIt<AuthService>().currentUser?.serverId;
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: 8),
+      padding: AlioloLayoutTokens.compactTileBottomPadding,
       child: InkWell(
         onTap: () async {
           final cards = await CardService().getCollectionCards(
@@ -3117,7 +3125,7 @@ class _CollectionListTile extends StatelessWidget {
         },
         borderRadius: BorderRadius.circular(16),
         child: Container(
-          padding: const EdgeInsets.all(12),
+          padding: AlioloLayoutTokens.compactTilePaddingAll,
           decoration: BoxDecoration(
             color: Theme.of(context).cardColor,
             borderRadius: BorderRadius.circular(16),
@@ -3138,7 +3146,7 @@ class _CollectionListTile extends StatelessWidget {
                       collection.getName(languageCode),
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 15,
+                        fontSize: AlioloLayoutTokens.compactTileTitleSize,
                       ),
                     ),
                     const SizedBox(height: 2),
@@ -3148,7 +3156,7 @@ class _CollectionListTile extends StatelessWidget {
                           '${collection.subjectIds.length} ${context.plural('subject', collection.subjectIds.length)}',
                           style: TextStyle(
                             color: Colors.grey[600],
-                            fontSize: 12,
+                            fontSize: AlioloLayoutTokens.compactTileMetaSize,
                           ),
                         ),
                         if (!isOwner && collection.ownerName != null) ...[
@@ -3157,7 +3165,7 @@ class _CollectionListTile extends StatelessWidget {
                             '•',
                             style: TextStyle(
                               color: Colors.grey[400],
-                              fontSize: 13,
+                              fontSize: AlioloLayoutTokens.compactTileMetaSize,
                             ),
                           ),
                           const SizedBox(width: 8),
@@ -3171,11 +3179,12 @@ class _CollectionListTile extends StatelessWidget {
                             Flexible(
                               child: Text(
                                 collection.ownerName!,
-                            style: TextStyle(
-                              color: Colors.grey[600],
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                            ),
+                                style: TextStyle(
+                                  color: Colors.grey[600],
+                                  fontSize:
+                                      AlioloLayoutTokens.compactTileMetaSize,
+                                  fontWeight: FontWeight.w500,
+                                ),
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
@@ -3286,7 +3295,7 @@ class _PillarGridTile extends StatelessWidget {
                               pillar.getTranslatedName(languageCode),
                               style: const TextStyle(
                                 color: Colors.white,
-                                fontSize: 18,
+                                fontSize: 20,
                                 fontWeight: FontWeight.bold,
                                 height: 1.1,
                               ),
@@ -3299,7 +3308,7 @@ class _PillarGridTile extends StatelessWidget {
                         pillar.getTranslatedDescription(languageCode),
                         style: TextStyle(
                           color: Colors.white.withValues(alpha: 0.8),
-                          fontSize: 12,
+                          fontSize: 14,
                           fontWeight: FontWeight.w500,
                         ),
                         maxLines: 2,

@@ -93,5 +93,5 @@ You can use these scripts from the project root:
 - **Run Frontend Tests**: `./scripts/test_frontend.sh`
 - **Run Integration Tests**: `./scripts/test_integration.sh`
 - **Run Golden Tests**: `./scripts/test_goldens.sh` (use `--update` to refresh baselines)
-- **Deploy Backend**: `./scripts/deploy_backend.sh`
-- **Build Frontend**: `./scripts/build_frontend.sh`
+- **Build**: `./scripts/build.sh`
+- **Deploy**: `./scripts/deploy.sh`

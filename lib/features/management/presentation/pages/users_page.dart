@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:aliolo/core/di/service_locator.dart';
+import 'package:aliolo/core/theme/aliolo_layout_tokens.dart';
 import 'package:aliolo/core/widgets/aliolo_scrollable_page.dart';
 import 'package:aliolo/data/models/admin_user_model.dart';
 import 'package:aliolo/data/services/admin_users_service.dart';
@@ -66,7 +67,8 @@ class _UsersPageState extends State<UsersPage> {
     try {
       final users = await _usersService.getAllUsers();
       users.sort(
-        (a, b) => a.displayName.toLowerCase().compareTo(b.displayName.toLowerCase()),
+        (a, b) =>
+            a.displayName.toLowerCase().compareTo(b.displayName.toLowerCase()),
       );
       if (!mounted) return;
       setState(() {
@@ -85,7 +87,8 @@ class _UsersPageState extends State<UsersPage> {
   List<AdminUserModel> get _filteredUsers {
     final query = _searchController.text.trim().toLowerCase();
     return _users.where((user) {
-      final matchesSearch = query.isEmpty ||
+      final matchesSearch =
+          query.isEmpty ||
           user.displayName.toLowerCase().contains(query) ||
           user.username.toLowerCase().contains(query) ||
           user.email.toLowerCase().contains(query);
@@ -158,10 +161,11 @@ class _UsersPageState extends State<UsersPage> {
                       )
                       .toList(),
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.surfaceContainerHighest
-                  .withValues(alpha: 0.9),
+              color: Theme.of(
+                context,
+              ).colorScheme.surfaceContainerHighest.withValues(alpha: 0.9),
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
                 color: Theme.of(context).colorScheme.outlineVariant,
@@ -223,7 +227,7 @@ class _UsersPageState extends State<UsersPage> {
               fontWeight: FontWeight.w600,
             ),
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: AlioloLayoutTokens.compactRowSpacing),
           SizedBox(
             width: 190,
             child: _buildCompactDropdown(
@@ -242,26 +246,41 @@ class _UsersPageState extends State<UsersPage> {
               },
             ),
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: AlioloLayoutTokens.compactRowSpacing),
           Expanded(
             child: TextField(
               controller: _searchController,
               decoration: InputDecoration(
-                labelText: context.t('search_users'),
+                isDense: true,
                 hintText: context.t('search_users'),
-                border: const OutlineInputBorder(),
-                prefixIcon: const Icon(Icons.search),
-                suffixIcon: _searchController.text.isEmpty
-                    ? null
-                    : IconButton(
-                        tooltip: context.t('clear'),
-                        icon: const Icon(Icons.clear),
-                        onPressed: () {
-                          _searchController.clear();
-                        },
-                      ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
                 ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                prefixIcon: const Icon(Icons.search),
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 8,
+                ),
+                filled: true,
+                fillColor: Theme.of(context).cardColor.withValues(alpha: 0.5),
+                suffixIcon:
+                    _searchController.text.isEmpty
+                        ? null
+                        : IconButton(
+                          tooltip: context.t('clear'),
+                          icon: const Icon(Icons.clear),
+                          onPressed: () {
+                            _searchController.clear();
+                          },
+                        ),
               ),
+            ),
           ),
         ],
       ),
@@ -269,7 +288,10 @@ class _UsersPageState extends State<UsersPage> {
   }
 
   Future<void> _showEditSubscriptionDialog(AdminUserModel user) async {
-    String status = user.subscription?.status?.toLowerCase() == 'active' ? 'active' : 'inactive';
+    String status =
+        user.subscription?.status?.toLowerCase() == 'active'
+            ? 'active'
+            : 'inactive';
     DateTime? expiryDate = user.subscription?.expiryDate;
 
     final result = await showDialog<_SubscriptionEditResult>(
@@ -277,9 +299,10 @@ class _UsersPageState extends State<UsersPage> {
       builder: (dialogContext) {
         return StatefulBuilder(
           builder: (context, setDialogState) {
-            final expiryLabel = expiryDate == null
-                ? context.t('not_available')
-                : _formatDate(expiryDate);
+            final expiryLabel =
+                expiryDate == null
+                    ? context.t('not_available')
+                    : _formatDate(expiryDate);
 
             return AlertDialog(
               title: Text(context.t('edit_subscription')),
@@ -336,7 +359,11 @@ class _UsersPageState extends State<UsersPage> {
                             onPressed: () async {
                               final picked = await showDatePicker(
                                 context: context,
-                                initialDate: expiryDate ?? DateTime.now().add(const Duration(days: 365)),
+                                initialDate:
+                                    expiryDate ??
+                                    DateTime.now().add(
+                                      const Duration(days: 365),
+                                    ),
                                 firstDate: DateTime(2000),
                                 lastDate: DateTime(2100),
                               );
@@ -381,11 +408,15 @@ class _UsersPageState extends State<UsersPage> {
                   onPressed: () {
                     final normalizedExpiry =
                         status == 'active'
-                            ? (expiryDate ?? DateTime.now().add(const Duration(days: 365)))
+                            ? (expiryDate ??
+                                DateTime.now().add(const Duration(days: 365)))
                             : expiryDate;
                     Navigator.pop(
                       dialogContext,
-                      _SubscriptionEditResult(status: status, expiryDate: normalizedExpiry),
+                      _SubscriptionEditResult(
+                        status: status,
+                        expiryDate: normalizedExpiry,
+                      ),
                     );
                   },
                   child: Text(context.t('save')),
@@ -413,9 +444,9 @@ class _UsersPageState extends State<UsersPage> {
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('$e')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('$e')));
       }
     }
   }
@@ -423,45 +454,53 @@ class _UsersPageState extends State<UsersPage> {
   Widget _buildUserCard(AdminUserModel user, Color currentSessionColor) {
     return Card(
       elevation: 1,
-      margin: const EdgeInsets.only(bottom: 4),
+      margin: const EdgeInsets.only(
+        bottom: AlioloLayoutTokens.compactTileBottomSpacing / 2,
+      ),
       child: ExpansionTile(
-        minTileHeight: 40,
+        minTileHeight: 42,
         dense: true,
         visualDensity: VisualDensity.compact,
-        tilePadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+        tilePadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
         leading: CircleAvatar(
-          radius: 14,
+          radius: 15,
           backgroundColor: currentSessionColor.withValues(alpha: 0.1),
           child: Icon(Icons.person, color: currentSessionColor),
         ),
         title: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Expanded(
               child: Text(
                 user.displayName,
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 14,
+                  fontSize: AlioloLayoutTokens.compactTileTitleSize,
                 ),
                 overflow: TextOverflow.ellipsis,
               ),
             ),
-            IconButton(
-              tooltip: context.t('edit_subscription'),
-              onPressed: () => _showEditSubscriptionDialog(user),
-              icon: const Icon(Icons.edit_outlined),
+            SizedBox(
+              height: 40,
+              child: Center(
+                child: IconButton(
+                  tooltip: context.t('edit_subscription'),
+                  onPressed: () => _showEditSubscriptionDialog(user),
+                  icon: const Icon(Icons.edit_outlined),
+                ),
+              ),
             ),
           ],
         ),
         subtitle: Text(
           user.email,
           style: TextStyle(
-            fontSize: 11,
+            fontSize: AlioloLayoutTokens.compactTileMetaSize,
             color: Theme.of(context).textTheme.bodySmall?.color,
           ),
           overflow: TextOverflow.ellipsis,
         ),
-        childrenPadding: const EdgeInsets.fromLTRB(12, 0, 12, 10),
+        childrenPadding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
         children: [
           Align(
             alignment: Alignment.centerLeft,
@@ -476,16 +515,30 @@ class _UsersPageState extends State<UsersPage> {
           const SizedBox(height: 4),
           _buildInfoRow(
             context.t('username'),
-            user.username.isNotEmpty ? user.username : context.t('not_available'),
+            user.username.isNotEmpty
+                ? user.username
+                : context.t('not_available'),
           ),
           _buildInfoRow(context.t('email'), user.email),
           _buildInfoRow(context.t('total_xp'), '${user.profile.totalXp}'),
-          _buildInfoRow(context.t('current_streak'), '${user.profile.currentStreak}'),
+          _buildInfoRow(
+            context.t('current_streak'),
+            '${user.profile.currentStreak}',
+          ),
           _buildInfoRow(context.t('max_streak'), '${user.profile.maxStreak}'),
           _buildInfoRow(context.t('ui_language'), user.profile.uiLanguage),
-          _buildInfoRow(context.t('default_language'), user.profile.defaultLanguage),
-          _buildInfoRow(context.t('created_at'), _formatDate(user.profile.createdAt)),
-          _buildInfoRow(context.t('updated_at'), _formatDate(user.profile.updatedAt)),
+          _buildInfoRow(
+            context.t('default_language'),
+            user.profile.defaultLanguage,
+          ),
+          _buildInfoRow(
+            context.t('created_at'),
+            _formatDate(user.profile.createdAt),
+          ),
+          _buildInfoRow(
+            context.t('updated_at'),
+            _formatDate(user.profile.updatedAt),
+          ),
           const SizedBox(height: 8),
           Align(
             alignment: Alignment.centerLeft,
@@ -536,6 +589,45 @@ class _UsersPageState extends State<UsersPage> {
   Widget build(BuildContext context) {
     const appBarColor = Colors.white;
     final currentSessionColor = ThemeService().primaryColor;
+    final isSmallScreen = MediaQuery.of(context).size.width < 600;
+
+    final homeAction = IconButton(
+      tooltip: context.t('home'),
+      icon: const Icon(Icons.school, color: appBarColor),
+      onPressed:
+          () => Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => const SubjectPage()),
+            (route) => false,
+          ),
+    );
+    final leaderboardAction = IconButton(
+      tooltip: context.t('leaderboard'),
+      icon: const Icon(Icons.emoji_events, color: appBarColor),
+      onPressed:
+          () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const LeaderboardPage()),
+          ),
+    );
+    final profileAction = IconButton(
+      tooltip: context.t('profile'),
+      icon: const Icon(Icons.person, color: appBarColor),
+      onPressed:
+          () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const ProfilePage()),
+          ),
+    );
+    final settingsAction = IconButton(
+      tooltip: context.t('settings'),
+      icon: const Icon(Icons.settings, color: appBarColor),
+      onPressed:
+          () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const SettingsPage()),
+          ),
+    );
 
     return ListenableBuilder(
       listenable: TranslationService(),
@@ -546,94 +638,69 @@ class _UsersPageState extends State<UsersPage> {
             style: const TextStyle(color: appBarColor),
           ),
           appBarColor: currentSessionColor,
-          actions: [
-            IconButton(
-              tooltip: context.t('profile'),
-              icon: const Icon(Icons.person, color: appBarColor),
-              onPressed: () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const ProfilePage()),
-              ),
-            ),
-            IconButton(
-              tooltip: context.t('settings'),
-              icon: const Icon(Icons.settings, color: appBarColor),
-              onPressed: () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const SettingsPage()),
-              ),
-            ),
-          ],
-          overflowActions: [
-            IconButton(
-              tooltip: context.t('home'),
-              icon: const Icon(Icons.school, color: appBarColor),
-              onPressed: () => Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(builder: (context) => const SubjectPage()),
-                (route) => false,
-              ),
-            ),
-            IconButton(
-              tooltip: context.t('leaderboard'),
-              icon: const Icon(Icons.emoji_events, color: appBarColor),
-              onPressed: () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const LeaderboardPage()),
-              ),
-            ),
-          ],
-          fixedBody: !_isAdmin ? const SizedBox.shrink() : _buildHeaderControls(context),
-          slivers: !_isAdmin
-              ? [
-                  SliverFillRemaining(
-                    child: Center(
-                      child: Text(
-                        context.t('not_available'),
-                        style: const TextStyle(fontSize: 16),
-                      ),
-                    ),
-                  ),
-                ]
-              : [
-                  const SliverToBoxAdapter(child: SizedBox(height: 4)),
-                  if (_isLoading)
-                    const SliverFillRemaining(
-                      child: Center(child: CircularProgressIndicator()),
-                    )
-                  else if (_errorMessage != null)
+          actions:
+              isSmallScreen
+                  ? [homeAction, profileAction]
+                  : [
+                    homeAction,
+                    leaderboardAction,
+                    profileAction,
+                    settingsAction,
+                  ],
+          overflowActions:
+              isSmallScreen ? [leaderboardAction, settingsAction] : null,
+          fixedBody:
+              !_isAdmin
+                  ? const SizedBox.shrink()
+                  : _buildHeaderControls(context),
+          slivers:
+              !_isAdmin
+                  ? [
                     SliverFillRemaining(
                       child: Center(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(_errorMessage!),
-                            const SizedBox(height: 12),
-                            ElevatedButton(
-                              onPressed: _loadUsers,
-                              child: Text(context.t('confirm')),
-                            ),
-                          ],
+                        child: Text(
+                          context.t('not_available'),
+                          style: const TextStyle(fontSize: 16),
                         ),
                       ),
-                    )
-                  else if (_filteredUsers.isEmpty)
-                    SliverFillRemaining(
-                      child: Center(child: Text(context.t('no_users_found'))),
-                    )
-                  else
-                    SliverList(
-                      delegate: SliverChildBuilderDelegate(
-                        (context, index) {
+                    ),
+                  ]
+                  : [
+                    const SliverToBoxAdapter(child: SizedBox(height: 4)),
+                    if (_isLoading)
+                      const SliverFillRemaining(
+                        child: Center(child: CircularProgressIndicator()),
+                      )
+                    else if (_errorMessage != null)
+                      SliverFillRemaining(
+                        child: Center(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(_errorMessage!),
+                              const SizedBox(height: 12),
+                              ElevatedButton(
+                                onPressed: _loadUsers,
+                                child: Text(context.t('confirm')),
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
+                    else if (_filteredUsers.isEmpty)
+                      SliverFillRemaining(
+                        child: Center(child: Text(context.t('no_users_found'))),
+                      )
+                    else
+                      SliverList(
+                        delegate: SliverChildBuilderDelegate((context, index) {
                           return _buildUserCard(
                             _filteredUsers[index],
                             currentSessionColor,
                           );
-                        },
-                        childCount: _filteredUsers.length,
+                        }, childCount: _filteredUsers.length),
                       ),
-                    ),
-                ],
+                  ],
         );
       },
     );
@@ -644,8 +711,5 @@ class _SubscriptionEditResult {
   final String status;
   final DateTime? expiryDate;
 
-  const _SubscriptionEditResult({
-    required this.status,
-    this.expiryDate,
-  });
+  const _SubscriptionEditResult({required this.status, this.expiryDate});
 }

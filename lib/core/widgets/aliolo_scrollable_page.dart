@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:aliolo/core/widgets/floating_app_bar.dart';
 import 'package:aliolo/core/widgets/resize_wrapper.dart';
+import 'package:aliolo/core/theme/aliolo_layout_tokens.dart';
 
 class AlioloScrollablePage extends StatelessWidget {
   final Widget title;
@@ -38,8 +39,6 @@ class AlioloScrollablePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const double standardTopGap = 92.0;
-
     return ResizeWrapper(
       child: Scaffold(
         extendBodyBehindAppBar: true,
@@ -61,8 +60,8 @@ class AlioloScrollablePage extends StatelessWidget {
               child: Stack(
                 children: [
                   Column(
-                    children: [
-                      const SizedBox(height: standardTopGap),
+                children: [
+                      const SizedBox(height: AlioloLayoutTokens.bodyTopGap),
                       if (fixedBody != null) fixedBody!,
                       Expanded(
                         child: CustomScrollView(

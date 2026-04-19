@@ -52,57 +52,60 @@ class _ProfilePageState extends State<ProfilePage> {
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
-      builder: (context) => SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ListTile(
-              leading: const Icon(Icons.photo_library),
-              title: Text(context.t('upload_new_photo')),
-              onTap: () {
-                Navigator.pop(context);
-                _pickAndUploadAvatar();
-              },
-            ),
-            if (_authService.currentUser?.avatarPath != null)
-              ListTile(
-                leading: const Icon(Icons.delete, color: Colors.red),
-                title: Text(
-                  context.t('delete_avatar'),
-                  style: const TextStyle(color: Colors.red),
+      builder:
+          (context) => SafeArea(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ListTile(
+                  leading: const Icon(Icons.photo_library),
+                  title: Text(context.t('upload_new_photo')),
+                  onTap: () {
+                    Navigator.pop(context);
+                    _pickAndUploadAvatar();
+                  },
                 ),
-                onTap: () async {
-                  Navigator.pop(context);
-                  final confirm = await showDialog<bool>(
-                    context: context,
-                    builder: (context) => AlertDialog(
-                      title: Text(context.t('delete_avatar')),
-                      content: Text(context.t('delete_avatar_confirm')),
-                      actions: [
-                        TextButton(
-                          onPressed: () => Navigator.pop(context, false),
-                          child: Text(context.t('cancel')),
-                        ),
-                        TextButton(
-                          onPressed: () => Navigator.pop(context, true),
-                          child: Text(
-                            context.t('delete'),
-                            style: const TextStyle(color: Colors.red),
-                          ),
-                        ),
-                      ],
+                if (_authService.currentUser?.avatarPath != null)
+                  ListTile(
+                    leading: const Icon(Icons.delete, color: Colors.red),
+                    title: Text(
+                      context.t('delete_avatar'),
+                      style: const TextStyle(color: Colors.red),
                     ),
-                  );
-                  if (confirm == true) {
-                    await _authService.deleteAvatar();
-                    if (mounted) setState(() {});
-                  }
-                },
-              ),
-            const SizedBox(height: 8),
-          ],
-        ),
-      ),
+                    onTap: () async {
+                      Navigator.pop(context);
+                      final confirm = await showDialog<bool>(
+                        context: context,
+                        builder:
+                            (context) => AlertDialog(
+                              title: Text(context.t('delete_avatar')),
+                              content: Text(context.t('delete_avatar_confirm')),
+                              actions: [
+                                TextButton(
+                                  onPressed:
+                                      () => Navigator.pop(context, false),
+                                  child: Text(context.t('cancel')),
+                                ),
+                                TextButton(
+                                  onPressed: () => Navigator.pop(context, true),
+                                  child: Text(
+                                    context.t('delete'),
+                                    style: const TextStyle(color: Colors.red),
+                                  ),
+                                ),
+                              ],
+                            ),
+                      );
+                      if (confirm == true) {
+                        await _authService.deleteAvatar();
+                        if (mounted) setState(() {});
+                      }
+                    },
+                  ),
+                const SizedBox(height: 8),
+              ],
+            ),
+          ),
     );
   }
 
@@ -154,98 +157,133 @@ class _ProfilePageState extends State<ProfilePage> {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => StatefulBuilder(
-        builder: (context, setDialogState) {
-          return AlertDialog(
-            title: Text(step == 0 ? context.t('edit_email') : 'Verify Email Change'),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                if (step == 0) ...[
-                  TextField(
-                    controller: emailController,
-                    autofocus: true,
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(
-                      labelText: 'New Email',
-                      hintText: context.t('enter_new_email'),
-                    ),
+      builder:
+          (context) => StatefulBuilder(
+            builder: (context, setDialogState) {
+              return AlertDialog(
+                title: Text(
+                  step == 0 ? context.t('edit_email') : 'Verify Email Change',
+                ),
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (step == 0) ...[
+                      TextField(
+                        controller: emailController,
+                        autofocus: true,
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: InputDecoration(
+                          labelText: 'New Email',
+                          hintText: context.t('enter_new_email'),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      TextField(
+                        controller: passwordController,
+                        obscureText: true,
+                        decoration: InputDecoration(
+                          labelText: context.t('password'),
+                          hintText: 'Enter current password',
+                        ),
+                      ),
+                    ] else ...[
+                      Text(
+                        'Enter the 6-digit code sent to ${emailController.text.trim()}',
+                      ),
+                      const SizedBox(height: 16),
+                      TextField(
+                        controller: codeController,
+                        keyboardType: TextInputType.number,
+                        maxLength: 6,
+                        decoration: const InputDecoration(
+                          labelText: 'Verification Code',
+                          counterText: '',
+                        ),
+                      ),
+                    ],
+                    if (isLoading) ...[
+                      const SizedBox(height: 16),
+                      const CircularProgressIndicator(),
+                    ],
+                  ],
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: isLoading ? null : () => Navigator.pop(context),
+                    child: Text(context.t('cancel')),
                   ),
-                  const SizedBox(height: 16),
-                  TextField(
-                    controller: passwordController,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      labelText: context.t('password'),
-                      hintText: 'Enter current password',
-                    ),
-                  ),
-                ] else ...[
-                  Text('Enter the 6-digit code sent to ${emailController.text.trim()}'),
-                  const SizedBox(height: 16),
-                  TextField(
-                    controller: codeController,
-                    keyboardType: TextInputType.number,
-                    maxLength: 6,
-                    decoration: const InputDecoration(
-                      labelText: 'Verification Code',
-                      counterText: '',
-                    ),
+                  ElevatedButton(
+                    onPressed:
+                        isLoading
+                            ? null
+                            : () async {
+                              final newEmail =
+                                  emailController.text.trim().toLowerCase();
+                              if (step == 0) {
+                                final pass = passwordController.text.trim();
+                                if (newEmail.isEmpty || pass.isEmpty) return;
+                                if (!_authService.isValidEmail(newEmail)) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text('Invalid email address'),
+                                    ),
+                                  );
+                                  return;
+                                }
+
+                                setDialogState(() => isLoading = true);
+                                final success = await _authService
+                                    .requestEmailChange(newEmail, pass);
+                                setDialogState(() => isLoading = false);
+
+                                if (success) {
+                                  setDialogState(() => step = 1);
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                        _authService.lastErrorMessage ??
+                                            'Failed to request change',
+                                      ),
+                                    ),
+                                  );
+                                }
+                              } else {
+                                final code = codeController.text.trim();
+                                if (code.length != 6) return;
+
+                                setDialogState(() => isLoading = true);
+                                final success = await _authService
+                                    .verifyEmailChange(newEmail, code);
+                                setDialogState(() => isLoading = false);
+
+                                if (success && mounted) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text(
+                                        'Email updated successfully!',
+                                      ),
+                                    ),
+                                  );
+                                  Navigator.pop(context);
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                        _authService.lastErrorMessage ??
+                                            'Invalid code',
+                                      ),
+                                    ),
+                                  );
+                                }
+                              }
+                            },
+                    child: Text(step == 0 ? 'Next' : 'Verify'),
                   ),
                 ],
-                if (isLoading) ...[
-                  const SizedBox(height: 16),
-                  const CircularProgressIndicator(),
-                ],
-              ],
-            ),
-            actions: [
-              TextButton(
-                onPressed: isLoading ? null : () => Navigator.pop(context),
-                child: Text(context.t('cancel')),
-              ),
-              ElevatedButton(
-                onPressed: isLoading ? null : () async {
-                  final newEmail = emailController.text.trim().toLowerCase();
-                  if (step == 0) {
-                    final pass = passwordController.text.trim();
-                    if (newEmail.isEmpty || pass.isEmpty) return;
-                    if (!_authService.isValidEmail(newEmail)) {
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Invalid email address')));
-                      return;
-                    }
-                    
-                    setDialogState(() => isLoading = true);
-                    final success = await _authService.requestEmailChange(newEmail, pass);
-                    setDialogState(() => isLoading = false);
-                    
-                    if (success) {
-                      setDialogState(() => step = 1);
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(_authService.lastErrorMessage ?? 'Failed to request change')));
-                    }
-                  } else {
-                    final code = codeController.text.trim();
-                    if (code.length != 6) return;
-                    
-                    setDialogState(() => isLoading = true);
-                    final success = await _authService.verifyEmailChange(newEmail, code);
-                    setDialogState(() => isLoading = false);
-                    
-                    if (success && mounted) {
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Email updated successfully!')));
-                      Navigator.pop(context);
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(_authService.lastErrorMessage ?? 'Invalid code')));
-                    }
-                  }
-                },
-                child: Text(step == 0 ? 'Next' : 'Verify'),
-              ),
-            ],
-          );
-        },
-      ),
+              );
+            },
+          ),
     );
   }
 
@@ -352,10 +390,11 @@ class _ProfilePageState extends State<ProfilePage> {
                     labelText: context.t('confirm_password'),
                     hintText: context.t('confirm_password_required'),
                   ),
-                  onSubmitted: (_) => _handlePasswordUpdate(
-                    passwordController.text,
-                    confirmController.text,
-                  ),
+                  onSubmitted:
+                      (_) => _handlePasswordUpdate(
+                        passwordController.text,
+                        confirmController.text,
+                      ),
                 ),
               ],
             ),
@@ -365,10 +404,11 @@ class _ProfilePageState extends State<ProfilePage> {
                 child: Text(context.t('cancel')),
               ),
               TextButton(
-                onPressed: () => _handlePasswordUpdate(
-                  passwordController.text,
-                  confirmController.text,
-                ),
+                onPressed:
+                    () => _handlePasswordUpdate(
+                      passwordController.text,
+                      confirmController.text,
+                    ),
                 child: Text(context.t('save')),
               ),
             ],
@@ -376,14 +416,11 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  void _handlePasswordUpdate(
-    String password,
-    String confirm,
-  ) async {
+  void _handlePasswordUpdate(String password, String confirm) async {
     if (password.isEmpty || confirm.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(context.t('fill_all_fields'))),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(context.t('fill_all_fields'))));
       return;
     }
     if (password != confirm) {
@@ -397,14 +434,16 @@ class _ProfilePageState extends State<ProfilePage> {
       await _authService.updatePassword(password);
       if (mounted) {
         Navigator.pop(context); // Close dialog
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(context.t('password_updated'))),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(context.t('password_updated'))));
       }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(_authService.lastErrorMessage ?? e.toString())),
+          SnackBar(
+            content: Text(_authService.lastErrorMessage ?? e.toString()),
+          ),
         );
       }
     }
@@ -470,7 +509,12 @@ class _ProfilePageState extends State<ProfilePage> {
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(_authService.lastErrorMessage ?? context.t('invalid_password_delete'))),
+          SnackBar(
+            content: Text(
+              _authService.lastErrorMessage ??
+                  context.t('invalid_password_delete'),
+            ),
+          ),
         );
       }
     }
@@ -496,17 +540,23 @@ class _ProfilePageState extends State<ProfilePage> {
         final homeAction = IconButton(
           tooltip: context.t('home'),
           icon: const Icon(Icons.school),
-          onPressed: () => Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (context) => const SubjectPage()),
-            (route) => false,
-          ),
+          onPressed:
+              () => Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => const SubjectPage()),
+                (route) => false,
+              ),
         );
         final leaderboardAction = IconButton(
           tooltip: context.t('leaderboard'),
           icon: const Icon(Icons.emoji_events),
-          onPressed: () =>
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const LeaderboardPage())),
+          onPressed:
+              () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const LeaderboardPage(),
+                ),
+              ),
         );
         final profileAction = IconButton(
           tooltip: context.t('profile'),
@@ -525,42 +575,55 @@ class _ProfilePageState extends State<ProfilePage> {
         final settingsAction = IconButton(
           tooltip: context.t('settings'),
           icon: const Icon(Icons.settings),
-          onPressed: () =>
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const SettingsPage())),
-        );
-        final docAction = (_authService.currentUser?.showDocumentation ?? true)
-            ? IconButton(
-              tooltip: context.t('documentation'),
-              icon: const Icon(Icons.help_outline),
-              onPressed: () => Navigator.push(
+          onPressed:
+              () => Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const DocumentationPage()),
+                MaterialPageRoute(builder: (context) => const SettingsPage()),
               ),
-            )
-            : null;
+        );
+        final docAction =
+            (_authService.currentUser?.showDocumentation ?? true)
+                ? IconButton(
+                  tooltip: context.t('documentation'),
+                  icon: const Icon(Icons.help_outline),
+                  onPressed:
+                      () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const DocumentationPage(),
+                        ),
+                      ),
+                )
+                : null;
 
         return AlioloScrollablePage(
           title: Text(
             context.t('profile'),
-            style: const TextStyle(color: appBarColor, fontSize: 20, fontWeight: FontWeight.bold),
+            style: const TextStyle(
+              color: appBarColor,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           appBarColor: currentSessionColor,
-          actions: isSmallScreen
-              ? [homeAction, profileAction]
-              : [
-                homeAction,
-                leaderboardAction,
-                profileAction,
-                settingsAction,
-                if (docAction != null) docAction,
-              ],
-          overflowActions: isSmallScreen
-              ? [
-                leaderboardAction,
-                settingsAction,
-                if (docAction != null) docAction,
-              ]
-              : null,
+          actions:
+              isSmallScreen
+                  ? [homeAction, profileAction]
+                  : [
+                    homeAction,
+                    leaderboardAction,
+                    profileAction,
+                    settingsAction,
+                    if (docAction != null) docAction,
+                  ],
+          overflowActions:
+              isSmallScreen
+                  ? [
+                    leaderboardAction,
+                    settingsAction,
+                    if (docAction != null) docAction,
+                  ]
+                  : null,
           body: Column(
             children: [
               const SizedBox(height: 24),
@@ -587,15 +650,25 @@ class _ProfilePageState extends State<ProfilePage> {
                   children: [
                     ListTile(
                       leading: Icon(
-                        user.isPremium ? Icons.workspace_premium : Icons.workspace_premium_outlined, 
-                        color: user.isPremium ? Colors.amber : currentSessionColor,
+                        user.isPremium
+                            ? Icons.workspace_premium
+                            : Icons.workspace_premium_outlined,
+                        color:
+                            user.isPremium ? Colors.amber : currentSessionColor,
                       ),
-                      title: Text(user.isPremium ? context.t('manage_subscription') : context.t('premium_go')),
+                      title: Text(
+                        user.isPremium
+                            ? context.t('manage_subscription')
+                            : context.t('premium_go'),
+                      ),
                       trailing: const Icon(Icons.chevron_right),
-                      onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const PremiumUpgradePage()),
-                      ),
+                      onTap:
+                          () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const PremiumUpgradePage(),
+                            ),
+                          ),
                     ),
                     const Divider(height: 1, indent: 16, endIndent: 16),
                     Consumer<SubscriptionService>(
@@ -607,7 +680,11 @@ class _ProfilePageState extends State<ProfilePage> {
                               Text(context.t('public_profile')),
                               if (!isPremium) ...[
                                 const SizedBox(width: 8),
-                                const Icon(Icons.workspace_premium, color: Colors.amber, size: 16),
+                                const Icon(
+                                  Icons.workspace_premium,
+                                  color: Colors.amber,
+                                  size: 16,
+                                ),
                               ],
                             ],
                           ),
@@ -618,7 +695,13 @@ class _ProfilePageState extends State<ProfilePage> {
                           value: isPremium ? user.showOnLeaderboard : true,
                           onChanged: (val) {
                             if (!isPremium) {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => const PremiumUpgradePage()));
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder:
+                                      (context) => const PremiumUpgradePage(),
+                                ),
+                              );
                             } else {
                               _authService.updateLeaderboardPreference(val);
                             }
@@ -631,21 +714,30 @@ class _ProfilePageState extends State<ProfilePage> {
                       leading: Icon(Icons.group, color: currentSessionColor),
                       title: Text(context.t('manage_friends')),
                       trailing: const Icon(Icons.chevron_right),
-                      onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const ManageFriendsPage()),
-                      ),
+                      onTap:
+                          () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ManageFriendsPage(),
+                            ),
+                          ),
                     ),
                     const Divider(height: 1, indent: 16, endIndent: 16),
                     if (_authService.currentUser?.serverId == _adminUserId) ...[
                       ListTile(
-                        leading: Icon(Icons.people_alt, color: currentSessionColor),
+                        leading: Icon(
+                          Icons.people_alt,
+                          color: currentSessionColor,
+                        ),
                         title: Text(context.t('users')),
                         trailing: const Icon(Icons.chevron_right),
-                        onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => const UsersPage()),
-                        ),
+                        onTap:
+                            () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const UsersPage(),
+                              ),
+                            ),
                       ),
                       const Divider(height: 1, indent: 16, endIndent: 16),
                     ],
@@ -658,14 +750,20 @@ class _ProfilePageState extends State<ProfilePage> {
                     if (!kIsWeb) ...[
                       const Divider(height: 1, indent: 16, endIndent: 16),
                       ListTile(
-                        leading: Icon(Icons.restore, color: currentSessionColor),
+                        leading: Icon(
+                          Icons.restore,
+                          color: currentSessionColor,
+                        ),
                         title: const Text('Restore Purchases'),
                         trailing: const Icon(Icons.chevron_right),
                         onTap: () async {
-                          await getIt<SubscriptionService>().checkSubscriptionStatus();
+                          await getIt<SubscriptionService>()
+                              .checkSubscriptionStatus();
                           if (mounted) {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text(context.t('setting_saved'))),
+                              SnackBar(
+                                content: Text(context.t('setting_saved')),
+                              ),
                             );
                           }
                         },
@@ -795,7 +893,11 @@ class _ProfilePageState extends State<ProfilePage> {
                     ],
                     const SizedBox(width: 4),
                     IconButton(
-                      icon: const Icon(Icons.edit, size: 18, color: Colors.grey),
+                      icon: const Icon(
+                        Icons.edit,
+                        size: 18,
+                        color: Colors.grey,
+                      ),
                       onPressed: () => _showEditUsernameDialog(user.username),
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(),
@@ -811,7 +913,11 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     const SizedBox(width: 4),
                     IconButton(
-                      icon: const Icon(Icons.edit, size: 16, color: Colors.grey),
+                      icon: const Icon(
+                        Icons.edit,
+                        size: 16,
+                        color: Colors.grey,
+                      ),
                       onPressed: () => _showEditEmailDialog(user.email),
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(),
@@ -826,29 +932,51 @@ class _ProfilePageState extends State<ProfilePage> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            _buildInfoItem(Icons.stars, '${user.totalXp}', context.t('total_xp'), getIt<ThemeService>().xp),
-            _buildInfoItem(Icons.local_fire_department, '${user.currentStreak}', context.t('current_streak'), getIt<ThemeService>().streak),
-            _buildInfoItem(Icons.emoji_events, '${user.maxStreak}', context.t('max_streak'), getIt<ThemeService>().amber),
-            _buildInfoItem(Icons.track_changes, '${user.dailyCompletions.toInt()}/${user.dailyGoalCount}', context.t('daily_goal'), color),
+            _buildInfoItem(
+              Icons.stars,
+              '${user.totalXp}',
+              context.t('total_xp'),
+              getIt<ThemeService>().xp,
+            ),
+            _buildInfoItem(
+              Icons.local_fire_department,
+              '${user.currentStreak}',
+              context.t('current_streak'),
+              getIt<ThemeService>().streak,
+            ),
+            _buildInfoItem(
+              Icons.emoji_events,
+              '${user.maxStreak}',
+              context.t('max_streak'),
+              getIt<ThemeService>().amber,
+            ),
+            _buildInfoItem(
+              Icons.track_changes,
+              '${user.dailyCompletions.toInt()}/${user.dailyGoalCount}',
+              context.t('daily_goal'),
+              color,
+            ),
           ],
         ),
       ],
     );
   }
 
-  Widget _buildInfoItem(IconData icon, String value, String label, Color color) {
+  Widget _buildInfoItem(
+    IconData icon,
+    String value,
+    String label,
+    Color color,
+  ) {
     return Column(
       children: [
         Icon(icon, color: color, size: 24),
         const SizedBox(height: 4),
         Text(
           value,
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         ),
-        Text(
-          label,
-          style: TextStyle(fontSize: 10, color: Colors.grey[600]),
-        ),
+        Text(label, style: TextStyle(fontSize: 12, color: Colors.grey[600])),
       ],
     );
   }
@@ -871,9 +999,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
     return Card(
       elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Column(
         children: [
           ListTile(
@@ -883,18 +1009,27 @@ class _ProfilePageState extends State<ProfilePage> {
                 Text(context.t('next_daily_goal')),
                 if (!isPremium) ...[
                   const SizedBox(width: 8),
-                  const Icon(Icons.workspace_premium, color: Colors.amber, size: 16),
+                  const Icon(
+                    Icons.workspace_premium,
+                    color: Colors.amber,
+                    size: 16,
+                  ),
                 ],
               ],
             ),
             subtitle: Text(context.t('next_daily_goal_desc')),
             trailing: Text(
               '${user.nextDailyGoal}',
-              style: const TextStyle(fontWeight: FontWeight.bold),
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
             ),
             onTap: () {
               if (!isPremium) {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const PremiumUpgradePage()));
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const PremiumUpgradePage(),
+                  ),
+                );
               } else {
                 _showValuePicker(
                   title: context.t('next_daily_goal'),
@@ -915,18 +1050,27 @@ class _ProfilePageState extends State<ProfilePage> {
                 Text(context.t('learn_session_size')),
                 if (!isPremium) ...[
                   const SizedBox(width: 8),
-                  const Icon(Icons.workspace_premium, color: Colors.amber, size: 16),
+                  const Icon(
+                    Icons.workspace_premium,
+                    color: Colors.amber,
+                    size: 16,
+                  ),
                 ],
               ],
             ),
             subtitle: Text(context.t('learn_session_size_desc')),
             trailing: Text(
               '${user.learnSessionSize}',
-              style: const TextStyle(fontWeight: FontWeight.bold),
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
             ),
             onTap: () {
               if (!isPremium) {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const PremiumUpgradePage()));
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const PremiumUpgradePage(),
+                  ),
+                );
               } else {
                 _showValuePicker(
                   title: context.t('learn_session_size'),
@@ -947,18 +1091,27 @@ class _ProfilePageState extends State<ProfilePage> {
                 Text(context.t('test_session_size')),
                 if (!isPremium) ...[
                   const SizedBox(width: 8),
-                  const Icon(Icons.workspace_premium, color: Colors.amber, size: 16),
+                  const Icon(
+                    Icons.workspace_premium,
+                    color: Colors.amber,
+                    size: 16,
+                  ),
                 ],
               ],
             ),
             subtitle: Text(context.t('test_session_size_desc')),
             trailing: Text(
               '${user.testSessionSize}',
-              style: const TextStyle(fontWeight: FontWeight.bold),
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
             ),
             onTap: () {
               if (!isPremium) {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const PremiumUpgradePage()));
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const PremiumUpgradePage(),
+                  ),
+                );
               } else {
                 _showValuePicker(
                   title: context.t('test_session_size'),
@@ -979,18 +1132,27 @@ class _ProfilePageState extends State<ProfilePage> {
                 Text(context.t('options_count')),
                 if (!isPremium) ...[
                   const SizedBox(width: 8),
-                  const Icon(Icons.workspace_premium, color: Colors.amber, size: 16),
+                  const Icon(
+                    Icons.workspace_premium,
+                    color: Colors.amber,
+                    size: 16,
+                  ),
                 ],
               ],
             ),
             subtitle: Text(context.t('options_count_desc')),
             trailing: Text(
               '${user.optionsCount}',
-              style: const TextStyle(fontWeight: FontWeight.bold),
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
             ),
             onTap: () {
               if (!isPremium) {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const PremiumUpgradePage()));
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const PremiumUpgradePage(),
+                  ),
+                );
               } else {
                 _showValuePicker(
                   title: context.t('options_count'),
