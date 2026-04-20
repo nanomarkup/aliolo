@@ -32,7 +32,7 @@ export const CreateSubjectSchema = z.object({
   folder_id: z.string().nullable().optional().openapi({ example: 'fold_456' }),
   is_public: z.boolean().optional().openapi({ example: true }),
   age_group: z.string().openapi({ example: 'primary' }),
-  name: z.string().openapi({ example: 'New Subject' }),
+  name: z.string().min(1, 'Name is required').openapi({ example: 'New Subject' }),
   names: z.record(z.string()).openapi({ example: { es: 'Nueva Materia' } }),
   description: z.string().openapi({ example: 'Desc' }),
   descriptions: z.record(z.string()).openapi({ example: { es: 'Desc' } }),

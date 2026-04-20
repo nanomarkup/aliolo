@@ -31,7 +31,7 @@ export const CreateCardSchema = z.object({
   level: z.number().optional().openapi({ example: 1 }),
   renderer: z.string().optional().openapi({ example: 'generic' }),
   is_public: z.boolean().optional().openapi({ example: true }),
-  answer: z.string().openapi({ example: 'A' }),
+  answer: z.string().min(1, 'Answer is required').openapi({ example: 'A' }),
   answers: z.record(z.string()).openapi({ example: { es: 'A' } }),
   prompt: z.string().openapi({ example: 'Choose A' }),
   prompts: z.record(z.string()).openapi({ example: { es: 'Elige A' } }),
@@ -43,4 +43,12 @@ export const CreateCardSchema = z.object({
   audios: z.record(z.string()).openapi({ example: { es: 'url_es' } }),
   video: z.string().openapi({ example: 'url' }),
   videos: z.record(z.string()).openapi({ example: { es: 'url_es' } }),
-}).openapi('CreateCard');
+}).openapi('CreateCard').refine(data => {
+  return (data.display_text && data.display_text.trim().length > 0) || 
+         data.images_base.length > 0 || 
+         data.audio.trim().length > 0 || 
+         data.video.trim().length > 0;
+}, {
+  message: "At least one visual content (text, image, audio, or video) must be provided.",
+  path: ["display_text"]
+});

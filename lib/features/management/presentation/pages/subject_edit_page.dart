@@ -434,16 +434,12 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
       }
     }
 
-    // Ensure global name is never null for the database NOT NULL constraint
+    // Ensure global name is never null
     if (globalName == null || globalName.trim().isEmpty) {
-      if (finalNames.isNotEmpty) {
-        globalName = finalNames.values.first;
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(context.t('provide_at_least_one_name'))),
-        );
-        return;
-      }
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(context.t('provide_at_least_one_name'))),
+      );
+      return;
     }
 
     setState(() => _isSaving = true);
@@ -814,21 +810,20 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
         ),
         const SizedBox(height: 24),
         TextFormField(
-          controller: _nameController,
-          onChanged: (v) => draft.name = v,
-          decoration: InputDecoration(
-            labelText: context.t('name'),
-            border: const OutlineInputBorder(),
-          ),
-          enabled: isOwner,
-          validator: (v) {
-            if (v == null || v.trim().isEmpty) {
-              return context.t('provide_at_least_one_name');
-            }
-            return null;
-          },
-        ),
-        if (!_isFolderMode) ...[
+           controller: _nameController,
+           onChanged: (v) => draft.name = v,
+           decoration: InputDecoration(
+             labelText: '${context.t('name')} *',
+             border: const OutlineInputBorder(),
+           ),
+           enabled: isOwner,
+           validator: (v) {
+             if (_selectedLang == 'global' && (v == null || v.trim().isEmpty)) {
+               return context.t('provide_at_least_one_name');
+             }
+             return null;
+           },
+         ),        if (!_isFolderMode) ...[
           const SizedBox(height: 16),
           TextFormField(
             controller: _descriptionController,

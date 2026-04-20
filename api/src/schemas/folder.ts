@@ -19,6 +19,6 @@ export const FoldersResponseSchema = z.array(FolderSchema);
 export const CreateFolderSchema = z.object({
   id: z.string().openapi({ example: 'fold_123' }),
   pillar_id: z.number().openapi({ example: 1 }),
-  name: z.string().openapi({ example: 'My Folder' }),
+  name: z.string().min(1, 'Name is required').openapi({ example: 'My Folder' }),
   names: z.record(z.string()).openapi({ example: { es: 'Mi Carpeta' } }),
 }).openapi('CreateFolder');

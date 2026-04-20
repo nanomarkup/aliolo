@@ -563,6 +563,27 @@ class _AddCardPageState extends State<AddCardPage> {
 
   Future<void> _save() async {
     if (_selectedSubjectId == null) return;
+
+    final globalDraft = _drafts['global'];
+    if (globalDraft == null || globalDraft.answer.trim().isEmpty) {
+      _showError('${context.t('answer')} ${context.t('is_required')}');
+      return;
+    }
+
+    // Check if at least one visual content is provided (Visual Text, Image, Audio, or Video)
+    bool hasVisual = globalDraft.displayText.trim().isNotEmpty ||
+        globalDraft.imageUrls.isNotEmpty ||
+        globalDraft.newImageFiles.isNotEmpty ||
+        globalDraft.newAudioFile != null ||
+        globalDraft.audioUrl != null ||
+        globalDraft.newVideoFile != null ||
+        globalDraft.videoUrl != null;
+
+    if (!hasVisual) {
+      _showError('At least one visual content (text, image, audio, or video) must be provided.');
+      return;
+    }
+
     setState(() => _isSaving = true);
 
     try {
@@ -1083,7 +1104,12 @@ class _AddCardPageState extends State<AddCardPage> {
               args: {'lang': _selectedLang.toUpperCase()},
             ),
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: 8),
+          const Text(
+            '* At least one visual content is required',
+            style: TextStyle(fontSize: 12, color: Colors.orange, fontWeight: FontWeight.w500),
+          ),
+          const SizedBox(height: 16),
 
           // SECTION: CARD VISUALS
           TextFormField(
@@ -1129,7 +1155,7 @@ class _AddCardPageState extends State<AddCardPage> {
             controller: _answerController,
             onChanged: (v) => draft.answer = v,
             decoration: InputDecoration(
-              labelText: context.t('answer'),
+              labelText: '${context.t('answer')} *',
               border: const OutlineInputBorder(),
             ),
             enabled: !widget.isReadOnly,

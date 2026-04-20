@@ -36,7 +36,7 @@ export const CreateCollectionSchema = z.object({
   folder_id: z.string().nullable().optional().openapi({ example: 'fold_456' }),
   is_public: z.boolean().optional().openapi({ example: true }),
   age_group: z.string().openapi({ example: 'primary' }),
-  name: z.string().openapi({ example: 'My Collection' }),
+  name: z.string().min(1, 'Name is required').openapi({ example: 'My Collection' }),
   names: z.record(z.string()).openapi({ example: { es: 'Mi Colección' } }),
   description: z.string().openapi({ example: 'Collection description' }),
   descriptions: z.record(z.string()).openapi({ example: { es: 'Descripción de la colección' } }),
