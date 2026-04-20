@@ -1084,37 +1084,18 @@ class _AddCardPageState extends State<AddCardPage> {
             ),
           ),
           const SizedBox(height: 24),
-          TextFormField(
-            controller: _promptController,
-            onChanged: (v) => draft.prompt = v,
-            decoration: InputDecoration(
-              labelText: context.t('prompt_label'),
-              border: const OutlineInputBorder(),
-            ),
-            maxLines: 1,
-            enabled: !widget.isReadOnly,
-          ),
-          const SizedBox(height: 16),
-          TextFormField(
-            controller: _answerController,
-            onChanged: (v) => draft.answer = v,
-            decoration: InputDecoration(
-              labelText: context.t('answer'),
-              border: const OutlineInputBorder(),
-            ),
-            enabled: !widget.isReadOnly,
-          ),
-          const SizedBox(height: 16),
+
+          // SECTION: CARD VISUALS
           TextFormField(
             controller: _displayTextController,
             onChanged: (v) => draft.displayText = v,
-            decoration: const InputDecoration(
-              labelText: 'Text',
-              border: OutlineInputBorder(),
+            decoration: InputDecoration(
+              labelText: context.t('visual_text'),
+              border: const OutlineInputBorder(),
             ),
             enabled: !widget.isReadOnly,
           ),
-          const SizedBox(height: 32),
+          const SizedBox(height: 24),
           _buildMediaSection(
             context.t('images'),
             Icons.image,
@@ -1134,6 +1115,32 @@ class _AddCardPageState extends State<AddCardPage> {
             Icons.videocam,
             _pickVideo,
             _buildVideoPreview(draft),
+          ),
+
+          const SizedBox(height: 32),
+          const Divider(),
+          const SizedBox(height: 32),
+
+          // SECTION: IDENTIFICATION
+          TextFormField(
+            controller: _answerController,
+            onChanged: (v) => draft.answer = v,
+            decoration: InputDecoration(
+              labelText: context.t('answer'),
+              border: const OutlineInputBorder(),
+            ),
+            enabled: !widget.isReadOnly,
+          ),
+          const SizedBox(height: 24),
+          TextFormField(
+            controller: _promptController,
+            onChanged: (v) => draft.prompt = v,
+            decoration: InputDecoration(
+              labelText: context.t('prompt_optional'),
+              border: const OutlineInputBorder(),
+            ),
+            maxLines: 1,
+            enabled: !widget.isReadOnly,
           ),
           const SizedBox(height: 100),
         ],

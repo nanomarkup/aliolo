@@ -428,7 +428,7 @@ entries:
     line: 418
     kind: Text
   - file: lib/features/management/presentation/pages/users_page.dart
-    line: 397
+    line: 429
     kind: Text
   - file: lib/features/settings/presentation/pages/about_page.dart
     line: 323
@@ -1651,6 +1651,14 @@ entries:
   - file: scripts/generate_ui_translations.py
     line: 0
     kind: explicit
+- key: show_fake_users
+  english: Show Fake Users
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/management/presentation/pages/users_page.dart
+    line: 258
+    kind: prop
 - key: subject_id
   english: Subject ID
   translate: true

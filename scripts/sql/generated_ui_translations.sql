@@ -6278,6 +6278,45 @@ INSERT INTO ui_translations (key, lang, value, updated_at) VALUES
   ('show_documentation_btn_desc', 'zh', '在应用栏中显示文档按钮。', CURRENT_TIMESTAMP),
   ('show_documentation_btn_desc', 'ja', 'アプリバーにドキュメントボタンを表示します。', CURRENT_TIMESTAMP),
   ('show_documentation_btn_desc', 'ko', '앱 바에 문서 버튼을 표시합니다.', CURRENT_TIMESTAMP),
+  ('show_fake_users', 'en', 'Show Fake Users', CURRENT_TIMESTAMP),
+  ('show_fake_users', 'id', 'Tampilkan Pengguna Palsu', CURRENT_TIMESTAMP),
+  ('show_fake_users', 'bg', 'Показване на фалшиви потребители', CURRENT_TIMESTAMP),
+  ('show_fake_users', 'cs', 'Zobrazit falešné uživatele', CURRENT_TIMESTAMP),
+  ('show_fake_users', 'da', 'Vis falske brugere', CURRENT_TIMESTAMP),
+  ('show_fake_users', 'de', 'Fake-Benutzer anzeigen', CURRENT_TIMESTAMP),
+  ('show_fake_users', 'et', 'Näita võltskasutajaid', CURRENT_TIMESTAMP),
+  ('show_fake_users', 'es', 'Mostrar usuarios falsos', CURRENT_TIMESTAMP),
+  ('show_fake_users', 'fr', 'Afficher les faux utilisateurs', CURRENT_TIMESTAMP),
+  ('show_fake_users', 'ga', 'Taispeáin Úsáideoirí Bréige', CURRENT_TIMESTAMP),
+  ('show_fake_users', 'hr', 'Prikaži lažne korisnike', CURRENT_TIMESTAMP),
+  ('show_fake_users', 'it', 'Mostra utenti falsi', CURRENT_TIMESTAMP),
+  ('show_fake_users', 'lv', 'Rādīt viltus lietotājus', CURRENT_TIMESTAMP),
+  ('show_fake_users', 'lt', 'Rodyti netikrus vartotojus', CURRENT_TIMESTAMP),
+  ('show_fake_users', 'hu', 'Hamis felhasználók megjelenítése', CURRENT_TIMESTAMP),
+  ('show_fake_users', 'mt', 'Uri Utenti Foloz', CURRENT_TIMESTAMP)
+ON CONFLICT(key, lang) DO UPDATE SET
+  value = excluded.value,
+  updated_at = CURRENT_TIMESTAMP;
+
+INSERT INTO ui_translations (key, lang, value, updated_at) VALUES
+  ('show_fake_users', 'nl', 'Toon valse gebruikers', CURRENT_TIMESTAMP),
+  ('show_fake_users', 'pl', 'Pokaż fałszywych użytkowników', CURRENT_TIMESTAMP),
+  ('show_fake_users', 'pt', 'Mostrar usuários falsos', CURRENT_TIMESTAMP),
+  ('show_fake_users', 'ro', 'Afișați utilizatori falși', CURRENT_TIMESTAMP),
+  ('show_fake_users', 'sk', 'Zobraziť falošných používateľov', CURRENT_TIMESTAMP),
+  ('show_fake_users', 'sl', 'Prikaži lažne uporabnike', CURRENT_TIMESTAMP),
+  ('show_fake_users', 'fi', 'Näytä väärennetyt käyttäjät', CURRENT_TIMESTAMP),
+  ('show_fake_users', 'sv', 'Visa falska användare', CURRENT_TIMESTAMP),
+  ('show_fake_users', 'tl', 'Ipakita ang Mga Pekeng Gumagamit', CURRENT_TIMESTAMP),
+  ('show_fake_users', 'vi', 'Hiển thị người dùng giả mạo', CURRENT_TIMESTAMP),
+  ('show_fake_users', 'tr', 'Sahte Kullanıcıları Göster', CURRENT_TIMESTAMP),
+  ('show_fake_users', 'el', 'Εμφάνιση ψεύτικων χρηστών', CURRENT_TIMESTAMP),
+  ('show_fake_users', 'uk', 'Показати підроблених користувачів', CURRENT_TIMESTAMP),
+  ('show_fake_users', 'ar', 'إظهار المستخدمين المزيفين', CURRENT_TIMESTAMP),
+  ('show_fake_users', 'hi', 'नकली उपयोगकर्ता दिखाएँ', CURRENT_TIMESTAMP),
+  ('show_fake_users', 'zh', '显示虚假用户', CURRENT_TIMESTAMP),
+  ('show_fake_users', 'ja', '偽のユーザーを表示する', CURRENT_TIMESTAMP),
+  ('show_fake_users', 'ko', '가짜 사용자 표시', CURRENT_TIMESTAMP),
   ('subject_id', 'en', 'Subject ID', CURRENT_TIMESTAMP),
   ('subject_id', 'id', 'ID Subjek', CURRENT_TIMESTAMP),
   ('subject_id', 'bg', 'ID на субекта', CURRENT_TIMESTAMP),
@@ -6293,12 +6332,7 @@ INSERT INTO ui_translations (key, lang, value, updated_at) VALUES
   ('subject_id', 'lv', 'Priekšmeta ID', CURRENT_TIMESTAMP),
   ('subject_id', 'lt', 'Dalyko ID', CURRENT_TIMESTAMP),
   ('subject_id', 'hu', 'Tárgyazonosító', CURRENT_TIMESTAMP),
-  ('subject_id', 'mt', 'ID tas-suġġett', CURRENT_TIMESTAMP)
-ON CONFLICT(key, lang) DO UPDATE SET
-  value = excluded.value,
-  updated_at = CURRENT_TIMESTAMP;
-
-INSERT INTO ui_translations (key, lang, value, updated_at) VALUES
+  ('subject_id', 'mt', 'ID tas-suġġett', CURRENT_TIMESTAMP),
   ('subject_id', 'nl', 'Onderwerp-ID', CURRENT_TIMESTAMP),
   ('subject_id', 'pl', 'Identyfikator podmiotu', CURRENT_TIMESTAMP),
   ('subject_id', 'pt', 'ID do assunto', CURRENT_TIMESTAMP),
@@ -6364,7 +6398,12 @@ INSERT INTO ui_translations (key, lang, value, updated_at) VALUES
   ('subscription_updated', 'hr', 'Pretplata ažurirana', CURRENT_TIMESTAMP),
   ('subscription_updated', 'it', 'Abbonamento aggiornato', CURRENT_TIMESTAMP),
   ('subscription_updated', 'lv', 'Abonements atjaunināts', CURRENT_TIMESTAMP),
-  ('subscription_updated', 'lt', 'Prenumerata atnaujinta', CURRENT_TIMESTAMP),
+  ('subscription_updated', 'lt', 'Prenumerata atnaujinta', CURRENT_TIMESTAMP)
+ON CONFLICT(key, lang) DO UPDATE SET
+  value = excluded.value,
+  updated_at = CURRENT_TIMESTAMP;
+
+INSERT INTO ui_translations (key, lang, value, updated_at) VALUES
   ('subscription_updated', 'hu', 'Az előfizetés frissítve', CURRENT_TIMESTAMP),
   ('subscription_updated', 'mt', 'Abbonament aġġornat', CURRENT_TIMESTAMP),
   ('subscription_updated', 'nl', 'Abonnement bijgewerkt', CURRENT_TIMESTAMP),
@@ -6398,12 +6437,7 @@ INSERT INTO ui_translations (key, lang, value, updated_at) VALUES
   ('subtraction_emoji', 'hr', 'Emotikoni oduzimanja', CURRENT_TIMESTAMP),
   ('subtraction_emoji', 'it', 'Sottrazione Emoji', CURRENT_TIMESTAMP),
   ('subtraction_emoji', 'lv', 'Atņemšanas emocijzīmes', CURRENT_TIMESTAMP),
-  ('subtraction_emoji', 'lt', 'Atimties jaustukai', CURRENT_TIMESTAMP)
-ON CONFLICT(key, lang) DO UPDATE SET
-  value = excluded.value,
-  updated_at = CURRENT_TIMESTAMP;
-
-INSERT INTO ui_translations (key, lang, value, updated_at) VALUES
+  ('subtraction_emoji', 'lt', 'Atimties jaustukai', CURRENT_TIMESTAMP),
   ('subtraction_emoji', 'hu', 'Kivonás Emoji', CURRENT_TIMESTAMP),
   ('subtraction_emoji', 'mt', 'Tnaqqis Emoji', CURRENT_TIMESTAMP),
   ('subtraction_emoji', 'nl', 'Aftrekken-emoji', CURRENT_TIMESTAMP),
@@ -6469,7 +6503,12 @@ INSERT INTO ui_translations (key, lang, value, updated_at) VALUES
   ('technical_context', 'fr', 'CONTEXTE TECHNIQUE', CURRENT_TIMESTAMP),
   ('technical_context', 'ga', 'COMHTHÉACS TEICNIÚIL', CURRENT_TIMESTAMP),
   ('technical_context', 'hr', 'TEHNIČKI KONTEKST', CURRENT_TIMESTAMP),
-  ('technical_context', 'it', 'CONTESTO TECNICO', CURRENT_TIMESTAMP),
+  ('technical_context', 'it', 'CONTESTO TECNICO', CURRENT_TIMESTAMP)
+ON CONFLICT(key, lang) DO UPDATE SET
+  value = excluded.value,
+  updated_at = CURRENT_TIMESTAMP;
+
+INSERT INTO ui_translations (key, lang, value, updated_at) VALUES
   ('technical_context', 'lv', 'TEHNISKAIS KONTEKSTS', CURRENT_TIMESTAMP),
   ('technical_context', 'lt', 'TECHNINIS KONTEKSTAS', CURRENT_TIMESTAMP),
   ('technical_context', 'hu', 'MŰSZAKI KÖRNYEZET', CURRENT_TIMESTAMP),
@@ -6503,12 +6542,7 @@ INSERT INTO ui_translations (key, lang, value, updated_at) VALUES
   ('testing_mode', 'fr', 'Mode test', CURRENT_TIMESTAMP),
   ('testing_mode', 'ga', 'Modh tástála', CURRENT_TIMESTAMP),
   ('testing_mode', 'hr', 'Način testiranja', CURRENT_TIMESTAMP),
-  ('testing_mode', 'it', 'Modalità di prova', CURRENT_TIMESTAMP)
-ON CONFLICT(key, lang) DO UPDATE SET
-  value = excluded.value,
-  updated_at = CURRENT_TIMESTAMP;
-
-INSERT INTO ui_translations (key, lang, value, updated_at) VALUES
+  ('testing_mode', 'it', 'Modalità di prova', CURRENT_TIMESTAMP),
   ('testing_mode', 'lv', 'Pārbaudes režīms', CURRENT_TIMESTAMP),
   ('testing_mode', 'lt', 'Testavimo režimas', CURRENT_TIMESTAMP),
   ('testing_mode', 'hu', 'Tesztelési mód', CURRENT_TIMESTAMP),
@@ -6574,7 +6608,12 @@ INSERT INTO ui_translations (key, lang, value, updated_at) VALUES
   ('this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards', 'et', 'See on kaust. Kõigi kaartide harjutamiseks saate ülalolevaid nuppe õppida/testida.', CURRENT_TIMESTAMP),
   ('this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards', 'es', 'Esta es una carpeta. Puede utilizar los botones Aprender/Probar de arriba para practicar todas las cartas.', CURRENT_TIMESTAMP),
   ('this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards', 'fr', 'Ceci est un dossier. Vous pouvez utiliser les boutons Apprendre/Test ci-dessus pour pratiquer toutes les cartes.', CURRENT_TIMESTAMP),
-  ('this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards', 'ga', 'Is fillteán é seo. Is féidir leat na cnaipí Foghlaim/Tástáil thuas a úsáid chun gach cárta a chleachtadh.', CURRENT_TIMESTAMP),
+  ('this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards', 'ga', 'Is fillteán é seo. Is féidir leat na cnaipí Foghlaim/Tástáil thuas a úsáid chun gach cárta a chleachtadh.', CURRENT_TIMESTAMP)
+ON CONFLICT(key, lang) DO UPDATE SET
+  value = excluded.value,
+  updated_at = CURRENT_TIMESTAMP;
+
+INSERT INTO ui_translations (key, lang, value, updated_at) VALUES
   ('this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards', 'hr', 'Ovo je mapa. Možete koristiti gornje gumbe za učenje/testiranje za vježbanje svih kartica.', CURRENT_TIMESTAMP),
   ('this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards', 'it', 'Questa è una cartella. Puoi utilizzare i pulsanti Impara/Test in alto per esercitarti con tutte le carte.', CURRENT_TIMESTAMP),
   ('this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards', 'lv', 'Šī ir mape. Varat izmantot iepriekš esošās pogas Mācīties/Pārbaudīt, lai trenētu visas kārtis.', CURRENT_TIMESTAMP),
@@ -6608,12 +6647,7 @@ INSERT INTO ui_translations (key, lang, value, updated_at) VALUES
   ('type_your_reply', 'et', 'Sisestage oma vastus...', CURRENT_TIMESTAMP),
   ('type_your_reply', 'es', 'Escribe tu respuesta...', CURRENT_TIMESTAMP),
   ('type_your_reply', 'fr', 'Tapez votre réponse...', CURRENT_TIMESTAMP),
-  ('type_your_reply', 'ga', 'Clóscríobh do fhreagra...', CURRENT_TIMESTAMP)
-ON CONFLICT(key, lang) DO UPDATE SET
-  value = excluded.value,
-  updated_at = CURRENT_TIMESTAMP;
-
-INSERT INTO ui_translations (key, lang, value, updated_at) VALUES
+  ('type_your_reply', 'ga', 'Clóscríobh do fhreagra...', CURRENT_TIMESTAMP),
   ('type_your_reply', 'hr', 'Upišite svoj odgovor...', CURRENT_TIMESTAMP),
   ('type_your_reply', 'it', 'Scrivi la tua risposta...', CURRENT_TIMESTAMP),
   ('type_your_reply', 'lv', 'Ierakstiet savu atbildi...', CURRENT_TIMESTAMP),
@@ -6679,7 +6713,12 @@ INSERT INTO ui_translations (key, lang, value, updated_at) VALUES
   ('unknown_user_profile_missing', 'da', 'Ukendt bruger (profil mangler)', CURRENT_TIMESTAMP),
   ('unknown_user_profile_missing', 'de', 'Unbekannter Benutzer (Profil fehlt)', CURRENT_TIMESTAMP),
   ('unknown_user_profile_missing', 'et', 'Tundmatu kasutaja (profiil puudub)', CURRENT_TIMESTAMP),
-  ('unknown_user_profile_missing', 'es', 'Usuario desconocido (falta perfil)', CURRENT_TIMESTAMP),
+  ('unknown_user_profile_missing', 'es', 'Usuario desconocido (falta perfil)', CURRENT_TIMESTAMP)
+ON CONFLICT(key, lang) DO UPDATE SET
+  value = excluded.value,
+  updated_at = CURRENT_TIMESTAMP;
+
+INSERT INTO ui_translations (key, lang, value, updated_at) VALUES
   ('unknown_user_profile_missing', 'fr', 'Utilisateur inconnu (profil manquant)', CURRENT_TIMESTAMP),
   ('unknown_user_profile_missing', 'ga', 'Úsáideoir Anaithnid (Próifíl in easnamh)', CURRENT_TIMESTAMP),
   ('unknown_user_profile_missing', 'hr', 'Nepoznati korisnik (nedostaje profil)', CURRENT_TIMESTAMP),
@@ -6713,12 +6752,7 @@ INSERT INTO ui_translations (key, lang, value, updated_at) VALUES
   ('user', 'da', 'Bruger', CURRENT_TIMESTAMP),
   ('user', 'de', 'Benutzer', CURRENT_TIMESTAMP),
   ('user', 'et', 'Kasutaja', CURRENT_TIMESTAMP),
-  ('user', 'es', 'Usuario', CURRENT_TIMESTAMP)
-ON CONFLICT(key, lang) DO UPDATE SET
-  value = excluded.value,
-  updated_at = CURRENT_TIMESTAMP;
-
-INSERT INTO ui_translations (key, lang, value, updated_at) VALUES
+  ('user', 'es', 'Usuario', CURRENT_TIMESTAMP),
   ('user', 'fr', 'Utilisateur', CURRENT_TIMESTAMP),
   ('user', 'ga', 'Úsáideoir', CURRENT_TIMESTAMP),
   ('user', 'hr', 'Korisnik', CURRENT_TIMESTAMP),
@@ -6784,7 +6818,12 @@ INSERT INTO ui_translations (key, lang, value, updated_at) VALUES
   ('user_with_this_email_already_exists_please_log_in_instead', 'bg', 'Потребител с този имейл вече съществува. Моля, влезте вместо това.', CURRENT_TIMESTAMP),
   ('user_with_this_email_already_exists_please_log_in_instead', 'cs', 'Uživatel s tímto e-mailem již existuje. Přihlaste se místo toho.', CURRENT_TIMESTAMP),
   ('user_with_this_email_already_exists_please_log_in_instead', 'da', 'Bruger med denne e-mailadresse findes allerede. Log venligst ind i stedet.', CURRENT_TIMESTAMP),
-  ('user_with_this_email_already_exists_please_log_in_instead', 'de', 'Der Benutzer mit dieser E-Mail-Adresse existiert bereits. Bitte melden Sie sich stattdessen an.', CURRENT_TIMESTAMP),
+  ('user_with_this_email_already_exists_please_log_in_instead', 'de', 'Der Benutzer mit dieser E-Mail-Adresse existiert bereits. Bitte melden Sie sich stattdessen an.', CURRENT_TIMESTAMP)
+ON CONFLICT(key, lang) DO UPDATE SET
+  value = excluded.value,
+  updated_at = CURRENT_TIMESTAMP;
+
+INSERT INTO ui_translations (key, lang, value, updated_at) VALUES
   ('user_with_this_email_already_exists_please_log_in_instead', 'et', 'Selle e-posti aadressiga kasutaja on juba olemas. Palun logi selle asemel sisse.', CURRENT_TIMESTAMP),
   ('user_with_this_email_already_exists_please_log_in_instead', 'es', 'El usuario con este correo electrónico ya existe. En su lugar, inicie sesión.', CURRENT_TIMESTAMP),
   ('user_with_this_email_already_exists_please_log_in_instead', 'fr', 'L''utilisateur avec cet e-mail existe déjà. Veuillez plutôt vous connecter.', CURRENT_TIMESTAMP),
@@ -6818,12 +6857,7 @@ INSERT INTO ui_translations (key, lang, value, updated_at) VALUES
   ('users', 'bg', 'Потребители', CURRENT_TIMESTAMP),
   ('users', 'cs', 'Uživatelé', CURRENT_TIMESTAMP),
   ('users', 'da', 'Brugere', CURRENT_TIMESTAMP),
-  ('users', 'de', 'Benutzer', CURRENT_TIMESTAMP)
-ON CONFLICT(key, lang) DO UPDATE SET
-  value = excluded.value,
-  updated_at = CURRENT_TIMESTAMP;
-
-INSERT INTO ui_translations (key, lang, value, updated_at) VALUES
+  ('users', 'de', 'Benutzer', CURRENT_TIMESTAMP),
   ('users', 'et', 'Kasutajad', CURRENT_TIMESTAMP),
   ('users', 'es', 'Usuarios', CURRENT_TIMESTAMP),
   ('users', 'fr', 'Utilisateurs', CURRENT_TIMESTAMP),
@@ -6889,7 +6923,12 @@ INSERT INTO ui_translations (key, lang, value, updated_at) VALUES
   ('verification_code', 'en', 'Verification Code', CURRENT_TIMESTAMP),
   ('verification_code', 'id', 'Kode Verifikasi', CURRENT_TIMESTAMP),
   ('verification_code', 'bg', 'Код за потвърждение', CURRENT_TIMESTAMP),
-  ('verification_code', 'cs', 'Ověřovací kód', CURRENT_TIMESTAMP),
+  ('verification_code', 'cs', 'Ověřovací kód', CURRENT_TIMESTAMP)
+ON CONFLICT(key, lang) DO UPDATE SET
+  value = excluded.value,
+  updated_at = CURRENT_TIMESTAMP;
+
+INSERT INTO ui_translations (key, lang, value, updated_at) VALUES
   ('verification_code', 'da', 'Bekræftelseskode', CURRENT_TIMESTAMP),
   ('verification_code', 'de', 'Bestätigungscode', CURRENT_TIMESTAMP),
   ('verification_code', 'et', 'Kinnituskood', CURRENT_TIMESTAMP),
@@ -6923,12 +6962,7 @@ INSERT INTO ui_translations (key, lang, value, updated_at) VALUES
   ('verification_code_sent_to', 'en', 'Verification code sent to $email', CURRENT_TIMESTAMP),
   ('verification_code_sent_to', 'id', 'Kode verifikasi dikirim ke $email', CURRENT_TIMESTAMP),
   ('verification_code_sent_to', 'bg', 'Кодът за потвърждение е изпратен до $email', CURRENT_TIMESTAMP),
-  ('verification_code_sent_to', 'cs', 'Ověřovací kód byl odeslán na adresu $email', CURRENT_TIMESTAMP)
-ON CONFLICT(key, lang) DO UPDATE SET
-  value = excluded.value,
-  updated_at = CURRENT_TIMESTAMP;
-
-INSERT INTO ui_translations (key, lang, value, updated_at) VALUES
+  ('verification_code_sent_to', 'cs', 'Ověřovací kód byl odeslán na adresu $email', CURRENT_TIMESTAMP),
   ('verification_code_sent_to', 'da', 'Bekræftelseskode sendt til $email', CURRENT_TIMESTAMP),
   ('verification_code_sent_to', 'de', 'Bestätigungscode an $email gesendet', CURRENT_TIMESTAMP),
   ('verification_code_sent_to', 'et', 'Kinnituskood saadeti aadressile $email', CURRENT_TIMESTAMP),
@@ -6994,7 +7028,12 @@ INSERT INTO ui_translations (key, lang, value, updated_at) VALUES
   ('version', 'ja', 'バージョン', CURRENT_TIMESTAMP),
   ('version', 'ko', '버전', CURRENT_TIMESTAMP),
   ('view_onboarding', 'en', 'View onboarding', CURRENT_TIMESTAMP),
-  ('view_onboarding', 'id', 'Lihat orientasi', CURRENT_TIMESTAMP),
+  ('view_onboarding', 'id', 'Lihat orientasi', CURRENT_TIMESTAMP)
+ON CONFLICT(key, lang) DO UPDATE SET
+  value = excluded.value,
+  updated_at = CURRENT_TIMESTAMP;
+
+INSERT INTO ui_translations (key, lang, value, updated_at) VALUES
   ('view_onboarding', 'bg', 'Преглед на включването', CURRENT_TIMESTAMP),
   ('view_onboarding', 'cs', 'Zobrazit registraci', CURRENT_TIMESTAMP),
   ('view_onboarding', 'da', 'Se onboarding', CURRENT_TIMESTAMP),
@@ -7028,12 +7067,7 @@ INSERT INTO ui_translations (key, lang, value, updated_at) VALUES
   ('view_onboarding', 'ja', 'オンボーディングを見る', CURRENT_TIMESTAMP),
   ('view_onboarding', 'ko', '온보딩 보기', CURRENT_TIMESTAMP),
   ('weekly_access', 'en', 'Weekly Access', CURRENT_TIMESTAMP),
-  ('weekly_access', 'id', 'Akses Mingguan', CURRENT_TIMESTAMP)
-ON CONFLICT(key, lang) DO UPDATE SET
-  value = excluded.value,
-  updated_at = CURRENT_TIMESTAMP;
-
-INSERT INTO ui_translations (key, lang, value, updated_at) VALUES
+  ('weekly_access', 'id', 'Akses Mingguan', CURRENT_TIMESTAMP),
   ('weekly_access', 'bg', 'Седмичен достъп', CURRENT_TIMESTAMP),
   ('weekly_access', 'cs', 'Týdenní přístup', CURRENT_TIMESTAMP),
   ('weekly_access', 'da', 'Ugentlig adgang', CURRENT_TIMESTAMP),
@@ -7099,7 +7133,12 @@ INSERT INTO ui_translations (key, lang, value, updated_at) VALUES
   ('welcome_complete_your_profile_to_join_aliolo', 'hi', 'स्वागत! aliolo से जुड़ने के लिए अपनी प्रोफ़ाइल पूरी करें।', CURRENT_TIMESTAMP),
   ('welcome_complete_your_profile_to_join_aliolo', 'zh', '欢迎！填写您的个​​人资料以加入 aliolo。', CURRENT_TIMESTAMP),
   ('welcome_complete_your_profile_to_join_aliolo', 'ja', 'いらっしゃいませ！ aliolo に参加するには、プロフィールを完成させてください。', CURRENT_TIMESTAMP),
-  ('welcome_complete_your_profile_to_join_aliolo', 'ko', '환영! aliolo에 가입하려면 프로필을 작성하세요.', CURRENT_TIMESTAMP),
+  ('welcome_complete_your_profile_to_join_aliolo', 'ko', '환영! aliolo에 가입하려면 프로필을 작성하세요.', CURRENT_TIMESTAMP)
+ON CONFLICT(key, lang) DO UPDATE SET
+  value = excluded.value,
+  updated_at = CURRENT_TIMESTAMP;
+
+INSERT INTO ui_translations (key, lang, value, updated_at) VALUES
   ('yearly_access', 'en', 'Yearly Access', CURRENT_TIMESTAMP),
   ('yearly_access', 'id', 'Akses Tahunan', CURRENT_TIMESTAMP),
   ('yearly_access', 'bg', 'Годишен достъп', CURRENT_TIMESTAMP),
@@ -7133,12 +7172,7 @@ INSERT INTO ui_translations (key, lang, value, updated_at) VALUES
   ('yearly_access', 'hi', 'वार्षिक प्रवेश', CURRENT_TIMESTAMP),
   ('yearly_access', 'zh', '每年访问', CURRENT_TIMESTAMP),
   ('yearly_access', 'ja', '年間アクセス', CURRENT_TIMESTAMP),
-  ('yearly_access', 'ko', '연간 액세스', CURRENT_TIMESTAMP)
-ON CONFLICT(key, lang) DO UPDATE SET
-  value = excluded.value,
-  updated_at = CURRENT_TIMESTAMP;
-
-INSERT INTO ui_translations (key, lang, value, updated_at) VALUES
+  ('yearly_access', 'ko', '연간 액세스', CURRENT_TIMESTAMP),
   ('you_do_not_have_permission_to_edit_this_card', 'en', 'You do not have permission to edit this card', CURRENT_TIMESTAMP),
   ('you_do_not_have_permission_to_edit_this_card', 'id', 'Anda tidak memiliki izin untuk mengedit kartu ini', CURRENT_TIMESTAMP),
   ('you_do_not_have_permission_to_edit_this_card', 'bg', 'Нямате разрешение да редактирате тази карта', CURRENT_TIMESTAMP),
@@ -7204,7 +7238,12 @@ INSERT INTO ui_translations (key, lang, value, updated_at) VALUES
   ('you_do_not_have_permission_to_view_this_card_details', 'uk', 'Ви не маєте дозволу переглядати дані цієї картки.', CURRENT_TIMESTAMP),
   ('you_do_not_have_permission_to_view_this_card_details', 'ar', 'ليس لديك إذن لعرض تفاصيل هذه البطاقة.', CURRENT_TIMESTAMP),
   ('you_do_not_have_permission_to_view_this_card_details', 'hi', 'आपको इस कार्ड विवरण को देखने की अनुमति नहीं है.', CURRENT_TIMESTAMP),
-  ('you_do_not_have_permission_to_view_this_card_details', 'zh', '您无权查看此卡的详细信息。', CURRENT_TIMESTAMP),
+  ('you_do_not_have_permission_to_view_this_card_details', 'zh', '您无权查看此卡的详细信息。', CURRENT_TIMESTAMP)
+ON CONFLICT(key, lang) DO UPDATE SET
+  value = excluded.value,
+  updated_at = CURRENT_TIMESTAMP;
+
+INSERT INTO ui_translations (key, lang, value, updated_at) VALUES
   ('you_do_not_have_permission_to_view_this_card_details', 'ja', 'このカードの詳細を表示する権限がありません。', CURRENT_TIMESTAMP),
   ('you_do_not_have_permission_to_view_this_card_details', 'ko', '이 카드 세부정보를 볼 수 있는 권한이 없습니다.', CURRENT_TIMESTAMP)
 ON CONFLICT(key, lang) DO UPDATE SET
