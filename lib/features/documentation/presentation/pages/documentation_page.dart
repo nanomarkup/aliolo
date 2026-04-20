@@ -72,7 +72,8 @@ class DocumentationPage extends StatelessWidget {
                 MaterialPageRoute(builder: (context) => const SettingsPage()),
               ),
         );
-        final docAction = IconButton(
+        final showDoc = getIt<AuthService>().currentUser?.showDocumentation ?? true;
+        final docAction = showDoc ? IconButton(
           tooltip: context.t('documentation'),
           icon: const Icon(Icons.help_outline),
           onPressed:
@@ -80,7 +81,7 @@ class DocumentationPage extends StatelessWidget {
                 context,
                 MaterialPageRoute(builder: (context) => const DocumentationPage()),
               ),
-        );
+        ) : null;
 
         final gettingStartedSections = [
           _Section(
@@ -220,13 +221,13 @@ class DocumentationPage extends StatelessWidget {
             appBarColor: currentPrimaryColor,
             actions:
                 isSmallScreen
-                    ? [homeAction, profileAction, docAction]
+                    ? [homeAction, profileAction, if (docAction != null) docAction]
                     : [
                       homeAction,
                       leaderboardAction,
                       profileAction,
                       settingsAction,
-                      docAction,
+                      if (docAction != null) docAction,
                     ],
             overflowActions:
                 isSmallScreen ? [leaderboardAction, settingsAction] : null,
@@ -236,11 +237,11 @@ class DocumentationPage extends StatelessWidget {
                 TabBar(
                   tabAlignment: TabAlignment.fill,
                   labelStyle: const TextStyle(
-                    fontSize: 18,
+                    fontSize: 22,
                     fontWeight: FontWeight.bold,
                   ),
                   unselectedLabelStyle: const TextStyle(
-                    fontSize: 18,
+                    fontSize: 22,
                     fontWeight: FontWeight.normal,
                   ),
                   labelColor: currentPrimaryColor,

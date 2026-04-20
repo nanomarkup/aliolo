@@ -3287,7 +3287,7 @@ class _PillarGridTile extends StatelessWidget {
                           Icon(
                             pillar.getIconData(),
                             color: Colors.white,
-                            size: 22,
+                            size: 24,
                           ),
                           const SizedBox(width: 8),
                           Expanded(
@@ -3295,7 +3295,7 @@ class _PillarGridTile extends StatelessWidget {
                               pillar.getTranslatedName(languageCode),
                               style: const TextStyle(
                                 color: Colors.white,
-                                fontSize: 20,
+                                fontSize: 22,
                                 fontWeight: FontWeight.bold,
                                 height: 1.1,
                               ),
@@ -3308,10 +3308,10 @@ class _PillarGridTile extends StatelessWidget {
                         pillar.getTranslatedDescription(languageCode),
                         style: TextStyle(
                           color: Colors.white.withValues(alpha: 0.8),
-                          fontSize: 14,
+                          fontSize: 16,
                           fontWeight: FontWeight.w500,
                         ),
-                        maxLines: 2,
+                        maxLines: 3,
                         overflow: TextOverflow.ellipsis,
                       ),
                       const Spacer(),
@@ -3321,7 +3321,7 @@ class _PillarGridTile extends StatelessWidget {
                             : '$subjectCount / $totalSubjectCount ${context.plural('subject', totalSubjectCount)}',
                         style: TextStyle(
                           color: Colors.white.withValues(alpha: 0.9),
-                          fontSize: 12,
+                          fontSize: 14,
                           fontWeight:
                               subjectCount > 0
                                   ? FontWeight.bold

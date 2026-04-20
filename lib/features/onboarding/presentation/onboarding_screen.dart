@@ -729,8 +729,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           Row(
             children: [
               const Expanded(child: SizedBox()),
-              SizedBox(width: 50, child: Text(context.t('feature_free'), textAlign: TextAlign.center, style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.grey[600]))),
-              SizedBox(width: 50, child: Text(context.t('feature_pro'), textAlign: TextAlign.center, style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: pillarColor))),
+              SizedBox(width: 60, child: Text(context.t('feature_free'), textAlign: TextAlign.center, style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.grey[600]))),
+              SizedBox(width: 60, child: Text(context.t('feature_pro'), textAlign: TextAlign.center, style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: pillarColor))),
             ],
           ),
           const Divider(),
@@ -738,9 +738,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             padding: const EdgeInsets.symmetric(vertical: 6),
             child: Row(
               children: [
-                Expanded(child: Text(f['name'], style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500))),
-                SizedBox(width: 50, child: Icon(f['free'] ? Icons.check_circle : Icons.cancel, size: 16, color: f['free'] ? Colors.green : Colors.grey[300])),
-                SizedBox(width: 50, child: Icon(Icons.check_circle, size: 16, color: pillarColor)),
+                Expanded(child: Text(f['name'], style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500))),
+                SizedBox(width: 60, child: Icon(f['free'] ? Icons.check_circle : Icons.cancel, size: 20, color: f['free'] ? Colors.green : Colors.grey[300])),
+                SizedBox(width: 60, child: Icon(Icons.check_circle, size: 20, color: pillarColor)),
               ],
             ),
           )),

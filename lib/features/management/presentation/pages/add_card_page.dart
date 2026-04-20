@@ -1234,59 +1234,48 @@ class _AddCardPageState extends State<AddCardPage> {
   }
 
   Widget _buildLevelPicker(Color color) {
-    final tierLabel = switch (_cardLevel) {
-      1 => context.t('level_tier_1'),
-      2 => context.t('level_tier_2'),
-      3 => context.t('level_tier_3'),
-      _ => '${context.t('level')} $_cardLevel',
-    };
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          context.t('card_level'),
+          context.t('level'),
           style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
         ),
-        const SizedBox(height: 4),
-        Text(
-          context.t('level_help_text'),
-          style: TextStyle(color: Colors.grey[600], fontSize: 12, height: 1.35),
-        ),
-        const SizedBox(height: 10),
-        Row(
-          children: [
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-              decoration: BoxDecoration(
-                color: color.withValues(alpha: 0.1),
+        const SizedBox(height: 12),
+        SizedBox(
+          width: double.infinity,
+          child: SegmentedButton<int>(
+            segments: [
+              ButtonSegment<int>(
+                value: 1,
+                label: Text(context.t('level_tier_1')),
+              ),
+              ButtonSegment<int>(
+                value: 2,
+                label: Text(context.t('level_tier_2')),
+              ),
+              ButtonSegment<int>(
+                value: 3,
+                label: Text(context.t('level_tier_3')),
+              ),
+            ],
+            selected: {_cardLevel},
+            onSelectionChanged:
+                widget.isReadOnly
+                    ? null
+                    : (Set<int> newSelection) {
+                      setState(() => _cardLevel = newSelection.first);
+                    },
+            style: SegmentedButton.styleFrom(
+              selectedBackgroundColor: color,
+              selectedForegroundColor: Colors.white,
+              visualDensity: VisualDensity.compact,
+              shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: color.withValues(alpha: 0.2)),
-              ),
-              child: Text(
-                tierLabel,
-                style: TextStyle(
-                  color: color,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 14,
-                ),
               ),
             ),
-            Expanded(
-              child: Slider(
-                value: _cardLevel.toDouble(),
-                min: 1,
-                max: 3,
-                divisions: 2,
-                label: tierLabel,
-                activeColor: color,
-                onChanged:
-                    widget.isReadOnly
-                        ? null
-                        : (v) => setState(() => _cardLevel = v.round()),
-              ),
-            ),
-          ],
+            showSelectedIcon: false,
+          ),
         ),
       ],
     );

@@ -1472,10 +1472,10 @@ entries:
   notes: []
   sources:
   - file: lib/features/management/presentation/pages/add_card_page.dart
-    line: 1434
+    line: 1423
     kind: prop
   - file: lib/features/management/presentation/pages/add_card_page.dart
-    line: 1482
+    line: 1471
     kind: prop
 - key: please_enter_the_6_digit_code
   english: Please enter the 6-digit code
