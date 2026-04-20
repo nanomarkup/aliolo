@@ -235,14 +235,6 @@ class _UsersPageState extends State<UsersPage> {
       padding: const EdgeInsets.only(bottom: 6),
       child: Row(
         children: [
-          Text(
-            '${_filteredUsers.length} / ${_users.length}',
-            style: TextStyle(
-              color: Theme.of(context).textTheme.bodySmall?.color,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          const SizedBox(width: AlioloLayoutTokens.compactRowSpacing),
           SizedBox(
             width: 140,
             child: _buildCompactDropdown(
@@ -312,6 +304,14 @@ class _UsersPageState extends State<UsersPage> {
                           },
                         ),
               ),
+            ),
+          ),
+          const SizedBox(width: AlioloLayoutTokens.compactRowSpacing),
+          Text(
+            '${_filteredUsers.length} / ${_users.length}',
+            style: TextStyle(
+              color: Theme.of(context).textTheme.bodySmall?.color,
+              fontWeight: FontWeight.w600,
             ),
           ),
         ],
