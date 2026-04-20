@@ -2,9 +2,8 @@ import 'user_model.dart';
 
 enum AdminUsersFilter {
   all,
-  premium,
-  fake,
   free,
+  premium,
 }
 
 class AdminSubscriptionModel {
@@ -85,19 +84,6 @@ class AdminUserModel {
   String get email => profile.email;
   bool get isFake => email.toLowerCase().startsWith('fake_');
   bool get isPremium => profile.isPremium || (subscription?.isActive ?? false);
-  bool get isFree => !isPremium && !isFake;
+  bool get isFree => !isPremium;
   String get displayName => username.trim().isNotEmpty ? username : email;
-
-  bool matchesFilter(AdminUsersFilter filter) {
-    switch (filter) {
-      case AdminUsersFilter.all:
-        return true;
-      case AdminUsersFilter.premium:
-        return isPremium;
-      case AdminUsersFilter.fake:
-        return isFake;
-      case AdminUsersFilter.free:
-        return isFree;
-    }
-  }
 }

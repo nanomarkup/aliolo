@@ -32,6 +32,7 @@ class _UsersPageState extends State<UsersPage> {
   bool _isLoading = true;
   String? _errorMessage;
   AdminUsersFilter _filter = AdminUsersFilter.all;
+  bool _showFakeUsers = false;
 
   bool get _isAdmin => _authService.currentUser?.serverId == _adminUserId;
 
@@ -87,12 +88,26 @@ class _UsersPageState extends State<UsersPage> {
   List<AdminUserModel> get _filteredUsers {
     final query = _searchController.text.trim().toLowerCase();
     return _users.where((user) {
+      // 1. Search filter
       final matchesSearch =
           query.isEmpty ||
           user.displayName.toLowerCase().contains(query) ||
           user.username.toLowerCase().contains(query) ||
           user.email.toLowerCase().contains(query);
-      return user.matchesFilter(_filter) && matchesSearch;
+      if (!matchesSearch) return false;
+
+      // 2. Fake users filter
+      if (!_showFakeUsers && user.isFake) return false;
+
+      // 3. Subscription status filter
+      switch (_filter) {
+        case AdminUsersFilter.all:
+          return true;
+        case AdminUsersFilter.free:
+          return user.isFree;
+        case AdminUsersFilter.premium:
+          return user.isPremium;
+      }
     }).toList();
   }
 
@@ -117,8 +132,6 @@ class _UsersPageState extends State<UsersPage> {
         return context.t('filter_all');
       case AdminUsersFilter.premium:
         return context.t('premium_only');
-      case AdminUsersFilter.fake:
-        return context.t('fake_only');
       case AdminUsersFilter.free:
         return context.t('free_only');
     }
@@ -216,6 +229,8 @@ class _UsersPageState extends State<UsersPage> {
   }
 
   Widget _buildHeaderControls(BuildContext context) {
+    final currentPrimaryColor = ThemeService().primaryColor;
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 6),
       child: Row(
@@ -229,7 +244,7 @@ class _UsersPageState extends State<UsersPage> {
           ),
           const SizedBox(width: AlioloLayoutTokens.compactRowSpacing),
           SizedBox(
-            width: 190,
+            width: 140,
             child: _buildCompactDropdown(
               value: _filter.name,
               items: {
@@ -244,6 +259,23 @@ class _UsersPageState extends State<UsersPage> {
                   );
                 });
               },
+            ),
+          ),
+          const SizedBox(width: AlioloLayoutTokens.compactRowSpacing),
+          IconButton(
+            tooltip: 'Show Fake Users',
+            icon: Icon(
+              _showFakeUsers ? Icons.face : Icons.face_outlined,
+              color: _showFakeUsers ? currentPrimaryColor : Colors.grey,
+            ),
+            onPressed: () {
+              setState(() => _showFakeUsers = !_showFakeUsers);
+            },
+            style: IconButton.styleFrom(
+              backgroundColor:
+                  _showFakeUsers
+                      ? currentPrimaryColor.withValues(alpha: 0.1)
+                      : null,
             ),
           ),
           const SizedBox(width: AlioloLayoutTokens.compactRowSpacing),

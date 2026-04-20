@@ -64,13 +64,6 @@ class SubscriptionService extends ChangeNotifier {
       return;
     }
 
-    if (user.serverId == 'usyeo7d2yzf2773') {
-      _isPremium = true;
-      _expiryDate = null;
-      notifyListeners();
-      return;
-    }
-
     try {
       final response = await _cfClient.client.get('/api/subscriptions');
       if (response.statusCode == 200 && response.data != null) {
