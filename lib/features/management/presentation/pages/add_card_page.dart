@@ -1101,6 +1101,7 @@ class _AddCardPageState extends State<AddCardPage> {
             Icons.image,
             _pickImage,
             _buildImageList(draft),
+            color,
           ),
           const SizedBox(height: 24),
           _buildMediaSection(
@@ -1108,6 +1109,7 @@ class _AddCardPageState extends State<AddCardPage> {
             Icons.audiotrack,
             _pickAudio,
             _buildAudioPreview(draft),
+            color,
           ),
           const SizedBox(height: 24),
           _buildMediaSection(
@@ -1115,6 +1117,7 @@ class _AddCardPageState extends State<AddCardPage> {
             Icons.videocam,
             _pickVideo,
             _buildVideoPreview(draft),
+            color,
           ),
 
           const SizedBox(height: 32),
@@ -1293,6 +1296,7 @@ class _AddCardPageState extends State<AddCardPage> {
     IconData icon,
     VoidCallback onAdd,
     Widget content,
+    Color color,
   ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -1310,7 +1314,7 @@ class _AddCardPageState extends State<AddCardPage> {
               IconButton(
                 icon: const Icon(Icons.add_circle_outline, size: 20),
                 onPressed: onAdd,
-                color: Colors.orange,
+                color: color,
               ),
           ],
         ),
@@ -1363,37 +1367,84 @@ class _AddCardPageState extends State<AddCardPage> {
     XFile? file,
     required VoidCallback onRemove,
   }) {
-    return Container(
-      width: 70,
-      margin: const EdgeInsets.only(right: 8),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Colors.grey.withValues(alpha: 0.3)),
-      ),
-      clipBehavior: Clip.antiAlias,
-      child: Stack(
-        children: [
-          if (url != null)
-            Image.network(url, fit: BoxFit.cover, width: 70, height: 70)
-          else if (file != null)
-            kIsWeb
-                ? (file.path.isNotEmpty
-                    ? Image.network(file.path, fit: BoxFit.cover)
-                    : const Icon(Icons.image, color: Colors.grey))
-                : Image.file(dynamicFile(file.path), fit: BoxFit.cover),
-          if (!widget.isReadOnly)
-            Positioned(
-              top: 0,
-              right: 0,
-              child: GestureDetector(
-                onTap: onRemove,
-                child: Container(
-                  color: Colors.black54,
-                  child: const Icon(Icons.close, size: 14, color: Colors.white),
+    return GestureDetector(
+      onTap: () {
+        showDialog(
+          context: context,
+          builder:
+              (context) => Dialog.fullscreen(
+                backgroundColor: Colors.black,
+                child: Stack(
+                  children: [
+                    Positioned.fill(
+                      child: InteractiveViewer(
+                        minScale: 0.5,
+                        maxScale: 4.0,
+                        child: Center(
+                          child:
+                              url != null
+                                  ? Image.network(url)
+                                  : (kIsWeb
+                                      ? Image.network(file!.path)
+                                      : Image.file(dynamicFile(file!.path))),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      top: 40,
+                      right: 20,
+                      child: IconButton(
+                        icon: const Icon(
+                          Icons.close,
+                          color: Colors.white,
+                          size: 30,
+                        ),
+                        onPressed: () => Navigator.pop(context),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ),
-        ],
+        );
+      },
+      child: Container(
+        width: 70,
+        margin: const EdgeInsets.only(right: 8),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(color: Colors.grey.withValues(alpha: 0.3)),
+        ),
+        clipBehavior: Clip.antiAlias,
+        child: Stack(
+          children: [
+            if (url != null)
+              Image.network(url, fit: BoxFit.cover, width: 70, height: 70)
+            else if (file != null)
+              kIsWeb
+                  ? (file.path.isNotEmpty
+                      ? Image.network(file.path, fit: BoxFit.cover)
+                      : const Icon(Icons.image, color: Colors.grey))
+                  : Image.file(dynamicFile(file.path), fit: BoxFit.cover),
+            if (!widget.isReadOnly)
+              Positioned(
+                top: 0,
+                right: 0,
+                child: GestureDetector(
+                  onTap: () {
+                    onRemove();
+                  },
+                  child: Container(
+                    color: Colors.black54,
+                    child: const Icon(
+                      Icons.close,
+                      size: 14,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+          ],
+        ),
       ),
     );
   }

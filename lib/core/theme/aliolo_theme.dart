@@ -66,6 +66,7 @@ class AlioloTheme {
         filled: true,
         fillColor: scheme.surfaceContainerHighest,
         contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+        floatingLabelBehavior: FloatingLabelBehavior.always,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide(color: scheme.outlineVariant),
