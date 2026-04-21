@@ -110,24 +110,37 @@ class CardMediaContent extends StatelessWidget {
   Widget build(BuildContext context) {
     final lang = languageCode.toLowerCase();
     
-    final hasMeaningfulDisplayText = card.hasMeaningfulDisplayText(lang);
-    final displayText = hasMeaningfulDisplayText ? card.getDisplayText(lang).trim() : '';
-    final deduplicatedText = centerTextOverride ?? ((headerText != null && displayText.toLowerCase() == headerText!.toLowerCase()) 
-        ? '' 
-        : displayText);
+    final hasPriorityVisuals = card.isSpecialRenderer || 
+                               card.isCountingRenderer || 
+                               card.isColors || 
+                               hasVideo || 
+                               images.isNotEmpty;
+
+    final rawDisplayText = card.getDisplayText(lang).trim();
+    
+    // Logic for final text to display in the content area:
+    // 1. Prefer centerTextOverride if provided (used by LearnPage for audio-only cards)
+    // 2. Otherwise, if it matches the header text AND we have other visual content, hide it.
+    // 3. If it's the ONLY visual content, show it even if it matches the header.
+    final String finalDisplayText;
+    if (centerTextOverride != null) {
+      finalDisplayText = centerTextOverride!;
+    } else {
+      final isMatchingHeader = headerText != null && rawDisplayText.toLowerCase() == headerText!.toLowerCase();
+      if (isMatchingHeader && hasPriorityVisuals) {
+        finalDisplayText = '';
+      } else {
+        finalDisplayText = rawDisplayText;
+      }
+    }
         
-    final hasVisual = card.isSpecialRenderer || 
-                      card.isCountingRenderer || 
-                      card.isColors || 
-                      hasVideo || 
-                      images.isNotEmpty || 
-                      deduplicatedText.isNotEmpty;
+    final hasVisual = hasPriorityVisuals || finalDisplayText.isNotEmpty;
                       
     final showCenterAudioIcon = !hasVisual && !hideAudioIcon;
     final showOverlayAudioIcon = hasVisual && !hideAudioIcon;
     final textFontSize = isMobile ? 80.0 : 120.0;
 
-    Widget content = _buildContent(context, deduplicatedText, textFontSize, showCenterAudioIcon);
+    Widget content = _buildContent(context, finalDisplayText, textFontSize, showCenterAudioIcon);
 
     final bool hasSlider = slideCount > 1 && !card.isSpecialRenderer && !card.isCountingRenderer && !card.isColors;
 

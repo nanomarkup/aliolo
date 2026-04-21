@@ -497,31 +497,33 @@ class _UsersPageState extends State<UsersPage> {
         leading: CircleAvatar(
           radius: 14,
           backgroundColor: currentSessionColor.withValues(alpha: 0.1),
-          child: Icon(Icons.person, color: currentSessionColor),
+          backgroundImage:
+              user.profile.avatarPath != null &&
+                      user.profile.avatarPath!.isNotEmpty
+                  ? NetworkImage(user.profile.avatarPath!)
+                  : null,
+          child:
+              user.profile.avatarPath == null ||
+                      user.profile.avatarPath!.isEmpty
+                  ? Icon(Icons.person, color: currentSessionColor, size: 18)
+                  : null,
         ),
-        title: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Expanded(
-              child: Text(
-                user.displayName,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: AlioloLayoutTokens.compactTileTitleSize,
-                  height: 1.0,
-                ),
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-            IconButton(
-              tooltip: context.t('edit_subscription'),
-              onPressed: () => _showEditSubscriptionDialog(user),
-              icon: const Icon(Icons.edit_outlined),
-              visualDensity: VisualDensity.compact,
-              padding: EdgeInsets.zero,
-              constraints: const BoxConstraints.tightFor(width: 36, height: 36),
-            ),
-          ],
+        title: Text(
+          user.displayName,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: AlioloLayoutTokens.compactTileTitleSize,
+            height: 1.0,
+          ),
+          overflow: TextOverflow.ellipsis,
+        ),
+        trailing: IconButton(
+          tooltip: context.t('edit_subscription'),
+          onPressed: () => _showEditSubscriptionDialog(user),
+          icon: const Icon(Icons.edit_outlined),
+          visualDensity: VisualDensity.compact,
+          padding: EdgeInsets.zero,
+          constraints: const BoxConstraints.tightFor(width: 36, height: 36),
         ),
         subtitle: Text(
           user.email,

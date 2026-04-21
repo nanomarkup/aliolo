@@ -97,15 +97,15 @@ def fetch_translation_map(lang: str) -> dict[str, str]:
 
 def upsert_bundle(lang: str, translations: dict[str, str]) -> None:
     payload = json.dumps(translations, ensure_ascii=False, separators=(",", ":"))
-    sql = """
+    sql = f"""
       INSERT INTO ui_translation_bundles (lang, translations, updated_at)
-      VALUES (?, ?, CURRENT_TIMESTAMP)
+      VALUES ({sql_literal(lang)}, {sql_literal(payload)}, CURRENT_TIMESTAMP)
       ON CONFLICT(lang) DO UPDATE SET
         translations = excluded.translations,
         updated_at = CURRENT_TIMESTAMP
     """.strip()
     run_wrangler(
-        ["d1", "execute", DB_NAME, "--command", sql, "--remote", "--params", lang, payload],
+        ["d1", "execute", DB_NAME, "--command", sql, "--remote"],
         json_output=False,
     )
 

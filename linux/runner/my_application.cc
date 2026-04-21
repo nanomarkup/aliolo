@@ -28,7 +28,7 @@ static void my_application_activate(GApplication* application) {
   // SET APPLICATION ICON
   g_autoptr(FlDartProject) project = fl_dart_project_new();
   const char* base_dir = fl_dart_project_get_assets_path(project);
-  g_autofree gchar* icon_path = g_build_filename(base_dir, "assets", "app_icon.png", nullptr);
+  g_autofree gchar* icon_path = g_build_filename(base_dir, "assets", "app_icon.webp", nullptr);
   GError* error = nullptr;
   if (!gtk_window_set_icon_from_file(window, icon_path, &error)) {
     g_warning("Failed to load icon: %s", error->message);

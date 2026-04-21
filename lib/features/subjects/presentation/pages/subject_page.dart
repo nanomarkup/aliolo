@@ -716,8 +716,7 @@ class _SubjectPageState extends State<SubjectPage> {
                                   crossAxisSpacing: 24,
                                   mainAxisSpacing: 24,
                                   childAspectRatio:
-                                      crossAxisCount == 1 ? 1.8 : 1.4,
-                                ),
+                                      crossAxisCount == 1 ? 2.2 : 1.8,                                ),
                             delegate: SliverChildBuilderDelegate((
                               context,
                               index,

@@ -61,7 +61,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     _initAnalytics();
     _player1 = Player();
     _controller1 = VideoController(_player1);
-    _player1.open(Media('asset:///assets/Slide1_v5.mp4'));
+    _player1.open(Media('asset:///assets/Slide1_v7.mp4'));
     _player1.setPlaylistMode(PlaylistMode.none);
   }
 

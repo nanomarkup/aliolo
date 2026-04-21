@@ -312,7 +312,7 @@ class _AboutPageState extends State<AboutPage> {
       children: [
         SizedBox(height: compact ? 56 : 24),
         Image.asset(
-          'assets/app_icon.png',
+          'assets/app_icon.webp',
           height: compact ? 108 : 150,
           fit: BoxFit.contain,
         ),

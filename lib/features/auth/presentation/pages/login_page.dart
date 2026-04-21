@@ -407,7 +407,7 @@ class _LoginPageState extends State<LoginPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Image.asset(
-                                'assets/app_icon.png',
+                                'assets/app_icon.webp',
                                 height: 120,
                                 fit: BoxFit.contain,
                               ),

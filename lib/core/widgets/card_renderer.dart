@@ -55,6 +55,9 @@ class CardRenderer extends StatelessWidget {
         card.primaryImageUrl(lang) ??
         card.primaryImageUrl('global') ??
         card.primaryImageUrl('en');
+    
+    final hasPriorityVisuals = imageUrl != null;
+
     if (imageUrl != null) {
       return AlioloImage(
         imageUrl: imageUrl,
@@ -63,16 +66,16 @@ class CardRenderer extends StatelessWidget {
       );
     }
 
-    final displayText = card.getDisplayText(lang);
-    if (displayText.trim().isNotEmpty) {
-      final deduplicatedText = (excludeText != null && displayText.toLowerCase() == excludeText!.toLowerCase())
-          ? ''
-          : displayText;
-          
-      if (deduplicatedText.isNotEmpty) {
+    final rawDisplayText = card.getDisplayText(lang).trim();
+    if (rawDisplayText.isNotEmpty) {
+      final isMatchingExclude = excludeText != null && rawDisplayText.toLowerCase() == excludeText!.toLowerCase();
+      
+      // If matches exclude and we have images, hide it.
+      // If it's the only visual, show it anyway.
+      if (!isMatchingExclude || !hasPriorityVisuals) {
         return Center(
           child: Text(
-            deduplicatedText,
+            rawDisplayText,
             style: TextStyle(
               fontSize: textFontSize ?? 48,
               fontWeight: FontWeight.w700,

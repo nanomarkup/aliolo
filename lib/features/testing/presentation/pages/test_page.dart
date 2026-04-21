@@ -208,7 +208,7 @@ class _TestPageState extends State<TestPage> {
     if (_autoPlayingOptionIndex == -1 || _isAnswered || !mounted) return;
 
     _optionAutoplayTimer?.cancel();
-    _optionAutoplayTimer = Timer(const Duration(milliseconds: 500), () {
+    _optionAutoplayTimer = Timer(const Duration(seconds: 1), () {
       _playOptionSequentially(_autoPlayingOptionIndex + 1);
     });
   }
@@ -862,6 +862,26 @@ class _TestPageState extends State<TestPage> {
                                                (correctImageUrl != null && correctImageUrl.isNotEmpty) ||
                                                deduplicatedText.isNotEmpty;
                       final isAudioTest = !hasCorrectVisual && (_currentCard.getAudioUrl(lang)?.isNotEmpty ?? false);
+                      
+                      // Calculate the absolute maximum columns based on width
+                      final maxPossibleColumns = isAudioTest 
+                          ? (constraints.maxWidth / 300).floor().clamp(2, 4)
+                          : (constraints.maxWidth / 400).floor().clamp(2, 3);
+                      
+                      // Balanced crossAxisCount logic:
+                      // Distribute items as evenly as possible across rows.
+                      final int numOptions = _options.length;
+                      int crossAxisCount;
+                      if (numOptions == 0) {
+                        crossAxisCount = maxPossibleColumns;
+                      } else if (numOptions <= maxPossibleColumns) {
+                        crossAxisCount = numOptions;
+                      } else {
+                        final int rows = (numOptions / maxPossibleColumns).ceil();
+                        crossAxisCount = (numOptions / rows).ceil();
+                      }
+                      // Safety clamp
+                      crossAxisCount = crossAxisCount.clamp(2, maxPossibleColumns);
 
                       final mediaContent = _buildForwardMediaContent(
                                 context: context,
@@ -921,8 +941,7 @@ class _TestPageState extends State<TestPage> {
                                   physics: const BouncingScrollPhysics(),
                                   gridDelegate:
                                       SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount:
-                                            isMobile ? 2 : 2,
+                                        crossAxisCount: crossAxisCount,
                                         crossAxisSpacing: 12,
                                         mainAxisSpacing: 12,
                                         childAspectRatio: isAudioTest ? (isMobile ? 2.5 : 3.0) : 1.0,
