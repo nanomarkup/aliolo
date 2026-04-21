@@ -171,6 +171,12 @@ CREATE TABLE IF NOT EXISTS ui_translations (
   PRIMARY KEY (key, lang)
 );
 
+CREATE TABLE IF NOT EXISTS ui_translation_bundles (
+  lang TEXT PRIMARY KEY,
+  translations TEXT NOT NULL,
+  updated_at TEXT DEFAULT CURRENT_TIMESTAMP
+);
+
 CREATE TABLE IF NOT EXISTS onboarding_analytics (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   session_id TEXT NOT NULL,

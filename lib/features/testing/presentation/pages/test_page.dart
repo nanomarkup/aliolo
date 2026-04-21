@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
 import 'dart:math';
 import 'package:aliolo/data/services/testing_language_service.dart';
 import 'package:flutter/foundation.dart';
@@ -15,11 +16,10 @@ import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/data/services/subscription_service.dart';
 import 'package:aliolo/core/widgets/card_renderer.dart';
-import 'package:aliolo/core/widgets/aliolo_image.dart';
+import 'package:aliolo/core/widgets/card_media_content.dart';
 import 'package:aliolo/core/widgets/window_controls.dart';
 import 'package:aliolo/core/di/service_locator.dart';
 import 'package:media_kit_video/media_kit_video.dart';
-import 'package:aliolo/core/widgets/counting_grid.dart';
 import 'package:aliolo/data/services/math_service.dart';
 import 'package:aliolo/features/settings/presentation/pages/premium_upgrade_page.dart';
 import 'package:aliolo/features/testing/domain/test_mode.dart';
@@ -74,9 +74,9 @@ class _TestPageState extends State<TestPage> {
 
   late final Player player;
   late final VideoController controller;
-  bool _showingVideo = false;
+  bool _hasVideo = false;
   List<String> _currentImages = [];
-  int _currentImageIndex = 0;
+  int _currentMediaIndex = 0;
 
   final _keyboardFocusNode = FocusNode();
   final _scrollController = ScrollController();
@@ -84,6 +84,10 @@ class _TestPageState extends State<TestPage> {
   bool _isAutoPlay = false;
   bool _isAutoPlayWaiting = false;
   final _random = Random();
+
+  int _autoPlayingOptionIndex = -1;
+  StreamSubscription? _playerSubscription;
+  Timer? _optionAutoplayTimer;
 
   late String _languageCode;
 
@@ -98,6 +102,13 @@ class _TestPageState extends State<TestPage> {
 
     player = Player();
     controller = VideoController(player);
+
+    _playerSubscription = player.stream.completed.listen((completed) {
+      if (completed && _autoPlayingOptionIndex != -1) {
+        _onOptionAudioCompleted();
+      }
+    });
+
     _sessionQueue = List.from(widget.sessionCards)..shuffle();
     _totalInSession = _sessionQueue.length;
     _setupNextCard();
@@ -130,8 +141,76 @@ class _TestPageState extends State<TestPage> {
     _isAnswered = false;
     _isCorrect = false;
     _isAutoPlayWaiting = false;
+    _stopOptionsAutoplay();
 
     _setupMCQ();
+  }
+
+  void _stopOptionsAutoplay() {
+    _optionAutoplayTimer?.cancel();
+    _optionAutoplayTimer = null;
+    setState(() => _autoPlayingOptionIndex = -1);
+  }
+
+  void _startOptionsAutoplay() {
+    if (!_isReverseMode) return;
+
+    final lang = _languageCode.toLowerCase();
+    final correctImageUrl = _currentCard.primaryImageUrl(lang) ??
+        _currentCard.primaryImageUrl('global') ??
+        _currentCard.primaryImageUrl('en');
+    final correctVideoUrl = _currentCard.getVideoUrl(lang);
+    final hasMeaningfulDisplayText = _currentCard.hasMeaningfulDisplayText(lang);
+    final displayText =
+        hasMeaningfulDisplayText ? _currentCard.getDisplayText(lang).trim() : '';
+    final deduplicatedText =
+        (_correctAnswerText.isNotEmpty &&
+                displayText.toLowerCase() == _correctAnswerText.toLowerCase())
+            ? ''
+            : displayText;
+    final hasCorrectVisual =
+        _currentCard.isSpecialRenderer ||
+        _currentCard.isCountingRenderer ||
+        _currentCard.isColors ||
+        (correctVideoUrl != null && correctVideoUrl.isNotEmpty) ||
+        (correctImageUrl != null && correctImageUrl.isNotEmpty) ||
+        deduplicatedText.isNotEmpty;
+    final isAudioTest =
+        !hasCorrectVisual && (_currentCard.getAudioUrl(lang)?.isNotEmpty ?? false);
+
+    if (!isAudioTest) return;
+
+    if (_options.isNotEmpty) {
+      _playOptionSequentially(0);
+    }
+  }
+
+  void _playOptionSequentially(int index) {
+    if (_isAnswered || !mounted) return;
+    if (index >= _options.length) {
+      setState(() => _autoPlayingOptionIndex = -1);
+      return;
+    }
+
+    setState(() => _autoPlayingOptionIndex = index);
+    final opt = _options[index];
+    final url = opt.card?.getAudioUrl(_languageCode.toLowerCase());
+    if (url != null && url.isNotEmpty) {
+      player.open(Media(url));
+      player.play();
+    } else {
+      // skip if no audio
+      _onOptionAudioCompleted();
+    }
+  }
+
+  void _onOptionAudioCompleted() {
+    if (_autoPlayingOptionIndex == -1 || _isAnswered || !mounted) return;
+
+    _optionAutoplayTimer?.cancel();
+    _optionAutoplayTimer = Timer(const Duration(milliseconds: 500), () {
+      _playOptionSequentially(_autoPlayingOptionIndex + 1);
+    });
   }
 
   Future<void> _setupMCQ() async {
@@ -248,19 +327,24 @@ class _TestPageState extends State<TestPage> {
           _options = options;
           final lang = _languageCode.toLowerCase();
           _currentImages = _currentCard.getImageUrls(lang);
-          _currentImageIndex = 0;
+          _currentMediaIndex = 0;
           final video = _currentCard.getVideoUrl(lang);
-          _showingVideo = video?.isNotEmpty ?? false;
+          _hasVideo = video?.isNotEmpty ?? false;
         });
       }
 
     final lang = _languageCode.toLowerCase();
     final audio = _currentCard.getAudioUrl(lang);
     if (audio != null &&
+        !_isReverseMode &&
         !_currentCard.isSpecialRenderer &&
         !_currentCard.isCountingRenderer) {
       player.open(Media(audio));
       player.play();
+    }
+
+    if (_isReverseMode) {
+      _startOptionsAutoplay();
     }
   }
 
@@ -314,112 +398,32 @@ class _TestPageState extends State<TestPage> {
     required Color headerColor,
     required String lang,
   }) {
-    final displayText = _currentCard.getDisplayText(lang).trim();
-    final hasAudio = _currentCard.getAudioUrl(lang) != null;
-    final hasVisual =
-        _currentCard.primaryImageUrl(lang) != null ||
-        _currentImages.isNotEmpty ||
-        _showingVideo ||
-        displayText.isNotEmpty ||
-        _currentCard.isSpecialRenderer;
-    final showAudioPrompt =
-        !_currentCard.isSpecialRenderer && hasAudio && !hasVisual;
-
-    return Center(
-      child: Padding(
-        padding: EdgeInsets.all(isMobile ? 16 : 32),
-        child: Card(
-          elevation: 4,
-          clipBehavior: Clip.antiAlias,
-          color: Theme.of(context).cardColor,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(24),
-            side: BorderSide(
-              color: headerColor.withValues(alpha: 0.1),
-              width: 1,
-            ),
-          ),
-          child: Container(
-            color: headerColor.withValues(alpha: 0.05),
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                minHeight: isMobile ? 300 : 0,
-                maxHeight:
-                    isMobile && !hasVisual ? 450 : double.infinity,
-              ),
-              child: Stack(
-                fit: isMobile ? StackFit.loose : StackFit.expand,
-                alignment: Alignment.center,
-                children: [
-                  if (_showingVideo)
-                    Video(controller: controller)
-                  else if (_currentCard.isCountingRenderer)
-                    CountingGrid(
-                      count: _currentCard.numericalAnswer,
-                      iconSize: isMobile ? 40 : 60,
-                    )
-                  else if (_currentCard.isColors)
-                    CardRenderer(
-                      card: _currentCard,
-                      subject: _subject,
-                      languageCode: lang,
-                      fallbackColor: headerColor,
-                      fit: BoxFit.contain,
-                      textFontSize: 120,
-                    )
-                  else if (showAudioPrompt)
-                    Container(
-                      color: headerColor.withValues(alpha: 0.05),
-                      child: Center(
-                        child: Icon(
-                          Icons.hearing,
-                          size: 120,
-                          color: headerColor.withValues(alpha: 0.5),
-                        ),
-                      ),
-                    )
-                  else if (_currentImages.isNotEmpty)
-                    Container(
-                      color: Theme.of(context).cardColor,
-                      child: AlioloImage(
-                        imageUrl: _currentImages[_currentImageIndex],
-                        fit: BoxFit.contain,
-                        backgroundColor: headerColor.withValues(alpha: 0.05),
-                      ),
-                    )
-                  else if (_currentCard.isSpecialRenderer)
-                    CardRenderer(
-                      card: _currentCard,
-                      subject: _subject,
-                      languageCode: lang,
-                      fallbackColor: headerColor,
-                      fit: BoxFit.contain,
-                      textFontSize: isMobile ? 80 : 120,
-                    )
-                  else if (displayText.isNotEmpty)
-                    Center(
-                      child: Text(
-                        displayText,
-                        style: TextStyle(
-                          fontSize: isMobile ? 80 : 120,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.black87,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    )
-                  else
-                    const Icon(
-                      Icons.image_not_supported,
-                      size: 100,
-                      color: Colors.grey,
-                    ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
+    final audioUrl = _currentCard.getAudioUrl(lang);
+    final hasAudio = audioUrl != null && audioUrl.isNotEmpty;
+    
+    return CardMediaContent(
+      card: _currentCard,
+      subject: _subject,
+      languageCode: lang,
+      headerColor: headerColor,
+      isMobile: isMobile,
+      videoController: controller,
+      hasVideo: _hasVideo,
+      images: _currentImages,
+      mediaIndex: _currentMediaIndex,
+      onMediaIndexChanged: (index) {
+        if (mounted) {
+          setState(() => _currentMediaIndex = index);
+        }
+      },
+      onPlayAudio: hasAudio ? () async {
+        if (audioUrl.isNotEmpty) {
+          await player.open(Media(audioUrl));
+          player.play();
+        }
+      } : null,
+      hasAudio: hasAudio,
+      headerText: _isReverseMode ? _correctAnswerText : _currentCard.getPrompt(lang).trim(),
     );
   }
 
@@ -429,9 +433,6 @@ class _TestPageState extends State<TestPage> {
         _isReverseMode
             ? _correctAnswerText
             : _currentCard.getPrompt(lang).trim();
-    final headerAudioUrl = _isReverseMode
-        ? _currentCard.getAudioUrl(lang)
-        : null;
     final primaryTextColor =
         _isReverseMode && _isAnswered
             ? (_isCorrect ? Colors.green : Colors.red)
@@ -480,24 +481,6 @@ class _TestPageState extends State<TestPage> {
                     fontWeight: FontWeight.bold,
                   ),
                 ));
-    final audioWidget =
-        (headerAudioUrl?.isNotEmpty ?? false)
-            ? IconButton(
-              icon: Icon(
-                Icons.volume_up,
-                color: headerColor,
-                size: 24,
-              ),
-              tooltip: context.t('play_audio'),
-              onPressed: () async {
-                final url = headerAudioUrl;
-                if (url != null && url.isNotEmpty) {
-                  await player.open(Media(url));
-                  player.play();
-                }
-              },
-            )
-            : const SizedBox.shrink();
 
     return Container(
       width: double.infinity,
@@ -517,7 +500,6 @@ class _TestPageState extends State<TestPage> {
               fontWeight: primaryTextFontWeight,
             ),
           ),
-          audioWidget,
           const SizedBox(width: 12),
           secondaryWidget,
         ],
@@ -558,6 +540,7 @@ class _TestPageState extends State<TestPage> {
 
   Future<void> _selectOption(int index) async {
     if (_isAnswered) return;
+    _stopOptionsAutoplay();
     final correct = _options[index].id == _correctAnswerId;
     setState(() {
       _selectedIndex = index;
@@ -865,6 +848,21 @@ class _TestPageState extends State<TestPage> {
                   child: LayoutBuilder(
                     builder: (context, constraints) {
                       final isMobile = constraints.maxWidth < 800;
+                      final correctImageUrl = _currentCard.primaryImageUrl(lang) ??
+                                              _currentCard.primaryImageUrl('global') ??
+                                              _currentCard.primaryImageUrl('en');
+                      final correctVideoUrl = _currentCard.getVideoUrl(lang);
+                      final hasMeaningfulDisplayText = _currentCard.hasMeaningfulDisplayText(lang);
+                      final displayText = hasMeaningfulDisplayText ? _currentCard.getDisplayText(lang).trim() : '';
+                      final deduplicatedText = (_correctAnswerText.isNotEmpty && displayText.toLowerCase() == _correctAnswerText.toLowerCase()) ? '' : displayText;
+                      final hasCorrectVisual = _currentCard.isSpecialRenderer ||
+                                               _currentCard.isCountingRenderer ||
+                                               _currentCard.isColors ||
+                                               (correctVideoUrl != null && correctVideoUrl.isNotEmpty) ||
+                                               (correctImageUrl != null && correctImageUrl.isNotEmpty) ||
+                                               deduplicatedText.isNotEmpty;
+                      final isAudioTest = !hasCorrectVisual && (_currentCard.getAudioUrl(lang)?.isNotEmpty ?? false);
+
                       final mediaContent = _buildForwardMediaContent(
                                 context: context,
                                 isMobile: isMobile,
@@ -927,7 +925,7 @@ class _TestPageState extends State<TestPage> {
                                             isMobile ? 2 : 2,
                                         crossAxisSpacing: 12,
                                         mainAxisSpacing: 12,
-                                        childAspectRatio: 1.0,
+                                        childAspectRatio: isAudioTest ? (isMobile ? 2.5 : 3.0) : 1.0,
                                       ),
                                   itemCount: _options.length,
                                   itemBuilder:
@@ -936,6 +934,7 @@ class _TestPageState extends State<TestPage> {
                                             index,
                                             headerColor,
                                             isMobile,
+                                            isAudioTest,
                                           ),
                                 ),
                               )
@@ -956,6 +955,7 @@ class _TestPageState extends State<TestPage> {
                                       index,
                                       headerColor,
                                       isMobile,
+                                      isAudioTest,
                                     ),
                               )
                             else
@@ -974,6 +974,7 @@ class _TestPageState extends State<TestPage> {
                                           index,
                                           headerColor,
                                           isMobile,
+                                          isAudioTest,
                                         ),
                                   ),
                                 ),
@@ -1026,7 +1027,7 @@ class _TestPageState extends State<TestPage> {
     );
   }
 
-  Widget _buildOptionButton(int index, Color headerColor, bool isMobile) {
+  Widget _buildOptionButton(int index, Color headerColor, bool isMobile, bool isAudioTest) {
     final opt = _options[index];
     final isSelected = _selectedIndex == index;
     final isCorrect = opt.id == _correctAnswerId;
@@ -1036,10 +1037,17 @@ class _TestPageState extends State<TestPage> {
           isCorrect
               ? getIt<ThemeService>().success
               : (isSelected ? getIt<ThemeService>().error : null);
-    } else if (isSelected)
+    } else if (isSelected) {
       color = headerColor;
+    } else if (_autoPlayingOptionIndex == index) {
+      color = headerColor.withValues(alpha: 0.5);
+    }
 
     if (_isReverseMode && opt.card != null) {
+      final lang = _languageCode.toLowerCase();
+      final optAudioUrl = opt.card!.getAudioUrl(lang);
+      final hasOptAudio = optAudioUrl != null && optAudioUrl.isNotEmpty;
+
       return InkWell(
         onTap: () => _selectOption(index),
         borderRadius: BorderRadius.circular(12),
@@ -1050,42 +1058,98 @@ class _TestPageState extends State<TestPage> {
             borderRadius: BorderRadius.circular(12),
             color: color?.withValues(alpha: 0.1),
           ),
-          child: Stack(
-            children: [
-              Positioned.fill(
-                child: CardRenderer(
-                  card: opt.card!,
-                  subject: _subject,
-                  languageCode: _languageCode,
-                  fallbackColor: headerColor,
-                  fit: BoxFit.contain,
-                  textFontSize: isMobile ? 24 : 32,
-                ),
-              ),
-              Positioned(
-                left: 4,
-                top: 4,
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 6,
-                    vertical: 2,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.black.withValues(alpha: 0.5),
-                    borderRadius: BorderRadius.circular(999),
-                  ),
-                  child: Text(
-                    '${index + 1}',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 11,
-                      fontWeight: FontWeight.bold,
+          child: isAudioTest
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Material(
+                      color: Colors.transparent,
+                      child: InkResponse(
+                        onTap: () => _selectOption(index),
+                        radius: isMobile ? 32 : 40,
+                        hoverColor: headerColor.withValues(alpha: 0.1),
+                        highlightShape: BoxShape.circle,
+                        containedInkWell: false,
+                        child: Container(
+                          padding: const EdgeInsets.all(8),
+                          child: Text(
+                            '${index + 1}',
+                            style: TextStyle(
+                              fontSize: isMobile ? 28 : 36,
+                              fontWeight: FontWeight.bold,
+                              color: headerColor.withValues(alpha: 0.7),
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
+                    IconButton(
+                      icon: Icon(
+                        Icons.volume_up,
+                        size: isMobile ? 36 : 52,
+                        color: hasOptAudio
+                            ? headerColor
+                            : Colors.grey.withValues(alpha: 0.3),
+                      ),
+                      onPressed:
+                          hasOptAudio
+                              ? () async {
+                                if (optAudioUrl.isNotEmpty) {
+                                  await player.open(Media(optAudioUrl));
+                                  player.play();
+                                }
+                              }
+                              : null,
+                    ),
+                  ],
+                )
+              : Stack(
+                  children: [
+                    Positioned.fill(
+                      child: CardRenderer(
+                        card: opt.card!,
+                        subject: _subject,
+                        languageCode: _languageCode,
+                        fallbackColor: headerColor,
+                        fit: BoxFit.contain,
+                        textFontSize: isMobile ? 24 : 32,
+                        excludeText: _correctAnswerText,
+                        forceAudioIcon: false,
+                        onPlayAudio:
+                            hasOptAudio
+                                ? () async {
+                                  if (optAudioUrl.isNotEmpty) {
+                                    await player.open(Media(optAudioUrl));
+                                    player.play();
+                                  }
+                                }
+                                : null,
+                      ),
+                    ),
+                    Positioned(
+                      left: 4,
+                      top: 4,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 6,
+                          vertical: 2,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.black.withValues(alpha: 0.5),
+                          borderRadius: BorderRadius.circular(999),
+                        ),
+                        child: Text(
+                          '${index + 1}',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 11,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
-          ),
         ),
       );
     }
@@ -1139,6 +1203,8 @@ class _TestPageState extends State<TestPage> {
 
   @override
   void dispose() {
+    _optionAutoplayTimer?.cancel();
+    _playerSubscription?.cancel();
     _keyboardFocusNode.dispose();
     _scrollController.dispose();
     _gridScrollController.dispose();

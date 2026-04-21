@@ -17,10 +17,8 @@ import 'package:aliolo/data/services/progress_service.dart';
 import 'package:aliolo/data/services/subscription_service.dart';
 import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/core/utils/session_bucket_sampler.dart';
-import 'package:aliolo/core/widgets/card_renderer.dart';
+import 'package:aliolo/core/widgets/card_media_content.dart';
 import 'package:aliolo/core/widgets/window_controls.dart';
-import 'package:aliolo/core/widgets/aliolo_image.dart';
-import 'package:aliolo/core/widgets/counting_grid.dart';
 import 'package:aliolo/features/settings/presentation/pages/premium_upgrade_page.dart';
 
 class LearnPage extends StatefulWidget {
@@ -46,8 +44,8 @@ class _LearnPageState extends State<LearnPage> {
 
   // Media State
   List<String> _currentImages = [];
-  int _currentImageIndex = 0;
-  bool _showingVideo = false;
+  int _currentMediaIndex = 0;
+  bool _hasVideo = false;
 
   // Session State
   List<SubjectCard> _sessionQueue = [];
@@ -143,8 +141,8 @@ class _LearnPageState extends State<LearnPage> {
 
       setState(() {
         _currentImages = images;
-        _currentImageIndex = 0;
-        _showingVideo = video?.isNotEmpty ?? false;
+        _currentMediaIndex = 0;
+        _hasVideo = video?.isNotEmpty ?? false;
       });
 
     _playInitialMedia();
@@ -156,10 +154,10 @@ class _LearnPageState extends State<LearnPage> {
     final audioUrl = _currentCard.getAudioUrl(lang);
     final videoUrl = _currentCard.getVideoUrl(lang);
 
-    print('LearnPage: playInitialMedia. audio: $audioUrl, video: $videoUrl, showingVideo: $_showingVideo');
+    print('LearnPage: playInitialMedia. audio: $audioUrl, video: $videoUrl, showingVideo: $_hasVideo');
 
     bool hasMedia = false;
-    if (_showingVideo && videoUrl != null && videoUrl.isNotEmpty) {
+    if (_hasVideo && videoUrl != null && videoUrl.isNotEmpty) {
       await player.open(Media(videoUrl));
       player.play();
       hasMedia = true;
@@ -384,6 +382,17 @@ class _LearnPageState extends State<LearnPage> {
         double progressValue =
             _totalInSession > 0 ? _completedInSession / _totalInSession : 0.0;
 
+        final hasMeaningfulDisplayText = _currentCard.hasMeaningfulDisplayText(lang);
+        final displayText = hasMeaningfulDisplayText ? _currentCard.getDisplayText(lang).trim() : '';
+        final hasVisual = _currentCard.isSpecialRenderer ||
+                          _currentCard.isCountingRenderer ||
+                          _currentCard.isColors ||
+                          _hasVideo ||
+                          _currentImages.isNotEmpty ||
+                          displayText.isNotEmpty;
+        
+        final showAudioInHeader = !hasVisual && (currentAudioUrl?.isNotEmpty ?? false);
+
         return KeyboardListener(
           focusNode: _keyboardFocusNode,
           autofocus: true,
@@ -446,7 +455,21 @@ class _LearnPageState extends State<LearnPage> {
                         final answers = _currentCard.getAnswerList(lang);
                         if (answers.isEmpty) return [const SizedBox.shrink()];
 
-                        final hasAudio = currentAudioUrl?.isNotEmpty ?? false;
+                        if (showAudioInHeader) {
+                          return [
+                            IconButton(
+                              icon: const Icon(Icons.volume_up),
+                              color: headerColor,
+                              tooltip: context.t('play_audio'),
+                              onPressed: () async {
+                                if (currentAudioUrl != null && currentAudioUrl.isNotEmpty) {
+                                  await player.open(Media(currentAudioUrl));
+                                  player.play();
+                                }
+                              },
+                            )
+                          ];
+                        }
 
                         return [
                           Column(
@@ -454,49 +477,24 @@ class _LearnPageState extends State<LearnPage> {
                             children:
                                 answers
                                     .map(
-                                      (ans) => InkWell(
-                                        onTap: () async {
-                                          final url = _currentCard.getAudioUrl(
-                                            lang,
-                                          );
-                                          if (url != null) {
-                                            await player.open(Media(url));
-                                            player.play();
-                                          }
-                                        },
-                                        borderRadius: BorderRadius.circular(8),
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: 8,
-                                            vertical: 2,
-                                          ),
-                                          child: Text(
-                                            CardModel.capitalizeFirst(ans),
-                                            style: TextStyle(
-                                              fontSize:
-                                                  answers.length > 1 ? 24 : 32,
-                                              color: headerColor,
-                                              fontWeight: FontWeight.bold,
-                                            ),
+                                      (ans) => Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 8,
+                                          vertical: 2,
+                                        ),
+                                        child: Text(
+                                          CardModel.capitalizeFirst(ans),
+                                          style: TextStyle(
+                                            fontSize:
+                                                answers.length > 1 ? 24 : 32,
+                                            color: headerColor,
+                                            fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                       ),
                                     )
                                     .toList(),
                           ),
-                          if (hasAudio)
-                            IconButton(
-                              icon: const Icon(Icons.volume_up),
-                              color: headerColor,
-                              tooltip: context.t('play_audio'),
-                              onPressed: () async {
-                                final url = currentAudioUrl;
-                                if (url != null && url.isNotEmpty) {
-                                  await player.open(Media(url));
-                                  player.play();
-                                }
-                              },
-                            ),
                         ];
                       })(),
                     ],
@@ -509,140 +507,33 @@ class _LearnPageState extends State<LearnPage> {
                   valueColor: AlwaysStoppedAnimation<Color>(headerColor),
                 ),
                 Expanded(
-                  child: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(32),
-                      child: Card(
-                        elevation: 4,
-                        clipBehavior: Clip.antiAlias,
-                        color: Theme.of(context).cardColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(24),
-                          side: BorderSide(
-                            color: headerColor.withValues(alpha: 0.1),
-                            width: 1,
-                          ),
-                        ),
-                        child: Container(
-                          color: headerColor.withValues(alpha: 0.05),
-                          child: _currentCard.isSpecialRenderer
-                              ? Center(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(24),
-                                    child: CardRenderer(
-                                      card: _currentCard,
-                                      subject: _subject,
-                                      languageCode: lang,
-                                      fallbackColor: headerColor,
-                                      fit: BoxFit.contain,
-                                      textFontSize: 120,
-                                    ),
-                                  ),
-                                )
-                              : Stack(
-                                  fit: StackFit.expand,
-                                  children: [
-                                    if (_showingVideo)
-                                      Video(controller: controller)
-                                    else if (_currentCard.isCountingRenderer)
-                                      CountingGrid(
-                                        count: _currentCard.numericalAnswer,
-                                        iconSize: 60,
-                                      )
-                                    else if (_currentCard.isColors)
-                                      CardRenderer(
-                                        card: _currentCard,
-                                        subject: _subject,
-                                        languageCode: lang,
-                                        fallbackColor: headerColor,
-                                        fit: BoxFit.contain,
-                                        textFontSize: 120,
-                                      )
-                                    else if (_currentImages.isNotEmpty)
-                                      AlioloImage(
-                                        imageUrl:
-                                            _currentImages[_currentImageIndex],
-                                        fit: BoxFit.contain,
-                                        backgroundColor: headerColor.withValues(
-                                          alpha: 0.05,
-                                        ),
-                                      )
-                                    else if (_currentCard.isSpecialRenderer)
-                                      CardRenderer(
-                                        card: _currentCard,
-                                        subject: _subject,
-                                        languageCode: lang,
-                                        fallbackColor: headerColor,
-                                        fit: BoxFit.contain,
-                                        textFontSize: 120,
-                                      )
-                                    else if (_currentCard
-                                            .getDisplayText(lang)
-                                            .trim()
-                                            .isNotEmpty)
-                                      Center(
-                                        child: Text(
-                                          _currentCard.getDisplayText(lang),
-                                          style: const TextStyle(
-                                            fontSize: 120,
-                                            fontWeight: FontWeight.w700,
-                                            color: Colors.black87,
-                                          ),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      )
-                                    else
-                                      const Icon(
-                                        Icons.image_not_supported,
-                                        size: 100,
-                                        color: Colors.grey,
-                                      ),
-                                    if (!_showingVideo &&
-                                        _currentImages.length > 1) ...[
-                                      Positioned(
-                                        left: 10,
-                                        top: 0,
-                                        bottom: 0,
-                                        child: IconButton(
-                                          icon: const Icon(
-                                            Icons.chevron_left,
-                                            color: Colors.black26,
-                                            size: 40,
-                                          ),
-                                          onPressed: () => setState(
-                                            () =>
-                                                _currentImageIndex =
-                                                    (_currentImageIndex -
-                                                        1 +
-                                                        _currentImages.length) %
-                                                    _currentImages.length,
-                                          ),
-                                        ),
-                                      ),
-                                      Positioned(
-                                        right: 10,
-                                        top: 0,
-                                        bottom: 0,
-                                        child: IconButton(
-                                          icon: const Icon(
-                                            Icons.chevron_right,
-                                            color: Colors.black26,
-                                            size: 40,
-                                          ),
-                                          onPressed: () => setState(
-                                            () =>
-                                                _currentImageIndex =
-                                                    (_currentImageIndex + 1) %
-                                                    _currentImages.length,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ],
-                                ),
-                        ),
-                      ),
-                    ),
+                  child: CardMediaContent(
+                    card: _currentCard,
+                    subject: _subject,
+                    languageCode: lang,
+                    headerColor: headerColor,
+                    isMobile: false, // LearnPage uses desktop-style layout sizing
+                    videoController: controller,
+                    hasVideo: _hasVideo,
+                    images: _currentImages,
+                    mediaIndex: _currentMediaIndex,
+                    onMediaIndexChanged: (index) {
+                      if (mounted) {
+                        setState(() => _currentMediaIndex = index);
+                      }
+                    },
+                    onPlayAudio: currentAudioUrl?.isNotEmpty == true ? () async {
+                      await player.open(Media(currentAudioUrl!));
+                      player.play();
+                    } : null,
+                    hasAudio: showAudioInHeader ? false : (currentAudioUrl?.isNotEmpty == true),
+                    hideAudioIcon: showAudioInHeader,
+                    headerText: showAudioInHeader ? null : (_currentCard.getAnswerList(lang).isNotEmpty 
+                        ? _currentCard.getAnswerList(lang).first 
+                        : null),
+                    centerTextOverride: showAudioInHeader && _currentCard.getAnswerList(lang).isNotEmpty 
+                        ? _currentCard.getAnswerList(lang).first 
+                        : null,
                   ),
                 ),
               ],

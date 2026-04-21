@@ -2,6 +2,7 @@ import { OpenAPIHono, createRoute, z } from '@hono/zod-openapi';
 import type { AppEnv } from '../types';
 import { LanguagesResponseSchema, TranslationsResponseSchema } from '../schemas/localization';
 import { ErrorResponseSchema } from '../schemas/shared';
+import { getTranslationsForLanguage } from '../utils/localization';
 
 const router = new OpenAPIHono<AppEnv>();
 
@@ -44,15 +45,10 @@ const getTranslationsRoute = createRoute({
 router.openapi(getTranslationsRoute, async (c) => {
     const { lang } = c.req.valid('param');
     try {
-        const { results } = await c.env.DB.prepare(
-            'SELECT key, value FROM ui_translations WHERE lang = ?'
-        ).bind(lang).all();
-        
-        const map: Record<string, string> = {};
-        results.forEach((r: any) => {
-            map[r.key] = r.value;
-        });
-        return c.json(map as any, 200);
+        const translations = await getTranslationsForLanguage(c.env.DB, lang);
+        const response = c.json(translations as any, 200);
+        response.headers.set('Cache-Control', 'public, max-age=3600, stale-while-revalidate=86400');
+        return response;
     } catch (e: any) {
         return c.json({ error: e.message } as any, 500);
     }

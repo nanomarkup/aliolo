@@ -51,6 +51,21 @@ flutter build web --release --dart-define=API_URL=https://aliolo.com
 ```bash
 ./scripts/build.sh   # Build the production web app
 ./scripts/deploy.sh  # Build the web app and deploy the Worker
+./scripts/refresh_ui_translation_bundles.sh  # Rebuild ui_translation_bundles from ui_translations in remote D1
+```
+
+### UI Translation Bundles
+
+UI strings are stored in `ui_translations` and served at runtime through `ui_translation_bundles` for faster reads. If you change translation rows, refresh the bundles with:
+
+```bash
+./scripts/refresh_ui_translation_bundles.sh
+```
+
+You can target specific languages with repeated `--lang` flags:
+
+```bash
+./scripts/refresh_ui_translation_bundles.sh --lang en --lang es
 ```
 
 ## Directory Structure

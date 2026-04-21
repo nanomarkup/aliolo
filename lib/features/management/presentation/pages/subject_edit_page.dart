@@ -13,6 +13,7 @@ import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/data/services/subscription_service.dart';
+import 'package:aliolo/features/management/presentation/utils/localized_data_json.dart';
 import 'package:aliolo/features/feedback/presentation/pages/feedback_page.dart';
 import 'package:aliolo/features/settings/presentation/pages/premium_upgrade_page.dart';
 
@@ -247,6 +248,25 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
     await prefs.setBool('show_localization_sidebar', newState);
   }
 
+  LocalizedJsonEditorMode get _jsonEditorMode {
+    if (_isFolderMode) return LocalizedJsonEditorMode.folder;
+    return _selectedType == 'collection'
+        ? LocalizedJsonEditorMode.collection
+        : LocalizedJsonEditorMode.subject;
+  }
+
+  Map<String, Map<String, String>> _buildJsonDrafts() {
+    return _drafts.map((key, value) {
+      final draft = <String, String>{
+        'name': value.name,
+      };
+      if (!_isFolderMode) {
+        draft['description'] = value.description;
+      }
+      return MapEntry(key, draft);
+    });
+  }
+
   @override
   void dispose() {
     _nameController.dispose();
@@ -257,12 +277,7 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
   }
 
   void _showJsonDialog() {
-    final Map<String, dynamic> data = _drafts.map(
-      (key, value) => MapEntry(key, {
-        'name': value.name,
-        'description': value.description,
-      }),
-    );
+    final data = buildLocalizedJsonTemplate(_jsonEditorMode, _buildJsonDrafts());
 
     final encoder = const JsonEncoder.withIndent('  ');
     final String jsonTemplate = encoder.convert(data);
@@ -330,21 +345,20 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
                       ElevatedButton.icon(
                         onPressed: () {
                           try {
-                            final Map<String, dynamic> parsed = jsonDecode(
+                            final parsed = parseLocalizedJsonTemplate(
+                              _jsonEditorMode,
                               textController.text,
                             );
                             setState(() {
                               parsed.forEach((lang, val) {
-                                final l = lang.toString().toLowerCase();
-                                _ensureDraftExists(l);
-                                if (val is Map) {
-                                  final d = val as Map<String, dynamic>;
-                                  if (d.containsKey('name')) {
-                                    _drafts[l]!.name = d['name']?.toString() ?? '';
-                                  }
-                                  if (d.containsKey('description')) {
-                                    _drafts[l]!.description = d['description']?.toString() ?? '';
-                                  }
+                                _ensureDraftExists(lang);
+                                final draft = _drafts[lang]!;
+                                if (val.containsKey('name')) {
+                                  draft.name = val['name'] ?? '';
+                                }
+                                if (!_isFolderMode &&
+                                    val.containsKey('description')) {
+                                  draft.description = val['description'] ?? '';
                                 }
                               });
                               _updateControllers();

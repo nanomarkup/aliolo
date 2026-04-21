@@ -250,6 +250,19 @@ class CardModel {
     return displayText;
   }
 
+  bool hasMeaningfulDisplayText(String lang) {
+    final localizedDisplayText = getDisplayText(lang).trim();
+    if (localizedDisplayText.isEmpty) return false;
+
+    final localizedAnswer = getAnswer(lang).trim();
+    return _normalizeForComparison(localizedDisplayText) !=
+        _normalizeForComparison(localizedAnswer);
+  }
+
+  static String _normalizeForComparison(String value) {
+    return value.toLowerCase();
+  }
+
   static String capitalizeFirst(String s) {
     if (s.isEmpty) return s;
     return s[0].toUpperCase() + s.substring(1);

@@ -13,6 +13,9 @@ class CardRenderer extends StatelessWidget {
   final Color fallbackColor;
   final BoxFit fit;
   final double? textFontSize;
+  final String? excludeText;
+  final bool forceAudioIcon;
+  final VoidCallback? onPlayAudio;
 
   const CardRenderer({
     super.key,
@@ -22,11 +25,18 @@ class CardRenderer extends StatelessWidget {
     required this.fallbackColor,
     this.fit = BoxFit.contain,
     this.textFontSize,
+    this.excludeText,
+    this.forceAudioIcon = false,
+    this.onPlayAudio,
   });
 
   @override
   Widget build(BuildContext context) {
     final lang = languageCode.toLowerCase();
+
+    if (forceAudioIcon) {
+      return _buildAudioFallback();
+    }
 
     final colorRenderer = _buildColorRenderer();
     if (colorRenderer != null) return colorRenderer;
@@ -55,20 +65,26 @@ class CardRenderer extends StatelessWidget {
 
     final displayText = card.getDisplayText(lang);
     if (displayText.trim().isNotEmpty) {
-      return Center(
-        child: Text(
-          displayText,
-          style: TextStyle(
-            fontSize: textFontSize ?? 48,
-            fontWeight: FontWeight.w700,
-            color: Colors.black87,
+      final deduplicatedText = (excludeText != null && displayText.toLowerCase() == excludeText!.toLowerCase())
+          ? ''
+          : displayText;
+          
+      if (deduplicatedText.isNotEmpty) {
+        return Center(
+          child: Text(
+            deduplicatedText,
+            style: TextStyle(
+              fontSize: textFontSize ?? 48,
+              fontWeight: FontWeight.w700,
+              color: Colors.black87,
+            ),
+            textAlign: TextAlign.center,
           ),
-          textAlign: TextAlign.center,
-        ),
-      );
+        );
+      }
     }
 
-    return _buildFallback();
+    return _buildFallback(lang);
   }
 
   Widget? _buildSpecialRenderer(String lang) {
@@ -124,10 +140,30 @@ class CardRenderer extends StatelessWidget {
     );
   }
 
-  Widget _buildFallback() {
+  Widget _buildFallback(String lang) {
+    final audioUrl = card.getAudioUrl(lang);
+    if (onPlayAudio != null || (audioUrl != null && audioUrl.isNotEmpty)) {
+      return _buildAudioFallback();
+    }
     return Container(
       color: fallbackColor.withValues(alpha: 0.1),
       child: Icon(Icons.image, size: 32, color: fallbackColor),
+    );
+  }
+
+  Widget _buildAudioFallback() {
+    return Container(
+      color: fallbackColor.withValues(alpha: 0.05),
+      child: Center(
+        child: IconButton(
+          icon: Icon(
+            Icons.volume_up,
+            size: textFontSize ?? 40,
+            color: onPlayAudio != null ? fallbackColor.withValues(alpha: 0.5) : Colors.grey.withValues(alpha: 0.3),
+          ),
+          onPressed: onPlayAudio,
+        ),
+      ),
     );
   }
 }

@@ -195,6 +195,41 @@ void main() {
       expect(legacyModel.hexColor, isNull);
     });
 
+    test('CardModel ignores display_text fallback when it matches answer', () {
+      final json = {
+        'id': 'test_card_display_match',
+        'subject_id': 'subj_1',
+        'owner_id': 'user_1',
+        'answer': 'Cat',
+        'display_text': ' cat ',
+        'display_texts': '{"es":"Gato"}',
+        'answers': '{"es":"Perro"}',
+        'localized_data': '{}',
+        'created_at': '2026-04-13T12:00:00Z',
+        'updated_at': '2026-04-13T12:00:00Z',
+      };
+
+      final model = CardModel.fromJson(json);
+      expect(model.hasMeaningfulDisplayText('en'), isFalse);
+      expect(model.hasMeaningfulDisplayText('ES'), isTrue);
+    });
+
+    test('CardModel treats trimmed case-insensitive matches as equal', () {
+      final json = {
+        'id': 'test_card_display_trim',
+        'subject_id': 'subj_1',
+        'owner_id': 'user_1',
+        'answer': 'Hello World',
+        'display_text': '  hello world  ',
+        'localized_data': '{}',
+        'created_at': '2026-04-13T12:00:00Z',
+        'updated_at': '2026-04-13T12:00:00Z',
+      };
+
+      final model = CardModel.fromJson(json);
+      expect(model.hasMeaningfulDisplayText('en'), isFalse);
+    });
+
     test('UserModel parses and serializes test_mode', () {
       final model = UserModel.fromJson({
         'id': 'user_1',
