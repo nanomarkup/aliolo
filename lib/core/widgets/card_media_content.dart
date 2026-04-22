@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:media_kit_video/media_kit_video.dart';
+import 'package:video_player/video_player.dart';
 import 'package:aliolo/data/models/card_model.dart';
 import 'package:aliolo/data/models/subject_model.dart';
 import 'package:aliolo/core/widgets/card_renderer.dart';
@@ -12,7 +12,7 @@ class CardMediaContent extends StatelessWidget {
   final String languageCode;
   final Color headerColor;
   final bool isMobile;
-  final VideoController? videoController;
+  final VideoPlayerController? videoController;
   final bool hasVideo;
   final List<String> images;
   final int mediaIndex;
@@ -50,7 +50,15 @@ class CardMediaContent extends StatelessWidget {
     final lang = languageCode.toLowerCase();
 
     if (showVideoNow && videoController != null) {
-      return Video(controller: videoController!);
+      if (!videoController!.value.isInitialized) {
+        return const Center(child: CircularProgressIndicator());
+      }
+      return Center(
+        child: AspectRatio(
+          aspectRatio: videoController!.value.aspectRatio,
+          child: VideoPlayer(videoController!),
+        ),
+      );
     } else if (card.isCountingRenderer) {
       return CountingGrid(
         count: card.numericalAnswer,

@@ -4,13 +4,14 @@ import 'dart:math';
 import 'package:aliolo/data/services/testing_language_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:media_kit/media_kit.dart';
+import 'package:video_player/video_player.dart';
 import 'package:aliolo/data/models/card_model.dart';
 import 'package:aliolo/data/models/subject_model.dart';
 import 'package:aliolo/data/models/pillar_model.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/card_service.dart';
 import 'package:aliolo/data/services/progress_service.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:aliolo/data/services/sound_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
@@ -19,7 +20,6 @@ import 'package:aliolo/core/widgets/card_renderer.dart';
 import 'package:aliolo/core/widgets/card_media_content.dart';
 import 'package:aliolo/core/widgets/window_controls.dart';
 import 'package:aliolo/core/di/service_locator.dart';
-import 'package:media_kit_video/media_kit_video.dart';
 import 'package:aliolo/data/services/math_service.dart';
 import 'package:aliolo/features/settings/presentation/pages/premium_upgrade_page.dart';
 import 'package:aliolo/features/testing/domain/test_mode.dart';
@@ -72,8 +72,8 @@ class _TestPageState extends State<TestPage> {
   bool _isSessionFinished = false;
   bool _isAdvancing = false;
 
-  late final Player player;
-  late final VideoController controller;
+  VideoPlayerController? _videoController;
+  final AudioPlayer _audioPlayer = AudioPlayer();
   bool _hasVideo = false;
   List<String> _currentImages = [];
   int _currentMediaIndex = 0;
@@ -100,11 +100,8 @@ class _TestPageState extends State<TestPage> {
         isPremium && (_authService.currentUser?.autoPlayEnabled ?? false);
     _selectedMode = parseTestModeChoice(_authService.currentUser?.testMode);
 
-    player = Player();
-    controller = VideoController(player);
-
-    _playerSubscription = player.stream.completed.listen((completed) {
-      if (completed && _autoPlayingOptionIndex != -1) {
+    _audioPlayer.onPlayerComplete.listen((_) {
+      if (_autoPlayingOptionIndex != -1) {
         _onOptionAudioCompleted();
       }
     });
@@ -196,8 +193,7 @@ class _TestPageState extends State<TestPage> {
     final opt = _options[index];
     final url = opt.card?.getAudioUrl(_languageCode.toLowerCase());
     if (url != null && url.isNotEmpty) {
-      player.open(Media(url));
-      player.play();
+      _audioPlayer.play(UrlSource(url));
     } else {
       // skip if no audio
       _onOptionAudioCompleted();
@@ -328,8 +324,24 @@ class _TestPageState extends State<TestPage> {
           final lang = _languageCode.toLowerCase();
           _currentImages = _currentCard.getImageUrls(lang);
           _currentMediaIndex = 0;
-          final video = _currentCard.getVideoUrl(lang);
-          _hasVideo = video?.isNotEmpty ?? false;
+          final videoUrl = _currentCard.getVideoUrl(lang);
+          
+          _videoController?.dispose();
+          _videoController = null;
+
+          if (videoUrl != null && videoUrl.isNotEmpty) {
+            _videoController = VideoPlayerController.networkUrl(Uri.parse(videoUrl));
+            _videoController!.initialize().then((_) {
+              if (mounted) {
+                setState(() {
+                  _hasVideo = true;
+                });
+                _videoController!.play();
+              }
+            });
+          } else {
+            _hasVideo = false;
+          }
         });
       }
 
@@ -339,8 +351,7 @@ class _TestPageState extends State<TestPage> {
         !_isReverseMode &&
         !_currentCard.isSpecialRenderer &&
         !_currentCard.isCountingRenderer) {
-      player.open(Media(audio));
-      player.play();
+      _audioPlayer.play(UrlSource(audio));
     }
 
     if (_isReverseMode) {
@@ -407,7 +418,7 @@ class _TestPageState extends State<TestPage> {
       languageCode: lang,
       headerColor: headerColor,
       isMobile: isMobile,
-      videoController: controller,
+      videoController: _videoController,
       hasVideo: _hasVideo,
       images: _currentImages,
       mediaIndex: _currentMediaIndex,
@@ -418,8 +429,7 @@ class _TestPageState extends State<TestPage> {
       },
       onPlayAudio: hasAudio ? () async {
         if (audioUrl.isNotEmpty) {
-          await player.open(Media(audioUrl));
-          player.play();
+          await _audioPlayer.play(UrlSource(audioUrl));
         }
       } : null,
       hasAudio: hasAudio,
@@ -541,6 +551,8 @@ class _TestPageState extends State<TestPage> {
   Future<void> _selectOption(int index) async {
     if (_isAnswered) return;
     _stopOptionsAutoplay();
+    _audioPlayer.stop();
+    _videoController?.pause();
     final correct = _options[index].id == _correctAnswerId;
     setState(() {
       _selectedIndex = index;
@@ -1114,8 +1126,7 @@ class _TestPageState extends State<TestPage> {
                           hasOptAudio
                               ? () async {
                                 if (optAudioUrl.isNotEmpty) {
-                                  await player.open(Media(optAudioUrl));
-                                  player.play();
+                                  await _audioPlayer.play(UrlSource(optAudioUrl));
                                 }
                               }
                               : null,
@@ -1138,8 +1149,7 @@ class _TestPageState extends State<TestPage> {
                             hasOptAudio
                                 ? () async {
                                   if (optAudioUrl.isNotEmpty) {
-                                    await player.open(Media(optAudioUrl));
-                                    player.play();
+                                    await _audioPlayer.play(UrlSource(optAudioUrl));
                                   }
                                 }
                                 : null,
@@ -1227,7 +1237,8 @@ class _TestPageState extends State<TestPage> {
     _keyboardFocusNode.dispose();
     _scrollController.dispose();
     _gridScrollController.dispose();
-    player.dispose();
+    _videoController?.dispose();
+    _audioPlayer.dispose();
     super.dispose();
   }
 }

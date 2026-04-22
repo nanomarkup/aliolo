@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
 import 'package:window_manager/window_manager.dart';
-import 'package:media_kit/media_kit.dart';
 import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/core/theme/aliolo_theme.dart';
@@ -68,13 +67,6 @@ OTHER LIABILITY.
         ),
       ]);
     });
-
-    if (!kIsWeb &&
-        (defaultTargetPlatform == TargetPlatform.linux ||
-            defaultTargetPlatform == TargetPlatform.macOS ||
-            defaultTargetPlatform == TargetPlatform.windows)) {
-      MediaKit.ensureInitialized();
-    }
 
     if (!kIsWeb) {
       if (defaultTargetPlatform == TargetPlatform.linux ||

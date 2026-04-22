@@ -19,7 +19,9 @@ import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/core/utils/session_bucket_sampler.dart';
 import 'package:aliolo/core/utils/card_sorting.dart';
 import 'package:aliolo/core/widgets/aliolo_scrollable_page.dart';
-import 'package:media_kit/media_kit.dart';
+import 'package:aliolo/core/widgets/card_media_content.dart';
+import 'package:video_player/video_player.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:aliolo/core/widgets/card_renderer.dart';
 import 'package:aliolo/features/testing/presentation/pages/learn_page.dart';
 import 'package:aliolo/features/testing/presentation/pages/test_page.dart';
@@ -1489,8 +1491,9 @@ class _ZoomedCardContentState extends State<_ZoomedCardContent> {
   bool _isAutoPlay = false;
   late int _autoplayDelaySeconds;
   Timer? _autoNextTimer;
-  final Player _player = Player();
-  StreamSubscription? _playerSubscription;
+  final AudioPlayer _audioPlayer = AudioPlayer();
+  VideoPlayerController? _videoController;
+  StreamSubscription? _audioSubscription;
 
   @override
   void initState() {
@@ -1499,20 +1502,61 @@ class _ZoomedCardContentState extends State<_ZoomedCardContent> {
     _pageController = PageController(initialPage: widget.initialIndex);
     _autoplayDelaySeconds = getIt<AuthService>().currentUser?.learnAutoplayDelaySeconds ?? 3;
     
-    _playerSubscription = _player.stream.completed.listen((completed) {
-      if (completed && _isAutoPlay && mounted) {
+    _audioSubscription = _audioPlayer.onPlayerComplete.listen((_) {
+      if (_isAutoPlay && mounted) {
         _scheduleAutoNext();
       }
+    });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _setupCurrentCardMedia();
     });
   }
 
   @override
   void dispose() {
     _autoNextTimer?.cancel();
-    _playerSubscription?.cancel();
-    _player.dispose();
+    _audioSubscription?.cancel();
+    _audioPlayer.dispose();
+    _videoController?.dispose();
     _pageController.dispose();
     super.dispose();
+  }
+
+  void _setupCurrentCardMedia() {
+    _autoNextTimer?.cancel();
+    _videoController?.dispose();
+    _videoController = null;
+
+    final card = widget.cards[_currentIndex];
+    final vUrl = card.getVideoUrl(widget.displayLang);
+
+    if (vUrl != null && vUrl.isNotEmpty) {
+      _videoController = VideoPlayerController.networkUrl(Uri.parse(vUrl));
+      _videoController!.initialize().then((_) {
+        if (mounted) {
+          setState(() {});
+          _videoController!.play();
+          _videoController!.addListener(_videoListener);
+        }
+      });
+    } else {
+      // If no video, maybe play initial audio if in some mode, but here we just wait for manual play or autoplay trigger
+      if (_isAutoPlay) {
+         _playCurrentAudio();
+      }
+    }
+  }
+
+  void _videoListener() {
+    if (_videoController == null) return;
+    if (_videoController!.value.position >= _videoController!.value.duration &&
+        _videoController!.value.isInitialized) {
+      _videoController!.removeListener(_videoListener);
+      if (_isAutoPlay && mounted) {
+        _scheduleAutoNext();
+      }
+    }
   }
 
   void _scheduleAutoNext() {
@@ -1537,10 +1581,19 @@ class _ZoomedCardContentState extends State<_ZoomedCardContent> {
     setState(() {
       _isAutoPlay = !_isAutoPlay;
       if (_isAutoPlay) {
-        _playCurrentAudio();
+        if (_videoController != null && _videoController!.value.isInitialized) {
+           if (_videoController!.value.position >= _videoController!.value.duration) {
+              _scheduleAutoNext();
+           } else {
+              _videoController!.play();
+           }
+        } else {
+           _playCurrentAudio();
+        }
       } else {
         _autoNextTimer?.cancel();
-        _player.stop();
+        _audioPlayer.stop();
+        _videoController?.pause();
       }
     });
   }
@@ -1549,8 +1602,7 @@ class _ZoomedCardContentState extends State<_ZoomedCardContent> {
     final card = widget.cards[_currentIndex];
     final audioUrl = card.getAudioUrl(widget.displayLang);
     if (audioUrl != null && audioUrl.isNotEmpty) {
-      _player.open(Media(audioUrl));
-      _player.play();
+      _audioPlayer.play(UrlSource(audioUrl));
     } else if (_isAutoPlay) {
       _scheduleAutoNext();
     }
@@ -1565,7 +1617,7 @@ class _ZoomedCardContentState extends State<_ZoomedCardContent> {
       ),
       items: [1, 2, 3, 4, 5].map((s) => PopupMenuItem(
         value: s,
-        child: Text('${s}s'),
+        child: Text(s.toString() + "s"),
       )).toList(),
     );
     if (selected != null) {
@@ -1618,23 +1670,25 @@ class _ZoomedCardContentState extends State<_ZoomedCardContent> {
                     onPageChanged: (index) {
                       setState(() {
                         _currentIndex = index;
-                        if (_isAutoPlay) {
-                          _playCurrentAudio();
-                        }
+                        _setupCurrentCardMedia();
                       });
                     },
                     itemBuilder: (context, index) {
                       final itemCard = widget.cards[index];
+                      final isCurrent = index == _currentIndex;
                       return Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(24.0),
-                          child: CardRenderer(
-                            card: itemCard,
-                            subject: widget.subject,
-                            languageCode: widget.displayLang,
-                            fallbackColor: widget.pillarColor,
-                            fit: BoxFit.contain,
-                          ),
+                        child: CardMediaContent(
+                          card: itemCard,
+                          subject: widget.subject!,
+                          languageCode: widget.displayLang,
+                          headerColor: widget.pillarColor,
+                          isMobile: isMobile,
+                          videoController: isCurrent ? _videoController : null,
+                          hasVideo: itemCard.getVideoUrl(widget.displayLang) != null,
+                          images: itemCard.getImageUrls(widget.displayLang),
+                          onPlayAudio: () => _audioPlayer.play(UrlSource(itemCard.getAudioUrl(widget.displayLang)!)),
+                          hasAudio: itemCard.getAudioUrl(widget.displayLang) != null,
+                          hideAudioIcon: true, 
                         ),
                       );
                     },
@@ -1656,7 +1710,7 @@ class _ZoomedCardContentState extends State<_ZoomedCardContent> {
                       const SizedBox(width: 96), 
                       Expanded(
                         child: Text(
-                          card.getAnswerList(widget.displayLang).map((a) => CardModel.capitalizeFirst(a)).join(', '),
+                          card.getAnswerList(widget.displayLang).map((a) => CardModel.capitalizeFirst(a)).join(", "),
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: isMobile ? 18 : 22,
@@ -1673,8 +1727,8 @@ class _ZoomedCardContentState extends State<_ZoomedCardContent> {
                               : Colors.grey.withValues(alpha: 0.3),
                           size: 28,
                         ),
-                        onPressed: hasAudio ? _playCurrentAudio : null,
-                        tooltip: context.t('play_audio'),
+                        onPressed: hasAudio ? () => _audioPlayer.play(UrlSource(audioUrl!)) : null,
+                        tooltip: context.t("play_audio"),
                       ),
                       GestureDetector(
                         onLongPressStart: (details) => _showDelayMenu(details.globalPosition),
@@ -1685,7 +1739,7 @@ class _ZoomedCardContentState extends State<_ZoomedCardContent> {
                             size: 28,
                           ),
                           onPressed: _toggleAutoPlay,
-                          tooltip: context.t('autoplay'),
+                          tooltip: context.t("autoplay"),
                         ),
                       ),
                     ],

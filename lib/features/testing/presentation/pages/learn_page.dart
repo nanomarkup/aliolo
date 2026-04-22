@@ -4,13 +4,13 @@ import 'package:aliolo/data/services/testing_language_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:window_manager/window_manager.dart';
-import 'package:media_kit/media_kit.dart';
-import 'package:media_kit_video/media_kit_video.dart';
+import 'package:video_player/video_player.dart';
 import 'package:aliolo/data/models/card_model.dart';
 import 'package:aliolo/data/models/pillar_model.dart';
 import 'package:aliolo/data/models/subject_model.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/sound_service.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/data/services/progress_service.dart';
@@ -66,8 +66,8 @@ class _LearnPageState extends State<LearnPage> {
   final _progressService = getIt<ProgressService>();
   final _keyboardFocusNode = FocusNode();
 
-  late final Player player = Player();
-  late final VideoController controller = VideoController(player);
+  VideoPlayerController? _videoController;
+  final AudioPlayer _audioPlayer = AudioPlayer();
 
   late String _languageCode;
 
@@ -95,12 +95,9 @@ class _LearnPageState extends State<LearnPage> {
       }
     }
 
-    _playerSubscription = player.stream.completed.listen((completed) {
-      if (completed) {
-        print('LearnPage: Player completed. autoPlay: $_isAutoPlay, waiting: $_isAutoPlayWaiting');
-        if (_isAutoPlay && !_isAutoPlayWaiting) {
-          _scheduleAutoNext();
-        }
+    _audioPlayer.onPlayerComplete.listen((_) {
+      if (_isAutoPlay && !_isAutoPlayWaiting) {
+        _scheduleAutoNext();
       }
     });
 
@@ -137,19 +134,46 @@ class _LearnPageState extends State<LearnPage> {
 
     final lang = _languageCode.toLowerCase();
     final images = _currentCard.getImageUrls(lang);
-    final video = _currentCard.getVideoUrl(lang);
+    final videoUrl = _currentCard.getVideoUrl(lang);
 
+    _videoController?.dispose();
+    _videoController = null;
+
+    if (videoUrl != null && videoUrl.isNotEmpty) {
+      _videoController = VideoPlayerController.networkUrl(Uri.parse(videoUrl));
+      _videoController!.initialize().then((_) {
+        if (mounted) {
+          setState(() {
+            _hasVideo = true;
+          });
+          _videoController!.play();
+          _videoController!.addListener(_videoListener);
+        }
+      });
+    } else {
       setState(() {
+        _hasVideo = false;
         _currentImages = images;
         _currentMediaIndex = 0;
-        _hasVideo = video?.isNotEmpty ?? false;
       });
+    }
 
     _playInitialMedia();
   }
 
+  void _videoListener() {
+    if (_videoController == null) return;
+    if (_videoController!.value.position >= _videoController!.value.duration &&
+        _videoController!.value.isInitialized) {
+      _videoController!.removeListener(_videoListener);
+      if (_isAutoPlay && !_isAutoPlayWaiting) {
+        _scheduleAutoNext();
+      }
+    }
+  }
+
   Future<void> _playInitialMedia() async {
-    await player.stop();
+    await _audioPlayer.stop();
     final lang = _languageCode.toLowerCase();
     final audioUrl = _currentCard.getAudioUrl(lang);
     final videoUrl = _currentCard.getVideoUrl(lang);
@@ -157,13 +181,11 @@ class _LearnPageState extends State<LearnPage> {
     print('LearnPage: playInitialMedia. audio: $audioUrl, video: $videoUrl, showingVideo: $_hasVideo');
 
     bool hasMedia = false;
-    if (_hasVideo && videoUrl != null && videoUrl.isNotEmpty) {
-      await player.open(Media(videoUrl));
-      player.play();
+    if (videoUrl != null && videoUrl.isNotEmpty) {
+      // Video handled in _setupMedia
       hasMedia = true;
     } else if (audioUrl != null && audioUrl.isNotEmpty) {
-      await player.open(Media(audioUrl));
-      player.play();
+      await _audioPlayer.play(UrlSource(audioUrl));
       hasMedia = true;
     }
 
@@ -324,7 +346,9 @@ class _LearnPageState extends State<LearnPage> {
     _autoNextTimer?.cancel();
     _cooldownTimer?.cancel();
     setState(() => _isAutoPlayWaiting = false);
-    player.stop();
+    
+    _audioPlayer.stop();
+    _videoController?.pause();
 
     await _progressService.recordLearnProgress(
       cardId: _currentCard.id,
@@ -463,8 +487,7 @@ class _LearnPageState extends State<LearnPage> {
                               tooltip: context.t('play_audio'),
                               onPressed: () async {
                                 if (currentAudioUrl != null && currentAudioUrl.isNotEmpty) {
-                                  await player.open(Media(currentAudioUrl));
-                                  player.play();
+                                  await _audioPlayer.play(UrlSource(currentAudioUrl));
                                 }
                               },
                             )
@@ -513,7 +536,7 @@ class _LearnPageState extends State<LearnPage> {
                     languageCode: lang,
                     headerColor: headerColor,
                     isMobile: false, // LearnPage uses desktop-style layout sizing
-                    videoController: controller,
+                    videoController: _videoController,
                     hasVideo: _hasVideo,
                     images: _currentImages,
                     mediaIndex: _currentMediaIndex,
@@ -523,8 +546,7 @@ class _LearnPageState extends State<LearnPage> {
                       }
                     },
                     onPlayAudio: currentAudioUrl?.isNotEmpty == true ? () async {
-                      await player.open(Media(currentAudioUrl!));
-                      player.play();
+                      await _audioPlayer.play(UrlSource(currentAudioUrl!));
                     } : null,
                     hasAudio: showAudioInHeader ? false : (currentAudioUrl?.isNotEmpty == true),
                     hideAudioIcon: showAudioInHeader,
@@ -550,7 +572,9 @@ class _LearnPageState extends State<LearnPage> {
     _cooldownTimer?.cancel();
     _playerSubscription?.cancel();
     _keyboardFocusNode.dispose();
-    player.dispose();
+    _videoController?.removeListener(_videoListener);
+    _videoController?.dispose();
+    _audioPlayer.dispose();
     super.dispose();
   }
 }

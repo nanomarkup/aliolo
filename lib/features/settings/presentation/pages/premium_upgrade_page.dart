@@ -30,13 +30,13 @@ class _PremiumUpgradePageState extends State<PremiumUpgradePage> {
     final currentPrimaryColor = ThemeService().primaryColor;
 
     final List<Map<String, dynamic>> features = [
+      {'name': context.t('feature_full_library'), 'free': true},
       {'name': context.t('feature_spaced_repetition'), 'free': false},
       {'name': context.t('feature_creation'), 'free': false},
       {'name': context.t('feature_testing'), 'free': false},
       {'name': context.t('feature_autoplay'), 'free': false},
       {'name': context.t('feature_private_mode'), 'free': false},
       {'name': context.t('feature_customize'), 'free': false},
-      {'name': context.t('feature_full_library'), 'free': true},
     ];
 
     return AlioloScrollablePage(
@@ -162,7 +162,7 @@ class _PremiumUpgradePageState extends State<PremiumUpgradePage> {
                       children: [
                         const Expanded(child: SizedBox()),
                         SizedBox(width: 60, child: Text(context.t('feature_free'), textAlign: TextAlign.center, style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.grey[600]))),
-                        SizedBox(width: 60, child: Text(context.t('feature_pro'), textAlign: TextAlign.center, style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: currentPrimaryColor))),
+                        SizedBox(width: 60, child: Text(context.t('feature_pro'), textAlign: TextAlign.center, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.green))),
                       ],
                     ),
                     const Divider(),
@@ -171,12 +171,11 @@ class _PremiumUpgradePageState extends State<PremiumUpgradePage> {
                       child: Row(
                         children: [
                           Expanded(child: Text(f['name'], style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500))),
-                          SizedBox(width: 60, child: Icon(f['free'] ? Icons.check_circle : Icons.cancel, size: 20, color: f['free'] ? Colors.green : Colors.grey[300])),
-                          SizedBox(width: 60, child: Icon(Icons.check_circle, size: 20, color: currentPrimaryColor)),
+                          SizedBox(width: 60, child: Icon(f['free'] ? Icons.check_circle : Icons.cancel, size: 20, color: f['free'] ? currentPrimaryColor : Colors.grey[300])),
+                          SizedBox(width: 60, child: const Icon(Icons.check_circle, size: 20, color: Colors.green)),
                         ],
                       ),
-                    )),
-                  ],
+                    )),                  ],
                 ),
               ),
 

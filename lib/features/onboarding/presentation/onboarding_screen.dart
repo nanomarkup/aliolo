@@ -1,8 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:media_kit/media_kit.dart';
-import 'package:media_kit_video/media_kit_video.dart';
+import 'package:video_player/video_player.dart';
 import 'package:uuid/uuid.dart';
 import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/data/services/auth_service.dart';
@@ -41,8 +40,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   bool _videoVisible = false;
   StreamSubscription? _slide1Subscription;
 
-  late final Player _player1;
-  late final VideoController _controller1;
+  late VideoPlayerController _controller1;
 
   final Color primaryColor = const Color(0xFF1D4289);
   final Color bgColor = const Color(0xFFF1F5F9);
@@ -60,16 +58,22 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   void initState() {
     super.initState();
     _initAnalytics();
-    _player1 = Player();
-    _controller1 = VideoController(_player1);
-    _player1.open(Media('asset:///assets/Slide1_v7.mp4'));
-    _player1.setPlaylistMode(PlaylistMode.none);
+    
+    _controller1 = VideoPlayerController.asset('assets/Slide1_v7.mp4');
+    _controller1.initialize().then((_) {
+      if (mounted) setState(() {});
+      _controller1.play();
+    });
 
-    _slide1Subscription = _player1.stream.completed.listen((completed) {
-      if (completed && mounted) {
-        setState(() {
-          _slide1VideoFinished = true;
-        });
+    _controller1.addListener(() {
+      if (_controller1.value.position >= _controller1.value.duration && 
+          _controller1.value.isInitialized && 
+          !_slide1VideoFinished) {
+        if (mounted) {
+          setState(() {
+            _slide1VideoFinished = true;
+          });
+        }
       }
     });
 
@@ -126,8 +130,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     });
     
     if (page == 0) {
-      _player1.seek(Duration.zero);
-      _player1.play();
+      _controller1.seekTo(Duration.zero);
+      _controller1.play();
       setState(() {
         _slide1VideoFinished = false;
         _videoVisible = false;
@@ -136,14 +140,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         if (mounted) setState(() => _videoVisible = true);
       });
     } else {
-      _player1.pause();
+      _controller1.pause();
     }
   }
 
   @override
   void dispose() {
     _slide1Subscription?.cancel();
-    _player1.dispose();
+    _controller1.dispose();
     _pageController.dispose();
     super.dispose();
   }
@@ -198,13 +202,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     // Use the global pillars list from pillar_model.dart
 
     final List<Map<String, dynamic>> features = [
+      {'name': context.t('feature_full_library'), 'free': true},
       {'name': context.t('feature_spaced_repetition'), 'free': false},
       {'name': context.t('feature_creation'), 'free': false},
       {'name': context.t('feature_testing'), 'free': false},
       {'name': context.t('feature_autoplay'), 'free': false},
       {'name': context.t('feature_private_mode'), 'free': false},
       {'name': context.t('feature_customize'), 'free': false},
-      {'name': context.t('feature_full_library'), 'free': true},
     ];
     
     return Scaffold(
@@ -229,11 +233,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         AnimatedOpacity(
                           opacity: (_videoVisible && !_slide1VideoFinished) ? 1.0 : 0.0,
                           duration: const Duration(milliseconds: 1000),
-                          child: Video(
-                            controller: _controller1,
-                            controls: NoVideoControls,
-                            fill: Colors.transparent,
-                          ),
+                          child: VideoPlayer(_controller1),
                         ),
                         AnimatedOpacity(
                           opacity: _slide1VideoFinished ? 1.0 : 0.0,
@@ -417,18 +417,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           ),
                         ),
                         const SizedBox(height: 32),
-                        SizedBox(
-                          width: 80,
-                          height: 40,
-                          child: Stack(
-                            children: [
-                              Positioned(left: 0, child: _buildUserAvatar(Colors.blue[100]!, Icons.person)),
-                              Positioned(left: 20, child: _buildUserAvatar(Colors.green[100]!, Icons.person_outline)),
-                              Positioned(left: 40, child: _buildUserAvatar(Colors.orange[100]!, Icons.face)),
-                            ],
-                          ),
+                        Image.asset(
+                          'assets/Social.webp',
+                          height: 60,
+                          fit: BoxFit.contain,
                         ),
-                        const SizedBox(height: 12),
+                        const SizedBox(height: 4),
                         Text(
                           context.t('onboarding_7_joined'),
                           style: const TextStyle(
@@ -804,7 +798,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             children: [
               const Expanded(child: SizedBox()),
               SizedBox(width: 60, child: Text(context.t('feature_free'), textAlign: TextAlign.center, style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.grey[600]))),
-              SizedBox(width: 60, child: Text(context.t('feature_pro'), textAlign: TextAlign.center, style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: pillarColor))),
+              SizedBox(width: 60, child: Text(context.t('feature_pro'), textAlign: TextAlign.center, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.green))),
             ],
           ),
           const Divider(),
@@ -813,26 +807,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             child: Row(
               children: [
                 Expanded(child: Text(f['name'], style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.black87))),
-                SizedBox(width: 60, child: Icon(f['free'] ? Icons.check_circle : Icons.cancel, size: 20, color: f['free'] ? Colors.green : Colors.grey[300])),
-                SizedBox(width: 60, child: Icon(Icons.check_circle, size: 20, color: pillarColor)),
+                SizedBox(width: 60, child: Icon(f['free'] ? Icons.check_circle : Icons.cancel, size: 20, color: f['free'] ? primaryColor : Colors.grey[300])),
+                SizedBox(width: 60, child: const Icon(Icons.check_circle, size: 20, color: Colors.green)),
               ],
             ),
           )),
         ],
       ),
-    );
-  }
-
-  Widget _buildUserAvatar(Color color, IconData icon) {
-    return Container(
-      width: 40,
-      height: 40,
-      decoration: BoxDecoration(
-        color: color,
-        shape: BoxShape.circle,
-        border: Border.all(color: Colors.white, width: 2),
-      ),
-      child: Icon(icon, color: primaryColor.withValues(alpha: 0.5), size: 20),
     );
   }
 }
