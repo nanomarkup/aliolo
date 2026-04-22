@@ -1914,3 +1914,91 @@ entries:
   - file: lib/features/onboarding/presentation/onboarding_screen.dart
     line: 527
     kind: Text
+- key: billing_title
+  english: Billing
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/settings/presentation/pages/billing_page.dart
+    line: 72
+    kind: Text
+- key: confirm_subscription
+  english: Confirm Subscription
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/settings/presentation/pages/billing_page.dart
+    line: 81
+    kind: Text
+- key: billing_disclaimer
+  english: Subscriptions automatically renew unless cancelled. You can manage your subscription in your store settings.
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/settings/presentation/pages/billing_page.dart
+    line: 147
+    kind: Text
+- key: subscribe_now
+  english: Subscribe Now
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/settings/presentation/pages/billing_page.dart
+    line: 167
+    kind: Text
+- key: current_subscription
+  english: Current Subscription
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/settings/presentation/pages/premium_upgrade_page.dart
+    line: 165
+    kind: Text
+- key: plan_weekly_title
+  english: Weekly Access
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/settings/presentation/pages/billing_page.dart
+    line: 58
+    kind: String
+- key: plan_monthly_title
+  english: Monthly Access
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/settings/presentation/pages/billing_page.dart
+    line: 52
+    kind: String
+- key: plan_yearly_title
+  english: Yearly Access
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/settings/presentation/pages/billing_page.dart
+    line: 64
+    kind: String
+- key: plan_weekly_tagline
+  english: Best for quick goals
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/settings/presentation/pages/billing_page.dart
+    line: 60
+    kind: String
+- key: plan_monthly_tagline
+  english: Most popular choice
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/settings/presentation/pages/billing_page.dart
+    line: 54
+    kind: String
+- key: plan_yearly_tagline
+  english: Save 33% per month
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/settings/presentation/pages/billing_page.dart
+    line: 66
+    kind: String

@@ -17,6 +17,9 @@ class SubscriptionService extends ChangeNotifier {
   DateTime? _expiryDate;
   DateTime? get expiryDate => _expiryDate;
 
+  String? _activeProductId;
+  String? get activeProductId => _activeProductId;
+
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
@@ -73,16 +76,19 @@ class SubscriptionService extends ChangeNotifier {
             ? DateTime.parse(data['expiry_date']) 
             : null;
         
+        _activeProductId = data['product_id'] as String?;
         _expiryDate = expiry;
         _isPremium = status == 'active' && (expiry == null || expiry.isAfter(DateTime.now()));
       } else {
         _isPremium = false;
         _expiryDate = null;
+        _activeProductId = null;
       }
     } catch (e) {
       AppLogger.log('Error checking subscription: $e');
       _isPremium = false;
       _expiryDate = null;
+      _activeProductId = null;
     }
     notifyListeners();
   }

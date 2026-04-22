@@ -1,0 +1,240 @@
+{
+  "en": {
+    "billing_title": "Billing",
+    "confirm_subscription": "Confirm Subscription",
+    "billing_disclaimer": "Subscriptions automatically renew unless cancelled. You can manage your subscription in your store settings.",
+    "subscribe_now": "Subscribe Now",
+    "current_subscription": "Current Subscription"
+  },
+  "id": {
+    "billing_title": "Penagihan",
+    "confirm_subscription": "Konfirmasi Langganan",
+    "billing_disclaimer": "Langganan diperpanjang secara otomatis kecuali dibatalkan. Anda dapat mengelola langganan di pengaturan toko Anda.",
+    "subscribe_now": "Berlangganan Sekarang",
+    "current_subscription": "Langganan Saat Ini"
+  },
+  "bg": {
+    "billing_title": "Фактуриране",
+    "confirm_subscription": "Потвърждаване на абонамента",
+    "billing_disclaimer": "Абонаментите се подновяват автоматично, освен ако не бъдат анулирани. Можете да управлявате абонамента си в настройките на магазина.",
+    "subscribe_now": "Абонирайте се сега",
+    "current_subscription": "Текущ абонамент"
+  },
+  "cs": {
+    "billing_title": "Fakturace",
+    "confirm_subscription": "Potvrdit předplatné",
+    "billing_disclaimer": "Předplatné se automaticky obnovuje, pokud není zrušeno. Předplatné můžete spravovat v nastavení obchodu.",
+    "subscribe_now": "Předplatit nyní",
+    "current_subscription": "Stávající předplatné"
+  },
+  "da": {
+    "billing_title": "Fakturering",
+    "confirm_subscription": "Bekræft abonnement",
+    "billing_disclaimer": "Abonnementer fornyes automatisk, medmindre de opsiges. Du kan administrere dit abonnement i dine butiksindstillinger.",
+    "subscribe_now": "Tilmeld dig nu",
+    "current_subscription": "Nuværende abonnement"
+  },
+  "de": {
+    "billing_title": "Abrechnung",
+    "confirm_subscription": "Abonnement bestätigen",
+    "billing_disclaimer": "Abonnements verlängern sich automatisch, sofern sie nicht gekündigt werden. Sie können Ihr Abonnement in Ihren Store-Einstellungen verwalten.",
+    "subscribe_now": "Jetzt abonnieren",
+    "current_subscription": "Aktuelles Abonnement"
+  },
+  "et": {
+    "billing_title": "Arveldus",
+    "confirm_subscription": "Kinnita tellimus",
+    "billing_disclaimer": "Tellimused uuenevad automaatselt, kui neid ei tühistata. Saate oma tellimust hallata poe seadetes.",
+    "subscribe_now": "Telli kohe",
+    "current_subscription": "Praegune tellimus"
+  },
+  "es": {
+    "billing_title": "Facturación",
+    "confirm_subscription": "Confirmar suscripción",
+    "billing_disclaimer": "Las suscripciones se renuevan automáticamente a menos que se cancelen. Puedes administrar tu suscripción en los ajustes de tu tienda.",
+    "subscribe_now": "Suscribirse ahora",
+    "current_subscription": "Suscripción actual"
+  },
+  "fr": {
+    "billing_title": "Facturation",
+    "confirm_subscription": "Confirmer l'abonnement",
+    "billing_disclaimer": "Les abonnements se renouvellent automatiquement sauf s'ils sont annulés. Vous pouvez gérer votre abonnement dans les paramètres de votre boutique.",
+    "subscribe_now": "S'abonner maintenant",
+    "current_subscription": "Abonnement actuel"
+  },
+  "ga": {
+    "billing_title": "Billiú",
+    "confirm_subscription": "Deimhnigh an Síntiús",
+    "billing_disclaimer": "Athnuaitear síntiúis go huathoibríoch mura gcuirtear ar ceal iad. Is féidir leat do shíntiús a bhainistiú i socruithe do stórais.",
+    "subscribe_now": "Liostáil Anois",
+    "current_subscription": "Síntiús Reatha"
+  },
+  "hr": {
+    "billing_title": "Naplata",
+    "confirm_subscription": "Potvrdi pretplatu",
+    "billing_disclaimer": "Pretplate se automatski obnavljaju osim ako se ne otkažu. Svojom pretplatom možete upravljati u postavkama trgovine.",
+    "subscribe_now": "Pretplatite se sada",
+    "current_subscription": "Trenutna pretplata"
+  },
+  "it": {
+    "billing_title": "Fatturazione",
+    "confirm_subscription": "Conferma abbonamento",
+    "billing_disclaimer": "Gli abbonamenti si rinnovano automaticamente a meno que non vengano annullati. Puoi gestire il tuo abbonamento nelle impostazioni del tuo store.",
+    "subscribe_now": "Iscriviti ora",
+    "current_subscription": "Abbonamento attuale"
+  },
+  "lv": {
+    "billing_title": "Norēķini",
+    "confirm_subscription": "Apstiprināt abonementu",
+    "billing_disclaimer": "Abonements tiek automātiski atjaunots, ja vien tas netiek atcelts. Savu abonementu varat pārvaldīt veikala iestatījumos.",
+    "subscribe_now": "Abonēt tagad",
+    "current_subscription": "Pašreizējais abonements"
+  },
+  "lt": {
+    "billing_title": "Atsiskaitymas",
+    "confirm_subscription": "Patvirtinti prenumeratą",
+    "billing_disclaimer": "Prenumeratos atnaujinamos automatiškai, nebent jos atšaukiamos. Prenumeratą galite tvarkyti parduotuvės nustatymuose.",
+    "subscribe_now": "Prenumeruoti dabar",
+    "current_subscription": "Dabartinė prenumerata"
+  },
+  "hu": {
+    "billing_title": "Számlázás",
+    "confirm_subscription": "Előfizetés megerősítése",
+    "billing_disclaimer": "Az előfizetések automatikusan megújulnak, hacsak nem mondják le őket. Az előfizetését az áruház beállításaiban kezelheti.",
+    "subscribe_now": "Feliratkozás most",
+    "current_subscription": "Jelenlegi előfizetés"
+  },
+  "mt": {
+    "billing_title": "Fatturazzjoni",
+    "confirm_subscription": "Ikkonferma l-abbonament",
+    "billing_disclaimer": "L-abbonamenti jiġdidu awtomatikament sakemm ma jiġux ikkanċellati. Tista' timmaniġġja l-abbonament tiegħek fis-settings tal-maħżen tiegħek.",
+    "subscribe_now": "Abbona issa",
+    "current_subscription": "Abbonament kurrenti"
+  },
+  "nl": {
+    "billing_title": "Facturering",
+    "confirm_subscription": "Abonnement bevestigen",
+    "billing_disclaimer": "Abonnementen worden automatisch verlengd, tenzij ze worden opgezegd. Je kunt je abonnement beheren in je winkelinstellingen.",
+    "subscribe_now": "Nu abonneren",
+    "current_subscription": "Huidig abonnement"
+  },
+  "pl": {
+    "billing_title": "Rozliczenia",
+    "confirm_subscription": "Potwierdź subskrypcję",
+    "billing_disclaimer": "Subskrypcje odnawiają się automatycznie, chyba że zostaną anulowane. Możesz zarządzać subskrypcją u ustawieniach sklepu.",
+    "subscribe_now": "Subskrybuj teraz",
+    "current_subscription": "Aktualna subskrypcja"
+  },
+  "pt": {
+    "billing_title": "Faturamento",
+    "confirm_subscription": "Confirmar assinatura",
+    "billing_disclaimer": "As assinaturas são renovadas automaticamente, a menos que sejam canceladas. Você pode gerenciar sua assinatura nas configurações da sua loja.",
+    "subscribe_now": "Assinar agora",
+    "current_subscription": "Assinatura atual"
+  },
+  "ro": {
+    "billing_title": "Facturare",
+    "confirm_subscription": "Confirmă abonamentul",
+    "billing_disclaimer": "Abonamentele se reînnoiesc automat, cu excepția cazului în care sunt anulate. Vă puteți gestiona abonamentul în setările magazinului.",
+    "subscribe_now": "Abonează-te acum",
+    "current_subscription": "Abonament curent"
+  },
+  "sk": {
+    "billing_title": "Fakturácia",
+    "confirm_subscription": "Potvrdiť predplatné",
+    "billing_disclaimer": "Predplatné sa automaticky obnovuje, ak nie je zrušené. Predplatné môžete spravovať v nastaveniach obchodu.",
+    "subscribe_now": "Predplatiť teraz",
+    "current_subscription": "Aktuálne predplatné"
+  },
+  "sl": {
+    "billing_title": "Obračunavanje",
+    "confirm_subscription": "Potrdi naročnino",
+    "billing_disclaimer": "Naročnine se samodejno podaljšajo, razen če jih prekličete. Naročnino lahko upravljate v nastavitvah trgovine.",
+    "subscribe_now": "Naročite se zdaj",
+    "current_subscription": "Trenutna naročnina"
+  },
+  "fi": {
+    "billing_title": "Laskutus",
+    "confirm_subscription": "Vahvista tilaus",
+    "billing_disclaimer": "Tilaukset uusiutuvat automaattisesti, ellei niitä peruuteta. Voit hallinnoida tilaustasi kaupan asetuksista.",
+    "subscribe_now": "Tilaa nyt",
+    "current_subscription": "Nykyinen tilaus"
+  },
+  "sv": {
+    "billing_title": "Fakturering",
+    "confirm_subscription": "Bekräfta prenumeration",
+    "billing_disclaimer": "Prenumerationer förnyas automatiskt om de inte sägs upp. Du kan hantera din prenumeration i dina butiksinställningar.",
+    "subscribe_now": "Prenumerera nu",
+    "current_subscription": "Nuvarande prenumeration"
+  },
+  "tl": {
+    "billing_title": "Pagsingil",
+    "confirm_subscription": "Kumpirmahin ang Subscription",
+    "billing_disclaimer": "Awtomatikong magre-renew ang mga subscription maliban kung kakanselahin. Maaari mong pamahalaan ang iyong subscription sa mga setting ng iyong store.",
+    "subscribe_now": "Mag-subscribe Ngayon",
+    "current_subscription": "Kasalukuyang Subscription"
+  },
+  "vi": {
+    "billing_title": "Thanh toán",
+    "confirm_subscription": "Xác nhận đăng ký",
+    "billing_disclaimer": "Các gói đăng ký tự động gia hạn trừ khi bị hủy. Bạn có thể quản lý gói đăng ký của mình dalam cài đặt cửa hàng.",
+    "subscribe_now": "Đăng ký ngay",
+    "current_subscription": "Gói đăng ký hiện tại"
+  },
+  "tr": {
+    "billing_title": "Faturalandırma",
+    "confirm_subscription": "Aboneliği Onayla",
+    "billing_disclaimer": "Abonelikler, iptal edilmediği sürece otomatik olarak yenilenir. Aboneliğinizi mağaza ayarlarınızdan yönetebilirsiniz.",
+    "subscribe_now": "Şimdi Abone Ol",
+    "current_subscription": "Mevcut Abonelik"
+  },
+  "el": {
+    "billing_title": "Χρέωση",
+    "confirm_subscription": "Επιβεβαίωση συνδρομής",
+    "billing_disclaimer": "Οι συνδρομές ανανεώνονται αυτόματα εκτός εάν ακυρωθούν. Μπορείτε να διαχειριστείτε τη συνδρομή σας στις ρυθμίσεις του καταστήματός σας.",
+    "subscribe_now": "Εγγραφείτε τώρα",
+    "current_subscription": "Τρέχουσα συνδρομή"
+  },
+  "uk": {
+    "billing_title": "Білінг",
+    "confirm_subscription": "Підтвердити підписку",
+    "billing_disclaimer": "Підписки автоматично поновлюються, якщо їх не скасувати. Ви можете керувати своєю підпиською в налаштуваннях магазину.",
+    "subscribe_now": "Підписатися зараз",
+    "current_subscription": "Поточна підписка"
+  },
+  "ar": {
+    "billing_title": "الفواتير",
+    "confirm_subscription": "تأكيد الاشتراك",
+    "billing_disclaimer": "يتم تجديد الاشتراكات تلقائيًا ما لم يتم إلغاؤها. يمكنك إدارة اشتراكك في إعدادات متجرك.",
+    "subscribe_now": "اشترك الآن",
+    "current_subscription": "الاشتراك الحالي"
+  },
+  "hi": {
+    "billing_title": "बिलिंग",
+    "confirm_subscription": "सदस्यता की पुष्टि करें",
+    "billing_disclaimer": "सदस्यता स्वतः नवीनीकृत हो जाती है जब तक कि उसे रद्द न किया जाए। आप अपनी स्टोर सेटिंग्स में अपनी सदस्यता का प्रबंधन कर सकते हैं।",
+    "subscribe_now": "अभी सब्सक्राइब करें",
+    "current_subscription": "वर्तमान सदस्यता"
+  },
+  "zh": {
+    "billing_title": "账单",
+    "confirm_subscription": "确认订阅",
+    "billing_disclaimer": "除非取消，否则订阅将自动续订。您可以在商店设置中管理您的订阅。",
+    "subscribe_now": "立即订阅",
+    "current_subscription": "当前订阅"
+  },
+  "ja": {
+    "billing_title": "請求",
+    "confirm_subscription": "定期購読を確認",
+    "billing_disclaimer": "定期購読は、キャンセルされない限り自動的に更新されます。定期購読はストアの設定で管理できます。",
+    "subscribe_now": "今すぐ購読",
+    "current_subscription": "現在の定期購読"
+  },
+  "ko": {
+    "billing_title": "청구",
+    "confirm_subscription": "구독 확인",
+    "billing_disclaimer": "구독은 취소하지 않는 한 자동으로 갱신됩니다. 스토어 설정에서 구독을 관리할 수 있습니다.",
+    "subscribe_now": "지금 구독하기",
+    "current_subscription": "현재 구독"
+  }
+}

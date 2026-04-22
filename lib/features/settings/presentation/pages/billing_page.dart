@@ -60,24 +60,24 @@ class _BillingPageState extends State<BillingPage> {
     final subService = context.watch<SubscriptionService>();
     final currentPrimaryColor = ThemeService().primaryColor;
     
-    String title = "Monthly Access";
+    String title = context.t('plan_monthly_title');
     String price = r"$8.99";
-    String sub = "Most popular choice";
+    String sub = context.t('plan_monthly_tagline');
     String? originalPrice = r"$17.98";
-    String? extraInfo = r"($2.25 / Week)";
+    String? extraInfo = context.t('price_per_week', args: {'price': r'$2.25'});
 
     if (widget.selectedIndex == 0) {
-      title = "Weekly Access";
+      title = context.t('plan_weekly_title');
       price = r"$2.99";
-      sub = "Best for quick goals";
+      sub = context.t('plan_weekly_tagline');
       originalPrice = r"$5.98";
       extraInfo = null;
     } else if (widget.selectedIndex == 2) {
-      title = "Yearly Access";
+      title = context.t('plan_yearly_title');
       price = r"$80.99";
-      sub = "Save 33% per month";
+      sub = context.t('plan_yearly_tagline');
       originalPrice = r"$161.98";
-      extraInfo = r"($1.56 / Week)";
+      extraInfo = context.t('price_per_week', args: {'price': r'$1.56'});
     }
 
     return AlioloScrollablePage(
