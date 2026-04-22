@@ -36,7 +36,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   double _dailyGoal = 30;
   String? _selectedAge;
   int? _selectedPillarId;
-  int _selectedOptionIndex = 1; // Monthly by default
+  int? _selectedOptionIndex;
   bool _showFeatures = false;
   bool _slide1VideoFinished = false;
   bool _videoVisible = false;
@@ -701,7 +701,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   Widget _buildSubscriptionOption(int index, String title, String price, String sub, {String? originalPrice, String? extraInfo, bool isActive = false}) {
-    final isSelected = _selectedOptionIndex == index;
+    final activeId = context.read<SubscriptionService>().activeProductId;
+    final int defaultIndex = activeId == 'aliolo_premium_weekly' ? 0 : (activeId == 'aliolo_premium_yearly' ? 2 : 1);
+    final isSelected = (_selectedOptionIndex ?? defaultIndex) == index;
 
     return InkWell(
       onTap: () {

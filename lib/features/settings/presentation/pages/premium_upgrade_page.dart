@@ -5,7 +5,6 @@ import 'package:aliolo/data/services/subscription_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/core/widgets/aliolo_scrollable_page.dart';
-import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/features/settings/presentation/pages/billing_page.dart';
 
 class PremiumUpgradePage extends StatefulWidget {
@@ -16,22 +15,7 @@ class PremiumUpgradePage extends StatefulWidget {
 }
 
 class _PremiumUpgradePageState extends State<PremiumUpgradePage> {
-  int _selectedOptionIndex = 1; // Monthly by default
-
-  @override
-  void initState() {
-    super.initState();
-    final subService = getIt<SubscriptionService>();
-    if (subService.activeProductId != null) {
-      if (subService.activeProductId == 'aliolo_premium_weekly') {
-        _selectedOptionIndex = 0;
-      } else if (subService.activeProductId == 'aliolo_premium_yearly') {
-        _selectedOptionIndex = 2;
-      } else {
-        _selectedOptionIndex = 1;
-      }
-    }
-  }
+  int? _selectedOptionIndex;
 
   void _navigateToBilling(int index) {
     Navigator.push(
@@ -210,7 +194,9 @@ class _PremiumUpgradePageState extends State<PremiumUpgradePage> {
   }
 
   Widget _buildSubscriptionOption(int index, String title, String price, String sub, {String? originalPrice, String? extraInfo, bool isActive = false}) {
-    final isSelected = _selectedOptionIndex == index;
+    final activeId = context.read<SubscriptionService>().activeProductId;
+    final int defaultIndex = activeId == 'aliolo_premium_weekly' ? 0 : (activeId == 'aliolo_premium_yearly' ? 2 : 1);
+    final isSelected = (_selectedOptionIndex ?? defaultIndex) == index;
     final currentPrimaryColor = ThemeService().primaryColor;
 
     return InkWell(
