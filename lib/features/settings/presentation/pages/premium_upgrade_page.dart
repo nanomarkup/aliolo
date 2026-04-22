@@ -7,8 +7,6 @@ import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/core/widgets/aliolo_scrollable_page.dart';
 import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/features/settings/presentation/pages/billing_page.dart';
-import 'package:in_app_purchase/in_app_purchase.dart';
-import 'package:flutter/foundation.dart';
 
 class PremiumUpgradePage extends StatefulWidget {
   const PremiumUpgradePage({super.key});
@@ -19,6 +17,21 @@ class PremiumUpgradePage extends StatefulWidget {
 
 class _PremiumUpgradePageState extends State<PremiumUpgradePage> {
   int _selectedOptionIndex = 1; // Monthly by default
+
+  @override
+  void initState() {
+    super.initState();
+    final subService = getIt<SubscriptionService>();
+    if (subService.activeProductId != null) {
+      if (subService.activeProductId == 'aliolo_premium_weekly') {
+        _selectedOptionIndex = 0;
+      } else if (subService.activeProductId == 'aliolo_premium_yearly') {
+        _selectedOptionIndex = 2;
+      } else {
+        _selectedOptionIndex = 1;
+      }
+    }
+  }
 
   void _navigateToBilling(int index) {
     Navigator.push(

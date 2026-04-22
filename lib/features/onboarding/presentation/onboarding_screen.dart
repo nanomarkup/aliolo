@@ -81,6 +81,17 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         });
       }
     });
+
+    final subService = getIt<SubscriptionService>();
+    if (subService.activeProductId != null) {
+      if (subService.activeProductId == 'aliolo_premium_weekly') {
+        _selectedOptionIndex = 0;
+      } else if (subService.activeProductId == 'aliolo_premium_yearly') {
+        _selectedOptionIndex = 2;
+      } else {
+        _selectedOptionIndex = 1;
+      }
+    }
   }
 
   Future<void> _initAnalytics() async {
