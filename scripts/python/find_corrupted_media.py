@@ -5,6 +5,7 @@ import shutil
 import sys
 import os
 from pathlib import Path
+from urllib.parse import urlparse
 
 try:
     import boto3
@@ -36,7 +37,6 @@ def wrangler_cmd() -> list[str]:
     return [resolve_node_bin(), str(WRANGLER_BIN)]
 
 def run_cmd(cmd: list[str], check: bool = True) -> subprocess.CompletedProcess:
-    # Use api/ as cwd since wrangler might need its local config
     api_dir = SCRIPT_DIR / "api"
     result = subprocess.run(
         cmd,
@@ -72,7 +72,6 @@ def get_s3_client():
     if not account_id or not access_key_id or not secret_access_key:
         print("Error: Missing required environment variables for R2 S3 API.")
         print("Please export R2_ACCOUNT_ID, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY")
-        print("You can get these from the Cloudflare Dashboard under R2 -> Manage R2 API Tokens.")
         sys.exit(1)
         
     return boto3.client(
@@ -89,86 +88,106 @@ def list_r2_objects(prefix: str):
     paginator = s3.get_paginator('list_objects_v2')
     pages = paginator.paginate(Bucket=R2_BUCKET, Prefix=prefix)
     
-    objects = []
+    objects = set()
     for page in pages:
         if 'Contents' in page:
-            objects.extend(page['Contents'])
+            for obj in page['Contents']:
+                objects.add(obj['Key'])
     return objects
 
-def extract_filename(url_or_path: str) -> str:
-    if not url_or_path:
+def extract_r2_key(url: str) -> str:
+    if not url:
         return ""
-    # Just grab the last segment
-    return url_or_path.split('/')[-1]
+    try:
+        parsed = urlparse(url)
+        path = parsed.path
+        prefix = f"/storage/v1/object/public/{R2_BUCKET}/"
+        if path.startswith(prefix):
+            return path[len(prefix):]
+        # Fallback for older URLs or relative paths if any
+        if "cards/" in url:
+            return "cards/" + url.split("cards/")[1]
+    except:
+        pass
+    return ""
 
 def main():
     cards = fetch_cards()
+    r2_keys = list_r2_objects("cards/")
+    print(f"Found {len(r2_keys)} objects in R2 under 'cards/'.")
     
-    card_media_map = {}
+    corrupted_links = []
+    
     for card in cards:
         card_id = card["id"]
-        referenced_files = set()
         
-        for field in ["images_base", "images_local", "audios", "videos"]:
+        # Process list fields
+        for field in ["images_base", "images_local"]:
             val = card.get(field)
             if val:
                 try:
                     urls = json.loads(val)
                     if isinstance(urls, list):
-                        for url in urls:
+                        for i, url in enumerate(urls):
                             if isinstance(url, str):
-                                referenced_files.add(extract_filename(url))
-                    elif isinstance(urls, dict):
-                        for k, v in urls.items():
-                            if isinstance(v, str):
-                                referenced_files.add(extract_filename(v))
-                            elif isinstance(v, list):
-                                for item in v:
-                                    if isinstance(item, str):
-                                        referenced_files.add(extract_filename(item))
+                                key = extract_r2_key(url)
+                                if key and key not in r2_keys:
+                                    corrupted_links.append({
+                                        "card_id": card_id,
+                                        "field": field,
+                                        "type": "list",
+                                        "index_or_key": i,
+                                        "url": url,
+                                        "key": key
+                                    })
+                except json.JSONDecodeError:
+                    pass
+                    
+        # Process dict fields
+        for field in ["audios", "videos"]:
+            val = card.get(field)
+            if val:
+                try:
+                    urls = json.loads(val)
+                    if isinstance(urls, dict):
+                        for k, url in urls.items():
+                            if isinstance(url, str):
+                                key = extract_r2_key(url)
+                                if key and key not in r2_keys:
+                                    corrupted_links.append({
+                                        "card_id": card_id,
+                                        "field": field,
+                                        "type": "dict",
+                                        "index_or_key": k,
+                                        "url": url,
+                                        "key": key
+                                    })
                 except json.JSONDecodeError:
                     pass
         
+        # Process string fields
         for field in ["audio", "video"]:
-            val = card.get(field)
-            if val:
-                referenced_files.add(extract_filename(val))
-                
-        card_media_map[card_id] = referenced_files
+            url = card.get(field)
+            if url and isinstance(url, str):
+                key = extract_r2_key(url)
+                if key and key not in r2_keys:
+                    corrupted_links.append({
+                        "card_id": card_id,
+                        "field": field,
+                        "type": "string",
+                        "index_or_key": None,
+                        "url": url,
+                        "key": key
+                    })
 
-    objects = list_r2_objects("cards/")
-    total_objects = len(objects)
-    print(f"Found {total_objects} objects in R2 under 'cards/'.")
-    
-    unused_keys = []
-    for obj in objects:
-        key = obj.get("Key")
-        if not key:
-            continue
-            
-        parts = key.split('/')
-        # Expecting cards/{card_id}/{filename}
-        if len(parts) >= 3 and parts[0] == "cards":
-            card_id = parts[1]
-            filename = parts[-1]
-            
-            if card_id not in card_media_map:
-                # The folder's card_id does not exist in D1
-                unused_keys.append(key)
-            elif filename not in card_media_map[card_id]:
-                # The card exists, but the file is not referenced
-                unused_keys.append(key)
-
-    if unused_keys:
-        # Write to the project root directory
-        output_file = (SCRIPT_DIR / "unused_media.txt").resolve()
+    if corrupted_links:
+        output_file = (SCRIPT_DIR / "corrupted_media.json").resolve()
         with open(output_file, "w") as f:
-            for key in unused_keys:
-                f.write(f"{key}\n")
-        print(f"Identified {len(unused_keys)} unused media files.")
+            json.dump(corrupted_links, f, indent=2)
+        print(f"Identified {len(corrupted_links)} corrupted media links.")
         print(f"List saved to: {output_file}")
     else:
-        print("No unused media files found.")
+        print("No corrupted media links found.")
 
 if __name__ == "__main__":
     main()

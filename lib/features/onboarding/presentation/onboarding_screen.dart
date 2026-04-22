@@ -476,21 +476,28 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       children: [
                         const Icon(Icons.workspace_premium, color: Colors.amber, size: 80),
                         const SizedBox(height: 24),
-                        if (subService.isPremium)
-                          _buildPremiumSuccess(primaryColor)
-                        else ...[
-                          _buildSubscriptionOption(0, context.t('plan_weekly'), r"$2.99", context.t('plan_weekly_desc'), originalPrice: r"$5.98"),
-                          const SizedBox(height: 12),
-                          _buildSubscriptionOption(
-                            1, context.t('plan_monthly'), r"$8.99", context.t('plan_monthly_desc'), 
-                            originalPrice: r"$17.98", extraInfo: context.t('price_per_week', args: {'price': r'$2.25'})
-                          ),
-                          const SizedBox(height: 12),
-                          _buildSubscriptionOption(
-                            2, context.t('plan_yearly'), r"$80.99", context.t('plan_yearly_desc'), 
-                            originalPrice: r"$161.98", extraInfo: context.t('price_per_week', args: {'price': r'$1.56'})
-                          ),
+                        if (subService.isPremium) ...[
+                          _buildPremiumSuccess(primaryColor),
+                          const SizedBox(height: 24),
                         ],
+                        
+                        _buildSubscriptionOption(
+                          0, context.t('plan_weekly_title'), r"$2.99", context.t('plan_weekly_tagline'), 
+                          originalPrice: r"$5.98",
+                          isActive: subService.activeProductId == 'aliolo_premium_weekly'
+                        ),
+                        const SizedBox(height: 12),
+                        _buildSubscriptionOption(
+                          1, context.t('plan_monthly_title'), r"$8.99", context.t('plan_monthly_tagline'), 
+                          originalPrice: r"$17.98", extraInfo: context.t('price_per_week', args: {'price': r'$2.25'}),
+                          isActive: subService.activeProductId == 'aliolo_premium_monthly'
+                        ),
+                        const SizedBox(height: 12),
+                        _buildSubscriptionOption(
+                          2, context.t('plan_yearly_title'), r"$80.99", context.t('plan_yearly_tagline'), 
+                          originalPrice: r"$161.98", extraInfo: context.t('price_per_week', args: {'price': r'$1.56'}),
+                          isActive: subService.activeProductId == 'aliolo_premium_yearly'
+                        ),
                         const SizedBox(height: 32),
                         // Collapsible Features List with Auto-Scroll
                         TextButton.icon(
@@ -693,7 +700,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 
-  Widget _buildSubscriptionOption(int index, String title, String price, String sub, {String? originalPrice, String? extraInfo}) {
+  Widget _buildSubscriptionOption(int index, String title, String price, String sub, {String? originalPrice, String? extraInfo, bool isActive = false}) {
     final isSelected = _selectedOptionIndex == index;
 
     return InkWell(
@@ -707,11 +714,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         width: double.infinity,
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: isSelected ? primaryColor.withValues(alpha: 0.05) : Colors.white,
+          color: isActive 
+              ? Colors.green.withValues(alpha: 0.05)
+              : (isSelected ? primaryColor.withValues(alpha: 0.05) : Colors.white),
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
-            color: isSelected ? primaryColor : Colors.black.withValues(alpha: 0.1),
-            width: 2,
+            color: isActive 
+                ? Colors.green 
+                : (isSelected ? primaryColor : Colors.black.withValues(alpha: 0.1)),
+            width: isActive || isSelected ? 2 : 1,
           ),
         ),
         child: Row(
@@ -720,7 +731,25 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                  Row(
+                    children: [
+                      Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                      if (isActive) ...[
+                        const SizedBox(width: 8),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                          decoration: BoxDecoration(
+                            color: Colors.green,
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          child: Text(
+                            context.t('current_subscription'),
+                            style: const TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ],
+                    ],
+                  ),
                   Text(sub, style: TextStyle(color: Colors.grey[600], fontSize: 12)),
                 ],
               ),
@@ -739,17 +768,17 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   ),
                 Text(
                   price,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
-                    color: Color(0xFF1D4289),
+                    color: isActive ? Colors.green : primaryColor,
                   ),
                 ),
                 if (extraInfo != null)
                   Text(
                     extraInfo,
                     style: TextStyle(
-                      color: primaryColor.withValues(alpha: 0.7),
+                      color: isActive ? Colors.green.withValues(alpha: 0.7) : primaryColor.withValues(alpha: 0.7),
                       fontSize: 11,
                       fontWeight: FontWeight.w600,
                     ),

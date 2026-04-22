@@ -47,7 +47,7 @@ router.openapi(getTranslationsRoute, async (c) => {
     try {
         const translations = await getTranslationsForLanguage(c.env.DB, lang);
         const response = c.json(translations as any, 200);
-        response.headers.set('Cache-Control', 'public, max-age=3600, stale-while-revalidate=86400');
+        response.headers.set('Cache-Control', 'public, max-age=60, stale-while-revalidate=600');
         return response;
     } catch (e: any) {
         return c.json({ error: e.message } as any, 500);

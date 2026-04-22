@@ -96,18 +96,28 @@ class TranslationService extends ChangeNotifier {
 
   Future<void> loadTranslations(String langCode) async {
     final lc = langCode.toLowerCase();
-    _translations = Map<String, String>.from(_englishFallbacks);
-    if (lc == 'en') return;
-
+    
+    // Always fetch the requested language from the server to ensure we have the latest
     try {
       final data = await _fetchFromCloudflare(lc);
       if (data.isNotEmpty) {
-        data.forEach((key, value) {
-          _translations[key] = value;
-        });
+        if (lc == 'en') {
+          _englishFallbacks = data;
+          _translations = Map<String, String>.from(data);
+        } else {
+          // Start with English fallbacks, then overlay the target language
+          _translations = Map<String, String>.from(_englishFallbacks);
+          data.forEach((key, value) {
+            _translations[key] = value;
+          });
+        }
+      } else {
+        // Fallback to what we already have if fetch fails
+        _translations = Map<String, String>.from(_englishFallbacks);
       }
     } catch (e) {
-      AppLogger.log('Translation: Cloudflare fetch failed for $lc: $e');
+      AppLogger.log('Translation: loadTranslations failed for $lc: $e');
+      _translations = Map<String, String>.from(_englishFallbacks);
     }
   }
 
