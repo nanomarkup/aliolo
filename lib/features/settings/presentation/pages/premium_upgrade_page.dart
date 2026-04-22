@@ -30,17 +30,13 @@ class _PremiumUpgradePageState extends State<PremiumUpgradePage> {
     final currentPrimaryColor = ThemeService().primaryColor;
 
     final List<Map<String, dynamic>> features = [
-      {'name': context.t('feature_learn_all'), 'free': true},
-      {'name': context.t('feature_community_access'), 'free': true},
-      {'name': context.t('feature_spaced_repetition'), 'free': true},
-      {'name': context.t('feature_favorites'), 'free': true},
-      {'name': context.t('feature_friends'), 'free': true},
-      {'name': context.t('feature_feedback'), 'free': true},
+      {'name': context.t('feature_spaced_repetition'), 'free': false},
       {'name': context.t('feature_creation'), 'free': false},
       {'name': context.t('feature_testing'), 'free': false},
       {'name': context.t('feature_autoplay'), 'free': false},
-      {'name': context.t('feature_customize'), 'free': false},
       {'name': context.t('feature_private_mode'), 'free': false},
+      {'name': context.t('feature_customize'), 'free': false},
+      {'name': context.t('feature_full_library'), 'free': true},
     ];
 
     return AlioloScrollablePage(

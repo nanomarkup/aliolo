@@ -2002,3 +2002,35 @@ entries:
   - file: lib/features/settings/presentation/pages/billing_page.dart
     line: 66
     kind: String
+- key: feature_full_library
+  english: Full Library Access
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/onboarding/presentation/onboarding_screen.dart
+    line: 200
+    kind: Text
+- key: feature_creation
+  english: Creation Tools
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/onboarding/presentation/onboarding_screen.dart
+    line: 201
+    kind: Text
+- key: feature_testing
+  english: Interactive Testing
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/onboarding/presentation/onboarding_screen.dart
+    line: 202
+    kind: Text
+- key: feature_customize
+  english: Advanced Customization
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/onboarding/presentation/onboarding_screen.dart
+    line: 203
+    kind: Text
