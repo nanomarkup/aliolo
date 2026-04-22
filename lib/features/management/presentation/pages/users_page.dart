@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/core/theme/aliolo_layout_tokens.dart';
@@ -211,7 +212,7 @@ class _UsersPageState extends State<UsersPage> {
     );
   }
 
-  Widget _buildInfoRow(String label, String value) {
+  Widget _buildInfoRow(String label, String value, {bool copyable = false}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 2),
       child: Row(
@@ -225,6 +226,19 @@ class _UsersPageState extends State<UsersPage> {
             ),
           ),
           Expanded(child: SelectableText(value)),
+          if (copyable)
+            IconButton(
+              icon: const Icon(Icons.copy, size: 16),
+              padding: EdgeInsets.zero,
+              constraints: const BoxConstraints(),
+              tooltip: context.t('copy'),
+              onPressed: () {
+                Clipboard.setData(ClipboardData(text: value));
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text(context.t('info_copied'))),
+                );
+              },
+            ),
         ],
       ),
     );
@@ -575,13 +589,14 @@ class _UsersPageState extends State<UsersPage> {
             ),
           ),
           const SizedBox(height: 4),
+          _buildInfoRow(context.t('user_id'), user.id, copyable: true),
           _buildInfoRow(
             context.t('username'),
             user.username.isNotEmpty
                 ? user.username
                 : context.t('not_available'),
           ),
-          _buildInfoRow(context.t('email'), user.email),
+          _buildInfoRow(context.t('email'), user.email, copyable: true),
           _buildInfoRow(context.t('total_xp'), '${user.profile.totalXp}'),
           _buildInfoRow(
             context.t('current_streak'),
@@ -625,14 +640,17 @@ class _UsersPageState extends State<UsersPage> {
           _buildInfoRow(
             context.t('purchase_token'),
             user.subscription?.purchaseToken ?? context.t('not_available'),
+            copyable: user.subscription?.purchaseToken != null,
           ),
           _buildInfoRow(
             context.t('order_id'),
             user.subscription?.orderId ?? context.t('not_available'),
+            copyable: user.subscription?.orderId != null,
           ),
           _buildInfoRow(
             context.t('product_id'),
             user.subscription?.productId ?? context.t('not_available'),
+            copyable: user.subscription?.productId != null,
           ),
           _buildInfoRow(
             context.t('created_at'),
