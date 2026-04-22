@@ -83,9 +83,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
     final subService = getIt<SubscriptionService>();
     if (subService.activeProductId != null) {
-      if (subService.activeProductId == 'aliolo_premium_weekly') {
+      final activeId = subService.activeProductId!;
+      if (activeId.contains('weekly')) {
         _selectedOptionIndex = 0;
-      } else if (subService.activeProductId == 'aliolo_premium_yearly') {
+      } else if (activeId.contains('yearly')) {
         _selectedOptionIndex = 2;
       } else {
         _selectedOptionIndex = 1;
@@ -483,19 +484,19 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         _buildSubscriptionOption(
                           0, context.t('plan_weekly_title'), r"$2.99", context.t('plan_weekly_tagline'), 
                           originalPrice: r"$5.98",
-                          isActive: subService.activeProductId == 'aliolo_premium_weekly'
+                          isActive: subService.activeProductId?.contains('weekly') ?? false
                         ),
                         const SizedBox(height: 12),
                         _buildSubscriptionOption(
                           1, context.t('plan_monthly_title'), r"$8.99", context.t('plan_monthly_tagline'), 
                           originalPrice: r"$17.98", extraInfo: context.t('price_per_week', args: {'price': r'$2.25'}),
-                          isActive: subService.activeProductId == 'aliolo_premium_monthly'
+                          isActive: subService.activeProductId?.contains('monthly') ?? false
                         ),
                         const SizedBox(height: 12),
                         _buildSubscriptionOption(
                           2, context.t('plan_yearly_title'), r"$80.99", context.t('plan_yearly_tagline'), 
                           originalPrice: r"$161.98", extraInfo: context.t('price_per_week', args: {'price': r'$1.56'}),
-                          isActive: subService.activeProductId == 'aliolo_premium_yearly'
+                          isActive: subService.activeProductId?.contains('yearly') ?? false
                         ),
                         const SizedBox(height: 32),
                         // Collapsible Features List with Auto-Scroll
@@ -701,7 +702,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   Widget _buildSubscriptionOption(int index, String title, String price, String sub, {String? originalPrice, String? extraInfo, bool isActive = false}) {
     final activeId = context.read<SubscriptionService>().activeProductId;
-    final int defaultIndex = activeId == 'aliolo_premium_weekly' ? 0 : (activeId == 'aliolo_premium_yearly' ? 2 : 1);
+    final int defaultIndex = (activeId != null && activeId.contains('weekly')) ? 0 : ((activeId != null && activeId.contains('yearly')) ? 2 : 1);
     final isSelected = (_selectedOptionIndex ?? defaultIndex) == index;
 
     return InkWell(
