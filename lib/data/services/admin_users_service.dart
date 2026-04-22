@@ -47,4 +47,25 @@ class AdminUsersService {
       rethrow;
     }
   }
+
+  Future<void> updateCardLimit({
+    required String userId,
+    required int limit,
+  }) async {
+    try {
+      final response = await _cfClient.client.patch(
+        '/api/admin/users/$userId/card-limit',
+        data: {
+          'card_limit': limit,
+        },
+      );
+
+      if (response.statusCode != 200) {
+        throw Exception('Failed to update card limit');
+      }
+    } catch (e) {
+      AppLogger.log('AdminUsersService: failed to update card limit: $e');
+      rethrow;
+    }
+  }
 }

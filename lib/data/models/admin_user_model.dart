@@ -4,6 +4,7 @@ enum AdminUsersFilter {
   all,
   free,
   premium,
+  fake,
 }
 
 class AdminSubscriptionModel {
@@ -86,4 +87,17 @@ class AdminUserModel {
   bool get isPremium => profile.isPremium || (subscription?.isActive ?? false);
   bool get isFree => !isPremium;
   String get displayName => username.trim().isNotEmpty ? username : email;
+
+  bool matchesFilter(AdminUsersFilter filter) {
+    switch (filter) {
+      case AdminUsersFilter.all:
+        return true;
+      case AdminUsersFilter.free:
+        return isFree;
+      case AdminUsersFilter.premium:
+        return isPremium;
+      case AdminUsersFilter.fake:
+        return isFake;
+    }
+  }
 }

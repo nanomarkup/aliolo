@@ -3,7 +3,7 @@ import 'package:patrol/patrol.dart';
 import 'package:aliolo/main.dart';
 
 void main() {
-  PatrolBinding.ensureInitialized(NativeAutomatorConfig());
+  PatrolBinding.ensureInitialized(PlatformAutomator());
 
   patrolTest(
     'App launches and shows some UI',

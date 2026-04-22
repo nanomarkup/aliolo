@@ -71,7 +71,7 @@ def get_s3_client():
     
     if not account_id or not access_key_id or not secret_access_key:
         print("Error: Missing required environment variables for R2 S3 API.")
-        print("Please export CLOUDFLARE_ACCOUNT_ID, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY")
+        print("Please export R2_ACCOUNT_ID, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY")
         print("You can get these from the Cloudflare Dashboard under R2 -> Manage R2 API Tokens.")
         sys.exit(1)
         

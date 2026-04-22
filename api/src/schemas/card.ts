@@ -25,6 +25,10 @@ export const CardSchema = z.object({
 
 export const CardsResponseSchema = z.array(CardSchema);
 
+export const CardCountSchema = z.object({
+  count: z.number().openapi({ example: 42 }),
+}).openapi('CardCount');
+
 export const CreateCardSchema = z.object({
   id: z.string().openapi({ example: 'card_123' }),
   subject_id: z.string().openapi({ example: 'subj_456' }),

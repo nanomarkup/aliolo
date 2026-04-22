@@ -97,6 +97,18 @@ class CardService with ChangeNotifier {
     return [];
   }
 
+  Future<int> getCardCount() async {
+    try {
+      final response = await _cfClient.client.get('/api/cards/count');
+      if (response.statusCode == 200 && response.data != null) {
+        return response.data['count'] ?? 0;
+      }
+    } catch (e) {
+      AppLogger.log('Error fetching card count from Cloudflare: $e');
+    }
+    return 0;
+  }
+
   String generateId() => _uuid.v4();
 
   // --- Media Deletion Helpers ---

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:aliolo/core/theme/aliolo_layout_tokens.dart';
@@ -13,12 +14,12 @@ import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/math_service.dart';
 import 'package:aliolo/data/services/subscription_service.dart';
 import 'package:aliolo/data/services/testing_language_service.dart';
-import 'package:aliolo/data/services/sound_service.dart';
 import 'package:aliolo/data/services/filter_service.dart';
 import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/core/utils/session_bucket_sampler.dart';
 import 'package:aliolo/core/utils/card_sorting.dart';
 import 'package:aliolo/core/widgets/aliolo_scrollable_page.dart';
+import 'package:media_kit/media_kit.dart';
 import 'package:aliolo/core/widgets/card_renderer.dart';
 import 'package:aliolo/features/testing/presentation/pages/learn_page.dart';
 import 'package:aliolo/features/testing/presentation/pages/test_page.dart';
@@ -1211,162 +1212,21 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
   }
 
   void _showZoomedCard(BuildContext context, int initialIndex, Color pillarColor, String displayLang) {
-    PageController pageController = PageController(initialPage: initialIndex);
-    
     showDialog(
       context: context,
       builder: (context) => Dialog(
         backgroundColor: Colors.transparent,
         insetPadding: const EdgeInsets.all(16),
-        child: StatefulBuilder(
-          builder: (context, setState) {
-            int currentIndex = initialIndex;
-            if (pageController.hasClients) {
-              currentIndex = pageController.page?.round() ?? initialIndex;
-            }
-
-            return KeyboardListener(
-              focusNode: FocusNode()..requestFocus(),
-              onKeyEvent: (event) {
-                if (event is KeyDownEvent) {
-                  if (event.logicalKey == LogicalKeyboardKey.arrowRight) {
-                    if (currentIndex < _filteredCards.length - 1) {
-                      pageController.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
-                    }
-                  } else if (event.logicalKey == LogicalKeyboardKey.arrowLeft) {
-                    if (currentIndex > 0) {
-                      pageController.previousPage(duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
-                    }
-                  }
-                }
-              },
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                Container(
-                  constraints: const BoxConstraints(maxWidth: 500, maxHeight: 600),
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).cardColor,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  clipBehavior: Clip.antiAlias,
-                  child: PageView.builder(
-                    controller: pageController,
-                    itemCount: _filteredCards.length,
-                    onPageChanged: (index) {
-                      setState(() {});
-                    },
-                    itemBuilder: (context, index) {
-                      final card = _filteredCards[index];
-                      final audioUrl = card.getAudioUrl(displayLang);
-                      
-                      return Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: Center(
-                              child: Padding(
-                                padding: const EdgeInsets.all(24.0),
-                                child: _buildCardPreview(
-                                  card, 
-                                  pillarColor, 
-                                  displayLang, 
-                                  fit: BoxFit.contain
-                                ),
-                              ),
-                            ),
-                          ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                            decoration: BoxDecoration(
-                              color: pillarColor.withValues(alpha: 0.1),
-                              border: Border(
-                                top: BorderSide(
-                                  color: pillarColor.withValues(alpha: 0.2),
-                                  width: 1,
-                                ),
-                              ),
-                            ),
-                            child: Row(
-                              children: [
-                                IconButton(
-                                  icon: Icon(
-                                    Icons.volume_up,
-                                    color: audioUrl != null ? pillarColor : Colors.grey.withValues(alpha: 0.5),
-                                    size: 28,
-                                  ),
-                                  onPressed: audioUrl != null 
-                                    ? () => SoundService().playUrl(audioUrl)
-                                    : null,
-                                  tooltip: context.t('play_audio'),
-                                ),
-                                Expanded(
-                                  child: Text(
-                                    card.getAnswerList(displayLang).map((a) => CardModel.capitalizeFirst(a)).join(', '),
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontSize: 22,
-                                      fontWeight: FontWeight.bold,
-                                      color: pillarColor,
-                                    ),
-                                  ),
-                                ),
-                                // Spacer to balance the audio button
-                                const SizedBox(width: 48),
-                              ],
-                            ),
-                          ),
-                        ],
-                      );
-                    },
-                  ),
-                ),
-                Positioned(
-                  top: 8,
-                  right: 8,
-                  child: IconButton(
-                    icon: const Icon(Icons.close, color: Colors.grey, size: 28),
-                    onPressed: () => Navigator.pop(context),
-                  ),
-                ),
-                // Left Arrow
-                if (_filteredCards.length > 1)
-                  Positioned(
-                    left: 8,
-                    child: Opacity(
-                      opacity: currentIndex <= 0 ? 0.3 : 1.0,
-                      child: IconButton(
-                        icon: const Icon(Icons.chevron_left, color: Colors.white, size: 40),
-                        style: IconButton.styleFrom(backgroundColor: Colors.black.withValues(alpha: 0.5)),
-                        onPressed: currentIndex <= 0 ? null : () {
-                          pageController.previousPage(duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
-                        },
-                      ),
-                    ),
-                  ),
-                // Right Arrow
-                if (_filteredCards.length > 1)
-                  Positioned(
-                    right: 8,
-                    child: Opacity(
-                      opacity: currentIndex >= _filteredCards.length - 1 ? 0.3 : 1.0,
-                      child: IconButton(
-                        icon: const Icon(Icons.chevron_right, color: Colors.white, size: 40),
-                        style: IconButton.styleFrom(backgroundColor: Colors.black.withValues(alpha: 0.5)),
-                        onPressed: currentIndex >= _filteredCards.length - 1 ? null : () {
-                          pageController.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
-                        },
-                      ),
-                    ),
-                  ),
-              ],
-            ),
-          );
-        },
+        child: _ZoomedCardContent(
+          initialIndex: initialIndex,
+          cards: _filteredCards,
+          pillarColor: pillarColor,
+          displayLang: displayLang,
+          subject: _currentSubject,
+        ),
       ),
-    ),
-  ).then((_) => pageController.dispose());
-}
+    );
+  }
   Widget _buildCardPreview(
     CardModel card,
     Color pillarColor,
@@ -1599,6 +1459,278 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
               .toList(),
           onChanged: onChanged,
         ),
+      ),
+    );
+  }
+}
+
+class _ZoomedCardContent extends StatefulWidget {
+  final int initialIndex;
+  final List<CardModel> cards;
+  final Color pillarColor;
+  final String displayLang;
+  final SubjectModel? subject;
+
+  const _ZoomedCardContent({
+    required this.initialIndex,
+    required this.cards,
+    required this.pillarColor,
+    required this.displayLang,
+    this.subject,
+  });
+
+  @override
+  State<_ZoomedCardContent> createState() => _ZoomedCardContentState();
+}
+
+class _ZoomedCardContentState extends State<_ZoomedCardContent> {
+  late final PageController _pageController;
+  late int _currentIndex;
+  bool _isAutoPlay = false;
+  late int _autoplayDelaySeconds;
+  Timer? _autoNextTimer;
+  final Player _player = Player();
+  StreamSubscription? _playerSubscription;
+
+  @override
+  void initState() {
+    super.initState();
+    _currentIndex = widget.initialIndex;
+    _pageController = PageController(initialPage: widget.initialIndex);
+    _autoplayDelaySeconds = getIt<AuthService>().currentUser?.learnAutoplayDelaySeconds ?? 3;
+    
+    _playerSubscription = _player.stream.completed.listen((completed) {
+      if (completed && _isAutoPlay && mounted) {
+        _scheduleAutoNext();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _autoNextTimer?.cancel();
+    _playerSubscription?.cancel();
+    _player.dispose();
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  void _scheduleAutoNext() {
+    _autoNextTimer?.cancel();
+    if (!_isAutoPlay || !mounted) return;
+    
+    _autoNextTimer = Timer(Duration(seconds: _autoplayDelaySeconds), () {
+      if (mounted && _isAutoPlay) {
+        if (_currentIndex < widget.cards.length - 1) {
+          _pageController.nextPage(
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
+          );
+        } else {
+          setState(() => _isAutoPlay = false);
+        }
+      }
+    });
+  }
+
+  void _toggleAutoPlay() {
+    setState(() {
+      _isAutoPlay = !_isAutoPlay;
+      if (_isAutoPlay) {
+        _playCurrentAudio();
+      } else {
+        _autoNextTimer?.cancel();
+        _player.stop();
+      }
+    });
+  }
+
+  void _playCurrentAudio() {
+    final card = widget.cards[_currentIndex];
+    final audioUrl = card.getAudioUrl(widget.displayLang);
+    if (audioUrl != null && audioUrl.isNotEmpty) {
+      _player.open(Media(audioUrl));
+      _player.play();
+    } else if (_isAutoPlay) {
+      _scheduleAutoNext();
+    }
+  }
+
+  Future<void> _showDelayMenu(Offset globalPosition) async {
+    final selected = await showMenu<int>(
+      context: context,
+      position: RelativeRect.fromRect(
+        Rect.fromPoints(globalPosition, globalPosition),
+        Offset.zero & MediaQuery.of(context).size,
+      ),
+      items: [1, 2, 3, 4, 5].map((s) => PopupMenuItem(
+        value: s,
+        child: Text('${s}s'),
+      )).toList(),
+    );
+    if (selected != null) {
+      setState(() {
+        _autoplayDelaySeconds = selected;
+        if (_isAutoPlay) _scheduleAutoNext();
+      });
+      getIt<AuthService>().updateLearnAutoplayDelay(selected);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final card = widget.cards[_currentIndex];
+    final audioUrl = card.getAudioUrl(widget.displayLang);
+    final hasAudio = audioUrl != null && audioUrl.isNotEmpty;
+    final isMobile = MediaQuery.sizeOf(context).width < 600;
+
+    return KeyboardListener(
+      focusNode: FocusNode()..requestFocus(),
+      onKeyEvent: (event) {
+        if (event is KeyDownEvent) {
+          if (event.logicalKey == LogicalKeyboardKey.arrowRight) {
+            if (_currentIndex < widget.cards.length - 1) {
+              _pageController.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+            }
+          } else if (event.logicalKey == LogicalKeyboardKey.arrowLeft) {
+            if (_currentIndex > 0) {
+              _pageController.previousPage(duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+            }
+          }
+        }
+      },
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Container(
+            constraints: const BoxConstraints(maxWidth: 500, maxHeight: 600),
+            decoration: BoxDecoration(
+              color: Theme.of(context).cardColor,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            clipBehavior: Clip.antiAlias,
+            child: Column(
+              children: [
+                Expanded(
+                  child: PageView.builder(
+                    controller: _pageController,
+                    itemCount: widget.cards.length,
+                    onPageChanged: (index) {
+                      setState(() {
+                        _currentIndex = index;
+                        if (_isAutoPlay) {
+                          _playCurrentAudio();
+                        }
+                      });
+                    },
+                    itemBuilder: (context, index) {
+                      final itemCard = widget.cards[index];
+                      return Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(24.0),
+                          child: CardRenderer(
+                            card: itemCard,
+                            subject: widget.subject,
+                            languageCode: widget.displayLang,
+                            fallbackColor: widget.pillarColor,
+                            fit: BoxFit.contain,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  decoration: BoxDecoration(
+                    color: widget.pillarColor.withValues(alpha: 0.1),
+                    border: Border(
+                      top: BorderSide(
+                        color: widget.pillarColor.withValues(alpha: 0.2),
+                        width: 1,
+                      ),
+                    ),
+                  ),
+                  child: Row(
+                    children: [
+                      const SizedBox(width: 96), 
+                      Expanded(
+                        child: Text(
+                          card.getAnswerList(widget.displayLang).map((a) => CardModel.capitalizeFirst(a)).join(', '),
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: isMobile ? 18 : 22,
+                            fontWeight: FontWeight.bold,
+                            color: widget.pillarColor,
+                          ),
+                        ),
+                      ),
+                      IconButton(
+                        icon: Icon(
+                          Icons.volume_up,
+                          color: hasAudio
+                              ? widget.pillarColor
+                              : Colors.grey.withValues(alpha: 0.3),
+                          size: 28,
+                        ),
+                        onPressed: hasAudio ? _playCurrentAudio : null,
+                        tooltip: context.t('play_audio'),
+                      ),
+                      GestureDetector(
+                        onLongPressStart: (details) => _showDelayMenu(details.globalPosition),
+                        child: IconButton(
+                          icon: Icon(
+                            _isAutoPlay ? Icons.pause_circle : Icons.play_circle,
+                            color: widget.pillarColor,
+                            size: 28,
+                          ),
+                          onPressed: _toggleAutoPlay,
+                          tooltip: context.t('autoplay'),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Positioned(
+            top: 8,
+            right: 8,
+            child: IconButton(
+              icon: const Icon(Icons.close, color: Colors.grey, size: 28),
+              onPressed: () => Navigator.pop(context),
+            ),
+          ),
+          if (widget.cards.length > 1) ...[
+            Positioned(
+              left: 8,
+              child: Opacity(
+                opacity: _currentIndex <= 0 ? 0.3 : 1.0,
+                child: IconButton(
+                  icon: const Icon(Icons.chevron_left, color: Colors.white, size: 40),
+                  style: IconButton.styleFrom(backgroundColor: Colors.black.withValues(alpha: 0.5)),
+                  onPressed: _currentIndex <= 0 ? null : () {
+                    _pageController.previousPage(duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+                  },
+                ),
+              ),
+            ),
+            Positioned(
+              right: 8,
+              child: Opacity(
+                opacity: _currentIndex >= widget.cards.length - 1 ? 0.3 : 1.0,
+                child: IconButton(
+                  icon: const Icon(Icons.chevron_right, color: Colors.white, size: 40),
+                  style: IconButton.styleFrom(backgroundColor: Colors.black.withValues(alpha: 0.5)),
+                  onPressed: _currentIndex >= widget.cards.length - 1 ? null : () {
+                    _pageController.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+                  },
+                ),
+              ),
+            ),
+          ],
+        ],
       ),
     );
   }

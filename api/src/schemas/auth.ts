@@ -60,6 +60,7 @@ export const UserProfileSchema = z.object({
   created_at: z.string().openapi({ example: '2026-04-12T00:00:00Z' }),
   updated_at: z.string().openapi({ example: '2026-04-12T00:00:00Z' }),
   is_premium: z.number().openapi({ example: 0 }),
+  card_limit: z.number().openapi({ example: 200 }),
 }).openapi('UserProfile');
 
 export const MeResponseSchema = z.object({
@@ -90,6 +91,7 @@ export const UpdateProfileSchema = z.object({
   last_age_group: z.string().optional().openapi({ example: 'all' }),
   last_source_filter: z.string().optional().openapi({ example: 'all' }),
   is_premium: z.union([z.boolean(), z.number()]).optional().openapi({ example: 1 }),
+  card_limit: z.number().optional().openapi({ example: 200 }),
 }).openapi('UpdateProfile');
 
 export const SuccessResponseSchema = z.object({

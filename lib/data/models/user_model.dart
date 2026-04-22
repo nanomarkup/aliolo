@@ -32,6 +32,7 @@ class UserModel {
   DateTime? createdAt;
   DateTime? updatedAt;
   bool isPremium;
+  late int cardLimit;
 
   UserModel({
     this.serverId,
@@ -64,6 +65,7 @@ class UserModel {
     this.createdAt,
     this.updatedAt,
     this.isPremium = false,
+    this.cardLimit = 200,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
@@ -105,6 +107,7 @@ class UserModel {
       createdAt: json['created_at'] != null ? DateTime.tryParse(json['created_at']) : null,
       updatedAt: json['updated_at'] != null ? DateTime.tryParse(json['updated_at']) : null,
       isPremium: toBool(json['is_premium'], false),
+      cardLimit: json['card_limit'] ?? 200,
     );
   }
 
@@ -139,6 +142,7 @@ class UserModel {
       'last_source_filter': lastSourceFilter,
       'created_at': createdAt?.toUtc().toIso8601String(),
       'updated_at': updatedAt?.toUtc().toIso8601String(),
+      'card_limit': cardLimit,
     };
   }
 

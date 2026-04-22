@@ -295,7 +295,7 @@ class _AddCardPageState extends State<AddCardPage> {
   }
 
   Future<void> _pickImage() async {
-    final result = await FilePicker.platform.pickFiles(
+    final FilePickerResult? result = await FilePicker.pickFiles(
       type: FileType.image,
       allowMultiple: false,
     );
@@ -317,7 +317,7 @@ class _AddCardPageState extends State<AddCardPage> {
   }
 
   Future<void> _pickAudio() async {
-    final result = await FilePicker.platform.pickFiles(
+    final FilePickerResult? result = await FilePicker.pickFiles(
       type: FileType.audio,
       allowMultiple: false,
     );
@@ -341,7 +341,7 @@ class _AddCardPageState extends State<AddCardPage> {
   }
 
   Future<void> _pickVideo() async {
-    final result = await FilePicker.platform.pickFiles(
+    final FilePickerResult? result = await FilePicker.pickFiles(
       type: FileType.video,
       allowMultiple: false,
     );
@@ -562,6 +562,55 @@ class _AddCardPageState extends State<AddCardPage> {
         );
       },
     );
+  }
+
+  Future<void> _checkLimitAndSave() async {
+    if (widget.existingCard == null && !_isAdmin) {
+      final currentCount = await _cardService.getCardCount();
+      final limit = _authService.currentUser?.cardLimit ?? 200;
+      
+      if (currentCount >= limit && mounted) {
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text(context.t('limit_reached')),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(context.t('card_limit_msg', args: {'limit': limit.toString()})),
+                const SizedBox(height: 16),
+                InkWell(
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const FeedbackPage()),
+                    );
+                  },
+                  child: Text(
+                    context.t('create_request'),
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                      fontWeight: FontWeight.bold,
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text(context.t('ok')),
+              ),
+            ],
+          ),
+        );
+        return;
+      }
+    }
+    _save();
   }
 
   Future<void> _save() async {
@@ -799,7 +848,7 @@ class _AddCardPageState extends State<AddCardPage> {
                               ),
                             )
                             : const Icon(Icons.save),
-                    onPressed: _isSaving ? null : _save,
+                    onPressed: _isSaving ? null : _checkLimitAndSave,
                   )
                   : null;
 

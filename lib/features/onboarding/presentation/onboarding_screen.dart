@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -39,6 +40,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   int? _selectedPillarId;
   int _selectedOptionIndex = 1; // Monthly by default
   bool _showFeatures = false;
+  bool _slide1VideoFinished = false;
+  bool _videoVisible = false;
+  StreamSubscription? _slide1Subscription;
 
   late final Player _player1;
   late final VideoController _controller1;
@@ -63,6 +67,22 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     _controller1 = VideoController(_player1);
     _player1.open(Media('asset:///assets/Slide1_v7.mp4'));
     _player1.setPlaylistMode(PlaylistMode.none);
+
+    _slide1Subscription = _player1.stream.completed.listen((completed) {
+      if (completed && mounted) {
+        setState(() {
+          _slide1VideoFinished = true;
+        });
+      }
+    });
+
+    Future.delayed(const Duration(milliseconds: 500), () {
+      if (mounted) {
+        setState(() {
+          _videoVisible = true;
+        });
+      }
+    });
   }
 
   Future<void> _initAnalytics() async {
@@ -99,6 +119,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     if (page == 0) {
       _player1.seek(Duration.zero);
       _player1.play();
+      setState(() {
+        _slide1VideoFinished = false;
+        _videoVisible = false;
+      });
+      Future.delayed(const Duration(milliseconds: 500), () {
+        if (mounted) setState(() => _videoVisible = true);
+      });
     } else {
       _player1.pause();
     }
@@ -106,6 +133,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   @override
   void dispose() {
+    _slide1Subscription?.cancel();
     _player1.dispose();
     _pageController.dispose();
     super.dispose();
@@ -190,14 +218,33 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   borderRadius: BorderRadius.circular(24),
                   child: AspectRatio(
                     aspectRatio: 16 / 9,
-                    child: Video(
-                      controller: _controller1,
-                      controls: NoVideoControls,
-                      fill: Colors.transparent,
+                    child: Stack(
+                      fit: StackFit.expand,
+                      children: [
+                        AnimatedOpacity(
+                          opacity: (_videoVisible && !_slide1VideoFinished) ? 1.0 : 0.0,
+                          duration: const Duration(milliseconds: 1000),
+                          child: Video(
+                            controller: _controller1,
+                            controls: NoVideoControls,
+                            fill: Colors.transparent,
+                          ),
+                        ),
+                        AnimatedOpacity(
+                          opacity: _slide1VideoFinished ? 1.0 : 0.0,
+                          duration: const Duration(milliseconds: 1000),
+                          child: Center(
+                            child: Image.asset(
+                              'assets/app_icon.webp',
+                              height: 240,
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                ),
-                title: context.t('onboarding_1_title'),
+                ),                title: context.t('onboarding_1_title'),
                 description: context.t('onboarding_1_desc'),
               ),
               // Slide 2: Age Selection

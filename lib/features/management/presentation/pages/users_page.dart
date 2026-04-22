@@ -107,6 +107,8 @@ class _UsersPageState extends State<UsersPage> {
           return user.isFree;
         case AdminUsersFilter.premium:
           return user.isPremium;
+        case AdminUsersFilter.fake:
+          return user.isFake;
       }
     }).toList();
   }
@@ -134,6 +136,8 @@ class _UsersPageState extends State<UsersPage> {
         return context.t('premium_only');
       case AdminUsersFilter.free:
         return context.t('free_only');
+      case AdminUsersFilter.fake:
+        return 'Fake Users';
     }
   }
 
@@ -176,12 +180,10 @@ class _UsersPageState extends State<UsersPage> {
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             decoration: BoxDecoration(
-              color: Theme.of(
-                context,
-              ).colorScheme.surfaceContainerHighest.withValues(alpha: 0.9),
+              color: Theme.of(context).cardColor.withValues(alpha: 0.5),
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
-                color: Theme.of(context).colorScheme.outlineVariant,
+                color: Colors.grey.withValues(alpha: 0.5),
               ),
             ),
             child: Row(
@@ -325,6 +327,7 @@ class _UsersPageState extends State<UsersPage> {
             ? 'active'
             : 'inactive';
     DateTime? expiryDate = user.subscription?.expiryDate;
+    int cardLimit = user.profile.cardLimit;
 
     final result = await showDialog<_SubscriptionEditResult>(
       context: context,
@@ -337,7 +340,7 @@ class _UsersPageState extends State<UsersPage> {
                     : _formatDate(expiryDate);
 
             return AlertDialog(
-              title: Text(context.t('edit_subscription')),
+              title: Text(context.t('edit_user')),
               content: SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -421,6 +424,21 @@ class _UsersPageState extends State<UsersPage> {
                       ),
                     ),
                     const SizedBox(height: 16),
+                    TextFormField(
+                      initialValue: cardLimit.toString(),
+                      decoration: InputDecoration(
+                        labelText: context.t('card_limit'),
+                        border: const OutlineInputBorder(),
+                      ),
+                      keyboardType: TextInputType.number,
+                      onChanged: (value) {
+                        final val = int.tryParse(value);
+                        if (val != null) {
+                          cardLimit = val;
+                        }
+                      },
+                    ),
+                    const SizedBox(height: 16),
                     InputDecorator(
                       decoration: InputDecoration(
                         labelText: context.t('provider'),
@@ -448,6 +466,7 @@ class _UsersPageState extends State<UsersPage> {
                       _SubscriptionEditResult(
                         status: status,
                         expiryDate: normalizedExpiry,
+                        cardLimit: cardLimit,
                       ),
                     );
                   },
@@ -463,15 +482,25 @@ class _UsersPageState extends State<UsersPage> {
     if (result == null) return;
 
     try {
-      await _usersService.updateSubscription(
-        userId: user.id,
-        status: result.status,
-        expiryDate: result.expiryDate,
-      );
+      if (result.status != (user.subscription?.status ?? 'inactive') || result.expiryDate != user.subscription?.expiryDate) {
+        await _usersService.updateSubscription(
+          userId: user.id,
+          status: result.status,
+          expiryDate: result.expiryDate,
+        );
+      }
+      
+      if (result.cardLimit != user.profile.cardLimit) {
+        await _usersService.updateCardLimit(
+          userId: user.id,
+          limit: result.cardLimit,
+        );
+      }
+
       await _loadUsers();
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(context.t('subscription_updated'))),
+          SnackBar(content: Text(context.t('user_updated'))),
         );
       }
     } catch (e) {
@@ -490,12 +519,11 @@ class _UsersPageState extends State<UsersPage> {
         bottom: AlioloLayoutTokens.compactTileBottomSpacing / 2,
       ),
       child: ExpansionTile(
-        minTileHeight: 38,
-        dense: true,
-        visualDensity: VisualDensity.compact,
-        tilePadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
+        minTileHeight: 56,
+        visualDensity: VisualDensity.standard,
+        tilePadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
         leading: CircleAvatar(
-          radius: 14,
+          radius: 20,
           backgroundColor: currentSessionColor.withValues(alpha: 0.1),
           backgroundImage:
               user.profile.avatarPath != null &&
@@ -505,15 +533,15 @@ class _UsersPageState extends State<UsersPage> {
           child:
               user.profile.avatarPath == null ||
                       user.profile.avatarPath!.isEmpty
-                  ? Icon(Icons.person, color: currentSessionColor, size: 18)
+                  ? Icon(Icons.person, color: currentSessionColor, size: 24)
                   : null,
         ),
         title: Text(
           user.displayName,
           style: const TextStyle(
             fontWeight: FontWeight.bold,
-            fontSize: AlioloLayoutTokens.compactTileTitleSize,
-            height: 1.0,
+            fontSize: 18,
+            height: 1.2,
           ),
           overflow: TextOverflow.ellipsis,
         ),
@@ -521,16 +549,16 @@ class _UsersPageState extends State<UsersPage> {
           tooltip: context.t('edit_subscription'),
           onPressed: () => _showEditSubscriptionDialog(user),
           icon: const Icon(Icons.edit_outlined),
-          visualDensity: VisualDensity.compact,
+          visualDensity: VisualDensity.standard,
           padding: EdgeInsets.zero,
-          constraints: const BoxConstraints.tightFor(width: 36, height: 36),
+          constraints: const BoxConstraints.tightFor(width: 44, height: 44),
         ),
         subtitle: Text(
           user.email,
           style: TextStyle(
-            fontSize: AlioloLayoutTokens.compactTileMetaSize,
+            fontSize: 14,
             color: Theme.of(context).textTheme.bodySmall?.color,
-            height: 1.0,
+            height: 1.2,
           ),
           overflow: TextOverflow.ellipsis,
         ),
@@ -744,6 +772,11 @@ class _UsersPageState extends State<UsersPage> {
 class _SubscriptionEditResult {
   final String status;
   final DateTime? expiryDate;
+  final int cardLimit;
 
-  const _SubscriptionEditResult({required this.status, this.expiryDate});
+  const _SubscriptionEditResult({
+    required this.status,
+    this.expiryDate,
+    required this.cardLimit,
+  });
 }

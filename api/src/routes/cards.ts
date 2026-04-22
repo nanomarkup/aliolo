@@ -1,9 +1,34 @@
 import { OpenAPIHono, createRoute, z } from '@hono/zod-openapi';
 import type { AppEnv } from '../types';
-import { CardSchema, CardsResponseSchema, CreateCardSchema } from '../schemas/card';
+import { CardSchema, CardsResponseSchema, CreateCardSchema, CardCountSchema } from '../schemas/card';
 import { SuccessResponseSchema, ErrorResponseSchema } from '../schemas/shared';
 
 const router = new OpenAPIHono<AppEnv>();
+
+const countCardsRoute = createRoute({
+    method: 'get',
+    path: '/count',
+    summary: 'Get current user card count',
+    responses: {
+      200: { content: { 'application/json': { schema: CardCountSchema } }, description: 'Success' },
+      401: { description: 'Unauthorized' },
+      500: { content: { 'application/json': { schema: ErrorResponseSchema } }, description: 'Error' }
+    }
+  });
+  
+  router.openapi(countCardsRoute, async (c) => {
+    const user = c.get("user");
+    if (!user) return c.json({ error: 'Unauthorized' } as any, 401);
+  
+    try {
+      const result: any = await c.env.DB.prepare('SELECT count(*) as count FROM cards WHERE owner_id = ?')
+        .bind(user.id)
+        .first();
+      return c.json({ count: result?.count || 0 }, 200);
+    } catch (e: any) {
+      return c.json({ error: e.message } as any, 500);
+    }
+  });
 
 const listCardsRoute = createRoute({
   method: 'get',
@@ -59,6 +84,31 @@ router.openapi(createCardRoute, async (c) => {
     } = c.req.valid('json');
 
     try {
+        // Check if card already exists
+        const existing: any = await c.env.DB.prepare('SELECT owner_id FROM cards WHERE id = ?')
+            .bind(id)
+            .first();
+
+        if (!existing) {
+            // New card: check limit
+            const profile: any = await c.env.DB.prepare('SELECT card_limit FROM profiles WHERE id = ?')
+                .bind(user.id)
+                .first();
+            
+            const limit = profile?.card_limit ?? 200;
+            const countResult: any = await c.env.DB.prepare('SELECT count(*) as count FROM cards WHERE owner_id = ?')
+                .bind(user.id)
+                .first();
+            
+            const currentCount = countResult?.count || 0;
+            if (currentCount >= limit) {
+                return c.json({ error: `Card limit reached (${limit} cards). To increase this limit, please contact aliolo@nohainc.com.` } as any, 403);
+            }
+        } else if (existing.owner_id !== user.id) {
+            // Card exists but owned by someone else
+            return c.json({ error: 'Forbidden' } as any, 403);
+        }
+
         await c.env.DB.prepare(`
             INSERT INTO cards (
                 id, subject_id, owner_id, level, renderer, is_public, 

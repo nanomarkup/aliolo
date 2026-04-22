@@ -12,6 +12,10 @@ const subscriptionUpdateSchema = z.object({
   expiry_date: z.string().nullable().optional(),
 });
 
+const cardLimitUpdateSchema = z.object({
+  card_limit: z.number().int().min(0),
+});
+
 const listUsersRoute = createRoute({
   method: 'get',
   path: '/users',
@@ -36,6 +40,31 @@ const updateUserSubscriptionRoute = createRoute({
       content: {
         'application/json': {
           schema: subscriptionUpdateSchema,
+        },
+      },
+    },
+  },
+  responses: {
+    200: { content: { 'application/json': { schema: SuccessResponseSchema } }, description: 'Success' },
+    401: { content: { 'application/json': { schema: ErrorResponseSchema } }, description: 'Unauthorized' },
+    403: { content: { 'application/json': { schema: ErrorResponseSchema } }, description: 'Forbidden' },
+    404: { content: { 'application/json': { schema: ErrorResponseSchema } }, description: 'Not found' },
+    500: { content: { 'application/json': { schema: ErrorResponseSchema } }, description: 'Error' },
+  },
+});
+
+const updateUserCardLimitRoute = createRoute({
+  method: 'patch',
+  path: '/users/{userId}/card-limit',
+  summary: 'Update a users card limit',
+  request: {
+    params: z.object({
+      userId: z.string(),
+    }),
+    body: {
+      content: {
+        'application/json': {
+          schema: cardLimitUpdateSchema,
         },
       },
     },
@@ -165,5 +194,33 @@ router.openapi(updateUserSubscriptionRoute, async (c) => {
     return c.json({ error: e.message } as any, 500);
   }
 });
+
+router.openapi(updateUserCardLimitRoute, async (c) => {
+    const user = c.get('user');
+    if (!user) return c.json({ error: 'Unauthorized' } as any, 401);
+    if (user.id !== ADMIN_ID) return c.json({ error: 'Forbidden' } as any, 403);
+  
+    try {
+      const { userId } = c.req.valid('param');
+      const { card_limit } = c.req.valid('json');
+  
+      const profile = await c.env.DB.prepare(
+        'SELECT id FROM profiles WHERE id = ?'
+      ).bind(userId).first();
+  
+      if (!profile) {
+        return c.json({ error: 'User not found' } as any, 404);
+      }
+  
+      await c.env.DB.prepare(
+        'UPDATE profiles SET card_limit = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?'
+      ).bind(card_limit, userId).run();
+  
+      return c.json({ success: true } as any, 200);
+    } catch (e: any) {
+      console.error('Admin card limit update failed:', e);
+      return c.json({ error: e.message } as any, 500);
+    }
+  });
 
 export default router;

@@ -716,7 +716,7 @@ class _SubjectPageState extends State<SubjectPage> {
                                   crossAxisSpacing: 24,
                                   mainAxisSpacing: 24,
                                   childAspectRatio:
-                                      crossAxisCount == 1 ? 2.2 : 1.8,                                ),
+                                      crossAxisCount == 1 ? 3.0 : 1.8,                                ),
                             delegate: SliverChildBuilderDelegate((
                               context,
                               index,
@@ -1037,12 +1037,10 @@ class _SubjectPageState extends State<SubjectPage> {
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             decoration: BoxDecoration(
-              color: Theme.of(
-                context,
-              ).colorScheme.surfaceContainerHighest.withValues(alpha: 0.9),
+              color: Theme.of(context).cardColor.withValues(alpha: 0.5),
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
-                color: Theme.of(context).colorScheme.outlineVariant,
+                color: Colors.grey.withValues(alpha: 0.5),
               ),
             ),
             child: Row(
@@ -1791,7 +1789,7 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
           position: PopupMenuPosition.under,
           offset: Offset.zero,
           tooltip: '',
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.surface,
           itemBuilder:
               (context) =>
                   items.entries
@@ -2657,7 +2655,7 @@ class _FolderPageState extends State<FolderPage> {
           position: PopupMenuPosition.under,
           offset: Offset.zero,
           tooltip: '',
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.surface,
           itemBuilder:
               (context) =>
                   items.entries
