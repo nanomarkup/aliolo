@@ -7,7 +7,6 @@ import 'package:uuid/uuid.dart';
 import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
-import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/data/services/subscription_service.dart';
 import 'package:aliolo/data/services/card_service.dart';
 import 'package:aliolo/data/models/pillar_model.dart';
@@ -735,7 +734,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 children: [
                   Row(
                     children: [
-                      Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                      Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.black87)),
                       if (isActive) ...[
                         const SizedBox(width: 8),
                         Container(
@@ -856,7 +855,7 @@ class _OnboardingPillarTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final pillarColor = pillar.getColor(getIt<ThemeService>().isDarkMode);
+    final pillarColor = pillar.getColor(false);
     
     return Card(
       clipBehavior: Clip.antiAlias,
