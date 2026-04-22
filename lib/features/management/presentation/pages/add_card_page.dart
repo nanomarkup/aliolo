@@ -632,7 +632,7 @@ class _AddCardPageState extends State<AddCardPage> {
         globalDraft.videoUrl != null;
 
     if (!hasVisual) {
-      _showError('At least one visual content (text, image, audio, or video) must be provided.');
+      _showError(context.t('visual_content_required_msg'));
       return;
     }
 
@@ -1157,9 +1157,9 @@ class _AddCardPageState extends State<AddCardPage> {
             ),
           ),
           const SizedBox(height: 8),
-          const Text(
-            '* At least one visual content is required',
-            style: TextStyle(fontSize: 12, color: Colors.orange, fontWeight: FontWeight.w500),
+          Text(
+            '* ${context.t('visual_content_required')}',
+            style: const TextStyle(fontSize: 12, color: Colors.orange, fontWeight: FontWeight.w500),
           ),
           const SizedBox(height: 16),
 
@@ -1289,7 +1289,7 @@ class _AddCardPageState extends State<AddCardPage> {
     return DropdownButtonFormField<String>(
       value: _renderer,
       decoration: InputDecoration(
-        labelText: 'Renderer',
+        labelText: context.t('renderer'),
         border: const OutlineInputBorder(),
         contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       ),
