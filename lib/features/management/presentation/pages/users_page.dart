@@ -219,7 +219,7 @@ class _UsersPageState extends State<UsersPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            width: 120,
+            width: 180,
             child: Text(
               label,
               style: const TextStyle(fontWeight: FontWeight.w600),
@@ -590,13 +590,13 @@ class _UsersPageState extends State<UsersPage> {
           ),
           const SizedBox(height: 4),
           _buildInfoRow(context.t('user_id'), user.id, copyable: true),
+          _buildInfoRow(context.t('email'), user.email, copyable: true),
           _buildInfoRow(
             context.t('username'),
             user.username.isNotEmpty
                 ? user.username
                 : context.t('not_available'),
           ),
-          _buildInfoRow(context.t('email'), user.email, copyable: true),
           _buildInfoRow(context.t('total_xp'), '${user.profile.totalXp}'),
           _buildInfoRow(
             context.t('current_streak'),
@@ -650,7 +650,6 @@ class _UsersPageState extends State<UsersPage> {
           _buildInfoRow(
             context.t('product_id'),
             user.subscription?.productId ?? context.t('not_available'),
-            copyable: user.subscription?.productId != null,
           ),
           _buildInfoRow(
             context.t('created_at'),
