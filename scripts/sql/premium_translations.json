@@ -1,0 +1,240 @@
+{
+  "en": {
+    "premium_status_active": "You are a premium member",
+    "premium_expires_at": "Expires at $date",
+    "premium_lifetime": "Lifetime access",
+    "premium_unlock_title": "Unlock Full Access",
+    "premium_unlock_desc": "Gain access to all subjects, create unlimited cards, and support Aliolo's mission."
+  },
+  "id": {
+    "premium_status_active": "Anda adalah anggota premium",
+    "premium_expires_at": "Berakhir pada $date",
+    "premium_lifetime": "Akses seumur hidup",
+    "premium_unlock_title": "Buka Akses Penuh",
+    "premium_unlock_desc": "Dapatkan akses ke semua subjek, buat kartu tanpa batas, dan dukung misi Aliolo."
+  },
+  "bg": {
+    "premium_status_active": "Вие сте премиум член",
+    "premium_expires_at": "Изтича на $date",
+    "premium_lifetime": "Доживотен достъп",
+    "premium_unlock_title": "Отключете пълен достъп",
+    "premium_unlock_desc": "Получете достъп до всички предмети, създавайте неограничен брой карти и подкрепете мисията на Aliolo."
+  },
+  "cs": {
+    "premium_status_active": "Jste prémiovým členem",
+    "premium_expires_at": "Platnost vyprší $date",
+    "premium_lifetime": "Doživotní přístup",
+    "premium_unlock_title": "Odemknout plný přístup",
+    "premium_unlock_desc": "Získejte přístup ke všem předmětům, vytvářejte neomezené množství karet a podpořte misi Aliolo."
+  },
+  "da": {
+    "premium_status_active": "Du er premium-medlem",
+    "premium_expires_at": "Udløber den $date",
+    "premium_lifetime": "Livstidsadgang",
+    "premium_unlock_title": "Lås op for fuld adgang",
+    "premium_unlock_desc": "Få adgang til alle emner, opret ubegrænsede kort og støt Aliolos mission."
+  },
+  "de": {
+    "premium_status_active": "Sie sind ein Premium-Mitglied",
+    "premium_expires_at": "Läuft am $date ab",
+    "premium_lifetime": "Lebenslanger Zugriff",
+    "premium_unlock_title": "Vollen Zugriff freischalten",
+    "premium_unlock_desc": "Erhalten Sie Zugriff auf alle Themen, erstellen Sie unbegrenzt Karten und unterstützen Sie die Mission von Aliolo."
+  },
+  "et": {
+    "premium_status_active": "Olete premium-liige",
+    "premium_expires_at": "Aegub $date",
+    "premium_lifetime": "Eluaegne juurdepääs",
+    "premium_unlock_title": "Ava täielik juurdepääs",
+    "premium_unlock_desc": "Saage juurdepääs kõigile teemadele, looge piiramatult kaarte ja toetage Aliolo missiooni."
+  },
+  "es": {
+    "premium_status_active": "Eres un miembro premium",
+    "premium_expires_at": "Expira el $date",
+    "premium_lifetime": "Acceso de por vida",
+    "premium_unlock_title": "Desbloquear acceso total",
+    "premium_unlock_desc": "Obtén acceso a todos los temas, crea tarjetas ilimitadas y apoya la misión de Aliolo."
+  },
+  "fr": {
+    "premium_status_active": "Vous êtes un membre premium",
+    "premium_expires_at": "Expire le $date",
+    "premium_lifetime": "Accès à vie",
+    "premium_unlock_title": "Débloquer l'accès complet",
+    "premium_unlock_desc": "Accédez à tous les sujets, créez des cartes illimitées et soutenez la mission d'Aliolo."
+  },
+  "ga": {
+    "premium_status_active": "Is ball préimhe thú",
+    "premium_expires_at": "In éag ar $date",
+    "premium_lifetime": "Rochtain ar feadh an tsaoil",
+    "premium_unlock_title": "Díghlasáil Rochtain Iomlán",
+    "premium_unlock_desc": "Faigh rochtain ar gach ábhar, cruthaigh cártaí gan teorainn, agus tacaigh le misean Aliolo."
+  },
+  "hr": {
+    "premium_status_active": "Ви сте премиум члан",
+    "premium_expires_at": "Istječe $date",
+    "premium_lifetime": "Doživotni pristup",
+    "premium_unlock_title": "Otključaj puni pristup",
+    "premium_unlock_desc": "Dobijte pristup svim predmetima, stvarajte neograničeno kartica i podržite misiju Aliola."
+  },
+  "it": {
+    "premium_status_active": "Sei un membro premium",
+    "premium_expires_at": "Scade il $date",
+    "premium_lifetime": "Accesso a vita",
+    "premium_unlock_title": "Sblocca l'accesso completo",
+    "premium_unlock_desc": "Ottieni l'accesso a tutti gli argomenti, crea carte illimitate e sostieni la missione di Aliolo."
+  },
+  "lv": {
+    "premium_status_active": "Jūs esat premium biedrs",
+    "premium_expires_at": "Beidzas $date",
+    "premium_lifetime": "Mūža piekļuve",
+    "premium_unlock_title": "Atbloķēt pilnu piekļuvi",
+    "premium_unlock_desc": "Iegūstiet piekļuvi visiem priekšmetiem, izveidojiet neierobežotu skaitu karšu un atbalstiet Aliolo misiju."
+  },
+  "lt": {
+    "premium_status_active": "Jūs esate „premium“ narys",
+    "premium_expires_at": "Galioja iki $date",
+    "premium_lifetime": "Prieiga visam gyvenimui",
+    "premium_unlock_title": "Atrakinti visą prieigą",
+    "premium_unlock_desc": "Gaukite prieigą prie visų temų, kurkite neribotą kiekį kortelių ir palaikykite „Aliolo“ misiją."
+  },
+  "hu": {
+    "premium_status_active": "Ön prémium tag",
+    "premium_expires_at": "Lejárat: $date",
+    "premium_lifetime": "Élethosszig tartó hozzáférés",
+    "premium_unlock_title": "Teljes hozzáférés feloldása",
+    "premium_unlock_desc": "Hozzáférés az összes tantárgyhoz, korlátlan kártyakészítés és az Aliolo küldetésének támogatása."
+  },
+  "mt": {
+    "premium_status_active": "Int membru premium",
+    "premium_expires_at": "Jiskadi nhar $date",
+    "premium_lifetime": "Aċċess għal għomrok",
+    "premium_unlock_title": "Iftaħ Aċċess Sħiħ",
+    "premium_unlock_desc": "Ikseb aċċess għas-suġġetti kollha, oħloq karti illimitati, u appoġġja l-missjoni ta' Aliolo."
+  },
+  "nl": {
+    "premium_status_active": "Je bent een premium lid",
+    "premium_expires_at": "Verloopt op $date",
+    "premium_lifetime": "Levenslange toegang",
+    "premium_unlock_title": "Ontgrendel volledige toegang",
+    "premium_unlock_desc": "Krijg toegang tot alle onderwerpen, maak onbeperkt kaarten en ondersteun de missie van Aliolo."
+  },
+  "pl": {
+    "premium_status_active": "Jesteś członkiem premium",
+    "premium_expires_at": "Wygasa $date",
+    "premium_lifetime": "Dożywotni dostęp",
+    "premium_unlock_title": "Odblokuj pełny dostęp",
+    "premium_unlock_desc": "Uzyskaj dostęp do wszystkich przedmiotów, twórz nieograniczoną liczbę kart i wspieraj misję Aliolo."
+  },
+  "pt": {
+    "premium_status_active": "Você é um membro premium",
+    "premium_expires_at": "Expira em $date",
+    "premium_lifetime": "Acesso vitalício",
+    "premium_unlock_title": "Desbloquear acesso total",
+    "premium_unlock_desc": "Tenha acesso a todos os assuntos, crie cartões ilimitados e apoie a missão da Aliolo."
+  },
+  "ro": {
+    "premium_status_active": "Sunteți membru premium",
+    "premium_expires_at": "Expiră la data de $date",
+    "premium_lifetime": "Acces pe viață",
+    "premium_unlock_title": "Deblocați accesul complet",
+    "premium_unlock_desc": "Obțineți acces la toate subiectele, creați carduri nelimitate și susțineți misiunea Aliolo."
+  },
+  "sk": {
+    "premium_status_active": "Ste prémiovým členom",
+    "premium_expires_at": "Platnosť vyprší $date",
+    "premium_lifetime": "Doživotný prístup",
+    "premium_unlock_title": "Odomknúť úplný prístup",
+    "premium_unlock_desc": "Získajte prístup ku všetkým predmetom, vytvárajte neobmedzený počet kariet a podporte misiu Aliolo."
+  },
+  "sl": {
+    "premium_status_active": "Ste premium član",
+    "premium_expires_at": "Poteče $date",
+    "premium_lifetime": "Doživljen dostop",
+    "premium_unlock_title": "Odkleni poln dostop",
+    "premium_unlock_desc": "Pridobite dostop do vseh predmetov, ustvarite neomejeno število kartic in podprite misijo Aliolo."
+  },
+  "fi": {
+    "premium_status_active": "Olet premium-jäsen",
+    "premium_expires_at": "Vanhentuu $date",
+    "premium_lifetime": "Elinikäinen käyttöoikeus",
+    "premium_unlock_title": "Avaa täysi käyttöoikeus",
+    "premium_unlock_desc": "Saat pääsyn kaikkiin aiheisiin, luo rajattomasti kortteja ja tue Aliolon missiota."
+  },
+  "sv": {
+    "premium_status_active": "Du är premiummedlem",
+    "premium_expires_at": "Löper ut $date",
+    "premium_lifetime": "Livstidsåtkomst",
+    "premium_unlock_title": "Lås upp full åtkomst",
+    "premium_unlock_desc": "Få tillgång till alla ämnen, skapa obegränsat antal kort och stöd Aliolos uppdrag."
+  },
+  "tl": {
+    "premium_status_active": "Ikaw ay isang premium member",
+    "premium_expires_at": "Mag-e-expire sa $date",
+    "premium_lifetime": "Lifetime access",
+    "premium_unlock_title": "I-unlock ang Buong Access",
+    "premium_unlock_desc": "Kumuha ng access sa lahat ng subject, gumawa ng walang limitasyong mga card, at suportahan ang misyon ng Aliolo."
+  },
+  "vi": {
+    "premium_status_active": "Bạn là thành viên cao cấp",
+    "premium_expires_at": "Hết hạn vào $date",
+    "premium_lifetime": "Truy cập trọn đời",
+    "premium_unlock_title": "Mở khóa quyền truy cập đầy đủ",
+    "premium_unlock_desc": "Truy cập tất cả các chủ đề, tạo thẻ không giới hạn và hỗ trợ sứ mệnh của Aliolo."
+  },
+  "tr": {
+    "premium_status_active": "Premium üyesiniz",
+    "premium_expires_at": "$date tarihinde sona eriyor",
+    "premium_lifetime": "Ömür boyu erişim",
+    "premium_unlock_title": "Tam Erişimin Kilidini Aç",
+    "premium_unlock_desc": "Tüm konulara erişim sağlayın, sınırsız kart oluşturun ve Aliolo'nun misyonunu destekleyin."
+  },
+  "el": {
+    "premium_status_active": "Είστε μέλος premium",
+    "premium_expires_at": "Λήγει στις $date",
+    "premium_lifetime": "Ισόβια πρόσβαση",
+    "premium_unlock_title": "Ξεκλειδώστε την πλήρη πρόσβαση",
+    "premium_unlock_desc": "Αποκτήστε πρόσβαση σε όλα τα θέματα, δημιουργήστε απεριόριστες κάρτες και υποστηρίξτε την αποστολή της Aliolo."
+  },
+  "uk": {
+    "premium_status_active": "Ви є преміум-учасником",
+    "premium_expires_at": "Термін дії закінчується $date",
+    "premium_lifetime": "Довічний доступ",
+    "premium_unlock_title": "Розблокувати повний доступ",
+    "premium_unlock_desc": "Отримайте доступ до всіх предметів, створюйте необмежену кількість карток і підтримайте місію Aliolo."
+  },
+  "ar": {
+    "premium_status_active": "أنت عضو بريميوم",
+    "premium_expires_at": "تنتهي الصلاحية في $date",
+    "premium_lifetime": "وصول مدى الحياة",
+    "premium_unlock_title": "فتح الوصول الكامل",
+    "premium_unlock_desc": "احصل على إمكانية الوصول إلى جميع المواد، وقم بإنشاء بطاقات غير محدودة، وادعم مهمة Aliolo."
+  },
+  "hi": {
+    "premium_status_active": "आप एक प्रीमियम सदस्य हैं",
+    "premium_expires_at": "$date को समाप्त होगा",
+    "premium_lifetime": "आजीवन पहुंच",
+    "premium_unlock_title": "पूर्ण पहुंच अनलॉक करें",
+    "premium_unlock_desc": "सभी विषयों तक पहुंच प्राप्त करें, असीमित कार्ड बनाएं और Aliolo के मिशन का समर्थन करें."
+  },
+  "zh": {
+    "premium_status_active": "您是高级会员",
+    "premium_expires_at": "将于 $date 到期",
+    "premium_lifetime": "终身访问权限",
+    "premium_unlock_title": "解锁全部权限",
+    "premium_unlock_desc": "访问所有主题，创建无限卡片，并支持 Aliolo 的使命。"
+  },
+  "ja": {
+    "premium_status_active": "あなたはプレミアムメンバーです",
+    "premium_expires_at": "$date に期限切れになります",
+    "premium_lifetime": "ライフタイムアクセス",
+    "premium_unlock_title": "フルアクセスを解除",
+    "premium_unlock_desc": "すべての科目にアクセスし、無制限にカードを作成して、Alioloのミッションをサポートしてください。"
+  },
+  "ko": {
+    "premium_status_active": "프리미엄 회원입니다",
+    "premium_expires_at": "$date에 만료됩니다",
+    "premium_lifetime": "평생 이용권",
+    "premium_unlock_title": "모든 권한 잠금 해제",
+    "premium_unlock_desc": "모든 주제에 액세스하고, 무제한 카드를 생성하며, Aliolo의 미션을 지원하세요."
+  }
+}

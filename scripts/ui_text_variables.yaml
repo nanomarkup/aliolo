@@ -1874,3 +1874,43 @@ entries:
   - file: lib/features/management/presentation/pages/add_card_page.dart
     line: 708
     kind: Text
+- key: premium_status_active
+  english: You are a premium member
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/onboarding/presentation/onboarding_screen.dart
+    line: 663
+    kind: Text
+- key: premium_expires_at
+  english: Expires at $date
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/onboarding/presentation/onboarding_screen.dart
+    line: 674
+    kind: Text
+- key: premium_lifetime
+  english: Lifetime access
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/onboarding/presentation/onboarding_screen.dart
+    line: 681
+    kind: Text
+- key: premium_unlock_title
+  english: Unlock Full Access
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/onboarding/presentation/onboarding_screen.dart
+    line: 526
+    kind: Text
+- key: premium_unlock_desc
+  english: Gain access to all subjects, create unlimited cards, and support Aliolo's mission.
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/onboarding/presentation/onboarding_screen.dart
+    line: 527
+    kind: Text

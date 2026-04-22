@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:media_kit_video/media_kit_video.dart';
@@ -16,7 +15,6 @@ import 'package:aliolo/features/subjects/presentation/pages/subject_page.dart';
 import 'package:aliolo/features/auth/presentation/pages/login_page.dart';
 import 'package:aliolo/features/settings/presentation/pages/billing_page.dart';
 import 'package:aliolo/core/network/cloudflare_client.dart';
-import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import 'slides.dart';
@@ -436,15 +434,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Text(
-                              "4.8/5",
-                              style: TextStyle(
-                                fontSize: 32,
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xFF1D4289),
-                              ),
-                            ),
-                            const SizedBox(width: 12),
                             Row(
                               children: [
                                 ...List.generate(4, (index) => const Icon(
@@ -785,7 +774,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             padding: const EdgeInsets.symmetric(vertical: 6),
             child: Row(
               children: [
-                Expanded(child: Text(f['name'], style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500))),
+                Expanded(child: Text(f['name'], style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.black87))),
                 SizedBox(width: 60, child: Icon(f['free'] ? Icons.check_circle : Icons.cancel, size: 20, color: f['free'] ? Colors.green : Colors.grey[300])),
                 SizedBox(width: 60, child: Icon(Icons.check_circle, size: 20, color: pillarColor)),
               ],
