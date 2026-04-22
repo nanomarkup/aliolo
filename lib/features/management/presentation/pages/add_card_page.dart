@@ -1336,15 +1336,15 @@ class _AddCardPageState extends State<AddCardPage> {
             segments: [
               ButtonSegment<int>(
                 value: 1,
-                label: Text(context.t('level_tier_1')),
+                label: const Text('1'),
               ),
               ButtonSegment<int>(
                 value: 2,
-                label: Text(context.t('level_tier_2')),
+                label: const Text('2'),
               ),
               ButtonSegment<int>(
                 value: 3,
-                label: Text(context.t('level_tier_3')),
+                label: const Text('3'),
               ),
             ],
             selected: {_cardLevel},
