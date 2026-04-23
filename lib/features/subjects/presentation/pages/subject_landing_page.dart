@@ -1676,6 +1676,8 @@ class _ZoomedCardContentState extends State<_ZoomedCardContent> {
                     itemBuilder: (context, index) {
                       final itemCard = widget.cards[index];
                       final isCurrent = index == _currentIndex;
+                      final audioUrl = itemCard.getAudioUrl(widget.displayLang) ?? '';
+                      final hasAudioUrl = audioUrl.isNotEmpty;
                       return Center(
                         child: CardMediaContent(
                           card: itemCard,
@@ -1684,11 +1686,11 @@ class _ZoomedCardContentState extends State<_ZoomedCardContent> {
                           headerColor: widget.pillarColor,
                           isMobile: isMobile,
                           videoController: isCurrent ? _videoController : null,
-                          hasVideo: itemCard.getVideoUrl(widget.displayLang) != null,
+                          hasVideo: itemCard.hasVideoUrl(widget.displayLang),
                           images: itemCard.getImageUrls(widget.displayLang),
-                          onPlayAudio: () => _audioPlayer.play(UrlSource(itemCard.getAudioUrl(widget.displayLang)!)),
-                          hasAudio: itemCard.getAudioUrl(widget.displayLang) != null,
-                          hideAudioIcon: true, 
+                          onPlayAudio: hasAudioUrl ? () => _audioPlayer.play(UrlSource(audioUrl)) : null,
+                          hasAudio: hasAudioUrl,
+                          hideAudioIcon: true,
                         ),
                       );
                     },

@@ -15,6 +15,7 @@ class UserModel {
   late String testMode;
   late int learnAutoplayDelaySeconds;
   String? avatarPath;
+  String? avatarOriginalPath;
   late String defaultLanguage;
   DateTime? lastActiveDate;
   late int totalXp;
@@ -25,8 +26,9 @@ class UserModel {
   late int nextDailyGoal;
   late double dailyCompletions;
   late bool autoPlayEnabled;
+  late bool mediaAutoPlayMuted;
   late bool showDocumentation;
-  late int mainPillarId; 
+  late int mainPillarId;
   late String lastAgeGroup;
   late String lastSourceFilter;
   DateTime? createdAt;
@@ -48,6 +50,7 @@ class UserModel {
     this.testMode = 'question_to_answer',
     this.learnAutoplayDelaySeconds = 3,
     this.avatarPath,
+    this.avatarOriginalPath,
     this.defaultLanguage = 'EN',
     this.lastActiveDate,
     this.totalXp = 0,
@@ -58,6 +61,7 @@ class UserModel {
     this.nextDailyGoal = 20,
     this.dailyCompletions = 0,
     this.autoPlayEnabled = false,
+    this.mediaAutoPlayMuted = false,
     this.showDocumentation = true,
     this.mainPillarId = 8,
     this.lastAgeGroup = 'all',
@@ -90,8 +94,13 @@ class UserModel {
       testMode: (json['test_mode'] ?? 'question_to_answer').toString(),
       learnAutoplayDelaySeconds: json['learn_autoplay_delay_seconds'] ?? 3,
       avatarPath: MediaUrlResolver.resolve(json['avatar_url']),
-      defaultLanguage: (json['default_language'] ?? 'EN').toString().toUpperCase(),
-      lastActiveDate: json['last_active_date'] != null ? DateTime.tryParse(json['last_active_date']) : null,
+      avatarOriginalPath: MediaUrlResolver.resolve(json['avatar_original_url']),
+      defaultLanguage:
+          (json['default_language'] ?? 'EN').toString().toUpperCase(),
+      lastActiveDate:
+          json['last_active_date'] != null
+              ? DateTime.tryParse(json['last_active_date'])
+              : null,
       totalXp: json['total_xp'] ?? 0,
       currentStreak: json['current_streak'] ?? 0,
       maxStreak: json['max_streak'] ?? 0,
@@ -100,12 +109,19 @@ class UserModel {
       nextDailyGoal: json['next_daily_goal'] ?? 20,
       dailyCompletions: (json['daily_completions'] ?? 0).toDouble(),
       autoPlayEnabled: toBool(json['auto_play_enabled'], false),
+      mediaAutoPlayMuted: toBool(json['media_auto_play_muted'], false),
       showDocumentation: toBool(json['show_documentation'], true),
       mainPillarId: json['main_pillar_id'] ?? 8,
       lastAgeGroup: json['last_age_group'] ?? 'all',
       lastSourceFilter: json['last_source_filter'] ?? 'all',
-      createdAt: json['created_at'] != null ? DateTime.tryParse(json['created_at']) : null,
-      updatedAt: json['updated_at'] != null ? DateTime.tryParse(json['updated_at']) : null,
+      createdAt:
+          json['created_at'] != null
+              ? DateTime.tryParse(json['created_at'])
+              : null,
+      updatedAt:
+          json['updated_at'] != null
+              ? DateTime.tryParse(json['updated_at'])
+              : null,
       isPremium: toBool(json['is_premium'], false),
       cardLimit: json['card_limit'] ?? 200,
     );
@@ -126,6 +142,7 @@ class UserModel {
       'test_mode': testMode,
       'learn_autoplay_delay_seconds': learnAutoplayDelaySeconds,
       'avatar_url': avatarPath,
+      'avatar_original_url': avatarOriginalPath,
       'default_language': defaultLanguage.toLowerCase(),
       'last_active_date': lastActiveDate?.toUtc().toIso8601String(),
       'total_xp': totalXp,
@@ -136,6 +153,7 @@ class UserModel {
       'next_daily_goal': nextDailyGoal,
       'daily_completions': dailyCompletions,
       'auto_play_enabled': autoPlayEnabled,
+      'media_auto_play_muted': mediaAutoPlayMuted,
       'show_documentation': showDocumentation,
       'main_pillar_id': mainPillarId,
       'last_age_group': lastAgeGroup,
@@ -154,5 +172,6 @@ class UserModel {
         : Colors.white;
   }
 
-  static String capitalizeFirst(String s) => s.isEmpty ? s : s[0].toUpperCase() + s.substring(1);
+  static String capitalizeFirst(String s) =>
+      s.isEmpty ? s : s[0].toUpperCase() + s.substring(1);
 }

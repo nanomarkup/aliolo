@@ -1,4 +1,5 @@
 import 'package:path/path.dart' as p;
+import 'package:image/image.dart' as img;
 import 'package:flutter/foundation.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:aliolo/core/utils/file_stub.dart'
@@ -422,7 +423,7 @@ class AuthService extends ChangeNotifier {
   Future<void> updateAvatarPath(XFile image) async {
     if (_currentUser == null) return;
     try {
-      // Delete old avatar if it exists
+      // Delete old avatars if they exist
       if (_currentUser!.avatarPath != null) {
         try {
           final oldUri = Uri.parse(_currentUser!.avatarPath!);
@@ -436,28 +437,87 @@ class AuthService extends ChangeNotifier {
           );
         }
       }
+      if (_currentUser!.avatarOriginalPath != null) {
+        try {
+          final oldUri = Uri.parse(_currentUser!.avatarOriginalPath!);
+          final oldFileName = oldUri.pathSegments.last.split('?').first;
+          await _cfClient.client.delete(
+            '/api/storage/aliolo-media/avatars/$oldFileName',
+          );
+        } catch (e) {
+          AppLogger.log(
+            'AuthService: error deleting old original avatar during update: $e',
+          );
+        }
+      }
 
       final ext = p.extension(image.name).toLowerCase();
-      final fileName = '${_currentUser!.serverId}$ext';
-      final bytes = await image.readAsBytes();
+      final originalFileName = '${_currentUser!.serverId}_original$ext';
+      final optimizedFileName = '${_currentUser!.serverId}$ext';
+      final originalBytes = await image.readAsBytes();
 
-      final response = await _cfClient.client.post(
-        '/api/upload/aliolo-media/avatars/$fileName',
-        data: Stream.fromIterable([bytes]),
+      // Upload original
+      final originalResponse = await _cfClient.client.post(
+        '/api/upload/aliolo-media/avatars/$originalFileName',
+        data: Stream.fromIterable([originalBytes]),
         options: Options(
           headers: {
             Headers.contentTypeHeader: 'image/${ext.replaceAll('.', '')}',
-            Headers.contentLengthHeader: bytes.length,
+            Headers.contentLengthHeader: originalBytes.length,
           },
         ),
       );
 
-      if (response.statusCode == 200) {
-        final String publicUrl = response.data['url'];
-        final bustUrl = '$publicUrl?t=${DateTime.now().millisecondsSinceEpoch}';
+      // Create optimized version (small)
+      Uint8List? optimizedBytes;
+      final img.Image? decoded = img.decodeImage(originalBytes);
+      if (decoded != null) {
+        final img.Image resized = img.copyResize(decoded, width: 200);
+        // We use original extension to pick encoder
+        if (ext == '.png') {
+          optimizedBytes = Uint8List.fromList(img.encodePng(resized));
+        } else if (ext == '.jpg' || ext == '.jpeg') {
+          optimizedBytes = Uint8List.fromList(
+            img.encodeJpg(resized, quality: 85),
+          );
+        } else {
+          // Fallback to WebP or Jpg if unknown
+          optimizedBytes = Uint8List.fromList(
+            img.encodeJpg(resized, quality: 85),
+          );
+        }
+      } else {
+        // If decoding failed, just use original as fallback for optimized
+        optimizedBytes = originalBytes;
+      }
 
-        await _patchCurrentUser({'avatar_url': bustUrl});
-        _currentUser!.avatarPath = bustUrl;
+      // Upload optimized
+      final optimizedResponse = await _cfClient.client.post(
+        '/api/upload/aliolo-media/avatars/$optimizedFileName',
+        data: Stream.fromIterable([optimizedBytes]),
+        options: Options(
+          headers: {
+            Headers.contentTypeHeader: 'image/${ext.replaceAll('.', '')}',
+            Headers.contentLengthHeader: optimizedBytes.length,
+          },
+        ),
+      );
+
+      if (optimizedResponse.statusCode == 200 &&
+          originalResponse.statusCode == 200) {
+        final String optimizedUrl = optimizedResponse.data['url'];
+        final String originalUrl = originalResponse.data['url'];
+        final bustOptimizedUrl =
+            '$optimizedUrl?t=${DateTime.now().millisecondsSinceEpoch}';
+        final bustOriginalUrl =
+            '$originalUrl?t=${DateTime.now().millisecondsSinceEpoch}';
+
+        await _patchCurrentUser({
+          'avatar_url': bustOptimizedUrl,
+          'avatar_original_url': bustOriginalUrl,
+        });
+        _currentUser!.avatarPath = bustOptimizedUrl;
+        _currentUser!.avatarOriginalPath = bustOriginalUrl;
         notifyListeners();
       }
     } catch (e) {
@@ -466,17 +526,29 @@ class AuthService extends ChangeNotifier {
   }
 
   Future<void> deleteAvatar() async {
-    if (_currentUser == null || _currentUser!.avatarPath == null) return;
+    if (_currentUser == null) return;
     try {
-      final uri = Uri.parse(_currentUser!.avatarPath!);
-      final fileName = uri.pathSegments.last.split('?').first;
+      if (_currentUser!.avatarPath != null) {
+        final uri = Uri.parse(_currentUser!.avatarPath!);
+        final fileName = uri.pathSegments.last.split('?').first;
+        await _cfClient.client.delete(
+          '/api/storage/aliolo-media/avatars/$fileName',
+        );
+      }
+      if (_currentUser!.avatarOriginalPath != null) {
+        final uri = Uri.parse(_currentUser!.avatarOriginalPath!);
+        final fileName = uri.pathSegments.last.split('?').first;
+        await _cfClient.client.delete(
+          '/api/storage/aliolo-media/avatars/$fileName',
+        );
+      }
 
-      await _cfClient.client.delete(
-        '/api/storage/aliolo-media/avatars/$fileName',
-      );
-
-      await _patchCurrentUser({'avatar_url': null});
+      await _patchCurrentUser({
+        'avatar_url': null,
+        'avatar_original_url': null,
+      });
       _currentUser!.avatarPath = null;
+      _currentUser!.avatarOriginalPath = null;
       notifyListeners();
     } catch (e) {
       AppLogger.log('AuthService: deleteAvatar error: $e');
@@ -623,6 +695,13 @@ class AuthService extends ChangeNotifier {
     if (_currentUser != null) {
       _currentUser!.autoPlayEnabled = val;
       await _patchCurrentUser({'auto_play_enabled': val});
+    }
+  }
+
+  Future<void> updateMediaAutoPlayMuted(bool val) async {
+    if (_currentUser != null) {
+      _currentUser!.mediaAutoPlayMuted = val;
+      await _patchCurrentUser({'media_auto_play_muted': val});
     }
   }
 

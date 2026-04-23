@@ -53,6 +53,7 @@ class _LearnPageState extends State<LearnPage> {
   int _totalInSession = 0;
 
   bool _isAutoPlay = false;
+  bool _isMediaAutoPlayMuted = false;
   bool _isAutoPlayWaiting = false;
   bool _canGoNext = false;
   bool _isAdvancing = false;
@@ -60,6 +61,11 @@ class _LearnPageState extends State<LearnPage> {
   Timer? _autoNextTimer;
   Timer? _cooldownTimer;
   StreamSubscription? _playerSubscription;
+  int _mediaSetupToken = 0;
+  int _autoPlayAudioToken = -1;
+  bool _autoPlayVisualReady = false;
+  bool _autoPlayPlaybackDone = false;
+  bool _autoPlayScheduledForToken = false;
 
   final _authService = AuthService();
   final _soundService = SoundService();
@@ -80,6 +86,8 @@ class _LearnPageState extends State<LearnPage> {
     final isPremium = getIt<SubscriptionService>().isPremium;
     _isAutoPlay =
         isPremium && (_authService.currentUser?.autoPlayEnabled ?? false);
+    _isMediaAutoPlayMuted =
+        _authService.currentUser?.mediaAutoPlayMuted ?? false;
     _learnAutoplayDelaySeconds =
         _authService.currentUser?.learnAutoplayDelaySeconds ?? 3;
 
@@ -96,8 +104,9 @@ class _LearnPageState extends State<LearnPage> {
     }
 
     _audioPlayer.onPlayerComplete.listen((_) {
-      if (_isAutoPlay && !_isAutoPlayWaiting) {
-        _scheduleAutoNext();
+      if (_autoPlayAudioToken == _mediaSetupToken) {
+        _autoPlayAudioToken = -1;
+        _markAutoPlayPlaybackDone(_mediaSetupToken);
       }
     });
 
@@ -120,9 +129,14 @@ class _LearnPageState extends State<LearnPage> {
   }
 
   void _setupMedia() {
+    final token = ++_mediaSetupToken;
     _autoNextTimer?.cancel();
     _cooldownTimer?.cancel();
+    _autoPlayAudioToken = -1;
     _isAutoPlayWaiting = false;
+    _autoPlayVisualReady = false;
+    _autoPlayPlaybackDone = false;
+    _autoPlayScheduledForToken = false;
     setState(() {
       _canGoNext = false;
       _isAdvancing = false;
@@ -139,26 +153,44 @@ class _LearnPageState extends State<LearnPage> {
     _videoController?.dispose();
     _videoController = null;
 
+    setState(() {
+      _currentImages = images;
+      _currentMediaIndex = 0;
+      _hasVideo = false;
+    });
+
     if (videoUrl != null && videoUrl.isNotEmpty) {
       _videoController = VideoPlayerController.networkUrl(Uri.parse(videoUrl));
       _videoController!.initialize().then((_) {
-        if (mounted) {
+        if (mounted && token == _mediaSetupToken) {
           setState(() {
             _hasVideo = true;
           });
-          _videoController!.play();
+          _markAutoPlayVisualReady(token);
+          if (!_isMediaAutoPlayMuted) {
+            _videoController!.play();
+          } else {
+            _markAutoPlayPlaybackDone(token);
+          }
           _videoController!.addListener(_videoListener);
         }
       });
     } else {
-      setState(() {
-        _hasVideo = false;
-        _currentImages = images;
-        _currentMediaIndex = 0;
-      });
+      final hasDisplayText =
+          _currentCard.getDisplayText(lang).trim().isNotEmpty;
+      if (images.isNotEmpty) {
+        unawaited(_waitForVisualReady(images.first, token));
+      } else if (_currentCard.isSpecialRenderer ||
+          _currentCard.isCountingRenderer ||
+          _currentCard.isColors ||
+          hasDisplayText) {
+        _markAutoPlayVisualReadyOnNextFrame(token);
+      } else {
+        _markAutoPlayVisualReady(token);
+      }
     }
 
-    _playInitialMedia();
+    _playInitialMedia(token);
   }
 
   void _videoListener() {
@@ -166,32 +198,80 @@ class _LearnPageState extends State<LearnPage> {
     if (_videoController!.value.position >= _videoController!.value.duration &&
         _videoController!.value.isInitialized) {
       _videoController!.removeListener(_videoListener);
-      if (_isAutoPlay && !_isAutoPlayWaiting) {
-        _scheduleAutoNext();
-      }
+      _markAutoPlayPlaybackDone(_mediaSetupToken);
     }
   }
 
-  Future<void> _playInitialMedia() async {
+  Future<void> _playInitialMedia(int token) async {
     await _audioPlayer.stop();
     final lang = _languageCode.toLowerCase();
     final audioUrl = _currentCard.getAudioUrl(lang);
     final videoUrl = _currentCard.getVideoUrl(lang);
 
-    print('LearnPage: playInitialMedia. audio: $audioUrl, video: $videoUrl, showingVideo: $_hasVideo');
+    print(
+      'LearnPage: playInitialMedia. audio: $audioUrl, video: $videoUrl, showingVideo: $_hasVideo',
+    );
 
-    bool hasMedia = false;
     if (videoUrl != null && videoUrl.isNotEmpty) {
-      // Video handled in _setupMedia
-      hasMedia = true;
+      if (_isMediaAutoPlayMuted) {
+        _markAutoPlayPlaybackDone(token);
+      }
     } else if (audioUrl != null && audioUrl.isNotEmpty) {
-      await _audioPlayer.play(UrlSource(audioUrl));
-      hasMedia = true;
+      if (!_isMediaAutoPlayMuted) {
+        _autoPlayAudioToken = token;
+        try {
+          await _audioPlayer.play(UrlSource(audioUrl));
+        } catch (_) {
+          if (_autoPlayAudioToken == token) {
+            _autoPlayAudioToken = -1;
+            _markAutoPlayPlaybackDone(token);
+          }
+        }
+      } else {
+        _markAutoPlayPlaybackDone(token);
+      }
+    } else {
+      _markAutoPlayPlaybackDone(token);
     }
+  }
 
-    if (_isAutoPlay && !hasMedia) {
-      _scheduleAutoNext();
+  Future<void> _waitForVisualReady(String imageUrl, int token) async {
+    try {
+      if (!imageUrl.toLowerCase().endsWith('.svg')) {
+        await precacheImage(NetworkImage(imageUrl), context);
+      } else {
+        await WidgetsBinding.instance.endOfFrame;
+      }
+    } catch (_) {
+      // Fall through and mark ready once we can show the fallback.
     }
+    _markAutoPlayVisualReadyOnNextFrame(token);
+  }
+
+  void _markAutoPlayVisualReadyOnNextFrame(int token) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _markAutoPlayVisualReady(token);
+    });
+  }
+
+  void _markAutoPlayVisualReady(int token) {
+    if (!mounted || token != _mediaSetupToken || _autoPlayVisualReady) return;
+    _autoPlayVisualReady = true;
+    _maybeScheduleAutoPlay(token);
+  }
+
+  void _markAutoPlayPlaybackDone(int token) {
+    if (!mounted || token != _mediaSetupToken || _autoPlayPlaybackDone) return;
+    _autoPlayPlaybackDone = true;
+    _maybeScheduleAutoPlay(token);
+  }
+
+  void _maybeScheduleAutoPlay(int token, {bool restart = false}) {
+    if (!mounted || token != _mediaSetupToken || !_isAutoPlay) return;
+    if (!_autoPlayVisualReady || !_autoPlayPlaybackDone) return;
+    if (_autoPlayScheduledForToken && !restart) return;
+    _autoPlayScheduledForToken = true;
+    _scheduleAutoNext(restart: restart);
   }
 
   void _scheduleAutoNext({bool restart = false}) {
@@ -201,12 +281,16 @@ class _LearnPageState extends State<LearnPage> {
       _autoNextTimer?.cancel();
       setState(() => _isAutoPlayWaiting = false);
     }
-    print('LearnPage: Scheduling auto-next with delay $_learnAutoplayDelaySeconds s');
+    print(
+      'LearnPage: Scheduling auto-next with delay $_learnAutoplayDelaySeconds s',
+    );
     setState(() => _isAutoPlayWaiting = true);
     final delay = Duration(seconds: _learnAutoplayDelaySeconds);
     _autoNextTimer?.cancel();
     _autoNextTimer = Timer(delay, () {
-      print('LearnPage: Auto-next timer fired. mounted: $mounted, waiting: $_isAutoPlayWaiting');
+      print(
+        'LearnPage: Auto-next timer fired. mounted: $mounted, waiting: $_isAutoPlayWaiting',
+      );
       if (mounted && _isAutoPlay && _isAutoPlayWaiting) _nextCard();
     });
   }
@@ -226,9 +310,7 @@ class _LearnPageState extends State<LearnPage> {
     if (!sub.isPremium) {
       Navigator.push(
         context,
-        MaterialPageRoute(
-          builder: (context) => const PremiumUpgradePage(),
-        ),
+        MaterialPageRoute(builder: (context) => const PremiumUpgradePage()),
       );
       return;
     }
@@ -238,7 +320,7 @@ class _LearnPageState extends State<LearnPage> {
     setState(() {
       _isAutoPlay = newVal;
       if (_isAutoPlay) {
-        _scheduleAutoNext(restart: true);
+        _maybeScheduleAutoPlay(_mediaSetupToken, restart: true);
       } else {
         _autoNextTimer?.cancel();
         _isAutoPlayWaiting = false;
@@ -246,14 +328,23 @@ class _LearnPageState extends State<LearnPage> {
     });
   }
 
+  Future<void> _toggleMediaAutoPlayMuted() async {
+    final newValue = !_isMediaAutoPlayMuted;
+    setState(() => _isMediaAutoPlayMuted = newValue);
+    await _authService.updateMediaAutoPlayMuted(newValue);
+
+    if (newValue) {
+      await _audioPlayer.stop();
+      await _videoController?.pause();
+    }
+  }
+
   Future<void> _showAutoplayDelayMenu(Offset globalPosition) async {
     final sub = getIt<SubscriptionService>();
     if (!sub.isPremium) {
       Navigator.push(
         context,
-        MaterialPageRoute(
-          builder: (context) => const PremiumUpgradePage(),
-        ),
+        MaterialPageRoute(builder: (context) => const PremiumUpgradePage()),
       );
       return;
     }
@@ -306,7 +397,8 @@ class _LearnPageState extends State<LearnPage> {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: _toggleAutoPlay,
-      onLongPressStart: (details) => _showAutoplayDelayMenu(details.globalPosition),
+      onLongPressStart:
+          (details) => _showAutoplayDelayMenu(details.globalPosition),
       child: Padding(
         padding: const EdgeInsets.all(8),
         child: Stack(
@@ -339,6 +431,17 @@ class _LearnPageState extends State<LearnPage> {
     );
   }
 
+  Widget _buildMediaMuteControl() {
+    return IconButton(
+      tooltip: _isMediaAutoPlayMuted ? 'Unmute auto-play' : 'Mute auto-play',
+      icon: Icon(
+        _isMediaAutoPlayMuted ? Icons.volume_off : Icons.volume_up,
+        color: Colors.white,
+      ),
+      onPressed: _toggleMediaAutoPlayMuted,
+    );
+  }
+
   Future<void> _nextCard() async {
     if (!_canGoNext || _isAdvancing) return;
     print('LearnPage: Moving to next card');
@@ -346,9 +449,10 @@ class _LearnPageState extends State<LearnPage> {
     _autoNextTimer?.cancel();
     _cooldownTimer?.cancel();
     setState(() => _isAutoPlayWaiting = false);
-    
+
     _audioPlayer.stop();
     _videoController?.pause();
+    _autoPlayAudioToken = -1;
 
     await _progressService.recordLearnProgress(
       cardId: _currentCard.id,
@@ -406,16 +510,23 @@ class _LearnPageState extends State<LearnPage> {
         double progressValue =
             _totalInSession > 0 ? _completedInSession / _totalInSession : 0.0;
 
-        final hasMeaningfulDisplayText = _currentCard.hasMeaningfulDisplayText(lang);
-        final displayText = hasMeaningfulDisplayText ? _currentCard.getDisplayText(lang).trim() : '';
-        final hasVisual = _currentCard.isSpecialRenderer ||
-                          _currentCard.isCountingRenderer ||
-                          _currentCard.isColors ||
-                          _hasVideo ||
-                          _currentImages.isNotEmpty ||
-                          displayText.isNotEmpty;
-        
-        final showAudioInHeader = !hasVisual && (currentAudioUrl?.isNotEmpty ?? false);
+        final hasMeaningfulDisplayText = _currentCard.hasMeaningfulDisplayText(
+          lang,
+        );
+        final displayText =
+            hasMeaningfulDisplayText
+                ? _currentCard.getDisplayText(lang).trim()
+                : '';
+        final hasVisual =
+            _currentCard.isSpecialRenderer ||
+            _currentCard.isCountingRenderer ||
+            _currentCard.isColors ||
+            _hasVideo ||
+            _currentImages.isNotEmpty ||
+            displayText.isNotEmpty;
+
+        final showAudioInHeader =
+            !hasVisual && (currentAudioUrl?.isNotEmpty ?? false);
 
         return KeyboardListener(
           focusNode: _keyboardFocusNode,
@@ -436,29 +547,28 @@ class _LearnPageState extends State<LearnPage> {
                   icon: const Icon(Icons.arrow_back),
                   onPressed: () => Navigator.pop(context),
                 ),
+                _buildMediaMuteControl(),
                 _buildAutoplayControl(),
                 if (!kIsWeb) const WindowControls(color: Colors.white),
               ],
             ),
-            floatingActionButton:
-                AnimatedOpacity(
-                  duration: const Duration(milliseconds: 120),
-                  opacity: (_canGoNext && !_isAdvancing) ? 1.0 : 0.45,
-                  child: FloatingActionButton.extended(
-                    onPressed:
-                        (_canGoNext && !_isAdvancing) ? _nextCard : null,
-                    backgroundColor: headerColor,
-                    foregroundColor: Colors.white,
-                    icon: const Icon(Icons.arrow_forward),
-                    label: Text(
-                      context.t('next'),
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
-                    ),
+            floatingActionButton: AnimatedOpacity(
+              duration: const Duration(milliseconds: 120),
+              opacity: (_canGoNext && !_isAdvancing) ? 1.0 : 0.45,
+              child: FloatingActionButton.extended(
+                onPressed: (_canGoNext && !_isAdvancing) ? _nextCard : null,
+                backgroundColor: headerColor,
+                foregroundColor: Colors.white,
+                icon: const Icon(Icons.arrow_forward),
+                label: Text(
+                  context.t('next'),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
                   ),
                 ),
+              ),
+            ),
             body: Column(
               children: [
                 // Integrated Header
@@ -486,11 +596,14 @@ class _LearnPageState extends State<LearnPage> {
                               color: headerColor,
                               tooltip: context.t('play_audio'),
                               onPressed: () async {
-                                if (currentAudioUrl != null && currentAudioUrl.isNotEmpty) {
-                                  await _audioPlayer.play(UrlSource(currentAudioUrl));
+                                if (currentAudioUrl != null &&
+                                    currentAudioUrl.isNotEmpty) {
+                                  await _audioPlayer.play(
+                                    UrlSource(currentAudioUrl),
+                                  );
                                 }
                               },
-                            )
+                            ),
                           ];
                         }
 
@@ -535,7 +648,8 @@ class _LearnPageState extends State<LearnPage> {
                     subject: _subject,
                     languageCode: lang,
                     headerColor: headerColor,
-                    isMobile: false, // LearnPage uses desktop-style layout sizing
+                    isMobile:
+                        false, // LearnPage uses desktop-style layout sizing
                     videoController: _videoController,
                     hasVideo: _hasVideo,
                     images: _currentImages,
@@ -545,17 +659,30 @@ class _LearnPageState extends State<LearnPage> {
                         setState(() => _currentMediaIndex = index);
                       }
                     },
-                    onPlayAudio: currentAudioUrl?.isNotEmpty == true ? () async {
-                      await _audioPlayer.play(UrlSource(currentAudioUrl!));
-                    } : null,
-                    hasAudio: showAudioInHeader ? false : (currentAudioUrl?.isNotEmpty == true),
+                    onPlayAudio:
+                        currentAudioUrl?.isNotEmpty == true
+                            ? () async {
+                              await _audioPlayer.play(
+                                UrlSource(currentAudioUrl!),
+                              );
+                            }
+                            : null,
+                    hasAudio:
+                        showAudioInHeader
+                            ? false
+                            : (currentAudioUrl?.isNotEmpty == true),
                     hideAudioIcon: showAudioInHeader,
-                    headerText: showAudioInHeader ? null : (_currentCard.getAnswerList(lang).isNotEmpty 
-                        ? _currentCard.getAnswerList(lang).first 
-                        : null),
-                    centerTextOverride: showAudioInHeader && _currentCard.getAnswerList(lang).isNotEmpty 
-                        ? _currentCard.getAnswerList(lang).first 
-                        : null,
+                    headerText:
+                        showAudioInHeader
+                            ? null
+                            : (_currentCard.getAnswerList(lang).isNotEmpty
+                                ? _currentCard.getAnswerList(lang).first
+                                : null),
+                    centerTextOverride:
+                        showAudioInHeader &&
+                                _currentCard.getAnswerList(lang).isNotEmpty
+                            ? _currentCard.getAnswerList(lang).first
+                            : null,
                   ),
                 ),
               ],

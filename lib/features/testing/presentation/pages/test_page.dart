@@ -82,12 +82,21 @@ class _TestPageState extends State<TestPage> {
   final _scrollController = ScrollController();
   final _gridScrollController = ScrollController();
   bool _isAutoPlay = false;
+  bool _isMediaAutoPlayMuted = false;
   bool _isAutoPlayWaiting = false;
   final _random = Random();
 
   int _autoPlayingOptionIndex = -1;
   StreamSubscription? _playerSubscription;
   Timer? _optionAutoplayTimer;
+  final Map<String, VideoPlayerController> _optionVideoControllers = {};
+  VideoPlayerController? _activeOptionVideoController;
+  VoidCallback? _activeOptionVideoListener;
+  int _optionAutoplayGeneration = 0;
+  int _optionAudioAutoplayGeneration = -1;
+  bool _optionVisualReady = false;
+  bool _optionPlaybackDone = false;
+  bool _optionAdvanceScheduled = false;
 
   late String _languageCode;
 
@@ -98,11 +107,14 @@ class _TestPageState extends State<TestPage> {
     final isPremium = getIt<SubscriptionService>().isPremium;
     _isAutoPlay =
         isPremium && (_authService.currentUser?.autoPlayEnabled ?? false);
+    _isMediaAutoPlayMuted =
+        _authService.currentUser?.mediaAutoPlayMuted ?? false;
     _selectedMode = parseTestModeChoice(_authService.currentUser?.testMode);
 
     _audioPlayer.onPlayerComplete.listen((_) {
-      if (_autoPlayingOptionIndex != -1) {
-        _onOptionAudioCompleted();
+      if (_optionAudioAutoplayGeneration == _optionAutoplayGeneration) {
+        _optionAudioAutoplayGeneration = -1;
+        _markOptionPlaybackDone(_optionAutoplayGeneration);
       }
     });
 
@@ -146,67 +158,241 @@ class _TestPageState extends State<TestPage> {
   void _stopOptionsAutoplay() {
     _optionAutoplayTimer?.cancel();
     _optionAutoplayTimer = null;
+    _optionAudioAutoplayGeneration = -1;
+    _detachActiveOptionVideoListener();
+    _activeOptionVideoController?.pause();
+    _activeOptionVideoController = null;
     setState(() => _autoPlayingOptionIndex = -1);
   }
 
   void _startOptionsAutoplay() {
-    if (!_isReverseMode) return;
-
+    if (!_isReverseMode || _isMediaAutoPlayMuted) return;
     final lang = _languageCode.toLowerCase();
-    final correctImageUrl = _currentCard.primaryImageUrl(lang) ??
-        _currentCard.primaryImageUrl('global') ??
-        _currentCard.primaryImageUrl('en');
-    final correctVideoUrl = _currentCard.getVideoUrl(lang);
-    final hasMeaningfulDisplayText = _currentCard.hasMeaningfulDisplayText(lang);
-    final displayText =
-        hasMeaningfulDisplayText ? _currentCard.getDisplayText(lang).trim() : '';
-    final deduplicatedText =
-        (_correctAnswerText.isNotEmpty &&
-                displayText.toLowerCase() == _correctAnswerText.toLowerCase())
-            ? ''
-            : displayText;
-    final hasCorrectVisual =
-        _currentCard.isSpecialRenderer ||
-        _currentCard.isCountingRenderer ||
-        _currentCard.isColors ||
-        (correctVideoUrl != null && correctVideoUrl.isNotEmpty) ||
-        (correctImageUrl != null && correctImageUrl.isNotEmpty) ||
-        deduplicatedText.isNotEmpty;
-    final isAudioTest =
-        !hasCorrectVisual && (_currentCard.getAudioUrl(lang)?.isNotEmpty ?? false);
-
-    if (!isAudioTest) return;
+    final hasOptionMedia = _options.any((option) {
+      final card = option.card;
+      if (card == null) return false;
+      final hasImage =
+          card.primaryImageUrl(lang) != null ||
+          card.primaryImageUrl('global') != null ||
+          card.primaryImageUrl('en') != null;
+      final hasDisplayText = card.getDisplayText(lang).trim().isNotEmpty;
+      return (card.getVideoUrl(lang)?.isNotEmpty ?? false) ||
+          (card.getAudioUrl(lang)?.isNotEmpty ?? false) ||
+          hasImage ||
+          card.isSpecialRenderer ||
+          card.isCountingRenderer ||
+          card.isColors ||
+          hasDisplayText;
+    });
+    if (!hasOptionMedia) return;
 
     if (_options.isNotEmpty) {
       _playOptionSequentially(0);
     }
   }
 
-  void _playOptionSequentially(int index) {
+  Future<void> _playOptionSequentially(int index) async {
     if (_isAnswered || !mounted) return;
     if (index >= _options.length) {
-      setState(() => _autoPlayingOptionIndex = -1);
+      _stopOptionsAutoplay();
       return;
     }
 
+    _optionAutoplayTimer?.cancel();
+    _optionAudioAutoplayGeneration = -1;
+    _detachActiveOptionVideoListener();
+    await _audioPlayer.stop();
+    await _activeOptionVideoController?.pause();
+    _activeOptionVideoController = null;
+    _optionAutoplayGeneration++;
+    _optionVisualReady = false;
+    _optionPlaybackDone = false;
+    _optionAdvanceScheduled = false;
+    final generation = _optionAutoplayGeneration;
+
     setState(() => _autoPlayingOptionIndex = index);
     final opt = _options[index];
-    final url = opt.card?.getAudioUrl(_languageCode.toLowerCase());
-    if (url != null && url.isNotEmpty) {
-      _audioPlayer.play(UrlSource(url));
-    } else {
-      // skip if no audio
-      _onOptionAudioCompleted();
+    final card = opt.card;
+    if (card == null) {
+      _markOptionVisualReady(generation);
+      _markOptionPlaybackDone(generation);
+      return;
     }
+
+    final lang = _languageCode.toLowerCase();
+    final videoUrl = card.getVideoUrl(lang);
+    if (videoUrl != null && videoUrl.isNotEmpty) {
+      final controller = await _ensureOptionVideoController(card);
+      if (!mounted ||
+          _isAnswered ||
+          _autoPlayingOptionIndex != index ||
+          generation != _optionAutoplayGeneration) {
+        return;
+      }
+      _activeOptionVideoController = controller;
+      _markOptionVisualReady(generation);
+      _activeOptionVideoListener = () {
+        final value = controller.value;
+        if (!value.isInitialized || value.isPlaying) return;
+        if (value.position >= value.duration &&
+            value.duration > Duration.zero) {
+          _detachActiveOptionVideoListener();
+          _markOptionPlaybackDone(generation);
+        }
+      };
+      controller.addListener(_activeOptionVideoListener!);
+      await controller.seekTo(Duration.zero);
+      await controller.play();
+      return;
+    }
+
+    unawaited(_prepareOptionVisualReady(card, generation));
+
+    final audioUrl = card.getAudioUrl(lang);
+    if (audioUrl != null && audioUrl.isNotEmpty) {
+      _optionAudioAutoplayGeneration = generation;
+      try {
+        await _audioPlayer.play(UrlSource(audioUrl));
+      } catch (_) {
+        if (_optionAudioAutoplayGeneration == generation) {
+          _optionAudioAutoplayGeneration = -1;
+          _markOptionPlaybackDone(generation);
+        }
+      }
+      return;
+    }
+
+    _markOptionPlaybackDone(generation);
   }
 
-  void _onOptionAudioCompleted() {
+  void _scheduleNextOption() {
     if (_autoPlayingOptionIndex == -1 || _isAnswered || !mounted) return;
 
     _optionAutoplayTimer?.cancel();
     _optionAutoplayTimer = Timer(const Duration(seconds: 1), () {
       _playOptionSequentially(_autoPlayingOptionIndex + 1);
     });
+  }
+
+  Future<void> _prepareOptionVisualReady(CardModel card, int generation) async {
+    final lang = _languageCode.toLowerCase();
+    final imageUrl =
+        card.primaryImageUrl(lang) ??
+        card.primaryImageUrl('global') ??
+        card.primaryImageUrl('en');
+
+    if (imageUrl != null && imageUrl.isNotEmpty) {
+      try {
+        if (!imageUrl.toLowerCase().endsWith('.svg')) {
+          await precacheImage(NetworkImage(imageUrl), context);
+        } else {
+          await WidgetsBinding.instance.endOfFrame;
+        }
+      } catch (_) {
+        // Fall through and let the fallback count as ready.
+      }
+      _markOptionVisualReadyOnNextFrame(generation);
+      return;
+    }
+
+    final hasDisplayText = card.getDisplayText(lang).trim().isNotEmpty;
+    if (card.isSpecialRenderer ||
+        card.isCountingRenderer ||
+        card.isColors ||
+        hasDisplayText) {
+      _markOptionVisualReadyOnNextFrame(generation);
+      return;
+    }
+
+    _markOptionVisualReady(generation);
+  }
+
+  void _markOptionVisualReadyOnNextFrame(int generation) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _markOptionVisualReady(generation);
+    });
+  }
+
+  void _markOptionVisualReady(int generation) {
+    if (!mounted ||
+        generation != _optionAutoplayGeneration ||
+        _optionVisualReady) {
+      return;
+    }
+    _optionVisualReady = true;
+    _maybeAdvanceOption(generation);
+  }
+
+  void _markOptionPlaybackDone(int generation) {
+    if (!mounted ||
+        generation != _optionAutoplayGeneration ||
+        _optionPlaybackDone) {
+      return;
+    }
+    _optionPlaybackDone = true;
+    _maybeAdvanceOption(generation);
+  }
+
+  void _maybeAdvanceOption(int generation) {
+    if (!mounted ||
+        generation != _optionAutoplayGeneration ||
+        _autoPlayingOptionIndex == -1 ||
+        _isAnswered ||
+        _optionAdvanceScheduled ||
+        !_optionVisualReady ||
+        !_optionPlaybackDone) {
+      return;
+    }
+    _optionAdvanceScheduled = true;
+    _scheduleNextOption();
+  }
+
+  void _detachActiveOptionVideoListener() {
+    if (_activeOptionVideoController != null &&
+        _activeOptionVideoListener != null) {
+      _activeOptionVideoController!.removeListener(_activeOptionVideoListener!);
+    }
+    _activeOptionVideoListener = null;
+  }
+
+  Future<VideoPlayerController> _ensureOptionVideoController(
+    CardModel card,
+  ) async {
+    final existing = _optionVideoControllers[card.id];
+    if (existing != null) return existing;
+
+    final videoUrl = card.getVideoUrl(_languageCode.toLowerCase())!;
+    final controller = VideoPlayerController.networkUrl(Uri.parse(videoUrl));
+    _optionVideoControllers[card.id] = controller;
+    await controller.initialize();
+    if (mounted) {
+      setState(() {});
+    }
+    return controller;
+  }
+
+  Future<void> _prepareOptionVideoControllers(List<TestOption> options) async {
+    final lang = _languageCode.toLowerCase();
+    final futures =
+        options
+            .map((option) => option.card)
+            .whereType<CardModel>()
+            .where((card) => card.getVideoUrl(lang)?.isNotEmpty ?? false)
+            .map(_ensureOptionVideoController)
+            .toList();
+
+    if (futures.isEmpty) return;
+    await Future.wait(futures);
+  }
+
+  Future<void> _disposeOptionVideoControllers() async {
+    _detachActiveOptionVideoListener();
+    _activeOptionVideoController = null;
+    final controllers = _optionVideoControllers.values.toList();
+    _optionVideoControllers.clear();
+    for (final controller in controllers) {
+      await controller.dispose();
+    }
   }
 
   Future<void> _setupMCQ() async {
@@ -232,11 +418,8 @@ class _TestPageState extends State<TestPage> {
       options =
           selectedCards
               .map(
-                (c) => TestOption(
-                  text: _getDisplayAnswer(c),
-                  card: c,
-                  id: c.id,
-                ),
+                (c) =>
+                    TestOption(text: _getDisplayAnswer(c), card: c, id: c.id),
               )
               .toList();
 
@@ -318,43 +501,63 @@ class _TestPageState extends State<TestPage> {
       options.shuffle();
     }
 
-    if (mounted) {
-        setState(() {
-          _options = options;
-          final lang = _languageCode.toLowerCase();
-          _currentImages = _currentCard.getImageUrls(lang);
-          _currentMediaIndex = 0;
-          final videoUrl = _currentCard.getVideoUrl(lang);
-          
-          _videoController?.dispose();
-          _videoController = null;
+    await _disposeOptionVideoControllers();
 
-          if (videoUrl != null && videoUrl.isNotEmpty) {
-            _videoController = VideoPlayerController.networkUrl(Uri.parse(videoUrl));
-            _videoController!.initialize().then((_) {
-              if (mounted) {
-                setState(() {
-                  _hasVideo = true;
-                });
+    if (mounted) {
+      setState(() {
+        _options = options;
+        final lang = _languageCode.toLowerCase();
+        _currentImages = _currentCard.getImageUrls(lang);
+        _currentMediaIndex = 0;
+        final videoUrl = _currentCard.getVideoUrl(lang);
+
+        _videoController?.dispose();
+        _videoController = null;
+
+        if (videoUrl != null && videoUrl.isNotEmpty) {
+          _videoController = VideoPlayerController.networkUrl(
+            Uri.parse(videoUrl),
+          );
+          _videoController!.initialize().then((_) {
+            if (mounted) {
+              setState(() {
+                _hasVideo = true;
+              });
+              if (!_isMediaAutoPlayMuted) {
                 _videoController!.play();
               }
-            });
-          } else {
-            _hasVideo = false;
-          }
-        });
-      }
+            }
+          });
+        } else {
+          _hasVideo = false;
+        }
+      });
+    }
+
+    await _prepareOptionVideoControllers(options);
 
     final lang = _languageCode.toLowerCase();
     final audio = _currentCard.getAudioUrl(lang);
+    final hasVisuals = _hasVideo || _currentImages.isNotEmpty;
+
+    // Normal mode: Play if NO visuals
+    // Reverse mode: Play if HAS visuals (as per new requirement)
+    bool shouldPlay = false;
     if (audio != null &&
-        !_isReverseMode &&
         !_currentCard.isSpecialRenderer &&
         !_currentCard.isCountingRenderer) {
+      if (!_isReverseMode && !hasVisuals) {
+        shouldPlay = true;
+      } else if (_isReverseMode && hasVisuals) {
+        shouldPlay = true;
+      }
+    }
+
+    if (!_isMediaAutoPlayMuted && shouldPlay && audio != null) {
       _audioPlayer.play(UrlSource(audio));
     }
 
-    if (_isReverseMode) {
+    if (_isReverseMode && !_isMediaAutoPlayMuted) {
       _startOptionsAutoplay();
     }
   }
@@ -366,6 +569,18 @@ class _TestPageState extends State<TestPage> {
     if (_selectedMode == mode) return;
     setState(() => _selectedMode = mode);
     await _authService.updateTestMode(mode.storageValue);
+  }
+
+  Future<void> _toggleMediaAutoPlayMuted() async {
+    final newValue = !_isMediaAutoPlayMuted;
+    setState(() => _isMediaAutoPlayMuted = newValue);
+    await _authService.updateMediaAutoPlayMuted(newValue);
+
+    if (newValue) {
+      _stopOptionsAutoplay();
+      await _audioPlayer.stop();
+      await _videoController?.pause();
+    }
   }
 
   Widget _buildModeMenuButton(Color headerColor) {
@@ -384,22 +599,24 @@ class _TestPageState extends State<TestPage> {
                 Icon(
                   mode.icon,
                   size: 20,
-                  color:
-                      selected ? headerColor : Colors.grey[700],
+                  color: selected ? headerColor : Colors.grey[700],
                 ),
                 const SizedBox(width: 12),
                 Expanded(child: Text(mode.label)),
-                if (selected)
-                  Icon(
-                    Icons.check,
-                    size: 18,
-                    color: headerColor,
-                  ),
+                if (selected) Icon(Icons.check, size: 18, color: headerColor),
               ],
             ),
           );
         }).toList();
       },
+    );
+  }
+
+  Widget _buildMediaMuteControl() {
+    return IconButton(
+      tooltip: _isMediaAutoPlayMuted ? 'Unmute auto-play' : 'Mute auto-play',
+      icon: Icon(_isMediaAutoPlayMuted ? Icons.volume_off : Icons.volume_up),
+      onPressed: _toggleMediaAutoPlayMuted,
     );
   }
 
@@ -410,8 +627,17 @@ class _TestPageState extends State<TestPage> {
     required String lang,
   }) {
     final audioUrl = _currentCard.getAudioUrl(lang);
-    final hasAudio = audioUrl != null && audioUrl.isNotEmpty;
-    
+    final hasVisuals = _hasVideo || _currentImages.isNotEmpty;
+    // In normal mode, if visuals are present, hide audio
+    final effectivelyHasAudio =
+        (audioUrl != null && audioUrl.isNotEmpty) &&
+        (_isReverseMode || !hasVisuals);
+
+    // Hide icon in CardMediaContent if:
+    // 1. Normal mode and has visuals (we don't want audio at all)
+    // 2. Reverse mode and has visuals (we show it in the top header)
+    final hideIconInContent = hasVisuals;
+
     return CardMediaContent(
       card: _currentCard,
       subject: _subject,
@@ -427,13 +653,20 @@ class _TestPageState extends State<TestPage> {
           setState(() => _currentMediaIndex = index);
         }
       },
-      onPlayAudio: hasAudio ? () async {
-        if (audioUrl.isNotEmpty) {
-          await _audioPlayer.play(UrlSource(audioUrl));
-        }
-      } : null,
-      hasAudio: hasAudio,
-      headerText: _isReverseMode ? _correctAnswerText : _currentCard.getPrompt(lang).trim(),
+      onPlayAudio:
+          effectivelyHasAudio
+              ? () async {
+                if (audioUrl.isNotEmpty) {
+                  await _audioPlayer.play(UrlSource(audioUrl));
+                }
+              }
+              : null,
+      hasAudio: effectivelyHasAudio,
+      hideAudioIcon: hideIconInContent,
+      headerText:
+          _isReverseMode
+              ? _correctAnswerText
+              : _currentCard.getPrompt(lang).trim(),
     );
   }
 
@@ -452,9 +685,7 @@ class _TestPageState extends State<TestPage> {
     final primaryTextFontSize =
         _isReverseMode ? (_isAnswered ? 32.0 : 32.0) : 20.0;
     final primaryTextFontWeight =
-        _isReverseMode && _isAnswered
-            ? FontWeight.bold
-            : FontWeight.w500;
+        _isReverseMode && _isAnswered ? FontWeight.bold : FontWeight.w500;
 
     final secondaryWidget =
         _isAnswered
@@ -473,8 +704,7 @@ class _TestPageState extends State<TestPage> {
                                     _currentCard.getAnswerList(lang).length > 1
                                         ? 24
                                         : 32,
-                                color:
-                                    _isCorrect ? Colors.green : Colors.red,
+                                color: _isCorrect ? Colors.green : Colors.red,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -491,6 +721,11 @@ class _TestPageState extends State<TestPage> {
                     fontWeight: FontWeight.bold,
                   ),
                 ));
+
+    final audioUrl = _currentCard.getAudioUrl(lang);
+    final hasAudio = audioUrl != null && audioUrl.isNotEmpty;
+    final hasVisuals = _hasVideo || _currentImages.isNotEmpty;
+    final showTopAudioIcon = _isReverseMode && hasVisuals && hasAudio;
 
     return Container(
       width: double.infinity,
@@ -510,6 +745,13 @@ class _TestPageState extends State<TestPage> {
               fontWeight: primaryTextFontWeight,
             ),
           ),
+          if (showTopAudioIcon)
+            IconButton(
+              icon: Icon(Icons.volume_up, color: headerColor),
+              onPressed: () => _audioPlayer.play(UrlSource(audioUrl)),
+              constraints: const BoxConstraints(),
+              padding: EdgeInsets.zero,
+            ),
           const SizedBox(width: 12),
           secondaryWidget,
         ],
@@ -776,6 +1018,7 @@ class _TestPageState extends State<TestPage> {
                   icon: const Icon(Icons.arrow_back),
                   onPressed: () => Navigator.pop(context),
                 ),
+                _buildMediaMuteControl(),
                 IconButton(
                   icon: Stack(
                     clipBehavior: Clip.none,
@@ -827,25 +1070,23 @@ class _TestPageState extends State<TestPage> {
                 if (!kIsWeb) const WindowControls(color: Colors.white),
               ],
             ),
-            floatingActionButton:
-                AnimatedOpacity(
-                  duration: const Duration(milliseconds: 120),
-                  opacity: (_isAnswered && !_isAdvancing) ? 1.0 : 0.45,
-                  child: FloatingActionButton.extended(
-                    onPressed:
-                        (_isAnswered && !_isAdvancing) ? _nextCard : null,
-                    backgroundColor: headerColor,
-                    foregroundColor: Colors.white,
-                    icon: const Icon(Icons.arrow_forward),
-                    label: Text(
-                      context.t('next'),
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
-                    ),
+            floatingActionButton: AnimatedOpacity(
+              duration: const Duration(milliseconds: 120),
+              opacity: (_isAnswered && !_isAdvancing) ? 1.0 : 0.45,
+              child: FloatingActionButton.extended(
+                onPressed: (_isAnswered && !_isAdvancing) ? _nextCard : null,
+                backgroundColor: headerColor,
+                foregroundColor: Colors.white,
+                icon: const Icon(Icons.arrow_forward),
+                label: Text(
+                  context.t('next'),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
                   ),
                 ),
+              ),
+            ),
             body: Column(
               children: [
                 _buildQuestionHeader(context, headerColor),
@@ -860,26 +1101,59 @@ class _TestPageState extends State<TestPage> {
                   child: LayoutBuilder(
                     builder: (context, constraints) {
                       final isMobile = constraints.maxWidth < 800;
-                      final correctImageUrl = _currentCard.primaryImageUrl(lang) ??
-                                              _currentCard.primaryImageUrl('global') ??
-                                              _currentCard.primaryImageUrl('en');
+                      final correctImageUrl =
+                          _currentCard.primaryImageUrl(lang) ??
+                          _currentCard.primaryImageUrl('global') ??
+                          _currentCard.primaryImageUrl('en');
                       final correctVideoUrl = _currentCard.getVideoUrl(lang);
-                      final hasMeaningfulDisplayText = _currentCard.hasMeaningfulDisplayText(lang);
-                      final displayText = hasMeaningfulDisplayText ? _currentCard.getDisplayText(lang).trim() : '';
-                      final deduplicatedText = (_correctAnswerText.isNotEmpty && displayText.toLowerCase() == _correctAnswerText.toLowerCase()) ? '' : displayText;
-                      final hasCorrectVisual = _currentCard.isSpecialRenderer ||
-                                               _currentCard.isCountingRenderer ||
-                                               _currentCard.isColors ||
-                                               (correctVideoUrl != null && correctVideoUrl.isNotEmpty) ||
-                                               (correctImageUrl != null && correctImageUrl.isNotEmpty) ||
-                                               deduplicatedText.isNotEmpty;
-                      final isAudioTest = !hasCorrectVisual && (_currentCard.getAudioUrl(lang)?.isNotEmpty ?? false);
-                      
+                      final hasMeaningfulDisplayText = _currentCard
+                          .hasMeaningfulDisplayText(lang);
+                      final displayText =
+                          hasMeaningfulDisplayText
+                              ? _currentCard.getDisplayText(lang).trim()
+                              : '';
+                      final deduplicatedText =
+                          (_correctAnswerText.isNotEmpty &&
+                                  displayText.toLowerCase() ==
+                                      _correctAnswerText.toLowerCase())
+                              ? ''
+                              : displayText;
+                      final hasCorrectVisual =
+                          _currentCard.isSpecialRenderer ||
+                          _currentCard.isCountingRenderer ||
+                          _currentCard.isColors ||
+                          (correctVideoUrl != null &&
+                              correctVideoUrl.isNotEmpty) ||
+                          (correctImageUrl != null &&
+                              correctImageUrl.isNotEmpty) ||
+                          deduplicatedText.isNotEmpty;
+                      final isAudioTest =
+                          !hasCorrectVisual &&
+                          (_currentCard.getAudioUrl(lang)?.isNotEmpty ?? false);
+
+                      final audioUrl = _currentCard.getAudioUrl(lang);
+                      final hasAudio = audioUrl != null && audioUrl.isNotEmpty;
+                      final isSpecialAudioMode =
+                          !_isReverseMode &&
+                          deduplicatedText.isEmpty &&
+                          (correctVideoUrl == null ||
+                              correctVideoUrl.isEmpty) &&
+                          (correctImageUrl == null ||
+                              correctImageUrl.isEmpty) &&
+                          hasAudio &&
+                          !_currentCard.isSpecialRenderer &&
+                          !_currentCard.isCountingRenderer &&
+                          !_currentCard.isColors;
+
                       // Calculate the absolute maximum columns based on width
-                      final maxPossibleColumns = isAudioTest 
-                          ? (constraints.maxWidth / 300).floor().clamp(2, 4)
-                          : (constraints.maxWidth / 400).floor().clamp(2, 3);
-                      
+                      final maxPossibleColumns =
+                          isAudioTest
+                              ? (constraints.maxWidth / 300).floor().clamp(2, 4)
+                              : (constraints.maxWidth / 400).floor().clamp(
+                                2,
+                                3,
+                              );
+
                       // Balanced crossAxisCount logic:
                       // Distribute items as evenly as possible across rows.
                       final int numOptions = _options.length;
@@ -889,18 +1163,22 @@ class _TestPageState extends State<TestPage> {
                       } else if (numOptions <= maxPossibleColumns) {
                         crossAxisCount = numOptions;
                       } else {
-                        final int rows = (numOptions / maxPossibleColumns).ceil();
+                        final int rows =
+                            (numOptions / maxPossibleColumns).ceil();
                         crossAxisCount = (numOptions / rows).ceil();
                       }
                       // Safety clamp
-                      crossAxisCount = crossAxisCount.clamp(2, maxPossibleColumns);
+                      crossAxisCount = crossAxisCount.clamp(
+                        2,
+                        maxPossibleColumns,
+                      );
 
                       final mediaContent = _buildForwardMediaContent(
-                                context: context,
-                                isMobile: isMobile,
-                                headerColor: headerColor,
-                                lang: lang,
-                              );
+                        context: context,
+                        isMobile: isMobile,
+                        headerColor: headerColor,
+                        lang: lang,
+                      );
 
                       final optionsTitle =
                           _isReverseMode
@@ -909,7 +1187,7 @@ class _TestPageState extends State<TestPage> {
 
                       final optionsContent = Container(
                         width:
-                            _isReverseMode || isMobile
+                            _isReverseMode || isMobile || isSpecialAudioMode
                                 ? double.infinity
                                 : 350,
                         padding: EdgeInsets.all(isMobile ? 24 : 32),
@@ -919,7 +1197,9 @@ class _TestPageState extends State<TestPage> {
                               isMobile
                                   ? [
                                     BoxShadow(
-                                      color: Colors.black.withValues(alpha: 0.05),
+                                      color: Colors.black.withValues(
+                                        alpha: 0.05,
+                                      ),
                                       blurRadius: 10,
                                       offset: const Offset(0, -5),
                                     ),
@@ -938,6 +1218,23 @@ class _TestPageState extends State<TestPage> {
                                 letterSpacing: 1.1,
                               ),
                             ),
+                            if (isSpecialAudioMode) ...[
+                              const SizedBox(height: 10),
+                              IconButton(
+                                icon: Icon(
+                                  Icons.volume_up,
+                                  size: 80,
+                                  color: headerColor,
+                                ),
+                                onPressed: () async {
+                                  if (audioUrl.isNotEmpty) {
+                                    await _audioPlayer.play(
+                                      UrlSource(audioUrl),
+                                    );
+                                  }
+                                },
+                              ),
+                            ],
                             const SizedBox(height: 20),
                             if (_options.isEmpty)
                               const Center(
@@ -956,17 +1253,19 @@ class _TestPageState extends State<TestPage> {
                                         crossAxisCount: crossAxisCount,
                                         crossAxisSpacing: 12,
                                         mainAxisSpacing: 12,
-                                        childAspectRatio: isAudioTest ? (isMobile ? 2.5 : 3.0) : 1.0,
+                                        childAspectRatio:
+                                            isAudioTest
+                                                ? (isMobile ? 2.5 : 3.0)
+                                                : 1.0,
                                       ),
                                   itemCount: _options.length,
                                   itemBuilder:
-                                      (context, index) =>
-                                          _buildOptionButton(
-                                            index,
-                                            headerColor,
-                                            isMobile,
-                                            isAudioTest,
-                                          ),
+                                      (context, index) => _buildOptionButton(
+                                        index,
+                                        headerColor,
+                                        isMobile,
+                                        isAudioTest,
+                                      ),
                                 ),
                               )
                             else if (isMobile)
@@ -997,9 +1296,7 @@ class _TestPageState extends State<TestPage> {
                                     physics: const BouncingScrollPhysics(),
                                     itemCount: _options.length,
                                     separatorBuilder:
-                                        (_, __) => const SizedBox(
-                                          height: 12,
-                                        ),
+                                        (_, __) => const SizedBox(height: 12),
                                     itemBuilder:
                                         (context, index) => _buildOptionButton(
                                           index,
@@ -1014,7 +1311,7 @@ class _TestPageState extends State<TestPage> {
                         ),
                       );
 
-                      if (_isReverseMode) {
+                      if (_isReverseMode || isSpecialAudioMode) {
                         return Padding(
                           padding: EdgeInsets.all(isMobile ? 16 : 32),
                           child: optionsContent,
@@ -1026,7 +1323,7 @@ class _TestPageState extends State<TestPage> {
                           controller: _scrollController,
                           child: Column(
                             children: [
-                              mediaContent,
+                              if (!isSpecialAudioMode) mediaContent,
                               optionsContent,
                             ],
                           ),
@@ -1040,10 +1337,12 @@ class _TestPageState extends State<TestPage> {
                             isLeft
                                 ? [
                                   optionsContent,
-                                  Expanded(flex: 3, child: mediaContent),
+                                  if (!isSpecialAudioMode)
+                                    Expanded(flex: 3, child: mediaContent),
                                 ]
                                 : [
-                                  Expanded(flex: 3, child: mediaContent),
+                                  if (!isSpecialAudioMode)
+                                    Expanded(flex: 3, child: mediaContent),
                                   optionsContent,
                                 ],
                       );
@@ -1058,7 +1357,12 @@ class _TestPageState extends State<TestPage> {
     );
   }
 
-  Widget _buildOptionButton(int index, Color headerColor, bool isMobile, bool isAudioTest) {
+  Widget _buildOptionButton(
+    int index,
+    Color headerColor,
+    bool isMobile,
+    bool isAudioTest,
+  ) {
     final opt = _options[index];
     final isSelected = _selectedIndex == index;
     final isCorrect = opt.id == _correctAnswerId;
@@ -1078,6 +1382,9 @@ class _TestPageState extends State<TestPage> {
       final lang = _languageCode.toLowerCase();
       final optAudioUrl = opt.card!.getAudioUrl(lang);
       final hasOptAudio = optAudioUrl != null && optAudioUrl.isNotEmpty;
+      final optVideoUrl = opt.card!.getVideoUrl(lang);
+      final hasOptVideo = optVideoUrl != null && optVideoUrl.isNotEmpty;
+      final optVideoController = _optionVideoControllers[opt.card!.id];
 
       return InkWell(
         onTap: () => _selectOption(index),
@@ -1089,96 +1396,178 @@ class _TestPageState extends State<TestPage> {
             borderRadius: BorderRadius.circular(12),
             color: color?.withValues(alpha: 0.1),
           ),
-          child: isAudioTest
-              ? Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Material(
-                      color: Colors.transparent,
-                      child: InkResponse(
-                        onTap: () => _selectOption(index),
-                        radius: isMobile ? 32 : 40,
-                        hoverColor: headerColor.withValues(alpha: 0.1),
-                        highlightShape: BoxShape.circle,
-                        containedInkWell: false,
-                        child: Container(
-                          padding: const EdgeInsets.all(8),
-                          child: Text(
-                            '${index + 1}',
-                            style: TextStyle(
-                              fontSize: isMobile ? 28 : 36,
-                              fontWeight: FontWeight.bold,
-                              color: headerColor.withValues(alpha: 0.7),
+          child:
+              isAudioTest
+                  ? Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Material(
+                        color: Colors.transparent,
+                        child: InkResponse(
+                          onTap: () => _selectOption(index),
+                          radius: isMobile ? 32 : 40,
+                          hoverColor: headerColor.withValues(alpha: 0.1),
+                          highlightShape: BoxShape.circle,
+                          containedInkWell: false,
+                          child: Container(
+                            padding: const EdgeInsets.all(8),
+                            child: Text(
+                              '${index + 1}',
+                              style: TextStyle(
+                                fontSize: isMobile ? 28 : 36,
+                                fontWeight: FontWeight.bold,
+                                color: headerColor.withValues(alpha: 0.7),
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                    IconButton(
-                      icon: Icon(
-                        Icons.volume_up,
-                        size: isMobile ? 36 : 52,
-                        color: hasOptAudio
-                            ? headerColor
-                            : Colors.grey.withValues(alpha: 0.3),
-                      ),
-                      onPressed:
-                          hasOptAudio
-                              ? () async {
-                                if (optAudioUrl.isNotEmpty) {
-                                  await _audioPlayer.play(UrlSource(optAudioUrl));
-                                }
-                              }
-                              : null,
-                    ),
-                  ],
-                )
-              : Stack(
-                  children: [
-                    Positioned.fill(
-                      child: CardRenderer(
-                        card: opt.card!,
-                        subject: _subject,
-                        languageCode: _languageCode,
-                        fallbackColor: headerColor,
-                        fit: BoxFit.contain,
-                        textFontSize: isMobile ? 24 : 32,
-                        excludeText: _correctAnswerText,
-                        forceAudioIcon: false,
-                        onPlayAudio:
+                      IconButton(
+                        icon: Icon(
+                          Icons.volume_up,
+                          size: isMobile ? 36 : 52,
+                          color:
+                              hasOptAudio
+                                  ? headerColor
+                                  : Colors.grey.withValues(alpha: 0.3),
+                        ),
+                        onPressed:
                             hasOptAudio
                                 ? () async {
                                   if (optAudioUrl.isNotEmpty) {
-                                    await _audioPlayer.play(UrlSource(optAudioUrl));
+                                    await _audioPlayer.play(
+                                      UrlSource(optAudioUrl),
+                                    );
                                   }
                                 }
                                 : null,
                       ),
-                    ),
-                    Positioned(
-                      left: 4,
-                      top: 4,
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 6,
-                          vertical: 2,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.black.withValues(alpha: 0.5),
-                          borderRadius: BorderRadius.circular(999),
-                        ),
-                        child: Text(
-                          '${index + 1}',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 11,
-                            fontWeight: FontWeight.bold,
+                    ],
+                  )
+                  : Stack(
+                    children: [
+                      Positioned.fill(
+                        child:
+                            hasOptVideo &&
+                                    optVideoController != null &&
+                                    optVideoController.value.isInitialized
+                                ? ValueListenableBuilder(
+                                  valueListenable: optVideoController,
+                                  builder: (
+                                    context,
+                                    VideoPlayerValue value,
+                                    _,
+                                  ) {
+                                    return Stack(
+                                      fit: StackFit.expand,
+                                      children: [
+                                        FittedBox(
+                                          fit: BoxFit.contain,
+                                          child: SizedBox(
+                                            width: value.size.width,
+                                            height: value.size.height,
+                                            child: VideoPlayer(
+                                              optVideoController,
+                                            ),
+                                          ),
+                                        ),
+                                        Positioned.fill(
+                                          child: GestureDetector(
+                                            behavior: HitTestBehavior.opaque,
+                                            onTap: () {
+                                              if (optVideoController
+                                                  .value
+                                                  .isPlaying) {
+                                                optVideoController.pause();
+                                              } else {
+                                                if (optVideoController
+                                                        .value
+                                                        .position >=
+                                                    optVideoController
+                                                        .value
+                                                        .duration) {
+                                                  optVideoController.seekTo(
+                                                    Duration.zero,
+                                                  );
+                                                }
+                                                optVideoController.play();
+                                              }
+                                            },
+                                          ),
+                                        ),
+                                        if (!value.isPlaying)
+                                          IgnorePointer(
+                                            child: Center(
+                                              child: Container(
+                                                padding: const EdgeInsets.all(
+                                                  10,
+                                                ),
+                                                decoration: BoxDecoration(
+                                                  color: Colors.black
+                                                      .withValues(alpha: 0.35),
+                                                  shape: BoxShape.circle,
+                                                ),
+                                                child: Icon(
+                                                  Icons.play_arrow,
+                                                  size: isMobile ? 40 : 52,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                      ],
+                                    );
+                                  },
+                                )
+                                : hasOptVideo
+                                ? const Center(
+                                  child: CircularProgressIndicator(),
+                                )
+                                : CardRenderer(
+                                  card: opt.card!,
+                                  subject: _subject,
+                                  languageCode: _languageCode,
+                                  fallbackColor: headerColor,
+                                  fit: BoxFit.contain,
+                                  textFontSize: isMobile ? 24 : 32,
+                                  excludeText: _correctAnswerText,
+                                  forceAudioIcon: false,
+                                  onPlayAudio:
+                                      hasOptAudio
+                                          ? () async {
+                                            if (optAudioUrl.isNotEmpty) {
+                                              await _audioPlayer.play(
+                                                UrlSource(optAudioUrl),
+                                              );
+                                            }
+                                          }
+                                          : null,
+                                ),
+                      ),
+                      Positioned(
+                        left: 4,
+                        top: 4,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 6,
+                            vertical: 2,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.black.withValues(alpha: 0.5),
+                            borderRadius: BorderRadius.circular(999),
+                          ),
+                          child: Text(
+                            '${index + 1}',
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 11,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
+                    ],
+                  ),
         ),
       );
     }
@@ -1234,6 +1623,10 @@ class _TestPageState extends State<TestPage> {
   void dispose() {
     _optionAutoplayTimer?.cancel();
     _playerSubscription?.cancel();
+    _detachActiveOptionVideoListener();
+    for (final controller in _optionVideoControllers.values) {
+      controller.dispose();
+    }
     _keyboardFocusNode.dispose();
     _scrollController.dispose();
     _gridScrollController.dispose();

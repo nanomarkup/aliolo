@@ -109,4 +109,37 @@ describe('Auth API', () => {
 
     expect(res.status).toBe(200);
   });
+
+  it('should persist media auto-play mute preference', async () => {
+    const loginRes = await app.request('/api/auth/login', {
+      method: 'POST',
+      body: JSON.stringify({
+        email: testUser.email,
+        password: testUser.password
+      }),
+      headers: { 'Content-Type': 'application/json' }
+    }, env);
+    const loginData = await loginRes.json() as any;
+
+    const updateRes = await app.request('/api/auth/update', {
+      method: 'POST',
+      body: JSON.stringify({
+        media_auto_play_muted: true,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Session-Id': loginData.session_id,
+      }
+    }, env);
+
+    expect(updateRes.status).toBe(200);
+
+    const meRes = await app.request('/api/auth/me', {
+      headers: { 'X-Session-Id': loginData.session_id }
+    }, env);
+
+    expect(meRes.status).toBe(200);
+    const meData = await meRes.json() as any;
+    expect(meData.user.media_auto_play_muted).toBe(1);
+  });
 });

@@ -349,6 +349,10 @@ class CardModel {
     return MediaUrlResolver.resolve(url == null || url.isEmpty ? null : url);
   }
 
+  bool hasAudioUrl(String lang) => (getAudioUrl(lang) ?? '').isNotEmpty;
+
+  bool hasVideoUrl(String lang) => (getVideoUrl(lang) ?? '').isNotEmpty;
+
   List<int>? get additionParts {
     final ans = getAnswer('en');
     final match = RegExp(r'(\d+)\s*\+\s*(\d+)').firstMatch(ans);

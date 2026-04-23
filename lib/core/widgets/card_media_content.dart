@@ -54,9 +54,50 @@ class CardMediaContent extends StatelessWidget {
         return const Center(child: CircularProgressIndicator());
       }
       return Center(
-        child: AspectRatio(
-          aspectRatio: videoController!.value.aspectRatio,
-          child: VideoPlayer(videoController!),
+        child: ValueListenableBuilder(
+          valueListenable: videoController!,
+          builder: (context, VideoPlayerValue value, child) {
+            return AspectRatio(
+              aspectRatio: value.aspectRatio,
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  VideoPlayer(videoController!),
+                  Positioned.fill(
+                    child: GestureDetector(
+                      behavior: HitTestBehavior.opaque,
+                      onTap: () {
+                        if (videoController!.value.isPlaying) {
+                          videoController!.pause();
+                        } else {
+                          if (videoController!.value.position >=
+                              videoController!.value.duration) {
+                            videoController!.seekTo(Duration.zero);
+                          }
+                          videoController!.play();
+                        }
+                      },
+                    ),
+                  ),
+                  if (!value.isPlaying)
+                    IgnorePointer(
+                      child: Container(
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          color: Colors.black.withValues(alpha: 0.3),
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(
+                          Icons.play_arrow,
+                          color: Colors.white,
+                          size: 64,
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            );
+          },
         ),
       );
     } else if (card.isCountingRenderer) {

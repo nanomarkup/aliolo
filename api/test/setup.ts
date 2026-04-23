@@ -31,6 +31,7 @@ CREATE TABLE IF NOT EXISTS profiles (
   sidebar_left INTEGER DEFAULT 0,
   sound_enabled INTEGER DEFAULT 1,
   auto_play_enabled INTEGER DEFAULT 0,
+  media_auto_play_muted INTEGER DEFAULT 0,
   show_on_leaderboard INTEGER DEFAULT 1,
   show_documentation INTEGER DEFAULT 1,
   learn_session_size INTEGER DEFAULT 10,

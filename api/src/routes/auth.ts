@@ -387,6 +387,7 @@ router.openapi(updateRoute, async (c) => {
     if (!user) return c.json({ error: 'Unauthorized' } as any, 401);
 
     const updateData = c.req.valid('json') as any;
+    console.log('UpdateProfile payload received:', JSON.stringify(updateData));
     
     // Remote protected fields
     delete updateData.id;

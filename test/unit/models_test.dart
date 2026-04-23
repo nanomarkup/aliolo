@@ -150,28 +150,31 @@ void main() {
       expect(model.isPublic, isTrue);
     });
 
-    test('CardModel reads renderer from json and supports special renderers', () {
-      final json = {
-        'id': 'test_card_math',
-        'subject_id': 'subj_1',
-        'owner_id': 'user_1',
-        'renderer': 'addition_number',
-        'display_text': '',
-        'display_texts': '{"es":""}',
-        'localized_data': '{}',
-        'created_at': '2026-04-13T12:00:00Z',
-        'updated_at': '2026-04-13T12:00:00Z',
-      };
+    test(
+      'CardModel reads renderer from json and supports special renderers',
+      () {
+        final json = {
+          'id': 'test_card_math',
+          'subject_id': 'subj_1',
+          'owner_id': 'user_1',
+          'renderer': 'addition_number',
+          'display_text': '',
+          'display_texts': '{"es":""}',
+          'localized_data': '{}',
+          'created_at': '2026-04-13T12:00:00Z',
+          'updated_at': '2026-04-13T12:00:00Z',
+        };
 
-      final model = CardModel.fromJson(json);
-      expect(model.renderer, 'addition_number');
-      expect(model.isSpecialRenderer, isTrue);
-      expect(model.isAdditionNumberRenderer, isTrue);
-      expect(model.isCountingRenderer, isFalse);
-      expect(model.isAdditionEmojiRenderer, isFalse);
-      expect(model.toJson().containsKey('test_mode'), isFalse);
-      expect(model.toJson()['renderer'], 'addition_number');
-    });
+        final model = CardModel.fromJson(json);
+        expect(model.renderer, 'addition_number');
+        expect(model.isSpecialRenderer, isTrue);
+        expect(model.isAdditionNumberRenderer, isTrue);
+        expect(model.isCountingRenderer, isFalse);
+        expect(model.isAdditionEmojiRenderer, isFalse);
+        expect(model.toJson().containsKey('test_mode'), isFalse);
+        expect(model.toJson()['renderer'], 'addition_number');
+      },
+    );
 
     test('CardModel parses colors from display_text only', () {
       final json = {
@@ -193,6 +196,25 @@ void main() {
       legacyJson['display_text'] = '';
       final legacyModel = CardModel.fromJson(legacyJson);
       expect(legacyModel.hexColor, isNull);
+    });
+
+    test('CardModel treats empty audio and video URLs as absent', () {
+      final json = {
+        'id': 'media_card',
+        'subject_id': 'subj_1',
+        'owner_id': 'user_1',
+        'audio': '',
+        'video': '',
+        'localized_data': '{}',
+        'created_at': '2026-04-13T12:00:00Z',
+        'updated_at': '2026-04-13T12:00:00Z',
+      };
+
+      final model = CardModel.fromJson(json);
+      expect(model.getAudioUrl('en'), isEmpty);
+      expect(model.getVideoUrl('en'), isEmpty);
+      expect(model.hasAudioUrl('en'), isFalse);
+      expect(model.hasVideoUrl('en'), isFalse);
     });
 
     test('CardModel ignores display_text fallback when it matches answer', () {
@@ -252,6 +274,18 @@ void main() {
 
       expect(model.learnAutoplayDelaySeconds, 4);
       expect(model.toJson()['learn_autoplay_delay_seconds'], 4);
+    });
+
+    test('UserModel parses and serializes media auto-play mute', () {
+      final model = UserModel.fromJson({
+        'id': 'user_1',
+        'username': 'Test User',
+        'email': 'test@example.com',
+        'media_auto_play_muted': 1,
+      });
+
+      expect(model.mediaAutoPlayMuted, isTrue);
+      expect(model.toJson()['media_auto_play_muted'], isTrue);
     });
   });
 

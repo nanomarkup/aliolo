@@ -64,6 +64,19 @@ def fetch_cards() -> list[dict]:
         print(f"Failed to parse D1 output: {e}\nOutput was: {result.stdout[:500]}")
         sys.exit(1)
 
+def fetch_profiles() -> list[dict]:
+    print(f"Fetching profiles from D1 database '{DB_NAME}'...")
+    sql = "SELECT avatar_url, avatar_original_url FROM profiles"
+    result = run_cmd(
+        wrangler_cmd() + ["d1", "execute", DB_NAME, "--command", sql, "--remote", "--json"],
+    )
+    try:
+        payload = json.loads(result.stdout)
+        return payload[0]["results"]
+    except (json.JSONDecodeError, KeyError, IndexError) as e:
+        print(f"Failed to parse D1 output: {e}")
+        return []
+
 def get_s3_client():
     account_id = os.environ.get("R2_ACCOUNT_ID")
     access_key_id = os.environ.get("AWS_ACCESS_KEY_ID")
@@ -103,6 +116,7 @@ def extract_filename(url_or_path: str) -> str:
 
 def main():
     cards = fetch_cards()
+    profiles = fetch_profiles()
     
     card_media_map = {}
     for card in cards:
@@ -136,6 +150,13 @@ def main():
                 
         card_media_map[card_id] = referenced_files
 
+    referenced_avatars = set()
+    for profile in profiles:
+        if profile.get("avatar_url"):
+            referenced_avatars.add(extract_filename(profile["avatar_url"]))
+        if profile.get("avatar_original_url"):
+            referenced_avatars.add(extract_filename(profile["avatar_original_url"]))
+
     objects = list_r2_objects("cards/")
     total_objects = len(objects)
     print(f"Found {total_objects} objects in R2 under 'cards/'.")
@@ -158,6 +179,16 @@ def main():
             elif filename not in card_media_map[card_id]:
                 # The card exists, but the file is not referenced
                 unused_keys.append(key)
+
+    avatar_objects = list_r2_objects("avatars/")
+    print(f"Found {len(avatar_objects)} objects in R2 under 'avatars/'.")
+    for obj in avatar_objects:
+        key = obj.get("Key")
+        if not key:
+            continue
+        filename = extract_filename(key)
+        if filename not in referenced_avatars:
+            unused_keys.append(key)
 
     if unused_keys:
         # Write to the project root directory
