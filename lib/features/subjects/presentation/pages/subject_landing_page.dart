@@ -473,28 +473,42 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
       }
 
       final size = isTest ? user.testSessionSize : user.learnSessionSize;
+      var emptySessionMessage = 'No cards available for this session.';
       if (isTest && !(_currentSubject?.isMath ?? false)) {
-        final cardsById = {for (final sc in sessionCards) sc.card.id: sc};
-        final selectedCardIds = await _progressService.getReviewSessionCardIds(
-          cardIds: cardsById.keys.toList(),
-          limit: size,
-        );
-        sessionCards =
-            selectedCardIds
-                .map((id) => cardsById[id])
-                .whereType<SubjectCard>()
-                .toList();
+        final candidateCards = List<SubjectCard>.from(sessionCards);
+        final cardsById = {for (final sc in candidateCards) sc.card.id: sc};
+        if (cardsById.isNotEmpty) {
+          final selection = await _progressService
+              .getReviewSessionCardSelection(
+                cardIds: cardsById.keys.toList(),
+                limit: size,
+              );
+
+          if (selection.succeeded) {
+            sessionCards =
+                selection.cardIds
+                    .map((id) => cardsById[id])
+                    .whereType<SubjectCard>()
+                    .toList();
+            if (sessionCards.isEmpty) {
+              emptySessionMessage = 'No cards due for review yet.';
+            }
+          } else {
+            sessionCards = SessionBucketSampler.sampleBucket(
+              candidateCards,
+              size,
+            );
+          }
+        }
       } else {
         sessionCards = SessionBucketSampler.sampleBucket(sessionCards, size);
       }
 
       if (sessionCards.isEmpty) {
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('No cards available for this session.'),
-            ),
-          );
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(emptySessionMessage)));
         }
         return;
       }

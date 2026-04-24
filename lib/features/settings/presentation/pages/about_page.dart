@@ -260,7 +260,9 @@ class _AboutPageState extends State<AboutPage> {
         onTap:
             () => Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const OnboardingScreen()),
+              MaterialPageRoute(
+                builder: (context) => const OnboardingScreen(isReplay: true),
+              ),
             ),
       ),
       (

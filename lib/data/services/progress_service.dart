@@ -4,6 +4,24 @@ import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/core/network/cloudflare_client.dart';
 import 'package:aliolo/core/utils/logger.dart';
 
+class ReviewSessionCardSelection {
+  final List<String> cardIds;
+  final bool succeeded;
+  final String? errorMessage;
+
+  const ReviewSessionCardSelection._({
+    required this.cardIds,
+    required this.succeeded,
+    this.errorMessage,
+  });
+
+  const ReviewSessionCardSelection.success(List<String> cardIds)
+    : this._(cardIds: cardIds, succeeded: true);
+
+  const ReviewSessionCardSelection.failure(String errorMessage)
+    : this._(cardIds: const [], succeeded: false, errorMessage: errorMessage);
+}
+
 class ProgressService {
   final _cfClient = getIt<CloudflareHttpClient>();
   final AuthService _authService = getIt<AuthService>();
@@ -22,7 +40,20 @@ class ProgressService {
     required List<String> cardIds,
     required int limit,
   }) async {
-    if (cardIds.isEmpty || limit <= 0) return [];
+    final selection = await getReviewSessionCardSelection(
+      cardIds: cardIds,
+      limit: limit,
+    );
+    return selection.cardIds;
+  }
+
+  Future<ReviewSessionCardSelection> getReviewSessionCardSelection({
+    required List<String> cardIds,
+    required int limit,
+  }) async {
+    if (cardIds.isEmpty || limit <= 0) {
+      return const ReviewSessionCardSelection.success([]);
+    }
 
     try {
       final response = await _cfClient.client.post(
@@ -32,12 +63,21 @@ class ProgressService {
       if (response.statusCode == 200 && response.data is Map) {
         final data = Map<String, dynamic>.from(response.data);
         final selected = data['card_ids'];
-        if (selected is List) return selected.map((id) => '$id').toList();
+        if (selected is List) {
+          return ReviewSessionCardSelection.success(
+            selected.map((id) => '$id').toList(),
+          );
+        }
       }
+      final message =
+          'Unexpected SM-2 review session response: ${response.statusCode}';
+      AppLogger.log(message);
+      return ReviewSessionCardSelection.failure(message);
     } catch (e) {
-      AppLogger.log('Error getting SM-2 review session cards: $e');
+      final message = 'Error getting SM-2 review session cards: $e';
+      AppLogger.log(message);
+      return ReviewSessionCardSelection.failure(message);
     }
-    return [];
   }
 
   Future<void> recordReview({

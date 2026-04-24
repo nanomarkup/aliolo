@@ -18,7 +18,9 @@ import 'package:intl/intl.dart';
 import 'slides.dart';
 
 class OnboardingScreen extends StatefulWidget {
-  const OnboardingScreen({super.key});
+  final bool isReplay;
+
+  const OnboardingScreen({super.key, this.isReplay = false});
 
   @override
   State<OnboardingScreen> createState() => _OnboardingScreenState();
@@ -29,7 +31,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   final String _sessionId = const Uuid().v4();
   final GlobalKey _featuresKey = GlobalKey();
   final _cfClient = getIt<CloudflareHttpClient>();
-  
+
   int _currentPage = 0;
   double _dailyGoal = 30;
   String? _selectedAge;
@@ -38,6 +40,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   bool _showFeatures = false;
   bool _slide1VideoFinished = false;
   bool _videoVisible = false;
+  bool _showVideoPlayFallback = false;
   StreamSubscription? _slide1Subscription;
 
   late VideoPlayerController _controller1;
@@ -58,16 +61,17 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   void initState() {
     super.initState();
     _initAnalytics();
-    
+
     _controller1 = VideoPlayerController.asset('assets/Slide1_v7.mp4');
     _controller1.initialize().then((_) {
-      if (mounted) setState(() {});
-      _controller1.play();
+      if (!mounted) return;
+      setState(() {});
+      _playSlide1Video(autoplay: true);
     });
 
     _controller1.addListener(() {
-      if (_controller1.value.position >= _controller1.value.duration && 
-          _controller1.value.isInitialized && 
+      if (_controller1.value.position >= _controller1.value.duration &&
+          _controller1.value.isInitialized &&
           !_slide1VideoFinished) {
         if (mounted) {
           setState(() {
@@ -100,26 +104,54 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   Future<void> _initAnalytics() async {
     try {
-      await _cfClient.client.post('/api/analytics/onboarding', data: {
-        'session_id': _sessionId,
-      });
+      await _cfClient.client.post(
+        '/api/analytics/onboarding',
+        data: {'session_id': _sessionId},
+      );
     } catch (e) {
       debugPrint('Error initializing onboarding analytics: $e');
     }
   }
 
-  Future<void> _updateAnalytics({String? ageRange, int? pillarId, int? lastSlideIndex}) async {
+  Future<void> _updateAnalytics({
+    String? ageRange,
+    int? pillarId,
+    int? lastSlideIndex,
+  }) async {
     try {
-      final updates = <String, dynamic>{
-        'session_id': _sessionId,
-      };
+      final updates = <String, dynamic>{'session_id': _sessionId};
       if (ageRange != null) updates['age_range'] = ageRange;
       if (pillarId != null) updates['pillar_id'] = pillarId;
       if (lastSlideIndex != null) updates['last_slide_index'] = lastSlideIndex;
-      
+
       await _cfClient.client.post('/api/analytics/onboarding', data: updates);
     } catch (e) {
       debugPrint('Error updating onboarding analytics: $e');
+    }
+  }
+
+  Future<void> _playSlide1Video({required bool autoplay}) async {
+    if (!_controller1.value.isInitialized) return;
+
+    try {
+      await _controller1.play();
+      if (!mounted) return;
+      setState(() {
+        _showVideoPlayFallback = false;
+        _videoVisible = true;
+      });
+
+      if (autoplay) {
+        Future.delayed(const Duration(milliseconds: 350), () {
+          if (!mounted || _currentPage != 0) return;
+          if (!_controller1.value.isPlaying && !_slide1VideoFinished) {
+            setState(() => _showVideoPlayFallback = true);
+          }
+        });
+      }
+    } catch (e) {
+      debugPrint('Onboarding video playback blocked: $e');
+      if (mounted) setState(() => _showVideoPlayFallback = true);
     }
   }
 
@@ -128,14 +160,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       _currentPage = page;
       if (page != 6) _showFeatures = false;
     });
-    
+
     if (page == 0) {
       _controller1.seekTo(Duration.zero);
-      _controller1.play();
       setState(() {
         _slide1VideoFinished = false;
         _videoVisible = false;
+        _showVideoPlayFallback = false;
       });
+      _playSlide1Video(autoplay: true);
       Future.delayed(const Duration(milliseconds: 500), () {
         if (mounted) setState(() => _videoVisible = true);
       });
@@ -153,15 +186,20 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   Future<void> _finishOnboarding({bool skipped = false}) async {
+    if (widget.isReplay) {
+      if (mounted) Navigator.of(context).pop();
+      return;
+    }
+
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('has_seen_onboarding', true);
-    
+
     await _updateAnalytics(lastSlideIndex: _currentPage);
 
     if (_selectedAge != null) {
       await prefs.setString('user_age_range', _selectedAge!);
     }
-    
+
     final authService = getIt<AuthService>();
     if (authService.currentUser != null) {
       await authService.updateNextDailyGoal(_dailyGoal.toInt());
@@ -190,13 +228,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   void _navigateToBilling(int index) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => BillingPage(selectedIndex: index)),
+      MaterialPageRoute(
+        builder: (context) => BillingPage(selectedIndex: index),
+      ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final String displayLang = getIt<TranslationService>().currentLocale.languageCode;
+    final String displayLang =
+        getIt<TranslationService>().currentLocale.languageCode;
     final subService = context.watch<SubscriptionService>();
     context.watch<CardService>(); // Keep watching for updates
     // Use the global pillars list from pillar_model.dart
@@ -210,7 +251,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       {'name': context.t('feature_private_mode'), 'free': false},
       {'name': context.t('feature_customize'), 'free': false},
     ];
-    
+
     return Scaffold(
       backgroundColor: bgColor,
       body: Stack(
@@ -231,10 +272,38 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       fit: StackFit.expand,
                       children: [
                         AnimatedOpacity(
-                          opacity: (_videoVisible && !_slide1VideoFinished) ? 1.0 : 0.0,
+                          opacity:
+                              (_videoVisible && !_slide1VideoFinished)
+                                  ? 1.0
+                                  : 0.0,
                           duration: const Duration(milliseconds: 1000),
-                          child: VideoPlayer(_controller1),
+                          child:
+                              _controller1.value.isInitialized
+                                  ? VideoPlayer(_controller1)
+                                  : Container(color: Colors.black),
                         ),
+                        if (_showVideoPlayFallback && !_slide1VideoFinished)
+                          Material(
+                            color: Colors.black.withValues(alpha: 0.38),
+                            child: InkWell(
+                              onTap: () => _playSlide1Video(autoplay: false),
+                              child: Center(
+                                child: Container(
+                                  width: 88,
+                                  height: 88,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white.withValues(alpha: 0.92),
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: Icon(
+                                    Icons.play_arrow_rounded,
+                                    color: primaryColor,
+                                    size: 56,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
                         AnimatedOpacity(
                           opacity: _slide1VideoFinished ? 1.0 : 0.0,
                           duration: const Duration(milliseconds: 1000),
@@ -249,7 +318,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       ],
                     ),
                   ),
-                ),                title: context.t('onboarding_1_title'),
+                ),
+                title: context.t('onboarding_1_title'),
                 description: context.t('onboarding_1_desc'),
               ),
               // Slide 2: Age Selection
@@ -265,57 +335,78 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       crossAxisSpacing: 12,
                       childAspectRatio: 2.5,
                       physics: const NeverScrollableScrollPhysics(),
-                      children: ageOptions.map((ageKey) {
-                        final bool isSelected = _selectedAge == ageKey;
-                        return InkWell(
-                          onTap: () {
-                            setState(() => _selectedAge = ageKey);
-                            _updateAnalytics(ageRange: ageKey);
-                            Future.delayed(const Duration(milliseconds: 300), () {
-                              if (mounted) {
-                                _pageController.nextPage(
-                                  duration: const Duration(milliseconds: 300),
-                                  curve: Curves.easeInOut,
+                      children:
+                          ageOptions.map((ageKey) {
+                            final bool isSelected = _selectedAge == ageKey;
+                            return InkWell(
+                              onTap: () {
+                                setState(() => _selectedAge = ageKey);
+                                _updateAnalytics(ageRange: ageKey);
+                                Future.delayed(
+                                  const Duration(milliseconds: 300),
+                                  () {
+                                    if (mounted) {
+                                      _pageController.nextPage(
+                                        duration: const Duration(
+                                          milliseconds: 300,
+                                        ),
+                                        curve: Curves.easeInOut,
+                                      );
+                                    }
+                                  },
                                 );
-                              }
-                            });
-                          },
-                          borderRadius: BorderRadius.circular(20),
-                          child: AnimatedContainer(
-                            duration: const Duration(milliseconds: 200),
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              color: isSelected ? primaryColor : Colors.white,
+                              },
                               borderRadius: BorderRadius.circular(20),
-                              border: Border.all(
-                                color: isSelected ? Colors.white.withValues(alpha: 0.8) : Colors.black.withValues(alpha: 0.05),
-                                width: isSelected ? 3 : 2,
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withValues(alpha: 0.03),
-                                  blurRadius: 10,
-                                  offset: const Offset(0, 4),
-                                ),
-                                if (isSelected)
-                                  BoxShadow(
-                                    color: primaryColor.withValues(alpha: 0.2),
-                                    blurRadius: 8,
-                                    offset: const Offset(0, 4),
+                              child: AnimatedContainer(
+                                duration: const Duration(milliseconds: 200),
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                  color:
+                                      isSelected ? primaryColor : Colors.white,
+                                  borderRadius: BorderRadius.circular(20),
+                                  border: Border.all(
+                                    color:
+                                        isSelected
+                                            ? Colors.white.withValues(
+                                              alpha: 0.8,
+                                            )
+                                            : Colors.black.withValues(
+                                              alpha: 0.05,
+                                            ),
+                                    width: isSelected ? 3 : 2,
                                   ),
-                              ],
-                            ),
-                            child: Text(
-                              context.t(ageKey),
-                              style: TextStyle(
-                                color: isSelected ? Colors.white : Colors.black87,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withValues(
+                                        alpha: 0.03,
+                                      ),
+                                      blurRadius: 10,
+                                      offset: const Offset(0, 4),
+                                    ),
+                                    if (isSelected)
+                                      BoxShadow(
+                                        color: primaryColor.withValues(
+                                          alpha: 0.2,
+                                        ),
+                                        blurRadius: 8,
+                                        offset: const Offset(0, 4),
+                                      ),
+                                  ],
+                                ),
+                                child: Text(
+                                  context.t(ageKey),
+                                  style: TextStyle(
+                                    color:
+                                        isSelected
+                                            ? Colors.white
+                                            : Colors.black87,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
-                        );
-                      }).toList(),
+                            );
+                          }).toList(),
                     ),
                   ),
                 ),
@@ -325,41 +416,51 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               // Slide 3: Pillar Selection
               OnboardingSlide(
                 useFixedHeader: false,
-                visual: pillars.isEmpty 
-                  ? const Center(child: CircularProgressIndicator())
-                  : Center(
-                    child: ConstrainedBox(
-                      constraints: const BoxConstraints(maxWidth: 400),
-                      child: GridView.count(
-                        crossAxisCount: 2,
-                        shrinkWrap: true,
-                        mainAxisSpacing: 12,
-                        crossAxisSpacing: 12,
-                        childAspectRatio: 1.8,
-                        physics: const NeverScrollableScrollPhysics(),
-                        children: pillars.map((pillar) {
-                          final bool isSelected = _selectedPillarId == pillar.id;
-                          return _OnboardingPillarTile(
-                            pillar: pillar,
-                            isSelected: isSelected,
-                            displayLang: displayLang,
-                            onTap: () {
-                              setState(() => _selectedPillarId = pillar.id);
-                              _updateAnalytics(pillarId: pillar.id);
-                              Future.delayed(const Duration(milliseconds: 300), () {
-                                if (mounted) {
-                                  _pageController.nextPage(
-                                    duration: const Duration(milliseconds: 300),
-                                    curve: Curves.easeInOut,
-                                  );
-                                }
-                              });
-                            },
-                          );
-                        }).toList(),
-                      ),
-                    ),
-                  ),
+                visual:
+                    pillars.isEmpty
+                        ? const Center(child: CircularProgressIndicator())
+                        : Center(
+                          child: ConstrainedBox(
+                            constraints: const BoxConstraints(maxWidth: 400),
+                            child: GridView.count(
+                              crossAxisCount: 2,
+                              shrinkWrap: true,
+                              mainAxisSpacing: 12,
+                              crossAxisSpacing: 12,
+                              childAspectRatio: 1.8,
+                              physics: const NeverScrollableScrollPhysics(),
+                              children:
+                                  pillars.map((pillar) {
+                                    final bool isSelected =
+                                        _selectedPillarId == pillar.id;
+                                    return _OnboardingPillarTile(
+                                      pillar: pillar,
+                                      isSelected: isSelected,
+                                      displayLang: displayLang,
+                                      onTap: () {
+                                        setState(
+                                          () => _selectedPillarId = pillar.id,
+                                        );
+                                        _updateAnalytics(pillarId: pillar.id);
+                                        Future.delayed(
+                                          const Duration(milliseconds: 300),
+                                          () {
+                                            if (mounted) {
+                                              _pageController.nextPage(
+                                                duration: const Duration(
+                                                  milliseconds: 300,
+                                                ),
+                                                curve: Curves.easeInOut,
+                                              );
+                                            }
+                                          },
+                                        );
+                                      },
+                                    );
+                                  }).toList(),
+                            ),
+                          ),
+                        ),
                 title: context.t('onboarding_3_title'),
                 description: context.t('onboarding_3_desc'),
               ),
@@ -373,7 +474,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               // Slide 5: Sync
               OnboardingSlide(
                 useFixedHeader: false,
-                visual: Icon(Icons.cloud_sync_outlined, size: 120, color: primaryColor),
+                visual: Icon(
+                  Icons.cloud_sync_outlined,
+                  size: 120,
+                  color: primaryColor,
+                ),
                 title: context.t('onboarding_5_title'),
                 description: context.t('onboarding_5_desc'),
               ),
@@ -401,7 +506,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           ),
                           child: Column(
                             children: [
-                              const Icon(Icons.format_quote, color: Color(0xFF1D4289), size: 40),
+                              const Icon(
+                                Icons.format_quote,
+                                color: Color(0xFF1D4289),
+                                size: 40,
+                              ),
                               const SizedBox(height: 16),
                               Text(
                                 context.t('onboarding_7_quote'),
@@ -437,12 +546,19 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           children: [
                             Row(
                               children: [
-                                ...List.generate(4, (index) => const Icon(
-                                  Icons.star,
+                                ...List.generate(
+                                  4,
+                                  (index) => const Icon(
+                                    Icons.star,
+                                    color: Colors.amber,
+                                    size: 28,
+                                  ),
+                                ),
+                                const Icon(
+                                  Icons.star_half,
                                   color: Colors.amber,
                                   size: 28,
-                                )),
-                                const Icon(Icons.star_half, color: Colors.amber, size: 28),
+                                ),
                               ],
                             ),
                           ],
@@ -464,29 +580,56 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Icon(Icons.workspace_premium, color: Colors.amber, size: 80),
+                        const Icon(
+                          Icons.workspace_premium,
+                          color: Colors.amber,
+                          size: 80,
+                        ),
                         const SizedBox(height: 24),
                         if (subService.isPremium) ...[
                           _buildPremiumSuccess(primaryColor),
                           const SizedBox(height: 24),
                         ],
-                        
+
                         _buildSubscriptionOption(
-                          0, context.t('plan_weekly_title'), r"$2.99", context.t('plan_weekly_tagline'), 
+                          0,
+                          context.t('plan_weekly_title'),
+                          r"$2.99",
+                          context.t('plan_weekly_tagline'),
                           originalPrice: r"$5.98",
-                          isActive: subService.activeProductId?.contains('weekly') ?? false
+                          isActive:
+                              subService.activeProductId?.contains('weekly') ??
+                              false,
                         ),
                         const SizedBox(height: 12),
                         _buildSubscriptionOption(
-                          1, context.t('plan_monthly_title'), r"$8.99", context.t('plan_monthly_tagline'), 
-                          originalPrice: r"$17.98", extraInfo: context.t('price_per_week', args: {'price': r'$2.25'}),
-                          isActive: subService.activeProductId?.contains('monthly') ?? false
+                          1,
+                          context.t('plan_monthly_title'),
+                          r"$8.99",
+                          context.t('plan_monthly_tagline'),
+                          originalPrice: r"$17.98",
+                          extraInfo: context.t(
+                            'price_per_week',
+                            args: {'price': r'$2.25'},
+                          ),
+                          isActive:
+                              subService.activeProductId?.contains('monthly') ??
+                              false,
                         ),
                         const SizedBox(height: 12),
                         _buildSubscriptionOption(
-                          2, context.t('plan_yearly_title'), r"$80.99", context.t('plan_yearly_tagline'), 
-                          originalPrice: r"$161.98", extraInfo: context.t('price_per_week', args: {'price': r'$1.56'}),
-                          isActive: subService.activeProductId?.contains('yearly') ?? false
+                          2,
+                          context.t('plan_yearly_title'),
+                          r"$80.99",
+                          context.t('plan_yearly_tagline'),
+                          originalPrice: r"$161.98",
+                          extraInfo: context.t(
+                            'price_per_week',
+                            args: {'price': r'$1.56'},
+                          ),
+                          isActive:
+                              subService.activeProductId?.contains('yearly') ??
+                              false,
                         ),
                         const SizedBox(height: 32),
                         // Collapsible Features List with Auto-Scroll
@@ -506,10 +649,20 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               });
                             }
                           },
-                          icon: Icon(_showFeatures ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down, color: primaryColor),
+                          icon: Icon(
+                            _showFeatures
+                                ? Icons.keyboard_arrow_up
+                                : Icons.keyboard_arrow_down,
+                            color: primaryColor,
+                          ),
                           label: Text(
-                            _showFeatures ? context.t('hide_comparison') : context.t('compare_plans'),
-                            style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold),
+                            _showFeatures
+                                ? context.t('hide_comparison')
+                                : context.t('compare_plans'),
+                            style: TextStyle(
+                              color: primaryColor,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                         if (_showFeatures) ...[
@@ -530,13 +683,27 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             Positioned(
               top: 20,
               right: 20,
-              child: TextButton(
-                onPressed: () => _finishOnboarding(skipped: true),
-                child: Text(
-                  context.t('onboarding_skip'),
-                  style: const TextStyle(color: Color(0xFF64748B), fontSize: 16),
-                ),
-              ),
+              child:
+                  widget.isReplay
+                      ? IconButton(
+                        onPressed: () => Navigator.of(context).pop(),
+                        icon: const Icon(Icons.close),
+                        color: const Color(0xFF64748B),
+                        tooltip:
+                            MaterialLocalizations.of(
+                              context,
+                            ).closeButtonTooltip,
+                      )
+                      : TextButton(
+                        onPressed: () => _finishOnboarding(skipped: true),
+                        child: Text(
+                          context.t('onboarding_skip'),
+                          style: const TextStyle(
+                            color: Color(0xFF64748B),
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
             ),
           // Bottom Overlay: Dots and Button
           Positioned(
@@ -555,9 +722,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         height: 8,
                         width: _currentPage == index ? 24 : 8,
                         decoration: BoxDecoration(
-                          color: _currentPage == index 
-                              ? primaryColor 
-                              : primaryColor.withValues(alpha: 0.3),
+                          color:
+                              _currentPage == index
+                                  ? primaryColor
+                                  : primaryColor.withValues(alpha: 0.3),
                           borderRadius: BorderRadius.circular(4),
                         ),
                       );
@@ -569,68 +737,101 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 40),
                   child: ConstrainedBox(
                     constraints: const BoxConstraints(maxWidth: 320),
-                    child: _currentPage == 6
-                        ? (subService.isPremium 
-                            ? ElevatedButton(
-                                onPressed: () => _finishOnboarding(skipped: false),
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.green,
-                                  foregroundColor: Colors.white,
-                                  disabledBackgroundColor: Colors.green.withValues(alpha: 0.1),
-                                  disabledForegroundColor: Colors.green.withValues(alpha: 0.3),
-                                  minimumSize: const Size(double.infinity, 56),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(16),
+                    child:
+                        _currentPage == 6
+                            ? (subService.isPremium
+                                ? ElevatedButton(
+                                  onPressed:
+                                      () => _finishOnboarding(skipped: false),
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.green,
+                                    foregroundColor: Colors.white,
+                                    disabledBackgroundColor: Colors.green
+                                        .withValues(alpha: 0.1),
+                                    disabledForegroundColor: Colors.green
+                                        .withValues(alpha: 0.3),
+                                    minimumSize: const Size(
+                                      double.infinity,
+                                      56,
+                                    ),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(16),
+                                    ),
+                                    elevation: 0,
                                   ),
-                                  elevation: 0,
-                                ),
-                                child: Text(
-                                  context.t('finish'),
-                                  style: const TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
+                                  child: Text(
+                                    context.t('finish'),
+                                    style: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
-                                ),
-                              )
-                            : TextButton(
-                                onPressed: () => _finishOnboarding(skipped: false),
-                                child: Text(
-                                  context.t('maybe_later'),
-                                  style: const TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
+                                )
+                                : TextButton(
+                                  onPressed:
+                                      () => _finishOnboarding(skipped: false),
+                                  child: Text(
+                                    context.t('maybe_later'),
+                                    style: const TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
+                                ))
+                            : ElevatedButton(
+                              onPressed:
+                                  (_currentPage == 1 || _currentPage == 2)
+                                      ? (_currentPage == 1
+                                          ? (_selectedAge != null
+                                              ? () {
+                                                _pageController.nextPage(
+                                                  duration: const Duration(
+                                                    milliseconds: 300,
+                                                  ),
+                                                  curve: Curves.easeInOut,
+                                                );
+                                              }
+                                              : null)
+                                          : (_selectedPillarId != null
+                                              ? () {
+                                                _pageController.nextPage(
+                                                  duration: const Duration(
+                                                    milliseconds: 300,
+                                                  ),
+                                                  curve: Curves.easeInOut,
+                                                );
+                                              }
+                                              : null))
+                                      : () {
+                                        _pageController.nextPage(
+                                          duration: const Duration(
+                                            milliseconds: 300,
+                                          ),
+                                          curve: Curves.easeInOut,
+                                        );
+                                      },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: primaryColor,
+                                foregroundColor: Colors.white,
+                                disabledBackgroundColor: primaryColor
+                                    .withValues(alpha: 0.1),
+                                disabledForegroundColor: primaryColor
+                                    .withValues(alpha: 0.3),
+                                minimumSize: const Size(double.infinity, 56),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(16),
                                 ),
-                              ))
-                        : ElevatedButton(
-                            onPressed: (_currentPage == 1 || _currentPage == 2)
-                                ? (_currentPage == 1 ? (_selectedAge != null ? () { _pageController.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.easeInOut); } : null) : (_selectedPillarId != null ? () { _pageController.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.easeInOut); } : null))
-                                : () {
-                                    _pageController.nextPage(
-                                      duration: const Duration(milliseconds: 300),
-                                      curve: Curves.easeInOut,
-                                    );
-                                  },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: primaryColor,
-                              foregroundColor: Colors.white,
-                              disabledBackgroundColor: primaryColor.withValues(alpha: 0.1),
-                              disabledForegroundColor: primaryColor.withValues(alpha: 0.3),
-                              minimumSize: const Size(double.infinity, 56),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16),
+                                elevation: 0,
                               ),
-                              elevation: 0,
-                            ),
-                            child: Text(
-                              context.t('onboarding_next'),
-                              style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
+                              child: Text(
+                                context.t('onboarding_next'),
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
-                          ),
                   ),
                 ),
               ],
@@ -690,9 +891,20 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 
-  Widget _buildSubscriptionOption(int index, String title, String price, String sub, {String? originalPrice, String? extraInfo, bool isActive = false}) {
+  Widget _buildSubscriptionOption(
+    int index,
+    String title,
+    String price,
+    String sub, {
+    String? originalPrice,
+    String? extraInfo,
+    bool isActive = false,
+  }) {
     final activeId = context.read<SubscriptionService>().activeProductId;
-    final int defaultIndex = (activeId != null && activeId.contains('weekly')) ? 0 : ((activeId != null && activeId.contains('yearly')) ? 2 : 1);
+    final int defaultIndex =
+        (activeId != null && activeId.contains('weekly'))
+            ? 0
+            : ((activeId != null && activeId.contains('yearly')) ? 2 : 1);
     final isSelected = (_selectedOptionIndex ?? defaultIndex) == index;
 
     return InkWell(
@@ -706,14 +918,20 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         width: double.infinity,
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: isActive 
-              ? Colors.green.withValues(alpha: 0.05)
-              : (isSelected ? primaryColor.withValues(alpha: 0.05) : Colors.white),
+          color:
+              isActive
+                  ? Colors.green.withValues(alpha: 0.05)
+                  : (isSelected
+                      ? primaryColor.withValues(alpha: 0.05)
+                      : Colors.white),
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
-            color: isActive 
-                ? Colors.green 
-                : (isSelected ? primaryColor : Colors.black.withValues(alpha: 0.1)),
+            color:
+                isActive
+                    ? Colors.green
+                    : (isSelected
+                        ? primaryColor
+                        : Colors.black.withValues(alpha: 0.1)),
             width: isActive || isSelected ? 2 : 1,
           ),
         ),
@@ -725,24 +943,41 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 children: [
                   Row(
                     children: [
-                      Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.black87)),
+                      Text(
+                        title,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          color: Colors.black87,
+                        ),
+                      ),
                       if (isActive) ...[
                         const SizedBox(width: 8),
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 6,
+                            vertical: 2,
+                          ),
                           decoration: BoxDecoration(
                             color: Colors.green,
                             borderRadius: BorderRadius.circular(4),
                           ),
                           child: Text(
                             context.t('current_subscription'),
-                            style: const TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold),
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ],
                     ],
                   ),
-                  Text(sub, style: TextStyle(color: Colors.grey[600], fontSize: 12)),
+                  Text(
+                    sub,
+                    style: TextStyle(color: Colors.grey[600], fontSize: 12),
+                  ),
                 ],
               ),
             ),
@@ -770,7 +1005,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   Text(
                     extraInfo,
                     style: TextStyle(
-                      color: isActive ? Colors.green.withValues(alpha: 0.7) : primaryColor.withValues(alpha: 0.7),
+                      color:
+                          isActive
+                              ? Colors.green.withValues(alpha: 0.7)
+                              : primaryColor.withValues(alpha: 0.7),
                       fontSize: 11,
                       fontWeight: FontWeight.w600,
                     ),
@@ -783,7 +1021,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 
-  Widget _buildFeatureComparison(Color pillarColor, List<Map<String, dynamic>> features) {
+  Widget _buildFeatureComparison(
+    Color pillarColor,
+    List<Map<String, dynamic>> features,
+  ) {
     return Container(
       key: _featuresKey,
       padding: const EdgeInsets.all(16),
@@ -797,21 +1038,68 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           Row(
             children: [
               const Expanded(child: SizedBox()),
-              SizedBox(width: 60, child: Text(context.t('feature_free'), textAlign: TextAlign.center, style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.grey[600]))),
-              SizedBox(width: 60, child: Text(context.t('feature_pro'), textAlign: TextAlign.center, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.green))),
+              SizedBox(
+                width: 60,
+                child: Text(
+                  context.t('feature_free'),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey[600],
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: 60,
+                child: Text(
+                  context.t('feature_pro'),
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.green,
+                  ),
+                ),
+              ),
             ],
           ),
           const Divider(),
-          ...features.map((f) => Padding(
-            padding: const EdgeInsets.symmetric(vertical: 6),
-            child: Row(
-              children: [
-                Expanded(child: Text(f['name'], style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.black87))),
-                SizedBox(width: 60, child: Icon(f['free'] ? Icons.check_circle : Icons.cancel, size: 20, color: f['free'] ? primaryColor : Colors.grey[300])),
-                SizedBox(width: 60, child: const Icon(Icons.check_circle, size: 20, color: Colors.green)),
-              ],
+          ...features.map(
+            (f) => Padding(
+              padding: const EdgeInsets.symmetric(vertical: 6),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      f['name'],
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black87,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 60,
+                    child: Icon(
+                      f['free'] ? Icons.check_circle : Icons.cancel,
+                      size: 20,
+                      color: f['free'] ? primaryColor : Colors.grey[300],
+                    ),
+                  ),
+                  SizedBox(
+                    width: 60,
+                    child: const Icon(
+                      Icons.check_circle,
+                      size: 20,
+                      color: Colors.green,
+                    ),
+                  ),
+                ],
+              ),
             ),
-          )),
+          ),
         ],
       ),
     );
@@ -834,14 +1122,18 @@ class _OnboardingPillarTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final pillarColor = pillar.getColor(false);
-    
+
     return Card(
       clipBehavior: Clip.antiAlias,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
-        side: isSelected 
-          ? BorderSide(color: Colors.white.withValues(alpha: 0.8), width: 3)
-          : BorderSide.none,
+        side:
+            isSelected
+                ? BorderSide(
+                  color: Colors.white.withValues(alpha: 0.8),
+                  width: 3,
+                )
+                : BorderSide.none,
       ),
       elevation: isSelected ? 8 : 4,
       child: InkWell(
@@ -851,10 +1143,7 @@ class _OnboardingPillarTile extends StatelessWidget {
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: [
-                pillarColor,
-                pillarColor.withValues(alpha: 0.8),
-              ],
+              colors: [pillarColor, pillarColor.withValues(alpha: 0.8)],
             ),
           ),
           child: Stack(
@@ -875,7 +1164,11 @@ class _OnboardingPillarTile extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Icon(pillar.getIconData(), color: Colors.white, size: 20),
+                        Icon(
+                          pillar.getIconData(),
+                          color: Colors.white,
+                          size: 20,
+                        ),
                         const SizedBox(width: 8),
                         Expanded(
                           child: Text(
