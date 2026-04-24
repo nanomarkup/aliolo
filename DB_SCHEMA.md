@@ -197,6 +197,10 @@ This is a Foreign Key to `profiles.id`.<fk table='profiles' column='id'/>
 - `created_at` (string)
 
 ### `progress`
+Stores per-user card test progress and SM-2 spaced repetition state. Learn mode
+does not advance these fields; Test mode updates review scheduling after each
+answer.
+
 - `id` (integer) (Required): Note:
 This is a Primary Key.<pk/>
 - `user_id` (string) (Required): Note:
@@ -213,6 +217,18 @@ This is a Foreign Key to `subjects.id`.<fk table='subjects' column='id'/>
 - `updated_at` (string)
 - `is_hidden` (boolean)
 - `created_at` (string)
+
+### `subject_usage_stats`
+Aggregated admin analytics for how often subjects are used in Learn and Test
+sessions.
+
+- `subject_id` (string) (Required): Note:
+This is a Foreign Key to `subjects.id`.<fk table='subjects' column='id'/>
+- `mode` (string) (Required): `learn` or `test`
+- `started_count` (integer)
+- `completed_count` (integer)
+- `created_at` (string)
+- `updated_at` (string)
 
 ### `pillars`
 - `id` (integer) (Required): Note:

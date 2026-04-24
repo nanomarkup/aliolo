@@ -9,6 +9,7 @@ describe('Admin Users API', () => {
   const premiumSessionId = 'premium-session';
   const normalSessionId = 'normal-session';
   let premiumUserId = '';
+  let usageSubjectId = '';
 
   beforeAll(async () => {
     await env.DB.prepare(`
@@ -77,6 +78,21 @@ describe('Admin Users API', () => {
         updated_at
       ) VALUES (?, ?, 'active', 'aliolo', DATE(CURRENT_TIMESTAMP, '+1 year'), 'token-1', 'order-1', 'premium_yearly', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
     `).bind('sub-premium-user', premium.user.id).run();
+
+    usageSubjectId = `admin-usage-subject-${Date.now()}`;
+    await env.DB.prepare("INSERT OR IGNORE INTO pillars (id, sort_order, name) VALUES (1, 1, 'Core')").run();
+    await env.DB.prepare(
+      "INSERT INTO subjects (id, pillar_id, owner_id, name) VALUES (?, 1, ?, 'Admin Usage Subject')"
+    ).bind(usageSubjectId, adminUserId).run();
+    await env.DB.prepare(`
+      INSERT INTO subject_usage_stats (
+        subject_id,
+        mode,
+        started_count,
+        completed_count,
+        updated_at
+      ) VALUES (?, 'learn', 4, 3, CURRENT_TIMESTAMP), (?, 'test', 2, 1, CURRENT_TIMESTAMP)
+    `).bind(usageSubjectId, usageSubjectId).run();
   });
 
   it('should return all users with subscription data for the admin session', async () => {
@@ -85,11 +101,17 @@ describe('Admin Users API', () => {
     }, env);
 
     expect(res.status).toBe(200);
-    const data = await res.json() as any[];
-    expect(Array.isArray(data)).toBe(true);
-    expect(data.length).toBeGreaterThanOrEqual(2);
+    const data = await res.json() as any;
+    expect(Array.isArray(data.users)).toBe(true);
+    expect(data.users.length).toBeGreaterThanOrEqual(2);
+    expect(data.page).toBe(0);
+    expect(data.pageSize).toBe(25);
+    expect(data.totalCount).toBeGreaterThanOrEqual(2);
+    expect(data.overallCount).toBeGreaterThanOrEqual(data.totalCount);
 
-    const premium = data.find((user) => user.email?.startsWith('admin_premium_'));
+    const premium = data.users.find((user: any) =>
+      user.email?.startsWith('admin_premium_')
+    );
     expect(premium).toBeTruthy();
     expect(premium.subscription).toBeTruthy();
     expect(premium.subscription.provider).toBe('aliolo');
@@ -98,6 +120,32 @@ describe('Admin Users API', () => {
 
   it('should reject non-admin users', async () => {
     const res = await app.request('/api/admin/users', {
+      headers: { 'X-Session-Id': normalSessionId },
+    }, env);
+
+    expect(res.status).toBe(403);
+  });
+
+  it('should return subject usage statistics for admin users', async () => {
+    const res = await app.request('/api/admin/subject-usage', {
+      headers: { 'X-Session-Id': adminSessionId },
+    }, env);
+
+    expect(res.status).toBe(200);
+    const data = await res.json() as any[];
+    const row = data.find((item) => item.subject_id === usageSubjectId);
+
+    expect(row).toBeTruthy();
+    expect(row.subject_name).toBe('Admin Usage Subject');
+    expect(row.total_started).toBe(6);
+    expect(row.total_completed).toBe(4);
+    expect(row.learn_started).toBe(4);
+    expect(row.test_started).toBe(2);
+    expect(row.completion_rate).toBeCloseTo(4 / 6);
+  });
+
+  it('should reject subject usage statistics for non-admin users', async () => {
+    const res = await app.request('/api/admin/subject-usage', {
       headers: { 'X-Session-Id': normalSessionId },
     }, env);
 

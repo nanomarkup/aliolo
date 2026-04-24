@@ -17,6 +17,7 @@ import 'package:aliolo/features/settings/presentation/pages/premium_upgrade_page
 import 'package:aliolo/features/documentation/presentation/pages/documentation_page.dart';
 import 'package:aliolo/features/auth/presentation/pages/manage_friends_page.dart';
 import 'package:aliolo/features/management/presentation/pages/users_page.dart';
+import 'package:aliolo/features/management/presentation/pages/subject_usage_page.dart';
 import 'package:aliolo/data/services/feedback_service.dart';
 import 'package:aliolo/core/widgets/premium_badge.dart';
 
@@ -736,6 +737,22 @@ class _ProfilePageState extends State<ProfilePage> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => const UsersPage(),
+                              ),
+                            ),
+                      ),
+                      const Divider(height: 1, indent: 16, endIndent: 16),
+                      ListTile(
+                        leading: Icon(
+                          Icons.analytics_outlined,
+                          color: currentSessionColor,
+                        ),
+                        title: const Text('Subject Usage'),
+                        trailing: const Icon(Icons.chevron_right),
+                        onTap:
+                            () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const SubjectUsagePage(),
                               ),
                             ),
                       ),

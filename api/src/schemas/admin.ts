@@ -18,4 +18,30 @@ export const AdminUserSchema = UserProfileSchema.extend({
   subscription: AdminSubscriptionSchema.nullable(),
 }).openapi('AdminUser');
 
-export const AdminUsersResponseSchema = z.array(AdminUserSchema);
+export const AdminUsersFilterSchema = z.enum(['all', 'free', 'premium', 'fake']);
+
+export const AdminUsersResponseSchema = z.object({
+  users: z.array(AdminUserSchema),
+  page: z.number().int().min(0).openapi({ example: 0 }),
+  pageSize: z.number().int().min(1).openapi({ example: 25 }),
+  totalCount: z.number().int().min(0).openapi({ example: 120 }),
+  totalPages: z.number().int().min(0).openapi({ example: 5 }),
+  overallCount: z.number().int().min(0).openapi({ example: 240 }),
+}).openapi('AdminUsersResponse');
+
+export const AdminSubjectUsageSchema = z.object({
+  subject_id: z.string().openapi({ example: 'subject_123' }),
+  subject_name: z.string().openapi({ example: 'World Bridges' }),
+  pillar_name: z.string().nullable().openapi({ example: 'World' }),
+  folder_name: z.string().nullable().openapi({ example: 'Architecture' }),
+  total_started: z.number().int().openapi({ example: 120 }),
+  total_completed: z.number().int().openapi({ example: 96 }),
+  learn_started: z.number().int().openapi({ example: 80 }),
+  learn_completed: z.number().int().openapi({ example: 72 }),
+  test_started: z.number().int().openapi({ example: 40 }),
+  test_completed: z.number().int().openapi({ example: 24 }),
+  completion_rate: z.number().openapi({ example: 0.8 }),
+  updated_at: z.string().nullable().openapi({ example: '2026-04-12T00:00:00Z' }),
+}).openapi('AdminSubjectUsage');
+
+export const AdminSubjectUsageResponseSchema = z.array(AdminSubjectUsageSchema);

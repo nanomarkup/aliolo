@@ -1,10 +1,9 @@
 import 'user_model.dart';
 
-enum AdminUsersFilter {
-  all,
-  free,
-  premium,
-  fake,
+enum AdminUsersFilter { all, free, premium, fake }
+
+extension AdminUsersFilterApi on AdminUsersFilter {
+  String get apiValue => name;
 }
 
 class AdminSubscriptionModel {
@@ -63,19 +62,19 @@ class AdminUserModel {
   final UserModel profile;
   final AdminSubscriptionModel? subscription;
 
-  AdminUserModel({
-    required this.profile,
-    this.subscription,
-  });
+  AdminUserModel({required this.profile, this.subscription});
 
   factory AdminUserModel.fromJson(Map<String, dynamic> json) {
     final subscriptionJson = json['subscription'];
     return AdminUserModel(
       profile: UserModel.fromJson(json),
-      subscription: subscriptionJson is Map<String, dynamic>
-          ? AdminSubscriptionModel.fromJson(subscriptionJson)
-          : subscriptionJson is Map
-              ? AdminSubscriptionModel.fromJson(Map<String, dynamic>.from(subscriptionJson))
+      subscription:
+          subscriptionJson is Map<String, dynamic>
+              ? AdminSubscriptionModel.fromJson(subscriptionJson)
+              : subscriptionJson is Map
+              ? AdminSubscriptionModel.fromJson(
+                Map<String, dynamic>.from(subscriptionJson),
+              )
               : null,
     );
   }
@@ -99,5 +98,51 @@ class AdminUserModel {
       case AdminUsersFilter.fake:
         return isFake;
     }
+  }
+}
+
+class AdminUsersPageModel {
+  final List<AdminUserModel> users;
+  final int page;
+  final int pageSize;
+  final int totalCount;
+  final int totalPages;
+  final int overallCount;
+
+  const AdminUsersPageModel({
+    required this.users,
+    required this.page,
+    required this.pageSize,
+    required this.totalCount,
+    required this.totalPages,
+    required this.overallCount,
+  });
+
+  factory AdminUsersPageModel.fromJson(Map<String, dynamic> json) {
+    final rawUsers = json['users'];
+    final users =
+        rawUsers is List
+            ? rawUsers
+                .whereType<Map>()
+                .map(
+                  (row) =>
+                      AdminUserModel.fromJson(Map<String, dynamic>.from(row)),
+                )
+                .toList()
+            : <AdminUserModel>[];
+
+    int parseInt(dynamic value, {int fallback = 0}) {
+      if (value is int) return value;
+      return int.tryParse(value?.toString() ?? '') ?? fallback;
+    }
+
+    return AdminUsersPageModel(
+      users: users,
+      page: parseInt(json['page']),
+      pageSize: parseInt(json['pageSize'], fallback: users.length),
+      totalCount: parseInt(json['totalCount']),
+      totalPages: parseInt(json['totalPages']),
+      overallCount: parseInt(json['overallCount']),
+    );
   }
 }

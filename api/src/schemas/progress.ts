@@ -7,6 +7,21 @@ export const ProgressUpdateSchema = z.object({
   is_hidden: z.boolean().optional().openapi({ example: true }),
 }).openapi('ProgressUpdate');
 
+export const ProgressReviewSchema = z.object({
+  card_id: z.string().openapi({ example: 'card_123' }),
+  subject_id: z.string().optional().openapi({ example: 'subj_456' }),
+  quality: z.number().int().min(0).max(5).openapi({ example: 5 }),
+}).openapi('ProgressReview');
+
+export const ProgressReviewSessionSchema = z.object({
+  card_ids: z.array(z.string()).openapi({ example: ['card_123', 'card_456'] }),
+  limit: z.number().int().min(1).max(200).openapi({ example: 10 }),
+}).openapi('ProgressReviewSession');
+
+export const ProgressReviewSessionResponseSchema = z.object({
+  card_ids: z.array(z.string()).openapi({ example: ['card_123', 'card_456'] }),
+}).openapi('ProgressReviewSessionResponse');
+
 export const ProgressSchema = z.object({
   id: z.number().openapi({ example: 1 }),
   user_id: z.string().openapi({ example: 'user_789' }),

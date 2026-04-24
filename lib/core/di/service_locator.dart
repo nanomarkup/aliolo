@@ -9,11 +9,11 @@ import 'package:aliolo/data/services/math_service.dart';
 import 'package:aliolo/data/services/progress_service.dart';
 import 'package:aliolo/data/services/subscription_service.dart';
 import 'package:aliolo/data/services/admin_users_service.dart';
+import 'package:aliolo/data/services/subject_usage_service.dart';
 import 'package:aliolo/data/services/feedback_service.dart';
 import 'package:aliolo/data/services/discovery_engine.dart';
 import 'package:aliolo/data/services/filter_service.dart';
 import 'package:aliolo/core/network/cloudflare_client.dart';
-
 
 final getIt = GetIt.instance;
 
@@ -37,12 +37,9 @@ Future<void> setupLocator({String? initialUrl, String? inviteToken}) async {
       (e) => print('CardService init error: $e'),
     );
 
-    await getIt<AuthService>().init(
-      manualUrl: initialUrl,
-      inviteToken: inviteToken,
-    ).catchError(
-      (e) => print('AuthService init error: $e'),
-    );
+    await getIt<AuthService>()
+        .init(manualUrl: initialUrl, inviteToken: inviteToken)
+        .catchError((e) => print('AuthService init error: $e'));
 
     await getIt<FilterService>().init().catchError(
       (e) => print('FilterService init error: $e'),
@@ -67,8 +64,13 @@ Future<void> setupLocator({String? initialUrl, String? inviteToken}) async {
     getIt.registerLazySingleton<ThemeService>(() => ThemeService());
     getIt.registerLazySingleton<MathService>(() => MathService());
     getIt.registerLazySingleton<ProgressService>(() => ProgressService());
-    getIt.registerLazySingleton<SubscriptionService>(() => SubscriptionService());
+    getIt.registerLazySingleton<SubscriptionService>(
+      () => SubscriptionService(),
+    );
     getIt.registerLazySingleton<AdminUsersService>(() => AdminUsersService());
+    getIt.registerLazySingleton<SubjectUsageService>(
+      () => SubjectUsageService(),
+    );
 
     print('All services initialized in remote-only mode.');
   } catch (e, stack) {

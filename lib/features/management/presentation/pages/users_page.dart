@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -24,6 +26,7 @@ class UsersPage extends StatefulWidget {
 
 class _UsersPageState extends State<UsersPage> {
   static const String _adminUserId = 'usyeo7d2yzf2773';
+  static const int _pageSize = 25;
 
   final _authService = getIt<AuthService>();
   final _usersService = getIt<AdminUsersService>();
@@ -34,6 +37,12 @@ class _UsersPageState extends State<UsersPage> {
   String? _errorMessage;
   AdminUsersFilter _filter = AdminUsersFilter.all;
   bool _showFakeUsers = false;
+  int _currentPage = 0;
+  int _totalPages = 0;
+  int _totalCount = 0;
+  int _overallCount = 0;
+  Timer? _searchDebounce;
+  int _loadRequestId = 0;
 
   bool get _isAdmin => _authService.currentUser?.serverId == _adminUserId;
 
@@ -50,68 +59,53 @@ class _UsersPageState extends State<UsersPage> {
   @override
   void dispose() {
     _searchController.removeListener(_onSearchChanged);
+    _searchDebounce?.cancel();
     _searchController.dispose();
     super.dispose();
   }
 
   void _onSearchChanged() {
-    if (mounted) {
-      setState(() {});
-    }
+    _searchDebounce?.cancel();
+    _searchDebounce = Timer(const Duration(milliseconds: 350), () {
+      if (!mounted) return;
+      _loadUsers(page: 0);
+    });
+    if (mounted) setState(() {});
   }
 
-  Future<void> _loadUsers() async {
+  Future<void> _loadUsers({int? page}) async {
+    final targetPage = page ?? _currentPage;
+    final requestId = ++_loadRequestId;
     setState(() {
       _isLoading = true;
       _errorMessage = null;
+      _currentPage = targetPage;
     });
 
     try {
-      final users = await _usersService.getAllUsers();
-      users.sort(
-        (a, b) =>
-            a.displayName.toLowerCase().compareTo(b.displayName.toLowerCase()),
+      final result = await _usersService.getUsers(
+        page: targetPage,
+        pageSize: _pageSize,
+        search: _searchController.text,
+        filter: _filter,
+        includeFake: _showFakeUsers,
       );
-      if (!mounted) return;
+      if (!mounted || requestId != _loadRequestId) return;
       setState(() {
-        _users = users;
+        _users = result.users;
+        _currentPage = result.page;
+        _totalPages = result.totalPages;
+        _totalCount = result.totalCount;
+        _overallCount = result.overallCount;
         _isLoading = false;
       });
     } catch (e) {
-      if (!mounted) return;
+      if (!mounted || requestId != _loadRequestId) return;
       setState(() {
         _errorMessage = e.toString();
         _isLoading = false;
       });
     }
-  }
-
-  List<AdminUserModel> get _filteredUsers {
-    final query = _searchController.text.trim().toLowerCase();
-    return _users.where((user) {
-      // 1. Search filter
-      final matchesSearch =
-          query.isEmpty ||
-          user.displayName.toLowerCase().contains(query) ||
-          user.username.toLowerCase().contains(query) ||
-          user.email.toLowerCase().contains(query);
-      if (!matchesSearch) return false;
-
-      // 2. Fake users filter
-      if (!_showFakeUsers && user.isFake) return false;
-
-      // 3. Subscription status filter
-      switch (_filter) {
-        case AdminUsersFilter.all:
-          return true;
-        case AdminUsersFilter.free:
-          return user.isFree;
-        case AdminUsersFilter.premium:
-          return user.isPremium;
-        case AdminUsersFilter.fake:
-          return user.isFake;
-      }
-    }).toList();
   }
 
   String _formatDate(DateTime? date) {
@@ -183,9 +177,7 @@ class _UsersPageState extends State<UsersPage> {
             decoration: BoxDecoration(
               color: Theme.of(context).cardColor.withValues(alpha: 0.5),
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(
-                color: Colors.grey.withValues(alpha: 0.5),
-              ),
+              border: Border.all(color: Colors.grey.withValues(alpha: 0.5)),
             ),
             child: Row(
               children: [
@@ -266,6 +258,7 @@ class _UsersPageState extends State<UsersPage> {
                     orElse: () => AdminUsersFilter.all,
                   );
                 });
+                _loadUsers(page: 0);
               },
             ),
           ),
@@ -278,6 +271,7 @@ class _UsersPageState extends State<UsersPage> {
             ),
             onPressed: () {
               setState(() => _showFakeUsers = !_showFakeUsers);
+              _loadUsers(page: 0);
             },
             style: IconButton.styleFrom(
               backgroundColor:
@@ -324,11 +318,51 @@ class _UsersPageState extends State<UsersPage> {
           ),
           const SizedBox(width: AlioloLayoutTokens.compactRowSpacing),
           Text(
-            '${_filteredUsers.length} / ${_users.length}',
+            '$_totalCount / $_overallCount',
             style: TextStyle(
               color: Theme.of(context).textTheme.bodySmall?.color,
               fontWeight: FontWeight.w600,
             ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPaginationControls() {
+    final hasResults = _totalCount > 0;
+    final pageLabel =
+        hasResults && _totalPages > 0
+            ? '${_currentPage + 1} / $_totalPages'
+            : '0 / 0';
+
+    return Padding(
+      padding: const EdgeInsets.only(top: 12, bottom: 20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          OutlinedButton.icon(
+            onPressed:
+                _isLoading || _currentPage <= 0
+                    ? null
+                    : () => _loadUsers(page: _currentPage - 1),
+            icon: const Icon(Icons.chevron_left),
+            label: const Text('Previous'),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Text(
+              pageLabel,
+              style: const TextStyle(fontWeight: FontWeight.w600),
+            ),
+          ),
+          OutlinedButton.icon(
+            onPressed:
+                _isLoading || !hasResults || _currentPage >= _totalPages - 1
+                    ? null
+                    : () => _loadUsers(page: _currentPage + 1),
+            icon: const Icon(Icons.chevron_right),
+            label: const Text('Next'),
           ),
         ],
       ),
@@ -496,14 +530,15 @@ class _UsersPageState extends State<UsersPage> {
     if (result == null) return;
 
     try {
-      if (result.status != (user.subscription?.status ?? 'inactive') || result.expiryDate != user.subscription?.expiryDate) {
+      if (result.status != (user.subscription?.status ?? 'inactive') ||
+          result.expiryDate != user.subscription?.expiryDate) {
         await _usersService.updateSubscription(
           userId: user.id,
           status: result.status,
           expiryDate: result.expiryDate,
         );
       }
-      
+
       if (result.cardLimit != user.profile.cardLimit) {
         await _usersService.updateCardLimit(
           userId: user.id,
@@ -511,11 +546,11 @@ class _UsersPageState extends State<UsersPage> {
         );
       }
 
-      await _loadUsers();
+      await _loadUsers(page: _currentPage);
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(context.t('user_updated'))),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(context.t('user_updated'))));
       }
     } catch (e) {
       if (mounted) {
@@ -766,18 +801,26 @@ class _UsersPageState extends State<UsersPage> {
                           ),
                         ),
                       )
-                    else if (_filteredUsers.isEmpty)
+                    else if (_users.isEmpty)
                       SliverFillRemaining(
                         child: Center(child: Text(context.t('no_users_found'))),
                       )
                     else
-                      SliverList(
-                        delegate: SliverChildBuilderDelegate((context, index) {
-                          return _buildUserCard(
-                            _filteredUsers[index],
-                            currentSessionColor,
-                          );
-                        }, childCount: _filteredUsers.length),
+                      SliverMainAxisGroup(
+                        slivers: [
+                          SliverList(
+                            delegate: SliverChildBuilderDelegate((
+                              context,
+                              index,
+                            ) {
+                              return _buildUserCard(
+                                _users[index],
+                                currentSessionColor,
+                              );
+                            }, childCount: _users.length),
+                          ),
+                          SliverToBoxAdapter(child: _buildPaginationControls()),
+                        ],
                       ),
                   ],
         );

@@ -1,7 +1,11 @@
 import { OpenAPIHono, createRoute, z } from '@hono/zod-openapi';
 import { generateId } from 'lucia';
 import type { AppEnv } from '../types';
-import { AdminUsersResponseSchema } from '../schemas/admin';
+import {
+  AdminSubjectUsageResponseSchema,
+  AdminUsersFilterSchema,
+  AdminUsersResponseSchema,
+} from '../schemas/admin';
 import { ErrorResponseSchema, SuccessResponseSchema } from '../schemas/shared';
 
 const router = new OpenAPIHono<AppEnv>();
@@ -16,10 +20,24 @@ const cardLimitUpdateSchema = z.object({
   card_limit: z.number().int().min(0),
 });
 
+const listUsersQuerySchema = z.object({
+  page: z.coerce.number().int().min(0).default(0),
+  pageSize: z.coerce.number().int().min(1).max(100).default(25),
+  search: z.string().trim().optional(),
+  filter: AdminUsersFilterSchema.default('all'),
+  includeFake: z
+    .enum(['true', 'false'])
+    .optional()
+    .transform((value) => value === 'true'),
+});
+
 const listUsersRoute = createRoute({
   method: 'get',
   path: '/users',
   summary: 'List all users with subscription data',
+  request: {
+    query: listUsersQuerySchema,
+  },
   responses: {
     200: { content: { 'application/json': { schema: AdminUsersResponseSchema } }, description: 'Success' },
     401: { content: { 'application/json': { schema: ErrorResponseSchema } }, description: 'Unauthorized' },
@@ -78,7 +96,104 @@ const updateUserCardLimitRoute = createRoute({
   },
 });
 
-async function fetchAdminUsers(c: any) {
+const subjectUsageRoute = createRoute({
+  method: 'get',
+  path: '/subject-usage',
+  summary: 'List subject usage statistics',
+  responses: {
+    200: { content: { 'application/json': { schema: AdminSubjectUsageResponseSchema } }, description: 'Success' },
+    401: { content: { 'application/json': { schema: ErrorResponseSchema } }, description: 'Unauthorized' },
+    403: { content: { 'application/json': { schema: ErrorResponseSchema } }, description: 'Forbidden' },
+    500: { content: { 'application/json': { schema: ErrorResponseSchema } }, description: 'Error' },
+  },
+});
+
+async function fetchAdminUsers(
+  c: any,
+  {
+    page,
+    pageSize,
+    search,
+    filter,
+    includeFake,
+  }: {
+    page: number;
+    pageSize: number;
+    search?: string;
+    filter: 'all' | 'free' | 'premium' | 'fake';
+    includeFake: boolean;
+  }
+) {
+  const whereClauses: string[] = [];
+  const whereBindings: unknown[] = [];
+  const normalizedSearch = search?.trim().toLowerCase();
+
+  if (normalizedSearch) {
+    const searchPattern = `%${normalizedSearch}%`;
+    whereClauses.push(`
+      (
+        LOWER(COALESCE(p.username, '')) LIKE ?
+        OR LOWER(COALESCE(p.email, '')) LIKE ?
+      )
+    `);
+    whereBindings.push(searchPattern, searchPattern);
+  }
+
+  if (filter === 'fake') {
+    whereClauses.push(`LOWER(COALESCE(p.email, '')) LIKE 'fake_%'`);
+  } else {
+    if (!includeFake) {
+      whereClauses.push(`LOWER(COALESCE(p.email, '')) NOT LIKE 'fake_%'`);
+    }
+
+    if (filter === 'premium') {
+      whereClauses.push(`
+        (
+          p.is_premium = 1
+          OR (
+            us.status = 'active'
+            AND (
+              us.expiry_date IS NULL
+              OR us.expiry_date = ''
+              OR datetime(us.expiry_date) > CURRENT_TIMESTAMP
+            )
+          )
+        )
+      `);
+    } else if (filter === 'free') {
+      whereClauses.push(`
+        (
+          p.is_premium != 1
+          AND (
+            us.status IS NULL
+            OR us.status != 'active'
+            OR (
+              us.expiry_date IS NOT NULL
+              AND us.expiry_date != ''
+              AND datetime(us.expiry_date) <= CURRENT_TIMESTAMP
+            )
+          )
+        )
+      `);
+    }
+  }
+
+  const whereSql =
+    whereClauses.length > 0 ? `WHERE ${whereClauses.join(' AND ')}` : '';
+  const offset = page * pageSize;
+
+  const countResult = await c.env.DB.prepare(`
+    SELECT COUNT(*) AS count
+    FROM profiles p
+    LEFT JOIN user_subscriptions us ON us.user_id = p.id
+    ${whereSql}
+  `).bind(...whereBindings).first<{ count: number | string | null }>();
+
+  const overallResult = await c.env.DB.prepare(`
+    SELECT COUNT(*) AS count
+    FROM profiles
+  `).first<{ count: number | string | null }>();
+
   const { results } = await c.env.DB.prepare(`
     SELECT
       p.*,
@@ -94,10 +209,12 @@ async function fetchAdminUsers(c: any) {
       us.updated_at AS subscription_updated_at
     FROM profiles p
     LEFT JOIN user_subscriptions us ON us.user_id = p.id
+    ${whereSql}
     ORDER BY COALESCE(NULLIF(p.username, ''), p.email) COLLATE NOCASE
-  `).all();
+    LIMIT ? OFFSET ?
+  `).bind(...whereBindings, pageSize, offset).all();
 
-  return (results as any[]).map((row) => {
+  const users = (results as any[]).map((row) => {
     const subscriptionId = row.subscription_id ?? null;
     const subscription = subscriptionId
       ? {
@@ -133,6 +250,18 @@ async function fetchAdminUsers(c: any) {
       subscription,
     };
   });
+
+  const totalCount = Number(countResult?.count ?? 0);
+  const overallCount = Number(overallResult?.count ?? 0);
+
+  return {
+    users,
+    page,
+    pageSize,
+    totalCount,
+    totalPages: totalCount == 0 ? 0 : Math.ceil(totalCount / pageSize),
+    overallCount,
+  };
 }
 
 router.openapi(listUsersRoute, async (c) => {
@@ -141,8 +270,68 @@ router.openapi(listUsersRoute, async (c) => {
   if (user.id !== ADMIN_ID) return c.json({ error: 'Forbidden' } as any, 403);
 
   try {
-    const users = await fetchAdminUsers(c);
+    const query = c.req.valid('query');
+    const users = await fetchAdminUsers(c, {
+      page: query.page,
+      pageSize: query.pageSize,
+      search: query.search,
+      filter: query.filter,
+      includeFake: query.includeFake,
+    });
     return c.json(users as any, 200);
+  } catch (e: any) {
+    return c.json({ error: e.message } as any, 500);
+  }
+});
+
+router.openapi(subjectUsageRoute, async (c) => {
+  const user = c.get('user');
+  if (!user) return c.json({ error: 'Unauthorized' } as any, 401);
+  if (user.id !== ADMIN_ID) return c.json({ error: 'Forbidden' } as any, 403);
+
+  try {
+    const { results } = await c.env.DB.prepare(`
+      SELECT
+        s.id AS subject_id,
+        COALESCE(NULLIF(s.name, ''), s.id) AS subject_name,
+        p.name AS pillar_name,
+        f.name AS folder_name,
+        COALESCE(SUM(sus.started_count), 0) AS total_started,
+        COALESCE(SUM(sus.completed_count), 0) AS total_completed,
+        COALESCE(SUM(CASE WHEN sus.mode = 'learn' THEN sus.started_count ELSE 0 END), 0) AS learn_started,
+        COALESCE(SUM(CASE WHEN sus.mode = 'learn' THEN sus.completed_count ELSE 0 END), 0) AS learn_completed,
+        COALESCE(SUM(CASE WHEN sus.mode = 'test' THEN sus.started_count ELSE 0 END), 0) AS test_started,
+        COALESCE(SUM(CASE WHEN sus.mode = 'test' THEN sus.completed_count ELSE 0 END), 0) AS test_completed,
+        MAX(sus.updated_at) AS updated_at
+      FROM subject_usage_stats sus
+      INNER JOIN subjects s ON s.id = sus.subject_id
+      LEFT JOIN pillars p ON p.id = s.pillar_id
+      LEFT JOIN folders f ON f.id = s.folder_id
+      GROUP BY s.id
+      ORDER BY total_started DESC, total_completed DESC, subject_name COLLATE NOCASE
+      LIMIT 200
+    `).all();
+
+    const rows = (results as any[]).map((row) => {
+      const totalStarted = Number(row.total_started ?? 0);
+      const totalCompleted = Number(row.total_completed ?? 0);
+      return {
+        subject_id: row.subject_id,
+        subject_name: row.subject_name,
+        pillar_name: row.pillar_name ?? null,
+        folder_name: row.folder_name ?? null,
+        total_started: totalStarted,
+        total_completed: totalCompleted,
+        learn_started: Number(row.learn_started ?? 0),
+        learn_completed: Number(row.learn_completed ?? 0),
+        test_started: Number(row.test_started ?? 0),
+        test_completed: Number(row.test_completed ?? 0),
+        completion_rate: totalStarted > 0 ? totalCompleted / totalStarted : 0,
+        updated_at: row.updated_at ?? null,
+      };
+    });
+
+    return c.json(rows as any, 200);
   } catch (e: any) {
     return c.json({ error: e.message } as any, 500);
   }

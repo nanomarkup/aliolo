@@ -11,6 +11,7 @@ import 'package:aliolo/data/models/pillar_model.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/card_service.dart';
 import 'package:aliolo/data/services/progress_service.dart';
+import 'package:aliolo/data/services/subject_usage_service.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:aliolo/data/services/sound_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
@@ -50,6 +51,7 @@ class TestPage extends StatefulWidget {
 class _TestPageState extends State<TestPage> {
   final _authService = getIt<AuthService>();
   final _progressService = getIt<ProgressService>();
+  final _subjectUsageService = getIt<SubjectUsageService>();
   final _soundService = getIt<SoundService>();
 
   late List<SubjectCard> _sessionQueue;
@@ -805,21 +807,17 @@ class _TestPageState extends State<TestPage> {
     if (correct) {
       _sessionCorrect++;
       _soundService.playCorrect();
-      await _progressService.recordProgress(
-        userServerId: _authService.currentUser!.serverId!,
+      await _progressService.recordReview(
         cardId: _currentCard.id,
         subjectId: _currentCard.subjectId,
         quality: 5,
-        cardLevel: _currentCard.level,
       );
     } else {
       _soundService.playWrong();
-      await _progressService.recordProgress(
-        userServerId: _authService.currentUser!.serverId!,
+      await _progressService.recordReview(
         cardId: _currentCard.id,
         subjectId: _currentCard.subjectId,
         quality: 0,
-        cardLevel: _currentCard.level,
       );
     }
 
@@ -869,6 +867,13 @@ class _TestPageState extends State<TestPage> {
   }
 
   void _finishSession() {
+    if (_isSessionFinished) return;
+    unawaited(
+      _subjectUsageService.recordSessionComplete(
+        subjectIds: widget.sessionCards.map((sc) => sc.card.subjectId),
+        mode: 'test',
+      ),
+    );
     setState(() {
       _isSessionFinished = true;
     });

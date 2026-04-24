@@ -14,6 +14,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/data/services/progress_service.dart';
+import 'package:aliolo/data/services/subject_usage_service.dart';
 import 'package:aliolo/data/services/subscription_service.dart';
 import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/core/utils/session_bucket_sampler.dart';
@@ -70,6 +71,7 @@ class _LearnPageState extends State<LearnPage> {
   final _authService = AuthService();
   final _soundService = SoundService();
   final _progressService = getIt<ProgressService>();
+  final _subjectUsageService = getIt<SubjectUsageService>();
   final _keyboardFocusNode = FocusNode();
 
   VideoPlayerController? _videoController;
@@ -468,6 +470,12 @@ class _LearnPageState extends State<LearnPage> {
     }
 
     _progressService.awardSubjectCompletionBonus(_totalInSession);
+    unawaited(
+      _subjectUsageService.recordSessionComplete(
+        subjectIds: widget.sessionCards.map((sc) => sc.card.subjectId),
+        mode: 'learn',
+      ),
+    );
     _soundService.playCompleted();
     _showCompletionDialog();
   }

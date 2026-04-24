@@ -15,6 +15,36 @@ class ProgressService {
     required int quality, // 0-5
     required int cardLevel,
   }) async {
+    await recordReview(cardId: cardId, subjectId: subjectId, quality: quality);
+  }
+
+  Future<List<String>> getReviewSessionCardIds({
+    required List<String> cardIds,
+    required int limit,
+  }) async {
+    if (cardIds.isEmpty || limit <= 0) return [];
+
+    try {
+      final response = await _cfClient.client.post(
+        '/api/progress/review-session',
+        data: {'card_ids': cardIds, 'limit': limit},
+      );
+      if (response.statusCode == 200 && response.data is Map) {
+        final data = Map<String, dynamic>.from(response.data);
+        final selected = data['card_ids'];
+        if (selected is List) return selected.map((id) => '$id').toList();
+      }
+    } catch (e) {
+      AppLogger.log('Error getting SM-2 review session cards: $e');
+    }
+    return [];
+  }
+
+  Future<void> recordReview({
+    required String cardId,
+    required String subjectId,
+    required int quality,
+  }) async {
     final user = _authService.currentUser;
     if (user == null) return;
 
@@ -22,20 +52,11 @@ class ProgressService {
     final today = DateTime(now.year, now.month, now.day);
 
     try {
-      // 1. Update card specific progress in D1
-      final getRes = await _cfClient.client.get('/api/progress/card/$cardId');
-      int currentCorrect = 0;
-      if (getRes.statusCode == 200 && getRes.data != null) {
-        currentCorrect = getRes.data['correct_count'] ?? 0;
-      }
+      await _cfClient.client.post(
+        '/api/progress/review',
+        data: {'card_id': cardId, 'subject_id': subjectId, 'quality': quality},
+      );
 
-      await _cfClient.client.post('/api/progress', data: {
-        'card_id': cardId,
-        'subject_id': subjectId,
-        'correct_count': (quality >= 3) ? currentCorrect + 1 : currentCorrect,
-      });
-
-      // 2. XP Gain
       int xpGain = 1; // Incorrect
       if (quality == 5) {
         xpGain = 9; // Perfect
@@ -47,12 +68,11 @@ class ProgressService {
 
       user.totalXp += xpGain;
 
-      // 3. New Day Detection & Reset
       _handleNewDayReset(user, today);
 
-      // 4. Update Daily Completions & Streak
       if (quality >= 2) {
-        final wasGoalReachedBefore = user.dailyCompletions >= user.dailyGoalCount;
+        final wasGoalReachedBefore =
+            user.dailyCompletions >= user.dailyGoalCount;
         user.dailyCompletions += 1.0;
         final isGoalReachedNow = user.dailyCompletions >= user.dailyGoalCount;
 
@@ -122,11 +142,7 @@ class ProgressService {
     if (user.lastActiveDate == null) return;
 
     final lastLocal = user.lastActiveDate!.toLocal();
-    final lastDay = DateTime(
-      lastLocal.year,
-      lastLocal.month,
-      lastLocal.day,
-    );
+    final lastDay = DateTime(lastLocal.year, lastLocal.month, lastLocal.day);
     final dayDifference = today.difference(lastDay).inDays;
 
     if (dayDifference > 0) {
@@ -147,10 +163,10 @@ class ProgressService {
 
   Future<void> hideCard(String cardId, bool hidden) async {
     try {
-      await _cfClient.client.post('/api/progress', data: {
-        'card_id': cardId,
-        'is_hidden': hidden,
-      });
+      await _cfClient.client.post(
+        '/api/progress',
+        data: {'card_id': cardId, 'is_hidden': hidden},
+      );
     } catch (e) {
       AppLogger.log('Error hiding card: $e');
     }
@@ -171,5 +187,6 @@ class ProgressService {
   Future<double> getSubjectProgress(String subjectId) async => 0.0;
   Future<int> getMathLevelCount() async => 0;
   Future<Map<String, int>> getSubjectCrowns() async => {};
-  Future<double> getDailyProgress() async => _authService.currentUser?.dailyCompletions ?? 0.0;
+  Future<double> getDailyProgress() async =>
+      _authService.currentUser?.dailyCompletions ?? 0.0;
 }

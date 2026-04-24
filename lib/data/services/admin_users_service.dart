@@ -6,23 +6,42 @@ import 'package:aliolo/data/models/admin_user_model.dart';
 class AdminUsersService {
   final _cfClient = getIt<CloudflareHttpClient>();
 
-  Future<List<AdminUserModel>> getAllUsers() async {
+  Future<AdminUsersPageModel> getUsers({
+    int page = 0,
+    int pageSize = 25,
+    String? search,
+    AdminUsersFilter filter = AdminUsersFilter.all,
+    bool includeFake = false,
+  }) async {
     try {
-      final response = await _cfClient.client.get('/api/admin/users');
+      final response = await _cfClient.client.get(
+        '/api/admin/users',
+        queryParameters: {
+          'page': page,
+          'pageSize': pageSize,
+          'search': search?.trim().isNotEmpty == true ? search!.trim() : null,
+          'filter': filter.apiValue,
+          'includeFake': includeFake,
+        },
+      );
       if (response.statusCode == 200) {
         final data = response.data;
-        if (data is List) {
-          return data
-              .whereType<Map>()
-              .map((row) => AdminUserModel.fromJson(Map<String, dynamic>.from(row)))
-              .toList();
+        if (data is Map) {
+          return AdminUsersPageModel.fromJson(Map<String, dynamic>.from(data));
         }
       }
     } catch (e) {
       AppLogger.log('AdminUsersService: failed to fetch users: $e');
       rethrow;
     }
-    return [];
+    return const AdminUsersPageModel(
+      users: [],
+      page: 0,
+      pageSize: 25,
+      totalCount: 0,
+      totalPages: 0,
+      overallCount: 0,
+    );
   }
 
   Future<void> updateSubscription({
@@ -55,9 +74,7 @@ class AdminUsersService {
     try {
       final response = await _cfClient.client.patch(
         '/api/admin/users/$userId/card-limit',
-        data: {
-          'card_limit': limit,
-        },
+        data: {'card_limit': limit},
       );
 
       if (response.statusCode != 200) {
