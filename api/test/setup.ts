@@ -37,6 +37,7 @@ CREATE TABLE IF NOT EXISTS profiles (
   learn_session_size INTEGER DEFAULT 10,
   test_session_size INTEGER DEFAULT 10,
   test_mode TEXT DEFAULT 'question_to_answer',
+  last_source_filter TEXT DEFAULT 'all',
   learn_autoplay_delay_seconds INTEGER DEFAULT 3,
   options_count INTEGER DEFAULT 6,
   avatar_url TEXT,
@@ -181,6 +182,7 @@ CREATE TABLE IF NOT EXISTS ui_translation_bundles (
 CREATE TABLE IF NOT EXISTS onboarding_analytics (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   session_id TEXT NOT NULL,
+  user_email TEXT,
   age_range TEXT,
   pillar_id INTEGER,
   last_slide_index INTEGER,

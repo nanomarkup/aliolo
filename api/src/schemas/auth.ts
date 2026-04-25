@@ -4,6 +4,9 @@ export const SignupRequestSchema = z.object({
   email: z.string().email().openapi({ example: 'user@example.com' }),
   password: z.string().min(6).openapi({ example: 'securepassword123' }),
   username: z.string().optional().openapi({ example: 'johndoe' }),
+  onboarding_session_id: z.string().optional().openapi({ example: 'session_123' }),
+  onboarding_age_range: z.string().optional().openapi({ example: 'age_19_25' }),
+  onboarding_pillar_id: z.number().int().optional().openapi({ example: 2 }),
 }).openapi('SignupRequest');
 
 export const SignupInviteRequestSchema = z.object({
@@ -11,6 +14,9 @@ export const SignupInviteRequestSchema = z.object({
   password: z.string().min(6).openapi({ example: 'securepassword123' }),
   username: z.string().optional().openapi({ example: 'johndoe' }),
   invite_token: z.string().openapi({ example: 'abc123token' }),
+  onboarding_session_id: z.string().optional().openapi({ example: 'session_123' }),
+  onboarding_age_range: z.string().optional().openapi({ example: 'age_19_25' }),
+  onboarding_pillar_id: z.number().int().optional().openapi({ example: 2 }),
 }).openapi('SignupInviteRequest');
 
 export const LoginRequestSchema = z.object({
@@ -112,6 +118,9 @@ export const ErrorResponseSchema = z.object({
 
 export const RequestOtpSchema = z.object({
   email: z.string().email().openapi({ example: 'user@example.com' }),
+  onboarding_session_id: z.string().optional().openapi({ example: 'session_123' }),
+  onboarding_age_range: z.string().optional().openapi({ example: 'age_19_25' }),
+  onboarding_pillar_id: z.number().int().optional().openapi({ example: 2 }),
 }).openapi('RequestOtp');
 
 export const VerifyOtpSchema = z.object({

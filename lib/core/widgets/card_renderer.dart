@@ -12,6 +12,8 @@ class CardRenderer extends StatelessWidget {
   final String languageCode;
   final Color fallbackColor;
   final BoxFit fit;
+  final AlignmentGeometry alignment;
+  final bool compactPreview;
   final double? textFontSize;
   final String? excludeText;
   final bool forceAudioIcon;
@@ -24,6 +26,8 @@ class CardRenderer extends StatelessWidget {
     required this.languageCode,
     required this.fallbackColor,
     this.fit = BoxFit.contain,
+    this.alignment = Alignment.center,
+    this.compactPreview = false,
     this.textFontSize,
     this.excludeText,
     this.forceAudioIcon = false,
@@ -62,6 +66,7 @@ class CardRenderer extends StatelessWidget {
       return AlioloImage(
         imageUrl: imageUrl,
         fit: fit,
+        alignment: alignment,
         backgroundColor: fallbackColor.withValues(alpha: 0.05),
       );
     }
@@ -130,14 +135,61 @@ class CardRenderer extends StatelessWidget {
 
   Widget? _buildColorRenderer() {
     if (!card.isColors) return null;
-    final colorCode = card.hexColorFor(languageCode) ?? card.hexColor;
-    if (colorCode == null) return null;
+    final colorCode =
+        card.displayText.trim().isNotEmpty
+            ? card.displayText.trim()
+            : (card.hexColor ?? '');
+    if (colorCode.isEmpty) return null;
 
-    return Center(
-      child: AspectRatio(
-        aspectRatio: 1,
-        child: ColoredBox(
-          color: Color(int.parse(colorCode.replaceFirst('#', '0xFF'))),
+    final color = Color(int.parse(colorCode.replaceFirst('#', '0xFF')));
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        ColoredBox(color: color),
+        Positioned(
+          top: 8,
+          left: 8,
+          right: 8,
+          child: Align(
+            alignment: Alignment.topCenter,
+            child: _buildColorLabel(colorCode, color),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildColorLabel(String colorCode, Color color) {
+    final isLight = ThemeData.estimateBrightnessForColor(color) ==
+        Brightness.light;
+    final labelBackground = isLight
+        ? Colors.black.withValues(alpha: 0.22)
+        : Colors.white.withValues(alpha: 0.24);
+    final labelForeground = isLight
+        ? Colors.white.withValues(alpha: 0.9)
+        : Colors.black87.withValues(alpha: 0.9);
+
+    return DecoratedBox(
+      key: const Key('color-hex-label'),
+      decoration: BoxDecoration(
+        color: labelBackground,
+        borderRadius: BorderRadius.circular(999),
+        border: Border.all(
+          color: labelForeground.withValues(alpha: 0.08),
+          width: 1,
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+        child: Text(
+          colorCode,
+          style: TextStyle(
+            fontSize: 11,
+            fontWeight: FontWeight.w700,
+            letterSpacing: 0.1,
+            color: labelForeground,
+          ),
+          textAlign: TextAlign.center,
         ),
       ),
     );

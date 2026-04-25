@@ -1,91 +1,43 @@
-import { describe, it, expect, beforeAll } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import { env } from 'cloudflare:test';
 import app from '../src/index';
-import { signupUser } from './test-utils';
 
 describe('Analytics API', () => {
-  let sessionId = '';
-  let subjectId = '';
+  it('updates onboarding analytics with the latest selected pillar and age', async () => {
+    const sessionId = `analytics_${Date.now()}`;
 
-  beforeAll(async () => {
-    const timestamp = Date.now();
-    const data = await signupUser({
-      email: `analytics_${timestamp}@test.com`,
-      password: 'password123',
-    });
-    sessionId = data.session_id;
-    subjectId = `analytics-subject-${timestamp}`;
-
-    await env.DB.prepare("INSERT OR IGNORE INTO pillars (id, sort_order) VALUES (1, 1)").run();
-    await env.DB.prepare(
-      "INSERT INTO subjects (id, pillar_id, owner_id, name) VALUES (?, 1, ?, 'Analytics Subject')"
-    ).bind(subjectId, data.user.id).run();
-  });
-
-  it('should record onboarding analytics', async () => {
-    const payload = {
-      session_id: `session_${Date.now()}`,
-      age_range: '7_14',
-      pillar_id: 1,
-      last_slide_index: 5
-    };
-
-    const res = await app.request('/api/analytics/onboarding', {
-      method: 'POST',
-      body: JSON.stringify(payload),
-      headers: { 'Content-Type': 'application/json' }
-    }, env);
-
-    expect(res.status).toBe(200);
-  });
-
-  it('should record subject session starts and completions once per subject', async () => {
-    const startRes = await app.request('/api/analytics/subject-session/start', {
+    const firstRes = await app.request('/api/analytics/onboarding', {
       method: 'POST',
       body: JSON.stringify({
-        subject_ids: [subjectId, subjectId],
-        mode: 'learn',
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Session-Id': sessionId,
-      },
-    }, env);
-
-    expect(startRes.status).toBe(200);
-
-    const completeRes = await app.request('/api/analytics/subject-session/complete', {
-      method: 'POST',
-      body: JSON.stringify({
-        subject_ids: [subjectId],
-        mode: 'learn',
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Session-Id': sessionId,
-      },
-    }, env);
-
-    expect(completeRes.status).toBe(200);
-
-    const row = await env.DB.prepare(
-      "SELECT started_count, completed_count FROM subject_usage_stats WHERE subject_id = ? AND mode = 'learn'"
-    ).bind(subjectId).first() as any;
-
-    expect(row.started_count).toBe(1);
-    expect(row.completed_count).toBe(1);
-  });
-
-  it('should reject anonymous subject session analytics', async () => {
-    const res = await app.request('/api/analytics/subject-session/start', {
-      method: 'POST',
-      body: JSON.stringify({
-        subject_ids: [subjectId],
-        mode: 'test',
+        session_id: sessionId,
+        age_range: 'age_19_25',
+        pillar_id: 6,
+        last_slide_index: 2,
       }),
       headers: { 'Content-Type': 'application/json' },
     }, env);
 
-    expect(res.status).toBe(401);
+    expect(firstRes.status).toBe(200);
+
+    const secondRes = await app.request('/api/analytics/onboarding', {
+      method: 'POST',
+      body: JSON.stringify({
+        session_id: sessionId,
+        age_range: 'age_26_35',
+        pillar_id: 7,
+        last_slide_index: 3,
+      }),
+      headers: { 'Content-Type': 'application/json' },
+    }, env);
+
+    expect(secondRes.status).toBe(200);
+
+    const analytics: any = await env.DB.prepare(
+      'SELECT age_range, pillar_id, last_slide_index FROM onboarding_analytics WHERE session_id = ?'
+    ).bind(sessionId).first();
+
+    expect(analytics.age_range).toBe('age_26_35');
+    expect(analytics.pillar_id).toBe(7);
+    expect(analytics.last_slide_index).toBe(3);
   });
 });

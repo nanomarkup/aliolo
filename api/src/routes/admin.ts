@@ -2,6 +2,7 @@ import { OpenAPIHono, createRoute, z } from '@hono/zod-openapi';
 import { generateId } from 'lucia';
 import type { AppEnv } from '../types';
 import {
+  AdminOnboardingAnalyticsResponseSchema,
   AdminSubjectUsageResponseSchema,
   AdminUsersFilterSchema,
   AdminUsersResponseSchema,
@@ -102,6 +103,18 @@ const subjectUsageRoute = createRoute({
   summary: 'List subject usage statistics',
   responses: {
     200: { content: { 'application/json': { schema: AdminSubjectUsageResponseSchema } }, description: 'Success' },
+    401: { content: { 'application/json': { schema: ErrorResponseSchema } }, description: 'Unauthorized' },
+    403: { content: { 'application/json': { schema: ErrorResponseSchema } }, description: 'Forbidden' },
+    500: { content: { 'application/json': { schema: ErrorResponseSchema } }, description: 'Error' },
+  },
+});
+
+const onboardingAnalyticsRoute = createRoute({
+  method: 'get',
+  path: '/onboarding-analytics',
+  summary: 'List onboarding analytics statistics',
+  responses: {
+    200: { content: { 'application/json': { schema: AdminOnboardingAnalyticsResponseSchema } }, description: 'Success' },
     401: { content: { 'application/json': { schema: ErrorResponseSchema } }, description: 'Unauthorized' },
     403: { content: { 'application/json': { schema: ErrorResponseSchema } }, description: 'Forbidden' },
     500: { content: { 'application/json': { schema: ErrorResponseSchema } }, description: 'Error' },
@@ -332,6 +345,127 @@ router.openapi(subjectUsageRoute, async (c) => {
     });
 
     return c.json(rows as any, 200);
+  } catch (e: any) {
+    return c.json({ error: e.message } as any, 500);
+  }
+});
+
+router.openapi(onboardingAnalyticsRoute, async (c) => {
+  const user = c.get('user');
+  if (!user) return c.json({ error: 'Unauthorized' } as any, 401);
+  if (user.id !== ADMIN_ID) return c.json({ error: 'Forbidden' } as any, 403);
+
+  try {
+    const summaryResult = await c.env.DB.prepare(`
+      SELECT
+        COUNT(*) AS total_sessions,
+        SUM(CASE WHEN COALESCE(TRIM(user_email), '') != '' THEN 1 ELSE 0 END) AS linked_email_sessions,
+        SUM(CASE WHEN COALESCE(TRIM(age_range), '') != '' THEN 1 ELSE 0 END) AS age_selected_sessions,
+        SUM(CASE WHEN pillar_id IS NOT NULL THEN 1 ELSE 0 END) AS pillar_selected_sessions,
+        SUM(CASE WHEN last_slide_index IS NOT NULL THEN 1 ELSE 0 END) AS slide_recorded_sessions,
+        SUM(CASE WHEN last_slide_index = 6 THEN 1 ELSE 0 END) AS final_slide_sessions,
+        COUNT(DISTINCT CASE WHEN COALESCE(TRIM(user_email), '') != '' THEN LOWER(TRIM(user_email)) END) AS unique_emails,
+        AVG(last_slide_index) AS average_last_slide_index,
+        MAX(updated_at) AS latest_updated_at
+      FROM onboarding_analytics
+    `).first<any>();
+
+    const ageBreakdownResult = await c.env.DB.prepare(`
+      SELECT
+        COALESCE(NULLIF(age_range, ''), 'not_set') AS age_range,
+        COUNT(*) AS sessions
+      FROM onboarding_analytics
+      GROUP BY COALESCE(NULLIF(age_range, ''), 'not_set')
+      ORDER BY sessions DESC, age_range COLLATE NOCASE
+    `).all();
+
+    const pillarBreakdownResult = await c.env.DB.prepare(`
+      SELECT
+        oa.pillar_id AS pillar_id,
+        COALESCE(p.name, 'Not set') AS pillar_name,
+        COUNT(*) AS sessions
+      FROM onboarding_analytics oa
+      LEFT JOIN pillars p ON p.id = oa.pillar_id
+      GROUP BY oa.pillar_id, COALESCE(p.name, 'Not set')
+      ORDER BY sessions DESC, pillar_name COLLATE NOCASE
+    `).all();
+
+    const slideBreakdownResult = await c.env.DB.prepare(`
+      SELECT
+        last_slide_index,
+        COUNT(*) AS sessions
+      FROM onboarding_analytics
+      GROUP BY last_slide_index
+      ORDER BY COALESCE(last_slide_index, -1) ASC
+    `).all();
+
+    const { results } = await c.env.DB.prepare(`
+      SELECT
+        oa.session_id,
+        oa.user_email,
+        oa.age_range,
+        oa.pillar_id,
+        COALESCE(p.name, NULL) AS pillar_name,
+        oa.last_slide_index,
+        oa.created_at,
+        oa.updated_at
+      FROM onboarding_analytics oa
+      LEFT JOIN pillars p ON p.id = oa.pillar_id
+      ORDER BY oa.updated_at DESC, oa.created_at DESC
+      LIMIT 200
+    `).all();
+
+    const totalSessions = Number(summaryResult?.total_sessions ?? 0);
+    const finalSlideSessions = Number(summaryResult?.final_slide_sessions ?? 0);
+    const averageLastSlideIndexRaw = summaryResult?.average_last_slide_index;
+    const averageLastSlideIndex =
+      averageLastSlideIndexRaw === null || averageLastSlideIndexRaw === undefined
+        ? null
+        : Number(averageLastSlideIndexRaw);
+
+    return c.json({
+      summary: {
+        total_sessions: totalSessions,
+        linked_email_sessions: Number(summaryResult?.linked_email_sessions ?? 0),
+        age_selected_sessions: Number(summaryResult?.age_selected_sessions ?? 0),
+        pillar_selected_sessions: Number(summaryResult?.pillar_selected_sessions ?? 0),
+        final_slide_sessions: finalSlideSessions,
+        unique_emails: Number(summaryResult?.unique_emails ?? 0),
+        average_last_slide_index: averageLastSlideIndex,
+        completion_rate: totalSessions > 0 ? finalSlideSessions / totalSessions : 0,
+        final_slide_index: 6,
+        latest_updated_at: summaryResult?.latest_updated_at ?? null,
+      },
+      age_breakdown: (ageBreakdownResult.results as any[]).map((row) => ({
+        age_range: row.age_range ?? 'not_set',
+        sessions: Number(row.sessions ?? 0),
+      })),
+      pillar_breakdown: (pillarBreakdownResult.results as any[]).map((row) => ({
+        pillar_id: row.pillar_id ?? null,
+        pillar_name: row.pillar_name ?? 'Not set',
+        sessions: Number(row.sessions ?? 0),
+      })),
+      slide_breakdown: (slideBreakdownResult.results as any[]).map((row) => ({
+        last_slide_index:
+          row.last_slide_index === null || row.last_slide_index === undefined
+            ? null
+            : Number(row.last_slide_index),
+        sessions: Number(row.sessions ?? 0),
+      })),
+      recent_sessions: (results as any[]).map((row) => ({
+        session_id: row.session_id,
+        user_email: row.user_email ?? null,
+        age_range: row.age_range ?? null,
+        pillar_id: row.pillar_id ?? null,
+        pillar_name: row.pillar_name ?? null,
+        last_slide_index:
+          row.last_slide_index === null || row.last_slide_index === undefined
+            ? null
+            : Number(row.last_slide_index),
+        created_at: row.created_at ?? null,
+        updated_at: row.updated_at ?? null,
+      })),
+    } as any, 200);
   } catch (e: any) {
     return c.json({ error: e.message } as any, 500);
   }

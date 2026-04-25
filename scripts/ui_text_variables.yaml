@@ -2034,3 +2034,35 @@ entries:
   - file: lib/features/onboarding/presentation/onboarding_screen.dart
     line: 203
     kind: Text
+- key: session_complete
+  english: Session Complete!
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/testing/presentation/pages/learn_page.dart
+    line: 600
+    kind: Text
+- key: session_complete_description
+  english: Great job! You have finished all the cards in this session.
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/testing/presentation/pages/learn_page.dart
+    line: 601
+    kind: Text
+- key: back_to_subjects
+  english: Back to Subjects
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/testing/presentation/pages/learn_page.dart
+    line: 610
+    kind: Text
+- key: play_audio
+  english: Play Audio
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/testing/presentation/pages/learn_page.dart
+    line: 750
+    kind: Text

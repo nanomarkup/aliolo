@@ -10,6 +10,8 @@ describe('Admin Users API', () => {
   const normalSessionId = 'normal-session';
   let premiumUserId = '';
   let usageSubjectId = '';
+  let onboardingRecentEmail = '';
+  let onboardingSecondaryEmail = '';
 
   beforeAll(async () => {
     await env.DB.prepare(`
@@ -93,6 +95,41 @@ describe('Admin Users API', () => {
         updated_at
       ) VALUES (?, 'learn', 4, 3, CURRENT_TIMESTAMP), (?, 'test', 2, 1, CURRENT_TIMESTAMP)
     `).bind(usageSubjectId, usageSubjectId).run();
+
+    onboardingRecentEmail = `oa_recent_${Date.now()}@test.com`;
+    onboardingSecondaryEmail = `oa_secondary_${Date.now()}@test.com`;
+
+    await env.DB.prepare(`
+      INSERT OR REPLACE INTO pillars (id, sort_order, name)
+      VALUES (6, 6, 'Academic & Professional'), (7, 7, 'Arts & Creativity')
+    `).run();
+
+    await env.DB.prepare(`
+      INSERT OR REPLACE INTO onboarding_analytics (
+        session_id,
+        user_email,
+        age_range,
+        pillar_id,
+        last_slide_index,
+        created_at,
+        updated_at
+      ) VALUES
+        (?, ?, 'age_15_18', 6, 6, ?, ?),
+        (?, ?, 'age_19_25', 7, 2, ?, ?),
+        (?, NULL, NULL, NULL, NULL, ?, ?)
+    `).bind(
+      'oa-session-recent',
+      onboardingRecentEmail,
+      new Date(Date.now() - 60_000).toISOString(),
+      new Date(Date.now() - 30_000).toISOString(),
+      'oa-session-secondary',
+      onboardingSecondaryEmail,
+      new Date(Date.now() - 50_000).toISOString(),
+      new Date(Date.now() - 20_000).toISOString(),
+      'oa-session-empty',
+      new Date(Date.now() - 40_000).toISOString(),
+      new Date(Date.now() - 10_000).toISOString()
+    ).run();
   });
 
   it('should return all users with subscription data for the admin session', async () => {
@@ -146,6 +183,48 @@ describe('Admin Users API', () => {
 
   it('should reject subject usage statistics for non-admin users', async () => {
     const res = await app.request('/api/admin/subject-usage', {
+      headers: { 'X-Session-Id': normalSessionId },
+    }, env);
+
+    expect(res.status).toBe(403);
+  });
+
+  it('should return onboarding analytics statistics for admin users', async () => {
+    const res = await app.request('/api/admin/onboarding-analytics', {
+      headers: { 'X-Session-Id': adminSessionId },
+    }, env);
+
+    expect(res.status).toBe(200);
+    const data = await res.json() as any;
+
+    expect(data.summary.total_sessions).toBeGreaterThanOrEqual(3);
+    expect(data.summary.linked_email_sessions).toBeGreaterThanOrEqual(2);
+    expect(data.summary.age_selected_sessions).toBeGreaterThanOrEqual(2);
+    expect(data.summary.pillar_selected_sessions).toBeGreaterThanOrEqual(2);
+    expect(data.summary.final_slide_sessions).toBeGreaterThanOrEqual(1);
+    expect(data.summary.unique_emails).toBeGreaterThanOrEqual(2);
+    expect(data.summary.completion_rate).toBeCloseTo(1 / 3, 1);
+    expect(Array.isArray(data.recent_sessions)).toBe(true);
+    expect(data.recent_sessions.length).toBeGreaterThanOrEqual(3);
+
+    const recent = data.recent_sessions.find((row: any) => row.session_id === 'oa-session-recent');
+    expect(recent).toBeTruthy();
+    expect(recent.user_email).toBe(onboardingRecentEmail);
+    expect(recent.age_range).toBe('age_15_18');
+    expect(recent.pillar_id).toBe(6);
+    expect(recent.pillar_name).toBe('Academic & Professional');
+    expect(recent.last_slide_index).toBe(6);
+
+    const ageBreakdown = data.age_breakdown.find((row: any) => row.age_range === 'age_15_18');
+    expect(ageBreakdown.sessions).toBeGreaterThanOrEqual(1);
+
+    const pillarBreakdown = data.pillar_breakdown.find((row: any) => row.pillar_id === 6);
+    expect(pillarBreakdown.pillar_name).toBe('Academic & Professional');
+    expect(pillarBreakdown.sessions).toBeGreaterThanOrEqual(1);
+  });
+
+  it('should reject onboarding analytics statistics for non-admin users', async () => {
+    const res = await app.request('/api/admin/onboarding-analytics', {
       headers: { 'X-Session-Id': normalSessionId },
     }, env);
 

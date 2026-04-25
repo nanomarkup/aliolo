@@ -24,6 +24,141 @@ import {
 } from '../schemas/auth';
 
 const router = new OpenAPIHono<AppEnv>();
+const OFFICIAL_CONTENT_EMAIL = 'aliolo@nohainc.com';
+
+type OnboardingSignupData = {
+    sessionId?: string;
+    ageRange?: string;
+    pillarId?: number;
+};
+
+function preferredSubjectAgeGroups(ageRange?: string) {
+    switch (ageRange) {
+        case 'age_under_14':
+            return ['primary', 'beginner'];
+        case 'age_15_18':
+            return ['secondary', 'intermediate'];
+        case 'age_19_25':
+        case 'age_26_35':
+        case 'age_36_50':
+        case 'age_over_50':
+            return ['advanced'];
+        default:
+            return [];
+    }
+}
+
+async function selectOfficialStarterSubjects(c: any, pillarId: number, ageRange?: string) {
+    const officialOwner: any = await c.env.DB.prepare(
+        'SELECT id FROM profiles WHERE email = ? LIMIT 1'
+    ).bind(OFFICIAL_CONTENT_EMAIL).first();
+    if (!officialOwner?.id) return [];
+
+    const targetMinimum = 3;
+    const selected: string[] = [];
+    const ageGroups = preferredSubjectAgeGroups(ageRange);
+    const ageMatched: string[] = [];
+
+    if (ageGroups.length > 0) {
+        const placeholders = ageGroups.map(() => '?').join(',');
+        const { results } = await c.env.DB.prepare(`
+            SELECT id
+            FROM subjects
+            WHERE pillar_id = ?
+              AND owner_id = ?
+              AND is_public = 1
+              AND age_group IN (${placeholders})
+            ORDER BY name COLLATE NOCASE ASC, created_at ASC
+            LIMIT 100
+        `).bind(pillarId, officialOwner.id, ...ageGroups).all();
+        ageMatched.push(...results.map((subject: any) => subject.id));
+    }
+
+    if (ageMatched.length >= targetMinimum) {
+        return ageMatched;
+    }
+
+    selected.push(...ageMatched);
+
+    if (selected.length < targetMinimum) {
+        const remaining = targetMinimum - selected.length;
+        const exclusion = selected.length > 0
+            ? `AND id NOT IN (${selected.map(() => '?').join(',')})`
+            : '';
+        const { results } = await c.env.DB.prepare(`
+            SELECT id
+            FROM subjects
+            WHERE pillar_id = ?
+              AND owner_id = ?
+              AND is_public = 1
+              ${exclusion}
+            ORDER BY name COLLATE NOCASE ASC, created_at ASC
+            LIMIT ?
+        `).bind(pillarId, officialOwner.id, ...selected, remaining).all();
+        selected.push(...results.map((subject: any) => subject.id));
+    }
+
+    return selected;
+}
+
+async function recordOnboardingEmail(c: any, userEmail: string, onboarding: OnboardingSignupData) {
+    const sessionId = onboarding.sessionId?.trim();
+    if (!sessionId) return;
+
+    await c.env.DB.prepare(`
+        INSERT INTO onboarding_analytics (
+            session_id,
+            user_email,
+            age_range,
+            pillar_id,
+            last_slide_index,
+            updated_at
+        )
+        VALUES (?, ?, ?, ?, null, CURRENT_TIMESTAMP)
+        ON CONFLICT(session_id) DO UPDATE SET
+            user_email = COALESCE(onboarding_analytics.user_email, excluded.user_email),
+            age_range = COALESCE(onboarding_analytics.age_range, excluded.age_range),
+            pillar_id = COALESCE(onboarding_analytics.pillar_id, excluded.pillar_id),
+            updated_at = CURRENT_TIMESTAMP
+    `).bind(
+        sessionId,
+        userEmail,
+        onboarding.ageRange || null,
+        onboarding.pillarId ?? null
+    ).run();
+}
+
+async function applyOnboardingSignup(c: any, userId: string, userEmail: string, onboarding: OnboardingSignupData) {
+    const sessionId = onboarding.sessionId?.trim();
+    if (!sessionId) return;
+
+    await recordOnboardingEmail(c, userEmail, onboarding);
+
+    const analytics: any = await c.env.DB.prepare(
+        'SELECT age_range, pillar_id FROM onboarding_analytics WHERE session_id = ?'
+    ).bind(sessionId).first();
+
+    const pillarId = Number(analytics?.pillar_id ?? onboarding.pillarId);
+    if (!Number.isInteger(pillarId) || pillarId <= 0) return;
+
+    await c.env.DB.prepare(
+        'UPDATE profiles SET main_pillar_id = ?, last_source_filter = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?'
+    ).bind(pillarId, 'public', userId).run();
+
+    const ageRange = analytics?.age_range ?? onboarding.ageRange;
+    const subjectIds = await selectOfficialStarterSubjects(c, pillarId, ageRange);
+    for (const subjectId of subjectIds) {
+        await c.env.DB.prepare(
+            'INSERT OR IGNORE INTO user_subjects (user_id, subject_id, collection_id) VALUES (?, ?, null)'
+        ).bind(userId, subjectId).run();
+    }
+}
+
+async function touchLastActive(c: any, userId: string) {
+    await c.env.DB.prepare(
+        'UPDATE profiles SET last_active_date = CURRENT_TIMESTAMP WHERE id = ?'
+    ).bind(userId).run();
+}
 
 const signupRoute = createRoute({
   method: 'post',
@@ -42,7 +177,14 @@ const signupRoute = createRoute({
 });
 
 router.openapi(signupRoute, async (c) => {
-    let { email, password, username } = c.req.valid('json');
+    let {
+        email,
+        password,
+        username,
+        onboarding_session_id,
+        onboarding_age_range,
+        onboarding_pillar_id,
+    } = c.req.valid('json');
 
     const cleanEmail = email.toLowerCase().trim();
     password = password.trim();
@@ -75,12 +217,24 @@ router.openapi(signupRoute, async (c) => {
         } else {
             userId = generateId(15);
             await c.env.DB.prepare(
-                "INSERT INTO profiles (id, email, username, password_hash, main_pillar_id) VALUES (?, ?, ?, ?, 6)"
+                "INSERT INTO profiles (id, email, username, password_hash, main_pillar_id, last_active_date) VALUES (?, ?, ?, ?, 6, CURRENT_TIMESTAMP)"
             ).bind(userId, cleanEmail, username || cleanEmail.split('@')[0], passwordHash).run();
         }
 
+        await touchLastActive(c, userId);
+
         // Cleanup
         await c.env.DB.prepare("DELETE FROM email_verification_codes WHERE email = ?").bind(cleanEmail).run();
+
+        try {
+            await applyOnboardingSignup(c, userId, cleanEmail, {
+                sessionId: onboarding_session_id,
+                ageRange: onboarding_age_range,
+                pillarId: onboarding_pillar_id,
+            });
+        } catch (onboardingErr) {
+            console.error('Failed to apply onboarding signup data:', onboardingErr);
+        }
 
         // Send Welcome Email
         try {
@@ -123,7 +277,15 @@ const signupInviteRoute = createRoute({
 });
 
 router.openapi(signupInviteRoute, async (c) => {
-    let { email, password, username, invite_token } = c.req.valid('json');
+    let {
+        email,
+        password,
+        username,
+        invite_token,
+        onboarding_session_id,
+        onboarding_age_range,
+        onboarding_pillar_id,
+    } = c.req.valid('json');
 
     const cleanEmail = email.toLowerCase().trim();
     password = password.trim();
@@ -167,9 +329,11 @@ router.openapi(signupInviteRoute, async (c) => {
         } else {
             userId = generateId(15);
             await c.env.DB.prepare(
-                "INSERT INTO profiles (id, email, username, password_hash, main_pillar_id) VALUES (?, ?, ?, ?, 6)"
+                "INSERT INTO profiles (id, email, username, password_hash, main_pillar_id, last_active_date) VALUES (?, ?, ?, ?, 6, CURRENT_TIMESTAMP)"
             ).bind(userId, cleanEmail, username || cleanEmail.split('@')[0], passwordHash).run();
         }
+
+        await touchLastActive(c, userId);
 
         // Cleanup
         await c.env.DB.prepare("DELETE FROM invitations WHERE token = ?").bind(invite_token).run();
@@ -178,6 +342,16 @@ router.openapi(signupInviteRoute, async (c) => {
             await c.env.DB.prepare(
                 "INSERT INTO user_friendships (sender_id, receiver_id, status) VALUES (?, ?, 'accepted') ON CONFLICT DO NOTHING"
             ).bind(inviterId, userId).run();
+        }
+
+        try {
+            await applyOnboardingSignup(c, userId, cleanEmail, {
+                sessionId: onboarding_session_id,
+                ageRange: onboarding_age_range,
+                pillarId: onboarding_pillar_id,
+            });
+        } catch (onboardingErr) {
+            console.error('Failed to apply onboarding signup data:', onboardingErr);
         }
 
         // Send Welcome Email
@@ -222,7 +396,12 @@ const requestOtpRoute = createRoute({
 });
 
 router.openapi(requestOtpRoute, async (c) => {
-    const { email } = c.req.valid('json');
+    const {
+        email,
+        onboarding_session_id,
+        onboarding_age_range,
+        onboarding_pillar_id,
+    } = c.req.valid('json');
     const cleanEmail = email.toLowerCase().trim();
     
     try {
@@ -242,6 +421,16 @@ router.openapi(requestOtpRoute, async (c) => {
         await c.env.DB.prepare(
             "INSERT INTO email_verification_codes (email, code, expires_at, is_verified) VALUES (?, ?, ?, 0) ON CONFLICT(email) DO UPDATE SET code = excluded.code, expires_at = excluded.expires_at, is_verified = 0"
         ).bind(cleanEmail, code, expiresAt).run();
+
+        try {
+            await recordOnboardingEmail(c, cleanEmail, {
+                sessionId: onboarding_session_id,
+                ageRange: onboarding_age_range,
+                pillarId: onboarding_pillar_id,
+            });
+        } catch (onboardingErr) {
+            console.error('Failed to record onboarding signup email:', onboardingErr);
+        }
 
         await sendEmail(
             cleanEmail,
@@ -617,6 +806,7 @@ router.openapi(deleteAccountRoute, async (c) => {
         // Cleanup user data
         // Many of these should have ON DELETE CASCADE, but we execute manually for safety
         await c.env.DB.batch([
+            c.env.DB.prepare("DELETE FROM onboarding_analytics WHERE user_email = ?").bind(fullUser.email),
             c.env.DB.prepare("DELETE FROM progress WHERE user_id = ?").bind(userId),
             c.env.DB.prepare("DELETE FROM user_subjects WHERE user_id = ?").bind(userId),
             c.env.DB.prepare("DELETE FROM user_subscriptions WHERE user_id = ?").bind(userId),

@@ -1,14 +1,26 @@
 import { env } from 'cloudflare:test';
 import app from '../src/index';
 
-export async function signupUser(user: { email: string; password?: string; username?: string }) {
+export async function signupUser(user: {
+    email: string;
+    password?: string;
+    username?: string;
+    onboarding_session_id?: string;
+    onboarding_age_range?: string;
+    onboarding_pillar_id?: number;
+}) {
     const password = user.password || 'password123';
     const username = user.username || user.email.split('@')[0];
 
     // 1. Request OTP
     await app.request('/api/auth/request-otp', {
       method: 'POST',
-      body: JSON.stringify({ email: user.email }),
+      body: JSON.stringify({
+        email: user.email,
+        onboarding_session_id: user.onboarding_session_id,
+        onboarding_age_range: user.onboarding_age_range,
+        onboarding_pillar_id: user.onboarding_pillar_id,
+      }),
       headers: { 'Content-Type': 'application/json' }
     }, env);
 
@@ -28,7 +40,14 @@ export async function signupUser(user: { email: string; password?: string; usern
     // 4. Final Signup
     const res = await app.request('/api/auth/signup', {
       method: 'POST',
-      body: JSON.stringify({ email: user.email, password, username }),
+      body: JSON.stringify({
+        email: user.email,
+        password,
+        username,
+        onboarding_session_id: user.onboarding_session_id,
+        onboarding_age_range: user.onboarding_age_range,
+        onboarding_pillar_id: user.onboarding_pillar_id,
+      }),
       headers: { 'Content-Type': 'application/json' }
     }, env);
 

@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 class AlioloImage extends StatelessWidget {
   final String imageUrl;
   final BoxFit fit;
+  final AlignmentGeometry alignment;
   final double? width;
   final double? height;
   final Widget? placeholder;
@@ -16,6 +17,7 @@ class AlioloImage extends StatelessWidget {
     super.key,
     required this.imageUrl,
     this.fit = BoxFit.cover,
+    this.alignment = Alignment.center,
     this.width,
     this.height,
     this.placeholder,
@@ -34,6 +36,7 @@ class AlioloImage extends StatelessWidget {
       image = SvgPicture.network(
         imageUrl,
         fit: fit,
+        alignment: alignment,
         width: width,
         height: height,
         placeholderBuilder: (context) =>
@@ -43,6 +46,7 @@ class AlioloImage extends StatelessWidget {
       image = Image.network(
         imageUrl,
         fit: fit,
+        alignment: alignment,
         width: width,
         height: height,
         loadingBuilder: (context, child, loadingProgress) {

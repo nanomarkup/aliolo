@@ -17,6 +17,7 @@ import 'package:aliolo/features/settings/presentation/pages/premium_upgrade_page
 import 'package:aliolo/features/documentation/presentation/pages/documentation_page.dart';
 import 'package:aliolo/features/auth/presentation/pages/manage_friends_page.dart';
 import 'package:aliolo/features/management/presentation/pages/users_page.dart';
+import 'package:aliolo/features/management/presentation/pages/onboarding_analytics_page.dart';
 import 'package:aliolo/features/management/presentation/pages/subject_usage_page.dart';
 import 'package:aliolo/data/services/feedback_service.dart';
 import 'package:aliolo/core/widgets/premium_badge.dart';
@@ -724,40 +725,6 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                     ),
                     const Divider(height: 1, indent: 16, endIndent: 16),
-                    if (_authService.currentUser?.serverId == _adminUserId) ...[
-                      ListTile(
-                        leading: Icon(
-                          Icons.people_alt,
-                          color: currentSessionColor,
-                        ),
-                        title: Text(context.t('users')),
-                        trailing: const Icon(Icons.chevron_right),
-                        onTap:
-                            () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const UsersPage(),
-                              ),
-                            ),
-                      ),
-                      const Divider(height: 1, indent: 16, endIndent: 16),
-                      ListTile(
-                        leading: Icon(
-                          Icons.analytics_outlined,
-                          color: currentSessionColor,
-                        ),
-                        title: const Text('Subject Usage'),
-                        trailing: const Icon(Icons.chevron_right),
-                        onTap:
-                            () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const SubjectUsagePage(),
-                              ),
-                            ),
-                      ),
-                      const Divider(height: 1, indent: 16, endIndent: 16),
-                    ],
                     ListTile(
                       leading: Icon(Icons.lock, color: currentSessionColor),
                       title: Text(context.t('change_password')),
@@ -789,6 +756,78 @@ class _ProfilePageState extends State<ProfilePage> {
                   ],
                 ),
               ),
+              if (user.serverId == _adminUserId) ...[
+                const SizedBox(height: 32),
+                _buildSectionTitle(
+                  context,
+                  'Admin Dashboard',
+                  Colors.deepOrange,
+                ),
+                Card(
+                  elevation: 0,
+                  color: Colors.orange.withOpacity(0.05),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    side: BorderSide(
+                      color: Colors.orange.withOpacity(0.2),
+                      width: 1,
+                    ),
+                  ),
+                  child: Column(
+                    children: [
+                      ListTile(
+                        leading: const Icon(
+                          Icons.people_alt,
+                          color: Colors.deepOrange,
+                        ),
+                        title: Text(context.t('users')),
+                        trailing: const Icon(Icons.chevron_right),
+                        onTap:
+                            () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const UsersPage(),
+                              ),
+                            ),
+                      ),
+                      const Divider(height: 1, indent: 16, endIndent: 16),
+                      ListTile(
+                        leading: const Icon(
+                          Icons.analytics_outlined,
+                          color: Colors.deepOrange,
+                        ),
+                        title: const Text('Subject Usage'),
+                        trailing: const Icon(Icons.chevron_right),
+                        onTap:
+                            () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const SubjectUsagePage(),
+                              ),
+                            ),
+                      ),
+                      const Divider(height: 1, indent: 16, endIndent: 16),
+                      ListTile(
+                        leading: const Icon(
+                          Icons.insights_outlined,
+                          color: Colors.deepOrange,
+                        ),
+                        title: const Text('Onboarding Analytics'),
+                        trailing: const Icon(Icons.chevron_right),
+                        onTap:
+                            () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder:
+                                    (context) =>
+                                        const OnboardingAnalyticsPage(),
+                              ),
+                            ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
               const SizedBox(height: 48),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,

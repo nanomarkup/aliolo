@@ -282,6 +282,14 @@ class _SubjectPageState extends State<SubjectPage> {
         final isSearching = _searchController.text.isNotEmpty;
         final currentSessionColor = ThemeService().primaryColor;
         final activePillars = pillars;
+        final matchingCounts = DiscoveryEngine.countPillarContent(
+          _matchingContent,
+        );
+        final totalCounts = DiscoveryEngine.countPillarContent(_allContent);
+        final visiblePillars = DiscoveryEngine.filterVisiblePillars(
+          activePillars,
+          _matchingContent,
+        );
 
         final activeCodes =
             getIt<TestingLanguageService>().activeLanguageCodes
@@ -674,6 +682,10 @@ class _SubjectPageState extends State<SubjectPage> {
                       const SliverFillRemaining(
                         child: Center(child: Text('No subjects found')),
                       )
+                    else if (!isSearching && visiblePillars.isEmpty)
+                      const SliverFillRemaining(
+                        child: Center(child: Text('No subjects found')),
+                      )
                     else if (isSearching)
                       SliverPadding(
                         padding: EdgeInsets.zero,
@@ -721,12 +733,11 @@ class _SubjectPageState extends State<SubjectPage> {
                               context,
                               index,
                             ) {
-                              final pillar = activePillars[index];
-                              final myId = _authService.currentUser?.serverId;
-
-                              // Use counts directly from Pillar model (populated by backend)
-                              final matchingCount = pillar.subjectCount;
-                              final pillarCategoryTotal = pillar.subjectCount;
+                              final pillar = visiblePillars[index];
+                              final matchingCount =
+                                  matchingCounts[pillar.id] ?? 0;
+                              final pillarCategoryTotal =
+                                  totalCounts[pillar.id] ?? 0;
                               final folderCount = pillar.folderCount;
 
                               final bool isFilteringBeyondCategory =
@@ -771,7 +782,7 @@ class _SubjectPageState extends State<SubjectPage> {
                                   }
                                 },
                               );
-                            }, childCount: activePillars.length),
+                            }, childCount: visiblePillars.length),
                           );
                         },
                       ),

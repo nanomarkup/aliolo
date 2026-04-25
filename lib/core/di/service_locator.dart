@@ -9,6 +9,7 @@ import 'package:aliolo/data/services/math_service.dart';
 import 'package:aliolo/data/services/progress_service.dart';
 import 'package:aliolo/data/services/subscription_service.dart';
 import 'package:aliolo/data/services/admin_users_service.dart';
+import 'package:aliolo/data/services/onboarding_analytics_service.dart';
 import 'package:aliolo/data/services/subject_usage_service.dart';
 import 'package:aliolo/data/services/feedback_service.dart';
 import 'package:aliolo/data/services/discovery_engine.dart';
@@ -68,6 +69,9 @@ Future<void> setupLocator({String? initialUrl, String? inviteToken}) async {
       () => SubscriptionService(),
     );
     getIt.registerLazySingleton<AdminUsersService>(() => AdminUsersService());
+    getIt.registerLazySingleton<OnboardingAnalyticsService>(
+      () => OnboardingAnalyticsService(),
+    );
     getIt.registerLazySingleton<SubjectUsageService>(
       () => SubjectUsageService(),
     );

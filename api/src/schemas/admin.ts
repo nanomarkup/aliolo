@@ -45,3 +45,51 @@ export const AdminSubjectUsageSchema = z.object({
 }).openapi('AdminSubjectUsage');
 
 export const AdminSubjectUsageResponseSchema = z.array(AdminSubjectUsageSchema);
+
+export const AdminOnboardingAnalyticsSummarySchema = z.object({
+  total_sessions: z.number().int().min(0).openapi({ example: 42 }),
+  linked_email_sessions: z.number().int().min(0).openapi({ example: 18 }),
+  age_selected_sessions: z.number().int().min(0).openapi({ example: 35 }),
+  pillar_selected_sessions: z.number().int().min(0).openapi({ example: 31 }),
+  final_slide_sessions: z.number().int().min(0).openapi({ example: 12 }),
+  unique_emails: z.number().int().min(0).openapi({ example: 16 }),
+  average_last_slide_index: z.number().nullable().openapi({ example: 3.4 }),
+  completion_rate: z.number().openapi({ example: 0.29 }),
+  final_slide_index: z.number().int().min(0).openapi({ example: 6 }),
+  latest_updated_at: z.string().nullable().openapi({ example: '2026-04-12T00:00:00Z' }),
+}).openapi('AdminOnboardingAnalyticsSummary');
+
+export const AdminOnboardingAgeBreakdownSchema = z.object({
+  age_range: z.string().openapi({ example: 'age_19_25' }),
+  sessions: z.number().int().min(0).openapi({ example: 14 }),
+}).openapi('AdminOnboardingAgeBreakdown');
+
+export const AdminOnboardingPillarBreakdownSchema = z.object({
+  pillar_id: z.number().nullable().openapi({ example: 6 }),
+  pillar_name: z.string().openapi({ example: 'Academic & Professional' }),
+  sessions: z.number().int().min(0).openapi({ example: 11 }),
+}).openapi('AdminOnboardingPillarBreakdown');
+
+export const AdminOnboardingSlideBreakdownSchema = z.object({
+  last_slide_index: z.number().nullable().openapi({ example: 6 }),
+  sessions: z.number().int().min(0).openapi({ example: 7 }),
+}).openapi('AdminOnboardingSlideBreakdown');
+
+export const AdminOnboardingSessionSchema = z.object({
+  session_id: z.string().openapi({ example: 'session_123' }),
+  user_email: z.string().nullable().openapi({ example: 'user@example.com' }),
+  age_range: z.string().nullable().openapi({ example: 'age_19_25' }),
+  pillar_id: z.number().nullable().openapi({ example: 6 }),
+  pillar_name: z.string().nullable().openapi({ example: 'Academic & Professional' }),
+  last_slide_index: z.number().nullable().openapi({ example: 3 }),
+  created_at: z.string().nullable().openapi({ example: '2026-04-12T00:00:00Z' }),
+  updated_at: z.string().nullable().openapi({ example: '2026-04-12T00:00:00Z' }),
+}).openapi('AdminOnboardingSession');
+
+export const AdminOnboardingAnalyticsResponseSchema = z.object({
+  summary: AdminOnboardingAnalyticsSummarySchema,
+  age_breakdown: z.array(AdminOnboardingAgeBreakdownSchema),
+  pillar_breakdown: z.array(AdminOnboardingPillarBreakdownSchema),
+  slide_breakdown: z.array(AdminOnboardingSlideBreakdownSchema),
+  recent_sessions: z.array(AdminOnboardingSessionSchema),
+}).openapi('AdminOnboardingAnalyticsResponse');

@@ -16,7 +16,9 @@ import 'package:aliolo/data/services/friendship_service.dart';
 import 'package:aliolo/features/auth/presentation/pages/manage_friends_page.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  final bool initialCreateAccount;
+
+  const LoginPage({super.key, this.initialCreateAccount = false});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -46,6 +48,7 @@ class _LoginPageState extends State<LoginPage> {
     super.initState();
     HardwareKeyboard.instance.addHandler(_handleGlobalKeyEvent);
     _clearFields();
+    _isCreatingAccount = widget.initialCreateAccount;
     _focusEmail();
 
     _authService.addListener(_syncWithServiceState);
@@ -73,7 +76,7 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<void> _handleInvite(String token) async {
     setState(() => _isLoading = true);
-    
+
     // Auto-logout if a user is already logged in
     if (_authService.currentUser != null) {
       await _authService.logout();
@@ -104,9 +107,9 @@ class _LoginPageState extends State<LoginPage> {
             _recoveryStep = 1;
           }
           if (_authService.isInviteFlow) {
-             _isCreatingAccount = true;
-             _signupStep = 2;
-             _inviteToken = _authService.inviteToken;
+            _isCreatingAccount = true;
+            _signupStep = 2;
+            _inviteToken = _authService.inviteToken;
           }
           final sessionEmail = _authService.currentSessionEmail;
           if (sessionEmail != null) {
@@ -209,7 +212,9 @@ class _LoginPageState extends State<LoginPage> {
         } else {
           final err = _authService.lastErrorMessage ?? '';
           if (err.contains('exists')) {
-            _showMsg('User with this email already exists. Please log in instead.');
+            _showMsg(
+              'User with this email already exists. Please log in instead.',
+            );
           } else {
             _showMsg(err.isNotEmpty ? err : 'Failed to send verification code');
           }
@@ -238,7 +243,7 @@ class _LoginPageState extends State<LoginPage> {
       final username = _usernameController.text.trim();
       final pass = _passwordController.text;
       final confirm = _confirmPasswordController.text;
-      
+
       if (username.isEmpty || pass.isEmpty) {
         _showMsg(context.t('fill_all_fields'));
         return;
@@ -257,14 +262,19 @@ class _LoginPageState extends State<LoginPage> {
       }
 
       setState(() => _isLoading = true);
-      
+
       try {
         if (_inviteToken != null) {
-          await _authService.createUserWithInvite(username, email, pass, _inviteToken!);
+          await _authService.createUserWithInvite(
+            username,
+            email,
+            pass,
+            _inviteToken!,
+          );
         } else {
           await _authService.createUser(username, email, pass);
         }
-        
+
         if (mounted) {
           Navigator.pushReplacement(
             context,
@@ -296,13 +306,19 @@ class _LoginPageState extends State<LoginPage> {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => hasPending ? const ManageFriendsPage() : const SubjectPage(),
+                builder:
+                    (context) =>
+                        hasPending
+                            ? const ManageFriendsPage()
+                            : const SubjectPage(),
               ),
             );
           }
         }
       } else {
-        _showMsg(_authService.lastErrorMessage ?? context.t('invalid_password'));
+        _showMsg(
+          _authService.lastErrorMessage ?? context.t('invalid_password'),
+        );
       }
     } catch (e) {
       _showMsg(_authService.lastErrorMessage ?? e.toString());
@@ -327,13 +343,15 @@ class _LoginPageState extends State<LoginPage> {
           _showMsg('Reset code sent to $email. Please check your inbox.');
           setState(() => _recoveryStep = 1);
         } else {
-          _showMsg(_authService.lastErrorMessage ?? 'Failed to send reset code');
+          _showMsg(
+            _authService.lastErrorMessage ?? 'Failed to send reset code',
+          );
         }
       } else {
         final code = _codeController.text.trim();
         final newPass = _passwordController.text;
         final confirm = _confirmPasswordController.text;
-        
+
         if (code.isEmpty || newPass.isEmpty || confirm.isEmpty) {
           _showMsg(context.t('fill_all_fields'));
           return;
@@ -342,14 +360,20 @@ class _LoginPageState extends State<LoginPage> {
           _showMsg(context.t('passwords_dont_match'));
           return;
         }
-        
-        final success = await _authService.finalizePasswordReset(email, code, newPass);
+
+        final success = await _authService.finalizePasswordReset(
+          email,
+          code,
+          newPass,
+        );
         if (success) {
           _showMsg('Password updated successfully!');
           _authService.clearRecoveryFlow();
           _toggleRecovery();
         } else {
-          _showMsg(_authService.lastErrorMessage ?? 'Invalid or expired reset code.');
+          _showMsg(
+            _authService.lastErrorMessage ?? 'Invalid or expired reset code.',
+          );
         }
       }
     } catch (e) {
@@ -363,15 +387,17 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     final themeService = getIt<ThemeService>();
     final authService = context.watch<AuthService>();
-    final bool isActuallyRecovering = _isRecovering || authService.isPasswordRecoveryFlow;
-    final int effectiveStep = authService.isPasswordRecoveryFlow ? 1 : _recoveryStep;
+    final bool isActuallyRecovering =
+        _isRecovering || authService.isPasswordRecoveryFlow;
+    final int effectiveStep =
+        authService.isPasswordRecoveryFlow ? 1 : _recoveryStep;
 
     if (authService.isPasswordRecoveryFlow && _recoveryStep == 0) {
-       WidgetsBinding.instance.addPostFrameCallback((_) {
-         if (mounted && _recoveryStep == 0) {
-           _syncWithServiceState();
-         }
-       });
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted && _recoveryStep == 0) {
+          _syncWithServiceState();
+        }
+      });
     }
 
     return ListenableBuilder(
@@ -456,10 +482,16 @@ class _LoginPageState extends State<LoginPage> {
                                   border: const OutlineInputBorder(),
                                   prefixIcon: const Icon(Icons.email),
                                   focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: mainColor, width: 2),
+                                    borderSide: BorderSide(
+                                      color: mainColor,
+                                      width: 2,
+                                    ),
                                   ),
                                   labelStyle: TextStyle(
-                                    color: _emailFocusNode.hasFocus ? mainColor : null,
+                                    color:
+                                        _emailFocusNode.hasFocus
+                                            ? mainColor
+                                            : null,
                                   ),
                                 ),
                                 keyboardType: TextInputType.emailAddress,
@@ -484,7 +516,10 @@ class _LoginPageState extends State<LoginPage> {
                                   border: const OutlineInputBorder(),
                                   prefixIcon: const Icon(Icons.pin),
                                   focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: mainColor, width: 2),
+                                    borderSide: BorderSide(
+                                      color: mainColor,
+                                      width: 2,
+                                    ),
                                   ),
                                 ),
                                 keyboardType: TextInputType.number,
@@ -504,7 +539,10 @@ class _LoginPageState extends State<LoginPage> {
                                   border: const OutlineInputBorder(),
                                   prefixIcon: const Icon(Icons.person),
                                   focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: mainColor, width: 2),
+                                    borderSide: BorderSide(
+                                      color: mainColor,
+                                      width: 2,
+                                    ),
                                   ),
                                 ),
                                 onSubmitted: (_) => _handleAuth(),
@@ -525,7 +563,10 @@ class _LoginPageState extends State<LoginPage> {
                                   border: const OutlineInputBorder(),
                                   prefixIcon: const Icon(Icons.lock),
                                   focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: mainColor, width: 2),
+                                    borderSide: BorderSide(
+                                      color: mainColor,
+                                      width: 2,
+                                    ),
                                   ),
                                 ),
                                 onSubmitted: (_) => _handleAuth(),
@@ -545,7 +586,10 @@ class _LoginPageState extends State<LoginPage> {
                                   border: const OutlineInputBorder(),
                                   prefixIcon: const Icon(Icons.lock_reset),
                                   focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: mainColor, width: 2),
+                                    borderSide: BorderSide(
+                                      color: mainColor,
+                                      width: 2,
+                                    ),
                                   ),
                                 ),
                                 onSubmitted: (_) => _handleAuth(),
@@ -567,22 +611,31 @@ class _LoginPageState extends State<LoginPage> {
                                   _isCreatingAccount
                                       ? (_signupStep == 0
                                           ? 'Next'
-                                          : (_signupStep == 1 ? 'Verify' : context.t('create_account')))
+                                          : (_signupStep == 1
+                                              ? 'Verify'
+                                              : context.t('create_account')))
                                       : context.t('login'),
                                 ),
                               ),
                               const SizedBox(height: 12),
                               TextButton(
-                                onPressed: _isCreatingAccount && _signupStep > 0
-                                    ? (_inviteToken != null ? _toggleMode : () => setState(() => _signupStep--))
-                                    : _toggleMode,
+                                onPressed:
+                                    _isCreatingAccount && _signupStep > 0
+                                        ? (_inviteToken != null
+                                            ? _toggleMode
+                                            : () =>
+                                                setState(() => _signupStep--))
+                                        : _toggleMode,
                                 child: Text(
                                   _isCreatingAccount
-                                      ? (_signupStep > 0 ? 'Back' : context.t('back_to_login'))
+                                      ? (_signupStep > 0
+                                          ? 'Back'
+                                          : context.t('back_to_login'))
                                       : context.t('create_new_account'),
                                   style: TextStyle(color: mainColor),
                                 ),
-                              ),                              if (!_isCreatingAccount) ...[
+                              ),
+                              if (!_isCreatingAccount) ...[
                                 TextButton(
                                   onPressed: _toggleRecovery,
                                   child: Text(
@@ -595,7 +648,8 @@ class _LoginPageState extends State<LoginPage> {
                                       () => Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => const AboutPage(),
+                                          builder:
+                                              (context) => const AboutPage(),
                                         ),
                                       ),
                                   child: Text(
@@ -607,7 +661,9 @@ class _LoginPageState extends State<LoginPage> {
                             ],
                           ] else ...[
                             Text(
-                              effectiveStep == 0 ? context.t('restore_password') : 'Set Your Password',
+                              effectiveStep == 0
+                                  ? context.t('restore_password')
+                                  : 'Set Your Password',
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
@@ -624,7 +680,10 @@ class _LoginPageState extends State<LoginPage> {
                                   border: const OutlineInputBorder(),
                                   prefixIcon: const Icon(Icons.email),
                                   focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: mainColor, width: 2),
+                                    borderSide: BorderSide(
+                                      color: mainColor,
+                                      width: 2,
+                                    ),
                                   ),
                                 ),
                                 onSubmitted: (_) => _handleRecovery(),
@@ -640,7 +699,10 @@ class _LoginPageState extends State<LoginPage> {
                                     border: const OutlineInputBorder(),
                                     prefixIcon: const Icon(Icons.pin),
                                     focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(color: mainColor, width: 2),
+                                      borderSide: BorderSide(
+                                        color: mainColor,
+                                        width: 2,
+                                      ),
                                     ),
                                   ),
                                   onSubmitted: (_) => _handleRecovery(),
@@ -657,7 +719,10 @@ class _LoginPageState extends State<LoginPage> {
                                   border: const OutlineInputBorder(),
                                   prefixIcon: const Icon(Icons.lock),
                                   focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: mainColor, width: 2),
+                                    borderSide: BorderSide(
+                                      color: mainColor,
+                                      width: 2,
+                                    ),
                                   ),
                                 ),
                                 onSubmitted: (_) => _handleRecovery(),
@@ -673,7 +738,10 @@ class _LoginPageState extends State<LoginPage> {
                                   border: const OutlineInputBorder(),
                                   prefixIcon: const Icon(Icons.lock_reset),
                                   focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: mainColor, width: 2),
+                                    borderSide: BorderSide(
+                                      color: mainColor,
+                                      width: 2,
+                                    ),
                                   ),
                                 ),
                                 onSubmitted: (_) => _handleRecovery(),
@@ -691,7 +759,9 @@ class _LoginPageState extends State<LoginPage> {
                                   foregroundColor: Colors.white,
                                 ),
                                 child: Text(
-                                  effectiveStep == 0 ? 'Send Reset Link' : 'Update Password',
+                                  effectiveStep == 0
+                                      ? 'Send Reset Link'
+                                      : 'Update Password',
                                 ),
                               ),
                               const SizedBox(height: 12),

@@ -6,12 +6,18 @@ import 'package:aliolo/core/utils/file_stub.dart'
     if (dart.library.html) 'dart:html'
     as html;
 import 'package:aliolo/data/models/user_model.dart';
+import 'package:aliolo/data/services/filter_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/core/utils/logger.dart';
 import 'package:dio/dio.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:aliolo/core/network/cloudflare_client.dart';
 import 'package:aliolo/core/di/service_locator.dart';
+
+const String onboardingSessionIdKey = 'onboarding_session_id';
+const String onboardingAgeRangeKey = 'onboarding_age_range';
+const String onboardingPillarIdKey = 'onboarding_pillar_id';
 
 class AuthService extends ChangeNotifier {
   static final AuthService _instance = AuthService._internal();
@@ -125,9 +131,10 @@ class AuthService extends ChangeNotifier {
   Future<bool> requestOtp(String email) async {
     _lastErrorMessage = null;
     try {
+      final onboardingData = await _loadOnboardingSignupData();
       final response = await _cfClient.client.post(
         '/api/auth/request-otp',
-        data: {'email': email},
+        data: {'email': email, ...onboardingData},
       );
       return response.statusCode == 200;
     } catch (e) {
@@ -178,6 +185,7 @@ class AuthService extends ChangeNotifier {
   ) async {
     _lastErrorMessage = null;
     try {
+      final onboardingData = await _loadOnboardingSignupData();
       final response = await _cfClient.client.post(
         '/api/auth/signup-invite',
         data: {
@@ -185,6 +193,7 @@ class AuthService extends ChangeNotifier {
           'email': email,
           'password': password,
           'invite_token': inviteToken,
+          ...onboardingData,
         },
       );
 
@@ -195,6 +204,8 @@ class AuthService extends ChangeNotifier {
         _isInviteFlow = false;
         _inviteToken = null;
         await refreshUser();
+        await _applyOnboardingSignupDefaults();
+        await _clearOnboardingSignupData();
       }
     } catch (e) {
       _lastErrorMessage = e.toString();
@@ -210,9 +221,15 @@ class AuthService extends ChangeNotifier {
     _lastErrorMessage = null;
     final cleanEmail = email.trim().toLowerCase();
     try {
+      final onboardingData = await _loadOnboardingSignupData();
       final response = await _cfClient.client.post(
         '/api/auth/signup',
-        data: {'username': username, 'email': cleanEmail, 'password': password},
+        data: {
+          'username': username,
+          'email': cleanEmail,
+          'password': password,
+          ...onboardingData,
+        },
       );
 
       if (response.statusCode == 200) {
@@ -220,6 +237,8 @@ class AuthService extends ChangeNotifier {
         final String sessionId = data['session_id'];
         await _cfClient.setSession(sessionId);
         await refreshUser();
+        await _applyOnboardingSignupDefaults();
+        await _clearOnboardingSignupData();
       } else {
         _lastErrorMessage = response.data['error'] ?? 'Signup failed';
         throw Exception(_lastErrorMessage);
@@ -228,6 +247,41 @@ class AuthService extends ChangeNotifier {
       _lastErrorMessage = e.toString();
       rethrow;
     }
+  }
+
+  Future<Map<String, dynamic>> _loadOnboardingSignupData() async {
+    final prefs = await SharedPreferences.getInstance();
+    final sessionId = prefs.getString(onboardingSessionIdKey);
+    if (sessionId == null || sessionId.isEmpty) return {};
+
+    final data = <String, dynamic>{'onboarding_session_id': sessionId};
+    final ageRange = prefs.getString(onboardingAgeRangeKey);
+    final pillarId = prefs.getInt(onboardingPillarIdKey);
+
+    if (ageRange != null && ageRange.isNotEmpty) {
+      data['onboarding_age_range'] = ageRange;
+    }
+    if (pillarId != null) {
+      data['onboarding_pillar_id'] = pillarId;
+    }
+
+    return data;
+  }
+
+  Future<void> _clearOnboardingSignupData() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(onboardingSessionIdKey);
+    await prefs.remove(onboardingAgeRangeKey);
+    await prefs.remove(onboardingPillarIdKey);
+  }
+
+  Future<void> _applyOnboardingSignupDefaults() async {
+    final prefs = await SharedPreferences.getInstance();
+    final sessionId = prefs.getString(onboardingSessionIdKey);
+    if (sessionId == null || sessionId.isEmpty) return;
+
+    await prefs.setString('last_collection_filter', 'public');
+    await getIt<FilterService>().updateSourceFilter('public');
   }
 
   Future<bool> login(String identifier, String password) async {
@@ -660,6 +714,7 @@ class AuthService extends ChangeNotifier {
       if (response.statusCode == 200) {
         _currentUser = null;
         await _cfClient.clearSession();
+        await _clearOnboardingSignupData();
         notifyListeners();
         return true;
       }

@@ -1275,6 +1275,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                                       card,
                                       pillarColor,
                                       _currentLanguageCode,
+                                      compactPreview: true,
                                     ),
                                     Positioned(
                                       top: 4,
@@ -1370,6 +1371,8 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
     Color pillarColor,
     String displayLang, {
     BoxFit fit = BoxFit.cover,
+    AlignmentGeometry alignment = Alignment.center,
+    bool compactPreview = false,
   }) {
     return CardRenderer(
       card: card,
@@ -1377,6 +1380,8 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
       languageCode: displayLang,
       fallbackColor: pillarColor,
       fit: fit,
+      alignment: alignment,
+      compactPreview: compactPreview,
     );
   }
 

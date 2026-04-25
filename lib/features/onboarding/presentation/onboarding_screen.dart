@@ -28,7 +28,7 @@ class OnboardingScreen extends StatefulWidget {
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
   final PageController _pageController = PageController();
-  final String _sessionId = const Uuid().v4();
+  String _sessionId = const Uuid().v4();
   final GlobalKey _featuresKey = GlobalKey();
   final _cfClient = getIt<CloudflareHttpClient>();
 
@@ -41,6 +41,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   bool _slide1VideoFinished = false;
   bool _videoVisible = false;
   bool _showVideoPlayFallback = false;
+  bool _slide1Muted = true;
   StreamSubscription? _slide1Subscription;
 
   late VideoPlayerController _controller1;
@@ -103,11 +104,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   Future<void> _initAnalytics() async {
+    if (widget.isReplay) return;
+
     try {
-      await _cfClient.client.post(
-        '/api/analytics/onboarding',
-        data: {'session_id': _sessionId},
-      );
+      final prefs = await SharedPreferences.getInstance();
+      final existingSessionId = prefs.getString(onboardingSessionIdKey);
+      if (existingSessionId != null && existingSessionId.isNotEmpty) {
+        _sessionId = existingSessionId;
+      } else {
+        await prefs.setString(onboardingSessionIdKey, _sessionId);
+      }
     } catch (e) {
       debugPrint('Error initializing onboarding analytics: $e');
     }
@@ -118,7 +124,17 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     int? pillarId,
     int? lastSlideIndex,
   }) async {
+    if (widget.isReplay) return;
+
     try {
+      final prefs = await SharedPreferences.getInstance();
+      if (ageRange != null) {
+        await prefs.setString(onboardingAgeRangeKey, ageRange);
+      }
+      if (pillarId != null) {
+        await prefs.setInt(onboardingPillarIdKey, pillarId);
+      }
+
       final updates = <String, dynamic>{'session_id': _sessionId};
       if (ageRange != null) updates['age_range'] = ageRange;
       if (pillarId != null) updates['pillar_id'] = pillarId;
@@ -130,10 +146,21 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     }
   }
 
-  Future<void> _playSlide1Video({required bool autoplay}) async {
+  Future<void> _playSlide1Video({
+    required bool autoplay,
+    bool unmute = false,
+  }) async {
     if (!_controller1.value.isInitialized) return;
 
     try {
+      if (autoplay) {
+        await _controller1.setVolume(0);
+        _slide1Muted = true;
+      } else if (unmute) {
+        await _controller1.setVolume(1);
+        _slide1Muted = false;
+      }
+
       await _controller1.play();
       if (!mounted) return;
       setState(() {
@@ -155,11 +182,28 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     }
   }
 
+  Future<void> _toggleSlide1Sound() async {
+    if (!_controller1.value.isInitialized) return;
+
+    final nextMuted = !_slide1Muted;
+    await _controller1.setVolume(nextMuted ? 0 : 1);
+    if (!mounted) return;
+
+    setState(() => _slide1Muted = nextMuted);
+    if (!_controller1.value.isPlaying) {
+      await _playSlide1Video(autoplay: false, unmute: !nextMuted);
+    }
+  }
+
   void _handlePageChange(int page) {
     setState(() {
       _currentPage = page;
       if (page != 6) _showFeatures = false;
     });
+
+    if (page > 0) {
+      _updateAnalytics(lastSlideIndex: page);
+    }
 
     if (page == 0) {
       _controller1.seekTo(Duration.zero);
@@ -167,6 +211,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         _slide1VideoFinished = false;
         _videoVisible = false;
         _showVideoPlayFallback = false;
+        _slide1Muted = true;
       });
       _playSlide1Video(autoplay: true);
       Future.delayed(const Duration(milliseconds: 500), () {
@@ -211,7 +256,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     if (authService.currentUser != null) {
       nextPath = const SubjectPage();
     } else {
-      nextPath = const LoginPage();
+      nextPath = const LoginPage(initialCreateAccount: true);
     }
 
     Navigator.of(context).pushReplacement(
@@ -286,7 +331,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           Material(
                             color: Colors.black.withValues(alpha: 0.38),
                             child: InkWell(
-                              onTap: () => _playSlide1Video(autoplay: false),
+                              onTap:
+                                  () => _playSlide1Video(
+                                    autoplay: false,
+                                    unmute: true,
+                                  ),
                               child: Center(
                                 child: Container(
                                   width: 88,
@@ -301,6 +350,30 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                     size: 56,
                                   ),
                                 ),
+                              ),
+                            ),
+                          ),
+                        if (_videoVisible &&
+                            !_slide1VideoFinished &&
+                            !_showVideoPlayFallback)
+                          Positioned(
+                            right: 12,
+                            bottom: 12,
+                            child: Material(
+                              color: Colors.black.withValues(alpha: 0.44),
+                              shape: const CircleBorder(),
+                              child: IconButton(
+                                onPressed: _toggleSlide1Sound,
+                                icon: Icon(
+                                  _slide1Muted
+                                      ? Icons.volume_off_rounded
+                                      : Icons.volume_up_rounded,
+                                  color: Colors.white,
+                                ),
+                                tooltip:
+                                    _slide1Muted
+                                        ? 'Turn sound on'
+                                        : 'Turn sound off',
                               ),
                             ),
                           ),

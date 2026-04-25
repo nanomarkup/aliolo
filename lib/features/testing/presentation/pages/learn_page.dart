@@ -39,9 +39,11 @@ class LearnPage extends StatefulWidget {
 class _LearnPageState extends State<LearnPage> {
   static const List<int> _autoPlayDelayOptions = <int>[1, 2, 3, 4, 5];
 
-  late SubjectCard _currentSubjectCard;
-  CardModel get _currentCard => _currentSubjectCard.card;
-  SubjectModel get _subject => _currentSubjectCard.subject;
+  late PageController _pageController;
+  int _currentIndex = 0;
+
+  CardModel get _currentCard => _sessionQueue[_currentIndex].card;
+  SubjectModel get _subject => _sessionQueue[_currentIndex].subject;
 
   // Media State
   List<String> _currentImages = [];
@@ -50,6 +52,7 @@ class _LearnPageState extends State<LearnPage> {
 
   // Session State
   List<SubjectCard> _sessionQueue = [];
+  final Set<String> _recordedCardIds = {};
   int _completedInSession = 0;
   int _totalInSession = 0;
 
@@ -93,17 +96,9 @@ class _LearnPageState extends State<LearnPage> {
     _learnAutoplayDelaySeconds =
         _authService.currentUser?.learnAutoplayDelaySeconds ?? 3;
 
-    _sessionQueue = List.from(widget.sessionCards);
-
+    _sessionQueue = List.from(widget.sessionCards)..shuffle();
     _totalInSession = _sessionQueue.length;
-
-    if (_sessionQueue.isNotEmpty) {
-      final firstCard = SessionBucketSampler.takeRandom(_sessionQueue);
-      if (firstCard != null) {
-        _currentSubjectCard = firstCard;
-        _completedInSession = 1;
-      }
-    }
+    _pageController = PageController(initialPage: 0);
 
     _audioPlayer.onPlayerComplete.listen((_) {
       if (_autoPlayAudioToken == _mediaSetupToken) {
@@ -112,9 +107,10 @@ class _LearnPageState extends State<LearnPage> {
       }
     });
 
-    if (_completedInSession > 0) {
+    if (_totalInSession > 0) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         _setupMedia();
+        _recordCurrentCardProgress();
       });
     }
   }
@@ -123,11 +119,28 @@ class _LearnPageState extends State<LearnPage> {
     if (event is! KeyDownEvent) return;
 
     if (event.logicalKey == LogicalKeyboardKey.space ||
-        event.logicalKey == LogicalKeyboardKey.enter) {
+        event.logicalKey == LogicalKeyboardKey.enter ||
+        event.logicalKey == LogicalKeyboardKey.arrowRight) {
       if (_canGoNext && !_isAdvancing) {
-        _nextCard();
+        _handleNext();
       }
+    } else if (event.logicalKey == LogicalKeyboardKey.arrowLeft) {
+      _handleBack();
     }
+  }
+
+  Future<void> _recordCurrentCardProgress() async {
+    if (_recordedCardIds.contains(_currentCard.id)) return;
+
+    _recordedCardIds.add(_currentCard.id);
+    setState(() {
+      _completedInSession = _recordedCardIds.length;
+    });
+
+    await _progressService.recordLearnProgress(
+      cardId: _currentCard.id,
+      subjectId: _currentCard.subjectId,
+    );
   }
 
   void _setupMedia() {
@@ -144,9 +157,13 @@ class _LearnPageState extends State<LearnPage> {
       _isAdvancing = false;
     });
 
-    _cooldownTimer = Timer(const Duration(seconds: 1), () {
-      if (mounted) setState(() => _canGoNext = true);
-    });
+    if (_recordedCardIds.contains(_currentCard.id)) {
+      setState(() => _canGoNext = true);
+    } else {
+      _cooldownTimer = Timer(const Duration(seconds: 1), () {
+        if (mounted) setState(() => _canGoNext = true);
+      });
+    }
 
     final lang = _languageCode.toLowerCase();
     final images = _currentCard.getImageUrls(lang);
@@ -293,7 +310,7 @@ class _LearnPageState extends State<LearnPage> {
       print(
         'LearnPage: Auto-next timer fired. mounted: $mounted, waiting: $_isAutoPlayWaiting',
       );
-      if (mounted && _isAutoPlay && _isAutoPlayWaiting) _nextCard();
+      if (mounted && _isAutoPlay && _isAutoPlayWaiting) _handleNext();
     });
   }
 
@@ -444,9 +461,30 @@ class _LearnPageState extends State<LearnPage> {
     );
   }
 
-  Future<void> _nextCard() async {
+  Future<void> _handleNext() async {
     if (!_canGoNext || _isAdvancing) return;
-    print('LearnPage: Moving to next card');
+
+    if (_currentIndex < _sessionQueue.length - 1) {
+      _pageController.nextPage(
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    } else {
+      _finishSession();
+    }
+  }
+
+  void _handleBack() {
+    if (_currentIndex > 0) {
+      _pageController.previousPage(
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
+
+  Future<void> _finishSession() async {
+    print('LearnPage: Finishing session');
     setState(() => _isAdvancing = true);
     _autoNextTimer?.cancel();
     _cooldownTimer?.cancel();
@@ -455,19 +493,6 @@ class _LearnPageState extends State<LearnPage> {
     _audioPlayer.stop();
     _videoController?.pause();
     _autoPlayAudioToken = -1;
-
-    await _progressService.recordLearnProgress(
-      cardId: _currentCard.id,
-      subjectId: _currentCard.subjectId,
-    );
-
-    final nextCard = SessionBucketSampler.takeRandom(_sessionQueue);
-    if (nextCard != null) {
-      _completedInSession++;
-      setState(() => _currentSubjectCard = nextCard);
-      _setupMedia();
-      return;
-    }
 
     _progressService.awardSubjectCompletionBonus(_totalInSession);
     unawaited(
@@ -560,137 +585,163 @@ class _LearnPageState extends State<LearnPage> {
                 if (!kIsWeb) const WindowControls(color: Colors.white),
               ],
             ),
-            floatingActionButton: AnimatedOpacity(
-              duration: const Duration(milliseconds: 120),
-              opacity: (_canGoNext && !_isAdvancing) ? 1.0 : 0.45,
-              child: FloatingActionButton.extended(
-                onPressed: (_canGoNext && !_isAdvancing) ? _nextCard : null,
-                backgroundColor: headerColor,
-                foregroundColor: Colors.white,
-                icon: const Icon(Icons.arrow_forward),
-                label: Text(
-                  context.t('next'),
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                  ),
-                ),
-              ),
-            ),
-            body: Column(
+            body: Stack(
               children: [
-                // Integrated Header
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 12,
-                    horizontal: 32,
-                  ),
-                  color: headerColor.withValues(alpha: 0.05),
-                  child: Wrap(
-                    alignment: WrapAlignment.center,
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    spacing: 12,
-                    runSpacing: 8,
-                    children: [
-                      ...(() {
-                        final answers = _currentCard.getAnswerList(lang);
-                        if (answers.isEmpty) return [const SizedBox.shrink()];
+                Column(
+                  children: [
+                    // Integrated Header
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 12,
+                        horizontal: 32,
+                      ),
+                      color: headerColor.withValues(alpha: 0.05),
+                      child: Wrap(
+                        alignment: WrapAlignment.center,
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        spacing: 12,
+                        runSpacing: 8,
+                        children: [
+                          ...(() {
+                            final answers = _currentCard.getAnswerList(lang);
+                            if (answers.isEmpty) return [const SizedBox.shrink()];
 
-                        if (showAudioInHeader) {
-                          return [
-                            IconButton(
-                              icon: const Icon(Icons.volume_up),
-                              color: headerColor,
-                              tooltip: context.t('play_audio'),
-                              onPressed: () async {
-                                if (currentAudioUrl != null &&
-                                    currentAudioUrl.isNotEmpty) {
-                                  await _audioPlayer.play(
-                                    UrlSource(currentAudioUrl),
-                                  );
-                                }
-                              },
-                            ),
-                          ];
-                        }
-
-                        return [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children:
-                                answers
-                                    .map(
-                                      (ans) => Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 8,
-                                          vertical: 2,
-                                        ),
-                                        child: Text(
-                                          CardModel.capitalizeFirst(ans),
-                                          style: TextStyle(
-                                            fontSize:
-                                                answers.length > 1 ? 24 : 32,
-                                            color: headerColor,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                    )
-                                    .toList(),
-                          ),
-                        ];
-                      })(),
-                    ],
-                  ),
-                ),
-                LinearProgressIndicator(
-                  value: progressValue,
-                  minHeight: 4,
-                  backgroundColor: headerColor.withValues(alpha: 0.1),
-                  valueColor: AlwaysStoppedAnimation<Color>(headerColor),
-                ),
-                Expanded(
-                  child: CardMediaContent(
-                    card: _currentCard,
-                    subject: _subject,
-                    languageCode: lang,
-                    headerColor: headerColor,
-                    isMobile:
-                        false, // LearnPage uses desktop-style layout sizing
-                    videoController: _videoController,
-                    hasVideo: _hasVideo,
-                    images: _currentImages,
-                    mediaIndex: _currentMediaIndex,
-                    onMediaIndexChanged: (index) {
-                      if (mounted) {
-                        setState(() => _currentMediaIndex = index);
-                      }
-                    },
-                    onPlayAudio:
-                        currentAudioUrl?.isNotEmpty == true
-                            ? () async {
-                              await _audioPlayer.play(
-                                UrlSource(currentAudioUrl!),
-                              );
+                            if (showAudioInHeader) {
+                              return [
+                                IconButton(
+                                  icon: const Icon(Icons.volume_up),
+                                  color: headerColor,
+                                  tooltip: context.t('play_audio'),
+                                  onPressed: () async {
+                                    if (currentAudioUrl != null &&
+                                        currentAudioUrl.isNotEmpty) {
+                                      await _audioPlayer.play(
+                                        UrlSource(currentAudioUrl),
+                                      );
+                                    }
+                                  },
+                                ),
+                              ];
                             }
-                            : null,
-                    hasAudio:
-                        showAudioInHeader
-                            ? false
-                            : (currentAudioUrl?.isNotEmpty == true),
-                    hideAudioIcon: showAudioInHeader,
-                    headerText:
-                        showAudioInHeader
-                            ? null
-                            : (_currentCard.getAnswerList(lang).isNotEmpty
-                                ? _currentCard.getAnswerList(lang).first
-                                : null),
-                    centerTextOverride:
-                        showAudioInHeader &&
-                                _currentCard.getAnswerList(lang).isNotEmpty
-                            ? _currentCard.getAnswerList(lang).first
-                            : null,
+
+                            return [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children:
+                                    answers
+                                        .map(
+                                          (ans) => Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 8,
+                                              vertical: 2,
+                                            ),
+                                            child: Text(
+                                              CardModel.capitalizeFirst(ans),
+                                              style: TextStyle(
+                                                fontSize:
+                                                    answers.length > 1 ? 24 : 32,
+                                                color: headerColor,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                        .toList(),
+                              ),
+                            ];
+                          })(),
+                        ],
+                      ),
+                    ),
+                    LinearProgressIndicator(
+                      value: progressValue,
+                      minHeight: 4,
+                      backgroundColor: headerColor.withValues(alpha: 0.1),
+                      valueColor: AlwaysStoppedAnimation<Color>(headerColor),
+                    ),
+                    Expanded(
+                      child: PageView.builder(
+                        controller: _pageController,
+                        itemCount: _sessionQueue.length,
+                        onPageChanged: (index) {
+                          setState(() {
+                            _currentIndex = index;
+                            _setupMedia();
+                            _recordCurrentCardProgress();
+                          });
+                        },
+                        itemBuilder: (context, index) {
+                          final itemCard = _sessionQueue[index].card;
+                          final isCurrent = index == _currentIndex;
+                          final audioUrl =
+                              itemCard.getAudioUrl(lang) ?? '';
+                          final hasAudioUrl = audioUrl.isNotEmpty;
+                          return Center(
+                            child: CardMediaContent(
+                              card: itemCard,
+                              subject: _sessionQueue[index].subject,
+                              languageCode: lang,
+                              headerColor: headerColor,
+                              isMobile: MediaQuery.sizeOf(context).width < 600,
+                              videoController: isCurrent ? _videoController : null,
+                              hasVideo: itemCard.hasVideoUrl(lang),
+                              images: itemCard.getImageUrls(lang),
+                              onPlayAudio:
+                                  hasAudioUrl
+                                      ? () => _audioPlayer.play(UrlSource(audioUrl))
+                                      : null,
+                              hasAudio: hasAudioUrl,
+                              hideAudioIcon: true,
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                // Side Navigation Controls
+                if (_currentIndex > 0)
+                  Positioned(
+                    left: 8,
+                    top: 0,
+                    bottom: 0,
+                    child: Center(
+                      child: IconButton(
+                        icon: const Icon(
+                          Icons.chevron_left,
+                          color: Colors.white,
+                          size: 40,
+                        ),
+                        style: IconButton.styleFrom(
+                          backgroundColor: Colors.black.withValues(alpha: 0.4),
+                          padding: const EdgeInsets.all(12),
+                        ),
+                        onPressed: _handleBack,
+                      ),
+                    ),
+                  ),
+                Positioned(
+                  right: 8,
+                  top: 0,
+                  bottom: 0,
+                  child: Center(
+                    child: AnimatedOpacity(
+                      duration: const Duration(milliseconds: 120),
+                      opacity: (_canGoNext && !_isAdvancing) ? 1.0 : 0.45,
+                      child: IconButton(
+                        icon: const Icon(
+                          Icons.chevron_right,
+                          color: Colors.white,
+                          size: 40,
+                        ),
+                        style: IconButton.styleFrom(
+                          backgroundColor: Colors.black.withValues(alpha: 0.4),
+                          padding: const EdgeInsets.all(12),
+                        ),
+                        onPressed: (_canGoNext && !_isAdvancing) ? _handleNext : null,
+                      ),
+                    ),
                   ),
                 ),
               ],

@@ -1,8 +1,8 @@
-import 'package:flutter/foundation.dart';
 import 'package:aliolo/data/models/content_item.dart';
 import 'package:aliolo/data/models/folder_model.dart';
 import 'package:aliolo/data/models/subject_model.dart';
 import 'package:aliolo/data/models/collection_model.dart';
+import 'package:aliolo/data/models/pillar_model.dart';
 import 'package:aliolo/data/services/card_service.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/core/di/service_locator.dart';
@@ -46,6 +46,43 @@ class DiscoveryFilters {
 class DiscoveryEngine {
   final _cardService = getIt<CardService>();
   final _authService = getIt<AuthService>();
+
+  static List<Pillar> filterVisiblePillars(
+    List<Pillar> allPillars,
+    List<ContentItem> visibleContent,
+  ) {
+    final visiblePillarIds =
+        visibleContent
+            .where(isPillarContent)
+            .map((item) => item.pillarId)
+            .toSet();
+    return allPillars
+        .where((pillar) => visiblePillarIds.contains(pillar.id))
+        .toList();
+  }
+
+  static bool isPillarContent(ContentItem item) {
+    return item is SubjectModel || item is CollectionModel;
+  }
+
+  static Map<int, int> countPillarContent(List<ContentItem> items) {
+    final counts = <int, int>{};
+    for (final item in items.where(isPillarContent)) {
+      counts[item.pillarId] = (counts[item.pillarId] ?? 0) + 1;
+    }
+    return counts;
+  }
+
+  static bool shouldShowFolder(
+    FolderModel folder,
+    List<ContentItem> items, {
+    required String collectionFilter,
+    required String? myId,
+  }) {
+    final hasMatchingContent = items.any((item) => item.folderId == folder.id);
+    if (hasMatchingContent) return true;
+    return collectionFilter == 'mine' && folder.ownerId == myId;
+  }
 
   Future<List<ContentItem>> getContent(DiscoveryFilters filters, String langCode) async {
     final items = await getRawContent(filters);
@@ -204,22 +241,17 @@ class DiscoveryEngine {
           }).toList();
     }
 
-    // Special folder logic: Show folders if they have matching content, belong to user, or if we are in a high-level view (favorites/public)
+    // Folders should only stay visible when they still have matching content.
+    // The one exception is `mine`, where empty owned folders remain visible for management.
     if (folderId == null && query.isEmpty) {
-      final matchingFolderIds = items.where((e) => e.folderId != null).map((e) => e.folderId!).toSet();
       visible = visible.where((item) {
         if (item is! FolderModel) return true;
-        final hasMatchingContent = matchingFolderIds.contains(item.id);
-        
-        bool shouldShowEmptyFolder = false;
-        if (collectionFilter == 'mine' || collectionFilter == 'all') {
-          shouldShowEmptyFolder = item.ownerId == myId;
-        } else if (collectionFilter == 'public' || collectionFilter == 'favorites') {
-          // In public/favorites view, we show all folders matching the basic criteria (always true for folders currently)
-          shouldShowEmptyFolder = true;
-        }
-        
-        return hasMatchingContent || shouldShowEmptyFolder;
+        return shouldShowFolder(
+          item,
+          items,
+          collectionFilter: collectionFilter,
+          myId: myId,
+        );
       }).toList();
     }
 

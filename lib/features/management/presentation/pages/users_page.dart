@@ -12,10 +12,6 @@ import 'package:aliolo/data/services/admin_users_service.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
-import 'package:aliolo/features/auth/presentation/pages/profile_page.dart';
-import 'package:aliolo/features/leaderboard/presentation/pages/leaderboard_page.dart';
-import 'package:aliolo/features/settings/presentation/pages/settings_page.dart';
-import 'package:aliolo/features/subjects/presentation/pages/subject_page.dart';
 
 class UsersPage extends StatefulWidget {
   const UsersPage({super.key});
@@ -112,6 +108,22 @@ class _UsersPageState extends State<UsersPage> {
     if (date == null) return context.t('not_available');
     final local = date.toLocal();
     return local.toIso8601String().split('T').first;
+  }
+
+  String _formatDateTime(DateTime? date) {
+    if (date == null) return context.t('not_available');
+    final local = date.toLocal();
+    return local.toIso8601String().replaceFirst('T', ' ').split('.').first;
+  }
+
+  String _lastSeenLabel(DateTime? date) {
+    if (date == null) return context.t('not_available');
+    final now = DateTime.now();
+    final local = date.toLocal();
+    if (now.difference(local).abs() <= const Duration(minutes: 15)) {
+      return 'Active now';
+    }
+    return _formatDateTime(date);
   }
 
   String _subscriptionStatusLabel(AdminUserModel user) {
@@ -647,9 +659,10 @@ class _UsersPageState extends State<UsersPage> {
             context.t('created_at'),
             _formatDate(user.profile.createdAt),
           ),
+          _buildInfoRow(context.t('updated_at'), _formatDate(user.profile.updatedAt)),
           _buildInfoRow(
-            context.t('updated_at'),
-            _formatDate(user.profile.updatedAt),
+            'Last seen',
+            _lastSeenLabel(user.profile.lastActiveDate),
           ),
           const SizedBox(height: 8),
           Align(
@@ -703,45 +716,6 @@ class _UsersPageState extends State<UsersPage> {
   Widget build(BuildContext context) {
     const appBarColor = Colors.white;
     final currentSessionColor = ThemeService().primaryColor;
-    final isSmallScreen = MediaQuery.of(context).size.width < 600;
-
-    final homeAction = IconButton(
-      tooltip: context.t('home'),
-      icon: const Icon(Icons.school, color: appBarColor),
-      onPressed:
-          () => Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (context) => const SubjectPage()),
-            (route) => false,
-          ),
-    );
-    final leaderboardAction = IconButton(
-      tooltip: context.t('leaderboard'),
-      icon: const Icon(Icons.emoji_events, color: appBarColor),
-      onPressed:
-          () => Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const LeaderboardPage()),
-          ),
-    );
-    final profileAction = IconButton(
-      tooltip: context.t('profile'),
-      icon: const Icon(Icons.person, color: appBarColor),
-      onPressed:
-          () => Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const ProfilePage()),
-          ),
-    );
-    final settingsAction = IconButton(
-      tooltip: context.t('settings'),
-      icon: const Icon(Icons.settings, color: appBarColor),
-      onPressed:
-          () => Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const SettingsPage()),
-          ),
-    );
 
     return ListenableBuilder(
       listenable: TranslationService(),
@@ -752,17 +726,16 @@ class _UsersPageState extends State<UsersPage> {
             style: const TextStyle(color: appBarColor),
           ),
           appBarColor: currentSessionColor,
-          actions:
-              isSmallScreen
-                  ? [homeAction, profileAction]
-                  : [
-                    homeAction,
-                    leaderboardAction,
-                    profileAction,
-                    settingsAction,
-                  ],
-          overflowActions:
-              isSmallScreen ? [leaderboardAction, settingsAction] : null,
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.arrow_back, color: appBarColor),
+              onPressed: () => Navigator.pop(context),
+            ),
+            IconButton(
+              icon: const Icon(Icons.refresh, color: appBarColor),
+              onPressed: _loadUsers,
+            ),
+          ],
           fixedBody:
               !_isAdmin
                   ? const SizedBox.shrink()

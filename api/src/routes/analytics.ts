@@ -19,9 +19,18 @@ router.post('/onboarding', async (c) => {
             INSERT INTO onboarding_analytics (session_id, age_range, pillar_id, last_slide_index, updated_at)
             VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP)
             ON CONFLICT(session_id) DO UPDATE SET
-                age_range = COALESCE(excluded.age_range, onboarding_analytics.age_range),
-                pillar_id = COALESCE(excluded.pillar_id, onboarding_analytics.pillar_id),
-                last_slide_index = COALESCE(excluded.last_slide_index, onboarding_analytics.last_slide_index),
+                age_range = CASE
+                    WHEN excluded.age_range IS NOT NULL THEN excluded.age_range
+                    ELSE onboarding_analytics.age_range
+                END,
+                pillar_id = CASE
+                    WHEN excluded.pillar_id IS NOT NULL THEN excluded.pillar_id
+                    ELSE onboarding_analytics.pillar_id
+                END,
+                last_slide_index = CASE
+                    WHEN excluded.last_slide_index IS NOT NULL THEN excluded.last_slide_index
+                    ELSE onboarding_analytics.last_slide_index
+                END,
                 updated_at = CURRENT_TIMESTAMP
         `).bind(session_id, age_range || null, pillar_id || null, last_slide_index !== undefined ? last_slide_index : null).run();
         

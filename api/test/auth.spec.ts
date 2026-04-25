@@ -16,6 +16,138 @@ describe('Auth API', () => {
 
     expect(data.user.email).toBe(testUser.email);
     expect(data.session_id).toBeDefined();
+
+    const profile: any = await env.DB.prepare(
+      'SELECT last_active_date FROM profiles WHERE email = ?'
+    ).bind(testUser.email).first();
+    expect(profile.last_active_date).toBeTruthy();
+  });
+
+  it('links first-run onboarding and assigns official starter subjects on signup', async () => {
+    const suffix = Date.now();
+    const officialUserId = `official_${suffix}`;
+    const onboardingSessionId = `onboarding_${suffix}`;
+
+    await env.DB.prepare(
+      "INSERT INTO profiles (id, email, username) VALUES (?, 'aliolo@nohainc.com', 'Aliolo') ON CONFLICT(email) DO NOTHING"
+    ).bind(officialUserId).run();
+    const official: any = await env.DB.prepare(
+      "SELECT id FROM profiles WHERE email = 'aliolo@nohainc.com'"
+    ).first();
+
+    for (let i = 0; i < 3; i++) {
+      await env.DB.prepare(`
+        INSERT INTO subjects (id, pillar_id, owner_id, is_public, age_group, name)
+        VALUES (?, 6, ?, 1, 'advanced', ?)
+      `).bind(`starter_${suffix}_${i}`, official.id, `Starter ${i}`).run();
+    }
+    await env.DB.prepare(`
+      INSERT INTO subjects (id, pillar_id, owner_id, is_public, age_group, name)
+      VALUES (?, 6, ?, 0, 'advanced', 'Private Starter')
+    `).bind(`private_${suffix}`, official.id).run();
+    await env.DB.prepare(`
+      INSERT INTO onboarding_analytics (session_id, age_range, pillar_id)
+      VALUES (?, 'age_19_25', 6)
+    `).bind(onboardingSessionId).run();
+
+    const data = await signupUser({
+      email: `onboarding_${suffix}@example.com`,
+      password: 'password123',
+      username: `onboarding_${suffix}`,
+      onboarding_session_id: onboardingSessionId,
+    });
+
+    const analytics: any = await env.DB.prepare(
+      'SELECT user_email, age_range, pillar_id FROM onboarding_analytics WHERE session_id = ?'
+    ).bind(onboardingSessionId).first();
+    expect(analytics.user_email).toBe(data.user.email);
+    expect(analytics.age_range).toBe('age_19_25');
+    expect(analytics.pillar_id).toBe(6);
+
+    const profile: any = await env.DB.prepare(
+      'SELECT main_pillar_id, last_source_filter FROM profiles WHERE id = ?'
+    ).bind(data.user.id).first();
+    expect(profile.main_pillar_id).toBe(6);
+    expect(profile.last_source_filter).toBe('public');
+
+    const { results } = await env.DB.prepare(
+      'SELECT subject_id FROM user_subjects WHERE user_id = ? ORDER BY subject_id'
+    ).bind(data.user.id).all();
+    expect(results.map((row: any) => row.subject_id)).toEqual([
+      `starter_${suffix}_0`,
+      `starter_${suffix}_1`,
+      `starter_${suffix}_2`,
+    ]);
+  });
+
+  it('backfills missing onboarding analytics from signup payload', async () => {
+    const suffix = Date.now();
+    const officialUserId = `official_backfill_${suffix}`;
+    const onboardingSessionId = `missing_onboarding_${suffix}`;
+
+    await env.DB.prepare(
+      "INSERT INTO profiles (id, email, username) VALUES (?, 'aliolo@nohainc.com', 'Aliolo') ON CONFLICT(email) DO NOTHING"
+    ).bind(officialUserId).run();
+    const official: any = await env.DB.prepare(
+      "SELECT id FROM profiles WHERE email = 'aliolo@nohainc.com'"
+    ).first();
+
+    for (let i = 0; i < 3; i++) {
+      await env.DB.prepare(`
+        INSERT INTO subjects (id, pillar_id, owner_id, is_public, age_group, name)
+        VALUES (?, 6, ?, 1, 'advanced', ?)
+      `).bind(`backfill_starter_${suffix}_${i}`, official.id, `Backfill Starter ${i}`).run();
+    }
+
+    const data = await signupUser({
+      email: `backfill_${suffix}@example.com`,
+      password: 'password123',
+      username: `backfill_${suffix}`,
+      onboarding_session_id: onboardingSessionId,
+      onboarding_age_range: 'age_26_35',
+      onboarding_pillar_id: 6,
+    });
+
+    const analytics: any = await env.DB.prepare(
+      'SELECT user_email, age_range, pillar_id FROM onboarding_analytics WHERE session_id = ?'
+    ).bind(onboardingSessionId).first();
+    expect(analytics.user_email).toBe(data.user.email);
+    expect(analytics.age_range).toBe('age_26_35');
+    expect(analytics.pillar_id).toBe(6);
+  });
+
+  it('deletes onboarding analytics for the account email on account deletion', async () => {
+    const suffix = Date.now();
+    const onboardingSessionId = `delete_onboarding_${suffix}`;
+    const email = `delete_${suffix}@example.com`;
+
+    await env.DB.prepare(`
+      INSERT INTO onboarding_analytics (session_id, user_email, age_range, pillar_id)
+      VALUES (?, ?, 'age_19_25', 6)
+    `).bind(onboardingSessionId, email).run();
+
+    const signupData = await signupUser({
+      email,
+      password: 'password123',
+      username: `delete_${suffix}`,
+      onboarding_session_id: onboardingSessionId,
+    });
+
+    const deleteRes = await app.request('/api/auth/delete', {
+      method: 'POST',
+      body: JSON.stringify({ password: 'password123' }),
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Session-Id': signupData.session_id,
+      },
+    }, env);
+
+    expect(deleteRes.status).toBe(200);
+
+    const analytics: any = await env.DB.prepare(
+      'SELECT session_id FROM onboarding_analytics WHERE user_email = ?'
+    ).bind(email).first();
+    expect(analytics).toBeNull();
   });
 
   it('should sign up using invitation token', async () => {
