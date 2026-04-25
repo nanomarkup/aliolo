@@ -17,10 +17,10 @@ import 'package:aliolo/data/services/progress_service.dart';
 import 'package:aliolo/data/services/subject_usage_service.dart';
 import 'package:aliolo/data/services/subscription_service.dart';
 import 'package:aliolo/core/di/service_locator.dart';
-import 'package:aliolo/core/utils/session_bucket_sampler.dart';
 import 'package:aliolo/core/widgets/card_media_content.dart';
 import 'package:aliolo/core/widgets/window_controls.dart';
 import 'package:aliolo/features/settings/presentation/pages/premium_upgrade_page.dart';
+import 'package:aliolo/features/testing/presentation/widgets/session_completion_window.dart';
 
 class LearnPage extends StatefulWidget {
   final List<SubjectCard> sessionCards;
@@ -46,8 +46,6 @@ class _LearnPageState extends State<LearnPage> {
   SubjectModel get _subject => _sessionQueue[_currentIndex].subject;
 
   // Media State
-  List<String> _currentImages = [];
-  int _currentMediaIndex = 0;
   bool _hasVideo = false;
 
   // Session State
@@ -61,6 +59,7 @@ class _LearnPageState extends State<LearnPage> {
   bool _isAutoPlayWaiting = false;
   bool _canGoNext = false;
   bool _isAdvancing = false;
+  bool _isSessionFinished = false;
   int _learnAutoplayDelaySeconds = 3;
   Timer? _autoNextTimer;
   Timer? _cooldownTimer;
@@ -173,8 +172,6 @@ class _LearnPageState extends State<LearnPage> {
     _videoController = null;
 
     setState(() {
-      _currentImages = images;
-      _currentMediaIndex = 0;
       _hasVideo = false;
     });
 
@@ -413,39 +410,91 @@ class _LearnPageState extends State<LearnPage> {
   Widget _buildAutoplayControl() {
     final isPremium = getIt<SubscriptionService>().isPremium;
 
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: _toggleAutoPlay,
-      onLongPressStart:
-          (details) => _showAutoplayDelayMenu(details.globalPosition),
-      child: Padding(
-        padding: const EdgeInsets.all(8),
-        child: Stack(
-          clipBehavior: Clip.none,
-          children: [
-            Icon(
-              _isAutoPlay ? Icons.pause_circle : Icons.play_circle,
-              color: Colors.white,
-            ),
-            if (!isPremium)
-              Positioned(
-                right: -4,
-                top: -4,
-                child: Container(
-                  padding: const EdgeInsets.all(2),
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    shape: BoxShape.circle,
-                  ),
-                  child: const Icon(
-                    Icons.workspace_premium,
-                    color: Colors.amber,
-                    size: 12,
-                  ),
-                ),
-              ),
-          ],
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+      decoration: BoxDecoration(
+        color:
+            _isAutoPlay
+                ? Colors.white.withValues(alpha: 0.2)
+                : Colors.white.withValues(alpha: 0.08),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color:
+              _isAutoPlay
+                  ? Colors.white.withValues(alpha: 0.3)
+                  : Colors.white.withValues(alpha: 0.15),
+          width: 1,
         ),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: _toggleAutoPlay,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(8, 6, 4, 6),
+              child: Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  Icon(
+                    _isAutoPlay ? Icons.pause_circle : Icons.play_circle,
+                    color: _isAutoPlay ? Colors.white : Colors.white70,
+                    size: 22,
+                  ),
+                  if (!isPremium)
+                    Positioned(
+                      right: -4,
+                      top: -4,
+                      child: Container(
+                        padding: const EdgeInsets.all(1.5),
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(
+                          Icons.workspace_premium,
+                          color: Colors.amber,
+                          size: 10,
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          ),
+          Container(
+            width: 1,
+            height: 16,
+            color: Colors.white.withValues(alpha: 0.15),
+          ),
+          GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTapDown:
+                (details) => _showAutoplayDelayMenu(details.globalPosition),
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(6, 6, 8, 6),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    '${_learnAutoplayDelaySeconds}s',
+                    style: TextStyle(
+                      color: _isAutoPlay ? Colors.white : Colors.white70,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 13,
+                    ),
+                  ),
+                  Icon(
+                    Icons.arrow_drop_down,
+                    color: _isAutoPlay ? Colors.white70 : Colors.white54,
+                    size: 18,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -484,6 +533,7 @@ class _LearnPageState extends State<LearnPage> {
   }
 
   Future<void> _finishSession() async {
+    if (_isSessionFinished) return;
     print('LearnPage: Finishing session');
     setState(() => _isAdvancing = true);
     _autoNextTimer?.cancel();
@@ -502,35 +552,17 @@ class _LearnPageState extends State<LearnPage> {
       ),
     );
     _soundService.playCompleted();
-    _showCompletionDialog();
-  }
-
-  void _showCompletionDialog() {
-    final navigator = Navigator.of(context);
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder:
-          (context) => AlertDialog(
-            title: Text(context.t('session_complete')),
-            content: Text(context.t('session_complete_description')),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  navigator.pop();
-                  navigator.pop();
-                },
-                child: Text(context.t('back_to_subjects')),
-              ),
-            ],
-          ),
-    );
+    if (mounted) {
+      setState(() {
+        _isSessionFinished = true;
+        _isAdvancing = false;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final lang = _languageCode.toLowerCase();
-    final currentAudioUrl = _currentCard.getAudioUrl(lang);
     final pillar = pillars.firstWhere(
       (p) => p.id == _subject.pillarId,
       orElse: () => pillars.first,
@@ -543,23 +575,30 @@ class _LearnPageState extends State<LearnPage> {
         double progressValue =
             _totalInSession > 0 ? _completedInSession / _totalInSession : 0.0;
 
-        final hasMeaningfulDisplayText = _currentCard.hasMeaningfulDisplayText(
-          lang,
-        );
-        final displayText =
-            hasMeaningfulDisplayText
-                ? _currentCard.getDisplayText(lang).trim()
-                : '';
-        final hasVisual =
-            _currentCard.isSpecialRenderer ||
-            _currentCard.isCountingRenderer ||
-            _currentCard.isColors ||
-            _hasVideo ||
-            _currentImages.isNotEmpty ||
-            displayText.isNotEmpty;
-
-        final showAudioInHeader =
-            !hasVisual && (currentAudioUrl?.isNotEmpty ?? false);
+        if (_isSessionFinished) {
+          return SessionCompletionWindow(
+            subjectTitle: _subject.getName(_languageCode),
+            headerColor: headerColor,
+            actionLabel: context.t('back_to_subjects'),
+            onBackPressed: () => Navigator.pop(context, true),
+            body: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(Icons.school_outlined, size: 64, color: headerColor),
+                const SizedBox(height: 20),
+                Text(
+                  context.t('learning_session_complete_description'),
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 20,
+                    height: 1.4,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
+          );
+        }
 
         return KeyboardListener(
           focusNode: _keyboardFocusNode,
@@ -605,25 +644,8 @@ class _LearnPageState extends State<LearnPage> {
                         children: [
                           ...(() {
                             final answers = _currentCard.getAnswerList(lang);
-                            if (answers.isEmpty) return [const SizedBox.shrink()];
-
-                            if (showAudioInHeader) {
-                              return [
-                                IconButton(
-                                  icon: const Icon(Icons.volume_up),
-                                  color: headerColor,
-                                  tooltip: context.t('play_audio'),
-                                  onPressed: () async {
-                                    if (currentAudioUrl != null &&
-                                        currentAudioUrl.isNotEmpty) {
-                                      await _audioPlayer.play(
-                                        UrlSource(currentAudioUrl),
-                                      );
-                                    }
-                                  },
-                                ),
-                              ];
-                            }
+                            if (answers.isEmpty)
+                              return [const SizedBox.shrink()];
 
                             return [
                               Column(
@@ -640,7 +662,9 @@ class _LearnPageState extends State<LearnPage> {
                                               CardModel.capitalizeFirst(ans),
                                               style: TextStyle(
                                                 fontSize:
-                                                    answers.length > 1 ? 24 : 32,
+                                                    answers.length > 1
+                                                        ? 24
+                                                        : 32,
                                                 color: headerColor,
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -674,8 +698,7 @@ class _LearnPageState extends State<LearnPage> {
                         itemBuilder: (context, index) {
                           final itemCard = _sessionQueue[index].card;
                           final isCurrent = index == _currentIndex;
-                          final audioUrl =
-                              itemCard.getAudioUrl(lang) ?? '';
+                          final audioUrl = itemCard.getAudioUrl(lang) ?? '';
                           final hasAudioUrl = audioUrl.isNotEmpty;
                           return Center(
                             child: CardMediaContent(
@@ -684,15 +707,17 @@ class _LearnPageState extends State<LearnPage> {
                               languageCode: lang,
                               headerColor: headerColor,
                               isMobile: MediaQuery.sizeOf(context).width < 600,
-                              videoController: isCurrent ? _videoController : null,
+                              videoController:
+                                  isCurrent ? _videoController : null,
                               hasVideo: itemCard.hasVideoUrl(lang),
                               images: itemCard.getImageUrls(lang),
                               onPlayAudio:
                                   hasAudioUrl
-                                      ? () => _audioPlayer.play(UrlSource(audioUrl))
+                                      ? () =>
+                                          _audioPlayer.play(UrlSource(audioUrl))
                                       : null,
                               hasAudio: hasAudioUrl,
-                              hideAudioIcon: true,
+                              hideAudioIcon: false,
                             ),
                           );
                         },
@@ -739,7 +764,8 @@ class _LearnPageState extends State<LearnPage> {
                           backgroundColor: Colors.black.withValues(alpha: 0.4),
                           padding: const EdgeInsets.all(12),
                         ),
-                        onPressed: (_canGoNext && !_isAdvancing) ? _handleNext : null,
+                        onPressed:
+                            (_canGoNext && !_isAdvancing) ? _handleNext : null,
                       ),
                     ),
                   ),

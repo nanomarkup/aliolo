@@ -21,6 +21,7 @@ import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/core/utils/session_bucket_sampler.dart';
 import 'package:aliolo/core/utils/card_sorting.dart';
 import 'package:aliolo/core/widgets/aliolo_scrollable_page.dart';
+import 'package:aliolo/core/widgets/aliolo_compact_dropdown.dart';
 import 'package:aliolo/core/widgets/card_media_content.dart';
 import 'package:video_player/video_player.dart';
 import 'package:audioplayers/audioplayers.dart';
@@ -1467,7 +1468,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
         ],
         SizedBox(
           width: constraints.maxWidth >= 600 ? 160 : 70,
-          child: _buildCompactDropdown(
+          child: AlioloCompactDropdown<String>(
             value: _currentLanguageCode,
             items: Map.fromEntries(
               _langService.activeLanguageCodes.map(
@@ -1480,6 +1481,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                     : _currentLanguageCode.toUpperCase(),
             matchAnchorWidth: constraints.maxWidth >= 600,
             verticalPadding: constraints.maxWidth >= 600 ? 8 : 13,
+            useFilledSurfaceStyle: true,
             onChanged: (val) async {
               if (val != null) {
                 await _langService.updateCurrentLanguage(val);

@@ -8029,6 +8029,7 @@ INSERT INTO ui_translations (key, lang, value, updated_at) VALUES
   ('session_complete_description', 'zh', '干得好！您已完成本节中的所有卡片。', CURRENT_TIMESTAMP),
   ('session_complete_description', 'ja', '素晴らしい仕事だ！このセッションのすべてのカードが完成しました。', CURRENT_TIMESTAMP),
   ('session_complete_description', 'ko', '정말 잘했어요! 이번 세션의 모든 카드를 완성했습니다.', CURRENT_TIMESTAMP),
+  ('learning_session_complete_description', 'en', 'Great job! You finished this learning session. Your progress has been saved.', CURRENT_TIMESTAMP),
   ('back_to_subjects', 'en', 'Back to Subjects', CURRENT_TIMESTAMP),
   ('back_to_subjects', 'id', 'Kembali ke Subjek', CURRENT_TIMESTAMP),
   ('back_to_subjects', 'bg', 'Обратно към Теми', CURRENT_TIMESTAMP),

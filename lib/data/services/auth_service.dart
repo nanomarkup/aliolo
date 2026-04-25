@@ -434,6 +434,13 @@ class AuthService extends ChangeNotifier {
     }
   }
 
+  Future<void> updateTestAutoplayDelay(int seconds) async {
+    if (_currentUser != null) {
+      _currentUser!.testAutoplayDelaySeconds = seconds;
+      await _patchCurrentUser({'test_autoplay_delay_seconds': seconds});
+    }
+  }
+
   Future<void> updateDailyGoal(int goal) async {
     if (_currentUser != null) {
       _currentUser!.dailyGoalCount = goal;

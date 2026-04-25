@@ -2050,6 +2050,14 @@ entries:
   - file: lib/features/testing/presentation/pages/learn_page.dart
     line: 601
     kind: Text
+- key: learning_session_complete_description
+  english: Great job! You finished this learning session. Your progress has been saved.
+  translate: true
+  notes: []
+  sources:
+  - file: lib/features/testing/presentation/pages/learn_page.dart
+    line: 557
+    kind: Text
 - key: back_to_subjects
   english: Back to Subjects
   translate: true

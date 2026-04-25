@@ -14,6 +14,7 @@ class UserModel {
   late int testSessionSize;
   late String testMode;
   late int learnAutoplayDelaySeconds;
+  late int testAutoplayDelaySeconds;
   String? avatarPath;
   String? avatarOriginalPath;
   late String defaultLanguage;
@@ -49,6 +50,7 @@ class UserModel {
     this.testSessionSize = 10,
     this.testMode = 'question_to_answer',
     this.learnAutoplayDelaySeconds = 3,
+    this.testAutoplayDelaySeconds = 1,
     this.avatarPath,
     this.avatarOriginalPath,
     this.defaultLanguage = 'EN',
@@ -93,6 +95,7 @@ class UserModel {
       testSessionSize: json['test_session_size'] ?? 10,
       testMode: (json['test_mode'] ?? 'question_to_answer').toString(),
       learnAutoplayDelaySeconds: json['learn_autoplay_delay_seconds'] ?? 3,
+      testAutoplayDelaySeconds: json['test_autoplay_delay_seconds'] ?? 1,
       avatarPath: MediaUrlResolver.resolve(json['avatar_url']),
       avatarOriginalPath: MediaUrlResolver.resolve(json['avatar_original_url']),
       defaultLanguage:
@@ -141,6 +144,7 @@ class UserModel {
       'test_session_size': testSessionSize,
       'test_mode': testMode,
       'learn_autoplay_delay_seconds': learnAutoplayDelaySeconds,
+      'test_autoplay_delay_seconds': testAutoplayDelaySeconds,
       'avatar_url': avatarPath,
       'avatar_original_url': avatarOriginalPath,
       'default_language': defaultLanguage.toLowerCase(),

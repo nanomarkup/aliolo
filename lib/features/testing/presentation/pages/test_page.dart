@@ -24,6 +24,7 @@ import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/data/services/math_service.dart';
 import 'package:aliolo/features/settings/presentation/pages/premium_upgrade_page.dart';
 import 'package:aliolo/features/testing/domain/test_mode.dart';
+import 'package:aliolo/features/testing/presentation/widgets/session_completion_window.dart';
 
 class TestOption {
   final String text;
@@ -86,7 +87,10 @@ class _TestPageState extends State<TestPage> {
   bool _isAutoPlay = false;
   bool _isMediaAutoPlayMuted = false;
   bool _isAutoPlayWaiting = false;
+  int _testAutoplayDelaySeconds = 1;
   final _random = Random();
+
+  static const List<int> _autoPlayDelayOptions = <int>[1, 2, 3, 4, 5];
 
   int _autoPlayingOptionIndex = -1;
   StreamSubscription? _playerSubscription;
@@ -111,6 +115,8 @@ class _TestPageState extends State<TestPage> {
         isPremium && (_authService.currentUser?.autoPlayEnabled ?? false);
     _isMediaAutoPlayMuted =
         _authService.currentUser?.mediaAutoPlayMuted ?? false;
+    _testAutoplayDelaySeconds =
+        _authService.currentUser?.testAutoplayDelaySeconds ?? 1;
     _selectedMode = parseTestModeChoice(_authService.currentUser?.testMode);
 
     _audioPlayer.onPlayerComplete.listen((_) {
@@ -559,7 +565,14 @@ class _TestPageState extends State<TestPage> {
       _audioPlayer.play(UrlSource(audio));
     }
 
-    if (_isReverseMode && !_isMediaAutoPlayMuted) {
+    final shouldAutoplayReverseOptions =
+        _isReverseMode &&
+        !_isMediaAutoPlayMuted &&
+        audio != null &&
+        audio.isNotEmpty &&
+        !hasVisuals;
+
+    if (shouldAutoplayReverseOptions) {
       _startOptionsAutoplay();
     }
   }
@@ -828,11 +841,184 @@ class _TestPageState extends State<TestPage> {
 
   void _scheduleAutoNext() {
     _isAutoPlayWaiting = true;
-    Future.delayed(Duration(milliseconds: _isCorrect ? 1000 : 2000), () {
+    final ms =
+        _isCorrect
+            ? (_testAutoplayDelaySeconds * 1000)
+            : (max(_testAutoplayDelaySeconds * 2, 2) * 1000);
+    Future.delayed(Duration(milliseconds: ms), () {
       if (mounted && _isAutoPlayWaiting && _isAnswered) {
         _nextCard();
       }
     });
+  }
+
+  Future<void> _showAutoplayDelayMenu(Offset globalPosition) async {
+    final sub = getIt<SubscriptionService>();
+    if (!sub.isPremium) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const PremiumUpgradePage()),
+      );
+      return;
+    }
+
+    final overlay = Overlay.of(context).context.findRenderObject() as RenderBox;
+    final selected = await showMenu<int>(
+      context: context,
+      position: RelativeRect.fromRect(
+        Rect.fromPoints(globalPosition, globalPosition),
+        Offset.zero & overlay.size,
+      ),
+      items:
+          _autoPlayDelayOptions
+              .map(
+                (seconds) => PopupMenuItem<int>(
+                  value: seconds,
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.timer_outlined,
+                        size: 18,
+                        color:
+                            seconds == _testAutoplayDelaySeconds
+                                ? Theme.of(context).colorScheme.primary
+                                : Colors.grey[700],
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(child: Text('${seconds}s')),
+                      if (seconds == _testAutoplayDelaySeconds)
+                        Icon(
+                          Icons.check,
+                          size: 18,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                    ],
+                  ),
+                ),
+              )
+              .toList(),
+    );
+
+    if (selected != null) {
+      await _setTestAutoplayDelay(selected);
+    }
+  }
+
+  Future<void> _setTestAutoplayDelay(int seconds) async {
+    if (_testAutoplayDelaySeconds == seconds) return;
+    setState(() => _testAutoplayDelaySeconds = seconds);
+    await _authService.updateTestAutoplayDelay(seconds);
+  }
+
+  Widget _buildAutoplayControl() {
+    final isPremium = getIt<SubscriptionService>().isPremium;
+
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+      decoration: BoxDecoration(
+        color:
+            _isAutoPlay
+                ? Colors.white.withValues(alpha: 0.2)
+                : Colors.white.withValues(alpha: 0.08),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color:
+              _isAutoPlay
+                  ? Colors.white.withValues(alpha: 0.3)
+                  : Colors.white.withValues(alpha: 0.15),
+          width: 1,
+        ),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: () {
+              final sub = getIt<SubscriptionService>();
+              if (!sub.isPremium) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const PremiumUpgradePage(),
+                  ),
+                );
+                return;
+              }
+              final newVal = !_isAutoPlay;
+              _authService.updateAutoPlayPreference(newVal);
+              setState(() {
+                _isAutoPlay = newVal;
+                if (_isAutoPlay && _isAnswered && !_isAutoPlayWaiting) {
+                  _scheduleAutoNext();
+                }
+              });
+            },
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(8, 6, 4, 6),
+              child: Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  Icon(
+                    _isAutoPlay ? Icons.pause_circle : Icons.play_circle,
+                    color: _isAutoPlay ? Colors.white : Colors.white70,
+                    size: 22,
+                  ),
+                  if (!isPremium)
+                    Positioned(
+                      right: -4,
+                      top: -4,
+                      child: Container(
+                        padding: const EdgeInsets.all(1.5),
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(
+                          Icons.workspace_premium,
+                          color: Colors.amber,
+                          size: 10,
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          ),
+          Container(
+            width: 1,
+            height: 16,
+            color: Colors.white.withValues(alpha: 0.15),
+          ),
+          GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTapDown:
+                (details) => _showAutoplayDelayMenu(details.globalPosition),
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(6, 6, 8, 6),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    '${_testAutoplayDelaySeconds}s',
+                    style: TextStyle(
+                      color: _isAutoPlay ? Colors.white : Colors.white70,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 13,
+                    ),
+                  ),
+                  Icon(
+                    Icons.arrow_drop_down,
+                    color: _isAutoPlay ? Colors.white70 : Colors.white54,
+                    size: 18,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   void _nextCard() {
@@ -886,101 +1072,38 @@ class _TestPageState extends State<TestPage> {
             ? (_sessionCorrect / _completedInSession) * 100
             : 0;
 
-    return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: Text(
-          _subject.getName(_languageCode),
-          style: const TextStyle(fontSize: 18),
-        ),
-        backgroundColor: headerColor,
-        foregroundColor: Colors.white,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () => Navigator.pop(context),
+    return SessionCompletionWindow(
+      subjectTitle: _subject.getName(_languageCode),
+      headerColor: headerColor,
+      actionLabel: context.t('back_to_subjects'),
+      onBackPressed: () => Navigator.pop(context, true),
+      body: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _buildResultRow(context.t('total_cards'), '$_completedInSession'),
+          _buildResultRow(
+            context.t('correct_answers'),
+            '$_sessionCorrect',
+            color: Colors.green,
           ),
-          if (!kIsWeb) const WindowControls(color: Colors.white),
-        ],
-      ),
-      body: Center(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(32),
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 600),
-            child: Card(
-              elevation: 8,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(24),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(48),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      context.t('session_complete'),
-                      style: const TextStyle(
-                        fontSize: 32,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 48),
-                    _buildResultRow(
-                      context.t('total_cards'),
-                      '$_completedInSession',
-                    ),
-                    _buildResultRow(
-                      context.t('correct_answers'),
-                      '$_sessionCorrect',
-                      color: Colors.green,
-                    ),
-                    _buildResultRow(
-                      context.t('failed_answers'),
-                      '$failed',
-                      color: Colors.red,
-                    ),
-                    const Divider(height: 64),
-                    Text(
-                      '${percent.toStringAsFixed(0)}%',
-                      style: TextStyle(
-                        fontSize: 80,
-                        fontWeight: FontWeight.bold,
-                        color:
-                            percent >= 70
-                                ? Colors.green
-                                : (percent >= 40 ? Colors.orange : Colors.red),
-                      ),
-                    ),
-                    const SizedBox(height: 48),
-                    SizedBox(
-                      width: double.infinity,
-                      height: 56,
-                      child: ElevatedButton.icon(
-                        onPressed: () => Navigator.pop(context, true),
-                        icon: const Icon(Icons.school),
-                        label: Text(
-                          context.t('back_to_subjects'),
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: headerColor,
-                          foregroundColor: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+          _buildResultRow(
+            context.t('failed_answers'),
+            '$failed',
+            color: Colors.red,
+          ),
+          const Divider(height: 64),
+          Text(
+            '${percent.toStringAsFixed(0)}%',
+            style: TextStyle(
+              fontSize: 80,
+              fontWeight: FontWeight.bold,
+              color:
+                  percent >= 70
+                      ? Colors.green
+                      : (percent >= 40 ? Colors.orange : Colors.red),
             ),
           ),
-        ),
+        ],
       ),
     );
   }
@@ -1024,53 +1147,7 @@ class _TestPageState extends State<TestPage> {
                   onPressed: () => Navigator.pop(context),
                 ),
                 _buildMediaMuteControl(),
-                IconButton(
-                  icon: Stack(
-                    clipBehavior: Clip.none,
-                    children: [
-                      Icon(
-                        _isAutoPlay ? Icons.pause_circle : Icons.play_circle,
-                      ),
-                      if (!getIt<SubscriptionService>().isPremium)
-                        Positioned(
-                          right: -4,
-                          top: -4,
-                          child: Container(
-                            padding: const EdgeInsets.all(2),
-                            decoration: const BoxDecoration(
-                              color: Colors.white,
-                              shape: BoxShape.circle,
-                            ),
-                            child: const Icon(
-                              Icons.workspace_premium,
-                              color: Colors.amber,
-                              size: 12,
-                            ),
-                          ),
-                        ),
-                    ],
-                  ),
-                  onPressed: () {
-                    final sub = getIt<SubscriptionService>();
-                    if (!sub.isPremium) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const PremiumUpgradePage(),
-                        ),
-                      );
-                      return;
-                    }
-                    final newVal = !_isAutoPlay;
-                    _authService.updateAutoPlayPreference(newVal);
-                    setState(() {
-                      _isAutoPlay = newVal;
-                      if (_isAutoPlay && _isAnswered && !_isAutoPlayWaiting) {
-                        _scheduleAutoNext();
-                      }
-                    });
-                  },
-                ),
+                _buildAutoplayControl(),
                 _buildModeMenuButton(headerColor),
                 if (!kIsWeb) const WindowControls(color: Colors.white),
               ],
@@ -1250,27 +1327,72 @@ class _TestPageState extends State<TestPage> {
                               )
                             else if (_isReverseMode)
                               Expanded(
-                                child: GridView.builder(
-                                  shrinkWrap: true,
-                                  physics: const BouncingScrollPhysics(),
-                                  gridDelegate:
-                                      SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: crossAxisCount,
-                                        crossAxisSpacing: 12,
-                                        mainAxisSpacing: 12,
-                                        childAspectRatio:
-                                            isAudioTest
-                                                ? (isMobile ? 2.5 : 3.0)
-                                                : 1.0,
-                                      ),
-                                  itemCount: _options.length,
-                                  itemBuilder:
-                                      (context, index) => _buildOptionButton(
-                                        index,
-                                        headerColor,
-                                        isMobile,
-                                        isAudioTest,
-                                      ),
+                                child: LayoutBuilder(
+                                  builder: (context, gridConstraints) {
+                                    final double availableWidth =
+                                        gridConstraints.maxWidth;
+                                    final double availableHeight =
+                                        gridConstraints.maxHeight;
+
+                                    const double crossAxisSpacing = 12.0;
+                                    const double mainAxisSpacing = 12.0;
+
+                                    final int numOptions = _options.length;
+                                    final int rowCount =
+                                        (numOptions / crossAxisCount).ceil();
+
+                                    final double totalSpacingWidth =
+                                        crossAxisSpacing * (crossAxisCount - 1);
+                                    final double itemWidth =
+                                        (availableWidth - totalSpacingWidth) /
+                                        crossAxisCount;
+
+                                    final double totalSpacingHeight =
+                                        mainAxisSpacing * (rowCount - 1);
+                                    final double maxItemHeight =
+                                        rowCount > 0
+                                            ? (availableHeight -
+                                                    totalSpacingHeight) /
+                                                rowCount
+                                            : itemWidth;
+
+                                    double aspectRatio;
+                                    if (isAudioTest) {
+                                      aspectRatio = isMobile ? 2.5 : 3.0;
+                                    } else {
+                                      // Smart Calculator: fit height but don't exceed width (square)
+                                      double targetHeight = maxItemHeight;
+                                      if (targetHeight > itemWidth) {
+                                        targetHeight = itemWidth;
+                                      }
+                                      // Minimum height to avoid excessive shrinking
+                                      if (targetHeight < 80) {
+                                        targetHeight = 80;
+                                      }
+                                      aspectRatio = itemWidth / targetHeight;
+                                    }
+
+                                    return GridView.builder(
+                                      shrinkWrap: true,
+                                      physics: const BouncingScrollPhysics(),
+                                      gridDelegate:
+                                          SliverGridDelegateWithFixedCrossAxisCount(
+                                            crossAxisCount: crossAxisCount,
+                                            crossAxisSpacing: crossAxisSpacing,
+                                            mainAxisSpacing: mainAxisSpacing,
+                                            childAspectRatio: aspectRatio,
+                                          ),
+                                      itemCount: numOptions,
+                                      itemBuilder:
+                                          (context, index) =>
+                                              _buildOptionButton(
+                                                index,
+                                                headerColor,
+                                                isMobile,
+                                                isAudioTest,
+                                              ),
+                                    );
+                                  },
                                 ),
                               )
                             else if (isMobile)
