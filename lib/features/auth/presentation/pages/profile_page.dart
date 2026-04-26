@@ -20,6 +20,7 @@ import 'package:aliolo/features/management/presentation/pages/users_page.dart';
 import 'package:aliolo/features/management/presentation/pages/onboarding_analytics_page.dart';
 import 'package:aliolo/features/management/presentation/pages/subject_usage_page.dart';
 import 'package:aliolo/data/services/feedback_service.dart';
+import 'package:aliolo/core/widgets/user_avatar.dart';
 import 'package:aliolo/core/widgets/premium_badge.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -1038,16 +1039,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget _buildAvatar(UserModel user, double radius, Color color) {
-    return CircleAvatar(
-      radius: radius,
-      backgroundColor: color.withValues(alpha: 0.1),
-      backgroundImage:
-          user.avatarPath != null ? NetworkImage(user.avatarPath!) : null,
-      child:
-          user.avatarPath == null
-              ? Icon(Icons.person, size: radius, color: color)
-              : null,
-    );
+    return UserAvatar(user: user, radius: radius, iconColor: color);
   }
 
   Widget _buildSettingsCard(BuildContext context, Color color, UserModel user) {

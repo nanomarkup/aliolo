@@ -1,4 +1,3 @@
-import 'package:aliolo/core/utils/io_utils.dart' if (dart.library.html) 'package:aliolo/core/utils/file_stub.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:aliolo/core/widgets/aliolo_scrollable_page.dart';
@@ -275,14 +274,28 @@ class _ManageFriendsPageState extends State<ManageFriendsPage> {
                 ),
                 child: ListTile(
                   leading: CircleAvatar(
-                    backgroundImage:
-                        avatarUrl != null
-                            ? (avatarUrl.startsWith('http') || kIsWeb
-                                    ? NetworkImage(avatarUrl)
-                                    : FileImage(dynamicFile(avatarUrl)))
-                                as ImageProvider
-                            : null,
-                    child: avatarUrl == null ? Icon(isInvited ? Icons.mail_outline : Icons.person) : null,
+                    backgroundColor: Theme.of(context).primaryColor.withValues(alpha: 0.1),
+                    child: avatarUrl != null
+                        ? ClipOval(
+                            child: (avatarUrl.startsWith('http') || kIsWeb)
+                                ? Image.network(
+                                    avatarUrl,
+                                    width: 40,
+                                    height: 40,
+                                    fit: BoxFit.cover,
+                                    errorBuilder: (context, error, stackTrace) =>
+                                        Icon(isInvited ? Icons.mail_outline : Icons.person),
+                                  )
+                                : Image.file(
+                                    dynamicFile(avatarUrl),
+                                    width: 40,
+                                    height: 40,
+                                    fit: BoxFit.cover,
+                                    errorBuilder: (context, error, stackTrace) =>
+                                        Icon(isInvited ? Icons.mail_outline : Icons.person),
+                                  ),
+                          )
+                        : Icon(isInvited ? Icons.mail_outline : Icons.person),
                   ),
                   title: Text(
                     username,

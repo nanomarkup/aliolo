@@ -12,6 +12,7 @@ import 'package:aliolo/data/services/admin_users_service.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
+import 'package:aliolo/core/widgets/user_avatar.dart';
 
 class UsersPage extends StatefulWidget {
   const UsersPage({super.key});
@@ -583,19 +584,10 @@ class _UsersPageState extends State<UsersPage> {
         minTileHeight: 56,
         visualDensity: VisualDensity.standard,
         tilePadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-        leading: CircleAvatar(
+        leading: UserAvatar(
+          user: user.profile,
           radius: 20,
-          backgroundColor: currentSessionColor.withValues(alpha: 0.1),
-          backgroundImage:
-              user.profile.avatarPath != null &&
-                      user.profile.avatarPath!.isNotEmpty
-                  ? NetworkImage(user.profile.avatarPath!)
-                  : null,
-          child:
-              user.profile.avatarPath == null ||
-                      user.profile.avatarPath!.isEmpty
-                  ? Icon(Icons.person, color: currentSessionColor, size: 24)
-                  : null,
+          iconColor: currentSessionColor,
         ),
         title: Text(
           user.displayName,

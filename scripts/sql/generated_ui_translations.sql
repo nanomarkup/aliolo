@@ -8034,6 +8034,8 @@ INSERT INTO ui_translations (key, lang, value, updated_at) VALUES
   ('correct_answers', 'en', 'Correct Answers', CURRENT_TIMESTAMP),
   ('failed_answers', 'en', 'Failed Answers', CURRENT_TIMESTAMP),
   ('back_to_subjects', 'en', 'Back to Subjects', CURRENT_TIMESTAMP),
+  ('update_available', 'en', 'A new version is available!', CURRENT_TIMESTAMP),
+  ('refresh', 'en', 'Refresh', CURRENT_TIMESTAMP),
   ('back_to_subjects', 'id', 'Kembali ke Subjek', CURRENT_TIMESTAMP),
   ('back_to_subjects', 'bg', 'Обратно към Теми', CURRENT_TIMESTAMP),
   ('back_to_subjects', 'cs', 'Zpět na Předměty', CURRENT_TIMESTAMP),

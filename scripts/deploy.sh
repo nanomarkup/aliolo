@@ -21,3 +21,10 @@ fi
 # Build the frontend and deploy the worker with the bundled web assets
 "$SCRIPT_DIR/build.sh"
 cd api && npx wrangler deploy --env production
+
+if [ -n "$new_version" ]; then
+    echo ""
+    echo "=================================================="
+    echo "✅ Successfully deployed version: $new_version"
+    echo "=================================================="
+fi

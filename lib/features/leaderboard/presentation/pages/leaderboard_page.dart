@@ -1,4 +1,3 @@
-import 'package:aliolo/core/utils/io_utils.dart' if (dart.library.html) 'package:aliolo/core/utils/file_stub.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:aliolo/core/widgets/aliolo_page.dart';
@@ -14,6 +13,7 @@ import 'package:aliolo/features/documentation/presentation/pages/documentation_p
 import 'package:aliolo/features/subjects/presentation/pages/subject_page.dart';
 import 'package:aliolo/data/services/feedback_service.dart';
 import 'package:aliolo/core/di/service_locator.dart';
+import 'package:aliolo/core/widgets/user_avatar.dart';
 import 'package:aliolo/core/widgets/premium_badge.dart';
 
 class LeaderboardPage extends StatefulWidget {
@@ -325,13 +325,10 @@ class _LeaderboardPageState extends State<LeaderboardPage>
                   ),
                 ),
                 const SizedBox(width: 8),
-                CircleAvatar(
-                  backgroundImage:
-                      user.avatarPath != null
-                          ? NetworkImage(user.avatarPath!)
-                          : null,
-                  child:
-                      user.avatarPath == null ? const Icon(Icons.person) : null,
+                UserAvatar(
+                  user: user,
+                  radius: 20,
+                  iconColor: rank < 3 ? ThemeService().primaryColor : Colors.grey,
                 ),
               ],
             ),

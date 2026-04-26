@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import 'package:provider/provider.dart';
 import 'package:aliolo/core/widgets/aliolo_scrollable_page.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -14,12 +13,9 @@ import 'package:aliolo/features/leaderboard/presentation/pages/leaderboard_page.
 import 'package:aliolo/features/subjects/presentation/pages/subject_page.dart';
 import 'package:aliolo/features/auth/presentation/pages/profile_page.dart';
 import 'package:aliolo/features/settings/presentation/pages/about_page.dart';
-import 'package:aliolo/features/settings/presentation/pages/premium_upgrade_page.dart';
 import 'package:aliolo/features/documentation/presentation/pages/documentation_page.dart';
 import 'package:aliolo/features/management/presentation/pages/feedback_management_page.dart';
 import 'package:aliolo/data/services/feedback_service.dart';
-import 'package:aliolo/data/services/subscription_service.dart';
-import 'package:aliolo/core/di/service_locator.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});

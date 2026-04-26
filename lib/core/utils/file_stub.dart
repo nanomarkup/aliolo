@@ -37,15 +37,22 @@ dynamic dynamicDirectory(String path) => Directory(path);
 
 class LocationStub {
   String get href => '';
+  void reload() {}
 }
 
 class HistoryStub {
   void replaceState(dynamic data, String title, String? url) {}
 }
 
+class MessageEventStub {
+  final dynamic data;
+  MessageEventStub(this.data);
+}
+
 class WindowStub {
   final LocationStub location = LocationStub();
   final HistoryStub history = HistoryStub();
+  Stream<MessageEventStub> get onMessage => const Stream.empty();
 }
 
 final window = WindowStub();

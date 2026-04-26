@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
@@ -251,11 +252,29 @@ class _AlioloMainAppState extends State<AlioloMainApp> {
   late Future<bool> _onboardingFuture;
   Future<bool>? _friendshipFuture;
   String? _lastUserId;
+  bool _updateAvailable = false;
+  StreamSubscription? _updateSubscription;
 
   @override
   void initState() {
     super.initState();
     _onboardingFuture = _loadOnboardingStatus();
+
+    if (kIsWeb) {
+      _updateSubscription = html.window.onMessage.listen((event) {
+        if (event.data == 'flutter-app-update-available') {
+          setState(() {
+            _updateAvailable = true;
+          });
+        }
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _updateSubscription?.cancel();
+    super.dispose();
   }
 
   Future<bool> _loadOnboardingStatus() async {
@@ -303,6 +322,58 @@ class _AlioloMainAppState extends State<AlioloMainApp> {
             seedColor: themeService.getAdjustedPrimary(),
             brightness: Brightness.dark,
           ),
+          builder: (context, child) {
+            return Stack(
+              children: [
+                if (child != null) child,
+                if (_updateAvailable)
+                  Positioned(
+                    bottom: 16,
+                    left: 16,
+                    right: 16,
+                    child: Material(
+                      elevation: 8,
+                      borderRadius: BorderRadius.circular(12),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 8,
+                        ),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF1D4289),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Row(
+                          children: [
+                            const Icon(Icons.update, color: Colors.white),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Text(
+                                context.t('update_available'),
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: () => html.window.location.reload(),
+                              child: Text(
+                                context.t('refresh'),
+                                style: const TextStyle(
+                                  color: Colors.yellow,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
+            );
+          },
           home: FutureBuilder<bool>(
             future: _onboardingFuture,
             builder: (context, onboardingSnapshot) {
