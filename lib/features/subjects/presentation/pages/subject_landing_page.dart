@@ -572,7 +572,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                             style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(height: 8),
-                          _buildCompactDropdown(
+                          AlioloCompactDropdown<String>(
                             value: _filterService.sourceFilter,
                             items: {
                               'all': context.t('filter_all'),
@@ -580,6 +580,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                               'mine': context.t('filter_my_subjects'),
                               'public': context.t('filter_public_library'),
                             },
+                            useFilledSurfaceStyle: true,
                             onChanged: (val) {
                               if (val != null) {
                                 _filterService.updateSourceFilter(val);
@@ -1449,7 +1450,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
             constraints.maxWidth >= 600) ...[
           SizedBox(
             width: 200,
-            child: _buildCompactDropdown(
+            child: AlioloCompactDropdown<String>(
               value: _filterService.sourceFilter,
               items: {
                 'all': context.t('filter_all'),
@@ -1457,6 +1458,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                 'mine': context.t('filter_my_subjects'),
                 'public': context.t('filter_public_library'),
               },
+              useFilledSurfaceStyle: true,
               onChanged: (val) async {
                 if (val != null) {
                   _filterService.updateSourceFilter(val);

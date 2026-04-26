@@ -41,10 +41,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   bool _slide1VideoFinished = false;
   bool _videoVisible = false;
   bool _showVideoPlayFallback = false;
-  bool _slide1Muted = true;
+  bool _slide1MutedFallbackActive = false;
+  bool _slide4VideoVisible = false;
+  bool _slide4Resetting = false;
+  int _slide1PlaybackAttempt = 0;
+  int _slide4PlaybackAttempt = 0;
   StreamSubscription? _slide1Subscription;
 
   late VideoPlayerController _controller1;
+  late VideoPlayerController _controller4;
 
   final Color primaryColor = const Color(0xFF1D4289);
   final Color bgColor = const Color(0xFFF1F5F9);
@@ -67,8 +72,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     _controller1.initialize().then((_) {
       if (!mounted) return;
       setState(() {});
-      _playSlide1Video(autoplay: true);
+      _startSlide1Video();
     });
+
+    _controller4 = VideoPlayerController.asset('assets/Slide4.mp4');
+    _controller4.initialize().then((_) {
+      if (!mounted) return;
+      setState(() {});
+    });
+    _controller4.addListener(_handleSlide4Playback);
 
     _controller1.addListener(() {
       if (_controller1.value.position >= _controller1.value.duration &&
@@ -153,18 +165,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     if (!_controller1.value.isInitialized) return;
 
     try {
-      if (autoplay) {
-        await _controller1.setVolume(0);
-        _slide1Muted = true;
-      } else if (unmute) {
-        await _controller1.setVolume(1);
-        _slide1Muted = false;
-      }
+      await _controller1.setVolume(autoplay && !unmute ? 0.0 : 1.0);
 
       await _controller1.play();
       if (!mounted) return;
       setState(() {
         _showVideoPlayFallback = false;
+        _slide1MutedFallbackActive = false;
         _videoVisible = true;
       });
 
@@ -182,16 +189,67 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     }
   }
 
-  Future<void> _toggleSlide1Sound() async {
+  Future<void> _startSlide1Video() async {
     if (!_controller1.value.isInitialized) return;
 
-    final nextMuted = !_slide1Muted;
-    await _controller1.setVolume(nextMuted ? 0 : 1);
-    if (!mounted) return;
+    final attempt = ++_slide1PlaybackAttempt;
+    if (mounted) {
+      setState(() {
+        _slide1MutedFallbackActive = false;
+        _showVideoPlayFallback = false;
+      });
+    }
 
-    setState(() => _slide1Muted = nextMuted);
-    if (!_controller1.value.isPlaying) {
-      await _playSlide1Video(autoplay: false, unmute: !nextMuted);
+    if (widget.isReplay) {
+      await _playSlide1Video(autoplay: false, unmute: true);
+      return;
+    }
+
+    try {
+      await _controller1.setVolume(1.0);
+      await _controller1.play();
+      if (!mounted || attempt != _slide1PlaybackAttempt) return;
+      setState(() {
+        _showVideoPlayFallback = false;
+        _videoVisible = true;
+      });
+
+      Future.delayed(const Duration(milliseconds: 350), () {
+        if (!mounted ||
+            attempt != _slide1PlaybackAttempt ||
+            _currentPage != 0) {
+          return;
+        }
+        if (!_controller1.value.isPlaying && !_slide1VideoFinished) {
+          _retrySlide1Muted(attempt);
+        }
+      });
+    } catch (e) {
+      debugPrint('Onboarding video playback with sound blocked: $e');
+      await _retrySlide1Muted(attempt);
+    }
+  }
+
+  Future<void> _retrySlide1Muted(int attempt) async {
+    if (!_controller1.value.isInitialized) return;
+    if (!mounted || attempt != _slide1PlaybackAttempt || _currentPage != 0) {
+      return;
+    }
+
+    try {
+      await _controller1.setVolume(0.0);
+      await _controller1.play();
+      if (!mounted || attempt != _slide1PlaybackAttempt) return;
+      setState(() {
+        _slide1MutedFallbackActive = true;
+        _showVideoPlayFallback = true;
+        _videoVisible = true;
+      });
+    } catch (e) {
+      debugPrint('Onboarding muted video playback blocked: $e');
+      if (mounted && attempt == _slide1PlaybackAttempt) {
+        setState(() => _showVideoPlayFallback = true);
+      }
     }
   }
 
@@ -211,21 +269,90 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         _slide1VideoFinished = false;
         _videoVisible = false;
         _showVideoPlayFallback = false;
-        _slide1Muted = true;
+        _slide1MutedFallbackActive = false;
       });
-      _playSlide1Video(autoplay: true);
+      _startSlide1Video();
       Future.delayed(const Duration(milliseconds: 500), () {
         if (mounted) setState(() => _videoVisible = true);
       });
     } else {
       _controller1.pause();
     }
+
+    if (page == 3) {
+      _startSlide4Video();
+    } else {
+      _slide4PlaybackAttempt++;
+      _slide4Resetting = false;
+      _controller4.pause();
+      if (mounted) {
+        setState(() {
+          _slide4VideoVisible = false;
+        });
+      }
+    }
+  }
+
+  void _startSlide4Video() {
+    if (!_controller4.value.isInitialized) return;
+
+    final attempt = ++_slide4PlaybackAttempt;
+    _slide4Resetting = false;
+    _controller4.seekTo(Duration.zero);
+    _controller4.play();
+    if (mounted) {
+      setState(() {
+        _slide4VideoVisible = false;
+      });
+    }
+
+    Future.delayed(const Duration(milliseconds: 80), () {
+      if (!mounted || _currentPage != 3 || attempt != _slide4PlaybackAttempt) {
+        return;
+      }
+      setState(() {
+        _slide4VideoVisible = true;
+      });
+    });
+  }
+
+  void _handleSlide4Playback() {
+    if (!_controller4.value.isInitialized) return;
+    if (!_controller4.value.isPlaying) return;
+    if (_controller4.value.duration == Duration.zero) return;
+    if (_controller4.value.position < _controller4.value.duration) return;
+    if (_slide4Resetting) return;
+
+    _slide4Resetting = true;
+    final attempt = ++_slide4PlaybackAttempt;
+    if (mounted) {
+      setState(() {
+        _slide4VideoVisible = false;
+      });
+    }
+
+    Future.delayed(const Duration(milliseconds: 350), () async {
+      if (!mounted || _currentPage != 3 || attempt != _slide4PlaybackAttempt) {
+        return;
+      }
+      await _controller4.pause();
+      await _controller4.seekTo(Duration.zero);
+      if (!mounted || _currentPage != 3 || attempt != _slide4PlaybackAttempt) {
+        return;
+      }
+      setState(() {
+        _slide4VideoVisible = true;
+        _slide4Resetting = false;
+      });
+    });
   }
 
   @override
   void dispose() {
     _slide1Subscription?.cancel();
     _controller1.dispose();
+    _controller4.removeListener(_handleSlide4Playback);
+    _controller4.dispose();
     _pageController.dispose();
     super.dispose();
   }
@@ -345,35 +472,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                     shape: BoxShape.circle,
                                   ),
                                   child: Icon(
-                                    Icons.play_arrow_rounded,
+                                    _slide1MutedFallbackActive
+                                        ? Icons.volume_up_rounded
+                                        : Icons.play_arrow_rounded,
                                     color: primaryColor,
                                     size: 56,
                                   ),
                                 ),
-                              ),
-                            ),
-                          ),
-                        if (_videoVisible &&
-                            !_slide1VideoFinished &&
-                            !_showVideoPlayFallback)
-                          Positioned(
-                            right: 12,
-                            bottom: 12,
-                            child: Material(
-                              color: Colors.black.withValues(alpha: 0.44),
-                              shape: const CircleBorder(),
-                              child: IconButton(
-                                onPressed: _toggleSlide1Sound,
-                                icon: Icon(
-                                  _slide1Muted
-                                      ? Icons.volume_off_rounded
-                                      : Icons.volume_up_rounded,
-                                  color: Colors.white,
-                                ),
-                                tooltip:
-                                    _slide1Muted
-                                        ? 'Turn sound on'
-                                        : 'Turn sound off',
                               ),
                             ),
                           ),
@@ -540,7 +645,26 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               // Slide 4: Create & Share
               OnboardingSlide(
                 useFixedHeader: false,
-                visual: Icon(Icons.groups, size: 120, color: primaryColor),
+                visual: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (_controller4.value.isInitialized)
+                      ConstrainedBox(
+                        constraints: const BoxConstraints(maxHeight: 300),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(16),
+                          child: AspectRatio(
+                            aspectRatio: _controller4.value.aspectRatio,
+                            child: AnimatedOpacity(
+                              opacity: _slide4VideoVisible ? 1.0 : 0.0,
+                              duration: const Duration(milliseconds: 350),
+                              child: VideoPlayer(_controller4),
+                            ),
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
                 title: context.t('onboarding_4_title'),
                 description: context.t('onboarding_4_desc'),
               ),

@@ -46,31 +46,53 @@ async function recordSubjectSession(c: any, column: 'started_count' | 'completed
     const user = c.get("user");
     if (!user) return c.json({ error: 'Unauthorized' }, 401);
 
+    // Ignore test and admin users
+    const isAdmin = user.id === 'usyeo7d2yzf2773';
+    const isTestEmail = user.email === 'vitalii.noga@gmail.com';
+    if (isAdmin || isTestEmail) {
+        return c.json({ success: true, ignored: true });
+    }
+
     const rawBody = await c.req.json().catch(() => ({}));
     const body = subjectSessionSchema.parse(rawBody);
     const subjectIds = [...new Set(body.subject_ids.map((id) => id.trim()).filter(Boolean))];
     if (subjectIds.length === 0) return c.json({ success: true });
 
     try {
-        for (const subjectId of subjectIds) {
-            await c.env.DB.prepare(`
-                INSERT INTO subject_usage_stats (
-                    subject_id,
-                    mode,
-                    started_count,
-                    completed_count,
-                    updated_at
-                )
-                VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP)
-                ON CONFLICT(subject_id, mode) DO UPDATE SET
-                    ${column} = ${column} + 1,
-                    updated_at = CURRENT_TIMESTAMP
-            `).bind(
-                subjectId,
-                body.mode,
-                column === 'started_count' ? 1 : 0,
-                column === 'completed_count' ? 1 : 0
-            ).run();
+        if (column === 'started_count') {
+            for (const subjectId of subjectIds) {
+                await c.env.DB.prepare(`
+                    INSERT INTO subject_usage_stats (
+                        subject_id,
+                        user_id,
+                        mode,
+                        completed
+                    )
+                    VALUES (?, ?, ?, 0)
+                `).bind(
+                    subjectId,
+                    user.id,
+                    body.mode
+                ).run();
+            }
+        } else {
+            // Mark the most recent uncompleted session as completed for each subject
+            for (const subjectId of subjectIds) {
+                await c.env.DB.prepare(`
+                    UPDATE subject_usage_stats
+                    SET completed = 1
+                    WHERE id = (
+                        SELECT id FROM subject_usage_stats
+                        WHERE subject_id = ? AND user_id = ? AND mode = ? AND completed = 0
+                        ORDER BY created_at DESC
+                        LIMIT 1
+                    )
+                `).bind(
+                    subjectId,
+                    user.id,
+                    body.mode
+                ).run();
+            }
         }
         return c.json({ success: true });
     } catch (e: any) {

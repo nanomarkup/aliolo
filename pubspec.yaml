@@ -1,7 +1,7 @@
 name: aliolo
 description: "Aliolo - Your Logic Ally for visual learning."
 publish_to: 'none'
-version: 0.1.0
+version: 0.1.100
 
 environment:
   sdk: ^3.7.0
@@ -78,5 +78,6 @@ flutter:
     - assets/app_icon.webp
     - assets/Slide1_v6.mp4
     - assets/Slide1_v7.mp4
+    - assets/Slide4.mp4
     - assets/Social.webp
     - assets/media/

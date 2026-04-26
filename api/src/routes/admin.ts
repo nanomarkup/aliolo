@@ -303,23 +303,34 @@ router.openapi(subjectUsageRoute, async (c) => {
   if (user.id !== ADMIN_ID) return c.json({ error: 'Forbidden' } as any, 403);
 
   try {
+    const period = c.req.query('period') || 'all';
+    let dateFilter = '';
+    if (period === '1m') {
+      dateFilter = "AND sus.created_at >= datetime('now', '-1 month')";
+    } else if (period === '3m') {
+      dateFilter = "AND sus.created_at >= datetime('now', '-3 month')";
+    } else if (period === '6m') {
+      dateFilter = "AND sus.created_at >= datetime('now', '-6 month')";
+    }
+
     const { results } = await c.env.DB.prepare(`
       SELECT
         s.id AS subject_id,
         COALESCE(NULLIF(s.name, ''), s.id) AS subject_name,
         p.name AS pillar_name,
         f.name AS folder_name,
-        COALESCE(SUM(sus.started_count), 0) AS total_started,
-        COALESCE(SUM(sus.completed_count), 0) AS total_completed,
-        COALESCE(SUM(CASE WHEN sus.mode = 'learn' THEN sus.started_count ELSE 0 END), 0) AS learn_started,
-        COALESCE(SUM(CASE WHEN sus.mode = 'learn' THEN sus.completed_count ELSE 0 END), 0) AS learn_completed,
-        COALESCE(SUM(CASE WHEN sus.mode = 'test' THEN sus.started_count ELSE 0 END), 0) AS test_started,
-        COALESCE(SUM(CASE WHEN sus.mode = 'test' THEN sus.completed_count ELSE 0 END), 0) AS test_completed,
-        MAX(sus.updated_at) AS updated_at
+        COUNT(sus.id) AS total_started,
+        SUM(CASE WHEN sus.completed = 1 THEN 1 ELSE 0 END) AS total_completed,
+        SUM(CASE WHEN sus.mode = 'learn' THEN 1 ELSE 0 END) AS learn_started,
+        SUM(CASE WHEN sus.mode = 'learn' AND sus.completed = 1 THEN 1 ELSE 0 END) AS learn_completed,
+        SUM(CASE WHEN sus.mode = 'test' THEN 1 ELSE 0 END) AS test_started,
+        SUM(CASE WHEN sus.mode = 'test' AND sus.completed = 1 THEN 1 ELSE 0 END) AS test_completed,
+        MAX(sus.created_at) AS updated_at
       FROM subject_usage_stats sus
       INNER JOIN subjects s ON s.id = sus.subject_id
       LEFT JOIN pillars p ON p.id = s.pillar_id
       LEFT JOIN folders f ON f.id = s.folder_id
+      WHERE 1=1 ${dateFilter}
       GROUP BY s.id
       ORDER BY total_started DESC, total_completed DESC, subject_name COLLATE NOCASE
       LIMIT 200

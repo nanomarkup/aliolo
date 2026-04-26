@@ -258,16 +258,28 @@ class _TestPageState extends State<TestPage> {
 
     final audioUrl = card.getAudioUrl(lang);
     if (audioUrl != null && audioUrl.isNotEmpty) {
-      _optionAudioAutoplayGeneration = generation;
-      try {
-        await _audioPlayer.play(UrlSource(audioUrl));
-      } catch (_) {
-        if (_optionAudioAutoplayGeneration == generation) {
-          _optionAudioAutoplayGeneration = -1;
-          _markOptionPlaybackDone(generation);
+      final hasImage =
+          card.primaryImageUrl(lang) != null ||
+          card.primaryImageUrl('global') != null ||
+          card.primaryImageUrl('en') != null;
+      final hasVisuals =
+          hasImage ||
+          card.isSpecialRenderer ||
+          card.isCountingRenderer ||
+          card.isColors;
+
+      if (!hasVisuals) {
+        _optionAudioAutoplayGeneration = generation;
+        try {
+          await _audioPlayer.play(UrlSource(audioUrl));
+        } catch (_) {
+          if (_optionAudioAutoplayGeneration == generation) {
+            _optionAudioAutoplayGeneration = -1;
+            _markOptionPlaybackDone(generation);
+          }
         }
+        return;
       }
-      return;
     }
 
     _markOptionPlaybackDone(generation);
@@ -546,7 +558,12 @@ class _TestPageState extends State<TestPage> {
 
     final lang = _languageCode.toLowerCase();
     final audio = _currentCard.getAudioUrl(lang);
-    final hasVisuals = _hasVideo || _currentImages.isNotEmpty;
+    final hasVisuals =
+        _hasVideo ||
+        _currentImages.isNotEmpty ||
+        _currentCard.isSpecialRenderer ||
+        _currentCard.isCountingRenderer ||
+        _currentCard.isColors;
 
     // Normal mode: Play if NO visuals
     // Reverse mode: Play if HAS visuals (as per new requirement)
@@ -642,7 +659,12 @@ class _TestPageState extends State<TestPage> {
     required String lang,
   }) {
     final audioUrl = _currentCard.getAudioUrl(lang);
-    final hasVisuals = _hasVideo || _currentImages.isNotEmpty;
+    final hasVisuals =
+        _hasVideo ||
+        _currentImages.isNotEmpty ||
+        _currentCard.isSpecialRenderer ||
+        _currentCard.isCountingRenderer ||
+        _currentCard.isColors;
     // In normal mode, if visuals are present, hide audio
     final effectivelyHasAudio =
         (audioUrl != null && audioUrl.isNotEmpty) &&
@@ -739,7 +761,12 @@ class _TestPageState extends State<TestPage> {
 
     final audioUrl = _currentCard.getAudioUrl(lang);
     final hasAudio = audioUrl != null && audioUrl.isNotEmpty;
-    final hasVisuals = _hasVideo || _currentImages.isNotEmpty;
+    final hasVisuals =
+        _hasVideo ||
+        _currentImages.isNotEmpty ||
+        _currentCard.isSpecialRenderer ||
+        _currentCard.isCountingRenderer ||
+        _currentCard.isColors;
     final showTopAudioIcon = _isReverseMode && hasVisuals && hasAudio;
 
     return Container(

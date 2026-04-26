@@ -43,9 +43,12 @@ class SubjectUsageService {
     }
   }
 
-  Future<List<SubjectUsageModel>> getSubjectUsage() async {
+  Future<List<SubjectUsageModel>> getSubjectUsage({String period = 'all'}) async {
     try {
-      final response = await _cfClient.client.get('/api/admin/subject-usage');
+      final response = await _cfClient.client.get(
+        '/api/admin/subject-usage',
+        queryParameters: {'period': period},
+      );
       if (response.statusCode == 200 && response.data is List) {
         return (response.data as List)
             .whereType<Map>()

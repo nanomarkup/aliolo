@@ -219,16 +219,14 @@ This is a Foreign Key to `subjects.id`.<fk table='subjects' column='id'/>
 - `created_at` (string)
 
 ### `subject_usage_stats`
-Aggregated admin analytics for how often subjects are used in Learn and Test
-sessions.
+Individual subject study sessions recording.
 
-- `subject_id` (string) (Required): Note:
-This is a Foreign Key to `subjects.id`.<fk table='subjects' column='id'/>
+- `id` (integer) (Primary Key)
+- `subject_id` (string) (Required): Foreign Key to `subjects.id`
+- `user_id` (string) (Required): Current user ID
 - `mode` (string) (Required): `learn` or `test`
-- `started_count` (integer)
-- `completed_count` (integer)
+- `completed` (boolean): Whether the session was finished
 - `created_at` (string)
-- `updated_at` (string)
 
 ### `pillars`
 - `id` (integer) (Required): Note:

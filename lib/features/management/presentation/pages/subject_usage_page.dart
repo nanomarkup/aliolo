@@ -22,6 +22,7 @@ class _SubjectUsagePageState extends State<SubjectUsagePage> {
   List<SubjectUsageModel> _rows = [];
   bool _isLoading = true;
   String? _errorMessage;
+  String _selectedPeriod = 'all';
 
   bool get _isAdmin => _authService.currentUser?.serverId == _adminUserId;
 
@@ -32,13 +33,16 @@ class _SubjectUsagePageState extends State<SubjectUsagePage> {
   }
 
   Future<void> _loadUsage() async {
+    if (!mounted) return;
     setState(() {
       _isLoading = true;
       _errorMessage = null;
     });
 
     try {
-      final rows = await _subjectUsageService.getSubjectUsage();
+      final rows = await _subjectUsageService.getSubjectUsage(
+        period: _selectedPeriod,
+      );
       if (!mounted) return;
       setState(() {
         _rows = rows;
@@ -202,7 +206,9 @@ class _SubjectUsagePageState extends State<SubjectUsagePage> {
               )
               : Column(
                 children: [
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 12),
+                  _buildPeriodSelector(),
+                  const SizedBox(height: 12),
                   for (var i = 0; i < _rows.length; i++)
                     Padding(
                       padding: const EdgeInsets.only(bottom: 10),
@@ -210,6 +216,34 @@ class _SubjectUsagePageState extends State<SubjectUsagePage> {
                     ),
                 ],
               ),
+    );
+  }
+
+  Widget _buildPeriodSelector() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+      decoration: BoxDecoration(
+        color: Theme.of(context).cardColor,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.grey.withValues(alpha: 0.2)),
+      ),
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton<String>(
+          value: _selectedPeriod,
+          items: const [
+            DropdownMenuItem(value: '1m', child: Text('Last Month')),
+            DropdownMenuItem(value: '3m', child: Text('Last 3 Months')),
+            DropdownMenuItem(value: '6m', child: Text('Last 6 Months')),
+            DropdownMenuItem(value: 'all', child: Text('All Time')),
+          ],
+          onChanged: (val) {
+            if (val != null) {
+              setState(() => _selectedPeriod = val);
+              _loadUsage();
+            }
+          },
+        ),
+      ),
     );
   }
 }
