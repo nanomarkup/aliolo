@@ -582,8 +582,8 @@ router.openapi(updateRoute, async (c) => {
     delete updateData.id;
     delete updateData.email;
     delete updateData.created_at;
+    delete updateData.updated_at;
     delete updateData.password_hash;
-
     // Convert booleans to numbers for SQLite
     for (const key in updateData) {
         if (typeof updateData[key] === 'boolean') {
