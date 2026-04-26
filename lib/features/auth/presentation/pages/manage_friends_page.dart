@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:aliolo/core/utils/io_utils.dart'
+    if (dart.library.html) 'package:aliolo/core/utils/file_stub.dart';
 import 'package:aliolo/core/widgets/aliolo_scrollable_page.dart';
 import 'package:aliolo/data/services/friendship_service.dart';
 import 'package:aliolo/data/services/auth_service.dart';

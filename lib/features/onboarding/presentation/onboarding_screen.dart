@@ -67,12 +67,55 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     'age_over_50',
   ];
 
+  void _attachSlide1Listener() {
+    _controller1.addListener(_handleSlide1Playback);
+  }
+
+  void _handleSlide1Playback() {
+    if (_currentPage == 0) {
+      final value = _controller1.value;
+      if (value.position.inMilliseconds == 0 ||
+          value.isPlaying ||
+          (!value.isPlaying &&
+              value.position > Duration.zero &&
+              value.position < value.duration)) {
+
+      }
+    }
+
+    if (_controller1.value.position >= _controller1.value.duration &&
+        _controller1.value.isInitialized &&
+        !_slide1VideoFinished) {
+      if (mounted) {
+        setState(() {
+          _slide1VideoFinished = true;
+        });
+      }
+    }
+  }
+
+  void _logSlide1State(String label) {
+    debugPrint(
+      '[slide1] $label | '
+      'page=$_currentPage '
+      'mode=$_slide1PlaybackMode '
+      'manual=$_slide1ShowManualStart '
+      'visible=$_videoVisible '
+      'finished=$_slide1VideoFinished '
+      'initialized=${_controller1.value.isInitialized} '
+      'playing=${_controller1.value.isPlaying} '
+      'position=${_controller1.value.position.inMilliseconds}ms '
+      'duration=${_controller1.value.duration.inMilliseconds}ms',
+    );
+  }
+
   @override
   void initState() {
     super.initState();
     _initAnalytics();
 
     _controller1 = VideoPlayerController.asset('assets/Slide1_v7.mp4');
+    _attachSlide1Listener();
     _controller1.initialize().then((_) {
       if (!mounted) return;
       setState(() {});
@@ -85,18 +128,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       setState(() {});
     });
     _controller4.addListener(_handleSlide4Playback);
-
-    _controller1.addListener(() {
-      if (_controller1.value.position >= _controller1.value.duration &&
-          _controller1.value.isInitialized &&
-          !_slide1VideoFinished) {
-        if (mounted) {
-          setState(() {
-            _slide1VideoFinished = true;
-          });
-        }
-      }
-    });
 
     final subService = getIt<SubscriptionService>();
     if (subService.activeProductId != null) {
@@ -154,10 +185,39 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     }
   }
 
-  void _handleSlide1ManualStart() {
-    if (!_controller1.value.isInitialized) return;
+  Future<void> _reinitializeSlide1Controller() async {
+    final previous = _controller1;
+    _controller1 = VideoPlayerController.asset('assets/Slide1_v7.mp4');
+    _attachSlide1Listener();
+    await _controller1.initialize();
+    await previous.dispose();
+    if (!mounted) return;
+    setState(() {});
+    _logSlide1State('controller reinitialized');
+  }
 
+  Future<void> _handleSlide1ManualStart() async {
     final attempt = ++_slide1PlaybackAttempt;
+    _logSlide1State('manual start tap; attempt=$attempt');
+
+    if (!_controller1.value.isInitialized) {
+      _logSlide1State('manual start requires reinit; attempt=$attempt');
+      try {
+        await _reinitializeSlide1Controller();
+      } catch (e) {
+        debugPrint('Onboarding manual controller reinit failed: $e');
+        _logSlide1State('manual start reinit failed; attempt=$attempt');
+        if (mounted && attempt == _slide1PlaybackAttempt) {
+          setState(() {
+            _slide1ShowManualStart = true;
+            _slide1PlaybackMode = _Slide1PlaybackMode.blocked;
+            _videoVisible = false;
+          });
+        }
+        return;
+      }
+    }
+
     _controller1.pause();
     _controller1.seekTo(Duration.zero);
 
@@ -169,8 +229,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       _videoVisible = true;
     });
 
-    _controller1.setVolume(1.0);
-    _controller1.play();
+    await _controller1.setVolume(1.0);
+    await _controller1.play();
+    _logSlide1State('manual start play issued; attempt=$attempt');
 
     Future.delayed(const Duration(milliseconds: 250), () async {
       if (!mounted ||
@@ -181,6 +242,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       }
 
       if (_controller1.value.isPlaying) {
+        _logSlide1State('manual start confirmed playing; attempt=$attempt');
         setState(() {
           _slide1PlaybackMode = _Slide1PlaybackMode.normal;
           _videoVisible = true;
@@ -188,7 +250,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         return;
       }
 
-      debugPrint('Onboarding manual video playback did not start.');
+      _logSlide1State('manual start did not begin playing; attempt=$attempt');
       await _retrySlide1Muted(attempt);
     });
   }
@@ -206,6 +268,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       setState(() {
         _slide1ShowManualStart = true;
       });
+      _logSlide1State('manual start shown; attempt=$attempt');
     });
   }
 
@@ -220,11 +283,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         _videoVisible = false;
       });
     }
+    _logSlide1State('autoplay start; attempt=$attempt');
     _scheduleSlide1ManualStart(attempt);
 
     try {
       await _controller1.setVolume(1.0);
       await _controller1.play();
+      _logSlide1State('autoplay play issued with sound; attempt=$attempt');
       if (!mounted || attempt != _slide1PlaybackAttempt) return;
 
       Future.delayed(const Duration(milliseconds: 350), () async {
@@ -232,6 +297,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           return;
         }
         if (_controller1.value.isPlaying && !_slide1VideoFinished) {
+          _logSlide1State('autoplay playing with sound; attempt=$attempt');
           setState(() {
             _slide1ShowManualStart = false;
             _slide1PlaybackMode = _Slide1PlaybackMode.normal;
@@ -240,10 +306,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           return;
         }
 
+        _logSlide1State('autoplay sound path failed; attempt=$attempt');
         await _retrySlide1Muted(attempt);
       });
     } catch (e) {
       debugPrint('Onboarding video playback with sound blocked: $e');
+      _logSlide1State('autoplay sound exception; attempt=$attempt');
       await _retrySlide1Muted(attempt);
     }
   }
@@ -259,10 +327,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       _slide1PlaybackMode = _Slide1PlaybackMode.mutedFallback;
       _videoVisible = true;
     });
+    _logSlide1State('muted fallback start; attempt=$attempt');
 
     try {
       await _controller1.setVolume(0.0);
       await _controller1.play();
+      _logSlide1State('muted fallback play issued; attempt=$attempt');
       if (!mounted || attempt != _slide1PlaybackAttempt) return;
 
       Future.delayed(const Duration(milliseconds: 250), () {
@@ -274,9 +344,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         }
 
         if (_controller1.value.isPlaying) {
+          _logSlide1State('muted fallback confirmed playing; attempt=$attempt');
           return;
         }
 
+        _logSlide1State('muted fallback did not begin playing; attempt=$attempt');
         setState(() {
           _slide1ShowManualStart = true;
           _slide1PlaybackMode = _Slide1PlaybackMode.blocked;
@@ -285,6 +357,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       });
     } catch (e) {
       debugPrint('Onboarding muted video playback blocked: $e');
+      _logSlide1State('muted fallback exception; attempt=$attempt');
       if (mounted && attempt == _slide1PlaybackAttempt) {
         setState(() {
           _slide1ShowManualStart = true;
@@ -388,84 +461,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   Widget _buildSlide1Poster() {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            primaryColor.withValues(alpha: 0.94),
-            const Color(0xFF102B5D),
-          ],
-        ),
-      ),
-      child: Stack(
-        fit: StackFit.expand,
-        children: [
-          Positioned(
-            top: -48,
-            right: -24,
-            child: Container(
-              width: 180,
-              height: 180,
-              decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: 0.08),
-                shape: BoxShape.circle,
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: -64,
-            left: -36,
-            child: Container(
-              width: 220,
-              height: 220,
-              decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: 0.06),
-                shape: BoxShape.circle,
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  'assets/app_icon.webp',
-                  height: 110,
-                  fit: BoxFit.contain,
-                ),
-                const SizedBox(height: 14),
-                Text(
-                  'aliolo',
-                  style: TextStyle(
-                    color: Colors.white.withValues(alpha: 0.96),
-                    fontSize: 24,
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: 0.8,
-                  ),
-                ),
-                if (_slide1PlaybackMode == _Slide1PlaybackMode.pending &&
-                    !_slide1ShowManualStart) ...[
-                  const SizedBox(height: 18),
-                  SizedBox(
-                    width: 26,
-                    height: 26,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2.6,
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                        Colors.white.withValues(alpha: 0.88),
-                      ),
-                    ),
-                  ),
-                ],
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
+    return ColoredBox(color: bgColor, child: const SizedBox.expand());
   }
 
   @override
@@ -590,23 +586,50 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             !_slide1VideoFinished)
                           Material(
                             color: Colors.black.withValues(alpha: 0.38),
-                            child: InkWell(
-                              onTap: _handleSlide1ManualStart,
+                            child: MouseRegion(
+                              cursor: SystemMouseCursors.click,
                               child: Center(
-                                child: Container(
-                                  width: 88,
-                                  height: 88,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white.withValues(alpha: 0.92),
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: Icon(
-                                    _slide1PlaybackMode ==
-                                            _Slide1PlaybackMode.mutedFallback
-                                        ? Icons.volume_up_rounded
-                                        : Icons.play_arrow_rounded,
-                                    color: primaryColor,
-                                    size: 56,
+                                child: Listener(
+                                  behavior: HitTestBehavior.opaque,
+                                  onPointerDown:
+                                      (_) => _logSlide1State(
+                                        'manual overlay pointer down',
+                                      ),
+                                  onPointerUp:
+                                      (_) => _logSlide1State(
+                                        'manual overlay pointer up',
+                                      ),
+                                  child: GestureDetector(
+                                    behavior: HitTestBehavior.opaque,
+                                    onTapDown:
+                                        (_) => _logSlide1State(
+                                          'manual overlay tap down',
+                                        ),
+                                    onTapUp: (_) {
+                                      _logSlide1State(
+                                        'manual overlay tap up',
+                                      );
+                                      _handleSlide1ManualStart();
+                                    },
+                                    child: Container(
+                                      width: 88,
+                                      height: 88,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white.withValues(
+                                          alpha: 0.92,
+                                        ),
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: Icon(
+                                        _slide1PlaybackMode ==
+                                                _Slide1PlaybackMode
+                                                    .mutedFallback
+                                            ? Icons.volume_up_rounded
+                                            : Icons.play_arrow_rounded,
+                                        color: primaryColor,
+                                        size: 56,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
@@ -615,11 +638,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         AnimatedOpacity(
                           opacity: _slide1VideoFinished ? 1.0 : 0.0,
                           duration: const Duration(milliseconds: 1000),
-                          child: Center(
-                            child: Image.asset(
-                              'assets/app_icon.webp',
-                              height: 240,
-                              fit: BoxFit.contain,
+                          child: IgnorePointer(
+                            ignoring: !_slide1VideoFinished,
+                            child: Center(
+                              child: Image.asset(
+                                'assets/app_icon.webp',
+                                height: 240,
+                                fit: BoxFit.contain,
+                              ),
                             ),
                           ),
                         ),
