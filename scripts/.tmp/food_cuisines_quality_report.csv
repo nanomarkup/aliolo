@@ -1,0 +1,100 @@
+item_id,field,locale,global_text,current_text,translated_text,status
+SUBJECT,description,ar,Explore foods and cuisines from around the world.,رحلة عبر النكهات العالمية والتقاليد الطهوية.,اكتشف الأطعمة والمأكولات من جميع أنحاء العالم.,mismatch
+SUBJECT,description,bg,Explore foods and cuisines from around the world.,Пътешествие през глобални вкусове и кулинарни традиции.,Разгледайте храни и кухни от цял ​​свят.,mismatch
+SUBJECT,name,da,Food & Cuisines,Mad og køkkener,Mad & Køkkener,mismatch
+SUBJECT,description,cs,Explore foods and cuisines from around the world.,Cesta po světových chutích a kulinářských tradicích.,Prozkoumejte jídla a kuchyně z celého světa.,mismatch
+SUBJECT,name,de,Food & Cuisines,Essen & Küchen,Essen & Küche,mismatch
+SUBJECT,description,da,Explore foods and cuisines from around the world.,En rejse gennem globale smagsoplevelser og kulinariske traditioner.,Udforsk fødevarer og køkkener fra hele verden.,mismatch
+SUBJECT,description,en,Explore foods and cuisines from around the world.,A journey through global flavors and culinary traditions.,Explore foods and cuisines from around the world.,mismatch
+SUBJECT,name,el,Food & Cuisines,Φαγητό και κουζίνες,Φαγητό & Κουζίνες,mismatch
+SUBJECT,description,de,Explore foods and cuisines from around the world.,Eine Reise durch weltweite Aromen und kulinarische Traditionen.,Entdecken Sie Lebensmittel und Küchen aus der ganzen Welt.,mismatch
+SUBJECT,description,es,Explore foods and cuisines from around the world.,Un viaje a través de los sabores globales y las tradiciones culinarias.,Explore alimentos y cocinas de todo el mundo.,mismatch
+SUBJECT,description,et,Explore foods and cuisines from around the world.,Rännak läbi maailma maitsete ja kulinaarsete traditsioonide.,Avastage toite ja kööke kogu maailmast.,mismatch
+SUBJECT,description,el,Explore foods and cuisines from around the world.,Ένα ταξίδι στις παγκόσμιες γεύσεις και τις γαστρονομικές παραδόσεις.,Εξερευνήστε φαγητά και κουζίνες από όλο τον κόσμο.,mismatch
+SUBJECT,description,fr,Explore foods and cuisines from around the world.,Un voyage à travers les saveurs mondiales et les traditions culinaires.,Explorez les aliments et les cuisines du monde entier.,mismatch
+SUBJECT,name,fr,Food & Cuisines,Nourriture et cuisines,Alimentation et cuisines,mismatch
+SUBJECT,description,fi,Explore foods and cuisines from around the world.,Matka globaaleihin makuihin ja kulinaarisiin perinteisiin.,Tutustu ruokiin ja keittiöihin ympäri maailmaa.,mismatch
+SUBJECT,name,fi,Food & Cuisines,Ruoka ja keittiöt,Ruoka & keittiöt,mismatch
+SUBJECT,name,hi,Food & Cuisines,भोजन और व्यंजन,भोजन एवं व्यंजन,mismatch
+SUBJECT,name,ga,Food & Cuisines,Bia & Cistineacha,Bia & Cuisíní,mismatch
+SUBJECT,description,hi,Explore foods and cuisines from around the world.,वैश्विक स्वादों और पाक परंपराओं के माध्यम से एक यात्रा।,दुनिया भर के खाद्य पदार्थों और व्यंजनों का अन्वेषण करें।,mismatch
+SUBJECT,description,hr,Explore foods and cuisines from around the world.,Putovanje kroz svjetske okuse i kulinarske tradicije.,Istražite hranu i kuhinje iz cijelog svijeta.,mismatch
+SUBJECT,description,ga,Explore foods and cuisines from around the world.,Turas trí bhlasanna domhanda agus traidisiúin chócaireachta.,Déan iniúchadh ar bhianna agus cuisíní ó ar fud an domhain.,mismatch
+SUBJECT,name,id,Food & Cuisines,Makanan & Kuliner,Makanan & Masakan,mismatch
+SUBJECT,description,id,Explore foods and cuisines from around the world.,Perjalanan melintasi cita rasa global dan tradisi kuliner.,Jelajahi makanan dan masakan dari seluruh dunia.,mismatch
+SUBJECT,description,hu,Explore foods and cuisines from around the world.,Utazás a világ ízei és kulináris hagyományai között.,Fedezze fel a világ minden tájáról származó ételeket és konyhákat.,mismatch
+SUBJECT,description,it,Explore foods and cuisines from around the world.,Un viaggio tra sapori globali e tradizioni culinarie.,Esplora cibi e cucine da tutto il mondo.,mismatch
+SUBJECT,description,ja,Explore foods and cuisines from around the world.,世界の味と料理の伝統を巡る旅。,世界中の食べ物や料理を探索してください。,mismatch
+SUBJECT,name,ja,Food & Cuisines,料理と食べ物,食べ物と料理,mismatch
+SUBJECT,description,ko,Explore foods and cuisines from around the world.,전 세계의 맛과 요리 전통을 탐험하는 여정.,전 세계의 음식과 요리를 탐색해 보세요.,mismatch
+SUBJECT,name,lt,Food & Cuisines,Maistas ir virtuvės,Maistas ir virtuvė,mismatch
+SUBJECT,description,lv,Explore foods and cuisines from around the world.,Ceļojums cauri pasaules garšām un kulinārijas tradīcijām.,Izpētiet ēdienus un virtuves ēdienus no visas pasaules.,mismatch
+SUBJECT,description,lt,Explore foods and cuisines from around the world.,Kelionė po pasaulio skonius ir kulinarines tradicijas.,Naršykite maisto produktus ir virtuves iš viso pasaulio.,mismatch
+SUBJECT,name,lv,Food & Cuisines,Ēdieni un virtuves,Ēdieni un virtuves ēdieni,mismatch
+SUBJECT,description,mt,Explore foods and cuisines from around the world.,Vjaġġ permezz ta' togħmiet globali u tradizzjonijiet kulinari.,Esplora ikel u kċejjen minn madwar id-dinja.,mismatch
+SUBJECT,description,nl,Explore foods and cuisines from around the world.,Een reis door wereldwijde smaken en culinaire tradities.,Ontdek voedingsmiddelen en keukens van over de hele wereld.,mismatch
+SUBJECT,description,pl,Explore foods and cuisines from around the world.,Podróż przez smaki świata i tradycje kulinarne.,Poznaj potrawy i kuchnie z całego świata.,mismatch
+SUBJECT,description,pt,Explore foods and cuisines from around the world.,Uma voyage pelos sabores globais e tradições culinárias.,Explore alimentos e culinárias de todo o mundo.,mismatch
+SUBJECT,name,ro,Food & Cuisines,Mâncare și bucătării,Mancare si bucatarie,mismatch
+SUBJECT,description,ro,Explore foods and cuisines from around the world.,O călătorie prin aromele globale și tradițiile culinare.,Explorați mâncăruri și bucătării din întreaga lume.,mismatch
+SUBJECT,description,sk,Explore foods and cuisines from around the world.,Cesta po svetových chutiach a kulinárskych tradíciách.,Preskúmajte jedlá a kuchyne z celého sveta.,mismatch
+SUBJECT,description,sl,Explore foods and cuisines from around the world.,Potovanje skozi svetovne okuse in kulinarične tradicije.,Raziščite hrano in kuhinje z vsega sveta.,mismatch
+SUBJECT,name,nl,Food & Cuisines,Eten & Keukens,Eten en keukens,mismatch
+SUBJECT,name,sv,Food & Cuisines,Mat och kök,Mat & kök,mismatch
+SUBJECT,name,tl,Food & Cuisines,Pagkain at mga Lutuin,Pagkain at Mga Pagkain,mismatch
+SUBJECT,description,sv,Explore foods and cuisines from around the world.,En resa genom globala smaker och kulinariska traditioner.,Utforska mat och kök från hela världen.,mismatch
+SUBJECT,description,tr,Explore foods and cuisines from around the world.,Küresel lezzetler ve mutfak gelenekleri arasında bir yolculuk.,Dünyanın dört bir yanından yiyecekleri ve mutfakları keşfedin.,mismatch
+SUBJECT,description,tl,Explore foods and cuisines from around the world.,Isang paglalakbay sa mga pandaigdigang lasa at tradisyon sa pagluluto.,Galugarin ang mga pagkain at lutuin mula sa buong mundo.,mismatch
+SUBJECT,name,tr,Food & Cuisines,Yemekler ve Mutfaklar,Yiyecek ve Mutfaklar,mismatch
+SUBJECT,description,vi,Explore foods and cuisines from around the world.,Hành trình trải nghiệm hương vị toàn cầu và truyền thống ẩm thực.,Khám phá các món ăn và ẩm thực từ khắp nơi trên thế giới.,mismatch
+SUBJECT,description,uk,Explore foods and cuisines from around the world.,Подорож світовими смаками та кулінарними традиціями.,Досліджуйте продукти та кухні з усього світу.,mismatch
+SUBJECT,name,vi,Food & Cuisines,Ẩm thực,Thực phẩm & Ẩm thực,mismatch
+fa8c2721-fa2b-400d-a7d4-927540489d69,answer,ko,"THE UNITED KINGDOM, Full breakfast","영국, 풀코스 아침 식사","영국, 풀코스 아침식사",mismatch
+90151063-1e1d-4a8b-b47b-6c170c211607,answer,ro,"IRELAND, Irish stew with soda bread","IRLANDA, tocană irlandeză cu pâine sifon","IRLANDA, tocană irlandeză cu pâine sodă",mismatch
+a4aa1cb5-7779-45cf-9cd4-fd5ea6405545,answer,ja,"THE BALTICS, Saltibarsciai",バルト三国、サルティバルシャイ,バルト海、サルティバルシャイ,mismatch
+316c6b1c-826c-4f38-8f7c-f7fe418a9f0d,answer,bg,"THE BALTICS, Cepelinai","БАЛТИЯ, Чепелинаи","БАЛТИЯ, Чепелинай",mismatch
+b7d151c7-fedf-4bfe-9736-6d874c6e8c72,answer,ko,"SOUTHERN AFRICA, Seswaa, pap and morongo","남아프리카, Seswaa, 아빠와 모롱고","남아프리카, Seswaa, Pap 및 Morongo",mismatch
+c0552bed-8d56-4b58-9fae-e6ec12ba67b6,answer,et,"SOUTHERN AFRICA, Bobotie","LÕUNA-AAFRIKA, Bobotie","LÕUNA-AFRIKA, Bobotie",mismatch
+7cd3e082-c2ec-4227-bc11-1b586e025124,answer,ko,"HUNGARY, Hungarian goulash","헝가리, 헝가리 굴라시","헝가리, 헝가리 굴라쉬",mismatch
+743ee191-127f-4a31-9caa-67f2db8b32a0,answer,mt,"THE BALTICS, Sklandrausis","IL-BALTICI, Sklandrausis","IL-BALTIĊI, Sklandrausis",mismatch
+c667cd14-073f-4c88-a82a-5574e7a2c3ac,answer,bg,"BRAZIL, Feijoada","БРАЗИЛИЯ, Фейхоада","БРАЗИЛИЯ, Feijoada",mismatch
+11de925d-1570-42f8-bad0-4a049e38772c,answer,ko,"DENMARK, Roast pork with crackling","덴마크, 크래클링을 곁들인 돼지고기 구이","덴마크, 크래클링을 곁들인 구운 돼지고기",mismatch
+a9c8b1eb-af98-4bb7-9ed9-7e3646186893,answer,vi,"SOUTHERN MEXICO, Chiles en nogada","NAM MEXICO, Chile và New Zealand","NAM MEXICO, Chiles và Nogada",mismatch
+8e14e52f-ea2d-4b61-96f5-269bd2ac2d1a,answer,ja,"WESTERN AFRICA, Nkatenkwan and fufu",西アフリカ、ヌカテンクワンとフフ,西アフリカ、ヌカテンクワンとフーフ,mismatch
+13e4b33d-d5be-44df-a00b-254c06ab66eb,answer,cs,"SOUTHERN USA, Shrimp ‘n’ grits and devilled eggs","JIŽNÍ USA, krupice z krevet a devilovaných vajec","JIŽNÍ USA, krevetová krupice a devilovaná vejce",mismatch
+13e4b33d-d5be-44df-a00b-254c06ab66eb,answer,sk,"SOUTHERN USA, Shrimp ‘n’ grits and devilled eggs","JUH USA, krevety 'n' krupice a devildované vajcia","JUH USA, krevety 'n' krúpy a devildované vajcia",mismatch
+6c43a161-6100-4a51-b567-f8fb4c8c3aed,answer,cs,"SINGAPORE, Hainanese chicken rice","SINGAPUR, hainanské kuřecí rýže","SINGAPUR, hainanese kuřecí rýže",mismatch
+6c43a161-6100-4a51-b567-f8fb4c8c3aed,answer,pl,"SINGAPORE, Hainanese chicken rice","SINGAPUR, ryż z kurczakiem hainańskim","SINGAPUR, ryż z kurczakiem po hainańsku",mismatch
+edcc1483-8506-47c4-9721-82806b2c0e9d,answer,ko,"SINGAPORE, Chilli crab","싱가포르, 칠리 크랩","싱가포르, 칠리크랩",mismatch
+167b82f3-ef4a-4d69-9cf9-4fc06c7fdade,answer,mt,"SINGAPORE, Curry laksa","SINGAPORE, Curry laksa","SINGAPUR, Curry laksa",mismatch
+bd710872-3d2d-49bb-b77b-58d41cf8a424,answer,sv,"BELGIUM AND LUXEMBOURG, Moules frites","BELGIEN OCH LUXEMBOURG, Moules frites","BELGIEN OCH LUXEMBURG, Moules frites",mismatch
+10cf68d6-5f7c-48ff-b6aa-04f7c2ea612e,answer,lt,"RUSSIA, Beef Stroganoff","RUSIJA, Beef Stroganoff","RUSIJA, jautienos stroganovas",mismatch
+10cf68d6-5f7c-48ff-b6aa-04f7c2ea612e,answer,mt,"RUSSIA, Beef Stroganoff","RUSSJA, Ċanga Stroganoff","IR-RUSSJA, Ċanga Stroganoff",mismatch
+ecc2e692-86b7-470b-b571-699c11d8faef,answer,vi,"ICELAND, Humarsúpa","ICELAND, Humarsúpa","ICELAND, Humarsupa",mismatch
+d713282b-b762-4960-9ea0-447beaeae913,answer,ko,"ICELAND, Kjötsúpa","아이슬란드, Kjötsúpa","아이슬란드, 키외추파",mismatch
+f20ac113-912d-4039-8ddf-789736d4b58a,answer,bg,"INDONESIA AND TIMOR-LESTE, Chicken bakso ball noodle soup","ИНДОНЕЗИЯ И ИЗТОЧЕН ТИМОР, Супа с пилешки топчета баксо с юфка","ИНДОНЕЗИЯ И ИЗТОЧЕН ТИМОР, Супа с пилешки баксо топчета с юфка",mismatch
+7a90925b-fc43-465c-9ec1-618d5730a113,answer,nl,"VENEZUELA, Arepas","VENETA, Arepas","VENEZUELA, Arepas",mismatch
+9e5091bb-7769-4855-a2a0-8376b666ba36,answer,bg,"TURKEY AND CYPRUS, Imam bayildi","ТУРЦИЯ И КИПЪР, Imam bayildi","ТУРЦИЯ И КИПЪР, Имам бейълди",mismatch
+db3e0184-552e-4bbd-a33f-fddb4e197ef9,answer,lv,"PERU, Ceviche","PERU, Ceviča","PERU, Ceviche",mismatch
+12ca57db-acdd-48af-bfbf-6307f0deac10,answer,ko,"PORTUGAL, Frango Português with chips, corn, rice and migas","포르투갈, 칩, 옥수수, 쌀, 미가를 곁들인 Frango 포르투갈어","포르투갈, 칩, 옥수수, 쌀, 미가를 곁들인 프랑고(Frango) 포르투갈어",mismatch
+cccdf7f9-75b1-4704-875e-3859c4746b86,answer,ja,"RUSSIA, Shchi and pelmeni",ロシア、シチーとペリメニ,ロシア、シチとペリメニ,mismatch
+ac05e118-d87e-4214-9dbb-dadf054647c5,answer,lv,"SOUTHERN USA, Southern BBQ","DIENVIDU ASV, Dienvidu BBQ","DIENVIDUSASV, Dienvidu BBQ",mismatch
+6f50fa83-2f3d-4117-9dc5-48e741a31aa2,answer,nl,"SOUTHERN CHINA, Sichuan chilli chicken","ZUID-CHINA, kip uit Sichuan-chili","ZUID-CHINA, Sichuan chili kip",mismatch
+e19bfc6d-4bd2-4ab1-ae4f-42b5b980b486,answer,da,"SOUTHERN MEXICO, Chilaquiles","SYD-MEXICO, Chilaquiles","SYD MEXICO, Chilaquiles",mismatch
+ec8d5eb7-070f-4af0-8bcd-d8d88e9bda04,answer,ga,"NORTHERN FRANCE, Mother sauces","AN THUAISCEART FHRAINC, Máthair anlainn","THUAISCEART AN FHRAINC, anlainn Mháthair",mismatch
+23b81997-57a8-4f89-9bd1-286e70ef4509,answer,tl,"MICRONESIA AND MELANESIA, Coconut crab","MICRONESIA AT MELANESIA, alimango ng niyog","MICRONESIA AT MELANESIA, Coconut crab",mismatch
+23b81997-57a8-4f89-9bd1-286e70ef4509,answer,uk,"MICRONESIA AND MELANESIA, Coconut crab","МІКРОНЕЗІЯ ТА МЕЛАНЕЗІЯ, Кокосовий краб","МІКРОНЕЗІЯ І МЕЛАНЕЗІЯ, кокосовий краб",mismatch
+1cf9b888-3f49-4506-96ae-a03e383a9a88,answer,uk,"IRELAND, Steak and Guinness pie","ІРЛАНДІЯ, стейк і пиріг Гіннесса","ІРЛАНДІЯ, стейк і пиріг Гіннеса",mismatch
+a1fe6e0d-0439-4242-9f68-68f9bb380528,answer,uk,"WESTERN AFRICA, Suya and plantains","ЗАХІДНА АФРИКА, Суя і подорожники","ЗАХІДНА АФРИКА, суйя та плантани",mismatch
+61155d73-aaf5-4404-943f-ad7454cd3084,answer,uk,"HUNGARY, Meggyleves and Hortobágyi palacsinta","УГОРЩИНА, Меггілевес і Хортобадьі палацінта","УГОРЩИНА, Меггілевес і Хортобадьі палацинта",mismatch
+e57e597f-fe42-49d7-b27a-3c568045effb,answer,nl,"FRANCE, Cassoulet with confit de canard","FRANKRIJK, Cassoulet met gekonfijte canard","FRANKRIJK, Cassoulet met gekonfijte de canard",mismatch
+25c33285-0b58-4d24-a47c-5e60b821fcd6,answer,ja,"SWEDEN, Ärtsoppa and raggmunk",スウェーデン、エルツオッパとラグムンク,スウェーデン、エルツオッパとラグマンク,mismatch
+c98896f4-fd05-461a-bbe0-9c5d390144fd,answer,hu,"SOUTH ASIA MINOR, Thukpa","DÉL-ÁZSIA, Thukpa","DÉL-ÁZSIA MINOR, Thukpa",mismatch
+9f993484-4110-497e-b250-63d5c40c1594,answer,ga,"CHILE, Pulmay, milcao and Chilean salads","CHILE, Pulmay, sailéid milcao agus Sile","sailéid CHILE, Pulmay, milcao agus Sile",mismatch
+3ba6e917-28e0-442d-a497-1d058ad35698,answer,el,"NORTH AFRICA, Ful medames and koshari","ΒΟΡΕΙΑ ΑΦΡΙΚΗ, Φουλ μεντάμ και κοσάρι","ΒΟΡΕΙΑ ΑΦΡΙΚΗ, Ful medames και koshari",mismatch
+d6bc292d-ebe0-43db-a919-b7be3afc2589,answer,pl,"MICRONESIA AND MELANESIA, Coconut crab and Chamorro red rice","MIKRONEZJA I MELANESJA, Krab kokosowy i czerwony ryż Chamorro","MIKRONEZJA I MELANEZJA, Krab kokosowy i czerwony ryż Chamorro",mismatch
+6781d35b-f14b-4134-9548-10b853a5b951,answer,da,"MICRONESIA AND MELANESIA, Chicken kelaguen with tityas","MIKRONESIA OG MELANESIA, Kylling kelaguen med tityas","MICRONESIA OG MELANESIA, Kylling kelaguen med tityas",mismatch
+6781d35b-f14b-4134-9548-10b853a5b951,answer,uk,"MICRONESIA AND MELANESIA, Chicken kelaguen with tityas","МІКРОНЕЗІЯ ТА МЕЛАНЕЗІЯ, курячий келагуен з титьями","МІКРОНЕЗІЯ ТА МЕЛАНЕЗІЯ, Курячий келагуен з титьясом",mismatch
+6781d35b-f14b-4134-9548-10b853a5b951,answer,tr,"MICRONESIA AND MELANESIA, Chicken kelaguen with tityas","MİKRONEZİ VE MELANEZİ, Tityaslı tavuk kelaguen","MİKRONEZYA VE MELANEZYA, Tityaslı tavuk kelaguen",mismatch
+fbb45a60-41bd-460c-acf1-e84c62a46016,answer,nl,"VENEZUELA, Pisca Andina","VENEZUELA, Pisca Andina","VENETA, Pisca Andina",mismatch
+bbb15fec-119c-4507-b74f-4e5f96f209d8,answer,cs,"RUSSIA, Blinis and shuba","RUSKO, Blinis a šuba","RUSKO, Blinis a shuba",mismatch

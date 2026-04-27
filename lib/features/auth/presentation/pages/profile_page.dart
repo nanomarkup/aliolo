@@ -600,6 +600,12 @@ class _ProfilePageState extends State<ProfilePage> {
                 : null;
 
         return AlioloScrollablePage(
+          leading: const Icon(
+            Icons.person,
+            color: appBarColor,
+            size: 24,
+          ),
+          leadingWidth: 56,
           title: Text(
             context.t('profile'),
             style: const TextStyle(

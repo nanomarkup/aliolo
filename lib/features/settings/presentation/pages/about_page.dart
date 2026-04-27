@@ -1,5 +1,6 @@
 import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/core/theme/aliolo_theme.dart';
+import 'package:aliolo/core/utils/legal_links.dart';
 import 'package:aliolo/core/widgets/window_controls.dart';
 import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
@@ -275,6 +276,26 @@ class _AboutPageState extends State<AboutPage> {
                 builder: (context) => const CustomLicensesPage(),
               ),
             ),
+      ),
+      (
+        icon: Icons.privacy_tip_outlined,
+        label: 'Privacy Policy',
+        onTap: () => AlioloLegalLinks.open(context, AlioloLegalLinks.privacy),
+      ),
+      (
+        icon: Icons.gavel_outlined,
+        label: 'Subscription Terms',
+        onTap: () => AlioloLegalLinks.open(context, AlioloLegalLinks.terms),
+      ),
+      (
+        icon: Icons.receipt_long_outlined,
+        label: 'Refund Policy',
+        onTap: () => AlioloLegalLinks.open(context, AlioloLegalLinks.refund),
+      ),
+      (
+        icon: Icons.sell_outlined,
+        label: 'Premium Pricing',
+        onTap: () => AlioloLegalLinks.open(context, AlioloLegalLinks.pricing),
       ),
       (
         icon: Icons.arrow_back,

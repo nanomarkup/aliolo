@@ -1,0 +1,91 @@
+item_id,field,locale,global_text,current_text,translated_text,status
+SUBJECT,description,ar,Learn to identify famous paintings and their artists.,تعرف على الروائع الشهيرة وكبار الفنانين.,تعلم كيفية التعرف على اللوحات الشهيرة وفنانيها.,mismatch
+SUBJECT,name,ar,Famous Paintings,لوحات شهيرة,اللوحات الشهيرة,mismatch
+SUBJECT,description,bg,Learn to identify famous paintings and their artists.,Идентифицирайте емблематични шедьоври и велики художници.,Научете се да идентифицирате известни картини и техните художници.,mismatch
+SUBJECT,description,cs,Learn to identify famous paintings and their artists.,Poznejte ikonická mistrovská díla a skvělé umělce.,Naučte se identifikovat slavné obrazy a jejich umělce.,mismatch
+SUBJECT,description,da,Learn to identify famous paintings and their artists.,Identificer ikoniske mesterværker og store kunstnere.,Lær at identificere berømte malerier og deres kunstnere.,mismatch
+SUBJECT,description,de,Learn to identify famous paintings and their artists.,Identifiziere ikonische Meisterwerke und große Künstler.,"Lernen Sie, berühmte Gemälde und ihre Künstler zu identifizieren.",mismatch
+SUBJECT,description,en,Learn to identify famous paintings and their artists.,Identify iconic masterpieces and great artists.,Learn to identify famous paintings and their artists.,mismatch
+SUBJECT,name,el,Famous Paintings,Διάσημοι πίνακες,Διάσημοι πίνακες ζωγραφικής,mismatch
+SUBJECT,description,el,Learn to identify famous paintings and their artists.,Αναγνωρίστε εμβληματικά αριστουργήματα και μεγάλους καλλιτέχνες.,Μάθετε να αναγνωρίζετε διάσημους πίνακες και τους καλλιτέχνες τους.,mismatch
+SUBJECT,description,et,Learn to identify famous paintings and their artists.,Tunne ära ikoonilised meistriteosed ja suured kunstnikud.,Õppige tuvastama kuulsaid maale ja nende kunstnikke.,mismatch
+SUBJECT,description,fi,Learn to identify famous paintings and their artists.,Tunnista ikoniset mestariteokset ja suuret taiteilijat.,Opi tunnistamaan kuuluisia maalauksia ja niiden taiteilijoita.,mismatch
+SUBJECT,name,fi,Famous Paintings,Kuuluisat maalaukset,Kuuluisia maalauksia,mismatch
+SUBJECT,name,hi,Famous Paintings,प्रसिद्ध पेंटिंग,प्रसिद्ध चित्र,mismatch
+SUBJECT,description,fr,Learn to identify famous paintings and their artists.,Identifiez des chefs-d'œuvre emblématiques et de grands artistes.,Apprenez à identifier des tableaux célèbres et leurs artistes.,mismatch
+SUBJECT,description,es,Learn to identify famous paintings and their artists.,Identifica obras maestras icónicas y grandes artistas.,Aprenda a identificar pinturas famosas y sus artistas.,mismatch
+SUBJECT,name,ga,Famous Paintings,Péintéireacht cháiliúil,Péintéireachtaí Cáiliúla,mismatch
+SUBJECT,description,ga,Learn to identify famous paintings and their artists.,Aithin sárshaothair íocónacha agus ealaíontóirí iontacha.,Foghlaim pictiúir cáiliúla agus a gcuid ealaíontóirí a aithint.,mismatch
+SUBJECT,description,hi,Learn to identify famous paintings and their artists.,प्रतिष्ठित उत्कृष्ट कृतियों और महान कलाकारों को पहचानें।,प्रसिद्ध चित्रों और उनके कलाकारों की पहचान करना सीखें।,mismatch
+SUBJECT,description,hu,Learn to identify famous paintings and their artists.,Ismerd fel az ikonikus remekműveket és a nagy művészeket!,Tanuld meg azonosítani a híres festményeket és művészeiket.,mismatch
+SUBJECT,description,hr,Learn to identify famous paintings and their artists.,Prepoznajte kultna remek-djela i velike umjetnike.,Naučite prepoznati poznate slike i njihove umjetnike.,mismatch
+SUBJECT,description,ja,Learn to identify famous paintings and their artists.,象徴的な傑作と偉大な芸術家を特定しましょう。,有名な絵画とそのアーティストを特定する方法を学びましょう。,mismatch
+SUBJECT,description,id,Learn to identify famous paintings and their artists.,Identifikasi mahakarya ikonik dan seniman hebat.,Belajar mengidentifikasi lukisan terkenal dan senimannya.,mismatch
+SUBJECT,description,it,Learn to identify famous paintings and their artists.,Identifica capolavori iconici e grandi artisti.,Impara a identificare i dipinti famosi e i loro artisti.,mismatch
+SUBJECT,description,lt,Learn to identify famous paintings and their artists.,Atpažinkite žymiausius šedevrus ir didžiuosius menininkus.,Išmokite atpažinti garsius paveikslus ir jų dailininkus.,mismatch
+SUBJECT,name,lv,Famous Paintings,Slavenas gleznas,Slavenās gleznas,mismatch
+SUBJECT,description,lv,Learn to identify famous paintings and their artists.,Atpazīstiet ikoniskus šedevrus un izcilus māksliniekus.,Iemācieties atpazīt slavenās gleznas un to māksliniekus.,mismatch
+SUBJECT,description,ko,Learn to identify famous paintings and their artists.,상징적인 걸작과 위대한 예술가들을 알아보세요.,유명한 그림과 예술가를 식별하는 방법을 알아보세요.,mismatch
+SUBJECT,name,lt,Famous Paintings,Garsūs paveikslai,Įžymūs paveikslai,mismatch
+SUBJECT,description,mt,Learn to identify famous paintings and their artists.,Identifika kapolavuri ikoniċi u artisti kbar.,Tgħallem tidentifika pitturi famużi u l-artisti tagħhom.,mismatch
+SUBJECT,description,nl,Learn to identify famous paintings and their artists.,Herken iconische meesterwerken en grote kunstenaars.,Leer beroemde schilderijen en hun kunstenaars identificeren.,mismatch
+SUBJECT,description,pt,Learn to identify famous paintings and their artists.,Identifique obras-primas icônicas e grandes artistas.,Aprenda a identificar pinturas famosas e seus artistas.,mismatch
+SUBJECT,description,pl,Learn to identify famous paintings and their artists.,Rozpoznaj kultowe arcydzieła i wielkich artystów.,Naucz się rozpoznawać słynne obrazy i ich artystów.,mismatch
+SUBJECT,name,ro,Famous Paintings,Picturi celebre,Tablouri celebre,mismatch
+SUBJECT,name,sl,Famous Paintings,Znamenite slike,Znane slike,mismatch
+SUBJECT,description,ro,Learn to identify famous paintings and their artists.,Identifică capodopere emblematice și mari artiști.,Învață să identifici picturile celebre și artiștii acestora.,mismatch
+SUBJECT,description,sl,Learn to identify famous paintings and their artists.,Prepoznajte ikonične mojstrovine in velike umetnike.,Naučite se prepoznati znane slike in njihove umetnike.,mismatch
+SUBJECT,description,sv,Learn to identify famous paintings and their artists.,Identifiera ikoniska mästerverk och stora konstnärer.,Lär dig att identifiera kända målningar och deras konstnärer.,mismatch
+SUBJECT,description,sk,Learn to identify famous paintings and their artists.,Spoznajte ikonické majstrovské diela a skvelých umelcov.,Naučte sa identifikovať slávne obrazy a ich umelcov.,mismatch
+SUBJECT,description,tr,Learn to identify famous paintings and their artists.,İkonik şaheserleri ve büyük sanatçıları tanıyın.,Ünlü tabloları ve sanatçılarını tanımlamayı öğrenin.,mismatch
+SUBJECT,description,tl,Learn to identify famous paintings and their artists.,Kilalanin ang mga iconic na obra maestra at mahuhusay na artista.,Matutong kilalanin ang mga sikat na painting at ang kanilang mga artist.,mismatch
+SUBJECT,name,tl,Famous Paintings,Kilalang mga Pintura,Mga Sikat na Pinta,mismatch
+SUBJECT,description,uk,Learn to identify famous paintings and their artists.,Впізнавайте культові шедеври та видатних художників.,Навчіться розпізнавати відомі картини та їх художників.,mismatch
+SUBJECT,description,vi,Learn to identify famous paintings and their artists.,Nhận diện những kiệt tác mang tính biểu tượng và các nghệ sĩ vĩ đại.,Tìm hiểu để xác định những bức tranh nổi tiếng và các nghệ sĩ của họ.,mismatch
+a80ed1a5-04bb-4653-aaea-6aeb87869a20,answer,sl,"Flaming June (1895), Lord Frederick Leighton","Flaming June (1895), Lord Frederick Leighton","Ognjeni junij (1895), Lord Frederick Leighton",mismatch
+20c94683-efcd-489b-9b92-d1ba30545126,answer,vi,"Dance at Bougival (1883), Pierre-Auguste Renoir","Khiêu vũ ở Bougival (1883), Pierre-Auguste Renoir","Khiêu vũ tại Bougival (1883), Pierre-Auguste Renoir",mismatch
+f241025c-1aa5-48a1-b754-7211d5a3ca07,answer,ga,"Starry Night (1889), Vincent van Gogh","Oíche Starry (1889), Vincent van Gogh","Oíche Réalta (1889), Vincent van Gogh",mismatch
+b0958a12-c221-4192-9848-7f80eae1333e,answer,lv,"Napoleon Crossing the Alps on 20th May 1800 (1803), Jacques-Louis David","Napoleons, šķērsojot Alpus 1800. gada 20. maijā (1803), Žaks-Luijs Deivids","Napoleons, šķērsojot Alpus 1800. gada 20. maijā (1803), Žaks-Luijs Deivids",mismatch
+b0958a12-c221-4192-9848-7f80eae1333e,answer,sl,"Napoleon Crossing the Alps on 20th May 1800 (1803), Jacques-Louis David","Napoleon pri prečkanju Alp 20. maja 1800 (1803), Jacques-Louis David","Napoleon prečka Alpe 20. maja 1800 (1803), Jacques-Louis David",mismatch
+965a5a4d-89ab-4da3-a233-b2a2e18b2796,answer,sv,"The Wanderer Above a Sea of Mist (1818), Caspar David Friedrich","Vandraren ovanför ett hav av dimma (1818), Caspar David Friedrich","Vandraren över ett hav av dimma (1818), Caspar David Friedrich",mismatch
+ba458bf7-9fc7-47d6-8cd9-9f44c7633785,answer,cs,"The Cafe Terrace on the Place du Forum, Arles (1888), Vincent van Gogh","The Cafe Terrace na Place du Forum, Arles (1888), Vincent van Gogh","Kavárna Terrace na Place du Forum, Arles (1888), Vincent van Gogh",mismatch
+ba458bf7-9fc7-47d6-8cd9-9f44c7633785,answer,fi,"The Cafe Terrace on the Place du Forum, Arles (1888), Vincent van Gogh","Cafe Terrace Place du Forumilla, Arlesissa (1888), Vincent van Gogh","Cafe Terrace Place du Forumilla, Arles (1888), Vincent van Gogh",mismatch
+7843d431-3ab5-4c94-9382-05351e5aaf6c,answer,lt,"Storm on the Sea of Galilee (1633), van Rijn Rembrandt","Audra Galilėjos jūroje (1633), van Rijn Rembrandt","Audra prie Galilėjos jūros (1633), van Rijn Rembrandt",mismatch
+1a194675-1060-4ce1-8c1d-fa926e1231ee,answer,ko,"The Lady of Shalott (1888), John William Waterhouse","샬럿의 여인(1888), 존 윌리엄 워터하우스","샬롯의 여인(1888), 존 윌리엄 워터하우스",mismatch
+c42bdbfd-7a12-44b9-ad6f-adf9f97f5496,answer,id,"The Sistine Madonna (1513), Raffaello Sanzio Raphael","Sistina Madonna (1513), Raffaello Sanzio Raphael","Sistine Madonna (1513), Raffaello Sanzio Raphael",mismatch
+ba2f0c17-2953-4732-8044-3c40a26155c5,answer,ko,"The Angelus (c. 1857/59), Jean-Francois Millet","만종(c. 1857/59), 장 프랑수아 밀레","만종 (c. 1857/59), 장 프랑수아 밀레",mismatch
+65220c92-7c4e-4a3c-9c74-671b7fbf9b10,answer,tl,"Saturn Devouring one of His Sons (c. 1821/23), Francisco de Goya","Sinasakmal ni Saturn ang isa sa Kanyang mga Anak (c. 1821/23), Francisco de Goya","Nilalamon ni Saturn ang isa sa Kanyang mga Anak (c. 1821/23), Francisco de Goya",mismatch
+6fb88349-7e9c-449c-8afc-bb33fad4798a,answer,hr,"Self-Portrait with Bandaged Ear (1889), Vincent van Gogh","Autoportret sa zavojenim uhom (1889), Vincent van Gogh","Autoportret sa zavijenim uhom (1889), Vincent van Gogh",mismatch
+6fb88349-7e9c-449c-8afc-bb33fad4798a,answer,sl,"Self-Portrait with Bandaged Ear (1889), Vincent van Gogh","Avtoportret s privitim ušesom (1889), Vincent van Gogh","Avtoportret s povojenim ušesom (1889), Vincent van Gogh",mismatch
+5f83f23c-1420-472e-9b7c-e277f427ba4a,answer,ja,"Virgin and Child with St. Anne (c. 1502/13), Leonardo da Vinci",聖母子と聖アンナ (1502/13 年頃)、レオナルド ダ ヴィンチ,聖母子と聖アンナ (1502/13 年頃)、レオナルド・ダ・ヴィンチ,mismatch
+a4cfd61e-31a0-467d-b22d-6bba208c2241,answer,hu,"A Man with a Quilted Sleeve (Ariosto) (c. 1510/12), Tiziano Vecellio Titian","Egy steppelt ujjú férfi (Ariosto) (kb. 1510/12), Tiziano Vecellio Titian","Egy steppelt ujjú férfi (Ariosto) (1510/12 körül), Tiziano Vecellio Titian",mismatch
+3128ec81-cdcf-4eb5-b1c1-9bbb91cb4b0b,answer,ja,"Madame X (Madame Pierre Gautreau) (1884), John Singer Sargent",マダムX (ピエール・ゴートロ夫人) (1884)、ジョン・シンガー・サージェント,マダムX（ピエール・ゴートロー夫人）（1884年）、ジョン・シンガー・サージェント,mismatch
+772da69c-88b6-4df2-a6b1-fdd374b16692,answer,el,"The Man with the Golden Helmet (1636), van Rijn Rembrandt","Ο άνθρωπος με το χρυσό κράνος (1636), van Rijn Rembrandt","The Man with the Golden Helmet (1636), van Rijn Rembrandt",mismatch
+0b13c807-91c8-4187-8274-0dbd619225ac,answer,tl,"Two Sisters (On the Terrace) (1881), Pierre-Auguste Renoir","Two Sisters (Sa Terrace) (1881), Pierre-Auguste Renoir","Dalawang Madre (Sa Terrace) (1881), Pierre-Auguste Renoir",mismatch
+4b5986d1-0634-417e-b42d-72faa42d81ea,answer,vi,"Wheat Field with Cypresses (1889), Vincent van Gogh","Cánh đồng lúa mì với cây bách (1889), Vincent van Gogh","Cánh đồng lúa mì và cây bách (1889), Vincent van Gogh",mismatch
+c165e8d8-fab4-420c-a2fc-74579d1232c1,answer,uk,"Dance at the Moulin de la Galette (1876), Pierre-Auguste Renoir","Танець у Мулен де ла Галет (1876), П'єр-Огюст Ренуар","Танець у Мулен де ля Галет (1876), П'єр-Огюст Ренуар",mismatch
+e595d32c-0962-41ed-a3b6-5a77488f47fa,answer,tl,"The Lunch on the Grass (1863), Edouard Manet","The Lunch on the Grass (1863), Edouard Manet","Ang Tanghalian sa Damo (1863), Edouard Manet",mismatch
+3af5a050-12b6-4b62-9be6-3fa83022279a,answer,et,"Nude Descending a Staircase II (1912), Marcel Duchamp","Akt Trepist alla laskumas II (1912), Marcel Duchamp","Alasti trepist laskumine II (1912), Marcel Duchamp",mismatch
+3af5a050-12b6-4b62-9be6-3fa83022279a,answer,fi,"Nude Descending a Staircase II (1912), Marcel Duchamp","Alaston laskeutuminen portaita II (1912), Marcel Duchamp","Alaston alastossa portaita II (1912), Marcel Duchamp",mismatch
+3af5a050-12b6-4b62-9be6-3fa83022279a,answer,hi,"Nude Descending a Staircase II (1912), Marcel Duchamp","न्यूड डिसेंडिंग ए स्टेयरकेस II (1912), मार्सेल ड्यूचैम्प","न्यूड डिसेंडिंग ए स्टेयरकेस II (1912), मार्सेल डुचैम्प",mismatch
+3af5a050-12b6-4b62-9be6-3fa83022279a,answer,ja,"Nude Descending a Staircase II (1912), Marcel Duchamp",階段を降りる裸婦 II (1912)、マルセル・デュシャン,階段を下りる裸婦 II (1912)、マルセル・デュシャン,mismatch
+3af5a050-12b6-4b62-9be6-3fa83022279a,answer,uk,"Nude Descending a Staircase II (1912), Marcel Duchamp","Оголена, що спускається по сходах II (1912), Марсель Дюшан","Оголена сходами II (1912), Марсель Дюшан",mismatch
+de49f8d2-488d-402d-9afd-182c42880bbb,answer,fi,"The Fighting Temeraire (1839), Joseph Mallord William Turner","The Fighting Temeraire (1839), Joseph Mallord William Turner","Taisteleva Temeraire (1839), Joseph Mallord William Turner",mismatch
+de49f8d2-488d-402d-9afd-182c42880bbb,answer,ko,"The Fighting Temeraire (1839), Joseph Mallord William Turner","The Fighting Temeraire (1839), 조셉 말로드 윌리엄 터너","싸우는 테메레르(1839), 조셉 말로드 윌리엄 터너",mismatch
+4cd3d476-8f05-48c6-b4ee-e3cc60ff57c2,answer,lt,"The Abduction of Psyche (1895), Adolphe-William Bouguereau","Psichikos pagrobimas (1895), Adolphe-William Bouguereau","Psichės pagrobimas (1895), Adolphe-William Bouguereau",mismatch
+bc1787ec-abad-439e-be14-a06bcce93f46,answer,ja,"Whistler's Mother (c. 1834), James Whistler",ウィスラーの母親 (1834 年頃)、ジェームズ・ウィスラー,ウィスラーの母 (1834 年頃)、ジェームズ・ウィスラー,mismatch
+0a53d967-45c7-46fe-a95b-be54e5285dd0,answer,sk,"Breezing Up (A Fair Wind) (c. 1873/76), Winslow Homer","Breezing Up (A Fair Wind) (okolo 1873/76), Winslow Homer","Breezing Up (A Fair Wind) (asi 1873/76), Winslow Homer",mismatch
+a316e9ae-146d-46b8-9b25-f8f7231c1869,answer,bg,"The 3rd of May 1808 in Madrid (1814), Francisco de Goya","3 май 1808 г. в Мадрид (1814 г.), Франсиско де Гоя","3 май 1808 г. в Мадрид (1814), Франсиско де Гоя",mismatch
+a316e9ae-146d-46b8-9b25-f8f7231c1869,answer,hu,"The 3rd of May 1808 in Madrid (1814), Francisco de Goya","1808. május 3-án Madridban (1814), Francisco de Goya","1808. május 3. Madridban (1814), Francisco de Goya",mismatch
+2749821f-77db-4013-94c2-889071c8f6b5,answer,tl,"The Tempest (c. 1505), Giorgio da Castelfranco Giorgione","Ang Bagyo (c. 1505), Giorgio da Castelfranco Giorgione","The Tempest (c. 1505), Giorgio da Castelfranco Giorgione",mismatch
+9b518687-b812-4731-b3aa-5a6edf76499d,answer,pl,"Jean de Dinteville, Georges de Selve (Ambassadors) (1533), Hans Holbein the Younger","Jean de Dinteville, Georges de Selve (Ambasadorzy) (1533), Hans Holbein Młodszy","Jean de Dinteville, Georges de Selve (Ambasadorowie) (1533), Hans Holbein Młodszy",mismatch
+ed56dd3a-1aee-4529-9a1b-ec35b31b9a20,answer,bg,"Boulevard Montmartre - Afternoon, Sunshine (1897), Camille Jacob Pissarro","Булевард Монмартър - Следобед, слънце (1897), Камил Джейкъб Писаро","Булевард Монмартър - Следобед, слънце (1897), Камий Якоб Писаро",mismatch
+ed56dd3a-1aee-4529-9a1b-ec35b31b9a20,answer,lv,"Boulevard Montmartre - Afternoon, Sunshine (1897), Camille Jacob Pissarro","Boulevard Montmartre — pēcpusdiena, saulīte (1897), Camille Jacob Pissarro","Boulevard Montmartre — pēcpusdiena, saulīte (1897), Camille Jacob Pissarro",mismatch
+fb27d306-f32f-4a00-ae87-102d15425258,answer,ar,"Mont Sainte-Victoire and the Viaduct of the Arc ... (c. 1882/85), Paul Cezanne",جبل سانت فيكتوار وجسر القوس ... (حوالي 1882/85)، بول سيزان,مونت سانت فيكتوار وجسر القوس ... (حوالي 1882/85)، بول سيزان,mismatch
+fb27d306-f32f-4a00-ae87-102d15425258,answer,el,"Mont Sainte-Victoire and the Viaduct of the Arc ... (c. 1882/85), Paul Cezanne","Mont Sainte-Victoire and the Viaduct of the Arc ... (περ. 1882/85), Paul Cezanne","Mont Sainte-Victoire and the Viaduct of the Arc ... (περίπου 1882/85), Paul Cezanne",mismatch
+7bb683d6-9aa4-4d40-8ea8-ec64abdf232f,answer,tl,"Portrait of Doctor Gachet (1890), Vincent van Gogh","Larawan ni Doctor Gachet (1890), Vincent van Gogh","Larawan ng Doctor Gachet (1890), Vincent van Gogh",mismatch
+ea00682e-b56f-4dba-99ae-ad63c3a630b1,answer,hu,"View of Toledo (c. 1599/00), Domenikos Theotokopoulos El Greco","Kilátás Toledóra (1599/00 körül), Domenikos Theotokopoulos El Greco","Kilátás Toledo (kb. 1599/00), Domenikos Theotokopoulos El Greco",mismatch
+e8789c44-1ca4-4230-aa4b-684b97afbe71,answer,ko,"The Nude Maja (c. 1797/00), Francisco de Goya","누드 마하(1797/00경), 프란시스코 데 고야","누드 마하 (c. 1797/00), 프란시스코 데 고야",mismatch
+618e416c-80d4-444d-84b2-14466a72b0c9,answer,lv,"A Bar at the Folies-Bergere (c. 1881/82), Edouard Manet","Bārs Folies-Bergere (apmēram 1881/82), Edouard Manet","Folies-Bergere bārs (apmēram 1881/82), Edouard Manet",mismatch
+99dee0e9-6b34-4117-ac07-41d89f6a2c66,answer,bg,"The Dance Class (c. 1873/76), Hilaire Germain Edgar Degas","Класът по танци (ок. 1873/76), Хилер Жермен Едгар Дега","Класът по танци (ок. 1873/76), Илер Жермен Едгар Дега",mismatch
+590c25ce-bf33-4a8c-8ea7-762133df406c,answer,de,"The Shepherds of Arcadia (Et In Arcadia Ego) (c. 1638/40), Nicolas Poussin","Die Hirten von Arcadia (Et In Arcadia Ego) (ca. 1638/40), Nicolas Poussin","Die Hirten von Arkadien (Et In Arcadia Ego) (ca. 1638/40), Nicolas Poussin",mismatch

@@ -1,0 +1,59 @@
+item_id,field,locale,global_text,current_text,translated_text,status
+SUBJECT,description,ar,Learn to identify influential historical figures.,تعرف على الأشخاص الذين شكلوا مسار التاريخ.,تعلم كيفية التعرف على الشخصيات التاريخية المؤثرة.,mismatch
+SUBJECT,description,bg,Learn to identify influential historical figures.,"Запознайте се с хората, които са оформили хода на историята.",Научете се да идентифицирате влиятелни исторически личности.,mismatch
+SUBJECT,description,cs,Learn to identify influential historical figures.,"Seznamte se s lidmi, kteří utvářeli běh dějin.",Naučte se identifikovat vlivné historické postavy.,mismatch
+SUBJECT,name,cs,Historical Figures,Historické osobnosti,Historické postavy,mismatch
+SUBJECT,name,el,Historical Figures,Ιστορικές προσωπικότητες,Ιστορικά Πρόσωπα,mismatch
+SUBJECT,description,en,Learn to identify influential historical figures.,Meet the people who shaped the course of history.,Learn to identify influential historical figures.,mismatch
+SUBJECT,name,da,Historical Figures,Historiske skikkelser,Historiske figurer,mismatch
+SUBJECT,description,el,Learn to identify influential historical figures.,Γνωρίστε τους ανθρώπους που διαμόρφωσαν την πορεία της ιστορίας.,Μάθετε να αναγνωρίζετε ιστορικές προσωπικότητες με επιρροή.,mismatch
+SUBJECT,description,de,Learn to identify influential historical figures.,"Lerne die Menschen kennen, die den Lauf der Geschichte geprägt haben.","Lernen Sie, einflussreiche historische Persönlichkeiten zu identifizieren.",mismatch
+SUBJECT,description,da,Learn to identify influential historical figures.,"Mød de mennesker, der har formet historiens gang.",Lær at identificere indflydelsesrige historiske personer.,mismatch
+SUBJECT,name,es,Historical Figures,Personajes históricos,Figuras Históricas,mismatch
+SUBJECT,description,et,Learn to identify influential historical figures.,"Kohtu inimestega, kes kujundasid ajaloo käiku.",Õppige tuvastama mõjukaid ajaloolisi isikuid.,mismatch
+SUBJECT,description,fi,Learn to identify influential historical figures.,"Tapaa ihmiset, jotka muovasivat historian kulkua.",Opi tunnistamaan vaikutusvaltaisia ​​historiallisia henkilöitä.,mismatch
+SUBJECT,name,fi,Historical Figures,Historialliset henkilöt,Historiallisia hahmoja,mismatch
+SUBJECT,name,et,Historical Figures,Ajaloolised isikud,Ajaloolised tegelased,mismatch
+SUBJECT,description,fr,Learn to identify influential historical figures.,Rencontrez les personnes qui ont façonné le cours de l'histoire.,Apprenez à identifier des personnages historiques influents.,mismatch
+SUBJECT,description,es,Learn to identify influential historical figures.,Conoce a las personas que dieron forma al curso de la historia.,Aprenda a identificar personajes históricos influyentes.,mismatch
+SUBJECT,name,hr,Historical Figures,Povijesne ličnosti,Povijesne osobe,mismatch
+SUBJECT,name,ga,Historical Figures,Pearsana stairiúla,Figiúirí Stairiúla,mismatch
+SUBJECT,description,hi,Learn to identify influential historical figures.,उन लोगों से मिलें जिन्होंने इतिहास की धारा को आकार दिया।,प्रभावशाली ऐतिहासिक शख्सियतों की पहचान करना सीखें।,mismatch
+SUBJECT,description,ga,Learn to identify influential historical figures.,Buail leis na daoine a mhúnlaigh cúrsa na staire.,Foghlaim conas figiúirí stairiúla a bhfuil tionchar acu a aithint.,mismatch
+SUBJECT,description,hr,Learn to identify influential historical figures.,Upoznajte ljude koji su oblikovali tijek povijesti.,Naučite prepoznati utjecajne povijesne ličnosti.,mismatch
+SUBJECT,name,hu,Historical Figures,Történelmi személyiségek,Történelmi alakok,mismatch
+SUBJECT,name,hi,Historical Figures,ऐतिहासिक व्यक्तित्व,ऐतिहासिक शख्सियतें,mismatch
+SUBJECT,description,hu,Learn to identify influential historical figures.,"Ismerd meg azokat az embereket, akik megváltoztatták a történelem menetét!",Tanuld meg azonosítani a befolyásos történelmi alakokat.,mismatch
+SUBJECT,description,ja,Learn to identify influential historical figures.,歴史の流れを変えた人々に出会いましょう。,影響力のある歴史上の人物を特定する方法を学びます。,mismatch
+SUBJECT,name,it,Historical Figures,Personaggi Storici,Figure storiche,mismatch
+SUBJECT,description,it,Learn to identify influential historical figures.,Incontra le persone che hanno plasmato il corso della storia.,Impara a identificare figure storiche influenti.,mismatch
+SUBJECT,description,id,Learn to identify influential historical figures.,Temui orang-orang yang membentuk jalannya sejarah.,Belajar mengidentifikasi tokoh sejarah yang berpengaruh.,mismatch
+SUBJECT,description,lt,Learn to identify influential historical figures.,"Susipažinkite su žmonėmis, kurie suformavo istorijos eigą.",Išmokite atpažinti įtakingas istorines asmenybes.,mismatch
+SUBJECT,name,lt,Historical Figures,Istorinės asmenybės,Istorinės figūros,mismatch
+SUBJECT,description,ko,Learn to identify influential historical figures.,역사의 흐름을 바꾼 인물들을 만나보세요.,영향력 있는 역사적 인물을 식별하는 방법을 알아보세요.,mismatch
+SUBJECT,description,mt,Learn to identify influential historical figures.,Iltaqa' man-nies li sawru l-kors tal-istorja.,Tgħallem tidentifika figuri storiċi influwenti.,mismatch
+SUBJECT,name,lv,Historical Figures,Vēsturiskas personas,Vēsturiskas figūras,mismatch
+SUBJECT,description,lv,Learn to identify influential historical figures.,"Iepazīstiet cilvēkiem, kuri veidoja vēstures gaitu.",Iemācieties atpazīt ietekmīgas vēsturiskas personas.,mismatch
+SUBJECT,name,mt,Historical Figures,Figuri storiċi,Ċifri Storiċi,mismatch
+SUBJECT,description,pl,Learn to identify influential historical figures.,"Poznaj ludzi, którzy kształtowali bieg historii.",Naucz się identyfikować wpływowe postacie historyczne.,mismatch
+SUBJECT,description,pt,Learn to identify influential historical figures.,Conheça as pessoas que moldaram o curso da história.,Aprenda a identificar figuras históricas influentes.,mismatch
+SUBJECT,description,nl,Learn to identify influential historical figures.,Maak kennis met de mensen die de loop van de geschiedenis hebben bepaald.,Leer invloedrijke historische figuren te identificeren.,mismatch
+SUBJECT,name,sl,Historical Figures,Zgodovinske osebnosti,Zgodovinske osebe,mismatch
+SUBJECT,description,ro,Learn to identify influential historical figures.,Întâlnește oamenii care au modelat cursul istoriei.,Învață să identifici personaje istorice influente.,mismatch
+SUBJECT,description,sk,Learn to identify influential historical figures.,"Spoznajte ľudí, ktorí utvárali beh dejín.",Naučte sa identifikovať vplyvné historické postavy.,mismatch
+SUBJECT,name,sk,Historical Figures,Historické osobnosti,Historické postavy,mismatch
+SUBJECT,description,sl,Learn to identify influential historical figures.,"Spoznajte ljudi, ki so krojili tok zgodovine.",Naučite se prepoznati vplivne zgodovinske osebnosti.,mismatch
+SUBJECT,description,sv,Learn to identify influential historical figures.,Möt människorna som formade historiens gång.,Lär dig att identifiera inflytelserika historiska personer.,mismatch
+SUBJECT,name,tl,Historical Figures,Mga Makasaysayang Tao,Mga Makasaysayang Pigura,mismatch
+SUBJECT,description,tr,Learn to identify influential historical figures.,Tarihin akışını şekillendiren insanlarla tanışın.,Etkili tarihsel figürleri tanımlamayı öğrenin.,mismatch
+SUBJECT,description,tl,Learn to identify influential historical figures.,Kilalanin ang mga taong humubog sa takbo ng kasaysayan.,Matutong kilalanin ang mga maimpluwensyang makasaysayang numero.,mismatch
+SUBJECT,description,uk,Learn to identify influential historical figures.,"Познайомтеся з людьми, які змінили хід історії.",Навчіться розпізнавати впливових історичних діячів.,mismatch
+SUBJECT,description,vi,Learn to identify influential historical figures.,Gặp gỡ những người đã định hình nên tiến trình lịch sử.,Tìm hiểu để xác định các nhân vật lịch sử có ảnh hưởng.,mismatch
+fbee2c57-ef1f-4607-bfb8-91ec94f44ae8,answer,sk,Alexander the Great,Alexandra Veľkého,Alexander Veľký,mismatch
+ab5a6797-aa3e-4d64-878a-57a42adb45d0,answer,nl,Ludwig Von Beethoven,Ludwig von Beethoven,Ludwig van Beethoven,mismatch
+64b49dc4-854a-4d8d-9915-d01575238f40,answer,ja,Woodrow Wilson,ウッドロウ・ウィルソン,ウッドロー・ウィルソン,mismatch
+21bf46d0-934b-423c-a842-248098d0d59c,answer,lv,Galileo Galilei,Galilejs Galilejs,Galileo Galilejs,mismatch
+555bc047-0efd-46b7-b96e-89b05be5a472,answer,sk,Charles II,Karol II,Karola II,mismatch
+c97e339f-f75f-4774-a16f-aeac56bca48f,answer,ko,Andrew Jackson,앤드루 잭슨,앤드류 잭슨,mismatch
+bd004a5c-85f2-4174-a96b-16002f58691e,answer,lv,Socrates,Sokrats,Sokrāts,mismatch
+22d20621-12fa-45c6-bb46-1cf69861667f,answer,sk,John Calvin,Ján Kalvín,Jána Kalvína,mismatch

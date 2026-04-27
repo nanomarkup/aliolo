@@ -67,19 +67,17 @@ describe('Admin Users API', () => {
       VALUES (?, ?, ?)
     `).bind(premiumSessionId, premium.user.id, Date.now() + 86_400_000).run();
     await env.DB.prepare(`
-      INSERT OR REPLACE INTO user_subscriptions (
+      INSERT OR REPLACE INTO manual_subscription_grants (
         id,
         user_id,
         status,
-        provider,
-        expiry_date,
-        purchase_token,
-        order_id,
-        product_id,
+        reason,
+        starts_at,
+        ends_at,
         created_at,
         updated_at
-      ) VALUES (?, ?, 'active', 'aliolo', DATE(CURRENT_TIMESTAMP, '+1 year'), 'token-1', 'order-1', 'premium_yearly', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
-    `).bind('sub-premium-user', premium.user.id).run();
+      ) VALUES (?, ?, 'active', 'Test premium user', CURRENT_TIMESTAMP, DATE(CURRENT_TIMESTAMP, '+1 year'), CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+    `).bind('manual-premium-user', premium.user.id).run();
 
     usageSubjectId = `admin-usage-subject-${Date.now()}`;
     await env.DB.prepare("INSERT OR IGNORE INTO pillars (id, sort_order, name) VALUES (1, 1, 'Core')").run();
@@ -151,7 +149,7 @@ describe('Admin Users API', () => {
     );
     expect(premium).toBeTruthy();
     expect(premium.subscription).toBeTruthy();
-    expect(premium.subscription.provider).toBe('aliolo');
+    expect(premium.subscription.provider).toBe('aliolo_manual');
     expect(premium.subscription.status).toBe('active');
   });
 
@@ -247,11 +245,46 @@ describe('Admin Users API', () => {
     expect(res.status).toBe(200);
 
     const subscription = await env.DB.prepare(
-      'SELECT status, provider, expiry_date FROM user_subscriptions WHERE user_id = ?'
+      'SELECT status, ends_at FROM manual_subscription_grants WHERE user_id = ? ORDER BY updated_at DESC LIMIT 1'
+    ).bind(premiumUserId).first() as any;
+    const profile = await env.DB.prepare(
+      'SELECT is_premium FROM profiles WHERE id = ?'
     ).bind(premiumUserId).first() as any;
 
     expect(subscription.status).toBe('inactive');
-    expect(subscription.provider).toBe('aliolo');
-    expect(subscription.expiry_date).toBe('2027-01-01T00:00:00Z');
+    expect(profile.is_premium).toBe(0);
+  });
+
+  it('should return premium users from provider subscriptions without a snapshot table', async () => {
+    const providerUser = await signupUser({
+      email: `admin_provider_${Date.now()}@test.com`,
+      password: 'password123',
+    });
+    await env.DB.prepare(`
+      INSERT INTO provider_subscriptions (
+        id,
+        user_id,
+        provider,
+        status,
+        external_subscription_id,
+        product_id,
+        current_period_end,
+        created_at,
+        updated_at
+      ) VALUES (?, ?, 'google_play', 'active', ?, 'aliolo_premium_yearly', DATE(CURRENT_TIMESTAMP, '+1 year'), CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+    `).bind('provider-admin-test', providerUser.user.id, `google-admin-${Date.now()}`).run();
+    await env.DB.prepare(
+      'UPDATE profiles SET is_premium = 1 WHERE id = ?'
+    ).bind(providerUser.user.id).run();
+
+    const res = await app.request('/api/admin/users?filter=premium&includeFake=true', {
+      headers: { 'X-Session-Id': adminSessionId },
+    }, env);
+
+    expect(res.status).toBe(200);
+    const data = await res.json() as any;
+    const premium = data.users.find((user: any) => user.id === providerUser.user.id);
+    expect(premium.subscription.provider).toBe('google_play');
+    expect(premium.subscription.effective_source).toBe('provider');
   });
 });

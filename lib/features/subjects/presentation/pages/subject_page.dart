@@ -409,6 +409,12 @@ class _SubjectPageState extends State<SubjectPage> {
                       : null;
 
               return AlioloScrollablePage(
+                leading: Icon(
+                  Icons.dashboard_customize,
+                  color: appBarColor,
+                  size: 24,
+                ),
+                leadingWidth: 56,
                 title: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -1341,6 +1347,12 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
             });
           },
           child: AlioloScrollablePage(
+            leading: Icon(
+              widget.pillar.getIconData(),
+              color: appBarColor,
+              size: 24,
+            ),
+            leadingWidth: 56,
             title: Text(
               widget.pillar.getTranslatedName(currentLang),
               style: const TextStyle(
@@ -1370,9 +1382,10 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
                     : null,
             actions:
                 isSmallScreen
-                    ? [homeAction, profileAction]
+                    ? [homeAction, backAction, profileAction]
                     : [
                       homeAction,
+                      backAction,
                       leaderboardAction,
                       profileAction,
                       settingsAction,
@@ -2228,6 +2241,12 @@ class _FolderPageState extends State<FolderPage> {
             });
           },
           child: AlioloScrollablePage(
+            leading: Icon(
+              widget.pillar.getIconData(),
+              color: appBarColor,
+              size: 24,
+            ),
+            leadingWidth: 56,
             title: Text(
               widget.folder.getName(currentLang),
               style: const TextStyle(

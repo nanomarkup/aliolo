@@ -1,0 +1,17 @@
+card_id,field,locale,global_text,current_text,translated_text,status
+SUBJECT,subject_name,da,Parts of the Human Body,Kropsdele,Dele af den menneskelige krop,mismatch
+SUBJECT,subject_name,en,Parts of the Human Body,Parts of Human Body,Parts of the Human Body,mismatch
+SUBJECT,subject_name,et,Parts of the Human Body,Inimese kehaosad,Inimkeha osad,mismatch
+SUBJECT,subject_name,ga,Parts of the Human Body,Baill an Choirp,Codanna de Chorp an Duine,mismatch
+SUBJECT,subject_name,ko,Parts of the Human Body,인체의 부위,인체의 일부,mismatch
+SUBJECT,subject_name,nl,Parts of the Human Body,Lichaamsdelen,Delen van het menselijk lichaam,mismatch
+SUBJECT,subject_name,ja,Parts of the Human Body,人体の部位,人体の各部,mismatch
+SUBJECT,subject_name,ro,Parts of the Human Body,Părțile corpului uman,Părți ale corpului uman,mismatch
+SUBJECT,subject_name,uk,Parts of the Human Body,Частини тіла людини,Частини людського тіла,mismatch
+SUBJECT,subject_name,sv,Parts of the Human Body,Människans kroppsdelar,Delar av människokroppen,mismatch
+SUBJECT,subject_name,tr,Parts of the Human Body,İnsan Vücudunun Bölümleri,İnsan Vücudunun Parçaları,mismatch
+SUBJECT,subject_name,vi,Parts of the Human Body,Các bộ phận trên cơ thể người,Các bộ phận của cơ thể con người,mismatch
+7e780ddb-4450-4cfe-9909-f901fc96aab6,answer,et,Ear,Kõrv,Kõrva,mismatch
+4c8e5505-99a0-4eaa-9370-fdf9d1acc32f,answer,lt,Lip,Lūpą,Lūpas,mismatch
+a9e5050b-8277-4912-b9f8-ea88a9a5463a,answer,mt,Hip,ġenbejn,Hip,mismatch
+cc29bc1c-ab2d-4a23-93f4-40071bc97f56,answer,fi,Thigh,Reiteen,Reisi,mismatch

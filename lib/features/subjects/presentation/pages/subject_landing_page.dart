@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:aliolo/core/theme/aliolo_layout_tokens.dart';
 import 'package:aliolo/data/models/subject_model.dart';
 import 'package:aliolo/data/models/card_model.dart';
@@ -32,6 +33,16 @@ import 'package:aliolo/features/management/presentation/pages/subject_edit_page.
 import 'package:aliolo/features/management/presentation/pages/add_card_page.dart';
 import 'package:aliolo/features/feedback/presentation/pages/feedback_page.dart';
 import 'package:aliolo/features/settings/presentation/pages/premium_upgrade_page.dart';
+
+class _EarlyRetestDecision {
+  final bool retest;
+  final bool remember;
+
+  const _EarlyRetestDecision({
+    required this.retest,
+    required this.remember,
+  });
+}
 
 class SubjectLandingPage extends StatefulWidget {
   final SubjectModel? subject;
@@ -123,6 +134,92 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
         _applyFilters();
       });
     }
+  }
+
+  String? _earlyRetestPreferenceKey() {
+    final subjectId = _currentSubject?.id;
+    if (subjectId == null || subjectId.isEmpty) return null;
+    return 'early_retest_allowed_$subjectId';
+  }
+
+  Future<bool> _canStartEarlyRetest() async {
+    final preferenceKey = _earlyRetestPreferenceKey();
+    if (preferenceKey != null) {
+      final prefs = await SharedPreferences.getInstance();
+      if (prefs.getBool(preferenceKey) ?? false) {
+        return true;
+      }
+    }
+
+    if (!mounted) return false;
+    final decision = await _showEarlyRetestDialog();
+    if (decision == null || !decision.retest) return false;
+
+    if (decision.remember && preferenceKey != null) {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool(preferenceKey, true);
+    }
+
+    return true;
+  }
+
+  Future<_EarlyRetestDecision?> _showEarlyRetestDialog() {
+    var remember = false;
+    return showDialog<_EarlyRetestDecision>(
+      context: context,
+      builder:
+          (dialogContext) => StatefulBuilder(
+            builder:
+                (context, setDialogState) => AlertDialog(
+                  title: const Text('No cards are due yet'),
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'You are up to date for this subject. You can still retest all cards now.',
+                      ),
+                      const SizedBox(height: 12),
+                      CheckboxListTile(
+                        value: remember,
+                        onChanged:
+                            (value) => setDialogState(
+                              () => remember = value ?? false,
+                            ),
+                        dense: true,
+                        contentPadding: EdgeInsets.zero,
+                        controlAffinity: ListTileControlAffinity.leading,
+                        title: const Text(
+                          "Don't show again for this subject",
+                        ),
+                      ),
+                    ],
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed:
+                          () => Navigator.of(dialogContext).pop(
+                            const _EarlyRetestDecision(
+                              retest: false,
+                              remember: false,
+                            ),
+                          ),
+                      child: Text(context.t('cancel')),
+                    ),
+                    ElevatedButton(
+                      onPressed:
+                          () => Navigator.of(dialogContext).pop(
+                            _EarlyRetestDecision(
+                              retest: true,
+                              remember: remember,
+                            ),
+                          ),
+                      child: const Text('Retest anyway'),
+                    ),
+                  ],
+                ),
+          ),
+    );
   }
 
   int get _minAvailableLevel {
@@ -475,6 +572,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
 
       final size = isTest ? user.testSessionSize : user.learnSessionSize;
       var emptySessionMessage = 'No cards available for this session.';
+      var userCanceledEarlyRetest = false;
       if (isTest && !(_currentSubject?.isMath ?? false)) {
         final candidateCards = List<SubjectCard>.from(sessionCards);
         final cardsById = {for (final sc in candidateCards) sc.card.id: sc};
@@ -492,7 +590,15 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                     .whereType<SubjectCard>()
                     .toList();
             if (sessionCards.isEmpty) {
-              emptySessionMessage = 'No cards due for review yet.';
+              final shouldRetest = await _canStartEarlyRetest();
+              if (shouldRetest) {
+                sessionCards = SessionBucketSampler.sampleBucket(
+                  candidateCards,
+                  size,
+                );
+              } else {
+                userCanceledEarlyRetest = true;
+              }
             }
           } else {
             sessionCards = SessionBucketSampler.sampleBucket(
@@ -506,7 +612,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
       }
 
       if (sessionCards.isEmpty) {
-        if (mounted) {
+        if (mounted && !userCanceledEarlyRetest) {
           ScaffoldMessenger.of(
             context,
           ).showSnackBar(SnackBar(content: Text(emptySessionMessage)));
@@ -957,14 +1063,27 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
             appBarColor: pillarColor,
             actions:
                 isSmallScreen
-                    ? [backAction, if (favoriteAction != null) favoriteAction]
+                    ? [
+                        IconButton(
+                          tooltip: context.t('home'),
+                          icon: Icon(pillar.getIconData(), color: appBarColor, size: 24),
+                          onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
+                        ),
+                        backAction,
+                        if (favoriteAction != null) favoriteAction
+                      ]
                     : [
-                      backAction,
-                      if (favoriteAction != null) favoriteAction,
-                      if (editAction != null) editAction,
-                      if (deleteAction != null) deleteAction,
-                      feedbackAction,
-                    ],
+                        IconButton(
+                          tooltip: context.t('home'),
+                          icon: Icon(pillar.getIconData(), color: appBarColor, size: 24),
+                          onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
+                        ),
+                        backAction,
+                        if (favoriteAction != null) favoriteAction,
+                        if (editAction != null) editAction,
+                        if (deleteAction != null) deleteAction,
+                        feedbackAction,
+                      ],
             overflowActions:
                 isSmallScreen
                     ? [

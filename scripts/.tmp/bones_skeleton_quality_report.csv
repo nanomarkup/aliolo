@@ -1,0 +1,38 @@
+card_id,field,locale,global_text,current_text,translated_text,status
+SUBJECT,subject_name,cs,Bones of the Human Skeleton,Kosti lidského skeletu,Kosti lidské kostry,mismatch
+SUBJECT,subject_name,da,Bones of the Human Skeleton,Menneskets knogler,Knogler af det menneskelige skelet,mismatch
+SUBJECT,subject_name,ga,Bones of the Human Skeleton,Cnámha an Duine,Cnámha an Chnámharlaigh Dhaonna,mismatch
+SUBJECT,subject_name,fi,Bones of the Human Skeleton,Ihmisen luurangon luut,Ihmisen luuston luut,mismatch
+SUBJECT,subject_name,ja,Bones of the Human Skeleton,人体の骨,人間の骨格の骨,mismatch
+SUBJECT,subject_name,id,Bones of the Human Skeleton,Tulang Rangka Manusia,Tulang Kerangka Manusia,mismatch
+SUBJECT,subject_name,ko,Bones of the Human Skeleton,인체 골격의 뼈,인간 해골의 뼈,mismatch
+SUBJECT,subject_name,pl,Bones of the Human Skeleton,Kości szkieletu człowieka,Kości ludzkiego szkieletu,mismatch
+SUBJECT,subject_name,sv,Bones of the Human Skeleton,Människans skelettben,Ben av det mänskliga skelettet,mismatch
+SUBJECT,subject_name,uk,Bones of the Human Skeleton,Кістки скелета людини,Кістки людського скелета,mismatch
+SUBJECT,subject_name,tr,Bones of the Human Skeleton,İnsan İskeleti Kemikleri,İnsan İskeletinin Kemikleri,mismatch
+SUBJECT,subject_name,vi,Bones of the Human Skeleton,Các xương trong cơ thể người,Xương của bộ xương người,mismatch
+922d80ec-8b05-4d8b-be2d-9519af773180,answer,hi,Fifth metacarpal bone,पांचवी मेटाकार्पल हड्डी,पांचवीं मेटाकार्पल हड्डी,mismatch
+922d80ec-8b05-4d8b-be2d-9519af773180,answer,lt,Fifth metacarpal bone,Penktasis plaštakos kaulas,Penktas plaštakos kaulas,mismatch
+3ec209ac-4223-4ed7-888b-9c94d82f4da3,answer,mt,Third metacarpal bone,It-tielet għadam metakarpali,It-tielet għadam metacarpal,mismatch
+1fd68b2e-7671-4f44-ba76-12640aec01de,answer,uk,Malleus,Маллеус,Молоточок,mismatch
+0de4d576-3f31-4abd-a8e9-dcb542fa0c42,answer,pl,Proximal phalanges of hand,Bliższe paliczki dłoni,Proksymalne paliczki dłoni,mismatch
+953334bc-3ae0-4e62-96c1-722d6c2805cf,answer,fi,Lateral cuneiform bone,Sivusuunnassa nuolenpäällinen luu,Sivusuuntainen nuolenpäällinen luu,mismatch
+4e028b9e-9529-434d-b5d4-3ca376544acf,answer,mt,Distal phalanges of foot,Falangi distali tas-sieq,Falanġi distali tas-sieq,mismatch
+4e028b9e-9529-434d-b5d4-3ca376544acf,answer,sv,Distal phalanges of foot,Distala falanger på foten,Distala falanger av foten,mismatch
+dadd6d62-15f2-4d71-bef0-b609a1fd185d,answer,sv,Palatine bones,Palatine ben,Palatin ben,mismatch
+dadd6d62-15f2-4d71-bef0-b609a1fd185d,answer,tr,Palatine bones,Palatine kemikleri,Palatin kemikleri,mismatch
+6f14372c-6d40-44fe-ad94-01c9bd8633e3,answer,lv,Frontal bone,Frontālais kauls,Priekšējais kauls,mismatch
+9e437d36-5eb7-4d1a-869d-5d8d386ea987,answer,hu,Inferior nasal concha bones,Inferior orrkagyló csontok,Alsó orrkagyló csontok,mismatch
+f81a1e55-90cd-40fb-9ece-5fc766fc56d9,answer,nl,Hyoid bone,Tongbeen,Hyoid bot,mismatch
+d836f29b-bf4a-44f7-b568-a2eec373dd93,answer,da,Cervical vertebrae,Nakkehvirvler,Halshvirvler,mismatch
+32b1f218-0d8b-4a9f-bd0d-43bfde97a558,answer,es,Lunate,Lunar,Lunate,mismatch
+657469a1-e094-443a-bd70-7d52b3c665e6,answer,lv,Pisiform bone,Kaulveida kauls,Psiforms kauls,mismatch
+f0c6961d-5f0a-48f3-a4f3-a00ce190a842,answer,ro,Trapezoid bone,Os trapez,Os trapezoid,mismatch
+eb1ee462-84d4-4047-a15f-7f7ffce00913,answer,ko,Hamate bone,하메이트 뼈,Hamate 뼈,mismatch
+d7e80b7b-cbd5-44b1-a411-bd9965cfe7d8,answer,mt,Second metatarsal bone,It-tieni għadam metatarsal,It-tieni għadam metatarsali,mismatch
+f1500b3d-8000-4708-9eee-df09e5150b5c,answer,cs,Patella,Patella,Čéška,mismatch
+1abb8234-00e2-4709-884b-f7ed02488ec3,answer,cs,Metacarpals,Záprstní kosti,Metakarpy,mismatch
+1a172881-b865-406c-8eac-1e27dc0690d2,answer,nl,Cranial bones,Schedelbeenderen,Craniale botten,mismatch
+47cb2f83-09b3-4c1b-8960-d4d0ae2e7993,answer,et,Medial cuneiform bone,Mediaalne kiilkirja luu,Mediaalne kiilkirjaline luu,mismatch
+47cb2f83-09b3-4c1b-8960-d4d0ae2e7993,answer,ro,Medial cuneiform bone,Osul cuneiform medial,Os cuneiform medial,mismatch
+fdd8ca5f-141a-4f3f-87fa-00fd1ae6385c,answer,lv,Carpals,Karpaļi,Karpāļi,mismatch

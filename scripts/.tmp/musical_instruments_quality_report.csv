@@ -1,0 +1,37 @@
+item_id,field,locale,global_text,current_text,translated_text,status
+SUBJECT,name,ar,Musical Instruments,آلات موسيقية,الآلات الموسيقية,mismatch
+SUBJECT,description,ar,Learn to identify musical instruments.,اكتشف أدوات الموسيقى من جميع أنحاء العالم.,تعلم كيفية التعرف على الآلات الموسيقية.,mismatch
+SUBJECT,description,bg,Learn to identify musical instruments.,Открийте музикалните инструменти от целия свят.,Научете се да разпознавате музикални инструменти.,mismatch
+SUBJECT,description,en,Learn to identify musical instruments.,Discover the tools of music from around the world.,Learn to identify musical instruments.,mismatch
+SUBJECT,description,de,Learn to identify musical instruments.,Entdecke Musikinstrumente aus aller Welt.,"Lernen Sie, Musikinstrumente zu identifizieren.",mismatch
+SUBJECT,description,el,Learn to identify musical instruments.,Ανακαλύψτε τα μουσικά όργανα από όλο τον κόσμο.,Μάθετε να αναγνωρίζετε μουσικά όργανα.,mismatch
+SUBJECT,description,es,Learn to identify musical instruments.,Descubre los instrumentos musicales de todo el mundo.,Aprende a identificar instrumentos musicales.,mismatch
+SUBJECT,description,da,Learn to identify musical instruments.,Oplev musikinstrumenter fra hele verden.,Lær at identificere musikinstrumenter.,mismatch
+SUBJECT,description,et,Learn to identify musical instruments.,Avasta muusikariistu kogu maailmast.,Õppige tundma muusikainstrumente.,mismatch
+SUBJECT,description,cs,Learn to identify musical instruments.,Objevte hudební nástroje z celého světa.,Naučte se rozeznávat hudební nástroje.,mismatch
+SUBJECT,description,fr,Learn to identify musical instruments.,Découvrez les instruments de musique du monde entier.,Apprenez à identifier les instruments de musique.,mismatch
+SUBJECT,name,hi,Musical Instruments,वाद्य यंत्र,संगीत वाद्ययंत्र,mismatch
+SUBJECT,description,ga,Learn to identify musical instruments.,Faigh amach faoi uirlisí ceoil ó gach cearn den domhan.,Foghlaim uirlisí ceoil a aithint.,mismatch
+SUBJECT,description,hi,Learn to identify musical instruments.,दुनिया भर के संगीत के वाद्ययंत्रों की खोज करें।,संगीत वाद्ययंत्रों की पहचान करना सीखें.,mismatch
+SUBJECT,description,fi,Learn to identify musical instruments.,Löydä soittimia eri puolilta maailmaa.,Opi tunnistamaan soittimet.,mismatch
+SUBJECT,description,hr,Learn to identify musical instruments.,Otkrijte glazbene instrumente iz cijelog svijeta.,Naučiti prepoznati glazbene instrumente.,mismatch
+SUBJECT,description,it,Learn to identify musical instruments.,Scopri gli strumenti musicali di tutto il mondo.,Impara a identificare gli strumenti musicali.,mismatch
+SUBJECT,description,hu,Learn to identify musical instruments.,Fedezd fel a világ minden tájáról származó hangszereket!,Tanuld meg azonosítani a hangszereket.,mismatch
+SUBJECT,description,id,Learn to identify musical instruments.,Temukan alat musik dari seluruh dunia.,Belajar mengidentifikasi alat musik.,mismatch
+SUBJECT,description,ko,Learn to identify musical instruments.,전 세계의 악기들을 발견해보세요.,악기를 식별하는 방법을 배우십시오.,mismatch
+SUBJECT,description,lt,Learn to identify musical instruments.,Atraskite muzikos instrumentus iš viso pasaulio.,Išmokite atpažinti muzikos instrumentus.,mismatch
+SUBJECT,description,ja,Learn to identify musical instruments.,世界中の楽器を発見しましょう。,楽器を識別する方法を学びます。,mismatch
+SUBJECT,description,lv,Learn to identify musical instruments.,Atklājiet muzikos instrumentus no visas pasaules.,Iemācieties atpazīt mūzikas instrumentus.,mismatch
+SUBJECT,description,mt,Learn to identify musical instruments.,Skopri l-istrumenti tal-mużika minn madwar id-dinja.,Tgħallem tidentifika strumenti mużikali.,mismatch
+SUBJECT,description,nl,Learn to identify musical instruments.,Ontdek muziekinstrumenten van over de hele wereld.,Leer muziekinstrumenten identificeren.,mismatch
+SUBJECT,description,pt,Learn to identify musical instruments.,Descubra os instrumentos musicais de todo o mundo.,Aprenda a identificar instrumentos musicais.,mismatch
+SUBJECT,description,pl,Learn to identify musical instruments.,Odkryj instrumenty muzyczne z całego świata.,Naucz się rozpoznawać instrumenty muzyczne.,mismatch
+SUBJECT,description,ro,Learn to identify musical instruments.,Descoperă instrumentele muzicale din întreaga lume.,Învață să identifici instrumentele muzicale.,mismatch
+SUBJECT,description,sl,Learn to identify musical instruments.,Odkrijte glasbila z vsega sveta.,Naučite se prepoznati glasbila.,mismatch
+SUBJECT,description,sk,Learn to identify musical instruments.,Objavte hudobné nástroje z celého sveta.,Naučte sa rozoznávať hudobné nástroje.,mismatch
+SUBJECT,description,tr,Learn to identify musical instruments.,Dünyanın dört bir yanından müzik aletlerini keşfedin.,Müzik aletlerini tanımlamayı öğrenin.,mismatch
+SUBJECT,description,uk,Learn to identify musical instruments.,Відкрийте для себе музичні інструменти з усього світу.,Вчити розпізнавати музичні інструменти.,mismatch
+SUBJECT,description,sv,Learn to identify musical instruments.,Upptäck musikinstrument från hela världen.,Lär dig att identifiera musikinstrument.,mismatch
+SUBJECT,description,tl,Learn to identify musical instruments.,Tuklasin ang mga kagamitan sa musika mula sa buong mundo.,Matutong kilalanin ang mga instrumentong pangmusika.,mismatch
+SUBJECT,description,vi,Learn to identify musical instruments.,Khám phá các loại nhạc cụ từ khắp nơi trên thế giới.,Học cách nhận biết nhạc cụ.,mismatch
+5a4d99b9-0dad-4f1a-a8d6-789c488ac34c,answer,vi,Oboe,Kèn oboe,kèn ô-boa,mismatch

@@ -5,6 +5,7 @@ import 'package:aliolo/core/widgets/aliolo_image.dart';
 import 'package:aliolo/core/widgets/counting_grid.dart';
 import 'package:aliolo/core/widgets/addition_grid.dart';
 import 'package:aliolo/core/widgets/subtraction_grid.dart';
+import 'package:aliolo/core/utils/number_localizer.dart';
 
 class CardRenderer extends StatelessWidget {
   final CardModel card;
@@ -42,7 +43,7 @@ class CardRenderer extends StatelessWidget {
       return _buildAudioFallback();
     }
 
-    final colorRenderer = _buildColorRenderer();
+    final colorRenderer = _buildColorRenderer(lang);
     if (colorRenderer != null) return colorRenderer;
 
     if (card.isCountingRenderer) {
@@ -73,6 +74,7 @@ class CardRenderer extends StatelessWidget {
 
     final rawDisplayText = card.getDisplayText(lang).trim();
     if (rawDisplayText.isNotEmpty) {
+      final localizedDisplayText = NumberLocalizer.localizeString(rawDisplayText, lang);
       final isMatchingExclude = excludeText != null && rawDisplayText.toLowerCase() == excludeText!.toLowerCase();
       
       // If matches exclude and we have images, hide it.
@@ -80,7 +82,7 @@ class CardRenderer extends StatelessWidget {
       if (!isMatchingExclude || !hasPriorityVisuals) {
         return Center(
           child: Text(
-            rawDisplayText,
+            localizedDisplayText,
             style: TextStyle(
               fontSize: textFontSize ?? 48,
               fontWeight: FontWeight.w700,
@@ -101,6 +103,7 @@ class CardRenderer extends StatelessWidget {
         totalSum: card.numericalAnswer,
         maxOperand: subject?.maxOperand ?? 20,
         iconSize: (textFontSize ?? 24).clamp(12, 64).toDouble(),
+        languageCode: lang,
       );
     }
 
@@ -110,6 +113,7 @@ class CardRenderer extends StatelessWidget {
         maxOperand: subject?.maxOperand ?? 20,
         iconSize: (textFontSize ?? 24).clamp(12, 64).toDouble(),
         useNumbers: true,
+        languageCode: lang,
       );
     }
 
@@ -118,6 +122,7 @@ class CardRenderer extends StatelessWidget {
         totalSum: card.numericalAnswer,
         maxOperand: subject?.maxOperand ?? 20,
         iconSize: (textFontSize ?? 24).clamp(12, 64).toDouble(),
+        languageCode: lang,
       );
     }
 
@@ -127,21 +132,24 @@ class CardRenderer extends StatelessWidget {
         maxOperand: subject?.maxOperand ?? 20,
         iconSize: (textFontSize ?? 24).clamp(12, 64).toDouble(),
         useNumbers: true,
+        languageCode: lang,
       );
     }
 
     return null;
   }
 
-  Widget? _buildColorRenderer() {
+  Widget? _buildColorRenderer(String lang) {
     if (!card.isColors) return null;
+    final localizedText = card.getDisplayText(lang).trim();
     final colorCode =
-        card.displayText.trim().isNotEmpty
-            ? card.displayText.trim()
+        localizedText.isNotEmpty
+            ? localizedText
             : (card.hexColor ?? '');
     if (colorCode.isEmpty) return null;
 
-    final color = Color(int.parse(colorCode.replaceFirst('#', '0xFF')));
+    final colorHex = card.hexColor ?? colorCode;
+    final color = Color(int.parse(colorHex.replaceFirst('#', '0xFF')));
     return Stack(
       fit: StackFit.expand,
       children: [

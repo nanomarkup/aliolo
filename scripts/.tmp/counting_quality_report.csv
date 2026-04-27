@@ -1,0 +1,302 @@
+card_id,field,locale,global_text,current_text,translated_text,status
+SUBJECT,subject_name,cs,Counting,Počítání,Počítací,mismatch
+SUBJECT,subject_name,ar,Counting,العد,عد,mismatch
+SUBJECT,subject_name,el,Counting,Μέτρηση,Αρίθμηση,mismatch
+SUBJECT,subject_name,es,Counting,Contar,Cálculo,mismatch
+SUBJECT,subject_name,fr,Counting,Comptage,Compte,mismatch
+SUBJECT,subject_name,id,Counting,Menghitung,Perhitungan,mismatch
+SUBJECT,subject_name,ko,Counting,계수하기,계산,mismatch
+SUBJECT,subject_name,ga,Counting,Comhaireamh,Ag comhaireamh,mismatch
+SUBJECT,subject_name,pl,Counting,Liczenie,Rachunkowość,mismatch
+SUBJECT,subject_name,ja,Counting,数え方,数える,mismatch
+SUBJECT,subject_name,pt,Counting,Contagem,Contando,mismatch
+SUBJECT,subject_name,sv,Counting,Räkna,Räkning,mismatch
+SUBJECT,subject_name,tl,Counting,Pagbilang,Nagbibilang,mismatch
+SUBJECT,subject_name,ro,Counting,Numărare,Numărând,mismatch
+d0b71ccb-0d77-42ca-9a91-be9cf42fb1e0,answer,ar,4,٤,4,mismatch
+SUBJECT,subject_name,uk,Counting,Лічба,Підрахунок,mismatch
+d0b71ccb-0d77-42ca-9a91-be9cf42fb1e0,answer,hi,4,४,4,mismatch
+d0b71ccb-0d77-42ca-9a91-be9cf42fb1e0,answer,ko,4,사,4,mismatch
+d0b71ccb-0d77-42ca-9a91-be9cf42fb1e0,answer,ja,4,四,4,mismatch
+d0b71ccb-0d77-42ca-9a91-be9cf42fb1e0,prompt,cs,Count the objects:,Spočítej objekty:,Spočítejte předměty:,mismatch
+d0b71ccb-0d77-42ca-9a91-be9cf42fb1e0,prompt,ar,Count the objects:,عد الأشياء:,عد الكائنات:,mismatch
+d0b71ccb-0d77-42ca-9a91-be9cf42fb1e0,prompt,bg,Count the objects:,Преброй обектите:,Пребройте обектите:,mismatch
+d0b71ccb-0d77-42ca-9a91-be9cf42fb1e0,prompt,et,Count the objects:,Loenda objekte:,Loendage objekte:,mismatch
+d0b71ccb-0d77-42ca-9a91-be9cf42fb1e0,prompt,el,Count the objects:,Μέτρησε τα αντικείμενα:,Μετρήστε τα αντικείμενα:,mismatch
+d0b71ccb-0d77-42ca-9a91-be9cf42fb1e0,prompt,es,Count the objects:,Cuenta los objetos:,Cuente los objetos:,mismatch
+d0b71ccb-0d77-42ca-9a91-be9cf42fb1e0,prompt,fr,Count the objects:,Compte les objets :,Comptez les objets :,mismatch
+d0b71ccb-0d77-42ca-9a91-be9cf42fb1e0,prompt,hi,Count the objects:,वस्तुओं को गिनें:,वस्तुओं की गिनती करें:,mismatch
+d0b71ccb-0d77-42ca-9a91-be9cf42fb1e0,prompt,ja,Count the objects:,オブジェクトを数えてください：,オブジェクトを数える：,mismatch
+d0b71ccb-0d77-42ca-9a91-be9cf42fb1e0,prompt,hu,Count the objects:,Számold meg a tárgyakat:,Számolja meg az objektumokat:,mismatch
+d0b71ccb-0d77-42ca-9a91-be9cf42fb1e0,prompt,fi,Count the objects:,Laske objektit:,Laske esineet:,mismatch
+d0b71ccb-0d77-42ca-9a91-be9cf42fb1e0,prompt,it,Count the objects:,Conta gli oggetti:,Contare gli oggetti:,mismatch
+d0b71ccb-0d77-42ca-9a91-be9cf42fb1e0,prompt,nl,Count the objects:,Tel de objecten:,Tel de voorwerpen:,mismatch
+d0b71ccb-0d77-42ca-9a91-be9cf42fb1e0,prompt,ko,Count the objects:,물체의 개수를 세어보세요:,개체 수를 계산합니다.,mismatch
+d0b71ccb-0d77-42ca-9a91-be9cf42fb1e0,prompt,lv,Count the objects:,Saskaiti objektus:,Saskaitiet objektus:,mismatch
+d0b71ccb-0d77-42ca-9a91-be9cf42fb1e0,prompt,lt,Count the objects:,Suskaičiuok objektus:,Suskaičiuokite objektus:,mismatch
+d0b71ccb-0d77-42ca-9a91-be9cf42fb1e0,prompt,sk,Count the objects:,Spočítaj objekty:,Spočítajte predmety:,mismatch
+d0b71ccb-0d77-42ca-9a91-be9cf42fb1e0,prompt,sv,Count the objects:,Räkna objekten:,Räkna föremålen:,mismatch
+d0b71ccb-0d77-42ca-9a91-be9cf42fb1e0,prompt,tr,Count the objects:,Nesneleri say:,Nesneleri sayın:,mismatch
+d0b71ccb-0d77-42ca-9a91-be9cf42fb1e0,prompt,ro,Count the objects:,Numără obiectele:,Numărați obiectele:,mismatch
+4658c6aa-aad7-4965-bed8-ecba12be6f8b,answer,ar,7,٧,7,mismatch
+d0b71ccb-0d77-42ca-9a91-be9cf42fb1e0,prompt,uk,Count the objects:,Порахуй об'єкти:,Полічіть предмети:,mismatch
+4658c6aa-aad7-4965-bed8-ecba12be6f8b,answer,hi,7,७,7,mismatch
+d0b71ccb-0d77-42ca-9a91-be9cf42fb1e0,prompt,vi,Count the objects:,Đếm các đối tượng:,Đếm các đồ vật:,mismatch
+4658c6aa-aad7-4965-bed8-ecba12be6f8b,answer,ko,7,칠,7,mismatch
+4658c6aa-aad7-4965-bed8-ecba12be6f8b,answer,ja,7,七,7,mismatch
+4658c6aa-aad7-4965-bed8-ecba12be6f8b,prompt,bg,Count the objects:,Преброй обектите:,Пребройте обектите:,mismatch
+4658c6aa-aad7-4965-bed8-ecba12be6f8b,prompt,cs,Count the objects:,Spočítej objekty:,Spočítejte předměty:,mismatch
+4658c6aa-aad7-4965-bed8-ecba12be6f8b,prompt,et,Count the objects:,Loenda objekte:,Loendage objekte:,mismatch
+4658c6aa-aad7-4965-bed8-ecba12be6f8b,prompt,fi,Count the objects:,Laske objektit:,Laske esineet:,mismatch
+4658c6aa-aad7-4965-bed8-ecba12be6f8b,prompt,el,Count the objects:,Μέτρησε τα αντικείμενα:,Μετρήστε τα αντικείμενα:,mismatch
+4658c6aa-aad7-4965-bed8-ecba12be6f8b,prompt,es,Count the objects:,Cuenta los objetos:,Cuente los objetos:,mismatch
+4658c6aa-aad7-4965-bed8-ecba12be6f8b,prompt,fr,Count the objects:,Compte les objets :,Comptez les objets :,mismatch
+4658c6aa-aad7-4965-bed8-ecba12be6f8b,prompt,hi,Count the objects:,वस्तुओं को गिनें:,वस्तुओं की गिनती करें:,mismatch
+4658c6aa-aad7-4965-bed8-ecba12be6f8b,prompt,hu,Count the objects:,Számold meg a tárgyakat:,Számolja meg az objektumokat:,mismatch
+4658c6aa-aad7-4965-bed8-ecba12be6f8b,prompt,it,Count the objects:,Conta gli oggetti:,Contare gli oggetti:,mismatch
+4658c6aa-aad7-4965-bed8-ecba12be6f8b,prompt,ar,Count the objects:,عد الأشياء:,عد الكائنات:,mismatch
+4658c6aa-aad7-4965-bed8-ecba12be6f8b,prompt,ja,Count the objects:,オブジェクトを数えてください：,オブジェクトを数える：,mismatch
+4658c6aa-aad7-4965-bed8-ecba12be6f8b,prompt,lt,Count the objects:,Suskaičiuok objektus:,Suskaičiuokite objektus:,mismatch
+4658c6aa-aad7-4965-bed8-ecba12be6f8b,prompt,nl,Count the objects:,Tel de objecten:,Tel de voorwerpen:,mismatch
+4658c6aa-aad7-4965-bed8-ecba12be6f8b,prompt,ko,Count the objects:,물체의 개수를 세어보세요:,개체 수를 계산합니다.,mismatch
+4658c6aa-aad7-4965-bed8-ecba12be6f8b,prompt,ro,Count the objects:,Numără obiectele:,Numărați obiectele:,mismatch
+4658c6aa-aad7-4965-bed8-ecba12be6f8b,prompt,lv,Count the objects:,Saskaiti objektus:,Saskaitiet objektus:,mismatch
+4658c6aa-aad7-4965-bed8-ecba12be6f8b,prompt,sv,Count the objects:,Räkna objekten:,Räkna föremålen:,mismatch
+4658c6aa-aad7-4965-bed8-ecba12be6f8b,prompt,sk,Count the objects:,Spočítaj objekty:,Spočítajte predmety:,mismatch
+4658c6aa-aad7-4965-bed8-ecba12be6f8b,prompt,tr,Count the objects:,Nesneleri say:,Nesneleri sayın:,mismatch
+4658c6aa-aad7-4965-bed8-ecba12be6f8b,prompt,uk,Count the objects:,Порахуй об'єкти:,Полічіть предмети:,mismatch
+4658c6aa-aad7-4965-bed8-ecba12be6f8b,prompt,vi,Count the objects:,Đếm các đối tượng:,Đếm các đồ vật:,mismatch
+b80dc723-c8ff-448b-af1b-ceaf8f3e1153,answer,hi,6,६,6,mismatch
+b80dc723-c8ff-448b-af1b-ceaf8f3e1153,answer,ja,6,六,6,mismatch
+b80dc723-c8ff-448b-af1b-ceaf8f3e1153,answer,ar,6,٦,6,mismatch
+b80dc723-c8ff-448b-af1b-ceaf8f3e1153,answer,ko,6,육,6,mismatch
+b80dc723-c8ff-448b-af1b-ceaf8f3e1153,prompt,ar,Count the objects:,عد الأشياء:,عد الكائنات:,mismatch
+b80dc723-c8ff-448b-af1b-ceaf8f3e1153,prompt,cs,Count the objects:,Spočítej objekty:,Spočítejte předměty:,mismatch
+b80dc723-c8ff-448b-af1b-ceaf8f3e1153,prompt,bg,Count the objects:,Преброй обектите:,Пребройте обектите:,mismatch
+b80dc723-c8ff-448b-af1b-ceaf8f3e1153,prompt,el,Count the objects:,Μέτρησε τα αντικείμενα:,Μετρήστε τα αντικείμενα:,mismatch
+b80dc723-c8ff-448b-af1b-ceaf8f3e1153,prompt,es,Count the objects:,Cuenta los objetos:,Cuente los objetos:,mismatch
+b80dc723-c8ff-448b-af1b-ceaf8f3e1153,prompt,et,Count the objects:,Loenda objekte:,Loendage objekte:,mismatch
+b80dc723-c8ff-448b-af1b-ceaf8f3e1153,prompt,fi,Count the objects:,Laske objektit:,Laske esineet:,mismatch
+b80dc723-c8ff-448b-af1b-ceaf8f3e1153,prompt,hi,Count the objects:,वस्तुओं को गिनें:,वस्तुओं की गिनती करें:,mismatch
+b80dc723-c8ff-448b-af1b-ceaf8f3e1153,prompt,fr,Count the objects:,Compte les objets :,Comptez les objets :,mismatch
+b80dc723-c8ff-448b-af1b-ceaf8f3e1153,prompt,hu,Count the objects:,Számold meg a tárgyakat:,Számolja meg az objektumokat:,mismatch
+b80dc723-c8ff-448b-af1b-ceaf8f3e1153,prompt,it,Count the objects:,Conta gli oggetti:,Contare gli oggetti:,mismatch
+b80dc723-c8ff-448b-af1b-ceaf8f3e1153,prompt,ja,Count the objects:,オブジェクトを数えてください：,オブジェクトを数える：,mismatch
+b80dc723-c8ff-448b-af1b-ceaf8f3e1153,prompt,ko,Count the objects:,물체의 개수를 세어보세요:,개체 수를 계산합니다.,mismatch
+b80dc723-c8ff-448b-af1b-ceaf8f3e1153,prompt,lt,Count the objects:,Suskaičiuok objektus:,Suskaičiuokite objektus:,mismatch
+b80dc723-c8ff-448b-af1b-ceaf8f3e1153,prompt,lv,Count the objects:,Saskaiti objektus:,Saskaitiet objektus:,mismatch
+b80dc723-c8ff-448b-af1b-ceaf8f3e1153,prompt,nl,Count the objects:,Tel de objecten:,Tel de voorwerpen:,mismatch
+b80dc723-c8ff-448b-af1b-ceaf8f3e1153,prompt,sk,Count the objects:,Spočítaj objekty:,Spočítajte predmety:,mismatch
+b80dc723-c8ff-448b-af1b-ceaf8f3e1153,prompt,ro,Count the objects:,Numără obiectele:,Numărați obiectele:,mismatch
+b80dc723-c8ff-448b-af1b-ceaf8f3e1153,prompt,sv,Count the objects:,Räkna objekten:,Räkna föremålen:,mismatch
+b80dc723-c8ff-448b-af1b-ceaf8f3e1153,prompt,uk,Count the objects:,Порахуй об'єкти:,Полічіть предмети:,mismatch
+b80dc723-c8ff-448b-af1b-ceaf8f3e1153,prompt,vi,Count the objects:,Đếm các đối tượng:,Đếm các đồ vật:,mismatch
+4b628fa8-ef0a-41cb-81d9-9d76fa07b144,answer,ar,1,١,1,mismatch
+4b628fa8-ef0a-41cb-81d9-9d76fa07b144,answer,hi,1,१,1,mismatch
+4b628fa8-ef0a-41cb-81d9-9d76fa07b144,answer,ja,1,一,1,mismatch
+4b628fa8-ef0a-41cb-81d9-9d76fa07b144,answer,ko,1,일,1,mismatch
+b80dc723-c8ff-448b-af1b-ceaf8f3e1153,prompt,tr,Count the objects:,Nesneleri say:,Nesneleri sayın:,mismatch
+4b628fa8-ef0a-41cb-81d9-9d76fa07b144,prompt,ar,Count the objects:,عد الأشياء:,عد الكائنات:,mismatch
+4b628fa8-ef0a-41cb-81d9-9d76fa07b144,prompt,bg,Count the objects:,Преброй обектите:,Пребройте обектите:,mismatch
+4b628fa8-ef0a-41cb-81d9-9d76fa07b144,prompt,cs,Count the objects:,Spočítej objekty:,Spočítejte předměty:,mismatch
+4b628fa8-ef0a-41cb-81d9-9d76fa07b144,prompt,el,Count the objects:,Μέτρησε τα αντικείμενα:,Μετρήστε τα αντικείμενα:,mismatch
+4b628fa8-ef0a-41cb-81d9-9d76fa07b144,prompt,fi,Count the objects:,Laske objektit:,Laske esineet:,mismatch
+4b628fa8-ef0a-41cb-81d9-9d76fa07b144,prompt,et,Count the objects:,Loenda objekte:,Loendage objekte:,mismatch
+4b628fa8-ef0a-41cb-81d9-9d76fa07b144,prompt,es,Count the objects:,Cuenta los objetos:,Cuente los objetos:,mismatch
+4b628fa8-ef0a-41cb-81d9-9d76fa07b144,prompt,fr,Count the objects:,Compte les objets :,Comptez les objets :,mismatch
+4b628fa8-ef0a-41cb-81d9-9d76fa07b144,prompt,hi,Count the objects:,वस्तुओं को गिनें:,वस्तुओं की गिनती करें:,mismatch
+4b628fa8-ef0a-41cb-81d9-9d76fa07b144,prompt,hu,Count the objects:,Számold meg a tárgyakat:,Számolja meg az objektumokat:,mismatch
+4b628fa8-ef0a-41cb-81d9-9d76fa07b144,prompt,it,Count the objects:,Conta gli oggetti:,Contare gli oggetti:,mismatch
+4b628fa8-ef0a-41cb-81d9-9d76fa07b144,prompt,ko,Count the objects:,물체의 개수를 세어보세요:,개체 수를 계산합니다.,mismatch
+4b628fa8-ef0a-41cb-81d9-9d76fa07b144,prompt,ja,Count the objects:,オブジェクトを数えてください：,オブジェクトを数える：,mismatch
+4b628fa8-ef0a-41cb-81d9-9d76fa07b144,prompt,lt,Count the objects:,Suskaičiuok objektus:,Suskaičiuokite objektus:,mismatch
+4b628fa8-ef0a-41cb-81d9-9d76fa07b144,prompt,lv,Count the objects:,Saskaiti objektus:,Saskaitiet objektus:,mismatch
+4b628fa8-ef0a-41cb-81d9-9d76fa07b144,prompt,nl,Count the objects:,Tel de objecten:,Tel de voorwerpen:,mismatch
+4b628fa8-ef0a-41cb-81d9-9d76fa07b144,prompt,ro,Count the objects:,Numără obiectele:,Numărați obiectele:,mismatch
+4b628fa8-ef0a-41cb-81d9-9d76fa07b144,prompt,sv,Count the objects:,Räkna objekten:,Räkna föremålen:,mismatch
+4b628fa8-ef0a-41cb-81d9-9d76fa07b144,prompt,tr,Count the objects:,Nesneleri say:,Nesneleri sayın:,mismatch
+4b628fa8-ef0a-41cb-81d9-9d76fa07b144,prompt,uk,Count the objects:,Порахуй об'єкти:,Полічіть предмети:,mismatch
+4b628fa8-ef0a-41cb-81d9-9d76fa07b144,prompt,vi,Count the objects:,Đếm các đối tượng:,Đếm các đồ vật:,mismatch
+502a0350-49a5-4616-853d-a92228f6251b,answer,ar,8,٨,8,mismatch
+4b628fa8-ef0a-41cb-81d9-9d76fa07b144,prompt,sk,Count the objects:,Spočítaj objekty:,Spočítajte predmety:,mismatch
+502a0350-49a5-4616-853d-a92228f6251b,answer,hi,8,८,8,mismatch
+502a0350-49a5-4616-853d-a92228f6251b,answer,ko,8,팔,8,mismatch
+502a0350-49a5-4616-853d-a92228f6251b,answer,ja,8,八,8,mismatch
+502a0350-49a5-4616-853d-a92228f6251b,prompt,ar,Count the objects:,عد الأشياء:,عد الكائنات:,mismatch
+502a0350-49a5-4616-853d-a92228f6251b,prompt,cs,Count the objects:,Spočítej objekty:,Spočítejte předměty:,mismatch
+502a0350-49a5-4616-853d-a92228f6251b,prompt,bg,Count the objects:,Преброй обектите:,Пребройте обектите:,mismatch
+502a0350-49a5-4616-853d-a92228f6251b,prompt,el,Count the objects:,Μέτρησε τα αντικείμενα:,Μετρήστε τα αντικείμενα:,mismatch
+502a0350-49a5-4616-853d-a92228f6251b,prompt,fi,Count the objects:,Laske objektit:,Laske esineet:,mismatch
+502a0350-49a5-4616-853d-a92228f6251b,prompt,et,Count the objects:,Loenda objekte:,Loendage objekte:,mismatch
+502a0350-49a5-4616-853d-a92228f6251b,prompt,es,Count the objects:,Cuenta los objetos:,Cuente los objetos:,mismatch
+502a0350-49a5-4616-853d-a92228f6251b,prompt,fr,Count the objects:,Compte les objets :,Comptez les objets :,mismatch
+502a0350-49a5-4616-853d-a92228f6251b,prompt,hi,Count the objects:,वस्तुओं को गिनें:,वस्तुओं की गिनती करें:,mismatch
+502a0350-49a5-4616-853d-a92228f6251b,prompt,hu,Count the objects:,Számold meg a tárgyakat:,Számolja meg az objektumokat:,mismatch
+502a0350-49a5-4616-853d-a92228f6251b,prompt,it,Count the objects:,Conta gli oggetti:,Contare gli oggetti:,mismatch
+502a0350-49a5-4616-853d-a92228f6251b,prompt,ja,Count the objects:,オブジェクトを数えてください：,オブジェクトを数える：,mismatch
+502a0350-49a5-4616-853d-a92228f6251b,prompt,ko,Count the objects:,물체의 개수를 세어보세요:,개체 수를 계산합니다.,mismatch
+502a0350-49a5-4616-853d-a92228f6251b,prompt,lv,Count the objects:,Saskaiti objektus:,Saskaitiet objektus:,mismatch
+502a0350-49a5-4616-853d-a92228f6251b,prompt,lt,Count the objects:,Suskaičiuok objektus:,Suskaičiuokite objektus:,mismatch
+502a0350-49a5-4616-853d-a92228f6251b,prompt,nl,Count the objects:,Tel de objecten:,Tel de voorwerpen:,mismatch
+502a0350-49a5-4616-853d-a92228f6251b,prompt,sk,Count the objects:,Spočítaj objekty:,Spočítajte predmety:,mismatch
+502a0350-49a5-4616-853d-a92228f6251b,prompt,ro,Count the objects:,Numără obiectele:,Numărați obiectele:,mismatch
+502a0350-49a5-4616-853d-a92228f6251b,prompt,sv,Count the objects:,Räkna objekten:,Räkna föremålen:,mismatch
+502a0350-49a5-4616-853d-a92228f6251b,prompt,tr,Count the objects:,Nesneleri say:,Nesneleri sayın:,mismatch
+502a0350-49a5-4616-853d-a92228f6251b,prompt,uk,Count the objects:,Порахуй об'єкти:,Полічіть предмети:,mismatch
+502a0350-49a5-4616-853d-a92228f6251b,prompt,vi,Count the objects:,Đếm các đối tượng:,Đếm các đồ vật:,mismatch
+8c9b37f5-ed03-4a1b-a30f-61885f1e84a4,answer,ar,2,٢,2,mismatch
+8c9b37f5-ed03-4a1b-a30f-61885f1e84a4,answer,hi,2,२,2,mismatch
+8c9b37f5-ed03-4a1b-a30f-61885f1e84a4,answer,ko,2,이,2,mismatch
+8c9b37f5-ed03-4a1b-a30f-61885f1e84a4,answer,ja,2,二,2,mismatch
+8c9b37f5-ed03-4a1b-a30f-61885f1e84a4,prompt,ar,Count the objects:,عد الأشياء:,عد الكائنات:,mismatch
+8c9b37f5-ed03-4a1b-a30f-61885f1e84a4,prompt,cs,Count the objects:,Spočítej objekty:,Spočítejte předměty:,mismatch
+8c9b37f5-ed03-4a1b-a30f-61885f1e84a4,prompt,bg,Count the objects:,Преброй обектите:,Пребройте обектите:,mismatch
+8c9b37f5-ed03-4a1b-a30f-61885f1e84a4,prompt,el,Count the objects:,Μέτρησε τα αντικείμενα:,Μετρήστε τα αντικείμενα:,mismatch
+8c9b37f5-ed03-4a1b-a30f-61885f1e84a4,prompt,es,Count the objects:,Cuenta los objetos:,Cuente los objetos:,mismatch
+8c9b37f5-ed03-4a1b-a30f-61885f1e84a4,prompt,fi,Count the objects:,Laske objektit:,Laske esineet:,mismatch
+8c9b37f5-ed03-4a1b-a30f-61885f1e84a4,prompt,fr,Count the objects:,Compte les objets :,Comptez les objets :,mismatch
+8c9b37f5-ed03-4a1b-a30f-61885f1e84a4,prompt,hi,Count the objects:,वस्तुओं को गिनें:,वस्तुओं की गिनती करें:,mismatch
+8c9b37f5-ed03-4a1b-a30f-61885f1e84a4,prompt,et,Count the objects:,Loenda objekte:,Loendage objekte:,mismatch
+8c9b37f5-ed03-4a1b-a30f-61885f1e84a4,prompt,hu,Count the objects:,Számold meg a tárgyakat:,Számolja meg az objektumokat:,mismatch
+8c9b37f5-ed03-4a1b-a30f-61885f1e84a4,prompt,it,Count the objects:,Conta gli oggetti:,Contare gli oggetti:,mismatch
+8c9b37f5-ed03-4a1b-a30f-61885f1e84a4,prompt,ko,Count the objects:,물체의 개수를 세어보세요:,개체 수를 계산합니다.,mismatch
+8c9b37f5-ed03-4a1b-a30f-61885f1e84a4,prompt,lt,Count the objects:,Suskaičiuok objektus:,Suskaičiuokite objektus:,mismatch
+8c9b37f5-ed03-4a1b-a30f-61885f1e84a4,prompt,lv,Count the objects:,Saskaiti objektus:,Saskaitiet objektus:,mismatch
+8c9b37f5-ed03-4a1b-a30f-61885f1e84a4,prompt,sk,Count the objects:,Spočítaj objekty:,Spočítajte predmety:,mismatch
+8c9b37f5-ed03-4a1b-a30f-61885f1e84a4,prompt,sv,Count the objects:,Räkna objekten:,Räkna föremålen:,mismatch
+8c9b37f5-ed03-4a1b-a30f-61885f1e84a4,prompt,ro,Count the objects:,Numără obiectele:,Numărați obiectele:,mismatch
+8c9b37f5-ed03-4a1b-a30f-61885f1e84a4,prompt,tr,Count the objects:,Nesneleri say:,Nesneleri sayın:,mismatch
+8c9b37f5-ed03-4a1b-a30f-61885f1e84a4,prompt,nl,Count the objects:,Tel de objecten:,Tel de voorwerpen:,mismatch
+8c9b37f5-ed03-4a1b-a30f-61885f1e84a4,prompt,uk,Count the objects:,Порахуй об'єкти:,Полічіть предмети:,mismatch
+8c9b37f5-ed03-4a1b-a30f-61885f1e84a4,prompt,vi,Count the objects:,Đếm các đối tượng:,Đếm các đồ vật:,mismatch
+8c9b37f5-ed03-4a1b-a30f-61885f1e84a4,prompt,ja,Count the objects:,オブジェクトを数えてください：,オブジェクトを数える：,mismatch
+aa978f38-d7f6-4182-bea7-d9a9c05f7106,answer,ar,5,٥,5,mismatch
+aa978f38-d7f6-4182-bea7-d9a9c05f7106,answer,hi,5,५,5,mismatch
+aa978f38-d7f6-4182-bea7-d9a9c05f7106,answer,ko,5,오,5,mismatch
+aa978f38-d7f6-4182-bea7-d9a9c05f7106,answer,ja,5,五,5,mismatch
+aa978f38-d7f6-4182-bea7-d9a9c05f7106,prompt,ar,Count the objects:,عد الأشياء:,عد الكائنات:,mismatch
+aa978f38-d7f6-4182-bea7-d9a9c05f7106,prompt,cs,Count the objects:,Spočítej objekty:,Spočítejte předměty:,mismatch
+aa978f38-d7f6-4182-bea7-d9a9c05f7106,prompt,es,Count the objects:,Cuenta los objetos:,Cuente los objetos:,mismatch
+aa978f38-d7f6-4182-bea7-d9a9c05f7106,prompt,et,Count the objects:,Loenda objekte:,Loendage objekte:,mismatch
+aa978f38-d7f6-4182-bea7-d9a9c05f7106,prompt,el,Count the objects:,Μέτρησε τα αντικείμενα:,Μετρήστε τα αντικείμενα:,mismatch
+aa978f38-d7f6-4182-bea7-d9a9c05f7106,prompt,fr,Count the objects:,Compte les objets :,Comptez les objets :,mismatch
+aa978f38-d7f6-4182-bea7-d9a9c05f7106,prompt,hi,Count the objects:,वस्तुओं को गिनें:,वस्तुओं की गिनती करें:,mismatch
+aa978f38-d7f6-4182-bea7-d9a9c05f7106,prompt,it,Count the objects:,Conta gli oggetti:,Contare gli oggetti:,mismatch
+aa978f38-d7f6-4182-bea7-d9a9c05f7106,prompt,hu,Count the objects:,Számold meg a tárgyakat:,Számolja meg az objektumokat:,mismatch
+aa978f38-d7f6-4182-bea7-d9a9c05f7106,prompt,fi,Count the objects:,Laske objektit:,Laske esineet:,mismatch
+aa978f38-d7f6-4182-bea7-d9a9c05f7106,prompt,ja,Count the objects:,オブジェクトを数えてください：,オブジェクトを数える：,mismatch
+aa978f38-d7f6-4182-bea7-d9a9c05f7106,prompt,lt,Count the objects:,Suskaičiuok objektus:,Suskaičiuokite objektus:,mismatch
+aa978f38-d7f6-4182-bea7-d9a9c05f7106,prompt,lv,Count the objects:,Saskaiti objektus:,Saskaitiet objektus:,mismatch
+aa978f38-d7f6-4182-bea7-d9a9c05f7106,prompt,ko,Count the objects:,물체의 개수를 세어보세요:,개체 수를 계산합니다.,mismatch
+aa978f38-d7f6-4182-bea7-d9a9c05f7106,prompt,bg,Count the objects:,Преброй обектите:,Пребройте обектите:,mismatch
+aa978f38-d7f6-4182-bea7-d9a9c05f7106,prompt,ro,Count the objects:,Numără obiectele:,Numărați obiectele:,mismatch
+aa978f38-d7f6-4182-bea7-d9a9c05f7106,prompt,sk,Count the objects:,Spočítaj objekty:,Spočítajte predmety:,mismatch
+aa978f38-d7f6-4182-bea7-d9a9c05f7106,prompt,sv,Count the objects:,Räkna objekten:,Räkna föremålen:,mismatch
+aa978f38-d7f6-4182-bea7-d9a9c05f7106,prompt,nl,Count the objects:,Tel de objecten:,Tel de voorwerpen:,mismatch
+aa978f38-d7f6-4182-bea7-d9a9c05f7106,prompt,tr,Count the objects:,Nesneleri say:,Nesneleri sayın:,mismatch
+aa978f38-d7f6-4182-bea7-d9a9c05f7106,prompt,uk,Count the objects:,Порахуй об'єкти:,Полічіть предмети:,mismatch
+aa978f38-d7f6-4182-bea7-d9a9c05f7106,prompt,vi,Count the objects:,Đếm các đối tượng:,Đếm các đồ vật:,mismatch
+e0665978-b740-4a48-b63d-b465231bbd03,answer,ar,9,٩,9,mismatch
+e0665978-b740-4a48-b63d-b465231bbd03,answer,hi,9,९,9,mismatch
+e0665978-b740-4a48-b63d-b465231bbd03,answer,ko,9,구,9,mismatch
+e0665978-b740-4a48-b63d-b465231bbd03,answer,ja,9,九,9,mismatch
+e0665978-b740-4a48-b63d-b465231bbd03,prompt,ar,Count the objects:,عد الأشياء:,عد الكائنات:,mismatch
+e0665978-b740-4a48-b63d-b465231bbd03,prompt,bg,Count the objects:,Преброй обектите:,Пребройте обектите:,mismatch
+e0665978-b740-4a48-b63d-b465231bbd03,prompt,cs,Count the objects:,Spočítej objekty:,Spočítejte předměty:,mismatch
+e0665978-b740-4a48-b63d-b465231bbd03,prompt,fi,Count the objects:,Laske objektit:,Laske esineet:,mismatch
+e0665978-b740-4a48-b63d-b465231bbd03,prompt,et,Count the objects:,Loenda objekte:,Loendage objekte:,mismatch
+e0665978-b740-4a48-b63d-b465231bbd03,prompt,fr,Count the objects:,Compte les objets :,Comptez les objets :,mismatch
+e0665978-b740-4a48-b63d-b465231bbd03,prompt,hi,Count the objects:,वस्तुओं को गिनें:,वस्तुओं की गिनती करें:,mismatch
+e0665978-b740-4a48-b63d-b465231bbd03,prompt,hu,Count the objects:,Számold meg a tárgyakat:,Számolja meg az objektumokat:,mismatch
+e0665978-b740-4a48-b63d-b465231bbd03,prompt,it,Count the objects:,Conta gli oggetti:,Contare gli oggetti:,mismatch
+e0665978-b740-4a48-b63d-b465231bbd03,prompt,ja,Count the objects:,オブジェクトを数えてください：,オブジェクトを数える：,mismatch
+e0665978-b740-4a48-b63d-b465231bbd03,prompt,ko,Count the objects:,물체의 개수를 세어보세요:,개체 수를 계산합니다.,mismatch
+e0665978-b740-4a48-b63d-b465231bbd03,prompt,lt,Count the objects:,Suskaičiuok objektus:,Suskaičiuokite objektus:,mismatch
+e0665978-b740-4a48-b63d-b465231bbd03,prompt,el,Count the objects:,Μέτρησε τα αντικείμενα:,Μετρήστε τα αντικείμενα:,mismatch
+e0665978-b740-4a48-b63d-b465231bbd03,prompt,nl,Count the objects:,Tel de objecten:,Tel de voorwerpen:,mismatch
+e0665978-b740-4a48-b63d-b465231bbd03,prompt,sk,Count the objects:,Spočítaj objekty:,Spočítajte predmety:,mismatch
+e0665978-b740-4a48-b63d-b465231bbd03,prompt,ro,Count the objects:,Numără obiectele:,Numărați obiectele:,mismatch
+e0665978-b740-4a48-b63d-b465231bbd03,prompt,lv,Count the objects:,Saskaiti objektus:,Saskaitiet objektus:,mismatch
+e0665978-b740-4a48-b63d-b465231bbd03,prompt,tr,Count the objects:,Nesneleri say:,Nesneleri sayın:,mismatch
+e0665978-b740-4a48-b63d-b465231bbd03,prompt,es,Count the objects:,Cuenta los objetos:,Cuente los objetos:,mismatch
+e0665978-b740-4a48-b63d-b465231bbd03,prompt,uk,Count the objects:,Порахуй об'єкти:,Полічіть предмети:,mismatch
+c669f663-1a26-4236-9e3a-9ba2f3c33092,answer,ar,10,١٠,10,mismatch
+e0665978-b740-4a48-b63d-b465231bbd03,prompt,vi,Count the objects:,Đếm các đối tượng:,Đếm các đồ vật:,mismatch
+e0665978-b740-4a48-b63d-b465231bbd03,prompt,sv,Count the objects:,Räkna objekten:,Räkna föremålen:,mismatch
+c669f663-1a26-4236-9e3a-9ba2f3c33092,answer,hi,10,१०,10,mismatch
+c669f663-1a26-4236-9e3a-9ba2f3c33092,answer,ja,10,十,10,mismatch
+c669f663-1a26-4236-9e3a-9ba2f3c33092,answer,ko,10,십,10,mismatch
+c669f663-1a26-4236-9e3a-9ba2f3c33092,prompt,ar,Count the objects:,عد الأشياء:,عد الكائنات:,mismatch
+c669f663-1a26-4236-9e3a-9ba2f3c33092,prompt,bg,Count the objects:,Преброй обектите:,Пребройте обектите:,mismatch
+c669f663-1a26-4236-9e3a-9ba2f3c33092,prompt,el,Count the objects:,Μέτρησε τα αντικείμενα:,Μετρήστε τα αντικείμενα:,mismatch
+c669f663-1a26-4236-9e3a-9ba2f3c33092,prompt,cs,Count the objects:,Spočítej objekty:,Spočítejte předměty:,mismatch
+c669f663-1a26-4236-9e3a-9ba2f3c33092,prompt,fi,Count the objects:,Laske objektit:,Laske esineet:,mismatch
+c669f663-1a26-4236-9e3a-9ba2f3c33092,prompt,es,Count the objects:,Cuenta los objetos:,Cuente los objetos:,mismatch
+c669f663-1a26-4236-9e3a-9ba2f3c33092,prompt,et,Count the objects:,Loenda objekte:,Loendage objekte:,mismatch
+c669f663-1a26-4236-9e3a-9ba2f3c33092,prompt,hi,Count the objects:,वस्तुओं को गिनें:,वस्तुओं की गिनती करें:,mismatch
+c669f663-1a26-4236-9e3a-9ba2f3c33092,prompt,fr,Count the objects:,Compte les objets :,Comptez les objets :,mismatch
+c669f663-1a26-4236-9e3a-9ba2f3c33092,prompt,ko,Count the objects:,물체의 개수를 세어보세요:,개체 수를 계산합니다.,mismatch
+c669f663-1a26-4236-9e3a-9ba2f3c33092,prompt,lt,Count the objects:,Suskaičiuok objektus:,Suskaičiuokite objektus:,mismatch
+c669f663-1a26-4236-9e3a-9ba2f3c33092,prompt,it,Count the objects:,Conta gli oggetti:,Contare gli oggetti:,mismatch
+c669f663-1a26-4236-9e3a-9ba2f3c33092,prompt,lv,Count the objects:,Saskaiti objektus:,Saskaitiet objektus:,mismatch
+c669f663-1a26-4236-9e3a-9ba2f3c33092,prompt,nl,Count the objects:,Tel de objecten:,Tel de voorwerpen:,mismatch
+c669f663-1a26-4236-9e3a-9ba2f3c33092,prompt,ro,Count the objects:,Numără obiectele:,Numărați obiectele:,mismatch
+c669f663-1a26-4236-9e3a-9ba2f3c33092,prompt,hu,Count the objects:,Számold meg a tárgyakat:,Számolja meg az objektumokat:,mismatch
+c669f663-1a26-4236-9e3a-9ba2f3c33092,prompt,ja,Count the objects:,オブジェクトを数えてください：,オブジェクトを数える：,mismatch
+c669f663-1a26-4236-9e3a-9ba2f3c33092,prompt,sk,Count the objects:,Spočítaj objekty:,Spočítajte predmety:,mismatch
+c669f663-1a26-4236-9e3a-9ba2f3c33092,prompt,sv,Count the objects:,Räkna objekten:,Räkna föremålen:,mismatch
+c669f663-1a26-4236-9e3a-9ba2f3c33092,prompt,tr,Count the objects:,Nesneleri say:,Nesneleri sayın:,mismatch
+c669f663-1a26-4236-9e3a-9ba2f3c33092,prompt,uk,Count the objects:,Порахуй об'єкти:,Полічіть предмети:,mismatch
+c669f663-1a26-4236-9e3a-9ba2f3c33092,prompt,vi,Count the objects:,Đếm các đối tượng:,Đếm các đồ vật:,mismatch
+da4e2e4d-cfb4-4f54-a91d-b19bd87aeb70,answer,ar,3,٣,3,mismatch
+da4e2e4d-cfb4-4f54-a91d-b19bd87aeb70,answer,hi,3,३,3,mismatch
+da4e2e4d-cfb4-4f54-a91d-b19bd87aeb70,answer,ko,3,삼,3,mismatch
+da4e2e4d-cfb4-4f54-a91d-b19bd87aeb70,answer,ja,3,三,3,mismatch
+da4e2e4d-cfb4-4f54-a91d-b19bd87aeb70,prompt,ar,Count the objects:,عد الأشياء:,عد الكائنات:,mismatch
+da4e2e4d-cfb4-4f54-a91d-b19bd87aeb70,prompt,bg,Count the objects:,Преброй обектите:,Пребройте обектите:,mismatch
+da4e2e4d-cfb4-4f54-a91d-b19bd87aeb70,prompt,cs,Count the objects:,Spočítej objekty:,Spočítejte předměty:,mismatch
+da4e2e4d-cfb4-4f54-a91d-b19bd87aeb70,prompt,el,Count the objects:,Μέτρησε τα αντικείμενα:,Μετρήστε τα αντικείμενα:,mismatch
+da4e2e4d-cfb4-4f54-a91d-b19bd87aeb70,prompt,es,Count the objects:,Cuenta los objetos:,Cuente los objetos:,mismatch
+da4e2e4d-cfb4-4f54-a91d-b19bd87aeb70,prompt,et,Count the objects:,Loenda objekte:,Loendage objekte:,mismatch
+da4e2e4d-cfb4-4f54-a91d-b19bd87aeb70,prompt,fi,Count the objects:,Laske objektit:,Laske esineet:,mismatch
+da4e2e4d-cfb4-4f54-a91d-b19bd87aeb70,prompt,hi,Count the objects:,वस्तुओं को गिनें:,वस्तुओं की गिनती करें:,mismatch
+da4e2e4d-cfb4-4f54-a91d-b19bd87aeb70,prompt,hu,Count the objects:,Számold meg a tárgyakat:,Számolja meg az objektumokat:,mismatch
+da4e2e4d-cfb4-4f54-a91d-b19bd87aeb70,prompt,ja,Count the objects:,オブジェクトを数えてください：,オブジェクトを数える：,mismatch
+da4e2e4d-cfb4-4f54-a91d-b19bd87aeb70,prompt,it,Count the objects:,Conta gli oggetti:,Contare gli oggetti:,mismatch
+da4e2e4d-cfb4-4f54-a91d-b19bd87aeb70,prompt,lt,Count the objects:,Suskaičiuok objektus:,Suskaičiuokite objektus:,mismatch
+da4e2e4d-cfb4-4f54-a91d-b19bd87aeb70,prompt,ko,Count the objects:,물체의 개수를 세어보세요:,개체 수를 계산합니다.,mismatch
+da4e2e4d-cfb4-4f54-a91d-b19bd87aeb70,prompt,lv,Count the objects:,Saskaiti objektus:,Saskaitiet objektus:,mismatch
+da4e2e4d-cfb4-4f54-a91d-b19bd87aeb70,prompt,fr,Count the objects:,Compte les objets :,Comptez les objets :,mismatch
+da4e2e4d-cfb4-4f54-a91d-b19bd87aeb70,prompt,nl,Count the objects:,Tel de objecten:,Tel de voorwerpen:,mismatch
+da4e2e4d-cfb4-4f54-a91d-b19bd87aeb70,prompt,sk,Count the objects:,Spočítaj objekty:,Spočítajte predmety:,mismatch
+da4e2e4d-cfb4-4f54-a91d-b19bd87aeb70,prompt,tr,Count the objects:,Nesneleri say:,Nesneleri sayın:,mismatch
+da4e2e4d-cfb4-4f54-a91d-b19bd87aeb70,prompt,vi,Count the objects:,Đếm các đối tượng:,Đếm các đồ vật:,mismatch
+da4e2e4d-cfb4-4f54-a91d-b19bd87aeb70,prompt,uk,Count the objects:,Порахуй об'єкти:,Полічіть предмети:,mismatch
+b64e1e2a-6938-467a-a06b-e3f626ce6955,answer,ar,0,٠,0,mismatch
+da4e2e4d-cfb4-4f54-a91d-b19bd87aeb70,prompt,ro,Count the objects:,Numără obiectele:,Numărați obiectele:,mismatch
+da4e2e4d-cfb4-4f54-a91d-b19bd87aeb70,prompt,sv,Count the objects:,Räkna objekten:,Räkna föremålen:,mismatch
+b64e1e2a-6938-467a-a06b-e3f626ce6955,answer,ja,0,零,0,mismatch
+b64e1e2a-6938-467a-a06b-e3f626ce6955,answer,ko,0,영,0,mismatch
+b64e1e2a-6938-467a-a06b-e3f626ce6955,answer,hi,0,०,0,mismatch
+b64e1e2a-6938-467a-a06b-e3f626ce6955,prompt,ar,Count the objects:,عد الأشياء:,عد الكائنات:,mismatch
+b64e1e2a-6938-467a-a06b-e3f626ce6955,prompt,bg,Count the objects:,Преброй обектите:,Пребройте обектите:,mismatch
+b64e1e2a-6938-467a-a06b-e3f626ce6955,prompt,cs,Count the objects:,Spočítej objekty:,Spočítejte předměty:,mismatch
+b64e1e2a-6938-467a-a06b-e3f626ce6955,prompt,el,Count the objects:,Μέτρησε τα αντικείμενα:,Μετρήστε τα αντικείμενα:,mismatch
+b64e1e2a-6938-467a-a06b-e3f626ce6955,prompt,fi,Count the objects:,Laske objektit:,Laske esineet:,mismatch
+b64e1e2a-6938-467a-a06b-e3f626ce6955,prompt,et,Count the objects:,Loenda objekte:,Loendage objekte:,mismatch
+b64e1e2a-6938-467a-a06b-e3f626ce6955,prompt,fr,Count the objects:,Compte les objets :,Comptez les objets :,mismatch
+b64e1e2a-6938-467a-a06b-e3f626ce6955,prompt,hi,Count the objects:,वस्तुओं को गिनें:,वस्तुओं की गिनती करें:,mismatch
+b64e1e2a-6938-467a-a06b-e3f626ce6955,prompt,hu,Count the objects:,Számold meg a tárgyakat:,Számolja meg az objektumokat:,mismatch
+b64e1e2a-6938-467a-a06b-e3f626ce6955,prompt,it,Count the objects:,Conta gli oggetti:,Contare gli oggetti:,mismatch
+b64e1e2a-6938-467a-a06b-e3f626ce6955,prompt,es,Count the objects:,Cuenta los objetos:,Cuente los objetos:,mismatch
+b64e1e2a-6938-467a-a06b-e3f626ce6955,prompt,ko,Count the objects:,물체의 개수를 세어보세요:,개체 수를 계산합니다.,mismatch
+b64e1e2a-6938-467a-a06b-e3f626ce6955,prompt,lt,Count the objects:,Suskaičiuok objektus:,Suskaičiuokite objektus:,mismatch
+b64e1e2a-6938-467a-a06b-e3f626ce6955,prompt,lv,Count the objects:,Saskaiti objektus:,Saskaitiet objektus:,mismatch
+b64e1e2a-6938-467a-a06b-e3f626ce6955,prompt,nl,Count the objects:,Tel de objecten:,Tel de voorwerpen:,mismatch
+b64e1e2a-6938-467a-a06b-e3f626ce6955,prompt,sk,Count the objects:,Spočítaj objekty:,Spočítajte predmety:,mismatch
+b64e1e2a-6938-467a-a06b-e3f626ce6955,prompt,ro,Count the objects:,Numără obiectele:,Numărați obiectele:,mismatch
+b64e1e2a-6938-467a-a06b-e3f626ce6955,prompt,sv,Count the objects:,Räkna objekten:,Räkna föremålen:,mismatch
+b64e1e2a-6938-467a-a06b-e3f626ce6955,prompt,tr,Count the objects:,Nesneleri say:,Nesneleri sayın:,mismatch
+b64e1e2a-6938-467a-a06b-e3f626ce6955,prompt,uk,Count the objects:,Порахуй об'єкти:,Полічіть предмети:,mismatch
+b64e1e2a-6938-467a-a06b-e3f626ce6955,prompt,vi,Count the objects:,Đếm các đối tượng:,Đếm các đồ vật:,mismatch
+b64e1e2a-6938-467a-a06b-e3f626ce6955,prompt,ja,Count the objects:,オブジェクトを数えてください：,オブジェクトを数える：,mismatch

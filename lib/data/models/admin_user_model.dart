@@ -11,10 +11,13 @@ class AdminSubscriptionModel {
   final String? userId;
   final String? status;
   final String? provider;
+  final String? effectiveSource;
   final DateTime? expiryDate;
   final String? purchaseToken;
   final String? orderId;
   final String? productId;
+  final String? activeProviderSubscriptionId;
+  final String? activeManualGrantId;
   final DateTime? createdAt;
   final DateTime? updatedAt;
 
@@ -23,10 +26,13 @@ class AdminSubscriptionModel {
     this.userId,
     this.status,
     this.provider,
+    this.effectiveSource,
     this.expiryDate,
     this.purchaseToken,
     this.orderId,
     this.productId,
+    this.activeProviderSubscriptionId,
+    this.activeManualGrantId,
     this.createdAt,
     this.updatedAt,
   });
@@ -42,10 +48,14 @@ class AdminSubscriptionModel {
       userId: json['user_id']?.toString(),
       status: json['status']?.toString(),
       provider: json['provider']?.toString(),
+      effectiveSource: json['effective_source']?.toString(),
       expiryDate: parseDate(json['expiry_date']),
       purchaseToken: json['purchase_token']?.toString(),
       orderId: json['order_id']?.toString(),
       productId: json['product_id']?.toString(),
+      activeProviderSubscriptionId:
+          json['active_provider_subscription_id']?.toString(),
+      activeManualGrantId: json['active_manual_grant_id']?.toString(),
       createdAt: parseDate(json['created_at']),
       updatedAt: parseDate(json['updated_at']),
     );

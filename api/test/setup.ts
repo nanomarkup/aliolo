@@ -152,17 +152,48 @@ CREATE TABLE IF NOT EXISTS user_friendships (
   UNIQUE(sender_id, receiver_id)
 );
 
-CREATE TABLE IF NOT EXISTS user_subscriptions (
+CREATE TABLE IF NOT EXISTS provider_subscriptions (
   id TEXT PRIMARY KEY,
-  user_id TEXT REFERENCES profiles(id) UNIQUE NOT NULL,
-  status TEXT NOT NULL DEFAULT 'inactive',
+  user_id TEXT REFERENCES profiles(id) NOT NULL,
   provider TEXT NOT NULL,
-  expiry_date TEXT,
+  status TEXT NOT NULL,
+  external_subscription_id TEXT NOT NULL,
+  external_customer_id TEXT,
+  external_transaction_id TEXT,
   purchase_token TEXT,
-  order_id TEXT,
   product_id TEXT,
+  environment TEXT,
+  current_period_start TEXT,
+  current_period_end TEXT,
+  will_renew INTEGER,
+  raw_payload TEXT,
+  created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+  updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE(provider, external_subscription_id)
+);
+
+CREATE TABLE IF NOT EXISTS manual_subscription_grants (
+  id TEXT PRIMARY KEY,
+  user_id TEXT REFERENCES profiles(id) NOT NULL,
+  status TEXT NOT NULL DEFAULT 'active',
+  reason TEXT,
+  starts_at TEXT,
+  ends_at TEXT,
+  created_by TEXT REFERENCES profiles(id),
   created_at TEXT DEFAULT CURRENT_TIMESTAMP,
   updated_at TEXT DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS subscription_events (
+  id TEXT PRIMARY KEY,
+  user_id TEXT REFERENCES profiles(id),
+  provider TEXT NOT NULL,
+  event_type TEXT,
+  external_subscription_id TEXT,
+  external_transaction_id TEXT,
+  product_id TEXT,
+  raw_event TEXT,
+  created_at TEXT DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS ui_translations (

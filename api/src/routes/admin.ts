@@ -8,6 +8,7 @@ import {
   AdminUsersResponseSchema,
 } from '../schemas/admin';
 import { ErrorResponseSchema, SuccessResponseSchema } from '../schemas/shared';
+import { recomputeUserSubscription } from '../utils/subscriptions';
 
 const router = new OpenAPIHono<AppEnv>();
 const ADMIN_ID = 'usyeo7d2yzf2773';
@@ -15,6 +16,7 @@ const ADMIN_ID = 'usyeo7d2yzf2773';
 const subscriptionUpdateSchema = z.object({
   status: z.enum(['active', 'inactive']),
   expiry_date: z.string().nullable().optional(),
+  reason: z.string().trim().optional(),
 });
 
 const cardLimitUpdateSchema = z.object({
@@ -121,6 +123,15 @@ const onboardingAnalyticsRoute = createRoute({
   },
 });
 
+async function getTableColumns(c: any, tableName: string): Promise<Set<string>> {
+  const { results } = await c.env.DB.prepare(`PRAGMA table_info(${tableName})`).all();
+  return new Set(
+    (results as any[])
+      .map((row) => row.name?.toString())
+      .filter((name): name is string => Boolean(name)),
+  );
+}
+
 async function fetchAdminUsers(
   c: any,
   {
@@ -140,6 +151,55 @@ async function fetchAdminUsers(
   const whereClauses: string[] = [];
   const whereBindings: unknown[] = [];
   const normalizedSearch = search?.trim().toLowerCase();
+  const activeSubscriptionSql = `(ap.id IS NOT NULL OR am.id IS NOT NULL)`;
+  const manualWinsSql = `(
+    am.id IS NOT NULL
+    AND (
+      ap.id IS NULL
+      OR am.ends_at IS NULL
+      OR (
+        ap.current_period_end IS NOT NULL
+        AND datetime(am.ends_at) > datetime(ap.current_period_end)
+      )
+    )
+  )`;
+  const subscriptionCtes = `
+    WITH active_provider AS (
+      SELECT *
+      FROM (
+        SELECT
+          ps.*,
+          ROW_NUMBER() OVER (
+            PARTITION BY ps.user_id
+            ORDER BY
+              CASE WHEN ps.current_period_end IS NULL THEN 1 ELSE 0 END DESC,
+              datetime(ps.current_period_end) DESC
+          ) AS rn
+        FROM provider_subscriptions ps
+        WHERE ps.status IN ('active', 'trialing')
+          AND (ps.current_period_end IS NULL OR datetime(ps.current_period_end) > CURRENT_TIMESTAMP)
+      )
+      WHERE rn = 1
+    ),
+    active_manual AS (
+      SELECT *
+      FROM (
+        SELECT
+          msg.*,
+          ROW_NUMBER() OVER (
+            PARTITION BY msg.user_id
+            ORDER BY
+              CASE WHEN msg.ends_at IS NULL THEN 1 ELSE 0 END DESC,
+              datetime(msg.ends_at) DESC
+          ) AS rn
+        FROM manual_subscription_grants msg
+        WHERE msg.status = 'active'
+          AND (msg.starts_at IS NULL OR datetime(msg.starts_at) <= CURRENT_TIMESTAMP)
+          AND (msg.ends_at IS NULL OR datetime(msg.ends_at) > CURRENT_TIMESTAMP)
+      )
+      WHERE rn = 1
+    )
+  `;
 
   if (normalizedSearch) {
     const searchPattern = `%${normalizedSearch}%`;
@@ -163,29 +223,14 @@ async function fetchAdminUsers(
       whereClauses.push(`
         (
           p.is_premium = 1
-          OR (
-            us.status = 'active'
-            AND (
-              us.expiry_date IS NULL
-              OR us.expiry_date = ''
-              OR datetime(us.expiry_date) > CURRENT_TIMESTAMP
-            )
-          )
+          OR ${activeSubscriptionSql}
         )
       `);
     } else if (filter === 'free') {
       whereClauses.push(`
         (
           p.is_premium != 1
-          AND (
-            us.status IS NULL
-            OR us.status != 'active'
-            OR (
-              us.expiry_date IS NOT NULL
-              AND us.expiry_date != ''
-              AND datetime(us.expiry_date) <= CURRENT_TIMESTAMP
-            )
-          )
+          AND NOT ${activeSubscriptionSql}
         )
       `);
     }
@@ -196,9 +241,11 @@ async function fetchAdminUsers(
   const offset = page * pageSize;
 
   const countResult = await c.env.DB.prepare(`
+    ${subscriptionCtes}
     SELECT COUNT(*) AS count
     FROM profiles p
-    LEFT JOIN user_subscriptions us ON us.user_id = p.id
+    LEFT JOIN active_provider ap ON ap.user_id = p.id
+    LEFT JOIN active_manual am ON am.user_id = p.id
     ${whereSql}
   `).bind(...whereBindings).first<{ count: number | string | null }>();
 
@@ -208,20 +255,58 @@ async function fetchAdminUsers(
   `).first<{ count: number | string | null }>();
 
   const { results } = await c.env.DB.prepare(`
+    ${subscriptionCtes}
     SELECT
       p.*,
-      us.id AS subscription_id,
-      us.user_id AS subscription_user_id,
-      us.status AS subscription_status,
-      us.provider AS subscription_provider,
-      us.expiry_date AS subscription_expiry_date,
-      us.purchase_token AS subscription_purchase_token,
-      us.order_id AS subscription_order_id,
-      us.product_id AS subscription_product_id,
-      us.created_at AS subscription_created_at,
-      us.updated_at AS subscription_updated_at
+      CASE
+        WHEN ${manualWinsSql} THEN am.id
+        WHEN ap.id IS NOT NULL THEN ap.id
+        WHEN am.id IS NOT NULL THEN am.id
+        ELSE NULL
+      END AS subscription_id,
+      CASE WHEN ${activeSubscriptionSql} THEN p.id ELSE NULL END AS subscription_user_id,
+      CASE WHEN ${activeSubscriptionSql} THEN 'active' ELSE NULL END AS subscription_status,
+      CASE
+        WHEN ${manualWinsSql} THEN 'aliolo_manual'
+        WHEN ap.id IS NOT NULL THEN ap.provider
+        WHEN am.id IS NOT NULL THEN 'aliolo_manual'
+        ELSE NULL
+      END AS subscription_provider,
+      CASE
+        WHEN ${manualWinsSql} THEN 'manual'
+        WHEN ap.id IS NOT NULL THEN 'provider'
+        WHEN am.id IS NOT NULL THEN 'manual'
+        ELSE NULL
+      END AS subscription_effective_source,
+      CASE
+        WHEN ap.id IS NOT NULL AND am.id IS NOT NULL THEN
+          CASE
+            WHEN ap.current_period_end IS NULL OR am.ends_at IS NULL THEN NULL
+            WHEN datetime(ap.current_period_end) >= datetime(am.ends_at) THEN ap.current_period_end
+            ELSE am.ends_at
+          END
+        WHEN ap.id IS NOT NULL THEN ap.current_period_end
+        WHEN am.id IS NOT NULL THEN am.ends_at
+        ELSE NULL
+      END AS subscription_expiry_date,
+      CASE WHEN ${manualWinsSql} THEN NULL ELSE ap.product_id END AS subscription_product_id,
+      ap.id AS subscription_active_provider_subscription_id,
+      am.id AS subscription_active_manual_grant_id,
+      CASE
+        WHEN ${manualWinsSql} THEN am.created_at
+        WHEN ap.id IS NOT NULL THEN ap.created_at
+        WHEN am.id IS NOT NULL THEN am.created_at
+        ELSE NULL
+      END AS subscription_created_at,
+      CASE
+        WHEN ${manualWinsSql} THEN am.updated_at
+        WHEN ap.id IS NOT NULL THEN ap.updated_at
+        WHEN am.id IS NOT NULL THEN am.updated_at
+        ELSE NULL
+      END AS subscription_updated_at
     FROM profiles p
-    LEFT JOIN user_subscriptions us ON us.user_id = p.id
+    LEFT JOIN active_provider ap ON ap.user_id = p.id
+    LEFT JOIN active_manual am ON am.user_id = p.id
     ${whereSql}
     ORDER BY COALESCE(NULLIF(p.username, ''), p.email) COLLATE NOCASE
     LIMIT ? OFFSET ?
@@ -235,10 +320,13 @@ async function fetchAdminUsers(
           user_id: row.subscription_user_id ?? null,
           status: row.subscription_status ?? null,
           provider: row.subscription_provider ?? null,
+          effective_source: row.subscription_effective_source ?? null,
           expiry_date: row.subscription_expiry_date ?? null,
-          purchase_token: row.subscription_purchase_token ?? null,
-          order_id: row.subscription_order_id ?? null,
+          purchase_token: null,
+          order_id: null,
           product_id: row.subscription_product_id ?? null,
+          active_provider_subscription_id: row.subscription_active_provider_subscription_id ?? null,
+          active_manual_grant_id: row.subscription_active_manual_grant_id ?? null,
           created_at: row.subscription_created_at ?? null,
           updated_at: row.subscription_updated_at ?? null,
         }
@@ -249,10 +337,11 @@ async function fetchAdminUsers(
       subscription_user_id,
       subscription_status,
       subscription_provider,
+      subscription_effective_source,
       subscription_expiry_date,
-      subscription_purchase_token,
-      subscription_order_id,
       subscription_product_id,
+      subscription_active_provider_subscription_id,
+      subscription_active_manual_grant_id,
       subscription_created_at,
       subscription_updated_at,
       ...profile
@@ -304,6 +393,27 @@ router.openapi(subjectUsageRoute, async (c) => {
 
   try {
     const period = c.req.query('period') || 'all';
+    const subjectUsageColumns = await getTableColumns(c, 'subject_usage_stats');
+    const hasAggregateSubjectUsage = subjectUsageColumns.has('started_count');
+    const totalStartedExpr = hasAggregateSubjectUsage
+      ? 'SUM(sus.started_count)'
+      : 'COUNT(sus.id)';
+    const totalCompletedExpr = hasAggregateSubjectUsage
+      ? 'SUM(sus.completed_count)'
+      : 'SUM(CASE WHEN sus.completed = 1 THEN 1 ELSE 0 END)';
+    const learnStartedExpr = hasAggregateSubjectUsage
+      ? "SUM(CASE WHEN sus.mode = 'learn' THEN sus.started_count ELSE 0 END)"
+      : "SUM(CASE WHEN sus.mode = 'learn' THEN 1 ELSE 0 END)";
+    const learnCompletedExpr = hasAggregateSubjectUsage
+      ? "SUM(CASE WHEN sus.mode = 'learn' THEN sus.completed_count ELSE 0 END)"
+      : "SUM(CASE WHEN sus.mode = 'learn' AND sus.completed = 1 THEN 1 ELSE 0 END)";
+    const testStartedExpr = hasAggregateSubjectUsage
+      ? "SUM(CASE WHEN sus.mode = 'test' THEN sus.started_count ELSE 0 END)"
+      : "SUM(CASE WHEN sus.mode = 'test' THEN 1 ELSE 0 END)";
+    const testCompletedExpr = hasAggregateSubjectUsage
+      ? "SUM(CASE WHEN sus.mode = 'test' THEN sus.completed_count ELSE 0 END)"
+      : "SUM(CASE WHEN sus.mode = 'test' AND sus.completed = 1 THEN 1 ELSE 0 END)";
+
     let dateFilter = '';
     if (period === '1m') {
       dateFilter = "AND sus.created_at >= datetime('now', '-1 month')";
@@ -319,12 +429,12 @@ router.openapi(subjectUsageRoute, async (c) => {
         COALESCE(NULLIF(s.name, ''), s.id) AS subject_name,
         p.name AS pillar_name,
         f.name AS folder_name,
-        COUNT(sus.id) AS total_started,
-        SUM(CASE WHEN sus.completed = 1 THEN 1 ELSE 0 END) AS total_completed,
-        SUM(CASE WHEN sus.mode = 'learn' THEN 1 ELSE 0 END) AS learn_started,
-        SUM(CASE WHEN sus.mode = 'learn' AND sus.completed = 1 THEN 1 ELSE 0 END) AS learn_completed,
-        SUM(CASE WHEN sus.mode = 'test' THEN 1 ELSE 0 END) AS test_started,
-        SUM(CASE WHEN sus.mode = 'test' AND sus.completed = 1 THEN 1 ELSE 0 END) AS test_completed,
+        ${totalStartedExpr} AS total_started,
+        ${totalCompletedExpr} AS total_completed,
+        ${learnStartedExpr} AS learn_started,
+        ${learnCompletedExpr} AS learn_completed,
+        ${testStartedExpr} AS test_started,
+        ${testCompletedExpr} AS test_completed,
         MAX(sus.created_at) AS updated_at
       FROM subject_usage_stats sus
       INNER JOIN subjects s ON s.id = sus.subject_id
@@ -500,27 +610,40 @@ router.openapi(updateUserSubscriptionRoute, async (c) => {
       return c.json({ error: 'User not found' } as any, 404);
     }
 
-    const expiryDate =
-      body.expiry_date === undefined || body.expiry_date === null || body.expiry_date === ''
-        ? null
-        : body.expiry_date;
+    if (body.status === 'inactive') {
+      await c.env.DB.prepare(`
+        UPDATE manual_subscription_grants
+        SET status = 'inactive', updated_at = CURRENT_TIMESTAMP
+        WHERE user_id = ? AND status = 'active'
+      `).bind(userId).run();
+    } else {
+      const expiryDate =
+        body.expiry_date === undefined || body.expiry_date === null || body.expiry_date === ''
+          ? null
+          : body.expiry_date;
 
-    await c.env.DB.prepare(`
-      INSERT INTO user_subscriptions (
-        id,
-        user_id,
-        status,
-        provider,
-        expiry_date,
-        created_at,
-        updated_at
-      ) VALUES (?, ?, ?, 'aliolo', ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
-      ON CONFLICT(user_id) DO UPDATE SET
-        status = excluded.status,
-        provider = 'aliolo',
-        expiry_date = excluded.expiry_date,
-        updated_at = CURRENT_TIMESTAMP
-    `).bind(generateId(15), userId, body.status, expiryDate).run();
+      await c.env.DB.prepare(`
+        INSERT INTO manual_subscription_grants (
+          id,
+          user_id,
+          status,
+          reason,
+          starts_at,
+          ends_at,
+          created_by,
+          created_at,
+          updated_at
+        ) VALUES (?, ?, 'active', ?, CURRENT_TIMESTAMP, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+      `).bind(
+        generateId(15),
+        userId,
+        body.reason ?? 'Admin manual subscription grant',
+        expiryDate,
+        user.id,
+      ).run();
+    }
+
+    await recomputeUserSubscription(c.env.DB, userId);
 
     return c.json({ success: true } as any, 200);
   } catch (e: any) {

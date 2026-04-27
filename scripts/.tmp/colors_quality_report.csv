@@ -1,0 +1,7 @@
+card_id,field,locale,global_text,current_text,translated_text,status
+SUBJECT,subject_name,el,Colors,Χρώματα,Χρωματιστά,mismatch
+SUBJECT,subject_name,es,Colors,Colores,Bandera,mismatch
+SUBJECT,subject_name,ko,Colors,색상,그림 물감,mismatch
+SUBJECT,subject_name,pl,Colors,Kolory,Zabarwienie,mismatch
+e1f5956c-e48c-4660-bd88-8b42cbf1c8e3,answer,hr,Red,Crveno,crvena,mismatch
+941482e0-d541-43cd-b8cd-2a41ff31cfca,answer,lt,Periwinkle,Perkūnas,Perkūnija,mismatch

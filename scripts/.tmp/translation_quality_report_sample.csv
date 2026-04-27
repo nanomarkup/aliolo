@@ -1,0 +1,8 @@
+card_id,subject_id,field,locale,global_text,current_text,translated_text,status
+c89379ae-3cdb-4173-a007-e646a1dedfc4,2450ccd1-b439-4ed1-8280-30de3f41e400,answer,tl,Dolphin,dolphin,Dolphin,lowercase_warning
+43085fab-1818-44db-9797-9d38e635052a,4b210d48-c309-4c4b-ad80-24b9f8dde33e,answer,es,"THE UNITED KINGDOM, Fish and chips","REINO UNIDO, Fish and chips","REINO UNIDO, Pescado con papas fritas",partial_translation
+43085fab-1818-44db-9797-9d38e635052a,4b210d48-c309-4c4b-ad80-24b9f8dde33e,answer,fr,"THE UNITED KINGDOM, Fish and chips","LE ROYAUME-UNI, Fish and chips","LE ROYAUME-UNI, Poisson-frites",partial_translation
+705f8af4-c8be-4867-bc1a-9b00d7dfe7fd,5319e962-cd18-4e74-9cd7-8092ebe1752c,answer,el,Pink Orchid Mantis,Pink Orchid Mantis,Ροζ μαντίς ορχιδέα,untranslated_script_mismatch
+bbce880f-0f4d-4015-8ff7-b37cae267d7a,5319e962-cd18-4e74-9cd7-8092ebe1752c,answer,es,Lantern Bug,Error de linterna,Bicho linterna,contextual_error_bug_vs_error
+bbce880f-0f4d-4015-8ff7-b37cae267d7a,5319e962-cd18-4e74-9cd7-8092ebe1752c,answer,pl,Lantern Bug,Błąd Latarni,Pluskwiak latarnia,contextual_error_bug_vs_error
+61612521-f2dc-429d-972b-273e28f266bf,8efc96db-89ae-4137-91cd-6a5800b788ad,answer,vi,Times Square,Quảng trường Thời đại,Quảng trường Thời đại,correct

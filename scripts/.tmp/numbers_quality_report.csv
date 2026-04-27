@@ -1,0 +1,219 @@
+card_id,field,locale,global_text,current_text,translated_text,status
+SUBJECT,subject_name,hi,Numbers,संख्याएं,नंबर,mismatch
+SUBJECT,subject_name,hr,Numbers,Brojevi,Brojke,mismatch
+SUBJECT,subject_name,pl,Numbers,Liczby,Takty muzyczne,mismatch
+SUBJECT,subject_name,ro,Numbers,Numere,Numerele,mismatch
+SUBJECT,subject_name,nl,Numbers,Getallen,Nummers,mismatch
+SUBJECT,subject_name,sv,Numbers,Nummer,Tal,mismatch
+SUBJECT,subject_name,tl,Numbers,Numero,Mga numero,mismatch
+SUBJECT,subject_name,vi,Numbers,Các con số,số,mismatch
+6011ab16-4b98-4263-b055-78cc755365ad,prompt,bg,Select the correct number:,Изберете правилното число:,Изберете правилния номер:,mismatch
+6011ab16-4b98-4263-b055-78cc755365ad,prompt,de,Select the correct number:,Wählen Sie die richtige Zahl aus:,Wählen Sie die richtige Nummer aus:,mismatch
+6011ab16-4b98-4263-b055-78cc755365ad,prompt,da,Select the correct number:,Vælg det rigtige tal:,Vælg det rigtige nummer:,mismatch
+6011ab16-4b98-4263-b055-78cc755365ad,prompt,fr,Select the correct number:,Sélectionnez le nombre correct :,Sélectionnez le bon numéro :,mismatch
+6011ab16-4b98-4263-b055-78cc755365ad,prompt,hu,Select the correct number:,Válassza ki a helyes számot!,Válassza ki a megfelelő számot:,mismatch
+6011ab16-4b98-4263-b055-78cc755365ad,prompt,ko,Select the correct number:,올바른 숫자를 선택하세요:,올바른 번호를 선택하세요:,mismatch
+6011ab16-4b98-4263-b055-78cc755365ad,prompt,pl,Select the correct number:,Wybierz poprawną liczbę:,Wybierz właściwy numer:,mismatch
+6011ab16-4b98-4263-b055-78cc755365ad,prompt,nl,Select the correct number:,Selecteer het juiste getal:,Selecteer het juiste nummer:,mismatch
+6011ab16-4b98-4263-b055-78cc755365ad,prompt,tr,Select the correct number:,Doğru sayıyı seçin:,Doğru numarayı seçin:,mismatch
+6011ab16-4b98-4263-b055-78cc755365ad,prompt,uk,Select the correct number:,Оберіть правильне число:,Виберіть правильний номер:,mismatch
+d6e15b5c-4d68-46cf-bce3-0afd463bfda4,prompt,bg,Select the correct number:,Изберете правилното число:,Изберете правилния номер:,mismatch
+d6e15b5c-4d68-46cf-bce3-0afd463bfda4,prompt,de,Select the correct number:,Wählen Sie die richtige Zahl aus:,Wählen Sie die richtige Nummer aus:,mismatch
+d6e15b5c-4d68-46cf-bce3-0afd463bfda4,prompt,hu,Select the correct number:,Válassza ki a helyes számot!,Válassza ki a megfelelő számot:,mismatch
+d6e15b5c-4d68-46cf-bce3-0afd463bfda4,prompt,da,Select the correct number:,Vælg det rigtige tal:,Vælg det rigtige nummer:,mismatch
+d6e15b5c-4d68-46cf-bce3-0afd463bfda4,prompt,ko,Select the correct number:,올바른 숫자를 선택하세요:,올바른 번호를 선택하세요:,mismatch
+d6e15b5c-4d68-46cf-bce3-0afd463bfda4,prompt,fr,Select the correct number:,Sélectionnez le nombre correct :,Sélectionnez le bon numéro :,mismatch
+d6e15b5c-4d68-46cf-bce3-0afd463bfda4,prompt,nl,Select the correct number:,Selecteer het juiste getal:,Selecteer het juiste nummer:,mismatch
+d6e15b5c-4d68-46cf-bce3-0afd463bfda4,prompt,pl,Select the correct number:,Wybierz poprawną liczbę:,Wybierz właściwy numer:,mismatch
+d6e15b5c-4d68-46cf-bce3-0afd463bfda4,prompt,uk,Select the correct number:,Оберіть правильне число:,Виберіть правильний номер:,mismatch
+d6e15b5c-4d68-46cf-bce3-0afd463bfda4,prompt,tr,Select the correct number:,Doğru sayıyı seçin:,Doğru numarayı seçin:,mismatch
+01534c38-ed07-400a-aa93-404ff101022c,prompt,bg,Select the correct number:,Изберете правилното число:,Изберете правилния номер:,mismatch
+01534c38-ed07-400a-aa93-404ff101022c,prompt,da,Select the correct number:,Vælg det rigtige tal:,Vælg det rigtige nummer:,mismatch
+01534c38-ed07-400a-aa93-404ff101022c,prompt,de,Select the correct number:,Wählen Sie die richtige Zahl aus:,Wählen Sie die richtige Nummer aus:,mismatch
+01534c38-ed07-400a-aa93-404ff101022c,prompt,fr,Select the correct number:,Sélectionnez le nombre correct :,Sélectionnez le bon numéro :,mismatch
+01534c38-ed07-400a-aa93-404ff101022c,prompt,hu,Select the correct number:,Válassza ki a helyes számot!,Válassza ki a megfelelő számot:,mismatch
+01534c38-ed07-400a-aa93-404ff101022c,prompt,ko,Select the correct number:,올바른 숫자를 선택하세요:,올바른 번호를 선택하세요:,mismatch
+01534c38-ed07-400a-aa93-404ff101022c,prompt,nl,Select the correct number:,Selecteer het juiste getal:,Selecteer het juiste nummer:,mismatch
+01534c38-ed07-400a-aa93-404ff101022c,prompt,pl,Select the correct number:,Wybierz poprawną liczbę:,Wybierz właściwy numer:,mismatch
+01534c38-ed07-400a-aa93-404ff101022c,prompt,tr,Select the correct number:,Doğru sayıyı seçin:,Doğru numarayı seçin:,mismatch
+01534c38-ed07-400a-aa93-404ff101022c,prompt,uk,Select the correct number:,Оберіть правильне число:,Виберіть правильний номер:,mismatch
+14ac9e63-f8dc-47e9-bf2e-3fc3bd9234c3,prompt,bg,Select the correct number:,Изберете правилното число:,Изберете правилния номер:,mismatch
+14ac9e63-f8dc-47e9-bf2e-3fc3bd9234c3,prompt,da,Select the correct number:,Vælg det rigtige tal:,Vælg det rigtige nummer:,mismatch
+14ac9e63-f8dc-47e9-bf2e-3fc3bd9234c3,prompt,de,Select the correct number:,Wählen Sie die richtige Zahl aus:,Wählen Sie die richtige Nummer aus:,mismatch
+14ac9e63-f8dc-47e9-bf2e-3fc3bd9234c3,prompt,fr,Select the correct number:,Sélectionnez le nombre correct :,Sélectionnez le bon numéro :,mismatch
+14ac9e63-f8dc-47e9-bf2e-3fc3bd9234c3,prompt,hu,Select the correct number:,Válassza ki a helyes számot!,Válassza ki a megfelelő számot:,mismatch
+14ac9e63-f8dc-47e9-bf2e-3fc3bd9234c3,prompt,ko,Select the correct number:,올바른 숫자를 선택하세요:,올바른 번호를 선택하세요:,mismatch
+14ac9e63-f8dc-47e9-bf2e-3fc3bd9234c3,prompt,nl,Select the correct number:,Selecteer het juiste getal:,Selecteer het juiste nummer:,mismatch
+14ac9e63-f8dc-47e9-bf2e-3fc3bd9234c3,prompt,pl,Select the correct number:,Wybierz poprawną liczbę:,Wybierz właściwy numer:,mismatch
+14ac9e63-f8dc-47e9-bf2e-3fc3bd9234c3,prompt,tr,Select the correct number:,Doğru sayıyı seçin:,Doğru numarayı seçin:,mismatch
+14ac9e63-f8dc-47e9-bf2e-3fc3bd9234c3,prompt,uk,Select the correct number:,Оберіть правильне число:,Виберіть правильний номер:,mismatch
+c5b3726c-7818-43d4-9f20-cc5187a912ed,prompt,bg,Select the correct number:,Изберете правилното число:,Изберете правилния номер:,mismatch
+c5b3726c-7818-43d4-9f20-cc5187a912ed,prompt,da,Select the correct number:,Vælg det rigtige tal:,Vælg det rigtige nummer:,mismatch
+c5b3726c-7818-43d4-9f20-cc5187a912ed,prompt,de,Select the correct number:,Wählen Sie die richtige Zahl aus:,Wählen Sie die richtige Nummer aus:,mismatch
+c5b3726c-7818-43d4-9f20-cc5187a912ed,prompt,fr,Select the correct number:,Sélectionnez le nombre correct :,Sélectionnez le bon numéro :,mismatch
+c5b3726c-7818-43d4-9f20-cc5187a912ed,prompt,hu,Select the correct number:,Válassza ki a helyes számot!,Válassza ki a megfelelő számot:,mismatch
+c5b3726c-7818-43d4-9f20-cc5187a912ed,prompt,ko,Select the correct number:,올바른 숫자를 선택하세요:,올바른 번호를 선택하세요:,mismatch
+c5b3726c-7818-43d4-9f20-cc5187a912ed,prompt,nl,Select the correct number:,Selecteer het juiste getal:,Selecteer het juiste nummer:,mismatch
+c5b3726c-7818-43d4-9f20-cc5187a912ed,prompt,pl,Select the correct number:,Wybierz poprawną liczbę:,Wybierz właściwy numer:,mismatch
+c5b3726c-7818-43d4-9f20-cc5187a912ed,prompt,tr,Select the correct number:,Doğru sayıyı seçin:,Doğru numarayı seçin:,mismatch
+c5b3726c-7818-43d4-9f20-cc5187a912ed,prompt,uk,Select the correct number:,Оберіть правильне число:,Виберіть правильний номер:,mismatch
+8f6d1262-cfba-4740-b7d8-59beb0057051,prompt,bg,Select the correct number:,Изберете правилното число:,Изберете правилния номер:,mismatch
+8f6d1262-cfba-4740-b7d8-59beb0057051,prompt,da,Select the correct number:,Vælg det rigtige tal:,Vælg det rigtige nummer:,mismatch
+8f6d1262-cfba-4740-b7d8-59beb0057051,prompt,de,Select the correct number:,Wählen Sie die richtige Zahl aus:,Wählen Sie die richtige Nummer aus:,mismatch
+8f6d1262-cfba-4740-b7d8-59beb0057051,prompt,fr,Select the correct number:,Sélectionnez le nombre correct :,Sélectionnez le bon numéro :,mismatch
+8f6d1262-cfba-4740-b7d8-59beb0057051,prompt,hu,Select the correct number:,Válassza ki a helyes számot!,Válassza ki a megfelelő számot:,mismatch
+8f6d1262-cfba-4740-b7d8-59beb0057051,prompt,ko,Select the correct number:,올바른 숫자를 선택하세요:,올바른 번호를 선택하세요:,mismatch
+8f6d1262-cfba-4740-b7d8-59beb0057051,prompt,nl,Select the correct number:,Selecteer het juiste getal:,Selecteer het juiste nummer:,mismatch
+8f6d1262-cfba-4740-b7d8-59beb0057051,prompt,pl,Select the correct number:,Wybierz poprawną liczbę:,Wybierz właściwy numer:,mismatch
+8f6d1262-cfba-4740-b7d8-59beb0057051,prompt,uk,Select the correct number:,Оберіть правильне число:,Виберіть правильний номер:,mismatch
+8f6d1262-cfba-4740-b7d8-59beb0057051,prompt,tr,Select the correct number:,Doğru sayıyı seçin:,Doğru numarayı seçin:,mismatch
+a7786b6f-3d70-433b-9c28-501a8e48fd24,prompt,bg,Select the correct number:,Изберете правилното число:,Изберете правилния номер:,mismatch
+a7786b6f-3d70-433b-9c28-501a8e48fd24,prompt,da,Select the correct number:,Vælg det rigtige tal:,Vælg det rigtige nummer:,mismatch
+a7786b6f-3d70-433b-9c28-501a8e48fd24,prompt,de,Select the correct number:,Wählen Sie die richtige Zahl aus:,Wählen Sie die richtige Nummer aus:,mismatch
+a7786b6f-3d70-433b-9c28-501a8e48fd24,prompt,fr,Select the correct number:,Sélectionnez le nombre correct :,Sélectionnez le bon numéro :,mismatch
+a7786b6f-3d70-433b-9c28-501a8e48fd24,prompt,hu,Select the correct number:,Válassza ki a helyes számot!,Válassza ki a megfelelő számot:,mismatch
+a7786b6f-3d70-433b-9c28-501a8e48fd24,prompt,ko,Select the correct number:,올바른 숫자를 선택하세요:,올바른 번호를 선택하세요:,mismatch
+a7786b6f-3d70-433b-9c28-501a8e48fd24,prompt,pl,Select the correct number:,Wybierz poprawną liczbę:,Wybierz właściwy numer:,mismatch
+a7786b6f-3d70-433b-9c28-501a8e48fd24,prompt,uk,Select the correct number:,Оберіть правильне число:,Виберіть правильний номер:,mismatch
+a7786b6f-3d70-433b-9c28-501a8e48fd24,prompt,tr,Select the correct number:,Doğru sayıyı seçin:,Doğru numarayı seçin:,mismatch
+a7786b6f-3d70-433b-9c28-501a8e48fd24,prompt,nl,Select the correct number:,Selecteer het juiste getal:,Selecteer het juiste nummer:,mismatch
+ca549f80-6185-4070-91eb-97e6846f4ed2,prompt,bg,Select the correct number:,Изберете правилното число:,Изберете правилния номер:,mismatch
+ca549f80-6185-4070-91eb-97e6846f4ed2,prompt,da,Select the correct number:,Vælg det rigtige tal:,Vælg det rigtige nummer:,mismatch
+ca549f80-6185-4070-91eb-97e6846f4ed2,prompt,de,Select the correct number:,Wählen Sie die richtige Zahl aus:,Wählen Sie die richtige Nummer aus:,mismatch
+ca549f80-6185-4070-91eb-97e6846f4ed2,prompt,fr,Select the correct number:,Sélectionnez le nombre correct :,Sélectionnez le bon numéro :,mismatch
+ca549f80-6185-4070-91eb-97e6846f4ed2,prompt,hu,Select the correct number:,Válassza ki a helyes számot!,Válassza ki a megfelelő számot:,mismatch
+ca549f80-6185-4070-91eb-97e6846f4ed2,prompt,nl,Select the correct number:,Selecteer het juiste getal:,Selecteer het juiste nummer:,mismatch
+ca549f80-6185-4070-91eb-97e6846f4ed2,prompt,pl,Select the correct number:,Wybierz poprawną liczbę:,Wybierz właściwy numer:,mismatch
+ca549f80-6185-4070-91eb-97e6846f4ed2,prompt,ko,Select the correct number:,올바른 숫자를 선택하세요:,올바른 번호를 선택하세요:,mismatch
+ca549f80-6185-4070-91eb-97e6846f4ed2,prompt,uk,Select the correct number:,Оберіть правильне число:,Виберіть правильний номер:,mismatch
+ca549f80-6185-4070-91eb-97e6846f4ed2,prompt,tr,Select the correct number:,Doğru sayıyı seçin:,Doğru numarayı seçin:,mismatch
+113ff9d3-6e98-432f-9141-bcfb27af5898,prompt,da,Select the correct number:,Vælg det rigtige tal:,Vælg det rigtige nummer:,mismatch
+113ff9d3-6e98-432f-9141-bcfb27af5898,prompt,bg,Select the correct number:,Изберете правилното число:,Изберете правилния номер:,mismatch
+113ff9d3-6e98-432f-9141-bcfb27af5898,prompt,fr,Select the correct number:,Sélectionnez le nombre correct :,Sélectionnez le bon numéro :,mismatch
+113ff9d3-6e98-432f-9141-bcfb27af5898,prompt,hu,Select the correct number:,Válassza ki a helyes számot!,Válassza ki a megfelelő számot:,mismatch
+113ff9d3-6e98-432f-9141-bcfb27af5898,prompt,de,Select the correct number:,Wählen Sie die richtige Zahl aus:,Wählen Sie die richtige Nummer aus:,mismatch
+113ff9d3-6e98-432f-9141-bcfb27af5898,prompt,ko,Select the correct number:,올바른 숫자를 선택하세요:,올바른 번호를 선택하세요:,mismatch
+113ff9d3-6e98-432f-9141-bcfb27af5898,prompt,nl,Select the correct number:,Selecteer het juiste getal:,Selecteer het juiste nummer:,mismatch
+113ff9d3-6e98-432f-9141-bcfb27af5898,prompt,pl,Select the correct number:,Wybierz poprawną liczbę:,Wybierz właściwy numer:,mismatch
+113ff9d3-6e98-432f-9141-bcfb27af5898,prompt,tr,Select the correct number:,Doğru sayıyı seçin:,Doğru numarayı seçin:,mismatch
+113ff9d3-6e98-432f-9141-bcfb27af5898,prompt,uk,Select the correct number:,Оберіть правильне число:,Виберіть правильний номер:,mismatch
+58489d4e-46fe-41ac-aa2d-8801b23e3e61,prompt,bg,Select the correct number:,Изберете правилното число:,Изберете правилния номер:,mismatch
+58489d4e-46fe-41ac-aa2d-8801b23e3e61,prompt,de,Select the correct number:,Wählen Sie die richtige Zahl aus:,Wählen Sie die richtige Nummer aus:,mismatch
+58489d4e-46fe-41ac-aa2d-8801b23e3e61,prompt,da,Select the correct number:,Vælg det rigtige tal:,Vælg det rigtige nummer:,mismatch
+58489d4e-46fe-41ac-aa2d-8801b23e3e61,prompt,fr,Select the correct number:,Sélectionnez le nombre correct :,Sélectionnez le bon numéro :,mismatch
+58489d4e-46fe-41ac-aa2d-8801b23e3e61,prompt,hu,Select the correct number:,Válassza ki a helyes számot!,Válassza ki a megfelelő számot:,mismatch
+58489d4e-46fe-41ac-aa2d-8801b23e3e61,prompt,ko,Select the correct number:,올바른 숫자를 선택하세요:,올바른 번호를 선택하세요:,mismatch
+58489d4e-46fe-41ac-aa2d-8801b23e3e61,prompt,nl,Select the correct number:,Selecteer het juiste getal:,Selecteer het juiste nummer:,mismatch
+58489d4e-46fe-41ac-aa2d-8801b23e3e61,prompt,pl,Select the correct number:,Wybierz poprawną liczbę:,Wybierz właściwy numer:,mismatch
+58489d4e-46fe-41ac-aa2d-8801b23e3e61,prompt,uk,Select the correct number:,Оберіть правильне число:,Виберіть правильний номер:,mismatch
+58489d4e-46fe-41ac-aa2d-8801b23e3e61,prompt,tr,Select the correct number:,Doğru sayıyı seçin:,Doğru numarayı seçin:,mismatch
+cd85b094-1b17-4071-89f7-3892ece52427,prompt,bg,Select the correct number:,Изберете правилното число:,Изберете правилния номер:,mismatch
+cd85b094-1b17-4071-89f7-3892ece52427,prompt,da,Select the correct number:,Vælg det rigtige tal:,Vælg det rigtige nummer:,mismatch
+cd85b094-1b17-4071-89f7-3892ece52427,prompt,de,Select the correct number:,Wählen Sie die richtige Zahl aus:,Wählen Sie die richtige Nummer aus:,mismatch
+cd85b094-1b17-4071-89f7-3892ece52427,prompt,fr,Select the correct number:,Sélectionnez le nombre correct :,Sélectionnez le bon numéro :,mismatch
+cd85b094-1b17-4071-89f7-3892ece52427,prompt,ko,Select the correct number:,올바른 숫자를 선택하세요:,올바른 번호를 선택하세요:,mismatch
+cd85b094-1b17-4071-89f7-3892ece52427,prompt,nl,Select the correct number:,Selecteer het juiste getal:,Selecteer het juiste nummer:,mismatch
+cd85b094-1b17-4071-89f7-3892ece52427,prompt,pl,Select the correct number:,Wybierz poprawną liczbę:,Wybierz właściwy numer:,mismatch
+cd85b094-1b17-4071-89f7-3892ece52427,prompt,tr,Select the correct number:,Doğru sayıyı seçin:,Doğru numarayı seçin:,mismatch
+cd85b094-1b17-4071-89f7-3892ece52427,prompt,hu,Select the correct number:,Válassza ki a helyes számot!,Válassza ki a megfelelő számot:,mismatch
+cd85b094-1b17-4071-89f7-3892ece52427,prompt,uk,Select the correct number:,Оберіть правильне число:,Виберіть правильний номер:,mismatch
+0f1003b1-f541-4088-bc68-f4f05c1a47ab,prompt,bg,Select the correct number:,Изберете правилното число:,Изберете правилния номер:,mismatch
+0f1003b1-f541-4088-bc68-f4f05c1a47ab,prompt,da,Select the correct number:,Vælg det rigtige tal:,Vælg det rigtige nummer:,mismatch
+0f1003b1-f541-4088-bc68-f4f05c1a47ab,prompt,de,Select the correct number:,Wählen Sie die richtige Zahl aus:,Wählen Sie die richtige Nummer aus:,mismatch
+0f1003b1-f541-4088-bc68-f4f05c1a47ab,prompt,hu,Select the correct number:,Válassza ki a helyes számot!,Válassza ki a megfelelő számot:,mismatch
+0f1003b1-f541-4088-bc68-f4f05c1a47ab,prompt,fr,Select the correct number:,Sélectionnez le nombre correct :,Sélectionnez le bon numéro :,mismatch
+0f1003b1-f541-4088-bc68-f4f05c1a47ab,prompt,ko,Select the correct number:,올바른 숫자를 선택하세요:,올바른 번호를 선택하세요:,mismatch
+0f1003b1-f541-4088-bc68-f4f05c1a47ab,prompt,pl,Select the correct number:,Wybierz poprawną liczbę:,Wybierz właściwy numer:,mismatch
+0f1003b1-f541-4088-bc68-f4f05c1a47ab,prompt,uk,Select the correct number:,Оберіть правильне число:,Виберіть правильний номер:,mismatch
+0f1003b1-f541-4088-bc68-f4f05c1a47ab,prompt,tr,Select the correct number:,Doğru sayıyı seçin:,Doğru numarayı seçin:,mismatch
+0f1003b1-f541-4088-bc68-f4f05c1a47ab,prompt,nl,Select the correct number:,Selecteer het juiste getal:,Selecteer het juiste nummer:,mismatch
+12c8903d-3099-4e45-865a-05df47e90fc0,prompt,da,Select the correct number:,Vælg det rigtige tal:,Vælg det rigtige nummer:,mismatch
+12c8903d-3099-4e45-865a-05df47e90fc0,prompt,bg,Select the correct number:,Изберете правилното число:,Изберете правилния номер:,mismatch
+12c8903d-3099-4e45-865a-05df47e90fc0,prompt,fr,Select the correct number:,Sélectionnez le nombre correct :,Sélectionnez le bon numéro :,mismatch
+12c8903d-3099-4e45-865a-05df47e90fc0,prompt,de,Select the correct number:,Wählen Sie die richtige Zahl aus:,Wählen Sie die richtige Nummer aus:,mismatch
+12c8903d-3099-4e45-865a-05df47e90fc0,prompt,hu,Select the correct number:,Válassza ki a helyes számot!,Válassza ki a megfelelő számot:,mismatch
+12c8903d-3099-4e45-865a-05df47e90fc0,prompt,ko,Select the correct number:,올바른 숫자를 선택하세요:,올바른 번호를 선택하세요:,mismatch
+12c8903d-3099-4e45-865a-05df47e90fc0,prompt,tr,Select the correct number:,Doğru sayıyı seçin:,Doğru numarayı seçin:,mismatch
+12c8903d-3099-4e45-865a-05df47e90fc0,prompt,uk,Select the correct number:,Оберіть правильне число:,Виберіть правильний номер:,mismatch
+12c8903d-3099-4e45-865a-05df47e90fc0,prompt,pl,Select the correct number:,Wybierz poprawną liczbę:,Wybierz właściwy numer:,mismatch
+12c8903d-3099-4e45-865a-05df47e90fc0,prompt,nl,Select the correct number:,Selecteer het juiste getal:,Selecteer het juiste nummer:,mismatch
+daacfa0e-9c24-4243-8c22-ed25c64893ac,prompt,bg,Select the correct number:,Изберете правилното число:,Изберете правилния номер:,mismatch
+daacfa0e-9c24-4243-8c22-ed25c64893ac,prompt,de,Select the correct number:,Wählen Sie die richtige Zahl aus:,Wählen Sie die richtige Nummer aus:,mismatch
+daacfa0e-9c24-4243-8c22-ed25c64893ac,prompt,fr,Select the correct number:,Sélectionnez le nombre correct :,Sélectionnez le bon numéro :,mismatch
+daacfa0e-9c24-4243-8c22-ed25c64893ac,prompt,da,Select the correct number:,Vælg det rigtige tal:,Vælg det rigtige nummer:,mismatch
+daacfa0e-9c24-4243-8c22-ed25c64893ac,prompt,hu,Select the correct number:,Válassza ki a helyes számot!,Válassza ki a megfelelő számot:,mismatch
+daacfa0e-9c24-4243-8c22-ed25c64893ac,prompt,ko,Select the correct number:,올바른 숫자를 선택하세요:,올바른 번호를 선택하세요:,mismatch
+daacfa0e-9c24-4243-8c22-ed25c64893ac,prompt,pl,Select the correct number:,Wybierz poprawną liczbę:,Wybierz właściwy numer:,mismatch
+daacfa0e-9c24-4243-8c22-ed25c64893ac,prompt,nl,Select the correct number:,Selecteer het juiste getal:,Selecteer het juiste nummer:,mismatch
+daacfa0e-9c24-4243-8c22-ed25c64893ac,prompt,uk,Select the correct number:,Оберіть правильне число:,Виберіть правильний номер:,mismatch
+daacfa0e-9c24-4243-8c22-ed25c64893ac,prompt,tr,Select the correct number:,Doğru sayıyı seçin:,Doğru numarayı seçin:,mismatch
+5905d757-335f-479d-b7fb-7577c2c329f3,prompt,da,Select the correct number:,Vælg det rigtige tal:,Vælg det rigtige nummer:,mismatch
+5905d757-335f-479d-b7fb-7577c2c329f3,prompt,de,Select the correct number:,Wählen Sie die richtige Zahl aus:,Wählen Sie die richtige Nummer aus:,mismatch
+5905d757-335f-479d-b7fb-7577c2c329f3,prompt,fr,Select the correct number:,Sélectionnez le nombre correct :,Sélectionnez le bon numéro :,mismatch
+5905d757-335f-479d-b7fb-7577c2c329f3,prompt,bg,Select the correct number:,Изберете правилното число:,Изберете правилния номер:,mismatch
+5905d757-335f-479d-b7fb-7577c2c329f3,prompt,hu,Select the correct number:,Válassza ki a helyes számot!,Válassza ki a megfelelő számot:,mismatch
+5905d757-335f-479d-b7fb-7577c2c329f3,prompt,ko,Select the correct number:,올바른 숫자를 선택하세요:,올바른 번호를 선택하세요:,mismatch
+5905d757-335f-479d-b7fb-7577c2c329f3,prompt,pl,Select the correct number:,Wybierz poprawną liczbę:,Wybierz właściwy numer:,mismatch
+5905d757-335f-479d-b7fb-7577c2c329f3,prompt,nl,Select the correct number:,Selecteer het juiste getal:,Selecteer het juiste nummer:,mismatch
+5905d757-335f-479d-b7fb-7577c2c329f3,prompt,tr,Select the correct number:,Doğru sayıyı seçin:,Doğru numarayı seçin:,mismatch
+5905d757-335f-479d-b7fb-7577c2c329f3,prompt,uk,Select the correct number:,Оберіть правильне число:,Виберіть правильний номер:,mismatch
+13f81b81-3848-43a0-9a10-d6b8df5e4f92,prompt,bg,Select the correct number:,Изберете правилното число:,Изберете правилния номер:,mismatch
+13f81b81-3848-43a0-9a10-d6b8df5e4f92,prompt,de,Select the correct number:,Wählen Sie die richtige Zahl aus:,Wählen Sie die richtige Nummer aus:,mismatch
+13f81b81-3848-43a0-9a10-d6b8df5e4f92,prompt,da,Select the correct number:,Vælg det rigtige tal:,Vælg det rigtige nummer:,mismatch
+13f81b81-3848-43a0-9a10-d6b8df5e4f92,prompt,fr,Select the correct number:,Sélectionnez le nombre correct :,Sélectionnez le bon numéro :,mismatch
+13f81b81-3848-43a0-9a10-d6b8df5e4f92,prompt,hu,Select the correct number:,Válassza ki a helyes számot!,Válassza ki a megfelelő számot:,mismatch
+13f81b81-3848-43a0-9a10-d6b8df5e4f92,prompt,ko,Select the correct number:,올바른 숫자를 선택하세요:,올바른 번호를 선택하세요:,mismatch
+13f81b81-3848-43a0-9a10-d6b8df5e4f92,prompt,pl,Select the correct number:,Wybierz poprawną liczbę:,Wybierz właściwy numer:,mismatch
+13f81b81-3848-43a0-9a10-d6b8df5e4f92,prompt,tr,Select the correct number:,Doğru sayıyı seçin:,Doğru numarayı seçin:,mismatch
+13f81b81-3848-43a0-9a10-d6b8df5e4f92,prompt,uk,Select the correct number:,Оберіть правильне число:,Виберіть правильний номер:,mismatch
+13f81b81-3848-43a0-9a10-d6b8df5e4f92,prompt,nl,Select the correct number:,Selecteer het juiste getal:,Selecteer het juiste nummer:,mismatch
+0cbc3ada-1be7-4ba1-ab92-80fbc1eaf8f9,prompt,bg,Select the correct number:,Изберете правилното число:,Изберете правилния номер:,mismatch
+0cbc3ada-1be7-4ba1-ab92-80fbc1eaf8f9,prompt,da,Select the correct number:,Vælg det rigtige tal:,Vælg det rigtige nummer:,mismatch
+0cbc3ada-1be7-4ba1-ab92-80fbc1eaf8f9,prompt,de,Select the correct number:,Wählen Sie die richtige Zahl aus:,Wählen Sie die richtige Nummer aus:,mismatch
+0cbc3ada-1be7-4ba1-ab92-80fbc1eaf8f9,prompt,fr,Select the correct number:,Sélectionnez le nombre correct :,Sélectionnez le bon numéro :,mismatch
+0cbc3ada-1be7-4ba1-ab92-80fbc1eaf8f9,prompt,hu,Select the correct number:,Válassza ki a helyes számot!,Válassza ki a megfelelő számot:,mismatch
+0cbc3ada-1be7-4ba1-ab92-80fbc1eaf8f9,prompt,ko,Select the correct number:,올바른 숫자를 선택하세요:,올바른 번호를 선택하세요:,mismatch
+0cbc3ada-1be7-4ba1-ab92-80fbc1eaf8f9,prompt,nl,Select the correct number:,Selecteer het juiste getal:,Selecteer het juiste nummer:,mismatch
+0cbc3ada-1be7-4ba1-ab92-80fbc1eaf8f9,prompt,pl,Select the correct number:,Wybierz poprawną liczbę:,Wybierz właściwy numer:,mismatch
+0cbc3ada-1be7-4ba1-ab92-80fbc1eaf8f9,prompt,uk,Select the correct number:,Оберіть правильне число:,Виберіть правильний номер:,mismatch
+0cbc3ada-1be7-4ba1-ab92-80fbc1eaf8f9,prompt,tr,Select the correct number:,Doğru sayıyı seçin:,Doğru numarayı seçin:,mismatch
+3721078a-3be0-4cf6-9897-b65c20417d4d,prompt,bg,Select the correct number:,Изберете правилното число:,Изберете правилния номер:,mismatch
+3721078a-3be0-4cf6-9897-b65c20417d4d,prompt,de,Select the correct number:,Wählen Sie die richtige Zahl aus:,Wählen Sie die richtige Nummer aus:,mismatch
+3721078a-3be0-4cf6-9897-b65c20417d4d,prompt,fr,Select the correct number:,Sélectionnez le nombre correct :,Sélectionnez le bon numéro :,mismatch
+3721078a-3be0-4cf6-9897-b65c20417d4d,prompt,hu,Select the correct number:,Válassza ki a helyes számot!,Válassza ki a megfelelő számot:,mismatch
+3721078a-3be0-4cf6-9897-b65c20417d4d,prompt,ko,Select the correct number:,올바른 숫자를 선택하세요:,올바른 번호를 선택하세요:,mismatch
+3721078a-3be0-4cf6-9897-b65c20417d4d,prompt,da,Select the correct number:,Vælg det rigtige tal:,Vælg det rigtige nummer:,mismatch
+3721078a-3be0-4cf6-9897-b65c20417d4d,prompt,nl,Select the correct number:,Selecteer het juiste getal:,Selecteer het juiste nummer:,mismatch
+3721078a-3be0-4cf6-9897-b65c20417d4d,prompt,uk,Select the correct number:,Оберіть правильне число:,Виберіть правильний номер:,mismatch
+3721078a-3be0-4cf6-9897-b65c20417d4d,prompt,tr,Select the correct number:,Doğru sayıyı seçin:,Doğru numarayı seçin:,mismatch
+3721078a-3be0-4cf6-9897-b65c20417d4d,prompt,pl,Select the correct number:,Wybierz poprawną liczbę:,Wybierz właściwy numer:,mismatch
+83a1d415-5b03-423a-84bf-94ba1d868f55,prompt,bg,Select the correct number:,Изберете правилното число:,Изберете правилния номер:,mismatch
+83a1d415-5b03-423a-84bf-94ba1d868f55,prompt,da,Select the correct number:,Vælg det rigtige tal:,Vælg det rigtige nummer:,mismatch
+83a1d415-5b03-423a-84bf-94ba1d868f55,prompt,de,Select the correct number:,Wählen Sie die richtige Zahl aus:,Wählen Sie die richtige Nummer aus:,mismatch
+83a1d415-5b03-423a-84bf-94ba1d868f55,prompt,fr,Select the correct number:,Sélectionnez le nombre correct :,Sélectionnez le bon numéro :,mismatch
+83a1d415-5b03-423a-84bf-94ba1d868f55,prompt,hu,Select the correct number:,Válassza ki a helyes számot!,Válassza ki a megfelelő számot:,mismatch
+83a1d415-5b03-423a-84bf-94ba1d868f55,prompt,ko,Select the correct number:,올바른 숫자를 선택하세요:,올바른 번호를 선택하세요:,mismatch
+83a1d415-5b03-423a-84bf-94ba1d868f55,prompt,nl,Select the correct number:,Selecteer het juiste getal:,Selecteer het juiste nummer:,mismatch
+83a1d415-5b03-423a-84bf-94ba1d868f55,prompt,pl,Select the correct number:,Wybierz poprawną liczbę:,Wybierz właściwy numer:,mismatch
+83a1d415-5b03-423a-84bf-94ba1d868f55,prompt,tr,Select the correct number:,Doğru sayıyı seçin:,Doğru numarayı seçin:,mismatch
+83a1d415-5b03-423a-84bf-94ba1d868f55,prompt,uk,Select the correct number:,Оберіть правильне число:,Виберіть правильний номер:,mismatch
+2035dd7e-1431-4c88-850c-a93fce4bdb75,prompt,da,Select the correct number:,Vælg det rigtige tal:,Vælg det rigtige nummer:,mismatch
+2035dd7e-1431-4c88-850c-a93fce4bdb75,prompt,bg,Select the correct number:,Изберете правилното число:,Изберете правилния номер:,mismatch
+2035dd7e-1431-4c88-850c-a93fce4bdb75,prompt,de,Select the correct number:,Wählen Sie die richtige Zahl aus:,Wählen Sie die richtige Nummer aus:,mismatch
+2035dd7e-1431-4c88-850c-a93fce4bdb75,prompt,fr,Select the correct number:,Sélectionnez le nombre correct :,Sélectionnez le bon numéro :,mismatch
+2035dd7e-1431-4c88-850c-a93fce4bdb75,prompt,hu,Select the correct number:,Válassza ki a helyes számot!,Válassza ki a megfelelő számot:,mismatch
+2035dd7e-1431-4c88-850c-a93fce4bdb75,prompt,ko,Select the correct number:,올바른 숫자를 선택하세요:,올바른 번호를 선택하세요:,mismatch
+2035dd7e-1431-4c88-850c-a93fce4bdb75,prompt,nl,Select the correct number:,Selecteer het juiste getal:,Selecteer het juiste nummer:,mismatch
+2035dd7e-1431-4c88-850c-a93fce4bdb75,prompt,pl,Select the correct number:,Wybierz poprawną liczbę:,Wybierz właściwy numer:,mismatch
+2035dd7e-1431-4c88-850c-a93fce4bdb75,prompt,uk,Select the correct number:,Оберіть правильне число:,Виберіть правильний номер:,mismatch
+2035dd7e-1431-4c88-850c-a93fce4bdb75,prompt,tr,Select the correct number:,Doğru sayıyı seçin:,Doğru numarayı seçin:,mismatch
+648791ac-517a-4186-ae74-9b90febed243,prompt,da,Select the correct number:,Vælg det rigtige tal:,Vælg det rigtige nummer:,mismatch
+648791ac-517a-4186-ae74-9b90febed243,prompt,fr,Select the correct number:,Sélectionnez le nombre correct :,Sélectionnez le bon numéro :,mismatch
+648791ac-517a-4186-ae74-9b90febed243,prompt,bg,Select the correct number:,Изберете правилното число:,Изберете правилния номер:,mismatch
+648791ac-517a-4186-ae74-9b90febed243,prompt,hu,Select the correct number:,Válassza ki a helyes számot!,Válassza ki a megfelelő számot:,mismatch
+648791ac-517a-4186-ae74-9b90febed243,prompt,nl,Select the correct number:,Selecteer het juiste getal:,Selecteer het juiste nummer:,mismatch
+648791ac-517a-4186-ae74-9b90febed243,prompt,pl,Select the correct number:,Wybierz poprawną liczbę:,Wybierz właściwy numer:,mismatch
+648791ac-517a-4186-ae74-9b90febed243,prompt,ko,Select the correct number:,올바른 숫자를 선택하세요:,올바른 번호를 선택하세요:,mismatch
+648791ac-517a-4186-ae74-9b90febed243,prompt,tr,Select the correct number:,Doğru sayıyı seçin:,Doğru numarayı seçin:,mismatch
+648791ac-517a-4186-ae74-9b90febed243,prompt,uk,Select the correct number:,Оберіть правильне число:,Виберіть правильний номер:,mismatch
+648791ac-517a-4186-ae74-9b90febed243,prompt,de,Select the correct number:,Wählen Sie die richtige Zahl aus:,Wählen Sie die richtige Nummer aus:,mismatch

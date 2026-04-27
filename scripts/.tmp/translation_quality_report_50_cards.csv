@@ -1,0 +1,7 @@
+card_id,subject_id,field,locale,global_text,current_text,translated_text,status
+6b44c052-ded9-4d14-91b9-b9184280553c,3fef9ea6-2e9d-45b1-87b0-75cce5adeedd,answer,es,O,O,oh,mismatch
+fa856517-6e02-4111-b050-4a27e1c5e7fb,68f5f724-3e4a-4c90-80c7-aee708c6b6cd,answer,ja,て,て,って,mismatch
+d8e55f21-c0f3-46f4-ab00-8a6a45e0e445,a1a7cbe7-2f68-4870-ba26-966132f75ba9,answer,de,I,I,ICH,mismatch
+1936909f-fba8-406b-9e4c-3370c6649bf8,f59a0f9c-5d6d-4f2d-b426-eb9ca6bf2782,answer,hi,17,१७,17,mismatch
+1936909f-fba8-406b-9e4c-3370c6649bf8,f59a0f9c-5d6d-4f2d-b426-eb9ca6bf2782,answer,ja,17,十七,17,mismatch
+fb3bcba9-04d7-4715-bd61-ab31ea36e34c,49154771-9b6b-42f6-8e4a-c1545ca0e94a,answer,fr,A,A,UN,mismatch

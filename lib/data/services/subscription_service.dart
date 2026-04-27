@@ -1,16 +1,24 @@
 import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/core/network/cloudflare_client.dart';
 import 'package:aliolo/core/utils/logger.dart';
 import 'auth_service.dart';
 
 class SubscriptionService extends ChangeNotifier {
+  static const productIds = {
+    'aliolo_premium_weekly',
+    'aliolo_premium_monthly',
+    'aliolo_premium_yearly',
+  };
+
   final InAppPurchase? _iap = kIsWeb ? null : InAppPurchase.instance;
   final _cfClient = getIt<CloudflareHttpClient>();
   StreamSubscription<List<PurchaseDetails>>? _purchaseSubscription;
-  
+
   bool _isPremium = false;
   bool get isPremium => _isPremium;
 
@@ -30,23 +38,20 @@ class SubscriptionService extends ChangeNotifier {
 
   SubscriptionService() {
     if (!kIsWeb && _iap != null) {
-      final purchaseUpdated = _iap!.purchaseStream;
-      _purchaseSubscription = purchaseUpdated.listen(
+      _purchaseSubscription = _iap.purchaseStream.listen(
         _onPurchaseUpdate,
         onDone: () => _purchaseSubscription?.cancel(),
-        onError: (error) {
-          AppLogger.log('Purchase stream error: $error');
-        },
+        onError: (error) => AppLogger.log('Purchase stream error: $error'),
       );
     }
-    
+
     getIt<AuthService>().addListener(_onAuthChanged);
   }
 
   void _onAuthChanged() {
     final user = getIt<AuthService>().currentUser;
     if (user?.serverId != _lastCheckedUserId) {
-      checkSubscriptionStatus();
+      init();
     }
   }
 
@@ -63,6 +68,8 @@ class SubscriptionService extends ChangeNotifier {
 
     if (user == null || user.serverId == null) {
       _isPremium = false;
+      _expiryDate = null;
+      _activeProductId = null;
       notifyListeners();
       return;
     }
@@ -71,14 +78,16 @@ class SubscriptionService extends ChangeNotifier {
       final response = await _cfClient.client.get('/api/subscriptions');
       if (response.statusCode == 200 && response.data != null) {
         final data = response.data;
-        final status = data['status'] as String;
-        final expiry = data['expiry_date'] != null 
-            ? DateTime.parse(data['expiry_date']) 
-            : null;
-        
+        final status = data['status'] as String?;
+        final expiryValue = data['expiry_date'] ?? data['effective_until'];
+        final expiry =
+            expiryValue == null ? null : DateTime.tryParse(expiryValue.toString());
+
         _activeProductId = data['product_id'] as String?;
         _expiryDate = expiry;
-        _isPremium = status == 'active' && (expiry == null || expiry.isAfter(DateTime.now()));
+        _isPremium =
+            status == 'active' &&
+            (expiry == null || expiry.isAfter(DateTime.now()));
       } else {
         _isPremium = false;
         _expiryDate = null;
@@ -95,57 +104,120 @@ class SubscriptionService extends ChangeNotifier {
 
   Future<void> loadProducts() async {
     if (kIsWeb || _iap == null) return;
+
     try {
-      const Set<String> kIds = {'aliolo_premium_weekly', 'aliolo_premium_monthly', 'aliolo_premium_yearly'};
-      final response = await _iap!.queryProductDetails(kIds);
+      final available = await _iap.isAvailable();
+      if (!available) {
+        _products = [];
+        notifyListeners();
+        return;
+      }
+
+      final response = await _iap.queryProductDetails(productIds);
       _products = response.productDetails;
       notifyListeners();
     } catch (e) {
-      AppLogger.log('Error loading products: $e');
+      AppLogger.log('Error loading store products: $e');
+      _products = [];
+      notifyListeners();
     }
   }
 
-  Future<void> buySubscription(ProductDetails product) async {
-    if (kIsWeb || _iap == null) return;
-    final PurchaseParam purchaseParam = PurchaseParam(productDetails: product);
-    await _iap!.buyNonConsumable(purchaseParam: purchaseParam);
+  ProductDetails? productForProductId(String productId) {
+    for (final product in _products) {
+      if (product.id == productId) return product;
+    }
+    return null;
+  }
+
+  Future<void> buySubscriptionByProductId(String productId) async {
+    if (kIsWeb) {
+      await _openPaddleCheckout(productId);
+      return;
+    }
+
+    if (_iap == null) {
+      throw Exception('In-app purchases are not available on this platform.');
+    }
+
+    var product = productForProductId(productId);
+    if (product == null) {
+      await loadProducts();
+      product = productForProductId(productId);
+    }
+    if (product == null) {
+      throw Exception('Product is not available in the store.');
+    }
+
+    final purchaseParam = PurchaseParam(productDetails: product);
+    await _iap.buyNonConsumable(purchaseParam: purchaseParam);
+  }
+
+  Future<void> _openPaddleCheckout(String productId) async {
+    _isLoading = true;
+    notifyListeners();
+    try {
+      final response = await _cfClient.client.post(
+        '/api/subscriptions/paddle/checkout',
+        data: {'productId': productId},
+      );
+
+      final checkoutUrl = response.data?['checkout_url']?.toString();
+      if (response.statusCode != 200 || checkoutUrl == null || checkoutUrl.isEmpty) {
+        throw Exception(response.data?['error'] ?? 'Paddle checkout is not configured.');
+      }
+
+      final uri = Uri.parse(checkoutUrl);
+      final launched = await launchUrl(uri, mode: LaunchMode.externalApplication);
+      if (!launched) throw Exception('Could not open Paddle checkout.');
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
   }
 
   Future<void> _onPurchaseUpdate(List<PurchaseDetails> purchaseDetailsList) async {
-    for (var purchase in purchaseDetailsList) {
+    for (final purchase in purchaseDetailsList) {
       if (purchase.status == PurchaseStatus.pending) {
         _isLoading = true;
         notifyListeners();
-      } else {
-        if (purchase.status == PurchaseStatus.error) {
-          _isLoading = false;
-          notifyListeners();
-        } else if (purchase.status == PurchaseStatus.purchased ||
-            purchase.status == PurchaseStatus.restored) {
-          
-          bool success = await _verifyPurchaseOnBackend(purchase);
-          if (success) {
-            _isPremium = true;
-          }
-        }
-        
-        if (purchase.pendingCompletePurchase) {
-          await _iap!.completePurchase(purchase);
-        }
+        continue;
+      }
+
+      if (purchase.status == PurchaseStatus.error) {
         _isLoading = false;
         notifyListeners();
+        continue;
       }
+
+      if (purchase.status == PurchaseStatus.purchased ||
+          purchase.status == PurchaseStatus.restored) {
+        await _verifyPurchaseOnBackend(purchase);
+      }
+
+      if (purchase.pendingCompletePurchase && _iap != null) {
+        await _iap.completePurchase(purchase);
+      }
+
+      _isLoading = false;
+      notifyListeners();
     }
   }
 
   Future<bool> _verifyPurchaseOnBackend(PurchaseDetails purchase) async {
     try {
+      final isApple = defaultTargetPlatform == TargetPlatform.iOS ||
+          defaultTargetPlatform == TargetPlatform.macOS;
+      final endpoint =
+          isApple ? '/api/subscriptions/apple/verify' : '/api/subscriptions/google/verify';
+
       final response = await _cfClient.client.post(
-        '/api/subscriptions/verify',
+        endpoint,
         data: {
           'purchaseToken': purchase.verificationData.serverVerificationData,
           'productId': purchase.productID,
           'orderId': purchase.purchaseID,
+          'source': purchase.verificationData.source,
         },
       );
 
@@ -157,6 +229,11 @@ class SubscriptionService extends ChangeNotifier {
       AppLogger.log('Error verifying purchase: $e');
     }
     return false;
+  }
+
+  Future<void> restorePurchases() async {
+    if (kIsWeb || _iap == null) return;
+    await _iap.restorePurchases();
   }
 
   @override

@@ -1105,7 +1105,18 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
               )
               : null;
 
+          final currentPillarObj = pillars.firstWhere(
+            (p) => p.id == _selectedPillar,
+            orElse: () => pillars.first,
+          );
+
           return AlioloScrollablePage(
+            leading: Icon(
+              currentPillarObj.getIconData(),
+              color: appBarColor,
+              size: 24,
+            ),
+            leadingWidth: 56,
             title: Text(
               _isFolderMode
                   ? (widget.existingFolder == null ? context.t('add_folder') : context.t('edit_folder'))

@@ -927,7 +927,18 @@ class _AddCardPageState extends State<AddCardPage> {
                   )
                   : null;
 
+          final currentPillarObj = pillars.firstWhere(
+            (p) => p.id == (_internalPillarId ?? 1),
+            orElse: () => pillars.first,
+          );
+
           return AlioloScrollablePage(
+            leading: Icon(
+              currentPillarObj.getIconData(),
+              color: appBarColor,
+              size: 24,
+            ),
+            leadingWidth: 56,
             title: Text(pageTitle, style: const TextStyle(color: appBarColor)),
             appBarColor: themeColor,
             actions:

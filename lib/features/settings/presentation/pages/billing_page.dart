@@ -3,9 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:aliolo/data/services/subscription_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
+import 'package:aliolo/core/utils/legal_links.dart';
 import 'package:aliolo/core/widgets/aliolo_scrollable_page.dart';
-import 'package:aliolo/core/di/service_locator.dart';
-import 'package:flutter/foundation.dart';
 
 class BillingPage extends StatefulWidget {
   final int selectedIndex;
@@ -19,40 +18,44 @@ class BillingPage extends StatefulWidget {
 class _BillingPageState extends State<BillingPage> {
   bool _isProcessing = false;
 
-  void _handlePurchase(SubscriptionService subService) async {
-    if (kIsWeb) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Payments are not yet integrated on Web. Please use the mobile app to upgrade.')),
-      );
-      return;
-    }
+  Widget _buildLegalLink(
+    BuildContext context,
+    String label,
+    Uri uri,
+    Color color,
+  ) {
+    return TextButton(
+      onPressed: () => AlioloLegalLinks.open(context, uri),
+      style: TextButton.styleFrom(
+        visualDensity: VisualDensity.compact,
+        foregroundColor: color,
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+      ),
+      child: Text(label),
+    );
+  }
 
+  Future<void> _handlePurchase(SubscriptionService subService) async {
     setState(() => _isProcessing = true);
 
     String productId = 'aliolo_premium_monthly';
     if (widget.selectedIndex == 2) productId = 'aliolo_premium_yearly';
     else if (widget.selectedIndex == 0) productId = 'aliolo_premium_weekly';
 
-    final product = subService.products.where((p) => p.id == productId).firstOrNull;
-    if (product != null) {
-      try {
-        await subService.buySubscription(product);
-      } catch (e) {
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Purchase failed: $e')),
-          );
-        }
+    try {
+      await subService.buySubscriptionByProductId(productId);
+      if (mounted) {
+        Navigator.pop(context);
       }
-    } else {
+    } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Product not available in store.')),
+          SnackBar(content: Text('Purchase failed: $e')),
         );
       }
+    } finally {
+      if (mounted) setState(() => _isProcessing = false);
     }
-    
-    if (mounted) setState(() => _isProcessing = false);
   }
 
   @override
@@ -120,15 +123,14 @@ class _BillingPageState extends State<BillingPage> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        if (originalPrice != null)
-                          Text(
-                            originalPrice,
-                            style: TextStyle(
-                              color: Colors.grey[400],
-                              fontSize: 14,
-                              decoration: TextDecoration.lineThrough,
-                            ),
+                        Text(
+                          originalPrice,
+                          style: TextStyle(
+                            color: Colors.grey[400],
+                            fontSize: 14,
+                            decoration: TextDecoration.lineThrough,
                           ),
+                        ),
                         Text(
                           price,
                           style: TextStyle(
@@ -157,6 +159,38 @@ class _BillingPageState extends State<BillingPage> {
                 context.t('billing_disclaimer'),
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+              ),
+              const SizedBox(height: 12),
+              Wrap(
+                alignment: WrapAlignment.center,
+                spacing: 4,
+                runSpacing: 4,
+                children: [
+                  _buildLegalLink(
+                    context,
+                    'Terms',
+                    AlioloLegalLinks.terms,
+                    currentPrimaryColor,
+                  ),
+                  _buildLegalLink(
+                    context,
+                    'Privacy',
+                    AlioloLegalLinks.privacy,
+                    currentPrimaryColor,
+                  ),
+                  _buildLegalLink(
+                    context,
+                    'Refund',
+                    AlioloLegalLinks.refund,
+                    currentPrimaryColor,
+                  ),
+                  _buildLegalLink(
+                    context,
+                    'Pricing',
+                    AlioloLegalLinks.pricing,
+                    currentPrimaryColor,
+                  ),
+                ],
               ),
               
               const SizedBox(height: 48),

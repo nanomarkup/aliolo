@@ -674,22 +674,27 @@ class _UsersPageState extends State<UsersPage> {
             user.subscription?.provider ?? context.t('not_available'),
           ),
           _buildInfoRow(
+            'Access source',
+            user.subscription?.effectiveSource ?? context.t('not_available'),
+          ),
+          _buildInfoRow(
             context.t('expiry_date'),
             _formatDate(user.subscription?.expiryDate),
           ),
           _buildInfoRow(
-            context.t('purchase_token'),
-            user.subscription?.purchaseToken ?? context.t('not_available'),
-            copyable: user.subscription?.purchaseToken != null,
-          ),
-          _buildInfoRow(
-            context.t('order_id'),
-            user.subscription?.orderId ?? context.t('not_available'),
-            copyable: user.subscription?.orderId != null,
-          ),
-          _buildInfoRow(
             context.t('product_id'),
             user.subscription?.productId ?? context.t('not_available'),
+          ),
+          _buildInfoRow(
+            'Provider subscription',
+            user.subscription?.activeProviderSubscriptionId ??
+                context.t('not_available'),
+            copyable: user.subscription?.activeProviderSubscriptionId != null,
+          ),
+          _buildInfoRow(
+            'Manual grant',
+            user.subscription?.activeManualGrantId ?? context.t('not_available'),
+            copyable: user.subscription?.activeManualGrantId != null,
           ),
           _buildInfoRow(
             context.t('created_at'),

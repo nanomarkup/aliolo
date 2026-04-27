@@ -1,11 +1,13 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:aliolo/core/utils/number_localizer.dart';
 
 class SubtractionGrid extends StatefulWidget {
   final int totalSum;
   final int maxOperand;
   final double iconSize;
   final bool useNumbers;
+  final String languageCode;
 
   const SubtractionGrid({
     super.key,
@@ -13,6 +15,7 @@ class SubtractionGrid extends StatefulWidget {
     required this.maxOperand,
     this.iconSize = 40,
     this.useNumbers = false,
+    this.languageCode = 'en',
   });
 
   @override
@@ -100,7 +103,7 @@ class _SubtractionGridState extends State<SubtractionGrid> {
   Widget _buildPart(int count) {
     if (count == 0) {
       return Text(
-        '0',
+        NumberLocalizer.localize(0, widget.languageCode),
         style: TextStyle(
           fontSize: widget.iconSize,
           fontWeight: FontWeight.bold,
@@ -111,7 +114,7 @@ class _SubtractionGridState extends State<SubtractionGrid> {
 
     if (widget.useNumbers) {
       return Text(
-        count.toString(),
+        NumberLocalizer.localize(count, widget.languageCode),
         style: TextStyle(
           fontSize: widget.iconSize * 1.4,
           fontWeight: FontWeight.bold,
