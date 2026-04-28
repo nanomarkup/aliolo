@@ -37,6 +37,7 @@ dynamic dynamicDirectory(String path) => Directory(path);
 
 class LocationStub {
   String get href => '';
+  set href(String value) {}
   void reload() {}
 }
 

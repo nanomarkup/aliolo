@@ -10,7 +10,8 @@
     "ENVIRONMENT": "development"
   },
   "assets": {
-    "directory": "../build/web"
+    "directory": "../build/web",
+    "binding": "ASSETS"
   },
   "d1_databases": [
     {
@@ -35,7 +36,8 @@
         "ENVIRONMENT": "production"
       },
       "assets": {
-        "directory": "../build/web"
+        "directory": "../build/web",
+        "binding": "ASSETS"
       },
       "d1_databases": [
         {

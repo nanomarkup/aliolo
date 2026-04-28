@@ -13,7 +13,11 @@ import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/data/services/testing_language_service.dart';
 import 'package:aliolo/features/auth/presentation/pages/login_page.dart';
 import 'package:aliolo/features/subjects/presentation/pages/subject_page.dart';
+import 'package:aliolo/features/subjects/presentation/pages/subject_landing_page.dart';
 import 'package:aliolo/features/onboarding/presentation/onboarding_screen.dart';
+import 'package:aliolo/data/models/subject_model.dart';
+import 'package:aliolo/data/models/collection_model.dart';
+import 'package:aliolo/data/models/card_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:aliolo/core/utils/file_stub.dart'
@@ -396,6 +400,64 @@ class _AlioloMainAppState extends State<AlioloMainApp> {
 
               if (user == null) {
                 return const SelectionArea(child: LoginPage());
+              }
+
+              // Deep Link Handling
+              if (authService.initialSubjectId != null ||
+                  authService.initialCollectionId != null) {
+                return FutureBuilder<List<dynamic>>(
+                  future:
+                      authService.initialSubjectId != null
+                          ? Future.wait([
+                            getIt<CardService>().getSubjectById(
+                              authService.initialSubjectId!,
+                            ),
+                            getIt<CardService>().getCardsBySubject(
+                              authService.initialSubjectId!,
+                            ),
+                          ])
+                          : Future.wait([
+                            getIt<CardService>().getCollectionById(
+                              authService.initialCollectionId!,
+                            ),
+                            getIt<CardService>().getCollectionCardsByCollectionId(
+                              authService.initialCollectionId!,
+                            ),
+                          ]),
+                  builder: (context, deepLinkSnapshot) {
+                    if (deepLinkSnapshot.connectionState !=
+                        ConnectionState.done) {
+                      return const Scaffold(
+                        body: Center(child: CircularProgressIndicator()),
+                      );
+                    }
+
+                    final data = deepLinkSnapshot.data;
+                    if (data == null || data[0] == null) {
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        authService.consumeDeepLinks();
+                      });
+                      return const SubjectPage();
+                    }
+
+                    final item = data[0];
+                    final cards = data[1] as List<CardModel>;
+
+                    // Consume links so we don't loop
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      authService.consumeDeepLinks();
+                    });
+
+                    return SubjectLandingPage(
+                      subject: item is SubjectModel ? item : null,
+                      collection: item is CollectionModel ? item : null,
+                      cards: cards,
+                      languageCode: getIt<TestingLanguageService>()
+                          .currentLanguageCode
+                          .value,
+                    );
+                  },
+                );
               }
 
               return FutureBuilder<bool>(

@@ -14,6 +14,9 @@ import 'package:aliolo/features/subjects/presentation/pages/subject_page.dart';
 import 'package:aliolo/features/settings/presentation/pages/about_page.dart';
 import 'package:aliolo/data/services/friendship_service.dart';
 import 'package:aliolo/features/auth/presentation/pages/manage_friends_page.dart';
+import 'package:aliolo/core/utils/file_stub.dart'
+    if (dart.library.html) 'dart:html'
+    as html;
 
 class LoginPage extends StatefulWidget {
   final bool initialCreateAccount;
@@ -187,6 +190,11 @@ class _LoginPageState extends State<LoginPage> {
   void _showMsg(String msg) {
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
+  }
+
+  void _goToHomePage() {
+    if (!kIsWeb) return;
+    html.window.location.href = '/';
   }
 
   Future<void> _handleAuth() async {
@@ -432,37 +440,53 @@ class _LoginPageState extends State<LoginPage> {
                           Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Image.asset(
-                                'assets/app_icon.webp',
-                                height: 120,
-                                fit: BoxFit.contain,
-                              ),
-                              Transform.translate(
-                                offset: const Offset(0, -16),
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      'aliolo',
-                                      style: GoogleFonts.poppins(
-                                        fontSize: 80,
-                                        fontWeight: FontWeight.w500,
-                                        color: mainColor,
-                                        letterSpacing: 4.0,
-                                      ),
-                                    ),
-                                    Transform.translate(
-                                      offset: const Offset(0, -20),
-                                      child: Text(
-                                        context.t('about_tagline'),
-                                        textAlign: TextAlign.center,
-                                        style: GoogleFonts.roboto(
-                                          fontSize: 14,
-                                          color: mainColor,
-                                          fontWeight: FontWeight.w400,
+                              SelectionContainer.disabled(
+                                child: MouseRegion(
+                                  cursor:
+                                      kIsWeb
+                                          ? SystemMouseCursors.click
+                                          : MouseCursor.defer,
+                                  child: GestureDetector(
+                                    onTap: _goToHomePage,
+                                    behavior: HitTestBehavior.opaque,
+                                    child: Column(
+                                      children: [
+                                        Image.asset(
+                                          'assets/app_icon.webp',
+                                          height: 120,
+                                          fit: BoxFit.contain,
                                         ),
-                                      ),
+                                        Transform.translate(
+                                          offset: const Offset(0, -16),
+                                          child: Column(
+                                            children: [
+                                              Text(
+                                                'aliolo',
+                                                style: GoogleFonts.poppins(
+                                                  fontSize: 80,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: mainColor,
+                                                  letterSpacing: 4.0,
+                                                ),
+                                              ),
+                                              Transform.translate(
+                                                offset: const Offset(0, -20),
+                                                child: Text(
+                                                  context.t('about_tagline'),
+                                                  textAlign: TextAlign.center,
+                                                  style: GoogleFonts.roboto(
+                                                    fontSize: 14,
+                                                    color: mainColor,
+                                                    fontWeight: FontWeight.w400,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ],
+                                  ),
                                 ),
                               ),
                             ],

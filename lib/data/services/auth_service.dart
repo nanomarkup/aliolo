@@ -33,6 +33,8 @@ class AuthService extends ChangeNotifier {
   String? _initialUrl;
   String? _recoveryFlowType;
   String? _currentSessionEmail;
+  String? _initialSubjectId;
+  String? _initialCollectionId;
 
   UserModel? get currentUser => _currentUser;
   String? get lastErrorMessage => _lastErrorMessage;
@@ -42,6 +44,13 @@ class AuthService extends ChangeNotifier {
   String? get recoveryFlowType => _recoveryFlowType;
   String? get currentSessionEmail =>
       _currentSessionEmail ?? _currentUser?.email;
+  String? get initialSubjectId => _initialSubjectId;
+  String? get initialCollectionId => _initialCollectionId;
+
+  void consumeDeepLinks() {
+    _initialSubjectId = null;
+    _initialCollectionId = null;
+  }
 
   Future<void> init({String? manualUrl, String? inviteToken}) async {
     try {
@@ -67,6 +76,12 @@ class AuthService extends ChangeNotifier {
 
       if (kIsWeb && _initialUrl != null) {
         final uri = Uri.parse(_initialUrl!);
+
+        if (uri.path.startsWith('/subject/')) {
+          _initialSubjectId = uri.pathSegments.last;
+        } else if (uri.path.startsWith('/collection/')) {
+          _initialCollectionId = uri.pathSegments.last;
+        }
 
         if (uri.queryParameters.containsKey('type')) {
           _isPasswordRecoveryFlow = true;

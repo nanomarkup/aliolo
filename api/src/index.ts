@@ -5,6 +5,7 @@ import { isbot } from 'isbot';
 import { initializeLucia } from './auth';
 import type { AppEnv } from './types';
 import { generateSeoHtml } from './utils/seo';
+import { generateSitemapXml } from './utils/sitemap';
 
 import authRouter from './routes/auth';
 import pillarsRouter from './routes/pillars';
@@ -103,150 +104,266 @@ app.get('/api/docs', swaggerUI({ url: '/openapi.json' }));
 const legalStyles = `
   :root {
     color-scheme: light;
-    --brand: #1d4289;
-    --brand-soft: rgba(29, 66, 137, 0.08);
-    --ink: rgba(0, 0, 0, 0.87);
-    --muted: rgba(0, 0, 0, 0.6);
-    --surface: #ffffff;
-    --bg: #F1F5F9;
-    --line: rgba(0, 0, 0, 0.05);
+    --ink: #112034;
+    --muted: #5f6c81;
+    --brand: #175f90;
+    --brand-strong: #0d476d;
+    --accent: #d67a2d;
+    --accent-soft: rgba(214, 122, 45, 0.12);
+    --surface: rgba(255, 255, 255, 0.96);
+    --page: #eef4f7;
+    --line: rgba(17, 32, 52, 0.10);
+    --line-strong: rgba(23, 95, 144, 0.18);
+    --shadow: 0 22px 58px rgba(17, 32, 52, 0.08);
   }
   * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
   body {
     margin: 0;
     color: var(--ink);
-    font-family: "Roboto", system-ui, -apple-system, sans-serif;
-    line-height: 1.55;
-    background-color: var(--bg);
+    font-family: "Source Sans 3", system-ui, -apple-system, sans-serif;
+    line-height: 1.6;
+    background:
+      radial-gradient(circle at top left, rgba(23, 95, 144, 0.11), transparent 28rem),
+      radial-gradient(circle at top right, rgba(214, 122, 45, 0.10), transparent 24rem),
+      linear-gradient(180deg, #f9fcfd 0%, var(--page) 100%);
   }
   a { color: var(--brand); font-weight: 700; text-decoration: none; }
   a:hover { text-decoration: underline; }
-  .shell { width: min(1040px, calc(100% - 48px)); margin: 0 auto; }
+  .shell { width: min(1100px, calc(100% - 40px)); margin: 0 auto; }
   header {
-    padding: 24px 0;
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    padding: 20px 0;
+    backdrop-filter: blur(18px);
+    background: rgba(249, 252, 253, 0.88);
+    border-bottom: 1px solid rgba(17, 32, 52, 0.06);
   }
-  .brand { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
-  .brand-name { 
+  .brand {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    font-family: "Poppins", system-ui, -apple-system, sans-serif; 
-    font-size: 28px; 
-    font-weight: 600; 
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .brand-name {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-family: "Manrope", system-ui, -apple-system, sans-serif;
+    font-size: 27px;
+    font-weight: 800;
     line-height: 1;
-    letter-spacing: 2px; 
-    color: var(--brand); 
+    letter-spacing: -0.04em;
+    color: var(--brand);
     text-transform: lowercase;
   }
-  .brand-name:hover {
-    text-decoration: none;
-  }
+  .brand-name:hover { text-decoration: none; }
   .brand-name img {
-    height: 44px;
-    margin-bottom: 2px;
-    border-radius: 10px;
+    width: 46px;
+    height: 46px;
   }
-  nav { display: flex; gap: 10px; flex-wrap: wrap; }
+  nav { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
   nav a {
     color: var(--ink);
-    font-family: "Roboto", system-ui, sans-serif;
-    font-size: 14px;
-    padding: 8px 16px;
-    border: 1px solid var(--line);
+    font-size: 15px;
+    font-weight: 600;
+    padding: 10px 14px;
+    border: 1px solid transparent;
     border-radius: 999px;
-    background: var(--surface);
-    transition: all 0.2s ease;
+    transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
   }
-  nav a.active, nav a:hover { 
-    border-color: var(--brand); 
-    background: var(--brand-soft); 
+  nav a:hover {
+    border-color: var(--line);
+    background: rgba(255, 255, 255, 0.84);
+    transform: translateY(-1px);
+    text-decoration: none;
+  }
+  nav a.active {
+    border-color: var(--line-strong);
+    background: rgba(23, 95, 144, 0.08);
     color: var(--brand);
     text-decoration: none;
   }
-  main { padding: 24px 0 56px; }
+  main { padding: 34px 0 78px; }
   .hero {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 280px;
+    grid-template-columns: minmax(0, 1fr) 290px;
     gap: 28px;
-    align-items: center;
-    margin-bottom: 24px;
+    align-items: stretch;
+    margin-bottom: 28px;
   }
   h1 {
     margin: 0;
-    font-family: "Poppins", system-ui, sans-serif;
-    font-size: clamp(32px, 5vw, 48px);
-    font-weight: 700;
-    line-height: 1.1;
-    color: var(--brand);
+    font-family: "Manrope", system-ui, sans-serif;
+    font-size: clamp(34px, 5vw, 52px);
+    font-weight: 800;
+    line-height: 1.02;
+    letter-spacing: -0.05em;
+    color: var(--ink);
   }
-  .subtitle { margin: 12px 0 0; color: var(--muted); font-size: 16px; max-width: 720px; }
+  .subtitle {
+    margin: 14px 0 0;
+    color: var(--muted);
+    font-size: 18px;
+    max-width: 760px;
+  }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 14px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: rgba(23, 95, 144, 0.10);
+    color: var(--brand);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
   .meta {
-    padding: 20px;
+    padding: 22px;
     background: var(--surface);
-    border-radius: 22px;
+    border: 1px solid var(--line);
+    border-radius: 24px;
     font-size: 14px;
     color: var(--muted);
+    box-shadow: var(--shadow);
   }
   .meta strong { color: var(--ink); font-weight: 600; }
   .content {
     background: var(--surface);
-    border-radius: 22px;
+    border: 1px solid var(--line);
+    border-radius: 28px;
     padding: clamp(24px, 4vw, 48px);
+    box-shadow: var(--shadow);
   }
   h2 {
-    margin: 32px 0 12px;
-    font-size: 20px;
-    font-weight: 700;
-    color: var(--brand);
+    margin: 34px 0 12px;
+    font-family: "Manrope", system-ui, sans-serif;
+    font-size: 24px;
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    color: var(--ink);
   }
   h2:first-child { margin-top: 0; }
-  p { margin: 12px 0; }
+  p { margin: 12px 0; font-size: 17px; }
   ul { padding-left: 24px; margin: 12px 0; }
-  li { margin: 8px 0; }
+  li { margin: 8px 0; font-size: 17px; }
   .notice {
     margin: 24px 0;
-    padding: 16px 20px;
-    border-radius: 14px;
-    background: var(--brand-soft);
-    color: var(--brand);
+    padding: 18px 20px;
+    border-radius: 18px;
+    background: rgba(23, 95, 144, 0.06);
+    border: 1px solid rgba(23, 95, 144, 0.10);
+    color: var(--ink);
     font-size: 14px;
   }
   .plans {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 16px;
+    gap: 18px;
     margin: 24px 0;
   }
   .plan {
-    padding: 24px;
+    padding: 26px;
     border: 1px solid var(--line);
-    border-radius: 22px;
-    background: var(--surface);
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow: 0 16px 34px rgba(17, 32, 52, 0.05);
   }
-  .plan h2 { margin-top: 0; color: var(--ink); font-size: 18px; }
+  .plan h2 { margin-top: 0; color: var(--ink); font-size: 22px; }
   .price {
-    font-family: "Poppins", system-ui, sans-serif;
-    font-size: 28px;
-    font-weight: 700;
+    font-family: "Manrope", system-ui, sans-serif;
+    font-size: 38px;
+    font-weight: 800;
     color: var(--brand);
     margin: 8px 0 16px;
+    letter-spacing: -0.05em;
   }
   .tag {
     display: inline-flex;
     margin-bottom: 12px;
-    padding: 4px 10px;
-    border-radius: 8px;
-    background: rgba(216, 121, 45, 0.1);
-    color: #d8792d;
+    padding: 6px 11px;
+    border-radius: 999px;
+    background: var(--accent-soft);
+    color: var(--accent);
     font-size: 12px;
-    font-weight: 700;
+    font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.08em;
+  }
+  .comparison-card {
+    margin-top: 28px;
+    padding: 28px;
+    border-radius: 28px;
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow: 0 16px 34px rgba(17, 32, 52, 0.05);
+  }
+  .comparison-card h2 {
+    margin-top: 0;
+  }
+  .comparison-card p {
+    color: var(--muted);
+  }
+  .comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 18px;
+  }
+  .comparison-table th,
+  .comparison-table td {
+    padding: 14px 10px;
+    border-bottom: 1px solid var(--line);
+    text-align: center;
+    font-size: 15px;
+  }
+  .comparison-table th:first-child,
+  .comparison-table td:first-child {
+    text-align: left;
+    width: 52%;
+  }
+  .comparison-table th {
+    color: var(--muted);
+    font-weight: 700;
+  }
+  .comparison-table td:first-child {
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .comparison-table tr:last-child td {
+    border-bottom: none;
+  }
+  .comparison-check {
+    color: var(--brand);
+    font-weight: 800;
+    font-size: 18px;
+  }
+  .comparison-check.pro {
+    color: #0f9d58;
+  }
+  .comparison-cross {
+    color: #c4ccd8;
+    font-weight: 800;
+    font-size: 18px;
+  }
+  .comparison-note {
+    margin-top: 18px;
+    color: var(--muted);
+    font-size: 15px;
   }
   @media (max-width: 760px) {
+    .shell { width: min(100% - 28px, 1100px); }
+    header { padding: 16px 0; }
     .hero, .plans { grid-template-columns: 1fr; }
     .hero { gap: 16px; }
-    main { padding-top: 16px; }
+    nav { gap: 6px; }
+    nav a { padding: 9px 12px; }
+    main { padding-top: 24px; }
   }
 `;
 
@@ -255,9 +372,11 @@ function legalPage(args: {
   subtitle: string;
   active: 'privacy' | 'terms' | 'refund' | 'pricing';
   updated: string;
+  path: string;
   body: string;
 }) {
   const nav = [
+    ['home', 'Home', '/'],
     ['privacy', 'Privacy', '/privacy'],
     ['terms', 'Terms', '/terms'],
     ['refund', 'Refunds', '/refund'],
@@ -271,6 +390,10 @@ function legalPage(args: {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${args.title}</title>
   <meta name="description" content="${args.subtitle}">
+  <link rel="canonical" href="https://aliolo.com${args.path}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>${legalStyles}</style>
 </head>
 <body>
@@ -280,7 +403,7 @@ function legalPage(args: {
         <img src="/app_icon.webp" alt="Aliolo Logo" />
         aliolo
       </a>
-      <nav aria-label="Legal and pricing pages">
+      <nav aria-label="Legal page navigation">
         ${nav.map(([key, label, href]) => `<a class="${args.active === key ? 'active' : ''}" href="${href}">${label}</a>`).join('')}
       </nav>
     </div>
@@ -288,6 +411,7 @@ function legalPage(args: {
   <main class="shell">
     <section class="hero">
       <div>
+        <div class="eyebrow">Legal information</div>
         <h1>${args.title}</h1>
         <p class="subtitle">${args.subtitle}</p>
       </div>
@@ -310,6 +434,7 @@ const privacyHtml = legalPage({
   title: 'Aliolo Privacy Policy',
   active: 'privacy',
   updated: 'April 28, 2026',
+  path: '/privacy',
   subtitle: 'How Aliolo collects, uses, stores, and protects account, learning, and payment-related information.',
   body: `
     <h2>Information We Collect</h2>
@@ -348,6 +473,7 @@ const termsHtml = legalPage({
   title: 'Aliolo Subscription Terms',
   active: 'terms',
   updated: 'April 28, 2026',
+  path: '/terms',
   subtitle: 'The rules for Aliolo accounts, premium access, subscription billing, cancellation, and acceptable use.',
   body: `
     <h2>Using Aliolo</h2>
@@ -384,6 +510,7 @@ const refundHtml = legalPage({
   title: 'Aliolo Refund Policy',
   active: 'refund',
   updated: 'April 28, 2026',
+  path: '/refund',
   subtitle: 'How refunds, cancellations, chargebacks, and payment support work for Aliolo Premium.',
   body: `
     <h2>Overview</h2>
@@ -411,6 +538,7 @@ const pricingHtml = legalPage({
   title: 'Aliolo Premium Pricing',
   active: 'pricing',
   updated: 'April 28, 2026',
+  path: '/pricing',
   subtitle: 'Simple subscription options for unlocking the full Aliolo visual learning experience.',
   body: `
     <div class="plans">
@@ -449,6 +577,60 @@ const pricingHtml = legalPage({
 
     <div class="notice"><strong>Paddle notice:</strong> Web orders may be processed by Paddle.com, our online reseller and Merchant of Record. Paddle may calculate and collect applicable taxes and provide payment-related buyer support.</div>
 
+    <div class="comparison-card">
+      <h2>Free vs Premium Comparison</h2>
+      <p>This table matches the current app experience and makes the premium upgrade easier to evaluate at a glance.</p>
+      <table class="comparison-table" aria-label="Aliolo free and premium feature comparison">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Free</th>
+            <th>Premium</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Full library</td>
+            <td><span class="comparison-check">✓</span></td>
+            <td><span class="comparison-check pro">✓</span></td>
+          </tr>
+          <tr>
+            <td>Spaced repetition</td>
+            <td><span class="comparison-cross">✕</span></td>
+            <td><span class="comparison-check pro">✓</span></td>
+          </tr>
+          <tr>
+            <td>Creation</td>
+            <td><span class="comparison-cross">✕</span></td>
+            <td><span class="comparison-check pro">✓</span></td>
+          </tr>
+          <tr>
+            <td>Testing</td>
+            <td><span class="comparison-cross">✕</span></td>
+            <td><span class="comparison-check pro">✓</span></td>
+          </tr>
+          <tr>
+            <td>Autoplay</td>
+            <td><span class="comparison-cross">✕</span></td>
+            <td><span class="comparison-check pro">✓</span></td>
+          </tr>
+          <tr>
+            <td>Private mode</td>
+            <td><span class="comparison-cross">✕</span></td>
+            <td><span class="comparison-check pro">✓</span></td>
+          </tr>
+          <tr>
+            <td>Customize</td>
+            <td><span class="comparison-cross">✕</span></td>
+            <td><span class="comparison-check pro">✓</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="comparison-note">
+        Premium unlocks the full study workflow: adaptive review, creation tools, advanced testing, autoplay controls, private organization, and deeper personalization.
+      </div>
+    </div>
+
     <h2>Platform Price Differences</h2>
     <p>Prices and offers may vary between web checkout, Google Play, Apple App Store, countries, currencies, and limited-time promotions. The final checkout screen controls the actual price and renewal terms for your purchase.</p>
 
@@ -457,10 +639,885 @@ const pricingHtml = legalPage({
   `,
 });
 
+const landingStyles = `
+  :root {
+    color-scheme: light;
+    --ink: #162235;
+    --muted: #5f6f85;
+    --brand: #185f90;
+    --brand-strong: #0d476d;
+    --accent: #d97728;
+    --line: rgba(18, 34, 53, 0.10);
+    --line-strong: rgba(24, 95, 144, 0.18);
+    --surface: #ffffff;
+    --surface-soft: #f6fbfd;
+    --hero-wash: rgba(24, 95, 144, 0.08);
+    --hero-wash-2: rgba(217, 119, 40, 0.09);
+    --page: #eef5f8;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    color: var(--ink);
+    font-family: "Roboto", system-ui, -apple-system, sans-serif;
+    line-height: 1.58;
+    background:
+      radial-gradient(circle at top left, var(--hero-wash), transparent 30rem),
+      radial-gradient(circle at top right, var(--hero-wash-2), transparent 28rem),
+      linear-gradient(180deg, #f9fcfd 0%, var(--page) 100%);
+  }
+  a { color: var(--brand); font-weight: 700; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .shell { width: min(1160px, calc(100% - 40px)); margin: 0 auto; }
+  header {
+    padding: 22px 0;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    backdrop-filter: blur(16px);
+    background: rgba(249, 252, 253, 0.88);
+    border-bottom: 1px solid rgba(18, 34, 53, 0.06);
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .brand-name {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-family: "Poppins", system-ui, sans-serif;
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: 0.03em;
+    color: var(--brand);
+    text-transform: lowercase;
+  }
+  .brand-name:hover { text-decoration: none; }
+  .brand-name img {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+  }
+  nav {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  nav a {
+    color: var(--ink);
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px 14px;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    transition: all 0.18s ease;
+  }
+  nav a:hover {
+    text-decoration: none;
+    border-color: var(--line);
+    background: rgba(255, 255, 255, 0.84);
+  }
+  .nav-cta {
+    border-color: var(--line-strong);
+    background: rgba(24, 95, 144, 0.08);
+    color: var(--brand);
+    font-weight: 700;
+  }
+  main { padding: 32px 0 80px; }
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+    gap: 34px;
+    align-items: stretch;
+    margin-bottom: 74px;
+  }
+  .hero-copy {
+    padding: 56px 0 10px;
+  }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: rgba(24, 95, 144, 0.10);
+    color: var(--brand);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  h1 {
+    margin: 18px 0 18px;
+    font-family: "Poppins", system-ui, sans-serif;
+    font-size: clamp(44px, 7vw, 76px);
+    line-height: 0.95;
+    letter-spacing: -0.05em;
+    color: var(--ink);
+  }
+  .hero p {
+    margin: 0;
+    font-size: 18px;
+    color: var(--muted);
+    max-width: 720px;
+  }
+  .cta-group {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 28px;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 54px;
+    padding: 0 24px;
+    border-radius: 16px;
+    font-weight: 700;
+    font-size: 15px;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+    cursor: pointer;
+    border: 1px solid transparent;
+  }
+  .btn:hover {
+    transform: translateY(-1px);
+    text-decoration: none;
+    box-shadow: 0 12px 28px rgba(18, 34, 53, 0.10);
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--brand), var(--brand-strong));
+    color: #fff;
+  }
+  .btn-secondary {
+    background: rgba(255, 255, 255, 0.82);
+    color: var(--ink);
+    border-color: var(--line);
+  }
+  .proof-row {
+    display: flex;
+    gap: 22px;
+    flex-wrap: wrap;
+    margin-top: 28px;
+  }
+  .proof {
+    min-width: 150px;
+  }
+  .proof strong {
+    display: block;
+    font-family: "Poppins", system-ui, sans-serif;
+    font-size: 28px;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: var(--brand);
+  }
+  .proof span {
+    display: block;
+    margin-top: 8px;
+    color: var(--muted);
+    font-size: 13px;
+  }
+  .hero-panel {
+    position: relative;
+    padding: 24px;
+    border-radius: 30px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(243,249,252,0.98));
+    border: 1px solid var(--line);
+    box-shadow: 0 30px 70px rgba(18, 34, 53, 0.10);
+    overflow: hidden;
+  }
+  .hero-panel::before {
+    content: "";
+    position: absolute;
+    inset: -80px auto auto -80px;
+    width: 210px;
+    height: 210px;
+    border-radius: 50%;
+    background: rgba(24, 95, 144, 0.08);
+  }
+  .panel-card {
+    position: relative;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    padding: 22px;
+    margin-bottom: 16px;
+  }
+  .panel-card:last-child { margin-bottom: 0; }
+  .panel-label {
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .panel-card h3 {
+    margin: 10px 0 8px;
+    font-size: 22px;
+    font-family: "Poppins", system-ui, sans-serif;
+    line-height: 1.1;
+  }
+  .panel-card p {
+    margin: 0 0 14px;
+    font-size: 14px;
+    color: var(--muted);
+  }
+  .micro-list {
+    display: grid;
+    gap: 10px;
+  }
+  .micro-list span {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    color: var(--ink);
+    font-size: 14px;
+  }
+  .micro-list span::before {
+    content: "•";
+    color: var(--brand);
+    font-weight: 900;
+  }
+  .section {
+    margin-bottom: 74px;
+  }
+  .section-heading {
+    max-width: 720px;
+    margin-bottom: 26px;
+  }
+  .section-heading h2 {
+    margin: 0 0 10px;
+    font-family: "Poppins", system-ui, sans-serif;
+    font-size: clamp(28px, 4vw, 40px);
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+  }
+  .section-heading p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 17px;
+  }
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+  }
+  .feature-card {
+    background: rgba(255, 255, 255, 0.92);
+    padding: 26px;
+    border-radius: 26px;
+    border: 1px solid var(--line);
+    box-shadow: 0 16px 34px rgba(18, 34, 53, 0.05);
+  }
+  .feature-card h3 {
+    margin: 16px 0 8px;
+    font-size: 21px;
+    font-family: "Poppins", system-ui, sans-serif;
+  }
+  .feature-card p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 15px;
+  }
+  .feature-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(24, 95, 144, 0.10);
+    color: var(--brand);
+    font-weight: 900;
+    font-size: 18px;
+    font-family: "Poppins", system-ui, sans-serif;
+  }
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+  }
+  .step {
+    padding: 24px;
+    border-radius: 24px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(240,248,251,0.96));
+    border: 1px solid var(--line);
+  }
+  .step strong {
+    display: inline-flex;
+    width: 36px;
+    height: 36px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: var(--brand);
+    color: #fff;
+    font-size: 14px;
+    margin-bottom: 16px;
+  }
+  .step h3 {
+    margin: 0 0 8px;
+    font-size: 20px;
+    font-family: "Poppins", system-ui, sans-serif;
+  }
+  .step p {
+    margin: 0;
+    color: var(--muted);
+  }
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+  }
+  .price-card {
+    padding: 28px;
+    border-radius: 26px;
+    background: rgba(255,255,255,0.96);
+    border: 1px solid var(--line);
+    position: relative;
+  }
+  .price-card.featured {
+    border-color: var(--line-strong);
+    box-shadow: 0 18px 40px rgba(24, 95, 144, 0.12);
+    transform: translateY(-4px);
+  }
+  .price-tag {
+    display: inline-flex;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(217, 119, 40, 0.10);
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .price-card h3 {
+    margin: 16px 0 8px;
+    font-family: "Poppins", system-ui, sans-serif;
+    font-size: 22px;
+  }
+  .price-amount {
+    margin: 6px 0 12px;
+    font-family: "Poppins", system-ui, sans-serif;
+    font-size: 38px;
+    line-height: 1;
+    letter-spacing: -0.05em;
+    color: var(--brand);
+  }
+  .price-card p {
+    margin: 0 0 18px;
+    color: var(--muted);
+  }
+  .price-card ul {
+    margin: 0;
+    padding-left: 18px;
+  }
+  .price-card li {
+    color: var(--ink);
+    margin: 8px 0;
+  }
+  .trust-panel {
+    padding: 30px;
+    border-radius: 28px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.97), rgba(245,250,252,0.97));
+    border: 1px solid var(--line);
+  }
+  .trust-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 28px;
+    align-items: start;
+  }
+  .trust-panel h2 {
+    margin: 0 0 10px;
+    font-family: "Poppins", system-ui, sans-serif;
+    font-size: 32px;
+    line-height: 1.08;
+  }
+  .trust-panel p {
+    margin: 0 0 14px;
+    color: var(--muted);
+    font-size: 16px;
+  }
+  .trust-list {
+    display: grid;
+    gap: 12px;
+    margin-top: 18px;
+  }
+  .trust-list div {
+    padding: 14px 16px;
+    border-radius: 16px;
+    background: rgba(24, 95, 144, 0.06);
+    border: 1px solid rgba(24, 95, 144, 0.10);
+  }
+  .mini-faq {
+    display: grid;
+    gap: 12px;
+  }
+  .mini-faq div {
+    padding: 16px 18px;
+    border-radius: 18px;
+    background: #fff;
+    border: 1px solid var(--line);
+  }
+  .mini-faq strong {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 15px;
+  }
+  footer {
+    padding: 56px 0 70px;
+    border-top: 1px solid rgba(18, 34, 53, 0.08);
+    margin-top: 70px;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 24px;
+    align-items: start;
+  }
+  .footer-brand {
+    display: grid;
+    gap: 10px;
+  }
+  .footer-brand strong {
+    font-family: "Poppins", system-ui, sans-serif;
+    color: var(--brand);
+    font-size: 18px;
+  }
+  .footer-brand p {
+    margin: 0;
+    color: var(--muted);
+    max-width: 540px;
+  }
+  .footer-links {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+  .footer-links a {
+    color: var(--muted);
+    font-weight: 500;
+  }
+  .legal-note {
+    margin-top: 20px;
+    padding: 18px 20px;
+    border-radius: 18px;
+    background: rgba(255,255,255,0.8);
+    border: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 14px;
+  }
+  @media (max-width: 980px) {
+    .hero,
+    .trust-grid,
+    .footer-grid,
+    .feature-grid,
+    .steps,
+    .pricing-grid {
+      grid-template-columns: 1fr;
+    }
+    .hero-copy {
+      padding-top: 20px;
+    }
+    .footer-links {
+      justify-content: flex-start;
+    }
+    .price-card.featured {
+      transform: none;
+    }
+  }
+  @media (max-width: 640px) {
+    .shell { width: min(100% - 28px, 1160px); }
+    header { padding: 18px 0; }
+    nav { gap: 6px; }
+    nav a { padding: 9px 12px; }
+    .hero { gap: 20px; margin-bottom: 56px; }
+    .cta-group { flex-direction: column; align-items: stretch; }
+    .btn { width: 100%; }
+    .proof-row { gap: 14px; }
+  }
+`;
+
+const landingStructuredData = JSON.stringify([
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Aliolo',
+    url: 'https://aliolo.com',
+    logo: 'https://aliolo.com/app_icon.webp',
+    email: 'vitalii@nohainc.com',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Aliolo',
+    url: 'https://aliolo.com',
+    description: 'Visual flashcards, spaced repetition, and interactive learning tools for building durable knowledge.',
+    inLanguage: 'en',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: 'Aliolo',
+    applicationCategory: 'EducationalApplication',
+    operatingSystem: 'Web, Android, iOS',
+    offers: [
+      {
+        '@type': 'Offer',
+        name: 'Weekly',
+        price: '2.99',
+        priceCurrency: 'USD',
+      },
+      {
+        '@type': 'Offer',
+        name: 'Monthly',
+        price: '8.99',
+        priceCurrency: 'USD',
+      },
+      {
+        '@type': 'Offer',
+        name: 'Yearly',
+        price: '80.99',
+        priceCurrency: 'USD',
+      },
+    ],
+    url: 'https://aliolo.com',
+    description: 'Aliolo helps learners master subjects with visual flashcards, spaced repetition, testing workflows, and structured study libraries.',
+  },
+]);
+
+const landingHtml = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aliolo | Visual Flashcards, Spaced Repetition, and Smarter Study Workflows</title>
+  <meta name="description" content="Aliolo helps learners master languages, science, anatomy, exam prep, and curated subjects with visual flashcards, spaced repetition, and interactive test modes.">
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Aliolo | Visual Flashcards and Smarter Study Workflows">
+  <meta property="og:description" content="Build durable knowledge with visual flashcards, spaced repetition, flexible collections, and test-driven learning.">
+  <meta property="og:url" content="https://aliolo.com/">
+  <meta property="og:image" content="https://aliolo.com/app_icon.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Aliolo | Visual Flashcards and Smarter Study Workflows">
+  <meta name="twitter:description" content="Master what matters with visual flashcards, spaced repetition, and interactive test modes.">
+  <link rel="canonical" href="https://aliolo.com/">
+  <script>
+    (() => {
+      const params = new URLSearchParams(window.location.search);
+      if (params.has('login') || params.has('type') || params.has('invite')) {
+        window.location.replace('/login' + window.location.search + window.location.hash);
+      }
+    })();
+  </script>
+  <style>${landingStyles}</style>
+  <script type="application/ld+json">${landingStructuredData}</script>
+</head>
+<body>
+  <header>
+    <div class="shell brand">
+      <a class="brand-name" href="/" aria-label="Aliolo home">
+        <img src="/app_icon.webp" alt="Aliolo logo">
+        aliolo
+      </a>
+      <nav aria-label="Site navigation">
+        <a href="/pricing">Pricing</a>
+        <a href="/privacy">Privacy</a>
+        <a href="/terms">Terms</a>
+        <a href="/login" class="nav-cta">Open App</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow">Visual learning platform</div>
+        <h1>Turn scattered facts into lasting recall.</h1>
+        <p>Aliolo combines visual flashcards, spaced repetition, structured study libraries, and focused test modes so students can learn faster, organize better, and stay consistent across subjects.</p>
+        <div class="cta-group">
+          <a href="/login" class="btn btn-primary">Start learning</a>
+          <a href="/pricing" class="btn btn-secondary">View premium plans</a>
+        </div>
+        <div class="proof-row" aria-label="Product highlights">
+          <div class="proof">
+            <strong>Visual</strong>
+            <span>Image, audio, and video friendly flashcards for recognition-heavy learning.</span>
+          </div>
+          <div class="proof">
+            <strong>Adaptive</strong>
+            <span>Spaced repetition and progress tracking to revisit material at the right time.</span>
+          </div>
+          <div class="proof">
+            <strong>Structured</strong>
+            <span>Pillars, folders, subjects, and collections that scale beyond a simple deck.</span>
+          </div>
+        </div>
+      </div>
+      <aside class="hero-panel" aria-label="Aliolo study workflow preview">
+        <section class="panel-card">
+          <div class="panel-label">Learn mode</div>
+          <h3>Build recognition before you test recall.</h3>
+          <p>Study with rich media and context first, then switch to stricter practice once the concept is familiar.</p>
+          <div class="micro-list">
+            <span>Visual flashcards for anatomy, languages, sciences, and more</span>
+            <span>Clean repetition flow that supports daily learning habits</span>
+          </div>
+        </section>
+        <section class="panel-card">
+          <div class="panel-label">Test mode</div>
+          <h3>Prove mastery under pressure.</h3>
+          <p>Use focused testing sessions to reinforce recall, identify weak spots, and keep progress measurable.</p>
+          <div class="micro-list">
+            <span>Switch from broad exposure to outcome-driven practice</span>
+            <span>Track streaks, XP, and daily completion without losing structure</span>
+          </div>
+        </section>
+      </aside>
+    </section>
+
+    <section class="section" id="features">
+      <div class="section-heading">
+        <h2>Built for real study workflows, not just isolated decks.</h2>
+        <p>Aliolo is designed for people who need more than a card stack. It supports discovery, organization, review timing, and long-term subject growth in one system.</p>
+      </div>
+      <div class="feature-grid">
+        <article class="feature-card">
+          <div class="feature-icon">VF</div>
+          <h3>Visual-first flashcards</h3>
+          <p>Support recognition and context with cards that can include images, audio, video, and flexible prompts instead of plain text alone.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon">LT</div>
+          <h3>Learn and test modes</h3>
+          <p>Start with guided exposure, then move into tighter assessment flows when you need confident recall instead of passive familiarity.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon">SR</div>
+          <h3>Spaced repetition</h3>
+          <p>Review timing adapts to progress so you can reinforce material before it fades rather than cramming everything at once.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon">OR</div>
+          <h3>Structured organization</h3>
+          <p>Group material into pillars, folders, subjects, and collections so large libraries stay navigable and useful over time.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon">CU</div>
+          <h3>Curated and custom</h3>
+          <p>Use curated subject libraries for fast starts or create your own study system when your goals are niche, professional, or exam-specific.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon">XP</div>
+          <h3>Progress that sticks</h3>
+          <p>Daily goals, XP, streaks, and repeatable sessions create enough structure to help retention without turning study into noise.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="workflow">
+      <div class="section-heading">
+        <h2>A clearer path from “I should study” to “I know this.”</h2>
+        <p>The product is built around a practical sequence: find the right material, learn with context, then test under tighter constraints.</p>
+      </div>
+      <div class="steps">
+        <article class="step">
+          <strong>01</strong>
+          <h3>Find or build the right subject.</h3>
+          <p>Start from curated material or create your own subject for a personal goal, exam, language track, or professional vocabulary set.</p>
+        </article>
+        <article class="step">
+          <strong>02</strong>
+          <h3>Learn with media, structure, and repetition.</h3>
+          <p>Study inside organized folders and collections while spaced review keeps important material circulating at the right frequency.</p>
+        </article>
+        <article class="step">
+          <strong>03</strong>
+          <h3>Test for retention, not just exposure.</h3>
+          <p>Switch into test mode when you need to measure recall, expose weak spots, and convert short-term recognition into durable knowledge.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="pricing">
+      <div class="section-heading">
+        <h2>Simple premium access with room to scale.</h2>
+        <p>Choose the plan that matches your timeline. Prices are listed in USD; final billing details, taxes, and local currency may vary by checkout or platform.</p>
+      </div>
+      <div class="pricing-grid">
+        <article class="price-card">
+          <span class="price-tag">Flexible</span>
+          <h3>Weekly</h3>
+          <div class="price-amount">$2.99</div>
+          <p>Good for short-term pushes, quick reviews, or exam-week prep.</p>
+          <ul>
+            <li>Short commitment window</li>
+            <li>Fast way to try the premium workflow</li>
+            <li>Renews automatically until canceled</li>
+          </ul>
+        </article>
+        <article class="price-card featured">
+          <span class="price-tag">Most popular</span>
+          <h3>Monthly</h3>
+          <div class="price-amount">$8.99</div>
+          <p>Balanced access for students building a steady learning habit.</p>
+          <ul>
+            <li>Best for regular weekly study</li>
+            <li>Enough time to organize larger subject libraries</li>
+            <li>Renews automatically until canceled</li>
+          </ul>
+        </article>
+        <article class="price-card">
+          <span class="price-tag">Best value</span>
+          <h3>Yearly</h3>
+          <div class="price-amount">$80.99</div>
+          <p>Lowest effective monthly cost for learners who want a durable study system.</p>
+          <ul>
+            <li>Ideal for long-term language and professional study</li>
+            <li>Lower cost over time</li>
+            <li>Renews automatically until canceled</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="trust-panel">
+        <div class="trust-grid">
+          <div>
+            <h2>Clear trust signals for students, reviewers, and payment partners.</h2>
+            <p>Aliolo is a live educational product with public legal pages, public pricing, accessible support contact, and a public subject index. That matters for user trust and for partner verification flows such as Paddle review.</p>
+            <div class="trust-list">
+              <div><strong>Support:</strong> <a href="mailto:vitalii@nohainc.com">vitalii@nohainc.com</a></div>
+              <div><strong>Public policies:</strong> Privacy, subscription terms, refund policy, and pricing are all accessible without login.</div>
+              <div><strong>Public learning pages:</strong> Selected subject pages are crawlable and expose structured educational content.</div>
+            </div>
+          </div>
+          <div class="mini-faq" aria-label="Mini FAQ">
+            <div>
+              <strong>Can I use Aliolo without building cards from scratch?</strong>
+              Curated subjects and public libraries help you start faster, then expand into your own collections when needed.
+            </div>
+            <div>
+              <strong>How do web payments work?</strong>
+              Web orders may be processed by Paddle.com as Merchant of Record, including payment support and applicable tax handling.
+            </div>
+            <div>
+              <strong>Where can I review legal details?</strong>
+              Use the footer links for privacy, terms, refunds, and pricing before starting a paid plan.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="shell">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <strong>Aliolo</strong>
+          <p>Visual flashcards, spaced repetition, flexible subject organization, and focused testing workflows for learners who want structure without friction.</p>
+        </div>
+        <div class="footer-links">
+          <a href="/privacy">Privacy Policy</a>
+          <a href="/terms">Subscription Terms</a>
+          <a href="/refund">Refund Policy</a>
+          <a href="/pricing">Pricing</a>
+          <a href="mailto:vitalii@nohainc.com">Support</a>
+        </div>
+      </div>
+      <div class="legal-note">
+        <strong>Merchant of Record:</strong> Our order process may be conducted by Paddle.com, our online reseller and Merchant of Record for web orders. Paddle handles payment processing, payment-related customer service, and returns for those orders.
+      </div>
+    </div>
+  </footer>
+</body>
+</html>`;
+
+const appShellHtml = `<!DOCTYPE html>
+<html>
+<head>
+  <base href="/">
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Aliolo app for visual learning, structured flashcards, and focused study workflows.">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Aliolo">
+  <link rel="apple-touch-icon" href="/icons/Icon-192.png">
+  <link rel="icon" type="image/webp" href="/app_icon.webp">
+  <link rel="manifest" href="/manifest.json">
+  <title>Aliolo App</title>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.ready.then(function (reg) {
+          reg.onupdatefound = function () {
+            const newWorker = reg.installing;
+            if (!newWorker) return;
+            newWorker.onstatechange = function () {
+              if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                window.postMessage('flutter-app-update-available', '*');
+              }
+            };
+          };
+        });
+      });
+    }
+  </script>
+</head>
+<body>
+  <script src="/flutter_bootstrap.js" async></script>
+</body>
+</html>`;
+
+function shouldServeAppShell(pathname: string) {
+  return (
+    pathname === '/login' ||
+    pathname.startsWith('/subject/') ||
+    pathname.startsWith('/collection/') ||
+    pathname.startsWith('/goals/')
+  );
+}
+
 app.get('/terms', (c) => c.html(termsHtml));
 app.get('/privacy', (c) => c.html(privacyHtml));
 app.get('/refund', (c) => c.html(refundHtml));
 app.get('/pricing', (c) => c.html(pricingHtml));
+
+// Landing Page / SPA Routing
+app.get('/', async (c, next) => {
+    const url = new URL(c.req.url);
+    const user = c.get('user');
+
+    if (!user && !url.searchParams.has('login')) {
+        return c.html(landingHtml);
+    }
+    
+    return next();
+});
+
+app.get('/sitemap.xml', async (c) => {
+    const xml = await generateSitemapXml(c.env.DB, 'https://aliolo.com');
+    return c.text(xml, 200, {
+        'Content-Type': 'application/xml',
+        'Cache-Control': 'public, max-age=86400'
+    });
+});
 
 // Fallback to Static Assets or SPA index.html
 app.get('*', async (c) => {
@@ -478,17 +1535,11 @@ app.get('*', async (c) => {
     // Try to fetch the specific asset
     const assetResponse = await c.env.ASSETS.fetch(c.req.raw);
     
-    // If the asset is not found (404), and it doesn't look like a file (no extension),
-    // serve index.html for SPA routing.
-    if (assetResponse.status === 404 && !url.pathname.includes('.')) {
-        const indexRequest = new Request(new URL('/', url).toString(), c.req.raw);
-        const indexResponse = await c.env.ASSETS.fetch(indexRequest);
-        
-        let htmlBody = await indexResponse.text();
-        
-        // SEO & Performance Interception (Items 1, 2, 4, 5)
+    // If the asset is not found (404), only known app routes should bootstrap the SPA shell.
+    if (assetResponse.status === 404 && !url.pathname.includes('.') && shouldServeAppShell(url.pathname)) {
+        let htmlBody = appShellHtml;
+
         const userAgent = c.req.header('user-agent') || '';
-        // Only run heavy DB queries for bots OR for specific content routes to provide a skeleton screen
         if (isbot(userAgent) || url.pathname.startsWith('/subject/') || url.pathname.startsWith('/goals/')) {
             const seoHtml = await generateSeoHtml(c.env.DB, url.pathname, htmlBody);
             if (seoHtml) {
@@ -496,9 +1547,8 @@ app.get('*', async (c) => {
             }
         }
 
-        // Ensure index.html is returned with 200 even if original request was 404
-        const newHeaders = new Headers(indexResponse.headers);
-        newHeaders.delete('content-length'); // Body size changed
+        const newHeaders = new Headers(assetResponse.headers);
+        newHeaders.delete('content-length');
         newHeaders.set('content-type', 'text/html;charset=UTF-8');
 
         return new Response(htmlBody, {

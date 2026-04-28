@@ -1,54 +1,1155 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
-
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
-
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
-
-    This is a placeholder for base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.
-  -->
   <base href="$FLUTTER_BASE_HREF">
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="A new Flutter project.">
-
-  <!-- iOS meta tags & icons -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Aliolo helps learners master languages, anatomy, science, and exam prep with visual flashcards, spaced repetition, and structured study workflows.">
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Aliolo | Visual Flashcards and Smarter Study Workflows">
+  <meta property="og:description" content="Build durable knowledge with visual flashcards, spaced repetition, focused testing, and structured subject libraries.">
+  <meta property="og:url" content="https://aliolo.com/">
+  <meta property="og:image" content="https://aliolo.com/app_icon.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Aliolo | Visual Flashcards and Smarter Study Workflows">
+  <meta name="twitter:description" content="Study with visual flashcards, repetition, collections, and test-driven learning in one system.">
   <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="aliolo">
+  <meta name="apple-mobile-web-app-title" content="Aliolo">
+  <link rel="canonical" href="https://aliolo.com/">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
-
-  <!-- Favicon -->
-  <link rel="icon" type="image/webp" href="app_icon.webp"/>
-
-  <title>aliolo</title>
+  <link rel="icon" type="image/webp" href="app_icon.webp">
   <link rel="manifest" href="manifest.json">
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function () {
-        navigator.serviceWorker.ready.then(reg => {
-          reg.onupdatefound = () => {
-            const newWorker = reg.installing;
-            newWorker.onstatechange = () => {
-              if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                window.postMessage('flutter-app-update-available', '*');
-              }
-            };
-          };
-        });
-      });
-    }
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <title>Aliolo | Visual Flashcards, Spaced Repetition, and Smarter Study Workflows</title>
+
+  <script type="application/ld+json">
+    [
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Aliolo",
+        "url": "https://aliolo.com",
+        "logo": "https://aliolo.com/app_icon.webp",
+        "email": "vitalii@nohainc.com"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Aliolo",
+        "url": "https://aliolo.com",
+        "description": "Visual flashcards, spaced repetition, and interactive study tools for durable learning outcomes.",
+        "inLanguage": "en"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Aliolo",
+        "applicationCategory": "EducationalApplication",
+        "operatingSystem": "Web, Android, iOS",
+        "url": "https://aliolo.com",
+        "description": "Aliolo helps learners study with visual flashcards, structured collections, repetition, and focused testing workflows.",
+        "offers": [
+          {
+            "@type": "Offer",
+            "name": "Weekly",
+            "price": "2.99",
+            "priceCurrency": "USD"
+          },
+          {
+            "@type": "Offer",
+            "name": "Monthly",
+            "price": "8.99",
+            "priceCurrency": "USD"
+          },
+          {
+            "@type": "Offer",
+            "name": "Yearly",
+            "price": "80.99",
+            "priceCurrency": "USD"
+          }
+        ]
+      }
+    ]
   </script>
+
+  <script>
+    (function () {
+      var params = new URLSearchParams(window.location.search);
+      if (params.has('login') || params.has('type') || params.has('invite')) {
+        var target = '/login' + window.location.search + window.location.hash;
+        window.location.replace(target);
+      }
+    }());
+  </script>
+
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #112034;
+      --muted: #5f6c81;
+      --brand: #175f90;
+      --brand-strong: #0d476d;
+      --accent: #d67a2d;
+      --accent-soft: rgba(214, 122, 45, 0.12);
+      --line: rgba(17, 32, 52, 0.10);
+      --line-strong: rgba(23, 95, 144, 0.18);
+      --surface: rgba(255, 255, 255, 0.96);
+      --surface-soft: #f4f9fb;
+      --page: #eef4f7;
+      --shadow: 0 26px 70px rgba(17, 32, 52, 0.10);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: "Source Sans 3", system-ui, sans-serif;
+      line-height: 1.6;
+      background:
+        radial-gradient(circle at top left, rgba(23, 95, 144, 0.11), transparent 28rem),
+        radial-gradient(circle at top right, rgba(214, 122, 45, 0.10), transparent 24rem),
+        linear-gradient(180deg, #f9fcfd 0%, var(--page) 100%);
+    }
+
+    a {
+      color: var(--brand);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .shell {
+      width: min(1160px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      padding: 20px 0;
+      backdrop-filter: blur(18px);
+      background: rgba(249, 252, 253, 0.88);
+      border-bottom: 1px solid rgba(17, 32, 52, 0.06);
+    }
+
+    .site-header .shell,
+    .hero,
+    .trust-grid,
+    .pricing-grid,
+    .feature-grid,
+    .workflow-grid,
+    .footer-grid {
+      display: grid;
+    }
+
+    .site-header .shell {
+      grid-template-columns: auto 1fr;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--brand);
+      font-family: "Manrope", system-ui, sans-serif;
+      font-size: 27px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      text-transform: lowercase;
+    }
+
+    .brand:hover {
+      text-decoration: none;
+    }
+
+    .brand img {
+      width: 46px;
+      height: 46px;
+    }
+
+    .site-nav {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .site-nav a {
+      color: var(--ink);
+      font-size: 15px;
+      font-weight: 600;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+    }
+
+    .site-nav a:hover {
+      text-decoration: none;
+      background: rgba(255, 255, 255, 0.84);
+      border-color: var(--line);
+      transform: translateY(-1px);
+    }
+
+    .site-nav .nav-cta {
+      color: var(--brand);
+      background: rgba(23, 95, 144, 0.08);
+      border-color: var(--line-strong);
+      font-weight: 700;
+    }
+
+    main {
+      padding: 34px 0 84px;
+    }
+
+    .hero {
+      grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+      gap: 34px;
+      align-items: stretch;
+      margin-bottom: 76px;
+    }
+
+    .hero-copy {
+      padding: 56px 0 12px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(23, 95, 144, 0.10);
+      color: var(--brand);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      margin: 0;
+      font-family: "Manrope", system-ui, sans-serif;
+    }
+
+    h1 {
+      margin-top: 18px;
+      font-size: clamp(38px, 5.8vw, 64px);
+      line-height: 0.98;
+      letter-spacing: -0.06em;
+      max-width: 720px;
+    }
+
+    .hero-copy p {
+      margin: 18px 0 0;
+      font-size: 20px;
+      color: var(--muted);
+      max-width: 700px;
+    }
+
+    .cta-group {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 30px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 56px;
+      padding: 0 24px;
+      border-radius: 18px;
+      border: 1px solid transparent;
+      font-size: 15px;
+      font-weight: 700;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      text-decoration: none;
+      box-shadow: 0 14px 30px rgba(17, 32, 52, 0.10);
+    }
+
+    .btn-primary {
+      color: #fff;
+      background: linear-gradient(135deg, var(--brand), var(--brand-strong));
+    }
+
+    .btn-secondary {
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.86);
+      border-color: var(--line);
+    }
+
+    .proof-row {
+      display: flex;
+      gap: 22px;
+      flex-wrap: wrap;
+      margin-top: 30px;
+    }
+
+    .proof {
+      min-width: 150px;
+      max-width: 210px;
+    }
+
+    .proof strong {
+      display: block;
+      color: var(--brand);
+      font-family: "Manrope", system-ui, sans-serif;
+      font-size: 31px;
+      line-height: 1;
+      letter-spacing: -0.05em;
+    }
+
+    .proof span {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .hero-panel,
+    .section-card,
+    .price-card,
+    .feature-card,
+    .workflow-card,
+    .mini-faq article,
+    .trust-note,
+    .legal-strip {
+      border: 1px solid var(--line);
+      background: var(--surface);
+    }
+
+    .hero-panel {
+      position: relative;
+      padding: 24px;
+      border-radius: 30px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .hero-panel::before {
+      content: "";
+      position: absolute;
+      inset: -90px auto auto -90px;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: rgba(23, 95, 144, 0.08);
+    }
+
+    .panel-card {
+      position: relative;
+      margin-bottom: 16px;
+      padding: 22px;
+      border-radius: 24px;
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .panel-card:last-child {
+      margin-bottom: 0;
+    }
+
+    .panel-label {
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .panel-card h3 {
+      margin-top: 12px;
+      font-size: 23px;
+      line-height: 1.08;
+      letter-spacing: -0.04em;
+    }
+
+    .panel-card p {
+      margin: 10px 0 16px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .micro-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .micro-list span {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 14px;
+    }
+
+    .micro-list span::before {
+      content: "•";
+      color: var(--brand);
+      font-weight: 900;
+    }
+
+    .section {
+      margin-bottom: 76px;
+    }
+
+    .section-heading {
+      max-width: 760px;
+      margin-bottom: 28px;
+    }
+
+    .section-heading h2 {
+      font-size: clamp(30px, 4vw, 42px);
+      line-height: 1.03;
+      letter-spacing: -0.05em;
+    }
+
+    .section-heading p {
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .feature-grid,
+    .workflow-grid,
+    .pricing-grid,
+    .mode-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .feature-card,
+    .workflow-card,
+    .price-card,
+    .mode-card {
+      padding: 26px;
+      border-radius: 26px;
+      box-shadow: 0 16px 34px rgba(17, 32, 52, 0.05);
+    }
+
+    .feature-badge,
+    .workflow-step {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 14px;
+      background: rgba(23, 95, 144, 0.10);
+      color: var(--brand);
+      font-family: "Manrope", system-ui, sans-serif;
+      font-size: 15px;
+      font-weight: 800;
+    }
+
+    .feature-badge {
+      width: 48px;
+      height: 48px;
+    }
+
+    .workflow-step {
+      width: 38px;
+      height: 38px;
+      border-radius: 999px;
+      background: var(--brand);
+      color: #fff;
+      font-size: 14px;
+    }
+
+    .feature-card h3,
+    .workflow-card h3,
+    .price-card h3,
+    .mode-card h3 {
+      margin-top: 16px;
+      font-size: 22px;
+      line-height: 1.12;
+      letter-spacing: -0.04em;
+    }
+
+    .feature-card p,
+    .workflow-card p,
+    .price-card p,
+    .mode-card p {
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .mode-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .mode-card {
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(244, 249, 251, 0.98));
+    }
+
+    .mode-card strong {
+      display: inline-flex;
+      margin-top: 12px;
+      color: var(--brand);
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .section-card {
+      padding: 28px;
+      border-radius: 30px;
+      box-shadow: 0 20px 44px rgba(17, 32, 52, 0.06);
+    }
+
+    .outcome-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .outcome-card {
+      padding: 22px;
+      border-radius: 22px;
+      background: linear-gradient(180deg, rgba(23, 95, 144, 0.05), rgba(255, 255, 255, 0.96));
+      border: 1px solid rgba(23, 95, 144, 0.10);
+    }
+
+    .outcome-card strong {
+      display: block;
+      margin-bottom: 8px;
+      font-family: "Manrope", system-ui, sans-serif;
+      font-size: 18px;
+      letter-spacing: -0.03em;
+    }
+
+    .price-card.featured {
+      border-color: var(--line-strong);
+      transform: translateY(-5px);
+      box-shadow: 0 20px 46px rgba(23, 95, 144, 0.12);
+    }
+
+    .price-tag {
+      display: inline-flex;
+      padding: 6px 11px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .price-amount {
+      margin-top: 10px;
+      color: var(--brand);
+      font-family: "Manrope", system-ui, sans-serif;
+      font-size: 39px;
+      line-height: 1;
+      letter-spacing: -0.06em;
+    }
+
+    .price-card ul {
+      margin: 18px 0 0;
+      padding-left: 18px;
+    }
+
+    .price-card li {
+      margin: 8px 0;
+    }
+
+    .comparison-card {
+      padding: 28px;
+      border-radius: 30px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.96);
+      box-shadow: 0 18px 42px rgba(17, 32, 52, 0.06);
+    }
+
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 18px;
+    }
+
+    .comparison-table th,
+    .comparison-table td {
+      padding: 14px 10px;
+      border-bottom: 1px solid var(--line);
+      text-align: center;
+      font-size: 15px;
+    }
+
+    .comparison-table th:first-child,
+    .comparison-table td:first-child {
+      text-align: left;
+      width: 52%;
+    }
+
+    .comparison-table th {
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .comparison-table td:first-child {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .comparison-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .comparison-check {
+      color: var(--brand);
+      font-weight: 800;
+      font-size: 18px;
+    }
+
+    .comparison-check.pro {
+      color: #0f9d58;
+    }
+
+    .comparison-cross {
+      color: #c4ccd8;
+      font-weight: 800;
+      font-size: 18px;
+    }
+
+    .comparison-note {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .trust-panel {
+      padding: 30px;
+      border-radius: 30px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.97), rgba(244, 249, 251, 0.98));
+      border: 1px solid var(--line);
+    }
+
+    .trust-grid {
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    .trust-grid h2 {
+      font-size: 33px;
+      line-height: 1.06;
+      letter-spacing: -0.05em;
+    }
+
+    .trust-grid p {
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .trust-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .trust-note,
+    .mini-faq article,
+    .legal-strip {
+      padding: 16px 18px;
+      border-radius: 18px;
+    }
+
+    .trust-note {
+      background: rgba(23, 95, 144, 0.06);
+      border-color: rgba(23, 95, 144, 0.10);
+    }
+
+    .trust-note strong,
+    .mini-faq strong {
+      display: block;
+      margin-bottom: 6px;
+      font-family: "Manrope", system-ui, sans-serif;
+      font-size: 15px;
+      letter-spacing: -0.02em;
+    }
+
+    .mini-faq {
+      display: grid;
+      gap: 12px;
+    }
+
+    .legal-strip {
+      margin-top: 24px;
+      color: var(--muted);
+      font-size: 14px;
+      background: rgba(255, 255, 255, 0.82);
+    }
+
+    footer {
+      padding: 24px 0 32px;
+      margin-top: 28px;
+      border-top: 1px solid rgba(17, 32, 52, 0.08);
+    }
+
+    .footer-grid {
+      grid-template-columns: auto 1fr;
+      gap: 18px;
+      align-items: center;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      justify-content: flex-end;
+      gap: 14px;
+    }
+
+    .footer-copy {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .footer-links a {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    @media (max-width: 980px) {
+      .hero,
+      .feature-grid,
+      .workflow-grid,
+      .pricing-grid,
+      .mode-grid,
+      .trust-grid,
+      .footer-grid,
+      .outcome-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-copy {
+        padding-top: 18px;
+      }
+
+      .footer-links {
+        justify-content: flex-start;
+      }
+
+      footer {
+        margin-top: 20px;
+      }
+
+      .price-card.featured {
+        transform: none;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .shell {
+        width: min(100% - 28px, 1160px);
+      }
+
+      .site-header {
+        padding: 16px 0;
+      }
+
+      .site-header .shell {
+        grid-template-columns: 1fr;
+      }
+
+      .site-nav {
+        justify-content: flex-start;
+      }
+
+      .hero {
+        gap: 22px;
+        margin-bottom: 58px;
+      }
+
+      .cta-group {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .btn {
+        width: 100%;
+      }
+    }
+  </style>
 </head>
 <body>
-  <script src="flutter_bootstrap.js" async></script>
+  <header class="site-header">
+    <div class="shell">
+      <a class="brand" href="/" aria-label="Aliolo home">
+        <img src="/app_icon.webp" alt="Aliolo logo">
+        aliolo
+      </a>
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="#features">Features</a>
+        <a href="#workflow">How it works</a>
+        <a href="#pricing">Pricing</a>
+        <a href="/login" class="nav-cta">Open app</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow">Visual learning platform</div>
+        <h1>Turn scattered facts into durable recall.</h1>
+        <p>Aliolo combines visual flashcards, structured subjects, spaced repetition, and focused test modes so students can learn faster, organize better, and stay consistent across real study goals.</p>
+        <div class="cta-group">
+          <a href="/login" class="btn btn-primary">Start learning</a>
+          <a href="/pricing" class="btn btn-secondary">View premium plans</a>
+        </div>
+        <p style="margin-top: 16px; font-size: 15px;">New users enter the app through login and get guided onboarding inside the product, not on the public homepage.</p>
+        <div class="proof-row" aria-label="Product highlights">
+          <div class="proof">
+            <strong>Visual</strong>
+            <span>Study with images, audio, and video when plain text is not enough.</span>
+          </div>
+          <div class="proof">
+            <strong>Adaptive</strong>
+            <span>Use repetition and progress tracking to revisit the right material at the right time.</span>
+          </div>
+          <div class="proof">
+            <strong>Structured</strong>
+            <span>Grow from a few cards into real subject systems with folders, collections, and pillars.</span>
+          </div>
+        </div>
+      </div>
+
+      <aside class="hero-panel" aria-label="Aliolo workflow preview">
+        <section class="panel-card">
+          <div class="panel-label">Learn mode</div>
+          <h3>Build recognition before you test recall.</h3>
+          <p>Start with context-rich cards, then tighten the loop once the concept becomes familiar.</p>
+          <div class="micro-list">
+            <span>Visual flashcards for anatomy, languages, science, exam prep, and more</span>
+            <span>Daily learning flow designed for consistency instead of random cramming</span>
+          </div>
+        </section>
+
+        <section class="panel-card">
+          <div class="panel-label">Test mode</div>
+          <h3>Practice under pressure when it matters.</h3>
+          <p>Move from broad exposure into retention-focused sessions that show where your weak spots still are.</p>
+          <div class="micro-list">
+            <span>Turn recognition into active recall</span>
+            <span>Keep progress measurable with XP, streaks, and repeatable sessions</span>
+          </div>
+        </section>
+      </aside>
+    </section>
+
+    <section class="section" id="features">
+      <div class="section-heading">
+        <h2>Built for study workflows, not just isolated decks.</h2>
+        <p>Aliolo is meant for learners who need more than a stack of cards. It helps with discovery, organization, review timing, and long-term subject growth in one system.</p>
+      </div>
+
+      <div class="feature-grid">
+        <article class="feature-card">
+          <div class="feature-badge">VF</div>
+          <h3>Visual-first flashcards</h3>
+          <p>Support recognition and context with cards that can include image, audio, or video cues instead of plain prompts alone.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-badge">LT</div>
+          <h3>Learn and test modes</h3>
+          <p>Begin with guided exposure and move into stricter assessment flows when you need confident recall instead of passive familiarity.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-badge">SR</div>
+          <h3>Spaced repetition</h3>
+          <p>Bring material back before it fades so review time compounds instead of turning into re-learning.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-badge">OR</div>
+          <h3>Structured organization</h3>
+          <p>Use pillars, folders, subjects, and collections to keep larger libraries usable as your learning expands.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-badge">CU</div>
+          <h3>Curated and custom</h3>
+          <p>Start quickly with public material or build your own systems for professional terms, niche topics, and exam-specific study.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-badge">XP</div>
+          <h3>Progress that stays useful</h3>
+          <p>Daily goals, XP, streaks, and repeatable sessions add structure without drowning the learning experience in noise.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="workflow">
+      <div class="section-heading">
+        <h2>A clearer path from “I should study” to “I know this.”</h2>
+        <p>The product is built around a practical sequence: choose the right material, learn with context, then test under tighter constraints.</p>
+      </div>
+
+      <div class="workflow-grid">
+        <article class="workflow-card">
+          <div class="workflow-step">01</div>
+          <h3>Find or build the right subject.</h3>
+          <p>Start from curated material or create a subject for your own language track, exam, profession, or specialized vocabulary goal.</p>
+        </article>
+        <article class="workflow-card">
+          <div class="workflow-step">02</div>
+          <h3>Learn with media and repetition.</h3>
+          <p>Study inside organized folders and collections while spaced review keeps important material circulating at the right frequency.</p>
+        </article>
+        <article class="workflow-card">
+          <div class="workflow-step">03</div>
+          <h3>Test for retention, not just exposure.</h3>
+          <p>Switch into test mode when you need to measure recall, expose weak spots, and convert short-term recognition into durable knowledge.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-heading">
+        <h2>Two test directions for stronger recall.</h2>
+        <p>Aliolo test mode is not a single static quiz. It supports both standard and reverse practice so learners can check memory from both sides of the same concept.</p>
+      </div>
+
+      <div class="mode-grid">
+        <article class="mode-card">
+          <div class="feature-badge">N</div>
+          <h3>Normal mode</h3>
+          <strong>Question to answer</strong>
+          <p>Use the standard direction when you want to recognize the prompt, then actively recall the correct answer. This is the default path for building confidence and reinforcing primary recall.</p>
+        </article>
+        <article class="mode-card">
+          <div class="feature-badge">R</div>
+          <h3>Reverse mode</h3>
+          <strong>Answer to question</strong>
+          <p>Flip the direction when you want stricter retrieval. Reverse mode exposes weak understanding faster because learners must work backward from the answer, image, or media cue to the source concept.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-card">
+        <div class="section-heading">
+          <h2>Made for outcome-driven learning.</h2>
+          <p>Students increasingly search for results, not tools. Aliolo is positioned for goals like exam readiness, medical terminology, language fluency, and structured long-term recall.</p>
+        </div>
+        <div class="outcome-grid">
+          <article class="outcome-card">
+            <strong>Language and vocabulary growth</strong>
+            Build collections for travel language, professional language, medical terms, or long-term fluency work with repeatable review.
+          </article>
+          <article class="outcome-card">
+            <strong>Recognition-heavy subjects</strong>
+            Use visual cards for anatomy, objects, symbols, locations, or categories where recognition and recall work together.
+          </article>
+          <article class="outcome-card">
+            <strong>Exam and certification prep</strong>
+            Create focused study paths for test windows, weak-topic review, and compact practice loops without losing your library structure.
+          </article>
+          <article class="outcome-card">
+            <strong>Professional memory systems</strong>
+            Keep domain-specific facts, terminology, and procedures organized in reusable subject frameworks instead of scattered notes.
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="pricing">
+      <div class="section-heading">
+        <h2>Simple premium access with room to scale.</h2>
+        <p>Choose the plan that matches your timeline. Prices here are in USD; final billing details, taxes, and local currency may vary by checkout or platform.</p>
+      </div>
+
+      <div class="pricing-grid">
+        <article class="price-card">
+          <span class="price-tag">Flexible</span>
+          <h3>Weekly</h3>
+          <div class="price-amount">$2.99</div>
+          <p>Useful for short review cycles, exam pushes, and quick premium trials.</p>
+          <ul>
+            <li>Short commitment window</li>
+            <li>Good for immediate study bursts</li>
+            <li>Renews automatically until canceled</li>
+          </ul>
+        </article>
+        <article class="price-card featured">
+          <span class="price-tag">Most popular</span>
+          <h3>Monthly</h3>
+          <div class="price-amount">$8.99</div>
+          <p>Balanced access for students building a steady and sustainable study habit.</p>
+          <ul>
+            <li>Best fit for regular weekly learning</li>
+            <li>Enough time to organize larger subject libraries</li>
+            <li>Renews automatically until canceled</li>
+          </ul>
+        </article>
+        <article class="price-card">
+          <span class="price-tag">Best value</span>
+          <h3>Yearly</h3>
+          <div class="price-amount">$80.99</div>
+          <p>Lower effective monthly cost for learners who want Aliolo as a durable long-term study system.</p>
+          <ul>
+            <li>Strong fit for language and professional study</li>
+            <li>Lower cost over time</li>
+            <li>Renews automatically until canceled</li>
+          </ul>
+        </article>
+      </div>
+
+      <div class="comparison-card" style="margin-top: 28px;">
+        <div class="section-heading" style="margin-bottom: 10px;">
+          <h2>Free vs premium at a glance.</h2>
+          <p>The product already distinguishes between a broad free entry point and the full premium workflow. This comparison matches the current app.</p>
+        </div>
+        <table class="comparison-table" aria-label="Free and premium feature comparison">
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>Free</th>
+              <th>Premium</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Full library</td>
+              <td><span class="comparison-check">✓</span></td>
+              <td><span class="comparison-check pro">✓</span></td>
+            </tr>
+            <tr>
+              <td>Spaced repetition</td>
+              <td><span class="comparison-cross">✕</span></td>
+              <td><span class="comparison-check pro">✓</span></td>
+            </tr>
+            <tr>
+              <td>Creation</td>
+              <td><span class="comparison-cross">✕</span></td>
+              <td><span class="comparison-check pro">✓</span></td>
+            </tr>
+            <tr>
+              <td>Testing</td>
+              <td><span class="comparison-cross">✕</span></td>
+              <td><span class="comparison-check pro">✓</span></td>
+            </tr>
+            <tr>
+              <td>Autoplay</td>
+              <td><span class="comparison-cross">✕</span></td>
+              <td><span class="comparison-check pro">✓</span></td>
+            </tr>
+            <tr>
+              <td>Private mode</td>
+              <td><span class="comparison-cross">✕</span></td>
+              <td><span class="comparison-check pro">✓</span></td>
+            </tr>
+            <tr>
+              <td>Customize</td>
+              <td><span class="comparison-cross">✕</span></td>
+              <td><span class="comparison-check pro">✓</span></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="comparison-note">
+          Premium unlocks the full study system: adaptive review, creation tools, advanced testing, autoplay controls, private organization, and deeper personalization.
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="trust-panel">
+        <div class="trust-grid">
+          <div>
+            <h2>Clear trust signals for students, reviewers, and payment partners.</h2>
+            <p>Aliolo is a live educational product with public pricing, legal pages, support contact, and crawlable learning content. That matters for users and for partner verification flows such as Paddle review.</p>
+            <div class="trust-list">
+              <div class="trust-note">
+                <strong>Support</strong>
+                <a href="mailto:vitalii@nohainc.com">vitalii@nohainc.com</a>
+              </div>
+              <div class="trust-note">
+                <strong>Public legal pages</strong>
+                Privacy, subscription terms, refund policy, and pricing are accessible without login.
+              </div>
+              <div class="trust-note">
+                <strong>Public educational content</strong>
+                Selected subject pages can be crawled and expose structured educational information.
+              </div>
+            </div>
+          </div>
+
+          <div class="mini-faq" aria-label="FAQ">
+            <article>
+              <strong>Can I use Aliolo without building everything myself?</strong>
+              Start from curated material, then expand into your own folders, subjects, and collections when your goals become more specific.
+            </article>
+            <article>
+              <strong>How do web payments work?</strong>
+              Web orders may be processed by Paddle.com as Merchant of Record, including payment support and applicable tax handling.
+            </article>
+            <article>
+              <strong>Where can I review the legal details?</strong>
+              Use the links below for privacy, terms, refunds, and pricing before starting a paid plan.
+            </article>
+          </div>
+        </div>
+
+        <div class="legal-strip">
+          <strong>Merchant of Record:</strong> Our order process may be conducted by Paddle.com, our online reseller and Merchant of Record for web orders. Paddle handles payment processing, payment-related customer service, and returns for those orders.
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="shell">
+      <div class="footer-grid">
+        <div class="footer-copy">© 2026 Aliolo</div>
+        <div class="footer-links">
+          <a href="/privacy">Privacy Policy</a>
+          <a href="/terms">Subscription Terms</a>
+          <a href="/refund">Refund Policy</a>
+          <a href="/pricing">Pricing</a>
+          <a href="mailto:vitalii@nohainc.com">Support</a>
+        </div>
+      </div>
+    </div>
+  </footer>
 </body>
 </html>

@@ -81,6 +81,28 @@ class CardService with ChangeNotifier {
     return [];
   }
 
+  Future<List<CardModel>> getRawCollectionCards(List<String> subjectIds) async {
+    try {
+      final response = await _cfClient.client.get(
+        '/api/cards',
+        queryParameters: {'subject_ids': subjectIds.join(',')},
+      );
+      if (response.statusCode == 200 && response.data != null) {
+        final List<dynamic> data = response.data;
+        return data.map((json) => CardModel.fromJson(json)).toList();
+      }
+    } catch (e) {
+      AppLogger.log('Error fetching collection cards from Cloudflare: $e');
+    }
+    return [];
+  }
+
+  Future<List<CardModel>> getCollectionCardsByCollectionId(String collectionId) async {
+    final collection = await getCollectionById(collectionId);
+    if (collection == null) return [];
+    return getRawCollectionCards(collection.subjectIds);
+  }
+
   Future<List<CardModel>> getCardsBySubject(String subjectId) async {
     try {
       final response = await _cfClient.client.get(
@@ -92,7 +114,7 @@ class CardService with ChangeNotifier {
         return data.map((json) => CardModel.fromJson(json)).toList();
       }
     } catch (e) {
-      AppLogger.log('Error fetching cards from Cloudflare: $e');
+      AppLogger.log('Error fetching cards by subject: $e');
     }
     return [];
   }
