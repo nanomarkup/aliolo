@@ -14,6 +14,7 @@ import 'package:aliolo/features/subjects/presentation/pages/subject_page.dart';
 import 'package:aliolo/features/settings/presentation/pages/about_page.dart';
 import 'package:aliolo/data/services/friendship_service.dart';
 import 'package:aliolo/features/auth/presentation/pages/manage_friends_page.dart';
+import 'package:aliolo/core/utils/api_error.dart';
 import 'package:aliolo/core/utils/file_stub.dart'
     if (dart.library.html) 'dart:html'
     as html;
@@ -290,7 +291,10 @@ class _LoginPageState extends State<LoginPage> {
           );
         }
       } catch (e) {
-        _showMsg(_authService.lastErrorMessage ?? e.toString());
+        _showMsg(
+          _authService.lastErrorMessage ??
+              formatApiErrorMessage(e, fallback: 'Could not create your account.'),
+        );
       } finally {
         if (mounted) setState(() => _isLoading = false);
       }
@@ -329,7 +333,10 @@ class _LoginPageState extends State<LoginPage> {
         );
       }
     } catch (e) {
-      _showMsg(_authService.lastErrorMessage ?? e.toString());
+      _showMsg(
+        _authService.lastErrorMessage ??
+            formatApiErrorMessage(e, fallback: 'Could not log in.'),
+      );
     } finally {
       if (mounted) setState(() => _isLoading = false);
     }
@@ -385,7 +392,10 @@ class _LoginPageState extends State<LoginPage> {
         }
       }
     } catch (e) {
-      _showMsg(_authService.lastErrorMessage ?? 'Recovery error: $e');
+      _showMsg(
+        _authService.lastErrorMessage ??
+            formatApiErrorMessage(e, fallback: 'Recovery error. Please try again.'),
+      );
     } finally {
       if (mounted) setState(() => _isLoading = false);
     }

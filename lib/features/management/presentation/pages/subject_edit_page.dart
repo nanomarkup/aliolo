@@ -14,6 +14,7 @@ import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/data/services/subscription_service.dart';
 import 'package:aliolo/features/management/presentation/utils/localized_data_json.dart';
+import 'package:aliolo/core/utils/api_error.dart';
 import 'package:aliolo/features/feedback/presentation/pages/feedback_page.dart';
 import 'package:aliolo/features/settings/presentation/pages/premium_upgrade_page.dart';
 
@@ -366,7 +367,14 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
                             Navigator.pop(context);
                           } catch (e) {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('Invalid JSON: $e')),
+                              SnackBar(
+                                content: Text(
+                                  formatApiErrorMessage(
+                                    e,
+                                    fallback: 'Invalid JSON input.',
+                                  ),
+                                ),
+                              ),
                             );
                           }
                         },
@@ -576,7 +584,16 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
       if (mounted) {
         ScaffoldMessenger.of(
           context,
-        ).showSnackBar(SnackBar(content: Text('Error saving: $e')));
+        ).showSnackBar(
+          SnackBar(
+            content: Text(
+              formatApiErrorMessage(
+                e,
+                fallback: 'Could not save changes. Please try again.',
+              ),
+            ),
+          ),
+        );
         setState(() => _isSaving = false);
       }
     }

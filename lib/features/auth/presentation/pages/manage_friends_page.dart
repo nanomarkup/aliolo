@@ -7,6 +7,7 @@ import 'package:aliolo/data/services/friendship_service.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
+import 'package:aliolo/core/utils/api_error.dart';
 
 import 'package:aliolo/features/subjects/presentation/pages/subject_page.dart';
 
@@ -179,7 +180,16 @@ class _ManageFriendsPageState extends State<ManageFriendsPage> {
               if (mounted) {
                 ScaffoldMessenger.of(
                   context,
-                ).showSnackBar(SnackBar(content: Text('Error: $e')));
+                ).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                      formatApiErrorMessage(
+                        e,
+                        fallback: 'Could not send the invitation.',
+                      ),
+                    ),
+                  ),
+                );
               }
             }
           }
@@ -200,7 +210,16 @@ class _ManageFriendsPageState extends State<ManageFriendsPage> {
       if (mounted) {
         ScaffoldMessenger.of(
           context,
-        ).showSnackBar(SnackBar(content: Text('Error: $e')));
+        ).showSnackBar(
+          SnackBar(
+            content: Text(
+              formatApiErrorMessage(
+                e,
+                fallback: 'Could not complete that action.',
+              ),
+            ),
+          ),
+        );
       }
     }
   }

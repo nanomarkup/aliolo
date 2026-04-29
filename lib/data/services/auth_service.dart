@@ -9,6 +9,7 @@ import 'package:aliolo/data/models/user_model.dart';
 import 'package:aliolo/data/services/filter_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/core/utils/logger.dart';
+import 'package:aliolo/core/utils/api_error.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -153,7 +154,7 @@ class AuthService extends ChangeNotifier {
       );
       return response.statusCode == 200;
     } catch (e) {
-      _lastErrorMessage = e.toString();
+      _setApiError('AuthService.requestOtp failed', e);
       return false;
     }
   }
@@ -167,7 +168,7 @@ class AuthService extends ChangeNotifier {
       );
       return response.statusCode == 200;
     } catch (e) {
-      _lastErrorMessage = e.toString();
+      _setApiError('AuthService.verifyOtp failed', e);
       return false;
     }
   }
@@ -187,7 +188,7 @@ class AuthService extends ChangeNotifier {
       }
       return null;
     } catch (e) {
-      _lastErrorMessage = e.toString();
+      _setApiError('AuthService.verifyInvite failed', e);
       return null;
     }
   }
@@ -223,7 +224,7 @@ class AuthService extends ChangeNotifier {
         await _clearOnboardingSignupData();
       }
     } catch (e) {
-      _lastErrorMessage = e.toString();
+      _setApiError('AuthService.createUserWithInvite failed', e);
       rethrow;
     }
   }
@@ -259,7 +260,7 @@ class AuthService extends ChangeNotifier {
         throw Exception(_lastErrorMessage);
       }
     } catch (e) {
-      _lastErrorMessage = e.toString();
+      _setApiError('AuthService.createUser failed', e);
       rethrow;
     }
   }
@@ -293,7 +294,7 @@ class AuthService extends ChangeNotifier {
           response.data['error']?.toString() ?? 'Checkout session failed';
       return false;
     } catch (e) {
-      _lastErrorMessage = _extractErrorMessage(e);
+      _setApiError('AuthService.createCheckoutSession failed', e);
       return false;
     }
   }
@@ -316,7 +317,7 @@ class AuthService extends ChangeNotifier {
           response.data['error']?.toString() ?? 'Account completion failed';
       return false;
     } catch (e) {
-      _lastErrorMessage = _extractErrorMessage(e);
+      _setApiError('AuthService.completeAccount failed', e);
       return false;
     }
   }
@@ -377,21 +378,17 @@ class AuthService extends ChangeNotifier {
         return false;
       }
     } catch (e) {
-      AppLogger.log('Cloudflare login failed: $e');
-      _lastErrorMessage = e.toString();
+      _setApiError('AuthService.login failed', e);
       return false;
     }
   }
 
-  String _extractErrorMessage(Object error) {
-    if (error is DioException) {
-      final data = error.response?.data;
-      if (data is Map && data['error'] != null) {
-        return data['error'].toString();
-      }
-      return error.message ?? error.toString();
-    }
-    return error.toString();
+  void _setApiError(String context, Object error, {String? fallback}) {
+    AppLogger.log('$context: $error');
+    _lastErrorMessage = formatApiErrorMessage(
+      error,
+      fallback: fallback ?? 'Something went wrong. Please try again.',
+    );
   }
 
   Future<void> logout() async {
@@ -708,7 +705,7 @@ class AuthService extends ChangeNotifier {
       );
       return response.statusCode == 200;
     } catch (e) {
-      _lastErrorMessage = e.toString();
+      _setApiError('AuthService.sendResetCode failed', e);
       return false;
     }
   }
@@ -726,7 +723,7 @@ class AuthService extends ChangeNotifier {
       );
       return response.statusCode == 200;
     } catch (e) {
-      _lastErrorMessage = e.toString();
+      _setApiError('AuthService.finalizePasswordReset failed', e);
       return false;
     }
   }
@@ -742,7 +739,7 @@ class AuthService extends ChangeNotifier {
         throw Exception(response.data['error'] ?? 'Failed to update password');
       }
     } catch (e) {
-      _lastErrorMessage = e.toString();
+      _setApiError('AuthService.updatePassword failed', e);
       rethrow;
     }
   }
@@ -922,12 +919,6 @@ class AuthService extends ChangeNotifier {
   }
 
   String _handleDioError(dynamic e) {
-    if (e is DioException) {
-      if (e.response != null && e.response!.data is Map) {
-        return e.response!.data['error'] ?? e.message ?? 'An error occurred';
-      }
-      return e.message ?? 'Connection error';
-    }
-    return e.toString();
+    return formatApiErrorMessage(e, fallback: 'An error occurred');
   }
 }

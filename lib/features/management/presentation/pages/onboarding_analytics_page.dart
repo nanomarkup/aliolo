@@ -5,6 +5,7 @@ import 'package:aliolo/data/models/onboarding_analytics_model.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/onboarding_analytics_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
+import 'package:aliolo/core/utils/api_error.dart';
 
 class OnboardingAnalyticsPage extends StatefulWidget {
   const OnboardingAnalyticsPage({super.key});
@@ -48,7 +49,10 @@ class _OnboardingAnalyticsPageState extends State<OnboardingAnalyticsPage> {
     } catch (e) {
       if (!mounted) return;
       setState(() {
-        _errorMessage = e.toString();
+        _errorMessage = formatApiErrorMessage(
+          e,
+          fallback: 'Could not load onboarding analytics. Please try again.',
+        );
         _isLoading = false;
       });
     }

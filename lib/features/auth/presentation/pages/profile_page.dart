@@ -23,6 +23,7 @@ import 'package:aliolo/features/management/presentation/pages/subject_usage_page
 import 'package:aliolo/data/services/feedback_service.dart';
 import 'package:aliolo/core/widgets/user_avatar.dart';
 import 'package:aliolo/core/widgets/premium_badge.dart';
+import 'package:aliolo/core/utils/api_error.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -442,14 +443,20 @@ class _ProfilePageState extends State<ProfilePage> {
           context,
         ).showSnackBar(SnackBar(content: Text(context.t('password_updated'))));
       }
-    } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(_authService.lastErrorMessage ?? e.toString()),
-          ),
-        );
-      }
+      } catch (e) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                _authService.lastErrorMessage ??
+                    formatApiErrorMessage(
+                      e,
+                      fallback: 'Could not update your password. Please try again.',
+                    ),
+              ),
+            ),
+          );
+        }
     }
   }
 

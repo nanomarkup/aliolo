@@ -2,6 +2,7 @@ import 'package:aliolo/data/models/user_model.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/core/network/cloudflare_client.dart';
+import 'package:aliolo/core/utils/api_error.dart';
 import 'package:aliolo/core/utils/logger.dart';
 
 class FriendshipService {
@@ -32,7 +33,7 @@ class FriendshipService {
       if (response.statusCode == 200) return 'success';
       return response.data['error'] ?? 'Request failed';
     } catch (e) {
-      return e.toString();
+      return formatApiErrorMessage(e, fallback: 'Request failed');
     }
   }
 

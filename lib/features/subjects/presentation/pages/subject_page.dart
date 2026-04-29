@@ -28,6 +28,7 @@ import 'package:aliolo/data/models/content_item.dart';
 import 'package:aliolo/data/services/discovery_engine.dart';
 import 'package:aliolo/data/services/filter_service.dart';
 import 'package:aliolo/features/feedback/presentation/pages/feedback_page.dart';
+import 'package:aliolo/core/utils/api_error.dart';
 import 'package:aliolo/core/widgets/premium_badge.dart';
 
 class SubjectPage extends StatefulWidget {
@@ -3077,7 +3078,14 @@ class _SubjectListTile extends StatelessWidget {
                   } catch (e) {
                     if (context.mounted)
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Error updating favorite: $e')),
+                        SnackBar(
+                          content: Text(
+                            formatApiErrorMessage(
+                              e,
+                              fallback: 'Could not update favorite. Please try again.',
+                            ),
+                          ),
+                        ),
                       );
                   }
                 },
@@ -3227,7 +3235,14 @@ class _CollectionListTile extends StatelessWidget {
                   } catch (e) {
                     if (context.mounted)
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Error updating favorite: $e')),
+                        SnackBar(
+                          content: Text(
+                            formatApiErrorMessage(
+                              e,
+                              fallback: 'Could not update favorite. Please try again.',
+                            ),
+                          ),
+                        ),
                       );
                   }
                 },

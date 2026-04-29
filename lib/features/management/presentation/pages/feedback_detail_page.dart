@@ -8,6 +8,7 @@ import 'package:aliolo/data/services/feedback_service.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/core/widgets/aliolo_scrollable_page.dart';
+import 'package:aliolo/core/utils/api_error.dart';
 
 class FeedbackDetailPage extends StatefulWidget {
   final FeedbackModel feedback;
@@ -93,7 +94,16 @@ class _FeedbackDetailPageState extends State<FeedbackDetailPage> {
       if (mounted) {
         ScaffoldMessenger.of(
           context,
-        ).showSnackBar(SnackBar(content: Text('Error: $e')));
+        ).showSnackBar(
+          SnackBar(
+            content: Text(
+              formatApiErrorMessage(
+                e,
+                fallback: 'Could not send the reply. Please try again.',
+              ),
+            ),
+          ),
+        );
       }
     } finally {
       if (mounted) setState(() => _isSending = false);
@@ -142,7 +152,16 @@ class _FeedbackDetailPageState extends State<FeedbackDetailPage> {
       if (mounted)
         ScaffoldMessenger.of(
           context,
-        ).showSnackBar(SnackBar(content: Text('Error: $e')));
+        ).showSnackBar(
+          SnackBar(
+            content: Text(
+              formatApiErrorMessage(
+                e,
+                fallback: 'Could not save the changes. Please try again.',
+              ),
+            ),
+          ),
+        );
     } finally {
       if (mounted) setState(() => _isSending = false);
     }
@@ -173,7 +192,16 @@ class _FeedbackDetailPageState extends State<FeedbackDetailPage> {
       if (mounted)
         ScaffoldMessenger.of(
           context,
-        ).showSnackBar(SnackBar(content: Text('Error: $e')));
+        ).showSnackBar(
+          SnackBar(
+            content: Text(
+              formatApiErrorMessage(
+                e,
+                fallback: 'Could not delete the reply. Please try again.',
+              ),
+            ),
+          ),
+        );
     } finally {
       if (mounted) setState(() => _isSending = false);
     }
@@ -228,7 +256,16 @@ class _FeedbackDetailPageState extends State<FeedbackDetailPage> {
       if (mounted)
         ScaffoldMessenger.of(
           context,
-        ).showSnackBar(SnackBar(content: Text('Error: $e')));
+        ).showSnackBar(
+          SnackBar(
+            content: Text(
+              formatApiErrorMessage(
+                e,
+                fallback: 'Could not update the feedback status.',
+              ),
+            ),
+          ),
+        );
     }
   }
 

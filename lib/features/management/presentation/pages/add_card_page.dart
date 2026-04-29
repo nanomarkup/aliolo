@@ -18,6 +18,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:aliolo/data/models/pillar_model.dart';
 import 'package:aliolo/core/widgets/aliolo_scrollable_page.dart';
+import 'package:aliolo/core/utils/api_error.dart';
 import 'package:flutter/foundation.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:path/path.dart' as p;
@@ -505,7 +506,14 @@ class _AddCardPageState extends State<AddCardPage> {
                             Navigator.pop(context);
                           } catch (e) {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('Invalid JSON: $e')),
+                              SnackBar(
+                                content: Text(
+                                  formatApiErrorMessage(
+                                    e,
+                                    fallback: 'Invalid JSON input.',
+                                  ),
+                                ),
+                              ),
                             );
                           }
                         },

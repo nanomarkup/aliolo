@@ -13,6 +13,7 @@ import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/core/widgets/user_avatar.dart';
+import 'package:aliolo/core/utils/api_error.dart';
 
 class UsersPage extends StatefulWidget {
   const UsersPage({super.key});
@@ -99,7 +100,10 @@ class _UsersPageState extends State<UsersPage> {
     } catch (e) {
       if (!mounted || requestId != _loadRequestId) return;
       setState(() {
-        _errorMessage = e.toString();
+        _errorMessage = formatApiErrorMessage(
+          e,
+          fallback: 'Could not load users. Please try again.',
+        );
         _isLoading = false;
       });
     }
@@ -569,7 +573,16 @@ class _UsersPageState extends State<UsersPage> {
       if (mounted) {
         ScaffoldMessenger.of(
           context,
-        ).showSnackBar(SnackBar(content: Text('$e')));
+        ).showSnackBar(
+          SnackBar(
+            content: Text(
+              formatApiErrorMessage(
+                e,
+                fallback: 'Could not save the user changes.',
+              ),
+            ),
+          ),
+        );
       }
     }
   }

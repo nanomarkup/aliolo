@@ -6,6 +6,7 @@ import 'package:aliolo/data/services/feedback_service.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/core/widgets/aliolo_scrollable_page.dart';
+import 'package:aliolo/core/utils/api_error.dart';
 
 class FeedbackPage extends StatefulWidget {
   final String? subjectId;
@@ -93,7 +94,14 @@ class _FeedbackPageState extends State<FeedbackPage> {
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('${context.t('feedback_error')}: $e')),
+          SnackBar(
+            content: Text(
+              formatApiErrorMessage(
+                e,
+                fallback: context.t('feedback_error'),
+              ),
+            ),
+          ),
         );
       }
     } finally {

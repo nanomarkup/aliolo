@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
 import 'package:aliolo/core/di/service_locator.dart';
+import 'package:aliolo/core/utils/api_error.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/subscription_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
@@ -71,9 +72,9 @@ class _BillingPageState extends State<BillingPage> {
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text('Purchase failed: $e')));
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(formatApiErrorMessage(e, fallback: 'Purchase failed. Please try again.'))),
+        );
       }
     } finally {
       if (mounted) setState(() => _isProcessing = false);
@@ -88,7 +89,14 @@ class _BillingPageState extends State<BillingPage> {
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Could not open Paddle cancellation: $e')),
+          SnackBar(
+            content: Text(
+              formatApiErrorMessage(
+                e,
+                fallback: 'Could not open Paddle cancellation. Please try again.',
+              ),
+            ),
+          ),
         );
       }
     } finally {

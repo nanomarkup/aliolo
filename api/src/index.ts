@@ -374,6 +374,8 @@ function legalPage(args: {
   updated: string;
   path: string;
   body: string;
+  robots?: string;
+  structuredData?: Record<string, unknown> | Array<Record<string, unknown>>;
 }) {
   const nav = [
     ['home', 'Home', '/'],
@@ -390,7 +392,30 @@ function legalPage(args: {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${args.title}</title>
   <meta name="description" content="${args.subtitle}">
+  <meta name="robots" content="${args.robots ?? 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1'}">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="${args.title}">
+  <meta property="og:description" content="${args.subtitle}">
+  <meta property="og:url" content="https://aliolo.com${args.path}">
+  <meta property="og:image" content="https://aliolo.com/app_icon.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="${args.title}">
+  <meta name="twitter:description" content="${args.subtitle}">
+  <meta name="twitter:image" content="https://aliolo.com/app_icon.webp">
   <link rel="canonical" href="https://aliolo.com${args.path}">
+  <script type="application/ld+json">${JSON.stringify(args.structuredData ?? {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: args.title,
+    description: args.subtitle,
+    url: `https://aliolo.com${args.path}`,
+    dateModified: args.updated,
+    isPartOf: {
+      '@type': 'WebSite',
+      name: 'Aliolo',
+      url: 'https://aliolo.com',
+    },
+  })}</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -540,6 +565,48 @@ const pricingHtml = legalPage({
   updated: 'April 28, 2026',
   path: '/pricing',
   subtitle: 'Simple subscription options for unlocking the full Aliolo visual learning experience.',
+  structuredData: [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      name: 'Aliolo Premium Pricing',
+      description: 'Simple subscription options for unlocking the full Aliolo visual learning experience.',
+      url: 'https://aliolo.com/pricing',
+      isPartOf: {
+        '@type': 'WebSite',
+        name: 'Aliolo',
+        url: 'https://aliolo.com',
+      },
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'SoftwareApplication',
+      name: 'Aliolo',
+      applicationCategory: 'EducationalApplication',
+      operatingSystem: 'Web, Android, iOS',
+      url: 'https://aliolo.com',
+      offers: [
+        {
+          '@type': 'Offer',
+          name: 'Weekly',
+          price: '2.99',
+          priceCurrency: 'USD',
+        },
+        {
+          '@type': 'Offer',
+          name: 'Monthly',
+          price: '8.99',
+          priceCurrency: 'USD',
+        },
+        {
+          '@type': 'Offer',
+          name: 'Yearly',
+          price: '80.99',
+          priceCurrency: 'USD',
+        },
+      ],
+    },
+  ],
   body: `
     <div class="plans">
       <section class="plan">
@@ -1795,10 +1862,12 @@ const appShellHtml = `<!DOCTYPE html>
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Aliolo app for visual learning, structured flashcards, and focused study workflows.">
+  <meta name="robots" content="noindex,nofollow">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title" content="Aliolo">
+  <link rel="canonical" href="https://aliolo.com/login">
   <link rel="apple-touch-icon" href="/icons/Icon-192.png">
   <link rel="icon" type="image/webp" href="/app_icon.webp">
   <link rel="manifest" href="/manifest.json">
@@ -1835,11 +1904,96 @@ function shouldServeAppShell(pathname: string) {
   );
 }
 
+function isPublicSeoPath(pathname: string) {
+  return (
+    pathname.startsWith('/subject/') ||
+    pathname.startsWith('/collection/') ||
+    pathname.startsWith('/goals/')
+  );
+}
+
+function buildPublicNotFoundHtml(pathname: string) {
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page not found | Aliolo</title>
+  <meta name="description" content="The requested Aliolo public page could not be found.">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="canonical" href="https://aliolo.com${pathname}">
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background: linear-gradient(180deg, #f9fcfd 0%, #eef5f8 100%);
+      color: #122338;
+      font-family: "Source Sans 3", system-ui, -apple-system, sans-serif;
+    }
+    main {
+      max-width: 760px;
+      padding: 32px;
+      border-radius: 28px;
+      border: 1px solid rgba(18, 35, 56, 0.10);
+      background: rgba(255, 255, 255, 0.96);
+      box-shadow: 0 24px 54px rgba(18, 35, 56, 0.08);
+    }
+    h1 {
+      margin: 0 0 12px;
+      font-family: "Manrope", system-ui, -apple-system, sans-serif;
+      font-size: clamp(32px, 5vw, 48px);
+      line-height: 1.02;
+      letter-spacing: -0.04em;
+    }
+    p {
+      margin: 0 0 12px;
+      color: #5f6f85;
+      font-size: 18px;
+      line-height: 1.6;
+    }
+    a {
+      display: inline-flex;
+      margin-top: 14px;
+      min-height: 48px;
+      align-items: center;
+      padding: 0 18px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #185f90, #0d476d);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Page not found</h1>
+    <p>The requested Aliolo public page does not exist or is no longer available.</p>
+    <p>Use the public landing page to open the app, browse pricing, or return to a supported study route.</p>
+    <a href="/">Return to Aliolo</a>
+  </main>
+</body>
+</html>`;
+}
+
 app.get('/terms', (c) => c.html(termsHtml));
 app.get('/privacy', (c) => c.html(privacyHtml));
 app.get('/refund', (c) => c.html(refundHtml));
 app.get('/pricing', (c) => c.html(pricingHtml));
 app.get('/pay', (c) => c.html(buildPayHtml(c.env.PADDLE_CLIENT_TOKEN)));
+app.get('/robots.txt', (c) =>
+  c.text(
+    `User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /login\nDisallow: /pay\n\nSitemap: https://aliolo.com/sitemap.xml\n`,
+    200,
+    {
+      'Content-Type': 'text/plain; charset=UTF-8',
+      'Cache-Control': 'public, max-age=86400',
+    },
+  ),
+);
 
 // Landing Page / SPA Routing
 app.get('/', async (c, next) => {
@@ -1882,10 +2036,12 @@ app.get('*', async (c) => {
         let htmlBody = appShellHtml;
 
         const userAgent = c.req.header('user-agent') || '';
-        if (isbot(userAgent) || url.pathname.startsWith('/subject/') || url.pathname.startsWith('/goals/')) {
+        if (isbot(userAgent) || isPublicSeoPath(url.pathname)) {
             const seoHtml = await generateSeoHtml(c.env.DB, url.pathname, htmlBody);
             if (seoHtml) {
                 htmlBody = seoHtml;
+            } else if (isPublicSeoPath(url.pathname)) {
+                return c.html(buildPublicNotFoundHtml(url.pathname), 404);
             }
         }
 

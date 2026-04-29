@@ -18,6 +18,7 @@ import 'package:aliolo/data/services/testing_language_service.dart';
 import 'package:aliolo/data/services/filter_service.dart';
 import 'package:aliolo/data/services/progress_service.dart';
 import 'package:aliolo/data/services/subject_usage_service.dart';
+import 'package:aliolo/core/utils/api_error.dart';
 import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/core/utils/session_bucket_sampler.dart';
 import 'package:aliolo/core/utils/card_sorting.dart';
@@ -33,7 +34,6 @@ import 'package:aliolo/features/management/presentation/pages/subject_edit_page.
 import 'package:aliolo/features/management/presentation/pages/add_card_page.dart';
 import 'package:aliolo/features/feedback/presentation/pages/feedback_page.dart';
 import 'package:aliolo/features/settings/presentation/pages/premium_upgrade_page.dart';
-import 'package:aliolo/features/settings/presentation/pages/billing_page.dart';
 
 class _EarlyRetestDecision {
   final bool retest;
@@ -429,7 +429,14 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
         if (mounted) {
           setState(() => _currentSubject!.isOnDashboard = !newState);
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Error updating favorite: $e')),
+            SnackBar(
+              content: Text(
+                formatApiErrorMessage(
+                  e,
+                  fallback: 'Could not update favorite. Please try again.',
+                ),
+              ),
+            ),
           );
         }
       }
@@ -448,7 +455,14 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
         if (mounted) {
           setState(() => _currentCollection!.isOnDashboard = !newState);
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Error updating favorite: $e')),
+            SnackBar(
+              content: Text(
+                formatApiErrorMessage(
+                  e,
+                  fallback: 'Could not update favorite. Please try again.',
+                ),
+              ),
+            ),
           );
         }
       }

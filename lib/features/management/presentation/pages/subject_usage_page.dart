@@ -5,6 +5,7 @@ import 'package:aliolo/data/models/subject_usage_model.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/subject_usage_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
+import 'package:aliolo/core/utils/api_error.dart';
 
 class SubjectUsagePage extends StatefulWidget {
   const SubjectUsagePage({super.key});
@@ -51,7 +52,10 @@ class _SubjectUsagePageState extends State<SubjectUsagePage> {
     } catch (e) {
       if (!mounted) return;
       setState(() {
-        _errorMessage = e.toString();
+        _errorMessage = formatApiErrorMessage(
+          e,
+          fallback: 'Could not load subject usage. Please try again.',
+        );
         _isLoading = false;
       });
     }

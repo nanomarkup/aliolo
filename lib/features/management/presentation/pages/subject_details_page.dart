@@ -8,6 +8,7 @@ import 'package:aliolo/data/services/card_service.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
+import 'package:aliolo/core/utils/api_error.dart';
 import 'package:aliolo/features/management/presentation/pages/add_card_page.dart';
 import 'package:aliolo/features/management/presentation/pages/subject_edit_page.dart';
 
@@ -111,7 +112,16 @@ class _SubjectDetailsPageState extends State<SubjectDetailsPage> {
         if (mounted) {
           ScaffoldMessenger.of(
             context,
-          ).showSnackBar(SnackBar(content: Text('Error deleting: $e')));
+          ).showSnackBar(
+            SnackBar(
+              content: Text(
+                formatApiErrorMessage(
+                  e,
+                  fallback: 'Could not delete the subject. Please try again.',
+                ),
+              ),
+            ),
+          );
         }
       }
     }
