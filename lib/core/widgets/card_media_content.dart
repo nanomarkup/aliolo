@@ -190,6 +190,12 @@ class CardMediaContent extends StatelessWidget {
     final textFontSize = isMobile ? 80.0 : 120.0;
 
     Widget content = _buildContent(context, finalDisplayText, textFontSize, showCenterAudioIcon);
+    if (card.isColors) {
+      content = AspectRatio(
+        aspectRatio: 1,
+        child: content,
+      );
+    }
 
     final bool hasSlider = slideCount > 1 && !card.isSpecialRenderer && !card.isCountingRenderer && !card.isColors;
 
@@ -211,11 +217,14 @@ class CardMediaContent extends StatelessWidget {
             color: headerColor.withValues(alpha: 0.05),
             child: ConstrainedBox(
               constraints: BoxConstraints(
-                minHeight: isMobile ? 300 : 0,
+                minHeight: card.isColors ? 300 : (isMobile ? 300 : 0),
                 maxHeight: isMobile && !hasVisual ? 450 : double.infinity,
               ),
               child: Stack(
-                fit: isMobile ? StackFit.loose : StackFit.expand,
+                fit:
+                    isMobile || card.isColors
+                        ? StackFit.loose
+                        : StackFit.expand,
                 alignment: Alignment.center,
                 children: [
                   content,

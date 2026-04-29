@@ -1210,6 +1210,10 @@ class _TestPageState extends State<TestPage> {
                   child: LayoutBuilder(
                     builder: (context, constraints) {
                       final isMobile = constraints.maxWidth < 800;
+                      final useStackedColorsLayout =
+                          _currentCard.isColors && constraints.maxWidth < 1100;
+                      final useCompactLayout =
+                          isMobile || useStackedColorsLayout;
                       final correctImageUrl =
                           _currentCard.primaryImageUrl(lang) ??
                           _currentCard.primaryImageUrl('global') ??
@@ -1288,6 +1292,18 @@ class _TestPageState extends State<TestPage> {
                         headerColor: headerColor,
                         lang: lang,
                       );
+                      final stackedMediaContent =
+                          useCompactLayout && _currentCard.isColors
+                              ? Align(
+                                alignment: Alignment.topCenter,
+                                child: ConstrainedBox(
+                                  constraints: const BoxConstraints(
+                                    maxWidth: 560,
+                                  ),
+                                  child: mediaContent,
+                                ),
+                              )
+                              : mediaContent;
 
                       final optionsTitle =
                           _isReverseMode
@@ -1296,14 +1312,16 @@ class _TestPageState extends State<TestPage> {
 
                       final optionsContent = Container(
                         width:
-                            _isReverseMode || isMobile || isSpecialAudioMode
+                            _isReverseMode ||
+                                    useCompactLayout ||
+                                    isSpecialAudioMode
                                 ? double.infinity
                                 : 350,
-                        padding: EdgeInsets.all(isMobile ? 24 : 32),
+                        padding: EdgeInsets.all(useCompactLayout ? 24 : 32),
                         decoration: BoxDecoration(
                           color: Theme.of(context).colorScheme.surface,
                           boxShadow:
-                              isMobile
+                              useCompactLayout
                                   ? [
                                     BoxShadow(
                                       color: Colors.black.withValues(
@@ -1385,7 +1403,8 @@ class _TestPageState extends State<TestPage> {
 
                                     double aspectRatio;
                                     if (isAudioTest) {
-                                      aspectRatio = isMobile ? 2.5 : 3.0;
+                                      aspectRatio =
+                                          useCompactLayout ? 2.5 : 3.0;
                                     } else {
                                       // Smart Calculator: fit height but don't exceed width (square)
                                       double targetHeight = maxItemHeight;
@@ -1422,7 +1441,7 @@ class _TestPageState extends State<TestPage> {
                                   },
                                 ),
                               )
-                            else if (isMobile)
+                            else if (useCompactLayout)
                               GridView.builder(
                                 shrinkWrap: true,
                                 physics: const NeverScrollableScrollPhysics(),
@@ -1467,17 +1486,17 @@ class _TestPageState extends State<TestPage> {
 
                       if (_isReverseMode || isSpecialAudioMode) {
                         return Padding(
-                          padding: EdgeInsets.all(isMobile ? 16 : 32),
+                          padding: EdgeInsets.all(useCompactLayout ? 16 : 32),
                           child: optionsContent,
                         );
                       }
 
-                      if (isMobile) {
+                      if (useCompactLayout) {
                         return SingleChildScrollView(
                           controller: _scrollController,
                           child: Column(
                             children: [
-                              if (!isSpecialAudioMode) mediaContent,
+                              if (!isSpecialAudioMode) stackedMediaContent,
                               optionsContent,
                             ],
                           ),

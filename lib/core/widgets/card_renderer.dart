@@ -153,7 +153,10 @@ class CardRenderer extends StatelessWidget {
     return Stack(
       fit: StackFit.expand,
       children: [
-        ColoredBox(color: color),
+        ColoredBox(
+          key: const Key('color-card-surface'),
+          color: color,
+        ),
         Positioned(
           top: 8,
           left: 8,
