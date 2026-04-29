@@ -28,6 +28,7 @@ export const UserSchema = z.object({
   id: z.string().openapi({ example: 'abc123xyz' }),
   email: z.string().email().openapi({ example: 'user@example.com' }),
   username: z.string().nullable().optional().openapi({ example: 'johndoe' }),
+  account_status: z.enum(['provisional', 'full']).optional().openapi({ example: 'full' }),
 }).openapi('User');
 
 export const AuthResponseSchema = z.object({
@@ -70,6 +71,7 @@ export const UserProfileSchema = z.object({
   updated_at: z.string().openapi({ example: '2026-04-12T00:00:00Z' }),
   is_premium: z.number().openapi({ example: 0 }),
   card_limit: z.number().openapi({ example: 200 }),
+  account_status: z.enum(['provisional', 'full']).optional().openapi({ example: 'full' }),
 }).openapi('UserProfile');
 
 export const MeResponseSchema = z.object({
@@ -129,6 +131,18 @@ export const VerifyOtpSchema = z.object({
   email: z.string().email().openapi({ example: 'user@example.com' }),
   code: z.string().length(6).openapi({ example: '123456' }),
 }).openapi('VerifyOtp');
+
+export const CheckoutSessionRequestSchema = z.object({
+  email: z.string().email().openapi({ example: 'user@example.com' }),
+  onboarding_session_id: z.string().optional().openapi({ example: 'session_123' }),
+  onboarding_age_range: z.string().optional().openapi({ example: 'age_19_25' }),
+  onboarding_pillar_id: z.number().int().optional().openapi({ example: 2 }),
+}).openapi('CheckoutSessionRequest');
+
+export const CompleteAccountSchema = z.object({
+  username: z.string().min(1).openapi({ example: 'johndoe' }),
+  password: z.string().min(6).openapi({ example: 'securepassword123' }),
+}).openapi('CompleteAccount');
 
 export const ResetPasswordSchema = z.object({
   email: z.string().email().openapi({ example: 'user@example.com' }),

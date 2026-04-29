@@ -150,6 +150,52 @@ describe('Auth API', () => {
     expect(analytics).toBeNull();
   });
 
+  it('deletes pending purchase intents when deleting an account', async () => {
+    const suffix = Date.now();
+    const email = `pending_delete_${suffix}@example.com`;
+
+    const signupData = await signupUser({
+      email,
+      password: 'password123',
+      username: `pending_delete_${suffix}`,
+    });
+
+    await env.DB.prepare(`
+      INSERT INTO pending_purchase_intents (
+        id,
+        user_id,
+        provider,
+        product_id,
+        package_name,
+        google_obfuscated_account_id,
+        platform,
+        status,
+        created_at,
+        updated_at
+      ) VALUES (?, ?, 'google_play', 'aliolo_premium_weekly', 'com.nanomarkup.aliolo', ?, 'android', 'pending', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+    `).bind(
+      `pending_${suffix}`,
+      signupData.user.id,
+      `google-obfuscated-${suffix}`,
+    ).run();
+
+    const deleteRes = await app.request('/api/auth/delete', {
+      method: 'POST',
+      body: JSON.stringify({ password: 'password123' }),
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Session-Id': signupData.session_id,
+      },
+    }, env);
+
+    expect(deleteRes.status).toBe(200);
+
+    const pending: any = await env.DB.prepare(
+      'SELECT id FROM pending_purchase_intents WHERE user_id = ?'
+    ).bind(signupData.user.id).first();
+    expect(pending).toBeNull();
+  });
+
   it('should sign up using invitation token', async () => {
     const inviteEmail = `invite_${Date.now()}@example.com`;
     const token = `token_${Date.now()}`;
@@ -221,6 +267,73 @@ describe('Auth API', () => {
     expect(res.status).toBe(200);
     const data = await res.json() as any;
     expect(data.user.email).toBe(testUser.email);
+  });
+
+  it('should create a provisional checkout session after OTP verification', async () => {
+    const suffix = Date.now();
+    const email = `checkout_${suffix}@example.com`;
+    await env.DB.prepare(`
+      INSERT INTO email_verification_codes (email, code, expires_at, is_verified)
+      VALUES (?, '123456', ?, 1)
+    `).bind(email, Math.floor(Date.now() / 1000) + 600).run();
+
+    const checkoutRes = await app.request('/api/auth/checkout-session', {
+      method: 'POST',
+      body: JSON.stringify({ email }),
+      headers: { 'Content-Type': 'application/json' },
+    }, env);
+    expect(checkoutRes.status).toBe(200);
+
+    const checkoutData = await checkoutRes.json() as any;
+    expect(checkoutData.user.email).toBe(email);
+    expect(checkoutData.user.account_status).toBe('provisional');
+    expect(checkoutData.session_id).toBeTruthy();
+
+    const profile: any = await env.DB.prepare(
+      'SELECT username, password_hash FROM profiles WHERE email = ?'
+    ).bind(email).first();
+    expect(profile.username).toBe('checkout_' + suffix);
+    expect(profile.password_hash).toBeNull();
+  });
+
+  it('should complete a provisional account without creating a new profile', async () => {
+    const suffix = Date.now();
+    const email = `complete_${suffix}@example.com`;
+
+    await env.DB.prepare(`
+      INSERT INTO email_verification_codes (email, code, expires_at, is_verified)
+      VALUES (?, '123456', ?, 1)
+    `).bind(email, Math.floor(Date.now() / 1000) + 600).run();
+
+    const checkoutRes = await app.request('/api/auth/checkout-session', {
+      method: 'POST',
+      body: JSON.stringify({ email }),
+      headers: { 'Content-Type': 'application/json' },
+    }, env);
+    const checkoutData = await checkoutRes.json() as any;
+
+    const completeRes = await app.request('/api/auth/complete-account', {
+      method: 'POST',
+      body: JSON.stringify({
+        username: `complete_user_${suffix}`,
+        password: 'password123',
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Session-Id': checkoutData.session_id,
+      },
+    }, env);
+    expect(completeRes.status).toBe(200);
+
+    const completeData = await completeRes.json() as any;
+    expect(completeData.user.account_status).toBe('full');
+    expect(completeData.user.username).toBe(`complete_user_${suffix}`);
+
+    const profile: any = await env.DB.prepare(
+      'SELECT username, password_hash FROM profiles WHERE email = ?'
+    ).bind(email).first();
+    expect(profile.username).toBe(`complete_user_${suffix}`);
+    expect(profile.password_hash).toBeTruthy();
   });
 
   it('should logout', async () => {

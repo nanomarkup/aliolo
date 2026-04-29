@@ -1,5 +1,13 @@
+import { generateId } from 'lucia';
+
 export type ProviderName = 'google_play' | 'app_store' | 'paddle';
 export type EntitlementSource = 'provider' | 'manual' | 'none';
+export type SubscriptionEventSource =
+  | 'client_verify'
+  | 'rtdn'
+  | 'reconcile'
+  | 'paddle_webhook'
+  | 'manual';
 
 type ProviderSubscriptionRow = {
   id: string;
@@ -23,6 +31,7 @@ export type EffectiveSubscription = {
   status: 'active' | 'inactive';
   effective_source: EntitlementSource;
   provider: ProviderName | 'aliolo_manual' | null;
+  billing_provider: ProviderName | null;
   product_id: string | null;
   effective_until: string | null;
   expiry_date: string | null;
@@ -76,6 +85,7 @@ export async function recomputeUserSubscription(
   let status = 'inactive';
   let effectiveSource: EntitlementSource = 'none';
   let snapshotProvider: ProviderName | 'aliolo_manual' | null = null;
+  let billingProvider: ProviderName | null = provider?.provider ?? null;
   let productId: string | null = null;
   let effectiveUntil: string | null = null;
   let activeProviderSubscriptionId: string | null = null;
@@ -86,11 +96,12 @@ export async function recomputeUserSubscription(
 
   if (provider && isFutureOrOpen(provider.current_period_end)) {
     status = 'active';
-    effectiveSource = 'provider';
-    snapshotProvider = provider.provider;
-    productId = provider.product_id;
-    effectiveUntil = provider.current_period_end;
-    activeProviderSubscriptionId = provider.id;
+      effectiveSource = 'provider';
+      snapshotProvider = provider.provider;
+      billingProvider = provider.provider;
+      productId = provider.product_id;
+      effectiveUntil = provider.current_period_end;
+      activeProviderSubscriptionId = provider.id;
     subscriptionId = provider.id;
     createdAt = provider.created_at;
     updatedAt = provider.updated_at;
@@ -133,6 +144,7 @@ export async function recomputeUserSubscription(
     status: status as 'active' | 'inactive',
     effective_source: effectiveSource,
     provider: snapshotProvider,
+    billing_provider: billingProvider,
     product_id: productId,
     effective_until: effectiveUntil,
     expiry_date: effectiveUntil,
@@ -145,6 +157,90 @@ export async function recomputeUserSubscription(
   };
 }
 
+export async function upsertProviderSubscription(
+  db: D1Database,
+  args: {
+    userId: string;
+    provider: ProviderName;
+    status: string;
+    externalSubscriptionId: string | null;
+    externalCustomerId?: string | null;
+    externalTransactionId?: string | null;
+    purchaseToken?: string | null;
+    productId?: string | null;
+    environment?: string | null;
+    periodStart?: string | null;
+    periodEnd?: string | null;
+    willRenew?: boolean | null;
+    rawPayload?: unknown;
+    googleObfuscatedAccountId?: string | null;
+    lastVerificationSource?: SubscriptionEventSource | null;
+    lastVerifiedAt?: string | null;
+  },
+) {
+  if (!args.externalSubscriptionId) {
+    throw new Error('externalSubscriptionId is required');
+  }
+
+  await db.prepare(`
+    INSERT INTO provider_subscriptions (
+      id,
+      user_id,
+      provider,
+      status,
+      external_subscription_id,
+      external_customer_id,
+      external_transaction_id,
+      purchase_token,
+      product_id,
+      environment,
+      current_period_start,
+      current_period_end,
+      will_renew,
+      raw_payload,
+      google_obfuscated_account_id,
+      last_verification_source,
+      last_verified_at,
+      created_at,
+      updated_at
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+    ON CONFLICT(provider, external_subscription_id) DO UPDATE SET
+      user_id = excluded.user_id,
+      status = excluded.status,
+      external_customer_id = excluded.external_customer_id,
+      external_transaction_id = excluded.external_transaction_id,
+      purchase_token = excluded.purchase_token,
+      product_id = excluded.product_id,
+      environment = excluded.environment,
+      current_period_start = excluded.current_period_start,
+      current_period_end = excluded.current_period_end,
+      will_renew = excluded.will_renew,
+      raw_payload = excluded.raw_payload,
+      google_obfuscated_account_id = COALESCE(excluded.google_obfuscated_account_id, provider_subscriptions.google_obfuscated_account_id),
+      last_verification_source = COALESCE(excluded.last_verification_source, provider_subscriptions.last_verification_source),
+      last_verified_at = COALESCE(excluded.last_verified_at, provider_subscriptions.last_verified_at),
+      updated_at = CURRENT_TIMESTAMP
+  `).bind(
+    generateId(15),
+    args.userId,
+    args.provider,
+    args.status,
+    args.externalSubscriptionId,
+    args.externalCustomerId ?? null,
+    args.externalTransactionId ?? null,
+    args.purchaseToken ?? null,
+    args.productId ?? null,
+    args.environment ?? null,
+    args.periodStart ?? null,
+    args.periodEnd ?? null,
+    args.willRenew == null ? null : args.willRenew ? 1 : 0,
+    args.rawPayload == null ? null : JSON.stringify(args.rawPayload),
+    args.googleObfuscatedAccountId ?? null,
+    args.lastVerificationSource ?? null,
+    args.lastVerifiedAt ?? null,
+  ).run();
+}
+
 export async function recordSubscriptionEvent(
   db: D1Database,
   args: {
@@ -155,6 +251,8 @@ export async function recordSubscriptionEvent(
     externalSubscriptionId?: string | null;
     externalTransactionId?: string | null;
     productId?: string | null;
+    source?: SubscriptionEventSource | null;
+    externalNotificationId?: string | null;
     rawEvent?: unknown;
   },
 ) {
@@ -173,9 +271,11 @@ export async function recordSubscriptionEvent(
       external_subscription_id,
       external_transaction_id,
       product_id,
+      source,
+      external_notification_id,
       raw_event,
       created_at
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
   `).bind(
     args.id,
     args.userId,
@@ -184,6 +284,8 @@ export async function recordSubscriptionEvent(
     args.externalSubscriptionId ?? null,
     args.externalTransactionId ?? null,
     args.productId ?? null,
+    args.source ?? null,
+    args.externalNotificationId ?? null,
     args.rawEvent == null ? null : JSON.stringify(args.rawEvent),
   ).run();
 

@@ -60,8 +60,8 @@ class AlioloScrollablePage extends StatelessWidget {
               child: Stack(
                 children: [
                   Column(
-                children: [
-                      const SizedBox(height: AlioloLayoutTokens.bodyTopGap),
+                    children: [
+                      SizedBox(height: AlioloLayoutTokens.bodyTopGap + MediaQuery.of(context).padding.top),
                       if (fixedBody != null) fixedBody!,
                       Expanded(
                         child: CustomScrollView(

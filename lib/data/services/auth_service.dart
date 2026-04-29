@@ -264,6 +264,63 @@ class AuthService extends ChangeNotifier {
     }
   }
 
+  Future<bool> createCheckoutSession(String email) async {
+    _lastErrorMessage = null;
+    final cleanEmail = email.trim().toLowerCase();
+
+    try {
+      final onboardingData = await _loadOnboardingSignupData();
+      final response = await _cfClient.client.post(
+        '/api/auth/checkout-session',
+        data: {'email': cleanEmail, ...onboardingData},
+      );
+
+      if (response.statusCode == 200) {
+        final sessionId = response.data['session_id']?.toString();
+        if (sessionId == null || sessionId.isEmpty) {
+          throw Exception('Checkout session was created without a session id.');
+        }
+
+        await _cfClient.setSession(sessionId);
+        _currentSessionEmail = cleanEmail;
+        await refreshUser();
+        await _applyOnboardingSignupDefaults();
+        await _clearOnboardingSignupData();
+        return true;
+      }
+
+      _lastErrorMessage =
+          response.data['error']?.toString() ?? 'Checkout session failed';
+      return false;
+    } catch (e) {
+      _lastErrorMessage = _extractErrorMessage(e);
+      return false;
+    }
+  }
+
+  Future<bool> completeAccount(String username, String password) async {
+    _lastErrorMessage = null;
+
+    try {
+      final response = await _cfClient.client.post(
+        '/api/auth/complete-account',
+        data: {'username': username.trim(), 'password': password},
+      );
+
+      if (response.statusCode == 200) {
+        await refreshUser();
+        return true;
+      }
+
+      _lastErrorMessage =
+          response.data['error']?.toString() ?? 'Account completion failed';
+      return false;
+    } catch (e) {
+      _lastErrorMessage = _extractErrorMessage(e);
+      return false;
+    }
+  }
+
   Future<Map<String, dynamic>> _loadOnboardingSignupData() async {
     final prefs = await SharedPreferences.getInstance();
     final sessionId = prefs.getString(onboardingSessionIdKey);
@@ -324,6 +381,17 @@ class AuthService extends ChangeNotifier {
       _lastErrorMessage = e.toString();
       return false;
     }
+  }
+
+  String _extractErrorMessage(Object error) {
+    if (error is DioException) {
+      final data = error.response?.data;
+      if (data is Map && data['error'] != null) {
+        return data['error'].toString();
+      }
+      return error.message ?? error.toString();
+    }
+    return error.toString();
   }
 
   Future<void> logout() async {

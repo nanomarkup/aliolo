@@ -167,9 +167,27 @@ CREATE TABLE IF NOT EXISTS provider_subscriptions (
   current_period_end TEXT,
   will_renew INTEGER,
   raw_payload TEXT,
+  google_obfuscated_account_id TEXT,
+  last_verification_source TEXT,
+  last_verified_at TEXT,
   created_at TEXT DEFAULT CURRENT_TIMESTAMP,
   updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
   UNIQUE(provider, external_subscription_id)
+);
+
+CREATE TABLE IF NOT EXISTS pending_purchase_intents (
+  id TEXT PRIMARY KEY,
+  user_id TEXT REFERENCES profiles(id) NOT NULL,
+  provider TEXT NOT NULL,
+  product_id TEXT NOT NULL,
+  package_name TEXT,
+  google_obfuscated_account_id TEXT,
+  platform TEXT,
+  purchase_token TEXT,
+  status TEXT NOT NULL DEFAULT 'pending',
+  raw_payload TEXT,
+  created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+  updated_at TEXT DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS manual_subscription_grants (
@@ -192,6 +210,8 @@ CREATE TABLE IF NOT EXISTS subscription_events (
   external_subscription_id TEXT,
   external_transaction_id TEXT,
   product_id TEXT,
+  source TEXT,
+  external_notification_id TEXT,
   raw_event TEXT,
   created_at TEXT DEFAULT CURRENT_TIMESTAMP
 );

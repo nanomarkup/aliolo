@@ -15,6 +15,8 @@ import {
   ErrorResponseSchema,
   RequestOtpSchema,
   VerifyOtpSchema,
+  CheckoutSessionRequestSchema,
+  CompleteAccountSchema,
   ResetPasswordSchema,
   DeleteAccountSchema,
   UpdatePasswordSchema,
@@ -31,6 +33,19 @@ type OnboardingSignupData = {
     ageRange?: string;
     pillarId?: number;
 };
+
+function accountStatusForProfile(profile: { password_hash?: string | null }) {
+    return profile.password_hash ? 'full' : 'provisional';
+}
+
+function authUserPayload(profile: { id: string; email: string; username?: string | null; password_hash?: string | null }) {
+    return {
+        id: profile.id,
+        email: profile.email,
+        username: profile.username ?? null,
+        account_status: accountStatusForProfile(profile),
+    };
+}
 
 function preferredSubjectAgeGroups(ageRange?: string) {
     switch (ageRange) {
@@ -212,7 +227,7 @@ router.openapi(signupRoute, async (c) => {
             }
             userId = existingUser.id;
             await c.env.DB.prepare(
-                "UPDATE profiles SET password_hash = ?, username = COALESCE(username, ?), updated_at = CURRENT_TIMESTAMP WHERE id = ?"
+                "UPDATE profiles SET password_hash = ?, username = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?"
             ).bind(passwordHash, username || cleanEmail.split('@')[0], userId).run();
         } else {
             userId = generateId(15);
@@ -254,7 +269,7 @@ router.openapi(signupRoute, async (c) => {
         const session = await lucia.createSession(userId, {});
         c.header("Set-Cookie", lucia.createSessionCookie(session.id).serialize(), { append: true });
         
-        return c.json({ user: { id: userId, email: cleanEmail, username }, session_id: session.id }, 200);
+        return c.json({ user: authUserPayload({ id: userId, email: cleanEmail, username, password_hash: passwordHash }), session_id: session.id }, 200);
     } catch (e: any) {
         return c.json({ error: e.message } as any, 400);
     }
@@ -372,7 +387,7 @@ router.openapi(signupInviteRoute, async (c) => {
         const session = await lucia.createSession(userId, {});
         c.header("Set-Cookie", lucia.createSessionCookie(session.id).serialize(), { append: true });
         
-        return c.json({ user: { id: userId, email: cleanEmail, username }, session_id: session.id }, 200);
+        return c.json({ user: authUserPayload({ id: userId, email: cleanEmail, username, password_hash: passwordHash }), session_id: session.id }, 200);
     } catch (e: any) {
         return c.json({ error: e.message } as any, 400);
     }
@@ -487,6 +502,153 @@ router.openapi(verifyOtpRoute, async (c) => {
     }
 });
 
+const checkoutSessionRoute = createRoute({
+  method: 'post',
+  path: '/checkout-session',
+  summary: 'Create or reuse a provisional account session for checkout after OTP verification',
+  request: {
+    body: {
+      content: { 'application/json': { schema: CheckoutSessionRequestSchema } }
+    }
+  },
+  responses: {
+    200: { content: { 'application/json': { schema: AuthResponseSchema } }, description: 'Success' },
+    400: { content: { 'application/json': { schema: ErrorResponseSchema } }, description: 'Bad Request' },
+    409: { content: { 'application/json': { schema: ErrorResponseSchema } }, description: 'Conflict' },
+  }
+});
+
+router.openapi(checkoutSessionRoute, async (c) => {
+    const {
+        email,
+        onboarding_session_id,
+        onboarding_age_range,
+        onboarding_pillar_id,
+    } = c.req.valid('json');
+    const cleanEmail = email.toLowerCase().trim();
+
+    try {
+        const verification: any = await c.env.DB.prepare(
+            "SELECT is_verified FROM email_verification_codes WHERE email = ?"
+        ).bind(cleanEmail).first();
+
+        if (!verification || verification.is_verified !== 1) {
+            return c.json({ error: 'Email not verified' } as any, 400);
+        }
+
+        const existingUser: any = await c.env.DB.prepare(
+            "SELECT id, email, username, password_hash FROM profiles WHERE email = ?"
+        ).bind(cleanEmail).first();
+
+        if (existingUser?.password_hash) {
+            return c.json({ error: 'User with this email already exists. Please log in before purchasing.' } as any, 409);
+        }
+
+        let profile = existingUser;
+        if (!profile) {
+            const userId = generateId(15);
+            const provisionalUsername = cleanEmail.split('@')[0];
+            await c.env.DB.prepare(
+                "INSERT INTO profiles (id, email, username, password_hash, main_pillar_id, last_active_date) VALUES (?, ?, ?, null, 6, CURRENT_TIMESTAMP)"
+            ).bind(userId, cleanEmail, provisionalUsername).run();
+            profile = {
+                id: userId,
+                email: cleanEmail,
+                username: provisionalUsername,
+                password_hash: null,
+            };
+        }
+
+        await touchLastActive(c, profile.id);
+
+        try {
+            await applyOnboardingSignup(c, profile.id, cleanEmail, {
+                sessionId: onboarding_session_id,
+                ageRange: onboarding_age_range,
+                pillarId: onboarding_pillar_id,
+            });
+        } catch (onboardingErr) {
+            console.error('Failed to apply onboarding checkout data:', onboardingErr);
+        }
+
+        const lucia = initializeLucia(c.env.DB);
+        const session = await lucia.createSession(profile.id, {});
+        c.header("Set-Cookie", lucia.createSessionCookie(session.id).serialize(), { append: true });
+
+        return c.json({
+            user: authUserPayload(profile),
+            session_id: session.id,
+        }, 200);
+    } catch (e: any) {
+        return c.json({ error: e.message } as any, 400);
+    }
+});
+
+const completeAccountRoute = createRoute({
+  method: 'post',
+  path: '/complete-account',
+  summary: 'Complete a provisional account by setting username and password',
+  request: {
+    body: {
+      content: { 'application/json': { schema: CompleteAccountSchema } }
+    }
+  },
+  responses: {
+    200: { content: { 'application/json': { schema: AuthResponseSchema } }, description: 'Success' },
+    400: { content: { 'application/json': { schema: ErrorResponseSchema } }, description: 'Bad Request' },
+    401: { content: { 'application/json': { schema: ErrorResponseSchema } }, description: 'Unauthorized' },
+    409: { content: { 'application/json': { schema: ErrorResponseSchema } }, description: 'Conflict' },
+  }
+});
+
+router.openapi(completeAccountRoute, async (c) => {
+    const user = c.get("user");
+    if (!user) return c.json({ error: 'Unauthorized' } as any, 401);
+
+    const { username, password } = c.req.valid('json');
+    const passwordHash = await hashPassword(password.trim());
+
+    try {
+        const existingUser: any = await c.env.DB.prepare(
+            "SELECT id, email, username, password_hash FROM profiles WHERE id = ?"
+        ).bind(user.id).first();
+
+        if (!existingUser) {
+            return c.json({ error: 'User not found' } as any, 404);
+        }
+        if (existingUser.password_hash) {
+            return c.json({ error: 'Account is already complete' } as any, 409);
+        }
+
+        await c.env.DB.prepare(
+            "UPDATE profiles SET username = ?, password_hash = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?"
+        ).bind(username.trim(), passwordHash, user.id).run();
+
+        try {
+            await sendEmail(
+                existingUser.email,
+                'Welcome to Aliolo!',
+                `Welcome to Aliolo, ${username.trim()}! Your account is now active.`,
+                c.env,
+                getWelcomeEmail(username.trim())
+            );
+        } catch (emailErr) {
+            console.error('Failed to send welcome email:', emailErr);
+        }
+
+        const refreshed: any = await c.env.DB.prepare(
+            "SELECT id, email, username, password_hash FROM profiles WHERE id = ?"
+        ).bind(user.id).first();
+        const session = c.get("session");
+        return c.json({
+            user: authUserPayload(refreshed),
+            session_id: session?.id ?? '',
+        }, 200);
+    } catch (e: any) {
+        return c.json({ error: e.message } as any, 400);
+    }
+});
+
 const loginRoute = createRoute({
   method: 'post',
   path: '/login',
@@ -525,7 +687,7 @@ router.openapi(loginRoute, async (c) => {
         const session = await lucia.createSession(user.id, {});
         c.header("Set-Cookie", lucia.createSessionCookie(session.id).serialize(), { append: true });
         
-        return c.json({ user: { id: user.id, email: user.email, username: user.username }, session_id: session.id }, 200);
+        return c.json({ user: authUserPayload(user), session_id: session.id }, 200);
     } catch (e: any) {
         return c.json({ error: e.message } as any, 500);
     }
@@ -549,7 +711,10 @@ router.openapi(meRoute, async (c) => {
         const fullUser = await c.env.DB.prepare(
             "SELECT * FROM profiles WHERE id = ?"
         ).bind(user.id).first();
-        return c.json({ user: fullUser as any }, 200);
+        if (!fullUser) return c.json({ user: null }, 200);
+        const sanitizedUser: any = { ...(fullUser as any) };
+        delete sanitizedUser.password_hash;
+        return c.json({ user: { ...sanitizedUser, account_status: accountStatusForProfile(fullUser as any) } }, 200);
     } catch (e: any) {
         return c.json({ error: e.message } as any, 500);
     }
@@ -584,6 +749,7 @@ router.openapi(updateRoute, async (c) => {
     delete updateData.created_at;
     delete updateData.updated_at;
     delete updateData.password_hash;
+    delete updateData.account_status;
     // Convert booleans to numbers for SQLite
     for (const key in updateData) {
         if (typeof updateData[key] === 'boolean') {
@@ -809,6 +975,7 @@ router.openapi(deleteAccountRoute, async (c) => {
             c.env.DB.prepare("DELETE FROM onboarding_analytics WHERE user_email = ?").bind(fullUser.email),
             c.env.DB.prepare("DELETE FROM progress WHERE user_id = ?").bind(userId),
             c.env.DB.prepare("DELETE FROM user_subjects WHERE user_id = ?").bind(userId),
+            c.env.DB.prepare("DELETE FROM pending_purchase_intents WHERE user_id = ?").bind(userId),
             c.env.DB.prepare("DELETE FROM subscription_events WHERE user_id = ?").bind(userId),
             c.env.DB.prepare("DELETE FROM provider_subscriptions WHERE user_id = ?").bind(userId),
             c.env.DB.prepare("DELETE FROM manual_subscription_grants WHERE user_id = ?").bind(userId),

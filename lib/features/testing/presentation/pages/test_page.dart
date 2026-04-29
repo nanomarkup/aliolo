@@ -1544,6 +1544,7 @@ class _TestPageState extends State<TestPage> {
         onTap: () => _selectOption(index),
         borderRadius: BorderRadius.circular(12),
         child: Container(
+          alignment: Alignment.center,
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
             border: Border.all(color: color ?? Colors.grey[300]!, width: 2),
@@ -1553,33 +1554,24 @@ class _TestPageState extends State<TestPage> {
           child:
               isAudioTest
                   ? Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Material(
-                        color: Colors.transparent,
-                        child: InkResponse(
-                          onTap: () => _selectOption(index),
-                          radius: isMobile ? 32 : 40,
-                          hoverColor: headerColor.withValues(alpha: 0.1),
-                          highlightShape: BoxShape.circle,
-                          containedInkWell: false,
-                          child: Container(
-                            padding: const EdgeInsets.all(8),
-                            child: Text(
-                              '${index + 1}',
-                              style: TextStyle(
-                                fontSize: isMobile ? 28 : 36,
-                                fontWeight: FontWeight.bold,
-                                color: headerColor.withValues(alpha: 0.7),
-                              ),
-                            ),
-                          ),
+                      Text(
+                        '${index + 1}',
+                        style: TextStyle(
+                          fontSize: isMobile ? 28 : 36,
+                          fontWeight: FontWeight.bold,
+                          color: headerColor.withValues(alpha: 0.7),
+                          height: 1.0,
                         ),
                       ),
                       IconButton(
+                        padding: EdgeInsets.zero,
+                        constraints: const BoxConstraints(),
                         icon: Icon(
                           Icons.volume_up,
-                          size: isMobile ? 36 : 52,
+                          size: isMobile ? 32 : 48,
                           color:
                               hasOptAudio
                                   ? headerColor

@@ -409,12 +409,6 @@ class _SubjectPageState extends State<SubjectPage> {
                       : null;
 
               return AlioloScrollablePage(
-                leading: Icon(
-                  Icons.dashboard_customize,
-                  color: appBarColor,
-                  size: 24,
-                ),
-                leadingWidth: 56,
                 title: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -1347,12 +1341,6 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
             });
           },
           child: AlioloScrollablePage(
-            leading: Icon(
-              widget.pillar.getIconData(),
-              color: appBarColor,
-              size: 24,
-            ),
-            leadingWidth: 56,
             title: Text(
               widget.pillar.getTranslatedName(currentLang),
               style: const TextStyle(

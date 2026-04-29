@@ -1,7 +1,11 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+import 'package:crypto/crypto.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:in_app_purchase_android/in_app_purchase_android.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/core/network/cloudflare_client.dart';
@@ -27,6 +31,12 @@ class SubscriptionService extends ChangeNotifier {
 
   String? _activeProductId;
   String? get activeProductId => _activeProductId;
+
+  String? _activeProvider;
+  String? get activeProvider => _activeProvider;
+
+  String? _billingProvider;
+  String? get billingProvider => _billingProvider;
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;
@@ -70,6 +80,8 @@ class SubscriptionService extends ChangeNotifier {
       _isPremium = false;
       _expiryDate = null;
       _activeProductId = null;
+      _activeProvider = null;
+      _billingProvider = null;
       notifyListeners();
       return;
     }
@@ -81,9 +93,13 @@ class SubscriptionService extends ChangeNotifier {
         final status = data['status'] as String?;
         final expiryValue = data['expiry_date'] ?? data['effective_until'];
         final expiry =
-            expiryValue == null ? null : DateTime.tryParse(expiryValue.toString());
+            expiryValue == null
+                ? null
+                : DateTime.tryParse(expiryValue.toString());
 
         _activeProductId = data['product_id'] as String?;
+        _activeProvider = data['provider'] as String?;
+        _billingProvider = data['billing_provider'] as String?;
         _expiryDate = expiry;
         _isPremium =
             status == 'active' &&
@@ -92,12 +108,16 @@ class SubscriptionService extends ChangeNotifier {
         _isPremium = false;
         _expiryDate = null;
         _activeProductId = null;
+        _activeProvider = null;
+        _billingProvider = null;
       }
     } catch (e) {
       AppLogger.log('Error checking subscription: $e');
       _isPremium = false;
       _expiryDate = null;
       _activeProductId = null;
+      _activeProvider = null;
+      _billingProvider = null;
     }
     notifyListeners();
   }
@@ -131,6 +151,13 @@ class SubscriptionService extends ChangeNotifier {
   }
 
   Future<void> buySubscriptionByProductId(String productId) async {
+    final currentUser = getIt<AuthService>().currentUser;
+    if (currentUser?.serverId == null) {
+      throw Exception(
+        'Please create or log into an account before purchasing.',
+      );
+    }
+
     if (kIsWeb) {
       await _openPaddleCheckout(productId);
       return;
@@ -149,8 +176,47 @@ class SubscriptionService extends ChangeNotifier {
       throw Exception('Product is not available in the store.');
     }
 
-    final purchaseParam = PurchaseParam(productDetails: product);
+    await _createGooglePurchaseIntent(productId);
+    final purchaseParam = _purchaseParamForProduct(product);
     await _iap.buyNonConsumable(purchaseParam: purchaseParam);
+  }
+
+  PurchaseParam _purchaseParamForProduct(ProductDetails product) {
+    final applicationUserName = _googlePlayApplicationUserName();
+    if (defaultTargetPlatform == TargetPlatform.android &&
+        product is GooglePlayProductDetails) {
+      return GooglePlayPurchaseParam(
+        productDetails: product,
+        applicationUserName: applicationUserName,
+        offerToken: product.offerToken,
+      );
+    }
+
+    return PurchaseParam(
+      productDetails: product,
+      applicationUserName: applicationUserName,
+    );
+  }
+
+  String? _googlePlayApplicationUserName() {
+    final userId = getIt<AuthService>().currentUser?.serverId;
+    if (userId == null || userId.isEmpty) return null;
+    return sha256.convert(utf8.encode('google-play:$userId')).toString();
+  }
+
+  Future<void> _createGooglePurchaseIntent(String productId) async {
+    if (defaultTargetPlatform != TargetPlatform.android) return;
+
+    final packageInfo = await PackageInfo.fromPlatform();
+    await _cfClient.client.post(
+      '/api/subscriptions/google/purchase-intent',
+      data: {
+        'productId': productId,
+        'packageName': packageInfo.packageName,
+        'platform': 'android',
+        'googleObfuscatedAccountId': _googlePlayApplicationUserName(),
+      },
+    );
   }
 
   Future<void> _openPaddleCheckout(String productId) async {
@@ -163,12 +229,23 @@ class SubscriptionService extends ChangeNotifier {
       );
 
       final checkoutUrl = response.data?['checkout_url']?.toString();
-      if (response.statusCode != 200 || checkoutUrl == null || checkoutUrl.isEmpty) {
-        throw Exception(response.data?['error'] ?? 'Paddle checkout is not configured.');
+      if (response.statusCode != 200 ||
+          checkoutUrl == null ||
+          checkoutUrl.isEmpty) {
+        throw Exception(
+          response.data?['error'] ?? 'Paddle checkout is not configured.',
+        );
       }
 
       final uri = Uri.parse(checkoutUrl);
-      final launched = await launchUrl(uri, mode: LaunchMode.externalApplication);
+      final launched = await launchUrl(
+        uri,
+        mode:
+            kIsWeb
+                ? LaunchMode.platformDefault
+                : LaunchMode.externalApplication,
+        webOnlyWindowName: kIsWeb ? '_self' : null,
+      );
       if (!launched) throw Exception('Could not open Paddle checkout.');
     } finally {
       _isLoading = false;
@@ -176,7 +253,9 @@ class SubscriptionService extends ChangeNotifier {
     }
   }
 
-  Future<void> _onPurchaseUpdate(List<PurchaseDetails> purchaseDetailsList) async {
+  Future<void> _onPurchaseUpdate(
+    List<PurchaseDetails> purchaseDetailsList,
+  ) async {
     for (final purchase in purchaseDetailsList) {
       if (purchase.status == PurchaseStatus.pending) {
         _isLoading = true;
@@ -204,22 +283,84 @@ class SubscriptionService extends ChangeNotifier {
     }
   }
 
+  Future<void> openPaddleCancellation() async {
+    if (!kIsWeb) {
+      throw Exception('Paddle subscriptions can only be managed on web.');
+    }
+
+    _isLoading = true;
+    notifyListeners();
+    try {
+      final response = await _cfClient.client.get(
+        '/api/subscriptions/paddle/cancel-link',
+      );
+
+      final cancelUrl = response.data?['cancel_url']?.toString();
+      if (response.statusCode != 200 ||
+          cancelUrl == null ||
+          cancelUrl.isEmpty) {
+        throw Exception(
+          response.data?['error'] ??
+              'Paddle cancellation link is not available.',
+        );
+      }
+
+      final uri = Uri.parse(cancelUrl);
+      final launched = await launchUrl(
+        uri,
+        mode:
+            kIsWeb
+                ? LaunchMode.platformDefault
+                : LaunchMode.externalApplication,
+        webOnlyWindowName: kIsWeb ? '_self' : null,
+      );
+      if (!launched) throw Exception('Could not open Paddle cancellation.');
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
   Future<bool> _verifyPurchaseOnBackend(PurchaseDetails purchase) async {
     try {
-      final isApple = defaultTargetPlatform == TargetPlatform.iOS ||
+      final packageInfo = await PackageInfo.fromPlatform();
+      final isApple =
+          defaultTargetPlatform == TargetPlatform.iOS ||
           defaultTargetPlatform == TargetPlatform.macOS;
       final endpoint =
-          isApple ? '/api/subscriptions/apple/verify' : '/api/subscriptions/google/verify';
+          isApple
+              ? '/api/subscriptions/apple/verify'
+              : purchase.status == PurchaseStatus.restored
+              ? '/api/subscriptions/google/claim-restored'
+              : '/api/subscriptions/google/verify';
 
-      final response = await _cfClient.client.post(
-        endpoint,
-        data: {
-          'purchaseToken': purchase.verificationData.serverVerificationData,
-          'productId': purchase.productID,
-          'orderId': purchase.purchaseID,
-          'source': purchase.verificationData.source,
-        },
-      );
+      final requestBody =
+          isApple
+              ? {
+                'transactionId':
+                    purchase.purchaseID ??
+                    purchase.verificationData.serverVerificationData,
+                'productId': purchase.productID,
+                'orderId': purchase.purchaseID,
+                'source': purchase.verificationData.source,
+                'receiptData': purchase.verificationData.serverVerificationData,
+                'packageName': packageInfo.packageName,
+              }
+              : {
+                'purchaseToken':
+                    purchase.verificationData.serverVerificationData,
+                'productId': purchase.productID,
+                'orderId': purchase.purchaseID,
+                'source': purchase.verificationData.source,
+                'packageName': packageInfo.packageName,
+                'googleObfuscatedAccountId':
+                    purchase is GooglePlayPurchaseDetails
+                        ? purchase.billingClientPurchase.obfuscatedAccountId ??
+                            _googlePlayApplicationUserName()
+                        : _googlePlayApplicationUserName(),
+              };
+
+      final response = await _cfClient.client.post(endpoint, data: requestBody);
 
       if (response.statusCode == 200) {
         await checkSubscriptionStatus();
@@ -233,7 +374,9 @@ class SubscriptionService extends ChangeNotifier {
 
   Future<void> restorePurchases() async {
     if (kIsWeb || _iap == null) return;
-    await _iap.restorePurchases();
+    await _iap.restorePurchases(
+      applicationUserName: _googlePlayApplicationUserName(),
+    );
   }
 
   @override

@@ -36,7 +36,12 @@ class AlioloPage extends StatelessWidget {
           child: ConstrainedBox(
             constraints: BoxConstraints(maxWidth: maxWidth),
             child: Padding(
-              padding: AlioloLayoutTokens.pageBodyPadding,
+              padding: EdgeInsets.fromLTRB(
+                AlioloLayoutTokens.bodyHorizontalPadding,
+                AlioloLayoutTokens.bodyTopGap + MediaQuery.of(context).padding.top,
+                AlioloLayoutTokens.bodyHorizontalPadding,
+                AlioloLayoutTokens.bodyBottomPadding,
+              ),
               child: body,
             ),
           ),

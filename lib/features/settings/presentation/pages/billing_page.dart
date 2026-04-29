@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
+import 'package:aliolo/core/di/service_locator.dart';
+import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/subscription_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/core/utils/legal_links.dart';
 import 'package:aliolo/core/widgets/aliolo_scrollable_page.dart';
+import 'package:aliolo/features/auth/presentation/pages/checkout_identity_page.dart';
 
 class BillingPage extends StatefulWidget {
   final int selectedIndex;
@@ -17,6 +21,19 @@ class BillingPage extends StatefulWidget {
 
 class _BillingPageState extends State<BillingPage> {
   bool _isProcessing = false;
+
+  Future<bool> _ensureCheckoutIdentity() async {
+    final authService = getIt<AuthService>();
+    if (authService.currentUser?.serverId != null) {
+      return true;
+    }
+
+    final created = await Navigator.push<bool>(
+      context,
+      MaterialPageRoute(builder: (_) => const CheckoutIdentityPage()),
+    );
+    return created == true && authService.currentUser?.serverId != null;
+  }
 
   Widget _buildLegalLink(
     BuildContext context,
@@ -39,18 +56,39 @@ class _BillingPageState extends State<BillingPage> {
     setState(() => _isProcessing = true);
 
     String productId = 'aliolo_premium_monthly';
-    if (widget.selectedIndex == 2) productId = 'aliolo_premium_yearly';
-    else if (widget.selectedIndex == 0) productId = 'aliolo_premium_weekly';
+    if (widget.selectedIndex == 2)
+      productId = 'aliolo_premium_yearly';
+    else if (widget.selectedIndex == 0)
+      productId = 'aliolo_premium_weekly';
 
     try {
+      final readyForCheckout = await _ensureCheckoutIdentity();
+      if (!readyForCheckout) return;
+
       await subService.buySubscriptionByProductId(productId);
       if (mounted) {
         Navigator.pop(context);
       }
     } catch (e) {
       if (mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Purchase failed: $e')));
+      }
+    } finally {
+      if (mounted) setState(() => _isProcessing = false);
+    }
+  }
+
+  Future<void> _handlePaddleCancellation(SubscriptionService subService) async {
+    setState(() => _isProcessing = true);
+
+    try {
+      await subService.openPaddleCancellation();
+    } catch (e) {
+      if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Purchase failed: $e')),
+          SnackBar(content: Text('Could not open Paddle cancellation: $e')),
         );
       }
     } finally {
@@ -58,11 +96,99 @@ class _BillingPageState extends State<BillingPage> {
     }
   }
 
+  String _billingDisclaimer() {
+    if (kIsWeb) {
+      return 'Subscriptions automatically renew unless canceled. Web subscriptions are managed through Paddle.';
+    }
+    return 'Subscriptions automatically renew unless cancelled. You can manage your subscription in your store settings.';
+  }
+
+  Widget _buildFooter(
+    BuildContext context,
+    SubscriptionService subService,
+    Color currentPrimaryColor,
+  ) {
+    final showPaddleCancellation =
+        kIsWeb &&
+        subService.isPremium &&
+        subService.billingProvider == 'paddle';
+
+    return SliverFillRemaining(
+      hasScrollBody: false,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          if (showPaddleCancellation) ...[
+            Text(
+              'Need to cancel a Paddle subscription? Open the Paddle cancellation flow below.',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 13, color: Colors.grey[600]),
+            ),
+            const SizedBox(height: 12),
+            SizedBox(
+              width: double.infinity,
+              child: OutlinedButton(
+                onPressed:
+                    _isProcessing
+                        ? null
+                        : () => _handlePaddleCancellation(subService),
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: currentPrimaryColor,
+                  side: BorderSide(color: currentPrimaryColor),
+                  minimumSize: const Size(double.infinity, 48),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                ),
+                child: Text(
+                  'Cancel in Paddle',
+                  style: TextStyle(
+                    color: currentPrimaryColor,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 24),
+          ],
+          const Divider(height: 1),
+          const SizedBox(height: 18),
+          Wrap(
+            alignment: WrapAlignment.center,
+            spacing: 4,
+            runSpacing: 4,
+            children: [
+              _buildLegalLink(
+                context,
+                'Terms',
+                AlioloLegalLinks.terms,
+                currentPrimaryColor,
+              ),
+              _buildLegalLink(
+                context,
+                'Privacy',
+                AlioloLegalLinks.privacy,
+                currentPrimaryColor,
+              ),
+              _buildLegalLink(
+                context,
+                'Refund',
+                AlioloLegalLinks.refund,
+                currentPrimaryColor,
+              ),
+            ],
+          ),
+          const SizedBox(height: 18),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final subService = context.watch<SubscriptionService>();
     final currentPrimaryColor = ThemeService().primaryColor;
-    
+
     String title = context.t('plan_monthly_title');
     String price = r"$8.99";
     String sub = context.t('plan_monthly_tagline');
@@ -84,7 +210,13 @@ class _BillingPageState extends State<BillingPage> {
     }
 
     return AlioloScrollablePage(
-      title: Text(context.t('billing_title'), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+      title: Text(
+        context.t('billing_title'),
+        style: const TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
       appBarColor: currentPrimaryColor,
       body: Center(
         child: ConstrainedBox(
@@ -92,14 +224,21 @@ class _BillingPageState extends State<BillingPage> {
           child: Column(
             children: [
               const SizedBox(height: 40),
-              const Icon(Icons.shopping_cart_checkout, size: 64, color: Colors.grey),
+              const Icon(
+                Icons.shopping_cart_checkout,
+                size: 64,
+                color: Colors.grey,
+              ),
               const SizedBox(height: 32),
               Text(
                 context.t('confirm_subscription'),
-                style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               const SizedBox(height: 24),
-              
+
               // Plan Display (Mirrors selection style)
               Container(
                 width: double.infinity,
@@ -115,8 +254,20 @@ class _BillingPageState extends State<BillingPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-                          Text(sub, style: TextStyle(color: Colors.grey[600], fontSize: 14)),
+                          Text(
+                            title,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                            ),
+                          ),
+                          Text(
+                            sub,
+                            style: TextStyle(
+                              color: Colors.grey[600],
+                              fontSize: 14,
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -156,43 +307,11 @@ class _BillingPageState extends State<BillingPage> {
 
               const SizedBox(height: 32),
               Text(
-                context.t('billing_disclaimer'),
+                _billingDisclaimer(),
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 14, color: Colors.grey[600]),
               ),
-              const SizedBox(height: 12),
-              Wrap(
-                alignment: WrapAlignment.center,
-                spacing: 4,
-                runSpacing: 4,
-                children: [
-                  _buildLegalLink(
-                    context,
-                    'Terms',
-                    AlioloLegalLinks.terms,
-                    currentPrimaryColor,
-                  ),
-                  _buildLegalLink(
-                    context,
-                    'Privacy',
-                    AlioloLegalLinks.privacy,
-                    currentPrimaryColor,
-                  ),
-                  _buildLegalLink(
-                    context,
-                    'Refund',
-                    AlioloLegalLinks.refund,
-                    currentPrimaryColor,
-                  ),
-                  _buildLegalLink(
-                    context,
-                    'Pricing',
-                    AlioloLegalLinks.pricing,
-                    currentPrimaryColor,
-                  ),
-                ],
-              ),
-              
+
               const SizedBox(height: 48),
               if (_isProcessing)
                 const CircularProgressIndicator()
@@ -203,24 +322,35 @@ class _BillingPageState extends State<BillingPage> {
                     backgroundColor: currentPrimaryColor,
                     foregroundColor: Colors.white,
                     minimumSize: const Size(double.infinity, 56),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
                     elevation: 0,
                   ),
                   child: Text(
                     context.t('subscribe_now'),
-                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               const SizedBox(height: 24),
               TextButton(
                 onPressed: () => Navigator.pop(context),
-                child: Text(context.t('cancel'), style: const TextStyle(color: Colors.grey, fontWeight: FontWeight.bold)),
+                child: Text(
+                  context.t('cancel'),
+                  style: const TextStyle(
+                    color: Colors.grey,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
             ],
           ),
         ),
       ),
-      slivers: const [],
+      slivers: [_buildFooter(context, subService, currentPrimaryColor)],
     );
   }
 }

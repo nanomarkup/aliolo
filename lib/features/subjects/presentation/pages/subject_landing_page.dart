@@ -33,6 +33,7 @@ import 'package:aliolo/features/management/presentation/pages/subject_edit_page.
 import 'package:aliolo/features/management/presentation/pages/add_card_page.dart';
 import 'package:aliolo/features/feedback/presentation/pages/feedback_page.dart';
 import 'package:aliolo/features/settings/presentation/pages/premium_upgrade_page.dart';
+import 'package:aliolo/features/settings/presentation/pages/billing_page.dart';
 
 class _EarlyRetestDecision {
   final bool retest;
@@ -1066,7 +1067,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                     ? [
                         IconButton(
                           tooltip: context.t('home'),
-                          icon: Icon(pillar.getIconData(), color: appBarColor, size: 24),
+                          icon: Icon(Icons.school, color: appBarColor, size: 24),
                           onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
                         ),
                         backAction,
@@ -1075,7 +1076,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                     : [
                         IconButton(
                           tooltip: context.t('home'),
-                          icon: Icon(pillar.getIconData(), color: appBarColor, size: 24),
+                          icon: Icon(Icons.school, color: appBarColor, size: 24),
                           onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
                         ),
                         backAction,
@@ -2045,17 +2046,37 @@ class _ZoomedCardContentState extends State<_ZoomedCardContent> {
                       ),
                       GestureDetector(
                         onLongPressStart:
-                            (details) => _showDelayMenu(details.globalPosition),
-                        child: IconButton(
-                          icon: Icon(
-                            _isAutoPlay
-                                ? Icons.pause_circle
-                                : Icons.play_circle,
-                            color: widget.pillarColor,
-                            size: 28,
-                          ),
-                          onPressed: _toggleAutoPlay,
-                          tooltip: context.t("autoplay"),
+                            getIt<SubscriptionService>().isPremium ? (details) => _showDelayMenu(details.globalPosition) : null,
+                        child: Stack(
+                          alignment: Alignment.topRight,
+                          children: [
+                            IconButton(
+                              icon: Icon(
+                                _isAutoPlay
+                                    ? Icons.pause_circle
+                                    : Icons.play_circle,
+                                color: widget.pillarColor,
+                                size: 28,
+                              ),
+                              onPressed: getIt<SubscriptionService>().isPremium
+                                  ? _toggleAutoPlay
+                                  : () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => const PremiumUpgradePage(),
+                                        ),
+                                      );
+                                    },
+                              tooltip: context.t("autoplay"),
+                            ),
+                            if (!getIt<SubscriptionService>().isPremium)
+                              const Positioned(
+                                top: 4,
+                                right: 4,
+                                child: Icon(Icons.workspace_premium, size: 14, color: Colors.amber),
+                              ),
+                          ],
                         ),
                       ),
                     ],

@@ -46,17 +46,23 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   _Slide1PlaybackMode _slide1PlaybackMode = _Slide1PlaybackMode.pending;
   bool _slide4VideoVisible = false;
   bool _slide4Resetting = false;
+  bool _slide5VideoVisible = false;
+  bool _slide5Resetting = false;
   int _slide1PlaybackAttempt = 0;
   int _slide4PlaybackAttempt = 0;
+  int _slide5PlaybackAttempt = 0;
   StreamSubscription? _slide1Subscription;
 
   late VideoPlayerController _controller1;
   late VideoPlayerController _controller4;
+  late VideoPlayerController _controller5;
 
   final Color primaryColor = const Color(0xFF1D4289);
   final Color bgColor = const Color(0xFFF1F5F9);
   final Duration _slide4FadeDuration = const Duration(milliseconds: 550);
   final Duration _slide4FadeInDelay = const Duration(milliseconds: 320);
+  final Duration _slide5FadeDuration = const Duration(milliseconds: 550);
+  final Duration _slide5FadeInDelay = const Duration(milliseconds: 320);
 
   final List<String> ageOptions = [
     'age_under_14',
@@ -88,7 +94,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     super.initState();
     _initAnalytics();
 
-    _controller1 = VideoPlayerController.asset('assets/Slide1_v7.mp4');
+    _controller1 = VideoPlayerController.asset('assets/Slide1.mp4');
     _attachSlide1Listener();
     _controller1.initialize().then((_) {
       if (!mounted) return;
@@ -102,6 +108,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       setState(() {});
     });
     _controller4.addListener(_handleSlide4Playback);
+
+    _controller5 = VideoPlayerController.asset('assets/Slide5.mp4');
+    _controller5.initialize().then((_) {
+      if (!mounted) return;
+      setState(() {});
+    });
+    _controller5.addListener(_handleSlide5Playback);
 
     final subService = getIt<SubscriptionService>();
     if (subService.activeProductId != null) {
@@ -162,7 +175,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   Future<void> _reinitializeSlide1Controller() async {
     final previous = _controller1;
-    _controller1 = VideoPlayerController.asset('assets/Slide1_v7.mp4');
+    _controller1 = VideoPlayerController.asset('assets/Slide1.mp4');
     _attachSlide1Listener();
     await _controller1.initialize();
     await previous.dispose();
@@ -360,6 +373,19 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         });
       }
     }
+
+    if (page == 4) {
+      _startSlide5Video();
+    } else {
+      _slide5PlaybackAttempt++;
+      _slide5Resetting = false;
+      _controller5.pause();
+      if (mounted) {
+        setState(() {
+          _slide5VideoVisible = false;
+        });
+      }
+    }
   }
 
   void _startSlide4Video() {
@@ -417,6 +443,61 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     });
   }
 
+  void _startSlide5Video() {
+    if (!_controller5.value.isInitialized) return;
+
+    final attempt = ++_slide5PlaybackAttempt;
+    _slide5Resetting = false;
+    _controller5.seekTo(Duration.zero);
+    _controller5.play();
+    if (mounted) {
+      setState(() {
+        _slide5VideoVisible = false;
+      });
+    }
+
+    Future.delayed(_slide5FadeInDelay, () {
+      if (!mounted || _currentPage != 4 || attempt != _slide5PlaybackAttempt) {
+        return;
+      }
+      setState(() {
+        _slide5VideoVisible = true;
+      });
+    });
+  }
+
+  void _handleSlide5Playback() {
+    if (!_controller5.value.isInitialized) return;
+    if (_controller5.value.duration == Duration.zero) return;
+    if (_slide5Resetting) return;
+
+    final remaining = _controller5.value.duration - _controller5.value.position;
+    if (remaining > const Duration(milliseconds: 120)) return;
+
+    _slide5Resetting = true;
+    final attempt = ++_slide5PlaybackAttempt;
+    if (mounted) {
+      setState(() {
+        _slide5VideoVisible = false;
+      });
+    }
+
+    Future.delayed(_slide5FadeDuration, () async {
+      if (!mounted || _currentPage != 4 || attempt != _slide5PlaybackAttempt) {
+        return;
+      }
+      await _controller5.pause();
+      await _controller5.seekTo(Duration.zero);
+      if (!mounted || _currentPage != 4 || attempt != _slide5PlaybackAttempt) {
+        return;
+      }
+      setState(() {
+        _slide5VideoVisible = true;
+        _slide5Resetting = false;
+      });
+    });
+  }
+
   Widget _buildSlide1Poster() {
     return ColoredBox(color: bgColor, child: const SizedBox.expand());
   }
@@ -427,6 +508,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     _controller1.dispose();
     _controller4.removeListener(_handleSlide4Playback);
     _controller4.dispose();
+    _controller5.removeListener(_handleSlide5Playback);
+    _controller5.dispose();
     _pageController.dispose();
     super.dispose();
   }
@@ -527,7 +610,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               (_videoVisible && !_slide1VideoFinished)
                                   ? 1.0
                                   : 0.0,
-                          duration: const Duration(milliseconds: 1000),
+                          duration: const Duration(milliseconds: 800),
                           child:
                               _controller1.value.isInitialized
                                   ? VideoPlayer(_controller1)
@@ -574,7 +657,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           ),
                         AnimatedOpacity(
                           opacity: _slide1VideoFinished ? 1.0 : 0.0,
-                          duration: const Duration(milliseconds: 1000),
+                          duration: const Duration(milliseconds: 800),
                           child: IgnorePointer(
                             ignoring: !_slide1VideoFinished,
                             child: Center(
@@ -619,7 +702,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                     if (mounted) {
                                       _pageController.nextPage(
                                         duration: const Duration(
-                                          milliseconds: 300,
+                                          milliseconds: 800,
                                         ),
                                         curve: Curves.easeInOut,
                                       );
@@ -719,7 +802,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                             if (mounted) {
                                               _pageController.nextPage(
                                                 duration: const Duration(
-                                                  milliseconds: 300,
+                                                  milliseconds: 800,
                                                 ),
                                                 curve: Curves.easeInOut,
                                               );
@@ -764,10 +847,25 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               // Slide 5: Sync
               OnboardingSlide(
                 useFixedHeader: false,
-                visual: Icon(
-                  Icons.cloud_sync_outlined,
-                  size: 120,
-                  color: primaryColor,
+                visual: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (_controller5.value.isInitialized)
+                      ConstrainedBox(
+                        constraints: const BoxConstraints(maxHeight: 300),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(16),
+                          child: AspectRatio(
+                            aspectRatio: _controller5.value.aspectRatio,
+                            child: AnimatedOpacity(
+                              opacity: _slide5VideoVisible ? 1.0 : 0.0,
+                              duration: _slide5FadeDuration,
+                              child: VideoPlayer(_controller5),
+                            ),
+                          ),
+                        ),
+                      ),
+                  ],
                 ),
                 title: context.t('onboarding_5_title'),
                 description: context.t('onboarding_5_desc'),
@@ -1007,7 +1105,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: List.generate(7, (index) {
                       return AnimatedContainer(
-                        duration: const Duration(milliseconds: 300),
+                        duration: const Duration(milliseconds: 800),
                         margin: const EdgeInsets.symmetric(horizontal: 4),
                         height: 8,
                         width: _currentPage == index ? 24 : 8,
@@ -1077,7 +1175,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                               ? () {
                                                 _pageController.nextPage(
                                                   duration: const Duration(
-                                                    milliseconds: 300,
+                                                    milliseconds: 800,
                                                   ),
                                                   curve: Curves.easeInOut,
                                                 );
@@ -1087,7 +1185,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                               ? () {
                                                 _pageController.nextPage(
                                                   duration: const Duration(
-                                                    milliseconds: 300,
+                                                    milliseconds: 800,
                                                   ),
                                                   curve: Curves.easeInOut,
                                                 );
@@ -1096,7 +1194,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                       : () {
                                         _pageController.nextPage(
                                           duration: const Duration(
-                                            milliseconds: 300,
+                                            milliseconds: 800,
                                           ),
                                           curve: Curves.easeInOut,
                                         );

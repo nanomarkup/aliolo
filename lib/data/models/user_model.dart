@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:aliolo/core/network/media_url_resolver.dart';
 
 class UserModel {
+  static const fullAccountStatus = 'full';
+  static const provisionalAccountStatus = 'provisional';
+
   String? serverId;
   late String username;
   late String email;
+  late String accountStatus;
   late bool sidebarLeft;
   late String themeMode;
   late String uiLanguage;
@@ -41,6 +45,7 @@ class UserModel {
     this.serverId,
     required this.username,
     required this.email,
+    this.accountStatus = fullAccountStatus,
     this.sidebarLeft = false,
     this.themeMode = 'system',
     this.uiLanguage = 'en',
@@ -86,6 +91,7 @@ class UserModel {
       serverId: json['id'],
       username: json['username'] ?? '',
       email: json['email'] ?? '',
+      accountStatus: (json['account_status'] ?? fullAccountStatus).toString(),
       sidebarLeft: toBool(json['sidebar_left'], false),
       themeMode: json['theme_mode'] ?? 'system',
       uiLanguage: json['ui_language'] ?? 'en',
@@ -167,6 +173,8 @@ class UserModel {
       'card_limit': cardLimit,
     };
   }
+
+  bool get isProvisionalAccount => accountStatus == provisionalAccountStatus;
 
   Color getThemeColor(BuildContext context) {
     if (themeMode == 'light') return Colors.white;

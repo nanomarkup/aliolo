@@ -6,6 +6,7 @@ import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/features/onboarding/presentation/onboarding_screen.dart';
 import 'package:aliolo/features/settings/presentation/pages/licenses_page.dart';
+import 'package:aliolo/features/settings/presentation/pages/premium_upgrade_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -267,6 +268,32 @@ class _AboutPageState extends State<AboutPage> {
             ),
       ),
       (
+        icon: Icons.sell_outlined,
+        label: 'Premium Pricing',
+        onTap:
+            () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const PremiumUpgradePage(),
+              ),
+            ),
+      ),
+      (
+        icon: Icons.gavel_outlined,
+        label: 'Subscription Terms',
+        onTap: () => AlioloLegalLinks.open(context, AlioloLegalLinks.terms),
+      ),
+      (
+        icon: Icons.privacy_tip_outlined,
+        label: 'Privacy Policy',
+        onTap: () => AlioloLegalLinks.open(context, AlioloLegalLinks.privacy),
+      ),
+      (
+        icon: Icons.receipt_long_outlined,
+        label: 'Refund Policy',
+        onTap: () => AlioloLegalLinks.open(context, AlioloLegalLinks.refund),
+      ),
+      (
         icon: Icons.description_outlined,
         label: context.t('licenses'),
         onTap:
@@ -276,26 +303,6 @@ class _AboutPageState extends State<AboutPage> {
                 builder: (context) => const CustomLicensesPage(),
               ),
             ),
-      ),
-      (
-        icon: Icons.privacy_tip_outlined,
-        label: 'Privacy Policy',
-        onTap: () => AlioloLegalLinks.open(context, AlioloLegalLinks.privacy),
-      ),
-      (
-        icon: Icons.gavel_outlined,
-        label: 'Subscription Terms',
-        onTap: () => AlioloLegalLinks.open(context, AlioloLegalLinks.terms),
-      ),
-      (
-        icon: Icons.receipt_long_outlined,
-        label: 'Refund Policy',
-        onTap: () => AlioloLegalLinks.open(context, AlioloLegalLinks.refund),
-      ),
-      (
-        icon: Icons.sell_outlined,
-        label: 'Premium Pricing',
-        onTap: () => AlioloLegalLinks.open(context, AlioloLegalLinks.pricing),
       ),
       (
         icon: Icons.arrow_back,
@@ -508,34 +515,36 @@ class _AboutPageState extends State<AboutPage> {
                                   ),
                                 ),
                               ),
-                              child: Padding(
-                                padding: const EdgeInsets.fromLTRB(
-                                  24,
-                                  24,
-                                  24,
-                                  24,
-                                ),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    const Spacer(flex: 2),
-                                    _buildBrandPanel(
-                                      context,
-                                      mainColor,
-                                      compact: false,
-                                    ),
-                                    const SizedBox(height: 36),
-                                    _buildActions(context, mainColor),
-                                    const Spacer(flex: 3),
-                                    Text(
-                                      context.t('all_rights_reserved'),
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: mainColor.withValues(alpha: 0.7),
+                              child: SingleChildScrollView(
+                                child: Padding(
+                                  padding: const EdgeInsets.fromLTRB(
+                                    24,
+                                    24,
+                                    24,
+                                    24,
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const SizedBox(height: 48),
+                                      _buildBrandPanel(
+                                        context,
+                                        mainColor,
+                                        compact: false,
                                       ),
-                                    ),
-                                  ],
+                                      const SizedBox(height: 36),
+                                      _buildActions(context, mainColor),
+                                      const SizedBox(height: 48),
+                                      Text(
+                                        context.t('all_rights_reserved'),
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: mainColor.withValues(alpha: 0.7),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),

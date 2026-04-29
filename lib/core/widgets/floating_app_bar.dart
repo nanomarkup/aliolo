@@ -56,9 +56,9 @@ class AlioloAppBar extends StatelessWidget implements PreferredSizeWidget {
         child: ConstrainedBox(
           constraints: BoxConstraints(maxWidth: maxWidth),
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(
+            padding: EdgeInsets.fromLTRB(
               AlioloLayoutTokens.appBarOuterTopPadding,
-              AlioloLayoutTokens.appBarOuterTopPadding,
+              AlioloLayoutTokens.appBarOuterTopPadding + MediaQuery.of(context).padding.top,
               AlioloLayoutTokens.appBarOuterTopPadding,
               0,
             ),
@@ -77,6 +77,7 @@ class AlioloAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
               clipBehavior: Clip.antiAlias,
               child: AppBar(
+                primary: false,
                 toolbarHeight: AlioloLayoutTokens.appBarContentHeight,
                 title: kIsWeb ? titleWidget : DragToMoveArea(child: titleWidget),
                 backgroundColor: Colors.transparent,

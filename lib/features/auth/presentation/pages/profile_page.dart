@@ -10,6 +10,7 @@ import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/data/models/user_model.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:aliolo/features/auth/presentation/pages/login_page.dart';
+import 'package:aliolo/features/auth/presentation/pages/complete_account_page.dart';
 import 'package:aliolo/features/subjects/presentation/pages/subject_page.dart';
 import 'package:aliolo/features/leaderboard/presentation/pages/leaderboard_page.dart';
 import 'package:aliolo/features/settings/presentation/pages/settings_page.dart';
@@ -600,12 +601,6 @@ class _ProfilePageState extends State<ProfilePage> {
                 : null;
 
         return AlioloScrollablePage(
-          leading: const Icon(
-            Icons.person,
-            color: appBarColor,
-            size: 24,
-          ),
-          leadingWidth: 56,
           title: Text(
             context.t('profile'),
             style: const TextStyle(
@@ -671,13 +666,36 @@ class _ProfilePageState extends State<ProfilePage> {
                             : context.t('premium_go'),
                       ),
                       trailing: const Icon(Icons.chevron_right),
-                      onTap:
-                          () => Navigator.push(
+                      onTap: () async {
+                        final subService = context.read<SubscriptionService>();
+                        if (kIsWeb &&
+                            user.isPremium &&
+                            subService.billingProvider == 'paddle') {
+                          try {
+                            await subService.openPaddleCancellation();
+                          } catch (e) {
+                            if (context.mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    'Could not open Paddle cancellation: $e',
+                                  ),
+                                ),
+                              );
+                            }
+                          }
+                          return;
+                        }
+
+                        if (context.mounted) {
+                          Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) => const PremiumUpgradePage(),
                             ),
-                          ),
+                          );
+                        }
+                      },
                     ),
                     const Divider(height: 1, indent: 16, endIndent: 16),
                     Consumer<SubscriptionService>(
@@ -738,6 +756,36 @@ class _ProfilePageState extends State<ProfilePage> {
                       trailing: const Icon(Icons.chevron_right),
                       onTap: _showUpdatePasswordDialog,
                     ),
+                    if (user.isProvisionalAccount) ...[
+                      const Divider(height: 1, indent: 16, endIndent: 16),
+                      ListTile(
+                        leading: Icon(
+                          Icons.verified_user,
+                          color: currentSessionColor,
+                        ),
+                        title: const Text('Complete account setup'),
+                        subtitle: const Text(
+                          'Add a username and password for future logins and restores.',
+                        ),
+                        trailing: const Icon(Icons.chevron_right),
+                        onTap: () async {
+                          final completed = await Navigator.push<bool>(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const CompleteAccountPage(),
+                            ),
+                          );
+                          if (completed == true && mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Account setup completed.'),
+                              ),
+                            );
+                            setState(() {});
+                          }
+                        },
+                      ),
+                    ],
                     if (!kIsWeb) ...[
                       const Divider(height: 1, indent: 16, endIndent: 16),
                       ListTile(
@@ -748,12 +796,13 @@ class _ProfilePageState extends State<ProfilePage> {
                         title: const Text('Restore Purchases'),
                         trailing: const Icon(Icons.chevron_right),
                         onTap: () async {
-                          await getIt<SubscriptionService>()
-                              .checkSubscriptionStatus();
+                          await getIt<SubscriptionService>().restorePurchases();
                           if (mounted) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
-                                content: Text(context.t('setting_saved')),
+                                content: const Text(
+                                  'Restore started. Aliolo will relink any valid purchases to this account.',
+                                ),
                               ),
                             );
                           }
@@ -772,11 +821,11 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
                 Card(
                   elevation: 0,
-                  color: Colors.orange.withOpacity(0.05),
+                  color: Colors.orange.withValues(alpha: 0.05),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
                     side: BorderSide(
-                      color: Colors.orange.withOpacity(0.2),
+                      color: Colors.orange.withValues(alpha: 0.2),
                       width: 1,
                     ),
                   ),
