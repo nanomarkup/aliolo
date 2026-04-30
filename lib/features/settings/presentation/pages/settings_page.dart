@@ -7,6 +7,7 @@ import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/card_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/data/services/translation_service.dart';
+import 'package:aliolo/core/utils/legal_links.dart';
 import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/data/models/pillar_model.dart';
 import 'package:aliolo/features/leaderboard/presentation/pages/leaderboard_page.dart';
@@ -497,9 +498,30 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
               const SizedBox(height: 24),
               Center(
-                child: Text(
-                  '${context.t('version')} $_version',
-                  style: TextStyle(fontSize: 12, color: Colors.grey[500]),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    TextButton.icon(
+                      onPressed: () => AlioloLegalLinks.open(
+                        context,
+                        AlioloLegalLinks.website,
+                      ),
+                      icon: Icon(
+                        Icons.public,
+                        size: 18,
+                        color: currentPrimaryColor,
+                      ),
+                      label: Text(
+                        'Official website',
+                        style: TextStyle(color: currentPrimaryColor),
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      '${context.t('version')} $_version',
+                      style: TextStyle(fontSize: 12, color: Colors.grey[500]),
+                    ),
+                  ],
                 ),
               ),
             ],

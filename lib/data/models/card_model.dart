@@ -327,26 +327,37 @@ class CardModel {
     return int.tryParse(ans) ?? 0;
   }
 
-  String? getAudioUrl(String lang) {
+  String? _resolveLocalizedMediaUrl(
+    Map<String, String> localized,
+    String lang,
+    String fallback,
+  ) {
     final lc = lang.toLowerCase();
-    String? url;
-    if (audios.containsKey(lc) && audios[lc]!.isNotEmpty) {
-      url = audios[lc];
-    } else {
-      url = audio;
+    final baseLang = lc.split(RegExp('[-_]')).first;
+
+    final candidates = <String?>[
+      localized[lc],
+      if (baseLang.isNotEmpty && baseLang != lc) localized[baseLang],
+      localized['global'],
+      if (lc != 'en' && baseLang != 'en') localized['en'],
+      fallback,
+    ];
+
+    for (final candidate in candidates) {
+      if (candidate != null && candidate.isNotEmpty) {
+        return MediaUrlResolver.resolve(candidate);
+      }
     }
-    return MediaUrlResolver.resolve(url == null || url.isEmpty ? null : url);
+
+    return null;
+  }
+
+  String? getAudioUrl(String lang) {
+    return _resolveLocalizedMediaUrl(audios, lang, audio);
   }
 
   String? getVideoUrl(String lang) {
-    final lc = lang.toLowerCase();
-    String? url;
-    if (videos.containsKey(lc) && videos[lc]!.isNotEmpty) {
-      url = videos[lc];
-    } else {
-      url = video;
-    }
-    return MediaUrlResolver.resolve(url == null || url.isEmpty ? null : url);
+    return _resolveLocalizedMediaUrl(videos, lang, video);
   }
 
   bool hasAudioUrl(String lang) => (getAudioUrl(lang) ?? '').isNotEmpty;

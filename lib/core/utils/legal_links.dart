@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AlioloLegalLinks {
+  static final Uri website = Uri.parse('https://aliolo.com');
   static final Uri privacy = Uri.parse('https://aliolo.com/privacy');
   static final Uri terms = Uri.parse('https://aliolo.com/terms');
   static final Uri refund = Uri.parse('https://aliolo.com/refund');

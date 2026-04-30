@@ -259,6 +259,7 @@ class _AboutPageState extends State<AboutPage> {
       (
         icon: Icons.auto_awesome,
         label: context.t('view_onboarding'),
+        trailingIcon: null,
         onTap:
             () => Navigator.push(
               context,
@@ -270,6 +271,7 @@ class _AboutPageState extends State<AboutPage> {
       (
         icon: Icons.sell_outlined,
         label: 'Premium Pricing',
+        trailingIcon: null,
         onTap:
             () => Navigator.push(
               context,
@@ -281,21 +283,31 @@ class _AboutPageState extends State<AboutPage> {
       (
         icon: Icons.gavel_outlined,
         label: 'Subscription Terms',
+        trailingIcon: Icons.open_in_new,
         onTap: () => AlioloLegalLinks.open(context, AlioloLegalLinks.terms),
       ),
       (
         icon: Icons.privacy_tip_outlined,
         label: 'Privacy Policy',
+        trailingIcon: Icons.open_in_new,
         onTap: () => AlioloLegalLinks.open(context, AlioloLegalLinks.privacy),
       ),
       (
         icon: Icons.receipt_long_outlined,
         label: 'Refund Policy',
+        trailingIcon: Icons.open_in_new,
         onTap: () => AlioloLegalLinks.open(context, AlioloLegalLinks.refund),
+      ),
+      (
+        icon: Icons.public,
+        label: 'Official website',
+        trailingIcon: Icons.open_in_new,
+        onTap: () => AlioloLegalLinks.open(context, AlioloLegalLinks.website),
       ),
       (
         icon: Icons.description_outlined,
         label: context.t('licenses'),
+        trailingIcon: null,
         onTap:
             () => Navigator.push(
               context,
@@ -307,6 +319,7 @@ class _AboutPageState extends State<AboutPage> {
       (
         icon: Icons.arrow_back,
         label: context.t('back'),
+        trailingIcon: null,
         onTap: () => Navigator.pop(context),
       ),
     ];
@@ -320,7 +333,21 @@ class _AboutPageState extends State<AboutPage> {
                   child: OutlinedButton.icon(
                     onPressed: button.onTap,
                     icon: Icon(button.icon, color: color),
-                    label: Text(button.label),
+                    label:
+                        button.trailingIcon != null
+                            ? Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Flexible(child: Text(button.label)),
+                                const SizedBox(width: 6),
+                                Icon(
+                                  button.trailingIcon,
+                                  size: 18,
+                                  color: color,
+                                ),
+                              ],
+                            )
+                            : Text(button.label),
                     style: OutlinedButton.styleFrom(
                       minimumSize: const Size(double.infinity, 50),
                       foregroundColor: color,

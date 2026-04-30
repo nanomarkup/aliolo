@@ -556,6 +556,29 @@ class _TestPageState extends State<TestPage> {
 
     await _prepareOptionVideoControllers(options);
 
+    await _maybeAutoPlayCurrentCardAudio();
+
+    final lang = _languageCode.toLowerCase();
+    final hasVisuals =
+        _hasVideo ||
+        _currentImages.isNotEmpty ||
+        _currentCard.isSpecialRenderer ||
+        _currentCard.isCountingRenderer ||
+        _currentCard.isColors;
+    final audio = _currentCard.getAudioUrl(lang);
+    final shouldAutoplayReverseOptions =
+        _isReverseMode &&
+        !_isMediaAutoPlayMuted &&
+        audio != null &&
+        audio.isNotEmpty &&
+        !hasVisuals;
+
+    if (shouldAutoplayReverseOptions) {
+      _startOptionsAutoplay();
+    }
+  }
+
+  Future<void> _maybeAutoPlayCurrentCardAudio() async {
     final lang = _languageCode.toLowerCase();
     final audio = _currentCard.getAudioUrl(lang);
     final hasVisuals =
@@ -569,7 +592,7 @@ class _TestPageState extends State<TestPage> {
     // Reverse mode: Play if HAS visuals (as per new requirement)
     bool shouldPlay = false;
     if (audio != null &&
-        !_currentCard.isSpecialRenderer &&
+        (!_currentCard.isSpecialRenderer || _currentCard.isColors) &&
         !_currentCard.isCountingRenderer) {
       if (!_isReverseMode && !hasVisuals) {
         shouldPlay = true;
@@ -579,18 +602,8 @@ class _TestPageState extends State<TestPage> {
     }
 
     if (!_isMediaAutoPlayMuted && shouldPlay && audio != null) {
-      _audioPlayer.play(UrlSource(audio));
-    }
-
-    final shouldAutoplayReverseOptions =
-        _isReverseMode &&
-        !_isMediaAutoPlayMuted &&
-        audio != null &&
-        audio.isNotEmpty &&
-        !hasVisuals;
-
-    if (shouldAutoplayReverseOptions) {
-      _startOptionsAutoplay();
+      await _audioPlayer.stop();
+      await _audioPlayer.play(UrlSource(audio));
     }
   }
 
@@ -612,6 +625,8 @@ class _TestPageState extends State<TestPage> {
       _stopOptionsAutoplay();
       await _audioPlayer.stop();
       await _videoController?.pause();
+    } else {
+      await _maybeAutoPlayCurrentCardAudio();
     }
   }
 
@@ -1210,10 +1225,7 @@ class _TestPageState extends State<TestPage> {
                   child: LayoutBuilder(
                     builder: (context, constraints) {
                       final isMobile = constraints.maxWidth < 800;
-                      final useStackedColorsLayout =
-                          _currentCard.isColors && constraints.maxWidth < 1100;
-                      final useCompactLayout =
-                          isMobile || useStackedColorsLayout;
+                      final useCompactLayout = isMobile;
                       final correctImageUrl =
                           _currentCard.primaryImageUrl(lang) ??
                           _currentCard.primaryImageUrl('global') ??
@@ -1292,18 +1304,6 @@ class _TestPageState extends State<TestPage> {
                         headerColor: headerColor,
                         lang: lang,
                       );
-                      final stackedMediaContent =
-                          useCompactLayout && _currentCard.isColors
-                              ? Align(
-                                alignment: Alignment.topCenter,
-                                child: ConstrainedBox(
-                                  constraints: const BoxConstraints(
-                                    maxWidth: 560,
-                                  ),
-                                  child: mediaContent,
-                                ),
-                              )
-                              : mediaContent;
 
                       final optionsTitle =
                           _isReverseMode
@@ -1496,7 +1496,7 @@ class _TestPageState extends State<TestPage> {
                           controller: _scrollController,
                           child: Column(
                             children: [
-                              if (!isSpecialAudioMode) stackedMediaContent,
+                              if (!isSpecialAudioMode) mediaContent,
                               optionsContent,
                             ],
                           ),
