@@ -80,14 +80,8 @@ jobs:
         run: |
           if [ -n "$ANDROID_KEYSTORE_BASE64" ] && [ -n "$ANDROID_KEYSTORE_PASSWORD" ] && [ -n "$ANDROID_KEY_ALIAS" ]; then
             echo "$ANDROID_KEYSTORE_BASE64" | tr -d '[:space:]' | base64 --decode > android/app/aliolo-release-keystore.jks
-            python3 -c "
-import os
-with open('android/key.properties', 'w') as f:
-    f.write(f'storeFile=aliolo-release-keystore.jks\n')
-    f.write(f'storePassword={os.environ[\"ANDROID_KEYSTORE_PASSWORD\"]}\n')
-    f.write(f'keyAlias={os.environ[\"ANDROID_KEY_ALIAS\"]}\n')
-    f.write(f'keyPassword={os.environ[\"ANDROID_KEYSTORE_PASSWORD\"]}\n')
-"
+            printf "storeFile=aliolo-release-keystore.jks\nstorePassword=%s\nkeyAlias=%s\nkeyPassword=%s\n" \
+              "$ANDROID_KEYSTORE_PASSWORD" "$ANDROID_KEY_ALIAS" "$ANDROID_KEYSTORE_PASSWORD" > android/key.properties
             ls -l android/key.properties android/app/aliolo-release-keystore.jks
           fi
       - name: Verify Keystore Integrity
