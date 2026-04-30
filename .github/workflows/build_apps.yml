@@ -79,11 +79,13 @@ jobs:
       - name: Configure Android release signing
         run: |
           if [ -n "$ANDROID_KEYSTORE_BASE64" ] && [ -n "$ANDROID_KEYSTORE_PASSWORD" ] && [ -n "$ANDROID_KEY_ALIAS" ] && [ -n "$ANDROID_KEY_PASSWORD" ]; then
-            printf '%s' "$ANDROID_KEYSTORE_BASE64" | base64 --decode > android/app/aliolo-release-keystore.jks
-            printf 'storeFile=aliolo-release-keystore.jks\n' > android/key.properties
-            printf 'storePassword=%s\n' "$ANDROID_KEYSTORE_PASSWORD" >> android/key.properties
-            printf 'keyAlias=%s\n' "$ANDROID_KEY_ALIAS" >> android/key.properties
-            printf 'keyPassword=%s\n' "$ANDROID_KEY_PASSWORD" >> android/key.properties
+            echo "$ANDROID_KEYSTORE_BASE64" | tr -d '[:space:]' | base64 --decode > android/app/aliolo-release-keystore.jks
+            cat > android/key.properties <<EOF
+storeFile=aliolo-release-keystore.jks
+storePassword=$ANDROID_KEYSTORE_PASSWORD
+keyAlias=$ANDROID_KEY_ALIAS
+keyPassword=$ANDROID_KEY_PASSWORD
+EOF
             ls -l android/key.properties android/app/aliolo-release-keystore.jks
           fi
       - name: Verify Keystore Integrity
