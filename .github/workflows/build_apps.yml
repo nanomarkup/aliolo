@@ -132,6 +132,8 @@ jobs:
       - name: Upload to Google Play internal track
         if: ${{ github.event.inputs.upload_android_internal == 'true' }}
         uses: r0adkll/upload-google-play@v1
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ steps.google_auth.outputs.credentials_file_path }}
         with:
           serviceAccountJson: ${{ steps.google_auth.outputs.credentials_file_path }}
           packageName: com.nanomarkup.aliolo
