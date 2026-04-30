@@ -37,15 +37,15 @@ jobs:
           path: build/web/
       - name: Verify Build
         run: ls -R build/web
-      - name: Deploy to Cloudflare Pages
+      - name: Deploy to Cloudflare
         if: inputs.deploy_web_to_cloudflare
-        uses: cloudflare/pages-action@v1
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: aliolo
-          directory: build/web
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cd api
+          npm ci
+          npx wrangler deploy --env production
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
 
   build_android:
     name: Build Android
@@ -79,13 +79,13 @@ jobs:
       - name: Configure Android release signing
         run: |
           if [ -n "$ANDROID_KEYSTORE_BASE64" ] && [ -n "$ANDROID_KEYSTORE_PASSWORD" ] && [ -n "$ANDROID_KEY_ALIAS" ] && [ -n "$ANDROID_KEY_PASSWORD" ]; then
-            printf '%s' "$ANDROID_KEYSTORE_BASE64" | tr -d '\r\n\t ' | base64 --decode > android/app/aliolo-release-keystore.jks
-            printf '%s\n' \
-              'storeFile=aliolo-release-keystore.jks' \
-              "storePassword=$ANDROID_KEYSTORE_PASSWORD" \
-              "keyAlias=$ANDROID_KEY_ALIAS" \
-              "keyPassword=$ANDROID_KEY_PASSWORD" \
-              > android/key.properties
+            echo "$ANDROID_KEYSTORE_BASE64" | tr -d '\r\n\t ' | base64 --decode > android/aliolo-release-keystore.jks
+            cat << EOF > android/key.properties
+          storeFile=aliolo-release-keystore.jks
+          storePassword=${ANDROID_KEYSTORE_PASSWORD}
+          keyAlias=${ANDROID_KEY_ALIAS}
+          keyPassword=${ANDROID_KEY_PASSWORD}
+          EOF
           fi
       - run: flutter build apk --release --dart-define=API_URL=https://aliolo.com
       - run: flutter build appbundle --release --dart-define=API_URL=https://aliolo.com
