@@ -133,7 +133,11 @@ jobs:
           releaseFiles: build/app/outputs/bundle/release/app-release.aab
           track: internal
           status: completed
-          releaseName: Aliolo ${{ steps.app_version.outputs.app_version }}
+          releaseName: Aliolo ${{ steps.app_version.outputs.app_version }} (Build ${{ github.run_number }})
+          releaseNotes: |
+            Build: ${{ github.run_number }}
+            Branch: ${{ github.ref_name }}
+            Commit: ${{ github.sha }}
 
   build_linux:
     name: Build Linux
