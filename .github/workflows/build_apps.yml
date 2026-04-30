@@ -123,6 +123,7 @@ jobs:
         with:
           workload_identity_provider: ${{ secrets.WIF_PROVIDER_PATH }}
           service_account: ${{ secrets.GCP_PLAY_UPLOAD_SERVICE_ACCOUNT }}
+          project_id: 'dulcet-clock-494800-i8'
           create_credentials_file: true
       - name: Upload to Google Play internal track
         if: ${{ github.event.inputs.upload_android_internal == 'true' }}
