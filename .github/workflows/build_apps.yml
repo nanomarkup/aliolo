@@ -19,6 +19,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Sync app version to commit count
+        run: ./scripts/sync_version.sh
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
@@ -56,6 +60,13 @@ jobs:
       ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - id: app_version
+        name: Sync app version to commit count
+        run: |
+          app_version="$(./scripts/sync_version.sh)"
+          echo "app_version=$app_version" >> "$GITHUB_OUTPUT"
       - uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
@@ -105,13 +116,17 @@ jobs:
           releaseFiles: build/app/outputs/bundle/release/app-release.aab
           track: internal
           status: completed
-          releaseName: Aliolo ${{ github.run_number }}
+          releaseName: Aliolo ${{ steps.app_version.outputs.app_version }}
 
   build_linux:
     name: Build Linux
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Sync app version to commit count
+        run: ./scripts/sync_version.sh
       - name: Install Linux Dependencies
         run: |
           sudo apt-get update
@@ -137,6 +152,11 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Sync app version to commit count
+        shell: bash
+        run: ./scripts/sync_version.sh
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
@@ -154,6 +174,10 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Sync app version to commit count
+        run: ./scripts/sync_version.sh
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
@@ -171,6 +195,10 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Sync app version to commit count
+        run: ./scripts/sync_version.sh
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
