@@ -79,7 +79,7 @@ jobs:
       - name: Configure Android release signing
         run: |
           if [ -n "$ANDROID_KEYSTORE_BASE64" ] && [ -n "$ANDROID_KEYSTORE_PASSWORD" ] && [ -n "$ANDROID_KEY_ALIAS" ] && [ -n "$ANDROID_KEY_PASSWORD" ]; then
-            printf '%s' "$ANDROID_KEYSTORE_BASE64" | tr -d '\r\n\t ' | base64 --decode > android/aliolo-release-keystore.jks
+            printf '%s' "$ANDROID_KEYSTORE_BASE64" | tr -d '\r\n\t ' | base64 --decode > android/app/aliolo-release-keystore.jks
             printf '%s\n' \
               'storeFile=aliolo-release-keystore.jks' \
               "storePassword=$ANDROID_KEYSTORE_PASSWORD" \
