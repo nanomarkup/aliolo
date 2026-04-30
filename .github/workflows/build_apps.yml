@@ -109,13 +109,6 @@ jobs:
         with:
           name: aliolo-android-aab
           path: build/app/outputs/bundle/release/app-release.aab
-      - name: Debug WIF Secret
-        run: |
-          if [ -n "${{ secrets.GCP_WIF_PROVIDER }}" ]; then
-            echo "GCP_WIF_PROVIDER secret is set."
-          else
-            echo "GCP_WIF_PROVIDER secret is EMPTY or MISSING."
-          fi
       - id: google_auth
         name: Authenticate to Google Cloud
         if: ${{ github.event.inputs.upload_android_internal == 'true' }}
