@@ -125,6 +125,10 @@ jobs:
           service_account: ${{ secrets.GCP_PLAY_UPLOAD_SERVICE_ACCOUNT }}
           project_id: 'dulcet-clock-494800-i8'
           create_credentials_file: true
+          export_environment_variables: true
+      - name: Set up Cloud SDK
+        if: ${{ github.event.inputs.upload_android_internal == 'true' }}
+        uses: google-github-actions/setup-gcloud@v2
       - name: Upload to Google Play internal track
         if: ${{ github.event.inputs.upload_android_internal == 'true' }}
         uses: r0adkll/upload-google-play@v1
