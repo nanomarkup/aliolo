@@ -86,6 +86,19 @@ jobs:
             printf 'keyPassword=%s\n' "$ANDROID_KEY_PASSWORD" >> android/key.properties
             ls -l android/key.properties android/app/aliolo-release-keystore.jks
           fi
+      - name: Verify Keystore Integrity
+        env:
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          if [ -f android/app/aliolo-release-keystore.jks ]; then
+            keytool -list -v \
+              -keystore android/app/aliolo-release-keystore.jks \
+              -storepass "$ANDROID_KEYSTORE_PASSWORD" \
+              -alias "$ANDROID_KEY_ALIAS" \
+              -keypass "$ANDROID_KEY_PASSWORD" | grep "Alias name" || echo "Keystore verification FAILED"
+          fi
       - run: flutter build apk --release --dart-define=API_URL=https://aliolo.com
       - run: flutter build appbundle --release --dart-define=API_URL=https://aliolo.com
       - name: Upload APK
