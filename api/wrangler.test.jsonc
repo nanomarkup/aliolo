@@ -1,0 +1,25 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "aliolo-test",
+  "main": "src/index.ts",
+  "compatibility_date": "2024-04-03",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "vars": {
+    "ENVIRONMENT": "test"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "aliolo-test-db",
+      "database_id": "fb2060e8-6fcc-44ac-b477-1eb62c0c335a"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "MEDIA",
+      "bucket_name": "aliolo-test-media"
+    }
+  ]
+}

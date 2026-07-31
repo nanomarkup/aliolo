@@ -4,7 +4,8 @@ import { cloudflareTest } from '@cloudflare/vitest-pool-workers';
 export default defineConfig({
   plugins: [
     cloudflareTest({
-      wrangler: { configPath: 'wrangler.jsonc' },
+      // Tests use isolated bindings and do not require a prebuilt Flutter asset directory.
+      wrangler: { configPath: 'wrangler.test.jsonc' },
     }),
   ],
   test: {
