@@ -1,4 +1,4 @@
-name: Multi-Platform Build
+name: Manual Platform Builds
 
 on:
   workflow_dispatch:
@@ -8,45 +8,7 @@ on:
         required: false
         default: false
         type: boolean
-      deploy_web_to_cloudflare:
-        description: Deploy the built web app to Cloudflare Pages
-        required: false
-        default: false
-        type: boolean
-
 jobs:
-  build_web:
-    name: Build Web
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Sync app version to commit count
-        run: ./scripts/sync_version.sh
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: 'stable'
-          cache: true
-      - run: flutter pub get
-      - run: flutter build web --release --dart-define=API_URL=https://aliolo.com
-      - name: Upload Web Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: aliolo-web
-          path: build/web/
-      - name: Verify Build
-        run: ls -R build/web
-      - name: Deploy to Cloudflare
-        if: inputs.deploy_web_to_cloudflare
-        run: |
-          cd api
-          npm ci
-          npx wrangler deploy --env production
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-
   build_android:
     name: Build Android
     runs-on: ubuntu-latest
@@ -59,7 +21,7 @@ jobs:
       ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
       ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - id: app_version
@@ -73,6 +35,7 @@ jobs:
           java-version: '17'
       - uses: subosito/flutter-action@v2
         with:
+          flutter-version: '3.29.0'
           channel: 'stable'
           cache: true
       - run: flutter pub get
@@ -143,7 +106,7 @@ jobs:
     name: Build Linux
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Sync app version to commit count
@@ -154,6 +117,7 @@ jobs:
           sudo apt-get install -y clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev libmpv-dev libasound2-dev libsecret-1-dev libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-bad1.0-dev
       - uses: subosito/flutter-action@v2
         with:
+          flutter-version: '3.29.0'
           channel: 'stable'
           cache: true
       - run: flutter pub get
@@ -172,7 +136,7 @@ jobs:
     name: Build Windows
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Sync app version to commit count
@@ -180,6 +144,7 @@ jobs:
         run: ./scripts/sync_version.sh
       - uses: subosito/flutter-action@v2
         with:
+          flutter-version: '3.29.0'
           channel: 'stable'
           cache: true
       - run: flutter pub get
@@ -194,7 +159,7 @@ jobs:
     name: Build macOS
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Sync app version to commit count
@@ -205,6 +170,7 @@ jobs:
           xcode-version: '26.1.1'
       - uses: subosito/flutter-action@v2
         with:
+          flutter-version: '3.29.0'
           channel: 'stable'
           cache: true
       - run: flutter pub get
@@ -219,7 +185,7 @@ jobs:
     name: Build iOS
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Sync app version to commit count
@@ -230,6 +196,7 @@ jobs:
           xcode-version: '26.1.1'
       - uses: subosito/flutter-action@v2
         with:
+          flutter-version: '3.29.0'
           channel: 'stable'
           cache: true
       - run: flutter pub get

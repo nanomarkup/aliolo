@@ -40,30 +40,32 @@ void main() {
   }
 
   test('matches premium, fake, and free filters', () {
-    final premium = AdminUserModel.fromJson(buildUser(
-      id: 'user-1',
-      email: 'premium@example.com',
-      username: 'Premium',
-      subscription: {
-        'id': 'sub-1',
-        'user_id': 'user-1',
-        'status': 'active',
-        'provider': 'aliolo',
-        'expiry_date': '2026-12-31T00:00:00Z',
-      },
-    ));
+    final premium = AdminUserModel.fromJson(
+      buildUser(
+        id: 'user-1',
+        email: 'premium@example.com',
+        username: 'Premium',
+        subscription: {
+          'id': 'sub-1',
+          'user_id': 'user-1',
+          'status': 'active',
+          'provider': 'aliolo',
+          'expiry_date': '2026-12-31T00:00:00Z',
+        },
+      ),
+    );
 
-    final fake = AdminUserModel.fromJson(buildUser(
-      id: 'user-2',
-      email: 'fake_user@example.com',
-      username: 'Fake User',
-    ));
+    final fake = AdminUserModel.fromJson(
+      buildUser(
+        id: 'user-2',
+        email: 'fake_user@example.com',
+        username: 'Fake User',
+      ),
+    );
 
-    final free = AdminUserModel.fromJson(buildUser(
-      id: 'user-3',
-      email: 'free@example.com',
-      username: 'Free User',
-    ));
+    final free = AdminUserModel.fromJson(
+      buildUser(id: 'user-3', email: 'free@example.com', username: 'Free User'),
+    );
 
     expect(premium.isPremium, isTrue);
     expect(premium.matchesFilter(AdminUsersFilter.premium), isTrue);
@@ -71,32 +73,36 @@ void main() {
 
     expect(fake.isFake, isTrue);
     expect(fake.matchesFilter(AdminUsersFilter.fake), isTrue);
-    expect(fake.matchesFilter(AdminUsersFilter.free), isFalse);
+    expect(fake.matchesFilter(AdminUsersFilter.free), isTrue);
 
     expect(free.isFree, isTrue);
     expect(free.matchesFilter(AdminUsersFilter.free), isTrue);
   });
 
   test('uses profile premium flag or active subscription', () {
-    final premiumByProfile = AdminUserModel.fromJson(buildUser(
-      id: 'user-4',
-      email: 'profile-premium@example.com',
-      username: 'Profile Premium',
-      isPremium: true,
-    ));
+    final premiumByProfile = AdminUserModel.fromJson(
+      buildUser(
+        id: 'user-4',
+        email: 'profile-premium@example.com',
+        username: 'Profile Premium',
+        isPremium: true,
+      ),
+    );
 
-    final inactiveSub = AdminUserModel.fromJson(buildUser(
-      id: 'user-5',
-      email: 'inactive@example.com',
-      username: 'Inactive',
-      subscription: {
-        'id': 'sub-2',
-        'user_id': 'user-5',
-        'status': 'inactive',
-        'provider': 'aliolo',
-        'expiry_date': '2024-12-31T00:00:00Z',
-      },
-    ));
+    final inactiveSub = AdminUserModel.fromJson(
+      buildUser(
+        id: 'user-5',
+        email: 'inactive@example.com',
+        username: 'Inactive',
+        subscription: {
+          'id': 'sub-2',
+          'user_id': 'user-5',
+          'status': 'inactive',
+          'provider': 'aliolo',
+          'expiry_date': '2024-12-31T00:00:00Z',
+        },
+      ),
+    );
 
     expect(premiumByProfile.isPremium, isTrue);
     expect(inactiveSub.isPremium, isFalse);

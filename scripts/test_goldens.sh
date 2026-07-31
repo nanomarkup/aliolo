@@ -8,8 +8,7 @@ echo "Running Golden Snapshot Tests..."
 # Check if --update flag is provided
 if [ "$1" == "--update" ]; then
     echo "Updating goldens..."
-    flutter test --update-goldens test/widget/
+    flutter test --update-goldens --tags golden
 else
-    # Run only the golden tests or all widget tests containing goldens
-    flutter test test/widget/
+    flutter test --tags golden
 fi

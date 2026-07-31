@@ -34,8 +34,8 @@ Aliolo is a visual learning platform designed to help users master various subje
 #### Backend (Cloudflare Worker)
 ```bash
 cd api
-npx wrangler dev --remote # Local development
-npx wrangler deploy --env production # Deployment
+npx wrangler dev # Local development with isolated D1/R2 data
+npx wrangler deploy --env production # Emergency manual deployment
 ```
 
 #### Frontend (Flutter)
@@ -50,7 +50,8 @@ flutter build web --release --dart-define=API_URL=https://aliolo.com
 #### Convenience Scripts
 ```bash
 ./scripts/build.sh   # Build the production web app
-./scripts/deploy.sh  # Build the web app and deploy the Worker
+./scripts/test_ci.sh # Run the checks that gate production
+./scripts/deploy.sh --confirm-production # Emergency local deployment only
 ./scripts/refresh_ui_translation_bundles.sh  # Rebuild ui_translation_bundles from ui_translations in remote D1
 ```
 

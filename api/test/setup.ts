@@ -42,6 +42,7 @@ CREATE TABLE IF NOT EXISTS profiles (
   options_count INTEGER DEFAULT 6,
   avatar_url TEXT,
   password_hash TEXT,
+  card_limit INTEGER DEFAULT 200,
   main_pillar_id INTEGER REFERENCES pillars(id),
   created_at TEXT DEFAULT CURRENT_TIMESTAMP,
   updated_at TEXT DEFAULT CURRENT_TIMESTAMP,

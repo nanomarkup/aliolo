@@ -3,5 +3,5 @@
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd "$SCRIPT_DIR/.."
 
-# Run flutter unit and widget tests
-flutter test
+# Golden snapshots are an explicit suite because they require reviewed baselines.
+flutter test --exclude-tags golden

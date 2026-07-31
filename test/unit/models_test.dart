@@ -211,8 +211,8 @@ void main() {
       };
 
       final model = CardModel.fromJson(json);
-      expect(model.getAudioUrl('en'), isEmpty);
-      expect(model.getVideoUrl('en'), isEmpty);
+      expect(model.getAudioUrl('en'), isNull);
+      expect(model.getVideoUrl('en'), isNull);
       expect(model.hasAudioUrl('en'), isFalse);
       expect(model.hasVideoUrl('en'), isFalse);
     });

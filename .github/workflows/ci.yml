@@ -1,0 +1,115 @@
+name: CI and Production Deploy
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      deploy_production:
+        description: Deploy main to production after all checks pass
+        required: true
+        default: true
+        type: boolean
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+jobs:
+  backend:
+    name: Backend tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: api
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: api/package-lock.json
+      - name: Install backend dependencies
+        run: npm ci
+      - name: Run isolated backend tests
+        run: npm run test:run
+
+  frontend:
+    name: Flutter checks and web build
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.29.0'
+          channel: stable
+          cache: true
+      - name: Install Flutter dependencies
+        run: flutter pub get --enforce-lockfile
+      - name: Run static analysis
+        run: flutter analyze --no-fatal-warnings --no-fatal-infos
+      - name: Run unit and widget tests
+        run: flutter test --exclude-tags golden
+      - name: Set release build number
+        run: ./scripts/sync_version.sh
+      - name: Build production web artifact
+        run: flutter build web --release --dart-define=API_URL=https://aliolo.com
+      - name: Upload immutable web artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: aliolo-web-${{ github.sha }}
+          path: build/web/
+          if-no-files-found: error
+          retention-days: 14
+
+  deploy_production:
+    name: Deploy production
+    if: >-
+      github.ref == 'refs/heads/main' &&
+      (github.event_name == 'push' ||
+      (github.event_name == 'workflow_dispatch' && inputs.deploy_production))
+    needs:
+      - backend
+      - frontend
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment:
+      name: production
+      url: https://aliolo.com
+    concurrency:
+      group: production
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: api/package-lock.json
+      - name: Install deployment dependencies
+        working-directory: api
+        run: npm ci
+      - name: Download tested web artifact
+        uses: actions/download-artifact@v5
+        with:
+          name: aliolo-web-${{ github.sha }}
+          path: build/web
+      - name: Verify deployment artifact
+        run: test -f build/web/index.html && test -f build/web/main.dart.js
+      - name: Deploy Worker and web assets
+        working-directory: api
+        run: npx wrangler deploy --env production
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      - name: Smoke-test production
+        run: ./scripts/smoke_production.sh

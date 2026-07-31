@@ -4,12 +4,21 @@ export async function sendEmail(
   to: string,
   subject: string,
   text: string,
-  env: { SMTP_USER?: string; GMAIL_APP_PASSWORD?: string; EMAIL_SENDER?: string },
+  env: {
+    ENVIRONMENT?: string;
+    SMTP_USER?: string;
+    GMAIL_APP_PASSWORD?: string;
+    EMAIL_SENDER?: string;
+  },
   html?: string
 ) {
   const { SMTP_USER, GMAIL_APP_PASSWORD, EMAIL_SENDER } = env;
 
   if (!SMTP_USER || !GMAIL_APP_PASSWORD || !EMAIL_SENDER) {
+    if (env.ENVIRONMENT !== 'production') {
+      console.info(`[local email] To: ${to}; Subject: ${subject}; Body: ${text}`);
+      return;
+    }
     throw new Error('Email configuration missing');
   }
 

@@ -3,5 +3,6 @@
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd "$SCRIPT_DIR/.."
 
-# Run backend locally connected to remote production database
-cd api && npx wrangler dev --remote
+# Wrangler uses isolated local D1 and R2 data unless --remote is explicitly used.
+"$SCRIPT_DIR/init_local_db.sh"
+cd api && npx wrangler dev

@@ -1,0 +1,7 @@
+# Copy this file to .dev.vars only if local development needs real email delivery.
+# Without these values, local emails and OTP codes are printed in the backend log.
+# Never commit .dev.vars.
+
+SMTP_USER=
+GMAIL_APP_PASSWORD=
+EMAIL_SENDER=

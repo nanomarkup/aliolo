@@ -3,5 +3,5 @@
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd "$SCRIPT_DIR/.."
 
-# Run backend vitest specs
-cd api && npm test
+# Run isolated backend Vitest specs once. Production E2E tests are separate.
+cd api && npm run test:run
