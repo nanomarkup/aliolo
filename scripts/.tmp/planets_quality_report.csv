@@ -1,0 +1,8 @@
+card_id,field,locale,global_text,current_text,translated_text,status
+SUBJECT,subject_name,da,Planets of the Solar System,Planeter i solsystemet,Solsystemets planeter,mismatch
+SUBJECT,subject_name,hi,Planets of the Solar System,सौर मंडल के ग्रह,सौरमंडल के ग्रह,mismatch
+SUBJECT,subject_name,id,Planets of the Solar System,Planet Tata Surya,Planet-Planet Tata Surya,mismatch
+SUBJECT,subject_name,sl,Planets of the Solar System,Planeti Osončja,Planeti sončnega sistema,mismatch
+SUBJECT,subject_name,sv,Planets of the Solar System,Solsystemets planeter,Planeter i solsystemet,mismatch
+SUBJECT,subject_name,tr,Planets of the Solar System,Güneş Sistemi Gezegenleri,Güneş Sisteminin Gezegenleri,mismatch
+SUBJECT,subject_name,vi,Planets of the Solar System,Các hành tinh trong Hệ Mặt trời,Các hành tinh của hệ mặt trời,mismatch

@@ -1,0 +1,222 @@
+card_id,field,locale,global_text,current_text,translated_text,status
+SUBJECT,subject_name,ar,Shapes 3D,أشكال ثلاثية الأبعاد,الأشكال 3D,mismatch
+SUBJECT,subject_name,da,Shapes 3D,3D-former,Former 3D,mismatch
+SUBJECT,subject_name,cs,Shapes 3D,3D tvary,Tvary 3D,mismatch
+SUBJECT,subject_name,el,Shapes 3D,3D σχήματα,Σχήματα 3D,mismatch
+SUBJECT,subject_name,de,Shapes 3D,3D-Formen,Formen 3D,mismatch
+SUBJECT,subject_name,bg,Shapes 3D,3D фигури,Форми 3D,mismatch
+SUBJECT,subject_name,et,Shapes 3D,3D kujundid,Kujundid 3D,mismatch
+SUBJECT,subject_name,fi,Shapes 3D,3D-muodot,Muodot 3D,mismatch
+SUBJECT,subject_name,hr,Shapes 3D,3D oblici,Oblici 3D,mismatch
+SUBJECT,subject_name,hu,Shapes 3D,3D alakzatok,3D formák,mismatch
+SUBJECT,subject_name,ko,Shapes 3D,3D 도형,3D 모양,mismatch
+SUBJECT,subject_name,hi,Shapes 3D,3D आकृतियाँ,आकृतियाँ 3डी,mismatch
+SUBJECT,subject_name,lt,Shapes 3D,3D formos,Formos 3D,mismatch
+SUBJECT,subject_name,lv,Shapes 3D,3D formas,Formas 3D,mismatch
+SUBJECT,subject_name,ja,Shapes 3D,3D図形,3D 形状,mismatch
+SUBJECT,subject_name,nl,Shapes 3D,3D-vormen,Vormen 3D,mismatch
+SUBJECT,subject_name,sl,Shapes 3D,3D liki,Oblike 3D,mismatch
+SUBJECT,subject_name,sk,Shapes 3D,3D tvary,Tvary 3D,mismatch
+SUBJECT,subject_name,tr,Shapes 3D,3D Şekiller,3 boyutlu şekiller,mismatch
+acb0efea-6311-4bf5-a6e2-42ebc6c94fdc,answer,ar,Cylinder,أسطوانة,اسطوانة,mismatch
+SUBJECT,subject_name,tl,Shapes 3D,Mga Hugis 3D,Hugis 3D,mismatch
+SUBJECT,subject_name,sv,Shapes 3D,3D-former,Former 3D,mismatch
+SUBJECT,subject_name,uk,Shapes 3D,3D фігури,Форми 3D,mismatch
+acb0efea-6311-4bf5-a6e2-42ebc6c94fdc,answer,hi,Cylinder,बेलन,सिलेंडर,mismatch
+SUBJECT,subject_name,vi,Shapes 3D,Hình 3D,Hình dạng 3D,mismatch
+acb0efea-6311-4bf5-a6e2-42ebc6c94fdc,answer,ga,Cylinder,Cylinder,Sorcóir,mismatch
+acb0efea-6311-4bf5-a6e2-42ebc6c94fdc,answer,hr,Cylinder,Valjak,Cilindar,mismatch
+acb0efea-6311-4bf5-a6e2-42ebc6c94fdc,answer,ja,Cylinder,円柱,シリンダー,mismatch
+acb0efea-6311-4bf5-a6e2-42ebc6c94fdc,answer,fi,Cylinder,Lieriö,Sylinteri,mismatch
+acb0efea-6311-4bf5-a6e2-42ebc6c94fdc,answer,ko,Cylinder,원기둥,실린더,mismatch
+acb0efea-6311-4bf5-a6e2-42ebc6c94fdc,answer,pl,Cylinder,Walec,Cylinder,mismatch
+acb0efea-6311-4bf5-a6e2-42ebc6c94fdc,answer,sl,Cylinder,Valj,Cilinder,mismatch
+acb0efea-6311-4bf5-a6e2-42ebc6c94fdc,answer,vi,Cylinder,Hình trụ,Xi lanh,mismatch
+acb0efea-6311-4bf5-a6e2-42ebc6c94fdc,prompt,bg,What shape is this?,Каква е тази форма?,Каква форма е това?,mismatch
+acb0efea-6311-4bf5-a6e2-42ebc6c94fdc,prompt,cs,What shape is this?,Jaký je to tvar?,Co je to za tvar?,mismatch
+acb0efea-6311-4bf5-a6e2-42ebc6c94fdc,prompt,de,What shape is this?,Welche Form ist das?,Welche Form hat das?,mismatch
+acb0efea-6311-4bf5-a6e2-42ebc6c94fdc,prompt,et,What shape is this?,Mis kujund see on?,Mis kujuga see on?,mismatch
+acb0efea-6311-4bf5-a6e2-42ebc6c94fdc,prompt,fr,What shape is this?,Quelle est cette forme ?,De quelle forme s'agit-il ?,mismatch
+acb0efea-6311-4bf5-a6e2-42ebc6c94fdc,prompt,ga,What shape is this?,Select the correct 3D shape:,Cén cruth atá air seo?,mismatch
+acb0efea-6311-4bf5-a6e2-42ebc6c94fdc,prompt,ar,What shape is this?,ما هذا الشكل؟,ما هو هذا الشكل؟,mismatch
+acb0efea-6311-4bf5-a6e2-42ebc6c94fdc,prompt,hr,What shape is this?,Koji je ovo oblik?,Kakav je ovo oblik?,mismatch
+acb0efea-6311-4bf5-a6e2-42ebc6c94fdc,prompt,hi,What shape is this?,यह कौन सा आकार है?,यह कौन सी आकृति है?,mismatch
+acb0efea-6311-4bf5-a6e2-42ebc6c94fdc,prompt,hu,What shape is this?,Milyen alakzat ez?,Milyen forma ez?,mismatch
+acb0efea-6311-4bf5-a6e2-42ebc6c94fdc,prompt,ko,What shape is this?,이것은 무슨 모양입니까?,이건 무슨 모양인가요?,mismatch
+acb0efea-6311-4bf5-a6e2-42ebc6c94fdc,prompt,ja,What shape is this?,これはどんな形ですか？,これは何の形ですか？,mismatch
+acb0efea-6311-4bf5-a6e2-42ebc6c94fdc,prompt,lv,What shape is this?,Kāda šī ir forma?,Kāda šī forma ir?,mismatch
+acb0efea-6311-4bf5-a6e2-42ebc6c94fdc,prompt,lt,What shape is this?,Kokia tai forma?,Kokia čia forma?,mismatch
+acb0efea-6311-4bf5-a6e2-42ebc6c94fdc,prompt,pt,What shape is this?,Que forma é esta?,Que formato é esse?,mismatch
+acb0efea-6311-4bf5-a6e2-42ebc6c94fdc,prompt,sk,What shape is this?,Aký je to tvar?,Čo je to za tvar?,mismatch
+acb0efea-6311-4bf5-a6e2-42ebc6c94fdc,prompt,sl,What shape is this?,Kakšne oblike je to?,Kakšna oblika je to?,mismatch
+acb0efea-6311-4bf5-a6e2-42ebc6c94fdc,prompt,tr,What shape is this?,Bu hangi şekil?,Bu nasıl bir şekil?,mismatch
+acb0efea-6311-4bf5-a6e2-42ebc6c94fdc,prompt,mt,What shape is this?,X'forma hi din?,X'forma hija din?,mismatch
+acb0efea-6311-4bf5-a6e2-42ebc6c94fdc,prompt,uk,What shape is this?,Яка це фігура?,Що це за форма?,mismatch
+562e628c-402a-4356-9309-6848df398ea8,answer,hi,Cube,घन,घनक्षेत्र,mismatch
+562e628c-402a-4356-9309-6848df398ea8,answer,ja,Cube,立方体,キューブ,mismatch
+562e628c-402a-4356-9309-6848df398ea8,answer,et,Cube,Kuup,Kuubik,mismatch
+562e628c-402a-4356-9309-6848df398ea8,answer,ko,Cube,정육면체,입방체,mismatch
+562e628c-402a-4356-9309-6848df398ea8,answer,ga,Cube,Cube,Ciúb,mismatch
+562e628c-402a-4356-9309-6848df398ea8,answer,vi,Cube,Hình lập phương,khối lập phương,mismatch
+562e628c-402a-4356-9309-6848df398ea8,prompt,ar,What shape is this?,ما هذا الشكل؟,ما هو هذا الشكل؟,mismatch
+562e628c-402a-4356-9309-6848df398ea8,prompt,bg,What shape is this?,Каква е тази форма?,Каква форма е това?,mismatch
+562e628c-402a-4356-9309-6848df398ea8,prompt,cs,What shape is this?,Jaký je to tvar?,Co je to za tvar?,mismatch
+562e628c-402a-4356-9309-6848df398ea8,prompt,de,What shape is this?,Welche Form ist das?,Welche Form hat das?,mismatch
+562e628c-402a-4356-9309-6848df398ea8,prompt,et,What shape is this?,Mis kujund see on?,Mis kujuga see on?,mismatch
+562e628c-402a-4356-9309-6848df398ea8,prompt,fr,What shape is this?,Quelle est cette forme ?,De quelle forme s'agit-il ?,mismatch
+562e628c-402a-4356-9309-6848df398ea8,prompt,hr,What shape is this?,Koji je ovo oblik?,Kakav je ovo oblik?,mismatch
+562e628c-402a-4356-9309-6848df398ea8,prompt,hi,What shape is this?,यह कौन सा आकार है?,यह कौन सी आकृति है?,mismatch
+562e628c-402a-4356-9309-6848df398ea8,prompt,ga,What shape is this?,Select the correct 3D shape:,Cén cruth atá air seo?,mismatch
+562e628c-402a-4356-9309-6848df398ea8,prompt,hu,What shape is this?,Milyen alakzat ez?,Milyen forma ez?,mismatch
+562e628c-402a-4356-9309-6848df398ea8,answer,tl,Cube,Kubo,Cube,mismatch
+562e628c-402a-4356-9309-6848df398ea8,prompt,ja,What shape is this?,これはどんな形ですか？,これは何の形ですか？,mismatch
+562e628c-402a-4356-9309-6848df398ea8,prompt,ko,What shape is this?,이것은 무슨 모양입니까?,이건 무슨 모양인가요?,mismatch
+562e628c-402a-4356-9309-6848df398ea8,prompt,lt,What shape is this?,Kokia tai forma?,Kokia čia forma?,mismatch
+562e628c-402a-4356-9309-6848df398ea8,prompt,lv,What shape is this?,Kāda šī ir forma?,Kāda šī forma ir?,mismatch
+562e628c-402a-4356-9309-6848df398ea8,prompt,mt,What shape is this?,X'forma hi din?,X'forma hija din?,mismatch
+562e628c-402a-4356-9309-6848df398ea8,prompt,pt,What shape is this?,Que forma é esta?,Que formato é esse?,mismatch
+562e628c-402a-4356-9309-6848df398ea8,prompt,sl,What shape is this?,Kakšne oblike je to?,Kakšna oblika je to?,mismatch
+562e628c-402a-4356-9309-6848df398ea8,prompt,tr,What shape is this?,Bu hangi şekil?,Bu nasıl bir şekil?,mismatch
+562e628c-402a-4356-9309-6848df398ea8,prompt,uk,What shape is this?,Яка це фігура?,Що це за форма?,mismatch
+0295a6aa-24dd-4410-a081-8bb2da84a572,answer,ar,Sphere,كرة,جسم كروي,mismatch
+562e628c-402a-4356-9309-6848df398ea8,prompt,sk,What shape is this?,Aký je to tvar?,Čo je to za tvar?,mismatch
+0295a6aa-24dd-4410-a081-8bb2da84a572,answer,ga,Sphere,Sphere,Sféar,mismatch
+0295a6aa-24dd-4410-a081-8bb2da84a572,answer,ko,Sphere,구,구체,mismatch
+0295a6aa-24dd-4410-a081-8bb2da84a572,answer,nl,Sphere,Sfeer,Gebied,mismatch
+0295a6aa-24dd-4410-a081-8bb2da84a572,answer,ja,Sphere,球体,球,mismatch
+0295a6aa-24dd-4410-a081-8bb2da84a572,answer,sk,Sphere,Guľa,Sphere,mismatch
+0295a6aa-24dd-4410-a081-8bb2da84a572,answer,sl,Sphere,Sfera,krogla,mismatch
+0295a6aa-24dd-4410-a081-8bb2da84a572,prompt,cs,What shape is this?,Jaký je to tvar?,Co je to za tvar?,mismatch
+0295a6aa-24dd-4410-a081-8bb2da84a572,prompt,ar,What shape is this?,ما هذا الشكل؟,ما هو هذا الشكل؟,mismatch
+0295a6aa-24dd-4410-a081-8bb2da84a572,prompt,bg,What shape is this?,Каква е тази форма?,Каква форма е това?,mismatch
+0295a6aa-24dd-4410-a081-8bb2da84a572,prompt,de,What shape is this?,Welche Form ist das?,Welche Form hat das?,mismatch
+0295a6aa-24dd-4410-a081-8bb2da84a572,answer,tl,Sphere,Espera,Sphere,mismatch
+0295a6aa-24dd-4410-a081-8bb2da84a572,prompt,et,What shape is this?,Mis kujund see on?,Mis kujuga see on?,mismatch
+0295a6aa-24dd-4410-a081-8bb2da84a572,prompt,fr,What shape is this?,Quelle est cette forme ?,De quelle forme s'agit-il ?,mismatch
+0295a6aa-24dd-4410-a081-8bb2da84a572,prompt,ga,What shape is this?,Select the correct 3D shape:,Cén cruth atá air seo?,mismatch
+0295a6aa-24dd-4410-a081-8bb2da84a572,prompt,hi,What shape is this?,यह कौन सा आकार है?,यह कौन सी आकृति है?,mismatch
+0295a6aa-24dd-4410-a081-8bb2da84a572,prompt,hr,What shape is this?,Koji je ovo oblik?,Kakav je ovo oblik?,mismatch
+0295a6aa-24dd-4410-a081-8bb2da84a572,prompt,hu,What shape is this?,Milyen alakzat ez?,Milyen forma ez?,mismatch
+0295a6aa-24dd-4410-a081-8bb2da84a572,prompt,ja,What shape is this?,これはどんな形ですか？,これは何の形ですか？,mismatch
+0295a6aa-24dd-4410-a081-8bb2da84a572,prompt,ko,What shape is this?,이것은 무슨 모양입니까?,이건 무슨 모양인가요?,mismatch
+0295a6aa-24dd-4410-a081-8bb2da84a572,prompt,lt,What shape is this?,Kokia tai forma?,Kokia čia forma?,mismatch
+0295a6aa-24dd-4410-a081-8bb2da84a572,prompt,mt,What shape is this?,X'forma hi din?,X'forma hija din?,mismatch
+0295a6aa-24dd-4410-a081-8bb2da84a572,prompt,lv,What shape is this?,Kāda šī ir forma?,Kāda šī forma ir?,mismatch
+0295a6aa-24dd-4410-a081-8bb2da84a572,prompt,sl,What shape is this?,Kakšne oblike je to?,Kakšna oblika je to?,mismatch
+0295a6aa-24dd-4410-a081-8bb2da84a572,prompt,sk,What shape is this?,Aký je to tvar?,Čo je to za tvar?,mismatch
+0295a6aa-24dd-4410-a081-8bb2da84a572,prompt,tr,What shape is this?,Bu hangi şekil?,Bu nasıl bir şekil?,mismatch
+0295a6aa-24dd-4410-a081-8bb2da84a572,prompt,uk,What shape is this?,Яка це фігура?,Що це за форма?,mismatch
+8d33519a-cddf-4a48-be52-1046418addd4,answer,ar,Hemisphere,نصف الكرة,نصف الكرة الأرضية,mismatch
+8d33519a-cddf-4a48-be52-1046418addd4,answer,de,Hemisphere,Halbkugel,Hemisphäre,mismatch
+8d33519a-cddf-4a48-be52-1046418addd4,answer,bg,Hemisphere,Полусфера,полукълбо,mismatch
+0295a6aa-24dd-4410-a081-8bb2da84a572,prompt,pt,What shape is this?,Que forma é esta?,Que formato é esse?,mismatch
+8d33519a-cddf-4a48-be52-1046418addd4,answer,fi,Hemisphere,Pallonpuolisko,Puolipallo,mismatch
+8d33519a-cddf-4a48-be52-1046418addd4,answer,hi,Hemisphere,गोलार्ध,गोलार्द्ध,mismatch
+8d33519a-cddf-4a48-be52-1046418addd4,answer,hu,Hemisphere,Félgömb,Félteke,mismatch
+8d33519a-cddf-4a48-be52-1046418addd4,answer,hr,Hemisphere,Polusfera,Hemisfera,mismatch
+8d33519a-cddf-4a48-be52-1046418addd4,answer,ga,Hemisphere,Hemisphere,Leathsféar,mismatch
+8d33519a-cddf-4a48-be52-1046418addd4,answer,tr,Hemisphere,Yarım küre,Yarımküre,mismatch
+8d33519a-cddf-4a48-be52-1046418addd4,answer,sl,Hemisphere,Polobla,Hemisfera,mismatch
+8d33519a-cddf-4a48-be52-1046418addd4,answer,tl,Hemisphere,Hemisperyo,Hemisphere,mismatch
+8d33519a-cddf-4a48-be52-1046418addd4,prompt,bg,What shape is this?,Каква е тази форма?,Каква форма е това?,mismatch
+8d33519a-cddf-4a48-be52-1046418addd4,prompt,ar,What shape is this?,ما هذا الشكل؟,ما هو هذا الشكل؟,mismatch
+8d33519a-cddf-4a48-be52-1046418addd4,prompt,cs,What shape is this?,Jaký je to tvar?,Co je to za tvar?,mismatch
+8d33519a-cddf-4a48-be52-1046418addd4,prompt,de,What shape is this?,Welche Form ist das?,Welche Form hat das?,mismatch
+8d33519a-cddf-4a48-be52-1046418addd4,prompt,et,What shape is this?,Mis kujund see on?,Mis kujuga see on?,mismatch
+8d33519a-cddf-4a48-be52-1046418addd4,prompt,fr,What shape is this?,Quelle est cette forme ?,De quelle forme s'agit-il ?,mismatch
+8d33519a-cddf-4a48-be52-1046418addd4,answer,sk,Hemisphere,Pologuľa,Hemisféra,mismatch
+8d33519a-cddf-4a48-be52-1046418addd4,prompt,hi,What shape is this?,यह कौन सा आकार है?,यह कौन सी आकृति है?,mismatch
+8d33519a-cddf-4a48-be52-1046418addd4,prompt,hr,What shape is this?,Koji je ovo oblik?,Kakav je ovo oblik?,mismatch
+8d33519a-cddf-4a48-be52-1046418addd4,prompt,ga,What shape is this?,Select the correct 3D shape:,Cén cruth atá air seo?,mismatch
+8d33519a-cddf-4a48-be52-1046418addd4,prompt,hu,What shape is this?,Milyen alakzat ez?,Milyen forma ez?,mismatch
+8d33519a-cddf-4a48-be52-1046418addd4,prompt,ko,What shape is this?,이것은 무슨 모양입니까?,이건 무슨 모양인가요?,mismatch
+8d33519a-cddf-4a48-be52-1046418addd4,prompt,lv,What shape is this?,Kāda šī ir forma?,Kāda šī forma ir?,mismatch
+8d33519a-cddf-4a48-be52-1046418addd4,prompt,mt,What shape is this?,X'forma hi din?,X'forma hija din?,mismatch
+8d33519a-cddf-4a48-be52-1046418addd4,prompt,ja,What shape is this?,これはどんな形ですか？,これは何の形ですか？,mismatch
+8d33519a-cddf-4a48-be52-1046418addd4,prompt,pt,What shape is this?,Que forma é esta?,Que formato é esse?,mismatch
+8d33519a-cddf-4a48-be52-1046418addd4,prompt,lt,What shape is this?,Kokia tai forma?,Kokia čia forma?,mismatch
+8d33519a-cddf-4a48-be52-1046418addd4,prompt,sl,What shape is this?,Kakšne oblike je to?,Kakšna oblika je to?,mismatch
+8d33519a-cddf-4a48-be52-1046418addd4,prompt,sk,What shape is this?,Aký je to tvar?,Čo je to za tvar?,mismatch
+8d33519a-cddf-4a48-be52-1046418addd4,prompt,uk,What shape is this?,Яка це фігура?,Що це за форма?,mismatch
+928cc2e1-6921-4a18-af8d-8eed4107e3dd,answer,cs,Pyramid,Jehlan,Pyramida,mismatch
+8d33519a-cddf-4a48-be52-1046418addd4,prompt,tr,What shape is this?,Bu hangi şekil?,Bu nasıl bir şekil?,mismatch
+928cc2e1-6921-4a18-af8d-8eed4107e3dd,answer,ga,Pyramid,Pyramid,Pirimid,mismatch
+928cc2e1-6921-4a18-af8d-8eed4107e3dd,answer,hu,Pyramid,Gúla,Piramis,mismatch
+928cc2e1-6921-4a18-af8d-8eed4107e3dd,answer,tl,Pyramid,Piramide,Pyramid,mismatch
+928cc2e1-6921-4a18-af8d-8eed4107e3dd,prompt,ar,What shape is this?,ما هذا الشكل؟,ما هو هذا الشكل؟,mismatch
+928cc2e1-6921-4a18-af8d-8eed4107e3dd,answer,vi,Pyramid,Hình chóp,kim tự tháp,mismatch
+928cc2e1-6921-4a18-af8d-8eed4107e3dd,prompt,bg,What shape is this?,Каква е тази форма?,Каква форма е това?,mismatch
+928cc2e1-6921-4a18-af8d-8eed4107e3dd,answer,sk,Pyramid,Ihlan,Pyramída,mismatch
+928cc2e1-6921-4a18-af8d-8eed4107e3dd,prompt,de,What shape is this?,Welche Form ist das?,Welche Form hat das?,mismatch
+928cc2e1-6921-4a18-af8d-8eed4107e3dd,prompt,et,What shape is this?,Mis kujund see on?,Mis kujuga see on?,mismatch
+928cc2e1-6921-4a18-af8d-8eed4107e3dd,prompt,ga,What shape is this?,Select the correct 3D shape:,Cén cruth atá air seo?,mismatch
+928cc2e1-6921-4a18-af8d-8eed4107e3dd,prompt,fr,What shape is this?,Quelle est cette forme ?,De quelle forme s'agit-il ?,mismatch
+928cc2e1-6921-4a18-af8d-8eed4107e3dd,prompt,hu,What shape is this?,Milyen alakzat ez?,Milyen forma ez?,mismatch
+928cc2e1-6921-4a18-af8d-8eed4107e3dd,prompt,hi,What shape is this?,यह कौन सा आकार है?,यह कौन सी आकृति है?,mismatch
+928cc2e1-6921-4a18-af8d-8eed4107e3dd,prompt,hr,What shape is this?,Koji je ovo oblik?,Kakav je ovo oblik?,mismatch
+928cc2e1-6921-4a18-af8d-8eed4107e3dd,prompt,ja,What shape is this?,これはどんな形ですか？,これは何の形ですか？,mismatch
+928cc2e1-6921-4a18-af8d-8eed4107e3dd,prompt,ko,What shape is this?,이것은 무슨 모양입니까?,이건 무슨 모양인가요?,mismatch
+928cc2e1-6921-4a18-af8d-8eed4107e3dd,prompt,cs,What shape is this?,Jaký je to tvar?,Co je to za tvar?,mismatch
+928cc2e1-6921-4a18-af8d-8eed4107e3dd,prompt,lt,What shape is this?,Kokia tai forma?,Kokia čia forma?,mismatch
+928cc2e1-6921-4a18-af8d-8eed4107e3dd,prompt,lv,What shape is this?,Kāda šī ir forma?,Kāda šī forma ir?,mismatch
+928cc2e1-6921-4a18-af8d-8eed4107e3dd,prompt,pt,What shape is this?,Que forma é esta?,Que formato é esse?,mismatch
+928cc2e1-6921-4a18-af8d-8eed4107e3dd,prompt,mt,What shape is this?,X'forma hi din?,X'forma hija din?,mismatch
+928cc2e1-6921-4a18-af8d-8eed4107e3dd,prompt,sk,What shape is this?,Aký je to tvar?,Čo je to za tvar?,mismatch
+928cc2e1-6921-4a18-af8d-8eed4107e3dd,prompt,sl,What shape is this?,Kakšne oblike je to?,Kakšna oblika je to?,mismatch
+928cc2e1-6921-4a18-af8d-8eed4107e3dd,prompt,tr,What shape is this?,Bu hangi şekil?,Bu nasıl bir şekil?,mismatch
+86078182-ce72-4e82-83dc-ead87c891bd6,answer,ar,Torus,طارة,تورس,mismatch
+86078182-ce72-4e82-83dc-ead87c891bd6,answer,el,Torus,Τόρος,Βάση στήλης,mismatch
+928cc2e1-6921-4a18-af8d-8eed4107e3dd,prompt,uk,What shape is this?,Яка це фігура?,Що це за форма?,mismatch
+86078182-ce72-4e82-83dc-ead87c891bd6,answer,fr,Torus,Tore,Torus,mismatch
+86078182-ce72-4e82-83dc-ead87c891bd6,answer,hi,Torus,टोरस,टोरस्र्स,mismatch
+86078182-ce72-4e82-83dc-ead87c891bd6,answer,ko,Torus,토러스,큰 쇠시리,mismatch
+86078182-ce72-4e82-83dc-ead87c891bd6,answer,hu,Torus,Tórusz,Torus,mismatch
+86078182-ce72-4e82-83dc-ead87c891bd6,answer,lv,Torus,Tors,Torus,mismatch
+86078182-ce72-4e82-83dc-ead87c891bd6,answer,lt,Torus,Toras,Torus,mismatch
+86078182-ce72-4e82-83dc-ead87c891bd6,answer,sk,Torus,Tórus,Torus,mismatch
+86078182-ce72-4e82-83dc-ead87c891bd6,answer,tr,Torus,Torus,simit,mismatch
+86078182-ce72-4e82-83dc-ead87c891bd6,prompt,ar,What shape is this?,ما هذا الشكل؟,ما هو هذا الشكل؟,mismatch
+86078182-ce72-4e82-83dc-ead87c891bd6,prompt,bg,What shape is this?,Каква е тази форма?,Каква форма е това?,mismatch
+86078182-ce72-4e82-83dc-ead87c891bd6,answer,tl,Torus,Torus,Tors,mismatch
+86078182-ce72-4e82-83dc-ead87c891bd6,prompt,cs,What shape is this?,Jaký je to tvar?,Co je to za tvar?,mismatch
+86078182-ce72-4e82-83dc-ead87c891bd6,prompt,de,What shape is this?,Welche Form ist das?,Welche Form hat das?,mismatch
+86078182-ce72-4e82-83dc-ead87c891bd6,prompt,et,What shape is this?,Mis kujund see on?,Mis kujuga see on?,mismatch
+86078182-ce72-4e82-83dc-ead87c891bd6,prompt,fr,What shape is this?,Quelle est cette forme ?,De quelle forme s'agit-il ?,mismatch
+86078182-ce72-4e82-83dc-ead87c891bd6,prompt,hr,What shape is this?,Koji je ovo oblik?,Kakav je ovo oblik?,mismatch
+86078182-ce72-4e82-83dc-ead87c891bd6,prompt,ga,What shape is this?,Select the correct 3D shape:,Cén cruth atá air seo?,mismatch
+86078182-ce72-4e82-83dc-ead87c891bd6,prompt,hi,What shape is this?,यह कौन सा आकार है?,यह कौन सी आकृति है?,mismatch
+86078182-ce72-4e82-83dc-ead87c891bd6,prompt,hu,What shape is this?,Milyen alakzat ez?,Milyen forma ez?,mismatch
+86078182-ce72-4e82-83dc-ead87c891bd6,prompt,ko,What shape is this?,이것은 무슨 모양입니까?,이건 무슨 모양인가요?,mismatch
+86078182-ce72-4e82-83dc-ead87c891bd6,prompt,ja,What shape is this?,これはどんな形ですか？,これは何の形ですか？,mismatch
+86078182-ce72-4e82-83dc-ead87c891bd6,prompt,lt,What shape is this?,Kokia tai forma?,Kokia čia forma?,mismatch
+86078182-ce72-4e82-83dc-ead87c891bd6,prompt,lv,What shape is this?,Kāda šī ir forma?,Kāda šī forma ir?,mismatch
+86078182-ce72-4e82-83dc-ead87c891bd6,prompt,mt,What shape is this?,X'forma hi din?,X'forma hija din?,mismatch
+86078182-ce72-4e82-83dc-ead87c891bd6,prompt,pt,What shape is this?,Que forma é esta?,Que formato é esse?,mismatch
+86078182-ce72-4e82-83dc-ead87c891bd6,prompt,sk,What shape is this?,Aký je to tvar?,Čo je to za tvar?,mismatch
+86078182-ce72-4e82-83dc-ead87c891bd6,prompt,sl,What shape is this?,Kakšne oblike je to?,Kakšna oblika je to?,mismatch
+86078182-ce72-4e82-83dc-ead87c891bd6,prompt,tr,What shape is this?,Bu hangi şekil?,Bu nasıl bir şekil?,mismatch
+86078182-ce72-4e82-83dc-ead87c891bd6,prompt,uk,What shape is this?,Яка це фігура?,Що це за форма?,mismatch
+d6d5deef-fadf-46db-a8a2-f0e6dff8d130,answer,ga,Cone,Cone,Cón,mismatch
+d6d5deef-fadf-46db-a8a2-f0e6dff8d130,answer,hi,Cone,शंकु,कोन,mismatch
+d6d5deef-fadf-46db-a8a2-f0e6dff8d130,answer,hr,Cone,Stožac,Konus,mismatch
+d6d5deef-fadf-46db-a8a2-f0e6dff8d130,answer,mt,Cone,Konu,Kon,mismatch
+d6d5deef-fadf-46db-a8a2-f0e6dff8d130,prompt,bg,What shape is this?,Каква е тази форма?,Каква форма е това?,mismatch
+d6d5deef-fadf-46db-a8a2-f0e6dff8d130,prompt,ar,What shape is this?,ما هذا الشكل؟,ما هو هذا الشكل؟,mismatch
+d6d5deef-fadf-46db-a8a2-f0e6dff8d130,prompt,cs,What shape is this?,Jaký je to tvar?,Co je to za tvar?,mismatch
+d6d5deef-fadf-46db-a8a2-f0e6dff8d130,prompt,de,What shape is this?,Welche Form ist das?,Welche Form hat das?,mismatch
+d6d5deef-fadf-46db-a8a2-f0e6dff8d130,prompt,et,What shape is this?,Mis kujund see on?,Mis kujuga see on?,mismatch
+d6d5deef-fadf-46db-a8a2-f0e6dff8d130,prompt,fr,What shape is this?,Quelle est cette forme ?,De quelle forme s'agit-il ?,mismatch
+d6d5deef-fadf-46db-a8a2-f0e6dff8d130,prompt,hr,What shape is this?,Koji je ovo oblik?,Kakav je ovo oblik?,mismatch
+d6d5deef-fadf-46db-a8a2-f0e6dff8d130,prompt,hu,What shape is this?,Milyen alakzat ez?,Milyen forma ez?,mismatch
+d6d5deef-fadf-46db-a8a2-f0e6dff8d130,prompt,hi,What shape is this?,यह कौन सा आकार है?,यह कौन सी आकृति है?,mismatch
+d6d5deef-fadf-46db-a8a2-f0e6dff8d130,prompt,ga,What shape is this?,Select the correct 3D shape:,Cén cruth atá air seo?,mismatch
+d6d5deef-fadf-46db-a8a2-f0e6dff8d130,prompt,ja,What shape is this?,これはどんな形ですか？,これは何の形ですか？,mismatch
+d6d5deef-fadf-46db-a8a2-f0e6dff8d130,prompt,ko,What shape is this?,이것은 무슨 모양입니까?,이건 무슨 모양인가요?,mismatch
+d6d5deef-fadf-46db-a8a2-f0e6dff8d130,prompt,lv,What shape is this?,Kāda šī ir forma?,Kāda šī forma ir?,mismatch
+d6d5deef-fadf-46db-a8a2-f0e6dff8d130,prompt,lt,What shape is this?,Kokia tai forma?,Kokia čia forma?,mismatch
+d6d5deef-fadf-46db-a8a2-f0e6dff8d130,prompt,mt,What shape is this?,X'forma hi din?,X'forma hija din?,mismatch
+d6d5deef-fadf-46db-a8a2-f0e6dff8d130,prompt,pt,What shape is this?,Que forma é esta?,Que formato é esse?,mismatch
+d6d5deef-fadf-46db-a8a2-f0e6dff8d130,prompt,sl,What shape is this?,Kakšne oblike je to?,Kakšna oblika je to?,mismatch
+d6d5deef-fadf-46db-a8a2-f0e6dff8d130,prompt,sk,What shape is this?,Aký je to tvar?,Čo je to za tvar?,mismatch
+d6d5deef-fadf-46db-a8a2-f0e6dff8d130,prompt,tr,What shape is this?,Bu hangi şekil?,Bu nasıl bir şekil?,mismatch
+d6d5deef-fadf-46db-a8a2-f0e6dff8d130,prompt,uk,What shape is this?,Яка це фігура?,Що це за форма?,mismatch

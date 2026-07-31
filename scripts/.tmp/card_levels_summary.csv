@@ -1,0 +1,85 @@
+subject_id,subject_name,card_count,policy,level_1,level_2,level_3,changed_cards
+de04da1c-9820-4e61-ae6b-bc7ed07eeb93,Addition 0-10,11,single_level,11,0,0,0
+5e81da1f-f92c-44d2-b3cd-f921d05425df,Addition 11-20,10,single_level,10,0,0,10
+4f24f604-ae85-40d0-9a96-6816bf26b7bf,Arabic Alphabet,28,single_level,28,0,0,0
+a3f500b9-a631-4e63-bdfb-ce5e53156163,Architectural Styles,35,quantized_existing_order,12,12,11,33
+25fff407-d9d1-4e29-a176-41ce01157c63,Bones of the Human Skeleton,85,quantized_existing_order,29,28,28,51
+c8c8c8c7-1f9d-4e2a-88fe-f809469916e0,Bulgarian Alphabet,30,single_level,30,0,0,0
+156365d1-0e84-40ca-a1a0-e0480ed278b5,Car Brands,35,quantized_existing_order,12,12,11,32
+424bd963-b3d7-4f5b-b021-56ec5492d1a6,Cars Body Style,30,quantized_existing_order,10,10,10,28
+45efa767-a560-4ed8-a1f9-9d0ccecc9248,Chinese Alphabet,37,single_level,37,0,0,0
+0b84447d-3af3-4509-bdf6-c4e7fe822cc7,Colors,140,quantized_existing_order,47,47,46,133
+68232807-b9cd-4cff-872c-c398444f85e2,Counting 0-10,11,single_level,11,0,0,0
+c3548727-65f4-4e0c-939c-56135b4eb543,Counting 11-20,10,single_level,10,0,0,10
+ba87655b-9f97-4022-85e0-9868620998f0,Croatian Alphabet,30,single_level,30,0,0,0
+83a02e6e-44b3-4629-9fc9-bd63ee6eafde,Czech Alphabet,42,single_level,42,0,0,0
+6cb3d0b9-b1e2-4075-ba89-8fc074e67229,Danish Alphabet,29,single_level,29,0,0,0
+d104da1c-9820-4e61-ae6b-bc7ed07eeb93,Divide 1,11,single_level,11,0,0,0
+d204da1c-9820-4e61-ae6b-bc7ed07eeb93,Divide 2,11,single_level,11,0,0,11
+d304da1c-9820-4e61-ae6b-bc7ed07eeb93,Divide 3,11,single_level,11,0,0,11
+d404da1c-9820-4e61-ae6b-bc7ed07eeb93,Divide 4,11,single_level,11,0,0,11
+d504da1c-9820-4e61-ae6b-bc7ed07eeb93,Divide 5,11,single_level,11,0,0,11
+d604da1c-9820-4e61-ae6b-bc7ed07eeb93,Divide 6,11,single_level,11,0,0,11
+d704da1c-9820-4e61-ae6b-bc7ed07eeb93,Divide 7,11,single_level,11,0,0,11
+d804da1c-9820-4e61-ae6b-bc7ed07eeb93,Divide 8,11,single_level,11,0,0,11
+d904da1c-9820-4e61-ae6b-bc7ed07eeb93,Divide 9,11,single_level,11,0,0,11
+6f3f66e2-2dce-4762-b7a0-e3e1e5c7dbb1,Dog Breeds,100,quantized_existing_order,34,33,33,95
+a6b5b079-4b75-400d-a9c6-43c28c80c040,Domesticated Animals,41,quantized_existing_order,14,14,13,39
+b5270f43-f604-4be9-a9e4-4f804b808690,Dutch Alphabet,26,single_level,26,0,0,0
+4b04fa27-8bfe-4580-912e-5d5f171b2670,English Alphabet,26,single_level,26,0,0,0
+945210fa-6559-4723-9a7c-4e5e8397342d,Estonian Alphabet,27,single_level,27,0,0,0
+2f0d2ba6-165f-4b1f-9460-0fb6eba79715,Famous Paintings,100,quantized_existing_order,34,33,33,95
+a88eb556-812c-4df0-8e9d-c9911a801f17,Finnish Alphabet,29,single_level,29,0,0,0
+6e242fd7-a743-49d5-813e-31f5e9622470,Flags of International Organizations,69,quantized_existing_order,23,23,23,62
+35b2f5c1-10be-4c1d-b915-1159ef35fe26,Flags of the World,198,quantized_existing_order,66,66,66,185
+4b210d48-c309-4c4b-ad80-24b9f8dde33e,Food & Cuisines,127,quantized_existing_order,43,42,42,120
+49154771-9b6b-42f6-8e4a-c1545ca0e94a,French Alphabet,42,single_level,42,0,0,0
+a1a7cbe7-2f68-4870-ba26-966132f75ba9,German Alphabet,30,single_level,30,0,0,0
+8df8e8bf-7fe8-4e99-a0eb-0a05c43ed6da,Greek Alphabet,24,single_level,24,0,0,0
+09a77e7a-e70b-4e5f-a1f9-1ec2aaac7f0d,Heavy Construction Machinery,37,quantized_existing_order,13,12,12,35
+3bf13dae-ace5-4fa8-ac9c-f84a7ac5cfc5,Hindi Alphabet,44,single_level,44,0,0,0
+02299d94-6d07-419f-b7df-ffcc048d412a,Historical Figures,50,quantized_existing_order,17,17,16,48
+de0b6e00-8c3d-4a56-997d-6345cb4ee316,Human Organ Systems,12,single_level,12,0,0,0
+8e92cfd0-de89-4c2e-adc2-04854e2ec456,Hungarian Alphabet,44,single_level,44,0,0,0
+09680efb-fc98-4f32-a9c8-1d0542ab9b81,Indonesian Alphabet,26,single_level,26,0,0,0
+282881e3-7516-481b-9894-7ff5796bb1f1,Irish Alphabet,18,single_level,18,0,0,0
+094d5bf3-5b22-4691-b652-dc07b490b97b,Italian Alphabet,21,single_level,21,0,0,0
+68f5f724-3e4a-4c90-80c7-aee708c6b6cd,Japanese Alphabet,46,single_level,46,0,0,0
+c6c33310-7a3f-4a5c-aef4-b37feb0662a4,Korean Alphabet,24,single_level,24,0,0,0
+8e5ead38-3dcb-472c-a690-f8aaa01960a6,Latvian Alphabet,33,single_level,33,0,0,0
+79f58eab-ab28-4673-a9e6-f2258edda08c,Lithuanian Alphabet,32,single_level,32,0,0,0
+576e6494-7f4a-4dbe-af0c-d80dbb9afb9b,Maltese Alphabet,30,single_level,30,0,0,0
+5319e962-cd18-4e74-9cd7-8092ebe1752c,Most Colorful Insects,53,quantized_existing_order,18,18,17,50
+e104da1c-9820-4e61-ae6b-bc7ed07eeb93,Multiply 1,11,single_level,11,0,0,0
+e204da1c-9820-4e61-ae6b-bc7ed07eeb93,Multiply 2,11,single_level,11,0,0,11
+e304da1c-9820-4e61-ae6b-bc7ed07eeb93,Multiply 3,11,single_level,11,0,0,11
+e404da1c-9820-4e61-ae6b-bc7ed07eeb93,Multiply 4,11,single_level,11,0,0,11
+e504da1c-9820-4e61-ae6b-bc7ed07eeb93,Multiply 5,11,single_level,11,0,0,11
+e604da1c-9820-4e61-ae6b-bc7ed07eeb93,Multiply 6,11,single_level,11,0,0,11
+e704da1c-9820-4e61-ae6b-bc7ed07eeb93,Multiply 7,11,single_level,11,0,0,11
+e804da1c-9820-4e61-ae6b-bc7ed07eeb93,Multiply 8,11,single_level,11,0,0,11
+e904da1c-9820-4e61-ae6b-bc7ed07eeb93,Multiply 9,11,single_level,11,0,0,11
+7c85b685-6821-4906-a0e6-e5baaa49b5bc,Musical Instruments,49,quantized_existing_order,17,16,16,47
+bc354f43-f9be-42a9-a7bc-ac400bd5e310,Numbers 0-10,11,single_level,11,0,0,5
+cb04da1c-9820-4e61-ae6b-bc7ed07eeb93,Numbers 11-20,10,single_level,10,0,0,10
+44202921-bedf-47c7-9ac1-5d47ba522f73,Parts of Human Body,41,quantized_existing_order,14,14,13,20
+193530d9-3e12-422a-801f-a0af7799f235,Planets of the Solar System,13,quantized_existing_order,5,4,4,12
+0a0bddf4-1de5-46e5-8183-fff7eb96952a,Polish Alphabet,35,single_level,35,0,0,0
+9606b189-82b5-4fda-8339-8c7edf83de63,Portuguese Alphabet,26,single_level,26,0,0,0
+c351bd64-25e7-4de8-9ee4-07875fb94ba4,Romanian Alphabet,31,single_level,31,0,0,0
+031f918e-6afa-469b-97bc-48a65e565237,Shapes 2D,16,quantized_existing_order,6,5,5,9
+39636cfd-cb6a-4d1c-95a7-c30b5db1846a,Shapes 3D,7,quantized_existing_order,3,2,2,0
+860510ac-bf6b-4202-af32-93a469c71048,Slovak Alphabet,46,single_level,46,0,0,0
+b5ccb20a-d137-4e1d-aaab-090cbd6d9cf0,Slovenian Alphabet,25,single_level,25,0,0,0
+3fef9ea6-2e9d-45b1-87b0-75cce5adeedd,Spanish Alphabet,27,single_level,27,0,0,0
+1c58e149-e9f8-4edb-876a-e148b19f6c82,Sports,50,quantized_existing_order,17,17,16,48
+ce04da1c-9820-4e61-ae6b-bc7ed07eeb93,Subtraction 0-10,11,single_level,11,0,0,0
+f59a0f9c-5d6d-4f2d-b426-eb9ca6bf2782,Subtraction 11-20,10,single_level,10,0,0,10
+1e7fe8e3-9c52-44f9-b47a-a5dcd20c542c,Swedish Alphabet,29,single_level,29,0,0,0
+74cb0940-1f03-4c29-bbcb-6f8a2b2d080b,Tagalog Alphabet,28,single_level,28,0,0,0
+03488dd6-cdb1-4320-9c67-2df16febfdb7,Turkish Alphabet,29,single_level,29,0,0,0
+2450ccd1-b439-4ed1-8280-30de3f41e400,Types of Sea Animals,23,quantized_existing_order,8,8,7,22
+48d52b9d-329b-44be-95e4-c89c0d5e9fca,Ukrainian Alphabet,33,single_level,33,0,0,0
+68aa38d7-499a-4ab4-a8e7-9d0b1701cb1a,Vietnamese Alphabet,29,single_level,29,0,0,0
+849ff5de-c89c-402b-8564-69feeb5ab1da,World Bridges,21,quantized_existing_order,7,7,7,20
+8efc96db-89ae-4137-91cd-6a5800b788ad,World Landmarks,191,quantized_existing_order,64,64,63,190

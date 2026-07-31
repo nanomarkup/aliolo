@@ -1,0 +1,78 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "aliolo",
+  "main": "src/index.ts",
+  "compatibility_date": "2024-04-03",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "vars": {
+    "ENVIRONMENT": "development"
+  },
+  "assets": {
+    "directory": "../build/web",
+    "binding": "ASSETS"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "aliolo-db",
+      "database_id": "fb2060e8-6fcc-44ac-b477-1eb62c0c335a"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "MEDIA",
+      "bucket_name": "aliolo-media"
+    }
+  ],
+  "observability": {
+    "enabled": true
+  },
+  "env": {
+    "production": {
+      "name": "aliolo",
+      "workers_dev": true,
+      "preview_urls": true,
+      "vars": {
+        "ENVIRONMENT": "production",
+        "PADDLE_CLIENT_TOKEN": "live_5a78200365486f94492a7636577",
+        "PADDLE_PRICE_WEEKLY": "pri_01kqaj8zcvyape233bvknvb34m",
+        "PADDLE_PRICE_MONTHLY": "pri_01kqajb535mwtx36gdw4h0vwkm",
+        "PADDLE_PRICE_YEARLY": "pri_01kqajds9hr5b27ahd0ssmenw0",
+        "GOOGLE_PLAY_PACKAGE_NAME": "com.nanomarkup.aliolo",
+        "GOOGLE_PLAY_VERIFICATION_MODE": "broker",
+        "GOOGLE_PLAY_VERIFIER_URL": "https://aliolo-google-play-verifier-702215281989.us-central1.run.app"
+      },
+      "routes": [
+        {
+          "pattern": "aliolo.com",
+          "zone_name": "aliolo.com",
+          "custom_domain": true
+        },
+        {
+          "pattern": "www.aliolo.com",
+          "zone_name": "aliolo.com",
+          "custom_domain": true
+        }
+      ],
+      "assets": {
+        "directory": "../build/web",
+        "binding": "ASSETS"
+      },
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_name": "aliolo-db",
+          "database_id": "fb2060e8-6fcc-44ac-b477-1eb62c0c335a"
+        }
+      ],
+      "r2_buckets": [
+        {
+          "binding": "MEDIA",
+          "bucket_name": "aliolo-media"
+        }
+      ]
+    }
+  }
+}

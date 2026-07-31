@@ -1,0 +1,29 @@
+card_id,field,locale,global_text,current_text,translated_text,status
+SUBJECT,subject_name,cs,Dog Breeds,Psí plemena,Plemena psů,mismatch
+SUBJECT,subject_name,fi,Dog Breeds,Koirarodut,Koiran rodut,mismatch
+SUBJECT,subject_name,ja,Dog Breeds,犬種,犬の品種,mismatch
+SUBJECT,subject_name,it,Dog Breeds,Razze Canine,Razze di cani,mismatch
+SUBJECT,subject_name,mt,Dog Breeds,Razzi ta' klieb,Razez tal-Klieb,mismatch
+SUBJECT,subject_name,sk,Dog Breeds,Psie plemená,Plemená psov,mismatch
+SUBJECT,subject_name,tl,Dog Breeds,Mga Uri ng Aso,Mga Lahi ng Aso,mismatch
+SUBJECT,subject_name,vi,Dog Breeds,Các giống chó,Giống chó,mismatch
+37f23a06-6ae0-4c79-bfa0-545250ef7857,answer,hu,American Bully,Amerikai Bully,American Bully,mismatch
+b902e358-81d3-4a1a-9466-f6f82a763e62,answer,hu,Black and Tan Coonhound,Fekete és cser coonhound,Fekete és cser gubókutya,mismatch
+b902e358-81d3-4a1a-9466-f6f82a763e62,answer,lv,Black and Tan Coonhound,Melns un dzeltenbrūns Coonhound,Melns dzeltenbrūns Coonhound,mismatch
+515a0f1e-d771-4c69-ab4b-2b4d59f756fb,answer,fi,American Cocker Spaniel,Amerikan cockerspanieli,Amerikkalainen cockerspanieli,mismatch
+aff9c464-5da8-4c82-a44e-b8026895b12a,answer,ja,Anglo-Francais De Petite Venerie,アングロ・フランセ・ド・プティ・ヴェネリー,アングロ・フランセ・ド・プティ・ヴェネリ,mismatch
+4d35dc19-a6da-4297-88ba-ca7107ec2c05,answer,es,Bluetick Coonhound,Coonhound tic azul,Coonhound garra azul,mismatch
+f8ba1bdc-b0ba-461a-a397-45d960595502,answer,ja,American Eskimo Dog,アメリカンエスキモードッグ,アメリカン エスキモー ドッグ,mismatch
+57fc67dc-6c5d-4045-93f6-9c4eb8aca01e,answer,ga,American Toy Terrier,Bréagán mBréagán Mheiriceá,Bréagán Bréagán Meiriceánach,mismatch
+7c435564-eb0e-4a39-b5a0-c62c93e76fb2,answer,uk,Australian Stumpy Tail Cattle Dog,Австралійська пастуша собака з товстим хвостом,Австралійський товстохвостий пастуший пес,mismatch
+93d9c51a-b3a1-4bcd-9ed1-0bf5ff0000a9,answer,bg,Berger Picard,Бергер Пикард,Бергер Пикар,mismatch
+4a7a74a7-57f8-46bf-a656-9612b0672e2d,answer,bg,Alsatian Shepalute,Елзаски шепалут,Елзаски шепалуте,mismatch
+1d144c26-bab6-40b7-9185-63003b2ce094,answer,bg,Appenzeller Sennenhund,Appenzeller Sennenhund,Апенцелер Зененхунд,mismatch
+9620d743-c6de-4797-97f2-8b36550a4084,answer,el,Barzoï,Μπαρζόι,Barzoï,mismatch
+fb6e201c-6506-457c-b79f-dd0f22587541,answer,ga,Brandlbracke,Branda Breac,Brandlbrack,mismatch
+a75e15d3-e361-4c79-a55c-699d2e783473,answer,ja,Braque de l'Ariège,ブラック・ドゥ・ラリエージュ,ブラック ドゥ ラリエージュ,mismatch
+e943bdc3-4e8c-4b0a-8f93-a771bd568f14,answer,mt,Caravan hound,Caravan hound,Hound tal-karavan,mismatch
+e943bdc3-4e8c-4b0a-8f93-a771bd568f14,answer,tl,Caravan hound,Caravan hound,Hound ng caravan,mismatch
+a28c7f19-0afc-42ff-822d-b04ade4c3240,answer,et,Basset Hound,Basset hagijas,Basset Hound,mismatch
+b123e4e6-49cb-471e-8836-d6c73c4f8d91,answer,ga,Border Collie,Teorainn Collie,Teorann Collie,mismatch
+2af12d38-e900-463e-a2e2-bcb076169f46,answer,bg,Majorero Canario,Майореро Канарио,Majorero Canario,mismatch

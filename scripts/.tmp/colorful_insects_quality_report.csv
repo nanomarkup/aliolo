@@ -1,0 +1,43 @@
+card_id,field,locale,global_text,current_text,translated_text,status
+SUBJECT,subject_name,ar,Most Colorful Insects,أكثر الحشرات ملونة,أكثر الحشرات الملونة,mismatch
+SUBJECT,subject_name,de,Most Colorful Insects,Farbenfrohste Insekten,Die buntesten Insekten,mismatch
+SUBJECT,subject_name,el,Most Colorful Insects,Τα πιο χρωματιστά έντομα,Τα πιο πολύχρωμα έντομα,mismatch
+SUBJECT,subject_name,da,Most Colorful Insects,De mest farverige insekter,Mest farverige insekter,mismatch
+SUBJECT,subject_name,fi,Most Colorful Insects,Värikриkkaimmat hyönteiset,Värikkäimmät hyönteiset,mismatch
+SUBJECT,subject_name,et,Most Colorful Insects,Kõige värvilisemad putukad,Kõige värvikamad putukad,mismatch
+SUBJECT,subject_name,hr,Most Colorful Insects,Najšareniji kukci,Najšareniji insekti,mismatch
+SUBJECT,subject_name,ga,Most Colorful Insects,Na feithidí is ildaite,Feithidí is Dathúla,mismatch
+SUBJECT,subject_name,fr,Most Colorful Insects,Insectes les plus colorés,Les insectes les plus colorés,mismatch
+SUBJECT,subject_name,id,Most Colorful Insects,Serangga Paling Berwarna-warni,Serangga Paling Berwarna,mismatch
+SUBJECT,subject_name,ko,Most Colorful Insects,가장 화려한 곤충,가장 다채로운 곤충,mismatch
+SUBJECT,subject_name,it,Most Colorful Insects,Insetti più colorati,Gli insetti più colorati,mismatch
+SUBJECT,subject_name,mt,Most Colorful Insects,L-aktar insetti kkuluriti,Ħafna Insetti Colorful,mismatch
+SUBJECT,subject_name,pt,Most Colorful Insects,Insetos mais coloridos,Os insetos mais coloridos,mismatch
+SUBJECT,subject_name,sv,Most Colorful Insects,De mest färgstarka insekterna,Mest färgglada insekter,mismatch
+SUBJECT,subject_name,uk,Most Colorful Insects,Найяскравіші комахи,Найбільш барвисті комахи,mismatch
+SUBJECT,subject_name,tl,Most Colorful Insects,Pinakamakulay na Insekto,Pinaka Makukulay na Insekto,mismatch
+SUBJECT,subject_name,vi,Most Colorful Insects,Những loài côn trùng sặc sỡ nhất,Côn trùng nhiều màu sắc nhất,mismatch
+e5feddb8-d0c0-47e4-bb90-ec8a6ce34050,answer,mt,Leaf-Footed Bug,Bug Saqajh Weraq,Bug bis-saqajn tal-werqa,mismatch
+e5feddb8-d0c0-47e4-bb90-ec8a6ce34050,answer,tl,Leaf-Footed Bug,Bug na may Leaf Footed,Bug na may Dahon,mismatch
+b0701193-bc08-4185-b819-a2c2527b4286,answer,vi,Madagascan Moon Moth,Bướm mặt trăng Madagascan,Bướm đêm mặt trăng Madagascan,mismatch
+d190698c-8c33-4a36-a6ce-a3e801cc8b9a,answer,nl,Malay Lacewing,Maleisische gaasvlieg,Maleise gaasvlieg,mismatch
+0873bbd1-2018-4d45-b5e8-dfd30b982bda,answer,ko,Neon Cuckoo Bee,네온 뻐꾸기 벌,네온 뻐꾸기벌,mismatch
+705f8af4-c8be-4867-bc1a-9b00d7dfe7fd,answer,ro,Pink Orchid Mantis,Manta Orhideea Roz,Mantis Orhidee Roz,mismatch
+066292f4-e646-42ea-8b7f-85d568c511c1,answer,sl,Assassin Bug,Hrošček morilec,Morilec Bug,mismatch
+76704bcf-88e8-4f9f-9d33-7b6bc257fce1,answer,cs,Cotton Harlequin Bug Nymph,Bavlněná nymfa na štěnice Harlekýna,Bavlněná harlekýnská nymfa,mismatch
+45b3c14a-ddf6-4ff0-b4a8-c4ff27278912,answer,lv,Neon Skimmer,Neona skimmers,Neona skimmeris,mismatch
+bbce880f-0f4d-4015-8ff7-b37cae267d7a,answer,bg,Lantern Bug,Фенер Буболечка,Буболечка с фенер,mismatch
+bbce880f-0f4d-4015-8ff7-b37cae267d7a,answer,uk,Lantern Bug,Жук-ліхтар,Жучок-ліхтар,mismatch
+ece9df9b-d7c1-422d-a089-8baabc6efd47,answer,lv,Rainbow Stag Beetle,Varavīksnes Stirnu vabole,Varavīksnes brieža vabole,mismatch
+ed56056d-d4ab-41cb-9fe2-e5d4bfc25512,answer,bg,Metallic Wood-Boring Beetle,Метален бръмбар за пробиване на дърво,Метален дървен бръмбар,mismatch
+827f423d-5e6c-4f15-a9dc-771d45b65639,answer,bg,White Ghost Cicada,Белият призрак цикада,Бял призрак цикада,mismatch
+65ce8e28-519e-485d-a64d-15f9bc270f9d,answer,ko,Rhododendron Leafhopper,진달래 매미,진달래 잎사귀,mismatch
+65ce8e28-519e-485d-a64d-15f9bc270f9d,answer,lt,Rhododendron Leafhopper,Rododendrų lapuočių skraistė,Rododendrų lapinė skraistė,mismatch
+bbdcc77a-0bac-4d22-a0ab-822e6b48e88a,answer,sl,Cecropia Moth Caterpillar,Gosenica molja Cecropia,Cecropia Moth Caterpillar,mismatch
+f68c46eb-8a58-4a5a-b967-5aef50afbff5,answer,hu,Rosy Maple Moth,Rózsaszín juharmoly,Rózsás juharmoly,mismatch
+f68c46eb-8a58-4a5a-b967-5aef50afbff5,answer,lt,Rosy Maple Moth,Rožinė klevo kandis,Rožinis klevo kandis,mismatch
+8519beac-9409-451d-9fe7-2c8deb51f7af,answer,fi,Rainbow Jewel Beetle,Rainbow Jewel Beetle,Rainbow Jalokivikuoriainen,mismatch
+8519beac-9409-451d-9fe7-2c8deb51f7af,answer,hu,Rainbow Jewel Beetle,Szivárvány ékszerbogár,Szivárvány Jewel Bogár,mismatch
+f7ea5ad6-a885-47a2-a5e3-26bb7e018b4c,answer,tr,Crimson Marsh Glider,Kızıl Bataklık Planörü,Kızıl Bataklık Planör,mismatch
+2bcf3e45-e090-4f23-9888-d10df3965f6b,answer,et,Golden Tortoise Beetle,Kuldkilpkonnamardikas,Kuldne kilpkonnamardikas,mismatch
+7b4064d7-bcfe-4f19-8b5e-dea71aa2a4d9,answer,lv,Malabar Banded Peacock Butterfly,Malabar lentveida pāvs tauriņš,Malabar lentveida pāva tauriņš,mismatch

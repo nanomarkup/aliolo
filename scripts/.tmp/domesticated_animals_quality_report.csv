@@ -1,0 +1,44 @@
+card_id,field,locale,global_text,current_text,translated_text,status
+SUBJECT,subject_name,cs,Domesticated Animals,Domácí zvířata,Domestikovaná zvířata,mismatch
+SUBJECT,subject_name,ar,Domesticated Animals,حيوانات أليفة,الحيوانات المستأنسة,mismatch
+SUBJECT,subject_name,de,Domesticated Animals,Haustiere,Domestizierte Tiere,mismatch
+SUBJECT,subject_name,es,Domesticated Animals,Animales domésticos,Animales domesticados,mismatch
+SUBJECT,subject_name,el,Domesticated Animals,Κατοικίδια ζώα,Εξημερωμένα Ζώα,mismatch
+SUBJECT,subject_name,da,Domesticated Animals,Husdyr,Tamme dyr,mismatch
+SUBJECT,subject_name,hi,Domesticated Animals,पालतू जानवर,पाले गए पशु,mismatch
+SUBJECT,subject_name,et,Domesticated Animals,Koduloomad,Kodustatud loomad,mismatch
+SUBJECT,subject_name,id,Domesticated Animals,Hewan Ternak & Peliharaan,Hewan Domestikasi,mismatch
+SUBJECT,subject_name,ga,Domesticated Animals,Ainmhithe clóis,Ainmhithe Intíre,mismatch
+SUBJECT,subject_name,ja,Domesticated Animals,家畜・ペット,家畜,mismatch
+SUBJECT,subject_name,nl,Domesticated Animals,Huisdieren,Gedomesticeerde dieren,mismatch
+SUBJECT,subject_name,ko,Domesticated Animals,가축 및 애완동물,가축화된 동물,mismatch
+SUBJECT,subject_name,mt,Domesticated Animals,Annimali domestiċi,Annimali Domestikati,mismatch
+SUBJECT,subject_name,lt,Domesticated Animals,Naminiai gyvūnai,Prijaukinti gyvūnai,mismatch
+SUBJECT,subject_name,sk,Domesticated Animals,Domáce zvieratá,Domestikované zvieratá,mismatch
+SUBJECT,subject_name,pt,Domesticated Animals,Animais domésticos,Animais domesticados,mismatch
+SUBJECT,subject_name,pl,Domesticated Animals,Zwierzęta domowe,Zwierzęta udomowione,mismatch
+SUBJECT,subject_name,ro,Domesticated Animals,Animale domestice,Animale domesticite,mismatch
+SUBJECT,subject_name,sv,Domesticated Animals,Husdjur,Tamdjur,mismatch
+SUBJECT,subject_name,uk,Domesticated Animals,Свійські тварини,Одомашнені тварини,mismatch
+SUBJECT,subject_name,sl,Domesticated Animals,Domače živali,Udomačene živali,mismatch
+SUBJECT,subject_name,tr,Domesticated Animals,Evcil Hayvanлар,Evcil Hayvanlar,mismatch
+SUBJECT,subject_name,vi,Domesticated Animals,Động vật thuần hóa,Động vật được thuần hóa,mismatch
+e03db021-c624-4db5-b2ab-603758041d83,answer,uk,"Zebu, Brahman cattle, indicine cattle or humped cattle","Зебу, велика рогата худоба Брахман, велика рогата худоба індицин або горбата велика рогата худоба","Зебу, велика рогата худоба Брахман, велика рогата худоба індіцин або горбата велика рогата худоба",mismatch
+7797724e-18f0-4d94-afd0-c4cff2f06632,answer,tl,Domestic horse,Domestic horse,Domestic na kabayo,mismatch
+aa7c0bb2-3583-4fb1-b375-c4c165091c1a,answer,ko,Domestic duck,국내오리,국내 오리,mismatch
+1cef0e89-8b68-49ea-8c37-f46b1a1e4283,answer,lt,Domestic water buffalo,Naminis vandens buivolas,Naminiai vandens buivolai,mismatch
+1cef0e89-8b68-49ea-8c37-f46b1a1e4283,answer,pl,Domestic water buffalo,Domowy bawół wodny,Bawół domowy,mismatch
+b8095ef2-7a19-4f85-88ca-36cb240daa7e,answer,id,Dromedary or Arabian camel,Unta Dromedari atau Arab,Dromedari atau unta Arab,mismatch
+16e26ba5-f52a-46f1-abbd-921879c157e2,answer,ga,Eri silkmoth,Síolmoth Eri,Éirigh shíoda,mismatch
+99922065-4848-44b2-9617-1daaa4d24092,answer,ga,Domestic goose and domestic swan goose,Gé intíre agus gé eala chlóis,Gé baile agus gé eala chlóis,mismatch
+99922065-4848-44b2-9617-1daaa4d24092,answer,nl,Domestic goose and domestic swan goose,Binnenlandse gans en binnenlandse zwaangans,Binnenlandse gans en binnenlandse zwanengans,mismatch
+89607fee-fc8a-450c-b552-c31f40b89a3d,answer,et,Domestic yak,Kodumaine jakk,Kodune jakk,mismatch
+7292b713-100c-4880-90e5-df34387c09e1,answer,id,Domestic guineafowl,ayam guinea domestik,ayam mutiara domestik,mismatch
+5298e4fe-2f36-4122-8d36-d67c89d22eec,answer,bg,Fuegian dog or Yaghan dog†,Fuegian dog или Yaghan куче†,Фуегийско куче или куче Яган†,mismatch
+9e6833a7-e4a0-4d15-9d9e-9d4dd783f90b,answer,mt,Barbary dove or ringed turtle dove,Ħamiema tal-barbar jew ħamiema ċrieki,Ħamiema tal-barbarija jew ħamiema ċrieket,mismatch
+9e6833a7-e4a0-4d15-9d9e-9d4dd783f90b,answer,uk,Barbary dove or ringed turtle dove,Голубка або кільчаста горлиця,Барбаріська голубка або кільчаста горлиця,mismatch
+ca6fb4a4-49ee-4a17-873b-e9fd72e344a6,answer,et,Society finch or Bengalese finch,Seltsivint ehk bengali vint,Seltsvint ehk bengali vint,mismatch
+ca6fb4a4-49ee-4a17-873b-e9fd72e344a6,answer,uk,Society finch or Bengalese finch,Товариство в'юрка або бенгальського в'юрка,Суспільство в'юрка або бенгальського в'юрка,mismatch
+63e8e53b-8f8e-4bf7-9e60-b0049b58725e,answer,uk,Fancy mouse or laboratory mouse,Модна миша або лабораторна мишка,Модна мишка або лабораторна мишка,mismatch
+cc4e8223-ff72-4ba0-b38b-eb760f6be39b,answer,fi,Fancy rat or laboratory rat,Hieno rotta tai laboratoriorotta,Fancy rotta tai laboratoriorotta,mismatch
+3eadcda1-d5d2-4760-bafc-18e26c11afdc,answer,tl,Domesticated silver fox,Domesticated silver fox,Domestikadong silver fox,mismatch

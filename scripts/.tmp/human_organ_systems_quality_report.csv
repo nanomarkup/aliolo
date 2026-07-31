@@ -1,0 +1,22 @@
+card_id,field,locale,global_text,current_text,translated_text,status
+SUBJECT,subject_name,ar,Human Organ Systems,أجهزة جسم الإنسان,أنظمة الأعضاء البشرية,mismatch
+SUBJECT,subject_name,da,Human Organ Systems,Menneskets organsystemer,Menneskelige organsystemer,mismatch
+SUBJECT,subject_name,bg,Human Organ Systems,Органни системи на човека,Системи на човешки органи,mismatch
+SUBJECT,subject_name,el,Human Organ Systems,Συστήματα οργάνων του ανθρώπου,Συστήματα Ανθρώπινων Οργάνων,mismatch
+SUBJECT,subject_name,cs,Human Organ Systems,Lidské orgánové soustavy,Systémy lidských orgánů,mismatch
+SUBJECT,subject_name,et,Human Organ Systems,Inimese elundkonnad,Inimese organsüsteemid,mismatch
+SUBJECT,subject_name,ga,Human Organ Systems,Córais Orgán Daonna,Córais Orgánach Daonna,mismatch
+SUBJECT,subject_name,hi,Human Organ Systems,मानव अंग प्रणाली,मानव अंग प्रणालियाँ,mismatch
+SUBJECT,subject_name,hr,Human Organ Systems,Ljudski organski sustavi,Sustavi ljudskih organa,mismatch
+SUBJECT,subject_name,ko,Human Organ Systems,인체 기관계,인간 장기 시스템,mismatch
+SUBJECT,subject_name,pl,Human Organ Systems,Układy narządów człowieka,Układy narządów ludzkich,mismatch
+SUBJECT,subject_name,ja,Human Organ Systems,人体の器官系,人間の臓器系,mismatch
+SUBJECT,subject_name,mt,Human Organ Systems,Sistemi ta' Organi tal-Bniedem,Sistemi tal-Organi tal-Bniedem,mismatch
+SUBJECT,subject_name,sl,Human Organ Systems,Človeški organski sistemi,Sistemi človeških organov,mismatch
+SUBJECT,subject_name,sk,Human Organ Systems,Ľudské orgánové sústavy,Systémy ľudských orgánov,mismatch
+SUBJECT,subject_name,sv,Human Organ Systems,Människans organsystem,Mänskliga organsystem,mismatch
+SUBJECT,subject_name,ro,Human Organ Systems,Sisteme de organe umane,Sistemele de organe umane,mismatch
+SUBJECT,subject_name,vi,Human Organ Systems,Các hệ cơ quan ở người,Hệ thống cơ quan con người,mismatch
+SUBJECT,subject_name,tl,Human Organ Systems,Mga Sistema ng Organ ng Tao,Sistema ng Organ ng Tao,mismatch
+de8b9416-e229-4da1-a21a-a320d1a647f3,answer,ko,Exocrine system,외분비 시스템,외분비계,mismatch
+78129c20-a3af-42cc-8064-7f4452b27bea,answer,ro,Reproductive system,Sistemul de reproducere,Sistemul reproducător,mismatch

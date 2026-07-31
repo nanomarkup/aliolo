@@ -1,0 +1,20 @@
+card_id,field,locale,global_text,current_text,translated_text,status
+SUBJECT,subject_name,cs,Flags of the World,Vlajky svěта,Vlajky světa,mismatch
+SUBJECT,subject_name,ga,Flags of the World,Brait an domhain,Bratacha an Domhain,mismatch
+SUBJECT,subject_name,ko,Flags of the World,세계의 국기,세계의 깃발,mismatch
+SUBJECT,subject_name,ro,Flags of the World,Steagurile lumii,Steaguri ale lumii,mismatch
+SUBJECT,subject_name,uk,Flags of the World,Прапори світу,Прапори країн світу,mismatch
+SUBJECT,subject_name,vi,Flags of the World,Quốc kỳ thế giới,Cờ của thế giới,mismatch
+0ea0f53d-4871-4ed6-8f94-d6d83de0be76,answer,ga,Coat of arms of Haiti,Armas de chuid Háítí,Armas Háití,mismatch
+ef5fa281-d46f-449d-a754-dc599f66c0c0,answer,ko,Equatorial Guinea,적도기니,적도 기니,mismatch
+d1cc707d-f739-4ca6-ba7c-0e15befa755d,answer,ga,Marshall Islands,Oileáin Marshall,Oileáin Mharshall,mismatch
+d1cc707d-f739-4ca6-ba7c-0e15befa755d,answer,tl,Marshall Islands,Marshall Islands,Mga Isla ng Marshall,mismatch
+26dbcb86-084e-4d88-b66c-65bb7ccc3a6b,answer,sk,San Marino,San Marino,San Maríno,mismatch
+844370ef-d818-4a34-89fa-814f3ced3aa3,answer,ko,South Africa,남아프리카공화국,남아프리카,mismatch
+80e4e81b-eff1-449c-bf22-5732b3cf8e70,answer,it,Costa Rica,Costa Rica,Costarica,mismatch
+92c61f89-baa6-4acd-aaba-8ccbc786eb94,answer,ga,Armenia,Airméin,an Airméin,mismatch
+7c3a0ad3-80cc-42ff-95f9-5b122e6af6cc,answer,ga,Bulgaria,an Bhulgáir,Bhulgáir,mismatch
+57f234a0-175c-4fa3-9902-b3427e50309e,answer,mt,Egypt,Eġittu,l-Eġittu,mismatch
+0c488d6b-3fa7-4038-8770-47082ba715d5,answer,nl,Eswatini,Eswatini,Swaziland,mismatch
+b1d5200f-3c74-4922-8f97-397b0731f689,answer,mt,India,Indja,l-Indja,mismatch
+f905e72b-91d8-4543-b654-f6ee4a014ec5,answer,tl,Saint Lucia,San Lucia,Saint Lucia,mismatch

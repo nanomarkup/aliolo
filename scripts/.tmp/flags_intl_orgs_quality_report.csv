@@ -1,0 +1,26 @@
+card_id,field,locale,global_text,current_text,translated_text,status
+SUBJECT,subject_name,es,Flags of International Organizations,Banderas de organizaciones internacionales,Banderas de Organismos Internacionales,mismatch
+SUBJECT,subject_name,hi,Flags of International Organizations,अंतर्राष्ट्रीय संगठनों के ध्वज,अंतर्राष्ट्रीय संगठनों के झंडे,mismatch
+SUBJECT,subject_name,it,Flags of International Organizations,Bandiere delle organizzazioni internazionali,Bandiere di organizzazioni internazionali,mismatch
+SUBJECT,subject_name,ja,Flags of International Organizations,国際機関の旗,国際機関の国旗,mismatch
+SUBJECT,subject_name,ko,Flags of International Organizations,국제기구의 기,국제기구의 깃발,mismatch
+SUBJECT,subject_name,ro,Flags of International Organizations,Steagurile organizațiilor internaționale,Steaguri ale organizațiilor internaționale,mismatch
+SUBJECT,subject_name,vi,Flags of International Organizations,Quốc kỳ của các tổ chức quốc tế,Cờ của các tổ chức quốc tế,mismatch
+SUBJECT,subject_name,tl,Flags of International Organizations,Mga Watawat ng mga Pandaigdigang Organisasyon,Mga Watawat ng mga Internasyonal na Organisasyon,mismatch
+736d0ed7-0999-4be2-b80b-2e6b4e096783,answer,sl,Commonwealth of Nations,Commonwealth of Nations,Commonwealth narodov,mismatch
+70fcdae8-3135-4535-bea4-2d62c556bddc,answer,sk,Andean Community,Andského spoločenstva,Andské spoločenstvo,mismatch
+5b3de6bb-f03f-4b71-ab71-e83652498836,answer,tr,"Organisation of African, Caribbean and Pacific States","Afrika, Karayipler ve Pasifik Devletleri Örgütü","Afrika, Karayip ve Pasifik Devletleri Örgütü",mismatch
+894bfa2a-58a8-4492-afb7-33a3d0dac0d6,answer,tl,European Olympic Committees,European Olympic Committees,European Olympic Committee,mismatch
+433259aa-83e2-4287-a64a-d4fd04581c4f,answer,bg,Community of Latin American and Caribbean States,Общност на държавите от Латинска Америка и Карибите,Общността на държавите от Латинска Америка и Карибите,mismatch
+ca590630-9c5b-485a-8b47-0077a55cf5a0,answer,hi,Southeast Asia Treaty Organization,दक्षिण पूर्व एशिया संधि संगठन,दक्षिणपूर्व एशिया संधि संगठन,mismatch
+ca590630-9c5b-485a-8b47-0077a55cf5a0,answer,ko,Southeast Asia Treaty Organization,동남아시아 조약 기구,동남아시아 조약기구,mismatch
+e3669afa-d64a-405f-8fcc-2cc23c03d2f2,answer,sk,Economic Community of West African States,Hospodárske spoločenstvo štátov západnej Afriky,Hospodárske spoločenstvo západoafrických štátov,mismatch
+de1f7493-f390-4706-8b81-58edb240d09a,answer,sk,Baltic Assembly,Baltské zhromaždenie,Pobaltské zhromaždenie,mismatch
+d3e01844-7e7e-4175-815b-e179399461d6,answer,ar,Jeux de la Francophonie,الألعاب الفرانكفونية,الألعاب الفرانكوفونية,mismatch
+4c4536d1-c024-4c2b-bd70-d3cec5955330,answer,id,Gulf Cooperation Council,Dewan Kerjasama Teluk,Dewan Kerja Sama Teluk,mismatch
+4fa40608-76e1-4964-bd37-a9b1ae8704ad,answer,sv,Pacific Community,Stillahavsområdet,Stilla havet,mismatch
+1a36c069-32a2-46c9-9855-3d5440120dfb,answer,ga,International Military Sports Council,An Chomhairle Idirnáisiúnta Spóirt Mhíleata,An Chomhairle Spóirt Mhíleata Idirnáisiúnta,mismatch
+0ff51f15-7a4f-4293-9578-f5ba9eca67e4,answer,da,Organisation of Islamic Cooperation,Organisation for Islamisk Samarbejde,Organisation af Islamisk Samarbejde,mismatch
+0ff51f15-7a4f-4293-9578-f5ba9eca67e4,answer,hu,Organisation of Islamic Cooperation,Az Iszlám Együttműködés Szervezete,Iszlám Együttműködés Szervezete,mismatch
+aa8ec813-5df8-428b-bb6f-21b0e39ea90c,answer,el,Southern African Development Community,Αναπτυξιακή Κοινότητα Νότιας Αφρικής,Αναπτυξιακή Κοινότητα Νοτίου Αφρικής,mismatch
+1192a42e-dab2-44b1-a44e-923f0968bd50,answer,da,Association of National Olympic Committees of Africa,Sammenslutningen af ​​Nationale Olympiske Komitéer i Afrika,Sammenslutningen af ​​Afrikas Nationale Olympiske Komitéer,mismatch

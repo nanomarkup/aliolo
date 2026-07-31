@@ -1,0 +1,14 @@
+card_id,field,locale,old_value,new_value
+acb0efea-6311-4bf5-a6e2-42ebc6c94fdc,prompt,ga,Select the correct 3D shape:,Cén cruth atá air seo?
+acb0efea-6311-4bf5-a6e2-42ebc6c94fdc,answer,ga,Cylinder,Sorcóir
+562e628c-402a-4356-9309-6848df398ea8,prompt,ga,Select the correct 3D shape:,Cén cruth atá air seo?
+562e628c-402a-4356-9309-6848df398ea8,answer,ga,Cube,Ciúb
+0295a6aa-24dd-4410-a081-8bb2da84a572,prompt,ga,Select the correct 3D shape:,Cén cruth atá air seo?
+0295a6aa-24dd-4410-a081-8bb2da84a572,answer,ga,Sphere,Sféar
+8d33519a-cddf-4a48-be52-1046418addd4,prompt,ga,Select the correct 3D shape:,Cén cruth atá air seo?
+928cc2e1-6921-4a18-af8d-8eed4107e3dd,prompt,ga,Select the correct 3D shape:,Cén cruth atá air seo?
+928cc2e1-6921-4a18-af8d-8eed4107e3dd,answer,ga,Pyramid,Pirimid
+86078182-ce72-4e82-83dc-ead87c891bd6,prompt,ga,Select the correct 3D shape:,Cén cruth atá air seo?
+86078182-ce72-4e82-83dc-ead87c891bd6,answer,ga,Torus,Tórás
+d6d5deef-fadf-46db-a8a2-f0e6dff8d130,prompt,ga,Select the correct 3D shape:,Cén cruth atá air seo?
+d6d5deef-fadf-46db-a8a2-f0e6dff8d130,answer,ga,Cone,Cón

@@ -1,0 +1,5 @@
+#!/bin/sh
+export GEM_HOME=/Users/vitaliinoha/.gem/ruby/2.6.0
+export GEM_PATH=/Users/vitaliinoha/.gem/ruby/2.6.0:/Library/Ruby/Gems/2.6.0:/System/Library/Frameworks/Ruby.framework/Versions/2.6/usr/lib/ruby/gems/2.6.0
+export PATH=/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin
+exec /System/Library/Frameworks/Ruby.framework/Versions/2.6/usr/bin/ruby -rlogger /Users/vitaliinoha/.gem/ruby/2.6.0/bin/pod "$@"

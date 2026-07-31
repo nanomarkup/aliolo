@@ -1,0 +1,12 @@
+card_id,field,locale,global_text,current_text,translated_text,status
+SUBJECT,subject_name,ar,Types of Sea Animals,أنواع حيوانات البحر,أنواع الحيوانات البحرية,mismatch
+SUBJECT,subject_name,el,Types of Sea Animals,Είδη θαλάσσιων ζώων,Τύποι θαλάσσιων ζώων,mismatch
+SUBJECT,subject_name,hu,Types of Sea Animals,Tengeri állatok típusai,A tengeri állatok fajtái,mismatch
+SUBJECT,subject_name,ja,Types of Sea Animals,海洋動物の種類,海の動物の種類,mismatch
+SUBJECT,subject_name,tr,Types of Sea Animals,Deniz Hayvanı Türleri,Deniz Hayvanlarının Türleri,mismatch
+015ab440-c0b2-4f56-981f-833fa5a55545,answer,et,Humphead parrotfish,Küürpea papagoikala,Küürpea papagoi kala,mismatch
+015ab440-c0b2-4f56-981f-833fa5a55545,answer,ro,Humphead parrotfish,Pește-papagal Humphead,Peștele papagal Humphead,mismatch
+8f8c9b7d-4476-43a6-939e-705a3cf634b6,answer,et,Walrus,Morss,Morsas,mismatch
+bf9ddc3a-6bab-4c2f-bbaf-28bfc6de3e9f,answer,tr,Barracuda,Baraküda,Barakuda,mismatch
+d2157af0-3fe8-4f14-98db-42908387d742,answer,sk,Manta ray,Manta ray,Manta raja,mismatch
+f5f728fe-e8b8-45a0-9fd5-b350de9c2603,answer,ga,Cuttlefish,Cudal,Cugall,mismatch

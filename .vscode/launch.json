@@ -1,0 +1,34 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Aliolo (Local API)",
+            "type": "dart",
+            "request": "launch",
+            "program": "lib/main.dart",
+            "args": [
+                "--dart-define=API_URL=http://localhost:8787"
+            ]
+        },
+        {
+            "name": "Aliolo (Production API)",
+            "type": "dart",
+            "request": "launch",
+            "program": "lib/main.dart",
+            "args": [
+                "--dart-define=API_URL=https://aliolo.com"
+            ]
+        },
+        {
+            "name": "Aliolo Web (Chrome)",
+            "type": "dart",
+            "request": "launch",
+            "program": "lib/main.dart",
+            "args": [
+                "-d",
+                "chrome",
+                "--dart-define=API_URL=http://localhost:8787"
+            ]
+        }
+    ]
+}

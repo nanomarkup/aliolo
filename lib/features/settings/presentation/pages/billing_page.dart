@@ -1,0 +1,364 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+import 'package:provider/provider.dart';
+import 'package:aliolo/core/di/service_locator.dart';
+import 'package:aliolo/core/utils/api_error.dart';
+import 'package:aliolo/data/services/auth_service.dart';
+import 'package:aliolo/data/services/subscription_service.dart';
+import 'package:aliolo/data/services/translation_service.dart';
+import 'package:aliolo/data/services/theme_service.dart';
+import 'package:aliolo/core/utils/legal_links.dart';
+import 'package:aliolo/core/widgets/aliolo_scrollable_page.dart';
+import 'package:aliolo/features/auth/presentation/pages/checkout_identity_page.dart';
+
+class BillingPage extends StatefulWidget {
+  final int selectedIndex;
+
+  const BillingPage({super.key, required this.selectedIndex});
+
+  @override
+  State<BillingPage> createState() => _BillingPageState();
+}
+
+class _BillingPageState extends State<BillingPage> {
+  bool _isProcessing = false;
+
+  Future<bool> _ensureCheckoutIdentity() async {
+    final authService = getIt<AuthService>();
+    if (authService.currentUser?.serverId != null) {
+      return true;
+    }
+
+    final created = await Navigator.push<bool>(
+      context,
+      MaterialPageRoute(builder: (_) => const CheckoutIdentityPage()),
+    );
+    return created == true && authService.currentUser?.serverId != null;
+  }
+
+  Widget _buildLegalLink(
+    BuildContext context,
+    String label,
+    Uri uri,
+    Color color,
+  ) {
+    return TextButton(
+      onPressed: () => AlioloLegalLinks.open(context, uri),
+      style: TextButton.styleFrom(
+        visualDensity: VisualDensity.compact,
+        foregroundColor: color,
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+      ),
+      child: Text(label),
+    );
+  }
+
+  Future<void> _handlePurchase(SubscriptionService subService) async {
+    setState(() => _isProcessing = true);
+
+    String productId = 'aliolo_premium_monthly';
+    if (widget.selectedIndex == 2)
+      productId = 'aliolo_premium_yearly';
+    else if (widget.selectedIndex == 0)
+      productId = 'aliolo_premium_weekly';
+
+    try {
+      final readyForCheckout = await _ensureCheckoutIdentity();
+      if (!readyForCheckout) return;
+
+      await subService.buySubscriptionByProductId(productId);
+      if (mounted) {
+        Navigator.pop(context);
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(formatApiErrorMessage(e, fallback: 'Purchase failed. Please try again.'))),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _isProcessing = false);
+    }
+  }
+
+  Future<void> _handlePaddleCancellation(SubscriptionService subService) async {
+    setState(() => _isProcessing = true);
+
+    try {
+      await subService.openPaddleCancellation();
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              formatApiErrorMessage(
+                e,
+                fallback: 'Could not open Paddle cancellation. Please try again.',
+              ),
+            ),
+          ),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _isProcessing = false);
+    }
+  }
+
+  String _billingDisclaimer() {
+    if (kIsWeb) {
+      return 'Subscriptions automatically renew unless canceled. Web subscriptions are managed through Paddle.';
+    }
+    return 'Subscriptions automatically renew unless cancelled. You can manage your subscription in your store settings.';
+  }
+
+  Widget _buildFooter(
+    BuildContext context,
+    SubscriptionService subService,
+    Color currentPrimaryColor,
+  ) {
+    final showPaddleCancellation =
+        kIsWeb &&
+        subService.isPremium &&
+        subService.billingProvider == 'paddle';
+
+    return SliverFillRemaining(
+      hasScrollBody: false,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          if (showPaddleCancellation) ...[
+            Text(
+              'Need to cancel a Paddle subscription? Open the Paddle cancellation flow below.',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 13, color: Colors.grey[600]),
+            ),
+            const SizedBox(height: 12),
+            SizedBox(
+              width: double.infinity,
+              child: OutlinedButton(
+                onPressed:
+                    _isProcessing
+                        ? null
+                        : () => _handlePaddleCancellation(subService),
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: currentPrimaryColor,
+                  side: BorderSide(color: currentPrimaryColor),
+                  minimumSize: const Size(double.infinity, 48),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                ),
+                child: Text(
+                  'Cancel in Paddle',
+                  style: TextStyle(
+                    color: currentPrimaryColor,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 24),
+          ],
+          const Divider(height: 1),
+          const SizedBox(height: 18),
+          Wrap(
+            alignment: WrapAlignment.center,
+            spacing: 4,
+            runSpacing: 4,
+            children: [
+              _buildLegalLink(
+                context,
+                'Terms',
+                AlioloLegalLinks.terms,
+                currentPrimaryColor,
+              ),
+              _buildLegalLink(
+                context,
+                'Privacy',
+                AlioloLegalLinks.privacy,
+                currentPrimaryColor,
+              ),
+              _buildLegalLink(
+                context,
+                'Refund',
+                AlioloLegalLinks.refund,
+                currentPrimaryColor,
+              ),
+            ],
+          ),
+          const SizedBox(height: 18),
+        ],
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final subService = context.watch<SubscriptionService>();
+    final currentPrimaryColor = ThemeService().primaryColor;
+
+    String title = context.t('plan_monthly_title');
+    String price = r"$8.99";
+    String sub = context.t('plan_monthly_tagline');
+    String? originalPrice = r"$17.98";
+    String? extraInfo = context.t('price_per_week', args: {'price': r'$2.25'});
+
+    if (widget.selectedIndex == 0) {
+      title = context.t('plan_weekly_title');
+      price = r"$2.99";
+      sub = context.t('plan_weekly_tagline');
+      originalPrice = r"$5.98";
+      extraInfo = null;
+    } else if (widget.selectedIndex == 2) {
+      title = context.t('plan_yearly_title');
+      price = r"$80.99";
+      sub = context.t('plan_yearly_tagline');
+      originalPrice = r"$161.98";
+      extraInfo = context.t('price_per_week', args: {'price': r'$1.56'});
+    }
+
+    return AlioloScrollablePage(
+      title: Text(
+        context.t('billing_title'),
+        style: const TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      appBarColor: currentPrimaryColor,
+      body: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 500),
+          child: Column(
+            children: [
+              const SizedBox(height: 40),
+              const Icon(
+                Icons.shopping_cart_checkout,
+                size: 64,
+                color: Colors.grey,
+              ),
+              const SizedBox(height: 32),
+              Text(
+                context.t('confirm_subscription'),
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 24),
+
+              // Plan Display (Mirrors selection style)
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(24),
+                decoration: BoxDecoration(
+                  color: currentPrimaryColor.withValues(alpha: 0.05),
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(color: currentPrimaryColor, width: 2),
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            title,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                            ),
+                          ),
+                          Text(
+                            sub,
+                            style: TextStyle(
+                              color: Colors.grey[600],
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          originalPrice,
+                          style: TextStyle(
+                            color: Colors.grey[400],
+                            fontSize: 14,
+                            decoration: TextDecoration.lineThrough,
+                          ),
+                        ),
+                        Text(
+                          price,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 24,
+                            color: currentPrimaryColor,
+                          ),
+                        ),
+                        if (extraInfo != null)
+                          Text(
+                            extraInfo,
+                            style: TextStyle(
+                              color: currentPrimaryColor.withValues(alpha: 0.7),
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+
+              const SizedBox(height: 32),
+              Text(
+                _billingDisclaimer(),
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+              ),
+
+              const SizedBox(height: 48),
+              if (_isProcessing)
+                const CircularProgressIndicator()
+              else
+                ElevatedButton(
+                  onPressed: () => _handlePurchase(subService),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: currentPrimaryColor,
+                    foregroundColor: Colors.white,
+                    minimumSize: const Size(double.infinity, 56),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    elevation: 0,
+                  ),
+                  child: Text(
+                    context.t('subscribe_now'),
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              const SizedBox(height: 24),
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text(
+                  context.t('cancel'),
+                  style: const TextStyle(
+                    color: Colors.grey,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+      slivers: [_buildFooter(context, subService, currentPrimaryColor)],
+    );
+  }
+}
