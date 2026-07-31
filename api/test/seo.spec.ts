@@ -8,12 +8,26 @@ function uniqueId(prefix: string) {
 }
 
 describe('SEO and crawlability', () => {
+  it('redirects the public HTTP origin to HTTPS', async () => {
+    const res = await app.request('http://aliolo.com/pricing?source=test', {}, env);
+
+    expect(res.status).toBe(308);
+    expect(res.headers.get('location')).toBe('https://aliolo.com/pricing?source=test');
+  });
+
+  it('allows local HTTP development', async () => {
+    const res = await app.request('http://localhost/robots.txt', {}, env);
+    expect(res.status).toBe(200);
+  });
+
   it('renders the public landing page with conversion and accessibility essentials', async () => {
     const res = await app.request('https://aliolo.com/', {}, env);
     const html = await res.text();
 
     expect(res.status).toBe(200);
     expect(html).toContain('<link rel="canonical" href="https://aliolo.com/">');
+    expect(html).toContain('<link rel="icon" type="image/webp" href="/app_icon.webp">');
+    expect(html).toContain('<link rel="manifest" href="/manifest.json">');
     expect(html).toContain('https://aliolo.com/aliolo-social-preview.png');
     expect(html).toContain('<meta property="og:image:width" content="1200">');
     expect(html).toContain('<meta property="og:image:height" content="630">');
@@ -34,8 +48,21 @@ describe('SEO and crawlability', () => {
 
     expect(res.status).toBe(200);
     expect(text).toContain('Sitemap: https://aliolo.com/sitemap.xml');
-    expect(text).toContain('Disallow: /pay');
-    expect(text).toContain('Disallow: /login');
+    expect(text).toContain('Disallow: /api/');
+    expect(text).not.toContain('Disallow: /pay');
+    expect(text).not.toContain('Disallow: /login');
+  });
+
+  it('builds a sitemap with accurate dates and no ignored hints', async () => {
+    const res = await app.request('https://aliolo.com/sitemap.xml', {}, env);
+    const xml = await res.text();
+
+    expect(res.status).toBe(200);
+    expect(res.headers.get('content-type')).toContain('application/xml');
+    expect(xml).toContain('<loc>https://aliolo.com/</loc>');
+    expect(xml).toContain('<lastmod>2026-08-01</lastmod>');
+    expect(xml).not.toContain('<changefreq>');
+    expect(xml).not.toContain('<priority>');
   });
 
   it('renders pricing page with social metadata', async () => {
@@ -82,6 +109,8 @@ describe('SEO and crawlability', () => {
     expect(html).toBeTruthy();
     expect(html).toContain('<title>Medical Spanish Flashcards | Aliolo</title>');
     expect(html).toContain(`<link rel="canonical" href="https://aliolo.com/subject/${subjectId}">`);
+    expect(html).toContain('https://aliolo.com/aliolo-social-preview.png');
+    expect(html).toContain('<meta property="og:image:width" content="1200">');
     expect(html).toContain('How do you say heart?');
     expect(html).toContain('Open Aliolo');
   });

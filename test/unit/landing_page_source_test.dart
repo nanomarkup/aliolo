@@ -4,44 +4,46 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:image/image.dart' as image;
 
 void main() {
-  group('public landing page', () {
+  group('web application assets', () {
     late String html;
+    late String wranglerConfig;
 
     setUpAll(() {
       html = File('web/index.html').readAsStringSync();
+      wranglerConfig = File('api/wrangler.jsonc').readAsStringSync();
     });
 
-    test('keeps conversion, product proof, and accessibility essentials', () {
-      expect(html, contains('<a class="skip-link" href="#main-content">'));
-      expect(html, contains('id="main-content"'));
-      expect(html, contains('Learn visually. Remember longer.'));
-      expect(html, contains('src="/landing-product-preview.jpg"'));
+    test('uses one minimal, non-indexable Flutter application shell', () {
+      expect(html, contains('<html lang="en">'));
+      expect(html, contains('<meta name="robots" content="noindex,nofollow">'));
       expect(
         html,
-        contains(
-          'href="/login" class="btn btn-primary">Create free account</a>',
-        ),
+        contains('<link rel="canonical" href="https://aliolo.com/login">'),
       );
       expect(
         html,
-        contains('href="/?login=1" class="btn btn-secondary">Log in</a>'),
+        contains('<link rel="icon" type="image/webp" href="app_icon.webp">'),
       );
-      expect(html, contains('aria-label="View monthly plan details"'));
-      expect(html, contains(':focus-visible'));
-      expect(html, contains('prefers-reduced-motion'));
-      expect(html, isNot(contains('payment partners')));
-      expect(html, isNot(contains('Paddle review')));
-      expect(html, isNot(contains('crawlable learning content')));
+      expect(html, contains('<link rel="manifest" href="manifest.json">'));
+      expect(
+        html,
+        contains('<script src="flutter_bootstrap.js" async></script>'),
+      );
+      expect(
+        html,
+        contains("window.postMessage('flutter-app-update-available'"),
+      );
+      expect(html, isNot(contains('Learn visually. Remember longer.')));
     });
 
-    test('uses a correctly sized social sharing image', () {
+    test('runs the Worker before static assets on every environment', () {
       expect(
-        html,
-        contains(
-          '<meta property="og:image" content="https://aliolo.com/aliolo-social-preview.png">',
-        ),
+        RegExp('"run_worker_first": true').allMatches(wranglerConfig).length,
+        2,
       );
+    });
 
+    test('provides a correctly sized social sharing image asset', () {
       final bytes = File('web/aliolo-social-preview.png').readAsBytesSync();
       final preview = image.decodePng(bytes);
       expect(preview, isNotNull);

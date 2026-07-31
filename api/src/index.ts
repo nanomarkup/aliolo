@@ -25,6 +25,18 @@ import storageRouter from './routes/storage';
 
 const app = new OpenAPIHono<AppEnv>();
 
+// Keep one canonical, secure origin for users and search engines. Cloudflare
+// forwards the original request scheme to the Worker, so this also covers the
+// custom production domain without affecting local HTTP development.
+app.use('*', async (c, next) => {
+  const url = new URL(c.req.url);
+  if (url.protocol === 'http:' && url.hostname !== 'localhost' && url.hostname !== '127.0.0.1') {
+    url.protocol = 'https:';
+    return c.redirect(url.toString(), 308);
+  }
+  return next();
+});
+
 app.use('*', cors({
     origin: (origin) => origin,
     credentials: true,
@@ -406,6 +418,7 @@ function legalPage(args: {
   <meta name="twitter:description" content="${args.subtitle}">
   <meta name="twitter:image" content="https://aliolo.com/aliolo-social-preview.png">
   <link rel="canonical" href="https://aliolo.com${args.path}">
+  <link rel="icon" type="image/webp" href="/app_icon.webp">
   <script type="application/ld+json">${JSON.stringify(args.structuredData ?? {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
@@ -1751,6 +1764,9 @@ const landingHtml = `<!DOCTYPE html>
   <meta name="twitter:description" content="Master what matters with visual flashcards, spaced repetition, and interactive test modes.">
   <meta name="twitter:image" content="https://aliolo.com/aliolo-social-preview.png">
   <link rel="canonical" href="https://aliolo.com/">
+  <link rel="apple-touch-icon" href="/icons/Icon-192.png">
+  <link rel="icon" type="image/webp" href="/app_icon.webp">
+  <link rel="manifest" href="/manifest.json">
   <script>
     (() => {
       const params = new URLSearchParams(window.location.search);
@@ -1973,47 +1989,6 @@ const landingHtml = `<!DOCTYPE html>
 </body>
 </html>`;
 
-const appShellHtml = `<!DOCTYPE html>
-<html>
-<head>
-  <base href="/">
-  <meta charset="UTF-8">
-  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Aliolo app for visual learning, structured flashcards, and focused study workflows.">
-  <meta name="robots" content="noindex,nofollow">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="Aliolo">
-  <link rel="canonical" href="https://aliolo.com/login">
-  <link rel="apple-touch-icon" href="/icons/Icon-192.png">
-  <link rel="icon" type="image/webp" href="/app_icon.webp">
-  <link rel="manifest" href="/manifest.json">
-  <title>Aliolo App</title>
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function () {
-        navigator.serviceWorker.ready.then(function (reg) {
-          reg.onupdatefound = function () {
-            const newWorker = reg.installing;
-            if (!newWorker) return;
-            newWorker.onstatechange = function () {
-              if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                window.postMessage('flutter-app-update-available', '*');
-              }
-            };
-          };
-        });
-      });
-    }
-  </script>
-</head>
-<body>
-  <script src="/flutter_bootstrap.js" async></script>
-</body>
-</html>`;
-
 function shouldServeAppShell(pathname: string) {
   return (
     pathname === '/login' ||
@@ -2105,7 +2080,7 @@ app.get('/pricing', (c) => c.html(pricingHtml));
 app.get('/pay', (c) => c.html(buildPayHtml(c.env.PADDLE_CLIENT_TOKEN)));
 app.get('/robots.txt', (c) =>
   c.text(
-    `User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /login\nDisallow: /pay\n\nSitemap: https://aliolo.com/sitemap.xml\n`,
+    `User-agent: *\nAllow: /\nDisallow: /api/\n\nSitemap: https://aliolo.com/sitemap.xml\n`,
     200,
     {
       'Content-Type': 'text/plain; charset=UTF-8',
@@ -2150,9 +2125,18 @@ app.get('*', async (c) => {
     // Try to fetch the specific asset
     const assetResponse = await c.env.ASSETS.fetch(c.req.raw);
     
-    // If the asset is not found (404), only known app routes should bootstrap the SPA shell.
+    // If the asset is not found (404), only known app routes should bootstrap
+    // the Flutter shell. web/index.html is the sole app-shell source.
     if (assetResponse.status === 404 && !url.pathname.includes('.') && shouldServeAppShell(url.pathname)) {
-        let htmlBody = appShellHtml;
+        const indexUrl = new URL('/index.html', c.req.url);
+        const appShellResponse = await c.env.ASSETS.fetch(
+            new Request(indexUrl.toString(), { headers: c.req.raw.headers }),
+        );
+        if (!appShellResponse.ok) {
+            return c.text('Not Found', 404);
+        }
+
+        let htmlBody = await appShellResponse.text();
 
         const userAgent = c.req.header('user-agent') || '';
         if (isbot(userAgent) || isPublicSeoPath(url.pathname)) {
@@ -2164,7 +2148,7 @@ app.get('*', async (c) => {
             }
         }
 
-        const newHeaders = new Headers(assetResponse.headers);
+        const newHeaders = new Headers(appShellResponse.headers);
         newHeaders.delete('content-length');
         newHeaders.set('content-type', 'text/html;charset=UTF-8');
 

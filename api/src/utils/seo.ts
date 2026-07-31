@@ -1,7 +1,7 @@
 import { D1Database } from '@cloudflare/workers-types';
 
 const BASE_URL = 'https://aliolo.com';
-const DEFAULT_OG_IMAGE = `${BASE_URL}/app_icon.webp`;
+const DEFAULT_OG_IMAGE = `${BASE_URL}/aliolo-social-preview.png`;
 
 type SeoEntity =
   | {
@@ -72,6 +72,9 @@ export async function generateSeoHtml(
       `<meta property="og:description" content="${escapeHtml(description)}">`,
       `<meta property="og:url" content="${canonicalUrl}">`,
       `<meta property="og:image" content="${DEFAULT_OG_IMAGE}">`,
+      '<meta property="og:image:width" content="1200">',
+      '<meta property="og:image:height" content="630">',
+      '<meta property="og:image:alt" content="Aliolo visual learning cards and spaced repetition preview">',
       '<meta name="twitter:card" content="summary_large_image">',
       `<meta name="twitter:title" content="${escapeHtml(title)}">`,
       `<meta name="twitter:description" content="${escapeHtml(description)}">`,
