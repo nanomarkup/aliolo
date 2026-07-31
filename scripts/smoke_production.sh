@@ -3,8 +3,19 @@ set -euo pipefail
 
 BASE_URL="${ALIOLO_PRODUCTION_URL:-https://aliolo.com}"
 
-HTTP_STATUS="$(curl --silent --output /dev/null --write-out '%{http_code}' http://aliolo.com/)"
-HTTP_LOCATION="$(curl --silent --head http://aliolo.com/ | tr -d '\r' | awk 'tolower($1) == "location:" { print $2 }')"
+HTTP_STATUS=""
+HTTP_LOCATION=""
+for attempt in {1..12}; do
+  HTTP_STATUS="$(curl --silent --output /dev/null --write-out '%{http_code}' http://aliolo.com/)"
+  HTTP_LOCATION="$(curl --silent --head http://aliolo.com/ | tr -d '\r' | awk 'tolower($1) == "location:" { print $2 }')"
+  if [[ "$HTTP_STATUS" == "301" || "$HTTP_STATUS" == "308" ]] && [[ "$HTTP_LOCATION" == "https://aliolo.com/" ]]; then
+    break
+  fi
+  if [[ "$attempt" -lt 12 ]]; then
+    sleep 5
+  fi
+done
+
 if [[ "$HTTP_STATUS" != "301" && "$HTTP_STATUS" != "308" ]] || [[ "$HTTP_LOCATION" != "https://aliolo.com/" ]]; then
   echo "Expected http://aliolo.com/ to redirect permanently to https://aliolo.com/" >&2
   exit 1

@@ -99,7 +99,7 @@ jobs:
         working-directory: api
         run: npm ci
       - name: Download tested web artifact
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v8
         with:
           name: aliolo-web-${{ github.sha }}
           path: build/web
