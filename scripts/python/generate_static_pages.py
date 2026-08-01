@@ -58,7 +58,7 @@ def render_lang_switcher(lang: str, page: str) -> str:
             prefix = f"/{l}"
             
         if page == "landing":
-            url = f"{prefix}/" if prefix else "/"
+            url = prefix if prefix else "/"
         else:
             url = f"{prefix}/{page}"
             
