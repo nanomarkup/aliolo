@@ -191,6 +191,26 @@
       color: var(--muted);
       font-weight: 600;
     }
+    .lang-select {
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 6px 32px 6px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.84) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23175f90' stroke-width='2.5'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5'/%3E%3C/svg%3E") no-repeat right 10px center;
+      background-size: 14px;
+      color: var(--ink);
+      cursor: pointer;
+      outline: none;
+      transition: border-color 0.18s ease, background-color 0.18s ease;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+    .lang-select:hover {
+      border-color: var(--brand);
+      background-color: rgba(255, 255, 255, 0.96);
+    }
     @media (max-width: 920px) {
       .layout {
         grid-template-columns: 1fr;
@@ -211,6 +231,9 @@
         <a href="/sv/terms">Villkor</a>
         <a href="/sv/privacy">Privatliv</a>
         <a href="/sv/refund">Återbetalningar</a>
+        <select class="lang-select" onchange="document.cookie='aliolo_lang=' + this.options[this.selectedIndex].getAttribute('data-lang') + '; path=/; max-age=31536000; SameSite=Lax; Secure'; window.location.href=this.value" aria-label="Change language">
+      <option value="/pay" data-lang="en">English</option><option value="/id/pay" data-lang="id">Bahasa Indonesia</option><option value="/bg/pay" data-lang="bg">Български</option><option value="/cs/pay" data-lang="cs">Čeština</option><option value="/da/pay" data-lang="da">Dansk</option><option value="/de/pay" data-lang="de">Deutsch</option><option value="/et/pay" data-lang="et">Eesti</option><option value="/es/pay" data-lang="es">Español</option><option value="/fr/pay" data-lang="fr">Français</option><option value="/ga/pay" data-lang="ga">Gaeilge</option><option value="/hr/pay" data-lang="hr">Hrvatski</option><option value="/it/pay" data-lang="it">Italiano</option><option value="/lv/pay" data-lang="lv">Latviešu</option><option value="/lt/pay" data-lang="lt">Lietuvių</option><option value="/hu/pay" data-lang="hu">Magyar</option><option value="/mt/pay" data-lang="mt">Malti</option><option value="/nl/pay" data-lang="nl">Nederlands</option><option value="/pl/pay" data-lang="pl">Polski</option><option value="/pt/pay" data-lang="pt">Português</option><option value="/ro/pay" data-lang="ro">Română</option><option value="/sk/pay" data-lang="sk">Slovenčina</option><option value="/sl/pay" data-lang="sl">Slovenščina</option><option value="/fi/pay" data-lang="fi">Suomi</option><option value="/sv/pay" data-lang="sv" selected>Svenska</option><option value="/tl/pay" data-lang="tl">Tagalog</option><option value="/vi/pay" data-lang="vi">Tiếng Việt</option><option value="/tr/pay" data-lang="tr">Türkçe</option><option value="/el/pay" data-lang="el">Ελληνικά</option><option value="/uk/pay" data-lang="uk">Українська</option><option value="/ar/pay" data-lang="ar">العربية</option><option value="/hi/pay" data-lang="hi">हिन्दी</option><option value="/zh/pay" data-lang="zh">中文</option><option value="/ja/pay" data-lang="ja">日本語</option><option value="/ko/pay" data-lang="ko">한국어</option>
+    </select>
       </nav>
     </div>
   </header>

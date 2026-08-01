@@ -143,6 +143,26 @@
     color: var(--brand);
     text-decoration: none;
   }
+  .lang-select {
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 6px 32px 6px 12px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.84) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23175f90' stroke-width='2.5'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5'/%3E%3C/svg%3E") no-repeat right 10px center;
+    background-size: 14px;
+    color: var(--ink);
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.18s ease, background-color 0.18s ease;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+  .lang-select:hover {
+    border-color: var(--brand);
+    background-color: rgba(255, 255, 255, 0.96);
+  }
   main { padding: 34px 0 78px; }
   .hero {
     display: grid;
@@ -337,6 +357,9 @@
         <a class="" href="/sk/terms">Podmienky</a>
         <a class="" href="/sk/refund">Refunds</a>
         <a class="" href="/sk/pricing">Stanovenie cien</a>
+        <select class="lang-select" onchange="document.cookie='aliolo_lang=' + this.options[this.selectedIndex].getAttribute('data-lang') + '; path=/; max-age=31536000; SameSite=Lax; Secure'; window.location.href=this.value" aria-label="Change language">
+      <option value="/privacy" data-lang="en">English</option><option value="/id/privacy" data-lang="id">Bahasa Indonesia</option><option value="/bg/privacy" data-lang="bg">Български</option><option value="/cs/privacy" data-lang="cs">Čeština</option><option value="/da/privacy" data-lang="da">Dansk</option><option value="/de/privacy" data-lang="de">Deutsch</option><option value="/et/privacy" data-lang="et">Eesti</option><option value="/es/privacy" data-lang="es">Español</option><option value="/fr/privacy" data-lang="fr">Français</option><option value="/ga/privacy" data-lang="ga">Gaeilge</option><option value="/hr/privacy" data-lang="hr">Hrvatski</option><option value="/it/privacy" data-lang="it">Italiano</option><option value="/lv/privacy" data-lang="lv">Latviešu</option><option value="/lt/privacy" data-lang="lt">Lietuvių</option><option value="/hu/privacy" data-lang="hu">Magyar</option><option value="/mt/privacy" data-lang="mt">Malti</option><option value="/nl/privacy" data-lang="nl">Nederlands</option><option value="/pl/privacy" data-lang="pl">Polski</option><option value="/pt/privacy" data-lang="pt">Português</option><option value="/ro/privacy" data-lang="ro">Română</option><option value="/sk/privacy" data-lang="sk" selected>Slovenčina</option><option value="/sl/privacy" data-lang="sl">Slovenščina</option><option value="/fi/privacy" data-lang="fi">Suomi</option><option value="/sv/privacy" data-lang="sv">Svenska</option><option value="/tl/privacy" data-lang="tl">Tagalog</option><option value="/vi/privacy" data-lang="vi">Tiếng Việt</option><option value="/tr/privacy" data-lang="tr">Türkçe</option><option value="/el/privacy" data-lang="el">Ελληνικά</option><option value="/uk/privacy" data-lang="uk">Українська</option><option value="/ar/privacy" data-lang="ar">العربية</option><option value="/hi/privacy" data-lang="hi">हिन्दी</option><option value="/zh/privacy" data-lang="zh">中文</option><option value="/ja/privacy" data-lang="ja">日本語</option><option value="/ko/privacy" data-lang="ko">한국어</option>
+    </select>
       </nav>
     </div>
   </header>

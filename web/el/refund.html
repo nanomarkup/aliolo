@@ -143,6 +143,26 @@
     color: var(--brand);
     text-decoration: none;
   }
+  .lang-select {
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 6px 32px 6px 12px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.84) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23175f90' stroke-width='2.5'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5'/%3E%3C/svg%3E") no-repeat right 10px center;
+    background-size: 14px;
+    color: var(--ink);
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.18s ease, background-color 0.18s ease;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+  .lang-select:hover {
+    border-color: var(--brand);
+    background-color: rgba(255, 255, 255, 0.96);
+  }
   main { padding: 34px 0 78px; }
   .hero {
     display: grid;
@@ -337,6 +357,9 @@
         <a class="" href="/el/terms">Οροι</a>
         <a class="active" href="/el/refund">Refunds</a>
         <a class="" href="/el/pricing">Τιμολόγηση</a>
+        <select class="lang-select" onchange="document.cookie='aliolo_lang=' + this.options[this.selectedIndex].getAttribute('data-lang') + '; path=/; max-age=31536000; SameSite=Lax; Secure'; window.location.href=this.value" aria-label="Change language">
+      <option value="/refund" data-lang="en">English</option><option value="/id/refund" data-lang="id">Bahasa Indonesia</option><option value="/bg/refund" data-lang="bg">Български</option><option value="/cs/refund" data-lang="cs">Čeština</option><option value="/da/refund" data-lang="da">Dansk</option><option value="/de/refund" data-lang="de">Deutsch</option><option value="/et/refund" data-lang="et">Eesti</option><option value="/es/refund" data-lang="es">Español</option><option value="/fr/refund" data-lang="fr">Français</option><option value="/ga/refund" data-lang="ga">Gaeilge</option><option value="/hr/refund" data-lang="hr">Hrvatski</option><option value="/it/refund" data-lang="it">Italiano</option><option value="/lv/refund" data-lang="lv">Latviešu</option><option value="/lt/refund" data-lang="lt">Lietuvių</option><option value="/hu/refund" data-lang="hu">Magyar</option><option value="/mt/refund" data-lang="mt">Malti</option><option value="/nl/refund" data-lang="nl">Nederlands</option><option value="/pl/refund" data-lang="pl">Polski</option><option value="/pt/refund" data-lang="pt">Português</option><option value="/ro/refund" data-lang="ro">Română</option><option value="/sk/refund" data-lang="sk">Slovenčina</option><option value="/sl/refund" data-lang="sl">Slovenščina</option><option value="/fi/refund" data-lang="fi">Suomi</option><option value="/sv/refund" data-lang="sv">Svenska</option><option value="/tl/refund" data-lang="tl">Tagalog</option><option value="/vi/refund" data-lang="vi">Tiếng Việt</option><option value="/tr/refund" data-lang="tr">Türkçe</option><option value="/el/refund" data-lang="el" selected>Ελληνικά</option><option value="/uk/refund" data-lang="uk">Українська</option><option value="/ar/refund" data-lang="ar">العربية</option><option value="/hi/refund" data-lang="hi">हिन्दी</option><option value="/zh/refund" data-lang="zh">中文</option><option value="/ja/refund" data-lang="ja">日本語</option><option value="/ko/refund" data-lang="ko">한국어</option>
+    </select>
       </nav>
     </div>
   </header>

@@ -15,7 +15,20 @@ const mockEnv = {
   ASSETS: {
     fetch: async (request: Request) => {
       const url = new URL(request.url);
-      const filepath = url.pathname;
+      let filepath = url.pathname;
+      
+      const SUPPORTED_LANGS = [
+        "en", "id", "bg", "cs", "da", "de", "et", "es", "fr", "ga", "hr", "it", "lv", "lt", 
+        "hu", "mt", "nl", "pl", "pt", "ro", "sk", "sl", "fi", "sv", "tl", "vi", "tr", "el", 
+        "uk", "ar", "hi", "zh", "ja", "ko"
+      ];
+      const parts = filepath.split('/');
+      if (parts.length > 2 && SUPPORTED_LANGS.includes(parts[1])) {
+        filepath = '/' + parts.slice(2).join('/');
+      } else if (parts.length === 2 && SUPPORTED_LANGS.includes(parts[1])) {
+        filepath = '/';
+      }
+
       let html = '';
       if (filepath === '/landing.html' || filepath === '/' || filepath === '/landing') {
         html = landingHtml;
@@ -198,5 +211,45 @@ describe('SEO and crawlability', () => {
   it('returns 404 for missing public SEO routes', async () => {
     const res = await app.request('https://aliolo.com/subject/does-not-exist', {}, mockEnv);
     expect(res.status).toBe(404);
+  });
+
+  it('redirects to preferred language based on Accept-Language header', async () => {
+    const res = await app.request('https://aliolo.com/privacy', {
+      headers: {
+        'Accept-Language': 'es-MX,es;q=0.9,en;q=0.8'
+      }
+    }, mockEnv);
+
+    expect(res.status).toBe(307);
+    expect(res.headers.get('location')).toBe('/es/privacy');
+    expect(res.headers.get('set-cookie')).toContain('aliolo_lang=es');
+  });
+
+  it('redirects to preferred language based on aliolo_lang cookie', async () => {
+    const res = await app.request('https://aliolo.com/terms', {
+      headers: {
+        'Cookie': 'aliolo_lang=de'
+      }
+    }, mockEnv);
+
+    expect(res.status).toBe(307);
+    expect(res.headers.get('location')).toBe('/de/terms');
+  });
+
+  it('sets aliolo_lang cookie when visiting localized page directly', async () => {
+    const res = await app.request('https://aliolo.com/fr/refund', {}, mockEnv);
+    expect(res.status).toBe(200);
+    expect(res.headers.get('set-cookie')).toContain('aliolo_lang=fr');
+  });
+
+  it('does not redirect search engine bots', async () => {
+    const res = await app.request('https://aliolo.com/pricing', {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)',
+        'Accept-Language': 'es-ES,es;q=0.9'
+      }
+    }, mockEnv);
+
+    expect(res.status).toBe(200);
   });
 });

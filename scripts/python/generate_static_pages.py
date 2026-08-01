@@ -11,6 +11,65 @@ SUPPORTED_LANGUAGES = [
     "uk", "ar", "hi", "zh", "ja", "ko"
 ]
 
+# Language display names (native names/endonyms where possible)
+LANGUAGE_DISPLAY_NAMES = {
+    "en": "English",
+    "id": "Bahasa Indonesia",
+    "bg": "Български",
+    "cs": "Čeština",
+    "da": "Dansk",
+    "de": "Deutsch",
+    "et": "Eesti",
+    "es": "Español",
+    "fr": "Français",
+    "ga": "Gaeilge",
+    "hr": "Hrvatski",
+    "it": "Italiano",
+    "lv": "Latviešu",
+    "lt": "Lietuvių",
+    "hu": "Magyar",
+    "mt": "Malti",
+    "nl": "Nederlands",
+    "pl": "Polski",
+    "pt": "Português",
+    "ro": "Română",
+    "sk": "Slovenčina",
+    "sl": "Slovenščina",
+    "fi": "Suomi",
+    "sv": "Svenska",
+    "tl": "Tagalog",
+    "vi": "Tiếng Việt",
+    "tr": "Türkçe",
+    "el": "Ελληνικά",
+    "uk": "Українська",
+    "ar": "العربية",
+    "hi": "हिन्दी",
+    "zh": "中文",
+    "ja": "日本語",
+    "ko": "한국어"
+}
+
+def render_lang_switcher(lang: str, page: str) -> str:
+    lang_options = []
+    for l in SUPPORTED_LANGUAGES:
+        if l == "en":
+            prefix = ""
+        else:
+            prefix = f"/{l}"
+            
+        if page == "landing":
+            url = f"{prefix}/" if prefix else "/"
+        else:
+            url = f"{prefix}/{page}"
+            
+        selected = " selected" if l == lang else ""
+        disp_name = LANGUAGE_DISPLAY_NAMES.get(l, l.upper())
+        lang_options.append(f'<option value="{url}" data-lang="{l}"{selected}>{disp_name}</option>')
+        
+    return f"""<select class="lang-select" onchange="document.cookie='aliolo_lang=' + this.options[this.selectedIndex].getAttribute('data-lang') + '; path=/; max-age=31536000; SameSite=Lax; Secure'; window.location.href=this.value" aria-label="Change language">
+      {"".join(lang_options)}
+    </select>"""
+
 # Legal layout CSS styles
 LEGAL_STYLES = """
   :root {
@@ -96,6 +155,26 @@ LEGAL_STYLES = """
     background: rgba(23, 95, 144, 0.08);
     color: var(--brand);
     text-decoration: none;
+  }
+  .lang-select {
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 6px 32px 6px 12px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.84) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23175f90' stroke-width='2.5'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5'/%3E%3C/svg%3E") no-repeat right 10px center;
+    background-size: 14px;
+    color: var(--ink);
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.18s ease, background-color 0.18s ease;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+  .lang-select:hover {
+    border-color: var(--brand);
+    background-color: rgba(255, 255, 255, 0.96);
   }
   main { padding: 34px 0 78px; }
   .hero {
@@ -460,6 +539,26 @@ PAY_STYLES = """
       color: var(--muted);
       font-weight: 600;
     }
+    .lang-select {
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 6px 32px 6px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.84) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23175f90' stroke-width='2.5'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5'/%3E%3C/svg%3E") no-repeat right 10px center;
+      background-size: 14px;
+      color: var(--ink);
+      cursor: pointer;
+      outline: none;
+      transition: border-color 0.18s ease, background-color 0.18s ease;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+    .lang-select:hover {
+      border-color: var(--brand);
+      background-color: rgba(255, 255, 255, 0.96);
+    }
     @media (max-width: 920px) {
       .layout {
         grid-template-columns: 1fr;
@@ -570,6 +669,26 @@ LANDING_STYLES = """
     text-decoration: none;
     border-color: var(--line);
     background: rgba(255, 255, 255, 0.84);
+  }
+  .lang-select {
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 6px 32px 6px 12px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.84) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23175f90' stroke-width='2.5'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5'/%3E%3C/svg%3E") no-repeat right 10px center;
+    background-size: 14px;
+    color: var(--ink);
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.18s ease, background-color 0.18s ease;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+  .lang-select:hover {
+    border-color: var(--brand);
+    background-color: rgba(255, 255, 255, 0.96);
   }
   .nav-cta {
     border-color: var(--line-strong);
@@ -1092,6 +1211,7 @@ LEGAL_LAYOUT = """<!DOCTYPE html>
       </a>
       <nav aria-label="Legal page navigation">
         {{NAV_LINKS}}
+        {{LANG_SWITCHER}}
       </nav>
     </div>
   </header>
@@ -1143,6 +1263,7 @@ PAY_LAYOUT = """<!DOCTYPE html>
         <a href="{{PREFIX}}/terms">{{TERMS_LABEL}}</a>
         <a href="{{PREFIX}}/privacy">{{PRIVACY_LABEL}}</a>
         <a href="{{PREFIX}}/refund">{{REFUND_LABEL}}</a>
+        {{LANG_SWITCHER}}
       </nav>
     </div>
   </header>
@@ -1313,6 +1434,7 @@ LANDING_LAYOUT = """<!DOCTYPE html>
         <a class="desktop-link" href="#features">{{T_landing_nav_features}}</a>
         <a class="desktop-link" href="#workflow">{{T_landing_nav_how_it_works}}</a>
         <a class="desktop-link" href="#pricing">{{T_landing_nav_pricing}}</a>
+        {{LANG_SWITCHER}}
         <a href="{{PREFIX}}/?login=1" class="nav-login">{{T_landing_nav_login}}</a>
         <a href="{{PREFIX}}/login" class="nav-cta">{{T_landing_nav_cta}}</a>
       </nav>
@@ -1622,6 +1744,7 @@ def render_legal(lang: str, t: dict, active: str, page_path: str, body_content: 
     html = html.replace("{{UPDATED_DATE}}", updated_date)
     html = html.replace("{{SUPPORT_LABEL}}", support_label)
     html = html.replace("{{BODY_CONTENT}}", body_content)
+    html = html.replace("{{LANG_SWITCHER}}", render_lang_switcher(lang, active))
     html = html.replace("{{LEGAL_STYLES}", LEGAL_STYLES)
     return html
 
@@ -1664,6 +1787,7 @@ def render_pay(lang: str, t: dict) -> str:
     html = html.replace("{{TERMS_LABEL}}", t.get('terms', 'Terms'))
     html = html.replace("{{PRIVACY_LABEL}}", t.get('privacy', 'Privacy'))
     html = html.replace("{{REFUND_LABEL}}", t.get('refunds', 'Refund'))
+    html = html.replace("{{LANG_SWITCHER}}", render_lang_switcher(lang, "pay"))
     html = html.replace("{{PAY_STYLES}", PAY_STYLES)
     return html
 
@@ -1679,6 +1803,7 @@ def render_landing(lang: str, t: dict) -> str:
     html = html.replace("{{LANG}}", lang)
     html = html.replace("{{PREFIX}}", prefix)
     html = html.replace("{{SEO_ALTERNATES}}", seo_alternates_html)
+    html = html.replace("{{LANG_SWITCHER}}", render_lang_switcher(lang, "landing"))
     html = html.replace("{{LANDING_STYLES}", LANDING_STYLES)
     
     # Replace all translations keys dynamically

@@ -2,6 +2,7 @@ import { OpenAPIHono } from '@hono/zod-openapi';
 import { swaggerUI } from '@hono/swagger-ui';
 import { cors } from 'hono/cors';
 import { isbot } from 'isbot';
+import { getCookie, setCookie } from 'hono/cookie';
 import { initializeLucia } from './auth';
 import type { AppEnv } from './types';
 import { generateSeoHtml } from './utils/seo';
@@ -118,6 +119,27 @@ const SUPPORTED_LANGS = [
   "uk", "ar", "hi", "zh", "ja", "ko"
 ];
 
+function getPreferredLanguage(acceptLanguageHeader: string | undefined): string {
+  if (!acceptLanguageHeader) return 'en';
+  const tags = acceptLanguageHeader.split(',')
+    .map(part => {
+      const [lang, qVal] = part.split(';');
+      let q = 1;
+      if (qVal && qVal.startsWith('q=')) {
+        q = parseFloat(qVal.substring(2)) || 0;
+      }
+      return { lang: lang.trim().split('-')[0].toLowerCase(), q };
+    })
+    .sort((a, b) => b.q - a.q);
+
+  for (const tag of tags) {
+    if (SUPPORTED_LANGS.includes(tag.lang)) {
+      return tag.lang;
+    }
+  }
+  return 'en';
+}
+
 const serveAsset = async (c: any, filepath: string) => {
   if (!c.env.ASSETS) {
     return c.text('Not Found', 404);
@@ -145,20 +167,63 @@ const renderStaticPage = async (c: any, page: string, lang: string = 'en') => {
   return serveAsset(c, filepath);
 };
 
-app.get('/privacy', (c) => renderStaticPage(c, 'privacy', 'en'));
-app.get('/:lang/privacy', (c) => renderStaticPage(c, 'privacy', c.req.param('lang')));
+const handleCleanStaticPageRoute = async (c: any, page: string) => {
+  const userAgent = c.req.header('User-Agent');
+  if (userAgent && isbot(userAgent)) {
+    return renderStaticPage(c, page, 'en');
+  }
 
-app.get('/terms', (c) => renderStaticPage(c, 'terms', 'en'));
-app.get('/:lang/terms', (c) => renderStaticPage(c, 'terms', c.req.param('lang')));
+  let lang = getCookie(c, 'aliolo_lang');
+  if (!lang || !SUPPORTED_LANGS.includes(lang)) {
+    lang = getPreferredLanguage(c.req.header('Accept-Language'));
+  }
 
-app.get('/refund', (c) => renderStaticPage(c, 'refund', 'en'));
-app.get('/:lang/refund', (c) => renderStaticPage(c, 'refund', c.req.param('lang')));
+  if (lang !== 'en') {
+    setCookie(c, 'aliolo_lang', lang, {
+      path: '/',
+      maxAge: 31536000,
+      sameSite: 'Lax',
+      secure: true
+    });
+    return c.redirect(`/${lang}/${page}`, 307);
+  }
 
-app.get('/pricing', (c) => renderStaticPage(c, 'pricing', 'en'));
-app.get('/:lang/pricing', (c) => renderStaticPage(c, 'pricing', c.req.param('lang')));
+  setCookie(c, 'aliolo_lang', 'en', {
+    path: '/',
+    maxAge: 31536000,
+    sameSite: 'Lax',
+    secure: true
+  });
+  return renderStaticPage(c, page, 'en');
+};
 
-app.get('/pay', (c) => renderStaticPage(c, 'pay', 'en'));
-app.get('/:lang/pay', (c) => renderStaticPage(c, 'pay', c.req.param('lang')));
+const handleLocalizedStaticPageRoute = async (c: any, page: string) => {
+  const lang = c.req.param('lang');
+  if (SUPPORTED_LANGS.includes(lang) && lang !== 'en') {
+    setCookie(c, 'aliolo_lang', lang, {
+      path: '/',
+      maxAge: 31536000,
+      sameSite: 'Lax',
+      secure: true
+    });
+  }
+  return renderStaticPage(c, page, lang);
+};
+
+app.get('/privacy', (c) => handleCleanStaticPageRoute(c, 'privacy'));
+app.get('/:lang/privacy', (c) => handleLocalizedStaticPageRoute(c, 'privacy'));
+
+app.get('/terms', (c) => handleCleanStaticPageRoute(c, 'terms'));
+app.get('/:lang/terms', (c) => handleLocalizedStaticPageRoute(c, 'terms'));
+
+app.get('/refund', (c) => handleCleanStaticPageRoute(c, 'refund'));
+app.get('/:lang/refund', (c) => handleLocalizedStaticPageRoute(c, 'refund'));
+
+app.get('/pricing', (c) => handleCleanStaticPageRoute(c, 'pricing'));
+app.get('/:lang/pricing', (c) => handleLocalizedStaticPageRoute(c, 'pricing'));
+
+app.get('/pay', (c) => handleCleanStaticPageRoute(c, 'pay'));
+app.get('/:lang/pay', (c) => handleLocalizedStaticPageRoute(c, 'pay'));
 
 app.get('/robots.txt', (c) =>
   c.text(
@@ -177,6 +242,32 @@ app.get('/', async (c, next) => {
   const user = c.get('user');
 
   if (!user && !url.searchParams.has('login')) {
+    const userAgent = c.req.header('User-Agent');
+    if (userAgent && isbot(userAgent)) {
+      return renderStaticPage(c, 'landing', 'en');
+    }
+
+    let lang = getCookie(c, 'aliolo_lang');
+    if (!lang || !SUPPORTED_LANGS.includes(lang)) {
+      lang = getPreferredLanguage(c.req.header('Accept-Language'));
+    }
+
+    if (lang !== 'en') {
+      setCookie(c, 'aliolo_lang', lang, {
+        path: '/',
+        maxAge: 31536000,
+        sameSite: 'Lax',
+        secure: true
+      });
+      return c.redirect(`/${lang}`, 307);
+    }
+
+    setCookie(c, 'aliolo_lang', 'en', {
+      path: '/',
+      maxAge: 31536000,
+      sameSite: 'Lax',
+      secure: true
+    });
     return renderStaticPage(c, 'landing', 'en');
   }
   
@@ -192,6 +283,12 @@ app.get('/:lang', async (c, next) => {
   const user = c.get('user');
 
   if (!user && !url.searchParams.has('login')) {
+    setCookie(c, 'aliolo_lang', lang, {
+      path: '/',
+      maxAge: 31536000,
+      sameSite: 'Lax',
+      secure: true
+    });
     return renderStaticPage(c, 'landing', lang);
   }
   

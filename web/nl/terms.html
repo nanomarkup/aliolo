@@ -143,6 +143,26 @@
     color: var(--brand);
     text-decoration: none;
   }
+  .lang-select {
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 6px 32px 6px 12px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.84) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23175f90' stroke-width='2.5'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5'/%3E%3C/svg%3E") no-repeat right 10px center;
+    background-size: 14px;
+    color: var(--ink);
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.18s ease, background-color 0.18s ease;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+  .lang-select:hover {
+    border-color: var(--brand);
+    background-color: rgba(255, 255, 255, 0.96);
+  }
   main { padding: 34px 0 78px; }
   .hero {
     display: grid;
@@ -337,6 +357,9 @@
         <a class="active" href="/nl/terms">Voorwaarden</a>
         <a class="" href="/nl/refund">Refunds</a>
         <a class="" href="/nl/pricing">Prijzen</a>
+        <select class="lang-select" onchange="document.cookie='aliolo_lang=' + this.options[this.selectedIndex].getAttribute('data-lang') + '; path=/; max-age=31536000; SameSite=Lax; Secure'; window.location.href=this.value" aria-label="Change language">
+      <option value="/terms" data-lang="en">English</option><option value="/id/terms" data-lang="id">Bahasa Indonesia</option><option value="/bg/terms" data-lang="bg">Български</option><option value="/cs/terms" data-lang="cs">Čeština</option><option value="/da/terms" data-lang="da">Dansk</option><option value="/de/terms" data-lang="de">Deutsch</option><option value="/et/terms" data-lang="et">Eesti</option><option value="/es/terms" data-lang="es">Español</option><option value="/fr/terms" data-lang="fr">Français</option><option value="/ga/terms" data-lang="ga">Gaeilge</option><option value="/hr/terms" data-lang="hr">Hrvatski</option><option value="/it/terms" data-lang="it">Italiano</option><option value="/lv/terms" data-lang="lv">Latviešu</option><option value="/lt/terms" data-lang="lt">Lietuvių</option><option value="/hu/terms" data-lang="hu">Magyar</option><option value="/mt/terms" data-lang="mt">Malti</option><option value="/nl/terms" data-lang="nl" selected>Nederlands</option><option value="/pl/terms" data-lang="pl">Polski</option><option value="/pt/terms" data-lang="pt">Português</option><option value="/ro/terms" data-lang="ro">Română</option><option value="/sk/terms" data-lang="sk">Slovenčina</option><option value="/sl/terms" data-lang="sl">Slovenščina</option><option value="/fi/terms" data-lang="fi">Suomi</option><option value="/sv/terms" data-lang="sv">Svenska</option><option value="/tl/terms" data-lang="tl">Tagalog</option><option value="/vi/terms" data-lang="vi">Tiếng Việt</option><option value="/tr/terms" data-lang="tr">Türkçe</option><option value="/el/terms" data-lang="el">Ελληνικά</option><option value="/uk/terms" data-lang="uk">Українська</option><option value="/ar/terms" data-lang="ar">العربية</option><option value="/hi/terms" data-lang="hi">हिन्दी</option><option value="/zh/terms" data-lang="zh">中文</option><option value="/ja/terms" data-lang="ja">日本語</option><option value="/ko/terms" data-lang="ko">한국어</option>
+    </select>
       </nav>
     </div>
   </header>

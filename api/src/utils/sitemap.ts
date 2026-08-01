@@ -51,11 +51,28 @@ export async function generateSitemapXml(db: D1Database, baseUrl: string): Promi
             { path: '/pricing', lastmod: '2026-04-28' },
         ];
 
+        const SUPPORTED_LANGS = [
+            "en", "id", "bg", "cs", "da", "de", "et", "es", "fr", "ga", "hr", "it", "lv", "lt", 
+            "hu", "mt", "nl", "pl", "pt", "ro", "sk", "sl", "fi", "sv", "tl", "vi", "tr", "el", 
+            "uk", "ar", "hi", "zh", "ja", "ko"
+        ];
+
         for (const route of staticRoutes) {
-            xml += `  <url>\n`;
-            xml += `    <loc>${escapeXml(baseUrl + route.path)}</loc>\n`;
-            xml += `    <lastmod>${route.lastmod}</lastmod>\n`;
-            xml += `  </url>\n`;
+            for (const lang of SUPPORTED_LANGS) {
+                let loc = baseUrl;
+                if (lang !== 'en') {
+                    loc += `/${lang}`;
+                }
+                if (route.path !== '/') {
+                    loc += route.path;
+                } else if (lang === 'en') {
+                    loc += '/';
+                }
+                xml += `  <url>\n`;
+                xml += `    <loc>${escapeXml(loc)}</loc>\n`;
+                xml += `    <lastmod>${route.lastmod}</lastmod>\n`;
+                xml += `  </url>\n`;
+            }
         }
 
         // Dynamic Subjects
