@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Check-out Aliolo</title>
+  <meta name="description" content="Check-out seguro para assinaturas Aliolo Premium.">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="canonical" href="https://aliolo.com/pt/pay">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #122338;
+      --muted: #5f6f85;
+      --brand: #185f90;
+      --brand-strong: #0d476d;
+      --accent: #d97728;
+      --line: rgba(18, 35, 56, 0.12);
+      --surface: rgba(255, 255, 255, 0.96);
+      --page: #eef5f8;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Source Sans 3", system-ui, -apple-system, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(24, 95, 144, 0.10), transparent 28rem),
+        radial-gradient(circle at top right, rgba(217, 119, 40, 0.10), transparent 24rem),
+        linear-gradient(180deg, #f9fcfd 0%, var(--page) 100%);
+    }
+    a { color: var(--brand); text-decoration: none; font-weight: 700; }
+    a:hover { text-decoration: underline; }
+    .shell {
+      width: min(1100px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+    header {
+      padding: 22px 0;
+      border-bottom: 1px solid rgba(18, 35, 56, 0.06);
+      background: rgba(249, 252, 253, 0.88);
+      backdrop-filter: blur(14px);
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+    .brand-name {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--brand);
+      font-family: "Manrope", system-ui, sans-serif;
+      font-size: 27px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      text-transform: lowercase;
+    }
+    .brand-name:hover { text-decoration: none; }
+    .brand-name img {
+      width: 44px;
+      height: 44px;
+    }
+    nav {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    nav a {
+      color: var(--ink);
+      font-size: 15px;
+      font-weight: 600;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+    }
+    nav a:hover {
+      background: rgba(255, 255, 255, 0.84);
+      border-color: var(--line);
+      text-decoration: none;
+    }
+    main {
+      padding: 42px 0 72px;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 0.92fr) minmax(320px, 0.78fr);
+      gap: 24px;
+      align-items: start;
+    }
+    .card {
+      padding: 28px;
+      border-radius: 28px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      box-shadow: 0 24px 54px rgba(18, 35, 56, 0.08);
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(24, 95, 144, 0.10);
+      color: var(--brand);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    h1 {
+      margin: 0 0 12px;
+      font-family: "Manrope", system-ui, sans-serif;
+      font-size: clamp(34px, 5vw, 52px);
+      line-height: 1.02;
+      letter-spacing: -0.04em;
+    }
+    p {
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.6;
+    }
+    .status {
+      margin-top: 22px;
+      padding: 18px 20px;
+      border-radius: 18px;
+      background: rgba(24, 95, 144, 0.06);
+      border: 1px solid rgba(24, 95, 144, 0.12);
+      color: var(--ink);
+      font-size: 15px;
+    }
+    .status strong { color: var(--brand); }
+    .status.error {
+      background: rgba(217, 119, 40, 0.10);
+      border-color: rgba(217, 119, 40, 0.16);
+    }
+    .list {
+      display: grid;
+      gap: 14px;
+      margin-top: 20px;
+    }
+    .list div {
+      padding: 16px 18px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid var(--line);
+    }
+    .list strong {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--ink);
+      font-size: 15px;
+    }
+    .checkout-shell {
+      min-height: 560px;
+      display: grid;
+      align-content: start;
+      gap: 18px;
+    }
+    .checkout-target {
+      min-height: 450px;
+    }
+    .fallback {
+      display: none;
+      padding: 20px;
+      border-radius: 20px;
+      border: 1px dashed rgba(24, 95, 144, 0.24);
+      background: rgba(24, 95, 144, 0.04);
+      color: var(--muted);
+      font-size: 15px;
+    }
+    .fallback.visible {
+      display: block;
+    }
+    .links {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+    .links a {
+      color: var(--muted);
+      font-weight: 600;
+    }
+    @media (max-width: 920px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+    }
+</style>
+  <script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
+</head>
+<body>
+  <header>
+    <div class="shell brand">
+      <a class="brand-name" href="/pt/" aria-label="Aliolo home">
+        <img src="/app_icon.webp" alt="Aliolo logo" />
+        aliolo
+      </a>
+      <nav aria-label="Checkout page navigation">
+        <a href="/pt/pricing">Preços</a>
+        <a href="/pt/terms">Termos</a>
+        <a href="/pt/privacy">Privacidade</a>
+        <a href="/pt/refund">Reembolsos</a>
+      </nav>
+    </div>
+  </header>
+  <main class="shell">
+    <section class="layout">
+      <article class="card">
+        <div class="eyebrow">Check-out seguro</div>
+        <h1>Conclua sua compra do Aliolo Premium.</h1>
+        <p>Check-out seguro para assinaturas Aliolo Premium.</p>
+        <div class="status" id="checkout-status">
+          <strong>Aguardando a finalização da compra</strong><br>
+          Se você abriu esta página de faturamento do Aliolo, o formulário de pagamento deverá aparecer automaticamente.
+        </div>
+        <div class="list">
+          <div>
+            <strong>Suporte de pagamento</strong>
+            Os pagamentos pela Web são processados ​​pela Paddle.com como Merchant of Record.
+          </div>
+          <div>
+            <strong>Faturamento de assinatura</strong>
+            Aliolo Premium é renovado automaticamente até ser cancelado. Você pode cancelar posteriormente através do Paddle ou da sua conta Aliolo.
+          </div>
+          <div>
+            <strong>Precisa de detalhes da política?</strong>
+            Revise preços, termos de assinatura, privacidade e informações de reembolso antes de concluir sua compra.
+          </div>
+        </div>
+        <div class="links">
+          <a href="/pt/pricing">Preços</a>
+          <a href="/pt/terms">Termos</a>
+          <a href="/pt/privacy">Privacidade</a>
+          <a href="/pt/refund">Reembolsos</a>
+        </div>
+      </article>
+      <aside class="card checkout-shell">
+        <div id="checkout-fallback" class="fallback">Checkout could not be started on this page. Return to Aliolo billing and try again. If the problem persists, contact <a href="mailto:vitalii@nohainc.com">vitalii@nohainc.com</a>.</div>
+        <div id="checkout-container" class="checkout-target" aria-live="polite"></div>
+      </aside>
+    </section>
+  </main>
+  <script>
+    (() => {
+      const token = {{PADDLE_CLIENT_TOKEN}};
+      const statusEl = document.getElementById('checkout-status');
+      const fallbackEl = document.getElementById('checkout-fallback');
+      const params = new URLSearchParams(window.location.search);
+      const transactionId = params.get('_ptxn');
+
+      const setStatus = (title, message, isError = false) => {
+        statusEl.classList.toggle('error', isError);
+        statusEl.innerHTML = '<strong>' + title + '</strong><br>' + message;
+      };
+
+      if (!token) {
+        fallbackEl.classList.add('visible');
+        setStatus(
+          'Checkout is not configured',
+          'Aliolo is missing the Paddle client-side token required for the /pay page. Add PADDLE_CLIENT_TOKEN to the Worker environment before using this checkout.',
+          true,
+        );
+        return;
+      }
+
+      if (!transactionId) {
+        fallbackEl.classList.add('visible');
+        setStatus(
+          'No checkout transaction found',
+          'This page is meant to be opened from an Aliolo billing flow. Open billing in the app and start checkout again.',
+          true,
+        );
+        return;
+      }
+
+      try {
+        if (token.startsWith('test_')) {
+          Paddle.Environment.set('sandbox');
+        }
+
+        Paddle.Initialize({
+          token,
+          eventCallback: function (event) {
+            if (event.name === 'checkout.loaded') {
+              setStatus('Checkout loaded', 'Paddle is ready. Continue in the payment form on this page.');
+            }
+            if (event.name === 'checkout.closed') {
+              setStatus('Checkout closed', 'The checkout was closed before payment completed. You can return to Aliolo billing and try again.');
+            }
+            if (event.name === 'checkout.completed') {
+              setStatus('Payment submitted', 'Your payment was submitted. Aliolo will unlock premium access after Paddle confirms the subscription.');
+            }
+            if (event.name === 'checkout.error') {
+              fallbackEl.classList.add('visible');
+              setStatus('Checkout error', 'Paddle reported an error while loading checkout. Return to billing and try again.', true);
+            }
+          },
+          checkout: {
+            settings: {
+              displayMode: 'inline',
+              frameTarget: 'checkout-container',
+              frameInitialHeight: 540,
+              frameStyle: 'width: 100%; min-width: 312px; background-color: transparent; border: none;',
+              theme: 'light',
+              variant: 'one-page',
+              showAddTaxId: false,
+              allowLogout: true,
+            },
+          },
+        });
+
+        setStatus('Opening checkout', 'Paddle is opening your secure payment form now.');
+      } catch (error) {
+        fallbackEl.classList.add('visible');
+        setStatus(
+          'Checkout failed to initialize',
+          'Paddle.js could not initialize on this page. Verify the client-side token and retry from Aliolo billing.',
+          true,
+        );
+      }
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,349 @@
+..
+    legal_info|
+        Thông tin pháp lý
+    last_updated|
+        Cập nhật lần cuối
+    support|
+        Ủng hộ
+    home|
+        Trang chủ
+    privacy|
+        Sự riêng tư
+    terms|
+        Điều khoản
+    refunds|
+        Hoàn tiền
+    pricing|
+        Định giá
+    privacy_title|
+        Chính sách quyền riêng tư của Aliolo
+    privacy_subtitle|
+        Cách Aliolo thu thập, sử dụng, lưu trữ và bảo vệ thông tin liên quan đến tài khoản, học tập và thanh toán.
+    privacy_body|
+        <h2>Thông tin chúng tôi thu thập</h2>
+        <p>Chúng tôi thu thập thông tin cần thiết để vận hành Aliolo, bao gồm chi tiết tài khoản như địa chỉ email, tên người dùng, dữ liệu xác thực mật khẩu, cài đặt hình đại diện, tùy chọn và cài đặt hồ sơ.</p>
+        <p>Chúng tôi cũng lưu trữ hoạt động học tập như chủ đề, thư mục, bộ sưu tập, thẻ, tiến độ, thành tích, mục tiêu hàng ngày, cài đặt kiểm tra và học hỏi, phản hồi cũng như các sự kiện sử dụng ứng dụng cơ bản cần thiết để mang lại trải nghiệm học tập.</p>
+        <h2>Cách chúng tôi sử dụng thông tin</h2>
+        <p>Chúng tôi sử dụng thông tin này để tạo và bảo mật tài khoản của bạn, đồng bộ hóa dữ liệu học tập, cá nhân hóa trải nghiệm học tập của bạn, cung cấp quyền truy cập cao cấp, phản hồi các yêu cầu hỗ trợ, cải thiện ứng dụng và ngăn chặn việc sử dụng sai mục đích hoặc lạm dụng dịch vụ.</p>
+        <h2>Thanh toán và đăng ký</h2>
+        <p>Aliolo không trực tiếp lưu trữ chi tiết thẻ thanh toán đầy đủ. Thanh toán trên web được Paddle xử lý và các giao dịch mua trên thiết bị di động có thể được Google Play hoặc Apple App Store xử lý khi các kênh mua hàng đó có sẵn.</p>
+        <p>Để truy cập đăng ký, chúng tôi có thể lưu trữ số nhận dạng nhà cung cấp thanh toán, số nhận dạng sản phẩm, trạng thái đăng ký, ngày gia hạn và siêu dữ liệu giao dịch hoặc webhook có liên quan. Điều này cho phép chúng tôi kích hoạt, gia hạn, hủy hoặc khôi phục quyền truy cập cao cấp.</p>
+        <h2>Dịch vụ của bên thứ ba</h2>
+        <p>Chúng tôi sử dụng các nhà cung cấp dịch vụ để lưu trữ, cơ sở hạ tầng, lưu trữ, phân tích hoặc nhật ký hoạt động, xác thực và thanh toán. Các nhà cung cấp này chỉ xử lý thông tin khi cần thiết để cung cấp dịch vụ của họ cho Aliolo.</p>
+        <div class="notice"><strong>Thông báo mái chèo:</strong> Quá trình đặt hàng của chúng tôi có thể được thực hiện bởi Paddle.com, người bán lại trực tuyến và Người bán hàng có uy tín của chúng tôi. Paddle xử lý việc xử lý thanh toán, tính thuế nếu có, bảo mật thanh toán và dịch vụ khách hàng liên quan đến thanh toán.</div>
+        <h2>Cookie và bộ nhớ cục bộ</h2>
+        <p>Aliolo có thể sử dụng cookie, mã nhận dạng phiên, bộ nhớ trình duyệt hoặc các công nghệ tương tự để duy trì trạng thái đăng nhập của bạn, ghi nhớ tùy chọn, bảo mật dịch vụ và vận hành ứng dụng web.</p>
+        <h2>Lưu giữ và xóa dữ liệu</h2>
+        <p>Chúng tôi lưu giữ tài khoản và dữ liệu học tập trong khi tài khoản của bạn đang hoạt động hoặc khi cần thiết để cung cấp dịch vụ, tuân thủ nghĩa vụ pháp lý, giải quyết tranh chấp, ngăn chặn lạm dụng và duy trì hồ sơ giao dịch. Bạn có thể yêu cầu xóa tài khoản hoặc hỗ trợ liên quan đến dữ liệu bằng cách liên hệ với chúng tôi.</p>
+        <h2>Trẻ em và việc sử dụng giáo dục</h2>
+        <p>Aliolo là một sản phẩm giáo dục. Nếu phụ huynh, người giám hộ hoặc trường học tin rằng trẻ đã cung cấp thông tin cá nhân mà không có sự cho phép thích hợp, hãy liên hệ với chúng tôi để chúng tôi có thể xem xét và thực hiện hành động thích hợp.</p>
+        <h2>Bảo vệ</h2>
+        <p>Chúng tôi sử dụng các biện pháp bảo vệ kỹ thuật và tổ chức hợp lý để bảo vệ thông tin cá nhân. Không có dịch vụ trực tuyến nào có thể đảm bảo tính bảo mật hoàn hảo nhưng chúng tôi nỗ lực hạn chế quyền truy cập và bảo vệ dữ liệu khỏi việc sử dụng trái phép.</p>
+        <h2>Lựa chọn và Quyền của Bạn</h2>
+        <p>Tùy thuộc vào vị trí của bạn, bạn có thể có quyền truy cập, sửa, xóa, xuất hoặc hạn chế sử dụng thông tin cá nhân của mình. Liên hệ với chúng tôi tại <a href="mailto:vitalii@nohainc.com">Vitalii@nohainc.com</a> để thực hiện một yêu cầu.</p>
+    terms_title|
+        Điều khoản đăng ký Aliolo
+    terms_subtitle|
+        Các quy tắc dành cho tài khoản Aliolo, quyền truy cập cao cấp, thanh toán đăng ký, hủy và sử dụng được chấp nhận.
+    terms_body|
+        <h2>Sử dụng Aliolo</h2>
+        <p>Aliolo cung cấp các công cụ học tập trực quan, nội dung giáo dục được tuyển chọn, thẻ ghi nhớ, theo dõi tiến độ và các tính năng học tập cao cấp. Bạn có trách nhiệm bảo mật thông tin tài khoản của mình và sử dụng dịch vụ một cách hợp pháp.</p>
+        <h2>Quyền truy cập cao cấp</h2>
+        <p>Quyền truy cập cao cấp sẽ mở khóa các tính năng trả phí được hiển thị trong ứng dụng hoặc trên trang định giá. Các tính năng sẵn có có thể thay đổi khi sản phẩm được cải tiến nhưng những người đăng ký đang hoạt động sẽ tiếp tục nhận được quyền truy cập vào trải nghiệm Aliolo trả phí trong thời gian đăng ký hợp lệ của họ.</p>
+        <h2>Thanh toán và gia hạn</h2>
+        <p>Đăng ký tự động gia hạn trừ khi bị hủy trước khi kết thúc thời hạn thanh toán hiện tại. Giá, nhịp thanh toán, thuế, quy đổi nội tệ và quy tắc gia hạn được hiển thị khi thanh toán và có thể thay đổi tùy theo kênh mua hàng, khu vực, nền tảng hoặc ưu đãi đang hoạt động.</p>
+        <div class="notice"><strong>Thông báo mái chèo:</strong> Đối với việc mua hàng trên web, quy trình đặt hàng của chúng tôi có thể được thực hiện bởi Paddle.com. Paddle.com là Người bán hồ sơ cho các đơn đặt hàng đó và cung cấp dịch vụ khách hàng liên quan đến thanh toán, xử lý thuế và xử lý hàng trả lại.</div>
+        <h2>Hủy bỏ</h2>
+        <p>Bạn có thể hủy theo quy định của kênh mua hàng bạn đã sử dụng. Việc hủy sẽ ngừng gia hạn trong tương lai. Trừ khi kênh mua hàng có quy định khác, quyền truy cập trả phí vẫn có sẵn cho đến khi kết thúc thời hạn thanh toán hiện tại.</p>
+        <h2>Hoàn tiền</h2>
+        <p>Việc hoàn tiền được xử lý theo quy định của chúng tôi <a href="/refund">Chính sách hoàn tiền</a>, quy tắc kênh mua hàng và luật tiêu dùng hiện hành. Việc mua hàng trên cửa hàng ứng dụng thường được xử lý bởi cửa hàng ứng dụng có liên quan.</p>
+        <h2>Sử dụng được chấp nhận</h2>
+        <p>Bạn không được lạm dụng Aliolo, can thiệp vào dịch vụ, cố gắng truy cập trái phép, sao chép hoặc sao chép nội dung trên quy mô lớn, đảo ngược các phần được bảo vệ của ứng dụng, tải lên tài liệu bất hợp pháp hoặc sử dụng dịch vụ theo cách gây hại cho người dùng khác hoặc Aliolo.</p>
+        <h2>Nội dung và tính sẵn có</h2>
+        <p>Aliolo có thể cập nhật, thêm, xóa hoặc sắp xếp lại các chủ đề, thẻ, tính năng và thiết kế. Chúng tôi mong muốn duy trì dịch vụ đáng tin cậy nhưng tính khả dụng có thể bị ảnh hưởng bởi việc bảo trì, nhà cung cấp bên thứ ba, sự cố mạng hoặc thay đổi sản phẩm.</p>
+        <h2>Tuyên bố miễn trừ trách nhiệm và trách nhiệm pháp lý</h2>
+        <p>Aliolo được cung cấp như một công cụ hỗ trợ giáo dục và học tập. Chúng tôi không đảm bảo kết quả học tập, kỳ thi, chuyên môn hoặc tài chính cụ thể. Trong phạm vi tối đa được pháp luật cho phép, Aliolo được cung cấp mà không có bảo đảm nào ngoài những bảo đảm được pháp luật hiện hành yêu cầu.</p>
+        <h2>Thay đổi đối với các điều khoản này</h2>
+        <p>Chúng tôi có thể cập nhật các điều khoản này để phản ánh những thay đổi về sản phẩm, pháp lý, thanh toán hoặc hoạt động. Phiên bản hiện tại được xuất bản trên trang này.</p>
+    refund_title|
+        Chính sách hoàn tiền của Aliolo
+    refund_subtitle|
+        Cách thức hoạt động của việc hoàn tiền, hủy, bồi hoàn và hỗ trợ thanh toán đối với Aliolo Premium.
+    refund_body|
+        <h2>Tổng quan</h2>
+        <p>Aliolo Premium là một thuê bao kỹ thuật số. Vì quyền truy cập cao cấp có thể được kích hoạt ngay lập tức nên các giao dịch mua thường chỉ là cuối cùng sau khi đăng ký được kích hoạt và sử dụng, trừ khi chính sách này, kênh mua hàng hoặc luật hiện hành có quy định khác.</p>
+        <h2>Cửa sổ hoàn tiền trong 7 ngày</h2>
+        <p>Nếu vô tình mua gói đăng ký web hoặc gặp sự cố kỹ thuật khiến bạn không thể sử dụng các tính năng cao cấp, bạn có thể yêu cầu hoàn lại tiền trong vòng 7 ngày kể từ lần mua đầu tiên. Bao gồm email tài khoản, chi tiết đơn đặt hàng và mô tả ngắn gọn về vấn đề.</p>
+        <h2>Không hoàn tiền theo tỷ lệ giữa chu kỳ</h2>
+        <p>Chúng tôi thường không hoàn lại tiền theo tỷ lệ cho các trường hợp hủy sau thời hạn hoàn tiền ban đầu. Nếu bạn hủy sau khoảng thời gian đó, thông thường bạn sẽ giữ quyền truy cập cao cấp cho đến khi kết thúc thời hạn thanh toán đã thanh toán.</p>
+        <h2>Quy tắc kênh mua hàng</h2>
+        <p>Việc hoàn tiền cho các giao dịch mua được thực hiện qua Google Play hoặc Apple App Store thường phải được yêu cầu thông qua cửa hàng ứng dụng liên quan. Những nền tảng đó áp dụng quy tắc hoàn tiền và quy trình xem xét của riêng họ.</p>
+        <div class="notice"><strong>Thông báo mái chèo:</strong> Đối với các đơn đặt hàng qua web, Paddle.com có ​​thể đóng vai trò là Người bán hàng chính thức. Paddle xử lý dịch vụ khách hàng liên quan đến thanh toán, xử lý thuế và xử lý hoàn trả cho các đơn đặt hàng đó.</div>
+        <h2>Cách yêu cầu hoàn lại tiền</h2>
+        <p>Đối với các đơn đặt hàng trên web, hãy liên hệ với bộ phận hỗ trợ người mua Paddle bằng cách sử dụng thông tin đặt hàng từ biên nhận của bạn hoặc liên hệ với bộ phận hỗ trợ của Aliolo tại <a href="mailto:vitalii@nohainc.com">Vitalii@nohainc.com</a>. Chúng tôi có thể gửi các yêu cầu thanh toán cụ thể tới Paddle khi Paddle là Người bán trên hồ sơ.</p>
+        <h2>Khoản bồi hoàn và lạm dụng</h2>
+        <p>Nếu một khoản thanh toán bị đảo ngược, tranh chấp, hoàn tiền hoặc được xác định là gian lận, Aliolo có thể tạm dừng hoặc xóa quyền truy cập đặc biệt liên quan đến giao dịch đó.</p>
+    pricing_title|
+        Giá cao cấp của Aliolo
+    pricing_subtitle|
+        Các tùy chọn đăng ký đơn giản để mở khóa trải nghiệm học tập trực quan đầy đủ của Aliolo.
+    pricing_body|
+        <div class="plans">
+        <section class="plan">
+        <span class="tag">Linh hoạt</span>
+        <h2>hàng tuần</h2>
+        <div class="price">$2.99</div>
+        <p>Mỗi tuần. Hữu ích cho việc học tập, ôn tập hoặc luyện thi ngắn hạn.</p>
+        </section>
+        <section class="plan">
+        <span class="tag">Phổ biến</span>
+        <h2>hàng tháng</h2>
+        <div class="price">$8.99</div>
+        <p>Mỗi tháng. Tốt nhất cho việc học tập nhất quán mà không cần cam kết lâu dài.</p>
+        </section>
+        <section class="plan">
+        <span class="tag">Giá trị tốt nhất</span>
+        <h2>Hàng năm</h2>
+        <div class="price">$80.99</div>
+        <p>Mỗi năm. Chi phí hàng tháng hiệu quả thấp hơn cho người học lâu dài.</p>
+        </section>
+        </div>
+        <h2>Premium bao gồm những gì</h2>
+        <ul>
+        <li>Toàn quyền truy cập vào các môn học và thư viện học tập cao cấp được tuyển chọn.</li>
+        <li>Các tính năng theo dõi tiến trình và lặp lại khoảng cách nâng cao.</li>
+        <li>Tạo flashcard, chủ đề, thư mục và bộ sưu tập tùy chỉnh nếu có.</li>
+        <li>Chế độ học tập và kiểm tra tương tác, bao gồm cài đặt tự động phát.</li>
+        <li>Các tính năng tổ chức học tập riêng cho quy trình học tập cá nhân.</li>
+        </ul>
+        <h2>Chi tiết thanh toán</h2>
+        <p>Giá được liệt kê bằng USD cho trang giá công khai này. Thanh toán có thể hiển thị nội tệ, thuế và chi tiết thanh toán cuối cùng tùy thuộc vào vị trí, phương thức thanh toán và kênh mua hàng của bạn.</p>
+        <p>Đăng ký tự động gia hạn cho đến khi bị hủy. Bạn có thể hủy theo quy định của kênh bạn đã mua. Quyền truy cập thường tiếp tục cho đến khi kết thúc thời hạn thanh toán đã thanh toán.</p>
+        <div class="notice"><strong>Thông báo mái chèo:</strong> Các đơn đặt hàng trên web có thể được xử lý bởi Paddle.com, người bán lại trực tuyến và Người bán hồ sơ của chúng tôi. Paddle có thể tính toán và thu các khoản thuế hiện hành cũng như cung cấp hỗ trợ cho người mua liên quan đến thanh toán.</div>
+        <div class="comparison-card">
+        <h2>So sánh miễn phí và cao cấp</h2>
+        <p>Bảng này phù hợp với trải nghiệm ứng dụng hiện tại và giúp dễ dàng đánh giá nhanh bản nâng cấp cao cấp hơn.</p>
+        <table class="comparison-table" aria-label="Aliolo free and premium feature comparison">
+        <thead>
+        <tr>
+        <th>Tính năng</th>
+        <th>Miễn phí</th>
+        <th>Phần thưởng</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>Thư viện đầy đủ</td>
+        <td><span class="comparison-check">✓</span></td>
+        <td><span class="comparison-check pro">✓</span></td>
+        </tr>
+        <tr>
+        <td>Sự lặp lại cách nhau</td>
+        <td><span class="comparison-cross">✕</span></td>
+        <td><span class="comparison-check pro">✓</span></td>
+        </tr>
+        <tr>
+        <td>Sáng tạo</td>
+        <td><span class="comparison-cross">✕</span></td>
+        <td><span class="comparison-check pro">✓</span></td>
+        </tr>
+        <tr>
+        <td>Kiểm tra</td>
+        <td><span class="comparison-cross">✕</span></td>
+        <td><span class="comparison-check pro">✓</span></td>
+        </tr>
+        <tr>
+        <td>Tự động phát</td>
+        <td><span class="comparison-cross">✕</span></td>
+        <td><span class="comparison-check pro">✓</span></td>
+        </tr>
+        <tr>
+        <td>Chế độ riêng tư</td>
+        <td><span class="comparison-cross">✕</span></td>
+        <td><span class="comparison-check pro">✓</span></td>
+        </tr>
+        <tr>
+        <td>Tùy chỉnh</td>
+        <td><span class="comparison-cross">✕</span></td>
+        <td><span class="comparison-check pro">✓</span></td>
+        </tr>
+        </tbody>
+        </table>
+        <div class="comparison-note">Premium mở khóa quy trình nghiên cứu đầy đủ: đánh giá thích ứng, công cụ tạo, thử nghiệm nâng cao, kiểm soát tự động phát, tổ chức tư nhân và cá nhân hóa sâu hơn.</div>
+        </div>
+        <h2>Chênh lệch giá nền tảng</h2>
+        <p>Giá và ưu đãi có thể khác nhau giữa thanh toán trên web, Google Play, Apple App Store, quốc gia, đơn vị tiền tệ và các chương trình khuyến mãi trong thời gian giới hạn. Màn hình thanh toán cuối cùng kiểm soát giá thực tế và các điều khoản gia hạn cho giao dịch mua hàng của bạn.</p>
+        <h2>Chính sách liên quan</h2>
+        <p>Trước khi đăng ký, hãy xem lại <a href="/terms">Điều khoản đăng ký</a>, <a href="/refund">Chính sách hoàn tiền</a>, Và <a href="/privacy">Chính sách bảo mật</a>.</p>
+    checkout_title|
+        Thanh toán Aliolo
+    checkout_subtitle|
+        Thanh toán an toàn cho đăng ký Aliolo Premium.
+    checkout_eyebrow|
+        Thanh toán an toàn
+    checkout_h1|
+        Hoàn tất giao dịch mua Aliolo Premium của bạn.
+    checkout_status_title|
+        Đang chờ thanh toán
+    checkout_status_desc|
+        Nếu bạn mở trang này từ thanh toán Aliolo, hình thức thanh toán sẽ tự động xuất hiện.
+    checkout_payment_support_title|
+        Hỗ trợ thanh toán
+    checkout_payment_support_desc|
+        Thanh toán trên web được Paddle.com xử lý với tư cách là Người bán hàng có uy tín.
+    checkout_billing_title|
+        Thanh toán đăng ký
+    checkout_billing_desc|
+        Aliolo Premium tự động gia hạn cho đến khi bị hủy. Bạn có thể hủy sau thông qua Paddle hoặc tài khoản Aliolo của bạn.
+    checkout_policy_title|
+        Cần chi tiết chính sách?
+    checkout_policy_desc|
+        Xem lại thông tin về giá, điều khoản đăng ký, quyền riêng tư và hoàn tiền trước khi hoàn tất giao dịch mua của bạn.
+    landing_meta_title|
+        Aliolo | Thẻ ghi nhớ trực quan, lặp lại cách quãng và quy trình học tập thông minh hơn
+    landing_meta_desc|
+        Aliolo giúp người học nắm vững ngôn ngữ, khoa học, giải phẫu, luyện thi và các môn học được tuyển chọn bằng thẻ ghi chú trực quan, lặp lại cách quãng và các chế độ kiểm tra tương tác.
+    landing_nav_features|
+        Đặc trưng
+    landing_nav_how_it_works|
+        Nó hoạt động như thế nào
+    landing_nav_pricing|
+        Định giá
+    landing_nav_login|
+        Đăng nhập
+    landing_nav_cta|
+        Tạo tài khoản miễn phí
+    landing_hero_eyebrow|
+        Nền tảng học tập trực quan
+    landing_hero_h1|
+        Học trực quan. Nhớ lâu hơn.
+    landing_hero_p|
+        Biến hình ảnh, âm thanh, video và văn bản thành các thẻ ghi chú có cấu trúc. Học theo ngữ cảnh, xem lại vào đúng thời điểm và kiểm tra những gì bạn thực sự có thể nhớ lại.
+    landing_hero_btn_primary|
+        Tạo tài khoản miễn phí
+    landing_hero_btn_secondary|
+        Đăng nhập
+    landing_hero_proof_1_title|
+        Thị giác
+    landing_hero_proof_1_desc|
+        Thẻ flashcard thân thiện với hình ảnh, âm thanh và video dành cho việc học nặng về nhận dạng.
+    landing_hero_proof_2_title|
+        Thích ứng
+    landing_hero_proof_2_desc|
+        Lặp lại khoảng cách và theo dõi tiến độ để xem lại tài liệu vào đúng thời điểm.
+    landing_hero_proof_3_title|
+        Có cấu trúc
+    landing_hero_proof_3_desc|
+        Các cột, thư mục, chủ đề và bộ sưu tập có quy mô vượt ra ngoài một bộ bài đơn giản.
+    landing_hero_preview_title|
+        Nhận biết trước khi thu hồi
+    landing_hero_preview_desc|
+        Một bài học Aliolo thực sự sử dụng hình ảnh, văn bản, âm thanh và điều hướng có hướng dẫn.
+    landing_hero_preview_chip|
+        Chế độ tìm hiểu
+    landing_features_h2|
+        Mọi thứ bạn cần để biến khả năng hiển thị thành thu hồi.
+    landing_features_p|
+        Xây dựng sự công nhận với đa phương tiện, sắp xếp các thư viện lớn hơn và xem lại tài liệu trước khi nó mất dần.
+    landing_feature_1_title|
+        Học không chỉ bằng văn bản
+    landing_feature_1_desc|
+        Sử dụng hình ảnh, âm thanh, video và lời nhắc linh hoạt khi chủ đề phụ thuộc vào nhận dạng và ngữ cảnh.
+    landing_feature_2_title|
+        Xem lại trước khi nó mờ dần
+    landing_feature_2_desc|
+        Sự lặp lại ngắt quãng và theo dõi tiến độ sẽ mang lại những tài liệu quan trọng vào thời điểm hữu ích.
+    landing_feature_3_title|
+        Phát triển vượt ra ngoài một bộ bài
+    landing_feature_3_desc|
+        Sắp xếp tài liệu được tuyển chọn hoặc tùy chỉnh thành các trụ cột, thư mục, chủ đề và bộ sưu tập mà vẫn có thể sử dụng được.
+    landing_workflow_h2|
+        Lộ trình rõ ràng từ “Tôi nên học” đến “Tôi biết điều này”.
+    landing_workflow_p|
+        Một quy trình làm việc tập trung giúp bước tiếp theo trở nên rõ ràng mà không làm phẳng mọi chủ đề vào cùng một loại thẻ.
+    landing_step_1_title|
+        Chọn vật liệu phù hợp
+    landing_step_1_desc|
+        Bắt đầu với một chủ đề được tuyển chọn hoặc xây dựng thư viện tập trung cho kỳ thi, ngôn ngữ, nghề nghiệp hoặc mục tiêu cá nhân.
+    landing_step_2_title|
+        Học theo ngữ cảnh
+    landing_step_2_desc|
+        Xây dựng sự công nhận thông qua thẻ hướng dẫn và phương tiện có sẵn trước khi yêu cầu trí nhớ của bạn hoạt động mà không cần trợ giúp.
+    landing_step_3_title|
+        Kiểm tra khả năng thu hồi thực tế
+    landing_step_3_desc|
+        Chuyển sang thử nghiệm tập trung để phát hiện những điểm yếu, củng cố khả năng truy xuất và đo lường tiến độ.
+    landing_pricing_h2|
+        Bắt đầu miễn phí. Nâng cấp khi bạn cần quy trình làm việc đầy đủ.
+    landing_pricing_p|
+        Tạo một tài khoản mà không cần thanh toán. Premium bổ sung tính năng lặp lại, tạo, thử nghiệm, tự động phát, tổ chức riêng tư và tùy chỉnh sâu hơn.
+    landing_plan_weekly_desc|
+        Phù hợp cho những đợt thúc đẩy ngắn hạn, ôn tập nhanh hoặc chuẩn bị cho tuần thi.
+    landing_plan_weekly_item_1|
+        Thời hạn cam kết ngắn
+    landing_plan_weekly_item_2|
+        Cách nhanh chóng để thử quy trình làm việc cao cấp
+    landing_plan_weekly_item_3|
+        Tự động gia hạn cho đến khi bị hủy
+    landing_plan_weekly_btn|
+        Xem chi tiết kế hoạch
+    landing_plan_monthly_desc|
+        Truy cập cân bằng cho sinh viên xây dựng thói quen học tập ổn định.
+    landing_plan_monthly_item_1|
+        Tốt nhất cho việc học tập thường xuyên hàng tuần
+    landing_plan_monthly_item_2|
+        Đủ thời gian để tổ chức các thư viện chủ đề lớn hơn
+    landing_plan_monthly_item_3|
+        Tự động gia hạn cho đến khi bị hủy
+    landing_plan_monthly_btn|
+        Xem chi tiết kế hoạch
+    landing_plan_yearly_desc|
+        Chi phí hàng tháng hiệu quả thấp nhất dành cho người học muốn có một hệ thống học tập bền vững.
+    landing_plan_yearly_item_1|
+        Lý tưởng cho việc học ngôn ngữ dài hạn và học tập chuyên nghiệp
+    landing_plan_yearly_item_2|
+        Chi phí thấp hơn theo thời gian
+    landing_plan_yearly_item_3|
+        Tự động gia hạn cho đến khi bị hủy
+    landing_plan_yearly_btn|
+        Xem chi tiết kế hoạch
+    landing_trust_h2|
+        Nghiên cứu với sự rõ ràng. Đăng ký với sự tự tin.
+    landing_trust_p|
+        Biết những gì miễn phí, những gì Premium bổ sung và nơi nhận trợ giúp trước khi bạn cam kết.
+    landing_trust_item_1_title|
+        Vào cửa miễn phí:
+    landing_trust_item_1_desc|
+        Tạo tài khoản và khám phá tài liệu học tập có sẵn mà không cần nhập chi tiết thanh toán.
+    landing_trust_item_2_title|
+        Điều khoản minh bạch:
+    landing_trust_item_2_desc|
+        Thông tin về giá cả, gia hạn, hủy, quyền riêng tư và hoàn tiền có sẵn trước khi thanh toán.
+    landing_trust_item_3_title|
+        Hỗ trợ con người:
+    landing_trust_item_3_desc|
+        Hãy liên hệ với Vitalii@nohainc.com khi bạn cần trợ giúp.
+    landing_faq_1_q|
+        Tôi có cần tự mình tạo mọi thẻ không?
+    landing_faq_1_a|
+        Không. Bắt đầu với các chủ đề được tuyển chọn sẵn, sau đó tạo tài liệu của riêng bạn khi mục tiêu của bạn trở nên cụ thể hơn.
+    landing_faq_2_q|
+        Tôi có thể sử dụng Aliolo miễn phí không?
+    landing_faq_2_a|
+        Đúng. Tài khoản miễn phí cung cấp một điểm vào thư viện; trang định giá giải thích quy trình công việc nâng cao nào yêu cầu Premium.
+    landing_faq_3_q|
+        Tôi có thể hủy đăng ký không?
+    landing_faq_3_a|
+        Đúng. Đăng ký có thể bị hủy thông qua kênh nơi họ đã mua và quyền truy cập thường tiếp tục trong suốt thời gian trả phí.
+    landing_final_h2|
+        Sẵn sàng để tính buổi học tiếp theo của bạn?
+    landing_final_p|
+        Tạo một tài khoản miễn phí, chọn một chủ đề và bắt đầu học một cách trực quan.
+    landing_final_btn|
+        Tạo tài khoản miễn phí
+    landing_footer_desc|
+        Thẻ flashcard trực quan, sự lặp lại có khoảng cách, tổ chức chủ đề linh hoạt và quy trình kiểm tra tập trung dành cho những người học muốn có cấu trúc dễ dàng.
+    landing_footer_mor|
+        Người bán ghi chép:
+    landing_footer_mor_desc|
+        Quá trình đặt hàng của chúng tôi có thể được thực hiện bởi Paddle.com, người bán lại trực tuyến và Người bán hàng có uy tín của chúng tôi đối với các đơn đặt hàng trên web. Paddle xử lý việc xử lý thanh toán, dịch vụ khách hàng liên quan đến thanh toán và trả lại cho các đơn đặt hàng đó.

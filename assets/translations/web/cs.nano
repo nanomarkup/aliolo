@@ -1,0 +1,349 @@
+..
+    legal_info|
+        Právní informace
+    last_updated|
+        Naposledy aktualizováno
+    support|
+        Podpora
+    home|
+        Domov
+    privacy|
+        Soukromí
+    terms|
+        Podmínky
+    refunds|
+        Vrácení peněz
+    pricing|
+        Ceny
+    privacy_title|
+        Zásady ochrany osobních údajů společnosti Aliolo
+    privacy_subtitle|
+        Jak Aliolo shromažďuje, používá, ukládá a chrání informace týkající se účtu, učení a plateb.
+    privacy_body|
+        <h2>Informace, které shromažďujeme</h2>
+        <p>Shromažďujeme informace potřebné k provozu Aliolo, včetně podrobností o účtu, jako je e-mailová adresa, uživatelské jméno, údaje pro ověření hesla, nastavení avatarů, předvolby a nastavení profilu.</p>
+        <p>Ukládáme také výukové aktivity, jako jsou předměty, složky, sbírky, karty, pokrok, pruhy, denní cíle, nastavení testování a učení, zpětnou vazbu a základní události používání aplikací potřebné k poskytování výukového prostředí.</p>
+        <h2>Jak používáme informace</h2>
+        <p>Tyto informace používáme k vytvoření a zabezpečení vašeho účtu, synchronizaci vašich studijních dat, přizpůsobení vašeho studijního prostředí, poskytování prémiového přístupu, odpovídání na žádosti o podporu, zlepšování aplikace a zabránění zneužití nebo zneužití služeb.</p>
+        <h2>Platby a předplatné</h2>
+        <p>Aliolo přímo neukládá úplné údaje o platební kartě. Webové platby zpracovává Paddle a mobilní nákupy mohou být zpracovány Google Play nebo Apple App Store, pokud jsou tyto nákupní kanály dostupné.</p>
+        <p>Pro přístup k předplatnému můžeme ukládat identifikátory poskytovatele plateb, identifikátory produktů, stav předplatného, ​​data období obnovení a související metadata webhooku nebo transakcí. To nám umožňuje aktivovat, obnovit, zrušit nebo obnovit prémiový přístup.</p>
+        <h2>Služby třetích stran</h2>
+        <p>Používáme poskytovatele služeb pro hosting, infrastrukturu, úložiště, analytické nebo provozní protokoly, autentizaci a platby. Tito poskytovatelé zpracovávají informace pouze podle potřeby k poskytování svých služeb společnosti Aliolo.</p>
+        <div class="notice"><strong>Upozornění na pádlo:</strong> Náš objednávkový proces může provádět Paddle.com, náš online prodejce a obchodník se záznamem. Paddle se stará o zpracování plateb, výpočet daně, kde je to vhodné, zabezpečení plateb a zákaznický servis související s platbami.</div>
+        <h2>Soubory cookie a místní úložiště</h2>
+        <p>Aliolo může používat soubory cookie, identifikátory relací, úložiště prohlížeče nebo podobné technologie, aby vás udrželo přihlášené, zapamatovalo si předvolby, zabezpečilo službu a provozovalo webovou aplikaci.</p>
+        <h2>Uchovávání a mazání dat</h2>
+        <p>Údaje o účtu a učení uchováváme, dokud je váš účet aktivní nebo podle potřeby k poskytování služby, plnění zákonných povinností, řešení sporů, zabránění zneužití a vedení záznamů o transakcích. Kontaktováním nás můžete požádat o smazání účtu nebo o podporu související s daty.</p>
+        <h2>Použití pro děti a vzdělávání</h2>
+        <p>Aliolo je vzdělávací produkt. Pokud se rodič, zákonný zástupce nebo škola domnívají, že dítě poskytlo osobní údaje bez příslušného povolení, kontaktujte nás, abychom je mohli zkontrolovat a přijmout vhodná opatření.</p>
+        <h2>Zabezpečení</h2>
+        <p>K ochraně osobních údajů používáme přiměřená technická a organizační opatření. Žádná online služba nemůže zaručit dokonalé zabezpečení, ale pracujeme na omezení přístupu a ochraně dat před neoprávněným použitím.</p>
+        <h2>Vaše volby a práva</h2>
+        <p>V závislosti na vaší poloze můžete mít práva na přístup, opravu, odstranění, export nebo omezení použití vašich osobních údajů. Kontaktujte nás na <a href="mailto:vitalii@nohainc.com">vitalii@nohainc.com</a> podat žádost.</p>
+    terms_title|
+        Podmínky předplatného Aliolo
+    terms_subtitle|
+        Pravidla pro účty Aliolo, prémiový přístup, fakturace předplatného, ​​zrušení a přijatelné použití.
+    terms_body|
+        <h2>Pomocí Aliolo</h2>
+        <p>Aliolo poskytuje nástroje vizuálního učení, kurátorský vzdělávací obsah, kartičky, sledování pokroku a prémiové výukové funkce. Jste odpovědní za uchování přihlašovacích údajů k účtu v bezpečí a za zákonné používání služby.</p>
+        <h2>Prémiový přístup</h2>
+        <p>Prémiový přístup odemkne placené funkce zobrazené v aplikaci nebo na stránce s cenami. Dostupné funkce se mohou se zdokonalováním produktu změnit, ale aktivní předplatitelé budou mít i nadále přístup k placenému prostředí Aliolo během svého platného období předplatného.</p>
+        <h2>Vyúčtování a obnovení</h2>
+        <p>Předplatné se automaticky obnoví, pokud není zrušeno před koncem aktuálního fakturačního období. Ceny, kadence fakturace, daně, přepočet místní měny a pravidla pro obnovení se zobrazují u pokladny a mohou se lišit podle nákupního kanálu, regionu, platformy nebo aktivní nabídky.</p>
+        <div class="notice"><strong>Upozornění na pádlo:</strong> U internetových nákupů může náš objednávkový proces provádět Paddle.com. Paddle.com je obchodník se záznamem pro tyto objednávky a poskytuje služby zákazníkům související s platbami, zpracování daní a zpracování vratek.</div>
+        <h2>Zrušení</h2>
+        <p>Můžete zrušit podle pravidel nákupního kanálu, který jste použili. Zrušení zastaví budoucí obnovení. Pokud není v nákupním kanálu uvedeno jinak, placený přístup zůstává dostupný až do konce aktuálního fakturačního období.</p>
+        <h2>Vrácení peněz</h2>
+        <p>Vrácení peněz probíhá podle našeho <a href="/refund">Zásady vrácení peněz</a>, pravidla nákupního kanálu a platné spotřebitelské právo. Nákupy v obchodě s aplikacemi obvykle zpracovává příslušný obchod s aplikacemi.</p>
+        <h2>Přijatelné použití</h2>
+        <p>Nesmíte Aliolo zneužívat, zasahovat do služby, pokoušet se o neoprávněný přístup, seškrabovat nebo kopírovat obsah ve velkém měřítku, zpětně analyzovat chráněné části aplikace, nahrávat nezákonný materiál nebo používat službu způsobem, který poškozuje ostatní uživatele nebo Aliolo.</p>
+        <h2>Obsah a dostupnost</h2>
+        <p>Aliolo může aktualizovat, přidávat, odebírat nebo reorganizovat předměty, karty, funkce a design. Naším cílem je zachovat spolehlivost služby, ale dostupnost může být ovlivněna údržbou, poskytovateli třetích stran, problémy se sítí nebo změnami produktů.</p>
+        <h2>Zřeknutí se odpovědnosti a odpovědnosti</h2>
+        <p>Aliolo je poskytován jako vzdělávací a studijní podpůrný nástroj. Nezaručujeme konkrétní výsledky učení, zkoušky, odborné ani finanční výsledky. V maximálním rozsahu povoleném zákonem je Aliolo poskytováno bez záruk nad rámec těch, které vyžadují platné zákony.</p>
+        <h2>Změny těchto podmínek</h2>
+        <p>Tyto podmínky můžeme aktualizovat, aby odrážely produktové, právní, fakturační nebo provozní změny. Aktuální verze je zveřejněna na této stránce.</p>
+    refund_title|
+        Zásady vrácení peněz Aliolo
+    refund_subtitle|
+        Jak funguje vrácení peněz, zrušení, zúčtování a podpora plateb pro Aliolo Premium.
+    refund_body|
+        <h2>Přehled</h2>
+        <p>Aliolo Premium je digitální předplatné. Vzhledem k tomu, že prémiový přístup lze aktivovat okamžitě, nákupy jsou obecně konečné, jakmile je předplatné aktivní a využíváno, pokud tyto zásady, nákupní kanál nebo příslušné zákony nestanoví jinak.</p>
+        <h2>7denní okno pro vrácení peněz</h2>
+        <p>Pokud jste omylem zakoupili webové předplatné nebo máte technický problém, který vám brání používat prémiové funkce, můžete požádat o vrácení peněz do 7 dnů od prvního nákupu. Uveďte e-mail účtu, podrobnosti o objednávce a krátký popis problému.</p>
+        <h2>Žádné poměrné refundace uprostřed cyklu</h2>
+        <p>Obecně neposkytujeme poměrné náhrady za zrušení po počátečním období pro vrácení peněz. Pokud zrušíte po tomto období, obvykle si ponecháte prémiový přístup až do konce placeného fakturačního období.</p>
+        <h2>Pravidla nákupního kanálu</h2>
+        <p>O vrácení peněz za nákupy provedené prostřednictvím Google Play nebo Apple App Store je obvykle nutné požádat prostřednictvím příslušného obchodu s aplikacemi. Tyto platformy uplatňují svá vlastní pravidla pro vrácení peněz a proces kontroly.</p>
+        <div class="notice"><strong>Upozornění na pádlo:</strong> U webových objednávek může Paddle.com vystupovat jako Obchodník záznamů. Paddle se stará o zákaznický servis související s platbami, zpracování daní a zpracování vratek pro tyto objednávky.</div>
+        <h2>Jak požádat o vrácení peněz</h2>
+        <p>V případě webových objednávek kontaktujte podporu kupujícího Paddle pomocí informací o objednávce z potvrzení nebo kontaktujte podporu Aliolo na adrese <a href="mailto:vitalii@nohainc.com">vitalii@nohainc.com</a>. Pokud je Paddle obchodníkem s rekordy, můžeme na Pádlo směřovat specifické požadavky na platby.</p>
+        <h2>Zpětná zúčtování a zneužití</h2>
+        <p>Pokud je platba stornována, zpochybněna, vrácena nebo identifikována jako podvodná, Aliolo může pozastavit nebo odebrat prémiový přístup spojený s touto transakcí.</p>
+    pricing_title|
+        Ceny Aliolo Premium
+    pricing_subtitle|
+        Jednoduché možnosti předplatného pro odemknutí plné vizuální výuky Aliolo.
+    pricing_body|
+        <div class="plans">
+        <section class="plan">
+        <span class="tag">Flexibilní</span>
+        <h2>Týdně</h2>
+        <div class="price">$2.99</div>
+        <p>Za týden. Užitečné pro krátkodobé studium, opakování nebo přípravu na zkoušky.</p>
+        </section>
+        <section class="plan">
+        <span class="tag">Populární</span>
+        <h2>Měsíční</h2>
+        <div class="price">$8.99</div>
+        <p>Za měsíc. Nejlepší pro konzistentní učení bez dlouhého závazku.</p>
+        </section>
+        <section class="plan">
+        <span class="tag">Nejlepší hodnota</span>
+        <h2>Roční</h2>
+        <div class="price">$80.99</div>
+        <p>Za rok. Nižší efektivní měsíční náklady pro dlouhodobě studující.</p>
+        </section>
+        </div>
+        <h2>Co zahrnuje Premium</h2>
+        <ul>
+        <li>Plný přístup k prémiovým kurátorským předmětům a výukovým knihovnám.</li>
+        <li>Pokročilé funkce opakování a sledování pokroku.</li>
+        <li>Vlastní kartička, předmět, složka a vytváření sbírek, pokud jsou k dispozici.</li>
+        <li>Interaktivní režimy učení a testování, včetně nastavení automatického přehrávání.</li>
+        <li>Funkce soukromé vzdělávací organizace pro osobní studijní pracovní postupy.</li>
+        </ul>
+        <h2>Fakturační údaje</h2>
+        <p>Ceny jsou uvedeny v USD na této veřejné stránce s cenami. Pokladna může zobrazovat místní měnu, daně a konečné fakturační údaje v závislosti na vaší poloze, platební metodě a nákupním kanálu.</p>
+        <p>Předplatné se automaticky obnovuje, dokud nebude zrušeno. Zrušit můžete podle pravidel kanálu, kde jste zakoupili. Přístup obvykle pokračuje až do konce placeného zúčtovacího období.</p>
+        <div class="notice"><strong>Upozornění na pádlo:</strong> Webové objednávky může zpracovávat Paddle.com, náš online prodejce a obchodník se záznamem. Společnost Paddle může vypočítat a vybrat příslušné daně a poskytovat podporu kupujícím související s platbami.</div>
+        <div class="comparison-card">
+        <h2>Porovnání zdarma a prémie</h2>
+        <p>Tato tabulka odpovídá aktuálnímu prostředí aplikace a usnadňuje na první pohled hodnocení prémiového upgradu.</p>
+        <table class="comparison-table" aria-label="Aliolo free and premium feature comparison">
+        <thead>
+        <tr>
+        <th>Funkce</th>
+        <th>Uvolnit</th>
+        <th>Pojistné</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>Plná knihovna</td>
+        <td><span class="comparison-check">✓</span></td>
+        <td><span class="comparison-check pro">✓</span></td>
+        </tr>
+        <tr>
+        <td>Rozložené opakování</td>
+        <td><span class="comparison-cross">✕</span></td>
+        <td><span class="comparison-check pro">✓</span></td>
+        </tr>
+        <tr>
+        <td>Stvoření</td>
+        <td><span class="comparison-cross">✕</span></td>
+        <td><span class="comparison-check pro">✓</span></td>
+        </tr>
+        <tr>
+        <td>Testování</td>
+        <td><span class="comparison-cross">✕</span></td>
+        <td><span class="comparison-check pro">✓</span></td>
+        </tr>
+        <tr>
+        <td>Automatické přehrávání</td>
+        <td><span class="comparison-cross">✕</span></td>
+        <td><span class="comparison-check pro">✓</span></td>
+        </tr>
+        <tr>
+        <td>Soukromý režim</td>
+        <td><span class="comparison-cross">✕</span></td>
+        <td><span class="comparison-check pro">✓</span></td>
+        </tr>
+        <tr>
+        <td>Přizpůsobit</td>
+        <td><span class="comparison-cross">✕</span></td>
+        <td><span class="comparison-check pro">✓</span></td>
+        </tr>
+        </tbody>
+        </table>
+        <div class="comparison-note">Premium odemyká celý pracovní postup studia: adaptivní kontrolu, nástroje pro tvorbu, pokročilé testování, ovládání automatického přehrávání, soukromou organizaci a hlubší personalizaci.</div>
+        </div>
+        <h2>Cenové rozdíly platformy</h2>
+        <p>Ceny a nabídky se mohou lišit podle webové pokladny, Google Play, Apple App Store, zemí, měn a časově omezených akcí. Poslední obrazovka pokladny kontroluje skutečnou cenu a podmínky obnovení vašeho nákupu.</p>
+        <h2>Související zásady</h2>
+        <p>Před přihlášením k odběru si prostudujte <a href="/terms">Podmínky předplatného</a>, <a href="/refund">Zásady vrácení peněz</a>a <a href="/privacy">Zásady ochrany osobních údajů</a>.</p>
+    checkout_title|
+        Aliolo Pokladna
+    checkout_subtitle|
+        Bezpečná pokladna za předplatné Aliolo Premium.
+    checkout_eyebrow|
+        Bezpečná pokladna
+    checkout_h1|
+        Dokončete nákup Aliolo Premium.
+    checkout_status_title|
+        Čekání na pokladnu
+    checkout_status_desc|
+        Pokud jste tuto stránku otevřeli z fakturace Aliolo, platební formulář by se měl objevit automaticky.
+    checkout_payment_support_title|
+        Podpora plateb
+    checkout_payment_support_desc|
+        Webové platby zpracovává Paddle.com jako Merchant of Record.
+    checkout_billing_title|
+        Vyúčtování předplatného
+    checkout_billing_desc|
+        Aliolo Premium se automaticky obnovuje, dokud nebude zrušeno. Později můžete zrušit prostřednictvím Paddle nebo svého účtu Aliolo.
+    checkout_policy_title|
+        Potřebujete podrobnosti o zásadách?
+    checkout_policy_desc|
+        Před dokončením nákupu si přečtěte ceny, podmínky předplatného, ​​soukromí a informace o vrácení peněz.
+    landing_meta_title|
+        Aliolo | Vizuální kartičky, opakování s mezerami a chytřejší pracovní postupy studia
+    landing_meta_desc|
+        Aliolo pomáhá studentům zvládnout jazyky, vědu, anatomii, přípravu na zkoušky a vybrané předměty pomocí vizuálních karet, opakování s mezerami a interaktivních testovacích režimů.
+    landing_nav_features|
+        Vlastnosti
+    landing_nav_how_it_works|
+        Jak to funguje
+    landing_nav_pricing|
+        Ceny
+    landing_nav_login|
+        Přihlaste se
+    landing_nav_cta|
+        Vytvořte si bezplatný účet
+    landing_hero_eyebrow|
+        Platforma vizuálního učení
+    landing_hero_h1|
+        Učte se vizuálně. Pamatuj déle.
+    landing_hero_p|
+        Proměňte obrázky, zvuk, video a text na strukturované kartičky. Učte se s kontextem, opakujte si ve správný čas a vyzkoušejte, co si skutečně vybavíte.
+    landing_hero_btn_primary|
+        Vytvořte si bezplatný účet
+    landing_hero_btn_secondary|
+        Přihlaste se
+    landing_hero_proof_1_title|
+        Vizuální
+    landing_hero_proof_1_desc|
+        Kartičky vhodné pro obrázky, zvuk a video pro učení náročné na rozpoznávání.
+    landing_hero_proof_2_title|
+        Adaptivní
+    landing_hero_proof_2_desc|
+        Rozložené opakování a sledování pokroku pro opětovné procházení materiálu ve správný čas.
+    landing_hero_proof_3_title|
+        Strukturovaný
+    landing_hero_proof_3_desc|
+        Pilíře, složky, předměty a sbírky, které přesahují rámec jednoduchého balíčku.
+    landing_hero_preview_title|
+        Rozpoznání před odvoláním
+    landing_hero_preview_desc|
+        Skutečná lekce Aliolo využívající obrázky, text, zvuk a navigaci s průvodcem.
+    landing_hero_preview_chip|
+        Režim učení
+    landing_features_h2|
+        Vše, co potřebujete k přeměně expozice na vyvolání.
+    landing_features_p|
+        Vytvářejte rozpoznávání pomocí multimédií, udržujte pořádek větších knihoven a znovu si prohlédněte materiál, než zmizí.
+    landing_feature_1_title|
+        Učte se více než jen textem
+    landing_feature_1_desc|
+        Pokud předmět závisí na rozpoznání a kontextu, použijte obrázky, zvuk, video a flexibilní výzvy.
+    landing_feature_2_title|
+        Zkontrolujte, než zmizí
+    landing_feature_2_desc|
+        Rozložené opakování a sledování pokroku přinášejí důležitý materiál zpět v užitečnou dobu.
+    landing_feature_3_title|
+        Vyrůst přes jednu palubu
+    landing_feature_3_desc|
+        Uspořádejte upravený nebo vlastní materiál do pilířů, složek, předmětů a sbírek, které zůstanou použitelné.
+    landing_workflow_h2|
+        Jasná cesta od „měl bych studovat“ k „tohle vím“.
+    landing_workflow_p|
+        Jeden soustředěný pracovní postup zajistí, že další krok bude zřejmý, aniž by byl každý předmět srovnáván na stejný druh karty.
+    landing_step_1_title|
+        Vyberte si správný materiál
+    landing_step_1_desc|
+        Začněte s vybraným předmětem nebo vytvořte knihovnu zaměřenou na zkoušku, jazyk, profesi nebo osobní cíl.
+    landing_step_2_title|
+        Učte se s kontextem
+    landing_step_2_desc|
+        Vybudujte rozpoznávání pomocí naváděných karet a dostupných médií, než požádáte svou paměť, aby pracovala bez pomoci.
+    landing_step_3_title|
+        Otestujte skutečnou paměť
+    landing_step_3_desc|
+        Přejděte do cíleného testování, abyste odhalili slabá místa, posílili vyhledávání a zajistili měřitelný pokrok.
+    landing_pricing_h2|
+        Začněte zdarma. Upgradujte, když potřebujete úplný pracovní postup.
+    landing_pricing_p|
+        Vytvořte si účet bez platby. Premium přidává opakované opakování, vytváření, testování, automatické přehrávání, soukromou organizaci a hlubší přizpůsobení.
+    landing_plan_weekly_desc|
+        Dobré pro krátkodobé nátlaky, rychlé recenze nebo přípravu na zkouškový týden.
+    landing_plan_weekly_item_1|
+        Krátké okno závazku
+    landing_plan_weekly_item_2|
+        Rychlý způsob, jak vyzkoušet prémiový pracovní postup
+    landing_plan_weekly_item_3|
+        Obnovuje se automaticky až do zrušení
+    landing_plan_weekly_btn|
+        Zobrazit podrobnosti plánu
+    landing_plan_monthly_desc|
+        Vyvážený přístup pro studenty, kteří si vybudují stálý učební návyk.
+    landing_plan_monthly_item_1|
+        Nejlepší pro pravidelné týdenní studium
+    landing_plan_monthly_item_2|
+        Dostatek času na uspořádání větších oborových knihoven
+    landing_plan_monthly_item_3|
+        Obnovuje se automaticky až do zrušení
+    landing_plan_monthly_btn|
+        Zobrazit podrobnosti plánu
+    landing_plan_yearly_desc|
+        Nejnižší efektivní měsíční náklady pro studenty, kteří chtějí trvalý studijní systém.
+    landing_plan_yearly_item_1|
+        Ideální pro dlouhodobé jazykové a odborné studium
+    landing_plan_yearly_item_2|
+        Nižší náklady v průběhu času
+    landing_plan_yearly_item_3|
+        Obnovuje se automaticky až do zrušení
+    landing_plan_yearly_btn|
+        Zobrazit podrobnosti plánu
+    landing_trust_h2|
+        Studujte s přehledem. Přihlásit se s důvěrou.
+    landing_trust_p|
+        Než se zavážete, zjistěte, co je zdarma, co Premium přidává a kde získat pomoc.
+    landing_trust_item_1_title|
+        Vstup zdarma:
+    landing_trust_item_1_desc|
+        Vytvořte si účet a prozkoumejte dostupné výukové materiály bez zadávání platebních údajů.
+    landing_trust_item_2_title|
+        Transparentní podmínky:
+    landing_trust_item_2_desc|
+        Informace o cenách, obnovení, zrušení, ochraně osobních údajů a vrácení peněz jsou k dispozici před pokladnou.
+    landing_trust_item_3_title|
+        Lidská podpora:
+    landing_trust_item_3_desc|
+        Když potřebujete pomoc, kontaktujte vitalii@nohainc.com.
+    landing_faq_1_q|
+        Musím si každou kartu vytvořit sám?
+    landing_faq_1_a|
+        Ne. Začněte s dostupnými vybranými předměty a poté, když se váš cíl stane konkrétnějším, vytvořte si vlastní materiál.
+    landing_faq_2_q|
+        Mohu používat Aliolo zdarma?
+    landing_faq_2_a|
+        Ano. Bezplatný účet poskytuje vstupní bod do knihovny; stránka s cenami vysvětluje, které pokročilé pracovní postupy vyžadují Premium.
+    landing_faq_3_q|
+        Mohu zrušit předplatné?
+    landing_faq_3_a|
+        Ano. Předplatné lze zrušit prostřednictvím kanálu, kde bylo zakoupeno, přičemž přístup obvykle pokračuje během placeného období.
+    landing_final_h2|
+        Jste připraveni, aby se vaše další studijní lekce počítala?
+    landing_final_p|
+        Vytvořte si bezplatný účet, vyberte si předmět a začněte se vizuálně učit.
+    landing_final_btn|
+        Vytvořte si bezplatný účet
+    landing_footer_desc|
+        Vizuální kartičky, opakování s mezerami, flexibilní organizace předmětů a cílené testovací pracovní postupy pro studenty, kteří chtějí strukturu bez tření.
+    landing_footer_mor|
+        Registrovaný obchodník:
+    landing_footer_mor_desc|
+        Náš proces objednávek může provádět společnost Paddle.com, náš online prodejce a obchodník se záznamem pro webové objednávky. Paddle se stará o zpracování plateb, zákaznický servis související s platbami a vrácení těchto objednávek.

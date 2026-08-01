@@ -1,0 +1,349 @@
+..
+    legal_info|
+        Informații juridice
+    last_updated|
+        Ultima actualizare
+    support|
+        Sprijin
+    home|
+        Acasă
+    privacy|
+        Confidențialitate
+    terms|
+        Termeni
+    refunds|
+        Rambursări
+    pricing|
+        Prețuri
+    privacy_title|
+        Politica de confidențialitate Aliolo
+    privacy_subtitle|
+        Cum Aliolo colectează, utilizează, stochează și protejează informațiile legate de cont, de învățare și de plată.
+    privacy_body|
+        <h2>Informații pe care le colectăm</h2>
+        <p>Colectăm informațiile necesare pentru a opera Aliolo, inclusiv detalii despre cont, cum ar fi adresa de e-mail, numele de utilizator, datele de autentificare prin parolă, setările avatarului, preferințele și setările profilului.</p>
+        <p>De asemenea, stocăm activități de învățare, cum ar fi subiecte, foldere, colecții, carduri, progrese, streaks, obiective zilnice, setări de testare și învățare, feedback și evenimente de bază de utilizare a aplicației necesare pentru a oferi experiența de învățare.</p>
+        <h2>Cum folosim informațiile</h2>
+        <p>Folosim aceste informații pentru a vă crea și a securiza contul, pentru a vă sincroniza datele de învățare, pentru a vă personaliza experiența de studiu, pentru a vă oferi acces premium, pentru a răspunde solicitărilor de asistență, pentru a îmbunătăți aplicația și pentru a preveni utilizarea greșită sau abuzul de servicii.</p>
+        <h2>Plăți și abonamente</h2>
+        <p>Aliolo nu stochează direct detaliile complete ale cardului de plată. Plățile web sunt procesate de Paddle, iar achizițiile mobile pot fi procesate de Google Play sau Apple App Store atunci când acele canale de achiziție sunt disponibile.</p>
+        <p>Pentru accesul la abonament, este posibil să stocăm identificatori de furnizori de plăți, identificatori de produse, starea abonamentului, datele perioadei de reînnoire și metadatele legate de webhook sau tranzacție. Acest lucru ne permite să activăm, să reînnoim, să anulăm sau să restabilim accesul premium.</p>
+        <h2>Servicii de la terți</h2>
+        <p>Folosim furnizori de servicii pentru găzduire, infrastructură, stocare, jurnalele de analiză sau operaționale, autentificare și plăți. Acești furnizori prelucrează informații numai după cum este necesar pentru a-și furniza serviciile către Aliolo.</p>
+        <div class="notice"><strong>Notă cu vâsle:</strong> Procesul nostru de comandă poate fi condus de Paddle.com, reseller-ul nostru online și comerciant de înregistrare. Paddle se ocupă de procesarea plăților, de calculul taxelor, acolo unde este cazul, de securitatea plăților și de serviciile pentru clienți legate de plăți.</div>
+        <h2>Cookie-uri și stocare locală</h2>
+        <p>Aliolo poate folosi cookie-uri, identificatori de sesiune, stocare în browser sau tehnologii similare pentru a vă menține conectat, a vă aminti preferințele, a securiza serviciul și a opera aplicația web.</p>
+        <h2>Reținerea și ștergerea datelor</h2>
+        <p>Păstrăm datele despre cont și datele de învățare cât timp contul dvs. este activ sau după cum este necesar pentru a furniza serviciul, pentru a ne conforma obligațiilor legale, a rezolva disputele, a preveni abuzurile și a păstra înregistrările tranzacțiilor. Puteți solicita ștergerea contului sau asistență legată de date, contactându-ne.</p>
+        <h2>Copii și utilizarea educației</h2>
+        <p>Aliolo este un produs educațional. Dacă un părinte, un tutore sau o școală consideră că un copil a furnizat informații personale fără permisiunea corespunzătoare, contactați-ne pentru a putea revizui și luăm măsurile corespunzătoare.</p>
+        <h2>Securitate</h2>
+        <p>Folosim garanții tehnice și organizatorice rezonabile pentru a proteja informațiile personale. Niciun serviciu online nu poate garanta securitatea perfectă, dar lucrăm pentru a limita accesul și a proteja datele împotriva utilizării neautorizate.</p>
+        <h2>Alegerile și drepturile tale</h2>
+        <p>În funcție de locația dvs., este posibil să aveți drepturi de a accesa, corecta, șterge, exporta sau restricționa utilizarea informațiilor dvs. personale. Contactați-ne la <a href="mailto:vitalii@nohainc.com">vitalii@nohainc.com</a> a face o cerere.</p>
+    terms_title|
+        Termenii de abonament Aliolo
+    terms_subtitle|
+        Regulile pentru conturile Aliolo, acces premium, facturare a abonamentului, anulare și utilizare acceptabilă.
+    terms_body|
+        <h2>Folosind Aliolo</h2>
+        <p>Aliolo oferă instrumente de învățare vizuală, conținut educațional organizat, carduri, urmărirea progresului și funcții de învățare premium. Sunteți responsabil pentru păstrarea în siguranță a acreditărilor contului și pentru utilizarea legală a serviciului.</p>
+        <h2>Acces Premium</h2>
+        <p>Accesul premium deblochează funcții cu plată afișate în aplicație sau pe pagina de prețuri. Funcțiile disponibile se pot schimba pe măsură ce produsul se îmbunătățește, dar abonații activi vor continua să primească acces la experiența Aliolo cu plată în perioada de valabilitate a abonamentului.</p>
+        <h2>Facturare și reînnoire</h2>
+        <p>Abonamentele se reînnoiesc automat, cu excepția cazului în care sunt anulate înainte de sfârșitul perioadei curente de facturare. Prețurile, cadența de facturare, taxele, conversia monedei locale și regulile de reînnoire sunt afișate la finalizare și pot varia în funcție de canalul de achiziție, regiune, platformă sau oferta activă.</p>
+        <div class="notice"><strong>Notă cu vâsle:</strong> Pentru achizițiile web, procesul nostru de comandă poate fi efectuat de Paddle.com. Paddle.com este comerciantul de înregistrare pentru aceste comenzi și oferă servicii pentru clienți legate de plăți, gestionarea taxelor și procesarea retururilor.</div>
+        <h2>Anulare</h2>
+        <p>Puteți anula conform regulilor canalului de achiziție pe care l-ați folosit. Anularea oprește reînnoirea viitoare. Cu excepția cazului în care canalul de achiziție prevede altfel, accesul cu plată rămâne disponibil până la sfârșitul perioadei curente de facturare.</p>
+        <h2>Rambursări</h2>
+        <p>Rambursările sunt gestionate conform noastre <a href="/refund">Politica de rambursare</a>, regulile canalului de achiziție și legislația aplicabilă privind consumatorii. Achizițiile din magazinul de aplicații sunt în mod normal gestionate de magazinul de aplicații relevant.</p>
+        <h2>Utilizare acceptabilă</h2>
+        <p>Nu aveți voie să utilizați greșit Aliolo, să interferați cu serviciul, să încercați accesul neautorizat, să răzuiți sau să copiați conținut la scară, să faceți inginerie inversă a părților protejate ale aplicației, să încărcați materiale ilegale sau să utilizați serviciul într-un mod care dăunează altor utilizatori sau Aliolo.</p>
+        <h2>Conținut și disponibilitate</h2>
+        <p>Aliolo poate actualiza, adăuga, elimina sau reorganiza subiecte, carduri, caracteristici și design. Ne propunem să păstrăm serviciul de încredere, dar disponibilitatea poate fi afectată de întreținere, furnizori terți, probleme de rețea sau modificări ale produsului.</p>
+        <h2>Declinare a răspunderii și răspundere</h2>
+        <p>Aliolo este oferit ca instrument educațional și de sprijin pentru studii. Nu garantăm rezultate specifice de învățare, examen, profesionale sau financiare. În măsura maximă permisă de lege, Aliolo este oferit fără garanții peste cele cerute de legea aplicabilă.</p>
+        <h2>Modificări ale acestor Termeni</h2>
+        <p>Este posibil să actualizăm acești termeni pentru a reflecta modificări de produs, legale, de facturare sau operaționale. Versiunea actuală este publicată pe această pagină.</p>
+    refund_title|
+        Politica de rambursare Aliolo
+    refund_subtitle|
+        Cum funcționează rambursările, anulările, rambursările și suportul pentru plăți pentru Aliolo Premium.
+    refund_body|
+        <h2>Prezentare generală</h2>
+        <p>Aliolo Premium este un abonament digital. Deoarece accesul premium poate fi activat imediat, achizițiile sunt în general finale odată ce abonamentul este activ și utilizat, cu excepția cazului în care această politică, canalul de achiziție sau legea aplicabilă prevede altfel.</p>
+        <h2>Fereastră de rambursare de 7 zile</h2>
+        <p>Dacă ați achiziționat accidental un abonament web sau aveți o problemă tehnică care vă împiedică să utilizați funcțiile premium, puteți solicita o rambursare în termen de 7 zile de la achiziția inițială. Includeți e-mailul contului, detaliile comenzii și o scurtă descriere a problemei.</p>
+        <h2>Fără rambursări proporționale la mijlocul ciclului</h2>
+        <p>În general, nu oferim rambursări proporționale pentru anulări după fereastra inițială de rambursare. Dacă anulați după această perioadă, veți păstra în mod normal accesul premium până la sfârșitul perioadei de facturare plătită.</p>
+        <h2>Regulile canalului de achiziție</h2>
+        <p>Rambursările pentru achizițiile efectuate prin Google Play sau Apple App Store trebuie de obicei solicitate prin intermediul magazinului de aplicații relevant. Aceste platforme își aplică propriile reguli de rambursare și procesul de revizuire.</p>
+        <div class="notice"><strong>Notă cu vâsle:</strong> Pentru comenzile web, Paddle.com poate acționa ca comerciant de înregistrare. Paddle se ocupă de serviciile pentru clienți legate de plăți, gestionarea taxelor și procesarea retururilor pentru acele comenzi.</div>
+        <h2>Cum să solicitați o rambursare</h2>
+        <p>Pentru comenzi web, contactați serviciul de asistență pentru cumpărători Paddle folosind informațiile despre comandă din chitanța dvs. sau contactați asistența Aliolo la <a href="mailto:vitalii@nohainc.com">vitalii@nohainc.com</a>. Este posibil să direcționăm către Paddle solicitări specifice de plată atunci când Paddle este comerciantul de înregistrare.</p>
+        <h2>Rambursări și abuz</h2>
+        <p>Dacă o plată este inversată, contestată, rambursată sau identificată ca fiind frauduloasă, Aliolo poate suspenda sau elimina accesul premium asociat tranzacției respective.</p>
+    pricing_title|
+        Prețuri Aliolo Premium
+    pricing_subtitle|
+        Opțiuni simple de abonament pentru a debloca experiența completă de învățare vizuală Aliolo.
+    pricing_body|
+        <div class="plans">
+        <section class="plan">
+        <span class="tag">Flexibil</span>
+        <h2>Săptămânal</h2>
+        <div class="price">$2.99</div>
+        <p>Pe săptămână. Util pentru studii pe termen scurt, revizuire sau pregătire pentru examen.</p>
+        </section>
+        <section class="plan">
+        <span class="tag">Popular</span>
+        <h2>Lunar</h2>
+        <div class="price">$8.99</div>
+        <p>Pe lună. Cel mai bun pentru învățarea consecventă fără un angajament lung.</p>
+        </section>
+        <section class="plan">
+        <span class="tag">Cea mai bună valoare</span>
+        <h2>Anual</h2>
+        <div class="price">$80.99</div>
+        <p>Pe an. Cost lunar efectiv mai mic pentru cursanții pe termen lung.</p>
+        </section>
+        </div>
+        <h2>Ce include Premium</h2>
+        <ul>
+        <li>Acces complet la subiecte curatate premium și biblioteci de învățare.</li>
+        <li>Funcții avansate de repetare distanțată și de urmărire a progresului.</li>
+        <li>Crearea de carduri, subiecte, foldere și colecții personalizate acolo unde este disponibil.</li>
+        <li>Moduri interactive de învățare și testare, inclusiv setări de redare automată.</li>
+        <li>Caracteristicile organizației private de învățare pentru fluxurile de lucru de studiu personal.</li>
+        </ul>
+        <h2>Detalii de facturare</h2>
+        <p>Prețurile sunt afișate în USD pentru această pagină publică de prețuri. Checkout poate afișa moneda locală, taxele și detaliile finale de facturare, în funcție de locația dvs., metoda de plată și canalul de achiziție.</p>
+        <p>Abonamentele se reînnoiesc automat până la anulare. Puteți anula conform regulilor canalului de unde ați achiziționat. Accesul continuă în mod normal până la sfârșitul perioadei de facturare plătită.</p>
+        <div class="notice"><strong>Notă cu vâsle:</strong> Comenzile web pot fi procesate de către Paddle.com, reseller-ul nostru online și comerciant de înregistrare. Paddle poate calcula și colecta taxele aplicabile și poate oferi asistență pentru cumpărători legată de plăți.</div>
+        <div class="comparison-card">
+        <h2>Comparație gratuită vs premium</h2>
+        <p>Acest tabel se potrivește cu experiența actuală a aplicației și face upgrade-ul premium mai ușor de evaluat dintr-o privire.</p>
+        <table class="comparison-table" aria-label="Aliolo free and premium feature comparison">
+        <thead>
+        <tr>
+        <th>Caracteristică</th>
+        <th>Gratuit</th>
+        <th>Premium</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>Bibliotecă completă</td>
+        <td><span class="comparison-check">✓</span></td>
+        <td><span class="comparison-check pro">✓</span></td>
+        </tr>
+        <tr>
+        <td>Repetare la distanță</td>
+        <td><span class="comparison-cross">✕</span></td>
+        <td><span class="comparison-check pro">✓</span></td>
+        </tr>
+        <tr>
+        <td>Creare</td>
+        <td><span class="comparison-cross">✕</span></td>
+        <td><span class="comparison-check pro">✓</span></td>
+        </tr>
+        <tr>
+        <td>Testare</td>
+        <td><span class="comparison-cross">✕</span></td>
+        <td><span class="comparison-check pro">✓</span></td>
+        </tr>
+        <tr>
+        <td>Redare automată</td>
+        <td><span class="comparison-cross">✕</span></td>
+        <td><span class="comparison-check pro">✓</span></td>
+        </tr>
+        <tr>
+        <td>Modul privat</td>
+        <td><span class="comparison-cross">✕</span></td>
+        <td><span class="comparison-check pro">✓</span></td>
+        </tr>
+        <tr>
+        <td>Personalizați</td>
+        <td><span class="comparison-cross">✕</span></td>
+        <td><span class="comparison-check pro">✓</span></td>
+        </tr>
+        </tbody>
+        </table>
+        <div class="comparison-note">Premium deblochează întregul flux de lucru al studiului: revizuire adaptivă, instrumente de creare, testare avansată, comenzi de redare automată, organizare privată și personalizare mai profundă.</div>
+        </div>
+        <h2>Diferențele de preț pe platformă</h2>
+        <p>Prețurile și ofertele pot varia în funcție de achiziție pe web, Google Play, Apple App Store, țări, monede și promoții pe durată limitată. Ecranul final de plată controlează prețul real și termenii de reînnoire pentru achiziția dvs.</p>
+        <h2>Politici aferente</h2>
+        <p>Înainte de a vă abona, examinați <a href="/terms">Termenii de abonament</a>, <a href="/refund">Politica de rambursare</a>, și <a href="/privacy">Politica de confidențialitate</a>.</p>
+    checkout_title|
+        Aliolo Checkout
+    checkout_subtitle|
+        Checkout securizat pentru abonamentele Aliolo Premium.
+    checkout_eyebrow|
+        Checkout securizat
+    checkout_h1|
+        Finalizați achiziția Aliolo Premium.
+    checkout_status_title|
+        Asteptand checkout
+    checkout_status_desc|
+        Dacă ați deschis această pagină din facturarea Aliolo, formularul de plată ar trebui să apară automat.
+    checkout_payment_support_title|
+        Suport de plată
+    checkout_payment_support_desc|
+        Plățile web sunt procesate de către Paddle.com în calitate de comerciant de înregistrare.
+    checkout_billing_title|
+        Facturarea abonamentului
+    checkout_billing_desc|
+        Aliolo Premium se reînnoiește automat până la anulare. Puteți anula ulterior prin Paddle sau contul Aliolo.
+    checkout_policy_title|
+        Aveți nevoie de detalii despre politică?
+    checkout_policy_desc|
+        Examinați prețurile, condițiile de abonament, confidențialitatea și informațiile de rambursare înainte de a finaliza achiziția.
+    landing_meta_title|
+        Aliolo | Fișe vizuale, repetiție distanțată și fluxuri de lucru mai inteligente de studiu
+    landing_meta_desc|
+        Aliolo îi ajută pe cursanți să stăpânească limbi străine, știință, anatomie, pregătire pentru examene și subiecte organizate cu carduri vizuale, repetare distanțată și moduri de testare interactive.
+    landing_nav_features|
+        Caracteristici
+    landing_nav_how_it_works|
+        Cum funcționează
+    landing_nav_pricing|
+        Prețuri
+    landing_nav_login|
+        Log in
+    landing_nav_cta|
+        Creează cont gratuit
+    landing_hero_eyebrow|
+        Platformă de învățare vizuală
+    landing_hero_h1|
+        Învață vizual. Amintește-ți mai mult.
+    landing_hero_p|
+        Transformați imagini, sunet, video și text în carduri structurate. Învățați cu contextul, revizuiți la momentul potrivit și testați ceea ce vă puteți aminti cu adevărat.
+    landing_hero_btn_primary|
+        Creează cont gratuit
+    landing_hero_btn_secondary|
+        Log in
+    landing_hero_proof_1_title|
+        Vizual
+    landing_hero_proof_1_desc|
+        Carduri flash prietenoase cu imagini, audio și video pentru o învățare grea de recunoaștere.
+    landing_hero_proof_2_title|
+        Adaptiv
+    landing_hero_proof_2_desc|
+        Repetarea distanțată și urmărirea progresului pentru a revedea materialul la momentul potrivit.
+    landing_hero_proof_3_title|
+        Structurat
+    landing_hero_proof_3_desc|
+        Stâlpi, dosare, subiecte și colecții care se extind dincolo de un simplu pachet.
+    landing_hero_preview_title|
+        Recunoaștere înainte de rechemare
+    landing_hero_preview_desc|
+        O adevărată lecție de Aliolo folosind imagini, text, audio și navigare ghidată.
+    landing_hero_preview_chip|
+        Modul de învățare
+    landing_features_h2|
+        Tot ce ai nevoie pentru a transforma expunerea în amintire.
+    landing_features_p|
+        Creați recunoaștere cu conținut media îmbogățit, păstrați bibliotecile mai mari organizate și revizuiți materialul înainte ca acesta să dispară.
+    landing_feature_1_title|
+        Învață mai mult decât text
+    landing_feature_1_desc|
+        Utilizați imagini, sunet, video și solicitări flexibile atunci când subiectul depinde de recunoaștere și context.
+    landing_feature_2_title|
+        Revizuiește înainte să se estompeze
+    landing_feature_2_desc|
+        Repetarea distanțată și urmărirea progresului aduc materialul important înapoi la un moment util.
+    landing_feature_3_title|
+        Creșteți dincolo de o punte
+    landing_feature_3_desc|
+        Organizați materialul personalizat sau personalizat în stâlpi, dosare, subiecte și colecții care rămân utilizabile.
+    landing_workflow_h2|
+        O cale clară de la „Ar trebui să studiez” la „Știu asta”.
+    landing_workflow_p|
+        Un flux de lucru concentrat menține următorul pas evident, fără a aplatiza fiecare subiect în același tip de card.
+    landing_step_1_title|
+        Alege materialul potrivit
+    landing_step_1_desc|
+        Începeți cu un subiect organizat sau construiți o bibliotecă concentrată pentru un examen, limbă, profesie sau obiectiv personal.
+    landing_step_2_title|
+        Învață cu context
+    landing_step_2_desc|
+        Construiți recunoașterea prin carduri ghidate și medii disponibile înainte de a cere memoriei să funcționeze fără ajutor.
+    landing_step_3_title|
+        Testează reamintirea reală
+    landing_step_3_desc|
+        Treceți la testarea concentrată pentru a expune punctele slabe, pentru a consolida recuperarea și pentru a face progresul măsurabil.
+    landing_pricing_h2|
+        Începe gratuit. Faceți upgrade atunci când aveți nevoie de fluxul de lucru complet.
+    landing_pricing_p|
+        Creați un cont fără plată. Premium adaugă repetare distanțată, creare, testare, redare automată, organizare privată și personalizare mai profundă.
+    landing_plan_weekly_desc|
+        Bun pentru impulsuri pe termen scurt, recenzii rapide sau pregătire pentru săptămâna examenului.
+    landing_plan_weekly_item_1|
+        Scurtă fereastră de angajament
+    landing_plan_weekly_item_2|
+        Mod rapid de a încerca fluxul de lucru premium
+    landing_plan_weekly_item_3|
+        Se reînnoiește automat până la anulare
+    landing_plan_weekly_btn|
+        Vedeți detaliile planului
+    landing_plan_monthly_desc|
+        Acces echilibrat pentru elevi care își construiesc un obicei constant de învățare.
+    landing_plan_monthly_item_1|
+        Cel mai bun pentru studiu săptămânal regulat
+    landing_plan_monthly_item_2|
+        Suficient timp pentru a organiza biblioteci de subiecte mai mari
+    landing_plan_monthly_item_3|
+        Se reînnoiește automat până la anulare
+    landing_plan_monthly_btn|
+        Vedeți detaliile planului
+    landing_plan_yearly_desc|
+        Cel mai mic cost lunar efectiv pentru cursanții care doresc un sistem de studiu durabil.
+    landing_plan_yearly_item_1|
+        Ideal pentru studii profesionale și lingvistice pe termen lung
+    landing_plan_yearly_item_2|
+        Cost mai mic în timp
+    landing_plan_yearly_item_3|
+        Se reînnoiește automat până la anulare
+    landing_plan_yearly_btn|
+        Vedeți detaliile planului
+    landing_trust_h2|
+        Studiați cu claritate. Aboneaza-te cu incredere.
+    landing_trust_p|
+        Aflați ce este gratuit, ce adaugă Premium și de unde să obțineți ajutor înainte de a vă angaja.
+    landing_trust_item_1_title|
+        Intrarea liberă:
+    landing_trust_item_1_desc|
+        Creați un cont și explorați materialele de învățare disponibile fără a introduce detaliile de plată.
+    landing_trust_item_2_title|
+        Termeni transparente:
+    landing_trust_item_2_desc|
+        Informațiile privind prețurile, reînnoirea, anularea, confidențialitatea și rambursarea sunt disponibile înainte de finalizare.
+    landing_trust_item_3_title|
+        Sprijin uman:
+    landing_trust_item_3_desc|
+        Contactați vitalii@nohainc.com când aveți nevoie de ajutor.
+    landing_faq_1_q|
+        Trebuie să creez singur fiecare card?
+    landing_faq_1_a|
+        Nu. Începeți cu subiectele selectate disponibile, apoi creați-vă propriul material când obiectivul dvs. devine mai specific.
+    landing_faq_2_q|
+        Pot folosi Aliolo gratuit?
+    landing_faq_2_a|
+        Da. Un cont gratuit oferă un punct de intrare în bibliotecă; pagina de prețuri explică ce fluxuri de lucru avansate necesită Premium.
+    landing_faq_3_q|
+        Pot anula un abonament?
+    landing_faq_3_a|
+        Da. Abonamentele pot fi anulate prin canalul de unde au fost achiziționate, accesul continuând în mod normal în perioada plătită.
+    landing_final_h2|
+        Ești gata să faci următoarea ta sesiune de studiu să conteze?
+    landing_final_p|
+        Creați un cont gratuit, alegeți un subiect și începeți să învățați vizual.
+    landing_final_btn|
+        Creează cont gratuit
+    landing_footer_desc|
+        Carduri vizuale, repetare la distanță, organizare flexibilă a subiectelor și fluxuri de lucru de testare concentrate pentru cursanții care doresc o structură fără frecare.
+    landing_footer_mor|
+        Comerciant de înregistrare:
+    landing_footer_mor_desc|
+        Procesul nostru de comandă poate fi condus de Paddle.com, reseller-ul nostru online și comerciant de înregistrare pentru comenzile web. Paddle se ocupă de procesarea plăților, serviciul pentru clienți legat de plăți și retururile pentru acele comenzi.

@@ -1,0 +1,349 @@
+..
+    legal_info|
+        Juridiskā informācija
+    last_updated|
+        Pēdējo reizi atjaunināts
+    support|
+        Atbalsts
+    home|
+        Sākums
+    privacy|
+        Privātums
+    terms|
+        Noteikumi
+    refunds|
+        Atmaksas
+    pricing|
+        Cenu noteikšana
+    privacy_title|
+        Aliolo privātuma politika
+    privacy_subtitle|
+        Kā Aliolo apkopo, izmanto, uzglabā un aizsargā ar kontu, mācībām un maksājumiem saistītu informāciju.
+    privacy_body|
+        <h2>Informācija, ko mēs apkopojam</h2>
+        <p>Mēs apkopojam informāciju, kas nepieciešama Aliolo darbībai, tostarp konta informāciju, piemēram, e-pasta adresi, lietotājvārdu, paroles autentifikācijas datus, iemiesojuma iestatījumus, preferences un profila iestatījumus.</p>
+        <p>Mēs arī glabājam mācību aktivitātes, piemēram, mācību priekšmetus, mapes, kolekcijas, kartītes, progresu, svītras, ikdienas mērķus, testēšanas un mācīšanās iestatījumus, atsauksmes un pamata lietotņu lietošanas notikumus, kas nepieciešami mācību pieredzes nodrošināšanai.</p>
+        <h2>Kā mēs izmantojam informāciju</h2>
+        <p>Mēs izmantojam šo informāciju, lai izveidotu un aizsargātu jūsu kontu, sinhronizētu jūsu mācību datus, personalizētu jūsu mācību pieredzi, nodrošinātu papildu piekļuvi, atbildētu uz atbalsta pieprasījumiem, uzlabotu lietotni un novērstu ļaunprātīgu izmantošanu vai pakalpojumu ļaunprātīgu izmantošanu.</p>
+        <h2>Maksājumi un abonementi</h2>
+        <p>Aliolo tieši neuzglabā pilnīgu maksājumu kartes informāciju. Tīmekļa maksājumus apstrādā Paddle, un mobilos pirkumus var apstrādāt Google Play vai Apple App Store, kad šie pirkumu kanāli ir pieejami.</p>
+        <p>Lai piekļūtu abonementam, mēs varam saglabāt maksājumu pakalpojumu sniedzēja identifikatorus, produktu identifikatorus, abonementa statusu, atjaunošanas perioda datumus un saistītos tīmekļa aizķeres vai darījumu metadatus. Tas ļauj mums aktivizēt, atjaunot, atcelt vai atjaunot premium piekļuvi.</p>
+        <h2>Trešo pušu pakalpojumi</h2>
+        <p>Mēs izmantojam pakalpojumu sniedzējus mitināšanai, infrastruktūrai, glabāšanai, analītikai vai darbības žurnāliem, autentifikācijai un maksājumiem. Šie pakalpojumu sniedzēji apstrādā informāciju tikai tad, ja tas ir nepieciešams, lai sniegtu savus pakalpojumus Aliolo.</p>
+        <div class="notice"><strong>Paziņojums par airi:</strong> Mūsu pasūtīšanas procesu var veikt Paddle.com, mūsu tiešsaistes tālākpārdevējs un reģistrētais tirgotājs. Paddle nodrošina maksājumu apstrādi, nodokļu aprēķinu, ja nepieciešams, maksājumu drošību un ar maksājumiem saistītu klientu apkalpošanu.</div>
+        <h2>Sīkfaili un vietējā krātuve</h2>
+        <p>Aliolo var izmantot sīkfailus, sesijas identifikatorus, pārlūkprogrammas krātuvi vai līdzīgas tehnoloģijas, lai saglabātu jūs pierakstīšanos, atcerētos preferences, aizsargātu pakalpojumu un darbinātu tīmekļa lietotni.</p>
+        <h2>Datu saglabāšana un dzēšana</h2>
+        <p>Mēs glabājam konta un mācību datus, kamēr jūsu konts ir aktīvs vai vajadzības gadījumā, lai sniegtu pakalpojumu, izpildītu juridiskās saistības, atrisinātu strīdus, novērstu ļaunprātīgu izmantošanu un uzturētu darījumu ierakstus. Jūs varat pieprasīt konta dzēšanu vai ar datiem saistītu atbalstu, sazinoties ar mums.</p>
+        <h2>Lietošana bērniem un izglītībai</h2>
+        <p>Aliolo ir izglītojošs produkts. Ja kāds vecāks, aizbildnis vai skola uzskata, ka bērns ir sniedzis personas informāciju bez atbilstošas ​​atļaujas, sazinieties ar mums, lai mēs varētu pārskatīt un veikt atbilstošus pasākumus.</p>
+        <h2>Drošība</h2>
+        <p>Mēs izmantojam saprātīgus tehniskos un organizatoriskos aizsardzības pasākumus, lai aizsargātu personas informāciju. Neviens tiešsaistes pakalpojums nevar garantēt perfektu drošību, taču mēs strādājam, lai ierobežotu piekļuvi un aizsargātu datus no nesankcionētas izmantošanas.</p>
+        <h2>Jūsu izvēle un tiesības</h2>
+        <p>Atkarībā no jūsu atrašanās vietas jums var būt tiesības piekļūt savai personiskajai informācijai, to labot, dzēst, eksportēt vai ierobežot tās izmantošanu. Sazinieties ar mums plkst <a href="mailto:vitalii@nohainc.com">vitalii@nohainc.com</a> izteikt pieprasījumu.</p>
+    terms_title|
+        Aliolo abonēšanas noteikumi
+    terms_subtitle|
+        Noteikumi par Aliolo kontiem, premium piekļuvi, abonementa norēķiniem, atcelšanu un pieņemamu lietošanu.
+    terms_body|
+        <h2>Izmantojot Aliolo</h2>
+        <p>Aliolo nodrošina vizuālus mācību rīkus, atlasītu izglītības saturu, zibatmiņas kartes, progresa izsekošanu un augstākās kvalitātes mācību funkcijas. Jūs esat atbildīgs par sava konta akreditācijas datu drošību un pakalpojuma likumīgu izmantošanu.</p>
+        <h2>Premium piekļuve</h2>
+        <p>Premium piekļuve atbloķē maksas funkcijas, kas tiek rādītas lietotnē vai cenu lapā. Produktam pilnveidojoties, pieejamās funkcijas var mainīties, taču aktīvie abonenti turpinās saņemt piekļuvi maksas Aliolo pieredzei derīgā abonēšanas perioda laikā.</p>
+        <h2>Norēķini un atjaunošana</h2>
+        <p>Abonementi tiek automātiski atjaunoti, ja vien tie netiek atcelti pirms pašreizējā norēķinu perioda beigām. Cenas, norēķinu ritms, nodokļi, vietējās valūtas konvertēšana un atjaunošanas noteikumi tiek parādīti norēķināšanās laikā un var atšķirties atkarībā no pirkuma kanāla, reģiona, platformas vai aktīvā piedāvājuma.</p>
+        <div class="notice"><strong>Paziņojums par airi:</strong> Iepērkoties tīmeklī, mūsu pasūtīšanas procesu var veikt Paddle.com. Paddle.com ir šo pasūtījumu reģistrētais tirgotājs un nodrošina ar maksājumiem saistītu klientu apkalpošanu, nodokļu apstrādi un atgriešanas apstrādi.</div>
+        <h2>Atcelšana</h2>
+        <p>Jūs varat atcelt saskaņā ar jūsu izmantotā pirkuma kanāla noteikumiem. Atcelšana aptur turpmāko atjaunošanu. Ja vien pirkuma kanālā nav norādīts citādi, maksas piekļuve ir pieejama līdz pašreizējā norēķinu perioda beigām.</p>
+        <h2>Atmaksas</h2>
+        <p>Atmaksa tiek veikta saskaņā ar mūsu <a href="/refund">Atmaksas politika</a>, pirkuma kanālu noteikumi un piemērojamie patērētāju tiesību akti. Pirkumus lietotņu veikalā parasti veic attiecīgais lietotņu veikals.</p>
+        <h2>Pieņemama lietošana</h2>
+        <p>Jūs nedrīkstat ļaunprātīgi izmantot Aliolo, traucēt pakalpojumam, mēģināt nesankcionēti piekļūt, skrāpēt vai kopēt saturu lielā mērogā, veikt reverso inženieriju aizsargātas lietotnes daļas, augšupielādēt nelikumīgu materiālu vai izmantot pakalpojumu veidā, kas kaitē citiem lietotājiem vai Aliolo.</p>
+        <h2>Saturs un pieejamība</h2>
+        <p>Aliolo var atjaunināt, pievienot, noņemt vai reorganizēt priekšmetus, kartes, līdzekļus un dizainu. Mūsu mērķis ir nodrošināt pakalpojuma uzticamību, taču pieejamību var ietekmēt apkope, trešo pušu pakalpojumu sniedzēji, tīkla problēmas vai produkta izmaiņas.</p>
+        <h2>Atruna un atbildība</h2>
+        <p>Aliolo tiek nodrošināts kā izglītības un studiju atbalsta instruments. Mēs negarantējam konkrētus mācību, eksāmenu, profesionālos vai finansiālos rezultātus. Ciktāl to pieļauj tiesību akti, Aliolo tiek nodrošināts bez garantijām, kas pārsniedz piemērojamos tiesību aktos noteikto.</p>
+        <h2>Izmaiņas šajos noteikumos</h2>
+        <p>Mēs varam atjaunināt šos noteikumus, lai atspoguļotu produkta, juridiskās, norēķinu vai darbības izmaiņas. Pašreizējā versija ir publicēta šajā lapā.</p>
+    refund_title|
+        Aliolo atmaksas politika
+    refund_subtitle|
+        Kā Aliolo Premium darbojas atmaksa, atcelšana, atmaksa un maksājumu atbalsts.
+    refund_body|
+        <h2>Pārskats</h2>
+        <p>Aliolo Premium ir digitālais abonements. Tā kā maksas piekļuvi var aktivizēt nekavējoties, pirkumi parasti ir galīgi, tiklīdz abonements ir aktīvs un izmantots, ja vien šī politika, pirkuma kanāls vai piemērojamie tiesību akti nenosaka citādi.</p>
+        <h2>7 dienu atmaksas logs</h2>
+        <p>Ja nejauši iegādājāties tīmekļa abonementu vai radās tehniska problēma, kas neļauj izmantot augstākās klases funkcijas, varat pieprasīt naudas atmaksu 7 dienu laikā pēc sākotnējā pirkuma. Iekļaujiet konta e-pasta adresi, pasūtījuma informāciju un īsu problēmas aprakstu.</p>
+        <h2>Nav proporcionālas atmaksas cikla vidū</h2>
+        <p>Mēs parasti nesniedzam proporcionālu atmaksu par atcelšanu pēc sākotnējās atmaksas perioda. Ja atcelsiet abonementu pēc šī perioda, jūs parasti saglabāsit papildu piekļuvi līdz apmaksātā norēķinu perioda beigām.</p>
+        <h2>Kanāla iegādes noteikumi</h2>
+        <p>Atmaksa par pirkumiem, kas veikti, izmantojot Google Play vai Apple App Store, parasti ir jāpieprasa attiecīgajā lietotņu veikalā. Šīs platformas piemēro savus atmaksas noteikumus un pārskatīšanas procesu.</p>
+        <div class="notice"><strong>Paziņojums par airi:</strong> Tīmekļa pasūtījumiem Paddle.com var darboties kā reģistrētais tirgotājs. Paddle nodrošina ar maksājumiem saistītu klientu apkalpošanu, nodokļu apstrādi un šo pasūtījumu atgriešanas apstrādi.</div>
+        <h2>Kā pieprasīt atmaksu</h2>
+        <p>Lai veiktu pasūtījumus tīmeklī, sazinieties ar Paddle pircēju atbalstu, izmantojot pasūtījuma informāciju kvītī, vai sazinieties ar Aliolo atbalsta dienestu pa e-pastu <a href="mailto:vitalii@nohainc.com">vitalii@nohainc.com</a>. Ja Paddle ir reģistrētais tirgotājs, mēs varam novirzīt ar maksājumiem saistītus pieprasījumus Paddle.</p>
+        <h2>Maksājumi un ļaunprātīga izmantošana</h2>
+        <p>Ja maksājums tiek atcelts, apstrīdēts, atmaksāts vai identificēts kā krāpniecisks, Aliolo var apturēt vai noņemt ar šo darījumu saistīto premium piekļuvi.</p>
+    pricing_title|
+        Aliolo Premium cenas
+    pricing_subtitle|
+        Vienkāršas abonēšanas iespējas, lai atbloķētu visu Aliolo vizuālo mācību pieredzi.
+    pricing_body|
+        <div class="plans">
+        <section class="plan">
+        <span class="tag">Elastīgs</span>
+        <h2>Iknedēļas</h2>
+        <div class="price">$2.99</div>
+        <p>Nedēļā. Noder īstermiņa mācībām, pārskatīšanai vai eksāmenu sagatavošanai.</p>
+        </section>
+        <section class="plan">
+        <span class="tag">Populārs</span>
+        <h2>Ikmēneša</h2>
+        <div class="price">$8.99</div>
+        <p>Mēnesī. Vislabāk konsekventai mācībām bez ilgstošas ​​​​apņemšanās.</p>
+        </section>
+        <section class="plan">
+        <span class="tag">Vislabākā vērtība</span>
+        <h2>Ik gadu</h2>
+        <div class="price">$80.99</div>
+        <p>Gadā. Zemākas faktiskās ikmēneša izmaksas ilgtermiņa izglītojamiem.</p>
+        </section>
+        </div>
+        <h2>Kas ir iekļauts Premium</h2>
+        <ul>
+        <li>Pilnīga piekļuve augstākās kvalitātes atlasītajiem priekšmetiem un mācību bibliotēkām.</li>
+        <li>Uzlabotas intervālu atkārtošanas un progresa izsekošanas funkcijas.</li>
+        <li>Pielāgotas kartītes, tēmas, mapes un kolekcijas izveide, ja iespējams.</li>
+        <li>Interaktīvi mācību un pārbaudes režīmi, tostarp automātiskās atskaņošanas iestatījumi.</li>
+        <li>Privātas mācību organizācijas funkcijas personiskām mācību darbplūsmām.</li>
+        </ul>
+        <h2>Norēķinu informācija</h2>
+        <p>Cenas šajā publiskajā cenu lapā ir norādītas USD. Pakalpojumā Checkout var tikt rādīta vietējā valūta, nodokļi un galīgā norēķinu informācija atkarībā no jūsu atrašanās vietas, maksājuma veida un pirkuma kanāla.</p>
+        <p>Abonementi tiek automātiski atjaunoti, līdz tie tiek atcelti. Varat atcelt saskaņā ar tā kanāla noteikumiem, kurā iegādājāties. Piekļuve parasti turpinās līdz apmaksātā norēķinu perioda beigām.</p>
+        <div class="notice"><strong>Paziņojums par airi:</strong> Tīmekļa pasūtījumus var apstrādāt Paddle.com, mūsu tiešsaistes tālākpārdevējs un reģistrētais tirgotājs. Paddle var aprēķināt un iekasēt piemērojamos nodokļus un sniegt ar maksājumiem saistītu pircēju atbalstu.</div>
+        <div class="comparison-card">
+        <h2>Bezmaksas un Premium salīdzinājums</h2>
+        <p>Šī tabula atbilst pašreizējai lietotnes pieredzei un atvieglo augstākās kvalitātes jaunināšanu vienā mirklī.</p>
+        <table class="comparison-table" aria-label="Aliolo free and premium feature comparison">
+        <thead>
+        <tr>
+        <th>Funkcija</th>
+        <th>Bezmaksas</th>
+        <th>Premium</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>Pilna bibliotēka</td>
+        <td><span class="comparison-check">✓</span></td>
+        <td><span class="comparison-check pro">✓</span></td>
+        </tr>
+        <tr>
+        <td>Atkārtots atkārtojums</td>
+        <td><span class="comparison-cross">✕</span></td>
+        <td><span class="comparison-check pro">✓</span></td>
+        </tr>
+        <tr>
+        <td>Radīšana</td>
+        <td><span class="comparison-cross">✕</span></td>
+        <td><span class="comparison-check pro">✓</span></td>
+        </tr>
+        <tr>
+        <td>Testēšana</td>
+        <td><span class="comparison-cross">✕</span></td>
+        <td><span class="comparison-check pro">✓</span></td>
+        </tr>
+        <tr>
+        <td>Automātiskā atskaņošana</td>
+        <td><span class="comparison-cross">✕</span></td>
+        <td><span class="comparison-check pro">✓</span></td>
+        </tr>
+        <tr>
+        <td>Privāts režīms</td>
+        <td><span class="comparison-cross">✕</span></td>
+        <td><span class="comparison-check pro">✓</span></td>
+        </tr>
+        <tr>
+        <td>Pielāgot</td>
+        <td><span class="comparison-cross">✕</span></td>
+        <td><span class="comparison-check pro">✓</span></td>
+        </tr>
+        </tbody>
+        </table>
+        <div class="comparison-note">Premium nodrošina pilnu studiju darbplūsmu: adaptīvā pārskatīšana, izveides rīki, uzlabota testēšana, automātiskās atskaņošanas vadīklas, privāta organizācija un dziļāka personalizācija.</div>
+        </div>
+        <h2>Platformu cenu atšķirības</h2>
+        <p>Cenas un piedāvājumi var atšķirties atkarībā no norēķināšanās tīmeklī, Google Play, Apple App Store, valstīm, valūtām un ierobežota laika akcijām. Pēdējā norēķināšanās ekrānā tiek kontrolēta pirkuma faktiskā cena un atjaunošanas noteikumi.</p>
+        <h2>Saistītās politikas</h2>
+        <p>Pirms abonēšanas pārskatiet <a href="/terms">Abonēšanas noteikumi</a>, <a href="/refund">Atmaksas politika</a>, un <a href="/privacy">Privātuma politika</a>.</p>
+    checkout_title|
+        Aliolo Checkout
+    checkout_subtitle|
+        Droša izrakstīšanās Aliolo Premium abonementiem.
+    checkout_eyebrow|
+        Droša izrakstīšanās
+    checkout_h1|
+        Pabeidziet Aliolo Premium pirkumu.
+    checkout_status_title|
+        Gaida izrakstīšanos
+    checkout_status_desc|
+        Ja šo lapu atvērāt no Aliolo norēķiniem, maksājuma veidlapai vajadzētu parādīties automātiski.
+    checkout_payment_support_title|
+        Maksājumu atbalsts
+    checkout_payment_support_desc|
+        Tīmekļa maksājumus apstrādā Paddle.com kā reģistrētais tirgotājs.
+    checkout_billing_title|
+        Abonementa norēķini
+    checkout_billing_desc|
+        Aliolo Premium tiek automātiski atjaunots, līdz tas tiek atcelts. Varat vēlāk atcelt, izmantojot Paddle vai savu Aliolo kontu.
+    checkout_policy_title|
+        Nepieciešama detalizēta informācija par politiku?
+    checkout_policy_desc|
+        Pirms pirkuma pabeigšanas pārskatiet cenas, abonēšanas noteikumus, konfidencialitātes un atmaksas informāciju.
+    landing_meta_title|
+        Aliolo | Vizuālas kartītes, atkārtota atkārtošana un viedākas studiju darbplūsmas
+    landing_meta_desc|
+        Aliolo palīdz izglītojamajiem apgūt valodas, dabaszinātnes, anatomiju, sagatavošanos eksāmeniem un atlasītos priekšmetus, izmantojot vizuālas zibatmiņas kartes, intervālu atkārtojumus un interaktīvus testa režīmus.
+    landing_nav_features|
+        Funkcijas
+    landing_nav_how_it_works|
+        Kā tas darbojas
+    landing_nav_pricing|
+        Cenu noteikšana
+    landing_nav_login|
+        Piesakieties
+    landing_nav_cta|
+        Izveidojiet bezmaksas kontu
+    landing_hero_eyebrow|
+        Vizuālā mācību platforma
+    landing_hero_h1|
+        Mācieties vizuāli. Atcerieties ilgāk.
+    landing_hero_p|
+        Pārvērtiet attēlus, audio, video un tekstu strukturētās kartītēs. Mācieties, ņemot vērā kontekstu, pārskatiet to īstajā laikā un pārbaudiet, ko patiešām varat atcerēties.
+    landing_hero_btn_primary|
+        Izveidojiet bezmaksas kontu
+    landing_hero_btn_secondary|
+        Piesakieties
+    landing_hero_proof_1_title|
+        Vizuāls
+    landing_hero_proof_1_desc|
+        Attēliem, audio un video draudzīgas zibatmiņas kartītes atpazīstamām mācībām.
+    landing_hero_proof_2_title|
+        Adaptīvs
+    landing_hero_proof_2_desc|
+        Atkārtota atkārtošanās un progresa izsekošana, lai īstajā laikā pārskatītu materiālu.
+    landing_hero_proof_3_title|
+        Strukturēts
+    landing_hero_proof_3_desc|
+        Pīlāri, mapes, tēmas un kolekcijas, kuru mērogs pārsniedz vienkāršu komplektu.
+    landing_hero_preview_title|
+        Atpazīšana pirms atsaukšanas
+    landing_hero_preview_desc|
+        Īsta Aliolo nodarbība, izmantojot attēlu, tekstu, audio un vadītu navigāciju.
+    landing_hero_preview_chip|
+        Mācīšanās režīms
+    landing_features_h2|
+        Viss, kas nepieciešams, lai ekspozīciju pārvērstu par atsaukšanu.
+    landing_features_p|
+        Veidojiet atpazīstamību, izmantojot bagātināto multividi, organizējiet lielākas bibliotēkas un atkārtoti apskatiet materiālu, pirms tas pazūd.
+    landing_feature_1_title|
+        Uzziniet, izmantojot vairāk nekā tekstu
+    landing_feature_1_desc|
+        Izmantojiet attēlus, audio, video un elastīgas uzvednes, ja objekts ir atkarīgs no atpazīšanas un konteksta.
+    landing_feature_2_title|
+        Pārskatiet, pirms tas pazūd
+    landing_feature_2_desc|
+        Atkārtota atkārtošanās un progresa izsekošana atgriež svarīgu materiālu lietderīgā laikā.
+    landing_feature_3_title|
+        Izaug tālāk par vienu klāju
+    landing_feature_3_desc|
+        Sakārtojiet atlasīto vai pielāgoto materiālu pīlāros, mapēs, tēmās un kolekcijās, kas paliek lietojamas.
+    landing_workflow_h2|
+        Skaidrs ceļš no "man vajadzētu mācīties" uz "es to zinu".
+    landing_workflow_p|
+        Viena fokusēta darbplūsma saglabā nākamo soli acīmredzamu, nesaplacinot katru objektu vienā un tajā pašā kartītē.
+    landing_step_1_title|
+        Izvēlieties pareizo materiālu
+    landing_step_1_desc|
+        Sāciet ar atlasītu priekšmetu vai izveidojiet mērķtiecīgu bibliotēku eksāmenam, valodai, profesijai vai personīgam mērķim.
+    landing_step_2_title|
+        Mācieties ar kontekstu
+    landing_step_2_desc|
+        Veidojiet atpazīšanu, izmantojot vadītas kartes un pieejamos datu nesējus, pirms lūdzat atmiņai darboties bez palīdzības.
+    landing_step_3_title|
+        Pārbaudiet īstu atsaukšanu
+    landing_step_3_desc|
+        Pārejiet uz mērķtiecīgu testēšanu, lai atklātu vājās vietas, pastiprinātu atgūšanu un padarītu progresu izmērāmu.
+    landing_pricing_h2|
+        Sāciet bez maksas. Jauniniet, kad nepieciešama pilna darbplūsma.
+    landing_pricing_p|
+        Izveidojiet kontu bez maksājuma. Premium nodrošina atkārtotu atkārtošanos, izveidi, testēšanu, automātisko atskaņošanu, privātu organizēšanu un padziļinātu pielāgošanu.
+    landing_plan_weekly_desc|
+        Piemērots īstermiņa grūdieniem, ātrai pārskatīšanai vai eksāmenu nedēļas sagatavošanai.
+    landing_plan_weekly_item_1|
+        Īss saistību periods
+    landing_plan_weekly_item_2|
+        Ātrs veids, kā izmēģināt augstākās kvalitātes darbplūsmu
+    landing_plan_weekly_item_3|
+        Automātiski tiek atjaunots līdz atcelšanai
+    landing_plan_weekly_btn|
+        Skatīt plāna informāciju
+    landing_plan_monthly_desc|
+        Līdzsvarota piekļuve studentiem, kas veido stabilu mācību ieradumu.
+    landing_plan_monthly_item_1|
+        Vislabāk regulārām iknedēļas studijām
+    landing_plan_monthly_item_2|
+        Pietiekami daudz laika, lai sakārtotu lielākas priekšmetu bibliotēkas
+    landing_plan_monthly_item_3|
+        Automātiski tiek atjaunots līdz atcelšanai
+    landing_plan_monthly_btn|
+        Skatīt plāna informāciju
+    landing_plan_yearly_desc|
+        Zemākās efektīvās ikmēneša izmaksas studentiem, kuri vēlas izturīgu mācību sistēmu.
+    landing_plan_yearly_item_1|
+        Ideāli piemērots ilgstošām valodas un profesionālām studijām
+    landing_plan_yearly_item_2|
+        Zemākas izmaksas laika gaitā
+    landing_plan_yearly_item_3|
+        Automātiski tiek atjaunots līdz atcelšanai
+    landing_plan_yearly_btn|
+        Skatīt plāna informāciju
+    landing_trust_h2|
+        Mācieties ar skaidrību. Abonējiet ar pārliecību.
+    landing_trust_p|
+        Uzziniet, kas ir bezmaksas, ko Premium pievieno un kur saņemt palīdzību pirms apņemšanās.
+    landing_trust_item_1_title|
+        Ieeja bez maksas:
+    landing_trust_item_1_desc|
+        Izveidojiet kontu un izpētiet pieejamos mācību materiālus, neievadot maksājuma informāciju.
+    landing_trust_item_2_title|
+        Caurspīdīgi noteikumi:
+    landing_trust_item_2_desc|
+        Informācija par cenām, atjaunošanu, atcelšanu, konfidencialitāti un atmaksu ir pieejama pirms izrakstīšanās.
+    landing_trust_item_3_title|
+        Cilvēka atbalsts:
+    landing_trust_item_3_desc|
+        Kad nepieciešama palīdzība, sazinieties ar vitalii@nohainc.com.
+    landing_faq_1_q|
+        Vai man pašam ir jāizveido katra karte?
+    landing_faq_1_a|
+        Nē. Sāciet ar pieejamajiem atlasītajiem tematiem, pēc tam izveidojiet savu materiālu, kad jūsu mērķis kļūst precīzāks.
+    landing_faq_2_q|
+        Vai es varu izmantot Aliolo bez maksas?
+    landing_faq_2_a|
+        Jā. Bezmaksas konts nodrošina ieejas punktu bibliotēkā; cenu lapā ir paskaidrots, kurām uzlabotajām darbplūsmām ir nepieciešama Premium.
+    landing_faq_3_q|
+        Vai es varu atcelt abonementu?
+    landing_faq_3_a|
+        Jā. Abonementus var atcelt, izmantojot kanālu, kurā tie tika iegādāti, un piekļuve parasti turpinās apmaksātajā periodā.
+    landing_final_h2|
+        Vai esat gatavs, lai jūsu nākamā mācību sesija būtu nozīmīga?
+    landing_final_p|
+        Izveidojiet bezmaksas kontu, izvēlieties priekšmetu un sāciet mācīties vizuāli.
+    landing_final_btn|
+        Izveidojiet bezmaksas kontu
+    landing_footer_desc|
+        Vizuālas zibatmiņas kartītes, atkārtots atkārtojums, elastīga mācību priekšmetu organizācija un mērķtiecīgas testēšanas darbplūsmas skolēniem, kuri vēlas struktūru bez berzes.
+    landing_footer_mor|
+        Ierakstu tirgotājs:
+    landing_footer_mor_desc|
+        Mūsu pasūtīšanas procesu var veikt Paddle.com, mūsu tiešsaistes tālākpārdevējs un reģistrētais tirgotājs tīmekļa pasūtījumiem. Paddle apstrādā maksājumu apstrādi, ar maksājumiem saistītu klientu apkalpošanu un šo pasūtījumu atgriešanu.

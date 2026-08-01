@@ -1,0 +1,349 @@
+..
+    legal_info|
+        Pravne informacije
+    last_updated|
+        Zadnje ažuriranje
+    support|
+        podrška
+    home|
+        Dom
+    privacy|
+        Privatnost
+    terms|
+        Uvjeti
+    refunds|
+        Povrat novca
+    pricing|
+        Cijene
+    privacy_title|
+        Aliolo Politika privatnosti
+    privacy_subtitle|
+        Kako Aliolo prikuplja, koristi, pohranjuje i štiti podatke o računu, učenju i plaćanju.
+    privacy_body|
+        <h2>Informacije koje prikupljamo</h2>
+        <p>Prikupljamo podatke potrebne za rad s Aliolom, uključujući podatke o računu kao što su adresa e-pošte, korisničko ime, podaci za provjeru autentičnosti lozinke, postavke avatara, postavke i postavke profila.</p>
+        <p>Također pohranjujemo aktivnosti učenja kao što su predmeti, mape, zbirke, kartice, napredak, nizovi, dnevni ciljevi, postavke testiranja i učenja, povratne informacije i osnovni događaji korištenja aplikacije potrebni za pružanje iskustva učenja.</p>
+        <h2>Kako koristimo informacije</h2>
+        <p>Ove podatke koristimo za izradu i zaštitu vašeg računa, sinkronizaciju vaših podataka o učenju, personalizaciju vašeg iskustva učenja, pružanje premium pristupa, odgovaranje na zahtjeve za podršku, poboljšanje aplikacije i sprječavanje zlouporabe ili zlouporabe usluga.</p>
+        <h2>Plaćanja i pretplate</h2>
+        <p>Aliolo ne pohranjuje izravno potpune podatke o platnoj kartici. Web plaćanja obrađuje Paddle, a mobilne kupnje mogu se obrađivati ​​putem Google Playa ili Apple App Storea kada su ti kanali za kupnju dostupni.</p>
+        <p>Za pristup pretplatom možemo pohraniti identifikatore pružatelja plaćanja, identifikatore proizvoda, status pretplate, datume razdoblja obnove i povezane metapodatke web-dojavnika ili transakcije. To nam omogućuje aktiviranje, obnavljanje, otkazivanje ili vraćanje premium pristupa.</p>
+        <h2>Usluge trećih strana</h2>
+        <p>Koristimo pružatelje usluga za hosting, infrastrukturu, pohranu, analitiku ili operativne zapisnike, autentifikaciju i plaćanja. Ti pružatelji obrađuju informacije samo prema potrebi za pružanje svojih usluga Aliolu.</p>
+        <div class="notice"><strong>Obavijest o veslanju:</strong> Naš postupak narudžbe može provoditi Paddle.com, naš online preprodavač i registrirani trgovac. Paddle se bavi obradom plaćanja, obračunom poreza gdje je primjenjivo, sigurnošću plaćanja i korisničkom službom povezanom s plaćanjem.</div>
+        <h2>Kolačići i lokalna pohrana</h2>
+        <p>Aliolo može koristiti kolačiće, identifikatore sesije, pohranu preglednika ili slične tehnologije kako bi vas zadržao prijavljenima, zapamtio postavke, osigurao uslugu i upravljao web aplikacijom.</p>
+        <h2>Zadržavanje i brisanje podataka</h2>
+        <p>Čuvamo podatke o računu i učenju dok je vaš račun aktivan ili ako je potrebno za pružanje usluge, pridržavanje zakonskih obveza, rješavanje sporova, sprječavanje zlouporabe i održavanje evidencije transakcija. Možete zatražiti brisanje računa ili podršku u vezi s podacima tako da nas kontaktirate.</p>
+        <h2>Upotreba djece i obrazovanja</h2>
+        <p>Aliolo je obrazovni proizvod. Ako roditelj, skrbnik ili škola vjeruju da je dijete dalo osobne podatke bez odgovarajućeg dopuštenja, kontaktirajte nas kako bismo mogli pregledati i poduzeti odgovarajuće mjere.</p>
+        <h2>Sigurnost</h2>
+        <p>Koristimo razumne tehničke i organizacijske zaštitne mjere za zaštitu osobnih podataka. Nijedna mrežna usluga ne može jamčiti savršenu sigurnost, ali radimo na ograničavanju pristupa i zaštiti podataka od neovlaštene upotrebe.</p>
+        <h2>Vaši izbori i prava</h2>
+        <p>Ovisno o vašoj lokaciji, možete imati prava pristupa, ispravljanja, brisanja, izvoza ili ograničavanja upotrebe vaših osobnih podataka. Kontaktirajte nas na <a href="mailto:vitalii@nohainc.com">vitalii@nohainc.com</a> uputiti zahtjev.</p>
+    terms_title|
+        Uvjeti pretplate na Aliolo
+    terms_subtitle|
+        Pravila za Aliolo račune, premium pristup, naplatu pretplate, otkazivanje i prihvatljivu upotrebu.
+    terms_body|
+        <h2>Korištenje Aliola</h2>
+        <p>Aliolo nudi vizualne alate za učenje, odabrane obrazovne sadržaje, flash kartice, praćenje napretka i vrhunske značajke učenja. Vi ste odgovorni za čuvanje vjerodajnica vašeg računa sigurnim i za zakonito korištenje usluge.</p>
+        <h2>Premium pristup</h2>
+        <p>Premium pristup otključava plaćene značajke prikazane u aplikaciji ili na stranici s cijenama. Dostupne značajke mogu se promijeniti kako se proizvod poboljšava, ali aktivni pretplatnici će i dalje imati pristup plaćenom Aliolo iskustvu tijekom važećeg razdoblja pretplate.</p>
+        <h2>Naplata i obnova</h2>
+        <p>Pretplate se automatski obnavljaju osim ako se ne otkažu prije kraja tekućeg obračunskog razdoblja. Cijene, ritam naplate, porezi, pretvorba lokalne valute i pravila obnove prikazani su na naplati i mogu se razlikovati ovisno o kanalu kupnje, regiji, platformi ili aktivnoj ponudi.</p>
+        <div class="notice"><strong>Obavijest o veslanju:</strong> Za web kupnju, naš postupak narudžbe može provoditi Paddle.com. Paddle.com je registrirani trgovac za te narudžbe i pruža korisničku uslugu u vezi s plaćanjem, obradu poreza i obradu povrata.</div>
+        <h2>Otkazivanje</h2>
+        <p>Možete otkazati prema pravilima kanala kupnje koji ste koristili. Otkazivanje zaustavlja buduće obnavljanje. Osim ako kanal kupnje ne navodi drugačije, plaćeni pristup ostaje dostupan do kraja tekućeg obračunskog razdoblja.</p>
+        <h2>Povrat novca</h2>
+        <p>Povrati se obrađuju u skladu s našim <a href="/refund">Politika povrata novca</a>, pravila kanala kupnje i primjenjivi zakon o zaštiti potrošača. Kupnje u trgovini aplikacija obično obavlja odgovarajuća trgovina aplikacija.</p>
+        <h2>Prihvatljiva uporaba</h2>
+        <p>Ne smijete zloupotrijebiti Aliolo, ometati uslugu, pokušavati neovlašteni pristup, strugati ili kopirati sadržaj u većem broju, obrnutim inženjeringom zaštićene dijelove aplikacije, učitavati nezakonit materijal ili koristiti uslugu na način koji šteti drugim korisnicima ili Aliolu.</p>
+        <h2>Sadržaj i dostupnost</h2>
+        <p>Aliolo može ažurirati, dodati, ukloniti ili reorganizirati teme, kartice, značajke i dizajn. Cilj nam je održati uslugu pouzdanom, ali na dostupnost mogu utjecati održavanje, davatelji trećih strana, problemi s mrežom ili promjene proizvoda.</p>
+        <h2>Odricanje od odgovornosti i odgovornost</h2>
+        <p>Aliolo se nudi kao obrazovni i pomoćni alat za učenje. Ne jamčimo određene ishode učenja, ispita, profesionalne ili financijske rezultate. U najvećoj mjeri dopuštenoj zakonom, Aliolo se pruža bez jamstava osim onih koje zahtijeva primjenjivi zakon.</p>
+        <h2>Promjene ovih uvjeta</h2>
+        <p>Možemo ažurirati ove uvjete kako bi odražavali promjene proizvoda, zakonske odredbe, naplate ili operativne promjene. Trenutna verzija objavljena je na ovoj stranici.</p>
+    refund_title|
+        Politika povrata Aliolo
+    refund_subtitle|
+        Kako funkcioniraju povrati novca, otkazivanja, storniranja i podrška pri plaćanju za Aliolo Premium.
+    refund_body|
+        <h2>Pregled</h2>
+        <p>Aliolo Premium je digitalna pretplata. Budući da se premium pristup može odmah aktivirati, kupnje su općenito konačne nakon što je pretplata aktivna i iskorištena, osim ako ova pravila, kanal za kupnju ili primjenjivi zakon ne propisuju drugačije.</p>
+        <h2>7-dnevni rok za povrat novca</h2>
+        <p>Ako ste slučajno kupili web pretplatu ili imate tehnički problem koji vas sprječava u korištenju premium značajki, možete zatražiti povrat novca u roku od 7 dana od prve kupnje. Uključite e-poštu računa, pojedinosti o narudžbi i kratak opis problema.</p>
+        <h2>Nema razmjernih povrata novca u sredini ciklusa</h2>
+        <p>Općenito ne pružamo proporcionalne povrate za otkazivanja nakon početnog razdoblja povrata. Ako otkažete nakon tog razdoblja, obično ćete zadržati premium pristup do kraja plaćenog obračunskog razdoblja.</p>
+        <h2>Pravila kanala za kupnju</h2>
+        <p>Povrat novca za kupnju putem Google Playa ili Apple App Storea obično se mora zatražiti putem odgovarajuće trgovine aplikacija. Te platforme primjenjuju vlastita pravila povrata i postupak pregleda.</p>
+        <div class="notice"><strong>Obavijest o veslanju:</strong> Za web narudžbe Paddle.com može djelovati kao registrirani trgovac. Paddle upravlja korisničkim uslugama u vezi s plaćanjem, obradom poreza i obradom povrata za te narudžbe.</div>
+        <h2>Kako zatražiti povrat novca</h2>
+        <p>Za web narudžbe kontaktirajte podršku za kupce Paddle koristeći informacije o narudžbi s računa ili kontaktirajte Aliolo podršku na <a href="mailto:vitalii@nohainc.com">vitalii@nohainc.com</a>. Zahtjeve specifične za plaćanje možemo usmjeriti na Paddle ako je Paddle registrirani trgovac.</p>
+        <h2>Povrati i zlouporaba</h2>
+        <p>Ako je plaćanje poništeno, osporeno, vraćeno ili identificirano kao lažno, Aliolo može obustaviti ili ukloniti premium pristup povezan s tom transakcijom.</p>
+    pricing_title|
+        Aliolo Premium cijene
+    pricing_subtitle|
+        Jednostavne opcije pretplate za otključavanje potpunog Aliolo iskustva vizualnog učenja.
+    pricing_body|
+        <div class="plans">
+        <section class="plan">
+        <span class="tag">Fleksibilan</span>
+        <h2>Tjedni</h2>
+        <div class="price">$2.99</div>
+        <p>Tjedno. Korisno za kratkotrajno učenje, ponavljanje ili pripremu ispita.</p>
+        </section>
+        <section class="plan">
+        <span class="tag">Popularan</span>
+        <h2>Mjesečno</h2>
+        <div class="price">$8.99</div>
+        <p>Mjesečno. Najbolje za dosljedno učenje bez duge obveze.</p>
+        </section>
+        <section class="plan">
+        <span class="tag">Najbolja vrijednost</span>
+        <h2>Godišnje</h2>
+        <div class="price">$80.99</div>
+        <p>Godišnje. Niži efektivni mjesečni trošak za dugotrajne učenike.</p>
+        </section>
+        </div>
+        <h2>Što Premium uključuje</h2>
+        <ul>
+        <li>Potpuni pristup vrhunski odabranim predmetima i knjižnicama za učenje.</li>
+        <li>Napredno ponavljanje s razmacima i značajke praćenja napretka.</li>
+        <li>Prilagođena kartica, predmet, mapa i stvaranje zbirke gdje je to moguće.</li>
+        <li>Interaktivni načini učenja i testiranja, uključujući postavke automatske reprodukcije.</li>
+        <li>Značajke organizacije privatnog učenja za tijek rada osobnog učenja.</li>
+        </ul>
+        <h2>Podaci o naplati</h2>
+        <p>Cijene su navedene u USD za ovu javnu stranicu s cijenama. Checkout može prikazati lokalnu valutu, poreze i pojedinosti o konačnoj naplati ovisno o vašoj lokaciji, načinu plaćanja i kanalu kupnje.</p>
+        <p>Pretplate se automatski obnavljaju do otkazivanja. Možete otkazati u skladu s pravilima kanala na kojem ste kupili. Pristup se normalno nastavlja do kraja plaćenog obračunskog razdoblja.</p>
+        <div class="notice"><strong>Obavijest o veslanju:</strong> Web narudžbe može obrađivati ​​Paddle.com, naš online preprodavač i registrirani trgovac. Paddle može izračunati i naplatiti primjenjive poreze i pružiti podršku kupcima vezanu uz plaćanje.</div>
+        <div class="comparison-card">
+        <h2>Usporedba besplatnih i premium</h2>
+        <p>Ova tablica odgovara trenutnom iskustvu aplikacije i čini vrhunsku nadogradnju lakšom za procjenu na prvi pogled.</p>
+        <table class="comparison-table" aria-label="Aliolo free and premium feature comparison">
+        <thead>
+        <tr>
+        <th>Značajka</th>
+        <th>Besplatno</th>
+        <th>Premija</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>Puna knjižnica</td>
+        <td><span class="comparison-check">✓</span></td>
+        <td><span class="comparison-check pro">✓</span></td>
+        </tr>
+        <tr>
+        <td>Razmaknuto ponavljanje</td>
+        <td><span class="comparison-cross">✕</span></td>
+        <td><span class="comparison-check pro">✓</span></td>
+        </tr>
+        <tr>
+        <td>Stvaranje</td>
+        <td><span class="comparison-cross">✕</span></td>
+        <td><span class="comparison-check pro">✓</span></td>
+        </tr>
+        <tr>
+        <td>Testiranje</td>
+        <td><span class="comparison-cross">✕</span></td>
+        <td><span class="comparison-check pro">✓</span></td>
+        </tr>
+        <tr>
+        <td>Automatska reprodukcija</td>
+        <td><span class="comparison-cross">✕</span></td>
+        <td><span class="comparison-check pro">✓</span></td>
+        </tr>
+        <tr>
+        <td>Privatni način rada</td>
+        <td><span class="comparison-cross">✕</span></td>
+        <td><span class="comparison-check pro">✓</span></td>
+        </tr>
+        <tr>
+        <td>Prilagodite</td>
+        <td><span class="comparison-cross">✕</span></td>
+        <td><span class="comparison-check pro">✓</span></td>
+        </tr>
+        </tbody>
+        </table>
+        <div class="comparison-note">Premium otključava potpuni radni tijek studija: prilagodljiv pregled, alate za izradu, napredno testiranje, kontrole automatske reprodukcije, privatnu organizaciju i dublju personalizaciju.</div>
+        </div>
+        <h2>Razlike u cijeni platforme</h2>
+        <p>Cijene i ponude mogu se razlikovati ovisno o web-naplati, Google Playu, Apple App Storeu, zemljama, valutama i vremenski ograničenim promocijama. Posljednji zaslon za naplatu kontrolira stvarnu cijenu i uvjete obnove za vašu kupnju.</p>
+        <h2>Povezana pravila</h2>
+        <p>Prije pretplate pregledajte <a href="/terms">Uvjeti pretplate</a>, <a href="/refund">Politika povrata novca</a>, i <a href="/privacy">Politika privatnosti</a>.</p>
+    checkout_title|
+        Aliolo Blagajna
+    checkout_subtitle|
+        Sigurna naplata za Aliolo Premium pretplate.
+    checkout_eyebrow|
+        Sigurna naplata
+    checkout_h1|
+        Dovršite svoju Aliolo Premium kupnju.
+    checkout_status_title|
+        Čekanje na blagajnu
+    checkout_status_desc|
+        Ako ste otvorili ovu stranicu iz Aliolo naplate, obrazac za plaćanje trebao bi se pojaviti automatski.
+    checkout_payment_support_title|
+        Podrška pri plaćanju
+    checkout_payment_support_desc|
+        Web plaćanja obrađuje Paddle.com kao registrirani trgovac.
+    checkout_billing_title|
+        Naplata pretplate
+    checkout_billing_desc|
+        Aliolo Premium automatski se obnavlja do otkazivanja. Možete otkazati kasnije putem Paddle ili svog Aliolo računa.
+    checkout_policy_title|
+        Trebate pojedinosti o pravilima?
+    checkout_policy_desc|
+        Pregledajte informacije o cijenama, uvjetima pretplate, privatnosti i povratu prije dovršetka kupnje.
+    landing_meta_title|
+        Aliolo | Vizualne kartice, ponavljanje u razmacima i pametniji tijek rada za učenje
+    landing_meta_desc|
+        Aliolo pomaže učenicima u svladavanju jezika, znanosti, anatomije, priprema za ispite i odabranih predmeta pomoću vizualnih kartica, ponavljanja s razmakom i interaktivnih načina testiranja.
+    landing_nav_features|
+        Značajke
+    landing_nav_how_it_works|
+        Kako radi
+    landing_nav_pricing|
+        Cijene
+    landing_nav_login|
+        Prijavite se
+    landing_nav_cta|
+        Stvorite besplatni račun
+    landing_hero_eyebrow|
+        Vizualna platforma za učenje
+    landing_hero_h1|
+        Učite vizualno. Zapamti dulje.
+    landing_hero_p|
+        Pretvorite slike, audio, video i tekst u strukturirane kartice. Učite s kontekstom, pregledajte u pravo vrijeme i testirajte čega se doista možete sjetiti.
+    landing_hero_btn_primary|
+        Stvorite besplatni račun
+    landing_hero_btn_secondary|
+        Prijavite se
+    landing_hero_proof_1_title|
+        Vizualno
+    landing_hero_proof_1_desc|
+        Kartice prilagođene slikama, zvuku i videu za učenje koje zahtijeva prepoznavanje.
+    landing_hero_proof_2_title|
+        Prilagodljiv
+    landing_hero_proof_2_desc|
+        Ponavljanje u razmacima i praćenje napretka za ponovno vraćanje gradiva u pravo vrijeme.
+    landing_hero_proof_3_title|
+        Strukturirano
+    landing_hero_proof_3_desc|
+        Stupovi, mape, subjekti i zbirke koje nadilaze jednostavan špil.
+    landing_hero_preview_title|
+        Prepoznavanje prije opoziva
+    landing_hero_preview_desc|
+        Prava Aliolo lekcija koja koristi sliku, tekst, zvuk i vođenu navigaciju.
+    landing_hero_preview_chip|
+        Način učenja
+    landing_features_h2|
+        Sve što vam je potrebno da izlaganje pretvorite u prisjećanje.
+    landing_features_p|
+        Izgradite prepoznatljivost s bogatim medijima, organizirajte veće knjižnice i ponovno pregledajte materijal prije nego što izblijedi.
+    landing_feature_1_title|
+        Učite s više od teksta
+    landing_feature_1_desc|
+        Upotrijebite slike, audio, video i fleksibilne upute kada predmet ovisi o prepoznavanju i kontekstu.
+    landing_feature_2_title|
+        Pregledajte prije nego izblijedi
+    landing_feature_2_desc|
+        Razmaknuto ponavljanje i praćenje napretka vraćaju važan materijal u korisno vrijeme.
+    landing_feature_3_title|
+        Rastite više od jednog špila
+    landing_feature_3_desc|
+        Organizirajte odabrani ili prilagođeni materijal u stupove, mape, teme i zbirke koje ostaju upotrebljive.
+    landing_workflow_h2|
+        Jasan put od "trebao bih učiti" do "znam ovo."
+    landing_workflow_p|
+        Jedan fokusirani radni tijek čini sljedeći korak očiglednim bez spajanja svakog subjekta u istu vrstu kartice.
+    landing_step_1_title|
+        Odaberite pravi materijal
+    landing_step_1_desc|
+        Započnite s odabranim predmetom ili izgradite fokusiranu biblioteku za ispit, jezik, profesiju ili osobni cilj.
+    landing_step_2_title|
+        Učite s kontekstom
+    landing_step_2_desc|
+        Izgradite prepoznavanje putem navođenih kartica i dostupnih medija prije nego zatražite od svoje memorije da radi bez pomoći.
+    landing_step_3_title|
+        Testirajte pravo sjećanje
+    landing_step_3_desc|
+        Prijeđite na fokusirano testiranje kako biste otkrili slabe točke, ojačali pronalaženje i učinili napredak mjerljivim.
+    landing_pricing_h2|
+        Počni besplatno. Nadogradite kada vam zatreba potpuni tijek rada.
+    landing_pricing_p|
+        Kreirajte račun bez plaćanja. Premium dodaje ponavljanje s razmakom, stvaranje, testiranje, automatsku reprodukciju, privatnu organizaciju i dublju prilagodbu.
+    landing_plan_weekly_desc|
+        Dobar za kratkoročna guranja, brze preglede ili pripreme za ispitni tjedan.
+    landing_plan_weekly_item_1|
+        Kratki prozor obveze
+    landing_plan_weekly_item_2|
+        Brz način isprobavanja vrhunskog tijeka rada
+    landing_plan_weekly_item_3|
+        Automatski se obnavlja do otkazivanja
+    landing_plan_weekly_btn|
+        Pogledajte detalje plana
+    landing_plan_monthly_desc|
+        Uravnotežen pristup za studente koji grade stabilnu naviku učenja.
+    landing_plan_monthly_item_1|
+        Najbolje za redovito tjedno učenje
+    landing_plan_monthly_item_2|
+        Dovoljno vremena za organiziranje većih predmetnih knjižnica
+    landing_plan_monthly_item_3|
+        Automatski se obnavlja do otkazivanja
+    landing_plan_monthly_btn|
+        Pogledajte detalje plana
+    landing_plan_yearly_desc|
+        Najniži efektivni mjesečni trošak za učenike koji žele dugotrajan sustav učenja.
+    landing_plan_yearly_item_1|
+        Idealno za dugotrajno učenje jezika i struke
+    landing_plan_yearly_item_2|
+        Niži troškovi tijekom vremena
+    landing_plan_yearly_item_3|
+        Automatski se obnavlja do otkazivanja
+    landing_plan_yearly_btn|
+        Pogledajte detalje plana
+    landing_trust_h2|
+        Učite s jasnoćom. Pretplatite se s povjerenjem.
+    landing_trust_p|
+        Saznajte što je besplatno, što Premium dodaje i gdje možete dobiti pomoć prije nego što se obvežete.
+    landing_trust_item_1_title|
+        Ulaz slobodan:
+    landing_trust_item_1_desc|
+        Napravite račun i istražite dostupni materijal za učenje bez unosa podataka o plaćanju.
+    landing_trust_item_2_title|
+        Transparentni uvjeti:
+    landing_trust_item_2_desc|
+        Informacije o cijeni, obnovi, otkazivanju, privatnosti i povratu novca dostupne su prije naplate.
+    landing_trust_item_3_title|
+        Ljudska podrška:
+    landing_trust_item_3_desc|
+        Kontaktirajte vitalii@nohainc.com kada vam je potrebna pomoć.
+    landing_faq_1_q|
+        Moram li sam izraditi svaku karticu?
+    landing_faq_1_a|
+        Ne. Započnite s dostupnim odabranim temama, a zatim izradite vlastiti materijal kada vaš cilj postane specifičniji.
+    landing_faq_2_q|
+        Mogu li besplatno koristiti Aliolo?
+    landing_faq_2_a|
+        Da. Besplatni račun omogućuje ulaz u knjižnicu; stranica s cijenama objašnjava koji napredni tijek rada zahtijeva Premium.
+    landing_faq_3_q|
+        Mogu li otkazati pretplatu?
+    landing_faq_3_a|
+        Da. Pretplate se mogu otkazati putem kanala na kojem su kupljene, a pristup se normalno nastavlja kroz plaćeno razdoblje.
+    landing_final_h2|
+        Jeste li spremni da se vaša sljedeća sesija učenja računa?
+    landing_final_p|
+        Napravite besplatni račun, odaberite predmet i počnite učiti vizualno.
+    landing_final_btn|
+        Stvorite besplatni račun
+    landing_footer_desc|
+        Vizualne kartice, ponavljanje u razmacima, fleksibilna organizacija predmeta i usmjereni tijek rada testiranja za učenike koji žele strukturu bez trenja.
+    landing_footer_mor|
+        Evidentirani trgovac:
+    landing_footer_mor_desc|
+        Naš postupak narudžbe može provoditi Paddle.com, naš mrežni prodavač i registrirani trgovac za web narudžbe. Paddle upravlja obradom plaćanja, korisničkom službom povezanom s plaćanjem i povratima tih narudžbi.

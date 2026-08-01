@@ -1,0 +1,349 @@
+..
+    legal_info|
+        Legal na impormasyon
+    last_updated|
+        Huling na-update
+    support|
+        Suporta
+    home|
+        Bahay
+    privacy|
+        Pagkapribado
+    terms|
+        Mga tuntunin
+    refunds|
+        Mga refund
+    pricing|
+        Pagpepresyo
+    privacy_title|
+        Patakaran sa Privacy ng Aliolo
+    privacy_subtitle|
+        Paano kinokolekta, ginagamit, iniimbak, at pinoprotektahan ni Aliolo ang account, pag-aaral, at impormasyong nauugnay sa pagbabayad.
+    privacy_body|
+        <h2>Impormasyon na Kinokolekta Namin</h2>
+        <p>Kinokolekta namin ang impormasyong kailangan upang mapatakbo ang Aliolo, kabilang ang mga detalye ng account tulad ng email address, username, data ng pagpapatunay ng password, mga setting ng avatar, mga kagustuhan, at mga setting ng profile.</p>
+        <p>Nag-iimbak din kami ng aktibidad sa pag-aaral tulad ng mga paksa, folder, koleksyon, card, pag-unlad, mga streak, pang-araw-araw na layunin, mga setting ng pagsubok at pag-aaral, feedback, at mga pangunahing kaganapan sa paggamit ng app na kailangan para magbigay ng karanasan sa pag-aaral.</p>
+        <h2>Paano Namin Gumamit ng Impormasyon</h2>
+        <p>Ginagamit namin ang impormasyong ito para gawin at i-secure ang iyong account, i-synchronize ang iyong data sa pag-aaral, i-personalize ang iyong karanasan sa pag-aaral, magbigay ng premium na access, tumugon sa mga kahilingan sa suporta, pagbutihin ang app, at maiwasan ang maling paggamit o pang-aabuso sa serbisyo.</p>
+        <h2>Mga Pagbabayad at Subscription</h2>
+        <p>Hindi direktang iniimbak ni Aliolo ang kumpletong detalye ng payment card. Ang mga pagbabayad sa web ay pinoproseso ng Paddle, at ang mga pagbili sa mobile ay maaaring iproseso ng Google Play o Apple App Store kapag available ang mga channel ng pagbili na iyon.</p>
+        <p>Para sa pag-access sa subscription, maaari kaming mag-imbak ng mga identifier ng provider ng pagbabayad, mga identifier ng produkto, status ng subscription, mga petsa ng panahon ng pag-renew, at nauugnay na webhook o metadata ng transaksyon. Nagbibigay-daan ito sa amin na i-activate, i-renew, kanselahin, o i-restore ang premium na access.</p>
+        <h2>Mga Serbisyo ng Third-Party</h2>
+        <p>Gumagamit kami ng mga service provider para sa pagho-host, imprastraktura, storage, analytics o operational logs, authentication, at mga pagbabayad. Pinoproseso ng mga provider na ito ang impormasyon lamang kung kinakailangan upang maibigay ang kanilang mga serbisyo sa Aliolo.</p>
+        <div class="notice"><strong>Paunawa sa sagwan:</strong> Ang aming proseso ng pag-order ay maaaring isagawa ng Paddle.com, ang aming online na reseller at Merchant of Record. Pinangangasiwaan ng Paddle ang pagpoproseso ng pagbabayad, pagkalkula ng buwis kung saan naaangkop, seguridad sa pagbabayad, at serbisyo sa customer na nauugnay sa pagbabayad.</div>
+        <h2>Cookies at Lokal na Imbakan</h2>
+        <p>Maaaring gumamit si Aliolo ng cookies, mga session identifier, storage ng browser, o mga katulad na teknolohiya para panatilihin kang naka-sign in, tandaan ang mga kagustuhan, secure ang serbisyo, at patakbuhin ang web app.</p>
+        <h2>Pagpapanatili at Pagtanggal ng Data</h2>
+        <p>Pinapanatili namin ang data ng account at pag-aaral habang aktibo ang iyong account o kung kinakailangan upang maibigay ang serbisyo, sumunod sa mga legal na obligasyon, lutasin ang mga hindi pagkakaunawaan, maiwasan ang pang-aabuso, at mapanatili ang mga talaan ng transaksyon. Maaari kang humiling ng pagtanggal ng account o suportang nauugnay sa data sa pamamagitan ng pakikipag-ugnayan sa amin.</p>
+        <h2>Mga Bata at Paggamit ng Edukasyon</h2>
+        <p>Ang Aliolo ay isang produktong pang-edukasyon. Kung naniniwala ang isang magulang, tagapag-alaga, o paaralan na ang isang bata ay nagbigay ng personal na impormasyon nang walang naaangkop na pahintulot, makipag-ugnayan sa amin upang masuri namin at makagawa ng naaangkop na aksyon.</p>
+        <h2>Seguridad</h2>
+        <p>Gumagamit kami ng mga makatwirang teknikal at pang-organisasyong pananggalang upang protektahan ang personal na impormasyon. Walang online na serbisyo ang magagarantiya ng perpektong seguridad, ngunit nagtatrabaho kami upang limitahan ang pag-access at protektahan ang data mula sa hindi awtorisadong paggamit.</p>
+        <h2>Iyong Mga Pagpipilian at Karapatan</h2>
+        <p>Depende sa iyong lokasyon, maaaring may mga karapatan kang i-access, itama, tanggalin, i-export, o paghigpitan ang paggamit ng iyong personal na impormasyon. Makipag-ugnayan sa amin sa <a href="mailto:vitalii@nohainc.com">vitalii@nohainc.com</a> upang gumawa ng isang kahilingan.</p>
+    terms_title|
+        Mga Tuntunin sa Subscription sa Aliolo
+    terms_subtitle|
+        Ang mga patakaran para sa mga Aliolo account, premium na pag-access, pagsingil sa subscription, pagkansela, at katanggap-tanggap na paggamit.
+    terms_body|
+        <h2>Gamit si Aliolo</h2>
+        <p>Nagbibigay ang Aliolo ng mga visual learning tool, curated educational content, flashcards, progress tracking, at premium learning feature. Responsibilidad mong panatilihing secure ang mga kredensyal ng iyong account at para sa paggamit ng serbisyo nang ayon sa batas.</p>
+        <h2>Premium Access</h2>
+        <p>Ina-unlock ng premium na access ang mga bayad na feature na ipinapakita sa app o sa page ng pagpepresyo. Maaaring magbago ang mga available na feature habang bumubuti ang produkto, ngunit patuloy na makakatanggap ang mga aktibong subscriber ng access sa bayad na karanasan sa Aliolo sa panahon ng kanilang wastong panahon ng subscription.</p>
+        <h2>Pagsingil at Pag-renew</h2>
+        <p>Awtomatikong nagre-renew ang mga subscription maliban kung kinansela bago matapos ang kasalukuyang panahon ng pagsingil. Ang mga presyo, ritmo ng pagsingil, mga buwis, conversion ng lokal na currency, at mga panuntunan sa pag-renew ay ipinapakita sa pag-checkout at maaaring mag-iba ayon sa channel ng pagbili, rehiyon, platform, o aktibong alok.</p>
+        <div class="notice"><strong>Paunawa sa sagwan:</strong> Para sa mga pagbili sa web, ang aming proseso ng pag-order ay maaaring isagawa ng Paddle.com. Ang Paddle.com ay ang Merchant of Record para sa mga order na iyon at nagbibigay ng serbisyo sa customer na may kaugnayan sa pagbabayad, pangangasiwa sa buwis, at pagproseso ng mga pagbabalik.</div>
+        <h2>Pagkansela</h2>
+        <p>Maaari kang magkansela ayon sa mga panuntunan ng channel ng pagbili na iyong ginamit. Ang pagkansela ay huminto sa pag-renew sa hinaharap. Maliban kung iba ang sinabi ng channel ng pagbili, mananatiling available ang bayad na access hanggang sa katapusan ng kasalukuyang panahon ng pagsingil.</p>
+        <h2>Mga refund</h2>
+        <p>Ang mga refund ay pinangangasiwaan ayon sa aming <a href="/refund">Patakaran sa Pag-refund</a>, ang mga panuntunan sa channel ng pagbili, at naaangkop na batas ng consumer. Karaniwang pinangangasiwaan ng nauugnay na app store ang mga pagbili sa app store.</p>
+        <h2>Katanggap-tanggap na Paggamit</h2>
+        <p>Hindi mo maaaring gamitin sa maling paraan ang Aliolo, manghimasok sa serbisyo, subukan ang hindi awtorisadong pag-access, simot o kumopya ng content nang malaki, ang mga bahagi ng app na protektado ng reverse engineer, mag-upload ng labag sa batas na materyal, o gamitin ang serbisyo sa paraang makapipinsala sa ibang mga user o Aliolo.</p>
+        <h2>Nilalaman at Availability</h2>
+        <p>Maaaring mag-update, magdagdag, mag-alis, o mag-ayos muli si Aliolo ng mga paksa, card, feature, at disenyo. Layunin naming panatilihing maaasahan ang serbisyo, ngunit maaaring maapektuhan ang availability ng maintenance, mga third-party na provider, mga isyu sa network, o mga pagbabago sa produkto.</p>
+        <h2>Disclaimer at Pananagutan</h2>
+        <p>Ang Aliolo ay ibinigay bilang isang tool na pang-edukasyon at suporta sa pag-aaral. Hindi namin ginagarantiyahan ang mga partikular na resulta ng pag-aaral, pagsusulit, propesyonal, o pinansyal. Sa pinakamataas na lawak na pinahihintulutan ng batas, ang Aliolo ay ibinibigay nang walang mga warranty na lampas sa kinakailangan ng naaangkop na batas.</p>
+        <h2>Mga Pagbabago sa Mga Tuntuning Ito</h2>
+        <p>Maaari naming i-update ang mga tuntuning ito upang ipakita ang mga pagbabago sa produkto, legal, pagsingil, o pagpapatakbo. Ang kasalukuyang bersyon ay nai-publish sa pahinang ito.</p>
+    refund_title|
+        Aliolo Refund Policy
+    refund_subtitle|
+        Paano gumagana ang mga refund, pagkansela, chargeback, at suporta sa pagbabayad para sa Aliolo Premium.
+    refund_body|
+        <h2>Pangkalahatang-ideya</h2>
+        <p>Ang Aliolo Premium ay isang digital na subscription. Dahil ang premium na access ay maaaring i-activate kaagad, ang mga pagbili ay karaniwang pinal kapag ang subscription ay aktibo at ginamit, maliban kung ang patakarang ito, ang channel ng pagbili, o naaangkop na batas ay nagbibigay ng iba.</p>
+        <h2>7-araw na Window ng Refund</h2>
+        <p>Kung hindi mo sinasadyang bumili ng subscription sa web o may teknikal na isyu na pumipigil sa iyong paggamit ng mga premium na feature, maaari kang humiling ng refund sa loob ng 7 araw ng unang pagbili. Isama ang email ng account, mga detalye ng order, at isang maikling paglalarawan ng isyu.</p>
+        <h2>Walang Prorated Mid-Cycle Refund</h2>
+        <p>Hindi kami karaniwang nagbibigay ng prorated na mga refund para sa mga pagkansela pagkatapos ng paunang palugit ng refund. Kung magkakansela ka pagkatapos ng panahong iyon, karaniwan mong pananatilihin ang premium na access hanggang sa katapusan ng panahon ng bayad na pagsingil.</p>
+        <h2>Bumili ng Mga Panuntunan sa Channel</h2>
+        <p>Ang mga refund para sa mga pagbili na ginawa sa pamamagitan ng Google Play o Apple App Store ay dapat na karaniwang hilingin sa pamamagitan ng nauugnay na app store. Inilalapat ng mga platform na iyon ang sarili nilang mga panuntunan sa refund at proseso ng pagsusuri.</p>
+        <div class="notice"><strong>Paunawa sa sagwan:</strong> Para sa mga order sa web, maaaring kumilos ang Paddle.com bilang Merchant of Record. Pinangangasiwaan ng Paddle ang serbisyo sa customer na may kaugnayan sa pagbabayad, pangangasiwa sa buwis, at pagpoproseso ng mga pagbabalik para sa mga order na iyon.</div>
+        <h2>Paano Humiling ng Refund</h2>
+        <p>Para sa mga web order, makipag-ugnayan sa suporta ng mamimili ng Paddle gamit ang impormasyon ng order mula sa iyong resibo, o makipag-ugnayan sa suporta ng Aliolo sa <a href="mailto:vitalii@nohainc.com">vitalii@nohainc.com</a>. Maaari naming idirekta ang mga kahilingang tukoy sa pagbabayad sa Paddle kapag ang Paddle ang Merchant of Record.</p>
+        <h2>Mga chargeback at Pang-aabuso</h2>
+        <p>Kung ang isang pagbabayad ay binaliktad, pinagtatalunan, na-refund, o natukoy bilang mapanlinlang, maaaring suspindihin o alisin ni Aliolo ang premium na access na nauugnay sa transaksyong iyon.</p>
+    pricing_title|
+        Aliolo Premium Pricing
+    pricing_subtitle|
+        Mga simpleng opsyon sa subscription para sa pag-unlock ng buong karanasan sa visual na pag-aaral ng Aliolo.
+    pricing_body|
+        <div class="plans">
+        <section class="plan">
+        <span class="tag">Flexible</span>
+        <h2>Lingguhan</h2>
+        <div class="price">$2.99</div>
+        <p>Bawat linggo. Kapaki-pakinabang para sa panandaliang pag-aaral, pagsusuri, o paghahanda sa pagsusulit.</p>
+        </section>
+        <section class="plan">
+        <span class="tag">Sikat</span>
+        <h2>Buwan-buwan</h2>
+        <div class="price">$8.99</div>
+        <p>Bawat buwan. Pinakamahusay para sa pare-parehong pag-aaral nang walang mahabang pangako.</p>
+        </section>
+        <section class="plan">
+        <span class="tag">Pinakamahusay na halaga</span>
+        <h2>Taon-taon</h2>
+        <div class="price">$80.99</div>
+        <p>Bawat taon. Mas mababang epektibong buwanang gastos para sa mga pangmatagalang mag-aaral.</p>
+        </section>
+        </div>
+        <h2>Ano ang Kasama sa Premium</h2>
+        <ul>
+        <li>Ganap na access sa mga premium na na-curate na paksa at mga library ng pag-aaral.</li>
+        <li>Advanced na spaced repetition at mga feature sa pagsubaybay sa pag-unlad.</li>
+        <li>Custom na flashcard, paksa, folder, at paggawa ng koleksyon kung saan available.</li>
+        <li>Mga interactive na learn at test mode, kabilang ang mga setting ng autoplay.</li>
+        <li>Mga feature ng pribadong learning organization para sa mga workflow ng personal na pag-aaral.</li>
+        </ul>
+        <h2>Mga Detalye ng Pagsingil</h2>
+        <p>Ang mga presyo ay nakalista sa USD para sa pampublikong pahina ng pagpepresyo. Maaaring magpakita ang checkout ng lokal na pera, mga buwis, at mga detalye ng huling pagsingil depende sa iyong lokasyon, paraan ng pagbabayad, at channel ng pagbili.</p>
+        <p>Awtomatikong nagre-renew ang mga subscription hanggang sa makansela. Maaari kang magkansela ayon sa mga panuntunan ng channel kung saan ka bumili. Karaniwang nagpapatuloy ang pag-access hanggang sa katapusan ng panahon ng bayad na pagsingil.</p>
+        <div class="notice"><strong>Paunawa sa sagwan:</strong> Ang mga order sa web ay maaaring iproseso ng Paddle.com, ang aming online na reseller at Merchant of Record. Maaaring kalkulahin at kolektahin ng Paddle ang mga naaangkop na buwis at magbigay ng suporta sa mamimili na may kaugnayan sa pagbabayad.</div>
+        <div class="comparison-card">
+        <h2>Libre kumpara sa Premium na Paghahambing</h2>
+        <p>Ang talahanayang ito ay tumutugma sa kasalukuyang karanasan sa app at ginagawang mas madaling suriin ang premium na pag-upgrade sa isang sulyap.</p>
+        <table class="comparison-table" aria-label="Aliolo free and premium feature comparison">
+        <thead>
+        <tr>
+        <th>Tampok</th>
+        <th>Libre</th>
+        <th>Premium</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>Buong library</td>
+        <td><span class="comparison-check">✓</span></td>
+        <td><span class="comparison-check pro">✓</span></td>
+        </tr>
+        <tr>
+        <td>Spaced repetition</td>
+        <td><span class="comparison-cross">✕</span></td>
+        <td><span class="comparison-check pro">✓</span></td>
+        </tr>
+        <tr>
+        <td>Paglikha</td>
+        <td><span class="comparison-cross">✕</span></td>
+        <td><span class="comparison-check pro">✓</span></td>
+        </tr>
+        <tr>
+        <td>Pagsubok</td>
+        <td><span class="comparison-cross">✕</span></td>
+        <td><span class="comparison-check pro">✓</span></td>
+        </tr>
+        <tr>
+        <td>Autoplay</td>
+        <td><span class="comparison-cross">✕</span></td>
+        <td><span class="comparison-check pro">✓</span></td>
+        </tr>
+        <tr>
+        <td>Pribadong mode</td>
+        <td><span class="comparison-cross">✕</span></td>
+        <td><span class="comparison-check pro">✓</span></td>
+        </tr>
+        <tr>
+        <td>I-customize</td>
+        <td><span class="comparison-cross">✕</span></td>
+        <td><span class="comparison-check pro">✓</span></td>
+        </tr>
+        </tbody>
+        </table>
+        <div class="comparison-note">Ina-unlock ng Premium ang buong workflow ng pag-aaral: adaptive review, mga tool sa paggawa, advanced na pagsubok, mga kontrol sa autoplay, pribadong organisasyon, at mas malalim na pag-personalize.</div>
+        </div>
+        <h2>Mga Pagkakaiba sa Presyo ng Platform</h2>
+        <p>Maaaring mag-iba ang mga presyo at alok sa pagitan ng web checkout, Google Play, Apple App Store, mga bansa, currency, at limitadong oras na mga promosyon. Kinokontrol ng huling screen ng pag-checkout ang aktwal na presyo at mga tuntunin sa pag-renew para sa iyong pagbili.</p>
+        <h2>Mga Kaugnay na Patakaran</h2>
+        <p>Bago mag-subscribe, suriin ang <a href="/terms">Mga Tuntunin sa Subscription</a>, <a href="/refund">Patakaran sa Pag-refund</a>, at <a href="/privacy">Patakaran sa Privacy</a>.</p>
+    checkout_title|
+        Aliolo Checkout
+    checkout_subtitle|
+        Secure na pag-checkout para sa mga subscription sa Aliolo Premium.
+    checkout_eyebrow|
+        Secure na pag-checkout
+    checkout_h1|
+        Kumpletuhin ang iyong pagbili ng Aliolo Premium.
+    checkout_status_title|
+        Naghihintay para sa pag-checkout
+    checkout_status_desc|
+        Kung binuksan mo ang page na ito mula sa Aliolo billing, dapat na awtomatikong lumabas ang payment form.
+    checkout_payment_support_title|
+        Suporta sa pagbabayad
+    checkout_payment_support_desc|
+        Ang mga pagbabayad sa web ay pinoproseso ng Paddle.com bilang Merchant of Record.
+    checkout_billing_title|
+        Pagsingil sa subscription
+    checkout_billing_desc|
+        Awtomatikong nagre-renew ang Aliolo Premium hanggang makansela. Maaari kang magkansela mamaya sa pamamagitan ng Paddle o sa iyong Aliolo account.
+    checkout_policy_title|
+        Kailangan ng mga detalye ng patakaran?
+    checkout_policy_desc|
+        Suriin ang pagpepresyo, mga tuntunin sa subscription, privacy, at impormasyon ng refund bago kumpletuhin ang iyong pagbili.
+    landing_meta_title|
+        Aliolo | Mga Visual Flashcard, Spaced Repetition, at Mas Matalinong Workflow sa Pag-aaral
+    landing_meta_desc|
+        Tinutulungan ng Aliolo ang mga mag-aaral na makabisado ang mga wika, agham, anatomy, paghahanda sa pagsusulit, at mga na-curate na paksa gamit ang mga visual flashcard, spaced repetition, at interactive na mga mode ng pagsubok.
+    landing_nav_features|
+        Mga tampok
+    landing_nav_how_it_works|
+        Paano ito gumagana
+    landing_nav_pricing|
+        Pagpepresyo
+    landing_nav_login|
+        Mag-log in
+    landing_nav_cta|
+        Lumikha ng libreng account
+    landing_hero_eyebrow|
+        Visual na platform sa pag-aaral
+    landing_hero_h1|
+        Matuto nang biswal. Alalahanin nang mas matagal.
+    landing_hero_p|
+        Gawing mga structured na flashcard ang mga larawan, audio, video, at text. Matuto nang may konteksto, suriin sa tamang oras, at subukan kung ano ang tunay mong maaalala.
+    landing_hero_btn_primary|
+        Lumikha ng libreng account
+    landing_hero_btn_secondary|
+        Mag-log in
+    landing_hero_proof_1_title|
+        Visual
+    landing_hero_proof_1_desc|
+        Imahe, audio, at video friendly na mga flashcard para sa pag-aaral na mabigat sa pagkilala.
+    landing_hero_proof_2_title|
+        Adaptive
+    landing_hero_proof_2_desc|
+        Spaced na pag-uulit at pagsubaybay sa pag-unlad upang muling bisitahin ang materyal sa tamang oras.
+    landing_hero_proof_3_title|
+        Nakabalangkas
+    landing_hero_proof_3_desc|
+        Mga haligi, folder, paksa, at koleksyon na lumalampas sa isang simpleng deck.
+    landing_hero_preview_title|
+        Pagkilala bago recall
+    landing_hero_preview_desc|
+        Isang tunay na aralin sa Aliolo gamit ang imahe, text, audio, at guided navigation.
+    landing_hero_preview_chip|
+        Learn mode
+    landing_features_h2|
+        Lahat ng kailangan mo para gawing recall ang exposure.
+    landing_features_p|
+        Bumuo ng pagkilala gamit ang rich media, panatilihing maayos ang mas malalaking library, at muling bisitahin ang materyal bago ito maglaho.
+    landing_feature_1_title|
+        Matuto nang higit pa sa text
+    landing_feature_1_desc|
+        Gumamit ng mga larawan, audio, video, at mga naiaangkop na prompt kapag ang paksa ay nakasalalay sa pagkilala at konteksto.
+    landing_feature_2_title|
+        Suriin bago ito kumupas
+    landing_feature_2_desc|
+        Ang spaced repetition at progress tracking ay nagbabalik ng mahalagang materyal sa isang kapaki-pakinabang na oras.
+    landing_feature_3_title|
+        Lumago sa kabila ng isang deck
+    landing_feature_3_desc|
+        Ayusin ang na-curate o custom na materyal sa mga haligi, folder, paksa, at koleksyon na mananatiling magagamit.
+    landing_workflow_h2|
+        Isang malinaw na landas mula sa "I should study" to "I know this."
+    landing_workflow_p|
+        Ang isang nakatutok na daloy ng trabaho ay nagpapanatili sa susunod na hakbang na malinaw nang hindi pinapatag ang bawat paksa sa parehong uri ng card.
+    landing_step_1_title|
+        Piliin ang tamang materyal
+    landing_step_1_desc|
+        Magsimula sa isang na-curate na paksa o bumuo ng nakatutok na library para sa isang pagsusulit, wika, propesyon, o personal na layunin.
+    landing_step_2_title|
+        Matuto nang may konteksto
+    landing_step_2_desc|
+        Bumuo ng pagkilala sa pamamagitan ng mga guided card at available na media bago hilingin sa iyong memorya na gumana nang walang tulong.
+    landing_step_3_title|
+        Subukan ang totoong recall
+    landing_step_3_desc|
+        Lumipat sa nakatutok na pagsubok upang ilantad ang mga mahihinang lugar, palakasin ang pagkuha, at gawing nasusukat ang pag-unlad.
+    landing_pricing_h2|
+        Magsimula nang libre. Mag-upgrade kapag kailangan mo ang buong daloy ng trabaho.
+    landing_pricing_p|
+        Gumawa ng account nang walang bayad. Ang Premium ay nagdaragdag ng spaced repetition, paggawa, pagsubok, autoplay, pribadong organisasyon, at mas malalim na pag-customize.
+    landing_plan_weekly_desc|
+        Mabuti para sa mga panandaliang push, mabilis na pagsusuri, o paghahanda sa linggo ng pagsusulit.
+    landing_plan_weekly_item_1|
+        Maikling window ng pangako
+    landing_plan_weekly_item_2|
+        Mabilis na paraan upang subukan ang premium na daloy ng trabaho
+    landing_plan_weekly_item_3|
+        Awtomatikong nire-renew hanggang makansela
+    landing_plan_weekly_btn|
+        Tingnan ang mga detalye ng plano
+    landing_plan_monthly_desc|
+        Balanseng pag-access para sa mga mag-aaral na bumubuo ng isang matatag na ugali sa pag-aaral.
+    landing_plan_monthly_item_1|
+        Pinakamahusay para sa regular na lingguhang pag-aaral
+    landing_plan_monthly_item_2|
+        Sapat na oras upang ayusin ang mas malalaking library ng paksa
+    landing_plan_monthly_item_3|
+        Awtomatikong nire-renew hanggang makansela
+    landing_plan_monthly_btn|
+        Tingnan ang mga detalye ng plano
+    landing_plan_yearly_desc|
+        Pinakamababang epektibong buwanang gastos para sa mga mag-aaral na nais ng matibay na sistema ng pag-aaral.
+    landing_plan_yearly_item_1|
+        Tamang-tama para sa pangmatagalang wika at propesyonal na pag-aaral
+    landing_plan_yearly_item_2|
+        Mas mababang gastos sa paglipas ng panahon
+    landing_plan_yearly_item_3|
+        Awtomatikong nire-renew hanggang makansela
+    landing_plan_yearly_btn|
+        Tingnan ang mga detalye ng plano
+    landing_trust_h2|
+        Mag-aral nang may kalinawan. Mag-subscribe nang may kumpiyansa.
+    landing_trust_p|
+        Alamin kung ano ang libre, kung ano ang idinaragdag ng Premium, at kung saan makakakuha ng tulong bago ka mangako.
+    landing_trust_item_1_title|
+        Libreng pagpasok:
+    landing_trust_item_1_desc|
+        Gumawa ng account at tuklasin ang magagamit na materyal sa pag-aaral nang hindi naglalagay ng mga detalye ng pagbabayad.
+    landing_trust_item_2_title|
+        Mga transparent na termino:
+    landing_trust_item_2_desc|
+        Available ang impormasyon sa pagpepresyo, pag-renew, pagkansela, privacy, at refund bago mag-checkout.
+    landing_trust_item_3_title|
+        Suporta ng tao:
+    landing_trust_item_3_desc|
+        Makipag-ugnayan sa vitalii@nohainc.com kapag kailangan mo ng tulong.
+    landing_faq_1_q|
+        Kailangan ko bang gumawa ng bawat card sa aking sarili?
+    landing_faq_1_a|
+        Hindi. Magsimula sa mga available na na-curate na paksa, pagkatapos ay lumikha ng iyong sariling materyal kapag naging mas tiyak ang iyong layunin.
+    landing_faq_2_q|
+        Can I use Aliolo for free?
+    landing_faq_2_a|
+        Oo. Ang isang libreng account ay nagbibigay ng isang entry point sa library; ipinapaliwanag ng page ng pagpepresyo kung aling mga advanced na daloy ng trabaho ang nangangailangan ng Premium.
+    landing_faq_3_q|
+        Maaari ko bang kanselahin ang isang subscription?
+    landing_faq_3_a|
+        Oo. Maaaring kanselahin ang mga subscription sa pamamagitan ng channel kung saan binili ang mga ito, na may access na karaniwang nagpapatuloy hanggang sa binabayarang panahon.
+    landing_final_h2|
+        Handa nang gawin ang iyong susunod na sesyon ng pag-aaral bilang bilang?
+    landing_final_p|
+        Lumikha ng isang libreng account, pumili ng isang paksa, at simulan ang pag-aaral nang biswal.
+    landing_final_btn|
+        Lumikha ng libreng account
+    landing_footer_desc|
+        Visual flashcards, spaced repetition, flexible subject organization, at focused testing workflows para sa mga mag-aaral na gusto ang structure na walang friction.
+    landing_footer_mor|
+        Merchant of Record:
+    landing_footer_mor_desc|
+        Ang aming proseso ng pag-order ay maaaring isagawa ng Paddle.com, ang aming online na reseller at Merchant of Record para sa mga web order. Pinangangasiwaan ng Paddle ang pagpoproseso ng pagbabayad, serbisyo sa customer na may kaugnayan sa pagbabayad, at pagbabalik para sa mga order na iyon.

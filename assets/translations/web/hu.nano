@@ -1,0 +1,349 @@
+..
+    legal_info|
+        Jogi információk
+    last_updated|
+        Utoljára frissítve
+    support|
+        Támogatás
+    home|
+        Otthon
+    privacy|
+        Magánélet
+    terms|
+        Feltételek
+    refunds|
+        Visszatérítések
+    pricing|
+        Árképzés
+    privacy_title|
+        Aliolo Adatvédelmi szabályzat
+    privacy_subtitle|
+        Hogyan gyűjti, használja, tárolja és védi az Aliolo fiókkal, tanulással és fizetéssel kapcsolatos információkat.
+    privacy_body|
+        <h2>Az általunk gyűjtött információk</h2>
+        <p>Az Aliolo működéséhez szükséges információkat gyűjtjük, beleértve a fiókadatokat, például e-mail címet, felhasználónevet, jelszó-hitelesítési adatokat, avatarbeállításokat, preferenciákat és profilbeállításokat.</p>
+        <p>Tárolunk továbbá tanulási tevékenységeket, például tantárgyakat, mappákat, gyűjteményeket, kártyákat, előrehaladást, csíkokat, napi célokat, tesztelési és tanulási beállításokat, visszajelzéseket és a tanulási élmény biztosításához szükséges alapvető alkalmazáshasználati eseményeket.</p>
+        <h2>Hogyan használjuk az információkat</h2>
+        <p>Ezeket az információkat arra használjuk, hogy létrehozzuk és biztonságossá tegyük fiókját, szinkronizáljuk tanulási adatait, személyre szabjuk a tanulmányi élményt, prémium szintű hozzáférést biztosítsunk, válaszoljunk a támogatási kérésekre, javítsuk az alkalmazást, és megakadályozzuk a visszaéléseket és a szolgáltatásokkal való visszaéléseket.</p>
+        <h2>Kifizetések és előfizetések</h2>
+        <p>Az Aliolo közvetlenül nem tárolja a teljes fizetési kártyaadatokat. A webes fizetéseket a Paddle, a mobilos vásárlásokat pedig a Google Play vagy az Apple App Store dolgozhatja fel, ha ezek a vásárlási csatornák elérhetők.</p>
+        <p>Az előfizetéshez való hozzáféréshez eltárolhatjuk a fizetési szolgáltató azonosítóit, a termékazonosítókat, az előfizetés állapotát, a megújítási időszak dátumait és a kapcsolódó webhook- vagy tranzakciós metaadatokat. Ezzel aktiválhatjuk, megújíthatjuk, törölhetjük vagy visszaállíthatjuk a prémium hozzáférést.</p>
+        <h2>Harmadik féltől származó szolgáltatások</h2>
+        <p>Szolgáltatókat használunk tárhelyszolgáltatáshoz, infrastruktúrához, tároláshoz, elemzéshez vagy működési naplókhoz, hitelesítéshez és fizetésekhez. Ezek a szolgáltatók csak akkor dolgozzák fel az információkat, ha az Aliolo számára nyújtott szolgáltatásaik szükségesek.</p>
+        <div class="notice"><strong>Az evezős megjegyzés:</strong> Rendelési folyamatunkat a Paddle.com, az online viszonteladónk és a Merchant of Record végezheti. A Paddle kezeli a fizetés feldolgozását, adott esetben az adószámítást, a fizetés biztonságát és a fizetéssel kapcsolatos ügyfélszolgálatot.</div>
+        <h2>Cookie-k és helyi tárolás</h2>
+        <p>Az Aliolo cookie-kat, munkamenet-azonosítókat, böngészőtárhelyet vagy hasonló technológiákat használhat a bejelentkezve tartására, a beállítások emlékezésére, a szolgáltatás biztonságára és a webalkalmazás működtetésére.</p>
+        <h2>Adatmegőrzés és -törlés</h2>
+        <p>Megőrizzük a fiók- és tanulási adatokat, amíg az Ön fiókja aktív, vagy a szolgáltatás nyújtásához, a jogi kötelezettségek betartásához, a viták megoldásához, a visszaélések megelőzéséhez és a tranzakciós nyilvántartások vezetéséhez szükséges. A fiók törlését vagy az adatokkal kapcsolatos támogatást kérheti, ha kapcsolatba lép velünk.</p>
+        <h2>Gyermekek és oktatási felhasználás</h2>
+        <p>Az Aliolo egy oktatási termék. Ha egy szülő, gyám vagy iskola úgy véli, hogy egy gyermek megfelelő engedély nélkül adott meg személyes adatokat, vegye fel velünk a kapcsolatot, hogy megvizsgálhassuk és megtegyük a megfelelő lépéseket.</p>
+        <h2>Biztonság</h2>
+        <p>Ésszerű technikai és szervezeti biztosítékokat alkalmazunk a személyes adatok védelme érdekében. Egyetlen online szolgáltatás sem garantálja a tökéletes biztonságot, de azon dolgozunk, hogy korlátozzuk a hozzáférést és megvédjük az adatokat a jogosulatlan használattól.</p>
+        <h2>Az Ön választásai és jogai</h2>
+        <p>Tartózkodási helyétől függően jogosultak lehetnek személyes adataihoz való hozzáférésre, azok javítására, törlésére, exportálására vagy használatának korlátozására. Vegye fel velünk a kapcsolatot a címen <a href="mailto:vitalii@nohainc.com">vitalii@nohainc.com</a> kérést tenni.</p>
+    terms_title|
+        Aliolo előfizetési feltételek
+    terms_subtitle|
+        Az Aliolo-fiókokra, a prémium hozzáférésre, az előfizetés számlázására, a lemondásra és az elfogadható használat szabályai.
+    terms_body|
+        <h2>Aliolo használata</h2>
+        <p>Az Aliolo vizuális tanulási eszközöket, válogatott oktatási tartalmat, kártyákat, fejlődéskövetést és prémium tanulási funkciókat biztosít. Ön felelős a fiók hitelesítő adatainak biztonságáért és a szolgáltatás jogszerű használatáért.</p>
+        <h2>Prémium hozzáférés</h2>
+        <p>A prémium hozzáférés feloldja az alkalmazásban vagy az ároldalon megjelenő fizetős funkciókat. Az elérhető funkciók a termék fejlesztésével változhatnak, de az aktív előfizetők továbbra is hozzáférhetnek a fizetős Aliolo-élményhez az érvényes előfizetési időszak alatt.</p>
+        <h2>Számlázás és megújítás</h2>
+        <p>Az előfizetések automatikusan megújulnak, hacsak nem mondják le az aktuális számlázási időszak vége előtt. Az árak, a számlázási ütem, az adók, a helyi valuta átváltási és a megújítási szabályok fizetéskor jelennek meg, és vásárlási csatornánként, régiónként, platformonként vagy aktív ajánlatonként változhatnak.</p>
+        <div class="notice"><strong>Az evezős megjegyzés:</strong> Internetes vásárlások esetén a rendelési folyamatot a Paddle.com bonyolíthatja le. A Paddle.com az ilyen rendelések kereskedője, és fizetéssel kapcsolatos ügyfélszolgálatot, adókezelést és visszaküldések feldolgozását biztosítja.</div>
+        <h2>Törlés</h2>
+        <p>Az Ön által használt vásárlási csatorna szabályai szerint lemondhatja. A lemondás leállítja a jövőbeni megújítást. Ha a vásárlási csatorna másként nem rendelkezik, a fizetős hozzáférés az aktuális számlázási időszak végéig elérhető marad.</p>
+        <h2>Visszatérítések</h2>
+        <p>A visszatérítést a mieink szerint kezeljük <a href="/refund">Visszatérítési szabályzat</a>, a vásárlási csatornára vonatkozó szabályok és az alkalmazandó fogyasztóvédelmi jogszabályok. Az App Store vásárlásokat általában az érintett alkalmazásbolt kezeli.</p>
+        <h2>Elfogadható használat</h2>
+        <p>Nem használhatja vissza az Aliolo-t, nem zavarhatja meg a szolgáltatást, nem kísérelhet meg jogosulatlan hozzáférést, nem másolhat vagy másolhat nagy mennyiségben tartalmat, nem fejtheti vissza az alkalmazás védett részeit, nem tölthet fel jogellenes anyagokat, és nem használhatja a szolgáltatást más felhasználóknak vagy az Aliolónak károsító módon.</p>
+        <h2>Tartalom és elérhetőség</h2>
+        <p>Az Aliolo frissítheti, hozzáadhatja, eltávolíthatja vagy átszervezheti a témákat, kártyákat, funkciókat és tervezést. Célunk, hogy a szolgáltatás megbízható legyen, de a rendelkezésre állást befolyásolhatják a karbantartás, a külső szolgáltatók, a hálózati problémák vagy a termékváltozások.</p>
+        <h2>Jogi nyilatkozat és felelősség</h2>
+        <p>Az Aliolo oktatási és tanulmányi támogatási eszköz. Nem garantálunk konkrét tanulási, vizsga-, szakmai vagy pénzügyi eredményeket. A törvény által megengedett maximális mértékig az Aliolo a vonatkozó törvények által megkövetelteken túli garanciák nélkül biztosított.</p>
+        <h2>A jelen Feltételek változásai</h2>
+        <p>Frissíthetjük ezeket a feltételeket, hogy tükrözzék a termék, jogi, számlázási vagy működési változásokat. Az aktuális verzió ezen az oldalon található.</p>
+    refund_title|
+        Aliolo visszatérítési szabályzat
+    refund_subtitle|
+        Hogyan működik a visszatérítés, a törlés, a visszaterhelés és a fizetési támogatás az Aliolo Premium esetében.
+    refund_body|
+        <h2>Áttekintés</h2>
+        <p>Az Aliolo Premium egy digitális előfizetés. Mivel a prémium hozzáférés azonnal aktiválható, a vásárlások általában az előfizetés aktiválása és felhasználása után véglegesek, kivéve, ha a jelen szabályzat, a vásárlási csatorna vagy a vonatkozó törvény másként rendelkezik.</p>
+        <h2>7 napos visszatérítési időszak</h2>
+        <p>Ha véletlenül vásárolt web-előfizetést, vagy olyan technikai probléma merül fel, amely miatt nem tudja használni a prémium funkciókat, az első vásárlástól számított 7 napon belül visszatérítést kérhet. Adja meg a fiók e-mail-címét, a rendelés részleteit és a probléma rövid leírását.</p>
+        <h2>Nincs időarányos ciklusközi visszatérítés</h2>
+        <p>Általában nem biztosítunk arányos visszatérítést a kezdeti visszatérítési időszak utáni lemondások esetén. Ha ezt az időszakot követően mondja le, akkor általában a fizetett számlázási időszak végéig fenntartja a prémium hozzáférést.</p>
+        <h2>Vásárlási csatornaszabályok</h2>
+        <p>A Google Playen vagy az Apple App Store-on keresztül vásárolt vásárlások visszatérítését általában a megfelelő alkalmazásboltban kell kérni. Ezek a platformok saját visszatérítési szabályaikat és felülvizsgálati eljárásukat alkalmazzák.</p>
+        <div class="notice"><strong>Az evezős megjegyzés:</strong> Webes rendelések esetén a Paddle.com feljegyzett kereskedőként járhat el. A Paddle kezeli a fizetéssel kapcsolatos ügyfélszolgálatot, az adókezelést és a visszaküldések feldolgozását ezen megrendeléseknél.</div>
+        <h2>Visszatérítés kérése</h2>
+        <p>Webes megrendelés esetén vegye fel a kapcsolatot a Paddle vásárlói ügyfélszolgálatával a nyugtán található rendelési adatok segítségével, vagy lépjen kapcsolatba az Aliolo ügyfélszolgálatával a következő címen: <a href="mailto:vitalii@nohainc.com">vitalii@nohainc.com</a>. Fizetéssel kapcsolatos kéréseket irányíthatunk a Paddle-hez, ha a Paddle a rekordkereskedő.</p>
+        <h2>Visszafizetések és visszaélések</h2>
+        <p>Ha egy fizetést visszavonnak, vitatnak, visszatérítenek, vagy hamisként azonosítják, az Aliolo felfüggesztheti vagy eltávolíthatja az adott tranzakcióhoz kapcsolódó prémium hozzáférést.</p>
+    pricing_title|
+        Aliolo Premium árképzés
+    pricing_subtitle|
+        Egyszerű előfizetési lehetőségek a teljes Aliolo vizuális tanulási élmény feloldásához.
+    pricing_body|
+        <div class="plans">
+        <section class="plan">
+        <span class="tag">Rugalmas</span>
+        <h2>Heti</h2>
+        <div class="price">$2.99</div>
+        <p>Hetente. Hasznos rövid távú tanuláshoz, áttekintéshez vagy vizsgára való felkészüléshez.</p>
+        </section>
+        <section class="plan">
+        <span class="tag">Népszerű</span>
+        <h2>Havi</h2>
+        <div class="price">$8.99</div>
+        <p>Havonta. A legjobb a következetes tanuláshoz, hosszú elkötelezettség nélkül.</p>
+        </section>
+        <section class="plan">
+        <span class="tag">Legjobb érték</span>
+        <h2>Évi</h2>
+        <div class="price">$80.99</div>
+        <p>Évente. Alacsonyabb tényleges havi költség a hosszú távú tanulók számára.</p>
+        </section>
+        </div>
+        <h2>Mit tartalmaz a prémium</h2>
+        <ul>
+        <li>Teljes hozzáférés a prémium kurátori tantárgyakhoz és tankönyvtárakhoz.</li>
+        <li>Fejlett időközönkénti ismétlési és haladáskövetési funkciók.</li>
+        <li>Egyéni tanulókártya, tárgy, mappa és gyűjtemény létrehozása, ahol elérhető.</li>
+        <li>Interaktív tanulási és tesztelési módok, beleértve az automatikus lejátszási beállításokat.</li>
+        <li>Privát tanulásszervezési funkciók a személyes tanulmányi munkafolyamatokhoz.</li>
+        </ul>
+        <h2>Számlázási részletek</h2>
+        <p>Az árak USD-ben vannak feltüntetve ezen a nyilvános árképzési oldalon. Helytől, fizetési módtól és vásárlási csatornától függően a Checkout megjelenítheti a helyi pénznemet, az adókat és a végső számlázási adatokat.</p>
+        <p>Az előfizetések automatikusan megújulnak a lemondásig. Lemondhatod annak a csatornának a szabályai szerint, ahol vásároltál. A hozzáférés általában a fizetett számlázási időszak végéig tart.</p>
+        <div class="notice"><strong>Az evezős megjegyzés:</strong> A webes rendeléseket a Paddle.com, az online viszonteladónk és a Merchant of Record dolgozhatja fel. A Paddle kiszámíthatja és beszedheti a vonatkozó adókat, és fizetéshez kapcsolódó vásárlói támogatást nyújthat.</div>
+        <div class="comparison-card">
+        <h2>Ingyenes vs prémium összehasonlítás</h2>
+        <p>Ez a táblázat megfelel a jelenlegi alkalmazásélménynek, és megkönnyíti a prémium frissítés egy pillanat alatti értékelését.</p>
+        <table class="comparison-table" aria-label="Aliolo free and premium feature comparison">
+        <thead>
+        <tr>
+        <th>Funkció</th>
+        <th>Ingyenes</th>
+        <th>Prémium</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>Teljes könyvtár</td>
+        <td><span class="comparison-check">✓</span></td>
+        <td><span class="comparison-check pro">✓</span></td>
+        </tr>
+        <tr>
+        <td>Szóközű ismétlés</td>
+        <td><span class="comparison-cross">✕</span></td>
+        <td><span class="comparison-check pro">✓</span></td>
+        </tr>
+        <tr>
+        <td>Teremtés</td>
+        <td><span class="comparison-cross">✕</span></td>
+        <td><span class="comparison-check pro">✓</span></td>
+        </tr>
+        <tr>
+        <td>Tesztelés</td>
+        <td><span class="comparison-cross">✕</span></td>
+        <td><span class="comparison-check pro">✓</span></td>
+        </tr>
+        <tr>
+        <td>Automatikus lejátszás</td>
+        <td><span class="comparison-cross">✕</span></td>
+        <td><span class="comparison-check pro">✓</span></td>
+        </tr>
+        <tr>
+        <td>Privát mód</td>
+        <td><span class="comparison-cross">✕</span></td>
+        <td><span class="comparison-check pro">✓</span></td>
+        </tr>
+        <tr>
+        <td>Testreszabás</td>
+        <td><span class="comparison-cross">✕</span></td>
+        <td><span class="comparison-check pro">✓</span></td>
+        </tr>
+        </tbody>
+        </table>
+        <div class="comparison-note">A Premium feloldja a teljes tanulmányi munkafolyamatot: adaptív áttekintés, létrehozási eszközök, speciális tesztelés, automatikus lejátszás vezérlők, privát szervezés és mélyebb személyre szabás.</div>
+        </div>
+        <h2>Platform árkülönbségek</h2>
+        <p>Az árak és az ajánlatok a webes fizetés, a Google Play, az Apple App Store, az országok, a pénznemek és a korlátozott idejű promóciók között változhatnak. Az utolsó fizetési képernyő szabályozza a vásárlás tényleges árát és megújítási feltételeit.</p>
+        <h2>Kapcsolódó irányelvek</h2>
+        <p>Előfizetés előtt tekintse át a <a href="/terms">Előfizetési feltételek</a>, <a href="/refund">Visszatérítési szabályzat</a>, és <a href="/privacy">Adatvédelmi szabályzat</a>.</p>
+    checkout_title|
+        Aliolo Checkout
+    checkout_subtitle|
+        Biztonságos fizetés az Aliolo Premium előfizetésekhez.
+    checkout_eyebrow|
+        Biztonságos fizetés
+    checkout_h1|
+        Végezze el Aliolo Premium vásárlását.
+    checkout_status_title|
+        Várakozás a pénztárra
+    checkout_status_desc|
+        Ha ezt az oldalt az Aliolo számlázásból nyitotta meg, a fizetési űrlapnak automatikusan meg kell jelennie.
+    checkout_payment_support_title|
+        Fizetési támogatás
+    checkout_payment_support_desc|
+        A webes fizetéseket a Paddle.com, mint Merchant of Record dolgozza fel.
+    checkout_billing_title|
+        Előfizetés számlázás
+    checkout_billing_desc|
+        Az Aliolo Premium automatikusan megújul a lemondásig. Később lemondhatja a Paddle-n vagy az Aliolo-fiókján keresztül.
+    checkout_policy_title|
+        Szüksége van a szabályzat részleteire?
+    checkout_policy_desc|
+        A vásárlás befejezése előtt tekintse át az árakat, az előfizetési feltételeket, az adatvédelmi és visszatérítési információkat.
+    landing_meta_title|
+        Aliolo | Vizuális kártyák, szóközzel történő ismétlés és intelligensebb tanulmányi munkafolyamatok
+    landing_meta_desc|
+        Az Aliolo vizuális kártyákkal, osztott ismétléssel és interaktív tesztmódokkal segíti a tanulókat a nyelvek, a természettudományok, az anatómia, a vizsgára való felkészülés és a kiválasztott tárgyak elsajátításában.
+    landing_nav_features|
+        Jellemzők
+    landing_nav_how_it_works|
+        Hogyan működik
+    landing_nav_pricing|
+        Árképzés
+    landing_nav_login|
+        Jelentkezzen be
+    landing_nav_cta|
+        Hozzon létre ingyenes fiókot
+    landing_hero_eyebrow|
+        Vizuális tanulási platform
+    landing_hero_h1|
+        Tanuljon vizuálisan. Emlékezz tovább.
+    landing_hero_p|
+        A képeket, hangokat, videókat és szövegeket strukturált kártyákká alakíthatja. Tanuljon a kontextus alapján, tekintse át a megfelelő időben, és tesztelje, hogy mire tud igazán visszaemlékezni.
+    landing_hero_btn_primary|
+        Hozzon létre ingyenes fiókot
+    landing_hero_btn_secondary|
+        Jelentkezzen be
+    landing_hero_proof_1_title|
+        Vizuális
+    landing_hero_proof_1_desc|
+        Kép-, hang- és videóbarát kártyák a felismerést igénylő tanuláshoz.
+    landing_hero_proof_2_title|
+        Adaptív
+    landing_hero_proof_2_desc|
+        Szóközök szerinti ismétlés és haladás követése az anyag megfelelő időben történő újralátogatásához.
+    landing_hero_proof_3_title|
+        Strukturált
+    landing_hero_proof_3_desc|
+        Oszlopok, mappák, témák és gyűjtemények, amelyek túlmutatnak egy egyszerű fedélzeten.
+    landing_hero_preview_title|
+        Felismerés visszahívás előtt
+    landing_hero_preview_desc|
+        Egy igazi Aliolo lecke kép, szöveg, hang és irányított navigáció használatával.
+    landing_hero_preview_chip|
+        Tanulási mód
+    landing_features_h2|
+        Minden, amire szüksége van ahhoz, hogy az expozíciót felidézéssé változtassa.
+    landing_features_p|
+        Építsen felismerést a multimédiával, tartsa rendszerezve a nagyobb könyvtárakat, és nézze meg újra az anyagot, mielőtt elhalványulna.
+    landing_feature_1_title|
+        Tanuljon többről, mint szövegből
+    landing_feature_1_desc|
+        Használjon képeket, hangot, videót és rugalmas felszólításokat, ha a téma a felismeréstől és a kontextustól függ.
+    landing_feature_2_title|
+        Tekintse át, mielőtt elhalványulna
+    landing_feature_2_desc|
+        Az időközönkénti ismétlés és a haladás követése hasznos időben hozza vissza a fontos anyagokat.
+    landing_feature_3_title|
+        Nőjjön túl egy fedélzeten
+    landing_feature_3_desc|
+        A válogatott vagy egyedi anyagokat oszlopokba, mappákba, témákba és gyűjteményekbe rendezheti, amelyek továbbra is használhatók maradnak.
+    landing_workflow_h2|
+        Egyértelmű út a "tanulnom kellene"-től a "tudom ezt"ig.
+    landing_workflow_p|
+        Egyetlen fókuszált munkafolyamat nyilvánvalóvá teszi a következő lépést anélkül, hogy minden témát ugyanabba a kártyába simítana.
+    landing_step_1_title|
+        Válassza ki a megfelelő anyagot
+    landing_step_1_desc|
+        Kezdje egy kurált témával, vagy építsen egy célzott könyvtárat egy vizsgához, nyelvhez, szakmához vagy személyes célhoz.
+    landing_step_2_title|
+        Tanuljon a kontextussal
+    landing_step_2_desc|
+        Az irányított kártyákon és a rendelkezésre álló adathordozókon keresztül építse fel a felismerést, mielőtt a memóriáját segítség nélkül kell működnie.
+    landing_step_3_title|
+        Tesztelje a valódi visszaemlékezést
+    landing_step_3_desc|
+        Váltson fókuszált tesztelésre, hogy feltárja a gyenge pontokat, megerősítse a visszakeresést, és mérhetővé tegye a fejlődést.
+    landing_pricing_h2|
+        Kezdje ingyen. Frissítsen, amikor szüksége van a teljes munkafolyamatra.
+    landing_pricing_p|
+        Hozzon létre egy fiókot fizetés nélkül. A Premium rendszeres ismétlést, létrehozást, tesztelést, automatikus lejátszást, privát rendszerezést és mélyebb testreszabást kínál.
+    landing_plan_weekly_desc|
+        Jó a rövid távú lökésekhez, gyors áttekintésekhez vagy a vizsgahetes felkészüléshez.
+    landing_plan_weekly_item_1|
+        Rövid kötelezettségvállalási időszak
+    landing_plan_weekly_item_2|
+        Gyors módja annak, hogy kipróbálja a prémium munkafolyamatot
+    landing_plan_weekly_item_3|
+        Lemondásig automatikusan megújul
+    landing_plan_weekly_btn|
+        Tekintse meg a terv részleteit
+    landing_plan_monthly_desc|
+        Kiegyensúlyozott hozzáférés a tanulók számára, akik állandó tanulási szokást alakítanak ki.
+    landing_plan_monthly_item_1|
+        A legjobb rendszeres heti tanuláshoz
+    landing_plan_monthly_item_2|
+        Elegendő idő a nagyobb tantárgyi könyvtárak rendszerezésére
+    landing_plan_monthly_item_3|
+        Lemondásig automatikusan megújul
+    landing_plan_monthly_btn|
+        Tekintse meg a terv részleteit
+    landing_plan_yearly_desc|
+        A legalacsonyabb tényleges havi költség azon tanulók számára, akik tartós tanulmányi rendszert szeretnének.
+    landing_plan_yearly_item_1|
+        Ideális hosszú távú nyelvi és szakmai tanuláshoz
+    landing_plan_yearly_item_2|
+        Alacsonyabb költség idővel
+    landing_plan_yearly_item_3|
+        Lemondásig automatikusan megújul
+    landing_plan_yearly_btn|
+        Tekintse meg a terv részleteit
+    landing_trust_h2|
+        Tanulmányozás világosan. Iratkozzon fel bizalommal.
+    landing_trust_p|
+        Tudja meg, mi ingyenes, mit ad hozzá a Premium, és hol kérhet segítséget, mielőtt elkötelezi magát.
+    landing_trust_item_1_title|
+        Ingyenes belépés:
+    landing_trust_item_1_desc|
+        Hozzon létre egy fiókot, és fedezze fel a rendelkezésre álló tananyagokat a fizetési adatok megadása nélkül.
+    landing_trust_item_2_title|
+        Átlátható feltételek:
+    landing_trust_item_2_desc|
+        Az árakkal, a megújítással, a törléssel, az adatvédelemmel és a visszatérítéssel kapcsolatos információk a fizetés előtt állnak rendelkezésre.
+    landing_trust_item_3_title|
+        Emberi támogatás:
+    landing_trust_item_3_desc|
+        Ha segítségre van szüksége, forduljon a vitalii@nohainc.com címhez.
+    landing_faq_1_q|
+        Minden kártyát magamnak kell létrehoznom?
+    landing_faq_1_a|
+        Nem. Kezdje a rendelkezésre álló kurált témákkal, majd hozzon létre saját anyagot, amikor a cél konkrétabbá válik.
+    landing_faq_2_q|
+        Használhatom ingyenesen az Aliolo-t?
+    landing_faq_2_a|
+        Igen. Az ingyenes fiók belépési pontot biztosít a könyvtárba; az árazási oldal elmagyarázza, hogy mely speciális munkafolyamatok igényelnek prémiumot.
+    landing_faq_3_q|
+        Lemondhatok egy előfizetést?
+    landing_faq_3_a|
+        Igen. Az előfizetések lemondhatók azon a csatornán keresztül, ahol megvásárolták, és a hozzáférés általában a fizetett időszakon keresztül folytatódik.
+    landing_final_h2|
+        Készen áll arra, hogy a következő tanulmányi ülése számítson?
+    landing_final_p|
+        Hozzon létre egy ingyenes fiókot, válasszon tantárgyat, és kezdje el vizuálisan tanulni.
+    landing_final_btn|
+        Hozzon létre ingyenes fiókot
+    landing_footer_desc|
+        Vizuális kártyák, osztott ismétlések, rugalmas tantárgyszervezés és fókuszált tesztelési munkafolyamatok azoknak a tanulóknak, akik súrlódásmentes szerkezetre vágynak.
+    landing_footer_mor|
+        Rekord kereskedő:
+    landing_footer_mor_desc|
+        Rendelési folyamatunkat a Paddle.com, az online viszonteladónk és a webes rendelések kereskedője végezheti. A Paddle kezeli a fizetések feldolgozását, a fizetéssel kapcsolatos ügyfélszolgálatot és az ilyen megrendelések visszaküldését.

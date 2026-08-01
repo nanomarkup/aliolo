@@ -1,0 +1,349 @@
+..
+    legal_info|
+        Eolas dlíthiúil
+    last_updated|
+        Nuashonraithe is déanaí
+    support|
+        Tacaíocht
+    home|
+        Baile
+    privacy|
+        Príobháideacht
+    terms|
+        Téarmaí
+    refunds|
+        Aisíocaíochtaí
+    pricing|
+        Praghsáil
+    privacy_title|
+        Polasaí Príobháideachta Aliolo
+    privacy_subtitle|
+        Conas a bhailíonn, a úsáideann, a stórálann, agus a chosnaíonn Aliolo faisnéis maidir le cuntais, foghlaim agus íocaíocht.
+    privacy_body|
+        <h2>Eolas a Bhailimid</h2>
+        <p>Bailímid an fhaisnéis a theastaíonn chun Aliolo a oibriú, lena n-áirítear sonraí cuntais ar nós seoladh ríomhphoist, ainm úsáideora, sonraí fíordheimhnithe pasfhocail, socruithe avatar, sainroghanna, agus socruithe próifíle.</p>
+        <p>Stórálaimid gníomhaíochtaí foghlama freisin ar nós ábhair, fillteáin, bailiúcháin, cártaí, dul chun cinn, stríoca, spriocanna laethúla, socruithe tástála agus foghlama, aiseolas, agus imeachtaí bunúsacha úsáide aipeanna is gá chun an t-eispéireas foghlama a sholáthar.</p>
+        <h2>Conas a Úsáidimid Faisnéis</h2>
+        <p>Bainimid úsáid as an bhfaisnéis seo chun do chuntas a chruthú agus a dhéanamh slán, do shonraí foghlama a shioncronú, d’eispéireas staidéir a phearsantú, rochtain den scoth a sholáthar, freagra a thabhairt ar iarratais tacaíochta, an aip a fheabhsú, agus mí-úsáid nó mí-úsáid seirbhíse a chosc.</p>
+        <h2>Íocaíochtaí agus Síntiúis</h2>
+        <p>Ní stórálann Aliolo sonraí iomlána an chárta íocaíochta go díreach. Is é Paddle a phróiseálann íocaíochtaí gréasáin, agus féadfaidh Google Play nó Apple App Store ceannacháin mhóibíleacha a phróiseáil nuair a bheidh na cainéil cheannaigh sin ar fáil.</p>
+        <p>Chun rochtain a fháil ar shíntiúis, féadfaimid aitheantóirí soláthraithe íocaíochta, aitheantóirí táirgí, stádas síntiúis, dátaí tréimhse athnuachana, agus meiteashonraí idirbheart nó cuaille gréasáin gaolmhar a stóráil. Ligeann sé seo dúinn rochtain phréimhe a ghníomhachtú, a athnuachan, a chealú nó a athchóiriú.</p>
+        <h2>Seirbhísí Tríú Páirtí</h2>
+        <p>Bainimid úsáid as soláthraithe seirbhíse le haghaidh óstála, bonneagair, stórála, anailísíochta nó logaí oibriúcháin, fíordheimhnithe, agus íocaíochtaí. Ní phróiseálann na soláthraithe seo faisnéis ach de réir mar is gá chun a gcuid seirbhísí a sholáthar do Aliolo.</p>
+        <div class="notice"><strong>Fógra paddle:</strong> Féadfaidh Paddle.com, ár n-athdhíoltóir ar líne agus Ceannaí Taifeadta ár bpróiseas ordaithe a dhéanamh. Láimhseálann Paddle próiseáil íocaíochta, ríomh cánach nuair is infheidhme, slándáil íocaíochta, agus seirbhís do chustaiméirí a bhaineann le híocaíocht.</div>
+        <h2>Fianáin agus Stóráil Áitiúil</h2>
+        <p>Féadfaidh Aliolo fianáin, aitheantóirí seisiúin, stór brabhsálaí, nó teicneolaíochtaí comhchosúla a úsáid chun tú a choinneáil sínithe isteach, cuimhneamh ar shainroghanna, an tseirbhís a dhaingniú agus an aip gréasáin a oibriú.</p>
+        <h2>Coinneáil agus Scriosadh Sonraí</h2>
+        <p>Coinneoimid sonraí cuntais agus foghlama fad a bhíonn do chuntas gníomhach nó de réir mar is gá chun an tseirbhís a sholáthar, chun oibleagáidí dlíthiúla a chomhlíonadh, díospóidí a réiteach, mí-úsáid a chosc, agus taifid idirbheart a chothabháil. Is féidir leat scriosadh cuntais nó tacaíocht a bhaineann le sonraí a iarraidh trí theagmháil a dhéanamh linn.</p>
+        <h2>Leanaí agus Úsáid Oideachais</h2>
+        <p>Is táirge oideachais é Aliolo. Má chreideann tuismitheoir, caomhnóir, nó scoil go bhfuil eolas pearsanta curtha ar fáil ag páiste gan cead cuí, déan teagmháil linn le gur féidir linn athbhreithniú a dhéanamh agus gníomh cuí a dhéanamh.</p>
+        <h2>Slándáil</h2>
+        <p>Bainimid úsáid as cosaintí teicniúla agus eagraíochtúla réasúnta chun faisnéis phearsanta a chosaint. Ní féidir le haon seirbhís ar líne slándáil foirfe a ráthú, ach oibrímid chun rochtain a theorannú agus chun sonraí a chosaint ó úsáid neamhúdaraithe.</p>
+        <h2>Do Roghanna agus Cearta</h2>
+        <p>Ag brath ar do shuíomh, b'fhéidir go bhfuil cearta agat rochtain a fháil ar do chuid faisnéise pearsanta, a cheartú, a scriosadh, a easpórtáil nó a úsáid a shrianadh. Déan teagmháil linn ag <a href="mailto:vitalii@nohainc.com">ríthábhachtachii@nohainc.com</a> iarratas a dhéanamh.</p>
+    terms_title|
+        Téarmaí Síntiúis Aliolo
+    terms_subtitle|
+        Na rialacha maidir le cuntais Aliolo, rochtain préimhe, billeáil síntiús, cealú, agus úsáid inghlactha.
+    terms_body|
+        <h2>Ag baint úsáide as Aliolo</h2>
+        <p>Soláthraíonn Aliolo uirlisí foghlama amhairc, ábhar oideachais coimeádta, luaschártaí, rianú dul chun cinn, agus gnéithe foghlama den scoth. Tá tú freagrach as do dhintiúir chuntais a choinneáil slán agus as an tseirbhís a úsáid go dleathach.</p>
+        <h2>Rochtain Préimh</h2>
+        <p>Díghlasálann rochtain préimhe gnéithe íoctha a thaispeántar san aip nó ar an leathanach praghsála. Féadfaidh na gnéithe atá ar fáil athrú de réir mar a fheabhsaíonn an táirge, ach leanfaidh síntiúsóirí gníomhacha de rochtain a fháil ar an taithí íoctha Aliolo le linn a dtréimhse síntiús bailí.</p>
+        <h2>Billeáil agus Athnuachan</h2>
+        <p>Déantar síntiúis a athnuachan go huathoibríoch mura gcuirtear ar ceal iad roimh dheireadh na tréimhse billeála reatha. Taispeántar praghsanna, deireadh billeála, cánacha, comhshó airgeadra áitiúil, agus rialacha athnuachana ag an tseiceáil amach agus féadfaidh siad athrú de réir cainéal ceannaigh, réigiúin, ardáin nó tairiscint ghníomhach.</p>
+        <div class="notice"><strong>Fógra paddle:</strong> Maidir le ceannacháin ghréasáin, féadfaidh Paddle.com ár bpróiseas ordaithe a dhéanamh. Is é Paddle.com an Ceannaí Taifead do na horduithe sin agus soláthraíonn sé seirbhís do chustaiméirí a bhaineann le híocaíocht, láimhseáil cánach, agus próiseáil tuairisceáin.</div>
+        <h2>Cealú</h2>
+        <p>Is féidir leat a chealú de réir rialacha an chainéil cheannaigh a d’úsáid tú. Cuireann cealú stop le hathnuachan amach anseo. Mura sonraítear a mhalairt sa chainéal ceannacháin, beidh rochtain íoctha fós ar fáil go dtí deireadh na tréimhse billeála reatha.</p>
+        <h2>Aisíocaíochtaí</h2>
+        <p>Déantar aisíocaíochtaí a láimhseáil de réir ár <a href="/refund">Beartas Aisíocaíochta</a>, rialacha an chainéil cheannaigh, agus an dlí tomhaltóra is infheidhme. Is iondúil go láimhseálann an siopa app ábhartha ceannacháin appstore.</p>
+        <h2>Úsáid Inghlactha</h2>
+        <p>Ní fhéadfaidh tú mí-úsáid a bhaint as Aliolo, cur isteach ar an tseirbhís, iarracht a dhéanamh ar rochtain neamhúdaraithe, ábhar a scrapeadh nó a chóipeáil ar scála, páirteanna cosanta den aip ó innealtóir droim ar ais, ábhar neamhdhleathach a uaslódáil, nó an tseirbhís a úsáid ar bhealach a dhéanann dochar d’úsáideoirí eile nó Aliolo.</p>
+        <h2>Ábhar agus Infhaighteacht</h2>
+        <p>Féadfaidh Aliolo ábhair, cártaí, gnéithe agus dearadh a nuashonrú, a chur leis, a bhaint nó a atheagrú. Tá sé mar aidhm againn an tseirbhís a choinneáil iontaofa, ach is féidir le hinfhaighteacht dul i bhfeidhm ar chothabháil, ar sholáthraithe tríú páirtí, ar shaincheisteanna líonra nó ar athruithe ar tháirgí.</p>
+        <h2>Séanadh agus Dliteanas</h2>
+        <p>Cuirtear Aliolo ar fáil mar uirlis oideachais agus tacaíochta staidéir. Ní ráthaimid torthaí foghlama, scrúduithe, gairmiúla nó airgeadais ar leith. A mhéid a cheadaítear le dlí, soláthraítear Aliolo gan bharántas thar na cinn a cheanglaítear leis an dlí is infheidhme.</p>
+        <h2>Athruithe ar na Téarmaí seo</h2>
+        <p>Féadfaimid na téarmaí seo a nuashonrú chun athruithe táirge, dlíthiúla, billeála nó oibríochta a léiriú. Tá an leagan reatha foilsithe ar an leathanach seo.</p>
+    refund_title|
+        Polasaí Aisíocaíochta Aliolo
+    refund_subtitle|
+        Conas a oibríonn aisíocaíochtaí, cealuithe, aismhuirir agus tacaíocht íocaíochta do Aliolo Premium.
+    refund_body|
+        <h2>Forbhreathnú</h2>
+        <p>Is síntiús digiteach é Aliolo Premium. Toisc gur féidir rochtain préimhe a chur i ngníomh láithreach, is gnách go mbíonn ceannacháin críochnaitheach nuair a bhíonn an síntiús gníomhach agus nuair a úsáidtear é, ach amháin nuair a fhoráiltear a mhalairt sa bheartas seo, sa chainéal ceannaigh nó sa dlí is infheidhme.</p>
+        <h2>Fuinneog Aisíocaíochta 7-Lá</h2>
+        <p>Má cheannaigh tú síntiús Gréasáin trí thimpiste nó má tá ceist theicniúil agat a chuireann cosc ​​ort gnéithe préimhe a úsáid, féadfaidh tú aisíocaíocht a iarraidh laistigh de 7 lá ón gcéad cheannach. Cuir ríomhphost an chuntais, sonraí an ordaithe, agus cur síos gairid ar an gceist san áireamh.</p>
+        <h2>Gan Aisíocaíochtaí Lár-Rothaíochta Pro ráite</h2>
+        <p>Go ginearálta ní sholáthraímid aisíocaíochtaí pro rata le haghaidh cealuithe tar éis na fuinneoige aisíocaíochta tosaigh. Má chealaíonn tú tar éis na tréimhse sin, de ghnáth coimeádfaidh tú rochtain préimhe go dtí deireadh na tréimhse billeála íoctha.</p>
+        <h2>Rialacha Cainéal Ceannaigh</h2>
+        <p>De ghnáth ní mór aisíocaíochtaí ar cheannacháin a dhéantar trí Google Play nó Apple App Store a iarraidh tríd an siopa app ábhartha. Cuireann na hardáin sin a rialacha aisíocaíochta agus a bpróiseas athbhreithnithe féin i bhfeidhm.</p>
+        <div class="notice"><strong>Fógra paddle:</strong> Maidir le horduithe gréasáin, féadfaidh Paddle.com feidhmiú mar Cheannaí Taifead. Láimhseálann Paddle seirbhís do chustaiméirí a bhaineann le híocaíocht, láimhseáil cánach, agus próiseáil tuairisceáin do na horduithe sin.</div>
+        <h2>Conas Aisíocaíocht a Iarraidh</h2>
+        <p>Le haghaidh orduithe gréasáin, déan teagmháil le tacaíocht ceannaitheora Paddle ag baint úsáide as an bhfaisnéis ordaithe ó d’admháil, nó déan teagmháil le tacaíocht Aliolo ag <a href="mailto:vitalii@nohainc.com">ríthábhachtachii@nohainc.com</a>. Is féidir linn iarratais a bhaineann go sonrach le híocaíocht a dhíriú chuig Paddle nuair is é Paddle an Ceannaí Taifeadta.</p>
+        <h2>Aisíocaíochtaí agus Mí-Úsáid</h2>
+        <p>Má dhéantar íocaíocht a fhreaschur, a dhíospóid, a aisíoc nó a shainaithint mar íocaíocht chalaoiseach, féadfaidh Aliolo rochtain phréimhe a bhaineann leis an idirbheart sin a chur ar fionraí nó a bhaint.</p>
+    pricing_title|
+        Praghsáil Préimhe Aliolo
+    pricing_subtitle|
+        Roghanna síntiús simplí chun an t-eispéireas foghlama amhairc iomlán Aliolo a dhíghlasáil.
+    pricing_body|
+        <div class="plans">
+        <section class="plan">
+        <span class="tag">Solúbtha</span>
+        <h2>Seachtainiúil</h2>
+        <div class="price">$2.99</div>
+        <p>In aghaidh na seachtaine. Úsáideach le haghaidh staidéar gearrthéarmach, athbhreithniú, nó ullmhú scrúdú.</p>
+        </section>
+        <section class="plan">
+        <span class="tag">Coitianta</span>
+        <h2>go míosúil</h2>
+        <div class="price">$8.99</div>
+        <p>In aghaidh na míosa. Is fearr le haghaidh foghlama comhsheasmhach gan tiomantas fada.</p>
+        </section>
+        <section class="plan">
+        <span class="tag">Luach is fearr</span>
+        <h2>Bliantúil</h2>
+        <div class="price">$80.99</div>
+        <p>In aghaidh na bliana. Costas éifeachtach míosúil níos ísle d'fhoghlaimeoirí fadtéarmacha.</p>
+        </section>
+        </div>
+        <h2>Cad a chuimsíonn Préimh</h2>
+        <ul>
+        <li>Rochtain iomlán ar ard-ábhair coimeádta agus ar leabharlanna foghlama.</li>
+        <li>Ardghnéithe athrá spásáilte agus rianaithe dul chun cinn.</li>
+        <li>Splancchárta saincheaptha, ábhar, fillteán, agus cruthú bailiúcháin nuair is féidir.</li>
+        <li>Modhanna idirghníomhacha foghlama agus tástála, lena n-áirítear socruithe uathseinm.</li>
+        <li>Gnéithe eagraíochta foghlama príobháideacha le haghaidh sreafaí oibre staidéir phearsanta.</li>
+        </ul>
+        <h2>Sonraí Billeála</h2>
+        <p>Tá praghsanna liostaithe i USD don leathanach praghsála poiblí seo. Seans go dtaispeánfar airgeadra áitiúil, cánacha, agus sonraí billeála deiridh ag brath ar do shuíomh, modh íocaíochta agus cainéal ceannaigh.</p>
+        <p>Athnuachann síntiúis go huathoibríoch go dtí go gcealófar iad. Is féidir leat a chealú de réir rialacha an chainéil ar cheannaigh tú é. De ghnáth leanann rochtain ar aghaidh go dtí deireadh na tréimhse billeála íoctha.</p>
+        <div class="notice"><strong>Fógra paddle:</strong> Féadfaidh Paddle.com, ár n-athdhíoltóir ar líne agus an Ceannaí Taifeadta orduithe gréasáin a phróiseáil. Féadfaidh Paddle na cánacha is infheidhme a ríomh agus a bhailiú agus tacaíocht ceannaitheora a bhaineann le híocaíocht a sholáthar.</div>
+        <div class="comparison-card">
+        <h2>Comparáid Préimh vs Saor in Aisce</h2>
+        <p>Meaitseálann an tábla seo an taithí aipe reatha agus is fusa sracfhéachaint ar an uasghrádú préimhe a mheas.</p>
+        <table class="comparison-table" aria-label="Aliolo free and premium feature comparison">
+        <thead>
+        <tr>
+        <th>Gné</th>
+        <th>Saor</th>
+        <th>Préimh</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>Leabharlann iomlán</td>
+        <td><span class="comparison-check">✓</span></td>
+        <td><span class="comparison-check pro">✓</span></td>
+        </tr>
+        <tr>
+        <td>Athrá spásáilte</td>
+        <td><span class="comparison-cross">✕</span></td>
+        <td><span class="comparison-check pro">✓</span></td>
+        </tr>
+        <tr>
+        <td>Cruthú</td>
+        <td><span class="comparison-cross">✕</span></td>
+        <td><span class="comparison-check pro">✓</span></td>
+        </tr>
+        <tr>
+        <td>Tástáil</td>
+        <td><span class="comparison-cross">✕</span></td>
+        <td><span class="comparison-check pro">✓</span></td>
+        </tr>
+        <tr>
+        <td>Uath-imirt</td>
+        <td><span class="comparison-cross">✕</span></td>
+        <td><span class="comparison-check pro">✓</span></td>
+        </tr>
+        <tr>
+        <td>Mód príobháideach</td>
+        <td><span class="comparison-cross">✕</span></td>
+        <td><span class="comparison-check pro">✓</span></td>
+        </tr>
+        <tr>
+        <td>Saincheap</td>
+        <td><span class="comparison-cross">✕</span></td>
+        <td><span class="comparison-check pro">✓</span></td>
+        </tr>
+        </tbody>
+        </table>
+        <div class="comparison-note">Díghlasálann Premium an sreabhadh oibre staidéir iomlán: athbhreithniú oiriúnaitheach, uirlisí cruthú, ardtástáil, rialuithe uath-imirt, eagrú príobháideach, agus pearsanú níos doimhne.</div>
+        </div>
+        <h2>Difríochtaí Praghsanna Ardán</h2>
+        <p>D’fhéadfadh go n-athródh praghsanna agus tairiscintí idir Seiceáil Gréasáin, Google Play, Apple App Store, tíortha, airgeadraí, agus promóisin am teoranta. Rialaíonn an scáileán seiceáil amach deiridh an praghas iarbhír agus na téarmaí athnuachana do do cheannachán.</p>
+        <h2>Beartais Ghaolmhara</h2>
+        <p>Sula síntiúis, déan athbhreithniú ar an <a href="/terms">Téarmaí Síntiúis</a>, <a href="/refund">Beartas Aisíocaíochta</a>, agus <a href="/privacy">Beartas Príobháideachta</a>.</p>
+    checkout_title|
+        Seiceáil Amach Aliolo
+    checkout_subtitle|
+        Seiceáil amach slán le haghaidh síntiúis Aliolo Premium.
+    checkout_eyebrow|
+        Seiceáil amach slán
+    checkout_h1|
+        Críochnaigh do cheannachán Aliolo Premium.
+    checkout_status_title|
+        Ag fanacht le seiceáil amach
+    checkout_status_desc|
+        Má d’oscail tú an leathanach seo ó bhilleáil Aliolo, ba cheart go mbeadh an fhoirm íocaíochta le feiceáil go huathoibríoch.
+    checkout_payment_support_title|
+        Tacaíocht íocaíochta
+    checkout_payment_support_desc|
+        Déanann Paddle.com íocaíochtaí gréasáin a phróiseáil mar Cheannaí Taifead.
+    checkout_billing_title|
+        Billeáil síntiús
+    checkout_billing_desc|
+        Athnuachan Aliolo Premium go huathoibríoch go dtí go gcuirtear ar ceal é. Is féidir leat a chealú níos déanaí trí Paddle nó do chuntas Aliolo.
+    checkout_policy_title|
+        Sonraí polasaí uait?
+    checkout_policy_desc|
+        Déan athbhreithniú ar phraghsáil, ar théarmaí síntiúis, ar phríobháideachas agus ar fhaisnéis aisíocaíochta sula gcríochnaíonn tú do cheannachán.
+    landing_meta_title|
+        Alúil | Luaschártaí Amhairc, Athrá Spásáilte, agus Sreafaí Oibre Staidéir Níos Cliste
+    landing_meta_desc|
+        Cuidíonn Aliolo le foghlaimeoirí máistreacht a fháil ar theangacha, ar eolaíocht, ar anatamaíocht, ar ullmhú don scrúdú, agus ar ábhair choimeádta le luaschártaí amhairc, athrá spásáilte, agus modhanna tástála idirghníomhacha.
+    landing_nav_features|
+        Gnéithe
+    landing_nav_how_it_works|
+        Conas a oibríonn sé
+    landing_nav_pricing|
+        Praghsáil
+    landing_nav_login|
+        Logáil isteach
+    landing_nav_cta|
+        Cruthaigh cuntas saor in aisce
+    landing_hero_eyebrow|
+        Ardán foghlama amhairc
+    landing_hero_h1|
+        Foghlaim ó thaobh amhairc. Cuimhnigh níos faide.
+    landing_hero_p|
+        Cas íomhánna, fuaime, físeáin agus téacs ina luaschártaí struchtúrtha. Foghlaim le comhthéacs, déan athbhreithniú ag an am ceart, agus tástála cad is féidir leat a thabhairt chun cuimhne go fírinneach.
+    landing_hero_btn_primary|
+        Cruthaigh cuntas saor in aisce
+    landing_hero_btn_secondary|
+        Logáil isteach
+    landing_hero_proof_1_title|
+        Amharc
+    landing_hero_proof_1_desc|
+        Luaschártaí atá cairdiúil don íomhá, don fhuaim agus don fhís le haghaidh foghlama trom-aitheantais.
+    landing_hero_proof_2_title|
+        Oiriúnaitheach
+    landing_hero_proof_2_desc|
+        Athrá spásáilte agus rianú dul chun cinn chun athchuairt a thabhairt ar ábhar ag an am ceart.
+    landing_hero_proof_3_title|
+        Struchtúrtha
+    landing_hero_proof_3_desc|
+        Piléir, fillteáin, ábhair, agus bailiúcháin a théann níos faide ná deic shimplí.
+    landing_hero_preview_title|
+        Aitheantas roimh athghairm
+    landing_hero_preview_desc|
+        Ceacht fíor Aliolo ag baint úsáide as íomhá, téacs, fuaime, agus nascleanúint threoraithe.
+    landing_hero_preview_chip|
+        Foghlaim mód
+    landing_features_h2|
+        Gach rud a theastaíonn uait chun nochtadh a iompú ina aisghairm.
+    landing_features_p|
+        Tóg aitheantas le meáin shaibhre, coimeád leabharlanna níos mó eagraithe, agus tabhair cuairt ar ábhar arís sula n-imíonn sé.
+    landing_feature_1_title|
+        Foghlaim le níos mó ná téacs
+    landing_feature_1_desc|
+        Úsáid íomhánna, fuaime, físeáin, agus leideanna solúbtha nuair a bhraitheann an t-ábhar ar aitheantas agus ar chomhthéacs.
+    landing_feature_2_title|
+        Déan athbhreithniú sula n-imíonn sé
+    landing_feature_2_desc|
+        Tugann athrá spásáilte agus rianú dul chun cinn ábhar tábhachtach ar ais ag am úsáideach.
+    landing_feature_3_title|
+        Fás thar deic amháin
+    landing_feature_3_desc|
+        Eagraigh ábhar coimeádta nó saincheaptha i bpiléir, fillteáin, ábhair agus bailiúcháin a fhanann inúsáidte.
+    landing_workflow_h2|
+        Bealach soiléir ó "Ba chóir dom staidéar a dhéanamh" go "Tá a fhios agam seo."
+    landing_workflow_p|
+        Coinníonn sreabhadh oibre dírithe amháin an chéad chéim eile soiléir gan gach ábhar a chothromú isteach sa chineál céanna cárta.
+    landing_step_1_title|
+        Roghnaigh an t-ábhar ceart
+    landing_step_1_desc|
+        Tosaigh le hábhar coimeádta nó tóg leabharlann dhírithe le haghaidh scrúdú, teanga, gairm nó sprioc phearsanta.
+    landing_step_2_title|
+        Foghlaim le comhthéacs
+    landing_step_2_desc|
+        Tóg aitheantas trí chártaí treoraithe agus na meáin atá ar fáil sula n-iarrtar ar do chuimhne oibriú gan chúnamh.
+    landing_step_3_title|
+        Tástáil cuimhne fíor
+    landing_step_3_desc|
+        Téigh isteach i dtástáil dhírithe chun spotaí laga a nochtadh, aisghabháil a threisiú, agus dul chun cinn intomhaiste a dhéanamh.
+    landing_pricing_h2|
+        Tosaigh saor in aisce. Uasghrádú nuair is gá duit an sreabhadh oibre iomlán.
+    landing_pricing_p|
+        Cruthaigh cuntas gan íocaíocht. Cuireann Préimh athrá spásáilte, cruthú, tástáil, uath-imirt, eagrú príobháideach, agus saincheaptha níos doimhne.
+    landing_plan_weekly_desc|
+        Go maith le haghaidh brúnna gearrthéarmacha, léirmheasanna tapa, nó ullmhúcháin seachtaine scrúdaithe.
+    landing_plan_weekly_item_1|
+        Fuinneog gealltanas gearr
+    landing_plan_weekly_item_2|
+        Bealach tapa chun an sreabhadh oibre préimhe a thriail
+    landing_plan_weekly_item_3|
+        Athnuachan go huathoibríoch go dtí go gcealófar é
+    landing_plan_weekly_btn|
+        Féach ar shonraí an phlean
+    landing_plan_monthly_desc|
+        Rochtain chothrom do mhic léinn ag tógáil nós seasta foghlama.
+    landing_plan_monthly_item_1|
+        Is fearr le haghaidh staidéar seachtainiúil rialta
+    landing_plan_monthly_item_2|
+        Go leor ama chun leabharlanna ábhar níos mó a eagrú
+    landing_plan_monthly_item_3|
+        Athnuachan go huathoibríoch go dtí go gcealófar é
+    landing_plan_monthly_btn|
+        Féach ar shonraí an phlean
+    landing_plan_yearly_desc|
+        An costas éifeachtach míosúil is ísle d’fhoghlaimeoirí atá ag iarraidh córas buanstaidéir.
+    landing_plan_yearly_item_1|
+        Ideal le haghaidh staidéar fadtéarmach teanga agus gairmiúil
+    landing_plan_yearly_item_2|
+        Costas níos ísle le himeacht ama
+    landing_plan_yearly_item_3|
+        Athnuachan go huathoibríoch go dtí go gcealófar é
+    landing_plan_yearly_btn|
+        Féach ar shonraí an phlean
+    landing_trust_h2|
+        Déan staidéar le soiléireacht. Liostáil le muinín.
+    landing_trust_p|
+        Bíodh a fhios agat cad atá saor in aisce, cad a chuireann Premium leis, agus cá háit le cabhair a fháil sula ngeallann tú.
+    landing_trust_item_1_title|
+        Iontráil saor in aisce:
+    landing_trust_item_1_desc|
+        Cruthaigh cuntas agus scrúdaigh ábhar foghlama atá ar fáil gan sonraí íocaíochta a chur isteach.
+    landing_trust_item_2_title|
+        Téarmaí trédhearcacha:
+    landing_trust_item_2_desc|
+        Tá faisnéis maidir le praghsáil, athnuachan, cealú, príobháideacht agus aisíocaíocht ar fáil roimh an tseiceáil amach.
+    landing_trust_item_3_title|
+        Tacaíocht dhaonna:
+    landing_trust_item_3_desc|
+        Déan teagmháil le vitalii@nohainc.com nuair a bhíonn cabhair uait.
+    landing_faq_1_q|
+        An gá dom gach cárta a chruthú mé féin?
+    landing_faq_1_a|
+        Tosaigh leis na hábhair choimeádaithe atá ar fáil, ansin cruthaigh d'ábhar féin nuair a bheidh do sprioc níos sainiúla.
+    landing_faq_2_q|
+        An féidir liom Aliolo a úsáid saor in aisce?
+    landing_faq_2_a|
+        Tá. Soláthraíonn cuntas saor in aisce pointe iontrála chuig an leabharlann; míníonn an leathanach praghsála cé na hardsreafaí oibre a dteastaíonn Préimh uathu.
+    landing_faq_3_q|
+        An féidir liom síntiús a chealú?
+    landing_faq_3_a|
+        Tá. Is féidir síntiúis a chealú tríd an gcainéal inar ceannaíodh iad, agus de ghnáth leanann rochtain ar feadh na tréimhse íoctha.
+    landing_final_h2|
+        Réidh le do chéad seisiún staidéir eile a chomhaireamh?
+    landing_final_p|
+        Cruthaigh cuntas saor in aisce, roghnaigh ábhar, agus tosú ag foghlaim ó thaobh amhairc.
+    landing_final_btn|
+        Cruthaigh cuntas saor in aisce
+    landing_footer_desc|
+        Luaschártaí amhairc, athrá spásáilte, eagrú ábhar solúbtha, agus sreafaí oibre tástála dírithe d'fhoghlaimeoirí atá ag iarraidh struchtúr gan cuimilte.
+    landing_footer_mor|
+        Ceannaí Taifead:
+    landing_footer_mor_desc|
+        Féadfaidh Paddle.com, ár n-athdhíoltóir ar líne agus Ceannaí Taifead le haghaidh orduithe gréasáin, ár bpróiseas ordaithe a dhéanamh. Láimhseálann Paddle próiseáil íocaíochta, seirbhís do chustaiméirí a bhaineann le híocaíocht, agus tuairisceáin do na horduithe sin.

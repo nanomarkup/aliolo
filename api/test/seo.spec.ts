@@ -2,6 +2,45 @@ import { describe, expect, it } from 'vitest';
 import { env } from 'cloudflare:test';
 import app from '../src/index';
 import { generateSeoHtml } from '../src/utils/seo';
+import landingHtml from '../../web/landing.html?raw';
+import pricingHtml from '../../web/pricing.html?raw';
+import privacyHtml from '../../web/privacy.html?raw';
+import termsHtml from '../../web/terms.html?raw';
+import refundHtml from '../../web/refund.html?raw';
+import payHtml from '../../web/pay.html?raw';
+import indexHtml from '../../web/index.html?raw';
+
+const mockEnv = {
+  ...env,
+  ASSETS: {
+    fetch: async (request: Request) => {
+      const url = new URL(request.url);
+      const filepath = url.pathname;
+      let html = '';
+      if (filepath === '/landing.html' || filepath === '/') {
+        html = landingHtml;
+      } else if (filepath === '/pricing.html' || filepath === '/pricing') {
+        html = pricingHtml;
+      } else if (filepath === '/privacy.html' || filepath === '/privacy') {
+        html = privacyHtml;
+      } else if (filepath === '/terms.html' || filepath === '/terms') {
+        html = termsHtml;
+      } else if (filepath === '/refund.html' || filepath === '/refund') {
+        html = refundHtml;
+      } else if (filepath === '/pay.html' || filepath === '/pay') {
+        html = payHtml;
+      } else if (filepath === '/index.html') {
+        html = indexHtml;
+      } else {
+        return new Response('Not Found', { status: 404 });
+      }
+      return new Response(html, {
+        status: 200,
+        headers: { 'Content-Type': 'text/html;charset=UTF-8' }
+      });
+    }
+  }
+};
 
 function uniqueId(prefix: string) {
   return `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
@@ -9,21 +48,20 @@ function uniqueId(prefix: string) {
 
 describe('SEO and crawlability', () => {
   it('redirects the public HTTP origin to HTTPS', async () => {
-    const res = await app.request('http://aliolo.com/pricing?source=test', {}, env);
+    const res = await app.request('http://aliolo.com/pricing?source=test', {}, mockEnv);
 
     expect(res.status).toBe(308);
     expect(res.headers.get('location')).toBe('https://aliolo.com/pricing?source=test');
   });
 
   it('allows local HTTP development', async () => {
-    const res = await app.request('http://localhost/robots.txt', {}, env);
+    const res = await app.request('http://localhost/robots.txt', {}, mockEnv);
     expect(res.status).toBe(200);
   });
 
   it('renders the public landing page with conversion and accessibility essentials', async () => {
-    const res = await app.request('https://aliolo.com/', {}, env);
+    const res = await app.request('https://aliolo.com/', {}, mockEnv);
     const html = await res.text();
-
     expect(res.status).toBe(200);
     expect(html).toContain('<link rel="canonical" href="https://aliolo.com/">');
     expect(html).toContain('<link rel="icon" type="image/webp" href="/app_icon.webp">');
@@ -43,7 +81,7 @@ describe('SEO and crawlability', () => {
   });
 
   it('serves robots.txt with sitemap and crawl directives', async () => {
-    const res = await app.request('https://aliolo.com/robots.txt', {}, env);
+    const res = await app.request('https://aliolo.com/robots.txt', {}, mockEnv);
     const text = await res.text();
 
     expect(res.status).toBe(200);
@@ -54,7 +92,7 @@ describe('SEO and crawlability', () => {
   });
 
   it('builds a sitemap with accurate dates and no ignored hints', async () => {
-    const res = await app.request('https://aliolo.com/sitemap.xml', {}, env);
+    const res = await app.request('https://aliolo.com/sitemap.xml', {}, mockEnv);
     const xml = await res.text();
 
     expect(res.status).toBe(200);
@@ -66,9 +104,8 @@ describe('SEO and crawlability', () => {
   });
 
   it('renders pricing page with social metadata', async () => {
-    const res = await app.request('https://aliolo.com/pricing', {}, env);
+    const res = await app.request('https://aliolo.com/pricing', {}, mockEnv);
     const html = await res.text();
-
     expect(res.status).toBe(200);
     expect(html).toContain('<meta property="og:title" content="Aliolo Premium Pricing">');
     expect(html).toContain('<meta name="twitter:title" content="Aliolo Premium Pricing">');
@@ -159,7 +196,7 @@ describe('SEO and crawlability', () => {
   });
 
   it('returns 404 for missing public SEO routes', async () => {
-    const res = await app.request('https://aliolo.com/subject/does-not-exist', {}, env);
+    const res = await app.request('https://aliolo.com/subject/does-not-exist', {}, mockEnv);
     expect(res.status).toBe(404);
   });
 });

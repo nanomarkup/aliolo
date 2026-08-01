@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>알리올로 | 시각적 플래시카드, 간격을 둔 반복, 더욱 스마트해진 학습 워크플로우</title>
+  <meta name="description" content="Aliolo는 시각적 플래시 카드, 간격 있는 반복 및 대화형 테스트 모드를 통해 학습자가 언어, 과학, 해부학, 시험 준비 및 선별된 과목을 마스터하도록 돕습니다.">
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="알리올로 | 시각적 플래시카드, 간격을 둔 반복, 더욱 스마트해진 학습 워크플로우">
+  <meta property="og:description" content="Aliolo는 시각적 플래시 카드, 간격 있는 반복 및 대화형 테스트 모드를 통해 학습자가 언어, 과학, 해부학, 시험 준비 및 선별된 과목을 마스터하도록 돕습니다.">
+  <meta property="og:url" content="https://aliolo.com/ko/">
+  <meta property="og:image" content="https://aliolo.com/aliolo-social-preview.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Aliolo visual learning cards and spaced repetition preview">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="알리올로 | 시각적 플래시카드, 간격을 둔 반복, 더욱 스마트해진 학습 워크플로우">
+  <meta name="twitter:description" content="Aliolo는 시각적 플래시 카드, 간격 있는 반복 및 대화형 테스트 모드를 통해 학습자가 언어, 과학, 해부학, 시험 준비 및 선별된 과목을 마스터하도록 돕습니다.">
+  <meta name="twitter:image" content="https://aliolo.com/aliolo-social-preview.png">
+  <link rel="canonical" href="https://aliolo.com/ko/">
+  <link rel="apple-touch-icon" href="/icons/Icon-192.png">
+  <link rel="icon" type="image/webp" href="/app_icon.webp">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="alternate" hreflang="en" href="https://aliolo.com">
+    <link rel="alternate" hreflang="id" href="https://aliolo.com/id">
+    <link rel="alternate" hreflang="bg" href="https://aliolo.com/bg">
+    <link rel="alternate" hreflang="cs" href="https://aliolo.com/cs">
+    <link rel="alternate" hreflang="da" href="https://aliolo.com/da">
+    <link rel="alternate" hreflang="de" href="https://aliolo.com/de">
+    <link rel="alternate" hreflang="et" href="https://aliolo.com/et">
+    <link rel="alternate" hreflang="es" href="https://aliolo.com/es">
+    <link rel="alternate" hreflang="fr" href="https://aliolo.com/fr">
+    <link rel="alternate" hreflang="ga" href="https://aliolo.com/ga">
+    <link rel="alternate" hreflang="hr" href="https://aliolo.com/hr">
+    <link rel="alternate" hreflang="it" href="https://aliolo.com/it">
+    <link rel="alternate" hreflang="lv" href="https://aliolo.com/lv">
+    <link rel="alternate" hreflang="lt" href="https://aliolo.com/lt">
+    <link rel="alternate" hreflang="hu" href="https://aliolo.com/hu">
+    <link rel="alternate" hreflang="mt" href="https://aliolo.com/mt">
+    <link rel="alternate" hreflang="nl" href="https://aliolo.com/nl">
+    <link rel="alternate" hreflang="pl" href="https://aliolo.com/pl">
+    <link rel="alternate" hreflang="pt" href="https://aliolo.com/pt">
+    <link rel="alternate" hreflang="ro" href="https://aliolo.com/ro">
+    <link rel="alternate" hreflang="sk" href="https://aliolo.com/sk">
+    <link rel="alternate" hreflang="sl" href="https://aliolo.com/sl">
+    <link rel="alternate" hreflang="fi" href="https://aliolo.com/fi">
+    <link rel="alternate" hreflang="sv" href="https://aliolo.com/sv">
+    <link rel="alternate" hreflang="tl" href="https://aliolo.com/tl">
+    <link rel="alternate" hreflang="vi" href="https://aliolo.com/vi">
+    <link rel="alternate" hreflang="tr" href="https://aliolo.com/tr">
+    <link rel="alternate" hreflang="el" href="https://aliolo.com/el">
+    <link rel="alternate" hreflang="uk" href="https://aliolo.com/uk">
+    <link rel="alternate" hreflang="ar" href="https://aliolo.com/ar">
+    <link rel="alternate" hreflang="hi" href="https://aliolo.com/hi">
+    <link rel="alternate" hreflang="zh" href="https://aliolo.com/zh">
+    <link rel="alternate" hreflang="ja" href="https://aliolo.com/ja">
+    <link rel="alternate" hreflang="ko" href="https://aliolo.com/ko">
+  <script>
+    (() => {
+      const params = new URLSearchParams(window.location.search);
+      if (params.has('login') || params.has('type') || params.has('invite')) {
+        window.location.replace('/login' + window.location.search + window.location.hash);
+      }
+    })();
+  </script>
+  <style>
+  :root {
+    color-scheme: light;
+    --ink: #162235;
+    --muted: #5f6f85;
+    --brand: #185f90;
+    --brand-strong: #0d476d;
+    --accent: #d97728;
+    --line: rgba(18, 34, 53, 0.10);
+    --line-strong: rgba(24, 95, 144, 0.18);
+    --surface: #ffffff;
+    --surface-soft: #f6fbfd;
+    --hero-wash: rgba(24, 95, 144, 0.08);
+    --hero-wash-2: rgba(217, 119, 40, 0.09);
+    --page: #eef5f8;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    color: var(--ink);
+    font-family: "Roboto", system-ui, -apple-system, sans-serif;
+    line-height: 1.58;
+    background:
+      radial-gradient(circle at top left, var(--hero-wash), transparent 30rem),
+      radial-gradient(circle at top right, var(--hero-wash-2), transparent 28rem),
+      linear-gradient(180deg, #f9fcfd 0%, var(--page) 100%);
+  }
+  a { color: var(--brand); font-weight: 700; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  a:focus-visible,
+  button:focus-visible {
+    outline: 3px solid #f0a15d;
+    outline-offset: 3px;
+  }
+  .skip-link {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 100;
+    padding: 10px 14px;
+    border-radius: 10px;
+    background: var(--ink);
+    color: #fff;
+    transform: translateY(-160%);
+    transition: transform 0.18s ease;
+  }
+  .skip-link:focus { transform: translateY(0); }
+  .shell { width: min(1160px, calc(100% - 40px)); margin: 0 auto; }
+  header {
+    padding: 14px 0;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    backdrop-filter: blur(16px);
+    background: rgba(249, 252, 253, 0.88);
+    border-bottom: 1px solid rgba(18, 34, 53, 0.06);
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: nowrap;
+  }
+  .brand-name {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-family: "Poppins", system-ui, sans-serif;
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: 0.03em;
+    color: var(--brand);
+    text-transform: lowercase;
+  }
+  .brand-name:hover { text-decoration: none; }
+  .brand-name img {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+  }
+  nav {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: nowrap;
+  }
+  nav a {
+    color: var(--ink);
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px 14px;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    transition: all 0.18s ease;
+  }
+  nav a:hover {
+    text-decoration: none;
+    border-color: var(--line);
+    background: rgba(255, 255, 255, 0.84);
+  }
+  .nav-cta {
+    border-color: var(--line-strong);
+    background: rgba(24, 95, 144, 0.08);
+    color: var(--brand);
+    font-weight: 700;
+  }
+  .nav-login { color: var(--brand); font-weight: 700; }
+  main { padding: 32px 0 80px; }
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+    gap: 34px;
+    align-items: stretch;
+    margin-bottom: 74px;
+  }
+  .hero-copy {
+    padding: 56px 0 10px;
+  }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: rgba(24, 95, 144, 0.10);
+    color: var(--brand);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  h1 {
+    margin: 18px 0 18px;
+    font-family: "Poppins", system-ui, sans-serif;
+    font-size: clamp(44px, 6vw, 70px);
+    line-height: 0.98;
+    letter-spacing: -0.05em;
+    color: var(--ink);
+  }
+  .hero p {
+    margin: 0;
+    font-size: 18px;
+    color: var(--muted);
+    max-width: 720px;
+  }
+  .cta-group {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 28px;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 54px;
+    padding: 0 24px;
+    border-radius: 16px;
+    font-weight: 700;
+    font-size: 15px;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+    cursor: pointer;
+    border: 1px solid transparent;
+  }
+  .btn:hover {
+    transform: translateY(-1px);
+    text-decoration: none;
+    box-shadow: 0 12px 28px rgba(18, 34, 53, 0.10);
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--brand), var(--brand-strong));
+    color: #fff;
+  }
+  .btn-secondary {
+    background: rgba(255, 255, 255, 0.82);
+    color: var(--ink);
+    border-color: var(--line);
+  }
+  .proof-row {
+    display: flex;
+    gap: 22px;
+    flex-wrap: wrap;
+    margin-top: 28px;
+  }
+  .proof {
+    min-width: 150px;
+  }
+  .proof strong {
+    display: block;
+    font-family: "Poppins", system-ui, sans-serif;
+    font-size: 28px;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: var(--brand);
+  }
+  .proof span {
+    display: block;
+    margin-top: 8px;
+    color: var(--muted);
+    font-size: 13px;
+  }
+  .hero-panel {
+    position: relative;
+    padding: 14px;
+    border-radius: 30px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(243,249,252,0.98));
+    border: 1px solid var(--line);
+    box-shadow: 0 30px 70px rgba(18, 34, 53, 0.10);
+    overflow: hidden;
+  }
+  .hero-panel::before {
+    content: "";
+    position: absolute;
+    inset: -80px auto auto -80px;
+    width: 210px;
+    height: 210px;
+    border-radius: 50%;
+    background: rgba(24, 95, 144, 0.08);
+  }
+  .panel-card {
+    position: relative;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    padding: 22px;
+    margin-bottom: 16px;
+  }
+  .panel-card:last-child { margin-bottom: 0; }
+  .product-preview {
+    margin: 0;
+    position: relative;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .product-preview img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: 20px;
+    border: 1px solid var(--line);
+  }
+  .preview-caption {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 18px 10px 8px;
+  }
+  .preview-caption strong {
+    display: block;
+    font-family: "Poppins", system-ui, sans-serif;
+    font-size: 17px;
+  }
+  .preview-caption span {
+    display: block;
+    color: var(--muted);
+    font-size: 14px;
+    margin-top: 3px;
+  }
+  .preview-chip {
+    flex: 0 0 auto;
+    padding: 7px 10px;
+    border-radius: 999px;
+    background: rgba(24, 95, 144, 0.1);
+    color: var(--brand);
+    font-size: 12px;
+    font-weight: 800;
+  }
+  .panel-label {
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .panel-card h3 {
+    margin: 10px 0 8px;
+    font-size: 22px;
+    font-family: "Poppins", system-ui, sans-serif;
+    line-height: 1.1;
+  }
+  .panel-card p {
+    margin: 0 0 14px;
+    font-size: 14px;
+    color: var(--muted);
+  }
+  .micro-list {
+    display: grid;
+    gap: 10px;
+  }
+  .micro-list span {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    color: var(--ink);
+    font-size: 14px;
+  }
+  .micro-list span::before {
+    content: "•";
+    color: var(--brand);
+    font-weight: 900;
+  }
+  .section {
+    margin-bottom: 74px;
+  }
+  .section-heading {
+    max-width: 720px;
+    margin-bottom: 26px;
+  }
+  .section-heading h2 {
+    margin: 0 0 10px;
+    font-family: "Poppins", system-ui, sans-serif;
+    font-size: clamp(28px, 4vw, 40px);
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+  }
+  .section-heading p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 17px;
+  }
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+  }
+  .feature-card {
+    background: rgba(255, 255, 255, 0.92);
+    padding: 26px;
+    border-radius: 26px;
+    border: 1px solid var(--line);
+    box-shadow: 0 16px 34px rgba(18, 34, 53, 0.05);
+  }
+  .feature-card h3 {
+    margin: 16px 0 8px;
+    font-size: 21px;
+    font-family: "Poppins", system-ui, sans-serif;
+  }
+  .feature-card p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 15px;
+  }
+  .feature-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(24, 95, 144, 0.10);
+    color: var(--brand);
+  }
+  .feature-icon svg {
+    width: 24px;
+    height: 24px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.9;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+  }
+  .step {
+    padding: 24px;
+    border-radius: 24px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(240,248,251,0.96));
+    border: 1px solid var(--line);
+  }
+  .step strong {
+    display: inline-flex;
+    width: 36px;
+    height: 36px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: var(--brand);
+    color: #fff;
+    font-size: 14px;
+    margin-bottom: 16px;
+  }
+  .step h3 {
+    margin: 0 0 8px;
+    font-size: 20px;
+    font-family: "Poppins", system-ui, sans-serif;
+  }
+  .step p {
+    margin: 0;
+    color: var(--muted);
+  }
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+  }
+  .price-card {
+    padding: 28px;
+    border-radius: 26px;
+    background: rgba(255,255,255,0.96);
+    border: 1px solid var(--line);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+  .price-card.featured {
+    border-color: var(--line-strong);
+    box-shadow: 0 18px 40px rgba(24, 95, 144, 0.12);
+    transform: translateY(-4px);
+  }
+  .price-tag {
+    display: inline-flex;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(217, 119, 40, 0.10);
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .price-card h3 {
+    margin: 16px 0 8px;
+    font-family: "Poppins", system-ui, sans-serif;
+    font-size: 22px;
+  }
+  .price-amount {
+    margin: 6px 0 12px;
+    font-family: "Poppins", system-ui, sans-serif;
+    font-size: 38px;
+    line-height: 1;
+    letter-spacing: -0.05em;
+    color: var(--brand);
+  }
+  .price-card p {
+    margin: 0 0 18px;
+    color: var(--muted);
+  }
+  .price-card ul {
+    margin: 0;
+    padding-left: 18px;
+  }
+  .price-card .btn {
+    width: 100%;
+    margin-top: auto;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  .price-card li:last-child { margin-bottom: 22px; }
+  .price-card li {
+    color: var(--ink);
+    margin: 8px 0;
+  }
+  .trust-panel {
+    padding: 30px;
+    border-radius: 28px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.97), rgba(245,250,252,0.97));
+    border: 1px solid var(--line);
+  }
+  .trust-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 28px;
+    align-items: start;
+  }
+  .trust-panel h2 {
+    margin: 0 0 10px;
+    font-family: "Poppins", system-ui, sans-serif;
+    font-size: 32px;
+    line-height: 1.08;
+  }
+  .trust-panel p {
+    margin: 0 0 14px;
+    color: var(--muted);
+    font-size: 16px;
+  }
+  .trust-list {
+    display: grid;
+    gap: 12px;
+    margin-top: 18px;
+  }
+  .trust-list div {
+    padding: 14px 16px;
+    border-radius: 16px;
+    background: rgba(24, 95, 144, 0.06);
+    border: 1px solid rgba(24, 95, 144, 0.10);
+  }
+  .mini-faq {
+    display: grid;
+    gap: 12px;
+  }
+  .mini-faq div {
+    padding: 16px 18px;
+    border-radius: 18px;
+    background: #fff;
+    border: 1px solid var(--line);
+  }
+  .mini-faq strong {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 15px;
+  }
+  .final-cta {
+    margin-top: 22px;
+    padding: 30px;
+    border-radius: 26px;
+    color: #fff;
+    background: linear-gradient(135deg, var(--brand), var(--brand-strong));
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .final-cta h2 {
+    margin: 0 0 6px;
+    font-family: "Poppins", system-ui, sans-serif;
+    font-size: 28px;
+    line-height: 1.08;
+  }
+  .final-cta p { margin: 0; color: rgba(255,255,255,0.82); }
+  .final-cta .btn {
+    flex: 0 0 auto;
+    background: #fff;
+    color: var(--brand-strong);
+  }
+  footer {
+    padding: 56px 0 64px;
+    border-top: 1px solid var(--line);
+    background: rgba(255,255,255,0.80);
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
+    gap: 34px;
+    align-items: start;
+  }
+  .footer-brand strong {
+    font-family: "Poppins", system-ui, sans-serif;
+    font-size: 22px;
+    color: var(--brand);
+  }
+  .footer-brand p {
+    margin: 10px 0 0;
+    color: var(--muted);
+    font-size: 14px;
+    max-width: 480px;
+  }
+  .footer-links {
+    display: flex;
+    gap: 16px 20px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+  .footer-links a {
+    color: var(--ink);
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .legal-note {
+    margin-top: 34px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  .legal-note strong { color: var(--ink); }
+  @media (max-width: 820px) {
+    .hero, .trust-grid, .footer-grid { grid-template-columns: 1fr; }
+    .feature-grid, .steps, .pricing-grid { grid-template-columns: 1fr; }
+    .hero-panel { display: none; }
+    .footer-links { justify-content: flex-start; }
+    .price-card.featured { transform: none; }
+    .hero-copy { padding-top: 24px; }
+  }
+</style>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header>
+    <div class="shell brand">
+      <a class="brand-name" href="/ko/" aria-label="Aliolo home">
+        <img src="/app_icon.webp" alt="Aliolo logo">
+        aliolo
+      </a>
+      <nav aria-label="Site navigation">
+        <a class="desktop-link" href="#features">특징</a>
+        <a class="desktop-link" href="#workflow">작동 원리</a>
+        <a class="desktop-link" href="#pricing">가격</a>
+        <a href="/ko/?login=1" class="nav-login">로그인</a>
+        <a href="/ko/login" class="nav-cta">무료 계정 만들기</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="shell" id="main-content">
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow">시각적 학습 플랫폼</div>
+        <h1>시각적으로 배워보세요. 더 오래 기억하세요.</h1>
+        <p>이미지, 오디오, 비디오, 텍스트를 구조화된 플래시카드로 바꿔보세요. 상황에 맞게 학습하고, 적절한 시기에 검토하고, 실제로 기억할 수 있는 내용을 테스트하세요.</p>
+        <div class="cta-group">
+          <a href="/ko/login" class="btn btn-primary">무료 계정 만들기</a>
+          <a href="/ko/?login=1" class="btn btn-secondary">로그인</a>
+        </div>
+        <div class="proof-row" aria-label="Product highlights">
+          <div class="proof">
+            <strong>시각적</strong>
+            <span>인식 중심 학습을 위한 이미지, 오디오 및 비디오 친화적인 플래시카드입니다.</span>
+          </div>
+          <div class="proof">
+            <strong>적응형</strong>
+            <span>적절한 시간에 자료를 다시 방문할 수 있도록 간격을 두고 반복하고 진행 상황을 추적합니다.</span>
+          </div>
+          <div class="proof">
+            <strong>구조화됨</strong>
+            <span>단순한 데크 이상으로 확장되는 기둥, 폴더, 주제 및 컬렉션입니다.</span>
+          </div>
+        </div>
+      </div>
+      <aside class="hero-panel" aria-label="Aliolo study workflow preview">
+        <figure class="product-preview">
+          <img src="/landing-product-preview.jpg" alt="Aliolo visual flashcard lesson showing an Akita Inu on a tablet" width="1200" height="675" fetchpriority="high">
+          <figcaption class="preview-caption">
+            <div>
+              <strong>회상 전 인식</strong>
+              <span>이미지, 텍스트, 오디오 및 안내 탐색을 사용하는 실제 Aliolo 수업입니다.</span>
+            </div>
+            <div class="preview-chip">학습 모드</div>
+          </figcaption>
+        </figure>
+      </aside>
+    </section>
+
+    <section class="section" id="features">
+      <div class="section-heading">
+        <h2>노출을 회상으로 전환하는 데 필요한 모든 것.</h2>
+        <p>리치 미디어로 인지도를 구축하고, 더 큰 라이브러리를 체계적으로 정리하고, 자료가 사라지기 전에 다시 방문하세요.</p>
+      </div>
+      <div class="feature-grid">
+        <article class="feature-card">
+          <div class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="m5 18 5-5 3 3 2-2 4 4"/></svg></div>
+          <h3>텍스트 이상의 내용으로 학습</h3>
+          <p>주제가 인식과 맥락에 따라 달라질 경우 이미지, 오디오, 비디오 및 유연한 프롬프트를 사용하세요.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.34-5.66"/><path d="M20 4v6h-6"/><path d="M9.5 12.5 11 14l3.5-4"/></svg></div>
+          <h3>사라지기 전에 검토하세요</h3>
+          <p>간격을 두고 반복하고 진행 상황을 추적하면 유용한 시간에 중요한 자료를 다시 가져올 수 있습니다.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 6.5 12 3l8 3.5-8 3.5z"/><path d="M6 9v6.5L12 19l6-3.5V9"/><path d="M20 7v6"/></svg></div>
+          <h3>하나의 데크 이상으로 성장</h3>
+          <p>엄선된 자료나 맞춤형 자료를 사용 가능한 기둥, 폴더, 주제, 컬렉션으로 정리하세요.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="workflow">
+      <div class="section-heading">
+        <h2>'공부해야지'에서 '이거 알아'로 가는 명확한 길이 있다.</h2>
+        <p>하나의 집중된 워크플로우는 모든 주제를 동일한 종류의 카드로 단순화하지 않고도 다음 단계를 명확하게 유지합니다.</p>
+      </div>
+      <div class="steps">
+        <article class="step">
+          <strong>01</strong>
+          <h3>올바른 재료를 선택하십시오</h3>
+          <p>선별된 주제로 시작하거나 시험, 언어, 직업 또는 개인 목표에 초점을 맞춘 라이브러리를 구축하세요.</p>
+        </article>
+        <article class="step">
+          <strong>02</strong>
+          <h3>상황에 맞게 학습</h3>
+          <p>도움 없이 기억력을 작동하도록 요청하기 전에 안내 카드와 사용 가능한 미디어를 통해 인식을 구축하세요.</p>
+        </article>
+        <article class="step">
+          <strong>03</strong>
+          <h3>실제 회상 테스트</h3>
+          <p>약점을 노출하고, 검색을 강화하고, 진행 상황을 측정 가능하게 만들기 위해 집중적인 테스트로 전환하세요.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="pricing">
+      <div class="section-heading">
+        <h2>무료로 시작하세요. 전체 워크플로가 필요할 때 업그레이드하세요.</h2>
+        <p>결제 없이 계정을 만드세요. Premium에는 간격 반복, 생성, 테스트, 자동 재생, 비공개 구성 및 심층적인 사용자 정의 기능이 추가되어 있습니다.</p>
+      </div>
+      <div class="pricing-grid">
+        <article class="price-card">
+          <span class="price-tag">가격</span>
+          <h3>가격</h3>
+          <div class="price-amount">$2.99</div>
+          <p>단기 추진, 빠른 검토 또는 시험 주간 준비에 적합합니다.</p>
+          <ul>
+            <li>짧은 약정 기간</li>
+            <li>프리미엄 워크플로우를 빠르게 체험해 볼 수 있는 방법</li>
+            <li>취소할 때까지 자동으로 갱신됩니다.</li>
+          </ul>
+          <a href="/ko/pricing" class="btn btn-secondary" aria-label="View weekly plan details">요금제 세부정보 보기</a>
+        </article>
+        <article class="price-card featured">
+          <span class="price-tag">가격</span>
+          <h3>가격</h3>
+          <div class="price-amount">$8.99</div>
+          <p>꾸준한 학습 습관을 형성하는 학생들을 위한 균형 잡힌 접근성.</p>
+          <ul>
+            <li>정기적인 주간 학습에 가장 적합</li>
+            <li>더 큰 주제 라이브러리를 구성하기에 충분한 시간</li>
+            <li>취소할 때까지 자동으로 갱신됩니다.</li>
+          </ul>
+          <a href="/ko/pricing" class="btn btn-primary" aria-label="View monthly plan details">요금제 세부정보 보기</a>
+        </article>
+        <article class="price-card">
+          <span class="price-tag">가격</span>
+          <h3>가격</h3>
+          <div class="price-amount">$80.99</div>
+          <p>내구성 있는 학습 시스템을 원하는 학습자를 위한 최저 유효 월 비용.</p>
+          <ul>
+            <li>장기 언어 및 전문 학습에 이상적</li>
+            <li>시간이 지남에 따라 비용 절감</li>
+            <li>취소할 때까지 자동으로 갱신됩니다.</li>
+          </ul>
+          <a href="/ko/pricing" class="btn btn-secondary" aria-label="View yearly plan details">요금제 세부정보 보기</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="trust-panel">
+        <div class="trust-grid">
+          <div>
+            <h2>명확하게 공부하십시오. 자신있게 구독하세요.</h2>
+            <p>무료가 무엇인지, Premium에 추가된 것이 무엇인지, 결정하기 전에 어디서 도움을 받을 수 있는지 알아보세요.</p>
+            <div class="trust-list">
+              <div><strong>무료 입장:</strong> 결제 세부정보를 입력하지 않고도 계정을 만들고 사용 가능한 학습 자료를 탐색할 수 있습니다.</div>
+              <div><strong>투명한 용어:</strong> 가격, 갱신, 취소, 개인 정보 보호 및 환불 정보는 결제 전에 확인할 수 있습니다.</div>
+              <div><strong>인적 지원:</strong> 도움이 필요하면 Vitalii@nohainc.com으로 문의하세요.</div>
+            </div>
+          </div>
+          <div class="mini-faq" aria-label="Mini FAQ">
+            <div>
+              <strong>모든 카드를 직접 만들어야 하나요?</strong>
+              아니요. 선별된 주제로 시작한 다음, 목표가 더욱 구체적으로 변하면 자신만의 자료를 만드세요.
+            </div>
+            <div>
+              <strong>알리올로를 무료로 사용할 수 있나요?</strong>
+              예. 무료 계정은 도서관에 대한 진입점을 제공합니다. 가격 책정 페이지에는 Premium이 필요한 고급 워크플로가 설명되어 있습니다.
+            </div>
+            <div>
+              <strong>구독을 취소할 수 있나요?</strong>
+              예. 구독은 구매한 채널을 통해 취소할 수 있으며 일반적으로 유료 기간 동안 계속 액세스할 수 있습니다.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="final-cta">
+        <div>
+          <h2>다음 학습 세션을 중요하게 여길 준비가 되셨나요?</h2>
+          <p>무료 계정을 만들고, 과목을 선택하고, 시각적으로 학습을 시작하세요.</p>
+        </div>
+        <a href="/ko/login" class="btn">무료 계정 만들기</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="shell">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <strong>Aliolo</strong>
+          <p>마찰 없는 구조를 원하는 학습자를 위한 시각적 플래시 카드, 간격 있는 반복, 유연한 주제 구성 및 집중적인 테스트 워크플로입니다.</p>
+        </div>
+        <div class="footer-links">
+          <a href="/ko/privacy">은둔</a>
+          <a href="/ko/terms">자귀</a>
+          <a href="/ko/refund">환불</a>
+          <a href="/ko/pricing">가격</a>
+          <a href="mailto:vitalii@nohainc.com">지원하다</a>
+        </div>
+      </div>
+      <div class="legal-note">
+        <strong>기록된 판매자:</strong> 당사의 주문 프로세스는 Paddle.com, 당사의 온라인 리셀러이자 웹 주문에 대한 등록된 판매자에 의해 수행될 수 있습니다. Paddle은 결제 처리, 결제 관련 고객 서비스 및 해당 주문에 대한 반품을 처리합니다.
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aliolo | Vaizdinės kortelės, kartojimas tarpais ir pažangesnės studijų eigos</title>
+  <meta name="description" content="„Aliolo“ padeda besimokantiesiems išmokti kalbas, gamtos mokslus, anatomiją, pasirengimą egzaminams ir kuruojamus dalykus naudojant vaizdines korteles, kartojimą intervalais ir interaktyvius testavimo režimus.">
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Aliolo | Vaizdinės kortelės, kartojimas tarpais ir pažangesnės studijų eigos">
+  <meta property="og:description" content="„Aliolo“ padeda besimokantiesiems išmokti kalbas, gamtos mokslus, anatomiją, pasirengimą egzaminams ir kuruojamus dalykus naudojant vaizdines korteles, kartojimą intervalais ir interaktyvius testavimo režimus.">
+  <meta property="og:url" content="https://aliolo.com/lt/">
+  <meta property="og:image" content="https://aliolo.com/aliolo-social-preview.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Aliolo visual learning cards and spaced repetition preview">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Aliolo | Vaizdinės kortelės, kartojimas tarpais ir pažangesnės studijų eigos">
+  <meta name="twitter:description" content="„Aliolo“ padeda besimokantiesiems išmokti kalbas, gamtos mokslus, anatomiją, pasirengimą egzaminams ir kuruojamus dalykus naudojant vaizdines korteles, kartojimą intervalais ir interaktyvius testavimo režimus.">
+  <meta name="twitter:image" content="https://aliolo.com/aliolo-social-preview.png">
+  <link rel="canonical" href="https://aliolo.com/lt/">
+  <link rel="apple-touch-icon" href="/icons/Icon-192.png">
+  <link rel="icon" type="image/webp" href="/app_icon.webp">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="alternate" hreflang="en" href="https://aliolo.com">
+    <link rel="alternate" hreflang="id" href="https://aliolo.com/id">
+    <link rel="alternate" hreflang="bg" href="https://aliolo.com/bg">
+    <link rel="alternate" hreflang="cs" href="https://aliolo.com/cs">
+    <link rel="alternate" hreflang="da" href="https://aliolo.com/da">
+    <link rel="alternate" hreflang="de" href="https://aliolo.com/de">
+    <link rel="alternate" hreflang="et" href="https://aliolo.com/et">
+    <link rel="alternate" hreflang="es" href="https://aliolo.com/es">
+    <link rel="alternate" hreflang="fr" href="https://aliolo.com/fr">
+    <link rel="alternate" hreflang="ga" href="https://aliolo.com/ga">
+    <link rel="alternate" hreflang="hr" href="https://aliolo.com/hr">
+    <link rel="alternate" hreflang="it" href="https://aliolo.com/it">
+    <link rel="alternate" hreflang="lv" href="https://aliolo.com/lv">
+    <link rel="alternate" hreflang="lt" href="https://aliolo.com/lt">
+    <link rel="alternate" hreflang="hu" href="https://aliolo.com/hu">
+    <link rel="alternate" hreflang="mt" href="https://aliolo.com/mt">
+    <link rel="alternate" hreflang="nl" href="https://aliolo.com/nl">
+    <link rel="alternate" hreflang="pl" href="https://aliolo.com/pl">
+    <link rel="alternate" hreflang="pt" href="https://aliolo.com/pt">
+    <link rel="alternate" hreflang="ro" href="https://aliolo.com/ro">
+    <link rel="alternate" hreflang="sk" href="https://aliolo.com/sk">
+    <link rel="alternate" hreflang="sl" href="https://aliolo.com/sl">
+    <link rel="alternate" hreflang="fi" href="https://aliolo.com/fi">
+    <link rel="alternate" hreflang="sv" href="https://aliolo.com/sv">
+    <link rel="alternate" hreflang="tl" href="https://aliolo.com/tl">
+    <link rel="alternate" hreflang="vi" href="https://aliolo.com/vi">
+    <link rel="alternate" hreflang="tr" href="https://aliolo.com/tr">
+    <link rel="alternate" hreflang="el" href="https://aliolo.com/el">
+    <link rel="alternate" hreflang="uk" href="https://aliolo.com/uk">
+    <link rel="alternate" hreflang="ar" href="https://aliolo.com/ar">
+    <link rel="alternate" hreflang="hi" href="https://aliolo.com/hi">
+    <link rel="alternate" hreflang="zh" href="https://aliolo.com/zh">
+    <link rel="alternate" hreflang="ja" href="https://aliolo.com/ja">
+    <link rel="alternate" hreflang="ko" href="https://aliolo.com/ko">
+  <script>
+    (() => {
+      const params = new URLSearchParams(window.location.search);
+      if (params.has('login') || params.has('type') || params.has('invite')) {
+        window.location.replace('/login' + window.location.search + window.location.hash);
+      }
+    })();
+  </script>
+  <style>
+  :root {
+    color-scheme: light;
+    --ink: #162235;
+    --muted: #5f6f85;
+    --brand: #185f90;
+    --brand-strong: #0d476d;
+    --accent: #d97728;
+    --line: rgba(18, 34, 53, 0.10);
+    --line-strong: rgba(24, 95, 144, 0.18);
+    --surface: #ffffff;
+    --surface-soft: #f6fbfd;
+    --hero-wash: rgba(24, 95, 144, 0.08);
+    --hero-wash-2: rgba(217, 119, 40, 0.09);
+    --page: #eef5f8;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    color: var(--ink);
+    font-family: "Roboto", system-ui, -apple-system, sans-serif;
+    line-height: 1.58;
+    background:
+      radial-gradient(circle at top left, var(--hero-wash), transparent 30rem),
+      radial-gradient(circle at top right, var(--hero-wash-2), transparent 28rem),
+      linear-gradient(180deg, #f9fcfd 0%, var(--page) 100%);
+  }
+  a { color: var(--brand); font-weight: 700; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  a:focus-visible,
+  button:focus-visible {
+    outline: 3px solid #f0a15d;
+    outline-offset: 3px;
+  }
+  .skip-link {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 100;
+    padding: 10px 14px;
+    border-radius: 10px;
+    background: var(--ink);
+    color: #fff;
+    transform: translateY(-160%);
+    transition: transform 0.18s ease;
+  }
+  .skip-link:focus { transform: translateY(0); }
+  .shell { width: min(1160px, calc(100% - 40px)); margin: 0 auto; }
+  header {
+    padding: 14px 0;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    backdrop-filter: blur(16px);
+    background: rgba(249, 252, 253, 0.88);
+    border-bottom: 1px solid rgba(18, 34, 53, 0.06);
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: nowrap;
+  }
+  .brand-name {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-family: "Poppins", system-ui, sans-serif;
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: 0.03em;
+    color: var(--brand);
+    text-transform: lowercase;
+  }
+  .brand-name:hover { text-decoration: none; }
+  .brand-name img {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+  }
+  nav {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: nowrap;
+  }
+  nav a {
+    color: var(--ink);
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px 14px;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    transition: all 0.18s ease;
+  }
+  nav a:hover {
+    text-decoration: none;
+    border-color: var(--line);
+    background: rgba(255, 255, 255, 0.84);
+  }
+  .nav-cta {
+    border-color: var(--line-strong);
+    background: rgba(24, 95, 144, 0.08);
+    color: var(--brand);
+    font-weight: 700;
+  }
+  .nav-login { color: var(--brand); font-weight: 700; }
+  main { padding: 32px 0 80px; }
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+    gap: 34px;
+    align-items: stretch;
+    margin-bottom: 74px;
+  }
+  .hero-copy {
+    padding: 56px 0 10px;
+  }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: rgba(24, 95, 144, 0.10);
+    color: var(--brand);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  h1 {
+    margin: 18px 0 18px;
+    font-family: "Poppins", system-ui, sans-serif;
+    font-size: clamp(44px, 6vw, 70px);
+    line-height: 0.98;
+    letter-spacing: -0.05em;
+    color: var(--ink);
+  }
+  .hero p {
+    margin: 0;
+    font-size: 18px;
+    color: var(--muted);
+    max-width: 720px;
+  }
+  .cta-group {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 28px;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 54px;
+    padding: 0 24px;
+    border-radius: 16px;
+    font-weight: 700;
+    font-size: 15px;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+    cursor: pointer;
+    border: 1px solid transparent;
+  }
+  .btn:hover {
+    transform: translateY(-1px);
+    text-decoration: none;
+    box-shadow: 0 12px 28px rgba(18, 34, 53, 0.10);
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--brand), var(--brand-strong));
+    color: #fff;
+  }
+  .btn-secondary {
+    background: rgba(255, 255, 255, 0.82);
+    color: var(--ink);
+    border-color: var(--line);
+  }
+  .proof-row {
+    display: flex;
+    gap: 22px;
+    flex-wrap: wrap;
+    margin-top: 28px;
+  }
+  .proof {
+    min-width: 150px;
+  }
+  .proof strong {
+    display: block;
+    font-family: "Poppins", system-ui, sans-serif;
+    font-size: 28px;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: var(--brand);
+  }
+  .proof span {
+    display: block;
+    margin-top: 8px;
+    color: var(--muted);
+    font-size: 13px;
+  }
+  .hero-panel {
+    position: relative;
+    padding: 14px;
+    border-radius: 30px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(243,249,252,0.98));
+    border: 1px solid var(--line);
+    box-shadow: 0 30px 70px rgba(18, 34, 53, 0.10);
+    overflow: hidden;
+  }
+  .hero-panel::before {
+    content: "";
+    position: absolute;
+    inset: -80px auto auto -80px;
+    width: 210px;
+    height: 210px;
+    border-radius: 50%;
+    background: rgba(24, 95, 144, 0.08);
+  }
+  .panel-card {
+    position: relative;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    padding: 22px;
+    margin-bottom: 16px;
+  }
+  .panel-card:last-child { margin-bottom: 0; }
+  .product-preview {
+    margin: 0;
+    position: relative;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .product-preview img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: 20px;
+    border: 1px solid var(--line);
+  }
+  .preview-caption {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 18px 10px 8px;
+  }
+  .preview-caption strong {
+    display: block;
+    font-family: "Poppins", system-ui, sans-serif;
+    font-size: 17px;
+  }
+  .preview-caption span {
+    display: block;
+    color: var(--muted);
+    font-size: 14px;
+    margin-top: 3px;
+  }
+  .preview-chip {
+    flex: 0 0 auto;
+    padding: 7px 10px;
+    border-radius: 999px;
+    background: rgba(24, 95, 144, 0.1);
+    color: var(--brand);
+    font-size: 12px;
+    font-weight: 800;
+  }
+  .panel-label {
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .panel-card h3 {
+    margin: 10px 0 8px;
+    font-size: 22px;
+    font-family: "Poppins", system-ui, sans-serif;
+    line-height: 1.1;
+  }
+  .panel-card p {
+    margin: 0 0 14px;
+    font-size: 14px;
+    color: var(--muted);
+  }
+  .micro-list {
+    display: grid;
+    gap: 10px;
+  }
+  .micro-list span {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    color: var(--ink);
+    font-size: 14px;
+  }
+  .micro-list span::before {
+    content: "•";
+    color: var(--brand);
+    font-weight: 900;
+  }
+  .section {
+    margin-bottom: 74px;
+  }
+  .section-heading {
+    max-width: 720px;
+    margin-bottom: 26px;
+  }
+  .section-heading h2 {
+    margin: 0 0 10px;
+    font-family: "Poppins", system-ui, sans-serif;
+    font-size: clamp(28px, 4vw, 40px);
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+  }
+  .section-heading p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 17px;
+  }
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+  }
+  .feature-card {
+    background: rgba(255, 255, 255, 0.92);
+    padding: 26px;
+    border-radius: 26px;
+    border: 1px solid var(--line);
+    box-shadow: 0 16px 34px rgba(18, 34, 53, 0.05);
+  }
+  .feature-card h3 {
+    margin: 16px 0 8px;
+    font-size: 21px;
+    font-family: "Poppins", system-ui, sans-serif;
+  }
+  .feature-card p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 15px;
+  }
+  .feature-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(24, 95, 144, 0.10);
+    color: var(--brand);
+  }
+  .feature-icon svg {
+    width: 24px;
+    height: 24px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.9;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+  }
+  .step {
+    padding: 24px;
+    border-radius: 24px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(240,248,251,0.96));
+    border: 1px solid var(--line);
+  }
+  .step strong {
+    display: inline-flex;
+    width: 36px;
+    height: 36px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: var(--brand);
+    color: #fff;
+    font-size: 14px;
+    margin-bottom: 16px;
+  }
+  .step h3 {
+    margin: 0 0 8px;
+    font-size: 20px;
+    font-family: "Poppins", system-ui, sans-serif;
+  }
+  .step p {
+    margin: 0;
+    color: var(--muted);
+  }
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+  }
+  .price-card {
+    padding: 28px;
+    border-radius: 26px;
+    background: rgba(255,255,255,0.96);
+    border: 1px solid var(--line);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+  .price-card.featured {
+    border-color: var(--line-strong);
+    box-shadow: 0 18px 40px rgba(24, 95, 144, 0.12);
+    transform: translateY(-4px);
+  }
+  .price-tag {
+    display: inline-flex;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(217, 119, 40, 0.10);
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .price-card h3 {
+    margin: 16px 0 8px;
+    font-family: "Poppins", system-ui, sans-serif;
+    font-size: 22px;
+  }
+  .price-amount {
+    margin: 6px 0 12px;
+    font-family: "Poppins", system-ui, sans-serif;
+    font-size: 38px;
+    line-height: 1;
+    letter-spacing: -0.05em;
+    color: var(--brand);
+  }
+  .price-card p {
+    margin: 0 0 18px;
+    color: var(--muted);
+  }
+  .price-card ul {
+    margin: 0;
+    padding-left: 18px;
+  }
+  .price-card .btn {
+    width: 100%;
+    margin-top: auto;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  .price-card li:last-child { margin-bottom: 22px; }
+  .price-card li {
+    color: var(--ink);
+    margin: 8px 0;
+  }
+  .trust-panel {
+    padding: 30px;
+    border-radius: 28px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.97), rgba(245,250,252,0.97));
+    border: 1px solid var(--line);
+  }
+  .trust-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 28px;
+    align-items: start;
+  }
+  .trust-panel h2 {
+    margin: 0 0 10px;
+    font-family: "Poppins", system-ui, sans-serif;
+    font-size: 32px;
+    line-height: 1.08;
+  }
+  .trust-panel p {
+    margin: 0 0 14px;
+    color: var(--muted);
+    font-size: 16px;
+  }
+  .trust-list {
+    display: grid;
+    gap: 12px;
+    margin-top: 18px;
+  }
+  .trust-list div {
+    padding: 14px 16px;
+    border-radius: 16px;
+    background: rgba(24, 95, 144, 0.06);
+    border: 1px solid rgba(24, 95, 144, 0.10);
+  }
+  .mini-faq {
+    display: grid;
+    gap: 12px;
+  }
+  .mini-faq div {
+    padding: 16px 18px;
+    border-radius: 18px;
+    background: #fff;
+    border: 1px solid var(--line);
+  }
+  .mini-faq strong {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 15px;
+  }
+  .final-cta {
+    margin-top: 22px;
+    padding: 30px;
+    border-radius: 26px;
+    color: #fff;
+    background: linear-gradient(135deg, var(--brand), var(--brand-strong));
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .final-cta h2 {
+    margin: 0 0 6px;
+    font-family: "Poppins", system-ui, sans-serif;
+    font-size: 28px;
+    line-height: 1.08;
+  }
+  .final-cta p { margin: 0; color: rgba(255,255,255,0.82); }
+  .final-cta .btn {
+    flex: 0 0 auto;
+    background: #fff;
+    color: var(--brand-strong);
+  }
+  footer {
+    padding: 56px 0 64px;
+    border-top: 1px solid var(--line);
+    background: rgba(255,255,255,0.80);
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
+    gap: 34px;
+    align-items: start;
+  }
+  .footer-brand strong {
+    font-family: "Poppins", system-ui, sans-serif;
+    font-size: 22px;
+    color: var(--brand);
+  }
+  .footer-brand p {
+    margin: 10px 0 0;
+    color: var(--muted);
+    font-size: 14px;
+    max-width: 480px;
+  }
+  .footer-links {
+    display: flex;
+    gap: 16px 20px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+  .footer-links a {
+    color: var(--ink);
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .legal-note {
+    margin-top: 34px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  .legal-note strong { color: var(--ink); }
+  @media (max-width: 820px) {
+    .hero, .trust-grid, .footer-grid { grid-template-columns: 1fr; }
+    .feature-grid, .steps, .pricing-grid { grid-template-columns: 1fr; }
+    .hero-panel { display: none; }
+    .footer-links { justify-content: flex-start; }
+    .price-card.featured { transform: none; }
+    .hero-copy { padding-top: 24px; }
+  }
+</style>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header>
+    <div class="shell brand">
+      <a class="brand-name" href="/lt/" aria-label="Aliolo home">
+        <img src="/app_icon.webp" alt="Aliolo logo">
+        aliolo
+      </a>
+      <nav aria-label="Site navigation">
+        <a class="desktop-link" href="#features">Savybės</a>
+        <a class="desktop-link" href="#workflow">Kaip tai veikia</a>
+        <a class="desktop-link" href="#pricing">Kainodara</a>
+        <a href="/lt/?login=1" class="nav-login">Prisijunkite</a>
+        <a href="/lt/login" class="nav-cta">Sukurti nemokamą paskyrą</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="shell" id="main-content">
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow">Vizualinio mokymosi platforma</div>
+        <h1>Mokykitės vizualiai. Prisiminkite ilgiau.</h1>
+        <p>Paverskite vaizdus, ​​​​garsą, vaizdo įrašus ir tekstą į struktūrines korteles. Mokykitės atsižvelgdami į kontekstą, peržiūrėkite tinkamu laiku ir patikrinkite, ką tikrai galite prisiminti.</p>
+        <div class="cta-group">
+          <a href="/lt/login" class="btn btn-primary">Sukurti nemokamą paskyrą</a>
+          <a href="/lt/?login=1" class="btn btn-secondary">Prisijunkite</a>
+        </div>
+        <div class="proof-row" aria-label="Product highlights">
+          <div class="proof">
+            <strong>Vizualinis</strong>
+            <span>Vaizdams, garsui ir vaizdo įrašams pritaikytos kortelės, skirtos atpažinimo reikalaujančiam mokymuisi.</span>
+          </div>
+          <div class="proof">
+            <strong>Prisitaikantis</strong>
+            <span>Skirtingas kartojimas ir pažangos stebėjimas, kad tinkamu laiku peržiūrėtumėte medžiagą.</span>
+          </div>
+          <div class="proof">
+            <strong>Struktūrizuotas</strong>
+            <span>Stulpai, aplankai, temos ir kolekcijos, kurių dydis ne tik paprastas.</span>
+          </div>
+        </div>
+      </div>
+      <aside class="hero-panel" aria-label="Aliolo study workflow preview">
+        <figure class="product-preview">
+          <img src="/landing-product-preview.jpg" alt="Aliolo visual flashcard lesson showing an Akita Inu on a tablet" width="1200" height="675" fetchpriority="high">
+          <figcaption class="preview-caption">
+            <div>
+              <strong>Atpažinimas prieš atšaukimą</strong>
+              <span>Tikra Aliolo pamoka naudojant vaizdą, tekstą, garsą ir vadovaujamą navigaciją.</span>
+            </div>
+            <div class="preview-chip">Mokymosi režimas</div>
+          </figcaption>
+        </figure>
+      </aside>
+    </section>
+
+    <section class="section" id="features">
+      <div class="section-heading">
+        <h2>Viskas, ko reikia, kad ekspozicija virstų prisiminimu.</h2>
+        <p>Sukurkite atpažinimą naudodami raiškiąją mediją, tvarkykite didesnes bibliotekas ir peržiūrėkite medžiagą, kol ji neišnyks.</p>
+      </div>
+      <div class="feature-grid">
+        <article class="feature-card">
+          <div class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="m5 18 5-5 3 3 2-2 4 4"/></svg></div>
+          <h3>Sužinokite daugiau nei naudodami tekstą</h3>
+          <p>Naudokite vaizdus, ​​garsą, vaizdo įrašus ir lanksčius raginimus, kai objektas priklauso nuo atpažinimo ir konteksto.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.34-5.66"/><path d="M20 4v6h-6"/><path d="M9.5 12.5 11 14l3.5-4"/></svg></div>
+          <h3>Peržiūrėkite, kol ji neišnyks</h3>
+          <p>Skirtingas kartojimas ir pažangos stebėjimas sugrąžina svarbią medžiagą tinkamu laiku.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 6.5 12 3l8 3.5-8 3.5z"/><path d="M6 9v6.5L12 19l6-3.5V9"/><path d="M20 7v6"/></svg></div>
+          <h3>Augti už vieno denio</h3>
+          <p>Suskirstykite kuruojamą arba tinkintą medžiagą į ramsčius, aplankus, temas ir kolekcijas, kurias galima naudoti.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="workflow">
+      <div class="section-heading">
+        <h2>Aiškus kelias nuo „turėčiau mokytis“ iki „aš tai žinau“.</h2>
+        <p>Viena sufokusuota darbo eiga išlaiko kitą žingsnį akivaizdų, nesuplodamas kiekvieno objekto į tą pačią kortelę.</p>
+      </div>
+      <div class="steps">
+        <article class="step">
+          <strong>01</strong>
+          <h3>Pasirinkite tinkamą medžiagą</h3>
+          <p>Pradėkite nuo kuruojamo dalyko arba sukurkite tikslią biblioteką, skirtą egzaminui, kalbai, profesijai ar asmeniniam tikslui.</p>
+        </article>
+        <article class="step">
+          <strong>02</strong>
+          <h3>Mokykitės su kontekstu</h3>
+          <p>Prieš prašydami, kad atmintis veiktų be pagalbos, sukurkite atpažinimą naudodami valdomas korteles ir turimą laikmeną.</p>
+        </article>
+        <article class="step">
+          <strong>03</strong>
+          <h3>Išbandykite tikrąjį prisiminimą</h3>
+          <p>Pereikite prie tikslinio testavimo, kad atskleistumėte silpnąsias vietas, sustiprintumėte paiešką ir pažangą būtų galima išmatuoti.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="pricing">
+      <div class="section-heading">
+        <h2>Pradėkite nemokamai. Atnaujinkite, kai jums reikia visos darbo eigos.</h2>
+        <p>Sukurti paskyrą be mokėjimo. „Premium“ prideda intervalų pasikartojimo, kūrimo, testavimo, automatinio paleidimo, privataus organizavimo ir gilesnio tinkinimo.</p>
+      </div>
+      <div class="pricing-grid">
+        <article class="price-card">
+          <span class="price-tag">Kainodara</span>
+          <h3>Kainodara</h3>
+          <div class="price-amount">$2.99</div>
+          <p>Tinka trumpalaikiams postūmiams, greitoms apžvalgoms ar pasirengimui egzaminų savaitei.</p>
+          <ul>
+            <li>Trumpas įsipareigojimų langas</li>
+            <li>Greitas būdas išbandyti aukščiausios kokybės darbo eigą</li>
+            <li>Atnaujinamas automatiškai, kol atšaukiamas</li>
+          </ul>
+          <a href="/lt/pricing" class="btn btn-secondary" aria-label="View weekly plan details">Peržiūrėkite išsamią plano informaciją</a>
+        </article>
+        <article class="price-card featured">
+          <span class="price-tag">Kainodara</span>
+          <h3>Kainodara</h3>
+          <div class="price-amount">$8.99</div>
+          <p>Subalansuota prieiga studentams, kurie formuoja nuolatinį mokymosi įprotį.</p>
+          <ul>
+            <li>Geriausiai tinka įprastoms savaitinėms studijoms</li>
+            <li>Pakanka laiko organizuoti didesnes dalykų bibliotekas</li>
+            <li>Atnaujinamas automatiškai, kol atšaukiamas</li>
+          </ul>
+          <a href="/lt/pricing" class="btn btn-primary" aria-label="View monthly plan details">Peržiūrėkite išsamią plano informaciją</a>
+        </article>
+        <article class="price-card">
+          <span class="price-tag">Kainodara</span>
+          <h3>Kainodara</h3>
+          <div class="price-amount">$80.99</div>
+          <p>Mažiausios efektyvios mėnesinės išlaidos besimokantiesiems, norintiems patvarios studijų sistemos.</p>
+          <ul>
+            <li>Idealiai tinka ilgalaikėms kalbos ir profesinėms studijoms</li>
+            <li>Mažesnės išlaidos laikui bėgant</li>
+            <li>Atnaujinamas automatiškai, kol atšaukiamas</li>
+          </ul>
+          <a href="/lt/pricing" class="btn btn-secondary" aria-label="View yearly plan details">Peržiūrėkite išsamią plano informaciją</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="trust-panel">
+        <div class="trust-grid">
+          <div>
+            <h2>Studijuokite aiškiai. Prenumeruokite su pasitikėjimu.</h2>
+            <p>Prieš įsipareigodami žinokite, kas yra nemokama, ką prideda „Premium“ ir kur gauti pagalbos.</p>
+            <div class="trust-list">
+              <div><strong>Nemokamas įėjimas:</strong> Susikurkite paskyrą ir peržiūrėkite turimą mokymosi medžiagą neįvesdami mokėjimo informacijos.</div>
+              <div><strong>Skaidrios sąlygos:</strong> Informacija apie kainas, atnaujinimą, atšaukimą, privatumą ir pinigų grąžinimą pateikiama prieš atsiskaitant.</div>
+              <div><strong>Žmogaus parama:</strong> Jei jums reikia pagalbos, susisiekite su vitalii@nohainc.com.</div>
+            </div>
+          </div>
+          <div class="mini-faq" aria-label="Mini FAQ">
+            <div>
+              <strong>Ar kiekvieną kortelę turiu susikurti pačiam?</strong>
+              Ne. Pradėkite nuo turimų kuruojamų temų, tada kurkite savo medžiagą, kai jūsų tikslas taps konkretesnis.
+            </div>
+            <div>
+              <strong>Ar galiu nemokamai naudotis „Aliolo“?</strong>
+              Taip. Nemokama paskyra suteikia įėjimo į biblioteką tašką; kainodaros puslapyje paaiškinama, kurioms išplėstinėms darbo eigoms reikalinga „Premium“.
+            </div>
+            <div>
+              <strong>Ar galiu atšaukti prenumeratą?</strong>
+              Taip. Prenumeratas galima atšaukti per kanalą, kuriame jos buvo įsigytos, o prieiga paprastai tęsiama per mokamą laikotarpį.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="final-cta">
+        <div>
+          <h2>Pasiruošę, kad kita studijų sesija būtų svarbi?</h2>
+          <p>Susikurkite nemokamą paskyrą, pasirinkite dalyką ir pradėkite mokytis vizualiai.</p>
+        </div>
+        <a href="/lt/login" class="btn">Sukurti nemokamą paskyrą</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="shell">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <strong>Aliolo</strong>
+          <p>Vaizdinės kortelės, pasikartojimas intervalais, lankstus dalyko organizavimas ir tikslingos testavimo darbo eigos besimokantiesiems, kurie nori struktūros be trinties.</p>
+        </div>
+        <div class="footer-links">
+          <a href="/lt/privacy">Privatumas</a>
+          <a href="/lt/terms">Sąlygos</a>
+          <a href="/lt/refund">Grąžinamos lėšos</a>
+          <a href="/lt/pricing">Kainodara</a>
+          <a href="mailto:vitalii@nohainc.com">Palaikymas</a>
+        </div>
+      </div>
+      <div class="legal-note">
+        <strong>Įrašų prekybininkas:</strong> Mūsų užsakymo procesą gali atlikti Paddle.com, mūsų internetinis perpardavėjas ir registruojamas prekybininkas, teikiantis užsakymus internetu. „Paddle“ tvarko mokėjimų apdorojimą, su mokėjimu susijusį klientų aptarnavimą ir tų užsakymų grąžinimą.
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
