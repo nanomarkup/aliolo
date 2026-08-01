@@ -119,6 +119,17 @@ const SUPPORTED_LANGS = [
   "uk", "ar", "hi", "zh", "ja", "ko"
 ];
 
+function cleanAppPathname(pathname: string): string {
+  const parts = pathname.split('/');
+  if (parts.length > 2 && SUPPORTED_LANGS.includes(parts[1])) {
+    return '/' + parts.slice(2).join('/');
+  }
+  if (parts.length === 2 && SUPPORTED_LANGS.includes(parts[1])) {
+    return '/';
+  }
+  return pathname;
+}
+
 function getPreferredLanguage(acceptLanguageHeader: string | undefined): string {
   if (!acceptLanguageHeader) return 'en';
   const tags = acceptLanguageHeader.split(',')
@@ -314,19 +325,21 @@ app.get('/sitemap.xml', async (c) => {
 });
 
 function shouldServeAppShell(pathname: string) {
+  const cleanPath = cleanAppPathname(pathname);
   return (
-    pathname === '/login' ||
-    pathname.startsWith('/subject/') ||
-    pathname.startsWith('/collection/') ||
-    pathname.startsWith('/goals/')
+    cleanPath === '/login' ||
+    cleanPath.startsWith('/subject/') ||
+    cleanPath.startsWith('/collection/') ||
+    cleanPath.startsWith('/goals/')
   );
 }
 
 function isPublicSeoPath(pathname: string) {
+  const cleanPath = cleanAppPathname(pathname);
   return (
-    pathname.startsWith('/subject/') ||
-    pathname.startsWith('/collection/') ||
-    pathname.startsWith('/goals/')
+    cleanPath.startsWith('/subject/') ||
+    cleanPath.startsWith('/collection/') ||
+    cleanPath.startsWith('/goals/')
   );
 }
 
@@ -426,8 +439,9 @@ app.get('*', async (c) => {
         let htmlBody = await appShellResponse.text();
 
         const userAgent = c.req.header('user-agent') || '';
+        const cleanPath = cleanAppPathname(url.pathname);
         if (isbot(userAgent) || isPublicSeoPath(url.pathname)) {
-            const seoHtml = await generateSeoHtml(c.env.DB, url.pathname, htmlBody);
+            const seoHtml = await generateSeoHtml(c.env.DB, cleanPath, htmlBody);
             if (seoHtml) {
                 htmlBody = seoHtml;
             } else if (isPublicSeoPath(url.pathname)) {

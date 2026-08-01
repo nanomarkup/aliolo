@@ -266,4 +266,11 @@ describe('SEO and crawlability', () => {
     expect(resUnknown.status).toBe(301);
     expect(resUnknown.headers.get('location')).toBe('/');
   });
+
+  it('serves the SPA app shell for localized app paths', async () => {
+    const resLogin = await app.request('https://aliolo.com/es/login', {}, mockEnv);
+    expect(resLogin.status).toBe(200);
+    const html = await resLogin.text();
+    expect(html).toContain('flutter_bootstrap.js');
+  });
 });
