@@ -1205,7 +1205,7 @@ LEGAL_LAYOUT = """<!DOCTYPE html>
 <body>
   <header>
     <div class="shell brand">
-      <a class="brand-name" href="{{PREFIX}}/" aria-label="Aliolo home">
+      <a class="brand-name" href="{{HOME_URL}}" aria-label="Aliolo home">
         <img src="/app_icon.webp" alt="Aliolo Logo" />
         aliolo
       </a>
@@ -1254,7 +1254,7 @@ PAY_LAYOUT = """<!DOCTYPE html>
 <body>
   <header>
     <div class="shell brand">
-      <a class="brand-name" href="{{PREFIX}}/" aria-label="Aliolo home">
+      <a class="brand-name" href="{{HOME_URL}}" aria-label="Aliolo home">
         <img src="/app_icon.webp" alt="Aliolo logo" />
         aliolo
       </a>
@@ -1426,7 +1426,7 @@ LANDING_LAYOUT = """<!DOCTYPE html>
   <a class="skip-link" href="#main-content">Skip to content</a>
   <header>
     <div class="shell brand">
-      <a class="brand-name" href="{{PREFIX}}/" aria-label="Aliolo home">
+      <a class="brand-name" href="{{HOME_URL}}" aria-label="Aliolo home">
         <img src="/app_icon.webp" alt="Aliolo logo">
         aliolo
       </a>
@@ -1435,7 +1435,7 @@ LANDING_LAYOUT = """<!DOCTYPE html>
         <a class="desktop-link" href="#workflow">{{T_landing_nav_how_it_works}}</a>
         <a class="desktop-link" href="#pricing">{{T_landing_nav_pricing}}</a>
         {{LANG_SWITCHER}}
-        <a href="{{PREFIX}}/?login=1" class="nav-login">{{T_landing_nav_login}}</a>
+        <a href="{{HOME_URL}}?login=1" class="nav-login">{{T_landing_nav_login}}</a>
         <a href="{{PREFIX}}/login" class="nav-cta">{{T_landing_nav_cta}}</a>
       </nav>
     </div>
@@ -1449,7 +1449,7 @@ LANDING_LAYOUT = """<!DOCTYPE html>
         <p>{{T_landing_hero_p}}</p>
         <div class="cta-group">
           <a href="{{PREFIX}}/login" class="btn btn-primary">{{T_landing_hero_btn_primary}}</a>
-          <a href="{{PREFIX}}/?login=1" class="btn btn-secondary">{{T_landing_hero_btn_secondary}}</a>
+          <a href="{{HOME_URL}}?login=1" class="btn btn-secondary">{{T_landing_hero_btn_secondary}}</a>
         </div>
         <div class="proof-row" aria-label="Product highlights">
           <div class="proof">
@@ -1694,6 +1694,7 @@ def render_legal(lang: str, t: dict, active: str, page_path: str, body_content: 
     ]
     
     prefix = "" if lang == "en" else f"/{lang}"
+    home_url = "/" if lang == "en" else f"/{lang}"
     
     seo_alternate_links = []
     for l in SUPPORTED_LANGUAGES:
@@ -1708,7 +1709,8 @@ def render_legal(lang: str, t: dict, active: str, page_path: str, body_content: 
     for key, label_default, href in nav_list:
         label = t.get(key, label_default)
         active_class = "active" if active == key else ""
-        nav_html.append(f'<a class="{active_class}" href="{prefix}{href}">{label}</a>')
+        link_href = home_url if (key == 'home') else f"{prefix}{href}"
+        nav_html.append(f'<a class="{active_class}" href="{link_href}">{label}</a>')
     nav_links_html = "\n        ".join(nav_html)
     
     title = t.get(f"{active}_title", "Aliolo legal")
@@ -1733,6 +1735,7 @@ def render_legal(lang: str, t: dict, active: str, page_path: str, body_content: 
     html = LEGAL_LAYOUT
     html = html.replace("{{LANG}}", lang)
     html = html.replace("{{PREFIX}}", prefix)
+    html = html.replace("{{HOME_URL}}", home_url)
     html = html.replace("{{PAGE_PATH}}", page_path)
     html = html.replace("{{TITLE}}", title)
     html = html.replace("{{SUBTITLE}}", subtitle)
@@ -1750,6 +1753,7 @@ def render_legal(lang: str, t: dict, active: str, page_path: str, body_content: 
 
 def render_pay(lang: str, t: dict) -> str:
     prefix = "" if lang == "en" else f"/{lang}"
+    home_url = "/" if lang == "en" else f"/{lang}"
     
     checkout_title = t.get("checkout_title", "Aliolo Checkout")
     checkout_subtitle = t.get("checkout_subtitle", "Secure checkout for Aliolo Premium subscriptions.")
@@ -1771,6 +1775,7 @@ def render_pay(lang: str, t: dict) -> str:
     html = PAY_LAYOUT
     html = html.replace("{{LANG}}", lang)
     html = html.replace("{{PREFIX}}", prefix)
+    html = html.replace("{{HOME_URL}}", home_url)
     html = html.replace("{{CHECKOUT_TITLE}}", checkout_title)
     html = html.replace("{{CHECKOUT_SUBTITLE}}", checkout_subtitle)
     html = html.replace("{{CHECKOUT_EYEBROW}}", checkout_eyebrow)
@@ -1793,6 +1798,7 @@ def render_pay(lang: str, t: dict) -> str:
 
 def render_landing(lang: str, t: dict) -> str:
     prefix = "" if lang == "en" else f"/{lang}"
+    home_url = "/" if lang == "en" else f"/{lang}"
     
     canonical_url = "https://aliolo.com/" if lang == "en" else f"https://aliolo.com/{lang}"
     
@@ -1805,6 +1811,7 @@ def render_landing(lang: str, t: dict) -> str:
     html = LANDING_LAYOUT
     html = html.replace("{{LANG}}", lang)
     html = html.replace("{{PREFIX}}", prefix)
+    html = html.replace("{{HOME_URL}}", home_url)
     html = html.replace("{{CANONICAL_URL}}", canonical_url)
     html = html.replace("{{SEO_ALTERNATES}}", seo_alternates_html)
     html = html.replace("{{LANG_SWITCHER}}", render_lang_switcher(lang, "landing"))
