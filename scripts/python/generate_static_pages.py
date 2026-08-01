@@ -1415,7 +1415,7 @@ LANDING_LAYOUT = """<!DOCTYPE html>
   <script>
     (() => {
       const params = new URLSearchParams(window.location.search);
-      if (params.has('login') || params.has('type') || params.has('invite')) {
+      if (params.has('type') || params.has('invite')) {
         window.location.replace('/login' + window.location.search + window.location.hash);
       }
     })();
@@ -1435,7 +1435,7 @@ LANDING_LAYOUT = """<!DOCTYPE html>
         <a class="desktop-link" href="#workflow">{{T_landing_nav_how_it_works}}</a>
         <a class="desktop-link" href="#pricing">{{T_landing_nav_pricing}}</a>
         {{LANG_SWITCHER}}
-        <a href="{{HOME_URL}}?login=1" class="nav-login">{{T_landing_nav_login}}</a>
+        <a href="{{LOGIN_URL}}?login=1" class="nav-login">{{T_landing_nav_login}}</a>
         <a href="{{PREFIX}}/login" class="nav-cta">{{T_landing_nav_cta}}</a>
       </nav>
     </div>
@@ -1449,7 +1449,7 @@ LANDING_LAYOUT = """<!DOCTYPE html>
         <p>{{T_landing_hero_p}}</p>
         <div class="cta-group">
           <a href="{{PREFIX}}/login" class="btn btn-primary">{{T_landing_hero_btn_primary}}</a>
-          <a href="{{HOME_URL}}?login=1" class="btn btn-secondary">{{T_landing_hero_btn_secondary}}</a>
+          <a href="{{LOGIN_URL}}?login=1" class="btn btn-secondary">{{T_landing_hero_btn_secondary}}</a>
         </div>
         <div class="proof-row" aria-label="Product highlights">
           <div class="proof">
@@ -1799,6 +1799,7 @@ def render_pay(lang: str, t: dict) -> str:
 def render_landing(lang: str, t: dict) -> str:
     prefix = "" if lang == "en" else f"/{lang}"
     home_url = "/" if lang == "en" else f"/{lang}"
+    login_url = "/login" if lang == "en" else f"/{lang}/login"
     
     canonical_url = "https://aliolo.com/" if lang == "en" else f"https://aliolo.com/{lang}"
     
@@ -1812,6 +1813,7 @@ def render_landing(lang: str, t: dict) -> str:
     html = html.replace("{{LANG}}", lang)
     html = html.replace("{{PREFIX}}", prefix)
     html = html.replace("{{HOME_URL}}", home_url)
+    html = html.replace("{{LOGIN_URL}}", login_url)
     html = html.replace("{{CANONICAL_URL}}", canonical_url)
     html = html.replace("{{SEO_ALTERNATES}}", seo_alternates_html)
     html = html.replace("{{LANG_SWITCHER}}", render_lang_switcher(lang, "landing"))

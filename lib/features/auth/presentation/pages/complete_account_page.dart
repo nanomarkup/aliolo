@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/data/services/auth_service.dart';
+import 'package:aliolo/data/services/translation_service.dart';
 
 class CompleteAccountPage extends StatefulWidget {
   const CompleteAccountPage({super.key});
@@ -64,7 +65,7 @@ class _CompleteAccountPageState extends State<CompleteAccountPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Complete account')),
+      appBar: AppBar(title: Text(context.t('complete_account'))),
       body: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 420),
@@ -74,22 +75,25 @@ class _CompleteAccountPageState extends State<CompleteAccountPage> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const SizedBox(height: 24),
-                const Text(
-                  'Finish your account setup',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                Text(
+                  context.t('finish_account_setup'),
+                  style: const TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 const SizedBox(height: 12),
                 Text(
-                  'Your subscription is already attached to this account. Add a username and password so you can log in anywhere and recover purchases later.',
+                  context.t('complete_account_subscription_desc'),
                   style: TextStyle(color: Colors.grey[700], fontSize: 15),
                 ),
                 const SizedBox(height: 32),
                 TextField(
                   controller: _usernameController,
                   enabled: !_isLoading,
-                  decoration: const InputDecoration(
-                    labelText: 'Username',
-                    border: OutlineInputBorder(),
+                  decoration: InputDecoration(
+                    labelText: context.t('username'),
+                    border: const OutlineInputBorder(),
                   ),
                 ),
                 const SizedBox(height: 16),
@@ -97,9 +101,9 @@ class _CompleteAccountPageState extends State<CompleteAccountPage> {
                   controller: _passwordController,
                   enabled: !_isLoading,
                   obscureText: true,
-                  decoration: const InputDecoration(
-                    labelText: 'Password',
-                    border: OutlineInputBorder(),
+                  decoration: InputDecoration(
+                    labelText: context.t('password'),
+                    border: const OutlineInputBorder(),
                   ),
                 ),
                 const SizedBox(height: 16),
@@ -107,9 +111,9 @@ class _CompleteAccountPageState extends State<CompleteAccountPage> {
                   controller: _confirmPasswordController,
                   enabled: !_isLoading,
                   obscureText: true,
-                  decoration: const InputDecoration(
-                    labelText: 'Confirm password',
-                    border: OutlineInputBorder(),
+                  decoration: InputDecoration(
+                    labelText: context.t('confirm_password'),
+                    border: const OutlineInputBorder(),
                   ),
                 ),
                 const SizedBox(height: 24),
@@ -118,7 +122,7 @@ class _CompleteAccountPageState extends State<CompleteAccountPage> {
                 else
                   ElevatedButton(
                     onPressed: _submit,
-                    child: const Text('Save account'),
+                    child: Text(context.t('save_account')),
                   ),
               ],
             ),

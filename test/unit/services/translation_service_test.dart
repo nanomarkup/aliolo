@@ -49,5 +49,32 @@ void main() {
 
       expect(translationService.translate('about'), equals('Acerca de'));
     });
+
+    test('detects startup language from localized URL prefix', () {
+      expect(
+        TranslationService.languageFromInitialUrl(
+          'https://aliolo.com/tr/login',
+        ),
+        equals('tr'),
+      );
+      expect(
+        TranslationService.languageFromInitialUrl(
+          'https://aliolo.com/sk/login?login=1',
+        ),
+        equals('sk'),
+      );
+      expect(
+        TranslationService.languageFromInitialUrl(
+          'https://aliolo.com/login?lang=es',
+        ),
+        equals('es'),
+      );
+      expect(
+        TranslationService.languageFromInitialUrl(
+          'https://aliolo.com/ru/login',
+        ),
+        isNull,
+      );
+    });
   });
 }

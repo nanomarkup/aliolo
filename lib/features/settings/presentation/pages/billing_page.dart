@@ -73,7 +73,14 @@ class _BillingPageState extends State<BillingPage> {
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(formatApiErrorMessage(e, fallback: 'Purchase failed. Please try again.'))),
+          SnackBar(
+            content: Text(
+              formatApiErrorMessage(
+                e,
+                fallback: 'Purchase failed. Please try again.',
+              ),
+            ),
+          ),
         );
       }
     } finally {
@@ -93,7 +100,8 @@ class _BillingPageState extends State<BillingPage> {
             content: Text(
               formatApiErrorMessage(
                 e,
-                fallback: 'Could not open Paddle cancellation. Please try again.',
+                fallback:
+                    'Could not open Paddle cancellation. Please try again.',
               ),
             ),
           ),
@@ -128,7 +136,7 @@ class _BillingPageState extends State<BillingPage> {
         children: [
           if (showPaddleCancellation) ...[
             Text(
-              'Need to cancel a Paddle subscription? Open the Paddle cancellation flow below.',
+              context.t('paddle_cancel_subscription_desc'),
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 13, color: Colors.grey[600]),
             ),
@@ -149,7 +157,7 @@ class _BillingPageState extends State<BillingPage> {
                   ),
                 ),
                 child: Text(
-                  'Cancel in Paddle',
+                  context.t('cancel_in_paddle'),
                   style: TextStyle(
                     color: currentPrimaryColor,
                     fontWeight: FontWeight.bold,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/data/services/auth_service.dart';
+import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/features/auth/presentation/pages/login_page.dart';
 
 class CheckoutIdentityPage extends StatefulWidget {
@@ -136,19 +137,19 @@ class _CheckoutIdentityPageState extends State<CheckoutIdentityPage> {
   Widget build(BuildContext context) {
     final title =
         _step == 0
-            ? 'Create your account to continue'
+            ? context.t('create_account_to_continue')
             : _step == 1
-            ? 'Verify your email'
-            : 'Finish account setup';
+            ? context.t('verify_your_email')
+            : context.t('finish_account_setup');
     final subtitle =
         _step == 0
-            ? 'Enter your email before checkout so Aliolo can create your account and attach the subscription to you.'
+            ? context.t('checkout_email_before_payment_desc')
             : _step == 1
-            ? 'We need one quick verification before opening the store payment sheet.'
-            : 'Choose your username and password now so you can log in again later if the payment is canceled or interrupted.';
+            ? context.t('checkout_verification_desc')
+            : context.t('checkout_finish_account_desc');
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Continue to checkout')),
+      appBar: AppBar(title: Text(context.t('continue_to_checkout'))),
       body: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 420),
@@ -176,9 +177,9 @@ class _CheckoutIdentityPageState extends State<CheckoutIdentityPage> {
                   enabled: !_isLoading && _step == 0,
                   keyboardType: TextInputType.emailAddress,
                   autofillHints: const [AutofillHints.email],
-                  decoration: const InputDecoration(
-                    labelText: 'Email',
-                    border: OutlineInputBorder(),
+                  decoration: InputDecoration(
+                    labelText: context.t('email'),
+                    border: const OutlineInputBorder(),
                   ),
                 ),
                 if (_step == 1) ...[
@@ -189,9 +190,9 @@ class _CheckoutIdentityPageState extends State<CheckoutIdentityPage> {
                     keyboardType: TextInputType.number,
                     maxLength: 6,
                     autofillHints: const [AutofillHints.oneTimeCode],
-                    decoration: const InputDecoration(
-                      labelText: 'Verification code',
-                      border: OutlineInputBorder(),
+                    decoration: InputDecoration(
+                      labelText: context.t('verification_code'),
+                      border: const OutlineInputBorder(),
                     ),
                   ),
                 ],
@@ -199,9 +200,9 @@ class _CheckoutIdentityPageState extends State<CheckoutIdentityPage> {
                   TextField(
                     controller: _usernameController,
                     enabled: !_isLoading,
-                    decoration: const InputDecoration(
-                      labelText: 'Username',
-                      border: OutlineInputBorder(),
+                    decoration: InputDecoration(
+                      labelText: context.t('username'),
+                      border: const OutlineInputBorder(),
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -209,9 +210,9 @@ class _CheckoutIdentityPageState extends State<CheckoutIdentityPage> {
                     controller: _passwordController,
                     enabled: !_isLoading,
                     obscureText: true,
-                    decoration: const InputDecoration(
-                      labelText: 'Password',
-                      border: OutlineInputBorder(),
+                    decoration: InputDecoration(
+                      labelText: context.t('password'),
+                      border: const OutlineInputBorder(),
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -219,9 +220,9 @@ class _CheckoutIdentityPageState extends State<CheckoutIdentityPage> {
                     controller: _confirmPasswordController,
                     enabled: !_isLoading,
                     obscureText: true,
-                    decoration: const InputDecoration(
-                      labelText: 'Confirm password',
-                      border: OutlineInputBorder(),
+                    decoration: InputDecoration(
+                      labelText: context.t('confirm_password'),
+                      border: const OutlineInputBorder(),
                     ),
                   ),
                 ],
@@ -281,7 +282,7 @@ class _CheckoutIdentityPageState extends State<CheckoutIdentityPage> {
                               ),
                             );
                           },
-                  child: const Text('Log in instead'),
+                  child: Text(context.t('log_in_instead')),
                 ),
               ],
             ),

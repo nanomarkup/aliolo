@@ -7,6 +7,7 @@ import 'package:aliolo/data/models/feedback_reply_model.dart';
 import 'package:aliolo/data/services/feedback_service.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
+import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/core/widgets/aliolo_scrollable_page.dart';
 import 'package:aliolo/core/utils/api_error.dart';
 
@@ -92,9 +93,7 @@ class _FeedbackDetailPageState extends State<FeedbackDetailPage> {
       _currentStatus = _isAdmin ? 'replied' : 'open';
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
               formatApiErrorMessage(
@@ -150,9 +149,7 @@ class _FeedbackDetailPageState extends State<FeedbackDetailPage> {
       }
     } catch (e) {
       if (mounted)
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
               formatApiErrorMessage(
@@ -190,9 +187,7 @@ class _FeedbackDetailPageState extends State<FeedbackDetailPage> {
       );
     } catch (e) {
       if (mounted)
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
               formatApiErrorMessage(
@@ -216,19 +211,17 @@ class _FeedbackDetailPageState extends State<FeedbackDetailPage> {
         context: context,
         builder:
             (context) => AlertDialog(
-              title: const Text('Close Request?'),
-              content: const Text(
-                'Are you sure you want to close this feedback request?',
-              ),
+              title: Text(context.t('close_request')),
+              content: Text(context.t('close_feedback_request_confirm')),
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(context, false),
-                  child: const Text('Cancel'),
+                  child: Text(context.t('cancel')),
                 ),
                 TextButton(
                   onPressed: () => Navigator.pop(context, true),
                   style: TextButton.styleFrom(foregroundColor: Colors.red),
-                  child: const Text('Close'),
+                  child: Text(context.t('close')),
                 ),
               ],
             ),
@@ -254,9 +247,7 @@ class _FeedbackDetailPageState extends State<FeedbackDetailPage> {
       setState(() => _currentStatus = newStatus);
     } catch (e) {
       if (mounted)
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
               formatApiErrorMessage(
@@ -286,7 +277,7 @@ class _FeedbackDetailPageState extends State<FeedbackDetailPage> {
           onPressed: () => Navigator.pop(context),
         ),
         IconButton(
-          tooltip: 'Refresh conversation',
+          tooltip: context.t('refresh_conversation'),
           icon: const Icon(Icons.refresh, color: appBarColor),
           onPressed: _isLoading ? null : _loadReplies,
         ),
@@ -325,7 +316,7 @@ class _FeedbackDetailPageState extends State<FeedbackDetailPage> {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                'Please wait for a response before replying again.',
+                context.t('wait_for_response_before_replying'),
                 style: TextStyle(
                   color: Colors.grey[600],
                   fontStyle: FontStyle.italic,
@@ -541,15 +532,15 @@ class _FeedbackDetailPageState extends State<FeedbackDetailPage> {
                   color: Colors.red,
                 ),
                 onPressed: _isSending ? null : _deleteLastReply,
-                label: const Text(
-                  'Delete',
+                label: Text(
+                  context.t('delete'),
                   style: TextStyle(color: Colors.red),
                 ),
               ),
             const Spacer(),
             TextButton(
               onPressed: () => setState(() => _isEditingLast = false),
-              child: const Text('Cancel'),
+              child: Text(context.t('cancel')),
             ),
             ElevatedButton(
               onPressed: _isSending ? null : _saveEdit,
@@ -560,7 +551,7 @@ class _FeedbackDetailPageState extends State<FeedbackDetailPage> {
                         height: 16,
                         child: CircularProgressIndicator(strokeWidth: 2),
                       )
-                      : const Text('Save'),
+                      : Text(context.t('save')),
             ),
           ],
         ),
@@ -673,16 +664,16 @@ class _FeedbackDetailPageState extends State<FeedbackDetailPage> {
           Row(
             children: [
               IconButton(
-                tooltip: 'Attach image',
+                tooltip: context.t('attach_image'),
                 icon: const Icon(Icons.attach_file),
                 onPressed: _isSending ? null : _pickReplyImages,
               ),
               Expanded(
                 child: TextField(
                   controller: _replyController,
-                  decoration: const InputDecoration(
-                    hintText: 'Type your reply...',
-                    border: OutlineInputBorder(),
+                  decoration: InputDecoration(
+                    hintText: context.t('type_your_reply'),
+                    border: const OutlineInputBorder(),
                   ),
                   onSubmitted: (_) => _sendReply(),
                 ),

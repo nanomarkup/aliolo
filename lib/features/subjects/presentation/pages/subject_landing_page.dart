@@ -39,10 +39,7 @@ class _EarlyRetestDecision {
   final bool retest;
   final bool remember;
 
-  const _EarlyRetestDecision({
-    required this.retest,
-    required this.remember,
-  });
+  const _EarlyRetestDecision({required this.retest, required this.remember});
 }
 
 class SubjectLandingPage extends StatefulWidget {
@@ -172,26 +169,23 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
           (dialogContext) => StatefulBuilder(
             builder:
                 (context, setDialogState) => AlertDialog(
-                  title: const Text('No cards are due yet'),
+                  title: Text(context.t('no_cards_due_yet')),
                   content: Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'You are up to date for this subject. You can still retest all cards now.',
-                      ),
+                      Text(context.t('subject_up_to_date_retest_desc')),
                       const SizedBox(height: 12),
                       CheckboxListTile(
                         value: remember,
                         onChanged:
-                            (value) => setDialogState(
-                              () => remember = value ?? false,
-                            ),
+                            (value) =>
+                                setDialogState(() => remember = value ?? false),
                         dense: true,
                         contentPadding: EdgeInsets.zero,
                         controlAffinity: ListTileControlAffinity.leading,
-                        title: const Text(
-                          "Don't show again for this subject",
+                        title: Text(
+                          context.t('dont_show_again_for_this_subject'),
                         ),
                       ),
                     ],
@@ -215,7 +209,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                               remember: remember,
                             ),
                           ),
-                      child: const Text('Retest anyway'),
+                      child: Text(context.t('retest_anyway')),
                     ),
                   ],
                 ),
@@ -1079,26 +1073,32 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
             actions:
                 isSmallScreen
                     ? [
-                        IconButton(
-                          tooltip: context.t('home'),
-                          icon: Icon(Icons.school, color: appBarColor, size: 24),
-                          onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
-                        ),
-                        backAction,
-                        if (favoriteAction != null) favoriteAction
-                      ]
+                      IconButton(
+                        tooltip: context.t('home'),
+                        icon: Icon(Icons.school, color: appBarColor, size: 24),
+                        onPressed:
+                            () => Navigator.of(
+                              context,
+                            ).popUntil((route) => route.isFirst),
+                      ),
+                      backAction,
+                      if (favoriteAction != null) favoriteAction,
+                    ]
                     : [
-                        IconButton(
-                          tooltip: context.t('home'),
-                          icon: Icon(Icons.school, color: appBarColor, size: 24),
-                          onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
-                        ),
-                        backAction,
-                        if (favoriteAction != null) favoriteAction,
-                        if (editAction != null) editAction,
-                        if (deleteAction != null) deleteAction,
-                        feedbackAction,
-                      ],
+                      IconButton(
+                        tooltip: context.t('home'),
+                        icon: Icon(Icons.school, color: appBarColor, size: 24),
+                        onPressed:
+                            () => Navigator.of(
+                              context,
+                            ).popUntil((route) => route.isFirst),
+                      ),
+                      backAction,
+                      if (favoriteAction != null) favoriteAction,
+                      if (editAction != null) editAction,
+                      if (deleteAction != null) deleteAction,
+                      feedbackAction,
+                    ],
             overflowActions:
                 isSmallScreen
                     ? [
@@ -1231,18 +1231,16 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                   child: Center(child: CircularProgressIndicator()),
                 )
               else if (_currentSubject == null && _currentCollection == null)
-                const SliverFillRemaining(
+                SliverFillRemaining(
                   child: Center(
-                    child: Text(
-                      'This is a folder. You can use Learn/Test buttons above to practice all cards.',
-                    ),
+                    child: Text(context.t('folder_practice_all_cards_desc')),
                   ),
                 )
               else if (_currentCollection != null)
                 if (_filteredSubjects.isEmpty)
-                  const SliverFillRemaining(
+                  SliverFillRemaining(
                     child: Center(
-                      child: Text('No subjects found in this collection'),
+                      child: Text(context.t('no_subjects_found_in_collection')),
                     ),
                   )
                 else
@@ -1347,8 +1345,8 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                     ),
                   )
               else if (_filteredCards.isEmpty)
-                const SliverFillRemaining(
-                  child: Center(child: Text('No cards found')),
+                SliverFillRemaining(
+                  child: Center(child: Text(context.t('no_cards_found'))),
                 )
               else
                 SliverPadding(
@@ -2060,7 +2058,10 @@ class _ZoomedCardContentState extends State<_ZoomedCardContent> {
                       ),
                       GestureDetector(
                         onLongPressStart:
-                            getIt<SubscriptionService>().isPremium ? (details) => _showDelayMenu(details.globalPosition) : null,
+                            getIt<SubscriptionService>().isPremium
+                                ? (details) =>
+                                    _showDelayMenu(details.globalPosition)
+                                : null,
                         child: Stack(
                           alignment: Alignment.topRight,
                           children: [
@@ -2072,23 +2073,30 @@ class _ZoomedCardContentState extends State<_ZoomedCardContent> {
                                 color: widget.pillarColor,
                                 size: 28,
                               ),
-                              onPressed: getIt<SubscriptionService>().isPremium
-                                  ? _toggleAutoPlay
-                                  : () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => const PremiumUpgradePage(),
-                                        ),
-                                      );
-                                    },
+                              onPressed:
+                                  getIt<SubscriptionService>().isPremium
+                                      ? _toggleAutoPlay
+                                      : () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder:
+                                                (context) =>
+                                                    const PremiumUpgradePage(),
+                                          ),
+                                        );
+                                      },
                               tooltip: context.t("autoplay"),
                             ),
                             if (!getIt<SubscriptionService>().isPremium)
                               const Positioned(
                                 top: 4,
                                 right: 4,
-                                child: Icon(Icons.workspace_premium, size: 14, color: Colors.amber),
+                                child: Icon(
+                                  Icons.workspace_premium,
+                                  size: 14,
+                                  color: Colors.amber,
+                                ),
                               ),
                           ],
                         ),

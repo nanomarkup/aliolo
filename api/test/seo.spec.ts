@@ -86,7 +86,7 @@ describe('SEO and crawlability', () => {
     expect(html).toContain('id="main-content"');
     expect(html).toContain('src="/landing-product-preview.jpg"');
     expect(html).toContain('href="/login" class="btn btn-primary">Create free account</a>');
-    expect(html).toContain('href="/?login=1" class="btn btn-secondary">Log in</a>');
+    expect(html).toContain('href="/login?login=1" class="btn btn-secondary">Log in</a>');
     expect(html).toContain('aria-label="View monthly plan details"');
     expect(html).not.toContain('payment partners');
     expect(html).not.toContain('Paddle review');
@@ -273,4 +273,5 @@ describe('SEO and crawlability', () => {
     const html = await resLogin.text();
     expect(html).toContain('flutter_bootstrap.js');
   });
+
 });

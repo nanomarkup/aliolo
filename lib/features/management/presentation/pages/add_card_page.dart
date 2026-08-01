@@ -87,8 +87,7 @@ class _AddCardPageState extends State<AddCardPage> {
   final _keyboardFocusNode = FocusNode();
   final _editorFocusNode = FocusNode();
 
-  bool get _isAdmin =>
-      _authService.currentUser?.serverId == _adminUserId;
+  bool get _isAdmin => _authService.currentUser?.serverId == _adminUserId;
 
   @override
   void initState() {
@@ -283,13 +282,11 @@ class _AddCardPageState extends State<AddCardPage> {
     if (subject.isCounting) {
       _renderer = 'counting';
     } else if (subject.isAddition) {
-      _renderer = subject.maxOperand > 10
-          ? 'addition_number'
-          : 'addition_emoji';
+      _renderer =
+          subject.maxOperand > 10 ? 'addition_number' : 'addition_emoji';
     } else if (subject.isSubtraction) {
-      _renderer = subject.maxOperand > 10
-          ? 'subtraction_number'
-          : 'subtraction_emoji';
+      _renderer =
+          subject.maxOperand > 10 ? 'subtraction_number' : 'subtraction_emoji';
     } else if (subject.isColors) {
       _renderer = 'colors';
     }
@@ -530,7 +527,7 @@ class _AddCardPageState extends State<AddCardPage> {
               return Dialog.fullscreen(
                 child: Scaffold(
                   appBar: AppBar(
-                    title: const Text('Localized Data'),
+                    title: Text(context.t('localized_data')),
                     automaticallyImplyLeading: false,
                     actions: [
                       IconButton(
@@ -550,7 +547,7 @@ class _AddCardPageState extends State<AddCardPage> {
             return AlertDialog(
               title: Row(
                 children: [
-                  const Text('Localized Data'),
+                  Text(context.t('localized_data')),
                   const Spacer(),
                   IconButton(
                     icon: const Icon(Icons.close),
@@ -576,44 +573,52 @@ class _AddCardPageState extends State<AddCardPage> {
     if (widget.existingCard == null && !_isAdmin) {
       final currentCount = await _cardService.getCardCount();
       final limit = _authService.currentUser?.cardLimit ?? 200;
-      
+
       if (currentCount >= limit && mounted) {
         showDialog(
           context: context,
-          builder: (context) => AlertDialog(
-            title: Text(context.t('limit_reached')),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(context.t('card_limit_msg', args: {'limit': limit.toString()})),
-                const SizedBox(height: 16),
-                InkWell(
-                  onTap: () {
-                    Navigator.pop(context);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const FeedbackPage()),
-                    );
-                  },
-                  child: Text(
-                    context.t('create_request'),
-                    style: TextStyle(
-                      color: Theme.of(context).primaryColor,
-                      fontWeight: FontWeight.bold,
-                      decoration: TextDecoration.underline,
+          builder:
+              (context) => AlertDialog(
+                title: Text(context.t('limit_reached')),
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      context.t(
+                        'card_limit_msg',
+                        args: {'limit': limit.toString()},
+                      ),
                     ),
-                  ),
+                    const SizedBox(height: 16),
+                    InkWell(
+                      onTap: () {
+                        Navigator.pop(context);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const FeedbackPage(),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        context.t('create_request'),
+                        style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                          fontWeight: FontWeight.bold,
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: Text(context.t('ok')),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: Text(context.t('ok')),
+                  ),
+                ],
               ),
-            ],
-          ),
         );
         return;
       }
@@ -631,7 +636,8 @@ class _AddCardPageState extends State<AddCardPage> {
     }
 
     // Check if at least one visual content is provided (Visual Text, Image, Audio, or Video)
-    bool hasVisual = globalDraft.displayText.trim().isNotEmpty ||
+    bool hasVisual =
+        globalDraft.displayText.trim().isNotEmpty ||
         globalDraft.imageUrls.isNotEmpty ||
         globalDraft.newImageFiles.isNotEmpty ||
         globalDraft.newAudioFile != null ||
@@ -783,11 +789,11 @@ class _AddCardPageState extends State<AddCardPage> {
     if (!isOwner) {
       return Scaffold(
         appBar: AppBar(title: Text(context.t('view_card'))),
-        body: const Center(
+        body: Center(
           child: Padding(
-            padding: EdgeInsets.all(32.0),
+            padding: const EdgeInsets.all(32.0),
             child: Text(
-              'You do not have permission to view this card details.',
+              context.t('no_permission_view_card_details'),
               textAlign: TextAlign.center,
             ),
           ),
@@ -1178,7 +1184,11 @@ class _AddCardPageState extends State<AddCardPage> {
           const SizedBox(height: 8),
           Text(
             '* ${context.t('visual_content_required')}',
-            style: const TextStyle(fontSize: 12, color: Colors.orange, fontWeight: FontWeight.w500),
+            style: const TextStyle(
+              fontSize: 12,
+              color: Colors.orange,
+              fontWeight: FontWeight.w500,
+            ),
           ),
           const SizedBox(height: 16),
 
@@ -1277,8 +1287,8 @@ class _AddCardPageState extends State<AddCardPage> {
       items.add(
         DropdownMenuItem(
           value: _selectedSubjectId,
-          child: const Text(
-            'Public/Other Subject',
+          child: Text(
+            context.t('public_other_subject'),
             overflow: TextOverflow.ellipsis,
           ),
         ),
@@ -1312,26 +1322,32 @@ class _AddCardPageState extends State<AddCardPage> {
         border: const OutlineInputBorder(),
         contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       ),
-      items: const [
-        DropdownMenuItem(value: 'generic', child: Text('Generic')),
-        DropdownMenuItem(value: 'counting', child: Text('Counting')),
+      items: [
+        DropdownMenuItem(
+          value: 'generic',
+          child: Text(context.t('renderer_generic')),
+        ),
+        DropdownMenuItem(
+          value: 'counting',
+          child: Text(context.t('renderer_counting')),
+        ),
         DropdownMenuItem(
           value: 'addition_emoji',
-          child: Text('Addition Emoji'),
+          child: Text(context.t('renderer_addition_emoji')),
         ),
         DropdownMenuItem(
           value: 'addition_number',
-          child: Text('Addition Numbers'),
+          child: Text(context.t('renderer_addition_numbers')),
         ),
         DropdownMenuItem(
           value: 'subtraction_emoji',
-          child: Text('Subtraction Emoji'),
+          child: Text(context.t('renderer_subtraction_emoji')),
         ),
         DropdownMenuItem(
           value: 'subtraction_number',
-          child: Text('Subtraction Numbers'),
+          child: Text(context.t('renderer_subtraction_numbers')),
         ),
-        DropdownMenuItem(value: 'colors', child: Text('Colors')),
+        DropdownMenuItem(value: 'colors', child: Text(context.t('colors'))),
       ],
       onChanged:
           widget.isReadOnly
@@ -1353,18 +1369,9 @@ class _AddCardPageState extends State<AddCardPage> {
           width: double.infinity,
           child: SegmentedButton<int>(
             segments: [
-              ButtonSegment<int>(
-                value: 1,
-                label: const Text('1'),
-              ),
-              ButtonSegment<int>(
-                value: 2,
-                label: const Text('2'),
-              ),
-              ButtonSegment<int>(
-                value: 3,
-                label: const Text('3'),
-              ),
+              ButtonSegment<int>(value: 1, label: const Text('1')),
+              ButtonSegment<int>(value: 2, label: const Text('2')),
+              ButtonSegment<int>(value: 3, label: const Text('3')),
             ],
             selected: {_cardLevel},
             onSelectionChanged:
@@ -1575,7 +1582,7 @@ class _AddCardPageState extends State<AddCardPage> {
             IconButton(
               icon: const Icon(Icons.play_arrow, size: 18, color: Colors.blue),
               onPressed: () => _playUrl(draft.audioUrl),
-              tooltip: 'Play',
+              tooltip: context.t('play'),
             ),
           if (!widget.isReadOnly)
             IconButton(
@@ -1623,7 +1630,7 @@ class _AddCardPageState extends State<AddCardPage> {
             IconButton(
               icon: const Icon(Icons.play_arrow, size: 18, color: Colors.blue),
               onPressed: () => _playUrl(draft.videoUrl),
-              tooltip: 'Play',
+              tooltip: context.t('play'),
             ),
           if (!widget.isReadOnly)
             IconButton(

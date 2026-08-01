@@ -632,7 +632,7 @@ class _TestPageState extends State<TestPage> {
 
   Widget _buildModeMenuButton(Color headerColor) {
     return PopupMenuButton<TestModeChoice>(
-      tooltip: 'Testing mode',
+      tooltip: context.t('testing_mode'),
       initialValue: _selectedMode,
       icon: Icon(_selectedMode.icon),
       onSelected: _setSelectedMode,

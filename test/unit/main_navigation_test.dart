@@ -8,6 +8,12 @@ void main() {
         shouldSkipOnboardingForInitialUrl('https://aliolo.com/login?login=1'),
         isTrue,
       );
+      expect(
+        shouldSkipOnboardingForInitialUrl(
+          'https://aliolo.com/tr/login?login=1',
+        ),
+        isTrue,
+      );
     });
 
     test('account creation links retain first-visit onboarding', () {

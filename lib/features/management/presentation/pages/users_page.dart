@@ -281,7 +281,7 @@ class _UsersPageState extends State<UsersPage> {
           ),
           const SizedBox(width: AlioloLayoutTokens.compactRowSpacing),
           IconButton(
-            tooltip: 'Show Fake Users',
+            tooltip: context.t('show_fake_users'),
             icon: Icon(
               _showFakeUsers ? Icons.face : Icons.face_outlined,
               color: _showFakeUsers ? currentPrimaryColor : Colors.grey,
@@ -364,7 +364,7 @@ class _UsersPageState extends State<UsersPage> {
                     ? null
                     : () => _loadUsers(page: _currentPage - 1),
             icon: const Icon(Icons.chevron_left),
-            label: const Text('Previous'),
+            label: Text(context.t('previous')),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -379,7 +379,7 @@ class _UsersPageState extends State<UsersPage> {
                     ? null
                     : () => _loadUsers(page: _currentPage + 1),
             icon: const Icon(Icons.chevron_right),
-            label: const Text('Next'),
+            label: Text(context.t('next')),
           ),
         ],
       ),
@@ -571,9 +571,7 @@ class _UsersPageState extends State<UsersPage> {
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
               formatApiErrorMessage(
@@ -664,7 +662,10 @@ class _UsersPageState extends State<UsersPage> {
             context.t('created_at'),
             _formatDate(user.profile.createdAt),
           ),
-          _buildInfoRow(context.t('updated_at'), _formatDate(user.profile.updatedAt)),
+          _buildInfoRow(
+            context.t('updated_at'),
+            _formatDate(user.profile.updatedAt),
+          ),
           _buildInfoRow(
             'Last seen',
             _lastSeenLabel(user.profile.lastActiveDate),
@@ -706,7 +707,8 @@ class _UsersPageState extends State<UsersPage> {
           ),
           _buildInfoRow(
             'Manual grant',
-            user.subscription?.activeManualGrantId ?? context.t('not_available'),
+            user.subscription?.activeManualGrantId ??
+                context.t('not_available'),
             copyable: user.subscription?.activeManualGrantId != null,
           ),
           _buildInfoRow(

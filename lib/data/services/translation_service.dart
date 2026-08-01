@@ -1,6 +1,9 @@
 import 'package:aliolo/core/utils/io_utils.dart'
     if (dart.library.html) 'package:aliolo/core/utils/file_stub.dart'
     as io;
+import 'package:aliolo/core/utils/file_stub.dart'
+    if (dart.library.html) 'dart:html'
+    as web;
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart' show rootBundle;
@@ -102,14 +105,65 @@ class TranslationService extends ChangeNotifier {
 
   List<String> get availableUILanguages => supportedUILanguages;
 
-  Future<void> init() async {
+  @visibleForTesting
+  static String? languageFromInitialUrl(String? initialUrl) {
+    if (initialUrl == null || initialUrl.trim().isEmpty) return null;
+
+    final uri = Uri.tryParse(initialUrl);
+    if (uri == null) return null;
+
+    final langQuery =
+        uri.queryParameters['lang'] ?? uri.queryParameters['ui_lang'];
+    if (langQuery != null) {
+      final lc = langQuery.toLowerCase();
+      if (supportedUILanguages.contains(lc)) return lc;
+    }
+
+    if (uri.pathSegments.isNotEmpty) {
+      final lc = uri.pathSegments.first.toLowerCase();
+      if (supportedUILanguages.contains(lc)) return lc;
+    }
+
+    return null;
+  }
+
+  String? _languageFromCookie() {
+    if (!kIsWeb) return null;
+
+    try {
+      final cookie = web.document.cookie ?? '';
+      for (final part in cookie.split(';')) {
+        final index = part.indexOf('=');
+        if (index <= 0) continue;
+
+        final name = part.substring(0, index).trim();
+        if (name != 'aliolo_lang') continue;
+
+        final value = Uri.decodeComponent(part.substring(index + 1).trim());
+        final lc = value.toLowerCase();
+        if (supportedUILanguages.contains(lc)) return lc;
+      }
+    } catch (_) {}
+
+    return null;
+  }
+
+  Future<void> init({String? initialUrl}) async {
     final prefs = await SharedPreferences.getInstance();
     String? savedLocale = prefs.getString('ui_locale');
 
     await _loadLocalEnglishFallback();
 
     String langCode = 'en';
-    if (savedLocale != null && supportedUILanguages.contains(savedLocale)) {
+    final startupLocale =
+        languageFromInitialUrl(initialUrl) ?? _languageFromCookie();
+
+    if (startupLocale != null) {
+      langCode = startupLocale;
+      _currentLocale = Locale(langCode);
+      await prefs.setString('ui_locale', langCode);
+    } else if (savedLocale != null &&
+        supportedUILanguages.contains(savedLocale)) {
       langCode = savedLocale;
       _currentLocale = Locale(langCode);
     } else {

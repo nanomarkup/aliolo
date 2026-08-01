@@ -293,7 +293,10 @@ class _LoginPageState extends State<LoginPage> {
       } catch (e) {
         _showMsg(
           _authService.lastErrorMessage ??
-              formatApiErrorMessage(e, fallback: 'Could not create your account.'),
+              formatApiErrorMessage(
+                e,
+                fallback: 'Could not create your account.',
+              ),
         );
       } finally {
         if (mounted) setState(() => _isLoading = false);
@@ -394,7 +397,10 @@ class _LoginPageState extends State<LoginPage> {
     } catch (e) {
       _showMsg(
         _authService.lastErrorMessage ??
-            formatApiErrorMessage(e, fallback: 'Recovery error. Please try again.'),
+            formatApiErrorMessage(
+              e,
+              fallback: 'Recovery error. Please try again.',
+            ),
       );
     } finally {
       if (mounted) setState(() => _isLoading = false);
@@ -535,7 +541,7 @@ class _LoginPageState extends State<LoginPage> {
                             ],
                             if (_isCreatingAccount && _signupStep == 1) ...[
                               Text(
-                                'Check your email for code',
+                                context.t('check_your_email_for_code'),
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
@@ -546,7 +552,7 @@ class _LoginPageState extends State<LoginPage> {
                               TextField(
                                 controller: _codeController,
                                 decoration: InputDecoration(
-                                  labelText: 'Verification Code',
+                                  labelText: context.t('verification_code'),
                                   border: const OutlineInputBorder(),
                                   prefixIcon: const Icon(Icons.pin),
                                   focusedBorder: OutlineInputBorder(
@@ -644,9 +650,9 @@ class _LoginPageState extends State<LoginPage> {
                                 child: Text(
                                   _isCreatingAccount
                                       ? (_signupStep == 0
-                                          ? 'Next'
+                                          ? context.t('next')
                                           : (_signupStep == 1
-                                              ? 'Verify'
+                                              ? context.t('verify')
                                               : context.t('create_account')))
                                       : context.t('login'),
                                 ),
@@ -663,7 +669,7 @@ class _LoginPageState extends State<LoginPage> {
                                 child: Text(
                                   _isCreatingAccount
                                       ? (_signupStep > 0
-                                          ? 'Back'
+                                          ? context.t('back')
                                           : context.t('back_to_login'))
                                       : context.t('create_new_account'),
                                   style: TextStyle(color: mainColor),
@@ -697,7 +703,7 @@ class _LoginPageState extends State<LoginPage> {
                             Text(
                               effectiveStep == 0
                                   ? context.t('restore_password')
-                                  : 'Set Your Password',
+                                  : context.t('set_your_password'),
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
@@ -729,7 +735,7 @@ class _LoginPageState extends State<LoginPage> {
                                 TextField(
                                   controller: _codeController,
                                   decoration: InputDecoration(
-                                    labelText: 'Reset Code',
+                                    labelText: context.t('reset_code'),
                                     border: const OutlineInputBorder(),
                                     prefixIcon: const Icon(Icons.pin),
                                     focusedBorder: OutlineInputBorder(

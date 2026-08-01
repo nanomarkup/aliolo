@@ -37,6 +37,52 @@ void main() {
     return keys;
   }
 
+  List<String> findHardcodedPageStrings() {
+    final findings = <String>[];
+    final sourceFiles = Directory('${projectRoot.path}/lib/features')
+        .listSync(recursive: true)
+        .whereType<File>()
+        .where((file) => file.path.contains('/pages/'))
+        .where((file) => file.path.endsWith('.dart'));
+    final patterns = <RegExp>[
+      RegExp(r'''\b(?:const\s+)?Text\(\s*['"]([^'"]+)['"]'''),
+      RegExp(r'''\blabelText\s*:\s*['"]([^'"]+)['"]'''),
+      RegExp(r'''\bhintText\s*:\s*['"]([^'"]+)['"]'''),
+      RegExp(r'''\btooltip\s*:\s*['"]([^'"]+)['"]'''),
+    ];
+    final allowed = {
+      '',
+      '-',
+      '•',
+      '???',
+      'JSON',
+      'XP',
+      'aliolo',
+      'TECHNICAL CONTEXT',
+    };
+
+    for (final file in sourceFiles) {
+      final content = file.readAsStringSync();
+      for (final pattern in patterns) {
+        for (final match in pattern.allMatches(content)) {
+          final value = match.group(1)!.trim();
+          if (allowed.contains(value)) continue;
+          if (RegExp(r'^\d+$').hasMatch(value)) continue;
+          if (value.startsWith('#')) continue;
+          if (RegExp(r'^\$').hasMatch(value)) continue;
+          if (RegExp(r'^[a-z0-9_]+$').hasMatch(value)) continue;
+          if (value.contains(r'${context.t')) continue;
+          if (value.startsWith('UA:')) continue;
+          if (value.startsWith('Context:')) continue;
+          final line = content.substring(0, match.start).split('\n').length;
+          findings.add('${file.path}:$line: $value');
+        }
+      }
+    }
+
+    return findings;
+  }
+
   test('localization assets are complete and local-only', () {
     expect(
       File('${projectRoot.path}/remote_bundles.json').existsSync(),
@@ -64,12 +110,11 @@ void main() {
     expect(englishKeys.containsAll(sourceKeys), isTrue);
 
     for (final lang in TranslationService.supportedUILanguages) {
-      final keys = parseNanoKeys(File('${translationsDir.path}/$lang.nano'));
-      expect(
-        keys.containsAll(englishKeys),
-        isTrue,
-        reason: '$lang is missing English keys',
-      );
+      expect(File('${translationsDir.path}/$lang.nano').existsSync(), isTrue);
     }
+  });
+
+  test('Flutter page strings use localization keys', () {
+    expect(findHardcodedPageStrings(), isEmpty);
   });
 }

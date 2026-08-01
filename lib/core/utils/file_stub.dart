@@ -6,7 +6,11 @@ class File {
   bool existsSync() => false;
   Future<String> readAsString() async => '';
   String readAsStringSync() => '';
-  Future<void> writeAsString(String content, {dynamic mode, bool flush = false}) async {}
+  Future<void> writeAsString(
+    String content, {
+    dynamic mode,
+    bool flush = false,
+  }) async {}
   void writeAsStringSync(String content, {dynamic mode, bool flush = false}) {}
   Future<List<int>> readAsBytes() async => [];
   dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
@@ -22,9 +26,9 @@ class Directory {
   dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
 
-class FileMode { 
-  static const write = 0; 
-  static const append = 1; 
+class FileMode {
+  static const write = 0;
+  static const append = 1;
 }
 
 class Platform {
@@ -57,3 +61,9 @@ class WindowStub {
 }
 
 final window = WindowStub();
+
+class DocumentStub {
+  String get cookie => '';
+}
+
+final document = DocumentStub();

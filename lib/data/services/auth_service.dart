@@ -7,6 +7,7 @@ import 'package:aliolo/core/utils/file_stub.dart'
     as html;
 import 'package:aliolo/data/models/user_model.dart';
 import 'package:aliolo/data/services/filter_service.dart';
+import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
 import 'package:aliolo/core/utils/logger.dart';
 import 'package:aliolo/core/utils/api_error.dart';
@@ -53,6 +54,17 @@ class AuthService extends ChangeNotifier {
     _initialCollectionId = null;
   }
 
+  String _cleanLocalizedPath(String path) {
+    final uri = Uri(path: path);
+    if (uri.pathSegments.isEmpty) return path;
+
+    final first = uri.pathSegments.first.toLowerCase();
+    if (!TranslationService.supportedUILanguages.contains(first)) return path;
+
+    final remaining = uri.pathSegments.skip(1).join('/');
+    return remaining.isEmpty ? '/' : '/$remaining';
+  }
+
   Future<void> init({String? manualUrl, String? inviteToken}) async {
     try {
       _initialUrl = manualUrl ?? (kIsWeb ? html.window.location.href : null);
@@ -77,10 +89,11 @@ class AuthService extends ChangeNotifier {
 
       if (kIsWeb && _initialUrl != null) {
         final uri = Uri.parse(_initialUrl!);
+        final cleanPath = _cleanLocalizedPath(uri.path);
 
-        if (uri.path.startsWith('/subject/')) {
+        if (cleanPath.startsWith('/subject/')) {
           _initialSubjectId = uri.pathSegments.last;
-        } else if (uri.path.startsWith('/collection/')) {
+        } else if (cleanPath.startsWith('/collection/')) {
           _initialCollectionId = uri.pathSegments.last;
         }
 

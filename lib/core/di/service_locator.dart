@@ -47,9 +47,9 @@ Future<void> setupLocator({String? initialUrl, String? inviteToken}) async {
     );
 
     print('Initializing TranslationService...');
-    await getIt<TranslationService>().init().catchError(
-      (e) => print('TranslationService init error: $e'),
-    );
+    await getIt<TranslationService>()
+        .init(initialUrl: initialUrl)
+        .catchError((e) => print('TranslationService init error: $e'));
 
     print('Initializing TestingLanguageService...');
     await getIt<TestingLanguageService>().init().catchError(

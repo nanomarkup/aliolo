@@ -680,12 +680,16 @@ class _SubjectPageState extends State<SubjectPage> {
                     )
                   else ...[
                     if (_allContent.isEmpty)
-                      const SliverFillRemaining(
-                        child: Center(child: Text('No subjects found')),
+                      SliverFillRemaining(
+                        child: Center(
+                          child: Text(context.t('no_subjects_found')),
+                        ),
                       )
                     else if (!isSearching && visiblePillars.isEmpty)
-                      const SliverFillRemaining(
-                        child: Center(child: Text('No subjects found')),
+                      SliverFillRemaining(
+                        child: Center(
+                          child: Text(context.t('no_subjects_found')),
+                        ),
                       )
                     else if (isSearching)
                       SliverPadding(
@@ -729,7 +733,8 @@ class _SubjectPageState extends State<SubjectPage> {
                                   crossAxisSpacing: 24,
                                   mainAxisSpacing: 24,
                                   childAspectRatio:
-                                      crossAxisCount == 1 ? 3.0 : 1.8,                                ),
+                                      crossAxisCount == 1 ? 3.0 : 1.8,
+                                ),
                             delegate: SliverChildBuilderDelegate((
                               context,
                               index,
@@ -1051,9 +1056,7 @@ class _SubjectPageState extends State<SubjectPage> {
             decoration: BoxDecoration(
               color: Theme.of(context).cardColor.withValues(alpha: 0.5),
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(
-                color: Colors.grey.withValues(alpha: 0.5),
-              ),
+              border: Border.all(color: Colors.grey.withValues(alpha: 0.5)),
             ),
             child: Row(
               children: [
@@ -1599,8 +1602,8 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
                   child: Center(child: CircularProgressIndicator()),
                 )
               else if (_filteredContent.isEmpty)
-                const SliverFillRemaining(
-                  child: Center(child: Text('No subjects found')),
+                SliverFillRemaining(
+                  child: Center(child: Text(context.t('no_subjects_found'))),
                 )
               else
                 SliverPadding(
@@ -2146,9 +2149,7 @@ class _FolderPageState extends State<FolderPage> {
                       builder:
                           (context) => AlertDialog(
                             title: Text(context.t('delete_folder')),
-                            content: const Text(
-                              'Are you sure you want to delete this folder?',
-                            ),
+                            content: Text(context.t('delete_folder_confirm')),
                             actions: [
                               TextButton(
                                 onPressed: () => Navigator.pop(context, false),
@@ -2471,8 +2472,8 @@ class _FolderPageState extends State<FolderPage> {
                   child: Center(child: CircularProgressIndicator()),
                 )
               else if (_filteredContent.isEmpty)
-                const SliverFillRemaining(
-                  child: Center(child: Text('No subjects found')),
+                SliverFillRemaining(
+                  child: Center(child: Text(context.t('no_subjects_found'))),
                 )
               else
                 SliverPadding(
@@ -3082,7 +3083,8 @@ class _SubjectListTile extends StatelessWidget {
                           content: Text(
                             formatApiErrorMessage(
                               e,
-                              fallback: 'Could not update favorite. Please try again.',
+                              fallback:
+                                  'Could not update favorite. Please try again.',
                             ),
                           ),
                         ),
@@ -3239,7 +3241,8 @@ class _CollectionListTile extends StatelessWidget {
                           content: Text(
                             formatApiErrorMessage(
                               e,
-                              fallback: 'Could not update favorite. Please try again.',
+                              fallback:
+                                  'Could not update favorite. Please try again.',
                             ),
                           ),
                         ),

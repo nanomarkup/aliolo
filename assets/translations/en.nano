@@ -731,3 +731,57 @@
     toggle_languages Toggle languages
     user_updated User updated
     zoom Zoom
+    account_setup_completed Account setup completed.
+    all_time All Time
+    cancel_in_paddle Cancel in Paddle
+    checkout_email_before_payment_desc Enter your email before checkout so Aliolo can create your account and attach the subscription to you.
+    checkout_finish_account_desc Choose your username and password now so you can log in again later if the payment is canceled or interrupted.
+    checkout_verification_desc We need one quick verification before opening the store payment sheet.
+    close_feedback_request_confirm Are you sure you want to close this feedback request?
+    complete_account Complete account
+    complete_account_setup Complete account setup
+    complete_account_setup_desc Add a username and password for future logins and restores.
+    complete_account_subscription_desc Your subscription is already attached to this account. Add a username and password so you can log in anywhere and recover purchases later.
+    continue_to_checkout Continue to checkout
+    could_not_open_paddle_cancellation Could not open Paddle cancellation: {error}
+    create_account_to_continue Create your account to continue
+    delete_folder_confirm Are you sure you want to delete this folder?
+    dont_show_again_for_this_subject Don't show again for this subject
+    enter_code_sent_to_email Enter the 6-digit code sent to {email}
+    finish_account_setup Finish account setup
+    folder_practice_all_cards_desc This is a folder. You can use Learn/Test buttons above to practice all cards.
+    last_3_months Last 3 Months
+    last_6_months Last 6 Months
+    last_month Last Month
+    last_slide Last slide
+    log_in_instead Log in instead
+    no_age_data_yet No age data yet
+    no_cards_due_yet No cards are due yet
+    no_onboarding_sessions_yet No onboarding sessions yet
+    no_permission_view_card_details You do not have permission to view this card details.
+    no_pillar_data_yet No pillar data yet
+    no_slide_data_yet No slide data yet
+    no_subjects_found_in_collection No subjects found in this collection
+    no_usage_data_yet No usage data yet
+    not_set Not set
+    official_website Official website
+    onboarding_analytics Onboarding Analytics
+    paddle_cancel_subscription_desc Need to cancel a Paddle subscription? Open the Paddle cancellation flow below.
+    previous Previous
+    renderer_addition_emoji Addition Emoji
+    renderer_addition_numbers Addition Numbers
+    renderer_counting Counting
+    renderer_generic Generic
+    renderer_subtraction_emoji Subtraction Emoji
+    renderer_subtraction_numbers Subtraction Numbers
+    restore_purchases_started Restore started. Aliolo will relink any valid purchases to this account.
+    retest_anyway Retest anyway
+    save_account Save account
+    session Session
+    set_your_password Set Your Password
+    subject_up_to_date_retest_desc You are up to date for this subject. You can still retest all cards now.
+    subject_usage Subject Usage
+    updated Updated
+    verify_email_change Verify Email Change
+    verify_your_email Verify your email
+    wait_for_response_before_replying Please wait for a response before replying again.

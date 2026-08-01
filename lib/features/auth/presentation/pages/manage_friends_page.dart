@@ -38,8 +38,12 @@ class _ManageFriendsPageState extends State<ManageFriendsPage> {
     data.sort((a, b) {
       final sA = a['status'];
       final sB = b['status'];
-      if ((sA == 'pending' || sA == 'invited') && (sB != 'pending' && sB != 'invited')) return -1;
-      if ((sA != 'pending' && sA != 'invited') && (sB == 'pending' || sB == 'invited')) return 1;
+      if ((sA == 'pending' || sA == 'invited') &&
+          (sB != 'pending' && sB != 'invited'))
+        return -1;
+      if ((sA != 'pending' && sA != 'invited') &&
+          (sB == 'pending' || sB == 'invited'))
+        return 1;
       return 0;
     });
 
@@ -150,7 +154,10 @@ class _ManageFriendsPageState extends State<ManageFriendsPage> {
                 (context) => AlertDialog(
                   title: Text(context.t('invite_user_title')),
                   content: Text(
-                    context.t('invite_user_content', args: {'email': emailTrimmed}),
+                    context.t(
+                      'invite_user_content',
+                      args: {'email': emailTrimmed},
+                    ),
                   ),
                   actions: [
                     TextButton(
@@ -168,19 +175,22 @@ class _ManageFriendsPageState extends State<ManageFriendsPage> {
           if (invite == true) {
             try {
               final senderId = _authService.currentUser?.serverId;
-              await _authService.inviteUserByEmail(emailTrimmed, senderId: senderId);
+              await _authService.inviteUserByEmail(
+                emailTrimmed,
+                senderId: senderId,
+              );
 
               if (mounted) {
-                ScaffoldMessenger.of(
-                  context,
-                ).showSnackBar(const SnackBar(content: Text('Invited and request sent!')));
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(context.t('invited_and_request_sent')),
+                  ),
+                );
                 _loadFriendships();
               }
             } catch (e) {
               if (mounted) {
-                ScaffoldMessenger.of(
-                  context,
-                ).showSnackBar(
+                ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text(
                       formatApiErrorMessage(
@@ -208,9 +218,7 @@ class _ManageFriendsPageState extends State<ManageFriendsPage> {
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
               formatApiErrorMessage(
@@ -270,23 +278,30 @@ class _ManageFriendsPageState extends State<ManageFriendsPage> {
               final status = f['status'];
               final id = f['id'];
               final isInvited = status == 'invited';
-              
+
               final isSender =
                   f['sender_id'] == _authService.currentUser?.serverId;
               final otherUser = isSender ? f['receiver'] : f['sender'];
-              
+
               if (otherUser == null && !isInvited) {
-                return const Card(
-                  margin: EdgeInsets.only(bottom: 12),
+                return Card(
+                  margin: const EdgeInsets.only(bottom: 12),
                   child: ListTile(
-                    title: Text('Unknown User (Profile missing)'),
+                    title: Text(context.t('unknown_user_profile_missing')),
                   ),
                 );
               }
 
-              final avatarUrl = isInvited ? null : otherUser?['avatar_url'] as String?;
-              final email = isInvited ? (f['receiver_username'] ?? '') : (otherUser?['email'] ?? '');
-              final username = isInvited ? (f['receiver_username'] ?? 'Invited User') : (otherUser?['username'] ?? 'User');
+              final avatarUrl =
+                  isInvited ? null : otherUser?['avatar_url'] as String?;
+              final email =
+                  isInvited
+                      ? (f['receiver_username'] ?? '')
+                      : (otherUser?['email'] ?? '');
+              final username =
+                  isInvited
+                      ? (f['receiver_username'] ?? 'Invited User')
+                      : (otherUser?['username'] ?? 'User');
 
               return Card(
                 margin: const EdgeInsets.only(bottom: 12),
@@ -295,28 +310,44 @@ class _ManageFriendsPageState extends State<ManageFriendsPage> {
                 ),
                 child: ListTile(
                   leading: CircleAvatar(
-                    backgroundColor: Theme.of(context).primaryColor.withValues(alpha: 0.1),
-                    child: avatarUrl != null
-                        ? ClipOval(
-                            child: (avatarUrl.startsWith('http') || kIsWeb)
-                                ? Image.network(
-                                    avatarUrl,
-                                    width: 40,
-                                    height: 40,
-                                    fit: BoxFit.cover,
-                                    errorBuilder: (context, error, stackTrace) =>
-                                        Icon(isInvited ? Icons.mail_outline : Icons.person),
-                                  )
-                                : Image.file(
-                                    dynamicFile(avatarUrl),
-                                    width: 40,
-                                    height: 40,
-                                    fit: BoxFit.cover,
-                                    errorBuilder: (context, error, stackTrace) =>
-                                        Icon(isInvited ? Icons.mail_outline : Icons.person),
-                                  ),
-                          )
-                        : Icon(isInvited ? Icons.mail_outline : Icons.person),
+                    backgroundColor: Theme.of(
+                      context,
+                    ).primaryColor.withValues(alpha: 0.1),
+                    child:
+                        avatarUrl != null
+                            ? ClipOval(
+                              child:
+                                  (avatarUrl.startsWith('http') || kIsWeb)
+                                      ? Image.network(
+                                        avatarUrl,
+                                        width: 40,
+                                        height: 40,
+                                        fit: BoxFit.cover,
+                                        errorBuilder:
+                                            (context, error, stackTrace) =>
+                                                Icon(
+                                                  isInvited
+                                                      ? Icons.mail_outline
+                                                      : Icons.person,
+                                                ),
+                                      )
+                                      : Image.file(
+                                        dynamicFile(avatarUrl),
+                                        width: 40,
+                                        height: 40,
+                                        fit: BoxFit.cover,
+                                        errorBuilder:
+                                            (context, error, stackTrace) =>
+                                                Icon(
+                                                  isInvited
+                                                      ? Icons.mail_outline
+                                                      : Icons.person,
+                                                ),
+                                      ),
+                            )
+                            : Icon(
+                              isInvited ? Icons.mail_outline : Icons.person,
+                            ),
                   ),
                   title: Text(
                     username,
@@ -334,7 +365,10 @@ class _ManageFriendsPageState extends State<ManageFriendsPage> {
                               : context.t('wants_to_be_friend'),
                         ),
                       if (status == 'invited')
-                        const Text('Invitation sent (awaiting registration)', style: TextStyle(fontStyle: FontStyle.italic)),
+                        Text(
+                          context.t('invitation_sent_awaiting_registration'),
+                          style: const TextStyle(fontStyle: FontStyle.italic),
+                        ),
                     ],
                   ),
                   trailing: Row(
@@ -351,11 +385,8 @@ class _ManageFriendsPageState extends State<ManageFriendsPage> {
                       IconButton(
                         icon: const Icon(Icons.close, color: Colors.red),
                         onPressed:
-                            () => _confirmCancelFriendship(
-                              id,
-                              username,
-                              status,
-                            ),
+                            () =>
+                                _confirmCancelFriendship(id, username, status),
                       ),
                     ],
                   ),

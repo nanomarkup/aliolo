@@ -89,8 +89,10 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           if (mounted) {
             Navigator.pushReplacement(
-              context, 
-              MaterialPageRoute(builder: (context) => const PremiumUpgradePage())
+              context,
+              MaterialPageRoute(
+                builder: (context) => const PremiumUpgradePage(),
+              ),
             );
           }
         });
@@ -98,23 +100,31 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
     }
 
     _isFolderMode = widget.isFolderMode || widget.existingFolder != null;
-    _selectedPillar = widget.existingSubject?.pillarId ?? widget.existingFolder?.pillarId ?? widget.pillarId ?? 1;
+    _selectedPillar =
+        widget.existingSubject?.pillarId ??
+        widget.existingFolder?.pillarId ??
+        widget.pillarId ??
+        1;
     _isPublic = widget.existingSubject?.isPublic ?? false;
-    _selectedAgeGroup = widget.existingSubject?.ageGroup ??
+    _selectedAgeGroup =
+        widget.existingSubject?.ageGroup ??
         ((widget.initialAgeGroup != null && widget.initialAgeGroup != 'all')
             ? widget.initialAgeGroup!
             : '15_plus');
-    _selectedType = widget.existingSubject?.typeStr ?? 
+    _selectedType =
+        widget.existingSubject?.typeStr ??
         (widget.isCollectionMode ? 'collection' : 'standard');
     _selectedFolderId = widget.existingSubject?.folderId ?? widget.folderId;
-    _linkedSubjectIds = List.from(widget.existingSubject?.linkedSubjectIds ?? []);
+    _linkedSubjectIds = List.from(
+      widget.existingSubject?.linkedSubjectIds ?? [],
+    );
 
     if (pillars.isEmpty) {
       _cardService.getPillars().then((_) {
         if (mounted) setState(() {});
       });
     }
-    
+
     _loadAllSubjects();
     _loadFolders();
     _initDrafts();
@@ -130,11 +140,12 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
     if (mounted) {
       final myId = _authService.currentUser?.serverId;
       const superUserId = 'usyeo7d2yzf2773';
-      
+
       setState(() {
-        _allFolders = results.where((f) => 
-          f.ownerId == myId || f.ownerId == superUserId
-        ).toList();
+        _allFolders =
+            results
+                .where((f) => f.ownerId == myId || f.ownerId == superUserId)
+                .toList();
       });
     }
   }
@@ -146,16 +157,13 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
     // Do not navigate languages if user is typing in a text field
     if (_editorFocusNode.hasFocus) return;
 
-    final sortedLangs = TranslationService()
-        .availableUILanguages
-        .map((l) => l.toLowerCase())
-        .toList();
+    final sortedLangs =
+        TranslationService().availableUILanguages
+            .map((l) => l.toLowerCase())
+            .toList();
     sortedLangs.sort();
 
-    final availableLangs = [
-      'global',
-      ...sortedLangs,
-    ];
+    final availableLangs = ['global', ...sortedLangs];
     final currentIndex = availableLangs.indexOf(_selectedLang);
     if (currentIndex == -1) return;
 
@@ -164,7 +172,8 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
     if (event.logicalKey == LogicalKeyboardKey.arrowRight) {
       newIndex = (currentIndex + 1) % availableLangs.length;
     } else if (event.logicalKey == LogicalKeyboardKey.arrowLeft) {
-      newIndex = (currentIndex - 1 + availableLangs.length) % availableLangs.length;
+      newIndex =
+          (currentIndex - 1 + availableLangs.length) % availableLangs.length;
     } else if (event.logicalKey == LogicalKeyboardKey.arrowDown) {
       newIndex = currentIndex + _itemsPerRow;
       if (newIndex >= availableLangs.length) {
@@ -174,7 +183,8 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
       newIndex = currentIndex - _itemsPerRow;
       if (newIndex < 0) {
         // Find last possible index in that column
-        int lastRowStart = ((availableLangs.length - 1) ~/ _itemsPerRow) * _itemsPerRow;
+        int lastRowStart =
+            ((availableLangs.length - 1) ~/ _itemsPerRow) * _itemsPerRow;
         newIndex = lastRowStart + currentIndex;
         if (newIndex >= availableLangs.length) newIndex -= _itemsPerRow;
       }
@@ -196,10 +206,11 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
 
     if (widget.existingSubject != null) {
       final s = widget.existingSubject!;
-      _drafts['global'] = DraftLocalizedSubjectData()
-        ..name = s.name
-        ..description = s.description;
-      
+      _drafts['global'] =
+          DraftLocalizedSubjectData()
+            ..name = s.name
+            ..description = s.description;
+
       s.names.forEach((lang, name) {
         _ensureDraftExists(lang);
         _drafts[lang]!.name = name;
@@ -210,8 +221,7 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
       });
     } else if (widget.existingFolder != null) {
       final f = widget.existingFolder!;
-      _drafts['global'] = DraftLocalizedSubjectData()
-        ..name = f.name;
+      _drafts['global'] = DraftLocalizedSubjectData()..name = f.name;
 
       f.names.forEach((lang, name) {
         _ensureDraftExists(lang);
@@ -258,9 +268,7 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
 
   Map<String, Map<String, String>> _buildJsonDrafts() {
     return _drafts.map((key, value) {
-      final draft = <String, String>{
-        'name': value.name,
-      };
+      final draft = <String, String>{'name': value.name};
       if (!_isFolderMode) {
         draft['description'] = value.description;
       }
@@ -278,7 +286,10 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
   }
 
   void _showJsonDialog() {
-    final data = buildLocalizedJsonTemplate(_jsonEditorMode, _buildJsonDrafts());
+    final data = buildLocalizedJsonTemplate(
+      _jsonEditorMode,
+      _buildJsonDrafts(),
+    );
 
     final encoder = const JsonEncoder.withIndent('  ');
     final String jsonTemplate = encoder.convert(data);
@@ -321,9 +332,7 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
                             ClipboardData(text: textController.text),
                           );
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(context.t('info_copied')),
-                            ),
+                            SnackBar(content: Text(context.t('info_copied'))),
                           );
                         },
                         icon: const Icon(Icons.copy, size: 18),
@@ -391,7 +400,7 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
               return Dialog.fullscreen(
                 child: Scaffold(
                   appBar: AppBar(
-                    title: const Text('Localized Data'),
+                    title: Text(context.t('localized_data')),
                     automaticallyImplyLeading: false,
                     actions: [
                       IconButton(
@@ -411,7 +420,7 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
             return AlertDialog(
               title: Row(
                 children: [
-                  const Text('Localized Data'),
+                  Text(context.t('localized_data')),
                   const Spacer(),
                   IconButton(
                     icon: const Icon(Icons.close),
@@ -420,7 +429,10 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
                 ],
               ),
               content: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 700, maxHeight: 500),
+                constraints: const BoxConstraints(
+                  maxWidth: 700,
+                  maxHeight: 500,
+                ),
                 child: content,
               ),
             );
@@ -444,7 +456,8 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
 
       if (lang == 'global') {
         globalName = draft.name.isEmpty ? null : draft.name;
-        globalDescription = draft.description.isEmpty ? null : draft.description;
+        globalDescription =
+            draft.description.isEmpty ? null : draft.description;
         continue;
       }
 
@@ -469,22 +482,29 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
     try {
       final now = DateTime.now();
       final myId = _authService.currentUser?.serverId;
-      
+
       if (_isFolderMode) {
-        final newName = globalName?.trim().toLowerCase() ?? 
-                        finalNames.values.firstOrNull?.trim().toLowerCase();
-        
+        final newName =
+            globalName?.trim().toLowerCase() ??
+            finalNames.values.firstOrNull?.trim().toLowerCase();
+
         if (newName != null) {
-          final isDuplicate = _allFolders.any((f) => 
-            f.ownerId == myId && 
-            f.id != widget.existingFolder?.id &&
-            f.getName('global').trim().toLowerCase() == newName
+          final isDuplicate = _allFolders.any(
+            (f) =>
+                f.ownerId == myId &&
+                f.id != widget.existingFolder?.id &&
+                f.getName('global').trim().toLowerCase() == newName,
           );
 
           if (isDuplicate) {
             if (mounted) {
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(context.t('folder_already_exists') ?? 'A folder with this name already exists in this pillar')),
+                SnackBar(
+                  content: Text(
+                    context.t('folder_already_exists') ??
+                        'A folder with this name already exists in this pillar',
+                  ),
+                ),
               );
               setState(() => _isSaving = false);
             }
@@ -496,27 +516,34 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
         final folder = FolderModel(
           id: folderId,
           pillarId: _selectedPillar,
-          ownerId: widget.existingFolder?.ownerId ?? _authService.currentUser!.serverId!,
+          ownerId:
+              widget.existingFolder?.ownerId ??
+              _authService.currentUser!.serverId!,
           createdAt: widget.existingFolder?.createdAt ?? now,
           updatedAt: now,
           name: globalName ?? '',
           names: finalNames,
         );
         await _cardService.addFolder(folder);
-        
+
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(context.t('save_success') ?? 'Saved successfully')),
+            SnackBar(
+              content: Text(context.t('save_success') ?? 'Saved successfully'),
+            ),
           );
           Navigator.pop(context, true);
         }
       } else if (_selectedType == 'collection') {
-        final collectionId = widget.existingSubject?.id ?? _cardService.generateId();
+        final collectionId =
+            widget.existingSubject?.id ?? _cardService.generateId();
         final collection = CollectionModel(
           id: collectionId,
           pillarId: _selectedPillar,
           ageGroup: _selectedAgeGroup,
-          ownerId: widget.existingSubject?.ownerId ?? _authService.currentUser!.serverId!,
+          ownerId:
+              widget.existingSubject?.ownerId ??
+              _authService.currentUser!.serverId!,
           createdAt: widget.existingSubject?.createdAt ?? now,
           updatedAt: now,
           name: globalName ?? '',
@@ -532,7 +559,9 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
 
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(context.t('save_success') ?? 'Saved successfully')),
+            SnackBar(
+              content: Text(context.t('save_success') ?? 'Saved successfully'),
+            ),
           );
           // If it's a new collection, return the object so we can navigate to it
           if (widget.existingSubject == null) {
@@ -542,7 +571,8 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
           }
         }
       } else {
-        final subjectId = widget.existingSubject?.id ?? _cardService.generateId();
+        final subjectId =
+            widget.existingSubject?.id ?? _cardService.generateId();
         final subject = SubjectModel(
           id: subjectId,
           pillarId: _selectedPillar,
@@ -570,7 +600,9 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
 
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(context.t('save_success') ?? 'Saved successfully')),
+            SnackBar(
+              content: Text(context.t('save_success') ?? 'Saved successfully'),
+            ),
           );
           // If it's a new subject, return the object so we can navigate to it
           if (widget.existingSubject == null) {
@@ -582,9 +614,7 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
               formatApiErrorMessage(
@@ -698,180 +728,201 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-        if (isGlobal) ...[
-          _buildSectionCaption(context.t('common_settings')),
-          const SizedBox(height: 16),
-          DropdownButtonFormField<int>(
-            value: _selectedPillar,
-            decoration: InputDecoration(
-              labelText: context.t('pillar'),
-              border: const OutlineInputBorder(),
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: 12,
-                vertical: 8,
+          if (isGlobal) ...[
+            _buildSectionCaption(context.t('common_settings')),
+            const SizedBox(height: 16),
+            DropdownButtonFormField<int>(
+              value: _selectedPillar,
+              decoration: InputDecoration(
+                labelText: context.t('pillar'),
+                border: const OutlineInputBorder(),
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 8,
+                ),
               ),
-            ),
-            items: pillars.map((p) => DropdownMenuItem(
-              value: p.id,
-              child: Text(p.getTranslatedName(currentLang)),
-            )).toList(),
-            onChanged: isOwner ? (val) {
-              if (val != null) {
-                setState(() {
-                  _selectedPillar = val;
-                  _selectedFolderId = null;
-                  _loadFolders();
-                });
-              }
-            } : null,
-          ),
-          if (!_isFolderMode) ...[
-            const SizedBox(height: 20),
-            (() {
-              final folderDropdown = DropdownButtonFormField<String?>(
-                value: _selectedFolderId,
-                decoration: InputDecoration(
-                  labelText: context.t('folder'),
-                  border: const OutlineInputBorder(),
-                  contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                ),
-                items: (() {
-                  final items = [
-                    DropdownMenuItem<String?>(value: null, child: const Text('')),
-                    ..._allFolders.map(
-                      (f) => DropdownMenuItem(
-                        value: f.id,
-                        child: Text(
-                          f.getName(currentLang),
-                          overflow: TextOverflow.ellipsis,
+              items:
+                  pillars
+                      .map(
+                        (p) => DropdownMenuItem(
+                          value: p.id,
+                          child: Text(p.getTranslatedName(currentLang)),
                         ),
-                      ),
-                    ),
-                  ];
-
-                  if (_selectedFolderId != null &&
-                      !items.any((item) => item.value == _selectedFolderId)) {
-                    items.add(
-                      DropdownMenuItem(
-                        value: _selectedFolderId,
-                        child: const Text('Loading...'),
-                      ),
-                    );
-                  }
-                  return items;
-                })(),
-                onChanged:
-                    isOwner
-                        ? (val) => setState(() => _selectedFolderId = val)
-                        : null,
-              );
-
-              final ageDropdown = DropdownButtonFormField<String>(
-                value: _selectedAgeGroup,
-                decoration: InputDecoration(
-                  labelText: context.t('age_group'),
-                  border: const OutlineInputBorder(),
-                  contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                ),
-                items: [
-                  DropdownMenuItem(
-                    value: '0_6',
-                    child: Text(context.t('age_0_6')),
-                  ),
-                  DropdownMenuItem(
-                    value: '7_14',
-                    child: Text(context.t('age_7_14')),
-                  ),
-                  DropdownMenuItem(
-                    value: '15_plus',
-                    child: Text(context.t('age_15_plus')),
-                  ),
-                ],
-                onChanged:
-                    isOwner
-                        ? (val) {
-                          if (val != null) {
-                            setState(() => _selectedAgeGroup = val);
-                          }
+                      )
+                      .toList(),
+              onChanged:
+                  isOwner
+                      ? (val) {
+                        if (val != null) {
+                          setState(() {
+                            _selectedPillar = val;
+                            _selectedFolderId = null;
+                            _loadFolders();
+                          });
                         }
-                        : null,
-              );
-
-              if (_showSidebar) {
-                return Column(
-                  children: [
-                    folderDropdown,
-                    const SizedBox(height: 20),
-                    ageDropdown,
-                  ],
-                );
-              } else {
-                return Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(child: folderDropdown),
-                    const SizedBox(width: 16),
-                    Expanded(child: ageDropdown),
-                  ],
-                );
-              }
-            })(),
-          ],
-          if (!_isFolderMode) ...[
-            const SizedBox(height: 20),
-            SwitchListTile(
-              contentPadding: EdgeInsets.zero,
-              title: Text(context.t('public_subject')),
-              value: _isPublic,
-              onChanged: isOwner ? (val) => setState(() => _isPublic = val) : null,
+                      }
+                      : null,
             ),
-          ],
-          const SizedBox(height: 32),
-          const Divider(),
-          const SizedBox(height: 32),
-        ],
+            if (!_isFolderMode) ...[
+              const SizedBox(height: 20),
+              (() {
+                final folderDropdown = DropdownButtonFormField<String?>(
+                  value: _selectedFolderId,
+                  decoration: InputDecoration(
+                    labelText: context.t('folder'),
+                    border: const OutlineInputBorder(),
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 8,
+                    ),
+                  ),
+                  items:
+                      (() {
+                        final items = [
+                          DropdownMenuItem<String?>(
+                            value: null,
+                            child: const Text(''),
+                          ),
+                          ..._allFolders.map(
+                            (f) => DropdownMenuItem(
+                              value: f.id,
+                              child: Text(
+                                f.getName(currentLang),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ),
+                        ];
 
-        _buildSectionCaption(
-          context.t(
-            'content_label',
-            args: {'lang': _selectedLang.toUpperCase()},
+                        if (_selectedFolderId != null &&
+                            !items.any(
+                              (item) => item.value == _selectedFolderId,
+                            )) {
+                          items.add(
+                            DropdownMenuItem(
+                              value: _selectedFolderId,
+                              child: Text(context.t('loading')),
+                            ),
+                          );
+                        }
+                        return items;
+                      })(),
+                  onChanged:
+                      isOwner
+                          ? (val) => setState(() => _selectedFolderId = val)
+                          : null,
+                );
+
+                final ageDropdown = DropdownButtonFormField<String>(
+                  value: _selectedAgeGroup,
+                  decoration: InputDecoration(
+                    labelText: context.t('age_group'),
+                    border: const OutlineInputBorder(),
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 8,
+                    ),
+                  ),
+                  items: [
+                    DropdownMenuItem(
+                      value: '0_6',
+                      child: Text(context.t('age_0_6')),
+                    ),
+                    DropdownMenuItem(
+                      value: '7_14',
+                      child: Text(context.t('age_7_14')),
+                    ),
+                    DropdownMenuItem(
+                      value: '15_plus',
+                      child: Text(context.t('age_15_plus')),
+                    ),
+                  ],
+                  onChanged:
+                      isOwner
+                          ? (val) {
+                            if (val != null) {
+                              setState(() => _selectedAgeGroup = val);
+                            }
+                          }
+                          : null,
+                );
+
+                if (_showSidebar) {
+                  return Column(
+                    children: [
+                      folderDropdown,
+                      const SizedBox(height: 20),
+                      ageDropdown,
+                    ],
+                  );
+                } else {
+                  return Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(child: folderDropdown),
+                      const SizedBox(width: 16),
+                      Expanded(child: ageDropdown),
+                    ],
+                  );
+                }
+              })(),
+            ],
+            if (!_isFolderMode) ...[
+              const SizedBox(height: 20),
+              SwitchListTile(
+                contentPadding: EdgeInsets.zero,
+                title: Text(context.t('public_subject')),
+                value: _isPublic,
+                onChanged:
+                    isOwner ? (val) => setState(() => _isPublic = val) : null,
+              ),
+            ],
+            const SizedBox(height: 32),
+            const Divider(),
+            const SizedBox(height: 32),
+          ],
+
+          _buildSectionCaption(
+            context.t(
+              'content_label',
+              args: {'lang': _selectedLang.toUpperCase()},
+            ),
           ),
-        ),
-        const SizedBox(height: 24),
-        TextFormField(
-           controller: _nameController,
-           onChanged: (v) => draft.name = v,
-           decoration: InputDecoration(
-             labelText: '${context.t('name')} *',
-             border: const OutlineInputBorder(),
-           ),
-           enabled: isOwner,
-           validator: (v) {
-             if (_selectedLang == 'global' && (v == null || v.trim().isEmpty)) {
-               return context.t('provide_at_least_one_name');
-             }
-             return null;
-           },
-         ),        if (!_isFolderMode) ...[
-          const SizedBox(height: 16),
+          const SizedBox(height: 24),
           TextFormField(
-            controller: _descriptionController,
-            onChanged: (v) => draft.description = v,
+            controller: _nameController,
+            onChanged: (v) => draft.name = v,
             decoration: InputDecoration(
-              labelText: context.t('description'),
+              labelText: '${context.t('name')} *',
               border: const OutlineInputBorder(),
             ),
-            maxLines: 2,
             enabled: isOwner,
+            validator: (v) {
+              if (_selectedLang == 'global' &&
+                  (v == null || v.trim().isEmpty)) {
+                return context.t('provide_at_least_one_name');
+              }
+              return null;
+            },
           ),
+          if (!_isFolderMode) ...[
+            const SizedBox(height: 16),
+            TextFormField(
+              controller: _descriptionController,
+              onChanged: (v) => draft.description = v,
+              decoration: InputDecoration(
+                labelText: context.t('description'),
+                border: const OutlineInputBorder(),
+              ),
+              maxLines: 2,
+              enabled: isOwner,
+            ),
+          ],
+          const SizedBox(height: 48),
         ],
-        const SizedBox(height: 48),
-      ],
-    ),
-  );
-}
+      ),
+    );
+  }
 
   bool _hasUnsavedChanges() {
     if (widget.existingSubject == null && widget.existingFolder == null) {
@@ -885,7 +936,7 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
     if (_isFolderMode) {
       final original = widget.existingFolder!;
       if (_selectedPillar != original.pillarId) return true;
-      
+
       final allLangs = {'global', ...original.names.keys, ..._drafts.keys};
       for (var lang in allLangs) {
         final draft = _drafts[lang];
@@ -907,7 +958,12 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
     if (_selectedType != original.typeStr) return true;
     if ((_selectedFolderId ?? '') != (original.folderId ?? '')) return true;
 
-    final allLangs = {'global', ...original.names.keys, ...original.descriptions.keys, ..._drafts.keys};
+    final allLangs = {
+      'global',
+      ...original.names.keys,
+      ...original.descriptions.keys,
+      ..._drafts.keys,
+    };
     for (var lang in allLangs) {
       final draft = _drafts[lang];
       final draftName = draft?.name.trim() ?? '';
@@ -918,7 +974,8 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
         if (draftDesc != original.description.trim()) return true;
       } else {
         if (draftName != (original.names[lang]?.trim() ?? '')) return true;
-        if (draftDesc != (original.descriptions[lang]?.trim() ?? '')) return true;
+        if (draftDesc != (original.descriptions[lang]?.trim() ?? ''))
+          return true;
       }
     }
 
@@ -930,21 +987,22 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
 
     final result = await showDialog<bool>(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text(context.t('discard_changes')),
-        content: Text(context.t('unsaved_changes_msg')),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context, false),
-            child: Text(context.t('cancel')),
+      builder:
+          (context) => AlertDialog(
+            title: Text(context.t('discard_changes')),
+            content: Text(context.t('unsaved_changes_msg')),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context, false),
+                child: Text(context.t('cancel')),
+              ),
+              TextButton(
+                onPressed: () => Navigator.pop(context, true),
+                style: TextButton.styleFrom(foregroundColor: Colors.red),
+                child: Text(context.t('discard')),
+              ),
+            ],
           ),
-          TextButton(
-            onPressed: () => Navigator.pop(context, true),
-            style: TextButton.styleFrom(foregroundColor: Colors.red),
-            child: Text(context.t('discard')),
-          ),
-        ],
-      ),
     );
     return result ?? false;
   }
@@ -962,7 +1020,7 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
         (widget.existingSubject == null && widget.existingFolder == null) ||
         widget.existingSubject?.ownerId == _authService.currentUser?.serverId ||
         widget.existingFolder?.ownerId == _authService.currentUser?.serverId;
-    
+
     final currentLang = TranslationService().currentLocale.languageCode;
 
     return PopScope(
@@ -989,138 +1047,172 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
             },
           );
 
-          final saveAction = isOwner
-              ? IconButton(
-                tooltip: context.t('save'),
-                icon: _isSaving
-                    ? const SizedBox(
-                      width: 20,
-                      height: 20,
-                      child: CircularProgressIndicator(
-                        color: appBarColor,
-                        strokeWidth: 2,
-                      ),
-                    )
-                    : const Icon(Icons.save),
-                onPressed: _isSaving ? null : _save,
-              )
-              : null;
-
-          final jsonAction = isOwner
-              ? IconButton(
-                tooltip: 'JSON',
-                icon: const Icon(Icons.data_object),
-                onPressed: _showJsonDialog,
-              )
-              : null;
-
-          final deleteAction = (isOwner && (widget.existingSubject != null || widget.existingFolder != null))
-              ? IconButton(
-                tooltip: context.t('delete'),
-                icon: const Icon(Icons.delete),
-                onPressed: () async {
-                  if (_isFolderMode) {
-                    final confirmed = await showDialog<bool>(
-                      context: context,
-                      builder:
-                          (context) => AlertDialog(
-                            title: Text(context.t('delete_folder')),
-                            content: const Text('Are you sure you want to delete this folder?'),
-                            actions: [
-                              TextButton(
-                                onPressed: () => Navigator.pop(context, false),
-                                child: Text(context.t('cancel')),
+          final saveAction =
+              isOwner
+                  ? IconButton(
+                    tooltip: context.t('save'),
+                    icon:
+                        _isSaving
+                            ? const SizedBox(
+                              width: 20,
+                              height: 20,
+                              child: CircularProgressIndicator(
+                                color: appBarColor,
+                                strokeWidth: 2,
                               ),
-                              TextButton(
-                                onPressed: () => Navigator.pop(context, true),
-                                style: TextButton.styleFrom(
-                                  foregroundColor: Colors.red,
+                            )
+                            : const Icon(Icons.save),
+                    onPressed: _isSaving ? null : _save,
+                  )
+                  : null;
+
+          final jsonAction =
+              isOwner
+                  ? IconButton(
+                    tooltip: 'JSON',
+                    icon: const Icon(Icons.data_object),
+                    onPressed: _showJsonDialog,
+                  )
+                  : null;
+
+          final deleteAction =
+              (isOwner &&
+                      (widget.existingSubject != null ||
+                          widget.existingFolder != null))
+                  ? IconButton(
+                    tooltip: context.t('delete'),
+                    icon: const Icon(Icons.delete),
+                    onPressed: () async {
+                      if (_isFolderMode) {
+                        final confirmed = await showDialog<bool>(
+                          context: context,
+                          builder:
+                              (context) => AlertDialog(
+                                title: Text(context.t('delete_folder')),
+                                content: Text(
+                                  context.t('delete_folder_confirm'),
                                 ),
-                                child: Text(context.t('delete')),
+                                actions: [
+                                  TextButton(
+                                    onPressed:
+                                        () => Navigator.pop(context, false),
+                                    child: Text(context.t('cancel')),
+                                  ),
+                                  TextButton(
+                                    onPressed:
+                                        () => Navigator.pop(context, true),
+                                    style: TextButton.styleFrom(
+                                      foregroundColor: Colors.red,
+                                    ),
+                                    child: Text(context.t('delete')),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                    );
-                    if (confirmed == true && mounted) {
-                      try {
-                        await _cardService.deleteFolder(widget.existingFolder!.id);
-                        if (mounted) Navigator.pop(context, true);
-                      } catch (e) {
-                        if (e.toString().contains('folder_not_empty') && mounted) {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(context.t('folder_not_empty_msg') ?? 'Cannot delete folder: it is not empty')));
+                        );
+                        if (confirmed == true && mounted) {
+                          try {
+                            await _cardService.deleteFolder(
+                              widget.existingFolder!.id,
+                            );
+                            if (mounted) Navigator.pop(context, true);
+                          } catch (e) {
+                            if (e.toString().contains('folder_not_empty') &&
+                                mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    context.t('folder_not_empty_msg') ??
+                                        'Cannot delete folder: it is not empty',
+                                  ),
+                                ),
+                              );
+                            }
+                          }
+                        }
+                        return;
+                      }
+
+                      final isCollection = _selectedType == 'collection';
+                      final cardCount = widget.existingSubject?.cardCount ?? 0;
+                      final confirmed = await showDialog<bool>(
+                        context: context,
+                        builder:
+                            (context) => AlertDialog(
+                              title: Text(
+                                isCollection
+                                    ? context.t('delete_collection')
+                                    : context.t('delete_subject'),
+                              ),
+                              content: Text(
+                                isCollection
+                                    ? context.t('delete_collection_confirm')
+                                    : (cardCount > 0
+                                        ? 'This subject contains $cardCount ${context.plural('card', cardCount)}. Deleting it will permanently remove all of them.'
+                                        : 'Delete this subject?'),
+                              ),
+                              actions: [
+                                TextButton(
+                                  onPressed:
+                                      () => Navigator.pop(context, false),
+                                  child: Text(context.t('cancel')),
+                                ),
+                                TextButton(
+                                  onPressed: () => Navigator.pop(context, true),
+                                  style: TextButton.styleFrom(
+                                    foregroundColor: Colors.red,
+                                  ),
+                                  child: Text(context.t('delete')),
+                                ),
+                              ],
+                            ),
+                      );
+                      if (confirmed == true && mounted) {
+                        if (isCollection) {
+                          await _cardService.deleteCollection(
+                            widget.existingSubject!.id,
+                          );
+                        } else {
+                          await _cardService.deleteSubjectById(
+                            widget.existingSubject!.id,
+                          );
+                        }
+                        if (mounted) {
+                          Navigator.pop(context);
+                          Navigator.pop(context, true);
                         }
                       }
-                    }
-                    return;
-                  }
+                    },
+                  )
+                  : null;
 
-                  final isCollection = _selectedType == 'collection';
-                  final cardCount = widget.existingSubject?.cardCount ?? 0;
-                  final confirmed = await showDialog<bool>(
-                    context: context,
-                    builder:
-                        (context) => AlertDialog(
-                          title: Text(isCollection ? context.t('delete_collection') : context.t('delete_subject')),
-                          content: Text(
-                            isCollection
-                                ? context.t('delete_collection_confirm')
-                                : (cardCount > 0
-                                    ? 'This subject contains $cardCount ${context.plural('card', cardCount)}. Deleting it will permanently remove all of them.'
-                                    : 'Delete this subject?'),
-                          ),
-                          actions: [
-                            TextButton(
-                              onPressed: () => Navigator.pop(context, false),
-                              child: Text(context.t('cancel')),
-                            ),
-                            TextButton(
-                              onPressed: () => Navigator.pop(context, true),
-                              style: TextButton.styleFrom(
-                                foregroundColor: Colors.red,
+          final feedbackAction =
+              (widget.existingSubject != null || widget.existingFolder != null)
+                  ? IconButton(
+                    tooltip: context.t('feedback'),
+                    icon: const Icon(Icons.feedback),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder:
+                              (context) => FeedbackPage(
+                                subjectId: widget.existingSubject?.id,
+                                folderId: widget.existingFolder?.id,
+                                contextTitle:
+                                    _isFolderMode
+                                        ? widget.existingFolder!.getName(
+                                          currentLang,
+                                        )
+                                        : widget.existingSubject!.getName(
+                                          currentLang,
+                                        ),
+                                appBarColor: currentSessionColor,
                               ),
-                              child: Text(context.t('delete')),
-                            ),
-                          ],
                         ),
-                  );
-                  if (confirmed == true && mounted) {
-                    if (isCollection) {
-                      await _cardService.deleteCollection(widget.existingSubject!.id);
-                    } else {
-                      await _cardService.deleteSubjectById(widget.existingSubject!.id);
-                    }
-                    if (mounted) {
-                      Navigator.pop(context);
-                      Navigator.pop(context, true);
-                    }
-                  }
-                },
-              )
-              : null;
-
-          final feedbackAction = (widget.existingSubject != null || widget.existingFolder != null)
-              ? IconButton(
-                tooltip: context.t('feedback'),
-                icon: const Icon(Icons.feedback),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder:
-                          (context) => FeedbackPage(
-                            subjectId: widget.existingSubject?.id,
-                            folderId: widget.existingFolder?.id,
-                            contextTitle:
-                                _isFolderMode 
-                                  ? widget.existingFolder!.getName(currentLang)
-                                  : widget.existingSubject!.getName(currentLang),
-                            appBarColor: currentSessionColor,
-                          ),
-                    ),
-                  );
-                },
-              )
-              : null;
+                      );
+                    },
+                  )
+                  : null;
 
           final currentPillarObj = pillars.firstWhere(
             (p) => p.id == _selectedPillar,
@@ -1136,97 +1228,111 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
             leadingWidth: 56,
             title: Text(
               _isFolderMode
-                  ? (widget.existingFolder == null ? context.t('add_folder') : context.t('edit_folder'))
+                  ? (widget.existingFolder == null
+                      ? context.t('add_folder')
+                      : context.t('edit_folder'))
                   : _selectedType == 'collection'
-                      ? (widget.existingSubject == null ? context.t('add_collection') : context.t('edit_collection'))
-                      : (widget.existingSubject == null ? context.t('add_subject') : context.t('edit_subject')),
+                  ? (widget.existingSubject == null
+                      ? context.t('add_collection')
+                      : context.t('edit_collection'))
+                  : (widget.existingSubject == null
+                      ? context.t('add_subject')
+                      : context.t('edit_subject')),
               style: const TextStyle(color: appBarColor),
             ),
             appBarColor: currentSessionColor,
-            actions: isSmallScreen 
-                ? [
-                    backAction,
-                    if (saveAction != null) saveAction,
-                    IconButton(
-                      tooltip: context.t('toggle_languages') ?? 'Languages',
-                      icon: Icon(_showSidebar ? Icons.last_page : Icons.language),
-                      onPressed: _toggleSidebar,
-                    ),
-                  ]
-                : [
-                    backAction,
-                    if (saveAction != null) saveAction,
-                    if (jsonAction != null) jsonAction,
-                    if (deleteAction != null) deleteAction,
-                    if (feedbackAction != null) feedbackAction,
-                    IconButton(
-                      tooltip: context.t('toggle_languages') ?? 'Languages',
-                      icon: Icon(_showSidebar ? Icons.last_page : Icons.language),
-                      onPressed: _toggleSidebar,
-                    ),
-                  ],
-            overflowActions: isSmallScreen
-                ? [
-                    if (jsonAction != null) jsonAction,
-                    if (deleteAction != null) deleteAction,
-                    if (feedbackAction != null) feedbackAction,
-                  ]
-                : null,
+            actions:
+                isSmallScreen
+                    ? [
+                      backAction,
+                      if (saveAction != null) saveAction,
+                      IconButton(
+                        tooltip: context.t('toggle_languages') ?? 'Languages',
+                        icon: Icon(
+                          _showSidebar ? Icons.last_page : Icons.language,
+                        ),
+                        onPressed: _toggleSidebar,
+                      ),
+                    ]
+                    : [
+                      backAction,
+                      if (saveAction != null) saveAction,
+                      if (jsonAction != null) jsonAction,
+                      if (deleteAction != null) deleteAction,
+                      if (feedbackAction != null) feedbackAction,
+                      IconButton(
+                        tooltip: context.t('toggle_languages') ?? 'Languages',
+                        icon: Icon(
+                          _showSidebar ? Icons.last_page : Icons.language,
+                        ),
+                        onPressed: _toggleSidebar,
+                      ),
+                    ],
+            overflowActions:
+                isSmallScreen
+                    ? [
+                      if (jsonAction != null) jsonAction,
+                      if (deleteAction != null) deleteAction,
+                      if (feedbackAction != null) feedbackAction,
+                    ]
+                    : null,
             body: KeyboardListener(
-          focusNode: _keyboardFocusNode,
-          autofocus: true,
-          onKeyEvent: _onKeyEvent,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      if (_showSidebar && isSmallScreen)
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+              focusNode: _keyboardFocusNode,
+              autofocus: true,
+              onKeyEvent: _onKeyEvent,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          if (_showSidebar && isSmallScreen)
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+                              child: _buildLangGrid(),
+                            ),
+                          const SizedBox(height: 32),
+                          Form(
+                            key: _formKey,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                              ),
+                              child: _buildEditor(),
+                            ),
+                          ),
+                          const SizedBox(height: 32),
+                        ],
+                      ),
+                    ),
+                  ),
+                  if (_showSidebar && !isSmallScreen)
+                    Container(
+                      width: 320,
+                      decoration: BoxDecoration(
+                        border: Border(
+                          left: BorderSide(
+                            color: Theme.of(context).dividerColor,
+                          ),
+                        ),
+                      ),
+                      child: SingleChildScrollView(
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
                           child: _buildLangGrid(),
                         ),
-                      const SizedBox(height: 32),
-                      Form(
-                        key: _formKey,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: _buildEditor(),
-                        ),
                       ),
-                      const SizedBox(height: 32),
-                    ],
-                  ),
-                ),
+                    ),
+                ],
               ),
-              if (_showSidebar && !isSmallScreen)
-                Container(
-                  width: 320,
-                  decoration: BoxDecoration(
-                    border: Border(
-                      left: BorderSide(
-                        color: Theme.of(context).dividerColor,
-                      ),
-                    ),
-                  ),
-                  child: SingleChildScrollView(
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: _buildLangGrid(),
-                    ),
-                  ),
-                ),
-            ],
-          ),
-        ),
-      );
-    },
-  ),
-);
-}
+            ),
+          );
+        },
+      ),
+    );
+  }
 
   Widget _buildSectionCaption(String label) {
     return Text(
@@ -1240,7 +1346,6 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
     );
   }
 
-
   Widget _buildLangGrid() {
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -1252,17 +1357,12 @@ class _SubjectEditPageState extends State<SubjectEditPage> {
           spacing: 8,
           runSpacing: 8,
           children: [
-            _buildLangTile(
-              'global',
-              'GLB',
-              Icons.public,
-              'Global / Fallback',
-            ),
+            _buildLangTile('global', 'GLB', Icons.public, 'Global / Fallback'),
             ...(() {
-              final langs = TranslationService()
-                  .availableUILanguages
-                  .map((l) => l.toLowerCase())
-                  .toList();
+              final langs =
+                  TranslationService().availableUILanguages
+                      .map((l) => l.toLowerCase())
+                      .toList();
               langs.sort();
               return langs.map((code) {
                 return _buildLangTile(

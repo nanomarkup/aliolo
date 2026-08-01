@@ -301,13 +301,14 @@ app.get('/:lang', async (c, next) => {
   const url = new URL(c.req.url);
   const user = c.get('user');
 
+  setCookie(c, 'aliolo_lang', lang, {
+    path: '/',
+    maxAge: 31536000,
+    sameSite: 'Lax',
+    secure: true
+  });
+
   if (!user && !url.searchParams.has('login')) {
-    setCookie(c, 'aliolo_lang', lang, {
-      path: '/',
-      maxAge: 31536000,
-      sameSite: 'Lax',
-      secure: true
-    });
     return renderStaticPage(c, 'landing', lang);
   }
   

@@ -167,7 +167,9 @@ class _ProfilePageState extends State<ProfilePage> {
             builder: (context, setDialogState) {
               return AlertDialog(
                 title: Text(
-                  step == 0 ? context.t('edit_email') : 'Verify Email Change',
+                  step == 0
+                      ? context.t('edit_email')
+                      : context.t('verify_email_change'),
                 ),
                 content: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -178,7 +180,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         autofocus: true,
                         keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
-                          labelText: 'New Email',
+                          labelText: context.t('new_email'),
                           hintText: context.t('enter_new_email'),
                         ),
                       ),
@@ -188,20 +190,23 @@ class _ProfilePageState extends State<ProfilePage> {
                         obscureText: true,
                         decoration: InputDecoration(
                           labelText: context.t('password'),
-                          hintText: 'Enter current password',
+                          hintText: context.t('enter_current_password'),
                         ),
                       ),
                     ] else ...[
                       Text(
-                        'Enter the 6-digit code sent to ${emailController.text.trim()}',
+                        context.t(
+                          'enter_code_sent_to_email',
+                          args: {'email': emailController.text.trim()},
+                        ),
                       ),
                       const SizedBox(height: 16),
                       TextField(
                         controller: codeController,
                         keyboardType: TextInputType.number,
                         maxLength: 6,
-                        decoration: const InputDecoration(
-                          labelText: 'Verification Code',
+                        decoration: InputDecoration(
+                          labelText: context.t('verification_code'),
                           counterText: '',
                         ),
                       ),
@@ -229,8 +234,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                 if (newEmail.isEmpty || pass.isEmpty) return;
                                 if (!_authService.isValidEmail(newEmail)) {
                                   ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content: Text('Invalid email address'),
+                                    SnackBar(
+                                      content: Text(
+                                        context.t('invalid_email_address'),
+                                      ),
                                     ),
                                   );
                                   return;
@@ -264,9 +271,9 @@ class _ProfilePageState extends State<ProfilePage> {
 
                                 if (success && mounted) {
                                   ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
+                                    SnackBar(
                                       content: Text(
-                                        'Email updated successfully!',
+                                        context.t('email_updated_successfully'),
                                       ),
                                     ),
                                   );
@@ -443,20 +450,21 @@ class _ProfilePageState extends State<ProfilePage> {
           context,
         ).showSnackBar(SnackBar(content: Text(context.t('password_updated'))));
       }
-      } catch (e) {
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(
-                _authService.lastErrorMessage ??
-                    formatApiErrorMessage(
-                      e,
-                      fallback: 'Could not update your password. Please try again.',
-                    ),
-              ),
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              _authService.lastErrorMessage ??
+                  formatApiErrorMessage(
+                    e,
+                    fallback:
+                        'Could not update your password. Please try again.',
+                  ),
             ),
-          );
-        }
+          ),
+        );
+      }
     }
   }
 
@@ -685,7 +693,10 @@ class _ProfilePageState extends State<ProfilePage> {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text(
-                                    'Could not open Paddle cancellation: $e',
+                                    context.t(
+                                      'could_not_open_paddle_cancellation',
+                                      args: {'error': e.toString()},
+                                    ),
                                   ),
                                 ),
                               );
@@ -770,9 +781,9 @@ class _ProfilePageState extends State<ProfilePage> {
                           Icons.verified_user,
                           color: currentSessionColor,
                         ),
-                        title: const Text('Complete account setup'),
-                        subtitle: const Text(
-                          'Add a username and password for future logins and restores.',
+                        title: Text(context.t('complete_account_setup')),
+                        subtitle: Text(
+                          context.t('complete_account_setup_desc'),
                         ),
                         trailing: const Icon(Icons.chevron_right),
                         onTap: () async {
@@ -784,8 +795,10 @@ class _ProfilePageState extends State<ProfilePage> {
                           );
                           if (completed == true && mounted) {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Account setup completed.'),
+                              SnackBar(
+                                content: Text(
+                                  context.t('account_setup_completed'),
+                                ),
                               ),
                             );
                             setState(() {});
@@ -800,15 +813,15 @@ class _ProfilePageState extends State<ProfilePage> {
                           Icons.restore,
                           color: currentSessionColor,
                         ),
-                        title: const Text('Restore Purchases'),
+                        title: Text(context.t('restore_purchases')),
                         trailing: const Icon(Icons.chevron_right),
                         onTap: () async {
                           await getIt<SubscriptionService>().restorePurchases();
                           if (mounted) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
-                                content: const Text(
-                                  'Restore started. Aliolo will relink any valid purchases to this account.',
+                                content: Text(
+                                  context.t('restore_purchases_started'),
                                 ),
                               ),
                             );
@@ -859,7 +872,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           Icons.analytics_outlined,
                           color: Colors.deepOrange,
                         ),
-                        title: const Text('Subject Usage'),
+                        title: Text(context.t('subject_usage')),
                         trailing: const Icon(Icons.chevron_right),
                         onTap:
                             () => Navigator.push(
@@ -875,7 +888,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           Icons.insights_outlined,
                           color: Colors.deepOrange,
                         ),
-                        title: const Text('Onboarding Analytics'),
+                        title: Text(context.t('onboarding_analytics')),
                         trailing: const Icon(Icons.chevron_right),
                         onTap:
                             () => Navigator.push(

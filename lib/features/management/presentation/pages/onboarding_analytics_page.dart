@@ -5,6 +5,7 @@ import 'package:aliolo/data/models/onboarding_analytics_model.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/onboarding_analytics_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
+import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/core/utils/api_error.dart';
 
 class OnboardingAnalyticsPage extends StatefulWidget {
@@ -201,7 +202,7 @@ class _OnboardingAnalyticsPageState extends State<OnboardingAnalyticsPage> {
             runSpacing: 8,
             children:
                 _data.ageBreakdown.isEmpty
-                    ? [const Text('No age data yet')]
+                    ? [Text(context.t('no_age_data_yet'))]
                     : _data.ageBreakdown
                         .map(
                           (row) => _buildChip(row.ageRange, '${row.sessions}'),
@@ -217,7 +218,7 @@ class _OnboardingAnalyticsPageState extends State<OnboardingAnalyticsPage> {
             runSpacing: 8,
             children:
                 _data.pillarBreakdown.isEmpty
-                    ? [const Text('No pillar data yet')]
+                    ? [Text(context.t('no_pillar_data_yet'))]
                     : _data.pillarBreakdown
                         .map(
                           (row) =>
@@ -234,7 +235,7 @@ class _OnboardingAnalyticsPageState extends State<OnboardingAnalyticsPage> {
             runSpacing: 8,
             children:
                 _data.slideBreakdown.isEmpty
-                    ? [const Text('No slide data yet')]
+                    ? [Text(context.t('no_slide_data_yet'))]
                     : _data.slideBreakdown
                         .map(
                           (row) => _buildChip(
@@ -253,7 +254,7 @@ class _OnboardingAnalyticsPageState extends State<OnboardingAnalyticsPage> {
 
   Widget _buildRecentSessionsTable() {
     if (_data.recentSessions.isEmpty) {
-      return const Text('No onboarding sessions yet');
+      return Text(context.t('no_onboarding_sessions_yet'));
     }
 
     final rows =
@@ -262,14 +263,21 @@ class _OnboardingAnalyticsPageState extends State<OnboardingAnalyticsPage> {
               (row) => DataRow(
                 cells: [
                   DataCell(SelectableText(row.sessionId)),
-                  DataCell(SelectableText(row.userEmail ?? 'Not set')),
-                  DataCell(Text(row.ageRange ?? 'Not set')),
+                  DataCell(
+                    SelectableText(row.userEmail ?? context.t('not_set')),
+                  ),
+                  DataCell(Text(row.ageRange ?? context.t('not_set'))),
                   DataCell(
                     Text(
-                      row.pillarName ?? (row.pillarId?.toString() ?? 'Not set'),
+                      row.pillarName ??
+                          (row.pillarId?.toString() ?? context.t('not_set')),
                     ),
                   ),
-                  DataCell(Text(row.lastSlideIndex?.toString() ?? 'Not set')),
+                  DataCell(
+                    Text(
+                      row.lastSlideIndex?.toString() ?? context.t('not_set'),
+                    ),
+                  ),
                   DataCell(Text(_formatDate(row.updatedAt))),
                 ],
               ),
@@ -279,13 +287,13 @@ class _OnboardingAnalyticsPageState extends State<OnboardingAnalyticsPage> {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: DataTable(
-        columns: const [
-          DataColumn(label: Text('Session')),
-          DataColumn(label: Text('Email')),
-          DataColumn(label: Text('Age')),
-          DataColumn(label: Text('Pillar')),
-          DataColumn(label: Text('Last slide')),
-          DataColumn(label: Text('Updated')),
+        columns: [
+          DataColumn(label: Text(context.t('session'))),
+          DataColumn(label: Text(context.t('email'))),
+          DataColumn(label: Text(context.t('age'))),
+          DataColumn(label: Text(context.t('pillar'))),
+          DataColumn(label: Text(context.t('last_slide'))),
+          DataColumn(label: Text(context.t('updated'))),
         ],
         rows: rows,
       ),
@@ -298,9 +306,9 @@ class _OnboardingAnalyticsPageState extends State<OnboardingAnalyticsPage> {
     const appBarColor = Colors.white;
 
     return AlioloScrollablePage(
-      title: const Text(
-        'Onboarding Analytics',
-        style: TextStyle(color: appBarColor, fontWeight: FontWeight.bold),
+      title: Text(
+        context.t('onboarding_analytics'),
+        style: const TextStyle(color: appBarColor, fontWeight: FontWeight.bold),
       ),
       appBarColor: themeColor,
       actions: [
@@ -315,9 +323,9 @@ class _OnboardingAnalyticsPageState extends State<OnboardingAnalyticsPage> {
       ],
       body:
           !_isAdmin
-              ? const Padding(
-                padding: EdgeInsets.all(32),
-                child: Center(child: Text('Not available')),
+              ? Padding(
+                padding: const EdgeInsets.all(32),
+                child: Center(child: Text(context.t('not_available'))),
               )
               : _isLoading
               ? const Padding(
@@ -333,7 +341,7 @@ class _OnboardingAnalyticsPageState extends State<OnboardingAnalyticsPage> {
                     const SizedBox(height: 12),
                     ElevatedButton(
                       onPressed: _loadAnalytics,
-                      child: const Text('Retry'),
+                      child: Text(context.t('retry')),
                     ),
                   ],
                 ),

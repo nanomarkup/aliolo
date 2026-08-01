@@ -5,6 +5,7 @@ import 'package:aliolo/data/models/subject_usage_model.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/data/services/subject_usage_service.dart';
 import 'package:aliolo/data/services/theme_service.dart';
+import 'package:aliolo/data/services/translation_service.dart';
 import 'package:aliolo/core/utils/api_error.dart';
 
 class SubjectUsagePage extends StatefulWidget {
@@ -163,9 +164,9 @@ class _SubjectUsagePageState extends State<SubjectUsagePage> {
     const appBarColor = Colors.white;
 
     return AlioloScrollablePage(
-      title: const Text(
-        'Subject Usage',
-        style: TextStyle(color: appBarColor, fontWeight: FontWeight.bold),
+      title: Text(
+        context.t('subject_usage'),
+        style: const TextStyle(color: appBarColor, fontWeight: FontWeight.bold),
       ),
       appBarColor: themeColor,
       actions: [
@@ -180,9 +181,9 @@ class _SubjectUsagePageState extends State<SubjectUsagePage> {
       ],
       body:
           !_isAdmin
-              ? const Padding(
-                padding: EdgeInsets.all(32),
-                child: Center(child: Text('Not available')),
+              ? Padding(
+                padding: const EdgeInsets.all(32),
+                child: Center(child: Text(context.t('not_available'))),
               )
               : _isLoading
               ? const Padding(
@@ -198,15 +199,15 @@ class _SubjectUsagePageState extends State<SubjectUsagePage> {
                     const SizedBox(height: 12),
                     ElevatedButton(
                       onPressed: _loadUsage,
-                      child: const Text('Retry'),
+                      child: Text(context.t('retry')),
                     ),
                   ],
                 ),
               )
               : _rows.isEmpty
-              ? const Padding(
-                padding: EdgeInsets.all(32),
-                child: Center(child: Text('No usage data yet')),
+              ? Padding(
+                padding: const EdgeInsets.all(32),
+                child: Center(child: Text(context.t('no_usage_data_yet'))),
               )
               : Column(
                 children: [
@@ -234,11 +235,17 @@ class _SubjectUsagePageState extends State<SubjectUsagePage> {
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
           value: _selectedPeriod,
-          items: const [
-            DropdownMenuItem(value: '1m', child: Text('Last Month')),
-            DropdownMenuItem(value: '3m', child: Text('Last 3 Months')),
-            DropdownMenuItem(value: '6m', child: Text('Last 6 Months')),
-            DropdownMenuItem(value: 'all', child: Text('All Time')),
+          items: [
+            DropdownMenuItem(value: '1m', child: Text(context.t('last_month'))),
+            DropdownMenuItem(
+              value: '3m',
+              child: Text(context.t('last_3_months')),
+            ),
+            DropdownMenuItem(
+              value: '6m',
+              child: Text(context.t('last_6_months')),
+            ),
+            DropdownMenuItem(value: 'all', child: Text(context.t('all_time'))),
           ],
           onChanged: (val) {
             if (val != null) {

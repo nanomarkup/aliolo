@@ -137,7 +137,11 @@ class _SettingsPageState extends State<SettingsPage> {
     const appBarColor = Colors.white;
 
     return ListenableBuilder(
-      listenable: Listenable.merge([TranslationService(), ThemeService(), _authService]),
+      listenable: Listenable.merge([
+        TranslationService(),
+        ThemeService(),
+        _authService,
+      ]),
       builder: (context, _) {
         final currentPrimaryColor = ThemeService().primaryColor;
         final isDark = Theme.of(context).brightness == Brightness.dark;
@@ -146,17 +150,23 @@ class _SettingsPageState extends State<SettingsPage> {
         final homeAction = IconButton(
           tooltip: context.t('home') ?? 'Home',
           icon: const Icon(Icons.school),
-          onPressed: () => Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (context) => const SubjectPage()),
-            (route) => false,
-          ),
+          onPressed:
+              () => Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => const SubjectPage()),
+                (route) => false,
+              ),
         );
         final leaderboardAction = IconButton(
           tooltip: context.t('leaderboard'),
           icon: const Icon(Icons.emoji_events),
-          onPressed: () =>
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const LeaderboardPage())),
+          onPressed:
+              () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const LeaderboardPage(),
+                ),
+              ),
         );
         final profileAction = IconButton(
           tooltip: context.t('profile'),
@@ -171,7 +181,10 @@ class _SettingsPageState extends State<SettingsPage> {
             },
           ),
           onPressed: () async {
-            await Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfilePage()));
+            await Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const ProfilePage()),
+            );
           },
         );
         final settingsAction = IconButton(
@@ -179,39 +192,49 @@ class _SettingsPageState extends State<SettingsPage> {
           icon: const Icon(Icons.settings),
           onPressed: () => setState(() {}),
         );
-        final docAction = (_authService.currentUser?.showDocumentation ?? true)
-            ? IconButton(
-              tooltip: context.t('documentation'),
-              icon: const Icon(Icons.help_outline),
-              onPressed: () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const DocumentationPage()),
-              ),
-            )
-            : null;
+        final docAction =
+            (_authService.currentUser?.showDocumentation ?? true)
+                ? IconButton(
+                  tooltip: context.t('documentation'),
+                  icon: const Icon(Icons.help_outline),
+                  onPressed:
+                      () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const DocumentationPage(),
+                        ),
+                      ),
+                )
+                : null;
 
         return AlioloScrollablePage(
           title: Text(
             context.t('settings'),
-            style: const TextStyle(color: appBarColor, fontSize: 20, fontWeight: FontWeight.bold),
+            style: const TextStyle(
+              color: appBarColor,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           appBarColor: currentPrimaryColor,
-          actions: isSmallScreen
-              ? [homeAction, profileAction]
-              : [
-                homeAction,
-                leaderboardAction,
-                profileAction,
-                settingsAction,
-                if (docAction != null) docAction,
-              ],
-          overflowActions: isSmallScreen
-              ? [
-                leaderboardAction,
-                settingsAction,
-                if (docAction != null) docAction,
-              ]
-              : null,
+          actions:
+              isSmallScreen
+                  ? [homeAction, profileAction]
+                  : [
+                    homeAction,
+                    leaderboardAction,
+                    profileAction,
+                    settingsAction,
+                    if (docAction != null) docAction,
+                  ],
+          overflowActions:
+              isSmallScreen
+                  ? [
+                    leaderboardAction,
+                    settingsAction,
+                    if (docAction != null) docAction,
+                  ]
+                  : null,
           body: Column(
             children: [
               _buildSectionTitle(
@@ -266,26 +289,29 @@ class _SettingsPageState extends State<SettingsPage> {
                         child: ListenableBuilder(
                           listenable: TranslationService(),
                           builder: (context, _) {
-                            final currentLang = TranslationService()
-                                .currentLocale
-                                .languageCode
-                                .toLowerCase();
-                            final availableLangs = TranslationService()
-                                .availableUILanguages
-                                .map((c) => c.toLowerCase())
-                                .toSet();
+                            final currentLang =
+                                TranslationService().currentLocale.languageCode
+                                    .toLowerCase();
+                            final availableLangs =
+                                TranslationService().availableUILanguages
+                                    .map((c) => c.toLowerCase())
+                                    .toSet();
 
                             if (!availableLangs.contains(currentLang)) {
                               availableLangs.add(currentLang);
                             }
 
-                            final sortedLangs = availableLangs.toList()
-                              ..sort((a, b) => TranslationService()
-                                  .getLanguageName(a)
-                                  .toLowerCase()
-                                  .compareTo(TranslationService()
-                                      .getLanguageName(b)
-                                      .toLowerCase()));
+                            final sortedLangs =
+                                availableLangs.toList()..sort(
+                                  (a, b) => TranslationService()
+                                      .getLanguageName(a)
+                                      .toLowerCase()
+                                      .compareTo(
+                                        TranslationService()
+                                            .getLanguageName(b)
+                                            .toLowerCase(),
+                                      ),
+                                );
 
                             return DropdownButtonHideUnderline(
                               child: DropdownButton<String>(
@@ -333,7 +359,9 @@ class _SettingsPageState extends State<SettingsPage> {
                             ButtonSegment<String>(
                               value: 'dark',
                               label:
-                                  isSmall ? null : Text(context.t('theme_dark')),
+                                  isSmall
+                                      ? null
+                                      : Text(context.t('theme_dark')),
                               icon: const Icon(Icons.dark_mode, size: 18),
                             ),
                             ButtonSegment<String>(
@@ -409,11 +437,17 @@ class _SettingsPageState extends State<SettingsPage> {
                         alignment: WrapAlignment.center,
                         children:
                             pillars.map((p) {
-                              final color = p.getColor(getIt<ThemeService>().isDarkMode);
-                              final isSelected = _authService.currentUser?.mainPillarId == p.id;
+                              final color = p.getColor(
+                                getIt<ThemeService>().isDarkMode,
+                              );
+                              final isSelected =
+                                  _authService.currentUser?.mainPillarId ==
+                                  p.id;
 
                               return GestureDetector(
-                                onTap: () => _authService.updateMainColorFromPillar(p.id),
+                                onTap:
+                                    () => _authService
+                                        .updateMainColorFromPillar(p.id),
                                 child: Container(
                                   width: 44,
                                   height: 44,
@@ -423,7 +457,9 @@ class _SettingsPageState extends State<SettingsPage> {
                                     border: Border.all(
                                       color:
                                           isSelected
-                                              ? (isDark ? Colors.white : Colors.black54)
+                                              ? (isDark
+                                                  ? Colors.white
+                                                  : Colors.black54)
                                               : Colors.transparent,
                                       width: 3,
                                     ),
@@ -464,34 +500,46 @@ class _SettingsPageState extends State<SettingsPage> {
                       leading: Icon(Icons.feedback, color: currentPrimaryColor),
                       title: Text(context.t('feedback_management_title')),
                       trailing: const Icon(Icons.chevron_right),
-                      onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const FeedbackManagementPage(),
-                        ),
-                      ),
+                      onTap:
+                          () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder:
+                                  (context) => const FeedbackManagementPage(),
+                            ),
+                          ),
                     ),
                     const Divider(height: 1, indent: 16, endIndent: 16),
                     ListTile(
-                      leading: Icon(Icons.help_outline, color: currentPrimaryColor),
+                      leading: Icon(
+                        Icons.help_outline,
+                        color: currentPrimaryColor,
+                      ),
                       title: Text(context.t('documentation')),
                       trailing: const Icon(Icons.chevron_right),
-                      onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const DocumentationPage(),
-                        ),
-                      ),
+                      onTap:
+                          () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const DocumentationPage(),
+                            ),
+                          ),
                     ),
                     const Divider(height: 1, indent: 16, endIndent: 16),
                     ListTile(
-                      leading: Icon(Icons.info_outline, color: currentPrimaryColor),
+                      leading: Icon(
+                        Icons.info_outline,
+                        color: currentPrimaryColor,
+                      ),
                       title: Text(context.t('about')),
                       trailing: const Icon(Icons.chevron_right),
-                      onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const AboutPage()),
-                      ),
+                      onTap:
+                          () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const AboutPage(),
+                            ),
+                          ),
                     ),
                   ],
                 ),
@@ -502,17 +550,18 @@ class _SettingsPageState extends State<SettingsPage> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     TextButton.icon(
-                      onPressed: () => AlioloLegalLinks.open(
-                        context,
-                        AlioloLegalLinks.website,
-                      ),
+                      onPressed:
+                          () => AlioloLegalLinks.open(
+                            context,
+                            AlioloLegalLinks.website,
+                          ),
                       icon: Icon(
                         Icons.public,
                         size: 18,
                         color: currentPrimaryColor,
                       ),
                       label: Text(
-                        'Official website',
+                        context.t('official_website'),
                         style: TextStyle(color: currentPrimaryColor),
                       ),
                     ),
