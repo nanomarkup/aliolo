@@ -1,24 +1,14 @@
 ..
-    legal_info|
-        法的情報
-    last_updated|
-        最終更新日
-    support|
-        サポート
-    home|
-        家
-    privacy|
-        プライバシー
-    terms|
-        条項
-    refunds|
-        払い戻し
-    pricing|
-        価格設定
-    privacy_title|
-        アリオロ プライバシー ポリシー
-    privacy_subtitle|
-        Aliolo がアカウント、学習、支払い関連情報を収集、使用、保存、保護する方法。
+    legal_info 法的情報
+    last_updated 最終更新日
+    support サポート
+    home 家
+    privacy プライバシー
+    terms 条項
+    refunds 払い戻し
+    pricing 価格設定
+    privacy_title アリオロ プライバシー ポリシー
+    privacy_subtitle Aliolo がアカウント、学習、支払い関連情報を収集、使用、保存、保護する方法。
     privacy_body|
         <h2>当社が収集する情報</h2>
         <p>当社は、メールアドレス、ユーザー名、パスワード認証データ、アバター設定、環境設定、プロフィール設定などのアカウント詳細を含む、Aliolo の操作に必要な情報を収集します。</p>
@@ -41,10 +31,8 @@
         <p>当社は、個人情報を保護するために合理的な技術的および組織的な安全対策を講じています。完璧なセキュリティを保証できるオンライン サービスはありませんが、当社はアクセスを制限し、不正使用からデータを保護するよう努めています。</p>
         <h2>あなたの選択と権利</h2>
         <p>お住まいの地域によっては、ご自身の個人情報にアクセス、修正、削除、エクスポート、または使用を制限する権利がある場合があります。お問い合わせ先 <a href="mailto:vitalii@nohainc.com">Vitaii@nohainc.com</a> リクエストをするために。</p>
-    terms_title|
-        Aliolo サブスクリプション規約
-    terms_subtitle|
-        Aliolo アカウント、プレミアム アクセス、サブスクリプションの請求、キャンセル、および許容される使用に関するルール。
+    terms_title Aliolo サブスクリプション規約
+    terms_subtitle Aliolo アカウント、プレミアム アクセス、サブスクリプションの請求、キャンセル、および許容される使用に関するルール。
     terms_body|
         <h2>アリオロの使用</h2>
         <p>Aliolo は、視覚的な学習ツール、厳選された教育コンテンツ、フラッシュカード、進捗状況の追跡、およびプレミアム学習機能を提供します。あなたには、アカウントの資格情報を安全に保管し、サービスを合法的に使用する責任があります。</p>
@@ -65,10 +53,8 @@
         <p>Aliolo は教育・学習支援ツールとして提供されています。当社は、特定の学習、試験、職業上、または財務上の成果を保証するものではありません。法律で認められる最大限の範囲で、Aliolo は適用法で要求される保証を超える保証なしで提供されます。</p>
         <h2>本規約の変更</h2>
         <p>当社は、製品、法的、請求、運用上の変更を反映するために、これらの規約を更新することがあります。現在のバージョンはこのページで公開されています。</p>
-    refund_title|
-        アリオロの返金ポリシー
-    refund_subtitle|
-        Aliolo プレミアムの返金、キャンセル、チャージバック、支払いサポートの仕組み。
+    refund_title アリオロの返金ポリシー
+    refund_subtitle Aliolo プレミアムの返金、キャンセル、チャージバック、支払いサポートの仕組み。
     refund_body|
         <h2>概要</h2>
         <p>Aliolo プレミアムはデジタル サブスクリプションです。プレミアム アクセスはすぐにアクティブ化できるため、このポリシー、購入チャネル、または適用される法律で別段の定めがある場合を除き、通常、サブスクリプションがアクティブになり使用されると、購入は最終的なものとなります。</p>
@@ -83,10 +69,8 @@
         <p>Web 注文の場合は、領収書に記載されている注文情報を使用して Paddle バイヤー サポートに連絡するか、次のアドレスで Aliolo サポートに連絡してください。 <a href="mailto:vitalii@nohainc.com">Vitaii@nohainc.com</a>。 Paddle が代表販売者である場合、当社は支払い固有のリクエストを Paddle に送信することがあります。</p>
         <h2>チャージバックと悪用</h2>
         <p>支払いが取り消され、異議が唱えられ、返金され、または不正であると特定された場合、Aliolo はその取引に関連するプレミアム アクセスを一時停止または削除することがあります。</p>
-    pricing_title|
-        Aliolo プレミアム価格
-    pricing_subtitle|
-        Aliolo の完全なビジュアル学習体験をアンロックするためのシンプルなサブスクリプション オプション。
+    pricing_title Aliolo プレミアム価格
+    pricing_subtitle Aliolo の完全なビジュアル学習体験をアンロックするためのシンプルなサブスクリプション オプション。
     pricing_body|
         <div class="plans">
         <section class="plan">
@@ -175,175 +159,89 @@
         <p>価格とオファーは、Web チェックアウト、Google Play、Apple App Store、国、通貨、期間限定のプロモーションによって異なる場合があります。最終チェックアウト画面では、購入の実際の価格と更新条件を制御します。</p>
         <h2>関連ポリシー</h2>
         <p>購読する前に、 <a href="/terms">サブスクリプション規約</a>, <a href="/refund">返金ポリシー</a>、 そして <a href="/privacy">プライバシーポリシー</a>.</p>
-    checkout_title|
-        アリオロ チェックアウト
-    checkout_subtitle|
-        Aliolo プレミアム サブスクリプションの安全なチェックアウト。
-    checkout_eyebrow|
-        安全なチェックアウト
-    checkout_h1|
-        Aliolo プレミアムの購入を完了します。
-    checkout_status_title|
-        チェックアウトを待っています
-    checkout_status_desc|
-        Aliolo 請求からこのページを開いた場合は、支払いフォームが自動的に表示されるはずです。
-    checkout_payment_support_title|
-        支払いサポート
-    checkout_payment_support_desc|
-        Web 支払いは、Paddle.com によって販売者として処理されます。
-    checkout_billing_title|
-        サブスクリプションの請求
-    checkout_billing_desc|
-        Aliolo プレミアムはキャンセルされるまで自動的に更新されます。後で Paddle または Aliolo アカウントを通じてキャンセルできます。
-    checkout_policy_title|
-        ポリシーの詳細が必要ですか?
-    checkout_policy_desc|
-        購入を完了する前に、価格、サブスクリプション条件、プライバシー、返金情報を確認してください。
-    landing_meta_title|
-        アリオロ |ビジュアルフラッシュカード、間隔をあけた繰り返し、よりスマートな学習ワークフロー
-    landing_meta_desc|
-        Aliolo は、学習者が言語、科学、解剖学、試験準備、視覚的なフラッシュカード、間隔を空けた反復、インタラクティブなテスト モードを使用して厳選された科目を習得するのに役立ちます。
-    landing_nav_features|
-        特徴
-    landing_nav_how_it_works|
-        仕組み
-    landing_nav_pricing|
-        価格設定
-    landing_nav_login|
-        ログイン
-    landing_nav_cta|
-        無料アカウントを作成する
-    landing_hero_eyebrow|
-        視覚的な学習プラットフォーム
-    landing_hero_h1|
-        視覚的に学びましょう。もっと長く覚えておいてください。
-    landing_hero_p|
-        画像、音声、ビデオ、テキストを構造化されたフラッシュカードに変換します。文脈を踏まえて学習し、適切なタイミングで復習し、本当に思い出せるものをテストします。
-    landing_hero_btn_primary|
-        無料アカウントを作成する
-    landing_hero_btn_secondary|
-        ログイン
-    landing_hero_proof_1_title|
-        ビジュアル
-    landing_hero_proof_1_desc|
-        画像、音声、ビデオに対応したフラッシュカードで、認識を重視した学習に最適です。
-    landing_hero_proof_2_title|
-        アダプティブ
-    landing_hero_proof_2_desc|
-        適切なタイミングで内容を再確認するための、間隔をあけた繰り返しと進捗状況の追跡。
-    landing_hero_proof_3_title|
-        構造化された
-    landing_hero_proof_3_desc|
-        単純なデッキを超えて拡大する柱、フォルダー、主題、およびコレクション。
-    landing_hero_preview_title|
-        リコール前の認識
-    landing_hero_preview_desc|
-        画像、テキスト、音声、ガイド付きナビゲーションを使用した実際の Aliolo レッスン。
-    landing_hero_preview_chip|
-        学習モード
-    landing_features_h2|
-        露出を思い出に変えるために必要なものがすべて揃っています。
-    landing_features_p|
-        リッチ メディアで認知度を高め、大規模なライブラリを整理して、内容が薄れる前に再訪します。
-    landing_feature_1_title|
-        テキストだけでなく学習も可能
-    landing_feature_1_desc|
-        主題が認識とコンテキストに依存する場合は、画像、音声、ビデオ、および柔軟なプロンプトを使用します。
-    landing_feature_2_title|
-        色褪せる前に見直してね
-    landing_feature_2_desc|
-        一定の間隔で繰り返し、進捗状況を追跡することで、重要な内容を有用なタイミングで取り戻すことができます。
-    landing_feature_3_title|
-        1 つのデッキを超えて成長する
-    landing_feature_3_desc|
-        厳選された素材やカスタム素材を柱、フォルダー、主題、コレクションに整理し、引き続き使用できるようにします。
-    landing_workflow_h2|
-        「勉強しなければいけない」から「これは知っている」までの明確な道筋。
-    landing_workflow_p|
-        1 つの焦点を絞ったワークフローにより、すべての主題を同じ種類のカードにまとめることなく、次のステップが明確になります。
-    landing_step_1_title|
-        適切な素材を選択してください
-    landing_step_1_desc|
-        厳選された主題から始めることも、試験、言語、職業、または個人の目標に特化したライブラリを構築することもできます。
-    landing_step_2_title|
-        コンテキストを理解して学ぶ
-    landing_step_2_desc|
-        助けを借りずに記憶力を働かせる前に、ガイド付きカードや利用可能なメディアを通じて認識力を高めてください。
-    landing_step_3_title|
-        実際の再現率をテストする
-    landing_step_3_desc|
-        集中的なテストに移行して、弱点を明らかにし、回復を強化し、進歩を測定可能にします。
-    landing_pricing_h2|
-        無料で始めましょう。完全なワークフローが必要な場合はアップグレードしてください。
-    landing_pricing_p|
-        支払いなしでアカウントを作成します。プレミアムでは、間隔をあけた繰り返し、作成、テスト、自動再生、プライベート編成、およびより深いカスタマイズが追加されます。
-    landing_plan_weekly_desc|
-        短期間の復習、簡単な復習、または試験週間の準備に適しています。
-    landing_plan_weekly_item_1|
-        短いコミットメントウィンドウ
-    landing_plan_weekly_item_2|
-        プレミアム ワークフローをすぐに試す方法
-    landing_plan_weekly_item_3|
-        キャンセルされるまで自動的に更新されます
-    landing_plan_weekly_btn|
-        プランの詳細を見る
-    landing_plan_monthly_desc|
-        安定した学習習慣を築く生徒のためのバランスの取れたアクセス。
-    landing_plan_monthly_item_1|
-        Best for regular weekly study
-    landing_plan_monthly_item_2|
-        大規模な主題ライブラリを整理するのに十分な時間
-    landing_plan_monthly_item_3|
-        キャンセルされるまで自動的に更新されます
-    landing_plan_monthly_btn|
-        プランの詳細を見る
-    landing_plan_yearly_desc|
-        耐久性のある学習システムを求める学習者にとって、月額費用が最も低額です。
-    landing_plan_yearly_item_1|
-        長期の語学学習や専門学習に最適
-    landing_plan_yearly_item_2|
-        長期にわたるコストの削減
-    landing_plan_yearly_item_3|
-        キャンセルされるまで自動的に更新されます
-    landing_plan_yearly_btn|
-        プランの詳細を見る
-    landing_trust_h2|
-        明確に勉強してください。安心して購読してください。
-    landing_trust_p|
-        コミットする前に、何が無料で、何がプレミアムで追加され、どこでサポートが受けられるのかを知ってください。
-    landing_trust_item_1_title|
-        入場無料：
-    landing_trust_item_1_desc|
-        アカウントを作成すると、支払いの詳細を入力せずに、利用可能な学習教材を検索できます。
-    landing_trust_item_2_title|
-        透明性のある条件:
-    landing_trust_item_2_desc|
-        価格、更新、キャンセル、プライバシー、返金に関する情報は、チェックアウト前に確認できます。
-    landing_trust_item_3_title|
-        人間によるサポート:
-    landing_trust_item_3_desc|
-        サポートが必要な場合は、vitalii@nohainc.com までご連絡ください。
-    landing_faq_1_q|
-        すべてのカードを自分で作成する必要がありますか?
-    landing_faq_1_a|
-        いいえ。利用可能な厳選された主題から始めて、目標がより具体的になったら独自の資料を作成します。
-    landing_faq_2_q|
-        Alioloを無料で使用できますか?
-    landing_faq_2_a|
-        はい。無料のアカウントは、ライブラリへのエントリ ポイントを提供します。価格ページでは、どの高度なワークフローにプレミアムが必要かが説明されています。
-    landing_faq_3_q|
-        サブスクリプションをキャンセルできますか?
-    landing_faq_3_a|
-        はい。サブスクリプションは購入したチャネルを通じてキャンセルでき、通常は有料期間中はアクセスが継続されます。
-    landing_final_h2|
-        次の勉強会を有意義なものにする準備はできていますか?
-    landing_final_p|
-        無料のアカウントを作成し、科目を選択して、視覚的に学習を始めましょう。
-    landing_final_btn|
-        無料アカウントを作成する
-    landing_footer_desc|
-        視覚的なフラッシュカード、間隔をあけた反復、柔軟な科目編成、摩擦のない構成を求める学習者向けの集中的なテスト ワークフロー。
-    landing_footer_mor|
-        登録販売者:
-    landing_footer_mor_desc|
-        当社の注文プロセスは、当社のオンライン再販業者およびウェブ注文の登録販売者である Paddle.com によって実行される場合があります。 Paddle は、支払い処理、支払い関連の顧客サービス、および注文の返品を処理します。
+    checkout_title アリオロ チェックアウト
+    checkout_subtitle Aliolo プレミアム サブスクリプションの安全なチェックアウト。
+    checkout_eyebrow 安全なチェックアウト
+    checkout_h1 Aliolo プレミアムの購入を完了します。
+    checkout_status_title チェックアウトを待っています
+    checkout_status_desc Aliolo 請求からこのページを開いた場合は、支払いフォームが自動的に表示されるはずです。
+    checkout_payment_support_title 支払いサポート
+    checkout_payment_support_desc Web 支払いは、Paddle.com によって販売者として処理されます。
+    checkout_billing_title サブスクリプションの請求
+    checkout_billing_desc Aliolo プレミアムはキャンセルされるまで自動的に更新されます。後で Paddle または Aliolo アカウントを通じてキャンセルできます。
+    checkout_policy_title ポリシーの詳細が必要ですか?
+    checkout_policy_desc 購入を完了する前に、価格、サブスクリプション条件、プライバシー、返金情報を確認してください。
+    landing_meta_title アリオロ |ビジュアルフラッシュカード、間隔をあけた繰り返し、よりスマートな学習ワークフロー
+    landing_meta_desc Aliolo は、学習者が言語、科学、解剖学、試験準備、視覚的なフラッシュカード、間隔を空けた反復、インタラクティブなテスト モードを使用して厳選された科目を習得するのに役立ちます。
+    landing_nav_features 特徴
+    landing_nav_how_it_works 仕組み
+    landing_nav_pricing 価格設定
+    landing_nav_login ログイン
+    landing_nav_cta 無料アカウントを作成する
+    landing_hero_eyebrow 視覚的な学習プラットフォーム
+    landing_hero_h1 視覚的に学びましょう。もっと長く覚えておいてください。
+    landing_hero_p 画像、音声、ビデオ、テキストを構造化されたフラッシュカードに変換します。文脈を踏まえて学習し、適切なタイミングで復習し、本当に思い出せるものをテストします。
+    landing_hero_btn_primary 無料アカウントを作成する
+    landing_hero_btn_secondary ログイン
+    landing_hero_proof_1_title ビジュアル
+    landing_hero_proof_1_desc 画像、音声、ビデオに対応したフラッシュカードで、認識を重視した学習に最適です。
+    landing_hero_proof_2_title アダプティブ
+    landing_hero_proof_2_desc 適切なタイミングで内容を再確認するための、間隔をあけた繰り返しと進捗状況の追跡。
+    landing_hero_proof_3_title 構造化された
+    landing_hero_proof_3_desc 単純なデッキを超えて拡大する柱、フォルダー、主題、およびコレクション。
+    landing_hero_preview_title リコール前の認識
+    landing_hero_preview_desc 画像、テキスト、音声、ガイド付きナビゲーションを使用した実際の Aliolo レッスン。
+    landing_hero_preview_chip 学習モード
+    landing_features_h2 露出を思い出に変えるために必要なものがすべて揃っています。
+    landing_features_p リッチ メディアで認知度を高め、大規模なライブラリを整理して、内容が薄れる前に再訪します。
+    landing_feature_1_title テキストだけでなく学習も可能
+    landing_feature_1_desc 主題が認識とコンテキストに依存する場合は、画像、音声、ビデオ、および柔軟なプロンプトを使用します。
+    landing_feature_2_title 色褪せる前に見直してね
+    landing_feature_2_desc 一定の間隔で繰り返し、進捗状況を追跡することで、重要な内容を有用なタイミングで取り戻すことができます。
+    landing_feature_3_title 1 つのデッキを超えて成長する
+    landing_feature_3_desc 厳選された素材やカスタム素材を柱、フォルダー、主題、コレクションに整理し、引き続き使用できるようにします。
+    landing_workflow_h2 「勉強しなければいけない」から「これは知っている」までの明確な道筋。
+    landing_workflow_p 1 つの焦点を絞ったワークフローにより、すべての主題を同じ種類のカードにまとめることなく、次のステップが明確になります。
+    landing_step_1_title 適切な素材を選択してください
+    landing_step_1_desc 厳選された主題から始めることも、試験、言語、職業、または個人の目標に特化したライブラリを構築することもできます。
+    landing_step_2_title コンテキストを理解して学ぶ
+    landing_step_2_desc 助けを借りずに記憶力を働かせる前に、ガイド付きカードや利用可能なメディアを通じて認識力を高めてください。
+    landing_step_3_title 実際の再現率をテストする
+    landing_step_3_desc 集中的なテストに移行して、弱点を明らかにし、回復を強化し、進歩を測定可能にします。
+    landing_pricing_h2 無料で始めましょう。完全なワークフローが必要な場合はアップグレードしてください。
+    landing_pricing_p 支払いなしでアカウントを作成します。プレミアムでは、間隔をあけた繰り返し、作成、テスト、自動再生、プライベート編成、およびより深いカスタマイズが追加されます。
+    landing_plan_weekly_desc 短期間の復習、簡単な復習、または試験週間の準備に適しています。
+    landing_plan_weekly_item_1 短いコミットメントウィンドウ
+    landing_plan_weekly_item_2 プレミアム ワークフローをすぐに試す方法
+    landing_plan_weekly_item_3 キャンセルされるまで自動的に更新されます
+    landing_plan_weekly_btn プランの詳細を見る
+    landing_plan_monthly_desc 安定した学習習慣を築く生徒のためのバランスの取れたアクセス。
+    landing_plan_monthly_item_1 Best for regular weekly study
+    landing_plan_monthly_item_2 大規模な主題ライブラリを整理するのに十分な時間
+    landing_plan_monthly_item_3 キャンセルされるまで自動的に更新されます
+    landing_plan_monthly_btn プランの詳細を見る
+    landing_plan_yearly_desc 耐久性のある学習システムを求める学習者にとって、月額費用が最も低額です。
+    landing_plan_yearly_item_1 長期の語学学習や専門学習に最適
+    landing_plan_yearly_item_2 長期にわたるコストの削減
+    landing_plan_yearly_item_3 キャンセルされるまで自動的に更新されます
+    landing_plan_yearly_btn プランの詳細を見る
+    landing_trust_h2 明確に勉強してください。安心して購読してください。
+    landing_trust_p コミットする前に、何が無料で、何がプレミアムで追加され、どこでサポートが受けられるのかを知ってください。
+    landing_trust_item_1_title 入場無料：
+    landing_trust_item_1_desc アカウントを作成すると、支払いの詳細を入力せずに、利用可能な学習教材を検索できます。
+    landing_trust_item_2_title 透明性のある条件:
+    landing_trust_item_2_desc 価格、更新、キャンセル、プライバシー、返金に関する情報は、チェックアウト前に確認できます。
+    landing_trust_item_3_title 人間によるサポート:
+    landing_trust_item_3_desc サポートが必要な場合は、vitalii@nohainc.com までご連絡ください。
+    landing_faq_1_q すべてのカードを自分で作成する必要がありますか?
+    landing_faq_1_a いいえ。利用可能な厳選された主題から始めて、目標がより具体的になったら独自の資料を作成します。
+    landing_faq_2_q Alioloを無料で使用できますか?
+    landing_faq_2_a はい。無料のアカウントは、ライブラリへのエントリ ポイントを提供します。価格ページでは、どの高度なワークフローにプレミアムが必要かが説明されています。
+    landing_faq_3_q サブスクリプションをキャンセルできますか?
+    landing_faq_3_a はい。サブスクリプションは購入したチャネルを通じてキャンセルでき、通常は有料期間中はアクセスが継続されます。
+    landing_final_h2 次の勉強会を有意義なものにする準備はできていますか?
+    landing_final_p 無料のアカウントを作成し、科目を選択して、視覚的に学習を始めましょう。
+    landing_final_btn 無料アカウントを作成する
+    landing_footer_desc 視覚的なフラッシュカード、間隔をあけた反復、柔軟な科目編成、摩擦のない構成を求める学習者向けの集中的なテスト ワークフロー。
+    landing_footer_mor 登録販売者:
+    landing_footer_mor_desc 当社の注文プロセスは、当社のオンライン再販業者およびウェブ注文の登録販売者である Paddle.com によって実行される場合があります。 Paddle は、支払い処理、支払い関連の顧客サービス、および注文の返品を処理します。

@@ -1,24 +1,14 @@
 ..
-    legal_info|
-        Juridisk information
-    last_updated|
-        Senast uppdaterad
-    support|
-        Stöd
-    home|
-        Hem
-    privacy|
-        Privatliv
-    terms|
-        Villkor
-    refunds|
-        Återbetalningar
-    pricing|
-        Prissättning
-    privacy_title|
-        Aliolos sekretesspolicy
-    privacy_subtitle|
-        Hur Aliolo samlar in, använder, lagrar och skyddar konto-, inlärnings- och betalningsrelaterad information.
+    legal_info Juridisk information
+    last_updated Senast uppdaterad
+    support Stöd
+    home Hem
+    privacy Privatliv
+    terms Villkor
+    refunds Återbetalningar
+    pricing Prissättning
+    privacy_title Aliolos sekretesspolicy
+    privacy_subtitle Hur Aliolo samlar in, använder, lagrar och skyddar konto-, inlärnings- och betalningsrelaterad information.
     privacy_body|
         <h2>Information vi samlar in</h2>
         <p>Vi samlar in den information som behövs för att driva Aliolo, inklusive kontodetaljer som e-postadress, användarnamn, lösenordsautentiseringsdata, avatarinställningar, preferenser och profilinställningar.</p>
@@ -41,10 +31,8 @@
         <p>Vi använder rimliga tekniska och organisatoriska skyddsåtgärder för att skydda personlig information. Ingen onlinetjänst kan garantera perfekt säkerhet, men vi arbetar för att begränsa åtkomsten och skydda data från obehörig användning.</p>
         <h2>Dina val och rättigheter</h2>
         <p>Beroende på din plats kan du ha rättigheter att få tillgång till, korrigera, ta bort, exportera eller begränsa användningen av din personliga information. Kontakta oss på <a href="mailto:vitalii@nohainc.com">vitalii@nohainc.com</a> att göra en begäran.</p>
-    terms_title|
-        Aliolo prenumerationsvillkor
-    terms_subtitle|
-        Reglerna för Aliolo-konton, premiumåtkomst, prenumerationsfakturering, avbokning och acceptabel användning.
+    terms_title Aliolo prenumerationsvillkor
+    terms_subtitle Reglerna för Aliolo-konton, premiumåtkomst, prenumerationsfakturering, avbokning och acceptabel användning.
     terms_body|
         <h2>Använder Aliolo</h2>
         <p>Aliolo tillhandahåller visuella inlärningsverktyg, kurerat utbildningsinnehåll, flashcards, framstegsspårning och förstklassiga inlärningsfunktioner. Du är ansvarig för att hålla dina kontouppgifter säkra och för att använda tjänsten lagligt.</p>
@@ -65,10 +53,8 @@
         <p>Aliolo tillhandahålls som ett utbildnings- och studiestödjande verktyg. Vi garanterar inte specifika inlärnings-, examens-, professionella eller ekonomiska resultat. I den maximala utsträckning som lagen tillåter tillhandahålls Aliolo utan garantier utöver de som krävs enligt tillämplig lag.</p>
         <h2>Ändringar av dessa villkor</h2>
         <p>Vi kan uppdatera dessa villkor för att återspegla produkt-, juridiska, fakturerings- eller driftsändringar. Den aktuella versionen publiceras på denna sida.</p>
-    refund_title|
-        Aliolos återbetalningspolicy
-    refund_subtitle|
-        Hur återbetalningar, avbokningar, återkrav och betalningssupport fungerar för Aliolo Premium.
+    refund_title Aliolos återbetalningspolicy
+    refund_subtitle Hur återbetalningar, avbokningar, återkrav och betalningssupport fungerar för Aliolo Premium.
     refund_body|
         <h2>Översikt</h2>
         <p>Aliolo Premium är ett digitalt abonnemang. Eftersom premiumåtkomst kan aktiveras omedelbart är köp i allmänhet slutgiltiga när prenumerationen är aktiv och används, utom där denna policy, köpkanalen eller tillämplig lag föreskriver något annat.</p>
@@ -83,10 +69,8 @@
         <p>För webborder, kontakta Paddle-köparsupport med hjälp av beställningsinformationen från ditt kvitto, eller kontakta Aliolos support på <a href="mailto:vitalii@nohainc.com">vitalii@nohainc.com</a>. Vi kan komma att rikta betalningsspecifika förfrågningar till Paddle när Paddle är den registrerade säljaren.</p>
         <h2>Återkrav och missbruk</h2>
         <p>Om en betalning återställs, bestrids, återbetalas eller identifieras som bedräglig, kan Aliolo stänga av eller ta bort premiumåtkomst som är kopplad till den transaktionen.</p>
-    pricing_title|
-        Aliolo Premium Prissättning
-    pricing_subtitle|
-        Enkla prenumerationsalternativ för att låsa upp hela Aliolos visuella inlärningsupplevelse.
+    pricing_title Aliolo Premium Prissättning
+    pricing_subtitle Enkla prenumerationsalternativ för att låsa upp hela Aliolos visuella inlärningsupplevelse.
     pricing_body|
         <div class="plans">
         <section class="plan">
@@ -175,175 +159,89 @@
         <p>Priser och erbjudanden kan variera mellan webbkassa, Google Play, Apple App Store, länder, valutor och tidsbegränsade kampanjer. Den sista kassan kontrollerar det faktiska priset och förnyelsevillkoren för ditt köp.</p>
         <h2>Relaterade policyer</h2>
         <p>Innan du prenumererar, granska <a href="/terms">Prenumerationsvillkor</a>, <a href="/refund">Återbetalningspolicy</a>, och <a href="/privacy">Sekretesspolicy</a>.</p>
-    checkout_title|
-        Aliolo kassan
-    checkout_subtitle|
-        Säker utcheckning för Aliolo Premium-prenumerationer.
-    checkout_eyebrow|
-        Säker utcheckning
-    checkout_h1|
-        Slutför ditt Aliolo Premium-köp.
-    checkout_status_title|
-        Väntar på kassan
-    checkout_status_desc|
-        Om du öppnade den här sidan från Aliolo-fakturering bör betalningsformuläret visas automatiskt.
-    checkout_payment_support_title|
-        Betalningsstöd
-    checkout_payment_support_desc|
-        Webbbetalningar behandlas av Paddle.com som Merchant of Record.
-    checkout_billing_title|
-        Prenumerationsfakturering
-    checkout_billing_desc|
-        Aliolo Premium förnyas automatiskt tills den avbryts. Du kan avbryta senare via Paddle eller ditt Aliolo-konto.
-    checkout_policy_title|
-        Behöver du policyinformation?
-    checkout_policy_desc|
-        Granska prissättning, prenumerationsvillkor, sekretess och återbetalningsinformation innan du slutför ditt köp.
-    landing_meta_title|
-        Aliolo | Visuella flashkort, upprepning med avstånd och smartare studiearbetsflöden
-    landing_meta_desc|
-        Aliolo hjälper elever att bemästra språk, vetenskap, anatomi, tentamensförberedelser och kurerade ämnen med visuella flashcards, upprepning med mellanrum och interaktiva testlägen.
-    landing_nav_features|
-        Drag
-    landing_nav_how_it_works|
-        Hur det fungerar
-    landing_nav_pricing|
-        Prissättning
-    landing_nav_login|
-        Logga in
-    landing_nav_cta|
-        Skapa ett gratis konto
-    landing_hero_eyebrow|
-        Visuell lärplattform
-    landing_hero_h1|
-        Lär dig visuellt. Kom ihåg längre.
-    landing_hero_p|
-        Förvandla bilder, ljud, video och text till strukturerade flashcards. Lär dig med sammanhang, granska vid rätt tidpunkt och testa vad du verkligen kan komma ihåg.
-    landing_hero_btn_primary|
-        Skapa ett gratis konto
-    landing_hero_btn_secondary|
-        Logga in
-    landing_hero_proof_1_title|
-        Visuell
-    landing_hero_proof_1_desc|
-        Bild-, ljud- och videovänliga flashkort för igenkänningstung inlärning.
-    landing_hero_proof_2_title|
-        Adaptiv
-    landing_hero_proof_2_desc|
-        Upprepning med mellanrum och framstegsspårning för att återbesöka material vid rätt tidpunkt.
-    landing_hero_proof_3_title|
-        Strukturerad
-    landing_hero_proof_3_desc|
-        Pelare, mappar, ämnen och samlingar som går utöver ett enkelt kortlek.
-    landing_hero_preview_title|
-        Erkännande före återkallelse
-    landing_hero_preview_desc|
-        En riktig Aliolo-lektion med bild, text, ljud och guidad navigering.
-    landing_hero_preview_chip|
-        Lärläge
-    landing_features_h2|
-        Allt du behöver för att förvandla exponering till återkallelse.
-    landing_features_p|
-        Skapa igenkänning med rich media, håll ordning på större bibliotek och besök material igen innan det bleknar.
-    landing_feature_1_title|
-        Lär dig med mer än text
-    landing_feature_1_desc|
-        Använd bilder, ljud, video och flexibla uppmaningar när ämnet beror på igenkänning och sammanhang.
-    landing_feature_2_title|
-        Granska innan det bleknar
-    landing_feature_2_desc|
-        Upprepningar med mellanrum och framstegsspårning tar tillbaka viktigt material vid en användbar tidpunkt.
-    landing_feature_3_title|
-        Väx bortom ett däck
-    landing_feature_3_desc|
-        Ordna kurerat eller anpassat material i pelare, mappar, ämnen och samlingar som förblir användbara.
-    landing_workflow_h2|
-        En tydlig väg från "jag borde plugga" till "jag vet det här."
-    landing_workflow_p|
-        Ett fokuserat arbetsflöde håller nästa steg uppenbart utan att platta till varje ämne till samma typ av kort.
-    landing_step_1_title|
-        Välj rätt material
-    landing_step_1_desc|
-        Börja med ett kurerat ämne eller bygg ett fokuserat bibliotek för ett prov, ett språk, ett yrke eller ett personligt mål.
-    landing_step_2_title|
-        Lär dig med sammanhang
-    landing_step_2_desc|
-        Skapa igenkänning genom guidade kort och tillgängliga media innan du ber ditt minne att arbeta utan hjälp.
-    landing_step_3_title|
-        Testa riktig återkallelse
-    landing_step_3_desc|
-        Gå till fokuserad testning för att exponera svaga punkter, förstärka hämtning och göra framsteg mätbara.
-    landing_pricing_h2|
-        Börja gratis. Uppgradera när du behöver hela arbetsflödet.
-    landing_pricing_p|
-        Skapa ett konto utan betalning. Premium lägger till spridd upprepning, skapande, testning, autoplay, privat organisation och djupare anpassning.
-    landing_plan_weekly_desc|
-        Bra för kortvariga push, snabba recensioner eller förberedelser för tentamensveckan.
-    landing_plan_weekly_item_1|
-        Kort åtagandefönster
-    landing_plan_weekly_item_2|
-        Snabbt sätt att prova premium-arbetsflödet
-    landing_plan_weekly_item_3|
-        Förnyas automatiskt tills den avbryts
-    landing_plan_weekly_btn|
-        Visa plandetaljer
-    landing_plan_monthly_desc|
-        Balanserad tillgång för elever som bygger en stadig inlärningsvana.
-    landing_plan_monthly_item_1|
-        Bäst för vanliga veckostudier
-    landing_plan_monthly_item_2|
-        Tillräckligt med tid för att organisera större ämnesbibliotek
-    landing_plan_monthly_item_3|
-        Förnyas automatiskt tills den avbryts
-    landing_plan_monthly_btn|
-        Visa plandetaljer
-    landing_plan_yearly_desc|
-        Lägsta effektiva månadskostnad för elever som vill ha ett hållbart studiesystem.
-    landing_plan_yearly_item_1|
-        Idealisk för långsiktiga språk- och yrkesstudier
-    landing_plan_yearly_item_2|
-        Lägre kostnad över tid
-    landing_plan_yearly_item_3|
-        Förnyas automatiskt tills den avbryts
-    landing_plan_yearly_btn|
-        Visa plandetaljer
-    landing_trust_h2|
-        Studera med tydlighet. Prenumerera med förtroende.
-    landing_trust_p|
-        Ta reda på vad som är gratis, vad Premium lägger till och var du kan få hjälp innan du binder dig.
-    landing_trust_item_1_title|
-        Fri entré:
-    landing_trust_item_1_desc|
-        Skapa ett konto och utforska tillgängligt läromedel utan att ange betalningsinformation.
-    landing_trust_item_2_title|
-        Transparenta termer:
-    landing_trust_item_2_desc|
-        Prissättning, förnyelse, avbokning, sekretess och återbetalningsinformation är tillgänglig före kassan.
-    landing_trust_item_3_title|
-        Mänskligt stöd:
-    landing_trust_item_3_desc|
-        Kontakta vitalii@nohainc.com när du behöver hjälp.
-    landing_faq_1_q|
-        Behöver jag skapa varje kort själv?
-    landing_faq_1_a|
-        Nej. Börja med tillgängliga kurerade ämnen, skapa sedan ditt eget material när ditt mål blir mer specifikt.
-    landing_faq_2_q|
-        Kan jag använda Aliolo gratis?
-    landing_faq_2_a|
-        Ja. Ett gratis konto ger en ingångspunkt till biblioteket; prissidan förklarar vilka avancerade arbetsflöden som kräver Premium.
-    landing_faq_3_q|
-        Kan jag säga upp ett abonnemang?
-    landing_faq_3_a|
-        Ja. Prenumerationer kan sägas upp via kanalen där de köptes, med åtkomst som normalt fortsätter under den betalda perioden.
-    landing_final_h2|
-        Är du redo att få ditt nästa studietillfälle att räknas?
-    landing_final_p|
-        Skapa ett gratis konto, välj ett ämne och börja lära dig visuellt.
-    landing_final_btn|
-        Skapa ett gratis konto
-    landing_footer_desc|
-        Visuella flashcards, upprepning på avstånd, flexibel ämnesorganisation och fokuserade testarbetsflöden för elever som vill ha struktur utan friktion.
-    landing_footer_mor|
-        Rekordhandlare:
-    landing_footer_mor_desc|
-        Vår beställningsprocess kan utföras av Paddle.com, vår onlineåterförsäljare och merchant of Record för webborder. Paddle hanterar betalningshantering, betalningsrelaterad kundservice och returer för dessa beställningar.
+    checkout_title Aliolo kassan
+    checkout_subtitle Säker utcheckning för Aliolo Premium-prenumerationer.
+    checkout_eyebrow Säker utcheckning
+    checkout_h1 Slutför ditt Aliolo Premium-köp.
+    checkout_status_title Väntar på kassan
+    checkout_status_desc Om du öppnade den här sidan från Aliolo-fakturering bör betalningsformuläret visas automatiskt.
+    checkout_payment_support_title Betalningsstöd
+    checkout_payment_support_desc Webbbetalningar behandlas av Paddle.com som Merchant of Record.
+    checkout_billing_title Prenumerationsfakturering
+    checkout_billing_desc Aliolo Premium förnyas automatiskt tills den avbryts. Du kan avbryta senare via Paddle eller ditt Aliolo-konto.
+    checkout_policy_title Behöver du policyinformation?
+    checkout_policy_desc Granska prissättning, prenumerationsvillkor, sekretess och återbetalningsinformation innan du slutför ditt köp.
+    landing_meta_title Aliolo | Visuella flashkort, upprepning med avstånd och smartare studiearbetsflöden
+    landing_meta_desc Aliolo hjälper elever att bemästra språk, vetenskap, anatomi, tentamensförberedelser och kurerade ämnen med visuella flashcards, upprepning med mellanrum och interaktiva testlägen.
+    landing_nav_features Drag
+    landing_nav_how_it_works Hur det fungerar
+    landing_nav_pricing Prissättning
+    landing_nav_login Logga in
+    landing_nav_cta Skapa ett gratis konto
+    landing_hero_eyebrow Visuell lärplattform
+    landing_hero_h1 Lär dig visuellt. Kom ihåg längre.
+    landing_hero_p Förvandla bilder, ljud, video och text till strukturerade flashcards. Lär dig med sammanhang, granska vid rätt tidpunkt och testa vad du verkligen kan komma ihåg.
+    landing_hero_btn_primary Skapa ett gratis konto
+    landing_hero_btn_secondary Logga in
+    landing_hero_proof_1_title Visuell
+    landing_hero_proof_1_desc Bild-, ljud- och videovänliga flashkort för igenkänningstung inlärning.
+    landing_hero_proof_2_title Adaptiv
+    landing_hero_proof_2_desc Upprepning med mellanrum och framstegsspårning för att återbesöka material vid rätt tidpunkt.
+    landing_hero_proof_3_title Strukturerad
+    landing_hero_proof_3_desc Pelare, mappar, ämnen och samlingar som går utöver ett enkelt kortlek.
+    landing_hero_preview_title Erkännande före återkallelse
+    landing_hero_preview_desc En riktig Aliolo-lektion med bild, text, ljud och guidad navigering.
+    landing_hero_preview_chip Lärläge
+    landing_features_h2 Allt du behöver för att förvandla exponering till återkallelse.
+    landing_features_p Skapa igenkänning med rich media, håll ordning på större bibliotek och besök material igen innan det bleknar.
+    landing_feature_1_title Lär dig med mer än text
+    landing_feature_1_desc Använd bilder, ljud, video och flexibla uppmaningar när ämnet beror på igenkänning och sammanhang.
+    landing_feature_2_title Granska innan det bleknar
+    landing_feature_2_desc Upprepningar med mellanrum och framstegsspårning tar tillbaka viktigt material vid en användbar tidpunkt.
+    landing_feature_3_title Väx bortom ett däck
+    landing_feature_3_desc Ordna kurerat eller anpassat material i pelare, mappar, ämnen och samlingar som förblir användbara.
+    landing_workflow_h2 En tydlig väg från "jag borde plugga" till "jag vet det här."
+    landing_workflow_p Ett fokuserat arbetsflöde håller nästa steg uppenbart utan att platta till varje ämne till samma typ av kort.
+    landing_step_1_title Välj rätt material
+    landing_step_1_desc Börja med ett kurerat ämne eller bygg ett fokuserat bibliotek för ett prov, ett språk, ett yrke eller ett personligt mål.
+    landing_step_2_title Lär dig med sammanhang
+    landing_step_2_desc Skapa igenkänning genom guidade kort och tillgängliga media innan du ber ditt minne att arbeta utan hjälp.
+    landing_step_3_title Testa riktig återkallelse
+    landing_step_3_desc Gå till fokuserad testning för att exponera svaga punkter, förstärka hämtning och göra framsteg mätbara.
+    landing_pricing_h2 Börja gratis. Uppgradera när du behöver hela arbetsflödet.
+    landing_pricing_p Skapa ett konto utan betalning. Premium lägger till spridd upprepning, skapande, testning, autoplay, privat organisation och djupare anpassning.
+    landing_plan_weekly_desc Bra för kortvariga push, snabba recensioner eller förberedelser för tentamensveckan.
+    landing_plan_weekly_item_1 Kort åtagandefönster
+    landing_plan_weekly_item_2 Snabbt sätt att prova premium-arbetsflödet
+    landing_plan_weekly_item_3 Förnyas automatiskt tills den avbryts
+    landing_plan_weekly_btn Visa plandetaljer
+    landing_plan_monthly_desc Balanserad tillgång för elever som bygger en stadig inlärningsvana.
+    landing_plan_monthly_item_1 Bäst för vanliga veckostudier
+    landing_plan_monthly_item_2 Tillräckligt med tid för att organisera större ämnesbibliotek
+    landing_plan_monthly_item_3 Förnyas automatiskt tills den avbryts
+    landing_plan_monthly_btn Visa plandetaljer
+    landing_plan_yearly_desc Lägsta effektiva månadskostnad för elever som vill ha ett hållbart studiesystem.
+    landing_plan_yearly_item_1 Idealisk för långsiktiga språk- och yrkesstudier
+    landing_plan_yearly_item_2 Lägre kostnad över tid
+    landing_plan_yearly_item_3 Förnyas automatiskt tills den avbryts
+    landing_plan_yearly_btn Visa plandetaljer
+    landing_trust_h2 Studera med tydlighet. Prenumerera med förtroende.
+    landing_trust_p Ta reda på vad som är gratis, vad Premium lägger till och var du kan få hjälp innan du binder dig.
+    landing_trust_item_1_title Fri entré:
+    landing_trust_item_1_desc Skapa ett konto och utforska tillgängligt läromedel utan att ange betalningsinformation.
+    landing_trust_item_2_title Transparenta termer:
+    landing_trust_item_2_desc Prissättning, förnyelse, avbokning, sekretess och återbetalningsinformation är tillgänglig före kassan.
+    landing_trust_item_3_title Mänskligt stöd:
+    landing_trust_item_3_desc Kontakta vitalii@nohainc.com när du behöver hjälp.
+    landing_faq_1_q Behöver jag skapa varje kort själv?
+    landing_faq_1_a Nej. Börja med tillgängliga kurerade ämnen, skapa sedan ditt eget material när ditt mål blir mer specifikt.
+    landing_faq_2_q Kan jag använda Aliolo gratis?
+    landing_faq_2_a Ja. Ett gratis konto ger en ingångspunkt till biblioteket; prissidan förklarar vilka avancerade arbetsflöden som kräver Premium.
+    landing_faq_3_q Kan jag säga upp ett abonnemang?
+    landing_faq_3_a Ja. Prenumerationer kan sägas upp via kanalen där de köptes, med åtkomst som normalt fortsätter under den betalda perioden.
+    landing_final_h2 Är du redo att få ditt nästa studietillfälle att räknas?
+    landing_final_p Skapa ett gratis konto, välj ett ämne och börja lära dig visuellt.
+    landing_final_btn Skapa ett gratis konto
+    landing_footer_desc Visuella flashcards, upprepning på avstånd, flexibel ämnesorganisation och fokuserade testarbetsflöden för elever som vill ha struktur utan friktion.
+    landing_footer_mor Rekordhandlare:
+    landing_footer_mor_desc Vår beställningsprocess kan utföras av Paddle.com, vår onlineåterförsäljare och merchant of Record för webborder. Paddle hanterar betalningshantering, betalningsrelaterad kundservice och returer för dessa beställningar.

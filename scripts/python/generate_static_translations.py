@@ -179,9 +179,7 @@ ENGLISH_CONTENT = {
 </tr>
 </tbody>
 </table>
-<div class="comparison-note">
-Premium unlocks the full study workflow: adaptive review, creation tools, advanced testing, autoplay controls, private organization, and deeper personalization.
-</div>
+<div class="comparison-note">Premium unlocks the full study workflow: adaptive review, creation tools, advanced testing, autoplay controls, private organization, and deeper personalization.</div>
 </div>
 <h2>Platform Price Differences</h2>
 <p>Prices and offers may vary between web checkout, Google Play, Apple App Store, countries, currencies, and limited-time promotions. The final checkout screen controls the actual price and renewal terms for your purchase.</p>
@@ -361,6 +359,32 @@ def translate_html(html: str, lang: str) -> str:
                 translated_tokens.append(translated_text)
     return "".join(translated_tokens)
 
+def align_capitalization(en_val: str, target_val: str) -> str:
+    if not en_val or not target_val:
+        return target_val
+    en_first_letter_idx = -1
+    for i, c in enumerate(en_val):
+        if c.isalpha():
+            en_first_letter_idx = i
+            break
+    if en_first_letter_idx == -1:
+        return target_val
+    en_char = en_val[en_first_letter_idx]
+    is_upper = en_char.isupper()
+    target_first_letter_idx = -1
+    for i, c in enumerate(target_val):
+        if c.isalpha():
+            target_first_letter_idx = i
+            break
+    if target_first_letter_idx == -1:
+        return target_val
+    target_char = target_val[target_first_letter_idx]
+    if is_upper:
+        new_char = target_char.upper()
+    else:
+        new_char = target_char.lower()
+    return target_val[:target_first_letter_idx] + new_char + target_val[target_first_letter_idx + 1:]
+
 def main():
     script_dir = Path(__file__).resolve().parent
     # Set api translations directory
@@ -383,16 +407,20 @@ def main():
                 if key.endswith("_body") or key == "landing_meta_desc" or key == "landing_hero_p":
                     translated_dict[key] = translate_html(val, lang)
                 else:
-                    translated_dict[key] = translate_google(val, lang)
+                    translated_val = translate_google(val, lang)
+                    translated_dict[key] = align_capitalization(val, translated_val)
                 # Sleep a tiny bit to prevent rate limits
                 time.sleep(0.08)
         
         # Write nano file
         nano_lines = [".."]
         for key, val in translated_dict.items():
-            nano_lines.append(f"    {key}|")
-            for line in val.split("\n"):
-                nano_lines.append(f"        {line}")
+            if "\n" not in val:
+                nano_lines.append(f"    {key} {val}")
+            else:
+                nano_lines.append(f"    {key}|")
+                for line in val.split("\n"):
+                    nano_lines.append(f"        {line}")
         
         nano_content = "\n".join(nano_lines)
         nano_file_path.write_text(nano_content, encoding="utf-8")

@@ -1,24 +1,14 @@
 ..
-    legal_info|
-        Lakitiedot
-    last_updated|
-        Viimeksi päivitetty
-    support|
-        Tukea
-    home|
-        Kotiin
-    privacy|
-        Yksityisyys
-    terms|
-        Ehdot
-    refunds|
-        Hyvitykset
-    pricing|
-        Hinnoittelu
-    privacy_title|
-        Aliolon tietosuojakäytäntö
-    privacy_subtitle|
-        Kuinka Aliolo kerää, käyttää, tallentaa ja suojaa tiliin, oppimiseen ja maksuihin liittyviä tietoja.
+    legal_info Lakitiedot
+    last_updated Viimeksi päivitetty
+    support Tukea
+    home Kotiin
+    privacy Yksityisyys
+    terms Ehdot
+    refunds Hyvitykset
+    pricing Hinnoittelu
+    privacy_title Aliolon tietosuojakäytäntö
+    privacy_subtitle Kuinka Aliolo kerää, käyttää, tallentaa ja suojaa tiliin, oppimiseen ja maksuihin liittyviä tietoja.
     privacy_body|
         <h2>Keräämämme tiedot</h2>
         <p>Keräämme Aliolon toimintaan tarvittavat tiedot, mukaan lukien tilitiedot, kuten sähköpostiosoite, käyttäjätunnus, salasanan todennustiedot, avatar-asetukset, asetukset ja profiiliasetukset.</p>
@@ -41,10 +31,8 @@
         <p>Käytämme kohtuullisia teknisiä ja organisatorisia suojakeinoja henkilötietojen suojaamiseksi. Mikään verkkopalvelu ei voi taata täydellistä turvallisuutta, mutta pyrimme rajoittamaan pääsyä ja suojaamaan tietoja luvattomalta käytöltä.</p>
         <h2>Sinun valintasi ja oikeutesi</h2>
         <p>Sijainnistasi riippuen sinulla voi olla oikeus käyttää, korjata, poistaa, viedä tai rajoittaa henkilökohtaisten tietojen käyttöä. Ota yhteyttä osoitteessa <a href="mailto:vitalii@nohainc.com">vitalii@nohainc.com</a> tehdä pyyntö.</p>
-    terms_title|
-        Aliolo-tilausehdot
-    terms_subtitle|
-        Aliolo-tilejä, premium-käyttöä, tilauslaskutusta, peruuttamista ja hyväksyttävää käyttöä koskevat säännöt.
+    terms_title Aliolo-tilausehdot
+    terms_subtitle Aliolo-tilejä, premium-käyttöä, tilauslaskutusta, peruuttamista ja hyväksyttävää käyttöä koskevat säännöt.
     terms_body|
         <h2>Aliolon käyttö</h2>
         <p>Aliolo tarjoaa visuaalisia oppimistyökaluja, kuratoitua opetussisältöä, muistikortteja, edistymisen seurantaa ja huippuluokan oppimisominaisuuksia. Olet vastuussa tilisi käyttöoikeustietojen turvaamisesta ja palvelun laillisesta käytöstä.</p>
@@ -65,10 +53,8 @@
         <p>Aliolo on koulutus- ja opiskelua tukeva työkalu. Emme takaa tiettyjä oppimis-, koke-, ammatillisia tai taloudellisia tuloksia. Lain sallimissa rajoissa Aliololle ei myönnetä muita kuin sovellettavan lain edellyttämiä takuita.</p>
         <h2>Muutokset näihin ehtoihin</h2>
         <p>Saatamme päivittää näitä ehtoja vastaamaan tuote-, laki-, laskutus- tai toiminnallisia muutoksia. Nykyinen versio on julkaistu tällä sivulla.</p>
-    refund_title|
-        Aliolon hyvityskäytäntö
-    refund_subtitle|
-        Kuinka hyvitykset, peruutukset, takaisinperinnät ja maksutuki toimivat Aliolo Premiumissa.
+    refund_title Aliolon hyvityskäytäntö
+    refund_subtitle Kuinka hyvitykset, peruutukset, takaisinperinnät ja maksutuki toimivat Aliolo Premiumissa.
     refund_body|
         <h2>Yleiskatsaus</h2>
         <p>Aliolo Premium on digitaalinen tilaus. Koska premium-käyttöoikeus voidaan aktivoida välittömästi, ostokset ovat yleensä lopullisia, kun tilaus on aktiivinen ja käytetty, paitsi jos tämä käytäntö, ostokanava tai sovellettava laki toisin määrää.</p>
@@ -83,10 +69,8 @@
         <p>Verkkotilauksia varten ota yhteyttä Paddlen ostajatukeen kuitissasi olevien tilaustietojen avulla tai ota yhteyttä Aliolon tukeen osoitteessa <a href="mailto:vitalii@nohainc.com">vitalii@nohainc.com</a>. Saatamme ohjata maksukohtaisia ​​pyyntöjä Paddlelle, kun Paddle on ennätyskauppias.</p>
         <h2>Takaisinperinnät ja väärinkäyttö</h2>
         <p>Jos maksu peruutetaan, kiistautetaan, hyvitetään tai todetaan vilpilliseksi, Aliolo voi keskeyttää tai poistaa kyseiseen tapahtumaan liittyvän premium-käyttöoikeuden.</p>
-    pricing_title|
-        Aliolo Premium -hinnoittelu
-    pricing_subtitle|
-        Yksinkertaiset tilausvaihtoehdot koko Aliolon visuaalisen oppimiskokemuksen avaamiseksi.
+    pricing_title Aliolo Premium -hinnoittelu
+    pricing_subtitle Yksinkertaiset tilausvaihtoehdot koko Aliolon visuaalisen oppimiskokemuksen avaamiseksi.
     pricing_body|
         <div class="plans">
         <section class="plan">
@@ -175,175 +159,89 @@
         <p>Hinnat ja tarjoukset voivat vaihdella verkkokassan, Google Playn, Apple App Storen, maiden, valuuttojen ja rajoitetun ajan tarjousten välillä. Viimeinen kassanäyttö hallitsee ostoksesi todellista hintaa ja uusimisehtoja.</p>
         <h2>Aiheeseen liittyvät käytännöt</h2>
         <p>Tarkista ennen tilaamista <a href="/terms">Tilausehdot</a>, <a href="/refund">Hyvityskäytäntö</a>, ja <a href="/privacy">Tietosuojakäytäntö</a>.</p>
-    checkout_title|
-        Aliolo Checkout
-    checkout_subtitle|
-        Suojattu kassalla Aliolo Premium -tilauksille.
-    checkout_eyebrow|
-        Turvallinen kassa
-    checkout_h1|
-        Suorita Aliolo Premium -ostos loppuun.
-    checkout_status_title|
-        Kassaa odotellessa
-    checkout_status_desc|
-        Jos avasit tämän sivun Aliolon laskutuksesta, maksulomakkeen pitäisi ilmestyä automaattisesti.
-    checkout_payment_support_title|
-        Maksun tuki
-    checkout_payment_support_desc|
-        Verkkomaksut käsittelee Paddle.com Merchant of Record -yrityksenä.
-    checkout_billing_title|
-        Tilauksen laskutus
-    checkout_billing_desc|
-        Aliolo Premium uusiutuu automaattisesti, kunnes se peruutetaan. Voit peruuttaa myöhemmin Paddlen tai Aliolo-tilisi kautta.
-    checkout_policy_title|
-        Tarvitsetko käytäntötietoja?
-    checkout_policy_desc|
-        Tarkista hinnat, tilausehdot, yksityisyys ja hyvitystiedot ennen ostoksen suorittamista.
-    landing_meta_title|
-        Aliolo | Visuaaliset muistikortit, välilliset toistot ja älykkäämpiä opiskelun työnkulkuja
-    landing_meta_desc|
-        Aliolo auttaa oppijoita hallitsemaan kieliä, luonnontieteitä, anatomiaa, kokeisiin valmistautumista ja kuratoituja aiheita visuaalisilla muistikorteilla, toistovälillä ja interaktiivisilla testitiloilla.
-    landing_nav_features|
-        Ominaisuudet
-    landing_nav_how_it_works|
-        Miten se toimii
-    landing_nav_pricing|
-        Hinnoittelu
-    landing_nav_login|
-        Kirjaudu sisään
-    landing_nav_cta|
-        Luo ilmainen tili
-    landing_hero_eyebrow|
-        Visuaalinen oppimisalusta
-    landing_hero_h1|
-        Opi visuaalisesti. Muista pidempään.
-    landing_hero_p|
-        Muuta kuvat, ääni, video ja teksti jäsennellyiksi muistikorteiksi. Opi kontekstin avulla, tarkista oikeaan aikaan ja testaa, mitä voit todella muistaa.
-    landing_hero_btn_primary|
-        Luo ilmainen tili
-    landing_hero_btn_secondary|
-        Kirjaudu sisään
-    landing_hero_proof_1_title|
-        Visuaalinen
-    landing_hero_proof_1_desc|
-        Kuva-, ääni- ja videoystävälliset muistikortit tunnistusta vaativaan oppimiseen.
-    landing_hero_proof_2_title|
-        Mukautuva
-    landing_hero_proof_2_desc|
-        Väliaikainen toisto ja edistymisen seuranta, jotta materiaalia voidaan tarkastella uudelleen oikeaan aikaan.
-    landing_hero_proof_3_title|
-        Strukturoitu
-    landing_hero_proof_3_desc|
-        Pilarit, kansiot, aiheet ja kokoelmat, jotka skaalautuvat yksinkertaista pakkaa pidemmälle.
-    landing_hero_preview_title|
-        Tunnistus ennen muistamista
-    landing_hero_preview_desc|
-        Todellinen Aliolo-tunti käyttämällä kuvaa, tekstiä, ääntä ja ohjattua navigointia.
-    landing_hero_preview_chip|
-        Opi-tila
-    landing_features_h2|
-        Kaikki mitä tarvitset altistumisesta muistamiseen.
-    landing_features_p|
-        Rakenna tunnistettavuutta multimedian avulla, pidä suuremmat kirjastot järjestyksessä ja tutustu materiaaliin uudelleen ennen kuin se haalistuu.
-    landing_feature_1_title|
-        Opi muustakin kuin tekstistä
-    landing_feature_1_desc|
-        Käytä kuvia, ääntä, videota ja joustavia kehotteita, kun aihe riippuu tunnistuksesta ja kontekstista.
-    landing_feature_2_title|
-        Tarkista ennen kuin se katoaa
-    landing_feature_2_desc|
-        Jaettu toisto ja edistymisen seuranta tuovat tärkeän materiaalin takaisin hyödylliseen aikaan.
-    landing_feature_3_title|
-        Kasvata yhden kannen yli
-    landing_feature_3_desc|
-        Järjestä kuratoitu tai mukautettu materiaali pilareihin, kansioihin, aiheisiin ja kokoelmiin, jotka pysyvät käyttökelpoisina.
-    landing_workflow_h2|
-        Selkeä polku "minun pitäisi opiskella" - "minä tiedän tämän".
-    landing_workflow_p|
-        Yksi kohdennettu työnkulku pitää seuraavan vaiheen ilmeisenä ilman, että jokaista kohdetta litistetään samanlaiseksi kortiksi.
-    landing_step_1_title|
-        Valitse oikea materiaali
-    landing_step_1_desc|
-        Aloita kuratoidusta aiheesta tai rakenna kohdennettu kirjasto koetta, kieltä, ammattia tai henkilökohtaista tavoitetta varten.
-    landing_step_2_title|
-        Opi kontekstin kanssa
-    landing_step_2_desc|
-        Rakenna tunnistusta ohjattujen korttien ja käytettävissä olevien tietovälineiden avulla, ennen kuin pyydät muistiasi toimimaan ilman apua.
-    landing_step_3_title|
-        Testaa todellista muistamista
-    landing_step_3_desc|
-        Siirry kohdennettuun testaukseen paljastaaksesi heikot kohdat, tehostaaksesi hakua ja tehdäksesi edistymisestä mitattavissa.
-    landing_pricing_h2|
-        Aloita ilmaiseksi. Päivitä, kun tarvitset täyden työnkulun.
-    landing_pricing_p|
-        Luo tili ilman maksua. Premium lisää väliajoin toistoa, luomista, testausta, automaattista toistoa, yksityistä järjestämistä ja syvempää räätälöintiä.
-    landing_plan_weekly_desc|
-        Sopii lyhytaikaisiin työntöihin, pikaarviointeihin tai koeviikon valmisteluihin.
-    landing_plan_weekly_item_1|
-        Lyhyt sitoutumisikkuna
-    landing_plan_weekly_item_2|
-        Nopea tapa kokeilla premium-työnkulkua
-    landing_plan_weekly_item_3|
-        Uusiutuu automaattisesti, kunnes se peruutetaan
-    landing_plan_weekly_btn|
-        Katso suunnitelman tiedot
-    landing_plan_monthly_desc|
-        Tasapainoinen pääsy opiskelijoille, jotka rakentavat vakaata oppimistapaa.
-    landing_plan_monthly_item_1|
-        Paras säännölliseen viikoittaiseen opiskeluun
-    landing_plan_monthly_item_2|
-        Aikaa riittää isompien aihekirjastojen järjestämiseen
-    landing_plan_monthly_item_3|
-        Uusiutuu automaattisesti, kunnes se peruutetaan
-    landing_plan_monthly_btn|
-        Katso suunnitelman tiedot
-    landing_plan_yearly_desc|
-        Alhaisimmat tosiasialliset kuukausikustannukset opiskelijoille, jotka haluavat kestävän opintojärjestelmän.
-    landing_plan_yearly_item_1|
-        Ihanteellinen pitkäaikaiseen kieli- ja ammatilliseen opiskeluun
-    landing_plan_yearly_item_2|
-        Pienemmät kustannukset ajan myötä
-    landing_plan_yearly_item_3|
-        Uusiutuu automaattisesti, kunnes se peruutetaan
-    landing_plan_yearly_btn|
-        Katso suunnitelman tiedot
-    landing_trust_h2|
-        Opiskele selkeästi. Tilaa luottavaisin mielin.
-    landing_trust_p|
-        Tiedä, mikä on ilmaista, mitä Premium lisää ja mistä saat apua, ennen kuin sitoudut.
-    landing_trust_item_1_title|
-        Ilmainen sisäänpääsy:
-    landing_trust_item_1_desc|
-        Luo tili ja tutustu saatavilla olevaan oppimateriaaliin syöttämättä maksutietoja.
-    landing_trust_item_2_title|
-        Läpinäkyvät ehdot:
-    landing_trust_item_2_desc|
-        Hinnoittelu-, uusimis-, peruutus-, tietosuoja- ja hyvitystiedot ovat saatavilla ennen kassalle.
-    landing_trust_item_3_title|
-        Ihmisen tuki:
-    landing_trust_item_3_desc|
-        Ota yhteyttä vitalii@nohainc.com, kun tarvitset apua.
-    landing_faq_1_q|
-        Pitääkö minun luoda jokainen kortti itse?
-    landing_faq_1_a|
-        Ei. Aloita saatavilla olevista kuratoiduista aiheista ja luo sitten oma materiaali, kun tavoitteesi tarkentuu.
-    landing_faq_2_q|
-        Voinko käyttää Alioloa ilmaiseksi?
-    landing_faq_2_a|
-        Kyllä. Ilmainen tili tarjoaa pääsyn kirjastoon; hinnoittelusivulla kerrotaan, mitkä edistyneet työnkulut vaativat Premiumin.
-    landing_faq_3_q|
-        Voinko peruuttaa tilauksen?
-    landing_faq_3_a|
-        Kyllä. Tilaukset voidaan peruuttaa sen kanavan kautta, josta ne on ostettu, ja pääsy jatkuu normaalisti maksullisen ajanjakson ajan.
-    landing_final_h2|
-        Oletko valmis ottamaan seuraavan opiskelujaksosi huomioon?
-    landing_final_p|
-        Luo ilmainen tili, valitse aihe ja aloita visuaalinen oppiminen.
-    landing_final_btn|
-        Luo ilmainen tili
-    landing_footer_desc|
-        Visuaaliset muistikortit, toistovälit, joustava oppiainejärjestely ja kohdennettu testaustyönkulku oppijoille, jotka haluavat rakennetta ilman kitkaa.
-    landing_footer_mor|
-        Ennätyskauppias:
-    landing_footer_mor_desc|
-        Tilausprosessimme voi suorittaa Paddle.com, verkkojälleenmyyjämme ja Merchant of Record verkkotilausten osalta. Paddle hoitaa maksujen käsittelyn, maksuihin liittyvän asiakaspalvelun ja näiden tilausten palautukset.
+    checkout_title Aliolo Checkout
+    checkout_subtitle Suojattu kassalla Aliolo Premium -tilauksille.
+    checkout_eyebrow Turvallinen kassa
+    checkout_h1 Suorita Aliolo Premium -ostos loppuun.
+    checkout_status_title Kassaa odotellessa
+    checkout_status_desc Jos avasit tämän sivun Aliolon laskutuksesta, maksulomakkeen pitäisi ilmestyä automaattisesti.
+    checkout_payment_support_title Maksun tuki
+    checkout_payment_support_desc Verkkomaksut käsittelee Paddle.com Merchant of Record -yrityksenä.
+    checkout_billing_title Tilauksen laskutus
+    checkout_billing_desc Aliolo Premium uusiutuu automaattisesti, kunnes se peruutetaan. Voit peruuttaa myöhemmin Paddlen tai Aliolo-tilisi kautta.
+    checkout_policy_title Tarvitsetko käytäntötietoja?
+    checkout_policy_desc Tarkista hinnat, tilausehdot, yksityisyys ja hyvitystiedot ennen ostoksen suorittamista.
+    landing_meta_title Aliolo | Visuaaliset muistikortit, välilliset toistot ja älykkäämpiä opiskelun työnkulkuja
+    landing_meta_desc Aliolo auttaa oppijoita hallitsemaan kieliä, luonnontieteitä, anatomiaa, kokeisiin valmistautumista ja kuratoituja aiheita visuaalisilla muistikorteilla, toistovälillä ja interaktiivisilla testitiloilla.
+    landing_nav_features Ominaisuudet
+    landing_nav_how_it_works Miten se toimii
+    landing_nav_pricing Hinnoittelu
+    landing_nav_login Kirjaudu sisään
+    landing_nav_cta Luo ilmainen tili
+    landing_hero_eyebrow Visuaalinen oppimisalusta
+    landing_hero_h1 Opi visuaalisesti. Muista pidempään.
+    landing_hero_p Muuta kuvat, ääni, video ja teksti jäsennellyiksi muistikorteiksi. Opi kontekstin avulla, tarkista oikeaan aikaan ja testaa, mitä voit todella muistaa.
+    landing_hero_btn_primary Luo ilmainen tili
+    landing_hero_btn_secondary Kirjaudu sisään
+    landing_hero_proof_1_title Visuaalinen
+    landing_hero_proof_1_desc Kuva-, ääni- ja videoystävälliset muistikortit tunnistusta vaativaan oppimiseen.
+    landing_hero_proof_2_title Mukautuva
+    landing_hero_proof_2_desc Väliaikainen toisto ja edistymisen seuranta, jotta materiaalia voidaan tarkastella uudelleen oikeaan aikaan.
+    landing_hero_proof_3_title Strukturoitu
+    landing_hero_proof_3_desc Pilarit, kansiot, aiheet ja kokoelmat, jotka skaalautuvat yksinkertaista pakkaa pidemmälle.
+    landing_hero_preview_title Tunnistus ennen muistamista
+    landing_hero_preview_desc Todellinen Aliolo-tunti käyttämällä kuvaa, tekstiä, ääntä ja ohjattua navigointia.
+    landing_hero_preview_chip Opi-tila
+    landing_features_h2 Kaikki mitä tarvitset altistumisesta muistamiseen.
+    landing_features_p Rakenna tunnistettavuutta multimedian avulla, pidä suuremmat kirjastot järjestyksessä ja tutustu materiaaliin uudelleen ennen kuin se haalistuu.
+    landing_feature_1_title Opi muustakin kuin tekstistä
+    landing_feature_1_desc Käytä kuvia, ääntä, videota ja joustavia kehotteita, kun aihe riippuu tunnistuksesta ja kontekstista.
+    landing_feature_2_title Tarkista ennen kuin se katoaa
+    landing_feature_2_desc Jaettu toisto ja edistymisen seuranta tuovat tärkeän materiaalin takaisin hyödylliseen aikaan.
+    landing_feature_3_title Kasvata yhden kannen yli
+    landing_feature_3_desc Järjestä kuratoitu tai mukautettu materiaali pilareihin, kansioihin, aiheisiin ja kokoelmiin, jotka pysyvät käyttökelpoisina.
+    landing_workflow_h2 Selkeä polku "minun pitäisi opiskella" - "minä tiedän tämän".
+    landing_workflow_p Yksi kohdennettu työnkulku pitää seuraavan vaiheen ilmeisenä ilman, että jokaista kohdetta litistetään samanlaiseksi kortiksi.
+    landing_step_1_title Valitse oikea materiaali
+    landing_step_1_desc Aloita kuratoidusta aiheesta tai rakenna kohdennettu kirjasto koetta, kieltä, ammattia tai henkilökohtaista tavoitetta varten.
+    landing_step_2_title Opi kontekstin kanssa
+    landing_step_2_desc Rakenna tunnistusta ohjattujen korttien ja käytettävissä olevien tietovälineiden avulla, ennen kuin pyydät muistiasi toimimaan ilman apua.
+    landing_step_3_title Testaa todellista muistamista
+    landing_step_3_desc Siirry kohdennettuun testaukseen paljastaaksesi heikot kohdat, tehostaaksesi hakua ja tehdäksesi edistymisestä mitattavissa.
+    landing_pricing_h2 Aloita ilmaiseksi. Päivitä, kun tarvitset täyden työnkulun.
+    landing_pricing_p Luo tili ilman maksua. Premium lisää väliajoin toistoa, luomista, testausta, automaattista toistoa, yksityistä järjestämistä ja syvempää räätälöintiä.
+    landing_plan_weekly_desc Sopii lyhytaikaisiin työntöihin, pikaarviointeihin tai koeviikon valmisteluihin.
+    landing_plan_weekly_item_1 Lyhyt sitoutumisikkuna
+    landing_plan_weekly_item_2 Nopea tapa kokeilla premium-työnkulkua
+    landing_plan_weekly_item_3 Uusiutuu automaattisesti, kunnes se peruutetaan
+    landing_plan_weekly_btn Katso suunnitelman tiedot
+    landing_plan_monthly_desc Tasapainoinen pääsy opiskelijoille, jotka rakentavat vakaata oppimistapaa.
+    landing_plan_monthly_item_1 Paras säännölliseen viikoittaiseen opiskeluun
+    landing_plan_monthly_item_2 Aikaa riittää isompien aihekirjastojen järjestämiseen
+    landing_plan_monthly_item_3 Uusiutuu automaattisesti, kunnes se peruutetaan
+    landing_plan_monthly_btn Katso suunnitelman tiedot
+    landing_plan_yearly_desc Alhaisimmat tosiasialliset kuukausikustannukset opiskelijoille, jotka haluavat kestävän opintojärjestelmän.
+    landing_plan_yearly_item_1 Ihanteellinen pitkäaikaiseen kieli- ja ammatilliseen opiskeluun
+    landing_plan_yearly_item_2 Pienemmät kustannukset ajan myötä
+    landing_plan_yearly_item_3 Uusiutuu automaattisesti, kunnes se peruutetaan
+    landing_plan_yearly_btn Katso suunnitelman tiedot
+    landing_trust_h2 Opiskele selkeästi. Tilaa luottavaisin mielin.
+    landing_trust_p Tiedä, mikä on ilmaista, mitä Premium lisää ja mistä saat apua, ennen kuin sitoudut.
+    landing_trust_item_1_title Ilmainen sisäänpääsy:
+    landing_trust_item_1_desc Luo tili ja tutustu saatavilla olevaan oppimateriaaliin syöttämättä maksutietoja.
+    landing_trust_item_2_title Läpinäkyvät ehdot:
+    landing_trust_item_2_desc Hinnoittelu-, uusimis-, peruutus-, tietosuoja- ja hyvitystiedot ovat saatavilla ennen kassalle.
+    landing_trust_item_3_title Ihmisen tuki:
+    landing_trust_item_3_desc Ota yhteyttä vitalii@nohainc.com, kun tarvitset apua.
+    landing_faq_1_q Pitääkö minun luoda jokainen kortti itse?
+    landing_faq_1_a Ei. Aloita saatavilla olevista kuratoiduista aiheista ja luo sitten oma materiaali, kun tavoitteesi tarkentuu.
+    landing_faq_2_q Voinko käyttää Alioloa ilmaiseksi?
+    landing_faq_2_a Kyllä. Ilmainen tili tarjoaa pääsyn kirjastoon; hinnoittelusivulla kerrotaan, mitkä edistyneet työnkulut vaativat Premiumin.
+    landing_faq_3_q Voinko peruuttaa tilauksen?
+    landing_faq_3_a Kyllä. Tilaukset voidaan peruuttaa sen kanavan kautta, josta ne on ostettu, ja pääsy jatkuu normaalisti maksullisen ajanjakson ajan.
+    landing_final_h2 Oletko valmis ottamaan seuraavan opiskelujaksosi huomioon?
+    landing_final_p Luo ilmainen tili, valitse aihe ja aloita visuaalinen oppiminen.
+    landing_final_btn Luo ilmainen tili
+    landing_footer_desc Visuaaliset muistikortit, toistovälit, joustava oppiainejärjestely ja kohdennettu testaustyönkulku oppijoille, jotka haluavat rakennetta ilman kitkaa.
+    landing_footer_mor Ennätyskauppias:
+    landing_footer_mor_desc Tilausprosessimme voi suorittaa Paddle.com, verkkojälleenmyyjämme ja Merchant of Record verkkotilausten osalta. Paddle hoitaa maksujen käsittelyn, maksuihin liittyvän asiakaspalvelun ja näiden tilausten palautukset.

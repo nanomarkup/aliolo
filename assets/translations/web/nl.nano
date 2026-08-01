@@ -1,24 +1,14 @@
 ..
-    legal_info|
-        Juridische informatie
-    last_updated|
-        Laatst bijgewerkt
-    support|
-        Steun
-    home|
-        Thuis
-    privacy|
-        Privacy
-    terms|
-        Voorwaarden
-    refunds|
-        Terugbetalingen
-    pricing|
-        Prijzen
-    privacy_title|
-        Aliolo-privacybeleid
-    privacy_subtitle|
-        Hoe Aliolo account-, leer- en betalingsgerelateerde informatie verzamelt, gebruikt, opslaat en beschermt.
+    legal_info Juridische informatie
+    last_updated Laatst bijgewerkt
+    support Steun
+    home Thuis
+    privacy Privacy
+    terms Voorwaarden
+    refunds Terugbetalingen
+    pricing Prijzen
+    privacy_title Aliolo-privacybeleid
+    privacy_subtitle Hoe Aliolo account-, leer- en betalingsgerelateerde informatie verzamelt, gebruikt, opslaat en beschermt.
     privacy_body|
         <h2>Informatie die we verzamelen</h2>
         <p>We verzamelen de informatie die nodig is om Aliolo te kunnen gebruiken, inclusief accountgegevens zoals e-mailadres, gebruikersnaam, wachtwoordverificatiegegevens, avatarinstellingen, voorkeuren en profielinstellingen.</p>
@@ -41,10 +31,8 @@
         <p>We gebruiken redelijke technische en organisatorische veiligheidsmaatregelen om persoonlijke informatie te beschermen. Geen enkele online dienst kan een perfecte veiligheid garanderen, maar wij doen er alles aan om de toegang te beperken en gegevens te beschermen tegen ongeoorloofd gebruik.</p>
         <h2>Uw keuzes en rechten</h2>
         <p>Afhankelijk van uw locatie heeft u mogelijk rechten op toegang tot, correctie, verwijdering, export of beperking van het gebruik van uw persoonlijke gegevens. Neem contact met ons op via <a href="mailto:vitalii@nohainc.com">vitalii@nohainc.com</a> om een ​​verzoek te doen.</p>
-    terms_title|
-        Aliolo-abonnementsvoorwaarden
-    terms_subtitle|
-        De regels voor Aliolo-accounts, premiumtoegang, facturering van abonnementen, opzegging en acceptabel gebruik.
+    terms_title Aliolo-abonnementsvoorwaarden
+    terms_subtitle De regels voor Aliolo-accounts, premiumtoegang, facturering van abonnementen, opzegging en acceptabel gebruik.
     terms_body|
         <h2>Aliolo gebruiken</h2>
         <p>Aliolo biedt visuele leermiddelen, samengestelde educatieve inhoud, flashcards, voortgangsregistratie en premium leerfuncties. U bent verantwoordelijk voor het veilig houden van uw accountgegevens en voor het rechtmatig gebruik van de dienst.</p>
@@ -65,10 +53,8 @@
         <p>Aliolo wordt aangeboden als educatief en studieondersteunend hulpmiddel. We garanderen geen specifieke leer-, examen-, professionele of financiële resultaten. Voor zover maximaal toegestaan ​​door de wet, wordt Aliolo geleverd zonder garanties die verder gaan dan de garanties die vereist zijn door de toepasselijke wetgeving.</p>
         <h2>Wijzigingen in deze voorwaarden</h2>
         <p>We kunnen deze voorwaarden bijwerken om product-, juridische, facturerings- of operationele wijzigingen weer te geven. De huidige versie wordt op deze pagina gepubliceerd.</p>
-    refund_title|
-        Aliolo-restitutiebeleid
-    refund_subtitle|
-        Hoe terugbetalingen, annuleringen, terugboekingen en betalingsondersteuning werken voor Aliolo Premium.
+    refund_title Aliolo-restitutiebeleid
+    refund_subtitle Hoe terugbetalingen, annuleringen, terugboekingen en betalingsondersteuning werken voor Aliolo Premium.
     refund_body|
         <h2>Overzicht</h2>
         <p>Aliolo Premium is een digitaal abonnement. Omdat premiumtoegang onmiddellijk kan worden geactiveerd, zijn aankopen over het algemeen definitief zodra het abonnement actief en gebruikt is, tenzij dit beleid, het aankoopkanaal of de toepasselijke wetgeving anders bepalen.</p>
@@ -83,10 +69,8 @@
         <p>Voor webbestellingen kunt u contact opnemen met de kopersondersteuning van Paddle met behulp van de bestelgegevens op uw betalingsbewijs, of contact opnemen met Aliolo-ondersteuning op <a href="mailto:vitalii@nohainc.com">vitalii@nohainc.com</a>. We kunnen betalingsspecifieke verzoeken aan Paddle richten als Paddle de geregistreerde handelaar is.</p>
         <h2>Terugvorderingen en misbruik</h2>
         <p>Als een betaling wordt teruggedraaid, betwist, terugbetaald of als frauduleus wordt geïdentificeerd, kan Aliolo de premiumtoegang die aan die transactie is gekoppeld, opschorten of verwijderen.</p>
-    pricing_title|
-        Aliolo Premium-prijzen
-    pricing_subtitle|
-        Eenvoudige abonnementsopties voor het ontsluiten van de volledige visuele leerervaring van Aliolo.
+    pricing_title Aliolo Premium-prijzen
+    pricing_subtitle Eenvoudige abonnementsopties voor het ontsluiten van de volledige visuele leerervaring van Aliolo.
     pricing_body|
         <div class="plans">
         <section class="plan">
@@ -175,175 +159,89 @@
         <p>Prijzen en aanbiedingen kunnen variëren tussen internetkassa, Google Play, Apple App Store, landen, valuta's en tijdelijke promoties. Het laatste afrekenscherm controleert de werkelijke prijs en verlengingsvoorwaarden voor uw aankoop.</p>
         <h2>Gerelateerd beleid</h2>
         <p>Voordat u zich abonneert, bekijkt u de <a href="/terms">Abonnementsvoorwaarden</a>, <a href="/refund">Terugbetalingsbeleid</a>, En <a href="/privacy">Privacybeleid</a>.</p>
-    checkout_title|
-        Aliolo-afrekening
-    checkout_subtitle|
-        Veilig afrekenen voor Aliolo Premium-abonnementen.
-    checkout_eyebrow|
-        Veilig afrekenen
-    checkout_h1|
-        Voltooi uw Aliolo Premium-aankoop.
-    checkout_status_title|
-        Wachten op afrekenen
-    checkout_status_desc|
-        Als u deze pagina vanuit Aliolo-facturering heeft geopend, zou het betalingsformulier automatisch moeten verschijnen.
-    checkout_payment_support_title|
-        Betalingsondersteuning
-    checkout_payment_support_desc|
-        Webbetalingen worden verwerkt door Paddle.com als Merchant of Record.
-    checkout_billing_title|
-        Facturering van abonnementen
-    checkout_billing_desc|
-        Aliolo Premium wordt automatisch verlengd totdat het wordt geannuleerd. Je kunt later opzeggen via Paddle of je Aliolo-account.
-    checkout_policy_title|
-        Beleidsdetails nodig?
-    checkout_policy_desc|
-        Controleer prijzen, abonnementsvoorwaarden, privacy en terugbetalingsinformatie voordat u uw aankoop voltooit.
-    landing_meta_title|
-        Aliolo | Visuele flashcards, gespreide herhaling en slimmere studieworkflows
-    landing_meta_desc|
-        Aliolo helpt leerlingen talen, wetenschap, anatomie, examenvoorbereiding en samengestelde onderwerpen onder de knie te krijgen met visuele flashcards, gespreide herhaling en interactieve testmodi.
-    landing_nav_features|
-        Functies
-    landing_nav_how_it_works|
-        Hoe het werkt
-    landing_nav_pricing|
-        Prijzen
-    landing_nav_login|
-        Inloggen
-    landing_nav_cta|
-        Maak een gratis account aan
-    landing_hero_eyebrow|
-        Visueel leerplatform
-    landing_hero_h1|
-        Visueel leren. Onthoud langer.
-    landing_hero_p|
-        Zet afbeeldingen, audio, video en tekst om in gestructureerde flashcards. Leer met context, bekijk het op het juiste moment en test wat u zich echt kunt herinneren.
-    landing_hero_btn_primary|
-        Maak een gratis account aan
-    landing_hero_btn_secondary|
-        Inloggen
-    landing_hero_proof_1_title|
-        Visueel
-    landing_hero_proof_1_desc|
-        Beeld-, audio- en videovriendelijke flashcards voor leren waarbij veel herkenning nodig is.
-    landing_hero_proof_2_title|
-        Adaptief
-    landing_hero_proof_2_desc|
-        Gespreide herhaling en voortgangsregistratie om de stof op het juiste moment opnieuw te bekijken.
-    landing_hero_proof_3_title|
-        Gestructureerd
-    landing_hero_proof_3_desc|
-        Pijlers, mappen, onderwerpen en collecties die verder reiken dan een eenvoudig kaartspel.
-    landing_hero_preview_title|
-        Erkenning vóór herinnering
-    landing_hero_preview_desc|
-        Een echte Aliolo-les met beeld, tekst, audio en begeleide navigatie.
-    landing_hero_preview_chip|
-        Leermodus
-    landing_features_h2|
-        Alles wat je nodig hebt om exposure om te zetten in herinnering.
-    landing_features_p|
-        Creëer herkenning met rich media, houd grotere bibliotheken georganiseerd en bekijk materiaal opnieuw voordat het vervaagt.
-    landing_feature_1_title|
-        Leer met meer dan alleen tekst
-    landing_feature_1_desc|
-        Gebruik afbeeldingen, audio, video en flexibele aanwijzingen wanneer het onderwerp afhankelijk is van herkenning en context.
-    landing_feature_2_title|
-        Controleer voordat het vervaagt
-    landing_feature_2_desc|
-        Gespreide herhaling en voortgangsregistratie brengen belangrijk materiaal terug op een nuttig moment.
-    landing_feature_3_title|
-        Groei verder dan één deck
-    landing_feature_3_desc|
-        Organiseer samengesteld of aangepast materiaal in pijlers, mappen, onderwerpen en collecties die bruikbaar blijven.
-    landing_workflow_h2|
-        Een duidelijk pad van ‘ik moet studeren’ naar ‘ik weet dit’.
-    landing_workflow_p|
-        Eén gerichte workflow zorgt ervoor dat de volgende stap duidelijk is, zonder dat elk onderwerp in hetzelfde soort kaart wordt gestopt.
-    landing_step_1_title|
-        Kies het juiste materiaal
-    landing_step_1_desc|
-        Begin met een samengesteld onderwerp of bouw een specifieke bibliotheek op voor een examen, taal, beroep of persoonlijk doel.
-    landing_step_2_title|
-        Leer met context
-    landing_step_2_desc|
-        Bouw herkenning op via geleide kaarten en beschikbare media voordat u uw geheugen vraagt ​​om zonder hulp te werken.
-    landing_step_3_title|
-        Test echte herinnering
-    landing_step_3_desc|
-        Ga gericht testen om zwakke plekken bloot te leggen, het ophalen te versterken en de voortgang meetbaar te maken.
-    landing_pricing_h2|
-        Begin gratis. Upgrade wanneer u de volledige workflow nodig heeft.
-    landing_pricing_p|
-        Maak een account aan zonder betaling. Premium voegt gespreide herhaling, creatie, testen, autoplay, privé-organisatie en diepere aanpassingen toe.
-    landing_plan_weekly_desc|
-        Goed voor kortetermijnsessies, snelle beoordelingen of voorbereiding op een examenweek.
-    landing_plan_weekly_item_1|
-        Korte verbintenisperiode
-    landing_plan_weekly_item_2|
-        Snelle manier om de premium workflow uit te proberen
-    landing_plan_weekly_item_3|
-        Wordt automatisch verlengd tot opzegging
-    landing_plan_weekly_btn|
-        Bekijk plandetails
-    landing_plan_monthly_desc|
-        Evenwichtige toegang voor studenten die een vaste leergewoonte opbouwen.
-    landing_plan_monthly_item_1|
-        Beste voor regelmatige wekelijkse studie
-    landing_plan_monthly_item_2|
-        Genoeg tijd om grotere onderwerpbibliotheken te organiseren
-    landing_plan_monthly_item_3|
-        Wordt automatisch verlengd tot opzegging
-    landing_plan_monthly_btn|
-        Bekijk plandetails
-    landing_plan_yearly_desc|
-        Laagste effectieve maandelijkse kosten voor leerlingen die een duurzaam studiesysteem willen.
-    landing_plan_yearly_item_1|
-        Ideaal voor langdurige taal- en professionele studie
-    landing_plan_yearly_item_2|
-        Lagere kosten in de loop van de tijd
-    landing_plan_yearly_item_3|
-        Wordt automatisch verlengd tot opzegging
-    landing_plan_yearly_btn|
-        Bekijk plandetails
-    landing_trust_h2|
-        Studeer met duidelijkheid. Abonneer u met vertrouwen.
-    landing_trust_p|
-        Weet wat gratis is, wat Premium toevoegt en waar u hulp kunt krijgen voordat u zich vastlegt.
-    landing_trust_item_1_title|
-        Gratis toegang:
-    landing_trust_item_1_desc|
-        Maak een account aan en ontdek het beschikbare leermateriaal zonder betalingsgegevens in te voeren.
-    landing_trust_item_2_title|
-        Transparante voorwaarden:
-    landing_trust_item_2_desc|
-        Informatie over prijzen, verlenging, annulering, privacy en terugbetaling is beschikbaar voordat u afrekent.
-    landing_trust_item_3_title|
-        Menselijke ondersteuning:
-    landing_trust_item_3_desc|
-        Neem contact op met vitalii@nohainc.com als u hulp nodig heeft.
-    landing_faq_1_q|
-        Moet ik elke kaart zelf maken?
-    landing_faq_1_a|
-        Nee. Begin met beschikbare samengestelde onderwerpen en maak vervolgens uw eigen materiaal wanneer uw doel specifieker wordt.
-    landing_faq_2_q|
-        Kan ik Aliolo gratis gebruiken?
-    landing_faq_2_a|
-        Ja. Een gratis account biedt toegang tot de bibliotheek; op de prijspagina wordt uitgelegd welke geavanceerde workflows Premium vereisen.
-    landing_faq_3_q|
-        Kan ik een abonnement opzeggen?
-    landing_faq_3_a|
-        Ja. Abonnementen kunnen worden opgezegd via het kanaal waar ze zijn gekocht, waarbij de toegang normaal gesproken doorloopt gedurende de betaalde periode.
-    landing_final_h2|
-        Klaar om uw volgende studiesessie te laten tellen?
-    landing_final_p|
-        Maak een gratis account aan, kies een onderwerp en begin visueel te leren.
-    landing_final_btn|
-        Maak een gratis account aan
-    landing_footer_desc|
-        Visuele flashcards, gespreide herhaling, flexibele onderwerporganisatie en gerichte testworkflows voor leerlingen die structuur willen zonder wrijving.
-    landing_footer_mor|
-        Bekende handelaar:
-    landing_footer_mor_desc|
-        Ons bestelproces kan worden uitgevoerd door Paddle.com, onze online reseller en Merchant of Record voor webbestellingen. Paddle verzorgt de betalingsverwerking, betalingsgerelateerde klantenservice en retourzendingen voor die bestellingen.
+    checkout_title Aliolo-afrekening
+    checkout_subtitle Veilig afrekenen voor Aliolo Premium-abonnementen.
+    checkout_eyebrow Veilig afrekenen
+    checkout_h1 Voltooi uw Aliolo Premium-aankoop.
+    checkout_status_title Wachten op afrekenen
+    checkout_status_desc Als u deze pagina vanuit Aliolo-facturering heeft geopend, zou het betalingsformulier automatisch moeten verschijnen.
+    checkout_payment_support_title Betalingsondersteuning
+    checkout_payment_support_desc Webbetalingen worden verwerkt door Paddle.com als Merchant of Record.
+    checkout_billing_title Facturering van abonnementen
+    checkout_billing_desc Aliolo Premium wordt automatisch verlengd totdat het wordt geannuleerd. Je kunt later opzeggen via Paddle of je Aliolo-account.
+    checkout_policy_title Beleidsdetails nodig?
+    checkout_policy_desc Controleer prijzen, abonnementsvoorwaarden, privacy en terugbetalingsinformatie voordat u uw aankoop voltooit.
+    landing_meta_title Aliolo | Visuele flashcards, gespreide herhaling en slimmere studieworkflows
+    landing_meta_desc Aliolo helpt leerlingen talen, wetenschap, anatomie, examenvoorbereiding en samengestelde onderwerpen onder de knie te krijgen met visuele flashcards, gespreide herhaling en interactieve testmodi.
+    landing_nav_features Functies
+    landing_nav_how_it_works Hoe het werkt
+    landing_nav_pricing Prijzen
+    landing_nav_login Inloggen
+    landing_nav_cta Maak een gratis account aan
+    landing_hero_eyebrow Visueel leerplatform
+    landing_hero_h1 Visueel leren. Onthoud langer.
+    landing_hero_p Zet afbeeldingen, audio, video en tekst om in gestructureerde flashcards. Leer met context, bekijk het op het juiste moment en test wat u zich echt kunt herinneren.
+    landing_hero_btn_primary Maak een gratis account aan
+    landing_hero_btn_secondary Inloggen
+    landing_hero_proof_1_title Visueel
+    landing_hero_proof_1_desc Beeld-, audio- en videovriendelijke flashcards voor leren waarbij veel herkenning nodig is.
+    landing_hero_proof_2_title Adaptief
+    landing_hero_proof_2_desc Gespreide herhaling en voortgangsregistratie om de stof op het juiste moment opnieuw te bekijken.
+    landing_hero_proof_3_title Gestructureerd
+    landing_hero_proof_3_desc Pijlers, mappen, onderwerpen en collecties die verder reiken dan een eenvoudig kaartspel.
+    landing_hero_preview_title Erkenning vóór herinnering
+    landing_hero_preview_desc Een echte Aliolo-les met beeld, tekst, audio en begeleide navigatie.
+    landing_hero_preview_chip Leermodus
+    landing_features_h2 Alles wat je nodig hebt om exposure om te zetten in herinnering.
+    landing_features_p Creëer herkenning met rich media, houd grotere bibliotheken georganiseerd en bekijk materiaal opnieuw voordat het vervaagt.
+    landing_feature_1_title Leer met meer dan alleen tekst
+    landing_feature_1_desc Gebruik afbeeldingen, audio, video en flexibele aanwijzingen wanneer het onderwerp afhankelijk is van herkenning en context.
+    landing_feature_2_title Controleer voordat het vervaagt
+    landing_feature_2_desc Gespreide herhaling en voortgangsregistratie brengen belangrijk materiaal terug op een nuttig moment.
+    landing_feature_3_title Groei verder dan één deck
+    landing_feature_3_desc Organiseer samengesteld of aangepast materiaal in pijlers, mappen, onderwerpen en collecties die bruikbaar blijven.
+    landing_workflow_h2 Een duidelijk pad van ‘ik moet studeren’ naar ‘ik weet dit’.
+    landing_workflow_p Eén gerichte workflow zorgt ervoor dat de volgende stap duidelijk is, zonder dat elk onderwerp in hetzelfde soort kaart wordt gestopt.
+    landing_step_1_title Kies het juiste materiaal
+    landing_step_1_desc Begin met een samengesteld onderwerp of bouw een specifieke bibliotheek op voor een examen, taal, beroep of persoonlijk doel.
+    landing_step_2_title Leer met context
+    landing_step_2_desc Bouw herkenning op via geleide kaarten en beschikbare media voordat u uw geheugen vraagt ​​om zonder hulp te werken.
+    landing_step_3_title Test echte herinnering
+    landing_step_3_desc Ga gericht testen om zwakke plekken bloot te leggen, het ophalen te versterken en de voortgang meetbaar te maken.
+    landing_pricing_h2 Begin gratis. Upgrade wanneer u de volledige workflow nodig heeft.
+    landing_pricing_p Maak een account aan zonder betaling. Premium voegt gespreide herhaling, creatie, testen, autoplay, privé-organisatie en diepere aanpassingen toe.
+    landing_plan_weekly_desc Goed voor kortetermijnsessies, snelle beoordelingen of voorbereiding op een examenweek.
+    landing_plan_weekly_item_1 Korte verbintenisperiode
+    landing_plan_weekly_item_2 Snelle manier om de premium workflow uit te proberen
+    landing_plan_weekly_item_3 Wordt automatisch verlengd tot opzegging
+    landing_plan_weekly_btn Bekijk plandetails
+    landing_plan_monthly_desc Evenwichtige toegang voor studenten die een vaste leergewoonte opbouwen.
+    landing_plan_monthly_item_1 Beste voor regelmatige wekelijkse studie
+    landing_plan_monthly_item_2 Genoeg tijd om grotere onderwerpbibliotheken te organiseren
+    landing_plan_monthly_item_3 Wordt automatisch verlengd tot opzegging
+    landing_plan_monthly_btn Bekijk plandetails
+    landing_plan_yearly_desc Laagste effectieve maandelijkse kosten voor leerlingen die een duurzaam studiesysteem willen.
+    landing_plan_yearly_item_1 Ideaal voor langdurige taal- en professionele studie
+    landing_plan_yearly_item_2 Lagere kosten in de loop van de tijd
+    landing_plan_yearly_item_3 Wordt automatisch verlengd tot opzegging
+    landing_plan_yearly_btn Bekijk plandetails
+    landing_trust_h2 Studeer met duidelijkheid. Abonneer u met vertrouwen.
+    landing_trust_p Weet wat gratis is, wat Premium toevoegt en waar u hulp kunt krijgen voordat u zich vastlegt.
+    landing_trust_item_1_title Gratis toegang:
+    landing_trust_item_1_desc Maak een account aan en ontdek het beschikbare leermateriaal zonder betalingsgegevens in te voeren.
+    landing_trust_item_2_title Transparante voorwaarden:
+    landing_trust_item_2_desc Informatie over prijzen, verlenging, annulering, privacy en terugbetaling is beschikbaar voordat u afrekent.
+    landing_trust_item_3_title Menselijke ondersteuning:
+    landing_trust_item_3_desc Neem contact op met vitalii@nohainc.com als u hulp nodig heeft.
+    landing_faq_1_q Moet ik elke kaart zelf maken?
+    landing_faq_1_a Nee. Begin met beschikbare samengestelde onderwerpen en maak vervolgens uw eigen materiaal wanneer uw doel specifieker wordt.
+    landing_faq_2_q Kan ik Aliolo gratis gebruiken?
+    landing_faq_2_a Ja. Een gratis account biedt toegang tot de bibliotheek; op de prijspagina wordt uitgelegd welke geavanceerde workflows Premium vereisen.
+    landing_faq_3_q Kan ik een abonnement opzeggen?
+    landing_faq_3_a Ja. Abonnementen kunnen worden opgezegd via het kanaal waar ze zijn gekocht, waarbij de toegang normaal gesproken doorloopt gedurende de betaalde periode.
+    landing_final_h2 Klaar om uw volgende studiesessie te laten tellen?
+    landing_final_p Maak een gratis account aan, kies een onderwerp en begin visueel te leren.
+    landing_final_btn Maak een gratis account aan
+    landing_footer_desc Visuele flashcards, gespreide herhaling, flexibele onderwerporganisatie en gerichte testworkflows voor leerlingen die structuur willen zonder wrijving.
+    landing_footer_mor Bekende handelaar:
+    landing_footer_mor_desc Ons bestelproces kan worden uitgevoerd door Paddle.com, onze online reseller en Merchant of Record voor webbestellingen. Paddle verzorgt de betalingsverwerking, betalingsgerelateerde klantenservice en retourzendingen voor die bestellingen.

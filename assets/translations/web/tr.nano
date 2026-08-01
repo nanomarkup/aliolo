@@ -1,24 +1,14 @@
 ..
-    legal_info|
-        Yasal bilgiler
-    last_updated|
-        Son güncelleme
-    support|
-        Destek
-    home|
-        Ev
-    privacy|
-        Mahremiyet
-    terms|
-        Şartlar
-    refunds|
-        Geri ödemeler
-    pricing|
-        Fiyatlandırma
-    privacy_title|
-        Aliolo Gizlilik Politikası
-    privacy_subtitle|
-        Aliolo'nun hesap, öğrenme ve ödemeyle ilgili bilgileri nasıl topladığı, kullandığı, sakladığı ve koruduğu.
+    legal_info Yasal bilgiler
+    last_updated Son güncelleme
+    support Destek
+    home Ev
+    privacy Mahremiyet
+    terms Şartlar
+    refunds Geri ödemeler
+    pricing Fiyatlandırma
+    privacy_title Aliolo Gizlilik Politikası
+    privacy_subtitle Aliolo'nun hesap, öğrenme ve ödemeyle ilgili bilgileri nasıl topladığı, kullandığı, sakladığı ve koruduğu.
     privacy_body|
         <h2>Topladığımız Bilgiler</h2>
         <p>E-posta adresi, kullanıcı adı, şifre kimlik doğrulama verileri, avatar ayarları, tercihler ve profil ayarları gibi hesap ayrıntıları da dahil olmak üzere Aliolo'yu çalıştırmak için gereken bilgileri topluyoruz.</p>
@@ -41,10 +31,8 @@
         <p>Kişisel bilgileri korumak için makul teknik ve organizasyonel önlemler kullanıyoruz. Hiçbir çevrimiçi hizmet mükemmel güvenliği garanti edemez, ancak erişimi sınırlamak ve verileri yetkisiz kullanıma karşı korumak için çalışıyoruz.</p>
         <h2>Seçimleriniz ve Haklarınız</h2>
         <p>Bulunduğunuz yere bağlı olarak kişisel bilgilerinize erişme, bunları düzeltme, silme, dışa aktarma veya bunların kullanımını kısıtlama haklarına sahip olabilirsiniz. Bize şu adresten ulaşın: <a href="mailto:vitalii@nohainc.com">vitalii@nohainc.com</a> bir istekte bulunmak için.</p>
-    terms_title|
-        Aliolo Abonelik Koşulları
-    terms_subtitle|
-        Aliolo hesaplarına ilişkin kurallar, premium erişim, abonelik faturalandırması, iptal ve kabul edilebilir kullanım.
+    terms_title Aliolo Abonelik Koşulları
+    terms_subtitle Aliolo hesaplarına ilişkin kurallar, premium erişim, abonelik faturalandırması, iptal ve kabul edilebilir kullanım.
     terms_body|
         <h2>Aliolo'yu kullanma</h2>
         <p>Aliolo görsel öğrenme araçları, özel olarak hazırlanmış eğitim içeriği, bilgi kartları, ilerleme takibi ve birinci sınıf öğrenme özellikleri sunar. Hesap bilgilerinizi güvende tutmak ve hizmeti yasal olarak kullanmak sizin sorumluluğunuzdadır.</p>
@@ -65,10 +53,8 @@
         <p>Aliolo bir eğitim ve çalışma-destek aracı olarak sunulmaktadır. Belirli öğrenme, sınav, mesleki veya finansal sonuçları garanti etmiyoruz. Aliolo, yasaların izin verdiği azami ölçüde, yürürlükteki yasaların gerektirdiği garantilerin ötesinde garantiler olmadan sağlanır.</p>
         <h2>Bu Koşullarda Yapılan Değişiklikler</h2>
         <p>Bu şartları ürün, yasal, faturalandırma veya operasyonel değişiklikleri yansıtacak şekilde güncelleyebiliriz. Güncel sürüm bu sayfada yayınlanmaktadır.</p>
-    refund_title|
-        Aliolo Geri Ödeme Politikası
-    refund_subtitle|
-        Aliolo Premium'da geri ödemeler, iptaller, ters ibrazlar ve ödeme desteği nasıl çalışır?
+    refund_title Aliolo Geri Ödeme Politikası
+    refund_subtitle Aliolo Premium'da geri ödemeler, iptaller, ters ibrazlar ve ödeme desteği nasıl çalışır?
     refund_body|
         <h2>Genel Bakış</h2>
         <p>Aliolo Premium dijital bir aboneliktir. Premium erişim hemen etkinleştirilebildiğinden, bu politikanın, satın alma kanalının veya geçerli yasanın aksini öngördüğü durumlar dışında, satın alma işlemleri genellikle abonelik etkinleştirilip kullanıldığında nihai olur.</p>
@@ -83,10 +69,8 @@
         <p>Web siparişleri için, makbuzunuzdaki sipariş bilgilerini kullanarak Paddle alıcı desteğiyle iletişime geçin veya şu adresten Aliolo desteğiyle iletişime geçin: <a href="mailto:vitalii@nohainc.com">vitalii@nohainc.com</a>. Paddle Kayıtlı Satıcı olduğunda, ödemeye özel talepleri Paddle'a yönlendirebiliriz.</p>
         <h2>Ters İbrazlar ve Kötüye Kullanım</h2>
         <p>Bir ödemenin iptal edilmesi, itiraz edilmesi, para iadesi yapılması veya sahtekarlık amaçlı olduğu tespit edilmesi halinde Aliolo, söz konusu işlemle ilişkili premium erişimi askıya alabilir veya kaldırabilir.</p>
-    pricing_title|
-        Aliolo Premium Fiyatlandırması
-    pricing_subtitle|
-        Aliolo görsel öğrenme deneyiminin tamamının kilidini açmak için basit abonelik seçenekleri.
+    pricing_title Aliolo Premium Fiyatlandırması
+    pricing_subtitle Aliolo görsel öğrenme deneyiminin tamamının kilidini açmak için basit abonelik seçenekleri.
     pricing_body|
         <div class="plans">
         <section class="plan">
@@ -175,175 +159,89 @@
         <p>Fiyatlar ve teklifler web ödemesi, Google Play, Apple App Store, ülkeler, para birimleri ve sınırlı süreli promosyonlara göre değişiklik gösterebilir. Son ödeme ekranı, satın alma işleminizin gerçek fiyatını ve yenileme koşullarını kontrol eder.</p>
         <h2>İlgili Politikalar</h2>
         <p>Abone olmadan önce inceleyin <a href="/terms">Abonelik Koşulları</a>, <a href="/refund">Geri Ödeme Politikası</a>, Ve <a href="/privacy">Gizlilik Politikası</a>.</p>
-    checkout_title|
-        Aliolo Ödeme
-    checkout_subtitle|
-        Aliolo Premium abonelikleri için güvenli ödeme.
-    checkout_eyebrow|
-        Güvenli ödeme
-    checkout_h1|
-        Aliolo Premium satın alma işleminizi tamamlayın.
-    checkout_status_title|
-        Ödeme bekleniyor
-    checkout_status_desc|
-        Bu sayfayı Aliolo faturalandırmasından açtıysanız ödeme formu otomatik olarak görünmelidir.
-    checkout_payment_support_title|
-        Ödeme desteği
-    checkout_payment_support_desc|
-        Web ödemeleri Paddle.com tarafından Merchant of Record olarak işlenir.
-    checkout_billing_title|
-        Abonelik faturalandırması
-    checkout_billing_desc|
-        Aliolo Premium, iptal edilene kadar otomatik olarak yenilenir. Daha sonra Paddle veya Aliolo hesabınız aracılığıyla iptal edebilirsiniz.
-    checkout_policy_title|
-        Politika ayrıntılarına mı ihtiyacınız var?
-    checkout_policy_desc|
-        Satın alma işleminizi tamamlamadan önce fiyatlandırmayı, abonelik koşullarını, gizliliği ve geri ödeme bilgilerini inceleyin.
-    landing_meta_title|
-        Aliolo | Görsel Bilgi Kartları, Aralıklı Tekrar ve Daha Akıllı Çalışma İş Akışları
-    landing_meta_desc|
-        Aliolo, görsel bilgi kartları, aralıklı tekrar ve etkileşimli test modlarıyla öğrencilerin dil, bilim, anatomi, sınav hazırlığı ve özel olarak seçilmiş konularda uzmanlaşmasına yardımcı olur.
-    landing_nav_features|
-        Özellikler
-    landing_nav_how_it_works|
-        Nasıl çalışır?
-    landing_nav_pricing|
-        Fiyatlandırma
-    landing_nav_login|
-        Giriş yapmak
-    landing_nav_cta|
-        Ücretsiz hesap oluştur
-    landing_hero_eyebrow|
-        Görsel öğrenme platformu
-    landing_hero_h1|
-        Görsel olarak öğrenin. Daha uzun süre hatırla.
-    landing_hero_p|
-        Görüntüleri, sesleri, videoları ve metni yapılandırılmış bilgi kartlarına dönüştürün. Bağlamla birlikte öğrenin, doğru zamanda gözden geçirin ve gerçekten hatırlayabildiğinizi test edin.
-    landing_hero_btn_primary|
-        Ücretsiz hesap oluştur
-    landing_hero_btn_secondary|
-        Giriş yapmak
-    landing_hero_proof_1_title|
-        Görsel
-    landing_hero_proof_1_desc|
-        Tanıma ağırlıklı öğrenme için resim, ses ve video dostu bilgi kartları.
-    landing_hero_proof_2_title|
-        Uyarlanabilir
-    landing_hero_proof_2_desc|
-        Malzemeyi doğru zamanda tekrar ziyaret etmek için aralıklı tekrarlama ve ilerleme takibi.
-    landing_hero_proof_3_title|
-        Yapılandırılmış
-    landing_hero_proof_3_desc|
-        Basit bir destenin ötesine geçen sütunlar, klasörler, konular ve koleksiyonlar.
-    landing_hero_preview_title|
-        Geri çağırmadan önce tanıma
-    landing_hero_preview_desc|
-        Resim, metin, ses ve rehberli navigasyonu kullanan gerçek bir Aliolo dersi.
-    landing_hero_preview_chip|
-        Öğrenme modu
-    landing_features_h2|
-        Maruz kalmayı hatırlamaya dönüştürmek için ihtiyacınız olan her şey.
-    landing_features_p|
-        Zengin medyayla tanınma sağlayın, daha büyük kitaplıkları düzenli tutun ve materyaller kaybolmadan önce yeniden ziyaret edin.
-    landing_feature_1_title|
-        Metinden daha fazlasıyla öğrenin
-    landing_feature_1_desc|
-        Konu tanınmaya ve bağlama bağlı olduğunda görseller, ses, video ve esnek istemler kullanın.
-    landing_feature_2_title|
-        Kaybolmadan önce gözden geçirin
-    landing_feature_2_desc|
-        Aralıklı tekrarlama ve ilerleme takibi, önemli materyali faydalı bir zamanda geri getirir.
-    landing_feature_3_title|
-        Bir destenin ötesine geçin
-    landing_feature_3_desc|
-        Seçilen veya özel malzemeleri kullanılabilir durumda kalan sütunlar, klasörler, konular ve koleksiyonlar halinde düzenleyin.
-    landing_workflow_h2|
-        "Çalışmalıyım"dan "Bunu biliyorum"a giden açık bir yol.
-    landing_workflow_p|
-        Odaklanmış bir iş akışı, her konuyu aynı tür karta sığdırmadan bir sonraki adımın açık olmasını sağlar.
-    landing_step_1_title|
-        Doğru malzemeyi seçin
-    landing_step_1_desc|
-        Özel olarak seçilmiş bir konuyla başlayın veya bir sınav, dil, meslek veya kişisel hedef için odaklanmış bir kütüphane oluşturun.
-    landing_step_2_title|
-        Bağlamla öğrenin
-    landing_step_2_desc|
-        Belleğinizin yardımsız çalışmasını istemeden önce, rehberli kartlar ve mevcut medya aracılığıyla tanınırlığınızı artırın.
-    landing_step_3_title|
-        Gerçek hatırlamayı test edin
-    landing_step_3_desc|
-        Zayıf noktaları ortaya çıkarmak, geri kazanımı güçlendirmek ve ilerlemeyi ölçülebilir hale getirmek için odaklanmış testlere geçin.
-    landing_pricing_h2|
-        Ücretsiz başlayın. Tam iş akışına ihtiyaç duyduğunuzda yükseltin.
-    landing_pricing_p|
-        Ödeme yapmadan bir hesap oluşturun. Premium, aralıklı tekrarlama, oluşturma, test etme, otomatik oynatma, özel organizasyon ve daha derin özelleştirme özellikleri ekler.
-    landing_plan_weekly_desc|
-        Kısa vadeli hamleler, hızlı incelemeler veya sınav haftası hazırlığı için idealdir.
-    landing_plan_weekly_item_1|
-        Kısa taahhüt penceresi
-    landing_plan_weekly_item_2|
-        Premium iş akışını denemenin hızlı yolu
-    landing_plan_weekly_item_3|
-        İptal edilene kadar otomatik olarak yenilenir
-    landing_plan_weekly_btn|
-        Plan ayrıntılarını görüntüle
-    landing_plan_monthly_desc|
-        İstikrarlı bir öğrenme alışkanlığı geliştiren öğrenciler için dengeli erişim.
-    landing_plan_monthly_item_1|
-        Düzenli haftalık çalışma için en iyisi
-    landing_plan_monthly_item_2|
-        Daha büyük konu kütüphanelerini düzenlemek için yeterli zaman
-    landing_plan_monthly_item_3|
-        İptal edilene kadar otomatik olarak yenilenir
-    landing_plan_monthly_btn|
-        Plan ayrıntılarını görüntüle
-    landing_plan_yearly_desc|
-        Dayanıklı bir çalışma sistemi isteyen öğrenciler için en düşük etkili aylık maliyet.
-    landing_plan_yearly_item_1|
-        Uzun süreli dil ve profesyonel çalışma için ideal
-    landing_plan_yearly_item_2|
-        Zaman içinde daha düşük maliyet
-    landing_plan_yearly_item_3|
-        İptal edilene kadar otomatik olarak yenilenir
-    landing_plan_yearly_btn|
-        Plan ayrıntılarını görüntüle
-    landing_trust_h2|
-        Net bir şekilde çalışın. Güvenle abone olun.
-    landing_trust_p|
-        Taahhütte bulunmadan önce neyin ücretsiz olduğunu, Premium'un neler eklediğini ve nereden yardım alabileceğinizi öğrenin.
-    landing_trust_item_1_title|
-        Ücretsiz giriş:
-    landing_trust_item_1_desc|
-        Bir hesap oluşturun ve ödeme ayrıntılarını girmeden mevcut öğrenim materyallerini keşfedin.
-    landing_trust_item_2_title|
-        Şeffaf terimler:
-    landing_trust_item_2_desc|
-        Fiyatlandırma, yenileme, iptal, gizlilik ve geri ödeme bilgileri ödeme işleminden önce mevcuttur.
-    landing_trust_item_3_title|
-        İnsan desteği:
-    landing_trust_item_3_desc|
-        Yardıma ihtiyacınız olduğunda vitalii@nohainc.com ile iletişime geçin.
-    landing_faq_1_q|
-        Her kartı kendim mi oluşturmam gerekiyor?
-    landing_faq_1_a|
-        Hayır. Mevcut seçilmiş konularla başlayın, ardından hedefiniz daha spesifik hale geldiğinde kendi materyalinizi oluşturun.
-    landing_faq_2_q|
-        Aliolo'yu ücretsiz kullanabilir miyim?
-    landing_faq_2_a|
-        Evet. Ücretsiz bir hesap, kütüphaneye giriş noktası sağlar; fiyatlandırma sayfasında hangi gelişmiş iş akışlarının Premium gerektirdiği açıklanmaktadır.
-    landing_faq_3_q|
-        Aboneliği iptal edebilir miyim?
-    landing_faq_3_a|
-        Evet. Abonelikler, satın alındıkları kanal üzerinden iptal edilebilir ve erişim normalde ücretli dönem boyunca devam eder.
-    landing_final_h2|
-        Bir sonraki çalışma oturumunuzu değerlendirmeye hazır mısınız?
-    landing_final_p|
-        Ücretsiz bir hesap oluşturun, bir konu seçin ve görsel olarak öğrenmeye başlayın.
-    landing_final_btn|
-        Ücretsiz hesap oluştur
-    landing_footer_desc|
-        Sorunsuz bir yapı isteyen öğrenciler için görsel bilgi kartları, aralıklı tekrar, esnek konu organizasyonu ve odaklanmış test iş akışları.
-    landing_footer_mor|
-        Kayıtlı Satıcı:
-    landing_footer_mor_desc|
-        Web siparişleri için sipariş sürecimiz çevrimiçi satıcımız ve Merchant of Record olan Paddle.com tarafından gerçekleştirilebilir. Paddle, ödeme işlemlerini, ödemeyle ilgili müşteri hizmetlerini ve bu siparişlerin iadelerini yönetir.
+    checkout_title Aliolo Ödeme
+    checkout_subtitle Aliolo Premium abonelikleri için güvenli ödeme.
+    checkout_eyebrow Güvenli ödeme
+    checkout_h1 Aliolo Premium satın alma işleminizi tamamlayın.
+    checkout_status_title Ödeme bekleniyor
+    checkout_status_desc Bu sayfayı Aliolo faturalandırmasından açtıysanız ödeme formu otomatik olarak görünmelidir.
+    checkout_payment_support_title Ödeme desteği
+    checkout_payment_support_desc Web ödemeleri Paddle.com tarafından Merchant of Record olarak işlenir.
+    checkout_billing_title Abonelik faturalandırması
+    checkout_billing_desc Aliolo Premium, iptal edilene kadar otomatik olarak yenilenir. Daha sonra Paddle veya Aliolo hesabınız aracılığıyla iptal edebilirsiniz.
+    checkout_policy_title Politika ayrıntılarına mı ihtiyacınız var?
+    checkout_policy_desc Satın alma işleminizi tamamlamadan önce fiyatlandırmayı, abonelik koşullarını, gizliliği ve geri ödeme bilgilerini inceleyin.
+    landing_meta_title Aliolo | Görsel Bilgi Kartları, Aralıklı Tekrar ve Daha Akıllı Çalışma İş Akışları
+    landing_meta_desc Aliolo, görsel bilgi kartları, aralıklı tekrar ve etkileşimli test modlarıyla öğrencilerin dil, bilim, anatomi, sınav hazırlığı ve özel olarak seçilmiş konularda uzmanlaşmasına yardımcı olur.
+    landing_nav_features Özellikler
+    landing_nav_how_it_works Nasıl çalışır?
+    landing_nav_pricing Fiyatlandırma
+    landing_nav_login Giriş yapmak
+    landing_nav_cta Ücretsiz hesap oluştur
+    landing_hero_eyebrow Görsel öğrenme platformu
+    landing_hero_h1 Görsel olarak öğrenin. Daha uzun süre hatırla.
+    landing_hero_p Görüntüleri, sesleri, videoları ve metni yapılandırılmış bilgi kartlarına dönüştürün. Bağlamla birlikte öğrenin, doğru zamanda gözden geçirin ve gerçekten hatırlayabildiğinizi test edin.
+    landing_hero_btn_primary Ücretsiz hesap oluştur
+    landing_hero_btn_secondary Giriş yapmak
+    landing_hero_proof_1_title Görsel
+    landing_hero_proof_1_desc Tanıma ağırlıklı öğrenme için resim, ses ve video dostu bilgi kartları.
+    landing_hero_proof_2_title Uyarlanabilir
+    landing_hero_proof_2_desc Malzemeyi doğru zamanda tekrar ziyaret etmek için aralıklı tekrarlama ve ilerleme takibi.
+    landing_hero_proof_3_title Yapılandırılmış
+    landing_hero_proof_3_desc Basit bir destenin ötesine geçen sütunlar, klasörler, konular ve koleksiyonlar.
+    landing_hero_preview_title Geri çağırmadan önce tanıma
+    landing_hero_preview_desc Resim, metin, ses ve rehberli navigasyonu kullanan gerçek bir Aliolo dersi.
+    landing_hero_preview_chip Öğrenme modu
+    landing_features_h2 Maruz kalmayı hatırlamaya dönüştürmek için ihtiyacınız olan her şey.
+    landing_features_p Zengin medyayla tanınma sağlayın, daha büyük kitaplıkları düzenli tutun ve materyaller kaybolmadan önce yeniden ziyaret edin.
+    landing_feature_1_title Metinden daha fazlasıyla öğrenin
+    landing_feature_1_desc Konu tanınmaya ve bağlama bağlı olduğunda görseller, ses, video ve esnek istemler kullanın.
+    landing_feature_2_title Kaybolmadan önce gözden geçirin
+    landing_feature_2_desc Aralıklı tekrarlama ve ilerleme takibi, önemli materyali faydalı bir zamanda geri getirir.
+    landing_feature_3_title Bir destenin ötesine geçin
+    landing_feature_3_desc Seçilen veya özel malzemeleri kullanılabilir durumda kalan sütunlar, klasörler, konular ve koleksiyonlar halinde düzenleyin.
+    landing_workflow_h2 "Çalışmalıyım"dan "Bunu biliyorum"a giden açık bir yol.
+    landing_workflow_p Odaklanmış bir iş akışı, her konuyu aynı tür karta sığdırmadan bir sonraki adımın açık olmasını sağlar.
+    landing_step_1_title Doğru malzemeyi seçin
+    landing_step_1_desc Özel olarak seçilmiş bir konuyla başlayın veya bir sınav, dil, meslek veya kişisel hedef için odaklanmış bir kütüphane oluşturun.
+    landing_step_2_title Bağlamla öğrenin
+    landing_step_2_desc Belleğinizin yardımsız çalışmasını istemeden önce, rehberli kartlar ve mevcut medya aracılığıyla tanınırlığınızı artırın.
+    landing_step_3_title Gerçek hatırlamayı test edin
+    landing_step_3_desc Zayıf noktaları ortaya çıkarmak, geri kazanımı güçlendirmek ve ilerlemeyi ölçülebilir hale getirmek için odaklanmış testlere geçin.
+    landing_pricing_h2 Ücretsiz başlayın. Tam iş akışına ihtiyaç duyduğunuzda yükseltin.
+    landing_pricing_p Ödeme yapmadan bir hesap oluşturun. Premium, aralıklı tekrarlama, oluşturma, test etme, otomatik oynatma, özel organizasyon ve daha derin özelleştirme özellikleri ekler.
+    landing_plan_weekly_desc Kısa vadeli hamleler, hızlı incelemeler veya sınav haftası hazırlığı için idealdir.
+    landing_plan_weekly_item_1 Kısa taahhüt penceresi
+    landing_plan_weekly_item_2 Premium iş akışını denemenin hızlı yolu
+    landing_plan_weekly_item_3 İptal edilene kadar otomatik olarak yenilenir
+    landing_plan_weekly_btn Plan ayrıntılarını görüntüle
+    landing_plan_monthly_desc İstikrarlı bir öğrenme alışkanlığı geliştiren öğrenciler için dengeli erişim.
+    landing_plan_monthly_item_1 Düzenli haftalık çalışma için en iyisi
+    landing_plan_monthly_item_2 Daha büyük konu kütüphanelerini düzenlemek için yeterli zaman
+    landing_plan_monthly_item_3 İptal edilene kadar otomatik olarak yenilenir
+    landing_plan_monthly_btn Plan ayrıntılarını görüntüle
+    landing_plan_yearly_desc Dayanıklı bir çalışma sistemi isteyen öğrenciler için en düşük etkili aylık maliyet.
+    landing_plan_yearly_item_1 Uzun süreli dil ve profesyonel çalışma için ideal
+    landing_plan_yearly_item_2 Zaman içinde daha düşük maliyet
+    landing_plan_yearly_item_3 İptal edilene kadar otomatik olarak yenilenir
+    landing_plan_yearly_btn Plan ayrıntılarını görüntüle
+    landing_trust_h2 Net bir şekilde çalışın. Güvenle abone olun.
+    landing_trust_p Taahhütte bulunmadan önce neyin ücretsiz olduğunu, Premium'un neler eklediğini ve nereden yardım alabileceğinizi öğrenin.
+    landing_trust_item_1_title Ücretsiz giriş:
+    landing_trust_item_1_desc Bir hesap oluşturun ve ödeme ayrıntılarını girmeden mevcut öğrenim materyallerini keşfedin.
+    landing_trust_item_2_title Şeffaf terimler:
+    landing_trust_item_2_desc Fiyatlandırma, yenileme, iptal, gizlilik ve geri ödeme bilgileri ödeme işleminden önce mevcuttur.
+    landing_trust_item_3_title İnsan desteği:
+    landing_trust_item_3_desc Yardıma ihtiyacınız olduğunda vitalii@nohainc.com ile iletişime geçin.
+    landing_faq_1_q Her kartı kendim mi oluşturmam gerekiyor?
+    landing_faq_1_a Hayır. Mevcut seçilmiş konularla başlayın, ardından hedefiniz daha spesifik hale geldiğinde kendi materyalinizi oluşturun.
+    landing_faq_2_q Aliolo'yu ücretsiz kullanabilir miyim?
+    landing_faq_2_a Evet. Ücretsiz bir hesap, kütüphaneye giriş noktası sağlar; fiyatlandırma sayfasında hangi gelişmiş iş akışlarının Premium gerektirdiği açıklanmaktadır.
+    landing_faq_3_q Aboneliği iptal edebilir miyim?
+    landing_faq_3_a Evet. Abonelikler, satın alındıkları kanal üzerinden iptal edilebilir ve erişim normalde ücretli dönem boyunca devam eder.
+    landing_final_h2 Bir sonraki çalışma oturumunuzu değerlendirmeye hazır mısınız?
+    landing_final_p Ücretsiz bir hesap oluşturun, bir konu seçin ve görsel olarak öğrenmeye başlayın.
+    landing_final_btn Ücretsiz hesap oluştur
+    landing_footer_desc Sorunsuz bir yapı isteyen öğrenciler için görsel bilgi kartları, aralıklı tekrar, esnek konu organizasyonu ve odaklanmış test iş akışları.
+    landing_footer_mor Kayıtlı Satıcı:
+    landing_footer_mor_desc Web siparişleri için sipariş sürecimiz çevrimiçi satıcımız ve Merchant of Record olan Paddle.com tarafından gerçekleştirilebilir. Paddle, ödeme işlemlerini, ödemeyle ilgili müşteri hizmetlerini ve bu siparişlerin iadelerini yönetir.

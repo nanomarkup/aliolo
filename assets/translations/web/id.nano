@@ -1,24 +1,14 @@
 ..
-    legal_info|
-        Informasi hukum
-    last_updated|
-        Terakhir diperbarui
-    support|
-        Mendukung
-    home|
-        Rumah
-    privacy|
-        Pribadi
-    terms|
-        Ketentuan
-    refunds|
-        Pengembalian dana
-    pricing|
-        Harga
-    privacy_title|
-        Kebijakan Privasi Aliolo
-    privacy_subtitle|
-        Bagaimana Aliolo mengumpulkan, menggunakan, menyimpan, dan melindungi informasi terkait akun, pembelajaran, dan pembayaran.
+    legal_info Informasi hukum
+    last_updated Terakhir diperbarui
+    support Mendukung
+    home Rumah
+    privacy Pribadi
+    terms Ketentuan
+    refunds Pengembalian dana
+    pricing Harga
+    privacy_title Kebijakan Privasi Aliolo
+    privacy_subtitle Bagaimana Aliolo mengumpulkan, menggunakan, menyimpan, dan melindungi informasi terkait akun, pembelajaran, dan pembayaran.
     privacy_body|
         <h2>Informasi yang Kami Kumpulkan</h2>
         <p>Kami mengumpulkan informasi yang diperlukan untuk mengoperasikan Aliolo, termasuk detail akun seperti alamat email, nama pengguna, data otentikasi kata sandi, pengaturan avatar, preferensi, dan pengaturan profil.</p>
@@ -41,10 +31,8 @@
         <p>Kami menggunakan perlindungan teknis dan organisasi yang wajar untuk melindungi informasi pribadi. Tidak ada layanan online yang dapat menjamin keamanan sempurna, namun kami berupaya membatasi akses dan melindungi data dari penggunaan tidak sah.</p>
         <h2>Pilihan dan Hak Anda</h2>
         <p>Tergantung pada lokasi Anda, Anda mungkin memiliki hak untuk mengakses, memperbaiki, menghapus, mengekspor, atau membatasi penggunaan informasi pribadi Anda. Hubungi kami di <a href="mailto:vitalii@nohainc.com">vitalii@nohainc.com</a> untuk membuat permintaan.</p>
-    terms_title|
-        Ketentuan Berlangganan Aliolo
-    terms_subtitle|
-        Aturan untuk akun Aliolo, akses premium, penagihan berlangganan, pembatalan, dan penggunaan yang dapat diterima.
+    terms_title Ketentuan Berlangganan Aliolo
+    terms_subtitle Aturan untuk akun Aliolo, akses premium, penagihan berlangganan, pembatalan, dan penggunaan yang dapat diterima.
     terms_body|
         <h2>Menggunakan Aliolo</h2>
         <p>Aliolo menyediakan alat pembelajaran visual, konten pendidikan yang dikurasi, kartu flash, pelacakan kemajuan, dan fitur pembelajaran premium. Anda bertanggung jawab untuk menjaga keamanan kredensial akun Anda dan menggunakan layanan secara sah.</p>
@@ -65,10 +53,8 @@
         <p>Aliolo disediakan sebagai alat pendidikan dan pendukung belajar. Kami tidak menjamin hasil pembelajaran, ujian, profesional, atau keuangan tertentu. Sejauh diizinkan oleh hukum, Aliolo diberikan tanpa jaminan di luar yang diwajibkan oleh hukum yang berlaku.</p>
         <h2>Perubahan Ketentuan Ini</h2>
         <p>Kami dapat memperbarui ketentuan ini untuk mencerminkan perubahan produk, hukum, penagihan, atau operasional. Versi saat ini dipublikasikan di halaman ini.</p>
-    refund_title|
-        Kebijakan Pengembalian Dana Aliolo
-    refund_subtitle|
-        Cara kerja pengembalian uang, pembatalan, tagihan balik, dan dukungan pembayaran untuk Aliolo Premium.
+    refund_title Kebijakan Pengembalian Dana Aliolo
+    refund_subtitle Cara kerja pengembalian uang, pembatalan, tagihan balik, dan dukungan pembayaran untuk Aliolo Premium.
     refund_body|
         <h2>Ringkasan</h2>
         <p>Aliolo Premium adalah langganan digital. Karena akses premium dapat segera diaktifkan, pembelian pada umumnya bersifat final setelah langganan aktif dan digunakan, kecuali jika kebijakan ini, saluran pembelian, atau undang-undang yang berlaku menentukan lain.</p>
@@ -83,10 +69,8 @@
         <p>Untuk pesanan web, hubungi dukungan pembeli Paddle menggunakan informasi pesanan dari tanda terima Anda, atau hubungi dukungan Aliolo di <a href="mailto:vitalii@nohainc.com">vitalii@nohainc.com</a>. Kami dapat mengarahkan permintaan khusus pembayaran ke Paddle ketika Paddle adalah Merchant of Record.</p>
         <h2>Tagihan Balik dan Penyalahgunaan</h2>
         <p>Jika pembayaran dibatalkan, disengketakan, dikembalikan, atau diidentifikasi sebagai penipuan, Aliolo dapat menangguhkan atau menghapus akses premium yang terkait dengan transaksi tersebut.</p>
-    pricing_title|
-        Harga Premium Aliolo
-    pricing_subtitle|
-        Opsi berlangganan sederhana untuk membuka pengalaman pembelajaran visual Aliolo sepenuhnya.
+    pricing_title Harga Premium Aliolo
+    pricing_subtitle Opsi berlangganan sederhana untuk membuka pengalaman pembelajaran visual Aliolo sepenuhnya.
     pricing_body|
         <div class="plans">
         <section class="plan">
@@ -175,175 +159,89 @@
         <p>Harga dan penawaran dapat bervariasi antara pembayaran web, Google Play, Apple App Store, negara, mata uang, dan promosi waktu terbatas. Layar pembayaran terakhir mengontrol harga sebenarnya dan ketentuan perpanjangan untuk pembelian Anda.</p>
         <h2>Kebijakan Terkait</h2>
         <p>Sebelum berlangganan, tinjau <a href="/terms">Ketentuan Berlangganan</a>, <a href="/refund">Kebijakan Pengembalian Dana</a>, Dan <a href="/privacy">Kebijakan Privasi</a>.</p>
-    checkout_title|
-        Pembayaran Aliolo
-    checkout_subtitle|
-        Pembayaran aman untuk langganan Aliolo Premium.
-    checkout_eyebrow|
-        Pembayaran aman
-    checkout_h1|
-        Selesaikan pembelian Aliolo Premium Anda.
-    checkout_status_title|
-        Menunggu pembayaran
-    checkout_status_desc|
-        Jika Anda membuka halaman ini dari penagihan Aliolo, formulir pembayaran akan muncul secara otomatis.
-    checkout_payment_support_title|
-        Dukungan pembayaran
-    checkout_payment_support_desc|
-        Pembayaran web diproses oleh Paddle.com sebagai Merchant of Record.
-    checkout_billing_title|
-        Penagihan langganan
-    checkout_billing_desc|
-        Aliolo Premium diperpanjang secara otomatis hingga dibatalkan. Anda dapat membatalkannya nanti melalui Paddle atau akun Aliolo Anda.
-    checkout_policy_title|
-        Butuh rincian kebijakan?
-    checkout_policy_desc|
-        Tinjau informasi harga, ketentuan berlangganan, privasi, dan pengembalian dana sebelum menyelesaikan pembelian Anda.
-    landing_meta_title|
-        Aliolo | Kartu Flash Visual, Pengulangan Berjarak, dan Alur Kerja Belajar yang Lebih Cerdas
-    landing_meta_desc|
-        Aliolo membantu pelajar menguasai bahasa, sains, anatomi, persiapan ujian, dan mata pelajaran yang dikurasi dengan kartu flash visual, pengulangan spasi, dan mode tes interaktif.
-    landing_nav_features|
-        Fitur
-    landing_nav_how_it_works|
-        Bagaimana cara kerjanya
-    landing_nav_pricing|
-        Harga
-    landing_nav_login|
-        Masuk
-    landing_nav_cta|
-        Buat akun gratis
-    landing_hero_eyebrow|
-        Platform pembelajaran visual
-    landing_hero_h1|
-        Belajar secara visual. Ingat lebih lama.
-    landing_hero_p|
-        Ubah gambar, audio, video, dan teks menjadi kartu flash terstruktur. Belajar sesuai konteks, tinjau pada waktu yang tepat, dan uji apa yang benar-benar dapat Anda ingat.
-    landing_hero_btn_primary|
-        Buat akun gratis
-    landing_hero_btn_secondary|
-        Masuk
-    landing_hero_proof_1_title|
-        Visual
-    landing_hero_proof_1_desc|
-        Kartu flash yang ramah gambar, audio, dan video untuk pembelajaran intensif pengenalan.
-    landing_hero_proof_2_title|
-        adaptif
-    landing_hero_proof_2_desc|
-        Pengulangan berkala dan pelacakan kemajuan untuk meninjau kembali materi pada waktu yang tepat.
-    landing_hero_proof_3_title|
-        Tersusun
-    landing_hero_proof_3_desc|
-        Pilar, folder, subjek, dan koleksi yang berskala lebih dari sekadar dek sederhana.
-    landing_hero_preview_title|
-        Pengakuan sebelum penarikan kembali
-    landing_hero_preview_desc|
-        Pelajaran Aliolo nyata menggunakan gambar, teks, audio, dan navigasi terpandu.
-    landing_hero_preview_chip|
-        Modus belajar
-    landing_features_h2|
-        Semua yang Anda perlukan untuk mengubah eksposur menjadi ingatan.
-    landing_features_p|
-        Bangun pengenalan dengan media yang kaya, atur perpustakaan yang lebih besar, dan tinjau kembali materi sebelum memudar.
-    landing_feature_1_title|
-        Belajar dengan lebih dari sekedar teks
-    landing_feature_1_desc|
-        Gunakan gambar, audio, video, dan perintah fleksibel ketika subjek bergantung pada pengenalan dan konteks.
-    landing_feature_2_title|
-        Tinjau sebelum memudar
-    landing_feature_2_desc|
-        Pengulangan secara berkala dan pelacakan kemajuan mengembalikan materi penting pada waktu yang berguna.
-    landing_feature_3_title|
-        Tumbuh lebih dari satu dek
-    landing_feature_3_desc|
-        Atur materi yang dikurasi atau disesuaikan ke dalam pilar, folder, subjek, dan koleksi agar tetap dapat digunakan.
-    landing_workflow_h2|
-        Jalur yang jelas dari "Saya harus belajar" menjadi "Saya tahu ini".
-    landing_workflow_p|
-        Satu alur kerja yang terfokus membuat langkah berikutnya tetap jelas tanpa menyamakan setiap subjek ke dalam jenis kartu yang sama.
-    landing_step_1_title|
-        Pilih bahan yang tepat
-    landing_step_1_desc|
-        Mulailah dengan mata pelajaran pilihan atau bangun perpustakaan terfokus untuk ujian, bahasa, profesi, atau tujuan pribadi.
-    landing_step_2_title|
-        Belajar dengan konteks
-    landing_step_2_desc|
-        Bangun pengenalan melalui kartu yang dipandu dan media yang tersedia sebelum meminta ingatan Anda bekerja tanpa bantuan.
-    landing_step_3_title|
-        Uji ingatan nyata
-    landing_step_3_desc|
-        Lanjutkan ke pengujian terfokus untuk mengungkap titik lemah, memperkuat pengambilan, dan membuat kemajuan dapat diukur.
-    landing_pricing_h2|
-        Mulai gratis. Tingkatkan versi saat Anda memerlukan alur kerja penuh.
-    landing_pricing_p|
-        Buat akun tanpa pembayaran. Premium menambahkan pengulangan spasi, pembuatan, pengujian, putar otomatis, organisasi pribadi, dan penyesuaian yang lebih dalam.
-    landing_plan_weekly_desc|
-        Cocok untuk dorongan jangka pendek, tinjauan singkat, atau persiapan minggu ujian.
-    landing_plan_weekly_item_1|
-        Jendela komitmen singkat
-    landing_plan_weekly_item_2|
-        Cara cepat untuk mencoba alur kerja premium
-    landing_plan_weekly_item_3|
-        Diperpanjang secara otomatis hingga dibatalkan
-    landing_plan_weekly_btn|
-        Lihat detail paket
-    landing_plan_monthly_desc|
-        Akses seimbang bagi siswa yang membangun kebiasaan belajar yang stabil.
-    landing_plan_monthly_item_1|
-        Terbaik untuk belajar mingguan reguler
-    landing_plan_monthly_item_2|
-        Waktu yang cukup untuk mengatur perpustakaan mata pelajaran yang lebih besar
-    landing_plan_monthly_item_3|
-        Diperpanjang secara otomatis hingga dibatalkan
-    landing_plan_monthly_btn|
-        Lihat detail paket
-    landing_plan_yearly_desc|
-        Biaya bulanan efektif terendah untuk pelajar yang menginginkan sistem belajar yang tahan lama.
-    landing_plan_yearly_item_1|
-        Ideal untuk bahasa jangka panjang dan studi profesional
-    landing_plan_yearly_item_2|
-        Menurunkan biaya seiring berjalannya waktu
-    landing_plan_yearly_item_3|
-        Diperpanjang secara otomatis hingga dibatalkan
-    landing_plan_yearly_btn|
-        Lihat detail paket
-    landing_trust_h2|
-        Belajarlah dengan jelas. Berlangganan dengan percaya diri.
-    landing_trust_p|
-        Ketahui apa yang gratis, apa yang ditambahkan Premium, dan di mana mendapatkan bantuan sebelum Anda berkomitmen.
-    landing_trust_item_1_title|
-        Entri gratis:
-    landing_trust_item_1_desc|
-        Buat akun dan jelajahi materi pembelajaran yang tersedia tanpa memasukkan detail pembayaran.
-    landing_trust_item_2_title|
-        Istilah transparan:
-    landing_trust_item_2_desc|
-        Informasi harga, pembaruan, pembatalan, privasi, dan pengembalian dana tersedia sebelum checkout.
-    landing_trust_item_3_title|
-        Dukungan manusia:
-    landing_trust_item_3_desc|
-        Hubungi vitalii@nohainc.com bila Anda membutuhkan bantuan.
-    landing_faq_1_q|
-        Apakah saya perlu membuat sendiri setiap kartu?
-    landing_faq_1_a|
-        Tidak. Mulailah dengan mata pelajaran pilihan yang tersedia, lalu buat materi Anda sendiri ketika tujuan Anda menjadi lebih spesifik.
-    landing_faq_2_q|
-        Bisakah saya menggunakan Aliolo secara gratis?
-    landing_faq_2_a|
-        Ya. Akun gratis menyediakan titik masuk ke perpustakaan; halaman harga menjelaskan alur kerja tingkat lanjut mana yang memerlukan Premium.
-    landing_faq_3_q|
-        Bisakah saya membatalkan langganan?
-    landing_faq_3_a|
-        Ya. Langganan dapat dibatalkan melalui saluran tempat langganan dibeli, dengan akses biasanya berlanjut sepanjang periode berbayar.
-    landing_final_h2|
-        Siap untuk membuat sesi belajar Anda berikutnya berarti?
-    landing_final_p|
-        Buat akun gratis, pilih subjek, dan mulailah belajar secara visual.
-    landing_final_btn|
-        Buat akun gratis
-    landing_footer_desc|
-        Kartu flash visual, pengulangan dengan jarak tertentu, pengorganisasian subjek yang fleksibel, dan alur kerja pengujian yang terfokus untuk pelajar yang menginginkan struktur tanpa gesekan.
-    landing_footer_mor|
-        Pedagang Tercatat:
-    landing_footer_mor_desc|
-        Proses pemesanan kami dapat dilakukan oleh Paddle.com, pengecer online kami dan Merchant of Record untuk pesanan web. Paddle menangani pemrosesan pembayaran, layanan pelanggan terkait pembayaran, dan pengembalian pesanan tersebut.
+    checkout_title Pembayaran Aliolo
+    checkout_subtitle Pembayaran aman untuk langganan Aliolo Premium.
+    checkout_eyebrow Pembayaran aman
+    checkout_h1 Selesaikan pembelian Aliolo Premium Anda.
+    checkout_status_title Menunggu pembayaran
+    checkout_status_desc Jika Anda membuka halaman ini dari penagihan Aliolo, formulir pembayaran akan muncul secara otomatis.
+    checkout_payment_support_title Dukungan pembayaran
+    checkout_payment_support_desc Pembayaran web diproses oleh Paddle.com sebagai Merchant of Record.
+    checkout_billing_title Penagihan langganan
+    checkout_billing_desc Aliolo Premium diperpanjang secara otomatis hingga dibatalkan. Anda dapat membatalkannya nanti melalui Paddle atau akun Aliolo Anda.
+    checkout_policy_title Butuh rincian kebijakan?
+    checkout_policy_desc Tinjau informasi harga, ketentuan berlangganan, privasi, dan pengembalian dana sebelum menyelesaikan pembelian Anda.
+    landing_meta_title Aliolo | Kartu Flash Visual, Pengulangan Berjarak, dan Alur Kerja Belajar yang Lebih Cerdas
+    landing_meta_desc Aliolo membantu pelajar menguasai bahasa, sains, anatomi, persiapan ujian, dan mata pelajaran yang dikurasi dengan kartu flash visual, pengulangan spasi, dan mode tes interaktif.
+    landing_nav_features Fitur
+    landing_nav_how_it_works Bagaimana cara kerjanya
+    landing_nav_pricing Harga
+    landing_nav_login Masuk
+    landing_nav_cta Buat akun gratis
+    landing_hero_eyebrow Platform pembelajaran visual
+    landing_hero_h1 Belajar secara visual. Ingat lebih lama.
+    landing_hero_p Ubah gambar, audio, video, dan teks menjadi kartu flash terstruktur. Belajar sesuai konteks, tinjau pada waktu yang tepat, dan uji apa yang benar-benar dapat Anda ingat.
+    landing_hero_btn_primary Buat akun gratis
+    landing_hero_btn_secondary Masuk
+    landing_hero_proof_1_title Visual
+    landing_hero_proof_1_desc Kartu flash yang ramah gambar, audio, dan video untuk pembelajaran intensif pengenalan.
+    landing_hero_proof_2_title Adaptif
+    landing_hero_proof_2_desc Pengulangan berkala dan pelacakan kemajuan untuk meninjau kembali materi pada waktu yang tepat.
+    landing_hero_proof_3_title Tersusun
+    landing_hero_proof_3_desc Pilar, folder, subjek, dan koleksi yang berskala lebih dari sekadar dek sederhana.
+    landing_hero_preview_title Pengakuan sebelum penarikan kembali
+    landing_hero_preview_desc Pelajaran Aliolo nyata menggunakan gambar, teks, audio, dan navigasi terpandu.
+    landing_hero_preview_chip Modus belajar
+    landing_features_h2 Semua yang Anda perlukan untuk mengubah eksposur menjadi ingatan.
+    landing_features_p Bangun pengenalan dengan media yang kaya, atur perpustakaan yang lebih besar, dan tinjau kembali materi sebelum memudar.
+    landing_feature_1_title Belajar dengan lebih dari sekedar teks
+    landing_feature_1_desc Gunakan gambar, audio, video, dan perintah fleksibel ketika subjek bergantung pada pengenalan dan konteks.
+    landing_feature_2_title Tinjau sebelum memudar
+    landing_feature_2_desc Pengulangan secara berkala dan pelacakan kemajuan mengembalikan materi penting pada waktu yang berguna.
+    landing_feature_3_title Tumbuh lebih dari satu dek
+    landing_feature_3_desc Atur materi yang dikurasi atau disesuaikan ke dalam pilar, folder, subjek, dan koleksi agar tetap dapat digunakan.
+    landing_workflow_h2 Jalur yang jelas dari "Saya harus belajar" menjadi "Saya tahu ini".
+    landing_workflow_p Satu alur kerja yang terfokus membuat langkah berikutnya tetap jelas tanpa menyamakan setiap subjek ke dalam jenis kartu yang sama.
+    landing_step_1_title Pilih bahan yang tepat
+    landing_step_1_desc Mulailah dengan mata pelajaran pilihan atau bangun perpustakaan terfokus untuk ujian, bahasa, profesi, atau tujuan pribadi.
+    landing_step_2_title Belajar dengan konteks
+    landing_step_2_desc Bangun pengenalan melalui kartu yang dipandu dan media yang tersedia sebelum meminta ingatan Anda bekerja tanpa bantuan.
+    landing_step_3_title Uji ingatan nyata
+    landing_step_3_desc Lanjutkan ke pengujian terfokus untuk mengungkap titik lemah, memperkuat pengambilan, dan membuat kemajuan dapat diukur.
+    landing_pricing_h2 Mulai gratis. Tingkatkan versi saat Anda memerlukan alur kerja penuh.
+    landing_pricing_p Buat akun tanpa pembayaran. Premium menambahkan pengulangan spasi, pembuatan, pengujian, putar otomatis, organisasi pribadi, dan penyesuaian yang lebih dalam.
+    landing_plan_weekly_desc Cocok untuk dorongan jangka pendek, tinjauan singkat, atau persiapan minggu ujian.
+    landing_plan_weekly_item_1 Jendela komitmen singkat
+    landing_plan_weekly_item_2 Cara cepat untuk mencoba alur kerja premium
+    landing_plan_weekly_item_3 Diperpanjang secara otomatis hingga dibatalkan
+    landing_plan_weekly_btn Lihat detail paket
+    landing_plan_monthly_desc Akses seimbang bagi siswa yang membangun kebiasaan belajar yang stabil.
+    landing_plan_monthly_item_1 Terbaik untuk belajar mingguan reguler
+    landing_plan_monthly_item_2 Waktu yang cukup untuk mengatur perpustakaan mata pelajaran yang lebih besar
+    landing_plan_monthly_item_3 Diperpanjang secara otomatis hingga dibatalkan
+    landing_plan_monthly_btn Lihat detail paket
+    landing_plan_yearly_desc Biaya bulanan efektif terendah untuk pelajar yang menginginkan sistem belajar yang tahan lama.
+    landing_plan_yearly_item_1 Ideal untuk bahasa jangka panjang dan studi profesional
+    landing_plan_yearly_item_2 Menurunkan biaya seiring berjalannya waktu
+    landing_plan_yearly_item_3 Diperpanjang secara otomatis hingga dibatalkan
+    landing_plan_yearly_btn Lihat detail paket
+    landing_trust_h2 Belajarlah dengan jelas. Berlangganan dengan percaya diri.
+    landing_trust_p Ketahui apa yang gratis, apa yang ditambahkan Premium, dan di mana mendapatkan bantuan sebelum Anda berkomitmen.
+    landing_trust_item_1_title Entri gratis:
+    landing_trust_item_1_desc Buat akun dan jelajahi materi pembelajaran yang tersedia tanpa memasukkan detail pembayaran.
+    landing_trust_item_2_title Istilah transparan:
+    landing_trust_item_2_desc Informasi harga, pembaruan, pembatalan, privasi, dan pengembalian dana tersedia sebelum checkout.
+    landing_trust_item_3_title Dukungan manusia:
+    landing_trust_item_3_desc Hubungi vitalii@nohainc.com bila Anda membutuhkan bantuan.
+    landing_faq_1_q Apakah saya perlu membuat sendiri setiap kartu?
+    landing_faq_1_a Tidak. Mulailah dengan mata pelajaran pilihan yang tersedia, lalu buat materi Anda sendiri ketika tujuan Anda menjadi lebih spesifik.
+    landing_faq_2_q Bisakah saya menggunakan Aliolo secara gratis?
+    landing_faq_2_a Ya. Akun gratis menyediakan titik masuk ke perpustakaan; halaman harga menjelaskan alur kerja tingkat lanjut mana yang memerlukan Premium.
+    landing_faq_3_q Bisakah saya membatalkan langganan?
+    landing_faq_3_a Ya. Langganan dapat dibatalkan melalui saluran tempat langganan dibeli, dengan akses biasanya berlanjut sepanjang periode berbayar.
+    landing_final_h2 Siap untuk membuat sesi belajar Anda berikutnya berarti?
+    landing_final_p Buat akun gratis, pilih subjek, dan mulailah belajar secara visual.
+    landing_final_btn Buat akun gratis
+    landing_footer_desc Kartu flash visual, pengulangan dengan jarak tertentu, pengorganisasian subjek yang fleksibel, dan alur kerja pengujian yang terfokus untuk pelajar yang menginginkan struktur tanpa gesekan.
+    landing_footer_mor Pedagang Tercatat:
+    landing_footer_mor_desc Proses pemesanan kami dapat dilakukan oleh Paddle.com, pengecer online kami dan Merchant of Record untuk pesanan web. Paddle menangani pemrosesan pembayaran, layanan pelanggan terkait pembayaran, dan pengembalian pesanan tersebut.

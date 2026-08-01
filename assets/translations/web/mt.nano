@@ -1,24 +1,14 @@
 ..
-    legal_info|
-        Informazzjoni legali
-    last_updated|
-        Aġġornata l-aħħar
-    support|
-        Appoġġ
-    home|
-        Dar
-    privacy|
-        Privatezza
-    terms|
-        Termini
-    refunds|
-        Rifużjonijiet
-    pricing|
-        Ipprezzar
-    privacy_title|
-        Politika ta' Privatezza ta' Aliolo
-    privacy_subtitle|
-        Kif Aliolo jiġbor, juża, jaħżen u jipproteġi informazzjoni relatata mal-kont, it-tagħlim u l-ħlas.
+    legal_info Informazzjoni legali
+    last_updated Aġġornata l-aħħar
+    support Appoġġ
+    home Dar
+    privacy Privatezza
+    terms Termini
+    refunds Rifużjonijiet
+    pricing Ipprezzar
+    privacy_title Politika ta' Privatezza ta' Aliolo
+    privacy_subtitle Kif Aliolo jiġbor, juża, jaħżen u jipproteġi informazzjoni relatata mal-kont, it-tagħlim u l-ħlas.
     privacy_body|
         <h2>Informazzjoni Aħna Niġbru</h2>
         <p>Aħna niġbru l-informazzjoni meħtieġa biex topera Aliolo, inklużi dettalji tal-kont bħall-indirizz tal-email, isem tal-utent, dejta tal-awtentikazzjoni tal-password, settings tal-avatar, preferenzi u settings tal-profil.</p>
@@ -41,10 +31,8 @@
         <p>Aħna nużaw salvagwardji tekniċi u organizzattivi raġonevoli biex nipproteġu l-informazzjoni personali. L-ebda servizz onlajn ma jista’ jiggarantixxi sigurtà perfetta, iżda naħdmu biex nillimitaw l-aċċess u nipproteġu d-dejta minn użu mhux awtorizzat.</p>
         <h2>L-Għażliet u d-Drittijiet Tiegħek</h2>
         <p>Skont il-lokalità tiegħek, jista' jkollok drittijiet biex taċċessa, tikkoreġi, tħassar, tesporta jew tirrestrinġi l-użu tal-informazzjoni personali tiegħek. Ikkuntattjana fuq <a href="mailto:vitalii@nohainc.com">vitalii@nohainc.com</a> biex tagħmel talba.</p>
-    terms_title|
-        Termini ta' Abbonament ta' Aliolo
-    terms_subtitle|
-        Ir-regoli għall-kontijiet Aliolo, aċċess premium, kontijiet ta 'abbonament, kanċellazzjoni, u użu aċċettabbli.
+    terms_title Termini ta' Abbonament ta' Aliolo
+    terms_subtitle Ir-regoli għall-kontijiet Aliolo, aċċess premium, kontijiet ta 'abbonament, kanċellazzjoni, u użu aċċettabbli.
     terms_body|
         <h2>Jużaw Aliolo</h2>
         <p>Aliolo jipprovdi għodod ta 'tagħlim viżwali, kontenut edukattiv ikkurat, flashcards, traċċar tal-progress, u karatteristiċi ta' tagħlim premium. Inti responsabbli biex iżżomm il-kredenzjali tal-kont tiegħek siguri u għall-użu legali tas-servizz.</p>
@@ -65,10 +53,8 @@
         <p>Aliolo huwa pprovdut bħala għodda edukattiva u ta' appoġġ għall-istudju. Aħna ma niggarantixxux tagħlim speċifiku, eżami, riżultati professjonali jew finanzjarji. Sal-limitu massimu permess mil-liġi, Aliolo huwa pprovdut mingħajr garanziji lil hinn minn dawk meħtieġa mil-liġi applikabbli.</p>
         <h2>Bidliet għal Dawn it-Termini</h2>
         <p>Nistgħu naġġornaw dawn it-termini biex jirriflettu bidliet fil-prodott, legali, tal-kontijiet jew operattivi. Il-verżjoni attwali hija ppubblikata fuq din il-paġna.</p>
-    refund_title|
-        Politika ta' Rifużjoni Aliolo
-    refund_subtitle|
-        Kif jaħdmu rifużjonijiet, kanċellazzjonijiet, chargebacks u appoġġ għall-ħlas għal Aliolo Premium.
+    refund_title Politika ta' Rifużjoni Aliolo
+    refund_subtitle Kif jaħdmu rifużjonijiet, kanċellazzjonijiet, chargebacks u appoġġ għall-ħlas għal Aliolo Premium.
     refund_body|
         <h2>Ħarsa ġenerali</h2>
         <p>Aliolo Premium huwa abbonament diġitali. Minħabba li l-aċċess premium jista’ jiġi attivat immedjatament, ix-xiri ġeneralment ikun finali ladarba l-abbonament ikun attiv u użat, ħlief fejn din il-politika, il-kanal tax-xiri, jew il-liġi applikabbli jipprovdu mod ieħor.</p>
@@ -83,10 +69,8 @@
         <p>Għal ordnijiet web, ikkuntattja lill-appoġġ tax-xerrej ta' Paddle billi tuża l-informazzjoni tal-ordni mill-irċevuta tiegħek, jew ikkuntattja lill-appoġġ ta' Aliolo fuq <a href="mailto:vitalii@nohainc.com">vitalii@nohainc.com</a>. Nistgħu nidderieġu talbiet speċifiċi għall-ħlas lil Paddle meta Paddle ikun in-Merkanti tar-Rekord.</p>
         <h2>Chargebacks u Abbuż</h2>
         <p>Jekk ħlas jitreġġa' lura, jiġi kkontestat, rimborsat, jew identifikat bħala frawdolenti, Aliolo jista' jissospendi jew ineħħi l-aċċess għall-primjum assoċjat ma' dik it-tranżazzjoni.</p>
-    pricing_title|
-        Ipprezzar Aliolo Premium
-    pricing_subtitle|
-        Għażliet ta’ abbonament sempliċi biex tinfetaħ l-esperjenza sħiħa ta’ tagħlim viżwali ta’ Aliolo.
+    pricing_title Ipprezzar Aliolo Premium
+    pricing_subtitle Għażliet ta’ abbonament sempliċi biex tinfetaħ l-esperjenza sħiħa ta’ tagħlim viżwali ta’ Aliolo.
     pricing_body|
         <div class="plans">
         <section class="plan">
@@ -175,175 +159,89 @@
         <p>Prezzijiet u offerti jistgħu jvarjaw bejn web checkout, Google Play, Apple App Store, pajjiżi, muniti, u promozzjonijiet għal żmien limitat. L-iskrin tal-kontroll finali jikkontrolla l-prezz attwali u t-termini tat-tiġdid għax-xiri tiegħek.</p>
         <h2>Politiki Relatati</h2>
         <p>Qabel ma tissottoskrivi, irrevedi l- <a href="/terms">Termini ta' Abbonament</a>, <a href="/refund">Politika ta' Rifużjoni</a>, u <a href="/privacy">Politika ta' Privatezza</a>.</p>
-    checkout_title|
-        Aliolo Checkout
-    checkout_subtitle|
-        Checkout sigur għall-abbonamenti Aliolo Premium.
-    checkout_eyebrow|
-        Checkout sigur
-    checkout_h1|
-        Imla x-xiri tiegħek ta' Aliolo Premium.
-    checkout_status_title|
-        Stennija għall-checkout
-    checkout_status_desc|
-        Jekk ftaħt din il-paġna mill-kontijiet ta' Aliolo, il-formola tal-ħlas għandha tidher awtomatikament.
-    checkout_payment_support_title|
-        Appoġġ għall-ħlas
-    checkout_payment_support_desc|
-        Paddle.com jipproċessa l-ħlasijiet mill-web bħala Merchant of Record.
-    checkout_billing_title|
-        Kont tal-abbonament
-    checkout_billing_desc|
-        Aliolo Premium iġedded awtomatikament sakemm jiġi kkanċellat. Tista' tikkanċella aktar tard permezz ta' Paddle jew il-kont ta' Aliolo tiegħek.
-    checkout_policy_title|
-        Għandek bżonn dettalji tal-politika?
-    checkout_policy_desc|
-        Irrevedi l-prezzijiet, it-termini tal-abbonament, il-privatezza u l-informazzjoni tar-rifużjoni qabel ma tlesti x-xiri tiegħek.
-    landing_meta_title|
-        Aliolo | Flashcards Viżwali, Ripetizzjoni Spazjata, u Flussi tax-Xogħol ta' Studju aktar Intelliġenti
-    landing_meta_desc|
-        Aliolo jgħin lill-istudenti jikkontrollaw il-lingwi, ix-xjenza, l-anatomija, il-preparazzjoni tal-eżami, u suġġetti kkurati bi flashcards viżwali, ripetizzjoni spazjata, u modi ta 'test interattivi.
-    landing_nav_features|
-        Karatteristiċi
-    landing_nav_how_it_works|
-        Kif taħdem
-    landing_nav_pricing|
-        Ipprezzar
-    landing_nav_login|
-        Idħol
-    landing_nav_cta|
-        Oħloq kont b'xejn
-    landing_hero_eyebrow|
-        Pjattaforma ta' tagħlim viżwali
-    landing_hero_h1|
-        Tgħallem viżwalment. Ftakar itwal.
-    landing_hero_p|
-        Dawwar immaġini, awdjo, vidjo, u test fi flashcards strutturati. Tgħallem bil-kuntest, irrevedi fil-ħin it-tajjeb, u ttestja dak li tista' verament tiftakar.
-    landing_hero_btn_primary|
-        Oħloq kont b'xejn
-    landing_hero_btn_secondary|
-        Idħol
-    landing_hero_proof_1_title|
-        Viżwali
-    landing_hero_proof_1_desc|
-        Flashcards favur l-immaġini, l-awdjo u l-vidjow għal tagħlim b'ħafna rikonoxximent.
-    landing_hero_proof_2_title|
-        Adattivi
-    landing_hero_proof_2_desc|
-        Ripetizzjoni spazjata u traċċar tal-progress biex tirrevedi l-materjal fil-ħin it-tajjeb.
-    landing_hero_proof_3_title|
-        Strutturat
-    landing_hero_proof_3_desc|
-        Pilastri, folders, suġġetti, u kollezzjonijiet li jiskalaw lil hinn minn sempliċi gverta.
-    landing_hero_preview_title|
-        Rikonoxximent qabel l-irtirar
-    landing_hero_preview_desc|
-        Lezzjoni reali ta' Aliolo bl-użu ta' immaġini, test, awdjo, u navigazzjoni ggwidata.
-    landing_hero_preview_chip|
-        Tgħallem il-mod
-    landing_features_h2|
-        Dak kollu li għandek bżonn biex iddawwar l-espożizzjoni f'recall.
-    landing_features_p|
-        Ibni rikonoxximent mal-midja sinjuri, żomm libreriji akbar organizzati, u erġa' jara l-materjal qabel ma jisparixxi.
-    landing_feature_1_title|
-        Tgħallem b'aktar minn test
-    landing_feature_1_desc|
-        Uża immaġini, awdjo, vidjo, u prompts flessibbli meta s-suġġett jiddependi fuq ir-rikonoxximent u l-kuntest.
-    landing_feature_2_title|
-        Reviżjoni qabel ma tgħib
-    landing_feature_2_desc|
-        Ir-ripetizzjoni spazjata u t-traċċar tal-progress iġibu lura materjal importanti fi żmien utli.
-    landing_feature_3_title|
-        Ikber lil hinn minn gverta waħda
-    landing_feature_3_desc|
-        Organizza materjal ikkurat jew personalizzat f'pilastri, folders, suġġetti, u kollezzjonijiet li jibqgħu użabbli.
-    landing_workflow_h2|
-        Mogħdija ċara minn "Għandi nistudja" għal "Naf dan."
-    landing_workflow_p|
-        Fluss tax-xogħol wieħed iffukat iżomm il-pass li jmiss ovvju mingħajr ma jċatt kull suġġett fl-istess tip ta 'karta.
-    landing_step_1_title|
-        Agħżel il-materjal it-tajjeb
-    landing_step_1_desc|
-        Ibda b'suġġett ikkurat jew ibni librerija ffukata għal eżami, lingwa, professjoni jew għan personali.
-    landing_step_2_title|
-        Tgħallem bil-kuntest
-    landing_step_2_desc|
-        Ibni rikonoxximent permezz ta' karti ggwidati u midja disponibbli qabel ma titlob lill-memorja tiegħek taħdem mingħajr għajnuna.
-    landing_step_3_title|
-        Test recall reali
-    landing_step_3_desc|
-        Imxi f'ttestjar iffukat biex tesponi punti dgħajfa, issaħħaħ l-irkupru, u tagħmel il-progress jitkejjel.
-    landing_pricing_h2|
-        Ibda b'xejn. Aġġorna meta jkollok bżonn il-fluss tax-xogħol sħiħ.
-    landing_pricing_p|
-        Oħloq kont mingħajr ħlas. Il-premium iżid ripetizzjoni spazjata, ħolqien, ittestjar, awtoplay, organizzazzjoni privata, u customization aktar profonda.
-    landing_plan_weekly_desc|
-        Tajjeb għal pushes għal żmien qasir, reviżjonijiet malajr, jew preparazzjoni għall-ġimgħa tal-eżami.
-    landing_plan_weekly_item_1|
-        Tieqa ta' impenn qasir
-    landing_plan_weekly_item_2|
-        Mod mgħaġġel biex tipprova l-fluss tax-xogħol premium
-    landing_plan_weekly_item_3|
-        Iġġedded awtomatikament sakemm jiġi kkanċellat
-    landing_plan_weekly_btn|
-        Ara d-dettalji tal-pjan
-    landing_plan_monthly_desc|
-        Aċċess bilanċjat għall-istudenti li jibnu drawwa ta' tagħlim kostanti.
-    landing_plan_monthly_item_1|
-        L-aħjar għal studju regolari ta 'kull ġimgħa
-    landing_plan_monthly_item_2|
-        Ħin biżżejjed biex torganizza libreriji ta’ suġġetti akbar
-    landing_plan_monthly_item_3|
-        Iġġedded awtomatikament sakemm jiġi kkanċellat
-    landing_plan_monthly_btn|
-        Ara d-dettalji tal-pjan
-    landing_plan_yearly_desc|
-        L-inqas spiża mensili effettiva għal studenti li jixtiequ sistema ta' studju dejjiema.
-    landing_plan_yearly_item_1|
-        Ideali għal lingwa fit-tul u studju professjonali
-    landing_plan_yearly_item_2|
-        Spiża aktar baxxa maż-żmien
-    landing_plan_yearly_item_3|
-        Iġġedded awtomatikament sakemm jiġi kkanċellat
-    landing_plan_yearly_btn|
-        Ara d-dettalji tal-pjan
-    landing_trust_h2|
-        Studja biċ-ċarezza. Abbona b'kunfidenza.
-    landing_trust_p|
-        Kun af x'inhu b'xejn, x'iżid il-Premium, u fejn tista' tikseb l-għajnuna qabel ma timpenja ruħek.
-    landing_trust_item_1_title|
-        Dħul b'xejn:
-    landing_trust_item_1_desc|
-        Oħloq kont u esplora materjal ta' tagħlim disponibbli mingħajr ma ddaħħal id-dettalji tal-ħlas.
-    landing_trust_item_2_title|
-        Termini trasparenti:
-    landing_trust_item_2_desc|
-        L-informazzjoni dwar il-prezzijiet, it-tiġdid, il-kanċellazzjoni, il-privatezza u r-rifużjoni huma disponibbli qabel iċ-checkout.
-    landing_trust_item_3_title|
-        Appoġġ uman:
-    landing_trust_item_3_desc|
-        Ikkuntattja vitalii@nohainc.com meta jkollok bżonn l-għajnuna.
-    landing_faq_1_q|
-        Għandi bżonn noħloq kull karta jien?
-    landing_faq_1_a|
-        Le. Ibda bis-suġġetti kkurati disponibbli, imbagħad oħloq il-materjal tiegħek meta l-mira tiegħek issir aktar speċifika.
-    landing_faq_2_q|
-        Nista' nuża Aliolo b'xejn?
-    landing_faq_2_a|
-        Iva. Kont b'xejn jipprovdi punt ta 'dħul għal-librerija; il-paġna tal-prezzijiet tispjega liema flussi tax-xogħol avvanzati jeħtieġu Premium.
-    landing_faq_3_q|
-        Nista' nikkanċella abbonament?
-    landing_faq_3_a|
-        Iva. L-abbonamenti jistgħu jiġu kkanċellati permezz tal-kanal minn fejn inxtraw, bl-aċċess normalment ikompli matul il-perjodu mħallas.
-    landing_final_h2|
-        Lest li tgħodd is-sessjoni ta' studju li jmiss tiegħek?
-    landing_final_p|
-        Oħloq kont b'xejn, agħżel suġġett, u ibda tgħallem viżwalment.
-    landing_final_btn|
-        Oħloq kont b'xejn
-    landing_footer_desc|
-        Flashcards viżwali, ripetizzjoni spazjata, organizzazzjoni flessibbli tas-suġġetti, u flussi tax-xogħol tal-ittestjar ffukati għal studenti li jridu struttura mingħajr frizzjoni.
-    landing_footer_mor|
-        Merkantili tar-Rekord:
-    landing_footer_mor_desc|
-        Il-proċess tal-ordnijiet tagħna jista’ jitmexxa minn Paddle.com, il-bejjiegħ mill-ġdid online tagħna u Merkantili tar-Rekord għall-ordnijiet tal-web. Paddle jieħu ħsieb l-ipproċessar tal-ħlas, is-servizz tal-konsumatur relatat mal-ħlas, u r-ritorni għal dawk l-ordnijiet.
+    checkout_title Aliolo Checkout
+    checkout_subtitle Checkout sigur għall-abbonamenti Aliolo Premium.
+    checkout_eyebrow Checkout sigur
+    checkout_h1 Imla x-xiri tiegħek ta' Aliolo Premium.
+    checkout_status_title Stennija għall-checkout
+    checkout_status_desc Jekk ftaħt din il-paġna mill-kontijiet ta' Aliolo, il-formola tal-ħlas għandha tidher awtomatikament.
+    checkout_payment_support_title Appoġġ għall-ħlas
+    checkout_payment_support_desc Paddle.com jipproċessa l-ħlasijiet mill-web bħala Merchant of Record.
+    checkout_billing_title Kont tal-abbonament
+    checkout_billing_desc Aliolo Premium iġedded awtomatikament sakemm jiġi kkanċellat. Tista' tikkanċella aktar tard permezz ta' Paddle jew il-kont ta' Aliolo tiegħek.
+    checkout_policy_title Għandek bżonn dettalji tal-politika?
+    checkout_policy_desc Irrevedi l-prezzijiet, it-termini tal-abbonament, il-privatezza u l-informazzjoni tar-rifużjoni qabel ma tlesti x-xiri tiegħek.
+    landing_meta_title Aliolo | Flashcards Viżwali, Ripetizzjoni Spazjata, u Flussi tax-Xogħol ta' Studju aktar Intelliġenti
+    landing_meta_desc Aliolo jgħin lill-istudenti jikkontrollaw il-lingwi, ix-xjenza, l-anatomija, il-preparazzjoni tal-eżami, u suġġetti kkurati bi flashcards viżwali, ripetizzjoni spazjata, u modi ta 'test interattivi.
+    landing_nav_features Karatteristiċi
+    landing_nav_how_it_works Kif taħdem
+    landing_nav_pricing Ipprezzar
+    landing_nav_login Idħol
+    landing_nav_cta Oħloq kont b'xejn
+    landing_hero_eyebrow Pjattaforma ta' tagħlim viżwali
+    landing_hero_h1 Tgħallem viżwalment. Ftakar itwal.
+    landing_hero_p Dawwar immaġini, awdjo, vidjo, u test fi flashcards strutturati. Tgħallem bil-kuntest, irrevedi fil-ħin it-tajjeb, u ttestja dak li tista' verament tiftakar.
+    landing_hero_btn_primary Oħloq kont b'xejn
+    landing_hero_btn_secondary Idħol
+    landing_hero_proof_1_title Viżwali
+    landing_hero_proof_1_desc Flashcards favur l-immaġini, l-awdjo u l-vidjow għal tagħlim b'ħafna rikonoxximent.
+    landing_hero_proof_2_title Adattivi
+    landing_hero_proof_2_desc Ripetizzjoni spazjata u traċċar tal-progress biex tirrevedi l-materjal fil-ħin it-tajjeb.
+    landing_hero_proof_3_title Strutturat
+    landing_hero_proof_3_desc Pilastri, folders, suġġetti, u kollezzjonijiet li jiskalaw lil hinn minn sempliċi gverta.
+    landing_hero_preview_title Rikonoxximent qabel l-irtirar
+    landing_hero_preview_desc Lezzjoni reali ta' Aliolo bl-użu ta' immaġini, test, awdjo, u navigazzjoni ggwidata.
+    landing_hero_preview_chip Tgħallem il-mod
+    landing_features_h2 Dak kollu li għandek bżonn biex iddawwar l-espożizzjoni f'recall.
+    landing_features_p Ibni rikonoxximent mal-midja sinjuri, żomm libreriji akbar organizzati, u erġa' jara l-materjal qabel ma jisparixxi.
+    landing_feature_1_title Tgħallem b'aktar minn test
+    landing_feature_1_desc Uża immaġini, awdjo, vidjo, u prompts flessibbli meta s-suġġett jiddependi fuq ir-rikonoxximent u l-kuntest.
+    landing_feature_2_title Reviżjoni qabel ma tgħib
+    landing_feature_2_desc Ir-ripetizzjoni spazjata u t-traċċar tal-progress iġibu lura materjal importanti fi żmien utli.
+    landing_feature_3_title Ikber lil hinn minn gverta waħda
+    landing_feature_3_desc Organizza materjal ikkurat jew personalizzat f'pilastri, folders, suġġetti, u kollezzjonijiet li jibqgħu użabbli.
+    landing_workflow_h2 Mogħdija ċara minn "Għandi nistudja" għal "Naf dan."
+    landing_workflow_p Fluss tax-xogħol wieħed iffukat iżomm il-pass li jmiss ovvju mingħajr ma jċatt kull suġġett fl-istess tip ta 'karta.
+    landing_step_1_title Agħżel il-materjal it-tajjeb
+    landing_step_1_desc Ibda b'suġġett ikkurat jew ibni librerija ffukata għal eżami, lingwa, professjoni jew għan personali.
+    landing_step_2_title Tgħallem bil-kuntest
+    landing_step_2_desc Ibni rikonoxximent permezz ta' karti ggwidati u midja disponibbli qabel ma titlob lill-memorja tiegħek taħdem mingħajr għajnuna.
+    landing_step_3_title Test recall reali
+    landing_step_3_desc Imxi f'ttestjar iffukat biex tesponi punti dgħajfa, issaħħaħ l-irkupru, u tagħmel il-progress jitkejjel.
+    landing_pricing_h2 Ibda b'xejn. Aġġorna meta jkollok bżonn il-fluss tax-xogħol sħiħ.
+    landing_pricing_p Oħloq kont mingħajr ħlas. Il-premium iżid ripetizzjoni spazjata, ħolqien, ittestjar, awtoplay, organizzazzjoni privata, u customization aktar profonda.
+    landing_plan_weekly_desc Tajjeb għal pushes għal żmien qasir, reviżjonijiet malajr, jew preparazzjoni għall-ġimgħa tal-eżami.
+    landing_plan_weekly_item_1 Tieqa ta' impenn qasir
+    landing_plan_weekly_item_2 Mod mgħaġġel biex tipprova l-fluss tax-xogħol premium
+    landing_plan_weekly_item_3 Iġġedded awtomatikament sakemm jiġi kkanċellat
+    landing_plan_weekly_btn Ara d-dettalji tal-pjan
+    landing_plan_monthly_desc Aċċess bilanċjat għall-istudenti li jibnu drawwa ta' tagħlim kostanti.
+    landing_plan_monthly_item_1 L-aħjar għal studju regolari ta 'kull ġimgħa
+    landing_plan_monthly_item_2 Ħin biżżejjed biex torganizza libreriji ta’ suġġetti akbar
+    landing_plan_monthly_item_3 Iġġedded awtomatikament sakemm jiġi kkanċellat
+    landing_plan_monthly_btn Ara d-dettalji tal-pjan
+    landing_plan_yearly_desc L-inqas spiża mensili effettiva għal studenti li jixtiequ sistema ta' studju dejjiema.
+    landing_plan_yearly_item_1 Ideali għal lingwa fit-tul u studju professjonali
+    landing_plan_yearly_item_2 Spiża aktar baxxa maż-żmien
+    landing_plan_yearly_item_3 Iġġedded awtomatikament sakemm jiġi kkanċellat
+    landing_plan_yearly_btn Ara d-dettalji tal-pjan
+    landing_trust_h2 Studja biċ-ċarezza. Abbona b'kunfidenza.
+    landing_trust_p Kun af x'inhu b'xejn, x'iżid il-Premium, u fejn tista' tikseb l-għajnuna qabel ma timpenja ruħek.
+    landing_trust_item_1_title Dħul b'xejn:
+    landing_trust_item_1_desc Oħloq kont u esplora materjal ta' tagħlim disponibbli mingħajr ma ddaħħal id-dettalji tal-ħlas.
+    landing_trust_item_2_title Termini trasparenti:
+    landing_trust_item_2_desc L-informazzjoni dwar il-prezzijiet, it-tiġdid, il-kanċellazzjoni, il-privatezza u r-rifużjoni huma disponibbli qabel iċ-checkout.
+    landing_trust_item_3_title Appoġġ uman:
+    landing_trust_item_3_desc Ikkuntattja vitalii@nohainc.com meta jkollok bżonn l-għajnuna.
+    landing_faq_1_q Għandi bżonn noħloq kull karta jien?
+    landing_faq_1_a Le. Ibda bis-suġġetti kkurati disponibbli, imbagħad oħloq il-materjal tiegħek meta l-mira tiegħek issir aktar speċifika.
+    landing_faq_2_q Nista' nuża Aliolo b'xejn?
+    landing_faq_2_a Iva. Kont b'xejn jipprovdi punt ta 'dħul għal-librerija; il-paġna tal-prezzijiet tispjega liema flussi tax-xogħol avvanzati jeħtieġu Premium.
+    landing_faq_3_q Nista' nikkanċella abbonament?
+    landing_faq_3_a Iva. L-abbonamenti jistgħu jiġu kkanċellati permezz tal-kanal minn fejn inxtraw, bl-aċċess normalment ikompli matul il-perjodu mħallas.
+    landing_final_h2 Lest li tgħodd is-sessjoni ta' studju li jmiss tiegħek?
+    landing_final_p Oħloq kont b'xejn, agħżel suġġett, u ibda tgħallem viżwalment.
+    landing_final_btn Oħloq kont b'xejn
+    landing_footer_desc Flashcards viżwali, ripetizzjoni spazjata, organizzazzjoni flessibbli tas-suġġetti, u flussi tax-xogħol tal-ittestjar ffukati għal studenti li jridu struttura mingħajr frizzjoni.
+    landing_footer_mor Merkantili tar-Rekord:
+    landing_footer_mor_desc Il-proċess tal-ordnijiet tagħna jista’ jitmexxa minn Paddle.com, il-bejjiegħ mill-ġdid online tagħna u Merkantili tar-Rekord għall-ordnijiet tal-web. Paddle jieħu ħsieb l-ipproċessar tal-ħlas, is-servizz tal-konsumatur relatat mal-ħlas, u r-ritorni għal dawk l-ordnijiet.

@@ -1,24 +1,14 @@
 ..
-    legal_info|
-        Juriidiline teave
-    last_updated|
-        Viimati värskendatud
-    support|
-        Toetus
-    home|
-        Kodu
-    privacy|
-        Privaatsus
-    terms|
-        Tingimused
-    refunds|
-        Tagasimaksed
-    pricing|
-        Hinnakujundus
-    privacy_title|
-        Aliolo privaatsuspoliitika
-    privacy_subtitle|
-        Kuidas Aliolo konto-, õppe- ja makseteavet kogub, kasutab, salvestab ja kaitseb.
+    legal_info Juriidiline teave
+    last_updated Viimati värskendatud
+    support Toetus
+    home Kodu
+    privacy Privaatsus
+    terms Tingimused
+    refunds Tagasimaksed
+    pricing Hinnakujundus
+    privacy_title Aliolo privaatsuspoliitika
+    privacy_subtitle Kuidas Aliolo konto-, õppe- ja makseteavet kogub, kasutab, salvestab ja kaitseb.
     privacy_body|
         <h2>Kogutav teave</h2>
         <p>Kogume Aliolo kasutamiseks vajalikku teavet, sealhulgas konto üksikasju, nagu e-posti aadress, kasutajanimi, parooli autentimise andmed, avatari seaded, eelistused ja profiili seaded.</p>
@@ -41,10 +31,8 @@
         <p>Kasutame isikuandmete kaitsmiseks mõistlikke tehnilisi ja organisatsioonilisi kaitsemeetmeid. Ükski võrguteenus ei taga täiuslikku turvalisust, kuid me töötame selle nimel, et piirata juurdepääsu ja kaitsta andmeid volitamata kasutamise eest.</p>
         <h2>Teie valikud ja õigused</h2>
         <p>Sõltuvalt teie asukohast võib teil olla õigus oma isikuandmetele juurde pääseda, neid parandada, kustutada, eksportida või piirata nende kasutamist. Võtke meiega ühendust aadressil <a href="mailto:vitalii@nohainc.com">vitalii@nohainc.com</a> palvet esitada.</p>
-    terms_title|
-        Aliolo tellimistingimused
-    terms_subtitle|
-        Aliolo kontode, tasulise juurdepääsu, tellimuse arveldamise, tühistamise ja vastuvõetava kasutamise reeglid.
+    terms_title Aliolo tellimistingimused
+    terms_subtitle Aliolo kontode, tasulise juurdepääsu, tellimuse arveldamise, tühistamise ja vastuvõetava kasutamise reeglid.
     terms_body|
         <h2>Aliolo kasutamine</h2>
         <p>Aliolo pakub visuaalseid õppetööriistu, kureeritud haridussisu, mälukaarte, edenemise jälgimist ja lisatasu õppefunktsioone. Vastutate oma konto mandaatide turvalisena hoidmise ja teenuse seadusliku kasutamise eest.</p>
@@ -65,10 +53,8 @@
         <p>Aliolot pakutakse õppe- ja õpiabivahendina. Me ei garanteeri konkreetseid õppimis-, eksami-, kutse- ega rahalisi tulemusi. Seadusega lubatud maksimaalses ulatuses antakse Aliolole garantiisid peale kehtivate seadustega nõutavate garantiide.</p>
         <h2>Nende tingimuste muudatused</h2>
         <p>Võime neid tingimusi värskendada, et kajastada toote-, juriidilisi, arveldus- või tegevusmuudatusi. Praegune versioon on avaldatud sellel lehel.</p>
-    refund_title|
-        Aliolo tagasimaksepoliitika
-    refund_subtitle|
-        Kuidas Aliolo Premiumi tagasimaksed, tühistamised, tagasimaksed ja maksete tugi toimivad.
+    refund_title Aliolo tagasimaksepoliitika
+    refund_subtitle Kuidas Aliolo Premiumi tagasimaksed, tühistamised, tagasimaksed ja maksete tugi toimivad.
     refund_body|
         <h2>Ülevaade</h2>
         <p>Aliolo Premium on digitaalne tellimus. Kuna tasulise juurdepääsu saab aktiveerida kohe, on ostud üldjuhul lõplikud, kui tellimus on aktiivne ja kasutatud, välja arvatud juhul, kui käesolev reegel, ostukanal või kohaldatav seadus sätestab teisiti.</p>
@@ -83,10 +69,8 @@
         <p>Veebitellimuste puhul võtke ühendust Paddle'i ostjate toega, kasutades kviitungil olevat tellimuse teavet, või võtke ühendust Aliolo toega aadressil <a href="mailto:vitalii@nohainc.com">vitalii@nohainc.com</a>. Kui Paddle on rekordiline kaupmees, võime suunata maksepõhised taotlused Paddle'ile.</p>
         <h2>Tagasimaksed ja kuritarvitamine</h2>
         <p>Kui makse tühistatakse, vaidlustatakse, tagastatakse või tuvastatakse petturlikuna, võib Aliolo peatada või eemaldada selle tehinguga seotud lisatasu juurdepääsu.</p>
-    pricing_title|
-        Aliolo Premium hinnakujundus
-    pricing_subtitle|
-        Lihtsad tellimisvalikud Aliolo visuaalse õppekogemuse täielikuks avamiseks.
+    pricing_title Aliolo Premium hinnakujundus
+    pricing_subtitle Lihtsad tellimisvalikud Aliolo visuaalse õppekogemuse täielikuks avamiseks.
     pricing_body|
         <div class="plans">
         <section class="plan">
@@ -175,175 +159,89 @@
         <p>Hinnad ja pakkumised võivad veebikassa, Google Play, Apple App Store'i, riikide, valuutade ja piiratud aja pakkumiste lõikes erineda. Lõplik kassaekraan kontrollib teie ostu tegelikku hinda ja pikendamise tingimusi.</p>
         <h2>Seotud eeskirjad</h2>
         <p>Enne tellimist vaadake üle <a href="/terms">Tellimistingimused</a>, <a href="/refund">Tagasimaksepoliitika</a>ja <a href="/privacy">Privaatsuspoliitika</a>.</p>
-    checkout_title|
-        Aliolo kassa
-    checkout_subtitle|
-        Aliolo Premiumi tellimuste turvaline maksmine.
-    checkout_eyebrow|
-        Turvaline kassa
-    checkout_h1|
-        Viige oma Aliolo Premiumi ost lõpule.
-    checkout_status_title|
-        Ootab kassasse
-    checkout_status_desc|
-        Kui avasite selle lehe Aliolo arveldamise kaudu, peaks maksevorm ilmuma automaatselt.
-    checkout_payment_support_title|
-        Maksetoetus
-    checkout_payment_support_desc|
-        Veebimakseid töötleb Paddle.com kui registreeritud kaupmees.
-    checkout_billing_title|
-        Tellimuse arveldamine
-    checkout_billing_desc|
-        Aliolo Premium uuendatakse automaatselt kuni tühistamiseni. Saate tühistada hiljem Paddle'i või oma Aliolo konto kaudu.
-    checkout_policy_title|
-        Kas vajate poliitika üksikasju?
-    checkout_policy_desc|
-        Enne ostu sooritamist vaadake üle hinnakujundus, tellimistingimused, privaatsus- ja tagasimakseteave.
-    landing_meta_title|
-        Aliolo | Visuaalsed mälukaardid, vahedega kordamine ja nutikamad õppetöövood
-    landing_meta_desc|
-        Aliolo aitab õppijatel õppida keeli, loodusteadusi, anatoomiat, eksamiteks valmistumist ja kureeritud aineid visuaalsete mälukaartide, vahedega kordamiste ja interaktiivsete testirežiimidega.
-    landing_nav_features|
-        Omadused
-    landing_nav_how_it_works|
-        Kuidas see toimib
-    landing_nav_pricing|
-        Hinnakujundus
-    landing_nav_login|
-        Logi sisse
-    landing_nav_cta|
-        Loo tasuta konto
-    landing_hero_eyebrow|
-        Visuaalne õppeplatvorm
-    landing_hero_h1|
-        Õppige visuaalselt. Pidage meeles kauem.
-    landing_hero_p|
-        Muutke pildid, heli, video ja tekst struktureeritud mälukaartideks. Õppige kontekstiga, vaadake üle õigel ajal ja testige, mida saate tõeliselt meelde jätta.
-    landing_hero_btn_primary|
-        Loo tasuta konto
-    landing_hero_btn_secondary|
-        Logi sisse
-    landing_hero_proof_1_title|
-        Visuaalne
-    landing_hero_proof_1_desc|
-        Pildi-, heli- ja videosõbralikud mälukaardid äratundmisrikkaks õppimiseks.
-    landing_hero_proof_2_title|
-        Kohanduv
-    landing_hero_proof_2_desc|
-        Jaotatud kordamine ja edenemise jälgimine, et materjali õigel ajal uuesti vaadata.
-    landing_hero_proof_3_title|
-        Struktureeritud
-    landing_hero_proof_3_desc|
-        Sambad, kaustad, teemad ja kogud, mis ulatuvad lihtsast tekist kaugemale.
-    landing_hero_preview_title|
-        Äratundmine enne meenutamist
-    landing_hero_preview_desc|
-        Tõeline Aliolo õppetund, kus kasutatakse pilti, teksti, heli ja juhendatud navigeerimist.
-    landing_hero_preview_chip|
-        Õppimisrežiim
-    landing_features_h2|
-        Kõik, mida vajate kokkupuute muutmiseks meeldetuletuseks.
-    landing_features_p|
-        Looge rikasmeedia abil äratundmist, hoidke suuremaid teeke korrastatuna ja vaadake materjal uuesti üle, enne kui see tuhmub.
-    landing_feature_1_title|
-        Õppige rohkemaga kui tekstiga
-    landing_feature_1_desc|
-        Kasutage pilte, heli, videot ja paindlikke viipasid, kui objekt sõltub äratundmisest ja kontekstist.
-    landing_feature_2_title|
-        Vaadake üle, enne kui see tuhmub
-    landing_feature_2_desc|
-        Korduv kordamine ja edenemise jälgimine toovad olulise materjali kasulikul ajal tagasi.
-    landing_feature_3_title|
-        Kasvake ühest tekist kaugemale
-    landing_feature_3_desc|
-        Korraldage kureeritud või kohandatud materjal sammasteks, kaustadeks, teemadeks ja kogudeks, mis jäävad kasutatavaks.
-    landing_workflow_h2|
-        Selge tee "ma peaksin õppima" kuni "ma tean seda".
-    landing_workflow_p|
-        Üks fokusseeritud töövoog hoiab järgmise sammu ilmselgelt ilma, et kõik objektid oleksid sama tüüpi kaardiks tasandatud.
-    landing_step_1_title|
-        Valige õige materjal
-    landing_step_1_desc|
-        Alustage kureeritud teemaga või koostage eksami, keele, elukutse või isikliku eesmärgi jaoks keskendunud raamatukogu.
-    landing_step_2_title|
-        Õppige kontekstiga
-    landing_step_2_desc|
-        Enne mälu abita töötamist looge tuvastus kaartide ja saadaolevate meediumide abil.
-    landing_step_3_title|
-        Testige tõelist meeldejäämist
-    landing_step_3_desc|
-        Liikuge keskendunud testimisele, et paljastada nõrgad kohad, tugevdada otsimist ja muuta edusammud mõõdetavaks.
-    landing_pricing_h2|
-        Alusta tasuta. Uuendage, kui vajate täielikku töövoogu.
-    landing_pricing_p|
-        Looge konto ilma makseta. Premium lisab vahedega kordamise, loomise, testimise, automaatesituse, privaatse korraldamise ja põhjalikuma kohandamise.
-    landing_plan_weekly_desc|
-        Sobib lühiajaliseks tõukejõuks, kiireks ülevaateks või eksaminädalaks valmistumiseks.
-    landing_plan_weekly_item_1|
-        Lühike kohustuste aken
-    landing_plan_weekly_item_2|
-        Kiire viis esmaklassilise töövoo proovimiseks
-    landing_plan_weekly_item_3|
-        Uueneb automaatselt kuni tühistamiseni
-    landing_plan_weekly_btn|
-        Vaadake plaani üksikasju
-    landing_plan_monthly_desc|
-        Tasakaalustatud juurdepääs õpilastele, kes loovad püsiva õppimisharjumuse.
-    landing_plan_monthly_item_1|
-        Parim regulaarseks iganädalaseks õppeks
-    landing_plan_monthly_item_2|
-        Piisavalt aega suuremate aineraamatukogude korrastamiseks
-    landing_plan_monthly_item_3|
-        Uueneb automaatselt kuni tühistamiseni
-    landing_plan_monthly_btn|
-        Vaadake plaani üksikasju
-    landing_plan_yearly_desc|
-        Madalaim efektiivne igakuine kulu õppijatele, kes soovivad vastupidavat õppesüsteemi.
-    landing_plan_yearly_item_1|
-        Ideaalne pikaajaliseks keele- ja erialaõppeks
-    landing_plan_yearly_item_2|
-        Madalamad kulud aja jooksul
-    landing_plan_yearly_item_3|
-        Uueneb automaatselt kuni tühistamiseni
-    landing_plan_yearly_btn|
-        Vaadake plaani üksikasju
-    landing_trust_h2|
-        Uurige selgelt. Telli julgelt.
-    landing_trust_p|
-        Enne kohustuse võtmist saate teada, mis on tasuta, mida Premium lisab ja kust abi saada.
-    landing_trust_item_1_title|
-        Tasuta sissepääs:
-    landing_trust_item_1_desc|
-        Looge konto ja uurige saadaolevaid õppematerjale ilma makseandmeid sisestamata.
-    landing_trust_item_2_title|
-        Läbipaistvad tingimused:
-    landing_trust_item_2_desc|
-        Hindade, pikendamise, tühistamise, privaatsuse ja tagasimaksete teave on saadaval enne kassasse minekut.
-    landing_trust_item_3_title|
-        Inimtoetus:
-    landing_trust_item_3_desc|
-        Kui vajate abi, võtke ühendust aadressil vitalii@nohainc.com.
-    landing_faq_1_q|
-        Kas ma pean iga kaardi ise looma?
-    landing_faq_1_a|
-        Ei. Alustage saadaolevatest kureeritud teemadest, seejärel looge oma materjal, kui teie eesmärk muutub konkreetsemaks.
-    landing_faq_2_q|
-        Kas ma saan Aliolot tasuta kasutada?
-    landing_faq_2_a|
-        Jah. Tasuta konto annab raamatukogusse sisenemispunkti; hinnakujunduse lehel selgitatakse, millised täpsemad töövood nõuavad Premiumi.
-    landing_faq_3_q|
-        Kas saan tellimuse tühistada?
-    landing_faq_3_a|
-        Jah. Tellimusi saab tühistada selle kanali kaudu, kust need osteti, ja juurdepääs jätkub tavaliselt tasulise perioodi jooksul.
-    landing_final_h2|
-        Kas olete valmis oma järgmist õppesessiooni arvestama?
-    landing_final_p|
-        Looge tasuta konto, valige õppeaine ja alustage visuaalselt õppimist.
-    landing_final_btn|
-        Loo tasuta konto
-    landing_footer_desc|
-        Visuaalsed mälukaardid, vahedega kordused, paindlik ainekorraldus ja keskendunud testimise töövood õppijatele, kes soovivad hõõrdumiseta struktuuri.
-    landing_footer_mor|
-        Rekordkaupmees:
-    landing_footer_mor_desc|
-        Meie tellimisprotsessi võib läbi viia Paddle.com, meie veebipõhine edasimüüja ja veebitellimuste registreeritud kaupmees. Paddle tegeleb maksete töötlemise, maksetega seotud klienditeeninduse ja nende tellimuste tagastamisega.
+    checkout_title Aliolo kassa
+    checkout_subtitle Aliolo Premiumi tellimuste turvaline maksmine.
+    checkout_eyebrow Turvaline kassa
+    checkout_h1 Viige oma Aliolo Premiumi ost lõpule.
+    checkout_status_title Ootab kassasse
+    checkout_status_desc Kui avasite selle lehe Aliolo arveldamise kaudu, peaks maksevorm ilmuma automaatselt.
+    checkout_payment_support_title Maksetoetus
+    checkout_payment_support_desc Veebimakseid töötleb Paddle.com kui registreeritud kaupmees.
+    checkout_billing_title Tellimuse arveldamine
+    checkout_billing_desc Aliolo Premium uuendatakse automaatselt kuni tühistamiseni. Saate tühistada hiljem Paddle'i või oma Aliolo konto kaudu.
+    checkout_policy_title Kas vajate poliitika üksikasju?
+    checkout_policy_desc Enne ostu sooritamist vaadake üle hinnakujundus, tellimistingimused, privaatsus- ja tagasimakseteave.
+    landing_meta_title Aliolo | Visuaalsed mälukaardid, vahedega kordamine ja nutikamad õppetöövood
+    landing_meta_desc Aliolo aitab õppijatel õppida keeli, loodusteadusi, anatoomiat, eksamiteks valmistumist ja kureeritud aineid visuaalsete mälukaartide, vahedega kordamiste ja interaktiivsete testirežiimidega.
+    landing_nav_features Omadused
+    landing_nav_how_it_works Kuidas see toimib
+    landing_nav_pricing Hinnakujundus
+    landing_nav_login Logi sisse
+    landing_nav_cta Loo tasuta konto
+    landing_hero_eyebrow Visuaalne õppeplatvorm
+    landing_hero_h1 Õppige visuaalselt. Pidage meeles kauem.
+    landing_hero_p Muutke pildid, heli, video ja tekst struktureeritud mälukaartideks. Õppige kontekstiga, vaadake üle õigel ajal ja testige, mida saate tõeliselt meelde jätta.
+    landing_hero_btn_primary Loo tasuta konto
+    landing_hero_btn_secondary Logi sisse
+    landing_hero_proof_1_title Visuaalne
+    landing_hero_proof_1_desc Pildi-, heli- ja videosõbralikud mälukaardid äratundmisrikkaks õppimiseks.
+    landing_hero_proof_2_title Kohanduv
+    landing_hero_proof_2_desc Jaotatud kordamine ja edenemise jälgimine, et materjali õigel ajal uuesti vaadata.
+    landing_hero_proof_3_title Struktureeritud
+    landing_hero_proof_3_desc Sambad, kaustad, teemad ja kogud, mis ulatuvad lihtsast tekist kaugemale.
+    landing_hero_preview_title Äratundmine enne meenutamist
+    landing_hero_preview_desc Tõeline Aliolo õppetund, kus kasutatakse pilti, teksti, heli ja juhendatud navigeerimist.
+    landing_hero_preview_chip Õppimisrežiim
+    landing_features_h2 Kõik, mida vajate kokkupuute muutmiseks meeldetuletuseks.
+    landing_features_p Looge rikasmeedia abil äratundmist, hoidke suuremaid teeke korrastatuna ja vaadake materjal uuesti üle, enne kui see tuhmub.
+    landing_feature_1_title Õppige rohkemaga kui tekstiga
+    landing_feature_1_desc Kasutage pilte, heli, videot ja paindlikke viipasid, kui objekt sõltub äratundmisest ja kontekstist.
+    landing_feature_2_title Vaadake üle, enne kui see tuhmub
+    landing_feature_2_desc Korduv kordamine ja edenemise jälgimine toovad olulise materjali kasulikul ajal tagasi.
+    landing_feature_3_title Kasvake ühest tekist kaugemale
+    landing_feature_3_desc Korraldage kureeritud või kohandatud materjal sammasteks, kaustadeks, teemadeks ja kogudeks, mis jäävad kasutatavaks.
+    landing_workflow_h2 Selge tee "ma peaksin õppima" kuni "ma tean seda".
+    landing_workflow_p Üks fokusseeritud töövoog hoiab järgmise sammu ilmselgelt ilma, et kõik objektid oleksid sama tüüpi kaardiks tasandatud.
+    landing_step_1_title Valige õige materjal
+    landing_step_1_desc Alustage kureeritud teemaga või koostage eksami, keele, elukutse või isikliku eesmärgi jaoks keskendunud raamatukogu.
+    landing_step_2_title Õppige kontekstiga
+    landing_step_2_desc Enne mälu abita töötamist looge tuvastus kaartide ja saadaolevate meediumide abil.
+    landing_step_3_title Testige tõelist meeldejäämist
+    landing_step_3_desc Liikuge keskendunud testimisele, et paljastada nõrgad kohad, tugevdada otsimist ja muuta edusammud mõõdetavaks.
+    landing_pricing_h2 Alusta tasuta. Uuendage, kui vajate täielikku töövoogu.
+    landing_pricing_p Looge konto ilma makseta. Premium lisab vahedega kordamise, loomise, testimise, automaatesituse, privaatse korraldamise ja põhjalikuma kohandamise.
+    landing_plan_weekly_desc Sobib lühiajaliseks tõukejõuks, kiireks ülevaateks või eksaminädalaks valmistumiseks.
+    landing_plan_weekly_item_1 Lühike kohustuste aken
+    landing_plan_weekly_item_2 Kiire viis esmaklassilise töövoo proovimiseks
+    landing_plan_weekly_item_3 Uueneb automaatselt kuni tühistamiseni
+    landing_plan_weekly_btn Vaadake plaani üksikasju
+    landing_plan_monthly_desc Tasakaalustatud juurdepääs õpilastele, kes loovad püsiva õppimisharjumuse.
+    landing_plan_monthly_item_1 Parim regulaarseks iganädalaseks õppeks
+    landing_plan_monthly_item_2 Piisavalt aega suuremate aineraamatukogude korrastamiseks
+    landing_plan_monthly_item_3 Uueneb automaatselt kuni tühistamiseni
+    landing_plan_monthly_btn Vaadake plaani üksikasju
+    landing_plan_yearly_desc Madalaim efektiivne igakuine kulu õppijatele, kes soovivad vastupidavat õppesüsteemi.
+    landing_plan_yearly_item_1 Ideaalne pikaajaliseks keele- ja erialaõppeks
+    landing_plan_yearly_item_2 Madalamad kulud aja jooksul
+    landing_plan_yearly_item_3 Uueneb automaatselt kuni tühistamiseni
+    landing_plan_yearly_btn Vaadake plaani üksikasju
+    landing_trust_h2 Uurige selgelt. Telli julgelt.
+    landing_trust_p Enne kohustuse võtmist saate teada, mis on tasuta, mida Premium lisab ja kust abi saada.
+    landing_trust_item_1_title Tasuta sissepääs:
+    landing_trust_item_1_desc Looge konto ja uurige saadaolevaid õppematerjale ilma makseandmeid sisestamata.
+    landing_trust_item_2_title Läbipaistvad tingimused:
+    landing_trust_item_2_desc Hindade, pikendamise, tühistamise, privaatsuse ja tagasimaksete teave on saadaval enne kassasse minekut.
+    landing_trust_item_3_title Inimtoetus:
+    landing_trust_item_3_desc Kui vajate abi, võtke ühendust aadressil vitalii@nohainc.com.
+    landing_faq_1_q Kas ma pean iga kaardi ise looma?
+    landing_faq_1_a Ei. Alustage saadaolevatest kureeritud teemadest, seejärel looge oma materjal, kui teie eesmärk muutub konkreetsemaks.
+    landing_faq_2_q Kas ma saan Aliolot tasuta kasutada?
+    landing_faq_2_a Jah. Tasuta konto annab raamatukogusse sisenemispunkti; hinnakujunduse lehel selgitatakse, millised täpsemad töövood nõuavad Premiumi.
+    landing_faq_3_q Kas saan tellimuse tühistada?
+    landing_faq_3_a Jah. Tellimusi saab tühistada selle kanali kaudu, kust need osteti, ja juurdepääs jätkub tavaliselt tasulise perioodi jooksul.
+    landing_final_h2 Kas olete valmis oma järgmist õppesessiooni arvestama?
+    landing_final_p Looge tasuta konto, valige õppeaine ja alustage visuaalselt õppimist.
+    landing_final_btn Loo tasuta konto
+    landing_footer_desc Visuaalsed mälukaardid, vahedega kordused, paindlik ainekorraldus ja keskendunud testimise töövood õppijatele, kes soovivad hõõrdumiseta struktuuri.
+    landing_footer_mor Rekordkaupmees:
+    landing_footer_mor_desc Meie tellimisprotsessi võib läbi viia Paddle.com, meie veebipõhine edasimüüja ja veebitellimuste registreeritud kaupmees. Paddle tegeleb maksete töötlemise, maksetega seotud klienditeeninduse ja nende tellimuste tagastamisega.

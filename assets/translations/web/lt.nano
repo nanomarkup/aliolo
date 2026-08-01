@@ -1,24 +1,14 @@
 ..
-    legal_info|
-        Teisinė informacija
-    last_updated|
-        Paskutinį kartą atnaujinta
-    support|
-        Palaikymas
-    home|
-        Pradžia
-    privacy|
-        Privatumas
-    terms|
-        Sąlygos
-    refunds|
-        Grąžinamos lėšos
-    pricing|
-        Kainodara
-    privacy_title|
-        Aliolo privatumo politika
-    privacy_subtitle|
-        Kaip „Aliolo“ renka, naudoja, saugo ir saugo paskyros, mokymosi ir su mokėjimu susijusią informaciją.
+    legal_info Teisinė informacija
+    last_updated Paskutinį kartą atnaujinta
+    support Palaikymas
+    home Pradžia
+    privacy Privatumas
+    terms Sąlygos
+    refunds Grąžinamos lėšos
+    pricing Kainodara
+    privacy_title Aliolo privatumo politika
+    privacy_subtitle Kaip „Aliolo“ renka, naudoja, saugo ir saugo paskyros, mokymosi ir su mokėjimu susijusią informaciją.
     privacy_body|
         <h2>Informacija, kurią renkame</h2>
         <p>Mes renkame informaciją, reikalingą „Aliolo“ veikimui, įskaitant paskyros duomenis, pvz., el. pašto adresą, vartotojo vardą, slaptažodžio autentifikavimo duomenis, pseudoportreto nustatymus, nuostatas ir profilio nustatymus.</p>
@@ -41,10 +31,8 @@
         <p>Mes naudojame pagrįstas technines ir organizacines apsaugos priemones, kad apsaugotume asmeninę informaciją. Jokia internetinė paslauga negali garantuoti tobulo saugumo, tačiau stengiamės apriboti prieigą ir apsaugoti duomenis nuo neteisėto naudojimo.</p>
         <h2>Jūsų pasirinkimai ir teisės</h2>
         <p>Priklausomai nuo jūsų buvimo vietos, galite turėti teises pasiekti, taisyti, ištrinti, eksportuoti arba apriboti savo asmeninės informacijos naudojimą. Susisiekite su mumis adresu <a href="mailto:vitalii@nohainc.com">vitalii@nohainc.com</a> pateikti prašymą.</p>
-    terms_title|
-        „Aliolo“ prenumeratos sąlygos
-    terms_subtitle|
-        „Aliolo“ paskyrų, aukščiausios kokybės prieigos, atsiskaitymo už prenumeratą, atšaukimo ir priimtino naudojimo taisyklės.
+    terms_title „Aliolo“ prenumeratos sąlygos
+    terms_subtitle „Aliolo“ paskyrų, aukščiausios kokybės prieigos, atsiskaitymo už prenumeratą, atšaukimo ir priimtino naudojimo taisyklės.
     terms_body|
         <h2>Naudojant Aliolo</h2>
         <p>„Aliolo“ teikia vaizdinius mokymosi įrankius, kuruojamą mokomąjį turinį, korteles, pažangos stebėjimą ir aukščiausios kokybės mokymosi funkcijas. Jūs esate atsakingi už paskyros kredencialų saugumą ir teisėtą paslaugos naudojimą.</p>
@@ -65,10 +53,8 @@
         <p>„Aliolo“ teikiama kaip švietimo ir studijų pagalbos priemonė. Negarantuojame konkrečių mokymosi, egzaminų, profesinių ar finansinių rezultatų. Tiek, kiek leidžia įstatymai, „Aliolo“ suteikiama be garantijų, išskyrus tas, kurios reikalaujama pagal galiojančius įstatymus.</p>
         <h2>Šių sąlygų pakeitimai</h2>
         <p>Galime atnaujinti šias sąlygas, kad atspindėtų produkto, teisinius, atsiskaitymo ar veiklos pakeitimus. Dabartinė versija paskelbta šiame puslapyje.</p>
-    refund_title|
-        Aliolo pinigų grąžinimo politika
-    refund_subtitle|
-        Kaip veikia „Aliolo Premium“ pinigų grąžinimas, atšaukimas, mokėjimų grąžinimas ir mokėjimo palaikymas.
+    refund_title Aliolo pinigų grąžinimo politika
+    refund_subtitle Kaip veikia „Aliolo Premium“ pinigų grąžinimas, atšaukimas, mokėjimų grąžinimas ir mokėjimo palaikymas.
     refund_body|
         <h2>Apžvalga</h2>
         <p>„Aliolo Premium“ yra skaitmeninė prenumerata. Kadangi aukščiausios kokybės prieigą galima suaktyvinti iš karto, pirkimai paprastai yra galutiniai, kai prenumerata yra aktyvi ir naudojama, išskyrus atvejus, kai ši politika, pirkimo kanalas arba taikomi įstatymai numato kitaip.</p>
@@ -83,10 +69,8 @@
         <p>Norėdami gauti internetinių užsakymų, susisiekite su „Paddle“ pirkėjų palaikymo komanda naudodami užsakymo informaciją kvite arba susisiekite su „Aliolo“ palaikymo komanda adresu <a href="mailto:vitalii@nohainc.com">vitalii@nohainc.com</a>. Galime nukreipti su mokėjimu susijusias užklausas „Paddle“, kai „Paddle“ yra rekordinis prekybininkas.</p>
         <h2>Mokesčių grąžinimas ir piktnaudžiavimas</h2>
         <p>Jei mokėjimas atšaukiamas, ginčijamas, grąžinamas arba nustatomas kaip apgaulingas, „Aliolo“ gali sustabdyti arba pašalinti su ta operacija susijusią priemoką.</p>
-    pricing_title|
-        Aliolo Premium Kainos
-    pricing_subtitle|
-        Paprastos prenumeratos parinktys, leidžiančios atrakinti visą „Aliolo“ vizualinio mokymosi patirtį.
+    pricing_title Aliolo Premium Kainos
+    pricing_subtitle Paprastos prenumeratos parinktys, leidžiančios atrakinti visą „Aliolo“ vizualinio mokymosi patirtį.
     pricing_body|
         <div class="plans">
         <section class="plan">
@@ -175,175 +159,89 @@
         <p>Kainos ir pasiūlymai gali skirtis priklausomai nuo internetinės kasos, „Google Play“, „Apple App Store“, šalių, valiutų ir riboto laiko reklamų. Galutinis atsiskaitymo ekranas valdo tikrąją pirkinio kainą ir atnaujinimo sąlygas.</p>
         <h2>Susijusi politika</h2>
         <p>Prieš užsiprenumeruodami peržiūrėkite <a href="/terms">Prenumeratos sąlygos</a>, <a href="/refund">Grąžinimo politika</a>, ir <a href="/privacy">Privatumo politika</a>.</p>
-    checkout_title|
-        „Aliolo Checkout“.
-    checkout_subtitle|
-        Saugus „Aliolo Premium“ prenumeratos apmokėjimas.
-    checkout_eyebrow|
-        Saugus atsiskaitymas
-    checkout_h1|
-        Užbaikite „Aliolo Premium“ pirkimą.
-    checkout_status_title|
-        Laukiu atsiskaitymo
-    checkout_status_desc|
-        Jei atidarėte šį puslapį iš Aliolo atsiskaitymo, mokėjimo forma turėtų būti rodoma automatiškai.
-    checkout_payment_support_title|
-        Mokėjimo palaikymas
-    checkout_payment_support_desc|
-        Interneto mokėjimus apdoroja Paddle.com kaip įrašų prekybininkas.
-    checkout_billing_title|
-        Prenumeratos atsiskaitymas
-    checkout_billing_desc|
-        „Aliolo Premium“ atnaujinama automatiškai, kol bus atšaukta. Vėliau galėsite atšaukti naudodami „Paddle“ arba „Aliolo“ paskyrą.
-    checkout_policy_title|
-        Reikia išsamios politikos informacijos?
-    checkout_policy_desc|
-        Prieš pirkdami peržiūrėkite kainodarą, prenumeratos sąlygas, privatumo ir pinigų grąžinimo informaciją.
-    landing_meta_title|
-        Aliolo | Vaizdinės kortelės, kartojimas tarpais ir pažangesnės studijų eigos
-    landing_meta_desc|
-        „Aliolo“ padeda besimokantiesiems išmokti kalbas, gamtos mokslus, anatomiją, pasirengimą egzaminams ir kuruojamus dalykus naudojant vaizdines korteles, kartojimą intervalais ir interaktyvius testavimo režimus.
-    landing_nav_features|
-        Savybės
-    landing_nav_how_it_works|
-        Kaip tai veikia
-    landing_nav_pricing|
-        Kainodara
-    landing_nav_login|
-        Prisijunkite
-    landing_nav_cta|
-        Sukurti nemokamą paskyrą
-    landing_hero_eyebrow|
-        Vizualinio mokymosi platforma
-    landing_hero_h1|
-        Mokykitės vizualiai. Prisiminkite ilgiau.
-    landing_hero_p|
-        Paverskite vaizdus, ​​​​garsą, vaizdo įrašus ir tekstą į struktūrines korteles. Mokykitės atsižvelgdami į kontekstą, peržiūrėkite tinkamu laiku ir patikrinkite, ką tikrai galite prisiminti.
-    landing_hero_btn_primary|
-        Sukurti nemokamą paskyrą
-    landing_hero_btn_secondary|
-        Prisijunkite
-    landing_hero_proof_1_title|
-        Vizualinis
-    landing_hero_proof_1_desc|
-        Vaizdams, garsui ir vaizdo įrašams pritaikytos kortelės, skirtos atpažinimo reikalaujančiam mokymuisi.
-    landing_hero_proof_2_title|
-        Prisitaikantis
-    landing_hero_proof_2_desc|
-        Skirtingas kartojimas ir pažangos stebėjimas, kad tinkamu laiku peržiūrėtumėte medžiagą.
-    landing_hero_proof_3_title|
-        Struktūrizuotas
-    landing_hero_proof_3_desc|
-        Stulpai, aplankai, temos ir kolekcijos, kurių dydis ne tik paprastas.
-    landing_hero_preview_title|
-        Atpažinimas prieš atšaukimą
-    landing_hero_preview_desc|
-        Tikra Aliolo pamoka naudojant vaizdą, tekstą, garsą ir vadovaujamą navigaciją.
-    landing_hero_preview_chip|
-        Mokymosi režimas
-    landing_features_h2|
-        Viskas, ko reikia, kad ekspozicija virstų prisiminimu.
-    landing_features_p|
-        Sukurkite atpažinimą naudodami raiškiąją mediją, tvarkykite didesnes bibliotekas ir peržiūrėkite medžiagą, kol ji neišnyks.
-    landing_feature_1_title|
-        Sužinokite daugiau nei naudodami tekstą
-    landing_feature_1_desc|
-        Naudokite vaizdus, ​​garsą, vaizdo įrašus ir lanksčius raginimus, kai objektas priklauso nuo atpažinimo ir konteksto.
-    landing_feature_2_title|
-        Peržiūrėkite, kol ji neišnyks
-    landing_feature_2_desc|
-        Skirtingas kartojimas ir pažangos stebėjimas sugrąžina svarbią medžiagą tinkamu laiku.
-    landing_feature_3_title|
-        Augti už vieno denio
-    landing_feature_3_desc|
-        Suskirstykite kuruojamą arba tinkintą medžiagą į ramsčius, aplankus, temas ir kolekcijas, kurias galima naudoti.
-    landing_workflow_h2|
-        Aiškus kelias nuo „turėčiau mokytis“ iki „aš tai žinau“.
-    landing_workflow_p|
-        Viena sufokusuota darbo eiga išlaiko kitą žingsnį akivaizdų, nesuplodamas kiekvieno objekto į tą pačią kortelę.
-    landing_step_1_title|
-        Pasirinkite tinkamą medžiagą
-    landing_step_1_desc|
-        Pradėkite nuo kuruojamo dalyko arba sukurkite tikslią biblioteką, skirtą egzaminui, kalbai, profesijai ar asmeniniam tikslui.
-    landing_step_2_title|
-        Mokykitės su kontekstu
-    landing_step_2_desc|
-        Prieš prašydami, kad atmintis veiktų be pagalbos, sukurkite atpažinimą naudodami valdomas korteles ir turimą laikmeną.
-    landing_step_3_title|
-        Išbandykite tikrąjį prisiminimą
-    landing_step_3_desc|
-        Pereikite prie tikslinio testavimo, kad atskleistumėte silpnąsias vietas, sustiprintumėte paiešką ir pažangą būtų galima išmatuoti.
-    landing_pricing_h2|
-        Pradėkite nemokamai. Atnaujinkite, kai jums reikia visos darbo eigos.
-    landing_pricing_p|
-        Sukurti paskyrą be mokėjimo. „Premium“ prideda intervalų pasikartojimo, kūrimo, testavimo, automatinio paleidimo, privataus organizavimo ir gilesnio tinkinimo.
-    landing_plan_weekly_desc|
-        Tinka trumpalaikiams postūmiams, greitoms apžvalgoms ar pasirengimui egzaminų savaitei.
-    landing_plan_weekly_item_1|
-        Trumpas įsipareigojimų langas
-    landing_plan_weekly_item_2|
-        Greitas būdas išbandyti aukščiausios kokybės darbo eigą
-    landing_plan_weekly_item_3|
-        Atnaujinamas automatiškai, kol atšaukiamas
-    landing_plan_weekly_btn|
-        Peržiūrėkite išsamią plano informaciją
-    landing_plan_monthly_desc|
-        Subalansuota prieiga studentams, kurie formuoja nuolatinį mokymosi įprotį.
-    landing_plan_monthly_item_1|
-        Geriausiai tinka įprastoms savaitinėms studijoms
-    landing_plan_monthly_item_2|
-        Pakanka laiko organizuoti didesnes dalykų bibliotekas
-    landing_plan_monthly_item_3|
-        Atnaujinamas automatiškai, kol atšaukiamas
-    landing_plan_monthly_btn|
-        Peržiūrėkite išsamią plano informaciją
-    landing_plan_yearly_desc|
-        Mažiausios efektyvios mėnesinės išlaidos besimokantiesiems, norintiems patvarios studijų sistemos.
-    landing_plan_yearly_item_1|
-        Idealiai tinka ilgalaikėms kalbos ir profesinėms studijoms
-    landing_plan_yearly_item_2|
-        Mažesnės išlaidos laikui bėgant
-    landing_plan_yearly_item_3|
-        Atnaujinamas automatiškai, kol atšaukiamas
-    landing_plan_yearly_btn|
-        Peržiūrėkite išsamią plano informaciją
-    landing_trust_h2|
-        Studijuokite aiškiai. Prenumeruokite su pasitikėjimu.
-    landing_trust_p|
-        Prieš įsipareigodami žinokite, kas yra nemokama, ką prideda „Premium“ ir kur gauti pagalbos.
-    landing_trust_item_1_title|
-        Nemokamas įėjimas:
-    landing_trust_item_1_desc|
-        Susikurkite paskyrą ir peržiūrėkite turimą mokymosi medžiagą neįvesdami mokėjimo informacijos.
-    landing_trust_item_2_title|
-        Skaidrios sąlygos:
-    landing_trust_item_2_desc|
-        Informacija apie kainas, atnaujinimą, atšaukimą, privatumą ir pinigų grąžinimą pateikiama prieš atsiskaitant.
-    landing_trust_item_3_title|
-        Žmogaus parama:
-    landing_trust_item_3_desc|
-        Jei jums reikia pagalbos, susisiekite su vitalii@nohainc.com.
-    landing_faq_1_q|
-        Ar kiekvieną kortelę turiu susikurti pačiam?
-    landing_faq_1_a|
-        Ne. Pradėkite nuo turimų kuruojamų temų, tada kurkite savo medžiagą, kai jūsų tikslas taps konkretesnis.
-    landing_faq_2_q|
-        Ar galiu nemokamai naudotis „Aliolo“?
-    landing_faq_2_a|
-        Taip. Nemokama paskyra suteikia įėjimo į biblioteką tašką; kainodaros puslapyje paaiškinama, kurioms išplėstinėms darbo eigoms reikalinga „Premium“.
-    landing_faq_3_q|
-        Ar galiu atšaukti prenumeratą?
-    landing_faq_3_a|
-        Taip. Prenumeratas galima atšaukti per kanalą, kuriame jos buvo įsigytos, o prieiga paprastai tęsiama per mokamą laikotarpį.
-    landing_final_h2|
-        Pasiruošę, kad kita studijų sesija būtų svarbi?
-    landing_final_p|
-        Susikurkite nemokamą paskyrą, pasirinkite dalyką ir pradėkite mokytis vizualiai.
-    landing_final_btn|
-        Sukurti nemokamą paskyrą
-    landing_footer_desc|
-        Vaizdinės kortelės, pasikartojimas intervalais, lankstus dalyko organizavimas ir tikslingos testavimo darbo eigos besimokantiesiems, kurie nori struktūros be trinties.
-    landing_footer_mor|
-        Įrašų prekybininkas:
-    landing_footer_mor_desc|
-        Mūsų užsakymo procesą gali atlikti Paddle.com, mūsų internetinis perpardavėjas ir registruojamas prekybininkas, teikiantis užsakymus internetu. „Paddle“ tvarko mokėjimų apdorojimą, su mokėjimu susijusį klientų aptarnavimą ir tų užsakymų grąžinimą.
+    checkout_title „Aliolo Checkout“.
+    checkout_subtitle Saugus „Aliolo Premium“ prenumeratos apmokėjimas.
+    checkout_eyebrow Saugus atsiskaitymas
+    checkout_h1 Užbaikite „Aliolo Premium“ pirkimą.
+    checkout_status_title Laukiu atsiskaitymo
+    checkout_status_desc Jei atidarėte šį puslapį iš Aliolo atsiskaitymo, mokėjimo forma turėtų būti rodoma automatiškai.
+    checkout_payment_support_title Mokėjimo palaikymas
+    checkout_payment_support_desc Interneto mokėjimus apdoroja Paddle.com kaip įrašų prekybininkas.
+    checkout_billing_title Prenumeratos atsiskaitymas
+    checkout_billing_desc „Aliolo Premium“ atnaujinama automatiškai, kol bus atšaukta. Vėliau galėsite atšaukti naudodami „Paddle“ arba „Aliolo“ paskyrą.
+    checkout_policy_title Reikia išsamios politikos informacijos?
+    checkout_policy_desc Prieš pirkdami peržiūrėkite kainodarą, prenumeratos sąlygas, privatumo ir pinigų grąžinimo informaciją.
+    landing_meta_title Aliolo | Vaizdinės kortelės, kartojimas tarpais ir pažangesnės studijų eigos
+    landing_meta_desc „Aliolo“ padeda besimokantiesiems išmokti kalbas, gamtos mokslus, anatomiją, pasirengimą egzaminams ir kuruojamus dalykus naudojant vaizdines korteles, kartojimą intervalais ir interaktyvius testavimo režimus.
+    landing_nav_features Savybės
+    landing_nav_how_it_works Kaip tai veikia
+    landing_nav_pricing Kainodara
+    landing_nav_login Prisijunkite
+    landing_nav_cta Sukurti nemokamą paskyrą
+    landing_hero_eyebrow Vizualinio mokymosi platforma
+    landing_hero_h1 Mokykitės vizualiai. Prisiminkite ilgiau.
+    landing_hero_p Paverskite vaizdus, ​​​​garsą, vaizdo įrašus ir tekstą į struktūrines korteles. Mokykitės atsižvelgdami į kontekstą, peržiūrėkite tinkamu laiku ir patikrinkite, ką tikrai galite prisiminti.
+    landing_hero_btn_primary Sukurti nemokamą paskyrą
+    landing_hero_btn_secondary Prisijunkite
+    landing_hero_proof_1_title Vizualinis
+    landing_hero_proof_1_desc Vaizdams, garsui ir vaizdo įrašams pritaikytos kortelės, skirtos atpažinimo reikalaujančiam mokymuisi.
+    landing_hero_proof_2_title Prisitaikantis
+    landing_hero_proof_2_desc Skirtingas kartojimas ir pažangos stebėjimas, kad tinkamu laiku peržiūrėtumėte medžiagą.
+    landing_hero_proof_3_title Struktūrizuotas
+    landing_hero_proof_3_desc Stulpai, aplankai, temos ir kolekcijos, kurių dydis ne tik paprastas.
+    landing_hero_preview_title Atpažinimas prieš atšaukimą
+    landing_hero_preview_desc Tikra Aliolo pamoka naudojant vaizdą, tekstą, garsą ir vadovaujamą navigaciją.
+    landing_hero_preview_chip Mokymosi režimas
+    landing_features_h2 Viskas, ko reikia, kad ekspozicija virstų prisiminimu.
+    landing_features_p Sukurkite atpažinimą naudodami raiškiąją mediją, tvarkykite didesnes bibliotekas ir peržiūrėkite medžiagą, kol ji neišnyks.
+    landing_feature_1_title Sužinokite daugiau nei naudodami tekstą
+    landing_feature_1_desc Naudokite vaizdus, ​​garsą, vaizdo įrašus ir lanksčius raginimus, kai objektas priklauso nuo atpažinimo ir konteksto.
+    landing_feature_2_title Peržiūrėkite, kol ji neišnyks
+    landing_feature_2_desc Skirtingas kartojimas ir pažangos stebėjimas sugrąžina svarbią medžiagą tinkamu laiku.
+    landing_feature_3_title Augti už vieno denio
+    landing_feature_3_desc Suskirstykite kuruojamą arba tinkintą medžiagą į ramsčius, aplankus, temas ir kolekcijas, kurias galima naudoti.
+    landing_workflow_h2 Aiškus kelias nuo „turėčiau mokytis“ iki „aš tai žinau“.
+    landing_workflow_p Viena sufokusuota darbo eiga išlaiko kitą žingsnį akivaizdų, nesuplodamas kiekvieno objekto į tą pačią kortelę.
+    landing_step_1_title Pasirinkite tinkamą medžiagą
+    landing_step_1_desc Pradėkite nuo kuruojamo dalyko arba sukurkite tikslią biblioteką, skirtą egzaminui, kalbai, profesijai ar asmeniniam tikslui.
+    landing_step_2_title Mokykitės su kontekstu
+    landing_step_2_desc Prieš prašydami, kad atmintis veiktų be pagalbos, sukurkite atpažinimą naudodami valdomas korteles ir turimą laikmeną.
+    landing_step_3_title Išbandykite tikrąjį prisiminimą
+    landing_step_3_desc Pereikite prie tikslinio testavimo, kad atskleistumėte silpnąsias vietas, sustiprintumėte paiešką ir pažangą būtų galima išmatuoti.
+    landing_pricing_h2 Pradėkite nemokamai. Atnaujinkite, kai jums reikia visos darbo eigos.
+    landing_pricing_p Sukurti paskyrą be mokėjimo. „Premium“ prideda intervalų pasikartojimo, kūrimo, testavimo, automatinio paleidimo, privataus organizavimo ir gilesnio tinkinimo.
+    landing_plan_weekly_desc Tinka trumpalaikiams postūmiams, greitoms apžvalgoms ar pasirengimui egzaminų savaitei.
+    landing_plan_weekly_item_1 Trumpas įsipareigojimų langas
+    landing_plan_weekly_item_2 Greitas būdas išbandyti aukščiausios kokybės darbo eigą
+    landing_plan_weekly_item_3 Atnaujinamas automatiškai, kol atšaukiamas
+    landing_plan_weekly_btn Peržiūrėkite išsamią plano informaciją
+    landing_plan_monthly_desc Subalansuota prieiga studentams, kurie formuoja nuolatinį mokymosi įprotį.
+    landing_plan_monthly_item_1 Geriausiai tinka įprastoms savaitinėms studijoms
+    landing_plan_monthly_item_2 Pakanka laiko organizuoti didesnes dalykų bibliotekas
+    landing_plan_monthly_item_3 Atnaujinamas automatiškai, kol atšaukiamas
+    landing_plan_monthly_btn Peržiūrėkite išsamią plano informaciją
+    landing_plan_yearly_desc Mažiausios efektyvios mėnesinės išlaidos besimokantiesiems, norintiems patvarios studijų sistemos.
+    landing_plan_yearly_item_1 Idealiai tinka ilgalaikėms kalbos ir profesinėms studijoms
+    landing_plan_yearly_item_2 Mažesnės išlaidos laikui bėgant
+    landing_plan_yearly_item_3 Atnaujinamas automatiškai, kol atšaukiamas
+    landing_plan_yearly_btn Peržiūrėkite išsamią plano informaciją
+    landing_trust_h2 Studijuokite aiškiai. Prenumeruokite su pasitikėjimu.
+    landing_trust_p Prieš įsipareigodami žinokite, kas yra nemokama, ką prideda „Premium“ ir kur gauti pagalbos.
+    landing_trust_item_1_title Nemokamas įėjimas:
+    landing_trust_item_1_desc Susikurkite paskyrą ir peržiūrėkite turimą mokymosi medžiagą neįvesdami mokėjimo informacijos.
+    landing_trust_item_2_title Skaidrios sąlygos:
+    landing_trust_item_2_desc Informacija apie kainas, atnaujinimą, atšaukimą, privatumą ir pinigų grąžinimą pateikiama prieš atsiskaitant.
+    landing_trust_item_3_title Žmogaus parama:
+    landing_trust_item_3_desc Jei jums reikia pagalbos, susisiekite su vitalii@nohainc.com.
+    landing_faq_1_q Ar kiekvieną kortelę turiu susikurti pačiam?
+    landing_faq_1_a Ne. Pradėkite nuo turimų kuruojamų temų, tada kurkite savo medžiagą, kai jūsų tikslas taps konkretesnis.
+    landing_faq_2_q Ar galiu nemokamai naudotis „Aliolo“?
+    landing_faq_2_a Taip. Nemokama paskyra suteikia įėjimo į biblioteką tašką; kainodaros puslapyje paaiškinama, kurioms išplėstinėms darbo eigoms reikalinga „Premium“.
+    landing_faq_3_q Ar galiu atšaukti prenumeratą?
+    landing_faq_3_a Taip. Prenumeratas galima atšaukti per kanalą, kuriame jos buvo įsigytos, o prieiga paprastai tęsiama per mokamą laikotarpį.
+    landing_final_h2 Pasiruošę, kad kita studijų sesija būtų svarbi?
+    landing_final_p Susikurkite nemokamą paskyrą, pasirinkite dalyką ir pradėkite mokytis vizualiai.
+    landing_final_btn Sukurti nemokamą paskyrą
+    landing_footer_desc Vaizdinės kortelės, pasikartojimas intervalais, lankstus dalyko organizavimas ir tikslingos testavimo darbo eigos besimokantiesiems, kurie nori struktūros be trinties.
+    landing_footer_mor Įrašų prekybininkas:
+    landing_footer_mor_desc Mūsų užsakymo procesą gali atlikti Paddle.com, mūsų internetinis perpardavėjas ir registruojamas prekybininkas, teikiantis užsakymus internetu. „Paddle“ tvarko mokėjimų apdorojimą, su mokėjimu susijusį klientų aptarnavimą ir tų užsakymų grąžinimą.

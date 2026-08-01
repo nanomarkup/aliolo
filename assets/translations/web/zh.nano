@@ -1,24 +1,14 @@
 ..
-    legal_info|
-        法律信息
-    last_updated|
-        最后更新
-    support|
-        支持
-    home|
-        家
-    privacy|
-        隐私
-    terms|
-        条款
-    refunds|
-        退款
-    pricing|
-        定价
-    privacy_title|
-        阿里奥洛隐私政策
-    privacy_subtitle|
-        Aliolo 如何收集、使用、存储和保护帐户、学习和付款相关信息。
+    legal_info 法律信息
+    last_updated 最后更新
+    support 支持
+    home 家
+    privacy 隐私
+    terms 条款
+    refunds 退款
+    pricing 定价
+    privacy_title 阿里奥洛隐私政策
+    privacy_subtitle Aliolo 如何收集、使用、存储和保护帐户、学习和付款相关信息。
     privacy_body|
         <h2>我们收集的信息</h2>
         <p>我们收集操作 Aliolo 所需的信息，包括帐户详细信息，例如电子邮件地址、用户名、密码身份验证数据、头像设置、偏好设置和个人资料设置。</p>
@@ -41,10 +31,8 @@
         <p>我们使用合理的技术和组织保障措施来保护个人信息。没有任何在线服务可以保证完美的安全性，但我们努力限制访问并保护数据免遭未经授权的使用。</p>
         <h2>您的选择和权利</h2>
         <p>根据您所在的位置，您可能有权访问、更正、删除、导出或限制使用您的个人信息。联系我们： <a href="mailto:vitalii@nohainc.com">vitalii@nohainc.com</a> 提出请求。</p>
-    terms_title|
-        Aliolo 订阅条款
-    terms_subtitle|
-        Aliolo 帐户、高级访问、订阅计费、取消和可接受使用的规则。
+    terms_title Aliolo 订阅条款
+    terms_subtitle Aliolo 帐户、高级访问、订阅计费、取消和可接受使用的规则。
     terms_body|
         <h2>使用 Aliolo</h2>
         <p>Aliolo 提供视觉学习工具、精选教育内容、抽认卡、进度跟踪和高级学习功能。您有责任保证您的帐户凭据的安全并合法使用该服务。</p>
@@ -65,10 +53,8 @@
         <p>Aliolo 是作为教育和学习支持工具提供的。我们不保证特定的学习、考试、专业或财务成果。在法律允许的最大范围内，Aliolo 不提供超出适用法律要求的保证。</p>
         <h2>这些条款的变更</h2>
         <p>我们可能会更新这些条款以反映产品、法律、计费或运营变更。当前版本发布在此页面上。</p>
-    refund_title|
-        Aliolo 退款政策
-    refund_subtitle|
-        Aliolo Premium 的退款、取消、退款和付款支持如何运作。
+    refund_title Aliolo 退款政策
+    refund_subtitle Aliolo Premium 的退款、取消、退款和付款支持如何运作。
     refund_body|
         <h2>概述</h2>
         <p>Aliolo Premium 是一种数字订阅。由于高级访问权限可以立即激活，因此一旦订阅激活并使用，购买通常就是最终的，除非本政策、购买渠道或适用法律另有规定。</p>
@@ -83,10 +69,8 @@
         <p>对于网络订单，请使用收据中的订单信息联系 Paddle 买家支持，或联系 Aliolo 支持： <a href="mailto:vitalii@nohainc.com">vitalii@nohainc.com</a>。当 Paddle 是记录商户时，我们可能会将特定于付款的请求发送给 Paddle。</p>
         <h2>退款和滥用</h2>
         <p>如果付款被撤销、有争议、退款或被识别为欺诈，Aliolo 可以暂停或删除与该交易相关的高级访问权限。</p>
-    pricing_title|
-        Aliolo 高级定价
-    pricing_subtitle|
-        简单的订阅选项可解锁完整的 Aliolo 视觉学习体验。
+    pricing_title Aliolo 高级定价
+    pricing_subtitle 简单的订阅选项可解锁完整的 Aliolo 视觉学习体验。
     pricing_body|
         <div class="plans">
         <section class="plan">
@@ -175,175 +159,89 @@
         <p>价格和优惠可能因网络结帐、Google Play、Apple App Store、国家/地区、货币和限时促销而异。最终结帐屏幕控制您购买的实际价格和续订条款。</p>
         <h2>相关政策</h2>
         <p>订阅之前，请查看 <a href="/terms">订阅条款</a>, <a href="/refund">退款政策</a>， 和 <a href="/privacy">隐私政策</a>.</p>
-    checkout_title|
-        阿里奥洛结帐
-    checkout_subtitle|
-        Aliolo Premium 订阅的安全结帐。
-    checkout_eyebrow|
-        安全结账
-    checkout_h1|
-        完成您的 Aliolo Premium 购买。
-    checkout_status_title|
-        等待结帐
-    checkout_status_desc|
-        如果您从 Aliolo 帐单打开此页面，付款表格应自动显示。
-    checkout_payment_support_title|
-        支付支持
-    checkout_payment_support_desc|
-        网络支付由 Paddle.com 作为记录商户进行处理。
-    checkout_billing_title|
-        订阅计费
-    checkout_billing_desc|
-        Aliolo Premium 会自动续订，直至取消。您可以稍后通过 Paddle 或您的 Aliolo 帐户取消。
-    checkout_policy_title|
-        需要政策详情吗？
-    checkout_policy_desc|
-        在完成购买之前，请查看定价、订阅条款、隐私和退款信息。
-    landing_meta_title|
-        阿里奥洛 |视觉抽认卡、间隔重复和更智能的学习工作流程
-    landing_meta_desc|
-        Aliolo 通过视觉抽认卡、间隔重复和交互式测试模式帮助学习者掌握语言、科学、解剖学、考试准备和策划科目。
-    landing_nav_features|
-        特征
-    landing_nav_how_it_works|
-        它是如何运作的
-    landing_nav_pricing|
-        定价
-    landing_nav_login|
-        登录
-    landing_nav_cta|
-        创建免费帐户
-    landing_hero_eyebrow|
-        可视化学习平台
-    landing_hero_h1|
-        直观地学习。记住时间长一些。
-    landing_hero_p|
-        将图像、音频、视频和文本转换为结构化抽认卡。结合上下文学习，在正确的时间复习，并测试你能真正记住什么。
-    landing_hero_btn_primary|
-        创建免费帐户
-    landing_hero_btn_secondary|
-        登录
-    landing_hero_proof_1_title|
-        视觉的
-    landing_hero_proof_1_desc|
-        图像、音频和视频友好的抽认卡，适合识别密集型学习。
-    landing_hero_proof_2_title|
-        自适应
-    landing_hero_proof_2_desc|
-        间隔重复和进度跟踪，以便在正确的时间重温材料。
-    landing_hero_proof_3_title|
-        结构化
-    landing_hero_proof_3_desc|
-        支柱、文件夹、主题和收藏超出了简单的甲板范围。
-    landing_hero_preview_title|
-        回忆前的识别
-    landing_hero_preview_desc|
-        使用图像、文本、音频和引导导航的真实 Aliolo 课程。
-    landing_hero_preview_chip|
-        学习模式
-    landing_features_h2|
-        将曝光转化为回忆所需的一切。
-    landing_features_p|
-        利用富媒体建立知名度，使大型图书馆井井有条，并在资料消失之前重新审视它们。
-    landing_feature_1_title|
-        不仅仅通过文字来学习
-    landing_feature_1_desc|
-        当主题取决于识别和上下文时，使用图像、音频、视频和灵活的提示。
-    landing_feature_2_title|
-        在它消失之前回顾一下
-    landing_feature_2_desc|
-        间隔重复和进度跟踪可以在有用的时间带回重要的材料。
-    landing_feature_3_title|
-        超越一层甲板
-    landing_feature_3_desc|
-        将精选或定制的材料组织成保持可用的支柱、文件夹、主题和集合。
-    landing_workflow_h2|
-        从“我应该学习”到“我知道这一点”的清晰路径。
-    landing_workflow_p|
-        一个集中的工作流程可以让下一步变得显而易见，而无需将每个主题扁平化到同一种卡片中。
-    landing_step_1_title|
-        选择合适的材料
-    landing_step_1_desc|
-        从精心策划的主题开始，或者为考试、语言、职业或个人目标建立一个有针对性的图书馆。
-    landing_step_2_title|
-        结合上下文学习
-    landing_step_2_desc|
-        在让你的记忆独立发挥作用之前，通过引导卡片和可用媒体建立认知。
-    landing_step_3_title|
-        测试真实回忆
-    landing_step_3_desc|
-        进行有针对性的测试，以暴露薄弱环节，加强检索，并使进展可衡量。
-    landing_pricing_h2|
-        开始免费。当您需要完整的工作流程时升级。
-    landing_pricing_p|
-        无需付款即可创建帐户。高级版增加了间隔重复、创建、测试、自动播放、私人组织和更深入的定制。
-    landing_plan_weekly_desc|
-        适合短期推动、快速复习或考试周准备。
-    landing_plan_weekly_item_1|
-        承诺窗口短
-    landing_plan_weekly_item_2|
-        尝试高级工作流程的快速方法
-    landing_plan_weekly_item_3|
-        自动续订直至取消
-    landing_plan_weekly_btn|
-        查看计划详情
-    landing_plan_monthly_desc|
-        为学生建立稳定的学习习惯提供平衡的机会。
-    landing_plan_monthly_item_1|
-        最适合每周定期学习
-    landing_plan_monthly_item_2|
-        有足够的时间来组织更大的主题库
-    landing_plan_monthly_item_3|
-        自动续订直至取消
-    landing_plan_monthly_btn|
-        查看计划详情
-    landing_plan_yearly_desc|
-        对于想要持久学习系统的学习者来说，每月有效成本最低。
-    landing_plan_yearly_item_1|
-        长期语言和专业学习的理想选择
-    landing_plan_yearly_item_2|
-        随着时间的推移成本更低
-    landing_plan_yearly_item_3|
-        自动续订直至取消
-    landing_plan_yearly_btn|
-        查看计划详情
-    landing_trust_h2|
-        清晰地学习。放心订阅。
-    landing_trust_p|
-        在做出承诺之前，了解什么是免费的、Premium 添加了哪些内容以及从哪里获得帮助。
-    landing_trust_item_1_title|
-        免费入场：
-    landing_trust_item_1_desc|
-        创建帐户并探索可用的学习材料，无需输入付款详细信息。
-    landing_trust_item_2_title|
-        透明条款：
-    landing_trust_item_2_desc|
-        结帐前可获取定价、续订、取消、隐私和退款信息。
-    landing_trust_item_3_title|
-        人力支持：
-    landing_trust_item_3_desc|
-        当您需要帮助时，请联系vitalii@nohainc.com。
-    landing_faq_1_q|
-        我需要自己创建每张卡吗？
-    landing_faq_1_a|
-        不会。从可用的策划主题开始，然后当您的目标变得更加具体时创建您自己的材料。
-    landing_faq_2_q|
-        我可以免费使用 Aliolo 吗？
-    landing_faq_2_a|
-        是的。免费帐户提供了图书馆的入口点；定价页面解释了哪些高级工作流程需要高级版。
-    landing_faq_3_q|
-        我可以取消订阅吗？
-    landing_faq_3_a|
-        是的。可以通过购买渠道取消订阅，但在付费期间通常可以继续访问。
-    landing_final_h2|
-        准备好让你的下一次学习变得有意义了吗？
-    landing_final_p|
-        创建一个免费帐户，选择一个主题，然后开始视觉学习。
-    landing_final_btn|
-        创建免费帐户
-    landing_footer_desc|
-        视觉抽认卡、间隔重复、灵活的主题组织以及针对想要无摩擦结构的学习者的集中测试工作流程。
-    landing_footer_mor|
-        记录商户：
-    landing_footer_mor_desc|
-        我们的订单流程可能由我们的在线经销商和网络订单记录商户 Paddle.com 进行。 Paddle 处理付款处理、付款相关的客户服务以及这些订单的退货。
+    checkout_title 阿里奥洛结帐
+    checkout_subtitle Aliolo Premium 订阅的安全结帐。
+    checkout_eyebrow 安全结账
+    checkout_h1 完成您的 Aliolo Premium 购买。
+    checkout_status_title 等待结帐
+    checkout_status_desc 如果您从 Aliolo 帐单打开此页面，付款表格应自动显示。
+    checkout_payment_support_title 支付支持
+    checkout_payment_support_desc 网络支付由 Paddle.com 作为记录商户进行处理。
+    checkout_billing_title 订阅计费
+    checkout_billing_desc Aliolo Premium 会自动续订，直至取消。您可以稍后通过 Paddle 或您的 Aliolo 帐户取消。
+    checkout_policy_title 需要政策详情吗？
+    checkout_policy_desc 在完成购买之前，请查看定价、订阅条款、隐私和退款信息。
+    landing_meta_title 阿里奥洛 |视觉抽认卡、间隔重复和更智能的学习工作流程
+    landing_meta_desc Aliolo 通过视觉抽认卡、间隔重复和交互式测试模式帮助学习者掌握语言、科学、解剖学、考试准备和策划科目。
+    landing_nav_features 特征
+    landing_nav_how_it_works 它是如何运作的
+    landing_nav_pricing 定价
+    landing_nav_login 登录
+    landing_nav_cta 创建免费帐户
+    landing_hero_eyebrow 可视化学习平台
+    landing_hero_h1 直观地学习。记住时间长一些。
+    landing_hero_p 将图像、音频、视频和文本转换为结构化抽认卡。结合上下文学习，在正确的时间复习，并测试你能真正记住什么。
+    landing_hero_btn_primary 创建免费帐户
+    landing_hero_btn_secondary 登录
+    landing_hero_proof_1_title 视觉的
+    landing_hero_proof_1_desc 图像、音频和视频友好的抽认卡，适合识别密集型学习。
+    landing_hero_proof_2_title 自适应
+    landing_hero_proof_2_desc 间隔重复和进度跟踪，以便在正确的时间重温材料。
+    landing_hero_proof_3_title 结构化
+    landing_hero_proof_3_desc 支柱、文件夹、主题和收藏超出了简单的甲板范围。
+    landing_hero_preview_title 回忆前的识别
+    landing_hero_preview_desc 使用图像、文本、音频和引导导航的真实 Aliolo 课程。
+    landing_hero_preview_chip 学习模式
+    landing_features_h2 将曝光转化为回忆所需的一切。
+    landing_features_p 利用富媒体建立知名度，使大型图书馆井井有条，并在资料消失之前重新审视它们。
+    landing_feature_1_title 不仅仅通过文字来学习
+    landing_feature_1_desc 当主题取决于识别和上下文时，使用图像、音频、视频和灵活的提示。
+    landing_feature_2_title 在它消失之前回顾一下
+    landing_feature_2_desc 间隔重复和进度跟踪可以在有用的时间带回重要的材料。
+    landing_feature_3_title 超越一层甲板
+    landing_feature_3_desc 将精选或定制的材料组织成保持可用的支柱、文件夹、主题和集合。
+    landing_workflow_h2 从“我应该学习”到“我知道这一点”的清晰路径。
+    landing_workflow_p 一个集中的工作流程可以让下一步变得显而易见，而无需将每个主题扁平化到同一种卡片中。
+    landing_step_1_title 选择合适的材料
+    landing_step_1_desc 从精心策划的主题开始，或者为考试、语言、职业或个人目标建立一个有针对性的图书馆。
+    landing_step_2_title 结合上下文学习
+    landing_step_2_desc 在让你的记忆独立发挥作用之前，通过引导卡片和可用媒体建立认知。
+    landing_step_3_title 测试真实回忆
+    landing_step_3_desc 进行有针对性的测试，以暴露薄弱环节，加强检索，并使进展可衡量。
+    landing_pricing_h2 开始免费。当您需要完整的工作流程时升级。
+    landing_pricing_p 无需付款即可创建帐户。高级版增加了间隔重复、创建、测试、自动播放、私人组织和更深入的定制。
+    landing_plan_weekly_desc 适合短期推动、快速复习或考试周准备。
+    landing_plan_weekly_item_1 承诺窗口短
+    landing_plan_weekly_item_2 尝试高级工作流程的快速方法
+    landing_plan_weekly_item_3 自动续订直至取消
+    landing_plan_weekly_btn 查看计划详情
+    landing_plan_monthly_desc 为学生建立稳定的学习习惯提供平衡的机会。
+    landing_plan_monthly_item_1 最适合每周定期学习
+    landing_plan_monthly_item_2 有足够的时间来组织更大的主题库
+    landing_plan_monthly_item_3 自动续订直至取消
+    landing_plan_monthly_btn 查看计划详情
+    landing_plan_yearly_desc 对于想要持久学习系统的学习者来说，每月有效成本最低。
+    landing_plan_yearly_item_1 长期语言和专业学习的理想选择
+    landing_plan_yearly_item_2 随着时间的推移成本更低
+    landing_plan_yearly_item_3 自动续订直至取消
+    landing_plan_yearly_btn 查看计划详情
+    landing_trust_h2 清晰地学习。放心订阅。
+    landing_trust_p 在做出承诺之前，了解什么是免费的、Premium 添加了哪些内容以及从哪里获得帮助。
+    landing_trust_item_1_title 免费入场：
+    landing_trust_item_1_desc 创建帐户并探索可用的学习材料，无需输入付款详细信息。
+    landing_trust_item_2_title 透明条款：
+    landing_trust_item_2_desc 结帐前可获取定价、续订、取消、隐私和退款信息。
+    landing_trust_item_3_title 人力支持：
+    landing_trust_item_3_desc 当您需要帮助时，请联系vitalii@nohainc.com。
+    landing_faq_1_q 我需要自己创建每张卡吗？
+    landing_faq_1_a 不会。从可用的策划主题开始，然后当您的目标变得更加具体时创建您自己的材料。
+    landing_faq_2_q 我可以免费使用 Aliolo 吗？
+    landing_faq_2_a 是的。免费帐户提供了图书馆的入口点；定价页面解释了哪些高级工作流程需要高级版。
+    landing_faq_3_q 我可以取消订阅吗？
+    landing_faq_3_a 是的。可以通过购买渠道取消订阅，但在付费期间通常可以继续访问。
+    landing_final_h2 准备好让你的下一次学习变得有意义了吗？
+    landing_final_p 创建一个免费帐户，选择一个主题，然后开始视觉学习。
+    landing_final_btn 创建免费帐户
+    landing_footer_desc 视觉抽认卡、间隔重复、灵活的主题组织以及针对想要无摩擦结构的学习者的集中测试工作流程。
+    landing_footer_mor 记录商户：
+    landing_footer_mor_desc 我们的订单流程可能由我们的在线经销商和网络订单记录商户 Paddle.com 进行。 Paddle 处理付款处理、付款相关的客户服务以及这些订单的退货。

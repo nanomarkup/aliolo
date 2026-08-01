@@ -1,24 +1,14 @@
 ..
-    legal_info|
-        Mentions légales
-    last_updated|
-        Dernière mise à jour
-    support|
-        Soutien
-    home|
-        Maison
-    privacy|
-        Confidentialité
-    terms|
-        Termes
-    refunds|
-        Remboursements
-    pricing|
-        Tarifs
-    privacy_title|
-        Politique de confidentialité d'Aliolo
-    privacy_subtitle|
-        Comment Aliolo collecte, utilise, stocke et protège les informations relatives au compte, à l'apprentissage et au paiement.
+    legal_info Mentions légales
+    last_updated Dernière mise à jour
+    support Soutien
+    home Maison
+    privacy Confidentialité
+    terms Termes
+    refunds Remboursements
+    pricing Tarifs
+    privacy_title Politique de confidentialité d'Aliolo
+    privacy_subtitle Comment Aliolo collecte, utilise, stocke et protège les informations relatives au compte, à l'apprentissage et au paiement.
     privacy_body|
         <h2>Informations que nous collectons</h2>
         <p>Nous collectons les informations nécessaires au fonctionnement d'Aliolo, y compris les détails du compte tels que l'adresse e-mail, le nom d'utilisateur, les données d'authentification par mot de passe, les paramètres de l'avatar, les préférences et les paramètres de profil.</p>
@@ -41,10 +31,8 @@
         <p>Nous utilisons des mesures de protection techniques et organisationnelles raisonnables pour protéger les informations personnelles. Aucun service en ligne ne peut garantir une sécurité parfaite, mais nous nous efforçons de limiter l'accès et de protéger les données contre toute utilisation non autorisée.</p>
         <h2>Vos choix et droits</h2>
         <p>En fonction de votre emplacement, vous pouvez avoir le droit d'accéder, de corriger, de supprimer, d'exporter ou de restreindre l'utilisation de vos informations personnelles. Contactez-nous au <a href="mailto:vitalii@nohainc.com">vitalii@nohainc.com</a> pour faire une demande.</p>
-    terms_title|
-        Conditions d'abonnement à Aliolo
-    terms_subtitle|
-        Les règles relatives aux comptes Aliolo, à l'accès premium, à la facturation des abonnements, à l'annulation et à l'utilisation acceptable.
+    terms_title Conditions d'abonnement à Aliolo
+    terms_subtitle Les règles relatives aux comptes Aliolo, à l'accès premium, à la facturation des abonnements, à l'annulation et à l'utilisation acceptable.
     terms_body|
         <h2>Utiliser Aliolo</h2>
         <p>Aliolo fournit des outils d'apprentissage visuels, du contenu éducatif organisé, des flashcards, un suivi des progrès et des fonctionnalités d'apprentissage premium. Vous êtes responsable de la sécurité des informations d’identification de votre compte et de l’utilisation légale du service.</p>
@@ -65,10 +53,8 @@
         <p>Aliolo est fourni comme un outil pédagogique et d’aide aux études. Nous ne garantissons pas des résultats spécifiques en matière d’apprentissage, d’examen, professionnels ou financiers. Dans la mesure permise par la loi, Aliolo est fourni sans garantie au-delà de celles requises par la loi applicable.</p>
         <h2>Modifications de ces conditions</h2>
         <p>Nous pouvons mettre à jour ces conditions pour refléter des changements de produit, juridiques, de facturation ou opérationnels. La version actuelle est publiée sur cette page.</p>
-    refund_title|
-        Politique de remboursement d'Aliolo
-    refund_subtitle|
-        Comment fonctionnent les remboursements, les annulations, les rétrofacturations et l'assistance au paiement pour Aliolo Premium.
+    refund_title Politique de remboursement d'Aliolo
+    refund_subtitle Comment fonctionnent les remboursements, les annulations, les rétrofacturations et l'assistance au paiement pour Aliolo Premium.
     refund_body|
         <h2>Aperçu</h2>
         <p>Aliolo Premium est un abonnement numérique. L'accès premium pouvant être activé immédiatement, les achats sont généralement définitifs une fois l'abonnement actif et utilisé, sauf lorsque la présente politique, le canal d'achat ou la loi applicable en dispose autrement.</p>
@@ -83,10 +69,8 @@
         <p>Pour les commandes Web, contactez le support acheteur Paddle en utilisant les informations de commande figurant sur votre reçu, ou contactez le support Aliolo au <a href="mailto:vitalii@nohainc.com">vitalii@nohainc.com</a>. Nous pouvons adresser des demandes spécifiques de paiement à Paddle lorsque Paddle est le commerçant officiel.</p>
         <h2>Rétrofacturations et abus</h2>
         <p>Si un paiement est annulé, contesté, remboursé ou identifié comme frauduleux, Aliolo peut suspendre ou supprimer l'accès premium associé à cette transaction.</p>
-    pricing_title|
-        Tarifs Aliolo Premium
-    pricing_subtitle|
-        Options d'abonnement simples pour débloquer l'expérience complète d'apprentissage visuel Aliolo.
+    pricing_title Tarifs Aliolo Premium
+    pricing_subtitle Options d'abonnement simples pour débloquer l'expérience complète d'apprentissage visuel Aliolo.
     pricing_body|
         <div class="plans">
         <section class="plan">
@@ -175,175 +159,89 @@
         <p>Les prix et les offres peuvent varier selon les paiements en ligne, Google Play, Apple App Store, les pays, les devises et les promotions à durée limitée. L'écran de paiement final contrôle le prix réel et les conditions de renouvellement de votre achat.</p>
         <h2>Politiques connexes</h2>
         <p>Avant de vous abonner, consultez le <a href="/terms">Conditions d'abonnement</a>, <a href="/refund">Politique de remboursement</a>, et <a href="/privacy">politique de confidentialité</a>.</p>
-    checkout_title|
-        Aliolo Commander
-    checkout_subtitle|
-        Paiement sécurisé pour les abonnements Aliolo Premium.
-    checkout_eyebrow|
-        Paiement sécurisé
-    checkout_h1|
-        Finalisez votre achat Aliolo Premium.
-    checkout_status_title|
-        En attente du paiement
-    checkout_status_desc|
-        Si vous avez ouvert cette page depuis la facturation Aliolo, le formulaire de paiement devrait apparaître automatiquement.
-    checkout_payment_support_title|
-        Assistance au paiement
-    checkout_payment_support_desc|
-        Les paiements Web sont traités par Paddle.com en tant que marchand officiel.
-    checkout_billing_title|
-        Facturation des abonnements
-    checkout_billing_desc|
-        Aliolo Premium se renouvelle automatiquement jusqu'à annulation. Vous pouvez annuler plus tard via Paddle ou votre compte Aliolo.
-    checkout_policy_title|
-        Besoin de détails sur la politique ?
-    checkout_policy_desc|
-        Vérifiez les prix, les conditions d’abonnement, la confidentialité et les informations de remboursement avant de finaliser votre achat.
-    landing_meta_title|
-        Aliolo | Cartes mémoire visuelles, répétitions espacées et flux de travail d'étude plus intelligents
-    landing_meta_desc|
-        Aliolo aide les apprenants à maîtriser les langues, les sciences, l'anatomie, la préparation aux examens et les sujets sélectionnés avec des flashcards visuels, une répétition espacée et des modes de test interactifs.
-    landing_nav_features|
-        Caractéristiques
-    landing_nav_how_it_works|
-        Comment ça marche
-    landing_nav_pricing|
-        Tarifs
-    landing_nav_login|
-        Se connecter
-    landing_nav_cta|
-        Créer un compte gratuit
-    landing_hero_eyebrow|
-        Plateforme d'apprentissage visuel
-    landing_hero_h1|
-        Apprenez visuellement. Rappelez-vous plus longtemps.
-    landing_hero_p|
-        Transformez les images, l'audio, la vidéo et le texte en cartes mémoire structurées. Apprenez avec le contexte, révisez au bon moment et testez ce dont vous vous souvenez vraiment.
-    landing_hero_btn_primary|
-        Créer un compte gratuit
-    landing_hero_btn_secondary|
-        Se connecter
-    landing_hero_proof_1_title|
-        Visuel
-    landing_hero_proof_1_desc|
-        Cartes mémoire compatibles avec les images, l'audio et la vidéo pour un apprentissage intensif en reconnaissance.
-    landing_hero_proof_2_title|
-        Adaptatif
-    landing_hero_proof_2_desc|
-        Répétition espacée et suivi des progrès pour revisiter le matériel au bon moment.
-    landing_hero_proof_3_title|
-        Structuré
-    landing_hero_proof_3_desc|
-        Piliers, dossiers, sujets et collections qui vont au-delà d’un simple deck.
-    landing_hero_preview_title|
-        Reconnaissance avant rappel
-    landing_hero_preview_desc|
-        Une véritable leçon d'Aliolo utilisant l'image, le texte, l'audio et la navigation guidée.
-    landing_hero_preview_chip|
-        Mode apprentissage
-    landing_features_h2|
-        Tout ce dont vous avez besoin pour transformer l'exposition en rappel.
-    landing_features_p|
-        Développez la reconnaissance grâce aux médias riches, organisez les grandes bibliothèques et revisitez les documents avant qu'ils ne disparaissent.
-    landing_feature_1_title|
-        Apprenez avec plus que du texte
-    landing_feature_1_desc|
-        Utilisez des images, de l'audio, de la vidéo et des invites flexibles lorsque le sujet dépend de la reconnaissance et du contexte.
-    landing_feature_2_title|
-        Révisez avant qu'il ne disparaisse
-    landing_feature_2_desc|
-        La répétition espacée et le suivi des progrès ramènent les éléments importants à un moment utile.
-    landing_feature_3_title|
-        Développez-vous au-delà d’un seul deck
-    landing_feature_3_desc|
-        Organisez le matériel organisé ou personnalisé en piliers, dossiers, sujets et collections qui restent utilisables.
-    landing_workflow_h2|
-        Un chemin clair entre « je devrais étudier » et « je sais ceci ».
-    landing_workflow_p|
-        Un flux de travail ciblé permet de garder l'étape suivante évidente sans aplatir chaque sujet dans le même type de carte.
-    landing_step_1_title|
-        Choisissez le bon matériau
-    landing_step_1_desc|
-        Commencez par un sujet sélectionné ou créez une bibliothèque ciblée pour un examen, une langue, une profession ou un objectif personnel.
-    landing_step_2_title|
-        Apprendre avec le contexte
-    landing_step_2_desc|
-        Développez la reconnaissance grâce aux cartes guidées et aux médias disponibles avant de demander à votre mémoire de travailler sans aide.
-    landing_step_3_title|
-        Testez le rappel réel
-    landing_step_3_desc|
-        Passez à des tests ciblés pour exposer les points faibles, renforcer la récupération et rendre les progrès mesurables.
-    landing_pricing_h2|
-        Commencez gratuitement. Mettez à niveau lorsque vous avez besoin du flux de travail complet.
-    landing_pricing_p|
-        Créez un compte sans paiement. Premium ajoute une répétition espacée, une création, des tests, une lecture automatique, une organisation privée et une personnalisation plus approfondie.
-    landing_plan_weekly_desc|
-        Idéal pour les poussées à court terme, les révisions rapides ou la préparation d’une semaine d’examen.
-    landing_plan_weekly_item_1|
-        Fenêtre d'engagement courte
-    landing_plan_weekly_item_2|
-        Un moyen rapide d'essayer le flux de travail premium
-    landing_plan_weekly_item_3|
-        Se renouvelle automatiquement jusqu'à annulation
-    landing_plan_weekly_btn|
-        Afficher les détails du forfait
-    landing_plan_monthly_desc|
-        Accès équilibré pour les étudiants qui développent une habitude d’apprentissage stable.
-    landing_plan_monthly_item_1|
-        Idéal pour les études hebdomadaires régulières
-    landing_plan_monthly_item_2|
-        Suffisamment de temps pour organiser de plus grandes bibliothèques thématiques
-    landing_plan_monthly_item_3|
-        Se renouvelle automatiquement jusqu'à annulation
-    landing_plan_monthly_btn|
-        Afficher les détails du forfait
-    landing_plan_yearly_desc|
-        Coût mensuel effectif le plus bas pour les apprenants qui souhaitent un système d’étude durable.
-    landing_plan_yearly_item_1|
-        Idéal pour les études linguistiques et professionnelles à long terme
-    landing_plan_yearly_item_2|
-        Coût réduit dans le temps
-    landing_plan_yearly_item_3|
-        Se renouvelle automatiquement jusqu'à annulation
-    landing_plan_yearly_btn|
-        Afficher les détails du forfait
-    landing_trust_h2|
-        Étudiez avec clarté. Abonnez-vous en toute confiance.
-    landing_trust_p|
-        Sachez ce qui est gratuit, ce que Premium ajoute et où obtenir de l'aide avant de vous engager.
-    landing_trust_item_1_title|
-        Entrée gratuite :
-    landing_trust_item_1_desc|
-        Créez un compte et explorez le matériel d'apprentissage disponible sans saisir les détails de paiement.
-    landing_trust_item_2_title|
-        Conditions transparentes :
-    landing_trust_item_2_desc|
-        Les informations sur les prix, le renouvellement, l'annulation, la confidentialité et le remboursement sont disponibles avant le paiement.
-    landing_trust_item_3_title|
-        Accompagnement humain :
-    landing_trust_item_3_desc|
-        Contactez vitalii@nohainc.com lorsque vous avez besoin d'aide.
-    landing_faq_1_q|
-        Dois-je créer chaque carte moi-même ?
-    landing_faq_1_a|
-        Non. Commencez par les sujets sélectionnés disponibles, puis créez votre propre matériel lorsque votre objectif devient plus spécifique.
-    landing_faq_2_q|
-        Puis-je utiliser Aliolo gratuitement ?
-    landing_faq_2_a|
-        Oui. Un compte gratuit fournit un point d'entrée à la bibliothèque ; la page de tarification explique quels flux de travail avancés nécessitent Premium.
-    landing_faq_3_q|
-        Puis-je annuler un abonnement ?
-    landing_faq_3_a|
-        Oui. Les abonnements peuvent être annulés via le canal où ils ont été achetés, l'accès se poursuivant normalement pendant la période payante.
-    landing_final_h2|
-        Prêt à faire en sorte que votre prochaine session d'étude compte ?
-    landing_final_p|
-        Créez un compte gratuit, choisissez un sujet et commencez à apprendre visuellement.
-    landing_final_btn|
-        Créer un compte gratuit
-    landing_footer_desc|
-        Cartes mémoire visuelles, répétitions espacées, organisation flexible des sujets et flux de travail de test ciblés pour les apprenants qui souhaitent une structure sans friction.
-    landing_footer_mor|
-        Commerçant officiel :
-    landing_footer_mor_desc|
-        Notre processus de commande peut être effectué par Paddle.com, notre revendeur en ligne et marchand officiel pour les commandes Web. Paddle gère le traitement des paiements, le service client lié aux paiements et les retours de ces commandes.
+    checkout_title Aliolo Commander
+    checkout_subtitle Paiement sécurisé pour les abonnements Aliolo Premium.
+    checkout_eyebrow Paiement sécurisé
+    checkout_h1 Finalisez votre achat Aliolo Premium.
+    checkout_status_title En attente du paiement
+    checkout_status_desc Si vous avez ouvert cette page depuis la facturation Aliolo, le formulaire de paiement devrait apparaître automatiquement.
+    checkout_payment_support_title Assistance au paiement
+    checkout_payment_support_desc Les paiements Web sont traités par Paddle.com en tant que marchand officiel.
+    checkout_billing_title Facturation des abonnements
+    checkout_billing_desc Aliolo Premium se renouvelle automatiquement jusqu'à annulation. Vous pouvez annuler plus tard via Paddle ou votre compte Aliolo.
+    checkout_policy_title Besoin de détails sur la politique ?
+    checkout_policy_desc Vérifiez les prix, les conditions d’abonnement, la confidentialité et les informations de remboursement avant de finaliser votre achat.
+    landing_meta_title Aliolo | Cartes mémoire visuelles, répétitions espacées et flux de travail d'étude plus intelligents
+    landing_meta_desc Aliolo aide les apprenants à maîtriser les langues, les sciences, l'anatomie, la préparation aux examens et les sujets sélectionnés avec des flashcards visuels, une répétition espacée et des modes de test interactifs.
+    landing_nav_features Caractéristiques
+    landing_nav_how_it_works Comment ça marche
+    landing_nav_pricing Tarifs
+    landing_nav_login Se connecter
+    landing_nav_cta Créer un compte gratuit
+    landing_hero_eyebrow Plateforme d'apprentissage visuel
+    landing_hero_h1 Apprenez visuellement. Rappelez-vous plus longtemps.
+    landing_hero_p Transformez les images, l'audio, la vidéo et le texte en cartes mémoire structurées. Apprenez avec le contexte, révisez au bon moment et testez ce dont vous vous souvenez vraiment.
+    landing_hero_btn_primary Créer un compte gratuit
+    landing_hero_btn_secondary Se connecter
+    landing_hero_proof_1_title Visuel
+    landing_hero_proof_1_desc Cartes mémoire compatibles avec les images, l'audio et la vidéo pour un apprentissage intensif en reconnaissance.
+    landing_hero_proof_2_title Adaptatif
+    landing_hero_proof_2_desc Répétition espacée et suivi des progrès pour revisiter le matériel au bon moment.
+    landing_hero_proof_3_title Structuré
+    landing_hero_proof_3_desc Piliers, dossiers, sujets et collections qui vont au-delà d’un simple deck.
+    landing_hero_preview_title Reconnaissance avant rappel
+    landing_hero_preview_desc Une véritable leçon d'Aliolo utilisant l'image, le texte, l'audio et la navigation guidée.
+    landing_hero_preview_chip Mode apprentissage
+    landing_features_h2 Tout ce dont vous avez besoin pour transformer l'exposition en rappel.
+    landing_features_p Développez la reconnaissance grâce aux médias riches, organisez les grandes bibliothèques et revisitez les documents avant qu'ils ne disparaissent.
+    landing_feature_1_title Apprenez avec plus que du texte
+    landing_feature_1_desc Utilisez des images, de l'audio, de la vidéo et des invites flexibles lorsque le sujet dépend de la reconnaissance et du contexte.
+    landing_feature_2_title Révisez avant qu'il ne disparaisse
+    landing_feature_2_desc La répétition espacée et le suivi des progrès ramènent les éléments importants à un moment utile.
+    landing_feature_3_title Développez-vous au-delà d’un seul deck
+    landing_feature_3_desc Organisez le matériel organisé ou personnalisé en piliers, dossiers, sujets et collections qui restent utilisables.
+    landing_workflow_h2 Un chemin clair entre « je devrais étudier » et « je sais ceci ».
+    landing_workflow_p Un flux de travail ciblé permet de garder l'étape suivante évidente sans aplatir chaque sujet dans le même type de carte.
+    landing_step_1_title Choisissez le bon matériau
+    landing_step_1_desc Commencez par un sujet sélectionné ou créez une bibliothèque ciblée pour un examen, une langue, une profession ou un objectif personnel.
+    landing_step_2_title Apprendre avec le contexte
+    landing_step_2_desc Développez la reconnaissance grâce aux cartes guidées et aux médias disponibles avant de demander à votre mémoire de travailler sans aide.
+    landing_step_3_title Testez le rappel réel
+    landing_step_3_desc Passez à des tests ciblés pour exposer les points faibles, renforcer la récupération et rendre les progrès mesurables.
+    landing_pricing_h2 Commencez gratuitement. Mettez à niveau lorsque vous avez besoin du flux de travail complet.
+    landing_pricing_p Créez un compte sans paiement. Premium ajoute une répétition espacée, une création, des tests, une lecture automatique, une organisation privée et une personnalisation plus approfondie.
+    landing_plan_weekly_desc Idéal pour les poussées à court terme, les révisions rapides ou la préparation d’une semaine d’examen.
+    landing_plan_weekly_item_1 Fenêtre d'engagement courte
+    landing_plan_weekly_item_2 Un moyen rapide d'essayer le flux de travail premium
+    landing_plan_weekly_item_3 Se renouvelle automatiquement jusqu'à annulation
+    landing_plan_weekly_btn Afficher les détails du forfait
+    landing_plan_monthly_desc Accès équilibré pour les étudiants qui développent une habitude d’apprentissage stable.
+    landing_plan_monthly_item_1 Idéal pour les études hebdomadaires régulières
+    landing_plan_monthly_item_2 Suffisamment de temps pour organiser de plus grandes bibliothèques thématiques
+    landing_plan_monthly_item_3 Se renouvelle automatiquement jusqu'à annulation
+    landing_plan_monthly_btn Afficher les détails du forfait
+    landing_plan_yearly_desc Coût mensuel effectif le plus bas pour les apprenants qui souhaitent un système d’étude durable.
+    landing_plan_yearly_item_1 Idéal pour les études linguistiques et professionnelles à long terme
+    landing_plan_yearly_item_2 Coût réduit dans le temps
+    landing_plan_yearly_item_3 Se renouvelle automatiquement jusqu'à annulation
+    landing_plan_yearly_btn Afficher les détails du forfait
+    landing_trust_h2 Étudiez avec clarté. Abonnez-vous en toute confiance.
+    landing_trust_p Sachez ce qui est gratuit, ce que Premium ajoute et où obtenir de l'aide avant de vous engager.
+    landing_trust_item_1_title Entrée gratuite :
+    landing_trust_item_1_desc Créez un compte et explorez le matériel d'apprentissage disponible sans saisir les détails de paiement.
+    landing_trust_item_2_title Conditions transparentes :
+    landing_trust_item_2_desc Les informations sur les prix, le renouvellement, l'annulation, la confidentialité et le remboursement sont disponibles avant le paiement.
+    landing_trust_item_3_title Accompagnement humain :
+    landing_trust_item_3_desc Contactez vitalii@nohainc.com lorsque vous avez besoin d'aide.
+    landing_faq_1_q Dois-je créer chaque carte moi-même ?
+    landing_faq_1_a Non. Commencez par les sujets sélectionnés disponibles, puis créez votre propre matériel lorsque votre objectif devient plus spécifique.
+    landing_faq_2_q Puis-je utiliser Aliolo gratuitement ?
+    landing_faq_2_a Oui. Un compte gratuit fournit un point d'entrée à la bibliothèque ; la page de tarification explique quels flux de travail avancés nécessitent Premium.
+    landing_faq_3_q Puis-je annuler un abonnement ?
+    landing_faq_3_a Oui. Les abonnements peuvent être annulés via le canal où ils ont été achetés, l'accès se poursuivant normalement pendant la période payante.
+    landing_final_h2 Prêt à faire en sorte que votre prochaine session d'étude compte ?
+    landing_final_p Créez un compte gratuit, choisissez un sujet et commencez à apprendre visuellement.
+    landing_final_btn Créer un compte gratuit
+    landing_footer_desc Cartes mémoire visuelles, répétitions espacées, organisation flexible des sujets et flux de travail de test ciblés pour les apprenants qui souhaitent une structure sans friction.
+    landing_footer_mor Commerçant officiel :
+    landing_footer_mor_desc Notre processus de commande peut être effectué par Paddle.com, notre revendeur en ligne et marchand officiel pour les commandes Web. Paddle gère le traitement des paiements, le service client lié aux paiements et les retours de ces commandes.

@@ -1,24 +1,14 @@
 ..
-    legal_info|
-        Jogi információk
-    last_updated|
-        Utoljára frissítve
-    support|
-        Támogatás
-    home|
-        Otthon
-    privacy|
-        Magánélet
-    terms|
-        Feltételek
-    refunds|
-        Visszatérítések
-    pricing|
-        Árképzés
-    privacy_title|
-        Aliolo Adatvédelmi szabályzat
-    privacy_subtitle|
-        Hogyan gyűjti, használja, tárolja és védi az Aliolo fiókkal, tanulással és fizetéssel kapcsolatos információkat.
+    legal_info Jogi információk
+    last_updated Utoljára frissítve
+    support Támogatás
+    home Otthon
+    privacy Magánélet
+    terms Feltételek
+    refunds Visszatérítések
+    pricing Árképzés
+    privacy_title Aliolo Adatvédelmi szabályzat
+    privacy_subtitle Hogyan gyűjti, használja, tárolja és védi az Aliolo fiókkal, tanulással és fizetéssel kapcsolatos információkat.
     privacy_body|
         <h2>Az általunk gyűjtött információk</h2>
         <p>Az Aliolo működéséhez szükséges információkat gyűjtjük, beleértve a fiókadatokat, például e-mail címet, felhasználónevet, jelszó-hitelesítési adatokat, avatarbeállításokat, preferenciákat és profilbeállításokat.</p>
@@ -41,10 +31,8 @@
         <p>Ésszerű technikai és szervezeti biztosítékokat alkalmazunk a személyes adatok védelme érdekében. Egyetlen online szolgáltatás sem garantálja a tökéletes biztonságot, de azon dolgozunk, hogy korlátozzuk a hozzáférést és megvédjük az adatokat a jogosulatlan használattól.</p>
         <h2>Az Ön választásai és jogai</h2>
         <p>Tartózkodási helyétől függően jogosultak lehetnek személyes adataihoz való hozzáférésre, azok javítására, törlésére, exportálására vagy használatának korlátozására. Vegye fel velünk a kapcsolatot a címen <a href="mailto:vitalii@nohainc.com">vitalii@nohainc.com</a> kérést tenni.</p>
-    terms_title|
-        Aliolo előfizetési feltételek
-    terms_subtitle|
-        Az Aliolo-fiókokra, a prémium hozzáférésre, az előfizetés számlázására, a lemondásra és az elfogadható használat szabályai.
+    terms_title Aliolo előfizetési feltételek
+    terms_subtitle Az Aliolo-fiókokra, a prémium hozzáférésre, az előfizetés számlázására, a lemondásra és az elfogadható használat szabályai.
     terms_body|
         <h2>Aliolo használata</h2>
         <p>Az Aliolo vizuális tanulási eszközöket, válogatott oktatási tartalmat, kártyákat, fejlődéskövetést és prémium tanulási funkciókat biztosít. Ön felelős a fiók hitelesítő adatainak biztonságáért és a szolgáltatás jogszerű használatáért.</p>
@@ -65,10 +53,8 @@
         <p>Az Aliolo oktatási és tanulmányi támogatási eszköz. Nem garantálunk konkrét tanulási, vizsga-, szakmai vagy pénzügyi eredményeket. A törvény által megengedett maximális mértékig az Aliolo a vonatkozó törvények által megkövetelteken túli garanciák nélkül biztosított.</p>
         <h2>A jelen Feltételek változásai</h2>
         <p>Frissíthetjük ezeket a feltételeket, hogy tükrözzék a termék, jogi, számlázási vagy működési változásokat. Az aktuális verzió ezen az oldalon található.</p>
-    refund_title|
-        Aliolo visszatérítési szabályzat
-    refund_subtitle|
-        Hogyan működik a visszatérítés, a törlés, a visszaterhelés és a fizetési támogatás az Aliolo Premium esetében.
+    refund_title Aliolo visszatérítési szabályzat
+    refund_subtitle Hogyan működik a visszatérítés, a törlés, a visszaterhelés és a fizetési támogatás az Aliolo Premium esetében.
     refund_body|
         <h2>Áttekintés</h2>
         <p>Az Aliolo Premium egy digitális előfizetés. Mivel a prémium hozzáférés azonnal aktiválható, a vásárlások általában az előfizetés aktiválása és felhasználása után véglegesek, kivéve, ha a jelen szabályzat, a vásárlási csatorna vagy a vonatkozó törvény másként rendelkezik.</p>
@@ -83,10 +69,8 @@
         <p>Webes megrendelés esetén vegye fel a kapcsolatot a Paddle vásárlói ügyfélszolgálatával a nyugtán található rendelési adatok segítségével, vagy lépjen kapcsolatba az Aliolo ügyfélszolgálatával a következő címen: <a href="mailto:vitalii@nohainc.com">vitalii@nohainc.com</a>. Fizetéssel kapcsolatos kéréseket irányíthatunk a Paddle-hez, ha a Paddle a rekordkereskedő.</p>
         <h2>Visszafizetések és visszaélések</h2>
         <p>Ha egy fizetést visszavonnak, vitatnak, visszatérítenek, vagy hamisként azonosítják, az Aliolo felfüggesztheti vagy eltávolíthatja az adott tranzakcióhoz kapcsolódó prémium hozzáférést.</p>
-    pricing_title|
-        Aliolo Premium árképzés
-    pricing_subtitle|
-        Egyszerű előfizetési lehetőségek a teljes Aliolo vizuális tanulási élmény feloldásához.
+    pricing_title Aliolo Premium árképzés
+    pricing_subtitle Egyszerű előfizetési lehetőségek a teljes Aliolo vizuális tanulási élmény feloldásához.
     pricing_body|
         <div class="plans">
         <section class="plan">
@@ -175,175 +159,89 @@
         <p>Az árak és az ajánlatok a webes fizetés, a Google Play, az Apple App Store, az országok, a pénznemek és a korlátozott idejű promóciók között változhatnak. Az utolsó fizetési képernyő szabályozza a vásárlás tényleges árát és megújítási feltételeit.</p>
         <h2>Kapcsolódó irányelvek</h2>
         <p>Előfizetés előtt tekintse át a <a href="/terms">Előfizetési feltételek</a>, <a href="/refund">Visszatérítési szabályzat</a>, és <a href="/privacy">Adatvédelmi szabályzat</a>.</p>
-    checkout_title|
-        Aliolo Checkout
-    checkout_subtitle|
-        Biztonságos fizetés az Aliolo Premium előfizetésekhez.
-    checkout_eyebrow|
-        Biztonságos fizetés
-    checkout_h1|
-        Végezze el Aliolo Premium vásárlását.
-    checkout_status_title|
-        Várakozás a pénztárra
-    checkout_status_desc|
-        Ha ezt az oldalt az Aliolo számlázásból nyitotta meg, a fizetési űrlapnak automatikusan meg kell jelennie.
-    checkout_payment_support_title|
-        Fizetési támogatás
-    checkout_payment_support_desc|
-        A webes fizetéseket a Paddle.com, mint Merchant of Record dolgozza fel.
-    checkout_billing_title|
-        Előfizetés számlázás
-    checkout_billing_desc|
-        Az Aliolo Premium automatikusan megújul a lemondásig. Később lemondhatja a Paddle-n vagy az Aliolo-fiókján keresztül.
-    checkout_policy_title|
-        Szüksége van a szabályzat részleteire?
-    checkout_policy_desc|
-        A vásárlás befejezése előtt tekintse át az árakat, az előfizetési feltételeket, az adatvédelmi és visszatérítési információkat.
-    landing_meta_title|
-        Aliolo | Vizuális kártyák, szóközzel történő ismétlés és intelligensebb tanulmányi munkafolyamatok
-    landing_meta_desc|
-        Az Aliolo vizuális kártyákkal, osztott ismétléssel és interaktív tesztmódokkal segíti a tanulókat a nyelvek, a természettudományok, az anatómia, a vizsgára való felkészülés és a kiválasztott tárgyak elsajátításában.
-    landing_nav_features|
-        Jellemzők
-    landing_nav_how_it_works|
-        Hogyan működik
-    landing_nav_pricing|
-        Árképzés
-    landing_nav_login|
-        Jelentkezzen be
-    landing_nav_cta|
-        Hozzon létre ingyenes fiókot
-    landing_hero_eyebrow|
-        Vizuális tanulási platform
-    landing_hero_h1|
-        Tanuljon vizuálisan. Emlékezz tovább.
-    landing_hero_p|
-        A képeket, hangokat, videókat és szövegeket strukturált kártyákká alakíthatja. Tanuljon a kontextus alapján, tekintse át a megfelelő időben, és tesztelje, hogy mire tud igazán visszaemlékezni.
-    landing_hero_btn_primary|
-        Hozzon létre ingyenes fiókot
-    landing_hero_btn_secondary|
-        Jelentkezzen be
-    landing_hero_proof_1_title|
-        Vizuális
-    landing_hero_proof_1_desc|
-        Kép-, hang- és videóbarát kártyák a felismerést igénylő tanuláshoz.
-    landing_hero_proof_2_title|
-        Adaptív
-    landing_hero_proof_2_desc|
-        Szóközök szerinti ismétlés és haladás követése az anyag megfelelő időben történő újralátogatásához.
-    landing_hero_proof_3_title|
-        Strukturált
-    landing_hero_proof_3_desc|
-        Oszlopok, mappák, témák és gyűjtemények, amelyek túlmutatnak egy egyszerű fedélzeten.
-    landing_hero_preview_title|
-        Felismerés visszahívás előtt
-    landing_hero_preview_desc|
-        Egy igazi Aliolo lecke kép, szöveg, hang és irányított navigáció használatával.
-    landing_hero_preview_chip|
-        Tanulási mód
-    landing_features_h2|
-        Minden, amire szüksége van ahhoz, hogy az expozíciót felidézéssé változtassa.
-    landing_features_p|
-        Építsen felismerést a multimédiával, tartsa rendszerezve a nagyobb könyvtárakat, és nézze meg újra az anyagot, mielőtt elhalványulna.
-    landing_feature_1_title|
-        Tanuljon többről, mint szövegből
-    landing_feature_1_desc|
-        Használjon képeket, hangot, videót és rugalmas felszólításokat, ha a téma a felismeréstől és a kontextustól függ.
-    landing_feature_2_title|
-        Tekintse át, mielőtt elhalványulna
-    landing_feature_2_desc|
-        Az időközönkénti ismétlés és a haladás követése hasznos időben hozza vissza a fontos anyagokat.
-    landing_feature_3_title|
-        Nőjjön túl egy fedélzeten
-    landing_feature_3_desc|
-        A válogatott vagy egyedi anyagokat oszlopokba, mappákba, témákba és gyűjteményekbe rendezheti, amelyek továbbra is használhatók maradnak.
-    landing_workflow_h2|
-        Egyértelmű út a "tanulnom kellene"-től a "tudom ezt"ig.
-    landing_workflow_p|
-        Egyetlen fókuszált munkafolyamat nyilvánvalóvá teszi a következő lépést anélkül, hogy minden témát ugyanabba a kártyába simítana.
-    landing_step_1_title|
-        Válassza ki a megfelelő anyagot
-    landing_step_1_desc|
-        Kezdje egy kurált témával, vagy építsen egy célzott könyvtárat egy vizsgához, nyelvhez, szakmához vagy személyes célhoz.
-    landing_step_2_title|
-        Tanuljon a kontextussal
-    landing_step_2_desc|
-        Az irányított kártyákon és a rendelkezésre álló adathordozókon keresztül építse fel a felismerést, mielőtt a memóriáját segítség nélkül kell működnie.
-    landing_step_3_title|
-        Tesztelje a valódi visszaemlékezést
-    landing_step_3_desc|
-        Váltson fókuszált tesztelésre, hogy feltárja a gyenge pontokat, megerősítse a visszakeresést, és mérhetővé tegye a fejlődést.
-    landing_pricing_h2|
-        Kezdje ingyen. Frissítsen, amikor szüksége van a teljes munkafolyamatra.
-    landing_pricing_p|
-        Hozzon létre egy fiókot fizetés nélkül. A Premium rendszeres ismétlést, létrehozást, tesztelést, automatikus lejátszást, privát rendszerezést és mélyebb testreszabást kínál.
-    landing_plan_weekly_desc|
-        Jó a rövid távú lökésekhez, gyors áttekintésekhez vagy a vizsgahetes felkészüléshez.
-    landing_plan_weekly_item_1|
-        Rövid kötelezettségvállalási időszak
-    landing_plan_weekly_item_2|
-        Gyors módja annak, hogy kipróbálja a prémium munkafolyamatot
-    landing_plan_weekly_item_3|
-        Lemondásig automatikusan megújul
-    landing_plan_weekly_btn|
-        Tekintse meg a terv részleteit
-    landing_plan_monthly_desc|
-        Kiegyensúlyozott hozzáférés a tanulók számára, akik állandó tanulási szokást alakítanak ki.
-    landing_plan_monthly_item_1|
-        A legjobb rendszeres heti tanuláshoz
-    landing_plan_monthly_item_2|
-        Elegendő idő a nagyobb tantárgyi könyvtárak rendszerezésére
-    landing_plan_monthly_item_3|
-        Lemondásig automatikusan megújul
-    landing_plan_monthly_btn|
-        Tekintse meg a terv részleteit
-    landing_plan_yearly_desc|
-        A legalacsonyabb tényleges havi költség azon tanulók számára, akik tartós tanulmányi rendszert szeretnének.
-    landing_plan_yearly_item_1|
-        Ideális hosszú távú nyelvi és szakmai tanuláshoz
-    landing_plan_yearly_item_2|
-        Alacsonyabb költség idővel
-    landing_plan_yearly_item_3|
-        Lemondásig automatikusan megújul
-    landing_plan_yearly_btn|
-        Tekintse meg a terv részleteit
-    landing_trust_h2|
-        Tanulmányozás világosan. Iratkozzon fel bizalommal.
-    landing_trust_p|
-        Tudja meg, mi ingyenes, mit ad hozzá a Premium, és hol kérhet segítséget, mielőtt elkötelezi magát.
-    landing_trust_item_1_title|
-        Ingyenes belépés:
-    landing_trust_item_1_desc|
-        Hozzon létre egy fiókot, és fedezze fel a rendelkezésre álló tananyagokat a fizetési adatok megadása nélkül.
-    landing_trust_item_2_title|
-        Átlátható feltételek:
-    landing_trust_item_2_desc|
-        Az árakkal, a megújítással, a törléssel, az adatvédelemmel és a visszatérítéssel kapcsolatos információk a fizetés előtt állnak rendelkezésre.
-    landing_trust_item_3_title|
-        Emberi támogatás:
-    landing_trust_item_3_desc|
-        Ha segítségre van szüksége, forduljon a vitalii@nohainc.com címhez.
-    landing_faq_1_q|
-        Minden kártyát magamnak kell létrehoznom?
-    landing_faq_1_a|
-        Nem. Kezdje a rendelkezésre álló kurált témákkal, majd hozzon létre saját anyagot, amikor a cél konkrétabbá válik.
-    landing_faq_2_q|
-        Használhatom ingyenesen az Aliolo-t?
-    landing_faq_2_a|
-        Igen. Az ingyenes fiók belépési pontot biztosít a könyvtárba; az árazási oldal elmagyarázza, hogy mely speciális munkafolyamatok igényelnek prémiumot.
-    landing_faq_3_q|
-        Lemondhatok egy előfizetést?
-    landing_faq_3_a|
-        Igen. Az előfizetések lemondhatók azon a csatornán keresztül, ahol megvásárolták, és a hozzáférés általában a fizetett időszakon keresztül folytatódik.
-    landing_final_h2|
-        Készen áll arra, hogy a következő tanulmányi ülése számítson?
-    landing_final_p|
-        Hozzon létre egy ingyenes fiókot, válasszon tantárgyat, és kezdje el vizuálisan tanulni.
-    landing_final_btn|
-        Hozzon létre ingyenes fiókot
-    landing_footer_desc|
-        Vizuális kártyák, osztott ismétlések, rugalmas tantárgyszervezés és fókuszált tesztelési munkafolyamatok azoknak a tanulóknak, akik súrlódásmentes szerkezetre vágynak.
-    landing_footer_mor|
-        Rekord kereskedő:
-    landing_footer_mor_desc|
-        Rendelési folyamatunkat a Paddle.com, az online viszonteladónk és a webes rendelések kereskedője végezheti. A Paddle kezeli a fizetések feldolgozását, a fizetéssel kapcsolatos ügyfélszolgálatot és az ilyen megrendelések visszaküldését.
+    checkout_title Aliolo Checkout
+    checkout_subtitle Biztonságos fizetés az Aliolo Premium előfizetésekhez.
+    checkout_eyebrow Biztonságos fizetés
+    checkout_h1 Végezze el Aliolo Premium vásárlását.
+    checkout_status_title Várakozás a pénztárra
+    checkout_status_desc Ha ezt az oldalt az Aliolo számlázásból nyitotta meg, a fizetési űrlapnak automatikusan meg kell jelennie.
+    checkout_payment_support_title Fizetési támogatás
+    checkout_payment_support_desc A webes fizetéseket a Paddle.com, mint Merchant of Record dolgozza fel.
+    checkout_billing_title Előfizetés számlázás
+    checkout_billing_desc Az Aliolo Premium automatikusan megújul a lemondásig. Később lemondhatja a Paddle-n vagy az Aliolo-fiókján keresztül.
+    checkout_policy_title Szüksége van a szabályzat részleteire?
+    checkout_policy_desc A vásárlás befejezése előtt tekintse át az árakat, az előfizetési feltételeket, az adatvédelmi és visszatérítési információkat.
+    landing_meta_title Aliolo | Vizuális kártyák, szóközzel történő ismétlés és intelligensebb tanulmányi munkafolyamatok
+    landing_meta_desc Az Aliolo vizuális kártyákkal, osztott ismétléssel és interaktív tesztmódokkal segíti a tanulókat a nyelvek, a természettudományok, az anatómia, a vizsgára való felkészülés és a kiválasztott tárgyak elsajátításában.
+    landing_nav_features Jellemzők
+    landing_nav_how_it_works Hogyan működik
+    landing_nav_pricing Árképzés
+    landing_nav_login Jelentkezzen be
+    landing_nav_cta Hozzon létre ingyenes fiókot
+    landing_hero_eyebrow Vizuális tanulási platform
+    landing_hero_h1 Tanuljon vizuálisan. Emlékezz tovább.
+    landing_hero_p A képeket, hangokat, videókat és szövegeket strukturált kártyákká alakíthatja. Tanuljon a kontextus alapján, tekintse át a megfelelő időben, és tesztelje, hogy mire tud igazán visszaemlékezni.
+    landing_hero_btn_primary Hozzon létre ingyenes fiókot
+    landing_hero_btn_secondary Jelentkezzen be
+    landing_hero_proof_1_title Vizuális
+    landing_hero_proof_1_desc Kép-, hang- és videóbarát kártyák a felismerést igénylő tanuláshoz.
+    landing_hero_proof_2_title Adaptív
+    landing_hero_proof_2_desc Szóközök szerinti ismétlés és haladás követése az anyag megfelelő időben történő újralátogatásához.
+    landing_hero_proof_3_title Strukturált
+    landing_hero_proof_3_desc Oszlopok, mappák, témák és gyűjtemények, amelyek túlmutatnak egy egyszerű fedélzeten.
+    landing_hero_preview_title Felismerés visszahívás előtt
+    landing_hero_preview_desc Egy igazi Aliolo lecke kép, szöveg, hang és irányított navigáció használatával.
+    landing_hero_preview_chip Tanulási mód
+    landing_features_h2 Minden, amire szüksége van ahhoz, hogy az expozíciót felidézéssé változtassa.
+    landing_features_p Építsen felismerést a multimédiával, tartsa rendszerezve a nagyobb könyvtárakat, és nézze meg újra az anyagot, mielőtt elhalványulna.
+    landing_feature_1_title Tanuljon többről, mint szövegből
+    landing_feature_1_desc Használjon képeket, hangot, videót és rugalmas felszólításokat, ha a téma a felismeréstől és a kontextustól függ.
+    landing_feature_2_title Tekintse át, mielőtt elhalványulna
+    landing_feature_2_desc Az időközönkénti ismétlés és a haladás követése hasznos időben hozza vissza a fontos anyagokat.
+    landing_feature_3_title Nőjjön túl egy fedélzeten
+    landing_feature_3_desc A válogatott vagy egyedi anyagokat oszlopokba, mappákba, témákba és gyűjteményekbe rendezheti, amelyek továbbra is használhatók maradnak.
+    landing_workflow_h2 Egyértelmű út a "tanulnom kellene"-től a "tudom ezt"ig.
+    landing_workflow_p Egyetlen fókuszált munkafolyamat nyilvánvalóvá teszi a következő lépést anélkül, hogy minden témát ugyanabba a kártyába simítana.
+    landing_step_1_title Válassza ki a megfelelő anyagot
+    landing_step_1_desc Kezdje egy kurált témával, vagy építsen egy célzott könyvtárat egy vizsgához, nyelvhez, szakmához vagy személyes célhoz.
+    landing_step_2_title Tanuljon a kontextussal
+    landing_step_2_desc Az irányított kártyákon és a rendelkezésre álló adathordozókon keresztül építse fel a felismerést, mielőtt a memóriáját segítség nélkül kell működnie.
+    landing_step_3_title Tesztelje a valódi visszaemlékezést
+    landing_step_3_desc Váltson fókuszált tesztelésre, hogy feltárja a gyenge pontokat, megerősítse a visszakeresést, és mérhetővé tegye a fejlődést.
+    landing_pricing_h2 Kezdje ingyen. Frissítsen, amikor szüksége van a teljes munkafolyamatra.
+    landing_pricing_p Hozzon létre egy fiókot fizetés nélkül. A Premium rendszeres ismétlést, létrehozást, tesztelést, automatikus lejátszást, privát rendszerezést és mélyebb testreszabást kínál.
+    landing_plan_weekly_desc Jó a rövid távú lökésekhez, gyors áttekintésekhez vagy a vizsgahetes felkészüléshez.
+    landing_plan_weekly_item_1 Rövid kötelezettségvállalási időszak
+    landing_plan_weekly_item_2 Gyors módja annak, hogy kipróbálja a prémium munkafolyamatot
+    landing_plan_weekly_item_3 Lemondásig automatikusan megújul
+    landing_plan_weekly_btn Tekintse meg a terv részleteit
+    landing_plan_monthly_desc Kiegyensúlyozott hozzáférés a tanulók számára, akik állandó tanulási szokást alakítanak ki.
+    landing_plan_monthly_item_1 A legjobb rendszeres heti tanuláshoz
+    landing_plan_monthly_item_2 Elegendő idő a nagyobb tantárgyi könyvtárak rendszerezésére
+    landing_plan_monthly_item_3 Lemondásig automatikusan megújul
+    landing_plan_monthly_btn Tekintse meg a terv részleteit
+    landing_plan_yearly_desc A legalacsonyabb tényleges havi költség azon tanulók számára, akik tartós tanulmányi rendszert szeretnének.
+    landing_plan_yearly_item_1 Ideális hosszú távú nyelvi és szakmai tanuláshoz
+    landing_plan_yearly_item_2 Alacsonyabb költség idővel
+    landing_plan_yearly_item_3 Lemondásig automatikusan megújul
+    landing_plan_yearly_btn Tekintse meg a terv részleteit
+    landing_trust_h2 Tanulmányozás világosan. Iratkozzon fel bizalommal.
+    landing_trust_p Tudja meg, mi ingyenes, mit ad hozzá a Premium, és hol kérhet segítséget, mielőtt elkötelezi magát.
+    landing_trust_item_1_title Ingyenes belépés:
+    landing_trust_item_1_desc Hozzon létre egy fiókot, és fedezze fel a rendelkezésre álló tananyagokat a fizetési adatok megadása nélkül.
+    landing_trust_item_2_title Átlátható feltételek:
+    landing_trust_item_2_desc Az árakkal, a megújítással, a törléssel, az adatvédelemmel és a visszatérítéssel kapcsolatos információk a fizetés előtt állnak rendelkezésre.
+    landing_trust_item_3_title Emberi támogatás:
+    landing_trust_item_3_desc Ha segítségre van szüksége, forduljon a vitalii@nohainc.com címhez.
+    landing_faq_1_q Minden kártyát magamnak kell létrehoznom?
+    landing_faq_1_a Nem. Kezdje a rendelkezésre álló kurált témákkal, majd hozzon létre saját anyagot, amikor a cél konkrétabbá válik.
+    landing_faq_2_q Használhatom ingyenesen az Aliolo-t?
+    landing_faq_2_a Igen. Az ingyenes fiók belépési pontot biztosít a könyvtárba; az árazási oldal elmagyarázza, hogy mely speciális munkafolyamatok igényelnek prémiumot.
+    landing_faq_3_q Lemondhatok egy előfizetést?
+    landing_faq_3_a Igen. Az előfizetések lemondhatók azon a csatornán keresztül, ahol megvásárolták, és a hozzáférés általában a fizetett időszakon keresztül folytatódik.
+    landing_final_h2 Készen áll arra, hogy a következő tanulmányi ülése számítson?
+    landing_final_p Hozzon létre egy ingyenes fiókot, válasszon tantárgyat, és kezdje el vizuálisan tanulni.
+    landing_final_btn Hozzon létre ingyenes fiókot
+    landing_footer_desc Vizuális kártyák, osztott ismétlések, rugalmas tantárgyszervezés és fókuszált tesztelési munkafolyamatok azoknak a tanulóknak, akik súrlódásmentes szerkezetre vágynak.
+    landing_footer_mor Rekord kereskedő:
+    landing_footer_mor_desc Rendelési folyamatunkat a Paddle.com, az online viszonteladónk és a webes rendelések kereskedője végezheti. A Paddle kezeli a fizetések feldolgozását, a fizetéssel kapcsolatos ügyfélszolgálatot és az ilyen megrendelések visszaküldését.
