@@ -101,6 +101,10 @@ LEGAL_STYLES = """
   a { color: var(--brand); font-weight: 700; text-decoration: none; }
   a:hover { text-decoration: underline; }
   .shell { width: min(1100px, calc(100% - 40px)); margin: 0 auto; }
+  h1, h2, h3, p, li, .subtitle, .meta, .content {
+    overflow-wrap: anywhere;
+    word-break: normal;
+  }
   header {
     position: sticky;
     top: 0;
@@ -160,6 +164,7 @@ LEGAL_STYLES = """
     font-family: inherit;
     font-size: 14px;
     font-weight: 600;
+    min-height: 44px;
     padding: 6px 32px 6px 12px;
     border: 1px solid var(--line);
     border-radius: 999px;
@@ -184,6 +189,7 @@ LEGAL_STYLES = """
     align-items: stretch;
     margin-bottom: 28px;
   }
+  .hero > * { min-width: 0; }
   h1 {
     margin: 0;
     font-family: "Manrope", system-ui, sans-serif;
@@ -221,6 +227,8 @@ LEGAL_STYLES = """
     font-size: 14px;
     color: var(--muted);
     box-shadow: var(--shadow);
+    min-width: 0;
+    max-width: 100%;
   }
   .meta strong { color: var(--ink); font-weight: 600; }
   .content {
@@ -293,6 +301,9 @@ LEGAL_STYLES = """
     border: 1px solid var(--line);
     background: rgba(255, 255, 255, 0.96);
     box-shadow: 0 16px 34px rgba(17, 32, 52, 0.05);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    max-width: 100%;
   }
   .comparison-card h2 {
     margin-top: 0;
@@ -304,6 +315,7 @@ LEGAL_STYLES = """
     width: 100%;
     border-collapse: collapse;
     margin-top: 18px;
+    table-layout: fixed;
   }
   .comparison-table th,
   .comparison-table td {
@@ -311,6 +323,7 @@ LEGAL_STYLES = """
     border-bottom: 1px solid var(--line);
     text-align: center;
     font-size: 15px;
+    overflow-wrap: anywhere;
   }
   .comparison-table th:first-child,
   .comparison-table td:first-child {
@@ -354,6 +367,15 @@ LEGAL_STYLES = """
     nav { gap: 6px; }
     nav a { padding: 9px 12px; }
     main { padding-top: 24px; }
+    h1 { font-size: clamp(32px, 12vw, 44px); }
+    .subtitle { font-size: 16px; }
+    .hero { grid-template-columns: minmax(0, 1fr); }
+    .comparison-card { padding: 20px; }
+    .comparison-table th,
+    .comparison-table td {
+      padding: 12px 8px;
+      font-size: 14px;
+    }
   }
 """
 
@@ -543,6 +565,7 @@ PAY_STYLES = """
       font-family: inherit;
       font-size: 14px;
       font-weight: 600;
+      min-height: 44px;
       padding: 6px 32px 6px 12px;
       border: 1px solid var(--line);
       border-radius: 999px;
@@ -630,7 +653,7 @@ LANDING_STYLES = """
     align-items: center;
     justify-content: space-between;
     gap: 20px;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
   }
   .brand-name {
     display: inline-flex;
@@ -654,7 +677,9 @@ LANDING_STYLES = """
     display: flex;
     align-items: center;
     gap: 10px;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    min-width: 0;
   }
   nav a {
     color: var(--ink);
@@ -674,6 +699,7 @@ LANDING_STYLES = """
     font-family: inherit;
     font-size: 14px;
     font-weight: 600;
+    min-height: 44px;
     padding: 6px 32px 6px 12px;
     border: 1px solid var(--line);
     border-radius: 999px;
@@ -697,6 +723,10 @@ LANDING_STYLES = """
     font-weight: 700;
   }
   .nav-login { color: var(--brand); font-weight: 700; }
+  h1, h2, h3, p, li, .btn, .eyebrow, .price-amount, .preview-caption, .final-cta {
+    overflow-wrap: anywhere;
+    word-break: normal;
+  }
   main { padding: 32px 0 80px; }
   .hero {
     display: grid;
@@ -1169,6 +1199,64 @@ LANDING_STYLES = """
     .footer-links { justify-content: flex-start; }
     .price-card.featured { transform: none; }
     .hero-copy { padding-top: 24px; }
+  }
+  @media (max-width: 960px) {
+    .brand { align-items: flex-start; }
+    nav {
+      width: 100%;
+      justify-content: flex-start;
+    }
+    .desktop-link { display: none; }
+    .lang-select {
+      max-width: 100%;
+      min-height: 44px;
+    }
+    .nav-login,
+    .nav-cta {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  @media (max-width: 520px) {
+    .shell { width: min(100% - 28px, 1160px); }
+    header { position: static; }
+    .brand-name { font-size: 24px; }
+    nav {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      width: 100%;
+      gap: 8px;
+    }
+    .lang-select {
+      grid-column: 1 / -1;
+      width: 100%;
+    }
+    .nav-login,
+    .nav-cta {
+      width: 100%;
+      text-align: center;
+      padding-inline: 10px;
+    }
+    main { padding-top: 20px; }
+    .hero-copy { padding-top: 18px; }
+    h1 {
+      font-size: clamp(36px, 13vw, 52px);
+      line-height: 1.04;
+    }
+    .hero p { font-size: 17px; }
+    .cta-group {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    .cta-group .btn { width: 100%; }
+    .final-cta {
+      align-items: stretch;
+      flex-direction: column;
+    }
+    .final-cta .btn { width: 100%; }
   }
 """
 

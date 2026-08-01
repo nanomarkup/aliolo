@@ -88,6 +88,10 @@
   a { color: var(--brand); font-weight: 700; text-decoration: none; }
   a:hover { text-decoration: underline; }
   .shell { width: min(1100px, calc(100% - 40px)); margin: 0 auto; }
+  h1, h2, h3, p, li, .subtitle, .meta, .content {
+    overflow-wrap: anywhere;
+    word-break: normal;
+  }
   header {
     position: sticky;
     top: 0;
@@ -147,6 +151,7 @@
     font-family: inherit;
     font-size: 14px;
     font-weight: 600;
+    min-height: 44px;
     padding: 6px 32px 6px 12px;
     border: 1px solid var(--line);
     border-radius: 999px;
@@ -171,6 +176,7 @@
     align-items: stretch;
     margin-bottom: 28px;
   }
+  .hero > * { min-width: 0; }
   h1 {
     margin: 0;
     font-family: "Manrope", system-ui, sans-serif;
@@ -208,6 +214,8 @@
     font-size: 14px;
     color: var(--muted);
     box-shadow: var(--shadow);
+    min-width: 0;
+    max-width: 100%;
   }
   .meta strong { color: var(--ink); font-weight: 600; }
   .content {
@@ -280,6 +288,9 @@
     border: 1px solid var(--line);
     background: rgba(255, 255, 255, 0.96);
     box-shadow: 0 16px 34px rgba(17, 32, 52, 0.05);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    max-width: 100%;
   }
   .comparison-card h2 {
     margin-top: 0;
@@ -291,6 +302,7 @@
     width: 100%;
     border-collapse: collapse;
     margin-top: 18px;
+    table-layout: fixed;
   }
   .comparison-table th,
   .comparison-table td {
@@ -298,6 +310,7 @@
     border-bottom: 1px solid var(--line);
     text-align: center;
     font-size: 15px;
+    overflow-wrap: anywhere;
   }
   .comparison-table th:first-child,
   .comparison-table td:first-child {
@@ -341,6 +354,15 @@
     nav { gap: 6px; }
     nav a { padding: 9px 12px; }
     main { padding-top: 24px; }
+    h1 { font-size: clamp(32px, 12vw, 44px); }
+    .subtitle { font-size: 16px; }
+    .hero { grid-template-columns: minmax(0, 1fr); }
+    .comparison-card { padding: 20px; }
+    .comparison-table th,
+    .comparison-table td {
+      padding: 12px 8px;
+      font-size: 14px;
+    }
   }
 </style>
 </head>
