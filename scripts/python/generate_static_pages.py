@@ -1398,7 +1398,7 @@ LANDING_LAYOUT = """<!DOCTYPE html>
   <meta property="og:type" content="website">
   <meta property="og:title" content="{{T_landing_meta_title}}">
   <meta property="og:description" content="{{T_landing_meta_desc}}">
-  <meta property="og:url" content="https://aliolo.com{{PREFIX}}/">
+  <meta property="og:url" content="{{CANONICAL_URL}}">
   <meta property="og:image" content="https://aliolo.com/aliolo-social-preview.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -1407,7 +1407,7 @@ LANDING_LAYOUT = """<!DOCTYPE html>
   <meta name="twitter:title" content="{{T_landing_meta_title}}">
   <meta name="twitter:description" content="{{T_landing_meta_desc}}">
   <meta name="twitter:image" content="https://aliolo.com/aliolo-social-preview.png">
-  <link rel="canonical" href="https://aliolo.com{{PREFIX}}/">
+  <link rel="canonical" href="{{CANONICAL_URL}}">
   <link rel="apple-touch-icon" href="/icons/Icon-192.png">
   <link rel="icon" type="image/webp" href="/app_icon.webp">
   <link rel="manifest" href="/manifest.json">
@@ -1794,14 +1794,18 @@ def render_pay(lang: str, t: dict) -> str:
 def render_landing(lang: str, t: dict) -> str:
     prefix = "" if lang == "en" else f"/{lang}"
     
+    canonical_url = "https://aliolo.com/" if lang == "en" else f"https://aliolo.com/{lang}"
+    
     seo_alternate_links = []
     for l in SUPPORTED_LANGUAGES:
-        seo_alternate_links.append(f'  <link rel="alternate" hreflang="{l}" href="https://aliolo.com{"" if l == "en" else "/" + l}">')
+        alt_url = "https://aliolo.com/" if l == "en" else f"https://aliolo.com/{l}"
+        seo_alternate_links.append(f'  <link rel="alternate" hreflang="{l}" href="{alt_url}">')
     seo_alternates_html = "\n  ".join(seo_alternate_links)
 
     html = LANDING_LAYOUT
     html = html.replace("{{LANG}}", lang)
     html = html.replace("{{PREFIX}}", prefix)
+    html = html.replace("{{CANONICAL_URL}}", canonical_url)
     html = html.replace("{{SEO_ALTERNATES}}", seo_alternates_html)
     html = html.replace("{{LANG_SWITCHER}}", render_lang_switcher(lang, "landing"))
     html = html.replace("{{LANDING_STYLES}", LANDING_STYLES)
