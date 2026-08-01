@@ -1,0 +1,228 @@
+..
+    a_folder_with_this_name_already_exists_in_this_pillar Ebben a pillérben már létezik ilyen nevű mappa
+    about Körülbelül
+    about_intro_audience_desc Az Aliolo támogatja azokat a tanulókat, akik strukturált felülvizsgálatot szeretnének, a szülőket és tanárokat, akiknek megközelíthető tanulmányi tartalomra van szükségük, valamint azokat az alkotókat, akik saját tananyagaikat szervezik és teszik közzé.
+    about_intro_audience_title Kinek szól
+    about_intro_desc Az Aliolo egy vizuális tanulási alkalmazás, amely egyszerű tanulmányi folyamatokra, rugalmas tartalomszervezésre és folyamatos előrehaladásra épül.
+    about_intro_start_desc Kezdje az irányítópulton, válasszon egy oszlopot, nyisson meg egy tárgyat, és kezdje a Tanulás lehetőséggel. Mentse el a hasznos tartalmakat a kedvencek közé, így később könnyebben meglátogathatja.
+    about_intro_start_title Hogyan kezdjem
+    about_intro_title Körülbelül Aliolo
+    about_learn_discovery_desc A keresés, az életkor szűrői és a forrásszűrők, például a kedvencek, az enyém és a nyilvános könyvtár segít gyorsan megtalálni a megfelelő tartalmat.
+    about_learn_discovery_title Felfedezés és szűrés
+    about_learn_language_desc Tanulmányozhat tartalmat különböző nyelveken, és módosíthatja a munkamenet-beállításokat profiljában, hogy azok megfeleljenek tempójának és aktuális céljainak.
+    about_learn_language_title Nyelvi és mód rugalmasság
+    about_learn_media_desc A képek, hangok és videók támogathatják a felismerést, a kiejtést és a kontextust, ha rendelkezésre állnak a tananyagban.
+    about_learn_media_title Média támogatás
+    about_learn_modes_desc Használja a Tanulás funkciót a felismerés és magabiztosság növelésére, majd váltson a Tesztre, ha szigorúbb visszahívást és gyorsabb ellenőrzést szeretne.
+    about_learn_modes_title Tanulj és tesztelj
+    about_learn_title Hogyan tanulsz
+    about_organize_collections_desc A gyűjtemények több tárgyat egyesítenek egy tanulmányi folyamatba, ami hasznos vegyes áttekintések és válogatott készletek esetén.
+    about_organize_collections_title Gyűjtemények
+    about_organize_creation_desc Az alkotók megszervezhetik saját tartalmaikat, munka közben privátként kezelhetik, vagy ha készen állnak, közzétehetik a nyilvános könyvtárban.
+    about_organize_creation_title Tulajdonjog és láthatóság
+    about_organize_folders_desc A mappák a kapcsolódó témákat egy oszlopon belül csoportosítják, így a nagyobb tartalomkészletek kezelhetők maradnak.
+    about_organize_folders_title Mappák
+    about_organize_subjects_desc A tantárgyak jelentik a tanulás fő egységét. Ők tartják a kártyákat, amelyeket a Tanulás és a Teszt munkamenetekben kinyit.
+    about_organize_subjects_title Tantárgyak
+    about_organize_title Hogyan szerveződik a tartalom
+    about_progress_goals_desc Profilja segítségével beállíthatja a napi célokat, megtudhatja a munkamenet méretét, a tesztmunkamenet méretét és a válaszok számát.
+    about_progress_goals_title Napi célok és munkamenet-beállítások
+    about_progress_social_desc A barátok és a ranglista-funkciók az alapvető tanulási folyamat megváltoztatása nélkül közösségi fejlődést tesznek lehetővé.
+    about_progress_social_title Barátok és a ranglista
+    about_progress_title Haladás, barátok és ranglista
+    about_progress_xp_desc Aliolo nyomon követi a teljes XP-t, az aktuális sorozatot és a maximális sorozatot, így a haladás rövid és hosszú tanulmányi időszakokban is látható.
+    about_progress_xp_title XP és Streaks
+    about_support_docs_desc Az alkalmazáson belüli dokumentációs oldal elmagyarázza, hogyan működnek ma az irányítópult, a tanulmányi folyamatok és az alkotói eszközök.
+    about_support_docs_title Dokumentáció
+    about_support_feedback_desc Használjon visszajelzési belépési pontokat az alkalmazásban, hogy jelentse a hibákat, javasoljon fejlesztéseket, vagy jelezze a konkrét tartalmi problémákat a kontextussal.
+    about_support_feedback_title Visszajelzés és jelentés
+    about_support_licenses_desc A licencek oldalon először a Aliolo kereskedelmi licence, majd a mellékelt harmadik féltől származó csomaglicencek szerepelnek.
+    about_support_licenses_title Licencek
+    about_support_onboarding_desc Bármikor újra megtekintheti a belépést, és áttekintheti az alkalmazás főbb ötleteit és beállítási folyamatát.
+    about_support_onboarding_title Felvétel
+    about_support_settings_desc A felhasználói felület nyelve, a téma mód, a téma színe, a hang, az oldalsáv elhelyezése és a dokumentáció láthatósága mind beállíthatók a beállításokból.
+    about_support_settings_title Személyre szabás
+    about_support_title Beállítások, visszajelzés és támogatás
+    addition_emoji Emoji kiegészítés
+    addition_numbers Kiegészítő számok
+    aliolo aliolo
+    all_rights_reserved Minden jog fenntartva
+    are_you_sure_you_want_to_close_this_feedback_request Biztosan bezárja ezt a visszajelzési kérelmet?
+    are_you_sure_you_want_to_delete_this_folder Biztosan törli ezt a mappát?
+    attach_image Kép csatolása
+    back Vissza
+    back_to_subjects Vissza a témákhoz
+    best_for_quick_goals Legjobb gyors gólokhoz
+    billing_disclaimer Az előfizetések automatikusan megújulnak, hacsak nem mondják le. Előfizetését az üzlet beállításaiban kezelheti.
+    billing_title Számlázás
+    browser Böngésző
+    cancel Mégse
+    cannot_delete_folder_it_is_not_empty A mappa nem törölhető: nem üres
+    card_id Kártyaazonosító
+    check_your_email_for_code Ellenőrizze az e-mailben a kódot
+    clear Világos
+    click_to_view_original Kattintson az eredeti megtekintéséhez
+    close Közeli
+    close_request Bezárja a kérést?
+    collection_id Gyűjteményazonosító
+    colors Színek
+    confirm_subscription Erősítse meg az előfizetést
+    context Kontextus
+    could_not_launch Nem sikerült elindítani a $url
+    counting Számolás
+    current_subscription Jelenlegi előfizetés
+    delete Töröl
+    device Eszköz
+    doc_create_intro_desc Ez a lap azt mutatja be, hogy az alkotók hogyan rendszerezik a tartalmat, lokalizálják azt, és hogyan tesznek közzé hasznos tananyagokat a munkafolyamat túlbonyolítása nélkül.
+    doc_create_intro_title Teremt
+    doc_create_json_desc A JSON-alapú létrehozás egy fejlett munkafolyamat a strukturált tömeges tartalomhoz. Ennek opcionálisnak kell maradnia; a legtöbb alkotónak képesnek kell lennie a tartalom létrehozására és szerkesztésére a szabványos űrlapokon keresztül.
+    doc_create_json_title Speciális JSON-importálás
+    doc_create_localization_desc Helyezze el a tartalmat oda, ahol a legfontosabb: nevek, leírások, felszólítások és válaszok. A címkék konzisztensek legyenek a különböző nyelveken, hogy a felhasználók a struktúra elvesztése nélkül válthassanak tanulmányi nyelvet.
+    doc_create_localization_title Lokalizáció
+    doc_create_media_desc A képeknek, a hangnak és a videónak támogatnia kell a tanulási célt, nem pedig elvonnia róla a figyelmet. Adjon hozzá médiát, ha az javítja a felismerést, a kiejtést vagy a szövegkörnyezetet, és tartsa a kártyákat akkor is használható állapotban, ha hiányzik a média.
+    doc_create_media_title Média munkafolyamat
+    doc_create_model_desc Az alkotók oszlopokon belül dolgoznak, és mappákba, témákba, gyűjteményekbe és kártyákba rendezik az anyagokat. Először építse fel a szerkezetet, majd töltse ki lokalizált promptokkal, válaszokkal és opcionális adathordozókkal.
+    doc_create_model_title Tartalommodell
+    doc_create_visibility_desc Használja az „enyémet” a saját tartalmain való munkához, a kedvenceket a hasznos elemek rögzítéséhez, a nyilvános könyvtárat pedig a megosztott anyagok böngészéséhez. A nyilvános láthatóság befolyásolja a felfedezést, míg a tulajdonjog azt, hogy mit szerkeszthet vagy törölhet.
+    doc_create_visibility_title Tulajdonjog és láthatóság
+    doc_start_dashboard_desc Az irányítópult a fő könyvtára. Használja a keresést a tartalom gyors megtalálásához, majd kombinálja a forrásszűrőket, például a kedvencek, az enyém és a nyilvános könyvtár életkorszűrőkkel a zaj csökkentése érdekében.
+    doc_start_dashboard_title Irányítópult, Keresés és szűrők
+    doc_start_feedback_desc Használja a visszajelzések belépési pontjait az alkalmazásban, ha valami nincs rendben vagy nem egyértelmű. A jelentések tartalmazhatják az aktuális kontextust, ami megkönnyíti a tartalmi problémák áttekintését és kijavítását.
+    doc_start_feedback_title Visszajelzés és segítség
+    doc_start_intro_desc Használja ezt a lapot, ha megtudja, hogyan illeszkednek egymáshoz az irányítópult, a könyvtár, az előrehaladás és a közösségi funkciók.
+    doc_start_intro_title Kezdő lépések
+    doc_start_progress_desc A profilod a teljes XP-t, az aktuális sorozatot, a maximális sorozatot és a napi célhaladást mutatja. A munkamenet mérete és a válaszok száma szintén a profiloldalról kezelhető.
+    doc_start_progress_title Haladás és célok
+    doc_start_quick_desc Válasszon egy oszlopot az irányítópulton, nyisson meg egy témát, és kezdje el a Tanulás lehetőséggel. Használja kedvenceit és szűrőit a könyvtár szűkítéséhez, majd tekintse át XP-jét, sorozatait és napi célját a profiljából.
+    doc_start_quick_title Gyors kezdés
+    doc_start_structure_desc Az alanyok kártyákat tartanak. A mappák a kapcsolódó tartalmakat egy oszlopon belül csoportosítják. A gyűjtemények olyan válogatott készletek, amelyek több tárgyat kombinálhatnak tanulmányozás és megosztás céljából.
+    doc_start_structure_title Tárgyak, mappák és gyűjtemények
+    doc_study_how_desc Kezdje a Tanulás lehetőséggel, amikor felismeri a felismerést, majd váltson a Tesztre, ha gyorsabb visszahívást és szigorúbb ellenőrzést szeretne. Használjon rövidebb munkameneteket a célzott áttekintéshez, és nagyobb munkameneteket a szélesebb lefedettség érdekében.
+    doc_study_how_title Hogyan tanuljunk
+    doc_study_intro_desc Ez a lap elmagyarázza, hogyan mozoghat a tartalom között, hogyan választhatja ki a megfelelő módot, és hogyan hangolhatja át a munkameneteket áttekintésre vagy visszahívásra.
+    doc_study_intro_title Tanulmány
+    doc_study_media_desc Ha rendelkezésre áll média, használja a kiejtés és a felismerés megerősítésére. Az automatikus lejátszás a leghasznosabb passzív áttekintéshez vagy rövidebb munkamenetek során történő ismételt hallgatáshoz.
+    doc_study_media_title Hang, automatikus lejátszás és média
+    doc_study_modes_desc A tanulás és a tesztelés az alapvető tanulási módok. Ugyanazt a tartalmat használják, de támogatják a különböző ütemezési és válaszelvárásokat, ezért váltson módot aszerint, hogy feltárja vagy ellenőrzi a megőrzést.
+    doc_study_modes_title Tanulási és tesztelési módok
+    doc_study_scope_desc A tanulmányozás kezdődhet egyetlen tárgyból, mappanézetből vagy gyűjteményből. A gyűjtemények akkor hasznosak, ha vegyes munkamenetet szeretne több témában anélkül, hogy elhagyná az aktuális folyamatot.
+    doc_study_scope_title Tantárgyak, mappák és gyűjtemények a tanulmányban
+    doc_tab_create Teremt
+    doc_tab_start Indul
+    doc_tab_study Tanulmány
+    documentation Dokumentáció
+    edit_subscription Előfizetés szerkesztése
+    email_updated_successfully Az e-mail sikeresen frissítve!
+    enter_current_password Adja meg az aktuális jelszót
+    error Hiba: $e
+    error_deleting Hiba a törléskor: $e
+    error_saving Hiba a mentéskor: $e
+    error_saving_card Hiba a kártya mentésekor: $e
+    error_updating_favorite Hiba történt a kedvenc frissítésekor: $e
+    failed_to_send_reset_code Nem sikerült elküldeni a visszaállítási kódot
+    failed_to_send_verification_code Nem sikerült elküldeni az ellenőrző kódot
+    fake_only Csak hamisítvány
+    feature_creation Létrehozási eszközök
+    feature_customize Speciális testreszabás
+    feature_full_library Teljes hozzáférés a könyvtárhoz
+    feature_testing Interaktív tesztelés
+    folder_id Mappaazonosító
+    free_only Ingyenes felhasználók
+    generic Általános
+    home Otthon
+    invalid_code Érvénytelen kód
+    invalid_email_address Érvénytelen e-mail cím
+    invalid_json Érvénytelen JSON: $e
+    invalid_or_expired_invitation_link Érvénytelen vagy lejárt meghívó link.
+    invalid_or_expired_reset_code Érvénytelen vagy lejárt visszaállítási kód.
+    invitation_sent_awaiting_registration Meghívó elküldve (regisztrációra vár)
+    invited_and_request_sent Meghívott és kérés elküldve!
+    json JSON
+    label_suffix $label:
+    leaderboard Ranglista
+    licenses Licencek
+    licenses_aliolo_section_title Aliolo Kereskedelmi engedély
+    licenses_aliolo_subtitle Saját szoftver és prémium hozzáférési feltételek
+    licenses_intro_desc Aliolo kereskedelmi licence jelenik meg először. A harmadik féltől származó csomaglicencek az alábbiakban olvashatók.
+    licenses_intro_title Aliolo Licenc és csomag megjegyzések
+    licenses_third_party_section_title Harmadik féltől származó csomaglicencek
+    linux_distro Linux Distro
+    loading Terhelés...
+    localized_data Lokalizált adatok
+    monthly_access Havi hozzáférés
+    most_popular_choice A legnépszerűbb választás
+    new_email Új e-mail
+    no_cards_available_for_this_session Ehhez a munkamenethez nem áll rendelkezésre kártya.
+    no_cards_found Nem található kártya
+    no_subjects_found Nem található alany
+    no_subjects_found_in_this_collection Nem található téma ebben a gyűjteményben
+    no_users_found Nem található felhasználó
+    os_version OS verzió
+    password_updated_successfully A jelszó sikeresen frissítve!
+    payments_are_not_yet_integrated_on_web_please_use_the_mobile_app_to_upgrade A fizetések még nincsenek integrálva a weben. Kérjük, használja a mobilalkalmazást a frissítéshez.
+    personal_data Személyes adatok
+    pick_date Válassz dátumot
+    plan_monthly_tagline A legnépszerűbb választás
+    plan_monthly_title Havi hozzáférés
+    plan_weekly_tagline Legjobb gyors gólokhoz
+    plan_weekly_title Heti hozzáférés
+    plan_yearly_tagline 33% megtakarítás havonta
+    plan_yearly_title Éves hozzáférés
+    platform Platform
+    play Játék
+    play_audio Hang lejátszása
+    please_enter_the_6_digit_code Kérjük, adja meg a 6 számjegyű kódot
+    please_wait_for_a_response_before_replying_again Kérjük, várja meg a választ, mielőtt újra válaszolna.
+    premium_expires_at Lejár: $date
+    premium_lifetime Életre szóló hozzáférés
+    premium_only Csak prémium
+    premium_status_active Ön prémium tag
+    premium_unlock_desc Szerezzen hozzáférést minden témához, hozzon létre korlátlan számú kártyát, és támogassa Aliolo küldetését.
+    premium_unlock_title Teljes hozzáférés feloldása
+    product_not_available_in_store A termék az üzletben nem kapható.
+    profile Profil
+    public_other_subject Nyilvános/Egyéb téma
+    purchase_failed Sikertelen vásárlás: $e
+    recovery_error Helyreállítási hiba: $e
+    refresh_conversation Frissítse a beszélgetést
+    renderer Renderer
+    reset_code Reset Code
+    reset_code_sent_to_please_check_your_inbox A kód visszaállítása a következőre: $email. Kérjük, ellenőrizze beérkező leveleit.
+    restore_purchases Vásárlások visszaállítása
+    save Megtakarítás
+    save_33_per_month 33% megtakarítás havonta
+    saved_successfully Sikeresen mentve
+    search_users Felhasználók keresése
+    session_complete A munkamenet kész!
+    session_complete_description Remek munka! Ebben a munkamenetben befejezte az összes kártyát.
+    settings Beállítások elemre
+    show_documentation_btn Dokumentáció megjelenítése gomb
+    show_documentation_btn_desc Jelenítse meg a dokumentáció gombot az alkalmazássávban.
+    show_fake_users Hamis felhasználók megjelenítése
+    subject_id Tárgyazonosító
+    subscribe_now Iratkozz fel most
+    subscription_data Előfizetési adatok
+    subscription_updated Az előfizetés frissítve
+    subtraction_emoji Kivonás Emoji
+    subtraction_numbers Számok kivonása
+    technical_context MŰSZAKI KÖRNYEZET
+    testing_mode Tesztelési mód
+    text Szöveg
+    this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards Ez egy mappa. Az összes kártya gyakorlásához használhatja a fenti Tanulás/Teszt gombokat.
+    type_your_reply Írja be a válaszát...
+    ua UA
+    unknown_user_profile_missing Ismeretlen felhasználó (profil hiányzik)
+    user Felhasználó
+    user_id Felhasználói azonosító
+    user_with_this_email_already_exists_please_log_in_instead Ezzel az e-mail-címmel már létezik felhasználó. Inkább jelentkezz be.
+    users Felhasználók
+    users_filter Felhasználók szűrése
+    verification_code Ellenőrző kód
+    verification_code_sent_to Ellenőrző kód elküldve a következőnek: $email
+    version Változat
+    view_onboarding Belépés megtekintése
+    weekly_access Heti hozzáférés
+    welcome_complete_your_profile_to_join_aliolo Üdvözöljük! Töltse ki profilját a aliolo-hoz való csatlakozáshoz.
+    yearly_access Éves hozzáférés
+    you_do_not_have_permission_to_edit_this_card Nincs engedélye a kártya szerkesztésére
+    you_do_not_have_permission_to_view_this_card_details Nincs jogosultsága a kártya adatainak megtekintéséhez.

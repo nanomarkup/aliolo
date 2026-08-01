@@ -1,0 +1,228 @@
+..
+    a_folder_with_this_name_already_exists_in_this_pillar Tämän niminen kansio on jo tässä pilarissa
+    about Noin
+    about_intro_audience_desc Aliolo tukee oppijoita, jotka haluavat jäsenneltyä arviointia, vanhempia ja opettajia, jotka tarvitsevat lähestyttävää oppimateriaalia, sekä sisällöntuottajia, jotka järjestävät ja julkaisevat omia oppimateriaalejaan.
+    about_intro_audience_title Kenelle se on tarkoitettu
+    about_intro_desc Aliolo on visuaalinen oppimissovellus, joka on rakennettu yksinkertaisten opintojen, joustavan sisällön organisoinnin ja tasaisen edistymisen ympärille ajan mittaan.
+    about_intro_start_desc Aloita kojelaudalta, valitse pilari, avaa aihe ja aloita Opi. Tallenna hyödyllinen sisältö suosikkeihin, jotta se on helpompi palata myöhemmin.
+    about_intro_start_title Kuinka aloittaa
+    about_intro_title Tietoja Aliolo
+    about_learn_discovery_desc Haku, ikäsuodattimet ja lähdesuodattimet, kuten suosikit, omani ja julkinen kirjasto, auttavat sinua löytämään oikean sisällön nopeasti.
+    about_learn_discovery_title Löytäminen ja suodatus
+    about_learn_language_desc Voit opiskella sisältöä eri kielillä ja muokata profiilissasi istuntoasetuksia vauhtisi ja nykyisten tavoitteidesi mukaan.
+    about_learn_language_title Kielen ja tilan joustavuus
+    about_learn_media_desc Kuvat, ääni ja video voivat tukea tunnistusta, ääntämistä ja kontekstia, kun ne ovat saatavilla oppimissisällössä.
+    about_learn_media_title Mediatuki
+    about_learn_modes_desc Käytä Learn-toimintoa tunnistuksen ja luottamuksen lisäämiseen ja vaihda sitten Testiin, kun haluat tiukempaa muistamista ja nopeampaa tarkistusta.
+    about_learn_modes_title Opi ja testaa
+    about_learn_title Kuinka opit
+    about_organize_collections_desc Kokoelmat yhdistävät useita aiheita yhdeksi tutkimusvirtaukseksi, mikä on hyödyllistä sekaarvosteluissa ja kuratoiduissa sarjoissa.
+    about_organize_collections_title Kokoelmat
+    about_organize_creation_desc Sisällöntuottajat voivat järjestää oman sisältönsä, pitää sen yksityisenä työskennellessään tai paljastaa sen julkisen kirjaston kautta, kun se on valmis.
+    about_organize_creation_title Omistajuus ja näkyvyys
+    about_organize_folders_desc Kansiot ryhmittelevät aiheeseen liittyvät aiheet pilariin, jotta suuremmat sisältöjoukot pysyvät hallittavissa.
+    about_organize_folders_title Kansiot
+    about_organize_subjects_desc Aineet ovat opiskelun pääyksikkö. Heillä on oppimis- ja testausistunnoissa avaamasi kortit.
+    about_organize_subjects_title Aiheet
+    about_organize_title Miten sisältö järjestetään
+    about_progress_goals_desc Profiilisi avulla voit säätää päivittäisiä tavoitteita, oppia istunnon kokoa, testiistunnon kokoa ja vastausten määrää.
+    about_progress_goals_title Päivittäiset tavoitteet ja istuntoasetukset
+    about_progress_social_desc Ystävät ja tulostaulukon ominaisuudet tekevät edistymisestä sosiaalista muuttamatta ydinoppimiskulkua.
+    about_progress_social_title Ystävät ja tulostaulukko
+    about_progress_title Edistyminen, ystävät ja tulostaulukko
+    about_progress_xp_desc Aliolo seuraa XP:tä, nykyistä sarjaa ja maksimiputkea, joten edistyminen tuntuu näkyvältä lyhyiden ja pitkien tutkimusjaksojen aikana.
+    about_progress_xp_title XP ja raidat
+    about_support_docs_desc Sovelluksen sisäisellä dokumentaatiosivulla kerrotaan, miten kojelauta, tutkimustyöt ja sisällöntuottajat toimivat nykyään.
+    about_support_docs_title Dokumentaatio
+    about_support_feedback_desc Käytä sovelluksen palautteen syöttöpisteitä ilmoittaaksesi virheistä, ehdottaaksesi parannuksia tai ilmoittaaksesi tietyistä sisältöongelmista kontekstin perusteella.
+    about_support_feedback_title Palaute ja raportointi
+    about_support_licenses_desc Lisenssisivulla luetellaan ensin Aliolo kaupalliset lisenssit ja sitten niputetut kolmannen osapuolen pakettilisenssit.
+    about_support_licenses_title Lisenssit
+    about_support_onboarding_desc Voit palata käyttöönottoon milloin tahansa tarkistaaksesi sovelluksen tärkeimmät ideat ja asetukset.
+    about_support_onboarding_title Käyttöönotto
+    about_support_settings_desc Käyttöliittymän kieltä, teematilaa, teeman väriä, ääntä, sivupalkin sijoittelua ja dokumentaation näkyvyyttä voidaan säätää asetuksista.
+    about_support_settings_title Personointi
+    about_support_title Asetukset, Palaute ja tuki
+    addition_emoji Lisäys Emoji
+    addition_numbers Lisäysnumerot
+    aliolo aliolo
+    all_rights_reserved Kaikki oikeudet pidätetään
+    are_you_sure_you_want_to_close_this_feedback_request Haluatko varmasti sulkea tämän palautepyynnön?
+    are_you_sure_you_want_to_delete_this_folder Haluatko varmasti poistaa tämän kansion?
+    attach_image Liitä kuva
+    back Takaisin
+    back_to_subjects Takaisin aiheisiin
+    best_for_quick_goals Paras nopeille maaleille
+    billing_disclaimer Tilaukset uusiutuvat automaattisesti, ellei niitä peruuteta. Voit hallita tilaustasi myymäläsi asetuksista.
+    billing_title Laskutus
+    browser Selain
+    cancel Peruuttaa
+    cannot_delete_folder_it_is_not_empty Kansiota ei voi poistaa: se ei ole tyhjä
+    card_id Kortin tunnus
+    check_your_email_for_code Tarkista koodi sähköpostistasi
+    clear Selkeä
+    click_to_view_original Napsauta nähdäksesi alkuperäisen
+    close Lähellä
+    close_request Sulje pyyntö?
+    collection_id Kokoelman tunnus
+    colors Värit
+    confirm_subscription Vahvista tilaus
+    context Konteksti
+    could_not_launch Ei voitu käynnistää $url
+    counting Laskeminen
+    current_subscription Nykyinen tilaus
+    delete Poistaa
+    device Laite
+    doc_create_intro_desc Tämä välilehti kattaa, kuinka sisällöntuottajat järjestävät sisältöä, lokalisoivat sen ja julkaisevat hyödyllistä oppimateriaalia mutkistamatta työnkulkua liikaa.
+    doc_create_intro_title Luoda
+    doc_create_json_desc JSON-pohjainen luonti on edistynyt työnkulku strukturoidulle joukkosisällölle. Sen pitäisi pysyä valinnaisena; useimpien sisällöntuottajien pitäisi pystyä rakentamaan ja muokkaamaan sisältöä vakiolomakkeiden avulla.
+    doc_create_json_title Edistynyt JSON-tuonti
+    doc_create_localization_desc Lokalista sisältö sinne, missä sillä on eniten merkitystä: nimet, kuvaukset, kehotteet ja vastaukset. Pidä tunnisteet yhtenäisinä eri kielillä, jotta käyttäjät voivat vaihtaa opiskelukieltä menettämättä rakennetta.
+    doc_create_localization_title Lokalisointi
+    doc_create_media_desc Kuvien, äänen ja videon tulee tukea oppimistavoitetta, ei häiritä sitä. Lisää mediaa, kun se parantaa tunnistusta, ääntämistä tai kontekstia, ja pidä kortit käyttökelpoisina, vaikka media puuttuu.
+    doc_create_media_title Median työnkulku
+    doc_create_model_desc Tekijät työskentelevät pilarien sisällä ja järjestävät materiaalia kansioiden, aiheiden, kokoelmien ja korttien avulla. Rakenna ensin rakenne ja täytä se sitten lokalisoiduilla kehotteilla, vastauksilla ja valinnaisella medialla.
+    doc_create_model_title Sisältömalli
+    doc_create_visibility_desc Käytä "minun" työstääksesi omaa sisältöäsi, suosikkeja kiinnittääksesi hyödyllisiä kohteita ja julkista kirjastoa selataksesi jaettua materiaalia. Julkinen näkyvyys vaikuttaa löytämiseen, kun taas omistajuus vaikuttaa siihen, mitä voit muokata tai poistaa.
+    doc_create_visibility_title Omistajuus ja näkyvyys
+    doc_start_dashboard_desc Kojelauta on pääkirjastosi. Käytä hakua löytääksesi sisältöä nopeasti ja yhdistä sitten lähdesuodattimet, kuten suosikit, omani ja julkinen kirjasto, ikäsuodattimiin melun vähentämiseksi.
+    doc_start_dashboard_title Kojelauta, haku ja suodattimet
+    doc_start_feedback_desc Käytä palautteen syöttöpisteitä sovelluksessa, kun jokin on vialla tai epäselvä. Raportit voivat sisältää nykyisen kontekstin, mikä tekee sisältöongelmien tarkastelusta ja korjaamisesta helpompaa.
+    doc_start_feedback_title Palautetta ja apua
+    doc_start_intro_desc Käytä tätä välilehteä, kun opit kuinka kojelauta, kirjasto, edistyminen ja sosiaaliset ominaisuudet sopivat yhteen.
+    doc_start_intro_title Aloitus
+    doc_start_progress_desc Profiilisi näyttää kokonaispistemäärän, nykyisen sarjan, enimmäisputken ja päivittäisen tavoitteen edistymisen. Myös istunnon kokoa ja vastausten määrää hallitaan profiilisivulta.
+    doc_start_progress_title Edistyminen ja tavoitteet
+    doc_start_quick_desc Valitse kojelaudalta pilari, avaa aihe ja aloita Opi. Käytä suosikkeja ja suodattimia rajataksesi kirjastoa ja tarkista sitten XP:si, viivat ja päivätavoitteesi profiilistasi.
+    doc_start_quick_title Pika-aloitus
+    doc_start_structure_desc Koehenkilöillä on kortit. Kansiot ryhmittelevät liittyvän sisällön pilarin sisällä. Kokoelmat ovat kuratoituja sarjoja, joissa voidaan yhdistää useita aiheita opiskelua ja jakamista varten.
+    doc_start_structure_title Aiheet, kansiot ja kokoelmat
+    doc_study_how_desc Aloita Opi, kun rakennat tunnistusta, ja vaihda sitten Testiin, kun haluat nopeamman palauttamisen ja tarkemman tarkistuksen. Käytä lyhyempiä istuntoja tarkennettuun tarkasteluun ja suurempia istuntoja laajempaan kattamiseen.
+    doc_study_how_title Kuinka opiskella
+    doc_study_intro_desc Tämä välilehti selittää, kuinka voit liikkua sisällössä, valita oikean tilan ja virittää istuntojasi tarkistusta tai muistamista varten.
+    doc_study_intro_title Opiskelu
+    doc_study_media_desc Kun mediaa on saatavilla, käytä sitä ääntämisen ja tunnistamisen vahvistamiseen. Automaattinen toisto on hyödyllisin passiiviseen katseluun tai toistuvaan kuunteluun lyhyempien istuntojen aikana.
+    doc_study_media_title Ääni, automaattinen toisto ja media
+    doc_study_modes_desc Opi ja Testaa ovat keskeisiä opiskelumuotoja. Ne käyttävät samaa sisältöä, mutta tukevat erilaisia ​​tahdistus- ja vastausodotuksia, joten vaihda tilaa sen mukaan, oletko tutkimassa tai tarkistamassa säilytystä.
+    doc_study_modes_title Opi ja testaa tilat
+    doc_study_scope_desc Opiskelu voi alkaa yhdestä aiheesta, kansionäkymästä tai kokoelmasta. Kokoelmat ovat hyödyllisiä, kun haluat yhdistetyn istunnon useille aiheille poistumatta nykyisestä virtauksesta.
+    doc_study_scope_title Opiskelun aiheet, kansiot ja kokoelmat
+    doc_tab_create Luoda
+    doc_tab_start Aloita
+    doc_tab_study Opiskelu
+    documentation Dokumentaatio
+    edit_subscription Muokkaa tilausta
+    email_updated_successfully Sähköposti päivitetty onnistuneesti!
+    enter_current_password Anna nykyinen salasana
+    error Virhe: $e
+    error_deleting Virhe poistettaessa: $e
+    error_saving Virhe tallennettaessa: $e
+    error_saving_card Virhe tallennettaessa korttia: $e
+    error_updating_favorite Virhe päivitettäessä suosikkia: $e
+    failed_to_send_reset_code Nollauskoodin lähettäminen epäonnistui
+    failed_to_send_verification_code Vahvistuskoodin lähettäminen epäonnistui
+    fake_only Vain väärennös
+    feature_creation Luontityökalut
+    feature_customize Edistynyt mukauttaminen
+    feature_full_library Täysi pääsy kirjastoon
+    feature_testing Interaktiivinen testaus
+    folder_id Kansion tunnus
+    free_only Ilmaiset käyttäjät
+    generic Yleinen
+    home Kotiin
+    invalid_code Virheellinen koodi
+    invalid_email_address Virheellinen sähköpostiosoite
+    invalid_json Virheellinen JSON: $e
+    invalid_or_expired_invitation_link Virheellinen tai vanhentunut kutsulinkki.
+    invalid_or_expired_reset_code Virheellinen tai vanhentunut palautuskoodi.
+    invitation_sent_awaiting_registration Kutsu lähetetty (odottaa rekisteröitymistä)
+    invited_and_request_sent Kutsuttu ja pyyntö lähetetty!
+    json JSON
+    label_suffix $label:
+    leaderboard Tulostaulukko
+    licenses Lisenssit
+    licenses_aliolo_section_title Aliolo Kaupallinen lisenssi
+    licenses_aliolo_subtitle Oma ohjelmisto ja premium-käyttöehdot
+    licenses_intro_desc Aliolo:n kaupallinen lisenssi ilmestyy ensimmäisenä. Kolmannen osapuolen pakettilisenssit ovat alla.
+    licenses_intro_title Aliolo Lisenssi- ja pakettiilmoitukset
+    licenses_third_party_section_title Kolmannen osapuolen pakettilisenssit
+    linux_distro Linux Distro
+    loading Ladataan...
+    localized_data Lokalisoitu data
+    monthly_access Kuukausittainen pääsy
+    most_popular_choice Suosituin valinta
+    new_email Uusi sähköposti
+    no_cards_available_for_this_session Tälle istunnolle ei ole saatavilla kortteja.
+    no_cards_found Kortteja ei löytynyt
+    no_subjects_found Aiheita ei löytynyt
+    no_subjects_found_in_this_collection Tästä kokoelmasta ei löytynyt aiheita
+    no_users_found Käyttäjiä ei löytynyt
+    os_version OS-versio
+    password_updated_successfully Salasana päivitetty onnistuneesti!
+    payments_are_not_yet_integrated_on_web_please_use_the_mobile_app_to_upgrade Maksuja ei ole vielä integroitu verkkoon. Käytä mobiilisovellusta päivittämiseen.
+    personal_data Henkilötiedot
+    pick_date Valitse päivämäärä
+    plan_monthly_tagline Suosituin valinta
+    plan_monthly_title Kuukausittainen pääsy
+    plan_weekly_tagline Paras nopeille maaleille
+    plan_weekly_title Viikoittainen pääsy
+    plan_yearly_tagline Säästä 33 % kuukaudessa
+    plan_yearly_title Vuosittainen pääsy
+    platform Alusta
+    play Pelata
+    play_audio Toista ääni
+    please_enter_the_6_digit_code Anna 6-numeroinen koodi
+    please_wait_for_a_response_before_replying_again Odota vastausta ennen kuin vastaat uudelleen.
+    premium_expires_at Vanhenee $date
+    premium_lifetime Elinikäinen pääsy
+    premium_only Vain Premium
+    premium_status_active Olet premium-jäsen
+    premium_unlock_desc Pääset kaikkiin aiheisiin, luo rajattomasti kortteja ja tue Aliolo:n tehtävää.
+    premium_unlock_title Avaa täysi käyttöoikeus
+    product_not_available_in_store Tuotetta ei ole saatavilla myymälästä.
+    profile Profiili
+    public_other_subject Julkinen/Muu aihe
+    purchase_failed Osto epäonnistui: $e
+    recovery_error Palautusvirhe: $e
+    refresh_conversation Päivitä keskustelu
+    renderer Renderöijä
+    reset_code Nollaa koodi
+    reset_code_sent_to_please_check_your_inbox Nollaa koodi lähetetty osoitteeseen $email. Tarkista postilaatikkosi.
+    restore_purchases Palauta ostokset
+    save Tallentaa
+    save_33_per_month Säästä 33 % kuukaudessa
+    saved_successfully Tallennettu onnistuneesti
+    search_users Etsi käyttäjiä
+    session_complete Istunto valmis!
+    session_complete_description Hienoa työtä! Olet saanut kaikki tämän istunnon kortit valmiiksi.
+    settings Asetukset
+    show_documentation_btn Näytä dokumentaatio -painike
+    show_documentation_btn_desc Näytä dokumentaatiopainike sovelluspalkissa.
+    show_fake_users Näytä väärennetyt käyttäjät
+    subject_id Aiheen tunnus
+    subscribe_now Tilaa nyt
+    subscription_data Tilaustiedot
+    subscription_updated Tilaus päivitetty
+    subtraction_emoji Vähennysemoji
+    subtraction_numbers Vähennysnumerot
+    technical_context TEKNINEN KONTEKSTI
+    testing_mode Testaustila
+    text Teksti
+    this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards Tämä on kansio. Voit käyttää yllä olevia Opi/Testi-painikkeita harjoitellaksesi kaikkia kortteja.
+    type_your_reply Kirjoita vastauksesi...
+    ua UA
+    unknown_user_profile_missing Tuntematon käyttäjä (profiili puuttuu)
+    user Käyttäjä
+    user_id Käyttäjätunnus
+    user_with_this_email_already_exists_please_log_in_instead Käyttäjä, jolla on tämä sähköpostiosoite, on jo olemassa. Ole hyvä ja kirjaudu sisään.
+    users Käyttäjät
+    users_filter Suodata käyttäjät
+    verification_code Vahvistuskoodi
+    verification_code_sent_to Vahvistuskoodi lähetetty osoitteeseen $email
+    version Versio
+    view_onboarding Katso perehdytys
+    weekly_access Viikoittainen pääsy
+    welcome_complete_your_profile_to_join_aliolo Tervetuloa! Täytä profiilisi liittyäksesi aliolo.
+    yearly_access Vuosittainen pääsy
+    you_do_not_have_permission_to_edit_this_card Sinulla ei ole lupaa muokata tätä korttia
+    you_do_not_have_permission_to_view_this_card_details Sinulla ei ole lupaa tarkastella tämän kortin tietoja.

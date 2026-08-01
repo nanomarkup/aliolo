@@ -1,0 +1,228 @@
+..
+    a_folder_with_this_name_already_exists_in_this_pillar Un dosar cu acest nume există deja în acest pilon
+    about Despre
+    about_intro_audience_desc Aliolo sprijină cursanții care doresc o evaluare structurată, părinții și profesorii care au nevoie de conținut de studiu accesibil și creatorii care își organizează și își publică propriile materiale de învățare.
+    about_intro_audience_title Pentru cine este
+    about_intro_desc Aliolo este o aplicație de învățare vizuală construită pe baza fluxurilor de studiu simple, organizare flexibilă a conținutului și progres constant în timp.
+    about_intro_start_desc Începeți de pe tabloul de bord, alegeți un pilon, deschideți un subiect și începeți cu Învățați. Salvați conținut util în favorite, astfel încât să fie mai ușor să îl revedeți mai târziu.
+    about_intro_start_title Cum să începi
+    about_intro_title Despre Aliolo
+    about_learn_discovery_desc Căutarea, filtrele de vârstă și filtrele sursă, cum ar fi favorite, ale mele și biblioteca publică, vă ajută să găsiți rapid conținutul potrivit.
+    about_learn_discovery_title Descoperire și filtrare
+    about_learn_language_desc Puteți studia conținut în diferite limbi și puteți ajusta setările sesiunii din profilul dvs. pentru a se potrivi cu ritmul și obiectivele actuale.
+    about_learn_language_title Limbă și mod flexibilitate
+    about_learn_media_desc Imaginile, sunetul și videoclipurile pot accepta recunoașterea, pronunția și contextul atunci când sunt disponibile în conținutul de învățare.
+    about_learn_media_title Suport media
+    about_learn_modes_desc Folosiți Învățați pentru a construi recunoașterea și încrederea, apoi treceți la Test când doriți o reamintire mai strictă și o examinare mai rapidă.
+    about_learn_modes_title Învață și Testează
+    about_learn_title Cum înveți
+    about_organize_collections_desc Colecțiile combină mai multe subiecte într-un singur flux de studiu, ceea ce este util pentru recenzii mixte și seturi organizate.
+    about_organize_collections_title Colecții
+    about_organize_creation_desc Creatorii își pot organiza propriul conținut, îl pot păstra privat în timp ce lucrează sau îl pot expune prin biblioteca publică atunci când este gata.
+    about_organize_creation_title Proprietatea și vizibilitatea
+    about_organize_folders_desc Folderele grupează subiecte înrudite într-un pilon, astfel încât seturile de conținut mai mari să rămână gestionabile.
+    about_organize_folders_title Foldere
+    about_organize_subjects_desc Subiectele sunt unitatea principală de studiu. Ei dețin cardurile pe care le deschideți în sesiunile de Învățare și Testare.
+    about_organize_subjects_title Subiecte
+    about_organize_title Cum este organizat conținutul
+    about_progress_goals_desc Profilul vă permite să reglați obiectivele zilnice, să aflați dimensiunea sesiunii, dimensiunea sesiunii de testare și numărul de răspunsuri.
+    about_progress_goals_title Obiective zilnice și setări de sesiune
+    about_progress_social_desc Prietenii și funcțiile de clasament fac progrese sociale fără a schimba fluxul de învățare de bază.
+    about_progress_social_title Prieteni și clasament
+    about_progress_title Progres, prieteni și clasament
+    about_progress_xp_desc Aliolo urmărește XP total, serie curentă și seria maximă, astfel încât progresul să fie vizibil pe perioade scurte și lungi de studiu.
+    about_progress_xp_title XP și Streaks
+    about_support_docs_desc Pagina de documentație în aplicație explică cum funcționează astăzi tabloul de bord, fluxurile de studiu și instrumentele pentru creatori.
+    about_support_docs_title Documentare
+    about_support_feedback_desc Utilizați punctele de intrare pentru feedback din aplicație pentru a raporta erori, pentru a sugera îmbunătățiri sau pentru a semnala probleme specifice de conținut în context.
+    about_support_feedback_title Feedback și raportare
+    about_support_licenses_desc Pagina de licențe afișează mai întâi licența comercială a lui Aliolo și apoi licențele pachetului terță parte.
+    about_support_licenses_title Licențe
+    about_support_onboarding_desc Puteți revedea oricând integrarea pentru a examina ideile principale ale aplicației și fluxul de configurare.
+    about_support_onboarding_title Onboarding
+    about_support_settings_desc Limba interfeței de utilizare, modul temă, culoarea temei, sunetul, plasarea barei laterale și vizibilitatea documentației pot fi ajustate din setări.
+    about_support_settings_title Personalizare
+    about_support_title Setări, feedback și asistență
+    addition_emoji Emoji suplimentar
+    addition_numbers Numere de adunare
+    aliolo aliolo
+    all_rights_reserved Toate drepturile rezervate
+    are_you_sure_you_want_to_close_this_feedback_request Sigur doriți să închideți această solicitare de feedback?
+    are_you_sure_you_want_to_delete_this_folder Sigur doriți să ștergeți acest dosar?
+    attach_image Atașați imaginea
+    back Spate
+    back_to_subjects Înapoi la Subiecte
+    best_for_quick_goals Cel mai bun pentru goluri rapide
+    billing_disclaimer Abonamentele se reînnoiesc automat, dacă nu sunt anulate. Vă puteți gestiona abonamentul în setările magazinului.
+    billing_title Facturare
+    browser Browser
+    cancel Anula
+    cannot_delete_folder_it_is_not_empty Nu se poate șterge folderul: nu este gol
+    card_id ID card
+    check_your_email_for_code Verificați-vă e-mailul pentru cod
+    clear Clar
+    click_to_view_original Click pentru a vizualiza originalul
+    close Aproape
+    close_request Închideți cererea?
+    collection_id ID-ul colecției
+    colors Culori
+    confirm_subscription Confirmați abonamentul
+    context Context
+    could_not_launch Nu s-a putut lansa $url
+    counting Numărând
+    current_subscription Abonament curent
+    delete Şterge
+    device Dispozitiv
+    doc_create_intro_desc Această filă acoperă modul în care creatorii organizează conținutul, îl localizează și publică material de studiu util fără a complica prea mult fluxul de lucru.
+    doc_create_intro_title Crea
+    doc_create_json_desc Crearea bazată pe JSON este un flux de lucru avansat pentru conținut structurat în vrac. Ar trebui să rămână opțional; majoritatea creatorilor ar trebui să poată construi și edita conținut prin intermediul formularelor standard.
+    doc_create_json_title Import JSON avansat
+    doc_create_localization_desc Localizați conținutul acolo unde contează cel mai mult: nume, descrieri, solicitări și răspunsuri. Păstrați etichetele coerente între limbi, astfel încât utilizatorii să poată schimba limba de studiu fără a pierde structura.
+    doc_create_localization_title Localizare
+    doc_create_media_desc Imaginile, audio și video ar trebui să sprijine obiectivul de învățare, nu să distrage atenția de la acesta. Adaugă conținut media atunci când îmbunătățește recunoașterea, pronunția sau contextul și păstrează cardurile utilizabile chiar și atunci când media lipsește.
+    doc_create_media_title Flux de lucru media
+    doc_create_model_desc Creatorii lucrează în interiorul stâlpilor și organizează materiale cu dosare, subiecte, colecții și carduri. Construiți mai întâi structura, apoi completați-o cu solicitări localizate, răspunsuri și conținut media opțional.
+    doc_create_model_title Model de conținut
+    doc_create_visibility_desc Folosiți „al meu” pentru a lucra la propriul conținut, favoritele pentru a fixa elemente utile și biblioteca publică pentru a răsfoi materialele partajate. Vizibilitatea publică afectează descoperirea, în timp ce calitatea de proprietar afectează ceea ce puteți edita sau șterge.
+    doc_create_visibility_title Proprietatea și vizibilitatea
+    doc_start_dashboard_desc Tabloul de bord este biblioteca dvs. principală. Utilizați căutarea pentru a găsi conținut rapid, apoi combinați filtrele sursă, cum ar fi favorite, ale mele și biblioteca publică, cu filtre de vârstă pentru a reduce zgomotul.
+    doc_start_dashboard_title Tabloul de bord, căutarea și filtrele
+    doc_start_feedback_desc Folosiți punctele de intrare pentru feedback din aplicație atunci când ceva este în neregulă sau neclar. Rapoartele pot include contextul actual, ceea ce face problemele de conținut mai ușor de revizuit și remediat.
+    doc_start_feedback_title Feedback și ajutor
+    doc_start_intro_desc Utilizați această filă atunci când aflați cum se potrivesc tabloul de bord, biblioteca, progresul și funcțiile sociale.
+    doc_start_intro_title Noțiuni de bază
+    doc_start_progress_desc Profilul dvs. arată XP total, seria curentă, seria maximă și progresul zilnic al obiectivului. Mărimea sesiunii și numărul de răspunsuri sunt, de asemenea, gestionate din pagina de profil.
+    doc_start_progress_title Progres și obiective
+    doc_start_quick_desc Alegeți un pilon de pe tabloul de bord, deschideți un subiect și începeți cu Învățați. Folosiți favorite și filtre pentru a restrânge biblioteca, apoi examinați XP-ul, liniile și obiectivul zilnic din profilul dvs.
+    doc_start_quick_title Pornire rapidă
+    doc_start_structure_desc Subiecții dețin carduri. Dosarele grupează conținutul asociat într-un pilon. Colecțiile sunt seturi organizate care pot combina mai multe subiecte pentru studiu și partajare.
+    doc_start_structure_title Subiecte, foldere și colecții
+    doc_study_how_desc Începeți cu Învățați când construiți recunoașterea, apoi treceți la Test când doriți o reamintire mai rapidă și o verificare mai strictă. Utilizați sesiuni mai scurte pentru o revizuire concentrată și sesiuni mai mari pentru o acoperire mai largă.
+    doc_study_how_title Cum să studiezi
+    doc_study_intro_desc Această filă explică cum să vă deplasați prin conținut, să alegeți modul potrivit și să vă reglați sesiunile pentru revizuire sau reamintire.
+    doc_study_intro_title Studiu
+    doc_study_media_desc Când media este disponibilă, utilizați-l pentru a consolida pronunția și recunoașterea. Redarea automată este cea mai utilă pentru revizuirea pasivă sau ascultarea repetată în timpul sesiunilor mai scurte.
+    doc_study_media_title Audio, Redare automată și Media
+    doc_study_modes_desc Învățare și testare sunt modurile de studiu de bază. Folosesc același conținut, dar acceptă ritmuri diferite și așteptări de răspuns diferite, așa că schimbați modurile în funcție de faptul că explorați sau verificați păstrarea.
+    doc_study_modes_title Moduri de învățare și testare
+    doc_study_scope_desc Studiul poate începe de la un singur subiect, o vizualizare de folder sau o colecție. Colecțiile sunt utile atunci când doriți o sesiune mixtă pe mai multe subiecte, fără a părăsi fluxul curent.
+    doc_study_scope_title Subiecte, foldere și colecții în studiu
+    doc_tab_create Crea
+    doc_tab_start Început
+    doc_tab_study Studiu
+    documentation Documentare
+    edit_subscription Editați abonamentul
+    email_updated_successfully E-mailul a fost actualizat cu succes!
+    enter_current_password Introduceți parola curentă
+    error Eroare: $e
+    error_deleting Eroare la ștergere: $e
+    error_saving Eroare la salvare: $e
+    error_saving_card Eroare la salvarea cardului: $e
+    error_updating_favorite Eroare la actualizarea preferatului: $e
+    failed_to_send_reset_code Nu s-a trimis codul de resetare
+    failed_to_send_verification_code Nu s-a putut trimite codul de verificare
+    fake_only Numai fals
+    feature_creation Instrumente de creație
+    feature_customize Personalizare avansată
+    feature_full_library Acces complet la bibliotecă
+    feature_testing Testare interactivă
+    folder_id ID dosar
+    free_only Utilizatori gratuiti
+    generic Generic
+    home Acasă
+    invalid_code Cod nevalid
+    invalid_email_address Adresă de e-mail nevalidă
+    invalid_json JSON nevalid: $e
+    invalid_or_expired_invitation_link Link de invitație nevalid sau expirat.
+    invalid_or_expired_reset_code Cod de resetare invalid sau expirat.
+    invitation_sent_awaiting_registration Invitație trimisă (se așteaptă înregistrarea)
+    invited_and_request_sent Invitat și cerere trimisă!
+    json JSON
+    label_suffix $label:
+    leaderboard Clasament
+    licenses Licențe
+    licenses_aliolo_section_title Aliolo Licență comercială
+    licenses_aliolo_subtitle Software proprietar și condiții de acces premium
+    licenses_intro_desc Licența comercială a Aliolo apare mai întâi. Licențele de pachete terță parte urmează mai jos.
+    licenses_intro_title Aliolo Notificări privind licența și pachetul
+    licenses_third_party_section_title Licențe de pachete de la terți
+    linux_distro Linux Distro
+    loading Încărcare...
+    localized_data Date localizate
+    monthly_access Acces lunar
+    most_popular_choice Cea mai populară alegere
+    new_email E-mail nou
+    no_cards_available_for_this_session Nu există carduri disponibile pentru această sesiune.
+    no_cards_found Nu s-au găsit carduri
+    no_subjects_found Nu s-au găsit subiecte
+    no_subjects_found_in_this_collection Nu s-au găsit subiecte în această colecție
+    no_users_found Nu s-au găsit utilizatori
+    os_version Versiunea OS
+    password_updated_successfully Parola a fost actualizată cu succes!
+    payments_are_not_yet_integrated_on_web_please_use_the_mobile_app_to_upgrade Plățile nu sunt încă integrate pe Web. Vă rugăm să utilizați aplicația mobilă pentru a face upgrade.
+    personal_data Date personale
+    pick_date Alegeți data
+    plan_monthly_tagline Cea mai populară alegere
+    plan_monthly_title Acces lunar
+    plan_weekly_tagline Cel mai bun pentru goluri rapide
+    plan_weekly_title Acces săptămânal
+    plan_yearly_tagline Economisiți 33% pe lună
+    plan_yearly_title Acces anual
+    platform Platformă
+    play Juca
+    play_audio Redați audio
+    please_enter_the_6_digit_code Vă rugăm să introduceți codul din 6 cifre
+    please_wait_for_a_response_before_replying_again Vă rugăm să așteptați un răspuns înainte de a răspunde din nou.
+    premium_expires_at Expiră la $date
+    premium_lifetime Acces pe viață
+    premium_only Doar Premium
+    premium_status_active Sunteți membru premium
+    premium_unlock_desc Obțineți acces la toate subiectele, creați carduri nelimitate și sprijiniți misiunea lui Aliolo.
+    premium_unlock_title Deblocați accesul complet
+    product_not_available_in_store Produsul nu este disponibil în magazin.
+    profile Profil
+    public_other_subject Public/Alt subiect
+    purchase_failed Achiziție eșuată: $e
+    recovery_error Eroare de recuperare: $e
+    refresh_conversation Reîmprospătați conversația
+    renderer Renderer
+    reset_code Resetați codul
+    reset_code_sent_to_please_check_your_inbox Resetează codul trimis către $email. Vă rugăm să vă verificați căsuța de e-mail.
+    restore_purchases Restabiliți achizițiile
+    save Salva
+    save_33_per_month Economisiți 33% pe lună
+    saved_successfully Salvat cu succes
+    search_users Căutați utilizatori
+    session_complete Sesiune finalizată!
+    session_complete_description Mare treaba! Ai terminat toate cărțile din această sesiune.
+    settings Setări
+    show_documentation_btn Butonul Afișați documentația
+    show_documentation_btn_desc Afișați butonul de documentare în bara de aplicații.
+    show_fake_users Afișați utilizatori falși
+    subject_id ID subiect
+    subscribe_now Abonați-vă acum
+    subscription_data Datele abonamentului
+    subscription_updated Abonamentul a fost actualizat
+    subtraction_emoji Emoji de scădere
+    subtraction_numbers Numerele de scădere
+    technical_context CONTEXT TEHNIC
+    testing_mode Modul de testare
+    text Text
+    this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards Acesta este un folder. Puteți folosi butoanele de învățare/testare de mai sus pentru a exersa toate cărțile.
+    type_your_reply Introduceți răspunsul...
+    ua UA
+    unknown_user_profile_missing Utilizator necunoscut (lipsește profilul)
+    user Utilizator
+    user_id ID-ul de utilizator
+    user_with_this_email_already_exists_please_log_in_instead Utilizatorul cu acest e-mail există deja. Vă rugăm să vă conectați.
+    users Utilizatori
+    users_filter Filtrați utilizatorii
+    verification_code Cod de verificare
+    verification_code_sent_to Cod de verificare trimis către $email
+    version Versiune
+    view_onboarding Vedeți integrarea
+    weekly_access Acces săptămânal
+    welcome_complete_your_profile_to_join_aliolo Bun venit! Completați-vă profilul pentru a vă alătura aliolo.
+    yearly_access Acces anual
+    you_do_not_have_permission_to_edit_this_card Nu aveți permisiunea de a edita acest card
+    you_do_not_have_permission_to_view_this_card_details Nu aveți permisiunea de a vizualiza detaliile acestui card.

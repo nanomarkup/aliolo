@@ -1,0 +1,228 @@
+..
+    a_folder_with_this_name_already_exists_in_this_pillar この名前のフォルダーはこの柱にすでに存在します
+    about について
+    about_intro_audience_desc Aliolo は、構造化された復習を必要とする学習者、親しみやすい学習コンテンツを必要とする保護者や教師、独自の学習教材を編成して公開するクリエイターをサポートします。
+    about_intro_audience_title 誰のためのものか
+    about_intro_desc Aliolo は、シンプルな学習フロー、柔軟なコンテンツ構成、長期にわたる着実な進歩を中心に構築された視覚的な学習アプリです。
+    about_intro_start_desc ダッシュボードから始めて、柱を選択し、主題を開いて、「学習」から始めます。役立つコンテンツをお気に入りに保存すると、後で簡単にアクセスできるようになります。
+    about_intro_start_title 始め方
+    about_intro_title Aliolo について
+    about_learn_discovery_desc 検索、年齢フィルター、お気に入り、私のもの、公共ライブラリなどのソース フィルターを使用すると、適切なコンテンツをすばやく見つけることができます。
+    about_learn_discovery_title 検出とフィルタリング
+    about_learn_language_desc さまざまな言語でコンテンツを学習したり、自分のペースや現在の目標に合わせてプロフィールのセッション設定を調整したりできます。
+    about_learn_language_title 言語とモードの柔軟性
+    about_learn_media_desc 画像、音声、およびビデオが学習コンテンツで利用可能な場合、それらは認識、発音、およびコンテキストをサポートできます。
+    about_learn_media_title メディアサポート
+    about_learn_modes_desc 「学習」を使用して認識と自信を構築し、より厳密に思い出して迅速なレビューが必要な場合は「テスト」に切り替えます。
+    about_learn_modes_title 学んでテストする
+    about_learn_title 学習方法
+    about_organize_collections_desc コレクションは、複数の主題を 1 つの学習フローに結合します。これは、混合レビューや厳選されたセットに役立ちます。
+    about_organize_collections_title コレクション
+    about_organize_creation_desc クリエイターは独自のコンテンツを整理し、作業中は非公開にしておくか、準備ができたらパブリック ライブラリを通じて公開することができます。
+    about_organize_creation_title 所有権と可視性
+    about_organize_folders_desc フォルダーは、関連する主題を柱内にグループ化するため、より大きなコンテンツ セットを管理しやすくします。
+    about_organize_folders_title フォルダー
+    about_organize_subjects_desc 科目は学習の主な単位です。学習セッションとテスト セッションで開いたカードが保持されます。
+    about_organize_subjects_title 科目
+    about_organize_title コンテンツの編成方法
+    about_progress_goals_desc プロファイルを使用すると、毎日の目標目標を調整したり、学習セッションのサイズ、テスト セッションのサイズ、回答数を調整したりできます。
+    about_progress_goals_title 毎日の目標とセッション設定
+    about_progress_social_desc 友達とリーダーボード機能により、中心的な学習フローを変えることなく、ソーシャルで進歩することができます。
+    about_progress_social_title 友達とリーダーボード
+    about_progress_title 進行状況、友達、リーダーボード
+    about_progress_xp_desc Aliolo は合計 XP、現在のストリーク、および最大ストリークを追跡するため、短期および長期の学習期間にわたって進捗状況を確認できます。
+    about_progress_xp_title XPとストリーク
+    about_support_docs_desc アプリ内のドキュメント ページでは、ダッシュボード、学習フロー、クリエイター ツールが現在どのように機能するかについて説明しています。
+    about_support_docs_title ドキュメント
+    about_support_feedback_desc アプリ全体でフィードバック エントリ ポイントを使用して、バグを報告したり、改善を提案したり、コンテキストを含めて特定のコンテンツの問題にフラグを立てたりします。
+    about_support_feedback_title フィードバックとレポート
+    about_support_licenses_desc ライセンス ページには、最初に Aliolo の商用ライセンスがリストされ、次にバンドルされているサードパーティ パッケージ ライセンスがリストされます。
+    about_support_licenses_title ライセンス
+    about_support_onboarding_desc いつでもオンボーディングに戻って、アプリの主なアイデアとセットアップ フローを確認できます。
+    about_support_onboarding_title オンボーディング
+    about_support_settings_desc UI 言語、テーマ モード、テーマの色、サウンド、サイドバーの配置、ドキュメントの表示/非表示はすべて設定から調整できます。
+    about_support_settings_title パーソナライゼーション
+    about_support_title 設定、フィードバック、サポート
+    addition_emoji 絵文字の追加
+    addition_numbers 加算番号
+    aliolo aliolo
+    all_rights_reserved 無断転載を禁じます
+    are_you_sure_you_want_to_close_this_feedback_request このフィードバックリクエストを閉じてもよろしいですか?
+    are_you_sure_you_want_to_delete_this_folder このフォルダを削除してもよろしいですか?
+    attach_image 画像を添付
+    back 戻る
+    back_to_subjects 主題に戻る
+    best_for_quick_goals 素早い目標に最適
+    billing_disclaimer キャンセルしない限り、サブスクリプションは自動的に更新されます。ストア設定でサブスクリプションを管理できます。
+    billing_title 請求する
+    browser ブラウザ
+    cancel キャンセル
+    cannot_delete_folder_it_is_not_empty フォルダを削除できません: フォルダは空ではありません
+    card_id カードID
+    check_your_email_for_code メールでコードを確認してください
+    clear クリア
+    click_to_view_original クリックするとオリジナルが表示されます
+    close 近い
+    close_request リクエストを閉じますか?
+    collection_id コレクションID
+    colors 色
+    confirm_subscription サブスクリプションの確認
+    context コンテクスト
+    could_not_launch $url を起動できませんでした
+    counting 数える
+    current_subscription 現在のサブスクリプション
+    delete 消去
+    device デバイス
+    doc_create_intro_desc このタブでは、クリエイターがワークフローを過度に複雑にすることなく、コンテンツを整理し、ローカライズし、有用な学習資料を公開する方法について説明します。
+    doc_create_intro_title 作成する
+    doc_create_json_desc JSON ベースの作成は、構造化されたバルク コンテンツの高度なワークフローです。これはオプションのままにする必要があります。ほとんどのクリエイターは、標準フォームを通じてコン​​テンツを作成および編集できるはずです。
+    doc_create_json_title 高度な JSON インポート
+    doc_create_localization_desc 名前、説明、プロンプト、回答など、コンテンツを最も重要な場所にローカライズします。ユーザーが構造を失わずに学習言語を切り替えることができるように、言語間でラベルの一貫性を保ちます。
+    doc_create_localization_title ローカリゼーション
+    doc_create_media_desc 画像、音声、ビデオは、学習目標を邪魔するものではなく、学習目標をサポートするものである必要があります。認識、発音、コンテキストが向上する場合はメディアを追加し、メディアが不足している場合でもカードを使用できるようにします。
+    doc_create_media_title メディアのワークフロー
+    doc_create_model_desc クリエイターは柱の内部で作業し、フォルダー、主題、コレクション、カードを使用して素材を整理します。まず構造を構築してから、ローカライズされたプロンプト、回答、およびオプションのメディアを入力します。
+    doc_create_model_title コンテンツモデル
+    doc_create_visibility_desc 自分のコンテンツに取り組むには「mine」を使用し、便利なアイテムを固定するにはお気に入りを、共有マテリアルを閲覧するには公共ライブラリを使用します。公開可視性は検出に影響しますが、所有権は編集または削除できる内容に影響します。
+    doc_create_visibility_title 所有権と可視性
+    doc_start_dashboard_desc ダッシュボードはメインのライブラリです。検索を使用してコンテンツをすばやく見つけ、お気に入り、私のもの、公共ライブラリなどのソース フィルターと年齢フィルターを組み合わせてノイズを軽減します。
+    doc_start_dashboard_title ダッシュボード、検索、フィルター
+    doc_start_feedback_desc 何かが間違っている場合や不明瞭な場合は、アプリ全体のフィードバック エントリ ポイントを使用します。レポートには現在のコンテキストを含めることができるため、コンテンツの問題の確認と修正が容易になります。
+    doc_start_feedback_title フィードバックとヘルプ
+    doc_start_intro_desc このタブは、ダッシュボード、ライブラリ、進捗状況、ソーシャル機能がどのように連携するかを学習するときに使用します。
+    doc_start_intro_title はじめる
+    doc_start_progress_desc プロフィールには、合計 XP、現在の連続記録、最大連続記録、毎日の目標の進捗状況が表示されます。セッションのサイズと回答数もプロフィール ページから管理できます。
+    doc_start_progress_title 進捗状況と目標
+    doc_start_quick_desc ダッシュボード上の柱を選択し、主題を開き、「学習」から始めます。お気に入りとフィルターを使用してライブラリを絞り込み、プロフィールから XP、連続記録、毎日の目標を確認します。
+    doc_start_quick_title クイックスタート
+    doc_start_structure_desc 被験者はカードを持っています。フォルダーは、関連するコンテンツをピラー内にグループ化します。コレクションは、研究や共有のために複数の主題を組み合わせることができる厳選されたセットです。
+    doc_start_structure_title 件名、フォルダー、およびコレクション
+    doc_study_how_desc 認識を構築する場合は学習から始めて、より迅速な呼び出しとより厳密なチェックが必要な場合はテストに切り替えます。集中的なレビューには短いセッションを使用し、より広範囲の内容をカバーするには大きなセッションを使用します。
+    doc_study_how_title 勉強方法
+    doc_study_intro_desc このタブでは、コンテンツ内を移動し、適切なモードを選択し、レビューまたはリコールのためにセッションを調整する方法を説明します。
+    doc_study_intro_title 勉強
+    doc_study_media_desc メディアが利用可能な場合は、それを使用して発音と認識を強化します。自動再生は、受動的なレビューや短いセッション中に繰り返し聞く場合に最も役立ちます。
+    doc_study_media_title オーディオ、自動再生、メディア
+    doc_study_modes_desc 学習とテストは中心的な学習モードです。同じコンテンツを使用しますが、異なるペースをサポートし、期待に応えることができるため、調査しているか保持率を確認しているかに基づいてモードを切り替えます。
+    doc_study_modes_title 学習モードとテストモード
+    doc_study_scope_desc 学習は、単一の主題、フォルダー ビュー、またはコレクションから開始できます。コレクションは、現在のフローから離れることなく、複数の主題にわたる混合セッションが必要な場合に便利です。
+    doc_study_scope_title 研究内の件名、フォルダー、およびコレクション
+    doc_tab_create 作成する
+    doc_tab_start 始める
+    doc_tab_study 勉強
+    documentation ドキュメント
+    edit_subscription サブスクリプションの編集
+    email_updated_successfully メールが正常に更新されました。
+    enter_current_password 現在のパスワードを入力してください
+    error エラー: $e
+    error_deleting 削除エラー: $e
+    error_saving 保存エラー: $e
+    error_saving_card カードの保存中にエラーが発生しました: $e
+    error_updating_favorite お気に入りの更新中にエラーが発生しました: $e
+    failed_to_send_reset_code リセットコードの送信に失敗しました
+    failed_to_send_verification_code 確認コードの送信に失敗しました
+    fake_only 偽物のみ
+    feature_creation 作成ツール
+    feature_customize 高度なカスタマイズ
+    feature_full_library 図書館への完全なアクセス
+    feature_testing インタラクティブなテスト
+    folder_id フォルダーID
+    free_only 無料ユーザー
+    generic ジェネリック
+    home 家
+    invalid_code 無効なコード
+    invalid_email_address 無効なメールアドレス
+    invalid_json 無効な JSON: $e
+    invalid_or_expired_invitation_link 招待リンクが無効または期限切れです。
+    invalid_or_expired_reset_code リセット コードが無効または期限切れです。
+    invitation_sent_awaiting_registration 招待状を送信しました（登録待ち）
+    invited_and_request_sent 招待され、リクエストが送信されました。
+    json JSON
+    label_suffix $label:
+    leaderboard リーダーボード
+    licenses ライセンス
+    licenses_aliolo_section_title Aliolo 商用ライセンス
+    licenses_aliolo_subtitle 独自のソフトウェアとプレミアム アクセス条件
+    licenses_intro_desc Aliolo の商用ライセンスが最初に表示されます。サードパーティのパッケージライセンスは以下の通りです。
+    licenses_intro_title Aliolo ライセンスとパッケージに関する通知
+    licenses_third_party_section_title サードパーティのパッケージライセンス
+    linux_distro Linux ディストリビューション
+    loading 読み込み中...
+    localized_data ローカライズされたデータ
+    monthly_access 月間アクセス数
+    most_popular_choice 最も人気のある選択肢
+    new_email 新しいメール
+    no_cards_available_for_this_session このセッションで使用できるカードはありません。
+    no_cards_found カードが見つかりませんでした
+    no_subjects_found 被験者が見つかりませんでした
+    no_subjects_found_in_this_collection このコレクションには主題が見つかりませんでした
+    no_users_found ユーザーが見つかりませんでした
+    os_version OSバージョン
+    password_updated_successfully パスワードが正常に更新されました。
+    payments_are_not_yet_integrated_on_web_please_use_the_mobile_app_to_upgrade 支払いはまだ Web に統合されていません。アップグレードするにはモバイルアプリを使用してください。
+    personal_data 個人データ
+    pick_date 日付の選択
+    plan_monthly_tagline 最も人気のある選択肢
+    plan_monthly_title 月間アクセス数
+    plan_weekly_tagline 素早いゴールに最適
+    plan_weekly_title 週間アクセス
+    plan_yearly_tagline 毎月 33% 割引
+    plan_yearly_title 年間アクセス
+    platform プラットフォーム
+    play 遊ぶ
+    play_audio オーディオを再生する
+    please_enter_the_6_digit_code 6桁のコードを入力してください
+    please_wait_for_a_response_before_replying_again 返信を待ってから再度返信してください。
+    premium_expires_at $date で期限切れになります
+    premium_lifetime 生涯アクセス
+    premium_only プレミアムのみ
+    premium_status_active あなたはプレミアム会員です
+    premium_unlock_desc すべての主題にアクセスし、無制限のカードを作成し、Aliolo の使命をサポートします。
+    premium_unlock_title フルアクセスのロックを解除する
+    product_not_available_in_store 店頭では取り扱いのない商品です。
+    profile プロフィール
+    public_other_subject 公共/その他の主題
+    purchase_failed 購入に失敗しました: $e
+    recovery_error リカバリエラー: $e
+    refresh_conversation 会話を更新する
+    renderer レンダラー
+    reset_code リセットコード
+    reset_code_sent_to_please_check_your_inbox リセット コードが $email に送信されました。受信箱をご確認ください。
+    restore_purchases 購入を復元する
+    save 保存
+    save_33_per_month 毎月 33% 割引
+    saved_successfully 正常に保存されました
+    search_users ユーザーを検索する
+    session_complete セッション完了！
+    session_complete_description 素晴らしい仕事だ！このセッションのすべてのカードが完成しました。
+    settings 設定
+    show_documentation_btn 「ドキュメントを表示」ボタン
+    show_documentation_btn_desc アプリバーにドキュメントボタンを表示します。
+    show_fake_users 偽のユーザーを表示する
+    subject_id 被験者ID
+    subscribe_now 今すぐ購読する
+    subscription_data サブスクリプションデータ
+    subscription_updated サブスクリプションが更新されました
+    subtraction_emoji 引き算の絵文字
+    subtraction_numbers 減算の数
+    technical_context 技術的背景
+    testing_mode テストモード
+    text 文章
+    this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards これはフォルダーです。上の「学習/テスト」ボタンを使用して、すべてのカードを練習できます。
+    type_your_reply 返信を入力してください...
+    ua UA
+    unknown_user_profile_missing 不明なユーザー (プロファイルがありません)
+    user ユーザー
+    user_id ユーザーID
+    user_with_this_email_already_exists_please_log_in_instead このメールアドレスを持つユーザーはすでに存在します。代わりにログインしてください。
+    users ユーザー
+    users_filter ユーザーをフィルタリングする
+    verification_code 検証コード
+    verification_code_sent_to 検証コードが $email に送信されました
+    version バージョン
+    view_onboarding オンボーディングを見る
+    weekly_access 週間アクセス
+    welcome_complete_your_profile_to_join_aliolo いらっしゃいませ！ aliolo に参加するには、プロフィールを完成させてください。
+    yearly_access 年間アクセス
+    you_do_not_have_permission_to_edit_this_card このカードを編集する権限がありません
+    you_do_not_have_permission_to_view_this_card_details このカードの詳細を表示する権限がありません。

@@ -1,0 +1,228 @@
+..
+    a_folder_with_this_name_already_exists_in_this_pillar Folder o tej nazwie już istnieje w tym filarze
+    about O
+    about_intro_audience_desc Aliolo wspiera uczniów, którzy chcą uporządkowanej recenzji, rodziców i nauczycieli, którzy potrzebują przystępnych treści do nauki, a także twórców, którzy organizują i publikują własne materiały edukacyjne.
+    about_intro_audience_title Dla kogo to jest
+    about_intro_desc Aliolo to wizualna aplikacja do nauki zbudowana wokół prostych procesów nauki, elastycznej organizacji treści i stałego postępu w czasie.
+    about_intro_start_desc Zacznij od panelu, wybierz filar, otwórz temat i zacznij od Ucz się. Zapisz przydatne treści w ulubionych, aby łatwiej było do nich wrócić później.
+    about_intro_start_title Jak zacząć
+    about_intro_title Informacje o Aliolo
+    about_learn_discovery_desc Wyszukiwanie, filtry wieku i filtry źródeł, takie jak ulubione, moje i biblioteki publiczne, pomagają szybko znaleźć odpowiednią treść.
+    about_learn_discovery_title Odkrywanie i filtrowanie
+    about_learn_language_desc Możesz uczyć się treści w różnych językach i dostosowywać ustawienia sesji w swoim profilu, aby dopasować je do swojego tempa i bieżących celów.
+    about_learn_language_title Elastyczność języka i trybu
+    about_learn_media_desc Obrazy, dźwięk i wideo mogą wspierać rozpoznawanie, wymowę i kontekst, jeśli są dostępne w treściach edukacyjnych.
+    about_learn_media_title Wsparcie mediów
+    about_learn_modes_desc Skorzystaj z opcji Naucz się, aby zyskać uznanie i pewność siebie, a następnie przełącz się na opcję Testuj, jeśli chcesz dokładniej zapamiętać dane i przyspieszyć ich sprawdzanie.
+    about_learn_modes_title Ucz się i testuj
+    about_learn_title Jak się uczysz
+    about_organize_collections_desc Kolekcje łączą wiele tematów w jeden proces badawczy, co jest przydatne w przypadku mieszanych recenzji i zestawów kuratorskich.
+    about_organize_collections_title Kolekcje
+    about_organize_creation_desc Twórcy mogą organizować własne treści, zachować ich prywatność podczas pracy lub udostępnić je w bibliotece publicznej, gdy będą gotowe.
+    about_organize_creation_title Własność i widoczność
+    about_organize_folders_desc Foldery grupują powiązane tematy w filarze, dzięki czemu łatwiej jest zarządzać większymi zestawami treści.
+    about_organize_folders_title Lornetka składana
+    about_organize_subjects_desc Przedmioty są główną jednostką studiów. Zawierają karty, które otwierasz w sesjach nauki i testowania.
+    about_organize_subjects_title Przedmioty
+    about_organize_title Jak zorganizowana jest treść
+    about_progress_goals_desc Twój profil umożliwia dostrojenie dziennych celów, poznanie rozmiaru sesji, rozmiaru sesji testowej i liczby odpowiedzi.
+    about_progress_goals_title Cele dzienne i ustawienia sesji
+    about_progress_social_desc Znajomi i funkcje tabeli liderów sprawiają, że postęp jest społeczny, bez zmiany podstawowego przepływu nauki.
+    about_progress_social_title Przyjaciele i tabela wyników
+    about_progress_title Postęp, przyjaciele i tabela wyników
+    about_progress_xp_desc Aliolo śledzi całkowitą liczbę XP, aktualną passę i maksymalną passę, dzięki czemu postęp jest widoczny w krótkich i długich okresach nauki.
+    about_progress_xp_title XP i serie
+    about_support_docs_desc Strona dokumentacji w aplikacji wyjaśnia, jak obecnie działa pulpit nawigacyjny, przebieg badań i narzędzia twórców.
+    about_support_docs_title Dokumentacja
+    about_support_feedback_desc Korzystaj z punktów wprowadzania opinii w całej aplikacji, aby zgłaszać błędy, sugerować ulepszenia lub oznaczać konkretne problemy z treścią w kontekście.
+    about_support_feedback_title Informacje zwrotne i raportowanie
+    about_support_licenses_desc Strona licencyjna zawiera najpierw licencję komercyjną Aliolo, a następnie dołączone licencje pakietowe innych firm.
+    about_support_licenses_title Licencje
+    about_support_onboarding_desc W dowolnym momencie możesz wrócić do wprowadzenia, aby zapoznać się z głównymi pomysłami aplikacji i przebiegiem konfiguracji.
+    about_support_onboarding_title Proces wdrażania do firmy nowego pracownika
+    about_support_settings_desc Język interfejsu użytkownika, tryb motywu, kolor motywu, dźwięk, rozmieszczenie paska bocznego i widoczność dokumentacji można dostosować w ustawieniach.
+    about_support_settings_title Personalizacja
+    about_support_title Ustawienia, opinie i wsparcie
+    addition_emoji Dodanie emotikonów
+    addition_numbers Numery dodane
+    aliolo aliolo
+    all_rights_reserved Wszelkie prawa zastrzeżone
+    are_you_sure_you_want_to_close_this_feedback_request Czy na pewno chcesz zamknąć tę prośbę o opinię?
+    are_you_sure_you_want_to_delete_this_folder Czy na pewno chcesz usunąć ten folder?
+    attach_image Dołącz obraz
+    back Z powrotem
+    back_to_subjects Powrót do tematów
+    best_for_quick_goals Najlepszy do szybkich bramek
+    billing_disclaimer Subskrypcje odnawiają się automatycznie, chyba że zostaną anulowane. Możesz zarządzać swoją subskrypcją w ustawieniach swojego sklepu.
+    billing_title Rozliczenia
+    browser Przeglądarka
+    cancel Anulować
+    cannot_delete_folder_it_is_not_empty Nie można usunąć folderu: nie jest pusty
+    card_id Identyfikator karty
+    check_your_email_for_code Sprawdź swój e-mail, aby uzyskać kod
+    clear Jasne
+    click_to_view_original Kliknij, aby zobaczyć oryginał
+    close Zamknąć
+    close_request Zamknąć żądanie?
+    collection_id Identyfikator kolekcji
+    colors Zabarwienie
+    confirm_subscription Potwierdź subskrypcję
+    context Kontekst
+    could_not_launch Nie można uruchomić $url
+    counting Rachunkowość
+    current_subscription Aktualna subskrypcja
+    delete Usuwać
+    device Urządzenie
+    doc_create_intro_desc Na tej karcie opisano, jak twórcy organizują treści, lokalizują je i publikują przydatne materiały do ​​nauki, nie komplikując przy tym nadmiernie przepływu pracy.
+    doc_create_intro_title Tworzyć
+    doc_create_json_desc Tworzenie w oparciu o JSON to zaawansowany przepływ pracy w przypadku ustrukturyzowanej treści zbiorczej. Powinno pozostać opcjonalne; większość twórców powinna mieć możliwość tworzenia i edytowania treści za pomocą standardowych formularzy.
+    doc_create_json_title Zaawansowany import JSON
+    doc_create_localization_desc Lokalizuj treść tam, gdzie ma to największe znaczenie: nazwy, opisy, podpowiedzi i odpowiedzi. Zachowaj spójność etykiet w różnych językach, aby użytkownicy mogli zmieniać język nauki bez utraty struktury.
+    doc_create_localization_title Lokalizacja
+    doc_create_media_desc Obrazy, dźwięk i wideo powinny wspierać cel nauczania, a nie odwracać od niego uwagę. Dodaj multimedia, gdy poprawi to rozpoznawanie, wymowę lub kontekst, i zachowaj użyteczność kart nawet wtedy, gdy brakuje multimediów.
+    doc_create_media_title Przepływ pracy z mediami
+    doc_create_model_desc Twórcy pracują wewnątrz filarów i organizują materiały za pomocą folderów, tematów, kolekcji i kart. Najpierw zbuduj strukturę, a następnie wypełnij ją zlokalizowanymi podpowiedziami, odpowiedziami i opcjonalnymi multimediami.
+    doc_create_model_title Model treści
+    doc_create_visibility_desc Użyj opcji „moje”, aby pracować nad własną zawartością, ulubionych, aby przypiąć przydatne elementy, a biblioteki publicznej, aby przeglądać udostępnione materiały. Publiczna widoczność wpływa na odkrywanie, a własność wpływa na to, co możesz edytować lub usunąć.
+    doc_create_visibility_title Własność i widoczność
+    doc_start_dashboard_desc Pulpit nawigacyjny to Twoja główna biblioteka. Użyj wyszukiwania, aby szybko znaleźć zawartość, a następnie połącz filtry źródłowe, takie jak ulubione, moje i biblioteki publiczne, z filtrami wieku, aby zredukować szum.
+    doc_start_dashboard_title Panel, wyszukiwanie i filtry
+    doc_start_feedback_desc Jeśli coś jest nie tak lub jest niejasne, korzystaj z punktów wprowadzania opinii w całej aplikacji. Raporty mogą uwzględniać bieżący kontekst, co ułatwia przeglądanie i naprawianie problemów z treścią.
+    doc_start_feedback_title Informacje zwrotne i pomoc
+    doc_start_intro_desc Użyj tej karty, aby dowiedzieć się, jak pulpit nawigacyjny, biblioteka, postęp i funkcje społecznościowe pasują do siebie.
+    doc_start_intro_title Pierwsze kroki
+    doc_start_progress_desc Twój profil pokazuje całkowitą liczbę punktów XP, aktualną passę, maksymalną passę i dzienny postęp w osiąganiu celów. Rozmiarem sesji i liczbą odpowiedzi zarządza się także na stronie profilu.
+    doc_start_progress_title Postęp i cele
+    doc_start_quick_desc Wybierz filar na pulpicie nawigacyjnym, otwórz temat i zacznij od Ucz się. Użyj ulubionych i filtrów, aby zawęzić bibliotekę, a następnie przejrzyj swoje XP, passy i dzienne cele w swoim profilu.
+    doc_start_quick_title Szybki start
+    doc_start_structure_desc Badani trzymają karty. Foldery grupują powiązane treści w filarze. Kolekcje to wybrane zestawy, które mogą łączyć wiele tematów w celu studiowania i udostępniania.
+    doc_start_structure_title Tematy, foldery i kolekcje
+    doc_study_how_desc Zacznij od Ucz się, gdy budujesz rozpoznawalność, a następnie przełącz się na Testuj, jeśli chcesz szybciej przypominać sobie i dokładniej sprawdzać. Korzystaj z krótszych sesji, aby uzyskać ukierunkowaną recenzję, i większych sesji, aby uzyskać szerszy zasięg.
+    doc_study_how_title Jak się uczyć
+    doc_study_intro_desc Na tej karcie wyjaśniono, jak poruszać się po zawartości, wybierać odpowiedni tryb i dostosowywać sesje do przeglądu lub przypomnienia.
+    doc_study_intro_title Badanie
+    doc_study_media_desc Jeśli media są dostępne, użyj ich, aby wzmocnić wymowę i rozpoznawanie. Autoodtwarzanie jest najbardziej przydatne w przypadku pasywnego przeglądania lub wielokrotnego słuchania podczas krótszych sesji.
+    doc_study_media_title Dźwięk, automatyczne odtwarzanie i multimedia
+    doc_study_modes_desc Podstawowe tryby nauki to nauka i testowanie. Korzystają z tej samej treści, ale obsługują różne tempo i oczekiwania dotyczące odpowiedzi, więc przełączaj tryby w zależności od tego, czy eksplorujesz, czy sprawdzasz zachowanie.
+    doc_study_modes_title Tryby uczenia się i testowania
+    doc_study_scope_desc Naukę można rozpocząć od pojedynczego przedmiotu, widoku folderu lub kolekcji. Kolekcje są przydatne, gdy chcesz przeprowadzić mieszaną sesję obejmującą kilka tematów bez opuszczania bieżącego toku.
+    doc_study_scope_title Przedmioty, foldery i zbiory w badaniu
+    doc_tab_create Tworzyć
+    doc_tab_start Start
+    doc_tab_study Badanie
+    documentation Dokumentacja
+    edit_subscription Edytuj subskrypcję
+    email_updated_successfully E-mail został pomyślnie zaktualizowany!
+    enter_current_password Wprowadź aktualne hasło
+    error Błąd: $e
+    error_deleting Błąd podczas usuwania: $e
+    error_saving Błąd podczas zapisywania: $e
+    error_saving_card Błąd podczas zapisywania karty: $e
+    error_updating_favorite Błąd aktualizacji ulubionego: $e
+    failed_to_send_reset_code Nie udało się wysłać kodu resetującego
+    failed_to_send_verification_code Nie udało się wysłać kodu weryfikacyjnego
+    fake_only Tylko fałszywe
+    feature_creation Narzędzia tworzenia
+    feature_customize Zaawansowane dostosowywanie
+    feature_full_library Pełny dostęp do biblioteki
+    feature_testing Testowanie interaktywne
+    folder_id Identyfikator folderu
+    free_only Bezpłatni użytkownicy
+    generic Ogólny
+    home Dom
+    invalid_code Nieprawidłowy kod
+    invalid_email_address Nieprawidłowy adres e-mail
+    invalid_json Nieprawidłowy JSON: $e
+    invalid_or_expired_invitation_link Nieprawidłowy lub wygasły link zaproszenia.
+    invalid_or_expired_reset_code Nieprawidłowy lub wygasły kod resetowania.
+    invitation_sent_awaiting_registration Zaproszenie wysłane (oczekuje na rejestrację)
+    invited_and_request_sent Zaproszenie i prośba wysłana!
+    json JSON
+    label_suffix $label:
+    leaderboard Tabela liderów
+    licenses Licencje
+    licenses_aliolo_section_title Aliolo Licencja komercyjna
+    licenses_aliolo_subtitle Zastrzeżone oprogramowanie i warunki dostępu premium
+    licenses_intro_desc Najpierw pojawia się licencja komercyjna Aliolo. Poniżej znajdują się licencje pakietowe innych firm.
+    licenses_intro_title Aliolo Informacje o licencji i pakiecie
+    licenses_third_party_section_title Licencje pakietowe stron trzecich
+    linux_distro Dystrybucja Linuksa
+    loading Załadunek...
+    localized_data Zlokalizowane dane
+    monthly_access Dostęp miesięczny
+    most_popular_choice Najpopularniejszy wybór
+    new_email Nowy e-mail
+    no_cards_available_for_this_session Brak dostępnych kart na tę sesję.
+    no_cards_found Nie znaleziono żadnych kart
+    no_subjects_found Nie znaleziono tematów
+    no_subjects_found_in_this_collection W tej kolekcji nie znaleziono żadnych tematów
+    no_users_found Nie znaleziono żadnych użytkowników
+    os_version Wersja systemu operacyjnego
+    password_updated_successfully Hasło zostało pomyślnie zaktualizowane!
+    payments_are_not_yet_integrated_on_web_please_use_the_mobile_app_to_upgrade Płatności nie są jeszcze zintegrowane z siecią. Aby dokonać aktualizacji, skorzystaj z aplikacji mobilnej.
+    personal_data Dane osobowe
+    pick_date Wybierz datę
+    plan_monthly_tagline Najpopularniejszy wybór
+    plan_monthly_title Dostęp miesięczny
+    plan_weekly_tagline Najlepszy do szybkich bramek
+    plan_weekly_title Dostęp tygodniowy
+    plan_yearly_tagline Oszczędzaj 33% miesięcznie
+    plan_yearly_title Dostęp roczny
+    platform Platforma
+    play Grać
+    play_audio Odtwórz dźwięk
+    please_enter_the_6_digit_code Proszę wprowadzić 6-cyfrowy kod
+    please_wait_for_a_response_before_replying_again Zanim odpowiesz ponownie, poczekaj na odpowiedź.
+    premium_expires_at Wygasa o $date
+    premium_lifetime Dożywotni dostęp
+    premium_only Tylko premium
+    premium_status_active Jesteś członkiem premium
+    premium_unlock_desc Uzyskaj dostęp do wszystkich przedmiotów, twórz nieograniczone karty i wspieraj misję Aliolo.
+    premium_unlock_title Odblokuj pełny dostęp
+    product_not_available_in_store Produkt niedostępny w sklepie.
+    profile Profil
+    public_other_subject Temat publiczny/inny
+    purchase_failed Zakup nie powiódł się: $e
+    recovery_error Błąd odzyskiwania: $e
+    refresh_conversation Odśwież rozmowę
+    renderer Renderer
+    reset_code Zresetuj kod
+    reset_code_sent_to_please_check_your_inbox Kod resetowania wysłany do $email. Sprawdź swoją skrzynkę odbiorczą.
+    restore_purchases Przywróć zakupy
+    save Ratować
+    save_33_per_month Oszczędzaj 33% miesięcznie
+    saved_successfully Zapisano pomyślnie
+    search_users Wyszukaj użytkowników
+    session_complete Sesja zakończona!
+    session_complete_description Świetna robota! Skończyłeś wszystkie karty w tej sesji.
+    settings Ustawienia
+    show_documentation_btn Pokaż przycisk dokumentacji
+    show_documentation_btn_desc Wyświetl przycisk dokumentacji na pasku aplikacji.
+    show_fake_users Pokaż fałszywych użytkowników
+    subject_id Identyfikator podmiotu
+    subscribe_now Subskrybuj teraz
+    subscription_data Dane subskrypcji
+    subscription_updated Subskrypcja zaktualizowana
+    subtraction_emoji Odejmowanie Emoji
+    subtraction_numbers Liczby odejmowania
+    technical_context KONTEKST TECHNICZNY
+    testing_mode Tryb testowy
+    text Tekst
+    this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards To jest folder. Możesz użyć powyższych przycisków Ucz się/Testuj, aby przećwiczyć wszystkie karty.
+    type_your_reply Wpisz swoją odpowiedź...
+    ua UA
+    unknown_user_profile_missing Nieznany użytkownik (brak profilu)
+    user Użytkownik
+    user_id Identyfikator użytkownika
+    user_with_this_email_already_exists_please_log_in_instead Użytkownik o tym adresie e-mail już istnieje. Zamiast tego zaloguj się.
+    users Użytkownicy
+    users_filter Filtruj użytkowników
+    verification_code Kod weryfikacyjny
+    verification_code_sent_to Kod weryfikacyjny wysłany do $email
+    version Wersja
+    view_onboarding Zobacz wprowadzenie
+    weekly_access Dostęp tygodniowy
+    welcome_complete_your_profile_to_join_aliolo Powitanie! Uzupełnij swój profil, aby dołączyć do aliolo.
+    yearly_access Dostęp roczny
+    you_do_not_have_permission_to_edit_this_card Nie masz uprawnień do edytowania tej karty
+    you_do_not_have_permission_to_view_this_card_details Nie masz uprawnień do przeglądania szczegółów tej karty.

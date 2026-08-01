@@ -1,0 +1,234 @@
+..
+    a_folder_with_this_name_already_exists_in_this_pillar A folder with this name already exists in this pillar
+    about About
+    about_intro_audience_desc Aliolo supports learners who want structured review, parents and teachers who need approachable study content, and creators who organize and publish their own learning materials.
+    about_intro_audience_title Who It Is For
+    about_intro_desc Aliolo is a visual learning app built around simple study flows, flexible content organization, and steady progress over time.
+    about_intro_start_desc Begin on the dashboard, choose a pillar, open a subject, and start with Learn. Save useful content to favorites so it is easier to revisit later.
+    about_intro_start_title How to Start
+    about_intro_title About Aliolo
+    about_learn_discovery_desc Search, age filters, and source filters such as favorites, mine, and public library help you find the right content quickly.
+    about_learn_discovery_title Discovery and Filtering
+    about_learn_language_desc You can study content in different languages and adjust session settings in your profile to match your pace and current goals.
+    about_learn_language_title Language and Mode Flexibility
+    about_learn_media_desc Images, audio, and video can support recognition, pronunciation, and context when they are available in the learning content.
+    about_learn_media_title Media Support
+    about_learn_modes_desc Use Learn to build recognition and confidence, then switch to Test when you want stricter recall and faster review.
+    about_learn_modes_title Learn and Test
+    about_learn_title How You Learn
+    about_organize_collections_desc Collections combine multiple subjects into one study flow, which is useful for mixed review and curated sets.
+    about_organize_collections_title Collections
+    about_organize_creation_desc Creators can organize their own content, keep it private while working, or expose it through the public library when it is ready.
+    about_organize_creation_title Ownership and Visibility
+    about_organize_folders_desc Folders group related subjects inside a pillar so larger content sets stay manageable.
+    about_organize_folders_title Folders
+    about_organize_subjects_desc Subjects are the main unit of study. They hold the cards you open in Learn and Test sessions.
+    about_organize_subjects_title Subjects
+    about_organize_title How Content Is Organized
+    about_progress_goals_desc Your profile lets you tune daily goal targets, learn session size, test session size, and number of answers.
+    about_progress_goals_title Daily Goals and Session Settings
+    about_progress_social_desc Friends and leaderboard features make progress social without changing the core learning flow.
+    about_progress_social_title Friends and Leaderboard
+    about_progress_title Progress, Friends, and Leaderboard
+    about_progress_xp_desc Aliolo tracks total XP, current streak, and max streak so progress feels visible across short and long study periods.
+    about_progress_xp_title XP and Streaks
+    about_support_docs_desc The in-app documentation page explains how the dashboard, study flows, and creator tools work today.
+    about_support_docs_title Documentation
+    about_support_feedback_desc Use feedback entry points across the app to report bugs, suggest improvements, or flag specific content issues with context.
+    about_support_feedback_title Feedback and Reporting
+    about_support_licenses_desc The licenses page lists Aliolo's commercial license first and then the bundled third-party package licenses.
+    about_support_licenses_title Licenses
+    about_support_onboarding_desc You can revisit onboarding at any time to review the app's main ideas and setup flow.
+    about_support_onboarding_title Onboarding
+    about_support_settings_desc UI language, theme mode, theme color, sound, sidebar placement, and documentation visibility can all be adjusted from settings.
+    about_support_settings_title Personalization
+    about_support_title Settings, Feedback, and Support
+    addition_emoji Addition Emoji
+    addition_numbers Addition Numbers
+    aliolo aliolo
+    all_rights_reserved All rights reserved
+    are_you_sure_you_want_to_close_this_feedback_request Are you sure you want to close this feedback request?
+    are_you_sure_you_want_to_delete_this_folder Are you sure you want to delete this folder?
+    attach_image Attach image
+    back Back
+    back_to_subjects Back to Subjects
+    best_for_quick_goals Best for quick goals
+    billing_disclaimer Subscriptions automatically renew unless cancelled. You can manage your subscription in your store settings.
+    billing_title Billing
+    browser Browser
+    cancel Cancel
+    cannot_delete_folder_it_is_not_empty Cannot delete folder: it is not empty
+    card_id Card ID
+    check_your_email_for_code Check your email for code
+    clear Clear
+    click_to_view_original Click to view original
+    close Close
+    close_request Close Request?
+    collection_id Collection ID
+    colors Colors
+    confirm_subscription Confirm Subscription
+    context Context
+    correct_answers Correct Answers
+    could_not_launch Could not launch $url
+    counting Counting
+    current_subscription Current Subscription
+    delete Delete
+    device Device
+    doc_create_intro_desc This tab covers how creators organize content, localize it, and publish useful study material without overcomplicating the workflow.
+    doc_create_intro_title Create
+    doc_create_json_desc JSON-based creation is an advanced workflow for structured bulk content. It should remain optional; most creators should be able to build and edit content through the standard forms.
+    doc_create_json_title Advanced JSON Import
+    doc_create_localization_desc Localize content where it matters most: names, descriptions, prompts, and answers. Keep labels consistent across languages so users can switch study language without losing structure.
+    doc_create_localization_title Localization
+    doc_create_media_desc Images, audio, and video should support the learning goal, not distract from it. Add media when it improves recognition, pronunciation, or context, and keep cards usable even when media is missing.
+    doc_create_media_title Media Workflow
+    doc_create_model_desc Creators work inside pillars and organize material with folders, subjects, collections, and cards. Build the structure first, then fill it with localized prompts, answers, and optional media.
+    doc_create_model_title Content Model
+    doc_create_visibility_desc Use "mine" to work on your own content, favorites to pin useful items, and public library to browse shared material. Public visibility affects discovery, while ownership affects what you can edit or delete.
+    doc_create_visibility_title Ownership and Visibility
+    doc_start_dashboard_desc The dashboard is your main library. Use search to find content quickly, then combine source filters such as favorites, mine, and public library with age filters to reduce noise.
+    doc_start_dashboard_title Dashboard, Search, and Filters
+    doc_start_feedback_desc Use the feedback entry points across the app when something is wrong or unclear. Reports can include the current context, which makes content issues easier to review and fix.
+    doc_start_feedback_title Feedback and Help
+    doc_start_intro_desc Use this tab when you are learning how the dashboard, library, progress, and social features fit together.
+    doc_start_intro_title Getting Started
+    doc_start_progress_desc Your profile shows total XP, current streak, max streak, and daily goal progress. Session size and number of answers are also managed from the profile page.
+    doc_start_progress_title Progress and Goals
+    doc_start_quick_desc Pick a pillar on the dashboard, open a subject, and start with Learn. Use favorites and filters to narrow the library, then review your XP, streaks, and daily goal from your profile.
+    doc_start_quick_title Quick Start
+    doc_start_structure_desc Subjects hold cards. Folders group related content inside a pillar. Collections are curated sets that can combine multiple subjects for study and sharing.
+    doc_start_structure_title Subjects, Folders, and Collections
+    doc_study_how_desc Start with Learn when you are building recognition, then switch to Test when you want faster recall and stricter checking. Use shorter sessions for focused review and larger sessions for broader coverage.
+    doc_study_how_title How to Study
+    doc_study_intro_desc This tab explains how to move through content, choose the right mode, and tune your sessions for review or recall.
+    doc_study_intro_title Study
+    doc_study_media_desc When media is available, use it to reinforce pronunciation and recognition. Autoplay is most useful for passive review or repeated listening during shorter sessions.
+    doc_study_media_title Audio, Autoplay, and Media
+    doc_study_modes_desc Learn and Test are the core study modes. They use the same content but support different pacing and answer expectations, so switch modes based on whether you are exploring or checking retention.
+    doc_study_modes_title Learn and Test Modes
+    doc_study_scope_desc Study can start from a single subject, a folder view, or a collection. Collections are useful when you want a mixed session across several subjects without leaving the current flow.
+    doc_study_scope_title Subjects, Folders, and Collections in Study
+    doc_tab_create Create
+    doc_tab_start Start
+    doc_tab_study Study
+    documentation Documentation
+    edit_subscription Edit subscription
+    email_updated_successfully Email updated successfully!
+    enter_current_password Enter current password
+    error Error: $e
+    error_deleting Error deleting: $e
+    error_saving Error saving: $e
+    error_saving_card Error saving card: $e
+    error_updating_favorite Error updating favorite: $e
+    failed_answers Failed Answers
+    failed_to_send_reset_code Failed to send reset code
+    failed_to_send_verification_code Failed to send verification code
+    fake_only Fake only
+    feature_creation Creation Tools
+    feature_customize Advanced Customization
+    feature_full_library Full Library Access
+    feature_testing Interactive Testing
+    folder_id Folder ID
+    free_only Free users
+    generic Generic
+    home Home
+    invalid_code Invalid code
+    invalid_email_address Invalid email address
+    invalid_json Invalid JSON: $e
+    invalid_or_expired_invitation_link Invalid or expired invitation link.
+    invalid_or_expired_reset_code Invalid or expired reset code.
+    invitation_sent_awaiting_registration Invitation sent (awaiting registration)
+    invited_and_request_sent Invited and request sent!
+    json JSON
+    label_suffix $label:
+    leaderboard Leaderboard
+    learning_session_complete_description Great job! You finished this learning session. Your progress has been saved.
+    licenses Licenses
+    licenses_aliolo_section_title Aliolo Commercial License
+    licenses_aliolo_subtitle Proprietary software and premium access terms
+    licenses_intro_desc Aliolo's commercial license appears first. Third-party package licenses follow below.
+    licenses_intro_title Aliolo License and Package Notices
+    licenses_third_party_section_title Third-Party Package Licenses
+    linux_distro Linux Distro
+    loading Loading...
+    localized_data Localized Data
+    monthly_access Monthly Access
+    most_popular_choice Most popular choice
+    new_email New Email
+    no_cards_available_for_this_session No cards available for this session.
+    no_cards_found No cards found
+    no_subjects_found No subjects found
+    no_subjects_found_in_this_collection No subjects found in this collection
+    no_users_found No users found
+    os_version OS Version
+    password_updated_successfully Password updated successfully!
+    payments_are_not_yet_integrated_on_web_please_use_the_mobile_app_to_upgrade Payments are not yet integrated on Web. Please use the mobile app to upgrade.
+    personal_data Personal data
+    pick_date Pick date
+    plan_monthly_tagline Most popular choice
+    plan_monthly_title Monthly Access
+    plan_weekly_tagline Best for quick goals
+    plan_weekly_title Weekly Access
+    plan_yearly_tagline Save 33% per month
+    plan_yearly_title Yearly Access
+    platform Platform
+    play Play
+    play_audio Play Audio
+    please_enter_the_6_digit_code Please enter the 6-digit code
+    please_wait_for_a_response_before_replying_again Please wait for a response before replying again.
+    premium_expires_at Expires at $date
+    premium_lifetime Lifetime access
+    premium_only Premium only
+    premium_status_active You are a premium member
+    premium_unlock_desc Gain access to all subjects, create unlimited cards, and support Aliolo's mission.
+    premium_unlock_title Unlock Full Access
+    product_not_available_in_store Product not available in store.
+    profile Profile
+    public_other_subject Public/Other Subject
+    purchase_failed Purchase failed: $e
+    recovery_error Recovery error: $e
+    refresh Refresh
+    refresh_conversation Refresh conversation
+    renderer Renderer
+    reset_code Reset Code
+    reset_code_sent_to_please_check_your_inbox Reset code sent to $email. Please check your inbox.
+    restore_purchases Restore Purchases
+    save Save
+    save_33_per_month Save 33% per month
+    saved_successfully Saved successfully
+    search_users Search users
+    session_complete Session Complete!
+    session_complete_description Great job! You have finished all the cards in this session.
+    settings Settings
+    show_documentation_btn Show documentation button
+    show_documentation_btn_desc Display the documentation button in the app bar.
+    show_fake_users Show Fake Users
+    subject_id Subject ID
+    subscribe_now Subscribe Now
+    subscription_data Subscription data
+    subscription_updated Subscription updated
+    subtraction_emoji Subtraction Emoji
+    subtraction_numbers Subtraction Numbers
+    technical_context TECHNICAL CONTEXT
+    testing_mode Testing mode
+    text Text
+    this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards This is a folder. You can use Learn/Test buttons above to practice all cards.
+    total_cards Total Cards
+    type_your_reply Type your reply...
+    ua UA
+    unknown_user_profile_missing Unknown User (Profile missing)
+    update_available A new version is available!
+    user User
+    user_id User ID
+    user_with_this_email_already_exists_please_log_in_instead User with this email already exists. Please log in instead.
+    users Users
+    users_filter Filter users
+    verification_code Verification Code
+    verification_code_sent_to Verification code sent to $email
+    version Version
+    view_onboarding View onboarding
+    weekly_access Weekly Access
+    welcome_complete_your_profile_to_join_aliolo Welcome! Complete your profile to join aliolo.
+    yearly_access Yearly Access
+    you_do_not_have_permission_to_edit_this_card You do not have permission to edit this card
+    you_do_not_have_permission_to_view_this_card_details You do not have permission to view this card details.

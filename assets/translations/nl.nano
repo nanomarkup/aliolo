@@ -1,0 +1,228 @@
+..
+    a_folder_with_this_name_already_exists_in_this_pillar Er bestaat al een map met deze naam in deze pijler
+    about Over
+    about_intro_audience_desc Aliolo ondersteunt leerlingen die gestructureerde evaluatie willen, ouders en docenten die toegankelijke studieinhoud nodig hebben, en makers die hun eigen leermateriaal organiseren en publiceren.
+    about_intro_audience_title Voor wie is het bedoeld
+    about_intro_desc Aliolo is een visuele leerapp die is opgebouwd rond eenvoudige studiestromen, flexibele inhoudorganisatie en gestage vooruitgang in de loop van de tijd.
+    about_intro_start_desc Begin op het dashboard, kies een pijler, open een onderwerp en begin met Leren. Bewaar nuttige inhoud in uw favorieten, zodat u deze later gemakkelijker kunt bekijken.
+    about_intro_start_title Hoe te beginnen
+    about_intro_title Over Aliolo
+    about_learn_discovery_desc Zoek-, leeftijds- en bronfilters zoals favorieten, mijn en openbare bibliotheek helpen je snel de juiste inhoud te vinden.
+    about_learn_discovery_title Ontdekken en filteren
+    about_learn_language_desc U kunt inhoud in verschillende talen bestuderen en de sessie-instellingen in uw profiel aanpassen aan uw tempo en huidige doelen.
+    about_learn_language_title Taal- en modusflexibiliteit
+    about_learn_media_desc Afbeeldingen, audio en video kunnen herkenning, uitspraak en context ondersteunen wanneer ze beschikbaar zijn in de leerinhoud.
+    about_learn_media_title Media-ondersteuning
+    about_learn_modes_desc Gebruik Learn om herkenning en vertrouwen op te bouwen en schakel vervolgens over naar Test als u striktere terugroeping en snellere beoordeling wilt.
+    about_learn_modes_title Leer en test
+    about_learn_title Hoe je leert
+    about_organize_collections_desc Collecties combineren meerdere onderwerpen in één studiestroom, wat handig is voor gemengde beoordelingen en samengestelde sets.
+    about_organize_collections_title Collecties
+    about_organize_creation_desc Makers kunnen hun eigen inhoud organiseren, deze privé houden terwijl ze werken, of deze via de openbare bibliotheek openbaar maken wanneer deze klaar is.
+    about_organize_creation_title Eigendom en zichtbaarheid
+    about_organize_folders_desc Mappen groeperen gerelateerde onderwerpen in een pilaar, zodat grotere inhoudssets beheersbaar blijven.
+    about_organize_folders_title Mappen
+    about_organize_subjects_desc Onderwerpen vormen de belangrijkste onderwijseenheid. Ze bevatten de kaarten die u opent tijdens leer- en testsessies.
+    about_organize_subjects_title Onderwerpen
+    about_organize_title Hoe inhoud is georganiseerd
+    about_progress_goals_desc Met uw profiel kunt u de dagelijkse doeldoelen afstemmen, de sessiegrootte, de testsessiegrootte en het aantal antwoorden leren.
+    about_progress_goals_title Dagelijkse doelen en sessie-instellingen
+    about_progress_social_desc Vrienden en klassementfuncties maken vooruitgang sociaal zonder de kernleerstroom te veranderen.
+    about_progress_social_title Vrienden en klassement
+    about_progress_title Vooruitgang, vrienden en klassement
+    about_progress_xp_desc Aliolo houdt de totale XP, de huidige streak en de maximale streak bij, zodat de voortgang zichtbaar lijkt over korte en lange studieperioden.
+    about_progress_xp_title XP en Streaks
+    about_support_docs_desc Op de documentatiepagina in de app wordt uitgelegd hoe het dashboard, de studiestromen en de tools voor makers vandaag de dag werken.
+    about_support_docs_title Documentatie
+    about_support_feedback_desc Gebruik feedback-invoerpunten in de app om bugs te melden, verbeteringen voor te stellen of specifieke inhoudsproblemen met context te markeren.
+    about_support_feedback_title Feedback en rapportage
+    about_support_licenses_desc Op de licentiepagina wordt eerst de commerciële licentie van Aliolo vermeld, gevolgd door de gebundelde pakketlicenties van derden.
+    about_support_licenses_title Licenties
+    about_support_onboarding_desc U kunt de onboarding op elk gewenst moment opnieuw bekijken om de belangrijkste ideeën en het installatieproces van de app te bekijken.
+    about_support_onboarding_title Aan boord
+    about_support_settings_desc UI-taal, themamodus, themakleur, geluid, plaatsing van de zijbalk en zichtbaarheid van de documentatie kunnen allemaal worden aangepast via de instellingen.
+    about_support_settings_title Personalisatie
+    about_support_title Instellingen, feedback en ondersteuning
+    addition_emoji Toevoeging Emoji
+    addition_numbers Toevoegingsnummers
+    aliolo aliolo
+    all_rights_reserved Alle rechten voorbehouden
+    are_you_sure_you_want_to_close_this_feedback_request Weet u zeker dat u dit feedbackverzoek wilt sluiten?
+    are_you_sure_you_want_to_delete_this_folder Weet u zeker dat u deze map wilt verwijderen?
+    attach_image Afbeelding bijvoegen
+    back Rug
+    back_to_subjects Terug naar Onderwerpen
+    best_for_quick_goals Beste voor snelle doelpunten
+    billing_disclaimer Abonnementen worden automatisch verlengd, tenzij ze worden opgezegd. U kunt uw abonnement beheren in uw winkelinstellingen.
+    billing_title Facturering
+    browser Browser
+    cancel Annuleren
+    cannot_delete_folder_it_is_not_empty Kan map niet verwijderen: deze is niet leeg
+    card_id Kaart-ID
+    check_your_email_for_code Controleer uw e-mail op code
+    clear Duidelijk
+    click_to_view_original Klik om het origineel te bekijken
+    close Dichtbij
+    close_request Aanvraag sluiten?
+    collection_id Collectie-ID
+    colors Kleuren
+    confirm_subscription Bevestig abonnement
+    context Context
+    could_not_launch Kan $url niet starten
+    counting Tellen
+    current_subscription Huidig ​​abonnement
+    delete Verwijderen
+    device Apparaat
+    doc_create_intro_desc Op dit tabblad wordt beschreven hoe makers inhoud organiseren, lokaliseren en nuttig studiemateriaal publiceren zonder de workflow te ingewikkeld te maken.
+    doc_create_intro_title Creëren
+    doc_create_json_desc Op JSON gebaseerde creatie is een geavanceerde workflow voor gestructureerde bulkinhoud. Het moet optioneel blijven; de meeste makers zouden inhoud moeten kunnen samenstellen en bewerken via de standaardformulieren.
+    doc_create_json_title Geavanceerde JSON-import
+    doc_create_localization_desc Lokaliseer inhoud waar dit het belangrijkst is: namen, beschrijvingen, aanwijzingen en antwoorden. Houd labels consistent in alle talen, zodat gebruikers van studietaal kunnen wisselen zonder de structuur te verliezen.
+    doc_create_localization_title Lokalisatie
+    doc_create_media_desc Afbeeldingen, audio en video moeten het leerdoel ondersteunen en er niet van afleiden. Voeg media toe als dit de herkenning, uitspraak of context verbetert, en houd kaarten bruikbaar, zelfs als media ontbreken.
+    doc_create_media_title Mediaworkflow
+    doc_create_model_desc Makers werken in pilaren en ordenen materiaal met mappen, onderwerpen, collecties en kaarten. Bouw eerst de structuur en vul deze vervolgens met gelokaliseerde aanwijzingen, antwoorden en optionele media.
+    doc_create_model_title Inhoudsmodel
+    doc_create_visibility_desc Gebruik 'mijn' om aan uw eigen inhoud te werken, favorieten om nuttige items vast te zetten en de openbare bibliotheek om door gedeeld materiaal te bladeren. Publieke zichtbaarheid heeft invloed op de ontdekking, terwijl eigendom invloed heeft op wat u kunt bewerken of verwijderen.
+    doc_create_visibility_title Eigendom en zichtbaarheid
+    doc_start_dashboard_desc Het dashboard is uw hoofdbibliotheek. Gebruik de zoekfunctie om snel inhoud te vinden en combineer vervolgens bronfilters zoals favorieten, de mijne en openbare bibliotheek met leeftijdsfilters om ruis te verminderen.
+    doc_start_dashboard_title Dashboard, zoeken en filters
+    doc_start_feedback_desc Gebruik de feedback-invoerpunten in de app als er iets mis of onduidelijk is. Rapporten kunnen de huidige context bevatten, waardoor inhoudsproblemen gemakkelijker kunnen worden beoordeeld en opgelost.
+    doc_start_feedback_title Feedback en hulp
+    doc_start_intro_desc Gebruik dit tabblad als u leert hoe het dashboard, de bibliotheek, de voortgang en de sociale functies in elkaar passen.
+    doc_start_intro_title Aan de slag
+    doc_start_progress_desc Je profiel toont de totale XP, huidige reeks, maximale reeks en dagelijkse doelvoortgang. De sessiegrootte en het aantal antwoorden worden ook beheerd vanaf de profielpagina.
+    doc_start_progress_title Vooruitgang en doelen
+    doc_start_quick_desc Kies een pijler op het dashboard, open een onderwerp en begin met Leren. Gebruik favorieten en filters om de bibliotheek te verfijnen en bekijk vervolgens uw XP, streaks en dagelijkse doelen vanuit uw profiel.
+    doc_start_quick_title Snel beginnen
+    doc_start_structure_desc Onderwerpen houden kaarten vast. Mappen groeperen gerelateerde inhoud in een pilaar. Collecties zijn samengestelde sets die meerdere onderwerpen kunnen combineren om te bestuderen en te delen.
+    doc_start_structure_title Onderwerpen, mappen en collecties
+    doc_study_how_desc Begin met Leren wanneer u erkenning opbouwt, en schakel vervolgens over naar Testen als u snellere herinnering en strengere controle wilt. Gebruik kortere sessies voor gerichte beoordeling en grotere sessies voor een bredere dekking.
+    doc_study_how_title Hoe te studeren
+    doc_study_intro_desc Op dit tabblad wordt uitgelegd hoe u door de inhoud bladert, de juiste modus kiest en uw sessies afstemt voor beoordeling of terugroeping.
+    doc_study_intro_title Studie
+    doc_study_media_desc Als er media beschikbaar zijn, gebruik deze dan om de uitspraak en herkenning te versterken. Autoplay is vooral handig voor passieve beoordeling of herhaald luisteren tijdens kortere sessies.
+    doc_study_media_title Audio, automatisch afspelen en media
+    doc_study_modes_desc Leren en testen zijn de belangrijkste studiemodi. Ze gebruiken dezelfde inhoud, maar ondersteunen verschillende tempo's en beantwoorden aan de verwachtingen, dus schakel van modus op basis van of u de retentie verkent of controleert.
+    doc_study_modes_title Leer- en testmodi
+    doc_study_scope_desc Het studeren kan starten vanuit een enkel onderwerp, een mapweergave of een verzameling. Verzamelingen zijn handig als u een gemengde sessie over meerdere onderwerpen wilt, zonder de huidige stroom te verlaten.
+    doc_study_scope_title Onderwerpen, mappen en collecties in studie
+    doc_tab_create Creëren
+    doc_tab_start Begin
+    doc_tab_study Studie
+    documentation Documentatie
+    edit_subscription Abonnement bewerken
+    email_updated_successfully E-mailadres succesvol bijgewerkt!
+    enter_current_password Voer het huidige wachtwoord in
+    error Fout: $e
+    error_deleting Fout bij verwijderen: $e
+    error_saving Fout bij opslaan: $e
+    error_saving_card Fout bij opslaan kaart: $e
+    error_updating_favorite Fout bij bijwerken favoriet: $e
+    failed_to_send_reset_code Kan de resetcode niet verzenden
+    failed_to_send_verification_code Kan verificatiecode niet verzenden
+    fake_only Alleen nep
+    feature_creation Creatiehulpmiddelen
+    feature_customize Geavanceerde aanpassingen
+    feature_full_library Volledige toegang tot de bibliotheek
+    feature_testing Interactief testen
+    folder_id Map-ID
+    free_only Gratis gebruikers
+    generic Algemeen
+    home Thuis
+    invalid_code Ongeldige code
+    invalid_email_address Ongeldig e-mailadres
+    invalid_json Ongeldige JSON: $e
+    invalid_or_expired_invitation_link Ongeldige of verlopen uitnodigingslink.
+    invalid_or_expired_reset_code Ongeldige of verlopen resetcode.
+    invitation_sent_awaiting_registration Uitnodiging verzonden (in afwachting van registratie)
+    invited_and_request_sent Uitgenodigd en verzoek verzonden!
+    json JSON
+    label_suffix $label:
+    leaderboard Leiderbord
+    licenses Licenties
+    licenses_aliolo_section_title Aliolo Commerciële licentie
+    licenses_aliolo_subtitle Eigen software en premium toegangsvoorwaarden
+    licenses_intro_desc De commerciële licentie van Aliolo wordt als eerste weergegeven. Pakketlicenties van derden volgen hieronder.
+    licenses_intro_title Aliolo Licentie- en pakketkennisgevingen
+    licenses_third_party_section_title Pakketlicenties van derden
+    linux_distro Linux-distributie
+    loading Laden...
+    localized_data Gelokaliseerde gegevens
+    monthly_access Maandelijkse toegang
+    most_popular_choice Meest populaire keuze
+    new_email Nieuwe e-mail
+    no_cards_available_for_this_session Er zijn geen kaarten beschikbaar voor deze sessie.
+    no_cards_found Geen kaarten gevonden
+    no_subjects_found Geen onderwerpen gevonden
+    no_subjects_found_in_this_collection Er zijn geen onderwerpen gevonden in deze collectie
+    no_users_found Geen gebruikers gevonden
+    os_version OS-versie
+    password_updated_successfully Wachtwoord succesvol bijgewerkt!
+    payments_are_not_yet_integrated_on_web_please_use_the_mobile_app_to_upgrade Betalingen zijn nog niet geïntegreerd op Web. Gebruik de mobiele app om te upgraden.
+    personal_data Persoonlijke gegevens
+    pick_date Datum kiezen
+    plan_monthly_tagline Meest populaire keuze
+    plan_monthly_title Maandelijkse toegang
+    plan_weekly_tagline Beste voor snelle doelpunten
+    plan_weekly_title Wekelijkse toegang
+    plan_yearly_tagline Bespaar 33% per maand
+    plan_yearly_title Jaarlijkse toegang
+    platform Platform
+    play Toneelstuk
+    play_audio Audio afspelen
+    please_enter_the_6_digit_code Voer de 6-cijferige code in
+    please_wait_for_a_response_before_replying_again Wacht alstublieft op een reactie voordat u opnieuw antwoordt.
+    premium_expires_at Verloopt op $date
+    premium_lifetime Levenslange toegang
+    premium_only Alleen premie
+    premium_status_active Je bent een premiumlid
+    premium_unlock_desc Krijg toegang tot alle onderwerpen, maak een onbeperkt aantal kaarten en steun de missie van Aliolo.
+    premium_unlock_title Ontgrendel volledige toegang
+    product_not_available_in_store Product niet verkrijgbaar in de winkel.
+    profile Profiel
+    public_other_subject Openbaar/ander onderwerp
+    purchase_failed Aankoop mislukt: $e
+    recovery_error Herstelfout: $e
+    refresh_conversation Ververs het gesprek
+    renderer Renderer
+    reset_code Code opnieuw instellen
+    reset_code_sent_to_please_check_your_inbox Resetcode verzonden naar $email. Controleer uw inbox.
+    restore_purchases Aankopen herstellen
+    save Redden
+    save_33_per_month Bespaar 33% per maand
+    saved_successfully Succesvol opgeslagen
+    search_users Zoek gebruikers
+    session_complete Sessie voltooid!
+    session_complete_description Geweldig werk! Je hebt alle kaarten in deze sessie voltooid.
+    settings Instellingen
+    show_documentation_btn Documentatieknop weergeven
+    show_documentation_btn_desc Geef de documentatieknop weer in de app-balk.
+    show_fake_users Toon valse gebruikers
+    subject_id Onderwerp-ID
+    subscribe_now Abonneer je nu
+    subscription_data Abonnementsgegevens
+    subscription_updated Abonnement bijgewerkt
+    subtraction_emoji Aftrekken-emoji
+    subtraction_numbers Aftrekkingsnummers
+    technical_context TECHNISCHE CONTEXT
+    testing_mode Testmodus
+    text Tekst
+    this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards Dit is een map. Je kunt de Leer/Test-knoppen hierboven gebruiken om alle kaarten te oefenen.
+    type_your_reply Typ uw antwoord...
+    ua UA
+    unknown_user_profile_missing Onbekende gebruiker (profiel ontbreekt)
+    user Gebruiker
+    user_id Gebruikers-ID
+    user_with_this_email_already_exists_please_log_in_instead Gebruiker met dit e-mailadres bestaat al. Log in plaats daarvan in.
+    users Gebruikers
+    users_filter Filter gebruikers
+    verification_code Verificatiecode
+    verification_code_sent_to Verificatiecode verzonden naar $email
+    version Versie
+    view_onboarding Bekijk onboarding
+    weekly_access Wekelijkse toegang
+    welcome_complete_your_profile_to_join_aliolo Welkom! Voltooi je profiel om lid te worden aliolo.
+    yearly_access Jaarlijkse toegang
+    you_do_not_have_permission_to_edit_this_card U heeft geen toestemming om deze kaart te bewerken
+    you_do_not_have_permission_to_view_this_card_details U heeft geen toestemming om deze kaartgegevens te bekijken.

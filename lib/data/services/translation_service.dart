@@ -1,17 +1,19 @@
 import 'package:aliolo/core/utils/io_utils.dart' if (dart.library.html) 'package:aliolo/core/utils/file_stub.dart';
 import 'dart:io' show Platform;
+import 'dart:convert' show json;
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:aliolo/core/network/cloudflare_client.dart';
 import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/core/utils/logger.dart';
+import 'package:nanomarkup/nanomarkup.dart' as nano;
 
 /// Runtime UI translation service.
 ///
-/// This only resolves chrome / app-label strings from the backend tables:
-/// - `languages`
-/// - `ui_translations`
+/// This resolves chrome / app-label strings using local unhashed .nano files
+/// as local assets and caches any fetched OTA translations locally in SharedPreferences.
 ///
 /// Card and subject content localization is handled separately through the
 /// localized fields on those models.
@@ -42,7 +44,7 @@ class TranslationService extends ChangeNotifier {
     String? savedLocale = prefs.getString('ui_locale');
 
     await fetchAvailableLanguages();
-    _englishFallbacks = await _fetchFromCloudflare('en');
+    await _loadLocalEnglishFallback();
 
     String langCode = 'en';
     if (savedLocale != null) {
@@ -62,6 +64,26 @@ class TranslationService extends ChangeNotifier {
     }
 
     await loadTranslations(langCode);
+
+    // Fetch and apply OTA updates for the active locale in the background
+    _checkForOTAUpdates(langCode).catchError((e) {
+      AppLogger.log('Translation: background OTA check error: $e');
+    });
+  }
+
+  Future<void> _loadLocalEnglishFallback() async {
+    try {
+      final localNano = await rootBundle.loadString('assets/translations/en.nano');
+      final decoded = nano.decode(localNano);
+      if (decoded is Map) {
+        _englishFallbacks = decoded.map((k, v) => MapEntry(k.toString(), v.toString()));
+        if (_translations.isEmpty) {
+          _translations = Map<String, String>.from(_englishFallbacks);
+        }
+      }
+    } catch (e) {
+      AppLogger.log('Translation: Failed to load local en.nano fallback: $e');
+    }
   }
 
   Future<void> fetchAvailableLanguages() async {
@@ -90,47 +112,91 @@ class TranslationService extends ChangeNotifier {
         notifyListeners();
       }
     } catch (e) {
-      AppLogger.log('Translation: Failed to fetch languages from Cloudflare: $e');
+      AppLogger.log('Translation: Failed to fetch languages: $e');
     }
   }
 
   Future<void> loadTranslations(String langCode) async {
     final lc = langCode.toLowerCase();
     
-    // Always fetch the requested language from the server to ensure we have the latest
+    // Start with English fallbacks
+    _translations = Map<String, String>.from(_englishFallbacks);
+
+    // Try to load cached OTA translations from SharedPreferences
+    final prefs = await SharedPreferences.getInstance();
+    final cachedJson = prefs.getString('cached_translations_$lc');
+    if (cachedJson != null) {
+      try {
+        final Map<String, dynamic> cachedMap = json.decode(cachedJson);
+        cachedMap.forEach((k, v) {
+          _translations[k] = v.toString();
+        });
+        AppLogger.log('Translation: Loaded cached OTA translations for $lc');
+        return;
+      } catch (e) {
+        AppLogger.log('Translation: Failed to decode cached translations for $lc: $e');
+      }
+    }
+
+    // Try to load local bundled asset translations
     try {
-      final data = await _fetchFromCloudflare(lc);
-      if (data.isNotEmpty) {
-        if (lc == 'en') {
-          _englishFallbacks = data;
-          _translations = Map<String, String>.from(data);
-        } else {
-          // Start with English fallbacks, then overlay the target language
-          _translations = Map<String, String>.from(_englishFallbacks);
-          data.forEach((key, value) {
-            _translations[key] = value;
-          });
-        }
-      } else {
-        // Fallback to what we already have if fetch fails
-        _translations = Map<String, String>.from(_englishFallbacks);
+      final localNano = await rootBundle.loadString('assets/translations/$lc.nano');
+      final decoded = nano.decode(localNano);
+      if (decoded is Map) {
+        decoded.forEach((k, v) {
+          _translations[k.toString()] = v.toString();
+        });
+        AppLogger.log('Translation: Loaded local asset translations for $lc');
       }
     } catch (e) {
-      AppLogger.log('Translation: loadTranslations failed for $lc: $e');
-      _translations = Map<String, String>.from(_englishFallbacks);
+      AppLogger.log('Translation: Local asset not found or failed for $lc: $e');
     }
   }
 
-  Future<Map<String, String>> _fetchFromCloudflare(String langCode) async {
+  Future<void> _checkForOTAUpdates(String langCode) async {
+    final lc = langCode.toLowerCase();
     try {
-      final response = await _cfClient.client.get('/api/translations/$langCode');
+      final response = await _cfClient.client.get(
+        '/storage/v1/object/public/aliolo-media/translations/manifest.json',
+      );
       if (response.statusCode == 200) {
-        return Map<String, String>.from(response.data);
+        final Map<String, dynamic> manifest = Map<String, dynamic>.from(response.data);
+        final serverHash = manifest[lc]?.toString();
+        if (serverHash == null) {
+          AppLogger.log('Translation: No remote hash found in manifest for $lc');
+          return;
+        }
+
+        final prefs = await SharedPreferences.getInstance();
+        final cachedHash = prefs.getString('cached_translations_hash_$lc');
+
+        if (serverHash != cachedHash) {
+          AppLogger.log('Translation: Fetching OTA translations for $lc (Server hash: $serverHash, Cached: $cachedHash)');
+          final translationRes = await _cfClient.client.get(
+            '/storage/v1/object/public/aliolo-media/translations/$lc.$serverHash.nano',
+          );
+          if (translationRes.statusCode == 200) {
+            final nanoContent = translationRes.data.toString();
+            final decoded = nano.decode(nanoContent);
+            if (decoded is Map) {
+              final Map<String, String> newTranslations = decoded.map((k, v) => MapEntry(k.toString(), v.toString()));
+              
+              await prefs.setString('cached_translations_$lc', json.encode(newTranslations));
+              await prefs.setString('cached_translations_hash_$lc', serverHash);
+
+              _translations = Map<String, String>.from(_englishFallbacks);
+              newTranslations.forEach((k, v) {
+                _translations[k] = v;
+              });
+              notifyListeners();
+              AppLogger.log('Translation: Successfully updated and cached OTA translations for $lc');
+            }
+          }
+        }
       }
     } catch (e) {
-      AppLogger.log('Error fetching translations: $e');
+      AppLogger.log('Translation: Failed to check/update OTA translations for $lc: $e');
     }
-    return {};
   }
 
   void setLocale(Locale locale, {bool persistGlobal = true}) async {
@@ -144,6 +210,10 @@ class TranslationService extends ChangeNotifier {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('ui_locale', locale.languageCode);
     }
+
+    _checkForOTAUpdates(locale.languageCode).catchError((e) {
+      AppLogger.log('Translation: setLocale background OTA check error: $e');
+    });
   }
 
   String translate(String key, {Map<String, String>? args}) {
@@ -178,3 +248,4 @@ extension TranslationExtension on BuildContext {
     return t(key);
   }
 }
+

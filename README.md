@@ -52,21 +52,19 @@ flutter build web --release --dart-define=API_URL=https://aliolo.com
 ./scripts/build.sh   # Build the production web app
 ./scripts/test_ci.sh # Run the checks that gate production
 ./scripts/deploy.sh --confirm-production # Emergency local deployment only
-./scripts/refresh_ui_translation_bundles.sh  # Rebuild ui_translation_bundles from ui_translations in remote D1
+python3 scripts/python/distribute_ui_translations.py --skip-upload  # Hash and prepare local translations
 ```
 
 ### UI Translation Bundles
 
-UI strings are stored in `ui_translations` and served at runtime through `ui_translation_bundles` for faster reads. If you change translation rows, refresh the bundles with:
+UI strings are stored in `assets/translations/` as unhashed `.nano` (Nano Markup) files, which are the source of truth. When deploying, these files are hashed, compile a `manifest.json`, and upload to Cloudflare R2:
 
 ```bash
-./scripts/refresh_ui_translation_bundles.sh
-```
+# Hash, generate manifest, and upload to Cloudflare R2
+python3 scripts/python/distribute_ui_translations.py
 
-You can target specific languages with repeated `--lang` flags:
-
-```bash
-./scripts/refresh_ui_translation_bundles.sh --lang en --lang es
+# Prepare locally without uploading
+python3 scripts/python/distribute_ui_translations.py --skip-upload
 ```
 
 ## Directory Structure

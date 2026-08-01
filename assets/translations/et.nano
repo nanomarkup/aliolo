@@ -1,0 +1,228 @@
+..
+    a_folder_with_this_name_already_exists_in_this_pillar Selle nimega kaust on selles sambas juba olemas
+    about Umbes
+    about_intro_audience_desc Aliolo toetab õppijaid, kes soovivad struktureeritud ülevaadet, lapsevanemaid ja õpetajaid, kes vajavad ligipääsetavat õppesisu, ning loojaid, kes korraldavad ja avaldavad oma õppematerjale.
+    about_intro_audience_title Kellele see on mõeldud
+    about_intro_desc Aliolo on visuaalne õpperakendus, mis on üles ehitatud lihtsatele õppevoogudele, paindlikule sisukorraldusele ja pidevale edenemisele aja jooksul.
+    about_intro_start_desc Alustage armatuurlaual, valige sammas, avage teema ja alustage valikust Õppimine. Salvestage kasulik sisu lemmikute hulka, et seda oleks hiljem lihtsam uuesti vaadata.
+    about_intro_start_title Kuidas alustada
+    about_intro_title Umbes Aliolo
+    about_learn_discovery_desc Otsingu-, vanusefiltrid ja allikafiltrid, nagu lemmikud, minu oma ja avalik kogu, aitavad teil õige sisu kiiresti leida.
+    about_learn_discovery_title Avastamine ja filtreerimine
+    about_learn_language_desc Saate uurida sisu erinevates keeltes ja kohandada seansi seadeid oma profiilis vastavalt oma tempole ja praegustele eesmärkidele.
+    about_learn_language_title Keele ja režiimi paindlikkus
+    about_learn_media_desc Pildid, heli ja video võivad toetada äratundmist, hääldust ja konteksti, kui need on õppesisus saadaval.
+    about_learn_media_title Meedia tugi
+    about_learn_modes_desc Kasutage äratundmise ja enesekindluse suurendamiseks funktsiooni Õppimine, seejärel lülitage valikule Test, kui soovite rangemat meeldetuletust ja kiiremat ülevaatamist.
+    about_learn_modes_title Õppige ja testige
+    about_learn_title Kuidas sa õpid
+    about_organize_collections_desc Kogud ühendavad mitu ainet üheks õppevooks, mis on kasulik segaarvustuste ja kureeritud komplektide jaoks.
+    about_organize_collections_title Kollektsioonid
+    about_organize_creation_desc Loojad saavad oma sisu ise korraldada, töötamise ajal privaatsena hoida või avalikus raamatukogus avaldada, kui see on valmis.
+    about_organize_creation_title Omandus ja nähtavus
+    about_organize_folders_desc Kaustad rühmitavad seotud teemad samba sees, nii et suuremad sisukomplektid jäävad hallatavaks.
+    about_organize_folders_title Kaustad
+    about_organize_subjects_desc Õppeained on õppetöö põhiüksus. Neil on kaardid, mille avanete õppimise ja testimise seanssides.
+    about_organize_subjects_title Õppeained
+    about_organize_title Kuidas sisu korraldatakse
+    about_progress_goals_desc Teie profiil võimaldab teil häälestada igapäevaseid eesmärke, teada saada seansi suurust, testseansi suurust ja vastuste arvu.
+    about_progress_goals_title Igapäevased eesmärgid ja seansi seaded
+    about_progress_social_desc Sõbrad ja edetabelifunktsioonid muudavad edusammud sotsiaalseks, muutmata põhilist õppevoogu.
+    about_progress_social_title Sõbrad ja edetabel
+    about_progress_title Edusammud, sõbrad ja edetabel
+    about_progress_xp_desc Aliolo jälgib kogu XP-d, praegust jada ja maksimaalset seeriat, nii et edusammud on nähtavad lühikese ja pika õppeperioodi jooksul.
+    about_progress_xp_title XP ja triibud
+    about_support_docs_desc Rakendusesisese dokumentatsiooni leht selgitab, kuidas armatuurlaud, õppevood ja loojatööriistad tänapäeval töötavad.
+    about_support_docs_title Dokumentatsioon
+    about_support_feedback_desc Kasutage kogu rakenduse tagasiside sisestuspunkte, et teavitada vigadest, soovitada täiustusi või märgistada konkreetseid sisuprobleeme konteksti järgi.
+    about_support_feedback_title Tagasiside ja aruandlus
+    about_support_licenses_desc Litsentside lehel loetletakse esmalt Aliolo kommertslitsentsid ja seejärel komplekteeritud kolmanda osapoole pakettide litsentsid.
+    about_support_licenses_title Litsentsid
+    about_support_onboarding_desc Rakenduse põhiideed ja seadistusvoog ülevaatamiseks saate igal ajal uuesti liitumist vaadata.
+    about_support_onboarding_title Sisseastumine
+    about_support_settings_desc Kasutajaliidese keelt, teemarežiimi, teema värvi, heli, külgriba paigutust ja dokumentatsiooni nähtavust saab seadetest reguleerida.
+    about_support_settings_title Isikupärastamine
+    about_support_title Seaded, tagasiside ja tugi
+    addition_emoji Lisa emotikonid
+    addition_numbers Lisanumbrid
+    aliolo aliolo
+    all_rights_reserved Kõik õigused kaitstud
+    are_you_sure_you_want_to_close_this_feedback_request Kas olete kindel, et soovite selle tagasisidetaotluse sulgeda?
+    are_you_sure_you_want_to_delete_this_folder Kas olete kindel, et soovite selle kausta kustutada?
+    attach_image Lisa pilt
+    back Tagasi
+    back_to_subjects Tagasi teemade juurde
+    best_for_quick_goals Parim kiirete eesmärkide saavutamiseks
+    billing_disclaimer Tellimused uuenevad automaatselt, kui neid ei tühistata. Tellimust saate hallata oma poe seadetes.
+    billing_title Arveldamine
+    browser Brauser
+    cancel Tühista
+    cannot_delete_folder_it_is_not_empty Kausta ei saa kustutada: see ei ole tühi
+    card_id Kaardi ID
+    check_your_email_for_code Kontrollige oma e-posti koodi
+    clear Selge
+    click_to_view_original Klõpsake originaali vaatamiseks
+    close Sule
+    close_request Kas sulgeda taotlus?
+    collection_id Kollektsiooni ID
+    colors Värvid
+    confirm_subscription Kinnitage tellimus
+    context Kontekst
+    could_not_launch $url ei saanud käivitada
+    counting Loendamine
+    current_subscription Praegune tellimus
+    delete Kustuta
+    device Seade
+    doc_create_intro_desc See vahekaart hõlmab seda, kuidas loojad sisu korraldavad, lokaliseerivad ja kasulikke õppematerjale avaldavad ilma töövoogu liigselt keerulisemaks muutmata.
+    doc_create_intro_title Loo
+    doc_create_json_desc JSON-põhine loomine on täiustatud töövoog struktureeritud hulgisisu jaoks. See peaks jääma vabatahtlikuks; enamikul loojatel peaks olema võimalik standardvormide kaudu sisu luua ja redigeerida.
+    doc_create_json_title Täpsem JSON-importimine
+    doc_create_localization_desc Lokaliseerige sisu sinna, kus see on kõige olulisem: nimed, kirjeldused, juhised ja vastused. Hoidke sildid kõigis keeltes järjepidevad, et kasutajad saaksid õppekeelt vahetada ilma struktuuri kaotamata.
+    doc_create_localization_title Lokaliseerimine
+    doc_create_media_desc Pildid, heli ja video peaksid toetama õpieesmärki, mitte sellest kõrvale tõmbama. Lisage meediumit, kui see parandab äratundmist, hääldust või konteksti, ja hoidke kaardid kasutatavana isegi siis, kui meediat pole.
+    doc_create_media_title Meedia töövoog
+    doc_create_model_desc Loojad töötavad sammaste sees ja korraldavad materjali kaustade, teemade, kogude ja kaartidega. Esmalt looge struktuur, seejärel täitke see lokaliseeritud viipade, vastuste ja valikulise meediaga.
+    doc_create_model_title Sisu mudel
+    doc_create_visibility_desc Kasutage "minu" oma sisu kallal töötamiseks, lemmikuid kasulike üksuste kinnitamiseks ja avalikku raamatukogu jagatud materjalide sirvimiseks. Avalik nähtavus mõjutab avastamist, samas kui omandiline kuuluvus mõjutab seda, mida saate muuta või kustutada.
+    doc_create_visibility_title Omandus ja nähtavus
+    doc_start_dashboard_desc Armatuurlaud on teie peamine raamatukogu. Kasutage sisu kiireks leidmiseks otsingut, seejärel kombineerige müra vähendamiseks allikafiltrid, nagu lemmikud, minu oma ja avalik kogu, vanusefiltritega.
+    doc_start_dashboard_title Armatuurlaud, otsing ja filtrid
+    doc_start_feedback_desc Kasutage kogu rakenduse tagasiside sisestuspunkte, kui midagi on valesti või ebaselge. Aruanded võivad sisaldada praegust konteksti, mis muudab sisuprobleemide ülevaatamise ja parandamise lihtsamaks.
+    doc_start_feedback_title Tagasiside ja abi
+    doc_start_intro_desc Kasutage seda vahekaarti, kui õpite, kuidas armatuurlaud, kogu, edenemine ja suhtlusfunktsioonid omavahel sobivad.
+    doc_start_intro_title Alustamine
+    doc_start_progress_desc Teie profiil näitab kogu XP-d, praegust seeriat, maksimaalset seeriat ja igapäevast eesmärkide saavutamist. Seansi mahtu ja vastuste arvu hallatakse ka profiililehelt.
+    doc_start_progress_title Edusammud ja eesmärgid
+    doc_start_quick_desc Valige armatuurlaual sammas, avage teema ja alustage õppimisest. Kasutage raamatukogu kitsendamiseks lemmikuid ja filtreid, seejärel vaadake oma profiililt üle XP, triibud ja päevane eesmärk.
+    doc_start_quick_title Kiire algus
+    doc_start_structure_desc Katsealused hoiavad kaarte. Kaustad rühmitavad seotud sisu samba sees. Kollektsioonid on kureeritud komplektid, mis võivad õppimiseks ja jagamiseks kombineerida mitut ainet.
+    doc_start_structure_title Teemad, kaustad ja kogud
+    doc_study_how_desc Tuvastamise loomisel alustage funktsioonist Õppimine, seejärel lülitage funktsioonile Test, kui soovite kiiremat meeldetuletust ja rangemat kontrolli. Kasutage lühemaid seansse keskendunud ülevaate saamiseks ja suuremaid seansse laiema katvuse jaoks.
+    doc_study_how_title Kuidas õppida
+    doc_study_intro_desc Sellel vahekaardil selgitatakse, kuidas sisus liikuda, õiget režiimi valida ja seansse ülevaatamiseks või meeldetuletamiseks häälestada.
+    doc_study_intro_title Uuring
+    doc_study_media_desc Kui meedia on saadaval, kasutage seda häälduse ja äratundmise tugevdamiseks. Automaatne esitus on kõige kasulikum passiivseks ülevaatuseks või korduvaks kuulamiseks lühemate seansside ajal.
+    doc_study_media_title Heli, automaatesitus ja meedia
+    doc_study_modes_desc Õppimine ja testimine on peamised õppimisviisid. Need kasutavad sama sisu, kuid toetavad erinevat tempot ja vastuse ootusi, seega vahetage režiime vastavalt sellele, kas uurite või kontrollite säilitamist.
+    doc_study_modes_title Õppige ja katsetage režiime
+    doc_study_scope_desc Õppetöö võib alata ühest ainest, kaustavaatest või kogust. Kogud on kasulikud, kui soovite mitme teema segaseanssi, ilma praegusest voost lahkumata.
+    doc_study_scope_title Õppeained, kaustad ja kogud
+    doc_tab_create Loo
+    doc_tab_start Alusta
+    doc_tab_study Uuring
+    documentation Dokumentatsioon
+    edit_subscription Muuda tellimust
+    email_updated_successfully Meili värskendamine õnnestus!
+    enter_current_password Sisestage praegune parool
+    error Viga: $e
+    error_deleting Viga kustutamisel: $e
+    error_saving Viga salvestamisel: $e
+    error_saving_card Viga kaardi salvestamisel: $e
+    error_updating_favorite Viga lemmiku värskendamisel: $e
+    failed_to_send_reset_code Lähtestamiskoodi saatmine ebaõnnestus
+    failed_to_send_verification_code Kinnituskoodi saatmine ebaõnnestus
+    fake_only Ainult võlts
+    feature_creation Loomise tööriistad
+    feature_customize Täpsem kohandamine
+    feature_full_library Täielik juurdepääs raamatukogule
+    feature_testing Interaktiivne testimine
+    folder_id Kausta ID
+    free_only Tasuta kasutajad
+    generic Üldine
+    home Kodu
+    invalid_code Vale kood
+    invalid_email_address Vale e-posti aadress
+    invalid_json Kehtetu JSON: $e
+    invalid_or_expired_invitation_link Kehtetu või aegunud kutse link.
+    invalid_or_expired_reset_code Vale või aegunud lähtestamiskood.
+    invitation_sent_awaiting_registration Kutse saadetud (ootab registreerimist)
+    invited_and_request_sent Kutsutud ja taotlus saadetud!
+    json JSON
+    label_suffix $label:
+    leaderboard Edetabel
+    licenses Litsentsid
+    licenses_aliolo_section_title Aliolo Kaubanduslitsents
+    licenses_aliolo_subtitle Patenditud tarkvara ja lisatasu juurdepääsutingimused
+    licenses_intro_desc Aliolo kommertslitsents ilmub esimesena. Allpool on toodud kolmanda osapoole pakettlitsentsid.
+    licenses_intro_title Aliolo Litsentsi ja paketi teatised
+    licenses_third_party_section_title Kolmanda osapoole paketilitsentsid
+    linux_distro Linuxi distributsioon
+    loading Laadimine...
+    localized_data Lokaliseeritud andmed
+    monthly_access Igakuine juurdepääs
+    most_popular_choice Kõige populaarsem valik
+    new_email Uus meil
+    no_cards_available_for_this_session Selle seansi jaoks pole kaarte saadaval.
+    no_cards_found Kaarte ei leitud
+    no_subjects_found Ühtegi teemat ei leitud
+    no_subjects_found_in_this_collection Sellest kogust ei leitud ühtegi teemat
+    no_users_found Ühtegi kasutajat ei leitud
+    os_version OS-i versioon
+    password_updated_successfully Parooli uuendamine õnnestus!
+    payments_are_not_yet_integrated_on_web_please_use_the_mobile_app_to_upgrade Maksed pole veel veebi integreeritud. Kasutage uuendamiseks mobiilirakendust.
+    personal_data Isikuandmed
+    pick_date Valige kuupäev
+    plan_monthly_tagline Kõige populaarsem valik
+    plan_monthly_title Igakuine juurdepääs
+    plan_weekly_tagline Parim kiirete eesmärkide saavutamiseks
+    plan_weekly_title Iganädalane juurdepääs
+    plan_yearly_tagline Säästa 33% kuus
+    plan_yearly_title Aastane juurdepääs
+    platform Platvorm
+    play Mängi
+    play_audio Esita heli
+    please_enter_the_6_digit_code Sisestage 6-kohaline kood
+    please_wait_for_a_response_before_replying_again Enne uuesti vastamist oodake vastust.
+    premium_expires_at Aegub $date
+    premium_lifetime Eluaegne juurdepääs
+    premium_only Ainult premium
+    premium_status_active Olete premium-liige
+    premium_unlock_desc Hankige juurdepääs kõikidele teemadele, looge piiramatu arv kaarte ja toetage Aliolo missiooni.
+    premium_unlock_title Avage täielik juurdepääs
+    product_not_available_in_store Toode pole poes saadaval.
+    profile Profiil
+    public_other_subject Avalik/muu teema
+    purchase_failed Ost ebaõnnestus: $e
+    recovery_error Taasteviga: $e
+    refresh_conversation Värskenda vestlust
+    renderer Renderdaja
+    reset_code Lähtestage kood
+    reset_code_sent_to_please_check_your_inbox Lähtestage kood, mis saadeti aadressile $email. Kontrollige oma postkasti.
+    restore_purchases Taasta ostud
+    save Salvesta
+    save_33_per_month Säästa 33% kuus
+    saved_successfully Salvestamine õnnestus
+    search_users Otsige kasutajaid
+    session_complete Seanss lõppenud!
+    session_complete_description Suurepärane töö! Olete lõpetanud kõik selle seansi kaardid.
+    settings Seaded
+    show_documentation_btn Kuva dokumentatsiooni nupp
+    show_documentation_btn_desc Kuvage rakenduse ribal dokumentatsiooninupp.
+    show_fake_users Näita võltskasutajaid
+    subject_id Subjekti ID
+    subscribe_now Telli kohe
+    subscription_data Tellimuse andmed
+    subscription_updated Tellimust värskendati
+    subtraction_emoji Lahutamise emotikonid
+    subtraction_numbers Lahutamisarvud
+    technical_context TEHNILINE KONTEKST
+    testing_mode Testimisrežiim
+    text Tekst
+    this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards See on kaust. Kõigi kaartide harjutamiseks saate ülalolevaid nuppe õppida/testida.
+    type_your_reply Sisestage oma vastus...
+    ua UA
+    unknown_user_profile_missing Tundmatu kasutaja (profiil puudub)
+    user Kasutaja
+    user_id Kasutaja ID
+    user_with_this_email_already_exists_please_log_in_instead Selle e-posti aadressiga kasutaja on juba olemas. Palun logi selle asemel sisse.
+    users Kasutajad
+    users_filter Kasutajate filtreerimine
+    verification_code Kinnituskood
+    verification_code_sent_to Kinnituskood saadeti aadressile $email
+    version Versioon
+    view_onboarding Vaata liitumist
+    weekly_access Iganädalane juurdepääs
+    welcome_complete_your_profile_to_join_aliolo Tere tulemast! aliolo-ga liitumiseks täitke oma profiil.
+    yearly_access Aastane juurdepääs
+    you_do_not_have_permission_to_edit_this_card Teil pole luba selle kaardi muutmiseks
+    you_do_not_have_permission_to_view_this_card_details Teil pole luba selle kaardi üksikasjade vaatamiseks.

@@ -1,0 +1,228 @@
+..
+    a_folder_with_this_name_already_exists_in_this_pillar Mayroon nang folder na may ganitong pangalan sa haliging ito
+    about Tungkol sa
+    about_intro_audience_desc Sinusuportahan ng Aliolo ang mga mag-aaral na nais ng structured na pagsusuri, mga magulang at guro na nangangailangan ng madaling lapitan na nilalaman ng pag-aaral, at mga creator na nag-aayos at nag-publish ng kanilang sariling mga materyales sa pag-aaral.
+    about_intro_audience_title Para Kanino Ito
+    about_intro_desc Ang Aliolo ay isang visual learning app na binuo sa paligid ng mga simpleng daloy ng pag-aaral, flexible na organisasyon ng content, at tuluy-tuloy na pag-unlad sa paglipas ng panahon.
+    about_intro_start_desc Magsimula sa dashboard, pumili ng isang haligi, magbukas ng paksa, at magsimula sa Matuto. I-save ang kapaki-pakinabang na nilalaman sa mga paborito upang mas madaling bisitahin muli sa ibang pagkakataon.
+    about_intro_start_title Paano Magsisimula
+    about_intro_title Tungkol sa Aliolo
+    about_learn_discovery_desc Ang paghahanap, mga filter ng edad, at mga filter ng pinagmulan gaya ng mga paborito, minahan, at pampublikong aklatan ay tumutulong sa iyong mahanap ang tamang nilalaman nang mabilis.
+    about_learn_discovery_title Pagtuklas at Pag-filter
+    about_learn_language_desc Maaari mong pag-aralan ang nilalaman sa iba't ibang wika at isaayos ang mga setting ng session sa iyong profile upang tumugma sa iyong bilis at kasalukuyang mga layunin.
+    about_learn_language_title Wika at Mode Flexibility
+    about_learn_media_desc Maaaring suportahan ng mga larawan, audio, at video ang pagkilala, pagbigkas, at konteksto kapag available ang mga ito sa nilalaman ng pag-aaral.
+    about_learn_media_title Suporta sa Media
+    about_learn_modes_desc Gamitin ang Alamin upang bumuo ng pagkilala at kumpiyansa, pagkatapos ay lumipat sa Pagsubok kapag gusto mo ng mas mahigpit na pag-recall at mas mabilis na pagsusuri.
+    about_learn_modes_title Matuto at Subukan
+    about_learn_title Paano Ka Natututo
+    about_organize_collections_desc Pinagsasama ng mga koleksyon ang maraming paksa sa isang daloy ng pag-aaral, na kapaki-pakinabang para sa magkahalong pagsusuri at mga na-curate na hanay.
+    about_organize_collections_title Mga koleksyon
+    about_organize_creation_desc Maaaring ayusin ng mga creator ang sarili nilang content, panatilihin itong pribado habang nagtatrabaho, o ilantad ito sa pamamagitan ng pampublikong aklatan kapag handa na ito.
+    about_organize_creation_title Pagmamay-ari at Visibility
+    about_organize_folders_desc Pinagpangkat-pangkat ng mga folder ang mga nauugnay na paksa sa loob ng isang haligi upang manatiling mapapamahalaan ang mas malalaking hanay ng nilalaman.
+    about_organize_folders_title Mga folder
+    about_organize_subjects_desc Ang mga paksa ay ang pangunahing yunit ng pag-aaral. Hawak nila ang mga card na binuksan mo sa mga session ng Matuto at Pagsubok.
+    about_organize_subjects_title Mga paksa
+    about_organize_title Paano Nakaayos ang Nilalaman
+    about_progress_goals_desc Hinahayaan ka ng iyong profile na ibagay ang mga pang-araw-araw na target ng layunin, matutunan ang laki ng session, sukat ng session ng pagsubok, at bilang ng mga sagot.
+    about_progress_goals_title Mga Pang-araw-araw na Layunin at Setting ng Session
+    about_progress_social_desc Ang mga kaibigan at mga feature ng leaderboard ay gumagawa ng panlipunang pag-unlad nang hindi binabago ang pangunahing daloy ng pag-aaral.
+    about_progress_social_title Mga Kaibigan at Leaderboard
+    about_progress_title Pag-unlad, Mga Kaibigan, at Leaderboard
+    about_progress_xp_desc Sinusubaybayan ng Aliolo ang kabuuang XP, kasalukuyang streak, at max na streak upang ang pag-unlad ay nakikita sa maikli at mahabang panahon ng pag-aaral.
+    about_progress_xp_title XP at Streaks
+    about_support_docs_desc Ipinapaliwanag ng page ng in-app na dokumentasyon kung paano gumagana ngayon ang dashboard, daloy ng pag-aaral, at mga tool ng creator.
+    about_support_docs_title Dokumentasyon
+    about_support_feedback_desc Gumamit ng mga entry point ng feedback sa buong app para mag-ulat ng mga bug, magmungkahi ng mga pagpapahusay, o mag-flag ng mga partikular na isyu sa content na may konteksto.
+    about_support_feedback_title Feedback at Pag-uulat
+    about_support_licenses_desc Inililista muna ng page ng mga lisensya ang komersyal na lisensya ni Aliolo at pagkatapos ay ang mga naka-bundle na lisensya ng third-party na package.
+    about_support_licenses_title Mga lisensya
+    about_support_onboarding_desc Maaari mong muling bisitahin ang onboarding anumang oras upang suriin ang mga pangunahing ideya at daloy ng pag-setup ng app.
+    about_support_onboarding_title Onboarding
+    about_support_settings_desc Ang wika ng UI, mode ng tema, kulay ng tema, tunog, pagkakalagay sa sidebar, at visibility ng dokumentasyon ay maaaring isaayos lahat mula sa mga setting.
+    about_support_settings_title Personalization
+    about_support_title Mga Setting, Feedback, at Suporta
+    addition_emoji Dagdag Emoji
+    addition_numbers Mga Numero ng Pagdaragdag
+    aliolo aliolo
+    all_rights_reserved Lahat ng karapatan ay nakalaan
+    are_you_sure_you_want_to_close_this_feedback_request Sigurado ka bang gusto mong isara ang kahilingan sa feedback na ito?
+    are_you_sure_you_want_to_delete_this_folder Sigurado ka bang gusto mong tanggalin ang folder na ito?
+    attach_image Maglakip ng larawan
+    back Bumalik
+    back_to_subjects Bumalik sa Mga Paksa
+    best_for_quick_goals Pinakamahusay para sa mabilis na layunin
+    billing_disclaimer Awtomatikong nagre-renew ang mga subscription maliban kung kinansela. Maaari mong pamahalaan ang iyong subscription sa mga setting ng iyong tindahan.
+    billing_title Pagsingil
+    browser Browser
+    cancel Kanselahin
+    cannot_delete_folder_it_is_not_empty Hindi matanggal ang folder: hindi ito walang laman
+    card_id Card ID
+    check_your_email_for_code Tingnan ang iyong email para sa code
+    clear Maaliwalas
+    click_to_view_original I-click upang tingnan ang orihinal
+    close Isara
+    close_request Isara ang Kahilingan?
+    collection_id Collection ID
+    colors Mga kulay
+    confirm_subscription Kumpirmahin ang Subscription
+    context Konteksto
+    could_not_launch Hindi mailunsad ang $url
+    counting Nagbibilang
+    current_subscription Kasalukuyang Subscription
+    delete Tanggalin
+    device Device
+    doc_create_intro_desc Sinasaklaw ng tab na ito kung paano inaayos ng mga creator ang content, nilo-localize ito, at nag-publish ng kapaki-pakinabang na materyal sa pag-aaral nang hindi nagpapasalimuot sa daloy ng trabaho.
+    doc_create_intro_title Lumikha
+    doc_create_json_desc Ang paggawa na nakabatay sa JSON ay isang advanced na workflow para sa structured bulk content. Dapat itong manatiling opsyonal; karamihan sa mga tagalikha ay dapat na makabuo at makapag-edit ng nilalaman sa pamamagitan ng mga karaniwang form.
+    doc_create_json_title Advanced na Pag-import ng JSON
+    doc_create_localization_desc I-localize ang content kung saan ito pinakamahalaga: mga pangalan, paglalarawan, prompt, at sagot. Panatilihing pare-pareho ang mga label sa mga wika upang ang mga user ay makapagpalit ng wika sa pag-aaral nang hindi nawawala ang istraktura.
+    doc_create_localization_title Lokalisasyon
+    doc_create_media_desc Dapat suportahan ng mga larawan, audio, at video ang layunin ng pag-aaral, hindi makagambala dito. Magdagdag ng media kapag pinahusay nito ang pagkilala, pagbigkas, o konteksto, at panatilihing magagamit ang mga card kahit na nawawala ang media.
+    doc_create_media_title Daloy ng Trabaho ng Media
+    doc_create_model_desc Gumagawa ang mga creator sa loob ng mga haligi at nag-aayos ng materyal na may mga folder, paksa, koleksyon, at card. Buuin muna ang istraktura, pagkatapos ay punan ito ng mga naisalokal na prompt, sagot, at opsyonal na media.
+    doc_create_model_title Modelo ng Nilalaman
+    doc_create_visibility_desc Gamitin ang "akin" para gumawa sa sarili mong content, mga paborito para i-pin ang mga kapaki-pakinabang na item, at pampublikong library para mag-browse ng nakabahaging materyal. Ang pampublikong visibility ay nakakaapekto sa pagtuklas, habang ang pagmamay-ari ay nakakaapekto sa kung ano ang maaari mong i-edit o tanggalin.
+    doc_create_visibility_title Pagmamay-ari at Visibility
+    doc_start_dashboard_desc Ang dashboard ay ang iyong pangunahing aklatan. Gamitin ang paghahanap para mabilis na makahanap ng content, pagkatapos ay pagsamahin ang mga source filter gaya ng mga paborito, minahan, at pampublikong library na may mga filter ng edad para mabawasan ang ingay.
+    doc_start_dashboard_title Dashboard, Paghahanap, at Mga Filter
+    doc_start_feedback_desc Gamitin ang mga entry point ng feedback sa buong app kapag may mali o hindi malinaw. Maaaring kasama sa mga ulat ang kasalukuyang konteksto, na ginagawang mas madaling suriin at ayusin ang mga isyu sa content.
+    doc_start_feedback_title Feedback at Tulong
+    doc_start_intro_desc Gamitin ang tab na ito kapag natututo ka kung paano magkatugma ang dashboard, library, pag-unlad, at mga social na feature.
+    doc_start_intro_title Pagsisimula
+    doc_start_progress_desc Ipinapakita ng iyong profile ang kabuuang XP, kasalukuyang streak, max streak, at pang-araw-araw na pag-unlad ng layunin. Ang laki ng session at bilang ng mga sagot ay pinamamahalaan din mula sa pahina ng profile.
+    doc_start_progress_title Pag-unlad at Mga Layunin
+    doc_start_quick_desc Pumili ng isang haligi sa dashboard, magbukas ng paksa, at magsimula sa Matuto. Gumamit ng mga paborito at filter upang paliitin ang library, pagkatapos ay suriin ang iyong XP, mga streak, at pang-araw-araw na layunin mula sa iyong profile.
+    doc_start_quick_title Mabilis na Pagsisimula
+    doc_start_structure_desc Ang mga paksa ay may hawak na mga card. Pinagpangkat ng mga folder ang nauugnay na nilalaman sa loob ng isang pillar. Ang mga koleksyon ay mga na-curate na hanay na maaaring pagsamahin ang maraming paksa para sa pag-aaral at pagbabahagi.
+    doc_start_structure_title Mga Paksa, Folder, at Koleksyon
+    doc_study_how_desc Magsimula sa Learn kapag gumagawa ka ng recognition, pagkatapos ay lumipat sa Test kapag gusto mo ng mas mabilis na pag-recall at mas mahigpit na pagsusuri. Gumamit ng mas maiikling session para sa nakatutok na pagsusuri at mas malalaking session para sa mas malawak na saklaw.
+    doc_study_how_title Paano Mag-aral
+    doc_study_intro_desc Ipinapaliwanag ng tab na ito kung paano lumipat sa nilalaman, piliin ang tamang mode, at ibagay ang iyong mga session para sa pagsusuri o paggunita.
+    doc_study_intro_title Mag-aral
+    doc_study_media_desc Kapag available ang media, gamitin ito upang palakasin ang pagbigkas at pagkilala. Ang autoplay ay pinakakapaki-pakinabang para sa passive na pagsusuri o paulit-ulit na pakikinig sa mas maiikling session.
+    doc_study_media_title Audio, Autoplay, at Media
+    doc_study_modes_desc Learn and Test ay ang mga pangunahing mode ng pag-aaral. Gumagamit sila ng parehong nilalaman ngunit sumusuporta sa iba't ibang bilis at sumasagot sa mga inaasahan, kaya lumipat ng mga mode batay sa kung ikaw ay nag-e-explore o nagsusuri ng pagpapanatili.
+    doc_study_modes_title Matuto at Subukan ang Mga Mode
+    doc_study_scope_desc Ang pag-aaral ay maaaring magsimula sa isang paksa, isang folder view, o isang koleksyon. Kapaki-pakinabang ang mga koleksyon kapag gusto mo ng halo-halong session sa ilang paksa nang hindi umaalis sa kasalukuyang daloy.
+    doc_study_scope_title Mga Paksa, Folder, at Koleksyon sa Pag-aaral
+    doc_tab_create Lumikha
+    doc_tab_start Magsimula
+    doc_tab_study Mag-aral
+    documentation Dokumentasyon
+    edit_subscription I-edit ang subscription
+    email_updated_successfully Matagumpay na na-update ang email!
+    enter_current_password Ipasok ang kasalukuyang password
+    error Error: $e
+    error_deleting Error sa pagtanggal: $e
+    error_saving Error sa pag-save: $e
+    error_saving_card Error sa pag-save ng card: $e
+    error_updating_favorite Error sa pag-update ng paborito: $e
+    failed_to_send_reset_code Nabigong magpadala ng reset code
+    failed_to_send_verification_code Nabigong ipadala ang verification code
+    fake_only Fake lang
+    feature_creation Mga Tool sa Paglikha
+    feature_customize Advanced na Pag-customize
+    feature_full_library Ganap na Access sa Aklatan
+    feature_testing Interactive na Pagsubok
+    folder_id Folder ID
+    free_only Libreng mga gumagamit
+    generic Generic
+    home Bahay
+    invalid_code Di-wastong code
+    invalid_email_address Di-wastong email address
+    invalid_json Di-wastong JSON: $e
+    invalid_or_expired_invitation_link Di-wasto o nag-expire na link ng imbitasyon.
+    invalid_or_expired_reset_code Di-wasto o nag-expire na reset code.
+    invitation_sent_awaiting_registration Ipinadala ang imbitasyon (naghihintay ng pagpaparehistro)
+    invited_and_request_sent Inimbitahan at ipinadala ang kahilingan!
+    json JSON
+    label_suffix $label:
+    leaderboard Leaderboard
+    licenses Mga lisensya
+    licenses_aliolo_section_title Aliolo Komersyal na Lisensya
+    licenses_aliolo_subtitle Mga tuntunin ng pagmamay-ari na software at premium na pag-access
+    licenses_intro_desc Unang lumabas ang komersyal na lisensya ni Aliolo. Ang mga lisensya ng third-party na pakete ay sumusunod sa ibaba.
+    licenses_intro_title Aliolo Mga Paunawa sa Lisensya at Package
+    licenses_third_party_section_title Mga Lisensya ng Third-Party na Package
+    linux_distro Linux Distro
+    loading Naglo-load...
+    localized_data Naka-localize na Data
+    monthly_access Buwanang Access
+    most_popular_choice Pinakatanyag na pagpipilian
+    new_email Bagong Email
+    no_cards_available_for_this_session Walang available na card para sa session na ito.
+    no_cards_found Walang nakitang card
+    no_subjects_found Walang nahanap na paksa
+    no_subjects_found_in_this_collection Walang nakitang paksa sa koleksyong ito
+    no_users_found Walang nakitang mga user
+    os_version Bersyon ng OS
+    password_updated_successfully Matagumpay na na-update ang password!
+    payments_are_not_yet_integrated_on_web_please_use_the_mobile_app_to_upgrade Ang mga pagbabayad ay hindi pa isinama sa Web. Mangyaring gamitin ang mobile app upang mag-upgrade.
+    personal_data Personal na data
+    pick_date Pumili ng petsa
+    plan_monthly_tagline Pinakatanyag na pagpipilian
+    plan_monthly_title Buwanang Access
+    plan_weekly_tagline Pinakamahusay para sa mabilis na layunin
+    plan_weekly_title Lingguhang Access
+    plan_yearly_tagline Makatipid ng 33% bawat buwan
+    plan_yearly_title Taunang Access
+    platform Plataporma
+    play Maglaro
+    play_audio I-play ang Audio
+    please_enter_the_6_digit_code Pakilagay ang 6 na digit na code
+    please_wait_for_a_response_before_replying_again Mangyaring maghintay ng tugon bago tumugon muli.
+    premium_expires_at Mag-e-expire sa $date
+    premium_lifetime Panghabambuhay na pag-access
+    premium_only Premium lang
+    premium_status_active Ikaw ay isang premium na miyembro
+    premium_unlock_desc Magkaroon ng access sa lahat ng paksa, gumawa ng walang limitasyong mga card, at suportahan ang misyon ni Aliolo.
+    premium_unlock_title I-unlock ang Buong Access
+    product_not_available_in_store Hindi available ang produkto sa tindahan.
+    profile Profile
+    public_other_subject Pampubliko/Iba Pang Paksa
+    purchase_failed Nabigo ang pagbili: $e
+    recovery_error Error sa pagbawi: $e
+    refresh_conversation I-refresh ang pag-uusap
+    renderer Tagapag-render
+    reset_code I-reset ang Code
+    reset_code_sent_to_please_check_your_inbox I-reset ang code na ipinadala sa $email. Mangyaring suriin ang iyong inbox.
+    restore_purchases Ibalik ang Mga Pagbili
+    save I-save
+    save_33_per_month Makatipid ng 33% bawat buwan
+    saved_successfully Matagumpay na na-save
+    search_users Maghanap ng mga gumagamit
+    session_complete Kumpleto na ang Session!
+    session_complete_description Mahusay na trabaho! Natapos mo na ang lahat ng card sa session na ito.
+    settings Mga setting
+    show_documentation_btn Ipakita ang pindutan ng dokumentasyon
+    show_documentation_btn_desc Ipakita ang button ng dokumentasyon sa app bar.
+    show_fake_users Ipakita ang Mga Pekeng Gumagamit
+    subject_id Subject ID
+    subscribe_now Mag-subscribe na
+    subscription_data Data ng subscription
+    subscription_updated Na-update ang subscription
+    subtraction_emoji Emoji ng pagbabawas
+    subtraction_numbers Mga Numero ng Pagbabawas
+    technical_context TEKNIKAL NA KONTEKSTO
+    testing_mode Mode ng pagsubok
+    text Text
+    this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards Ito ay isang folder. Maaari mong gamitin ang mga button na Matuto/Subukan sa itaas para sanayin ang lahat ng card.
+    type_your_reply I-type ang iyong tugon...
+    ua UA
+    unknown_user_profile_missing Hindi Kilalang User (Nawawala ang profile)
+    user Gumagamit
+    user_id User ID
+    user_with_this_email_already_exists_please_log_in_instead Umiiral na ang user na may ganitong email. Mangyaring mag-log in sa halip.
+    users Mga gumagamit
+    users_filter I-filter ang mga user
+    verification_code Verification Code
+    verification_code_sent_to Ipinadala ang verification code sa $email
+    version Bersyon
+    view_onboarding Tingnan ang onboarding
+    weekly_access Lingguhang Access
+    welcome_complete_your_profile_to_join_aliolo Maligayang pagdating! Kumpletuhin ang iyong profile para makasali sa aliolo.
+    yearly_access Taunang Access
+    you_do_not_have_permission_to_edit_this_card Wala kang pahintulot na i-edit ang card na ito
+    you_do_not_have_permission_to_view_this_card_details Wala kang pahintulot na tingnan ang mga detalye ng card na ito.

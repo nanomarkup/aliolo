@@ -1,0 +1,228 @@
+..
+    a_folder_with_this_name_already_exists_in_this_pillar F'dan il-pilastru diġà jeżisti folder b'dan l-isem
+    about Dwar
+    about_intro_audience_desc Aliolo jappoġġa lill-istudenti li jridu reviżjoni strutturata, lill-ġenituri u lill-għalliema li jeħtieġu kontenut ta' studju li jista' jkun avviċinabbli, u lill-ħallieqa li jorganizzaw u jippubblikaw il-materjali tat-tagħlim tagħhom stess.
+    about_intro_audience_title Għal Min Huwa
+    about_intro_desc Aliolo hija app ta' tagħlim viżwali mibnija madwar flussi ta' studju sempliċi, organizzazzjoni flessibbli tal-kontenut, u progress kostanti maż-żmien.
+    about_intro_start_desc Ibda fuq id-dashboard, agħżel pilastru, iftaħ suġġett, u ibda b'Tgħallem. Issejvja l-kontenut utli fil-favoriti sabiex ikun aktar faċli li terġa 'tirrevedi aktar tard.
+    about_intro_start_title Kif tibda
+    about_intro_title Dwar Aliolo
+    about_learn_discovery_desc It-tfittxija, il-filtri tal-età, u l-filtri tas-sors bħal favoriti, tiegħi, u librerija pubblika jgħinuk issib il-kontenut it-tajjeb malajr.
+    about_learn_discovery_title Skoperta u Iffiltrar
+    about_learn_language_desc Tista' tistudja l-kontenut f'lingwi differenti u taġġusta s-settings tas-sessjoni fil-profil tiegħek biex taqbel mal-pass tiegħek u mal-miri attwali.
+    about_learn_language_title Lingwa u Flessibilità tal-Modalità
+    about_learn_media_desc Immaġini, awdjo, u vidjo jistgħu jappoġġaw ir-rikonoxximent, il-pronunzja u l-kuntest meta jkunu disponibbli fil-kontenut tat-tagħlim.
+    about_learn_media_title Appoġġ tal-Midja
+    about_learn_modes_desc Uża Tgħallem biex tibni rikonoxximent u kunfidenza, imbagħad aqleb għal Test meta trid tirtira aktar stretta u reviżjoni aktar mgħaġġla.
+    about_learn_modes_title Tgħallem u Ittestja
+    about_learn_title Kif Tgħallem
+    about_organize_collections_desc Kollezzjonijiet jgħaqqdu suġġetti multipli fi fluss wieħed ta 'studju, li huwa utli għal reviżjoni mħallta u settijiet kkurati.
+    about_organize_collections_title Kollezzjonijiet
+    about_organize_creation_desc Il-ħallieqa jistgħu jorganizzaw il-kontenut tagħhom stess, iżommuh privat waqt li jaħdmu, jew jesponuh permezz tal-librerija pubblika meta jkun lest.
+    about_organize_creation_title Sjieda u Viżibilità
+    about_organize_folders_desc Il-folders jiġbru s-suġġetti relatati ġewwa pilastru sabiex settijiet ta' kontenut akbar jibqgħu maniġġabbli.
+    about_organize_folders_title Folders
+    about_organize_subjects_desc Is-suġġetti huma l-unità ewlenija ta’ studju. Huma jżommu l-karti li tiftaħ fis-sessjonijiet ta' Tgħallem u Test.
+    about_organize_subjects_title Suġġetti
+    about_organize_title Kif Huwa Organizzat il-Kontenut
+    about_progress_goals_desc Il-profil tiegħek iħallik tirranġa l-miri tal-miri ta’ kuljum, titgħallem id-daqs tas-sessjoni, id-daqs tas-sessjoni tat-test, u n-numru ta’ tweġibiet.
+    about_progress_goals_title Għanijiet ta 'Kuljum u Settings tas-Sessjoni
+    about_progress_social_desc Il-ħbieb u l-karatteristiċi tal-leaderboard jagħmlu progress soċjali mingħajr ma jbiddlu l-fluss ewlieni tat-tagħlim.
+    about_progress_social_title Ħbieb u Leaderboard
+    about_progress_title Progress, Ħbieb, u Leaderboard
+    about_progress_xp_desc Aliolo issegwi l-XP totali, is-sensiela attwali, u l-firxa massima sabiex il-progress ikun jidher viżibbli fuq perjodi ta' studju qosra u twal.
+    about_progress_xp_title XP u Streaks
+    about_support_docs_desc Il-paġna tad-dokumentazzjoni fl-app tispjega kif id-dashboard, il-flussi tal-istudju, u l-għodod tal-kreatur jaħdmu llum.
+    about_support_docs_title Dokumentazzjoni
+    about_support_feedback_desc Uża punti ta' dħul ta' feedback madwar l-app biex tirrapporta bugs, tissuġġerixxi titjib, jew timmarka kwistjonijiet speċifiċi ta' kontenut bil-kuntest.
+    about_support_feedback_title Feedback u Rappurtar
+    about_support_licenses_desc Il-paġna tal-liċenzji telenka l-liċenzja kummerċjali ta' Aliolo l-ewwel u mbagħad il-liċenzji tal-pakketti ta' partijiet terzi miġbura.
+    about_support_licenses_title Liċenzji
+    about_support_onboarding_desc Tista' tirrevedi l-onboarding fi kwalunkwe ħin biex tirrevedi l-ideat ewlenin u l-fluss tas-setup tal-app.
+    about_support_onboarding_title Abbord
+    about_support_settings_desc Il-lingwa tal-UI, il-mod tat-tema, il-kulur tat-tema, il-ħoss, it-tqegħid tal-sidebar, u l-viżibilità tad-dokumentazzjoni kollha jistgħu jiġu aġġustati mis-settings.
+    about_support_settings_title Personalizzazzjoni
+    about_support_title Settings, Feedback, u Appoġġ
+    addition_emoji Żieda Emoji
+    addition_numbers Numri ta' Żieda
+    aliolo aliolo
+    all_rights_reserved Id-drittijiet kollha riżervati
+    are_you_sure_you_want_to_close_this_feedback_request Żgur li trid tagħlaq din it-talba għal feedback?
+    are_you_sure_you_want_to_delete_this_folder Int żgur li trid tħassar dan il-folder?
+    attach_image Ehmeż immaġini
+    back Lura
+    back_to_subjects Lura għas-Suġġetti
+    best_for_quick_goals L-aħjar għal għanijiet ta' malajr
+    billing_disclaimer L-abbonamenti jġeddu awtomatikament sakemm ma jiġux ikkanċellati. Tista' timmaniġġja l-abbonament tiegħek fis-settings tal-maħżen tiegħek.
+    billing_title Kontijiet
+    browser Browser
+    cancel Ikkanċella
+    cannot_delete_folder_it_is_not_empty Ma tistax tħassar il-folder: mhuwiex vojt
+    card_id ID tal-Karta
+    check_your_email_for_code Iċċekkja l-email tiegħek għall-kodiċi
+    clear Ċara
+    click_to_view_original Ikklikkja biex tara l-oriġinal
+    close Agħlaq
+    close_request Talba mill-qrib?
+    collection_id ID tal-ġbir
+    colors Kuluri
+    confirm_subscription Ikkonferma l-Abbonament
+    context Kuntest
+    could_not_launch Ma setgħetx tniedi $url
+    counting Għadd
+    current_subscription Abbonament kurrenti
+    delete Ħassar
+    device Apparat
+    doc_create_intro_desc Din it-tab tkopri kif il-ħallieqa jorganizzaw il-kontenut, jillokawh, u jippubblikaw materjal ta’ studju utli mingħajr ma jikkomplika żżejjed il-fluss tax-xogħol.
+    doc_create_intro_title Oħloq
+    doc_create_json_desc Il-ħolqien ibbażat fuq JSON huwa fluss tax-xogħol avvanzat għal kontenut bl-ingrossa strutturat. Għandu jibqa' fakultattiv; il-biċċa l-kbira tal-ħallieqa għandhom ikunu jistgħu jibnu u jeditjaw il-kontenut permezz tal-formoli standard.
+    doc_create_json_title Importazzjoni JSON Avvanzata
+    doc_create_localization_desc Lokalizza l-kontenut fejn huwa importanti l-aktar: ismijiet, deskrizzjonijiet, prompts, u tweġibiet. Żomm it-tikketti konsistenti madwar il-lingwi sabiex l-utenti jkunu jistgħu jaqilbu l-lingwa tal-istudju mingħajr ma jitilfu l-istruttura.
+    doc_create_localization_title Lokalizzazzjoni
+    doc_create_media_desc L-immaġini, l-awdjo u l-vidjow għandhom jappoġġjaw l-għan tat-tagħlim, mhux ifixkluh. Żid il-midja meta ttejjeb ir-rikonoxximent, il-pronunzja, jew il-kuntest, u żomm il-karti li jistgħu jintużaw anki meta l-midja tkun nieqsa.
+    doc_create_media_title Fluss tax-Xogħol tal-Midja
+    doc_create_model_desc Il-ħallieqa jaħdmu ġewwa l-pilastri u jorganizzaw materjal b'folders, suġġetti, kollezzjonijiet, u kards. Ibni l-istruttura l-ewwel, imbagħad imla bi prompts lokalizzati, tweġibiet, u midja fakultattiva.
+    doc_create_model_title Mudell tal-Kontenut
+    doc_create_visibility_desc Uża "minjiera" biex taħdem fuq il-kontenut tiegħek stess, favoriti biex tippinja oġġetti utli, u librerija pubblika biex tfittex materjal kondiviż. Il-viżibilità pubblika taffettwa l-iskoperta, filwaqt li s-sjieda taffettwa dak li tista’ teditja jew tħassar.
+    doc_create_visibility_title Sjieda u Viżibilità
+    doc_start_dashboard_desc Id-dashboard hija l-librerija ewlenija tiegħek. Uża t-tfittxija biex issib kontenut malajr, imbagħad għaqqad filtri tas-sors bħal favoriti, tiegħi, u librerija pubblika ma' filtri tal-età biex tnaqqas il-ħoss.
+    doc_start_dashboard_title Dashboard, Tiftix, u Filtri
+    doc_start_feedback_desc Uża l-punti tad-dħul tal-feedback madwar l-app meta xi ħaġa tkun ħażina jew mhux ċara. Ir-rapporti jistgħu jinkludu l-kuntest attwali, li jagħmel il-kwistjonijiet tal-kontenut aktar faċli biex jiġu riveduti u rranġati.
+    doc_start_feedback_title Feedback u Għajnuna
+    doc_start_intro_desc Uża din it-tab meta tkun qed titgħallem kif id-daxxbord, il-librerija, il-progress u l-karatteristiċi soċjali jaqblu flimkien.
+    doc_start_intro_title Nibdew
+    doc_start_progress_desc Il-profil tiegħek juri l-XP totali, is-sensiela attwali, is-sensiela massima, u l-progress tal-miri ta' kuljum. Id-daqs tas-sessjoni u n-numru ta’ tweġibiet huma ġestiti wkoll mill-paġna tal-profil.
+    doc_start_progress_title Progress u Għanijiet
+    doc_start_quick_desc Agħżel pilastru fuq id-dashboard, iftaħ suġġett, u ibda b'Tgħallem. Uża l-favoriti u l-filtri biex tnaqqas il-librerija, imbagħad irrevedi l-XP, l-istrixxi, u l-mira ta’ kuljum tiegħek mill-profil tiegħek.
+    doc_start_quick_title Bidu malajr
+    doc_start_structure_desc Is-suġġetti jżommu karti. Il-folders jiġbru kontenut relatat ġewwa pilastru. Il-kollezzjonijiet huma settijiet ikkurati li jistgħu jgħaqqdu diversi suġġetti għall-istudju u l-qsim.
+    doc_start_structure_title Suġġetti, Folders, u Kollezzjonijiet
+    doc_study_how_desc Ibda b'Tgħallem meta tkun qed tibni rikonoxximent, imbagħad aqleb għal Test meta trid tirtira aktar malajr u ċċekkjar aktar strett. Uża sessjonijiet iqsar għal reviżjoni ffukata u sessjonijiet akbar għal kopertura usa '.
+    doc_study_how_title Kif Studja
+    doc_study_intro_desc Din it-tab tispjega kif timxi permezz tal-kontenut, tagħżel il-mod it-tajjeb, u tixgħel is-sessjonijiet tiegħek għal reviżjoni jew sejħa lura.
+    doc_study_intro_title Studju
+    doc_study_media_desc Meta l-midja tkun disponibbli, użaha biex issaħħaħ il-pronunzja u r-rikonoxximent. Autoplay huwa l-aktar utli għal reviżjoni passiva jew smigħ ripetut waqt sessjonijiet iqsar.
+    doc_study_media_title Awdjo, Autoplay, u Media
+    doc_study_modes_desc Tgħallem u Test huma l-modi ewlenin ta 'studju. Jużaw l-istess kontenut iżda jappoġġjaw ritmu differenti u aspettattivi ta' tweġiba, għalhekk jaqilbu l-modi skont jekk tkunx qed tesplora jew tiċċekkja ż-żamma.
+    doc_study_modes_title Tgħallem u Ittestja Modi
+    doc_study_scope_desc L-istudju jista' jibda minn suġġett wieħed, ħarsa ta' folder, jew ġabra. Il-kollezzjonijiet huma utli meta trid sessjoni mħallta fuq diversi suġġetti mingħajr ma tħalli l-fluss kurrenti.
+    doc_study_scope_title Suġġetti, Folders, u Kollezzjonijiet fl-Istudju
+    doc_tab_create Oħloq
+    doc_tab_start Ibda
+    doc_tab_study Studju
+    documentation Dokumentazzjoni
+    edit_subscription Editja l-abbonament
+    email_updated_successfully Email aġġornata b'suċċess!
+    enter_current_password Daħħal il-password attwali
+    error Żball: $e
+    error_deleting Żball fit-tħassir: $e
+    error_saving Żball fl-iffrankar: $e
+    error_saving_card Żball fl-iffrankar tal-karta: $e
+    error_updating_favorite Żball fl-aġġornament tal-favorit: $e
+    failed_to_send_reset_code Naqas milli jibgħat il-kodiċi reset
+    failed_to_send_verification_code Naqas milli jintbagħat il-kodiċi ta' verifika
+    fake_only Foloz biss
+    feature_creation Għodda tal-Ħolqien
+    feature_customize Personalizzazzjoni Avvanzata
+    feature_full_library Aċċess sħiħ għall-Librerija
+    feature_testing Ittestjar Interattiv
+    folder_id ID tal-folder
+    free_only Utenti b'xejn
+    generic Ġeneriċi
+    home Dar
+    invalid_code Kodiċi invalidu
+    invalid_email_address Indirizz elettroniku mhux validu
+    invalid_json JSON mhux validu: $e
+    invalid_or_expired_invitation_link Link tal-istedina invalida jew skaduta.
+    invalid_or_expired_reset_code Kodiċi ta' reset mhux validu jew skadut.
+    invitation_sent_awaiting_registration Stedina mibgħuta (li qed tistenna r-reġistrazzjoni)
+    invited_and_request_sent Mistiedna u talba mibgħuta!
+    json JSON
+    label_suffix $label:
+    leaderboard Leaderboard
+    licenses Liċenzji
+    licenses_aliolo_section_title Aliolo Liċenzja Kummerċjali
+    licenses_aliolo_subtitle Softwer proprjetarju u termini ta' aċċess premium
+    licenses_intro_desc Il-liċenzja kummerċjali ta' Aliolo tidher l-ewwel. Liċenzji ta' pakketti ta' partijiet terzi isegwu hawn taħt.
+    licenses_intro_title Aliolo Avviżi dwar il-Liċenzja u l-Pakketti
+    licenses_third_party_section_title Liċenzji ta' Pakkett ta' Partijiet Terzi
+    linux_distro Linux Distro
+    loading Tagħbija...
+    localized_data Dejta Lokalizzata
+    monthly_access Aċċess ta' Kull Xahar
+    most_popular_choice L-aktar għażla popolari
+    new_email Email Ġdid
+    no_cards_available_for_this_session Ebda cards disponibbli għal din is-sessjoni.
+    no_cards_found L-ebda karta ma nstabet
+    no_subjects_found Ma nstab l-ebda suġġett
+    no_subjects_found_in_this_collection L-ebda suġġett ma nstab f'din il-ġabra
+    no_users_found L-ebda utent ma nstab
+    os_version Verżjoni OS
+    password_updated_successfully Password aġġornata b'suċċess!
+    payments_are_not_yet_integrated_on_web_please_use_the_mobile_app_to_upgrade Il-ħlasijiet għadhom mhumiex integrati fuq il-Web. Jekk jogħġbok uża l-app mobbli biex taġġorna.
+    personal_data Data personali
+    pick_date Agħżel id-data
+    plan_monthly_tagline L-aktar għażla popolari
+    plan_monthly_title Aċċess ta' Kull Xahar
+    plan_weekly_tagline L-aħjar għal għanijiet ta' malajr
+    plan_weekly_title Aċċess fil-ġimgħa
+    plan_yearly_tagline Iffranka 33% fix-xahar
+    plan_yearly_title Aċċess annwali
+    platform Pjattaforma
+    play Play
+    play_audio Play Awdjo
+    please_enter_the_6_digit_code Jekk jogħġbok daħħal il-kodiċi b'6 ċifri
+    please_wait_for_a_response_before_replying_again Jekk jogħġbok stenna għal tweġiba qabel ma terġa' twieġeb.
+    premium_expires_at Tiskadi fi $date
+    premium_lifetime Aċċess tul il-ħajja
+    premium_only Premium biss
+    premium_status_active Inti membru premium
+    premium_unlock_desc Ikseb aċċess għas-suġġetti kollha, oħloq karti illimitati, u appoġġja l-missjoni ta' Aliolo.
+    premium_unlock_title Nisfruttaw Aċċess Sħiħ
+    product_not_available_in_store Prodott mhux disponibbli fil-maħżen.
+    profile Profil
+    public_other_subject Pubbliku/Suġġett Ieħor
+    purchase_failed Xiri falla: $e
+    recovery_error Żball fl-irkupru: $e
+    refresh_conversation Aġġorna l-konversazzjoni
+    renderer Renderer
+    reset_code Irrisettja l-Kodiċi
+    reset_code_sent_to_please_check_your_inbox Irrisettja l-kodiċi mibgħut lil $email. Jekk jogħġbok iċċekkja l-inbox tiegħek.
+    restore_purchases Irrestawra Xiri
+    save Ħlief
+    save_33_per_month Iffranka 33% fix-xahar
+    saved_successfully Salvat b'suċċess
+    search_users Fittex l-utenti
+    session_complete Sessjoni Lesta!
+    session_complete_description Xogħol kbir! Int lestejt il-karti kollha f'din is-sessjoni.
+    settings Settings
+    show_documentation_btn Uri l-buttuna tad-dokumentazzjoni
+    show_documentation_btn_desc Uri l-buttuna tad-dokumentazzjoni fil-bar tal-app.
+    show_fake_users Uri Utenti Foloz
+    subject_id ID tas-suġġett
+    subscribe_now Abbona Issa
+    subscription_data Data ta' abbonament
+    subscription_updated Abbonament aġġornat
+    subtraction_emoji Tnaqqis Emoji
+    subtraction_numbers Numri tat-Tnaqqis
+    technical_context KUNTEST TEKNIKU
+    testing_mode Mod ta 'ttestjar
+    text Test
+    this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards Dan huwa folder. Tista' tuża l-buttuni Tgħallem/Ittestja hawn fuq biex tipprattika l-karti kollha.
+    type_your_reply Ittajpja t-tweġiba tiegħek...
+    ua UA
+    unknown_user_profile_missing Utent mhux magħruf (Profil nieqes)
+    user Utent
+    user_id ID tal-utent
+    user_with_this_email_already_exists_please_log_in_instead Utent b'din l-email diġà jeżisti. Jekk jogħġbok idħol minflok.
+    users Utenti
+    users_filter Iffiltra l-utenti
+    verification_code Kodiċi ta' Verifika
+    verification_code_sent_to Kodiċi ta' verifika mibgħut lil $email
+    version Verżjoni
+    view_onboarding Ara l-onboarding
+    weekly_access Aċċess ta' kull ġimgħa
+    welcome_complete_your_profile_to_join_aliolo Merħba! Imla l-profil tiegħek biex tingħaqad ma' aliolo.
+    yearly_access Aċċess annwali
+    you_do_not_have_permission_to_edit_this_card M'għandekx permess biex teditja din il-karta
+    you_do_not_have_permission_to_view_this_card_details M'għandekx permess biex tara d-dettalji ta' din il-karta.

@@ -1,0 +1,228 @@
+..
+    a_folder_with_this_name_already_exists_in_this_pillar يوجد مجلد بهذا الاسم بالفعل في هذا العمود
+    about عن
+    about_intro_audience_desc Aliolo يدعم المتعلمين الذين يريدون مراجعة منظمة، وأولياء الأمور والمدرسين الذين يحتاجون إلى محتوى دراسة يسهل الوصول إليه، والمبدعين الذين ينظمون المواد التعليمية الخاصة بهم وينشرونها.
+    about_intro_audience_title من هو من أجل
+    about_intro_desc Aliolo هو تطبيق تعليمي مرئي يعتمد على تدفقات الدراسة البسيطة وتنظيم المحتوى المرن والتقدم المطرد بمرور الوقت.
+    about_intro_start_desc ابدأ من لوحة المعلومات، واختر عمودًا، وافتح موضوعًا، وابدأ بالتعلم. احفظ المحتوى المفيد في المفضلة حتى يسهل عليك العودة إليه لاحقًا.
+    about_intro_start_title كيف تبدأ
+    about_intro_title حول Aliolo
+    about_learn_discovery_desc تساعدك عوامل تصفية البحث والعمر وعوامل تصفية المصدر مثل المفضلة والمكتبة العامة في العثور على المحتوى المناسب بسرعة.
+    about_learn_discovery_title الاكتشاف والتصفية
+    about_learn_language_desc يمكنك دراسة المحتوى بلغات مختلفة وضبط إعدادات الجلسة في ملفك الشخصي لتتناسب مع سرعتك وأهدافك الحالية.
+    about_learn_language_title مرونة اللغة والوضع
+    about_learn_media_desc يمكن أن تدعم الصور والصوت والفيديو التعرف والنطق والسياق عندما تكون متاحة في المحتوى التعليمي.
+    about_learn_media_title دعم وسائل الإعلام
+    about_learn_modes_desc استخدم التعلم لبناء التعرف والثقة، ثم قم بالتبديل إلى الاختبار عندما تريد استدعاء أكثر صرامة ومراجعة أسرع.
+    about_learn_modes_title تعلم واختبار
+    about_learn_title كيف تتعلم
+    about_organize_collections_desc تجمع المجموعات موضوعات متعددة في مسار دراسة واحد، وهو أمر مفيد للمراجعة المختلطة والمجموعات المنسقة.
+    about_organize_collections_title المجموعات
+    about_organize_creation_desc يمكن للمنشئين تنظيم المحتوى الخاص بهم، والحفاظ عليه خاصًا أثناء العمل، أو عرضه من خلال المكتبة العامة عندما يكون جاهزًا.
+    about_organize_creation_title الملكية والرؤية
+    about_organize_folders_desc تقوم المجلدات بتجميع الموضوعات ذات الصلة داخل عمود بحيث تظل مجموعات المحتوى الأكبر قابلة للإدارة.
+    about_organize_folders_title المجلدات
+    about_organize_subjects_desc المواد هي الوحدة الرئيسية للدراسة. إنهم يحملون البطاقات التي تفتحها في جلسات التعلم والاختبار.
+    about_organize_subjects_title المواضيع
+    about_organize_title كيف يتم تنظيم المحتوى
+    about_progress_goals_desc يتيح لك ملفك الشخصي ضبط أهداف الأهداف اليومية ومعرفة حجم الجلسة واختبار حجم الجلسة وعدد الإجابات.
+    about_progress_goals_title الأهداف اليومية وإعدادات الجلسة
+    about_progress_social_desc تجعل ميزات الأصدقاء وقائمة المتصدرين التقدم اجتماعيًا دون تغيير تدفق التعلم الأساسي.
+    about_progress_social_title الأصدقاء والمتصدرين
+    about_progress_title التقدم والأصدقاء والمتصدرين
+    about_progress_xp_desc Aliolo يتتبع إجمالي XP والخط الحالي والحد الأقصى للخط حتى يبدو التقدم مرئيًا عبر فترات الدراسة القصيرة والطويلة.
+    about_progress_xp_title XP والشرائط
+    about_support_docs_desc تشرح صفحة الوثائق داخل التطبيق كيفية عمل لوحة المعلومات وتدفقات الدراسة وأدوات منشئ المحتوى اليوم.
+    about_support_docs_title التوثيق
+    about_support_feedback_desc استخدم نقاط إدخال التعليقات عبر التطبيق للإبلاغ عن الأخطاء أو اقتراح التحسينات أو الإبلاغ عن مشكلات معينة في المحتوى مع السياق.
+    about_support_feedback_title ردود الفعل والتقارير
+    about_support_licenses_desc تسرد صفحة التراخيص الترخيص التجاري لـ Aliolo أولاً ثم تراخيص حزمة الطرف الثالث المجمعة.
+    about_support_licenses_title التراخيص
+    about_support_onboarding_desc يمكنك العودة إلى الإعداد في أي وقت لمراجعة الأفكار الرئيسية للتطبيق وخطوات الإعداد.
+    about_support_onboarding_title الإعداد
+    about_support_settings_desc يمكن تعديل لغة واجهة المستخدم ووضع السمة ولون السمة والصوت وموضع الشريط الجانبي ورؤية الوثائق من الإعدادات.
+    about_support_settings_title التخصيص
+    about_support_title الإعدادات والتعليقات والدعم
+    addition_emoji إضافة الرموز التعبيرية
+    addition_numbers أرقام الإضافة
+    aliolo aliolo
+    all_rights_reserved جميع الحقوق محفوظة
+    are_you_sure_you_want_to_close_this_feedback_request هل أنت متأكد أنك تريد إغلاق طلب التعليقات هذا؟
+    are_you_sure_you_want_to_delete_this_folder هل أنت متأكد أنك تريد حذف هذا المجلد؟
+    attach_image إرفاق الصورة
+    back خلف
+    back_to_subjects العودة إلى المواضيع
+    best_for_quick_goals الأفضل للأهداف السريعة
+    billing_disclaimer يتم تجديد الاشتراكات تلقائيًا ما لم يتم إلغاؤها. يمكنك إدارة اشتراكك في إعدادات متجرك.
+    billing_title الفواتير
+    browser المتصفح
+    cancel يلغي
+    cannot_delete_folder_it_is_not_empty لا يمكن حذف المجلد: فهو ليس فارغاً
+    card_id معرف البطاقة
+    check_your_email_for_code تحقق من بريدك الإلكتروني للحصول على الرمز
+    clear واضح
+    click_to_view_original انقر لعرض الأصلي
+    close يغلق
+    close_request هل تريد إغلاق الطلب؟
+    collection_id معرف المجموعة
+    colors الألوان
+    confirm_subscription تأكيد الاشتراك
+    context سياق
+    could_not_launch تعذر تشغيل $url
+    counting عد
+    current_subscription الاشتراك الحالي
+    delete يمسح
+    device جهاز
+    doc_create_intro_desc تغطي علامة التبويب هذه كيفية قيام منشئي المحتوى بتنظيم المحتوى وتوطينه ونشر مواد دراسية مفيدة دون المبالغة في تعقيد سير العمل.
+    doc_create_intro_title يخلق
+    doc_create_json_desc يعد الإنشاء المستند إلى JSON بمثابة سير عمل متقدم للمحتوى المجمع المنظم. وينبغي أن تظل اختيارية؛ يجب أن يكون معظم منشئي المحتوى قادرين على إنشاء المحتوى وتحريره من خلال النماذج القياسية.
+    doc_create_json_title استيراد JSON المتقدم
+    doc_create_localization_desc توطين المحتوى في الأماكن الأكثر أهمية: الأسماء والأوصاف والمطالبات والإجابات. حافظ على اتساق التسميات عبر اللغات حتى يتمكن المستخدمون من تبديل لغة الدراسة دون فقدان البنية.
+    doc_create_localization_title التعريب
+    doc_create_media_desc يجب أن تدعم الصور والصوت والفيديو هدف التعلم، وليس صرف الانتباه عنه. أضف الوسائط عندما يؤدي ذلك إلى تحسين التعرف أو النطق أو السياق، واحتفظ بالبطاقات قابلة للاستخدام حتى في حالة فقدان الوسائط.
+    doc_create_media_title سير عمل الوسائط
+    doc_create_model_desc يعمل منشئو المحتوى داخل الركائز وينظمون المواد باستخدام المجلدات والموضوعات والمجموعات والبطاقات. أنشئ الهيكل أولاً، ثم املأه بالمطالبات والإجابات والوسائط الاختيارية المترجمة.
+    doc_create_model_title نموذج المحتوى
+    doc_create_visibility_desc استخدم "الخاص بي" للعمل على المحتوى الخاص بك، والمفضلات لتثبيت العناصر المفيدة، والمكتبة العامة لتصفح المواد المشتركة. تؤثر الرؤية العامة على الاكتشاف، بينما تؤثر الملكية على ما يمكنك تعديله أو حذفه.
+    doc_create_visibility_title الملكية والرؤية
+    doc_start_dashboard_desc لوحة القيادة هي مكتبتك الرئيسية. استخدم البحث للعثور على المحتوى بسرعة، ثم قم بدمج مرشحات المصدر مثل المفضلة والمفضلات الخاصة بي والمكتبة العامة مع مرشحات العمر لتقليل الضوضاء.
+    doc_start_dashboard_title لوحة التحكم والبحث والمرشحات
+    doc_start_feedback_desc استخدم نقاط إدخال التعليقات عبر التطبيق عندما يكون هناك خطأ ما أو غير واضح. يمكن أن تتضمن التقارير السياق الحالي، مما يسهل مراجعة مشكلات المحتوى وإصلاحها.
+    doc_start_feedback_title ردود الفعل والمساعدة
+    doc_start_intro_desc استخدم علامة التبويب هذه عندما تتعلم كيفية توافق لوحة المعلومات والمكتبة والتقدم والميزات الاجتماعية معًا.
+    doc_start_intro_title ابدء
+    doc_start_progress_desc يعرض ملفك الشخصي إجمالي XP والخط الحالي والحد الأقصى للخط والتقدم اليومي للهدف. تتم أيضًا إدارة حجم الجلسة وعدد الإجابات من صفحة الملف الشخصي.
+    doc_start_progress_title التقدم والأهداف
+    doc_start_quick_desc اختر عمودًا على لوحة المعلومات، وافتح موضوعًا، وابدأ بالتعلم. استخدم المفضلة والمرشحات لتضييق نطاق المكتبة، ثم قم بمراجعة XP والخطوط والهدف اليومي من ملفك الشخصي.
+    doc_start_quick_title بداية سريعة
+    doc_start_structure_desc المواضيع تحمل البطاقات. تقوم المجلدات بتجميع المحتوى ذي الصلة داخل عمود. المجموعات عبارة عن مجموعات منسقة يمكنها الجمع بين موضوعات متعددة للدراسة والمشاركة.
+    doc_start_structure_title المواضيع والمجلدات والمجموعات
+    doc_study_how_desc ابدأ بـ "تعلم" عندما تقوم ببناء التعرف، ثم قم بالتبديل إلى "اختبار" عندما تريد استدعاء أسرع وفحصًا أكثر صرامة. استخدم جلسات أقصر للمراجعة المركزة وجلسات أكبر لتغطية أوسع.
+    doc_study_how_title كيفية الدراسة
+    doc_study_intro_desc تشرح علامة التبويب هذه كيفية التنقل عبر المحتوى واختيار الوضع المناسب وضبط جلساتك للمراجعة أو الاستدعاء.
+    doc_study_intro_title يذاكر
+    doc_study_media_desc عندما تكون الوسائط متاحة، استخدمها لتعزيز النطق والتعرف. يعد التشغيل التلقائي مفيدًا جدًا للمراجعة السلبية أو الاستماع المتكرر أثناء الجلسات الأقصر.
+    doc_study_media_title الصوت والتشغيل التلقائي والوسائط
+    doc_study_modes_desc التعلم والاختبار هما وضعا الدراسة الأساسيان. إنهم يستخدمون نفس المحتوى ولكنهم يدعمون وتيرة مختلفة ويستجيبون للتوقعات، لذا قم بتبديل الأوضاع بناءً على ما إذا كنت تستكشف الاحتفاظ أو تتحقق منه.
+    doc_study_modes_title أوضاع التعلم والاختبار
+    doc_study_scope_desc يمكن أن تبدأ الدراسة من موضوع واحد، أو عرض مجلد، أو مجموعة. تكون المجموعات مفيدة عندما تريد جلسة مختلطة عبر عدة مواضيع دون مغادرة التدفق الحالي.
+    doc_study_scope_title المواضيع والمجلدات والمجموعات في الدراسة
+    doc_tab_create يخلق
+    doc_tab_start يبدأ
+    doc_tab_study يذاكر
+    documentation التوثيق
+    edit_subscription تحرير الاشتراك
+    email_updated_successfully تم تحديث البريد الإلكتروني بنجاح!
+    enter_current_password أدخل كلمة المرور الحالية
+    error خطأ: $e
+    error_deleting حدث خطأ أثناء الحذف: $e
+    error_saving حدث خطأ أثناء الحفظ: $e
+    error_saving_card خطأ في حفظ البطاقة: $e
+    error_updating_favorite حدث خطأ أثناء تحديث المفضلة: $e
+    failed_to_send_reset_code فشل إرسال رمز إعادة التعيين
+    failed_to_send_verification_code فشل في إرسال رمز التحقق
+    fake_only وهمية فقط
+    feature_creation أدوات الإنشاء
+    feature_customize التخصيص المتقدم
+    feature_full_library الوصول الكامل للمكتبة
+    feature_testing الاختبار التفاعلي
+    folder_id معرف المجلد
+    free_only المستخدمين مجانا
+    generic نوعي
+    home بيت
+    invalid_code رمز غير صالح
+    invalid_email_address عنوان البريد الإلكتروني غير صالح
+    invalid_json JSON غير صالح: $e
+    invalid_or_expired_invitation_link رابط الدعوة غير صالح أو منتهية الصلاحية.
+    invalid_or_expired_reset_code رمز إعادة التعيين غير صالح أو منتهي الصلاحية.
+    invitation_sent_awaiting_registration تم إرسال الدعوة (في انتظار التسجيل)
+    invited_and_request_sent تمت الدعوة وتم إرسال الطلب!
+    json JSON
+    label_suffix $label:
+    leaderboard المتصدرين
+    licenses التراخيص
+    licenses_aliolo_section_title Aliolo رخصة تجارية
+    licenses_aliolo_subtitle البرمجيات الاحتكارية وشروط الوصول المتميزة
+    licenses_intro_desc يظهر الترخيص التجاري لـ Aliolo أولاً. تراخيص حزمة الطرف الثالث تتبع أدناه.
+    licenses_intro_title Aliolo إشعارات الترخيص والحزمة
+    licenses_third_party_section_title تراخيص حزمة الطرف الثالث
+    linux_distro توزيعة لينكس
+    loading تحميل...
+    localized_data البيانات المترجمة
+    monthly_access الوصول الشهري
+    most_popular_choice الاختيار الأكثر شعبية
+    new_email البريد الإلكتروني الجديد
+    no_cards_available_for_this_session لا توجد بطاقات متاحة لهذه الجلسة.
+    no_cards_found لم يتم العثور على بطاقات
+    no_subjects_found لم يتم العثور على مواضيع
+    no_subjects_found_in_this_collection لم يتم العثور على مواضيع في هذه المجموعة
+    no_users_found لم يتم العثور على مستخدمين
+    os_version إصدار نظام التشغيل
+    password_updated_successfully تم تحديث كلمة المرور بنجاح!
+    payments_are_not_yet_integrated_on_web_please_use_the_mobile_app_to_upgrade لم يتم بعد دمج المدفوعات على شبكة الإنترنت. يرجى استخدام تطبيق الهاتف المحمول للترقية.
+    personal_data البيانات الشخصية
+    pick_date اختر التاريخ
+    plan_monthly_tagline الاختيار الأكثر شعبية
+    plan_monthly_title الوصول الشهري
+    plan_weekly_tagline الأفضل للأهداف السريعة
+    plan_weekly_title الوصول الأسبوعي
+    plan_yearly_tagline وفر 33% شهريًا
+    plan_yearly_title الوصول السنوي
+    platform منصة
+    play يلعب
+    play_audio تشغيل الصوت
+    please_enter_the_6_digit_code الرجاء إدخال الرمز المكون من 6 أرقام
+    please_wait_for_a_response_before_replying_again الرجاء انتظار الرد قبل الرد مرة أخرى.
+    premium_expires_at تنتهي صلاحيته في $date
+    premium_lifetime الوصول مدى الحياة
+    premium_only قسط فقط
+    premium_status_active أنت عضو مميز
+    premium_unlock_desc يمكنك الوصول إلى جميع المواضيع وإنشاء عدد غير محدود من البطاقات ودعم مهمة Aliolo.
+    premium_unlock_title فتح الوصول الكامل
+    product_not_available_in_store المنتج غير متوفر في المتجر.
+    profile حساب تعريفي
+    public_other_subject موضوع عام/آخر
+    purchase_failed فشل الشراء: $e
+    recovery_error خطأ في الاسترداد: $e
+    refresh_conversation تحديث المحادثة
+    renderer العارض
+    reset_code إعادة تعيين الرمز
+    reset_code_sent_to_please_check_your_inbox تم إرسال رمز إعادة الضبط إلى $email. يرجى التحقق من البريد الوارد الخاص بك.
+    restore_purchases استعادة المشتريات
+    save يحفظ
+    save_33_per_month وفر 33% شهريًا
+    saved_successfully تم الحفظ بنجاح
+    search_users بحث المستخدمين
+    session_complete اكتملت الجلسة!
+    session_complete_description عمل عظيم! لقد انتهيت من جميع البطاقات في هذه الجلسة.
+    settings إعدادات
+    show_documentation_btn إظهار زر التوثيق
+    show_documentation_btn_desc اعرض زر التوثيق في شريط التطبيقات.
+    show_fake_users إظهار المستخدمين المزيفين
+    subject_id معرف الموضوع
+    subscribe_now اشترك الآن
+    subscription_data بيانات الاشتراك
+    subscription_updated تم تحديث الاشتراك
+    subtraction_emoji رمز تعبيري الطرح
+    subtraction_numbers أرقام الطرح
+    technical_context السياق الفني
+    testing_mode وضع الاختبار
+    text نص
+    this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards هذا مجلد. يمكنك استخدام أزرار التعلم/الاختبار أعلاه للتدرب على جميع البطاقات.
+    type_your_reply اكتب ردك...
+    ua تعميم الوصول إلى الخدمات
+    unknown_user_profile_missing مستخدم غير معروف (الملف الشخصي مفقود)
+    user مستخدم
+    user_id معرف المستخدم
+    user_with_this_email_already_exists_please_log_in_instead المستخدم الذي لديه هذا البريد الإلكتروني موجود بالفعل. الرجاء تسجيل الدخول بدلا من ذلك.
+    users المستخدمين
+    users_filter تصفية المستخدمين
+    verification_code رمز التحقق
+    verification_code_sent_to تم إرسال رمز التحقق إلى $email
+    version إصدار
+    view_onboarding عرض الإعداد
+    weekly_access الوصول الأسبوعي
+    welcome_complete_your_profile_to_join_aliolo مرحباً! أكمل ملفك الشخصي للانضمام إلى aliolo.
+    yearly_access الوصول السنوي
+    you_do_not_have_permission_to_edit_this_card ليس لديك الإذن بتعديل هذه البطاقة
+    you_do_not_have_permission_to_view_this_card_details ليس لديك إذن لعرض تفاصيل هذه البطاقة.

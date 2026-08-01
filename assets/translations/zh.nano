@@ -1,0 +1,228 @@
+..
+    a_folder_with_this_name_already_exists_in_this_pillar 此支柱中已存在同名文件夹
+    about 关于
+    about_intro_audience_desc Aliolo 支持需要结构化复习的学习者、需要平易近人的学习内容的家长和教师以及组织和发布自己的学习材料的创作者。
+    about_intro_audience_title 它适合谁
+    about_intro_desc Aliolo 是一款视觉学习应用程序，围绕简单的学习流程、灵活的内容组织和随着时间的推移稳步进步而构建。
+    about_intro_start_desc 从仪表板开始，选择一个支柱，打开一个主题，然后从学习开始。将有用的内容保存到收藏夹，以便以后更轻松地重新访问。
+    about_intro_start_title 如何开始
+    about_intro_title 关于Aliolo
+    about_learn_discovery_desc 搜索、年龄过滤器和源过滤器（例如收藏夹、我的和公共图书馆）可帮助您快速找到合适的内容。
+    about_learn_discovery_title 发现和过滤
+    about_learn_language_desc 您可以学习不同语言的内容，并在个人资料中调整课程设置，以符合您的进度和当前目标。
+    about_learn_language_title 语言和模式的灵活性
+    about_learn_media_desc 当图像、音频和视频在学习内容中可用时，它们可以支持识别、发音和上下文。
+    about_learn_media_title 媒体支持
+    about_learn_modes_desc 使用“学习”来建立认可和信心，然后在需要更严格的回忆和更快的审查时切换到“测试”。
+    about_learn_modes_title 学习和测试
+    about_learn_title 你如何学习
+    about_organize_collections_desc 集合将多个主题合并到一个研究流程中，这对于混合审查和策划集很有用。
+    about_organize_collections_title 收藏
+    about_organize_creation_desc 创作者可以组织自己的内容，在工作时将其保密，或者在准备好后通过公共库将其公开。
+    about_organize_creation_title 所有权和可见性
+    about_organize_folders_desc 文件夹将相关主题分组在一个支柱内，以便较大的内容集保持易于管理。
+    about_organize_folders_title 文件夹
+    about_organize_subjects_desc 科目是学习的主要单位。他们保存您在学习和测试课程中打开的卡片。
+    about_organize_subjects_title 科目
+    about_organize_title 内容是如何组织的
+    about_progress_goals_desc 您的个人资料可让您调整每日目标、学习会话大小、测试会话大小和答案数量。
+    about_progress_goals_title 每日目标和会话设置
+    about_progress_social_desc 朋友和排行榜功能可以在不改变核心学习流程的情况下实现社交进步。
+    about_progress_social_title 好友和排行榜
+    about_progress_title 进度、好友和排行榜
+    about_progress_xp_desc Aliolo 跟踪总 XP、当前连续记录和最大连续记录，因此在短期和长期学习期间都可以看到进步。
+    about_progress_xp_title XP 和条纹
+    about_support_docs_desc 应用程序内文档页面解释了仪表板、学习流程和创建者工具目前的工作原理。
+    about_support_docs_title 文档
+    about_support_feedback_desc 使用整个应用程序的反馈入口点来报告错误、提出改进建议或根据上下文标记特定内容问题。
+    about_support_feedback_title 反馈和报告
+    about_support_licenses_desc 许可证页面首先列出 Aliolo 的商业许可证，然后列出捆绑的第三方软件包许可证。
+    about_support_licenses_title 许可证
+    about_support_onboarding_desc 您可以随时重新访问入门，以查看应用程序的主要想法和设置流程。
+    about_support_onboarding_title 入职
+    about_support_settings_desc UI 语言、主题模式、主题颜色、声音、侧边栏位置和文档可见性都可以通过设置进行调整。
+    about_support_settings_title 个性化
+    about_support_title 设置、反馈和支持
+    addition_emoji 添加表情符号
+    addition_numbers 加法数字
+    aliolo aliolo
+    all_rights_reserved 版权所有
+    are_you_sure_you_want_to_close_this_feedback_request 您确定要关闭此反馈请求吗？
+    are_you_sure_you_want_to_delete_this_folder 您确定要删除该文件夹吗？
+    attach_image 附上图片
+    back 后退
+    back_to_subjects 返回主题
+    best_for_quick_goals 最适合快速目标
+    billing_disclaimer 除非取消，否则订阅会自动续订。您可以在商店设置中管理您的订阅。
+    billing_title 计费
+    browser 浏览器
+    cancel 取消
+    cannot_delete_folder_it_is_not_empty 无法删除文件夹：它不为空
+    card_id 卡号
+    check_your_email_for_code 检查您的电子邮件中是否有代码
+    clear 清除
+    click_to_view_original 点击查看原文
+    close 关闭
+    close_request 关闭请求？
+    collection_id 集合ID
+    colors 颜色
+    confirm_subscription 确认订阅
+    context 语境
+    could_not_launch 无法启动 $url
+    counting 计数
+    current_subscription 当前订阅
+    delete 删除
+    device 设备
+    doc_create_intro_desc 此选项卡涵盖了创建者如何组织内容、本地化内容以及发布有用的学习材料，而不会使工作流程过于复杂。
+    doc_create_intro_title 创造
+    doc_create_json_desc 基于 JSON 的创建是结构化批量内容的高级工作流程。它应该保持可选；大多数创作者应该能够通过标准形式构建和编辑内容。
+    doc_create_json_title 高级 JSON 导入
+    doc_create_localization_desc 对最重要的内容进行本地化：名称、描述、提示和答案。保持不同语言的标签一致，以便用户可以在不丢失结构的情况下切换学习语言。
+    doc_create_localization_title 本土化
+    doc_create_media_desc 图像、音频和视频应该支持学习目标，而不是分散注意力。当媒体可以改善识别、发音或上下文时添加媒体，并在媒体丢失时保持卡片可用。
+    doc_create_media_title 媒体工作流程
+    doc_create_model_desc 创作者在支柱内工作，并使用文件夹、主题、收藏和卡片来组织材料。首先构建结构，然后用本地化的提示、答案和可选媒体填充它。
+    doc_create_model_title 内容模型
+    doc_create_visibility_desc 使用“我的”来处理您自己的内容，使用收藏夹来固定有用的项目，使用公共图书馆来浏览共享材料。公众可见性影响发现，而所有权影响您可以编辑或删除的内容。
+    doc_create_visibility_title 所有权和可见性
+    doc_start_dashboard_desc 仪表板是您的主要库。使用搜索快速查找内容，然后将收藏夹、我的和公共图书馆等源过滤器与年龄过滤器结合起来以减少噪音。
+    doc_start_dashboard_title 仪表板、搜索和过滤器
+    doc_start_feedback_desc 当出现问题或不清楚时，请使用应用程序中的反馈入口点。报告可以包含当前上下文，这使得内容问题更容易审查和修复。
+    doc_start_feedback_title 反馈和帮助
+    doc_start_intro_desc 当您了解仪表板、库、进度和社交功能如何组合在一起时，请使用此选项卡。
+    doc_start_intro_title 入门
+    doc_start_progress_desc 您的个人资料显示总 XP、当前连胜、最大连胜和每日目标进度。会话大小和答案数量也可以通过个人资料页面进行管理。
+    doc_start_progress_title 进展和目标
+    doc_start_quick_desc 在仪表板上选择一个支柱，打开一个主题，然后从“学习”开始。使用收藏夹和过滤器来缩小库范围，然后从您的个人资料中查看您的 XP、连胜记录和每日目标。
+    doc_start_quick_title 快速入门
+    doc_start_structure_desc 受试者持有卡片。文件夹将相关内容分组在一个支柱内。集合是精心策划的集合，可以结合多个主题进行研究和共享。
+    doc_start_structure_title 主题、文件夹和集合
+    doc_study_how_desc 当您建立识别时从学习开始，然后当您需要更快的回忆和更严格的检查时切换到测试。使用较短的会议进行重点审查，使用较大的会议进行更广泛的覆盖。
+    doc_study_how_title 如何学习
+    doc_study_intro_desc 此选项卡说明如何浏览内容、选择正确的模式以及调整您的会话以供回顾或回忆。
+    doc_study_intro_title 学习
+    doc_study_media_desc 当有媒体可用时，用它来加强发音和识别。自动播放对于被动复习或在较短的会话期间重复聆听最有用。
+    doc_study_media_title 音频、自动播放和媒体
+    doc_study_modes_desc 学习和测试是核心学习模式。它们使用相同的内容，但支持不同的节奏和答案期望，因此根据您是在探索还是在检查保留来切换模式。
+    doc_study_modes_title 学习和测试模式
+    doc_study_scope_desc 研究可以从单个主题、文件夹视图或集合开始。当您想要跨多个主题进行混合会话而不离开当前流程时，集合非常有用。
+    doc_study_scope_title 研究中的主题、文件夹和收藏
+    doc_tab_create 创造
+    doc_tab_start 开始
+    doc_tab_study 学习
+    documentation 文档
+    edit_subscription 编辑订阅
+    email_updated_successfully 邮箱更新成功！
+    enter_current_password 输入当前密码
+    error 错误：$e
+    error_deleting 删除时出错：$e
+    error_saving 保存时出错：$e
+    error_saving_card 保存卡时出错：$e
+    error_updating_favorite 更新收藏夹时出错：$e
+    failed_to_send_reset_code 发送重置代码失败
+    failed_to_send_verification_code 发送验证码失败
+    fake_only 仅限假货
+    feature_creation 创作工具
+    feature_customize 高级定制
+    feature_full_library 完整的图书馆访问权限
+    feature_testing 交互式测试
+    folder_id 文件夹ID
+    free_only 免费用户
+    generic 通用的
+    home 家
+    invalid_code 代码无效
+    invalid_email_address 电子邮件地址无效
+    invalid_json 无效 JSON：$e
+    invalid_or_expired_invitation_link 邀请链接无效或过期。
+    invalid_or_expired_reset_code 重置代码无效或过期。
+    invitation_sent_awaiting_registration 邀请已发送（等待注册）
+    invited_and_request_sent 已邀请并已发送请求！
+    json JSON
+    label_suffix $label:
+    leaderboard 排行榜
+    licenses 许可证
+    licenses_aliolo_section_title Aliolo 商业许可证
+    licenses_aliolo_subtitle 专有软件和高级访问条款
+    licenses_intro_desc Aliolo 的商业许可证首先出现。第三方软件包许可证如下。
+    licenses_intro_title Aliolo 许可证和软件包声明
+    licenses_third_party_section_title 第三方软件包许可证
+    linux_distro Linux发行版
+    loading 加载中...
+    localized_data 本地化数据
+    monthly_access 每月访问
+    most_popular_choice 最受欢迎的选择
+    new_email 新电子邮件
+    no_cards_available_for_this_session 此会话没有可用的卡片。
+    no_cards_found 没有找到卡片
+    no_subjects_found 没有找到主题
+    no_subjects_found_in_this_collection 在此集合中找不到主题
+    no_users_found 没有找到用户
+    os_version 操作系统版本
+    password_updated_successfully 密码更新成功！
+    payments_are_not_yet_integrated_on_web_please_use_the_mobile_app_to_upgrade 支付尚未集成到 Web 上。请使用移动应用程序进行升级。
+    personal_data 个人资料
+    pick_date 选择日期
+    plan_monthly_tagline 最受欢迎的选择
+    plan_monthly_title 每月访问
+    plan_weekly_tagline 最适合快速目标
+    plan_weekly_title 每周访问
+    plan_yearly_tagline 每月节省 33%
+    plan_yearly_title 每年访问
+    platform 平台
+    play 玩
+    play_audio 播放音频
+    please_enter_the_6_digit_code 请输入6位数字代码
+    please_wait_for_a_response_before_replying_again 请等待回复后再回复。
+    premium_expires_at 于 $date 到期
+    premium_lifetime 终身访问
+    premium_only 仅限高级版
+    premium_status_active 您是高级会员
+    premium_unlock_desc 访问所有主题、创建无限卡牌并支持 Aliolo 的使命。
+    premium_unlock_title 解锁完全访问权限
+    product_not_available_in_store 产品在商店不可用。
+    profile 轮廓
+    public_other_subject 公共/其他主题
+    purchase_failed 购买失败：$e
+    recovery_error 恢复错误：$e
+    refresh_conversation 刷新对话
+    renderer 渲染器
+    reset_code 重置代码
+    reset_code_sent_to_please_check_your_inbox 重置代码发送至 $email。请检查您的收件箱。
+    restore_purchases 恢复购买
+    save 节省
+    save_33_per_month 每月节省 33%
+    saved_successfully 保存成功
+    search_users 搜索用户
+    session_complete 会议结束！
+    session_complete_description 干得好！您已完成本节中的所有卡片。
+    settings 设置
+    show_documentation_btn 显示文档按钮
+    show_documentation_btn_desc 在应用栏中显示文档按钮。
+    show_fake_users 显示虚假用户
+    subject_id 主题 ID
+    subscribe_now 立即订阅
+    subscription_data 订阅数据
+    subscription_updated 订阅已更新
+    subtraction_emoji 减法表情符号
+    subtraction_numbers 减法数字
+    technical_context 技术背景
+    testing_mode 测试方式
+    text 文本
+    this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards 这是一个文件夹。您可以使用上面的学习/测试按钮来练习所有卡片。
+    type_your_reply 输入您的回复...
+    ua UA
+    unknown_user_profile_missing 未知用户（缺少配置文件）
+    user 用户
+    user_id 用户身份
+    user_with_this_email_already_exists_please_log_in_instead 使用此电子邮件的用户已存在。请改为登录。
+    users 用户
+    users_filter 过滤用户
+    verification_code 验证码
+    verification_code_sent_to 验证码发送至$email
+    version 版本
+    view_onboarding 查看入职流程
+    weekly_access 每周访问
+    welcome_complete_your_profile_to_join_aliolo 欢迎！填写您的个​​人资料以加入 aliolo。
+    yearly_access 每年访问
+    you_do_not_have_permission_to_edit_this_card 您无权编辑此卡
+    you_do_not_have_permission_to_view_this_card_details 您无权查看此卡的详细信息。

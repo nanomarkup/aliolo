@@ -1,0 +1,228 @@
+..
+    a_folder_with_this_name_already_exists_in_this_pillar Já existe uma pasta com este nome neste pilar
+    about Sobre
+    about_intro_audience_desc Aliolo apoia alunos que desejam uma revisão estruturada, pais e professores que precisam de conteúdo de estudo acessível e criadores que organizam e publicam seus próprios materiais de aprendizagem.
+    about_intro_audience_title Para quem é
+    about_intro_desc Aliolo é um aplicativo de aprendizagem visual desenvolvido com base em fluxos de estudo simples, organização flexível de conteúdo e progresso constante ao longo do tempo.
+    about_intro_start_desc Comece no painel, escolha um pilar, abra um assunto e comece com Aprender. Salve conteúdo útil nos favoritos para que seja mais fácil revisitá-lo mais tarde.
+    about_intro_start_title Como começar
+    about_intro_title Sobre Aliolo
+    about_learn_discovery_desc Pesquisa, filtros de idade e filtros de origem, como favoritos, meus e biblioteca pública, ajudam você a encontrar o conteúdo certo rapidamente.
+    about_learn_discovery_title Descoberta e Filtragem
+    about_learn_language_desc Você pode estudar conteúdo em diferentes idiomas e ajustar as configurações da sessão em seu perfil para corresponder ao seu ritmo e objetivos atuais.
+    about_learn_language_title Flexibilidade de idioma e modo
+    about_learn_media_desc Imagens, áudio e vídeo podem apoiar o reconhecimento, a pronúncia e o contexto quando estão disponíveis no conteúdo de aprendizagem.
+    about_learn_media_title Suporte de mídia
+    about_learn_modes_desc Use Aprender para criar reconhecimento e confiança e, em seguida, mude para Teste quando desejar uma recuperação mais rigorosa e uma revisão mais rápida.
+    about_learn_modes_title Aprenda e teste
+    about_learn_title Como você aprende
+    about_organize_collections_desc As coleções combinam vários assuntos em um fluxo de estudo, o que é útil para revisões mistas e conjuntos selecionados.
+    about_organize_collections_title Coleções
+    about_organize_creation_desc Os criadores podem organizar seu próprio conteúdo, mantê-lo privado enquanto trabalham ou expô-lo na biblioteca pública quando estiver pronto.
+    about_organize_creation_title Propriedade e Visibilidade
+    about_organize_folders_desc As pastas agrupam assuntos relacionados dentro de um pilar para que conjuntos maiores de conteúdo permaneçam gerenciáveis.
+    about_organize_folders_title Pastas
+    about_organize_subjects_desc Os assuntos são a principal unidade de estudo. Eles contêm os cartões que você abre nas sessões de aprendizado e teste.
+    about_organize_subjects_title Assuntos
+    about_organize_title Como o conteúdo é organizado
+    about_progress_goals_desc Seu perfil permite ajustar metas diárias, saber o tamanho da sessão, o tamanho da sessão de teste e o número de respostas.
+    about_progress_goals_title Metas diárias e configurações de sessão
+    about_progress_social_desc Os recursos de amigos e placar tornam o progresso social sem alterar o fluxo principal de aprendizagem.
+    about_progress_social_title Amigos e tabela de classificação
+    about_progress_title Progresso, amigos e tabela de classificação
+    about_progress_xp_desc Aliolo rastreia o XP total, a sequência atual e a sequência máxima para que o progresso pareça visível em períodos de estudo curtos e longos.
+    about_progress_xp_title XP e sequências
+    about_support_docs_desc A página de documentação do aplicativo explica como o painel, os fluxos de estudo e as ferramentas do criador funcionam hoje.
+    about_support_docs_title Documentação
+    about_support_feedback_desc Use pontos de entrada de feedback em todo o aplicativo para relatar bugs, sugerir melhorias ou sinalizar problemas de conteúdo específicos com contexto.
+    about_support_feedback_title Feedback e relatórios
+    about_support_licenses_desc A página de licenças lista primeiro a licença comercial de Aliolo e depois as licenças de pacotes de terceiros agrupadas.
+    about_support_licenses_title Licenças
+    about_support_onboarding_desc Você pode revisitar a integração a qualquer momento para revisar as ideias principais e o fluxo de configuração do aplicativo.
+    about_support_onboarding_title Integração
+    about_support_settings_desc O idioma da interface do usuário, o modo do tema, a cor do tema, o som, o posicionamento da barra lateral e a visibilidade da documentação podem ser ajustados nas configurações.
+    about_support_settings_title Personalização
+    about_support_title Configurações, comentários e suporte
+    addition_emoji Emoji de adição
+    addition_numbers Números de adição
+    aliolo aliolo
+    all_rights_reserved Todos os direitos reservados
+    are_you_sure_you_want_to_close_this_feedback_request Tem certeza de que deseja encerrar esta solicitação de feedback?
+    are_you_sure_you_want_to_delete_this_folder Tem certeza de que deseja excluir esta pasta?
+    attach_image Anexar imagem
+    back Voltar
+    back_to_subjects Voltar para assuntos
+    best_for_quick_goals Melhor para metas rápidas
+    billing_disclaimer As assinaturas são renovadas automaticamente, a menos que sejam canceladas. Você pode gerenciar sua assinatura nas configurações da sua loja.
+    billing_title Cobrança
+    browser Navegador
+    cancel Cancelar
+    cannot_delete_folder_it_is_not_empty Não é possível excluir a pasta: ela não está vazia
+    card_id ID do cartão
+    check_your_email_for_code Verifique seu e-mail para obter o código
+    clear Claro
+    click_to_view_original Clique para ver o original
+    close Fechar
+    close_request Fechar solicitação?
+    collection_id ID da coleção
+    colors Cores
+    confirm_subscription Confirmar assinatura
+    context Contexto
+    could_not_launch Não foi possível iniciar $url
+    counting Contando
+    current_subscription Assinatura Atual
+    delete Excluir
+    device Dispositivo
+    doc_create_intro_desc Esta guia aborda como os criadores organizam o conteúdo, localizam-no e publicam material de estudo útil sem complicar demais o fluxo de trabalho.
+    doc_create_intro_title Criar
+    doc_create_json_desc A criação baseada em JSON é um fluxo de trabalho avançado para conteúdo estruturado em massa. Deve permanecer opcional; a maioria dos criadores deve ser capaz de criar e editar conteúdo por meio de formulários padrão.
+    doc_create_json_title Importação JSON avançada
+    doc_create_localization_desc Localize o conteúdo onde for mais importante: nomes, descrições, prompts e respostas. Mantenha os rótulos consistentes entre os idiomas para que os usuários possam mudar o idioma de estudo sem perder a estrutura.
+    doc_create_localization_title Localização
+    doc_create_media_desc Imagens, áudio e vídeo devem apoiar o objetivo de aprendizagem, e não desviar a atenção dele. Adicione mídia quando melhorar o reconhecimento, a pronúncia ou o contexto e mantenha os cartões utilizáveis ​​mesmo quando a mídia estiver faltando.
+    doc_create_media_title Fluxo de trabalho de mídia
+    doc_create_model_desc Os criadores trabalham dentro de pilares e organizam o material com pastas, assuntos, coleções e cartões. Construa a estrutura primeiro e depois preencha-a com prompts, respostas e mídias opcionais localizadas.
+    doc_create_model_title Modelo de conteúdo
+    doc_create_visibility_desc Use "meu" para trabalhar em seu próprio conteúdo, favoritos para fixar itens úteis e biblioteca pública para navegar pelo material compartilhado. A visibilidade pública afeta a descoberta, enquanto a propriedade afeta o que você pode editar ou excluir.
+    doc_create_visibility_title Propriedade e Visibilidade
+    doc_start_dashboard_desc O painel é sua biblioteca principal. Use a pesquisa para encontrar conteúdo rapidamente e, em seguida, combine filtros de origem, como favoritos, meus e biblioteca pública, com filtros de idade para reduzir o ruído.
+    doc_start_dashboard_title Painel, pesquisa e filtros
+    doc_start_feedback_desc Use os pontos de entrada de feedback no aplicativo quando algo estiver errado ou pouco claro. Os relatórios podem incluir o contexto atual, o que facilita a revisão e a correção de problemas de conteúdo.
+    doc_start_feedback_title Feedback e ajuda
+    doc_start_intro_desc Use esta guia quando estiver aprendendo como o painel, a biblioteca, o progresso e os recursos sociais se encaixam.
+    doc_start_intro_title Começando
+    doc_start_progress_desc Seu perfil mostra XP total, sequência atual, sequência máxima e progresso da meta diária. O tamanho da sessão e o número de respostas também são gerenciados na página de perfil.
+    doc_start_progress_title Progresso e metas
+    doc_start_quick_desc Escolha um pilar no painel, abra um assunto e comece com Aprender. Use favoritos e filtros para restringir a biblioteca e, em seguida, revise seu XP, sequências e meta diária em seu perfil.
+    doc_start_quick_title Início rápido
+    doc_start_structure_desc Os sujeitos seguram cartões. As pastas agrupam o conteúdo relacionado dentro de um pilar. As coleções são conjuntos selecionados que podem combinar vários assuntos para estudo e compartilhamento.
+    doc_start_structure_title Assuntos, pastas e coleções
+    doc_study_how_desc Comece com Aprender quando estiver construindo reconhecimento e depois mude para Teste quando desejar uma recuperação mais rápida e uma verificação mais rigorosa. Use sessões mais curtas para uma revisão focada e sessões maiores para uma cobertura mais ampla.
+    doc_study_how_title Como estudar
+    doc_study_intro_desc Esta guia explica como navegar pelo conteúdo, escolher o modo correto e ajustar suas sessões para revisão ou recuperação.
+    doc_study_intro_title Estudar
+    doc_study_media_desc Quando houver mídia disponível, use-a para reforçar a pronúncia e o reconhecimento. A reprodução automática é mais útil para revisão passiva ou audição repetida durante sessões mais curtas.
+    doc_study_media_title Áudio, reprodução automática e mídia
+    doc_study_modes_desc Aprender e testar são os principais modos de estudo. Eles usam o mesmo conteúdo, mas suportam ritmos e expectativas de resposta diferentes, portanto, alterne os modos dependendo se você está explorando ou verificando a retenção.
+    doc_study_modes_title Modos de aprendizagem e teste
+    doc_study_scope_desc O estudo pode começar a partir de um único assunto, uma visualização de pasta ou uma coleção. As coleções são úteis quando você deseja uma sessão mista de vários assuntos sem sair do fluxo atual.
+    doc_study_scope_title Assuntos, pastas e coleções em estudo
+    doc_tab_create Criar
+    doc_tab_start Começar
+    doc_tab_study Estudar
+    documentation Documentação
+    edit_subscription Editar assinatura
+    email_updated_successfully E-mail atualizado com sucesso!
+    enter_current_password Digite a senha atual
+    error Erro: $e
+    error_deleting Erro ao excluir: $e
+    error_saving Erro ao salvar: $e
+    error_saving_card Erro ao salvar o cartão: $e
+    error_updating_favorite Erro ao atualizar favorito: $e
+    failed_to_send_reset_code Falha ao enviar código de redefinição
+    failed_to_send_verification_code Falha ao enviar o código de verificação
+    fake_only Apenas falso
+    feature_creation Ferramentas de criação
+    feature_customize Personalização Avançada
+    feature_full_library Acesso total à biblioteca
+    feature_testing Teste Interativo
+    folder_id ID da pasta
+    free_only Usuários gratuitos
+    generic Genérico
+    home Lar
+    invalid_code Código inválido
+    invalid_email_address Endereço de e-mail inválido
+    invalid_json JSON inválido: $e
+    invalid_or_expired_invitation_link Link de convite inválido ou expirado.
+    invalid_or_expired_reset_code Código de redefinição inválido ou expirado.
+    invitation_sent_awaiting_registration Convite enviado (aguardando inscrição)
+    invited_and_request_sent Convidado e solicitação enviada!
+    json JSON
+    label_suffix $label:
+    leaderboard Tabela de classificação
+    licenses Licenças
+    licenses_aliolo_section_title Aliolo Licença Comercial
+    licenses_aliolo_subtitle Software proprietário e termos de acesso premium
+    licenses_intro_desc A licença comercial de Aliolo aparece primeiro. Licenças de pacotes de terceiros seguem abaixo.
+    licenses_intro_title Aliolo Avisos de licença e pacote
+    licenses_third_party_section_title Licenças de pacotes de terceiros
+    linux_distro Distribuição Linux
+    loading Carregando...
+    localized_data Dados localizados
+    monthly_access Acesso Mensal
+    most_popular_choice Escolha mais popular
+    new_email Novo e-mail
+    no_cards_available_for_this_session Não há cartões disponíveis para esta sessão.
+    no_cards_found Nenhum cartão encontrado
+    no_subjects_found Nenhum assunto encontrado
+    no_subjects_found_in_this_collection Nenhum assunto encontrado nesta coleção
+    no_users_found Nenhum usuário encontrado
+    os_version Versão do sistema operacional
+    password_updated_successfully Senha atualizada com sucesso!
+    payments_are_not_yet_integrated_on_web_please_use_the_mobile_app_to_upgrade Os pagamentos ainda não estão integrados na Web. Use o aplicativo móvel para atualizar.
+    personal_data Dados pessoais
+    pick_date Escolher data
+    plan_monthly_tagline Escolha mais popular
+    plan_monthly_title Acesso Mensal
+    plan_weekly_tagline Melhor para metas rápidas
+    plan_weekly_title Acesso Semanal
+    plan_yearly_tagline Economize 33% ao mês
+    plan_yearly_title Acesso Anual
+    platform Plataforma
+    play Jogar
+    play_audio Reproduzir áudio
+    please_enter_the_6_digit_code Por favor insira o código de 6 dígitos
+    please_wait_for_a_response_before_replying_again Aguarde uma resposta antes de responder novamente.
+    premium_expires_at Expira em $date
+    premium_lifetime Acesso vitalício
+    premium_only Apenas premium
+    premium_status_active Você é um membro premium
+    premium_unlock_desc Obtenha acesso a todos os assuntos, crie cartões ilimitados e apoie a missão de Aliolo.
+    premium_unlock_title Desbloquear acesso total
+    product_not_available_in_store Produto não disponível na loja.
+    profile Perfil
+    public_other_subject Público/Outro Assunto
+    purchase_failed Falha na compra: $e
+    recovery_error Erro de recuperação: $e
+    refresh_conversation Atualizar conversa
+    renderer Renderizador
+    reset_code Redefinir código
+    reset_code_sent_to_please_check_your_inbox Código de redefinição enviado para $email. Por favor, verifique sua caixa de entrada.
+    restore_purchases Restaurar compras
+    save Salvar
+    save_33_per_month Economize 33% ao mês
+    saved_successfully Salvo com sucesso
+    search_users Pesquisar usuários
+    session_complete Sessão concluída!
+    session_complete_description Ótimo trabalho! Você terminou todas as cartas nesta sessão.
+    settings Configurações
+    show_documentation_btn Botão Mostrar documentação
+    show_documentation_btn_desc Exiba o botão de documentação na barra de aplicativos.
+    show_fake_users Mostrar usuários falsos
+    subject_id ID do assunto
+    subscribe_now Assine agora
+    subscription_data Dados de assinatura
+    subscription_updated Assinatura atualizada
+    subtraction_emoji Emoji de subtração
+    subtraction_numbers Números de subtração
+    technical_context CONTEXTO TÉCNICO
+    testing_mode Modo de teste
+    text Texto
+    this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards Esta é uma pasta. Você pode usar os botões Aprender/Teste acima para praticar todas as cartas.
+    type_your_reply Digite sua resposta...
+    ua UA
+    unknown_user_profile_missing Usuário desconhecido (perfil ausente)
+    user Usuário
+    user_id ID do usuário
+    user_with_this_email_already_exists_please_log_in_instead Já existe um usuário com este e-mail. Em vez disso, faça login.
+    users Usuários
+    users_filter Filtrar usuários
+    verification_code Código de verificação
+    verification_code_sent_to Código de verificação enviado para $email
+    version Versão
+    view_onboarding Ver integração
+    weekly_access Acesso Semanal
+    welcome_complete_your_profile_to_join_aliolo Bem-vindo! Complete seu perfil para ingressar em aliolo.
+    yearly_access Acesso Anual
+    you_do_not_have_permission_to_edit_this_card Você não tem permissão para editar este cartão
+    you_do_not_have_permission_to_view_this_card_details Você não tem permissão para visualizar os detalhes deste cartão.

@@ -1,0 +1,228 @@
+..
+    a_folder_with_this_name_already_exists_in_this_pillar इस स्तंभ में इस नाम का एक फ़ोल्डर पहले से मौजूद है
+    about के बारे में
+    about_intro_audience_desc Aliolo उन शिक्षार्थियों का समर्थन करता है जो संरचित समीक्षा चाहते हैं, माता-पिता और शिक्षक जिन्हें सुलभ अध्ययन सामग्री की आवश्यकता होती है, और उन रचनाकारों का समर्थन करता है जो अपनी स्वयं की शिक्षण सामग्री व्यवस्थित और प्रकाशित करते हैं।
+    about_intro_audience_title यह किसके लिए है
+    about_intro_desc Aliolo एक विज़ुअल लर्निंग ऐप है जो सरल अध्ययन प्रवाह, लचीली सामग्री संगठन और समय के साथ स्थिर प्रगति के आसपास बनाया गया है।
+    about_intro_start_desc डैशबोर्ड पर प्रारंभ करें, एक स्तंभ चुनें, एक विषय खोलें, और सीखें से प्रारंभ करें। उपयोगी सामग्री को पसंदीदा में सहेजें ताकि बाद में इसे दोबारा देखना आसान हो।
+    about_intro_start_title शुरू कैसे करें
+    about_intro_title Aliolo के बारे में
+    about_learn_discovery_desc खोज, आयु फ़िल्टर और स्रोत फ़िल्टर जैसे पसंदीदा, मेरा और सार्वजनिक लाइब्रेरी आपको सही सामग्री शीघ्रता से ढूंढने में मदद करते हैं।
+    about_learn_discovery_title खोज और फ़िल्टरिंग
+    about_learn_language_desc आप विभिन्न भाषाओं में सामग्री का अध्ययन कर सकते हैं और अपनी गति और वर्तमान लक्ष्यों से मेल खाने के लिए अपनी प्रोफ़ाइल में सत्र सेटिंग्स समायोजित कर सकते हैं।
+    about_learn_language_title भाषा और मोड लचीलापन
+    about_learn_media_desc छवियाँ, ऑडियो और वीडियो सीखने की सामग्री में उपलब्ध होने पर पहचान, उच्चारण और संदर्भ का समर्थन कर सकते हैं।
+    about_learn_media_title मीडिया समर्थन
+    about_learn_modes_desc पहचान और आत्मविश्वास बनाने के लिए लर्न का उपयोग करें, फिर जब आप सख्त रिकॉल और तेज समीक्षा चाहते हैं तो टेस्ट पर स्विच करें।
+    about_learn_modes_title जानें और परीक्षण करें
+    about_learn_title आप कैसे सीखते हैं
+    about_organize_collections_desc संग्रह कई विषयों को एक अध्ययन प्रवाह में जोड़ते हैं, जो मिश्रित समीक्षा और क्यूरेटेड सेट के लिए उपयोगी है।
+    about_organize_collections_title संग्रह
+    about_organize_creation_desc निर्माता अपनी सामग्री स्वयं व्यवस्थित कर सकते हैं, काम करते समय इसे निजी रख सकते हैं, या तैयार होने पर इसे सार्वजनिक पुस्तकालय के माध्यम से प्रदर्शित कर सकते हैं।
+    about_organize_creation_title स्वामित्व और दृश्यता
+    about_organize_folders_desc फ़ोल्डर संबंधित विषयों को एक स्तंभ के अंदर समूहित करते हैं ताकि बड़े सामग्री सेट प्रबंधनीय बने रहें।
+    about_organize_folders_title फ़ोल्डर
+    about_organize_subjects_desc विषय अध्ययन की मुख्य इकाई हैं। वे आपके द्वारा लर्न और टेस्ट सत्र में खोले गए कार्ड रखते हैं।
+    about_organize_subjects_title विषयों
+    about_organize_title सामग्री कैसे व्यवस्थित की जाती है
+    about_progress_goals_desc आपकी प्रोफ़ाइल आपको दैनिक लक्ष्य निर्धारित करने, सत्र का आकार, परीक्षण सत्र का आकार और उत्तरों की संख्या जानने की सुविधा देती है।
+    about_progress_goals_title दैनिक लक्ष्य और सत्र सेटिंग
+    about_progress_social_desc मित्र और लीडरबोर्ड सुविधाएँ मुख्य शिक्षण प्रवाह को बदले बिना प्रगति को सामाजिक बनाती हैं।
+    about_progress_social_title मित्र और लीडरबोर्ड
+    about_progress_title प्रगति, मित्र और लीडरबोर्ड
+    about_progress_xp_desc Aliolo कुल XP, वर्तमान स्ट्रीक और अधिकतम स्ट्रीक को ट्रैक करता है ताकि छोटी और लंबी अध्ययन अवधि में प्रगति दिखाई दे।
+    about_progress_xp_title एक्सपी और स्ट्रीक्स
+    about_support_docs_desc इन-ऐप दस्तावेज़ीकरण पृष्ठ बताता है कि डैशबोर्ड, अध्ययन प्रवाह और निर्माता उपकरण आज कैसे काम करते हैं।
+    about_support_docs_title प्रलेखन
+    about_support_feedback_desc बग की रिपोर्ट करने, सुधार का सुझाव देने या संदर्भ के साथ विशिष्ट सामग्री मुद्दों को चिह्नित करने के लिए ऐप में फीडबैक प्रविष्टि बिंदुओं का उपयोग करें।
+    about_support_feedback_title प्रतिक्रिया और रिपोर्टिंग
+    about_support_licenses_desc लाइसेंस पृष्ठ पहले Aliolo के वाणिज्यिक लाइसेंस को सूचीबद्ध करता है और फिर बंडल किए गए तृतीय-पक्ष पैकेज लाइसेंस को सूचीबद्ध करता है।
+    about_support_licenses_title लाइसेंस
+    about_support_onboarding_desc आप ऐप के मुख्य विचारों और सेटअप प्रवाह की समीक्षा करने के लिए किसी भी समय ऑनबोर्डिंग पर दोबारा जा सकते हैं।
+    about_support_onboarding_title ज्ञानप्राप्ति
+    about_support_settings_desc यूआई भाषा, थीम मोड, थीम रंग, ध्वनि, साइडबार प्लेसमेंट और दस्तावेज़ीकरण दृश्यता सभी को सेटिंग्स से समायोजित किया जा सकता है।
+    about_support_settings_title वैयक्तिकरण
+    about_support_title सेटिंग्स, फीडबैक और समर्थन
+    addition_emoji अतिरिक्त इमोजी
+    addition_numbers अतिरिक्त संख्याएँ
+    aliolo aliolo
+    all_rights_reserved सर्वाधिकार सुरक्षित
+    are_you_sure_you_want_to_close_this_feedback_request क्या आप वाकई इस फीडबैक अनुरोध को बंद करना चाहते हैं?
+    are_you_sure_you_want_to_delete_this_folder क्या आप वाकई इस फ़ोल्डर को हटाना चाहते हैं?
+    attach_image छवि संलग्न करें
+    back पीछे
+    back_to_subjects विषयों पर वापस जाएँ
+    best_for_quick_goals त्वरित लक्ष्यों के लिए सर्वोत्तम
+    billing_disclaimer रद्द न होने तक सदस्यताएँ स्वचालित रूप से नवीनीकृत हो जाती हैं। आप अपनी सदस्यता को अपनी स्टोर सेटिंग में प्रबंधित कर सकते हैं.
+    billing_title बिलिंग
+    browser ब्राउज़र
+    cancel रद्द करना
+    cannot_delete_folder_it_is_not_empty फ़ोल्डर हटाया नहीं जा सकता: यह खाली नहीं है
+    card_id कार्ड आईडी
+    check_your_email_for_code कोड के लिए अपना ईमेल जांचें
+    clear स्पष्ट
+    click_to_view_original मूल देखने के लिए क्लिक करें
+    close बंद करना
+    close_request अनुरोध बंद करें?
+    collection_id संग्रह आईडी
+    colors रंग
+    confirm_subscription सदस्यता की पुष्टि करें
+    context प्रसंग
+    could_not_launch $url लॉन्च नहीं किया जा सका
+    counting गिनती
+    current_subscription वर्तमान सदस्यता
+    delete मिटाना
+    device उपकरण
+    doc_create_intro_desc यह टैब कवर करता है कि निर्माता कैसे सामग्री को व्यवस्थित करते हैं, उसका स्थानीयकरण करते हैं और वर्कफ़्लो को अधिक जटिल किए बिना उपयोगी अध्ययन सामग्री प्रकाशित करते हैं।
+    doc_create_intro_title बनाएं
+    doc_create_json_desc JSON-आधारित निर्माण संरचित थोक सामग्री के लिए एक उन्नत वर्कफ़्लो है। यह वैकल्पिक रहना चाहिए; अधिकांश रचनाकारों को मानक प्रपत्रों के माध्यम से सामग्री बनाने और संपादित करने में सक्षम होना चाहिए।
+    doc_create_json_title उन्नत JSON आयात
+    doc_create_localization_desc सामग्री को स्थानीयकृत करें जहां यह सबसे अधिक मायने रखती है: नाम, विवरण, संकेत और उत्तर। सभी भाषाओं में लेबल एक समान रखें ताकि उपयोगकर्ता संरचना खोए बिना अध्ययन भाषा बदल सकें।
+    doc_create_localization_title स्थानीयकरण
+    doc_create_media_desc छवियों, ऑडियो और वीडियो को सीखने के लक्ष्य का समर्थन करना चाहिए, इससे ध्यान भटकाना नहीं चाहिए। जब मीडिया पहचान, उच्चारण या संदर्भ में सुधार करता है तो उसे जोड़ें और मीडिया गायब होने पर भी कार्ड को उपयोग योग्य रखें।
+    doc_create_media_title मीडिया वर्कफ़्लो
+    doc_create_model_desc निर्माता स्तंभों के अंदर काम करते हैं और सामग्री को फ़ोल्डरों, विषयों, संग्रहों और कार्डों के साथ व्यवस्थित करते हैं। पहले संरचना बनाएं, फिर इसे स्थानीयकृत संकेतों, उत्तरों और वैकल्पिक मीडिया से भरें।
+    doc_create_model_title सामग्री मॉडल
+    doc_create_visibility_desc अपनी सामग्री पर काम करने के लिए "मेरा", उपयोगी वस्तुओं को पिन करने के लिए पसंदीदा और साझा सामग्री ब्राउज़ करने के लिए सार्वजनिक लाइब्रेरी का उपयोग करें। सार्वजनिक दृश्यता खोज को प्रभावित करती है, जबकि स्वामित्व प्रभावित करता है कि आप क्या संपादित या हटा सकते हैं।
+    doc_create_visibility_title स्वामित्व और दृश्यता
+    doc_start_dashboard_desc डैशबोर्ड आपकी मुख्य लाइब्रेरी है. सामग्री को तुरंत ढूंढने के लिए खोज का उपयोग करें, फिर शोर को कम करने के लिए पसंदीदा, मेरा और सार्वजनिक लाइब्रेरी जैसे स्रोत फ़िल्टर को आयु फ़िल्टर के साथ संयोजित करें।
+    doc_start_dashboard_title डैशबोर्ड, खोज और फ़िल्टर
+    doc_start_feedback_desc कुछ गलत या अस्पष्ट होने पर ऐप में फीडबैक प्रविष्टि बिंदुओं का उपयोग करें। रिपोर्ट में वर्तमान संदर्भ शामिल हो सकता है, जिससे सामग्री संबंधी समस्याओं की समीक्षा करना और उन्हें ठीक करना आसान हो जाता है।
+    doc_start_feedback_title प्रतिक्रिया और सहायता
+    doc_start_intro_desc इस टैब का उपयोग तब करें जब आप सीख रहे हों कि डैशबोर्ड, लाइब्रेरी, प्रगति और सामाजिक सुविधाएँ एक साथ कैसे फिट होती हैं।
+    doc_start_intro_title शुरू करना
+    doc_start_progress_desc आपकी प्रोफ़ाइल कुल XP, वर्तमान स्ट्रीक, अधिकतम स्ट्रीक और दैनिक लक्ष्य प्रगति दिखाती है। प्रोफ़ाइल पृष्ठ से सत्र का आकार और उत्तरों की संख्या भी प्रबंधित की जाती है।
+    doc_start_progress_title प्रगति और लक्ष्य
+    doc_start_quick_desc डैशबोर्ड पर एक स्तंभ चुनें, एक विषय खोलें और सीखें से प्रारंभ करें। लाइब्रेरी को सीमित करने के लिए पसंदीदा और फ़िल्टर का उपयोग करें, फिर अपनी प्रोफ़ाइल से अपने XP, स्ट्रीक्स और दैनिक लक्ष्य की समीक्षा करें।
+    doc_start_quick_title त्वरित शुरुआत
+    doc_start_structure_desc विषय कार्ड रखते हैं. फ़ोल्डर्स संबंधित सामग्री को एक स्तंभ के अंदर समूहित करते हैं। संग्रह क्यूरेटेड सेट होते हैं जो अध्ययन और साझा करने के लिए कई विषयों को जोड़ सकते हैं।
+    doc_start_structure_title विषय, फ़ोल्डर और संग्रह
+    doc_study_how_desc जब आप पहचान बना रहे हों तो लर्न से शुरुआत करें, फिर जब आप तेजी से रिकॉल और सख्त जांच चाहते हैं तो टेस्ट पर स्विच करें। केंद्रित समीक्षा के लिए छोटे सत्र और व्यापक कवरेज के लिए बड़े सत्र का उपयोग करें।
+    doc_study_how_title पढ़ाई कैसे करें
+    doc_study_intro_desc यह टैब बताता है कि सामग्री के माध्यम से कैसे आगे बढ़ना है, सही मोड चुनना है और समीक्षा या याद करने के लिए अपने सत्रों को ट्यून करना है।
+    doc_study_intro_title अध्ययन
+    doc_study_media_desc जब मीडिया उपलब्ध हो, तो उच्चारण और पहचान को सुदृढ़ करने के लिए इसका उपयोग करें। छोटे सत्रों के दौरान निष्क्रिय समीक्षा या बार-बार सुनने के लिए ऑटोप्ले सबसे उपयोगी है।
+    doc_study_media_title ऑडियो, ऑटोप्ले और मीडिया
+    doc_study_modes_desc सीखना और परीक्षण करना अध्ययन के मुख्य तरीके हैं। वे एक ही सामग्री का उपयोग करते हैं लेकिन अलग-अलग गति और उत्तर अपेक्षाओं का समर्थन करते हैं, इसलिए इस आधार पर मोड स्विच करें कि आप खोज कर रहे हैं या अवधारण की जांच कर रहे हैं।
+    doc_study_modes_title मोड सीखें और परीक्षण करें
+    doc_study_scope_desc अध्ययन एक विषय, एक फ़ोल्डर दृश्य या एक संग्रह से शुरू हो सकता है। संग्रह तब उपयोगी होते हैं जब आप वर्तमान प्रवाह को छोड़े बिना कई विषयों पर मिश्रित सत्र चाहते हैं।
+    doc_study_scope_title अध्ययन में विषय, फ़ोल्डर और संग्रह
+    doc_tab_create बनाएं
+    doc_tab_start शुरू
+    doc_tab_study अध्ययन
+    documentation प्रलेखन
+    edit_subscription सदस्यता संपादित करें
+    email_updated_successfully ईमेल सफलतापूर्वक अपडेट किया गया!
+    enter_current_password वर्तमान पासवर्ड दर्ज करें
+    error त्रुटि: $e
+    error_deleting हटाने में त्रुटि: $e
+    error_saving सहेजने में त्रुटि: $e
+    error_saving_card कार्ड सहेजने में त्रुटि: $e
+    error_updating_favorite पसंदीदा अपडेट करने में त्रुटि: $e
+    failed_to_send_reset_code रीसेट कोड भेजने में विफल
+    failed_to_send_verification_code सत्यापन कोड भेजने में विफल
+    fake_only केवल नकली
+    feature_creation निर्माण उपकरण
+    feature_customize उन्नत अनुकूलन
+    feature_full_library पूर्ण पुस्तकालय प्रवेश
+    feature_testing इंटरैक्टिव परीक्षण
+    folder_id फ़ोल्डर आईडी
+    free_only निःशुल्क उपयोगकर्ता
+    generic सामान्य
+    home घर
+    invalid_code अवैध कोड
+    invalid_email_address अमान्य ईमेल पता
+    invalid_json अमान्य JSON: $e
+    invalid_or_expired_invitation_link अमान्य या समाप्त आमंत्रण लिंक.
+    invalid_or_expired_reset_code अमान्य या समाप्त हो चुका रीसेट कोड.
+    invitation_sent_awaiting_registration आमंत्रण भेजा गया (पंजीकरण की प्रतीक्षा में)
+    invited_and_request_sent आमंत्रित किया गया और अनुरोध भेजा गया!
+    json JSON
+    label_suffix $label:
+    leaderboard लीडरबोर्ड
+    licenses लाइसेंस
+    licenses_aliolo_section_title Aliolo वाणिज्यिक लाइसेंस
+    licenses_aliolo_subtitle मालिकाना सॉफ़्टवेयर और प्रीमियम एक्सेस शर्तें
+    licenses_intro_desc Aliolo का वाणिज्यिक लाइसेंस सबसे पहले दिखाई देता है। तृतीय-पक्ष पैकेज लाइसेंस नीचे दिए गए हैं।
+    licenses_intro_title Aliolo लाइसेंस और पैकेज नोटिस
+    licenses_third_party_section_title तृतीय-पक्ष पैकेज लाइसेंस
+    linux_distro लिनक्स डिस्ट्रो
+    loading लोड हो रहा है...
+    localized_data स्थानीयकृत डेटा
+    monthly_access मासिक प्रवेश
+    most_popular_choice सबसे लोकप्रिय विकल्प
+    new_email नया ईमेल
+    no_cards_available_for_this_session इस सत्र के लिए कोई कार्ड उपलब्ध नहीं है.
+    no_cards_found कोई कार्ड नहीं मिला
+    no_subjects_found कोई विषय नहीं मिला
+    no_subjects_found_in_this_collection इस संग्रह में कोई विषय नहीं मिला
+    no_users_found कोई उपयोगकर्ता नहीं मिला
+    os_version ओएस संस्करण
+    password_updated_successfully पासवर्ड सफलतापूर्वक अद्यतन!
+    payments_are_not_yet_integrated_on_web_please_use_the_mobile_app_to_upgrade भुगतान अभी तक वेब पर एकीकृत नहीं हैं। कृपया अपग्रेड करने के लिए मोबाइल ऐप का उपयोग करें।
+    personal_data व्यक्तिगत डेटा
+    pick_date तारीख चुनें
+    plan_monthly_tagline सबसे लोकप्रिय विकल्प
+    plan_monthly_title मासिक प्रवेश
+    plan_weekly_tagline त्वरित लक्ष्यों के लिए सर्वोत्तम
+    plan_weekly_title साप्ताहिक प्रवेश
+    plan_yearly_tagline प्रति माह 33% बचाएं
+    plan_yearly_title वार्षिक प्रवेश
+    platform प्लैटफ़ॉर्म
+    play खेल
+    play_audio ऑडियो चलाएं
+    please_enter_the_6_digit_code कृपया 6 अंकीय कोड दर्ज करें
+    please_wait_for_a_response_before_replying_again कृपया दोबारा उत्तर देने से पहले प्रतिक्रिया की प्रतीक्षा करें।
+    premium_expires_at $date पर समाप्त होता है
+    premium_lifetime आजीवन पहुंच
+    premium_only केवल प्रीमियम
+    premium_status_active आप एक प्रीमियम सदस्य हैं
+    premium_unlock_desc सभी विषयों तक पहुंच प्राप्त करें, असीमित कार्ड बनाएं और Aliolo के मिशन का समर्थन करें।
+    premium_unlock_title पूर्ण पहुँच अनलॉक करें
+    product_not_available_in_store उत्पाद स्टोर में उपलब्ध नहीं है.
+    profile प्रोफ़ाइल
+    public_other_subject सार्वजनिक/अन्य विषय
+    purchase_failed खरीदारी विफल: $e
+    recovery_error पुनर्प्राप्ति त्रुटि: $e
+    refresh_conversation बातचीत ताज़ा करें
+    renderer रेंडरर
+    reset_code कोड फिर ठीक करें
+    reset_code_sent_to_please_check_your_inbox रीसेट कोड $email पर भेजा गया। कृपया अपना इनबॉक्स जांचें.
+    restore_purchases खरीदारी वापस लौटाएं
+    save बचाना
+    save_33_per_month प्रति माह 33% बचाएं
+    saved_successfully सफलतापूर्वक बचाया
+    search_users उपयोगकर्ता खोजें
+    session_complete सत्र पूरा!
+    session_complete_description अच्छा काम! आपने इस सत्र में सभी कार्ड समाप्त कर लिए हैं।
+    settings सेटिंग्स
+    show_documentation_btn दस्तावेज़ीकरण बटन दिखाएँ
+    show_documentation_btn_desc ऐप बार में दस्तावेज़ीकरण बटन प्रदर्शित करें।
+    show_fake_users नकली उपयोगकर्ता दिखाएँ
+    subject_id विषय आईडी
+    subscribe_now अब सदस्यता लें
+    subscription_data सदस्यता डेटा
+    subscription_updated सदस्यता अद्यतन की गई
+    subtraction_emoji घटाव इमोजी
+    subtraction_numbers घटाव संख्याएँ
+    technical_context तकनीकी संदर्भ
+    testing_mode परीक्षण मोड
+    text मूलपाठ
+    this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards यह एक फ़ोल्डर है. आप सभी कार्डों का अभ्यास करने के लिए ऊपर दिए गए लर्न/टेस्ट बटन का उपयोग कर सकते हैं।
+    type_your_reply अपना उत्तर लिखें...
+    ua यूए
+    unknown_user_profile_missing अज्ञात उपयोगकर्ता (प्रोफ़ाइल अनुपलब्ध)
+    user उपयोगकर्ता
+    user_id उपयोगकर्ता पहचान
+    user_with_this_email_already_exists_please_log_in_instead इस ईमेल के साथ पहले से प्रयोगकर्ता मौजूद है। कृपया इसके बजाय लॉग इन करें.
+    users उपयोगकर्ताओं
+    users_filter उपयोगकर्ताओं को फ़िल्टर करें
+    verification_code सत्यापन कोड
+    verification_code_sent_to सत्यापन कोड $email को भेजा गया
+    version संस्करण
+    view_onboarding ऑनबोर्डिंग देखें
+    weekly_access साप्ताहिक प्रवेश
+    welcome_complete_your_profile_to_join_aliolo स्वागत! aliolo से जुड़ने के लिए अपनी प्रोफ़ाइल पूरी करें।
+    yearly_access वार्षिक प्रवेश
+    you_do_not_have_permission_to_edit_this_card आपको इस कार्ड को संपादित करने की अनुमति नहीं है
+    you_do_not_have_permission_to_view_this_card_details आपको इस कार्ड विवरण को देखने की अनुमति नहीं है.

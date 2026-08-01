@@ -1,0 +1,228 @@
+..
+    a_folder_with_this_name_already_exists_in_this_pillar Folder dengan nama ini sudah ada di pilar ini
+    about Tentang
+    about_intro_audience_desc Aliolo mendukung pelajar yang menginginkan tinjauan terstruktur, orang tua dan guru yang membutuhkan konten pembelajaran yang mudah didekati, dan pembuat konten yang mengatur dan menerbitkan materi pembelajaran mereka sendiri.
+    about_intro_audience_title Untuk Siapa Ini
+    about_intro_desc Aliolo adalah aplikasi pembelajaran visual yang dibangun berdasarkan alur belajar sederhana, pengaturan konten yang fleksibel, dan kemajuan yang stabil dari waktu ke waktu.
+    about_intro_start_desc Mulailah dari dasbor, pilih pilar, buka subjek, dan mulai dengan Pelajari. Simpan konten bermanfaat ke favorit agar lebih mudah untuk dikunjungi lagi nanti.
+    about_intro_start_title Bagaimana Memulainya
+    about_intro_title Tentang Aliolo
+    about_learn_discovery_desc Pencarian, filter usia, dan filter sumber seperti favorit, milik saya, dan perpustakaan umum membantu Anda menemukan konten yang tepat dengan cepat.
+    about_learn_discovery_title Penemuan dan Penyaringan
+    about_learn_language_desc Anda dapat mempelajari konten dalam berbagai bahasa dan menyesuaikan pengaturan sesi di profil Anda agar sesuai dengan kecepatan dan tujuan Anda saat ini.
+    about_learn_language_title Fleksibilitas Bahasa dan Mode
+    about_learn_media_desc Gambar, audio, dan video dapat mendukung pengenalan, pengucapan, dan konteks bila tersedia dalam konten pembelajaran.
+    about_learn_media_title Dukungan Media
+    about_learn_modes_desc Gunakan Pelajari untuk membangun pengakuan dan kepercayaan diri, lalu beralih ke Tes ketika Anda ingin mengingat lebih ketat dan meninjau lebih cepat.
+    about_learn_modes_title Pelajari dan Uji
+    about_learn_title Bagaimana Anda Belajar
+    about_organize_collections_desc Koleksi menggabungkan beberapa subjek ke dalam satu alur studi, yang berguna untuk tinjauan campuran dan kumpulan yang dikurasi.
+    about_organize_collections_title Koleksi
+    about_organize_creation_desc Kreator dapat mengatur konten mereka sendiri, merahasiakannya saat bekerja, atau mengeksposnya melalui perpustakaan umum jika sudah siap.
+    about_organize_creation_title Kepemilikan dan Visibilitas
+    about_organize_folders_desc Folder mengelompokkan subjek terkait di dalam pilar sehingga kumpulan konten yang lebih besar tetap dapat dikelola.
+    about_organize_folders_title Folder
+    about_organize_subjects_desc Mata pelajaran merupakan unit utama pembelajaran. Mereka memegang kartu yang Anda buka di sesi Belajar dan Tes.
+    about_organize_subjects_title Subyek
+    about_organize_title Bagaimana Konten Diorganisasikan
+    about_progress_goals_desc Profil Anda memungkinkan Anda menyesuaikan target sasaran harian, mempelajari ukuran sesi, ukuran sesi tes, dan jumlah jawaban.
+    about_progress_goals_title Tujuan Harian dan Pengaturan Sesi
+    about_progress_social_desc Fitur teman dan papan peringkat menjadikan kemajuan bersifat sosial tanpa mengubah alur pembelajaran inti.
+    about_progress_social_title Teman dan Papan Peringkat
+    about_progress_title Kemajuan, Teman, dan Papan Peringkat
+    about_progress_xp_desc Aliolo melacak total XP, pukulan saat ini, dan pukulan maksimal sehingga kemajuan terlihat terlihat dalam periode studi pendek dan panjang.
+    about_progress_xp_title XP dan Coretan
+    about_support_docs_desc Halaman dokumentasi dalam aplikasi menjelaskan cara kerja dasbor, alur studi, dan alat pembuat konten saat ini.
+    about_support_docs_title Dokumentasi
+    about_support_feedback_desc Gunakan titik masuk umpan balik di seluruh aplikasi untuk melaporkan bug, menyarankan perbaikan, atau menandai masalah konten tertentu sesuai konteks.
+    about_support_feedback_title Umpan Balik dan Pelaporan
+    about_support_licenses_desc Halaman lisensi mencantumkan lisensi komersial Aliolo terlebih dahulu, kemudian lisensi paket pihak ketiga yang dibundel.
+    about_support_licenses_title Lisensi
+    about_support_onboarding_desc Anda dapat meninjau kembali orientasi kapan saja untuk meninjau ide utama aplikasi dan alur penyiapan.
+    about_support_onboarding_title Orientasi
+    about_support_settings_desc Bahasa UI, mode tema, warna tema, suara, penempatan sidebar, dan visibilitas dokumentasi semuanya dapat disesuaikan dari pengaturan.
+    about_support_settings_title Personalisasi
+    about_support_title Pengaturan, Umpan Balik, dan Dukungan
+    addition_emoji Emoji Tambahan
+    addition_numbers Nomor Tambahan
+    aliolo aliolo
+    all_rights_reserved Semua hak dilindungi undang-undang
+    are_you_sure_you_want_to_close_this_feedback_request Apakah Anda yakin ingin menutup permintaan masukan ini?
+    are_you_sure_you_want_to_delete_this_folder Apakah Anda yakin ingin menghapus folder ini?
+    attach_image Lampirkan gambar
+    back Kembali
+    back_to_subjects Kembali ke Subjek
+    best_for_quick_goals Terbaik untuk tujuan cepat
+    billing_disclaimer Langganan diperpanjang secara otomatis kecuali dibatalkan. Anda dapat mengelola langganan Anda di pengaturan toko Anda.
+    billing_title Penagihan
+    browser Peramban
+    cancel Membatalkan
+    cannot_delete_folder_it_is_not_empty Tidak dapat menghapus folder: tidak kosong
+    card_id ID Kartu
+    check_your_email_for_code Periksa email Anda untuk kode
+    clear Jernih
+    click_to_view_original Klik untuk melihat yang asli
+    close Menutup
+    close_request Tutup Permintaan?
+    collection_id ID Koleksi
+    colors Warna
+    confirm_subscription Konfirmasi Berlangganan
+    context Konteks
+    could_not_launch Tidak dapat meluncurkan $url
+    counting Perhitungan
+    current_subscription Langganan Saat Ini
+    delete Menghapus
+    device Perangkat
+    doc_create_intro_desc Tab ini mencakup cara pembuat konten mengatur konten, melokalkannya, dan menerbitkan materi pelajaran yang bermanfaat tanpa membuat alur kerja menjadi terlalu rumit.
+    doc_create_intro_title Membuat
+    doc_create_json_desc Pembuatan berbasis JSON adalah alur kerja tingkat lanjut untuk konten massal terstruktur. Ini harus tetap opsional; sebagian besar pembuat konten harus dapat membuat dan mengedit konten melalui formulir standar.
+    doc_create_json_title Impor JSON Tingkat Lanjut
+    doc_create_localization_desc Lokalkan konten di tempat yang paling penting: nama, deskripsi, petunjuk, dan jawaban. Jaga konsistensi label di berbagai bahasa sehingga pengguna dapat mengganti bahasa pembelajaran tanpa kehilangan struktur.
+    doc_create_localization_title Lokalisasi
+    doc_create_media_desc Gambar, audio, dan video harus mendukung tujuan pembelajaran, bukan mengalihkan perhatian. Tambahkan media jika dapat meningkatkan pengenalan, pengucapan, atau konteks, dan jaga agar kartu tetap dapat digunakan meskipun media tidak ada.
+    doc_create_media_title Alur Kerja Media
+    doc_create_model_desc Pembuat konten bekerja di dalam pilar dan mengatur materi dengan folder, subjek, koleksi, dan kartu. Bangun strukturnya terlebih dahulu, lalu isi dengan petunjuk lokal, jawaban, dan media opsional.
+    doc_create_model_title Model Konten
+    doc_create_visibility_desc Gunakan "milikku" untuk mengerjakan konten Anda sendiri, favorit untuk menyematkan item berguna, dan perpustakaan umum untuk menelusuri materi yang dibagikan. Visibilitas publik memengaruhi penemuan, sedangkan kepemilikan memengaruhi apa yang dapat Anda edit atau hapus.
+    doc_create_visibility_title Kepemilikan dan Visibilitas
+    doc_start_dashboard_desc Dasbor adalah perpustakaan utama Anda. Gunakan pencarian untuk menemukan konten dengan cepat, lalu gabungkan filter sumber seperti favorit, milik saya, dan perpustakaan umum dengan filter usia untuk mengurangi kebisingan.
+    doc_start_dashboard_title Dasbor, Pencarian, dan Filter
+    doc_start_feedback_desc Gunakan titik masuk umpan balik di seluruh aplikasi ketika ada sesuatu yang salah atau tidak jelas. Laporan dapat menyertakan konteks terkini, sehingga masalah konten lebih mudah ditinjau dan diperbaiki.
+    doc_start_feedback_title Umpan Balik dan Bantuan
+    doc_start_intro_desc Gunakan tab ini saat Anda mempelajari bagaimana dasbor, perpustakaan, kemajuan, dan fitur sosial saling terkait.
+    doc_start_intro_title Memulai
+    doc_start_progress_desc Profil Anda menunjukkan total XP, rekor saat ini, rekor maksimum, dan kemajuan sasaran harian. Ukuran sesi dan jumlah jawaban juga dikelola dari halaman profil.
+    doc_start_progress_title Kemajuan dan Tujuan
+    doc_start_quick_desc Pilih pilar di dasbor, buka subjek, dan mulai dengan Belajar. Gunakan favorit dan filter untuk mempersempit perpustakaan, lalu tinjau XP, coretan, dan sasaran harian Anda dari profil Anda.
+    doc_start_quick_title Mulai Cepat
+    doc_start_structure_desc Subjek memegang kartu. Folder mengelompokkan konten terkait di dalam pilar. Koleksi adalah kumpulan hasil kurasi yang dapat menggabungkan beberapa mata pelajaran untuk dipelajari dan dibagikan.
+    doc_start_structure_title Subjek, Folder, dan Koleksi
+    doc_study_how_desc Mulailah dengan Pelajari saat Anda membangun pengenalan, lalu beralih ke Uji saat Anda ingin mengingat lebih cepat dan pemeriksaan lebih ketat. Gunakan sesi yang lebih pendek untuk tinjauan terfokus dan sesi yang lebih besar untuk cakupan yang lebih luas.
+    doc_study_how_title Cara Belajar
+    doc_study_intro_desc Tab ini menjelaskan cara menelusuri konten, memilih mode yang tepat, dan menyesuaikan sesi Anda untuk ditinjau atau dipanggil kembali.
+    doc_study_intro_title Belajar
+    doc_study_media_desc Jika media tersedia, gunakan media tersebut untuk memperkuat pengucapan dan pengenalan. Putar otomatis paling berguna untuk tinjauan pasif atau mendengarkan berulang kali selama sesi yang lebih singkat.
+    doc_study_media_title Audio, Putar Otomatis, dan Media
+    doc_study_modes_desc Belajar dan Uji adalah mode belajar inti. Mereka menggunakan konten yang sama tetapi mendukung kecepatan dan ekspektasi jawaban yang berbeda, jadi gantilah mode berdasarkan apakah Anda menjelajahi atau memeriksa retensi.
+    doc_study_modes_title Mode Belajar dan Uji
+    doc_study_scope_desc Pembelajaran dapat dimulai dari satu mata pelajaran, tampilan folder, atau kumpulan. Koleksi berguna ketika Anda menginginkan sesi campuran di beberapa subjek tanpa meninggalkan alur saat ini.
+    doc_study_scope_title Subyek, Folder, dan Koleksi dalam Kajian
+    doc_tab_create Membuat
+    doc_tab_start Awal
+    doc_tab_study Belajar
+    documentation Dokumentasi
+    edit_subscription Sunting langganan
+    email_updated_successfully Email berhasil diperbarui!
+    enter_current_password Masukkan kata sandi saat ini
+    error Kesalahan: $e
+    error_deleting Kesalahan saat menghapus: $e
+    error_saving Kesalahan saat menyimpan: $e
+    error_saving_card Kesalahan saat menyimpan kartu: $e
+    error_updating_favorite Kesalahan saat memperbarui favorit: $e
+    failed_to_send_reset_code Gagal mengirim kode reset
+    failed_to_send_verification_code Gagal mengirim kode verifikasi
+    fake_only Hanya palsu
+    feature_creation Alat Penciptaan
+    feature_customize Kustomisasi Tingkat Lanjut
+    feature_full_library Akses Perpustakaan Penuh
+    feature_testing Pengujian Interaktif
+    folder_id ID map
+    free_only Pengguna gratis
+    generic Umum
+    home Rumah
+    invalid_code Kode tidak valid
+    invalid_email_address Alamat email tidak valid
+    invalid_json JSON tidak valid: $e
+    invalid_or_expired_invitation_link Tautan undangan tidak valid atau kedaluwarsa.
+    invalid_or_expired_reset_code Kode reset tidak valid atau kedaluwarsa.
+    invitation_sent_awaiting_registration Undangan terkirim (menunggu pendaftaran)
+    invited_and_request_sent Diundang dan permintaan dikirim!
+    json JSON
+    label_suffix $label:
+    leaderboard Papan peringkat
+    licenses Lisensi
+    licenses_aliolo_section_title Aliolo Lisensi Komersial
+    licenses_aliolo_subtitle Perangkat lunak berpemilik dan persyaratan akses premium
+    licenses_intro_desc Lisensi komersial Aliolo muncul pertama kali. Lisensi paket pihak ketiga ikuti di bawah ini.
+    licenses_intro_title Aliolo Pemberitahuan Lisensi dan Paket
+    licenses_third_party_section_title Lisensi Paket Pihak Ketiga
+    linux_distro Distro Linux
+    loading Memuat...
+    localized_data Data yang Dilokalkan
+    monthly_access Akses Bulanan
+    most_popular_choice Pilihan paling populer
+    new_email Surel Baru
+    no_cards_available_for_this_session Tidak ada kartu yang tersedia untuk sesi ini.
+    no_cards_found Tidak ada kartu yang ditemukan
+    no_subjects_found Tidak ada subjek yang ditemukan
+    no_subjects_found_in_this_collection Tidak ada subjek yang ditemukan dalam koleksi ini
+    no_users_found Tidak ada pengguna yang ditemukan
+    os_version Versi OS
+    password_updated_successfully Kata sandi berhasil diperbarui!
+    payments_are_not_yet_integrated_on_web_please_use_the_mobile_app_to_upgrade Pembayaran belum terintegrasi di Web. Silakan gunakan aplikasi seluler untuk meningkatkan.
+    personal_data Data pribadi
+    pick_date Pilih tanggal
+    plan_monthly_tagline Pilihan paling populer
+    plan_monthly_title Akses Bulanan
+    plan_weekly_tagline Terbaik untuk tujuan cepat
+    plan_weekly_title Akses Mingguan
+    plan_yearly_tagline Hemat 33% per bulan
+    plan_yearly_title Akses Tahunan
+    platform Platform
+    play Bermain
+    play_audio Putar Audio
+    please_enter_the_6_digit_code Silakan masukkan kode 6 digit
+    please_wait_for_a_response_before_replying_again Harap menunggu tanggapan sebelum membalas lagi.
+    premium_expires_at Berakhir pada $date
+    premium_lifetime Akses seumur hidup
+    premium_only Hanya premium
+    premium_status_active Anda adalah anggota premium
+    premium_unlock_desc Dapatkan akses ke semua mata pelajaran, buat kartu tanpa batas, dan dukung misi Aliolo.
+    premium_unlock_title Buka Kunci Akses Penuh
+    product_not_available_in_store Produk tidak tersedia di toko.
+    profile Profil
+    public_other_subject Subyek Umum/Lainnya
+    purchase_failed Pembelian gagal: $e
+    recovery_error Kesalahan pemulihan: $e
+    refresh_conversation Segarkan percakapan
+    renderer Penyaji
+    reset_code Atur Ulang Kode
+    reset_code_sent_to_please_check_your_inbox Kode setel ulang dikirim ke $email. Silakan periksa kotak masuk Anda.
+    restore_purchases Pulihkan Pembelian
+    save Menyimpan
+    save_33_per_month Hemat 33% per bulan
+    saved_successfully Berhasil disimpan
+    search_users Cari pengguna
+    session_complete Sesi Selesai!
+    session_complete_description Kerja bagus! Anda telah menyelesaikan semua kartu di sesi ini.
+    settings Pengaturan
+    show_documentation_btn Tampilkan tombol dokumentasi
+    show_documentation_btn_desc Tampilkan tombol dokumentasi di bilah aplikasi.
+    show_fake_users Tampilkan Pengguna Palsu
+    subject_id ID Subjek
+    subscribe_now Berlangganan Sekarang
+    subscription_data Data langganan
+    subscription_updated Langganan diperbarui
+    subtraction_emoji Emoji Pengurangan
+    subtraction_numbers Angka Pengurangan
+    technical_context KONTEKS TEKNIS
+    testing_mode Modus pengujian
+    text Teks
+    this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards Ini adalah sebuah map. Anda dapat menggunakan tombol Pelajari/Uji di atas untuk melatih semua kartu.
+    type_your_reply Ketik balasan Anda...
+    ua UA
+    unknown_user_profile_missing Pengguna Tidak Dikenal (Profil hilang)
+    user Pengguna
+    user_id ID Pengguna
+    user_with_this_email_already_exists_please_log_in_instead Pengguna dengan email ini sudah ada. Silakan masuk sebagai gantinya.
+    users Pengguna
+    users_filter Filter pengguna
+    verification_code Kode Verifikasi
+    verification_code_sent_to Kode verifikasi dikirim ke $email
+    version Versi
+    view_onboarding Lihat orientasi
+    weekly_access Akses Mingguan
+    welcome_complete_your_profile_to_join_aliolo Selamat datang! Lengkapi profil Anda untuk bergabung aliolo.
+    yearly_access Akses Tahunan
+    you_do_not_have_permission_to_edit_this_card Anda tidak memiliki izin untuk mengedit kartu ini
+    you_do_not_have_permission_to_view_this_card_details Anda tidak memiliki izin untuk melihat detail kartu ini.

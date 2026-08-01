@@ -1,0 +1,228 @@
+..
+    a_folder_with_this_name_already_exists_in_this_pillar Složka s tímto názvem již v tomto pilíři existuje
+    about O
+    about_intro_audience_desc Aliolo podporuje studenty, kteří chtějí strukturovaný přehled, rodiče a učitele, kteří potřebují přístupný studijní obsah, a tvůrce, kteří organizují a publikují své vlastní výukové materiály.
+    about_intro_audience_title Pro koho to je
+    about_intro_desc Aliolo je vizuální vzdělávací aplikace postavená na jednoduchých studijních postupech, flexibilní organizaci obsahu a stabilním pokroku v průběhu času.
+    about_intro_start_desc Začněte na palubní desce, vyberte sloup, otevřete téma a začněte s učením. Uložte si užitečný obsah do oblíbených, abyste se k němu mohli později snáze vrátit.
+    about_intro_start_title Jak začít
+    about_intro_title O Aliolo
+    about_learn_discovery_desc Vyhledávání, věkové filtry a zdrojové filtry, jako jsou oblíbené, moje a veřejné knihovny, vám pomohou rychle najít správný obsah.
+    about_learn_discovery_title Zjišťování a filtrování
+    about_learn_language_desc Můžete studovat obsah v různých jazycích a upravit nastavení relace ve svém profilu tak, aby odpovídala vašemu tempu a aktuálním cílům.
+    about_learn_language_title Flexibilita jazyka a režimu
+    about_learn_media_desc Obrázky, zvuk a video mohou podporovat rozpoznávání, výslovnost a kontext, pokud jsou k dispozici ve výukovém obsahu.
+    about_learn_media_title Podpora médií
+    about_learn_modes_desc Použijte funkci Naučit k budování uznání a důvěry a poté přepněte na Test, když chcete přísnější zapamatování a rychlejší kontrolu.
+    about_learn_modes_title Učte se a testujte
+    about_learn_title Jak se učíte
+    about_organize_collections_desc Kolekce kombinují více předmětů do jednoho studijního toku, což je užitečné pro smíšené recenze a kurátorské sady.
+    about_organize_collections_title Sbírky
+    about_organize_creation_desc Tvůrci si mohou uspořádat svůj vlastní obsah, ponechat jej soukromý při práci nebo jej vystavit prostřednictvím veřejné knihovny, až bude připraven.
+    about_organize_creation_title Vlastnictví a viditelnost
+    about_organize_folders_desc Složky seskupují související předměty do jednoho pilíře, takže větší soubory obsahu lze spravovat.
+    about_organize_folders_title Složky
+    about_organize_subjects_desc Předměty jsou hlavní jednotkou studia. Drží karty, které otevřete v relacích učení a testování.
+    about_organize_subjects_title Předměty
+    about_organize_title Jak je obsah organizován
+    about_progress_goals_desc Váš profil vám umožňuje vyladit denní cíle, zjistit velikost relace, velikost testovací relace a počet odpovědí.
+    about_progress_goals_title Denní cíle a nastavení relace
+    about_progress_social_desc Funkce přátel a žebříčku dělají pokrok v sociální síti, aniž by měnily základní tok učení.
+    about_progress_social_title Přátelé a žebříček
+    about_progress_title Pokrok, přátelé a žebříček
+    about_progress_xp_desc Aliolo sleduje celkové XP, aktuální sérii a maximální sérii, takže pokrok je viditelný během krátkých i dlouhých studijních období.
+    about_progress_xp_title XP a pruhy
+    about_support_docs_desc Stránka dokumentace v aplikaci vysvětluje, jak dnes řídicí panel, studijní postupy a nástroje pro tvůrce fungují.
+    about_support_docs_title Dokumentace
+    about_support_feedback_desc Pomocí vstupních bodů zpětné vazby v aplikaci můžete nahlásit chyby, navrhnout vylepšení nebo označit konkrétní problémy s obsahem s kontextem.
+    about_support_feedback_title Zpětná vazba a hlášení
+    about_support_licenses_desc Na stránce licencí je nejprve uvedena komerční licence Aliolo a poté licence k balíčku třetích stran.
+    about_support_licenses_title Licence
+    about_support_onboarding_desc K registraci se můžete kdykoli vrátit a prohlédnout si hlavní myšlenky aplikace a postup nastavení.
+    about_support_onboarding_title Registrace
+    about_support_settings_desc Jazyk uživatelského rozhraní, režim motivu, barvu motivu, zvuk, umístění postranního panelu a viditelnost dokumentace lze upravit v nastavení.
+    about_support_settings_title Personalizace
+    about_support_title Nastavení, zpětná vazba a podpora
+    addition_emoji Přidání Emoji
+    addition_numbers Sčítací čísla
+    aliolo aliolo
+    all_rights_reserved Všechna práva vyhrazena
+    are_you_sure_you_want_to_close_this_feedback_request Opravdu chcete tuto žádost o zpětnou vazbu uzavřít?
+    are_you_sure_you_want_to_delete_this_folder Opravdu chcete smazat tuto složku?
+    attach_image Připojit obrázek
+    back Zadní
+    back_to_subjects Zpět na Předměty
+    best_for_quick_goals Nejlepší na rychlé góly
+    billing_disclaimer Předplatné se automaticky obnoví, pokud nebude zrušeno. Své předplatné můžete spravovat v nastavení obchodu.
+    billing_title Fakturace
+    browser Prohlížeč
+    cancel Zrušit
+    cannot_delete_folder_it_is_not_empty Nelze smazat složku: není prázdná
+    card_id ID karty
+    check_your_email_for_code Zkontrolujte svůj e-mail pro kód
+    clear Jasný
+    click_to_view_original Kliknutím zobrazíte originál
+    close Blízko
+    close_request Zavřít požadavek?
+    collection_id ID sbírky
+    colors Barvy
+    confirm_subscription Potvrďte odběr
+    context Kontext
+    could_not_launch Nelze spustit $url
+    counting Počítací
+    current_subscription Aktuální předplatné
+    delete Vymazat
+    device Zařízení
+    doc_create_intro_desc Tato karta popisuje, jak tvůrci organizují obsah, lokalizují jej a publikují užitečný studijní materiál, aniž by to příliš komplikovalo pracovní postup.
+    doc_create_intro_title Vytvořit
+    doc_create_json_desc Vytváření založené na JSON je pokročilý pracovní postup pro strukturovaný hromadný obsah. Mělo by zůstat nepovinné; většina tvůrců by měla být schopna vytvářet a upravovat obsah prostřednictvím standardních formulářů.
+    doc_create_json_title Pokročilý import JSON
+    doc_create_localization_desc Lokalizovat obsah tam, kde je to nejdůležitější: jména, popisy, výzvy a odpovědi. Udržujte štítky konzistentní ve všech jazycích, aby uživatelé mohli přepínat studijní jazyk bez ztráty struktury.
+    doc_create_localization_title Lokalizace
+    doc_create_media_desc Obrázky, zvuk a video by měly podporovat cíl učení, nikoli od něj odvádět pozornost. Přidejte média, když to zlepší rozpoznávání, výslovnost nebo kontext, a udržujte karty použitelné, i když média chybí.
+    doc_create_media_title Pracovní postup médií
+    doc_create_model_desc Tvůrci pracují uvnitř sloupů a organizují materiál pomocí složek, předmětů, sbírek a karet. Nejprve vytvořte strukturu a poté ji vyplňte lokalizovanými výzvami, odpověďmi a volitelnými médii.
+    doc_create_model_title Model obsahu
+    doc_create_visibility_desc Použijte „moje“ k práci na svém vlastním obsahu, oblíbené položky k připnutí užitečných položek a veřejnou knihovnu k procházení sdílených materiálů. Veřejná viditelnost ovlivňuje zjišťování, zatímco vlastnictví ovlivňuje, co můžete upravit nebo smazat.
+    doc_create_visibility_title Vlastnictví a viditelnost
+    doc_start_dashboard_desc Dashboard je vaší hlavní knihovnou. Použijte vyhledávání k rychlému nalezení obsahu a poté zkombinujte zdrojové filtry, jako jsou oblíbené, moje a veřejné knihovny, s věkovými filtry, abyste snížili šum.
+    doc_start_dashboard_title Dashboard, Search a Filters
+    doc_start_feedback_desc Použijte vstupní body zpětné vazby v aplikaci, když je něco špatně nebo nejasné. Zprávy mohou zahrnovat aktuální kontext, což usnadňuje kontrolu a opravu problémů s obsahem.
+    doc_start_feedback_title Zpětná vazba a pomoc
+    doc_start_intro_desc Tuto kartu použijte, když se učíte, jak do sebe zapadají řídicí panel, knihovna, pokrok a sociální funkce.
+    doc_start_intro_title Začínáme
+    doc_start_progress_desc Váš profil zobrazuje celkové XP, aktuální sérii, maximální sérii a denní pokrok v cíli. Velikost relace a počet odpovědí se také spravují ze stránky profilu.
+    doc_start_progress_title Pokrok a cíle
+    doc_start_quick_desc Vyberte si sloup na palubní desce, otevřete téma a začněte s učením. Použijte oblíbené položky a filtry k zúžení knihovny a poté zkontrolujte své XP, série a denní cíl ze svého profilu.
+    doc_start_quick_title Rychlý start
+    doc_start_structure_desc Předměty drží karty. Složky seskupují související obsah uvnitř sloupu. Sbírky jsou kurátorské sady, které mohou kombinovat více předmětů pro studium a sdílení.
+    doc_start_structure_title Předměty, složky a sbírky
+    doc_study_how_desc Začněte s Učte se, když vytváříte rozpoznávání, poté přepněte na Test, když chcete rychlejší vyvolání a přísnější kontrolu. Použijte kratší sezení pro cílenou kontrolu a větší sezení pro širší pokrytí.
+    doc_study_how_title Jak studovat
+    doc_study_intro_desc Tato karta vysvětluje, jak se pohybovat v obsahu, zvolit správný režim a vyladit relace pro kontrolu nebo vyvolání.
+    doc_study_intro_title Studie
+    doc_study_media_desc Když jsou k dispozici média, použijte je k posílení výslovnosti a rozpoznávání. Automatické přehrávání je nejužitečnější pro pasivní kontrolu nebo opakované poslouchání během kratších relací.
+    doc_study_media_title Zvuk, automatické přehrávání a média
+    doc_study_modes_desc Učit se a testovat jsou základní režimy studia. Používají stejný obsah, ale podporují různé tempo a očekávání odpovědí, takže přepínejte režimy podle toho, zda zkoumáte nebo kontrolujete udržení.
+    doc_study_modes_title Režimy učení a testování
+    doc_study_scope_desc Studium může začít od jednoho předmětu, zobrazení složky nebo kolekce. Kolekce jsou užitečné, když chcete smíšenou relaci napříč několika tématy, aniž byste opustili aktuální tok.
+    doc_study_scope_title Předměty, složky a sbírky ve studiu
+    doc_tab_create Vytvořit
+    doc_tab_start Start
+    doc_tab_study Studie
+    documentation Dokumentace
+    edit_subscription Upravit předplatné
+    email_updated_successfully E-mail byl úspěšně aktualizován!
+    enter_current_password Zadejte aktuální heslo
+    error Chyba: $e
+    error_deleting Chyba při mazání: $e
+    error_saving Chyba při ukládání: $e
+    error_saving_card Chyba při ukládání karty: $e
+    error_updating_favorite Chyba při aktualizaci oblíbené položky: $e
+    failed_to_send_reset_code Odeslání resetovacího kódu se nezdařilo
+    failed_to_send_verification_code Odeslání ověřovacího kódu se nezdařilo
+    fake_only Pouze falešný
+    feature_creation Nástroje pro tvorbu
+    feature_customize Pokročilé přizpůsobení
+    feature_full_library Úplný přístup do knihovny
+    feature_testing Interaktivní testování
+    folder_id ID složky
+    free_only Volní uživatelé
+    generic Obecný
+    home Domov
+    invalid_code Neplatný kód
+    invalid_email_address Neplatná e-mailová adresa
+    invalid_json Neplatný JSON: $e
+    invalid_or_expired_invitation_link Neplatný nebo vypršela platnost odkazu pozvánky.
+    invalid_or_expired_reset_code Neplatný nebo vypršela platnost resetovacího kódu.
+    invitation_sent_awaiting_registration Pozvánka odeslána (čeká na registraci)
+    invited_and_request_sent Pozváni a žádost odeslána!
+    json JSON
+    label_suffix $label:
+    leaderboard Žebříček
+    licenses Licence
+    licenses_aliolo_section_title Aliolo Komerční licence
+    licenses_aliolo_subtitle Proprietární software a prémiové podmínky přístupu
+    licenses_intro_desc Jako první se objeví komerční licence Aliolo. Níže jsou uvedeny licence na balíčky třetích stran.
+    licenses_intro_title Aliolo Oznámení o licenci a balíčku
+    licenses_third_party_section_title Licence na balíčky třetích stran
+    linux_distro Linuxová distribuce
+    loading Načítání...
+    localized_data Lokalizovaná data
+    monthly_access Měsíční přístup
+    most_popular_choice Nejoblíbenější volba
+    new_email Nový email
+    no_cards_available_for_this_session Pro tuto relaci nejsou k dispozici žádné karty.
+    no_cards_found Nebyly nalezeny žádné karty
+    no_subjects_found Nebyly nalezeny žádné předměty
+    no_subjects_found_in_this_collection V této sbírce nebyly nalezeny žádné předměty
+    no_users_found Nebyli nalezeni žádní uživatelé
+    os_version Verze OS
+    password_updated_successfully Heslo bylo úspěšně aktualizováno!
+    payments_are_not_yet_integrated_on_web_please_use_the_mobile_app_to_upgrade Platby ještě nejsou integrovány na webu. Pro upgrade použijte mobilní aplikaci.
+    personal_data Osobní údaje
+    pick_date Vyberte datum
+    plan_monthly_tagline Nejoblíbenější volba
+    plan_monthly_title Měsíční přístup
+    plan_weekly_tagline Nejlepší na rychlé góly
+    plan_weekly_title Týdenní přístup
+    plan_yearly_tagline Ušetřete 33 % měsíčně
+    plan_yearly_title Roční přístup
+    platform Platforma
+    play Hrát
+    play_audio Přehrát zvuk
+    please_enter_the_6_digit_code Zadejte 6místný kód
+    please_wait_for_a_response_before_replying_again Před další odpovědí prosím počkejte na odpověď.
+    premium_expires_at Platnost vyprší v $date
+    premium_lifetime Doživotní přístup
+    premium_only Pouze prémiové
+    premium_status_active Jste prémiovým členem
+    premium_unlock_desc Získejte přístup ke všem předmětům, vytvořte neomezený počet karet a podpořte misi Aliolo.
+    premium_unlock_title Odemkněte plný přístup
+    product_not_available_in_store Produkt není dostupný v obchodě.
+    profile Profil
+    public_other_subject Veřejný/jiný předmět
+    purchase_failed Nákup se nezdařil: $e
+    recovery_error Chyba obnovení: $e
+    refresh_conversation Obnovit konverzaci
+    renderer Renderer
+    reset_code Resetovat kód
+    reset_code_sent_to_please_check_your_inbox Resetovat kód odeslaný na $email. Zkontrolujte prosím svou doručenou poštu.
+    restore_purchases Obnovit nákupy
+    save Uložit
+    save_33_per_month Ušetřete 33 % měsíčně
+    saved_successfully Úspěšně uloženo
+    search_users Hledat uživatele
+    session_complete Relace dokončena!
+    session_complete_description Skvělá práce! Dokončili jste všechny karty v této relaci.
+    settings Nastavení
+    show_documentation_btn Tlačítko Zobrazit dokumentaci
+    show_documentation_btn_desc Zobrazte tlačítko dokumentace na liště aplikace.
+    show_fake_users Zobrazit falešné uživatele
+    subject_id ID předmětu
+    subscribe_now Přihlaste se k odběru
+    subscription_data Údaje o předplatném
+    subscription_updated Předplatné aktualizováno
+    subtraction_emoji Odečítání Emoji
+    subtraction_numbers Odečítání čísel
+    technical_context TECHNICKÉ SOUVISLOSTI
+    testing_mode Testovací režim
+    text Text
+    this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards Toto je složka. K procvičení všech karet můžete použít tlačítka Učit/Test výše.
+    type_your_reply Napište svou odpověď...
+    ua UA
+    unknown_user_profile_missing Neznámý uživatel (chybí profil)
+    user Uživatel
+    user_id ID uživatele
+    user_with_this_email_already_exists_please_log_in_instead Uživatel s tímto e-mailem již existuje. Přihlaste se místo toho.
+    users Uživatelé
+    users_filter Filtrujte uživatele
+    verification_code Ověřovací kód
+    verification_code_sent_to Ověřovací kód byl odeslán na adresu $email
+    version Verze
+    view_onboarding Zobrazit registraci
+    weekly_access Týdenní přístup
+    welcome_complete_your_profile_to_join_aliolo Vítejte! Chcete-li se připojit k aliolo, vyplňte svůj profil.
+    yearly_access Roční přístup
+    you_do_not_have_permission_to_edit_this_card Nemáte oprávnění upravovat tuto kartu
+    you_do_not_have_permission_to_view_this_card_details Nemáte oprávnění zobrazit podrobnosti této karty.

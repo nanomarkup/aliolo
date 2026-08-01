@@ -1,0 +1,228 @@
+..
+    a_folder_with_this_name_already_exists_in_this_pillar En mapp med detta namn finns redan i denna pelare
+    about Om
+    about_intro_audience_desc Aliolo stöder elever som vill ha strukturerad granskning, föräldrar och lärare som behöver lättillgängligt studieinnehåll och kreatörer som organiserar och publicerar sitt eget läromedel.
+    about_intro_audience_title Vem är det för
+    about_intro_desc Aliolo är en visuell inlärningsapp byggd kring enkla studieflöden, flexibel innehållsorganisation och stadiga framsteg över tid.
+    about_intro_start_desc Börja på instrumentpanelen, välj en pelare, öppna ett ämne och börja med Lär dig. Spara användbart innehåll i favoriter så att det är lättare att återbesöka senare.
+    about_intro_start_title Hur man börjar
+    about_intro_title Om Aliolo
+    about_learn_discovery_desc Sök, åldersfilter och källfilter som favoriter, mitt och offentliga bibliotek hjälper dig att snabbt hitta rätt innehåll.
+    about_learn_discovery_title Upptäckt och filtrering
+    about_learn_language_desc Du kan studera innehåll på olika språk och justera sessionsinställningar i din profil för att matcha din takt och nuvarande mål.
+    about_learn_language_title Språk och lägesflexibilitet
+    about_learn_media_desc Bilder, ljud och video kan stödja igenkänning, uttal och sammanhang när de är tillgängliga i inlärningsinnehållet.
+    about_learn_media_title Mediasupport
+    about_learn_modes_desc Använd Lär dig för att skapa igenkänning och självförtroende, växla sedan till Testa när du vill ha striktare återkallelse och snabbare granskning.
+    about_learn_modes_title Lär dig och testa
+    about_learn_title Hur du lär dig
+    about_organize_collections_desc Samlingar kombinerar flera ämnen i ett studieflöde, vilket är användbart för blandade granskningar och kurerade uppsättningar.
+    about_organize_collections_title Samlingar
+    about_organize_creation_desc Skapare kan organisera sitt eget innehåll, hålla det privat medan de arbetar eller exponera det genom det offentliga biblioteket när det är klart.
+    about_organize_creation_title Ägarskap och synlighet
+    about_organize_folders_desc Mappar grupperar relaterade ämnen i en pelare så att större innehållsuppsättningar förblir hanterbara.
+    about_organize_folders_title Mappar
+    about_organize_subjects_desc Ämnen är den huvudsakliga studieenheten. De håller korten du öppnar i Learn and Test-sessioner.
+    about_organize_subjects_title Ämnen
+    about_organize_title Hur innehåll är organiserat
+    about_progress_goals_desc Din profil låter dig ställa in dagliga mål, lära dig sessionsstorlek, testsessionsstorlek och antal svar.
+    about_progress_goals_title Dagliga mål och sessionsinställningar
+    about_progress_social_desc Vänner och topplistfunktioner gör framsteg sociala utan att förändra det grundläggande inlärningsflödet.
+    about_progress_social_title Vänner och Leaderboard
+    about_progress_title Framsteg, Vänner och Leaderboard
+    about_progress_xp_desc Aliolo spårar totalt XP, nuvarande streak och max streak så att framstegen känns synliga över korta och långa studieperioder.
+    about_progress_xp_title XP och Streaks
+    about_support_docs_desc Dokumentationssidan i appen förklarar hur instrumentpanelen, studieflödena och skaparverktygen fungerar idag.
+    about_support_docs_title Dokumentation
+    about_support_feedback_desc Använd ingångspunkter för feedback i appen för att rapportera buggar, föreslå förbättringar eller flagga specifika innehållsproblem med sammanhang.
+    about_support_feedback_title Feedback och rapportering
+    about_support_licenses_desc Licenssidan listar först Aliolos kommersiella licens och sedan de medföljande tredjepartspaketlicenserna.
+    about_support_licenses_title Licenser
+    about_support_onboarding_desc Du kan besöka onboarding igen när som helst för att granska appens huvudidéer och installationsflöde.
+    about_support_onboarding_title Onboarding
+    about_support_settings_desc Användargränssnittsspråk, temaläge, temafärg, ljud, sidofältsplacering och dokumentationssynlighet kan alla justeras från inställningarna.
+    about_support_settings_title Personalisering
+    about_support_title Inställningar, feedback och support
+    addition_emoji Tillägg Emoji
+    addition_numbers Tilläggsnummer
+    aliolo aliolo
+    all_rights_reserved Alla rättigheter reserverade
+    are_you_sure_you_want_to_close_this_feedback_request Är du säker på att du vill stänga denna feedbackförfrågan?
+    are_you_sure_you_want_to_delete_this_folder Är du säker på att du vill ta bort den här mappen?
+    attach_image Bifoga bild
+    back Tillbaka
+    back_to_subjects Tillbaka till Ämnen
+    best_for_quick_goals Bäst för snabba mål
+    billing_disclaimer Prenumerationer förnyas automatiskt om de inte avbryts. Du kan hantera din prenumeration i dina butiksinställningar.
+    billing_title Fakturering
+    browser Webbläsare
+    cancel Avboka
+    cannot_delete_folder_it_is_not_empty Kan inte ta bort mapp: den är inte tom
+    card_id Kort-ID
+    check_your_email_for_code Kontrollera din e-post för kod
+    clear Rensa
+    click_to_view_original Klicka för att se originalet
+    close Nära
+    close_request Stäng förfrågan?
+    collection_id Samlings-ID
+    colors Färger
+    confirm_subscription Bekräfta prenumeration
+    context Sammanhang
+    could_not_launch Kunde inte starta $url
+    counting Räkning
+    current_subscription Aktuell prenumeration
+    delete Radera
+    device Anordning
+    doc_create_intro_desc Den här fliken tar upp hur skapare organiserar innehåll, lokaliserar det och publicerar användbart studiematerial utan att överkomplicera arbetsflödet.
+    doc_create_intro_title Skapa
+    doc_create_json_desc JSON-baserat skapande är ett avancerat arbetsflöde för strukturerat massinnehåll. Det bör förbli valfritt; de flesta kreatörer bör kunna bygga och redigera innehåll genom standardformulären.
+    doc_create_json_title Avancerad JSON-import
+    doc_create_localization_desc Lokalisera innehåll där det är viktigast: namn, beskrivningar, uppmaningar och svar. Håll etiketter konsekventa på olika språk så att användare kan byta studiespråk utan att tappa struktur.
+    doc_create_localization_title Lokalisering
+    doc_create_media_desc Bilder, ljud och video ska stödja inlärningsmålet, inte distrahera från det. Lägg till media när det förbättrar igenkänning, uttal eller sammanhang, och håll kort användbara även när media saknas.
+    doc_create_media_title Media arbetsflöde
+    doc_create_model_desc Skapare arbetar inom pelare och organiserar material med mappar, ämnen, samlingar och kort. Bygg strukturen först och fyll den sedan med lokaliserade uppmaningar, svar och valfria media.
+    doc_create_model_title Innehållsmodell
+    doc_create_visibility_desc Använd "min" för att arbeta med ditt eget innehåll, favoriter för att fästa användbara föremål och offentligt bibliotek för att bläddra i delat material. Offentlig synlighet påverkar upptäckten, medan äganderätten påverkar vad du kan redigera eller ta bort.
+    doc_create_visibility_title Ägarskap och synlighet
+    doc_start_dashboard_desc Instrumentpanelen är ditt huvudbibliotek. Använd sökning för att hitta innehåll snabbt, kombinera sedan källfilter som favoriter, mitt och offentliga bibliotek med åldersfilter för att minska brus.
+    doc_start_dashboard_title Instrumentpanel, sökning och filter
+    doc_start_feedback_desc Använd ingångspunkterna för feedback i appen när något är fel eller oklart. Rapporter kan innehålla det aktuella sammanhanget, vilket gör innehållsproblem lättare att granska och åtgärda.
+    doc_start_feedback_title Feedback och hjälp
+    doc_start_intro_desc Använd den här fliken när du lär dig hur instrumentpanelen, biblioteket, framsteg och sociala funktioner passar ihop.
+    doc_start_intro_title Komma igång
+    doc_start_progress_desc Din profil visar totalt XP, nuvarande streak, max streak och dagliga målframsteg. Sessionsstorlek och antal svar hanteras också från profilsidan.
+    doc_start_progress_title Framsteg och mål
+    doc_start_quick_desc Välj en pelare på instrumentpanelen, öppna ett ämne och börja med Lär dig. Använd favoriter och filter för att begränsa biblioteket, granska sedan ditt XP, streaks och dagliga mål från din profil.
+    doc_start_quick_title Snabbstart
+    doc_start_structure_desc Ämnen håller kort. Mappar grupperar relaterat innehåll i en pelare. Samlingar är utvalda uppsättningar som kan kombinera flera ämnen för studier och delning.
+    doc_start_structure_title Ämnen, mappar och samlingar
+    doc_study_how_desc Börja med Lär dig när du bygger igenkänning, byt sedan till Testa när du vill ha snabbare återkallning och striktare kontroll. Använd kortare sessioner för fokuserad granskning och större sessioner för bredare täckning.
+    doc_study_how_title Hur man studerar
+    doc_study_intro_desc Den här fliken förklarar hur du går igenom innehåll, väljer rätt läge och ställer in dina sessioner för granskning eller återkallelse.
+    doc_study_intro_title Studera
+    doc_study_media_desc När media är tillgänglig, använd den för att förstärka uttal och igenkänning. Autouppspelning är mest användbar för passiv granskning eller upprepad lyssning under kortare sessioner.
+    doc_study_media_title Ljud, Autouppspelning och Media
+    doc_study_modes_desc Lär dig och testa är de viktigaste studieformerna. De använder samma innehåll men stödjer olika takt och svarar på förväntningar, så byt lägen baserat på om du utforskar eller kontrollerar retention.
+    doc_study_modes_title Lär- och testlägen
+    doc_study_scope_desc Studien kan starta från ett enskilt ämne, en mappvy eller en samling. Samlingar är användbara när du vill ha en blandad session över flera ämnen utan att lämna det aktuella flödet.
+    doc_study_scope_title Ämnen, mappar och samlingar i studier
+    doc_tab_create Skapa
+    doc_tab_start Start
+    doc_tab_study Studera
+    documentation Dokumentation
+    edit_subscription Redigera prenumeration
+    email_updated_successfully E-posten har uppdaterats!
+    enter_current_password Ange aktuellt lösenord
+    error Fel: $e
+    error_deleting Fel vid borttagning av: $e
+    error_saving Fel när det skulle sparas: $e
+    error_saving_card Fel när kortet skulle sparas: $e
+    error_updating_favorite Fel vid uppdatering av favorit: $e
+    failed_to_send_reset_code Det gick inte att skicka återställningskoden
+    failed_to_send_verification_code Det gick inte att skicka verifieringskoden
+    fake_only Endast falska
+    feature_creation Skapande verktyg
+    feature_customize Avancerad anpassning
+    feature_full_library Fullständig tillgång till biblioteket
+    feature_testing Interaktiv testning
+    folder_id Mapp-ID
+    free_only Gratis användare
+    generic Generisk
+    home Hem
+    invalid_code Ogiltig kod
+    invalid_email_address Ogiltig e-postadress
+    invalid_json Ogiltig JSON: $e
+    invalid_or_expired_invitation_link Ogiltig eller utgången inbjudningslänk.
+    invalid_or_expired_reset_code Ogiltig eller utgången återställningskod.
+    invitation_sent_awaiting_registration Inbjudan skickad (väntar på registrering)
+    invited_and_request_sent Inbjuden och förfrågan skickad!
+    json JSON
+    label_suffix $label:
+    leaderboard Leaderboard
+    licenses Licenser
+    licenses_aliolo_section_title Aliolo Kommersiell licens
+    licenses_aliolo_subtitle Proprietär programvara och premiumåtkomstvillkor
+    licenses_intro_desc Aliolos kommersiella licens visas först. Tredjepartspaketlicenser följer nedan.
+    licenses_intro_title Aliolo Licens- och paketmeddelanden
+    licenses_third_party_section_title Tredjepartspaketlicenser
+    linux_distro Linux Distro
+    loading Belastning...
+    localized_data Lokaliserade data
+    monthly_access Månatlig tillgång
+    most_popular_choice Mest populära valet
+    new_email Ny e-post
+    no_cards_available_for_this_session Inga kort tillgängliga för denna session.
+    no_cards_found Inga kort hittades
+    no_subjects_found Inga ämnen hittades
+    no_subjects_found_in_this_collection Inga ämnen hittades i den här samlingen
+    no_users_found Inga användare hittades
+    os_version OS-version
+    password_updated_successfully Lösenordet har uppdaterats!
+    payments_are_not_yet_integrated_on_web_please_use_the_mobile_app_to_upgrade Betalningar är ännu inte integrerade på webben. Använd mobilappen för att uppgradera.
+    personal_data Personuppgifter
+    pick_date Välj datum
+    plan_monthly_tagline Mest populära valet
+    plan_monthly_title Månatlig tillgång
+    plan_weekly_tagline Bäst för snabba mål
+    plan_weekly_title Veckovis tillgång
+    plan_yearly_tagline Spara 33 % per månad
+    plan_yearly_title Årlig tillgång
+    platform Plattform
+    play Spela
+    play_audio Spela ljud
+    please_enter_the_6_digit_code Ange den 6-siffriga koden
+    please_wait_for_a_response_before_replying_again Vänta på svar innan du svarar igen.
+    premium_expires_at Upphör att gälla $date
+    premium_lifetime Livstidsåtkomst
+    premium_only Endast premium
+    premium_status_active Du är premiummedlem
+    premium_unlock_desc Få tillgång till alla ämnen, skapa ett obegränsat antal kort och stöd Aliolos uppdrag.
+    premium_unlock_title Lås upp full åtkomst
+    product_not_available_in_store Produkten finns inte i butik.
+    profile Profil
+    public_other_subject Offentligt/annat ämne
+    purchase_failed Köp misslyckades: $e
+    recovery_error Återställningsfel: $e
+    refresh_conversation Uppdatera konversationen
+    renderer Renderare
+    reset_code Återställ koden
+    reset_code_sent_to_please_check_your_inbox Återställ koden skickad till $email. Kontrollera din inkorg.
+    restore_purchases Återställ inköp
+    save Spara
+    save_33_per_month Spara 33 % per månad
+    saved_successfully Sparad framgångsrikt
+    search_users Sök användare
+    session_complete Session klar!
+    session_complete_description Bra jobbat! Du har avslutat alla kort i denna session.
+    settings Inställningar
+    show_documentation_btn Visa dokumentationsknapp
+    show_documentation_btn_desc Visa dokumentationsknappen i appfältet.
+    show_fake_users Visa falska användare
+    subject_id Ämnes-ID
+    subscribe_now Prenumerera nu
+    subscription_data Prenumerationsdata
+    subscription_updated Prenumerationen uppdaterad
+    subtraction_emoji Subtraktionsemoji
+    subtraction_numbers Subtraktionsnummer
+    technical_context TEKNISK KONTEXT
+    testing_mode Testläge
+    text Text
+    this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards Det här är en mapp. Du kan använda Learn/Test-knapparna ovan för att öva på alla kort.
+    type_your_reply Skriv ditt svar...
+    ua UA
+    unknown_user_profile_missing Okänd användare (profil saknas)
+    user Användare
+    user_id Användar-ID
+    user_with_this_email_already_exists_please_log_in_instead Användare med denna e-postadress finns redan. Logga in istället.
+    users Användare
+    users_filter Filtrera användare
+    verification_code Verifieringskod
+    verification_code_sent_to Verifieringskod skickad till $email
+    version Version
+    view_onboarding Se onboarding
+    weekly_access Veckovis tillgång
+    welcome_complete_your_profile_to_join_aliolo Välkomna! Fyll i din profil för att gå med i aliolo.
+    yearly_access Årlig tillgång
+    you_do_not_have_permission_to_edit_this_card Du har inte behörighet att redigera detta kort
+    you_do_not_have_permission_to_view_this_card_details Du har inte behörighet att se denna kortinformation.

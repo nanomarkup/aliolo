@@ -1,0 +1,228 @@
+..
+    a_folder_with_this_name_already_exists_in_this_pillar Bu sütunda bu adda bir klasör zaten mevcut
+    about Hakkında
+    about_intro_audience_desc Aliolo yapılandırılmış inceleme isteyen öğrencileri, ulaşılabilir çalışma içeriğine ihtiyaç duyan ebeveynleri ve öğretmenleri ve kendi öğrenme materyallerini düzenleyen ve yayınlayan yaratıcıları destekler.
+    about_intro_audience_title Kimin İçin?
+    about_intro_desc Aliolo basit çalışma akışları, esnek içerik organizasyonu ve zaman içinde istikrarlı ilerleme üzerine kurulmuş bir görsel öğrenme uygulamasıdır.
+    about_intro_start_desc Kontrol panelinden başlayın, bir sütun seçin, bir konu açın ve Learn ile başlayın. Yararlı içerikleri favorilere kaydedin, böylece daha sonra tekrar ziyaret etmek daha kolay olur.
+    about_intro_start_title Nasıl Başlanır?
+    about_intro_title Aliolo hakkında
+    about_learn_discovery_desc Arama, yaş filtreleri ve favoriler, benimki ve halk kütüphanesi gibi kaynak filtreleri, doğru içeriği hızlı bir şekilde bulmanıza yardımcı olur.
+    about_learn_discovery_title Keşif ve Filtreleme
+    about_learn_language_desc Farklı dillerdeki içerikleri çalışabilir ve profilinizdeki oturum ayarlarını hızınıza ve mevcut hedeflerinize uyacak şekilde değiştirebilirsiniz.
+    about_learn_language_title Dil ve Mod Esnekliği
+    about_learn_media_desc Resimler, sesler ve videolar, öğrenme içeriğinde mevcut olduklarında tanımayı, telaffuzu ve bağlamı destekleyebilir.
+    about_learn_media_title Medya Desteği
+    about_learn_modes_desc Tanınırlık ve güven oluşturmak için Öğren'i kullanın, ardından daha sıkı hatırlama ve daha hızlı inceleme istediğinizde Test'e geçin.
+    about_learn_modes_title Öğrenin ve Test Edin
+    about_learn_title Nasıl Öğrenirsiniz?
+    about_organize_collections_desc Koleksiyonlar, birden fazla konuyu tek bir çalışma akışında birleştirir; bu, karma inceleme ve seçilmiş setler için faydalıdır.
+    about_organize_collections_title Koleksiyonlar
+    about_organize_creation_desc İçerik oluşturucular kendi içeriklerini düzenleyebilir, çalışırken gizli tutabilir veya hazır olduğunda halk kütüphanesi aracılığıyla sunabilir.
+    about_organize_creation_title Sahiplik ve Görünürlük
+    about_organize_folders_desc Klasörler ilgili konuları bir sütun içinde gruplandırır, böylece daha büyük içerik kümeleri yönetilebilir kalır.
+    about_organize_folders_title Klasörler
+    about_organize_subjects_desc Konular çalışmanın ana birimidir. Öğrenme ve Test oturumlarında açtığınız kartları tutarlar.
+    about_organize_subjects_title Konular
+    about_organize_title İçerik Nasıl Düzenlenir?
+    about_progress_goals_desc Profiliniz günlük hedef hedeflerinizi ayarlamanıza, oturum boyutunu, test oturumu boyutunu ve yanıt sayısını öğrenmenize olanak tanır.
+    about_progress_goals_title Günlük Hedefler ve Oturum Ayarları
+    about_progress_social_desc Arkadaşlar ve skor tablosu özellikleri, temel öğrenme akışını değiştirmeden ilerlemeyi sosyal hale getirir.
+    about_progress_social_title Arkadaşlar ve Skor Tablosu
+    about_progress_title İlerleme, Arkadaşlar ve Skor Tablosu
+    about_progress_xp_desc Aliolo toplam XP'yi, mevcut seriyi ve maksimum seriyi takip eder, böylece kısa ve uzun çalışma dönemlerinde ilerleme görünür hale gelir.
+    about_progress_xp_title XP ve Seriler
+    about_support_docs_desc Uygulama içi dokümantasyon sayfasında kontrol panelinin, çalışma akışlarının ve içerik oluşturucu araçlarının günümüzde nasıl çalıştığı açıklanmaktadır.
+    about_support_docs_title Dokümantasyon
+    about_support_feedback_desc Hataları bildirmek, iyileştirmeler önermek veya belirli içerik sorunlarını bağlamla işaretlemek için uygulama genelinde geri bildirim giriş noktalarını kullanın.
+    about_support_feedback_title Geri Bildirim ve Raporlama
+    about_support_licenses_desc Lisanslar sayfasında, önce Aliolo'nin ticari lisansı, ardından da paketlenmiş üçüncü taraf paket lisansları listelenir.
+    about_support_licenses_title Lisanslar
+    about_support_onboarding_desc Uygulamanın ana fikirlerini ve kurulum akışını incelemek için istediğiniz zaman katılım sürecini yeniden ziyaret edebilirsiniz.
+    about_support_onboarding_title İlk katılım
+    about_support_settings_desc Kullanıcı arayüzü dili, tema modu, tema rengi, ses, kenar çubuğu yerleşimi ve belgelerin görünürlüğü ayarlardan ayarlanabilir.
+    about_support_settings_title Kişiselleştirme
+    about_support_title Ayarlar, Geri Bildirim ve Destek
+    addition_emoji Ek Emoji
+    addition_numbers İlave Numaralar
+    aliolo aliolo
+    all_rights_reserved Her hakkı saklıdır
+    are_you_sure_you_want_to_close_this_feedback_request Bu geri bildirim isteğini kapatmak istediğinizden emin misiniz?
+    are_you_sure_you_want_to_delete_this_folder Bu klasörü silmek istediğinizden emin misiniz?
+    attach_image Resim ekle
+    back Geri
+    back_to_subjects Konulara Geri Dön
+    best_for_quick_goals Hızlı hedefler için en iyisi
+    billing_disclaimer Abonelikler iptal edilmediği sürece otomatik olarak yenilenir. Aboneliğinizi mağaza ayarlarınızdan yönetebilirsiniz.
+    billing_title Faturalandırma
+    browser Tarayıcı
+    cancel İptal etmek
+    cannot_delete_folder_it_is_not_empty Klasör silinemiyor: boş değil
+    card_id Kart Kimliği
+    check_your_email_for_code Kod için e-postanızı kontrol edin
+    clear Temizlemek
+    click_to_view_original Orijinali görmek için tıklayın
+    close Kapalı
+    close_request İsteği Kapat?
+    collection_id Koleksiyon Kimliği
+    colors Renkler
+    confirm_subscription Aboneliği Onayla
+    context Bağlam
+    could_not_launch $url başlatılamadı
+    counting Sayma
+    current_subscription Mevcut Abonelik
+    delete Silmek
+    device Cihaz
+    doc_create_intro_desc Bu sekme, içerik oluşturucuların iş akışını aşırı karmaşık hale getirmeden içeriği nasıl düzenlediklerini, yerelleştirdiklerini ve faydalı çalışma materyallerini nasıl yayınladıklarını kapsar.
+    doc_create_intro_title Yaratmak
+    doc_create_json_desc JSON tabanlı oluşturma, yapılandırılmış toplu içerik için gelişmiş bir iş akışıdır. İsteğe bağlı kalmalı; çoğu yaratıcının standart formlar aracılığıyla içerik oluşturabilmesi ve düzenleyebilmesi gerekir.
+    doc_create_json_title Gelişmiş JSON İçe Aktarma
+    doc_create_localization_desc İçeriği en önemli yerde yerelleştirin: adlar, açıklamalar, istemler ve yanıtlar. Kullanıcıların yapıyı kaybetmeden çalışma dilini değiştirebilmesi için etiketlerin diller arasında tutarlı olmasını sağlayın.
+    doc_create_localization_title Yerelleştirme
+    doc_create_media_desc Resimler, sesler ve videolar öğrenme hedefini desteklemeli, dikkati dağıtmamalıdır. Tanıma, telaffuz veya bağlamı iyileştirdiğinde medya ekleyin ve medya eksik olduğunda bile kartları kullanılabilir durumda tutun.
+    doc_create_media_title Medya İş Akışı
+    doc_create_model_desc İçerik oluşturucular sütunların içinde çalışır ve materyalleri klasörler, konular, koleksiyonlar ve kartlarla düzenler. Önce yapıyı oluşturun, ardından bunu yerelleştirilmiş istemler, yanıtlar ve isteğe bağlı medyayla doldurun.
+    doc_create_model_title İçerik Modeli
+    doc_create_visibility_desc Kendi içeriğiniz üzerinde çalışmak için "benimki"yi, faydalı öğeleri sabitlemek için favorilerinizi ve paylaşılan materyale göz atmak için halk kütüphanesini kullanın. Herkese açık görünürlük, keşfi etkilerken sahiplik, neyi düzenleyebileceğinizi veya silebileceğinizi etkiler.
+    doc_create_visibility_title Sahiplik ve Görünürlük
+    doc_start_dashboard_desc Kontrol paneli ana kütüphanenizdir. İçeriği hızlı bir şekilde bulmak için aramayı kullanın, ardından gürültüyü azaltmak için favoriler, benimki ve halk kütüphanesi gibi kaynak filtrelerini yaş filtreleriyle birleştirin.
+    doc_start_dashboard_title Kontrol Paneli, Arama ve Filtreler
+    doc_start_feedback_desc Bir şeyler yanlış olduğunda veya belirsiz olduğunda uygulamadaki geri bildirim giriş noktalarını kullanın. Raporlar mevcut bağlamı içerebilir, bu da içerik sorunlarının incelenmesini ve düzeltilmesini kolaylaştırır.
+    doc_start_feedback_title Geribildirim ve Yardım
+    doc_start_intro_desc Kontrol panelinin, kitaplığın, ilerlemenin ve sosyal özelliklerin birbirine nasıl uyduğunu öğrenirken bu sekmeyi kullanın.
+    doc_start_intro_title Başlarken
+    doc_start_progress_desc Profiliniz toplam XP'yi, mevcut seriyi, maksimum seriyi ve günlük hedef ilerlemesini gösterir. Oturum boyutu ve yanıt sayısı da profil sayfasından yönetilir.
+    doc_start_progress_title İlerleme ve Hedefler
+    doc_start_quick_desc Kontrol panelinden bir bölüm seçin, bir konu açın ve Learn ile başlayın. Kitaplığı daraltmak için favorileri ve filtreleri kullanın, ardından profilinizden XP'nizi, galibiyet serilerinizi ve günlük hedefinizi inceleyin.
+    doc_start_quick_title Hızlı Başlangıç
+    doc_start_structure_desc Deneklerin kartları vardır. Klasörler ilgili içeriği bir sütun içinde gruplandırır. Koleksiyonlar, çalışma ve paylaşım için birden fazla konuyu birleştirebilen özel olarak hazırlanmış setlerdir.
+    doc_start_structure_title Konular, Klasörler ve Koleksiyonlar
+    doc_study_how_desc Tanıma geliştirirken Öğren ile başlayın, ardından daha hızlı hatırlama ve daha sıkı kontrol istediğinizde Test'e geçin. Odaklanmış inceleme için daha kısa oturumları, daha geniş kapsam için daha büyük oturumları kullanın.
+    doc_study_how_title Nasıl Çalışılır?
+    doc_study_intro_desc Bu sekme içerikte nasıl gezineceğinizi, doğru modu nasıl seçeceğinizi ve oturumlarınızı gözden geçirmek veya geri çağırmak için nasıl ayarlayacağınızı açıklar.
+    doc_study_intro_title Çalışmak
+    doc_study_media_desc Medya mevcut olduğunda, telaffuzu ve tanınmayı güçlendirmek için bunu kullanın. Otomatik oynatma, pasif inceleme veya kısa oturumlar sırasında tekrarlanan dinleme için en kullanışlıdır.
+    doc_study_media_title Ses, Otomatik Oynatma ve Medya
+    doc_study_modes_desc Öğren ve Test temel çalışma modlarıdır. Aynı içeriği kullanırlar ancak farklı ilerleme hızını ve yanıt beklentilerini desteklerler; bu nedenle, araştırma veya elde tutma durumunu kontrol etmenize göre modları değiştirin.
+    doc_study_modes_title Öğrenme ve Test Modları
+    doc_study_scope_desc Çalışma tek bir konudan, klasör görünümünden veya koleksiyondan başlayabilir. Koleksiyonlar, mevcut akıştan ayrılmadan çeşitli konularda karma bir oturum istediğinizde kullanışlıdır.
+    doc_study_scope_title Çalışmadaki Konular, Klasörler ve Koleksiyonlar
+    doc_tab_create Yaratmak
+    doc_tab_start Başlangıç
+    doc_tab_study Çalışmak
+    documentation Dokümantasyon
+    edit_subscription Aboneliği düzenle
+    email_updated_successfully E-posta başarıyla güncellendi!
+    enter_current_password Mevcut şifreyi girin
+    error Hata: $e
+    error_deleting Silinirken hata oluştu: $e
+    error_saving Kaydederken hata oluştu: $e
+    error_saving_card Kart kaydedilirken hata oluştu: $e
+    error_updating_favorite Favori güncellenirken hata oluştu: $e
+    failed_to_send_reset_code Sıfırlama kodu gönderilemedi
+    failed_to_send_verification_code Doğrulama kodu gönderilemedi
+    fake_only Yalnızca sahte
+    feature_creation Oluşturma Araçları
+    feature_customize Gelişmiş Özelleştirme
+    feature_full_library Tam Kütüphane Erişimi
+    feature_testing İnteraktif Test
+    folder_id Klasör Kimliği
+    free_only Ücretsiz kullanıcılar
+    generic Genel
+    home Ev
+    invalid_code Geçersiz kod
+    invalid_email_address Geçersiz e-posta adresi
+    invalid_json Geçersiz JSON: $e
+    invalid_or_expired_invitation_link Geçersiz veya süresi dolmuş davet bağlantısı.
+    invalid_or_expired_reset_code Geçersiz veya süresi dolmuş sıfırlama kodu.
+    invitation_sent_awaiting_registration Davetiye gönderildi (kayıt bekleniyor)
+    invited_and_request_sent Davet edildi ve istek gönderildi!
+    json JSON
+    label_suffix $label:
+    leaderboard Liderlik tablosu
+    licenses Lisanslar
+    licenses_aliolo_section_title Aliolo Ticari Lisans
+    licenses_aliolo_subtitle Tescilli yazılım ve premium erişim koşulları
+    licenses_intro_desc Önce Aliolo'nin ticari lisansı görünür. Üçüncü taraf paket lisansları aşağıda verilmiştir.
+    licenses_intro_title Aliolo Lisans ve Paket Bildirimleri
+    licenses_third_party_section_title Üçüncü Taraf Paket Lisansları
+    linux_distro Linux Dağıtımı
+    loading Yükleniyor...
+    localized_data Yerelleştirilmiş Veriler
+    monthly_access Aylık Erişim
+    most_popular_choice En popüler seçim
+    new_email Yeni E-posta
+    no_cards_available_for_this_session Bu oturum için kullanılabilir kart yok.
+    no_cards_found Kart bulunamadı
+    no_subjects_found Hiçbir konu bulunamadı
+    no_subjects_found_in_this_collection Bu koleksiyonda konu bulunamadı
+    no_users_found Kullanıcı bulunamadı
+    os_version İşletim Sistemi Sürümü
+    password_updated_successfully Şifre başarıyla güncellendi!
+    payments_are_not_yet_integrated_on_web_please_use_the_mobile_app_to_upgrade Ödemeler henüz Web'e entegre edilmemiştir. Yükseltmek için lütfen mobil uygulamayı kullanın.
+    personal_data Kişisel veriler
+    pick_date Tarih seç
+    plan_monthly_tagline En popüler seçim
+    plan_monthly_title Aylık Erişim
+    plan_weekly_tagline Hızlı hedefler için en iyisi
+    plan_weekly_title Haftalık Erişim
+    plan_yearly_tagline Ayda %33 tasarruf edin
+    plan_yearly_title Yıllık Erişim
+    platform Platformu
+    play Oynamak
+    play_audio Ses Çal
+    please_enter_the_6_digit_code Lütfen 6 haneli kodu giriniz
+    please_wait_for_a_response_before_replying_again Lütfen tekrar yanıt vermeden önce yanıt bekleyin.
+    premium_expires_at $date tarihinde sona eriyor
+    premium_lifetime Ömür boyu erişim
+    premium_only Yalnızca premium
+    premium_status_active Premium üyesin
+    premium_unlock_desc Tüm konulara erişim kazanın, sınırsız kart oluşturun ve Aliolo'nin misyonunu destekleyin.
+    premium_unlock_title Tam Erişimin Kilidini Açın
+    product_not_available_in_store Ürün mağazada mevcut değil.
+    profile Profil
+    public_other_subject Kamu/Diğer Konu
+    purchase_failed Satın alma başarısız oldu: $e
+    recovery_error Kurtarma hatası: $e
+    refresh_conversation Konuşmayı yenile
+    renderer Oluşturucu
+    reset_code Kodu Sıfırla
+    reset_code_sent_to_please_check_your_inbox $email'ye gönderilen kodu sıfırlayın. Lütfen gelen kutunuzu kontrol edin.
+    restore_purchases Satın Alınanları Geri Yükle
+    save Kaydetmek
+    save_33_per_month Ayda %33 tasarruf edin
+    saved_successfully Başarıyla kaydedildi
+    search_users Kullanıcıları ara
+    session_complete Oturum Tamamlandı!
+    session_complete_description Harika iş! Bu oturumdaki tüm kartları bitirdiniz.
+    settings Ayarlar
+    show_documentation_btn Belgeleri göster düğmesi
+    show_documentation_btn_desc Uygulama çubuğunda dokümantasyon düğmesini görüntüleyin.
+    show_fake_users Sahte Kullanıcıları Göster
+    subject_id Konu Kimliği
+    subscribe_now Şimdi Abone Ol
+    subscription_data Abonelik verileri
+    subscription_updated Abonelik güncellendi
+    subtraction_emoji Çıkarma Emojisi
+    subtraction_numbers Çıkarma Sayıları
+    technical_context TEKNİK BAĞLAM
+    testing_mode Test modu
+    text Metin
+    this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards Bu bir klasör. Tüm kartların alıştırmasını yapmak için yukarıdaki Öğren/Test düğmelerini kullanabilirsiniz.
+    type_your_reply Cevabınızı yazın...
+    ua Birleşik Arap Emirlikleri
+    unknown_user_profile_missing Bilinmeyen Kullanıcı (Profil eksik)
+    user Kullanıcı
+    user_id Kullanıcı kimliği
+    user_with_this_email_already_exists_please_log_in_instead Bu e-postaya sahip kullanıcı zaten mevcut. Lütfen bunun yerine giriş yapın.
+    users Kullanıcılar
+    users_filter Kullanıcıları filtrele
+    verification_code Doğrulama Kodu
+    verification_code_sent_to Doğrulama kodu $email adresine gönderildi
+    version Sürüm
+    view_onboarding İlk katılımı görüntüle
+    weekly_access Haftalık Erişim
+    welcome_complete_your_profile_to_join_aliolo Hoş geldin! aliolo'e katılmak için profilinizi tamamlayın.
+    yearly_access Yıllık Erişim
+    you_do_not_have_permission_to_edit_this_card Bu kartı düzenleme izniniz yok
+    you_do_not_have_permission_to_view_this_card_details Bu kart ayrıntılarını görüntüleme izniniz yok.

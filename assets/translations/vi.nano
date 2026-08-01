@@ -1,0 +1,228 @@
+..
+    a_folder_with_this_name_already_exists_in_this_pillar Một thư mục có tên này đã tồn tại trong cột này
+    about Về
+    about_intro_audience_desc Aliolo hỗ trợ những học viên muốn xem xét có cấu trúc, phụ huynh và giáo viên cần nội dung học tập dễ tiếp cận cũng như những người sáng tạo tổ chức và xuất bản tài liệu học tập của riêng họ.
+    about_intro_audience_title Nó dành cho ai
+    about_intro_desc Aliolo là một ứng dụng học tập trực quan được xây dựng dựa trên các quy trình nghiên cứu đơn giản, tổ chức nội dung linh hoạt và tiến độ ổn định theo thời gian.
+    about_intro_start_desc Bắt đầu trên trang tổng quan, chọn trụ cột, mở chủ đề và bắt đầu với Tìm hiểu. Lưu nội dung hữu ích vào mục yêu thích để dễ dàng xem lại sau này.
+    about_intro_start_title Làm thế nào để bắt đầu
+    about_intro_title Giới thiệu về Aliolo
+    about_learn_discovery_desc Tìm kiếm, bộ lọc độ tuổi và bộ lọc nguồn như mục yêu thích, của tôi và thư viện công cộng giúp bạn nhanh chóng tìm thấy nội dung phù hợp.
+    about_learn_discovery_title Khám phá và lọc
+    about_learn_language_desc Bạn có thể nghiên cứu nội dung bằng nhiều ngôn ngữ khác nhau và điều chỉnh cài đặt phiên trong hồ sơ của mình để phù hợp với tốc độ và mục tiêu hiện tại của bạn.
+    about_learn_language_title Ngôn ngữ và chế độ linh hoạt
+    about_learn_media_desc Hình ảnh, âm thanh và video có thể hỗ trợ nhận dạng, phát âm và ngữ cảnh khi chúng có sẵn trong nội dung học tập.
+    about_learn_media_title Hỗ trợ truyền thông
+    about_learn_modes_desc Sử dụng Học để xây dựng sự công nhận và sự tự tin, sau đó chuyển sang Kiểm tra khi bạn muốn nhớ lại chặt chẽ hơn và ôn tập nhanh hơn.
+    about_learn_modes_title Tìm hiểu và kiểm tra
+    about_learn_title Bạn học như thế nào
+    about_organize_collections_desc Bộ sưu tập kết hợp nhiều chủ đề vào một luồng nghiên cứu, rất hữu ích cho các học phần được tuyển chọn và đánh giá hỗn hợp.
+    about_organize_collections_title Bộ sưu tập
+    about_organize_creation_desc Người sáng tạo có thể sắp xếp nội dung của riêng mình, giữ nội dung đó ở chế độ riêng tư khi làm việc hoặc hiển thị nội dung đó qua thư viện công cộng khi nội dung đó sẵn sàng.
+    about_organize_creation_title Quyền sở hữu và khả năng hiển thị
+    about_organize_folders_desc Các thư mục nhóm các chủ đề liên quan vào một cột để có thể quản lý được các bộ nội dung lớn hơn.
+    about_organize_folders_title Thư mục
+    about_organize_subjects_desc Môn học là đơn vị học tập chính. Họ giữ các thẻ bạn mở trong các buổi Học và Kiểm tra.
+    about_organize_subjects_title Môn học
+    about_organize_title Nội dung được tổ chức như thế nào
+    about_progress_goals_desc Hồ sơ của bạn cho phép bạn điều chỉnh các mục tiêu mục tiêu hàng ngày, tìm hiểu quy mô phiên, quy mô phiên kiểm tra và số lượng câu trả lời.
+    about_progress_goals_title Mục tiêu hàng ngày và cài đặt phiên
+    about_progress_social_desc Tính năng bạn bè và bảng xếp hạng giúp tiến bộ về mặt xã hội mà không làm thay đổi quy trình học tập cốt lõi.
+    about_progress_social_title Bạn bè và Bảng xếp hạng
+    about_progress_title Tiến độ, Bạn bè và Bảng xếp hạng
+    about_progress_xp_desc Aliolo theo dõi tổng XP, chuỗi hiện tại và chuỗi tối đa để có thể thấy rõ tiến độ trong thời gian nghiên cứu ngắn và dài.
+    about_progress_xp_title XP và Chuỗi
+    about_support_docs_desc Trang tài liệu trong ứng dụng giải thích cách hoạt động của trang tổng quan, quy trình nghiên cứu và các công cụ dành cho người sáng tạo hiện nay.
+    about_support_docs_title Tài liệu
+    about_support_feedback_desc Sử dụng các điểm nhập phản hồi trên ứng dụng để báo cáo lỗi, đề xuất cải tiến hoặc gắn cờ các vấn đề nội dung cụ thể theo ngữ cảnh.
+    about_support_feedback_title Phản hồi và báo cáo
+    about_support_licenses_desc Trang giấy phép liệt kê giấy phép thương mại của Aliolo trước tiên, sau đó là các giấy phép gói bên thứ ba đi kèm.
+    about_support_licenses_title Giấy phép
+    about_support_onboarding_desc Bạn có thể xem lại quá trình giới thiệu bất kỳ lúc nào để xem lại các ý tưởng chính và quy trình thiết lập của ứng dụng.
+    about_support_onboarding_title Giới thiệu
+    about_support_settings_desc Ngôn ngữ giao diện người dùng, chế độ chủ đề, màu chủ đề, âm thanh, vị trí thanh bên và khả năng hiển thị tài liệu đều có thể được điều chỉnh từ cài đặt.
+    about_support_settings_title Cá nhân hóa
+    about_support_title Cài đặt, phản hồi và hỗ trợ
+    addition_emoji Biểu tượng cảm xúc bổ sung
+    addition_numbers Số bổ sung
+    aliolo aliolo
+    all_rights_reserved Mọi quyền được bảo lưu
+    are_you_sure_you_want_to_close_this_feedback_request Bạn có chắc chắn muốn đóng yêu cầu phản hồi này không?
+    are_you_sure_you_want_to_delete_this_folder Bạn có chắc chắn muốn xóa thư mục này?
+    attach_image Đính kèm hình ảnh
+    back Mặt sau
+    back_to_subjects Quay lại chủ đề
+    best_for_quick_goals Tốt nhất cho mục tiêu nhanh chóng
+    billing_disclaimer Đăng ký tự động gia hạn trừ khi bị hủy. Bạn có thể quản lý đăng ký của mình trong cài đặt cửa hàng.
+    billing_title Thanh toán
+    browser Trình duyệt
+    cancel Hủy bỏ
+    cannot_delete_folder_it_is_not_empty Không thể xóa thư mục: nó không trống
+    card_id Mã thẻ
+    check_your_email_for_code Kiểm tra email của bạn để lấy mã
+    clear Thông thoáng
+    click_to_view_original Click để xem bản gốc
+    close Đóng
+    close_request Đóng yêu cầu?
+    collection_id ID bộ sưu tập
+    colors Màu sắc
+    confirm_subscription Xác nhận đăng ký
+    context Bối cảnh
+    could_not_launch Không thể khởi chạy $url
+    counting Đếm
+    current_subscription Đăng ký hiện tại
+    delete Xóa bỏ
+    device Thiết bị
+    doc_create_intro_desc Tab này bao gồm cách người sáng tạo sắp xếp nội dung, bản địa hóa nội dung và xuất bản tài liệu nghiên cứu hữu ích mà không làm phức tạp quy trình làm việc.
+    doc_create_intro_title Tạo nên
+    doc_create_json_desc Tạo dựa trên JSON là một quy trình làm việc nâng cao dành cho nội dung hàng loạt có cấu trúc. Nó vẫn là tùy chọn; hầu hết người sáng tạo đều có thể xây dựng và chỉnh sửa nội dung thông qua các biểu mẫu tiêu chuẩn.
+    doc_create_json_title Nhập JSON nâng cao
+    doc_create_localization_desc Bản địa hóa nội dung ở nơi quan trọng nhất: tên, mô tả, lời nhắc và câu trả lời. Giữ nhãn nhất quán giữa các ngôn ngữ để người dùng có thể chuyển đổi ngôn ngữ học mà không làm mất cấu trúc.
+    doc_create_localization_title Bản địa hóa
+    doc_create_media_desc Hình ảnh, âm thanh và video phải hỗ trợ mục tiêu học tập chứ không làm sao lãng mục tiêu đó. Thêm phương tiện khi nó cải thiện khả năng nhận dạng, phát âm hoặc ngữ cảnh và giữ cho thẻ có thể sử dụng được ngay cả khi thiếu phương tiện.
+    doc_create_media_title Quy trình làm việc truyền thông
+    doc_create_model_desc Người sáng tạo làm việc bên trong các cột và sắp xếp tài liệu bằng các thư mục, chủ đề, bộ sưu tập và thẻ. Trước tiên, hãy xây dựng cấu trúc, sau đó điền vào đó các lời nhắc, câu trả lời và phương tiện tùy chọn đã bản địa hóa.
+    doc_create_model_title Mô hình nội dung
+    doc_create_visibility_desc Sử dụng "của tôi" để làm việc trên nội dung của riêng bạn, mục yêu thích để ghim các mục hữu ích và thư viện công cộng để duyệt tài liệu được chia sẻ. Khả năng hiển thị công khai ảnh hưởng đến khả năng khám phá, trong khi quyền sở hữu ảnh hưởng đến nội dung bạn có thể chỉnh sửa hoặc xóa.
+    doc_create_visibility_title Quyền sở hữu và khả năng hiển thị
+    doc_start_dashboard_desc Bảng điều khiển là thư viện chính của bạn. Sử dụng tìm kiếm để tìm nội dung nhanh chóng, sau đó kết hợp các bộ lọc nguồn như mục yêu thích, của tôi và thư viện công cộng với các bộ lọc theo độ tuổi để giảm nhiễu.
+    doc_start_dashboard_title Trang tổng quan, Tìm kiếm và Bộ lọc
+    doc_start_feedback_desc Sử dụng các điểm nhập phản hồi trên ứng dụng khi có lỗi hoặc không rõ ràng. Các báo cáo có thể bao gồm bối cảnh hiện tại, giúp việc xem xét và khắc phục các vấn đề về nội dung trở nên dễ dàng hơn.
+    doc_start_feedback_title Phản hồi và trợ giúp
+    doc_start_intro_desc Sử dụng tab này khi bạn đang tìm hiểu cách bảng điều khiển, thư viện, tiến trình và các tính năng xã hội khớp với nhau như thế nào.
+    doc_start_intro_title Bắt đầu
+    doc_start_progress_desc Hồ sơ của bạn hiển thị tổng XP, chuỗi hiện tại, chuỗi tối đa và tiến độ mục tiêu hàng ngày. Quy mô phiên và số lượng câu trả lời cũng được quản lý từ trang hồ sơ.
+    doc_start_progress_title Tiến độ và Mục tiêu
+    doc_start_quick_desc Chọn một cột trên bảng điều khiển, mở một chủ đề và bắt đầu với Tìm hiểu. Sử dụng các mục yêu thích và bộ lọc để thu hẹp thư viện, sau đó xem lại XP, chuỗi và mục tiêu hàng ngày từ hồ sơ của bạn.
+    doc_start_quick_title Bắt đầu nhanh
+    doc_start_structure_desc Đối tượng cầm thẻ. Các thư mục nhóm nội dung liên quan bên trong một cột. Bộ sưu tập là các bộ được tuyển chọn có thể kết hợp nhiều chủ đề để nghiên cứu và chia sẻ.
+    doc_start_structure_title Chủ đề, thư mục và bộ sưu tập
+    doc_study_how_desc Hãy bắt đầu với Tìm hiểu khi bạn đang xây dựng khả năng nhận dạng, sau đó chuyển sang Kiểm tra khi bạn muốn nhớ lại nhanh hơn và kiểm tra chặt chẽ hơn. Sử dụng các phiên ngắn hơn để xem xét tập trung và các phiên lớn hơn để có phạm vi bao quát hơn.
+    doc_study_how_title Cách học
+    doc_study_intro_desc Tab này giải thích cách di chuyển qua nội dung, chọn chế độ phù hợp và điều chỉnh các phiên của bạn để xem lại hoặc thu hồi.
+    doc_study_intro_title Học
+    doc_study_media_desc Khi phương tiện có sẵn, hãy sử dụng nó để củng cố khả năng phát âm và nhận biết. Tự động phát hữu ích nhất cho việc xem lại thụ động hoặc nghe lặp lại trong các phiên ngắn hơn.
+    doc_study_media_title Âm thanh, Tự động phát và Phương tiện
+    doc_study_modes_desc Học và Kiểm tra là các chế độ học tập cốt lõi. Chúng sử dụng cùng một nội dung nhưng hỗ trợ nhịp độ khác nhau và trả lời các kỳ vọng, vì vậy, hãy chuyển đổi chế độ dựa trên việc bạn đang khám phá hay kiểm tra khả năng lưu giữ.
+    doc_study_modes_title Chế độ học và kiểm tra
+    doc_study_scope_desc Nghiên cứu có thể bắt đầu từ một chủ đề duy nhất, chế độ xem thư mục hoặc bộ sưu tập. Bộ sưu tập rất hữu ích khi bạn muốn có một phiên kết hợp giữa nhiều chủ đề mà không cần rời khỏi luồng hiện tại.
+    doc_study_scope_title Chủ đề, Thư mục và Bộ sưu tập trong Nghiên cứu
+    doc_tab_create Tạo nên
+    doc_tab_start Bắt đầu
+    doc_tab_study Học
+    documentation Tài liệu
+    edit_subscription Chỉnh sửa đăng ký
+    email_updated_successfully Email được cập nhật thành công!
+    enter_current_password Nhập mật khẩu hiện tại
+    error Lỗi: $e
+    error_deleting Lỗi xóa: $e
+    error_saving Lỗi lưu: $e
+    error_saving_card Lỗi lưu thẻ: $e
+    error_updating_favorite Lỗi cập nhật mục yêu thích: $e
+    failed_to_send_reset_code Không gửi được mã đặt lại
+    failed_to_send_verification_code Không gửi được mã xác minh
+    fake_only Chỉ giả
+    feature_creation Công cụ tạo
+    feature_customize Tùy chỉnh nâng cao
+    feature_full_library Truy cập toàn bộ thư viện
+    feature_testing Thử nghiệm tương tác
+    folder_id Mã thư mục
+    free_only Người dùng miễn phí
+    generic Chung
+    home Trang chủ
+    invalid_code Mã không hợp lệ
+    invalid_email_address Địa chỉ email không hợp lệ
+    invalid_json JSON không hợp lệ: $e
+    invalid_or_expired_invitation_link Liên kết lời mời không hợp lệ hoặc đã hết hạn.
+    invalid_or_expired_reset_code Mã đặt lại không hợp lệ hoặc đã hết hạn.
+    invitation_sent_awaiting_registration Đã gửi lời mời (đang chờ đăng ký)
+    invited_and_request_sent Đã mời và yêu cầu đã được gửi!
+    json JSON
+    label_suffix $label:
+    leaderboard Bảng xếp hạng
+    licenses Giấy phép
+    licenses_aliolo_section_title Aliolo Giấy phép thương mại
+    licenses_aliolo_subtitle Phần mềm độc quyền và các điều khoản truy cập cao cấp
+    licenses_intro_desc Giấy phép thương mại của Aliolo xuất hiện đầu tiên. Giấy phép gói của bên thứ ba như sau.
+    licenses_intro_title Aliolo Thông báo về gói và giấy phép
+    licenses_third_party_section_title Giấy phép gói của bên thứ ba
+    linux_distro Bản phân phối Linux
+    loading Đang tải...
+    localized_data Dữ liệu được bản địa hóa
+    monthly_access Truy cập hàng tháng
+    most_popular_choice Sự lựa chọn phổ biến nhất
+    new_email Email mới
+    no_cards_available_for_this_session Không có thẻ nào cho phiên này.
+    no_cards_found Không tìm thấy thẻ nào
+    no_subjects_found Không tìm thấy chủ đề nào
+    no_subjects_found_in_this_collection Không tìm thấy chủ đề nào trong bộ sưu tập này
+    no_users_found Không tìm thấy người dùng nào
+    os_version Phiên bản hệ điều hành
+    password_updated_successfully Đã cập nhật mật khẩu thành công!
+    payments_are_not_yet_integrated_on_web_please_use_the_mobile_app_to_upgrade Thanh toán chưa được tích hợp trên Web. Vui lòng sử dụng ứng dụng di động để nâng cấp.
+    personal_data Dữ liệu cá nhân
+    pick_date Chọn ngày
+    plan_monthly_tagline Sự lựa chọn phổ biến nhất
+    plan_monthly_title Truy cập hàng tháng
+    plan_weekly_tagline Tốt nhất cho mục tiêu nhanh chóng
+    plan_weekly_title Truy cập hàng tuần
+    plan_yearly_tagline Tiết kiệm 33% mỗi tháng
+    plan_yearly_title Truy cập hàng năm
+    platform Nền tảng
+    play Chơi
+    play_audio Phát âm thanh
+    please_enter_the_6_digit_code Vui lòng nhập mã gồm 6 chữ số
+    please_wait_for_a_response_before_replying_again Vui lòng đợi phản hồi trước khi trả lời lại.
+    premium_expires_at Hết hạn lúc $date
+    premium_lifetime Truy cập trọn đời
+    premium_only Chỉ trả phí
+    premium_status_active Bạn là thành viên cao cấp
+    premium_unlock_desc Có quyền truy cập vào tất cả các chủ đề, tạo thẻ không giới hạn và hỗ trợ sứ mệnh của Aliolo.
+    premium_unlock_title Mở khóa toàn quyền truy cập
+    product_not_available_in_store Sản phẩm không có sẵn tại cửa hàng.
+    profile Hồ sơ
+    public_other_subject Chủ đề công cộng/khác
+    purchase_failed Mua hàng không thành công: $e
+    recovery_error Lỗi khôi phục: $e
+    refresh_conversation Làm mới cuộc trò chuyện
+    renderer Trình kết xuất
+    reset_code Đặt lại mã
+    reset_code_sent_to_please_check_your_inbox Đặt lại mã được gửi tới $email. Vui lòng kiểm tra hộp thư đến của bạn.
+    restore_purchases Khôi phục mua hàng
+    save Cứu
+    save_33_per_month Tiết kiệm 33% mỗi tháng
+    saved_successfully Đã lưu thành công
+    search_users Tìm kiếm người dùng
+    session_complete Phiên hoàn tất!
+    session_complete_description Làm tốt lắm! Bạn đã hoàn thành tất cả các thẻ trong phiên này.
+    settings Cài đặt
+    show_documentation_btn Nút hiển thị tài liệu
+    show_documentation_btn_desc Hiển thị nút tài liệu trên thanh ứng dụng.
+    show_fake_users Hiển thị người dùng giả mạo
+    subject_id ID chủ đề
+    subscribe_now Đăng ký ngay
+    subscription_data Dữ liệu đăng ký
+    subscription_updated Đã cập nhật đăng ký
+    subtraction_emoji Biểu tượng cảm xúc phép trừ
+    subtraction_numbers Số trừ
+    technical_context BỐI CẢNH KỸ THUẬT
+    testing_mode Chế độ kiểm tra
+    text Chữ
+    this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards Đây là một thư mục. Bạn có thể sử dụng các nút Học/Kiểm tra ở trên để luyện tập tất cả các thẻ.
+    type_your_reply Nhập câu trả lời của bạn...
+    ua UA
+    unknown_user_profile_missing Người dùng không xác định (Thiếu hồ sơ)
+    user Người dùng
+    user_id ID người dùng
+    user_with_this_email_already_exists_please_log_in_instead Người dùng có email này đã tồn tại. Vui lòng đăng nhập thay thế.
+    users Người dùng
+    users_filter Lọc người dùng
+    verification_code Mã xác minh
+    verification_code_sent_to Mã xác minh được gửi tới $email
+    version Phiên bản
+    view_onboarding Xem giới thiệu
+    weekly_access Truy cập hàng tuần
+    welcome_complete_your_profile_to_join_aliolo Chào mừng! Hoàn tất hồ sơ của bạn để tham gia aliolo.
+    yearly_access Truy cập hàng năm
+    you_do_not_have_permission_to_edit_this_card Bạn không có quyền chỉnh sửa thẻ này
+    you_do_not_have_permission_to_view_this_card_details Bạn không có quyền xem chi tiết thẻ này.

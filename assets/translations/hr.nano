@@ -1,0 +1,228 @@
+..
+    a_folder_with_this_name_already_exists_in_this_pillar Mapa s ovim nazivom već postoji u ovom stupu
+    about Oko
+    about_intro_audience_desc Aliolo podržava učenike koji žele strukturirani pregled, roditelje i učitelje koji trebaju pristupačne sadržaje za učenje i kreatore koji organiziraju i objavljuju vlastite materijale za učenje.
+    about_intro_audience_title Za koga je
+    about_intro_desc Aliolo je aplikacija za vizualno učenje izgrađena oko jednostavnih tokova učenja, fleksibilne organizacije sadržaja i postojanog napretka tijekom vremena.
+    about_intro_start_desc Započnite na nadzornoj ploči, odaberite stup, otvorite predmet i počnite s Učenjem. Spremite koristan sadržaj u favorite kako biste ga kasnije lakše ponovno pregledali.
+    about_intro_start_title Kako započeti
+    about_intro_title O Aliolo
+    about_learn_discovery_desc Pretraživanje, filtri za dob i filtri izvora kao što su favoriti, moje i javna biblioteka pomažu vam da brzo pronađete pravi sadržaj.
+    about_learn_discovery_title Otkrivanje i filtriranje
+    about_learn_language_desc Možete proučavati sadržaj na različitim jezicima i prilagoditi postavke sesije u svom profilu kako bi odgovarale vašem tempu i trenutnim ciljevima.
+    about_learn_language_title Fleksibilnost jezika i načina
+    about_learn_media_desc Slike, audio i video mogu podržati prepoznavanje, izgovor i kontekst kada su dostupni u sadržaju učenja.
+    about_learn_media_title Medijska podrška
+    about_learn_modes_desc Upotrijebite Learn kako biste izgradili prepoznavanje i samopouzdanje, a zatim se prebacite na Test kada želite strože prisjećanje i brži pregled.
+    about_learn_modes_title Učite i testirajte
+    about_learn_title Kako učite
+    about_organize_collections_desc Zbirke kombiniraju više predmeta u jedan tijek proučavanja, što je korisno za mješovite recenzije i odabrane skupove.
+    about_organize_collections_title Zbirke
+    about_organize_creation_desc Kreatori mogu organizirati vlastiti sadržaj, držati ga privatnim dok rade ili ga izložiti putem javne knjižnice kada bude spreman.
+    about_organize_creation_title Vlasništvo i vidljivost
+    about_organize_folders_desc Mape grupiraju srodne predmete unutar stupa tako da se većim skupovima sadržaja može upravljati.
+    about_organize_folders_title Mape
+    about_organize_subjects_desc Predmeti su glavna jedinica učenja. Oni drže kartice koje otvorite u sesijama učenja i testiranja.
+    about_organize_subjects_title Predmeti
+    about_organize_title Kako je sadržaj organiziran
+    about_progress_goals_desc Vaš profil omogućuje podešavanje dnevnih ciljeva, učenje veličine sesije, veličine testne sesije i broja odgovora.
+    about_progress_goals_title Dnevni ciljevi i postavke sesije
+    about_progress_social_desc Značajke prijatelja i ploče s najboljim rezultatima čine napredak društvenim bez promjene temeljnog tijeka učenja.
+    about_progress_social_title Prijatelji i Leaderboard
+    about_progress_title Napredak, prijatelji i ploča s najboljim rezultatima
+    about_progress_xp_desc Aliolo prati ukupni XP, trenutni niz i maksimalni niz tako da je napredak vidljiv u kratkim i dugim razdobljima učenja.
+    about_progress_xp_title XP i pruge
+    about_support_docs_desc Stranica s dokumentacijom unutar aplikacije objašnjava kako danas funkcioniraju nadzorna ploča, tijek studija i alati za kreatore.
+    about_support_docs_title Dokumentacija
+    about_support_feedback_desc Upotrijebite ulazne točke za povratne informacije u cijeloj aplikaciji kako biste prijavili pogreške, predložili poboljšanja ili označili određene probleme sa sadržajem s kontekstom.
+    about_support_feedback_title Povratne informacije i izvješćivanje
+    about_support_licenses_desc Stranica s licencama prvo navodi komercijalnu licencu Aliolo, a zatim paketne licence paketa treće strane.
+    about_support_licenses_title Licence
+    about_support_onboarding_desc U bilo kojem trenutku možete ponovno posjetiti integraciju kako biste pregledali glavne ideje aplikacije i tijek postavljanja.
+    about_support_onboarding_title Uključivanje
+    about_support_settings_desc Jezik korisničkog sučelja, način rada teme, boja teme, zvuk, položaj bočne trake i vidljivost dokumentacije mogu se podesiti iz postavki.
+    about_support_settings_title Personalizacija
+    about_support_title Postavke, povratne informacije i podrška
+    addition_emoji Dodatak Emoji
+    addition_numbers Dodatni brojevi
+    aliolo aliolo
+    all_rights_reserved Sva prava pridržana
+    are_you_sure_you_want_to_close_this_feedback_request Jeste li sigurni da želite zatvoriti ovaj zahtjev za povratne informacije?
+    are_you_sure_you_want_to_delete_this_folder Jeste li sigurni da želite izbrisati ovu mapu?
+    attach_image Priloži sliku
+    back Nazad
+    back_to_subjects Povratak na Predmete
+    best_for_quick_goals Najbolji za brze golove
+    billing_disclaimer Pretplate se automatski obnavljaju osim ako se ne otkažu. Svojom pretplatom možete upravljati u postavkama trgovine.
+    billing_title Naplata
+    browser Preglednik
+    cancel Otkazati
+    cannot_delete_folder_it_is_not_empty Nije moguće izbrisati mapu: nije prazna
+    card_id ID kartice
+    check_your_email_for_code Provjerite svoju e-poštu za kôd
+    clear Jasan
+    click_to_view_original Kliknite za prikaz originala
+    close Zatvoriti
+    close_request Zatvoriti zahtjev?
+    collection_id ID zbirke
+    colors Boje
+    confirm_subscription Potvrdite pretplatu
+    context Kontekst
+    could_not_launch Nije moguće pokrenuti $url
+    counting Brojanje
+    current_subscription Trenutna pretplata
+    delete Izbrisati
+    device Uređaj
+    doc_create_intro_desc Ova kartica pokriva kako kreatori organiziraju sadržaj, lokaliziraju ga i objavljuju korisne materijale za učenje bez prekompliciranja tijeka rada.
+    doc_create_intro_title Stvoriti
+    doc_create_json_desc Stvaranje temeljeno na JSON-u napredni je tijek rada za strukturirani skupni sadržaj. Trebalo bi ostati izborno; većina kreatora trebala bi moći graditi i uređivati ​​sadržaj putem standardnih obrazaca.
+    doc_create_json_title Napredni JSON uvoz
+    doc_create_localization_desc Lokalizirajte sadržaj tamo gdje je najvažnije: imena, opisi, upute i odgovori. Neka oznake budu dosljedne na svim jezicima kako bi korisnici mogli promijeniti jezik učenja bez gubitka strukture.
+    doc_create_localization_title Lokalizacija
+    doc_create_media_desc Slike, zvuk i video trebaju podržavati cilj učenja, a ne odvraćati pažnju od njega. Dodajte medije kada to poboljšava prepoznavanje, izgovor ili kontekst i ostavite kartice upotrebljivima čak i kada mediji nedostaju.
+    doc_create_media_title Tijek rada s medijima
+    doc_create_model_desc Kreatori rade unutar stupova i organiziraju materijal s mapama, temama, zbirkama i karticama. Prvo izgradite strukturu, a zatim je ispunite lokaliziranim uputama, odgovorima i dodatnim medijima.
+    doc_create_model_title Model sadržaja
+    doc_create_visibility_desc Koristite "moje" za rad na vlastitom sadržaju, favorite za prikvačivanje korisnih stavki i javnu biblioteku za pregledavanje zajedničkog materijala. Javna vidljivost utječe na otkrivanje, dok vlasništvo utječe na ono što možete uređivati ​​ili brisati.
+    doc_create_visibility_title Vlasništvo i vidljivost
+    doc_start_dashboard_desc Nadzorna ploča je vaša glavna biblioteka. Upotrijebite pretraživanje za brzo pronalaženje sadržaja, a zatim kombinirajte filtre izvora kao što su favoriti, moje i javna knjižnica s filtrima za dob kako biste smanjili šum.
+    doc_start_dashboard_title Nadzorna ploča, pretraživanje i filtri
+    doc_start_feedback_desc Koristite ulazne točke za povratne informacije u aplikaciji kada nešto nije u redu ili nejasno. Izvješća mogu uključivati ​​trenutni kontekst, što olakšava pregled i rješavanje problema sa sadržajem.
+    doc_start_feedback_title Povratne informacije i pomoć
+    doc_start_intro_desc Koristite ovu karticu kada učite kako se nadzorna ploča, biblioteka, napredak i društvene značajke uklapaju zajedno.
+    doc_start_intro_title Početak rada
+    doc_start_progress_desc Vaš profil prikazuje ukupni XP, trenutni niz, maksimalni niz i dnevni cilj. Veličinom sesije i brojem odgovora također se upravlja sa stranice profila.
+    doc_start_progress_title Napredak i ciljevi
+    doc_start_quick_desc Odaberite stup na nadzornoj ploči, otvorite predmet i počnite s Učenjem. Upotrijebite favorite i filtre kako biste suzili biblioteku, zatim pregledajte svoje XP, nizove i dnevni cilj na svom profilu.
+    doc_start_quick_title Brzi početak
+    doc_start_structure_desc Subjekti drže kartice. Mape grupiraju povezani sadržaj unutar stupa. Zbirke su odabrani skupovi koji mogu kombinirati više tema za proučavanje i dijeljenje.
+    doc_start_structure_title Predmeti, mape i zbirke
+    doc_study_how_desc Započnite s Učiti kada gradite prepoznavanje, a zatim se prebacite na Test kada želite brže prisjećanje i strožu provjeru. Koristite kraće sesije za fokusirani pregled i veće sesije za širu pokrivenost.
+    doc_study_how_title Kako učiti
+    doc_study_intro_desc Ova kartica objašnjava kako se kretati kroz sadržaj, odabrati pravi način rada i podesiti svoje sesije za pregled ili opoziv.
+    doc_study_intro_title Studija
+    doc_study_media_desc Kada su mediji dostupni, koristite ih za učvršćivanje izgovora i prepoznavanja. Automatska reprodukcija najkorisnija je za pasivni pregled ili ponovljeno slušanje tijekom kraćih sesija.
+    doc_study_media_title Audio, automatska reprodukcija i mediji
+    doc_study_modes_desc Učenje i testiranje osnovni su načini učenja. Koriste isti sadržaj, ali podržavaju različit tempo i očekivanja odgovora, pa mijenjajte načine ovisno o tome istražujete li ili provjeravate zadržavanje.
+    doc_study_modes_title Načini učenja i testiranja
+    doc_study_scope_desc Studija može započeti od jednog predmeta, prikaza mape ili zbirke. Zbirke su korisne kada želite mješovitu sesiju s nekoliko predmeta bez napuštanja trenutnog tijeka.
+    doc_study_scope_title Predmeti, mape i zbirke u proučavanju
+    doc_tab_create Stvoriti
+    doc_tab_start Start
+    doc_tab_study Studija
+    documentation Dokumentacija
+    edit_subscription Uredi pretplatu
+    email_updated_successfully E-pošta je uspješno ažurirana!
+    enter_current_password Unesite trenutnu lozinku
+    error Pogreška: $e
+    error_deleting Pogreška pri brisanju: $e
+    error_saving Pogreška pri spremanju: $e
+    error_saving_card Pogreška pri spremanju kartice: $e
+    error_updating_favorite Pogreška pri ažuriranju favorita: $e
+    failed_to_send_reset_code Slanje koda za poništavanje nije uspjelo
+    failed_to_send_verification_code Slanje kontrolnog koda nije uspjelo
+    fake_only Samo lažni
+    feature_creation Alati za izradu
+    feature_customize Napredna prilagodba
+    feature_full_library Potpuni pristup knjižnici
+    feature_testing Interaktivno testiranje
+    folder_id ID mape
+    free_only Besplatni korisnici
+    generic Generički
+    home Dom
+    invalid_code Neispravan kod
+    invalid_email_address Nevažeća adresa e-pošte
+    invalid_json Nevažeći JSON: $e
+    invalid_or_expired_invitation_link Veza pozivnice nije važeća ili je istekla.
+    invalid_or_expired_reset_code Kôd za resetiranje nije valjan ili je istekao.
+    invitation_sent_awaiting_registration Pozivnica poslana (čeka se registracija)
+    invited_and_request_sent Pozvan i zahtjev poslan!
+    json JSON
+    label_suffix $label:
+    leaderboard Leaderboard
+    licenses Licence
+    licenses_aliolo_section_title Aliolo Komercijalna licenca
+    licenses_aliolo_subtitle Vlasnički softver i premium uvjeti pristupa
+    licenses_intro_desc Prvo se pojavljuje komercijalna licenca Aliolo. Licence paketa treće strane slijede u nastavku.
+    licenses_intro_title Aliolo Obavijesti o licenci i paketu
+    licenses_third_party_section_title Licence paketa treće strane
+    linux_distro Linux distro
+    loading Učitavanje...
+    localized_data Lokalizirani podaci
+    monthly_access Mjesečni pristup
+    most_popular_choice Najpopularniji izbor
+    new_email Nova e-pošta
+    no_cards_available_for_this_session Nema dostupnih kartica za ovu sesiju.
+    no_cards_found Nema pronađenih kartica
+    no_subjects_found Nema pronađenih predmeta
+    no_subjects_found_in_this_collection U ovoj kolekciji nema predmeta
+    no_users_found Nema pronađenih korisnika
+    os_version Verzija OS-a
+    password_updated_successfully Lozinka je uspješno ažurirana!
+    payments_are_not_yet_integrated_on_web_please_use_the_mobile_app_to_upgrade Plaćanja još nisu integrirana na webu. Za nadogradnju koristite mobilnu aplikaciju.
+    personal_data Osobni podaci
+    pick_date Odaberite datum
+    plan_monthly_tagline Najpopularniji izbor
+    plan_monthly_title Mjesečni pristup
+    plan_weekly_tagline Najbolji za brze golove
+    plan_weekly_title Tjedni pristup
+    plan_yearly_tagline Uštedite 33% mjesečno
+    plan_yearly_title Godišnji pristup
+    platform Platforma
+    play Igrati
+    play_audio Reproduciraj zvuk
+    please_enter_the_6_digit_code Molimo unesite 6-znamenkasti kod
+    please_wait_for_a_response_before_replying_again Pričekajte odgovor prije ponovnog odgovora.
+    premium_expires_at Istječe u $date
+    premium_lifetime Doživotni pristup
+    premium_only Samo premium
+    premium_status_active Vi ste premium član
+    premium_unlock_desc Dobijte pristup svim temama, izradite neograničen broj kartica i podržite misiju Aliolo.
+    premium_unlock_title Otključajte puni pristup
+    product_not_available_in_store Proizvod nije dostupan u trgovini.
+    profile Profil
+    public_other_subject Javni/Drugi predmet
+    purchase_failed Kupnja nije uspjela: $e
+    recovery_error Pogreška oporavka: $e
+    refresh_conversation Osvježi razgovor
+    renderer Renderer
+    reset_code Poništi kod
+    reset_code_sent_to_please_check_your_inbox Reset kod poslan na $email. Provjerite svoju pristiglu poštu.
+    restore_purchases Obnovi kupnje
+    save Uštedjeti
+    save_33_per_month Uštedite 33% mjesečno
+    saved_successfully Uspješno spremljeno
+    search_users Pretražite korisnike
+    session_complete Sesija završena!
+    session_complete_description Odličan posao! Završili ste sve karte u ovoj sesiji.
+    settings Postavke
+    show_documentation_btn Gumb Prikaži dokumentaciju
+    show_documentation_btn_desc Prikaži gumb za dokumentaciju na traci aplikacije.
+    show_fake_users Prikaži lažne korisnike
+    subject_id ID subjekta
+    subscribe_now Pretplatite se sada
+    subscription_data Podaci o pretplati
+    subscription_updated Pretplata ažurirana
+    subtraction_emoji Emotikoni oduzimanja
+    subtraction_numbers Oduzimanje brojeva
+    technical_context TEHNIČKI KONTEKST
+    testing_mode Način testiranja
+    text Tekst
+    this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards Ovo je mapa. Možete koristiti gornje gumbe za učenje/testiranje za vježbanje svih kartica.
+    type_your_reply Upišite svoj odgovor...
+    ua UA
+    unknown_user_profile_missing Nepoznati korisnik (nedostaje profil)
+    user Korisnik
+    user_id ID korisnika
+    user_with_this_email_already_exists_please_log_in_instead Korisnik s ovom e-poštom već postoji. Umjesto toga prijavite se.
+    users Korisnici
+    users_filter Filtrirajte korisnike
+    verification_code Kontrolni kod
+    verification_code_sent_to Kontrolni kod poslan na $email
+    version Verzija
+    view_onboarding Pregledajte integraciju
+    weekly_access Tjedni pristup
+    welcome_complete_your_profile_to_join_aliolo Dobrodošli! Ispunite svoj profil da biste se pridružili aliolo.
+    yearly_access Godišnji pristup
+    you_do_not_have_permission_to_edit_this_card Nemate dozvolu za uređivanje ove kartice
+    you_do_not_have_permission_to_view_this_card_details Nemate dozvolu za pregled pojedinosti ove kartice.

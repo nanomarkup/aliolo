@@ -37,6 +37,7 @@ dependencies:
   flutter_secure_storage: ^10.0.0
   dio: ^5.9.2
   image: ^4.8.0
+  nanomarkup: ^1.0.0
 
 dev_dependencies:
   integration_test:
@@ -87,3 +88,4 @@ flutter:
     - assets/Slide5.mp4
     - assets/Social.webp
     - assets/media/
+    - assets/translations/

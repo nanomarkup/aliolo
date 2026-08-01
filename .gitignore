@@ -94,3 +94,7 @@ pillar_block.txt
 !web/index.html
 !web/aliolo-social-preview.png
 !web/landing-product-preview.jpg
+
+# Temporary build directories
+scripts/.tmp/
+
