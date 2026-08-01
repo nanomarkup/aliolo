@@ -217,20 +217,6 @@ CREATE TABLE IF NOT EXISTS subscription_events (
   created_at TEXT DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE IF NOT EXISTS ui_translations (
-  key TEXT NOT NULL,
-  lang TEXT NOT NULL,
-  value TEXT NOT NULL,
-  updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (key, lang)
-);
-
-CREATE TABLE IF NOT EXISTS ui_translation_bundles (
-  lang TEXT PRIMARY KEY,
-  translations TEXT NOT NULL,
-  updated_at TEXT DEFAULT CURRENT_TIMESTAMP
-);
-
 CREATE TABLE IF NOT EXISTS onboarding_analytics (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   session_id TEXT NOT NULL,
