@@ -43,37 +43,139 @@
     about_support_settings_desc UI valodu, motīva režīmu, motīva krāsu, skaņu, sānjoslas izvietojumu un dokumentācijas redzamību var pielāgot iestatījumos.
     about_support_settings_title Personalizēšana
     about_support_title Iestatījumi, atsauksmes un atbalsts
+    about_tagline Mācieties vizuāli. Apgūstiet uz visiem laikiem.
+    account_created Konts izveidots
+    account_created_billing_fail Jūsu konts tika izveidots, bet maksājums netika pabeigts. Mēģiniet vēlreiz veikt tālāk norādīto maksājumu.
+    account_deleted Account deleted successfully
+    add_card Add Card
+    add_collection Pievienot kolekciju
+    add_folder Pievienot mapi
+    add_friend_by_email Add Friend By Email
+    add_lang_translation Add Language Translation
+    add_prompt_translation Add Prompt Translation
+    add_subject Add Subject
     addition_emoji Papildinājums Emoji
     addition_numbers Papildinājuma numuri
+    age Vecums
+    age_0_6 0-6 gadi
+    age_15_18 15 - 18
+    age_15_plus 15+ gadi
+    age_19_25 19 - 25
+    age_26_35 26 - 35
+    age_36_50 36 - 50
+    age_7_14 7-14 gadi
+    age_advanced Advanced
+    age_all All Ages
+    age_early Early Childhood
+    age_group Age Group
+    age_intermediate Intermediate
+    age_over_50 Virs 50
+    age_primary Primary School
+    age_under_14 Zem 14
+    algorithm_title THE ALIOLO ALGORITHM
     aliolo aliolo
+    all_matching_subjects Visi atbilstošie temati
     all_rights_reserved Visas tiesības paturētas
+    answer Atbilde
+    answer_label answer
+    answers_label answers
     are_you_sure_you_want_to_close_this_feedback_request Vai tiešām vēlaties aizvērt šo atsauksmju pieprasījumu?
     are_you_sure_you_want_to_delete_this_folder Vai tiešām vēlaties dzēst šo mapi?
+    ascending Ascending
     attach_image Pievienojiet attēlu
+    audio Audio
+    audio_playing Audio Playing
+    author Author
     back Atpakaļ
+    back_to_login Back to Login
     back_to_subjects Atgriezties pie priekšmetiem
     best_for_quick_goals Vislabāk ātriem mērķiem
     billing_disclaimer Abonementi tiek automātiski atjaunoti, ja vien tie netiek atcelti. Varat pārvaldīt savu abonementu veikala iestatījumos.
     billing_title Norēķini
+    bronze BRONZE
     browser Pārlūkprogramma
     cancel Atcelt
+    cancel_request Cancel Request
+    cancel_request_confirm Are you sure you want to cancel the request to
+    cannot_delete_folder Cannot Delete Folder
     cannot_delete_folder_it_is_not_empty Nevar izdzēst mapi: tā nav tukša
+    card_details Card Details
     card_id Kartes ID
+    card_label Card
+    card_level Kartes līmenis
+    card_plural Cards
+    cards cards
+    cards_label cards
+    cards_per_day cards per day
+    cards_per_session cards per session
+    change_avatar Change Avatar
+    change_password Mainīt paroli
     check_your_email_for_code Pārbaudiet kodu, lai atrastu savu e-pastu
     clear Skaidrs
+    click_to_select_image Click to select image
     click_to_view_original Noklikšķiniet, lai skatītu oriģinālu
     close Aizvērt
     close_request Vai aizvērt pieprasījumu?
-    collection_id Kolekcijas ID
+    code_label Code
+    collection_id Kolekcijas ID
     colors Krāsas
+    common_settings Common Settings
+    compare_plans Salīdzināt bezmaksas pret Premium
+    confirm Apstiprināt
+    confirm_logout Are you sure you want to logout?
+    confirm_password Confirm Password
     confirm_subscription Apstipriniet abonementu
+    content_label Content
     context Konteksts
+    copy COPY
+    copy_all Copy All
+    core_features CORE FEATURES
     correct_answers Pareizās atbildes
     could_not_launch Nevarēja palaist $url
     counting Skaitīšana
+    create_account Create Account
+    create_new_account Create New Account
+    create_new_card Create New Card
+    created_at Izveidots
+    current_streak Current Streak
     current_subscription Pašreizējais abonements
+    daily_goal Daily Goal
+    daily_progress Daily Progress
+    dark Dark
+    dashboard_greeting Sveiki
+    day day
+    day_label Day
+    day_plural Days
+    days days
+    default Default
+    default_language Noklusējuma valoda
+    default_testing_language Default Testing Language
+    default_testing_language_desc Pre-selects this language on the subjects page.
     delete Dzēst
+    delete_account Delete Account
+    delete_account_confirm Are you sure you want to delete your account? This action is permanent.
+    delete_avatar Dzēst avataru
+    delete_avatar_confirm Vai tiešām vēlaties noņemt savu profila attēlu?
+    delete_card_confirm Delete this card?
+    delete_collection Dzēst kolekciju
+    delete_collection_confirm Vai tiešām vēlaties dzēst šo kolekciju?
+    delete_folder Dzēst mapi
+    delete_selected_cards Delete selected cards?
+    delete_subject Delete Subject
+    delete_subject_confirm Delete subject '{subject}' and all {count} cards inside?
+    delete_subjects_first Please delete all sub-subjects inside this folder before deleting the folder itself.
+    descending Descending
+    description Description
     device Ierīce
+    digit_code 6-digit Code
+    discard Discard
+    discard_changes Atmest izmaiņas?
+    doc_autoplay_desc Lietotne var automātiski pāriet uz nākamo kartīti pēc tam, kad esat atbildējis. Pareizās atbildes gaida 1 s, bet nepareizās - 2 s, lai jūs varētu tās pārskatīt.
+    doc_autoplay_title Automātiskā mācīšanās
+    doc_card_scope_desc Kartītes ir mācību bloki un vienmēr pieder pie konkrēta priekšmeta. Lai gan varat sakārtot priekšmetus mapēs vai kolekcijās, pašas kartītes ir jāizveido priekšmetā.
+    doc_card_scope_title Kur dzīvo kartītes
+    doc_collections_purpose_desc Kolekcijas ir atlasīti ceļi, kas grupē priekšmetus kopā. Sākot sesiju no kolekcijas, sistēma sajauc kartītes no visiem iekļautajiem priekšmetiem, lai nodrošinātu visaptverošu testu.
+    doc_collections_purpose_title Kolekciju mērķis
     doc_create_intro_desc Šajā cilnē ir aprakstīts, kā veidotāji organizē saturu, lokalizē to un publicē noderīgu mācību materiālu, nepārliekot sarežģījot darbplūsmu.
     doc_create_intro_title Izveidot
     doc_create_json_desc Uz JSON balstīta izveide ir uzlabota darbplūsma strukturētam lielapjoma saturam. Tam vajadzētu palikt fakultatīvam; lielākajai daļai satura veidotāju vajadzētu būt iespējai izveidot un rediģēt saturu, izmantojot standarta veidlapas.
@@ -86,6 +188,38 @@
     doc_create_model_title Satura modelis
     doc_create_visibility_desc Izmantojiet "manējo", lai strādātu pie sava satura, izlasi, lai piespraustu noderīgus vienumus, un publisko bibliotēku, lai pārlūkotu koplietoto materiālu. Publiskā redzamība ietekmē atklāšanu, savukārt īpašumtiesības ietekmē to, ko varat rediģēt vai dzēst.
     doc_create_visibility_title Īpašumtiesības un redzamība
+    doc_creation_desc Izveidojiet savus priekšmetus un pievienojiet vizuālās kartītes. Katra kartīte atbalsta attēlu un izvēles audio failu izrunai.
+    doc_creation_title Priekšmetu un kartīšu izveide
+    doc_feedback_desc Palīdziet mums pilnveidoties! Izmantojiet atsauksmju ikonu (Icons.feedback) jebkurā priekšmetā vai mapē, lai ziņotu par problēmām. Varat arī nosūtīt vispārīgas lietotnes atsauksmes, izmantojot sadaļu Atbalsts.
+    doc_feedback_title Atsauksmju sistēma
+    doc_filters_desc Ātri atrodiet saturu, izmantojot meklēšanas joslu. Varat filtrēt pēc vecuma grupas (no agrīnas līdz padziļinātai) vai sašaurināt skatījumu uz konkrētām kolekcijām un mapēm.
+    doc_filters_title Meklēšana un filtri
+    doc_flashcards_desc Katrs priekšmets satur kartīšu komplektu. Lai gan attēli un audio tiek atbalstīti, tie nav obligāti — saturs var būt tīri tekstuāls vai dinamiski ģenerēts.
+    doc_flashcards_title Vizuālās kartītes
+    doc_friends_desc Mācīties kopā ir labāk! Uzaiciniet draugus uz Aliolo, izmantojot savu profilu. Varat sekot viens otra progresam un saglabāt motivāciju, redzot, kurš saglabā garāko sēriju.
+    doc_friends_title Draugi un ielūgumi
+    doc_goals_desc Iestatījumos iestatiet ikdienas kartīšu izpildes mērķi. Izmaiņas jūsu mērķī stājas spēkā no nākamās dienas.
+    doc_goals_title Dienas mērķi
+    doc_json_desc Uzlaboti veidotāji var izmantot JSON datus, lai sniegtu lokalizētus nosaukumus un aprakstus, padarot priekšmetus pieejamus visās atbalstītajās valodās.
+    doc_json_title JSON lokalizacija
+    doc_lang_desc Pirms priekšmeta izvēles augšējā izvēlnē vienmēr izvēlieties vēlamo mācību valodu. Tas nodrošina pareizā audio un tulkojumu ielādi.
+    doc_lang_title Mācību valoda
+    doc_leaderboard_desc Konkurējiet ar izglītojamajiem visā pasaulē! Nopelniet XP, pabeidzot kartīšu sesijas, un pakāpieties reitingā. Jūsu pozīcija tiek atjaunināta reāllaikā, apgūstot jaunus priekšmetus.
+    doc_leaderboard_title Globālais līderu saraksts
+    doc_localization_details_desc "\"Globālā\" valoda ir jūsu primārā rezerves valoda — tā var būt jebkura jūsu izvēlēta valoda. Ja norādāt konkrētus tulkojumus, tie aizstās globālos datus tikai tad, kad lietotājs izvēlēsies šo konkrēto saskarnes valodu."
+    doc_localization_details_title Kā darbojas lokalizācija
+    doc_localization_ui_desc Lai pievienotu lokalizētos datus, redaktora galvenē vienkārši pieskarieties valodas koda ikonai (piemēram, EN, ES, FR). Tas ļauj norādīt konkrētus nosaukumus, aprakstus un kartīšu saturu katrai atbalstītajai valodai.
+    doc_localization_ui_title Tulkojumu pievienošana
+    doc_math_desc Matemātiskajos priekšmetos tiek izmantoti specializēti dzinēji, lai reāllaikā ģenerētu kartīšu vizualizācijas. Šiem priekšmetiem ir unikāli mācību un testēšanas režīmi, kas pielāgoti konkrētiem matemātiskiem jēdzieniem.
+    doc_math_title Matemātiskie priekšmeti
+    doc_media_desc Lai nodrošinātu ātru sinhronizāciju, attēliem jābūt mazākiem par 5 MB un audio failiem - mazākiem par 10 MB.
+    doc_media_title Multivides augšupielādes ierobežojumi
+    doc_organization_desc Izmantojiet mapes, lai grupētu saistītos priekšmetus. Varat arī izveidot kolekcijas, lai sakārtotu priekšmetus atlasītos ceļos.
+    doc_organization_title Satura organizēšana
+    doc_pillars_desc Viss Aliolo saturs ir sakārtots 8 pamatpīlāros: Akadēmiskais un profesionālais, Pasaule, Daba, Cilvēka ķermenis, Humanitārās zinātnes, Atpūta, Inženierzinātnes un Citi. Šīs kategorijas nodrošina strukturētu ietvaru visiem priekšmetiem visā platformā.
+    doc_pillars_title 8 galvenie pīlāri
+    doc_public_desc Priekšmeti var būt privāti (redzami tikai jums) vai publiski. Publisks saturs tiek kopīgots ar visu Aliolo kopienu, ļaujot ikvienam atklāt un mācīties no jūsu darbiem.
+    doc_public_title Publisks pret privātu
     doc_start_dashboard_desc Informācijas panelis ir jūsu galvenā bibliotēka. Izmantojiet meklēšanu, lai ātri atrastu saturu, pēc tam apvienojiet avota filtrus, piemēram, izlases, manu un publisko bibliotēku, ar vecuma filtriem, lai samazinātu troksni.
     doc_start_dashboard_title Informācijas panelis, meklēšana un filtri
     doc_start_feedback_desc Izmantojiet atsauksmes ievades punktus visā lietotnē, ja kaut kas nav kārtībā vai nav skaidrs. Pārskatos var iekļaut pašreizējo kontekstu, kas atvieglo satura problēmu pārskatīšanu un labošanu.
@@ -98,6 +232,8 @@
     doc_start_quick_title Ātrais sākums
     doc_start_structure_desc Subjekti tur kartītes. Mapes grupē saistīto saturu pīlārā. Kolekcijas ir atlasītas kopas, kurās var apvienot vairākus mācību priekšmetus un koplietot tos.
     doc_start_structure_title Priekšmeti, mapes un kolekcijas
+    doc_streaks_desc Konsekvence ir galvenais! Katru dienu izpildiet savu ikdienas mērķi, lai izveidotu savu sēriju. Nepalaidiet garām nevienu dienu, pretējā gadījumā sērija tiks atiestatīta.
+    doc_streaks_title Sēriju sistēma
     doc_study_how_desc Sāciet ar Uzziniet, kad veidojat atpazīšanu, pēc tam pārslēdzieties uz Pārbaudīt, ja vēlaties ātrāk atsaukt atmiņā un stingrāk pārbaudīt. Izmantojiet īsākas sesijas mērķtiecīgai pārskatīšanai un lielākas sesijas, lai iegūtu plašāku informāciju.
     doc_study_how_title Kā mācīties
     doc_study_intro_desc Šajā cilnē ir paskaidrots, kā pārvietoties pa saturu, izvēlēties pareizo režīmu un pielāgot sesijas pārskatīšanai vai atsaukšanai.
@@ -108,127 +244,490 @@
     doc_study_modes_title Apgūstiet un pārbaudiet režīmus
     doc_study_scope_desc Mācības var sākt no viena priekšmeta, mapes skata vai kolekcijas. Kolekcijas ir noderīgas, ja vēlaties jauktu sesiju vairākiem priekšmetiem, neizejot no pašreizējās plūsmas.
     doc_study_scope_title Studiju priekšmeti, mapes un kolekcijas
+    doc_sync_desc Jūsu progress tiek automātiski sinhronizēts ar mākoni. Varat pārslēgties starp tīmekļa un darbvirsmas versijām, nezaudējot sēriju.
+    doc_sync_title Mākoņa sinhronizācija
     doc_tab_create Izveidot
+    doc_tab_creator Izveide
+    doc_tab_general Vispārīgi
+    doc_tab_learning Prakse
     doc_tab_start Sākt
     doc_tab_study Pētījums
+    doc_testing_desc Izaiciniet sevi ar atbilžu variantiem (MCQ). Lietotne automātiski virzīsies uz priekšu, kad atbildēsit, palīdzot jums mācīties ātrāk.
+    doc_testing_title Interaktīva testēšana
+    doc_welcome_desc Aliolo ir vizuāla mācību platforma, kas izstrādāta, lai palīdzētu jums apgūt mācību priekšmetus, izmantojot kartītes un interaktīvu testēšanu.
+    doc_welcome_title Laipni lūdzam Aliolo
     documentation Dokumentācija
+    done_today Done Today
+    down_arrow Down Arrow
+    edit Rediģēt
+    edit_card Edit Card
+    edit_collection Rediģēt kolekciju
+    edit_email Rediģēt e-pastu
+    edit_folder Rediģēt mapi
+    edit_name Edit Name
+    edit_subject Edit Subject
+    edit_subject_title Edit Subject
     edit_subscription Rediģēt abonementu
+    email E-pasts
+    email_change_notice For security, a confirmation link will be sent to BOTH your old and new email addresses. You must click both to complete the change.
+    email_in_use Email is already in use
+    email_subject Subject
+    email_update_sent Confirmation emails sent. Please check both inboxes.
     email_updated_successfully E-pasts ir veiksmīgi atjaunināts!
+    english English
     enter_current_password Ievadiet pašreizējo paroli
+    enter_new_email Ievadiet jaunu e-pastu
+    enter_new_name Enter New Name
+    enter_number Enter a number
+    enter_or_select_subject Please enter or select a subject
+    enter_pass_to_confirm Enter your password to confirm
+    enter_subject_name Enter subject name
     error Kļūda: $e
     error_deleting Kļūda dzēšot: $e
+    error_deleting_account Could not delete account. Check your password.
     error_saving Saglabājot, radās kļūda: $e
     error_saving_card Saglabājot karti, radās kļūda: $e
     error_updating_favorite Atjauninot izlasi, radās kļūda: $e
+    exit Exit
+    exit_confirm_msg Are you sure you want to exit the application?
+    exit_confirm_title Exit Aliolo?
+    expiry_date Derīguma termiņš
     failed_answers Neizdevušās atbildes
     failed_to_send_reset_code Neizdevās nosūtīt atiestatīšanas kodu
     failed_to_send_verification_code Neizdevās nosūtīt verifikācijas kodu
     fake_only Tikai viltojums
+    fatal_startup_error Fatal Startup Error
+    feat_adaptive_desc The system monitors your recognition speed across MCQ options, dynamically adjusting intervals to push your boundaries.
+    feat_adaptive_title Adaptive Response Timing
+    feat_ages_desc Content curated for different age groups from early childhood to advanced learning.
+    feat_ages_title For All Ages
+    feat_gamified_desc Earn XP, badges, and build streaks while mastering complex visual subjects.
+    feat_gamified_title Gamified Experience
+    feat_mastery_desc Dynamic XP rewards difficulty, while real-time mastery badges (Bronze, Silver, Gold) track your journey from novice to expert.
+    feat_mastery_title Visual Mastery & XP
+    feat_multimedia_desc Learn with images, audio, and video support for immersive training.
+    feat_multimedia_title Multimedia Cards
+    feat_recognition_desc Immersive identification drills designed to build instant "muscle memory" for complex visual subjects.
+    feat_recognition_title Visual Pattern Training
+    feat_science_adaptive_desc Intervals automatically adjust based on your recognition speed and accuracy.
+    feat_science_adaptive_title Adaptive Timing
+    feat_science_spacing_desc Advanced cognitive spacing model that predicts memory decay and optimizes review cycles.
+    feat_science_spacing_title SuperMemo-2 (SM-2)
+    feat_spacing_desc A full implementation of the SuperMemo-2 model predicts your memory decay and schedules reviews at the peak of retention.
+    feat_spacing_title Cognitive Spacing (SM-2)
+    feature_autoplay Automātiskās atskaņošanas režīms
+    feature_community_access Piekļuve kopienas tēmām
     feature_creation Izveides rīki
     feature_customize Papildu pielāgošana
+    feature_favorites Iecienītākie vienumi informācijas panelī
+    feature_feedback Tiešas atsauksmes un ieteikumi
+    feature_free BEZMAKSAS
+    feature_friends Uzaiciniet un sazinieties ar draugiem
     feature_full_library Pilna piekļuve bibliotēkai
+    feature_learn_all Apgūstiet jebkuru tēmu vai kolekciju
+    feature_private_mode Privātā profila režīms
+    feature_pro PRO
+    feature_spaced_repetition Intervāla atkārtošana (SM-2)
     feature_testing Interaktīvā pārbaude
+    feedback Atsauksmes
+    feedback_add_image Pievienot attēlu
+    feedback_attachments Pielikumi
+    feedback_bug Ziņot par kļūdu
+    feedback_context Konteksts
+    feedback_details Sīkāka informācija
+    feedback_error Neizdevās nosūtīt atsauksmi. Lūdzu, mēģiniet vēlreiz.
+    feedback_management_desc Skatīt un pārvaldīt lietotāju atsauksmes
+    feedback_management_title Atsauksmju pieprasījumi
+    feedback_other Cits
+    feedback_submit Iesniegt atsauksmi
+    feedback_success Paldies par jūsu atsauksmi!
+    feedback_suggestion Ieteikums
+    feedback_title Sūtīt atsauksmi
+    feedback_title_hint Virsraksts
+    feedback_type Veids
+    fill_all_fields Please fill all fields
+    filter_all All
+    filter_dashboard Informācijas panelis
+    filter_favorites Izlase
+    filter_my_subjects My Subjects
+    filter_on_dashboard On Dashboard
+    filter_public Public
+    filter_public_library Publiskā bibliotēka
+    filters Filtri
+    finish Pabeigt
+    finished_session You finished {count} cards. XP bonus awarded!
+    folder Mape
+    folder_already_exists Mape ar šādu nosaukumu šajā pīlārā jau eksistē
     folder_id Mapes ID
+    folder_label Mape
+    folder_not_empty_msg Nevar dzēst: mape nav tukša.
+    folder_plural Mapes
+    forgot_password Forgot Password?
     free_only Bezmaksas lietotāji
+    general_preferences General Preferences
     generic Vispārējs
+    go_to_manager Go to Library Manager
+    goal_change_hint Change your card goal for tomorrow
+    goal_change_notice Izmaiņas jūsu dienas mērķī stāsies spēkā rīt.
+    gold GOLD
+    hide_comparison Paslēpt plānu salīdzinājumu
     home Sākums
+    images Images
+    included_subjects Iekļautie priekšmeti
+    info_copied Info copied to clipboard
+    initializing_aliolo Initializing Aliolo...
     invalid_code Nederīgs kods
+    invalid_email Invalid email address
     invalid_email_address Nederīga e-pasta adrese
     invalid_json Nederīgs JSON: $e
+    invalid_number Invalid number
     invalid_or_expired_invitation_link Nederīga uzaicinājuma saite vai tās derīguma termiņš ir beidzies.
     invalid_or_expired_reset_code Nederīgs vai beidzies atiestatīšanas kods.
+    invalid_password Invalid password
+    invalid_password_delete Invalid Password
     invitation_sent_awaiting_registration Ielūgums nosūtīts (gaida reģistrāciju)
+    invite Uzaicināt
+    invite_user_content E-pasts {email} netika atrasts. Uzaicināt pievienoties Aliolo?
+    invite_user_title Uzaicināt lietotāju?
     invited_and_request_sent Uzaicināts un pieprasījums nosūtīts!
     json JSON
+    keyboard_shortcuts Keyboard Shortcuts
     label_suffix $label:
+    lang_abbr Lang
+    language Valoda
     leaderboard Līderu saraksts
+    learn_mode_desc Study cards and memorize answers
+    learn_mode_title Learn
+    learn_session_size Learn Session Size
+    learn_session_size_desc Vienā mācību sesijā ieviešamo jauno karšu skaits.
     learning_session_complete_description Lielisks darbs! Jūs pabeidzāt šo mācību sesiju. Jūsu progress ir saglabāts.
+    left_arrow Left Arrow
+    level Level
+    level_range Must be between 1 and 20
+    level_tier_1 Līmenis 1
+    level_tier_2 Līmenis 2
+    level_tier_3 Līmenis 3
     licenses Licences
     licenses_aliolo_section_title Aliolo Komerclicence
     licenses_aliolo_subtitle Patentēta programmatūra un augstākās kvalitātes piekļuves noteikumi
     licenses_intro_desc Pirmā parādās Aliolo komerciālā licence. Tālāk ir norādītas trešo pušu pakotņu licences.
     licenses_intro_title Aliolo Paziņojumi par licenci un paketi
     licenses_third_party_section_title Trešās puses pakotņu licences
+    light Light
     linux_distro Linux Distro
     loading Notiek ielāde...
     localized_data Lokalizēti dati
+    login Pieteikties
+    logout Izrakstīties
+    manage_cards Manage Cards
+    manage_friends Friends
+    manage_friends_desc View and manage your friend requests
+    manage_library Manage Library ({sCount} subjects, {cCount} cards)
+    manage_subjects Manage Subjects
+    manage_subscription Pārvaldīt abonementu
+    manage_testing_langs Manage Testing Languages
+    manage_users Manage Users
+    master_visual_ease Master visual subjects with ease.
+    mastered mastered
+    mastery Meistarība
+    max_streak Max Streak
+    maybe_later Varbūt vēlāk
+    mission_desc The smart companion that helps your brain learn and retain visual knowledge through science-backed algorithms.
+    mock_email_title Mock Email Inbox
+    mode_audio_to_image Audio to Image
+    mode_audio_to_text Audio to Text
+    mode_image_to_text Image to Text
+    mode_text_to_text Text to Text
     monthly_access Ikmēneša piekļuve
     most_popular_choice Populārākā izvēle
+    multi_lang_answers Multi-language Answers
+    multi_lang_prompts Multi-language Prompts
+    my_position My Position
+    name Name
+    names_descriptions Names & Descriptions
+    new NEW
     new_email Jauns e-pasts
+    new_password New Password
+    next Tālāk
+    next_card Next Card
+    next_daily_goal Nākamais dienas mērķis
+    next_daily_goal_desc Katru dienu apgūstamo karšu mērķa skaits. Izmaiņas stājas spēkā rīt.
+    next_day_goal Next Day Goal
     no_cards_available_for_this_session Šai sesijai nav pieejama neviena karte.
     no_cards_found Nav atrasta neviena karte
+    no_cards_found_for_lang No cards found for this language
+    no_cards_in_library No cards found in the library.
+    no_feedback_found Atsauksmes nav atrastas.
+    no_folder Nav mapes (Sakne)
+    no_friends_found No friends found
+    no_images_added Nav pievienotu attēlu
+    no_leaderboard_data No leaderboard data available.
+    no_localized_audio Nav lokalizēta audio
+    no_localized_images Nav lokalizētu attēlu
+    no_localized_video Nav lokalizēta video
+    no_subjects_available Priekšmeti nav pieejami
     no_subjects_found Nav atrasts neviens priekšmets
     no_subjects_found_in_this_collection Šajā kolekcijā nav atrasts neviens priekšmets
     no_users_found Nav atrasts neviens lietotājs
+    ok OK
+    old_password Vecā parole
+    old_password_required Vecā parole ir obligāta
+    onboarding_1_desc Mācieties vizuāli. Apgūstiet paliekoši. Jūsu vizuālais mācību biedrs, kura pamatā ir SM-2 zinātne.
+    onboarding_1_title Laipni lūdzam Aliolo
+    onboarding_2_desc Tas palīdz mums personalizēt jūsu mācību pieredzi un ieteikt piemērotākos priekšmetus.
+    onboarding_2_title Cik jums ir gadu?
+    onboarding_3_desc Izvēlieties savu galveno interesi, lai pielāgotu sākotnējo informācijas paneli.
+    onboarding_3_title Ko jūs vēlaties apgūt?
+    onboarding_4_desc Izveidojiet savu kāršu komplektu vai iedziļinieties kartītēs, ar kurām dalās Aliolo lietotāji visā pasaulē. Mācieties savā tempā un pēc tam pārbaudiet sevi, kad esat gatavs.
+    onboarding_4_title Izveidojiet un kopīgojiet
+    onboarding_5_desc Jūsu bibliotēka tiek sinhronizēta visās jūsu ierīcēs. Mēs jūs mudināsim tikai tad, kad būs laiks aizsargāt savu sēriju.
+    onboarding_5_title Apgūstiet jebkur
+    onboarding_6_desc Sāciet savu ceļojumu šodien un apgūstiet visu, ko esat iecerējis.
+    onboarding_6_title Pievienojieties kopienai
+    onboarding_7_joined Pievienojušies tūkstošiem izglītojamo
+    onboarding_7_quote Aliolo ir pilnībā mainījis veidu, kā es un mani bērni apgūstam jaunas tēmas. Vizuālās kartītes un intervālu atkārtošana liek mācībām justies kā spēlei!
+    onboarding_get_started Sākt
+    onboarding_next Tālāk
+    onboarding_skip Izlaist
+    options_count Number of Answers
+    options_count_desc Testu laikā parādīto atbilžu variantu skaits.
+    options_per_card options per card
+    order_id Pasūtījuma ID
     os_version OS versija
+    our_mission OUR MISSION
+    page Page
+    parent_folder_label Parent Folder (lv)
+    password Parole
+    password_required Password is required
+    password_reset_success Password reset successful
     password_updated_successfully Parole veiksmīgi atjaunināta!
+    passwords_dont_match Passwords do not match
+    paste PASTE
     payments_are_not_yet_integrated_on_web_please_use_the_mobile_app_to_upgrade Maksājumi vēl nav integrēti tīmeklī. Lūdzu, izmantojiet mobilo lietotni, lai veiktu jaunināšanu.
     personal_data Personas dati
     pick_date Izvēlieties datumu
+    picture Picture
+    pillar Pillar
+    plan_monthly Mēneša piekļuve
+    plan_monthly_desc Populārākā izvēle
     plan_monthly_tagline Populārākā izvēle
     plan_monthly_title Ikmēneša piekļuve
+    plan_weekly Nedēļas piekļuve
+    plan_weekly_desc Vislabāk ātriem mērķiem
     plan_weekly_tagline Vislabāk ātriem mērķiem
     plan_weekly_title Iknedēļas piekļuve
+    plan_yearly Gada piekļuve
+    plan_yearly_desc Ietaupiet 33% mēnesī
     plan_yearly_tagline Ietaupiet 33% mēnesī
     plan_yearly_title Ikgadējā piekļuve
     platform Platforma
     play Spēlēt
     play_audio Atskaņot audio
-    please_enter_the_6_digit_code Lūdzu, ievadiet 6 ciparu kodu
+    please_enter_the_6_digit_code Lūdzu, ievadiet 6 ciparu kodu
     please_wait_for_a_response_before_replying_again Lūdzu, uzgaidiet atbildi, pirms atbildat vēlreiz.
     premium_expires_at Derīguma termiņš beidzas $date
+    premium_go Kļūt par Premium
     premium_lifetime Piekļuve mūža garumā
     premium_only Tikai Premium
     premium_status_active Jūs esat Premium dalībnieks
+    premium_title Aliolo Premium
     premium_unlock_desc Iegūstiet piekļuvi visiem priekšmetiem, izveidojiet neierobežotu skaitu kartīšu un atbalstiet Aliolo misiju.
     premium_unlock_title Atbloķējiet pilnu piekļuvi
+    prev Prev
+    previous_card Previous Card
+    price_per_week ({price} / nedēļā)
+    private Private
+    pro_label PRO
+    product_id Produkta ID
     product_not_available_in_store Prece veikalā nav pieejama.
     profile Profils
+    profile_title My Profile & Progress
+    prompt_label Prompt
+    prompt_optional Prompt / Question
+    prompts_answers Prompts & Answers
+    provide_at_least_one_answer Please provide at least one answer
+    provide_at_least_one_name Provide at least one name
+    provider Pakalpojumu sniedzējs
     public_other_subject Publisks/cits temats
+    public_profile Public Profile
+    public_profile_desc Show your XP and Streak on Hall of Fame.
+    public_subject Public Subject
+    public_subject_desc Make this subject visible to other users.
     purchase_failed Pirkums neizdevās: $e
+    purchase_token Pirkuma pilnvara
+    record_shortcut Record Shortcut
     recovery_error Atkopšanas kļūda: $e
     refresh Atsvaidzināt
     refresh_conversation Atsvaidzināt sarunu
+    remove_friend Remove Friend
+    remove_friend_confirm Are you sure you want to remove friend
     renderer Renderētājs
+    request_sent Request sent
+    request_sent_waiting Request sent (waiting)
+    required Required
     reset_code Atiestatīt kodu
+    reset_code_email_title Password Reset Code
+    reset_code_sent "Reset code for: "
     reset_code_sent_to_please_check_your_inbox Atiestatīt kodu, kas nosūtīts uz $email. Lūdzu, pārbaudiet savu iesūtni.
+    reset_password_for "Reset Password for: "
+    restore_password Restore Password
     restore_purchases Atjaunot pirkumus
+    retry Retry
+    right_arrow Right Arrow
     save Saglabāt
     save_33_per_month Ietaupiet 33% mēnesī
+    save_before_nav Do you want to save changes before navigating?
+    save_card Save Card
+    save_subject Save Subject
     saved_successfully Veiksmīgi saglabāts
+    search_cards Search Cards
+    search_subjects Search Subjects
     search_users Meklēt lietotājus
+    select_an_answer Select an Answer
+    select_lang Select Language
+    select_package_license Select Package License
+    select_user Select User
+    selected_count {count} Selected
+    send Send
+    send_code Send Code
+    send_verification_code Send verification code?
     session_complete Sesija pabeigta!
     session_complete_description Lielisks darbs! Jūs esat pabeidzis visas šīs sesijas kārtis.
+    setting_saved Setting saved
     settings Iestatījumi
+    shortcuts_hint Press the key you want to use with Ctrl.
+    show_all_languages Show all languages
     show_documentation_btn Rādīt dokumentācijas pogu
     show_documentation_btn_desc Programmu joslā parādiet dokumentācijas pogu.
     show_fake_users Rādīt viltus lietotājus
-    subject_id Priekšmeta ID
+    show_less_languages Show less languages
+    sidebar_left Sidebar on the left
+    sidebar_left_desc Move testing controls to the left side of the screen.
+    silver SILVER
+    social Social
+    sort_by Sort by
+    sound_effects Sound Effects
+    sound_effects_desc Enable audio feedback for correct and wrong answers.
+    source Avots
+    status Statuss
+    status_closed Slēgts
+    status_open Atvērts
+    status_replied Atbildēts
+    streak Sērija
+    subject Subject
+    subject_deleted Subject deleted
+    subject_id Priekšmeta ID
+    subject_label Subject
+    subject_plural Subjects
+    subject_type Subject Type (lv)
+    subjects Priekšmeti
     subscribe_now Abonējiet tūlīt
     subscription_data Abonēšanas dati
     subscription_updated Abonements atjaunināts
     subtraction_emoji Atņemšanas emocijzīmes
     subtraction_numbers Atņemšanas skaitļi
+    support_and_management Atbalsts un pārvaldība
+    system System
+    tap_to_replay Tap to Replay
     technical_context TEHNISKAIS KONTEKSTS
+    test_mode_desc Challenge yourself with a quiz
+    test_mode_label Test Mode
+    test_mode_title Test
+    test_session_size Test Session Size
+    test_session_size_desc Vienā testēšanas sesijā pārskatāmo karšu skaits.
+    testing Testing
     testing_mode Pārbaudes režīms
+    testing_section Testing Settings
     text Teksts
+    the_science THE SCIENCE
+    theme_color App Theme Color
+    theme_color_desc Customize the primary color used for buttons and highlights.
+    theme_dark Dark
+    theme_light Light
+    theme_mode Motīva režīms
+    theme_system System
     this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards Šī ir mape. Varat izmantot iepriekš esošās pogas Mācīties/Pārbaudīt, lai trenētu visas kārtis.
+    to_label To
     total_cards Kopējais karšu skaits
+    total_xp Total XP
+    trust_cloud_desc Your progress is securely synced across all your devices in real-time.
+    trust_cloud_title Cloud Sync
+    trust_privacy TRUST & PRIVACY
+    trust_sync_desc Your data is private and encrypted to ensure the highest security standards.
+    trust_sync_title Encrypted Data
+    type_collection Kolekcija
+    type_folder Folder (Sub-subjects) (lv)
+    type_standard Standard (Cards) (lv)
     type_your_reply Ierakstiet savu atbildi...
     ua UA
+    ui_language Saskarnes valoda
+    ukrainian Ukrainian
     unknown_user_profile_missing Nezināms lietotājs (trūkst profila)
+    unsaved_changes Unsaved Changes
+    unsaved_changes_msg Jums ir nesaglabātas izmaiņas. Vai vēlaties tās atmest?
+    up_arrow Up Arrow
+    update Update
     update_available Ir pieejama jauna versija!
+    updated_at Atjaunināts
+    upload_new_photo Augšupielādēt jaunu fotoattēlu
     user Lietotājs
-    user_id Lietotāja ID
+    user_exists User already exists
+    user_id Lietotāja ID
+    user_not_found User not found
     user_with_this_email_already_exists_please_log_in_instead Lietotājs ar šo e-pasta adresi jau pastāv. Lūdzu, piesakieties.
+    username Lietotājvārds
     users Lietotāji
     users_filter Filtrēt lietotājus
     verification_code Verifikācijas kods
     verification_code_sent_to Verifikācijas kods nosūtīts uz $email
+    verify Verify
     version Versija
+    video Video
+    video_link Video Link
+    video_url_optional Video URL (Optional)
+    view_card View Card
+    view_cards_title View Cards
     view_onboarding Skatīt iekāpšanu
+    visibility Visibility
+    visual_content_required Nepieciešams vismaz viens vizuālais saturs
+    visual_content_required_msg Jānorāda vismaz viens vizuālais saturs (teksts, attēls, audio vai video).
+    visual_text Vizuālais teksts
+    wants_to_be_friend Wants to be your friend
     weekly_access Iknedēļas piekļuve
     welcome_complete_your_profile_to_join_aliolo Laipni lūdzam! Aizpildiet savu profilu, lai pievienotos aliolo.
+    xp XP
     yearly_access Ikgadējā piekļuve
+    you You
     you_do_not_have_permission_to_edit_this_card Jums nav atļaujas rediģēt šo kartīti
     you_do_not_have_permission_to_view_this_card_details Jums nav atļaujas skatīt šīs kartes informāciju.
+    you_rank You are ranked #{rank}
+    active Aktīvs
+    autoplay Automātiska atskaņošana
+    card_limit Kartīšu limits
+    card_limit_msg Jūs esat sasniedzis {limit} kartīšu limitu.
+    create_request Izveidot pieprasījumu
+    edit_user Rediģēt lietotāju
+    favorite Izlase
+    file_too_large Fails ir pārāk liels
+    inactive Neaktīvs
+    is_required ir obligāts
+    languages Valodas
+    limit_reached Limits sasniegts
+    not_available Nav pieejams
+    toggle_languages Pārslēgt valodas
+    user_updated Lietotājs atjaunināts
+    zoom Tālummaiņa
+    account_and_management Account & Management
+    back_to_plans Back to plans
+    confirm_password_required Confirm password is required
+    feat_autoplay_desc Focus on learning while the app automatically advances through cards at your pace.
+    feat_autoplay_title Hands-Free Autoplay
+    feat_create_share_desc Easily create your own subjects and cards, or share them with the community.
+    feat_create_share_title Create & Share
+    feat_science_smart_review_desc The algorithm calculates the optimal time to review each card for maximum retention.
+    feat_science_smart_review_title Smart Review Cycles
+    new_password_required New password is required
+    password_updated Password updated successfully
+    save_success Saved successfully
+    trust_ecosystem_desc Your progress and cards are seamlessly synced across all your devices.
+    trust_ecosystem_title Aliolo Ecosystem

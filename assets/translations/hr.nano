@@ -43,37 +43,139 @@
     about_support_settings_desc Jezik korisničkog sučelja, način rada teme, boja teme, zvuk, položaj bočne trake i vidljivost dokumentacije mogu se podesiti iz postavki.
     about_support_settings_title Personalizacija
     about_support_title Postavke, povratne informacije i podrška
+    about_tagline Učite vizualno. Ovladajte trajno.
+    account_created Račun kreiran
+    account_created_billing_fail Vaš račun je kreiran, ali plaćanje nije dovršeno. Pokušajte ponovno uplatiti u nastavku.
+    account_deleted Account deleted successfully
+    add_card Add Card
+    add_collection Dodaj kolekciju
+    add_folder Dodaj mapu
+    add_friend_by_email Add Friend By Email
+    add_lang_translation Add Language Translation
+    add_prompt_translation Add Prompt Translation
+    add_subject Add Subject
     addition_emoji Dodatak Emoji
     addition_numbers Dodatni brojevi
+    age Dob
+    age_0_6 0-6 godina
+    age_15_18 15 - 18
+    age_15_plus 15+ godina
+    age_19_25 19 - 25
+    age_26_35 26 - 35
+    age_36_50 36 - 50
+    age_7_14 7-14 godina
+    age_advanced Advanced
+    age_all All Ages
+    age_early Early Childhood
+    age_group Age Group
+    age_intermediate Intermediate
+    age_over_50 Iznad 50
+    age_primary Primary School
+    age_under_14 Ispod 14
+    algorithm_title THE ALIOLO ALGORITHM
     aliolo aliolo
+    all_matching_subjects Svi odgovarajući subjekti
     all_rights_reserved Sva prava pridržana
+    answer Odgovor
+    answer_label answer
+    answers_label answers
     are_you_sure_you_want_to_close_this_feedback_request Jeste li sigurni da želite zatvoriti ovaj zahtjev za povratne informacije?
     are_you_sure_you_want_to_delete_this_folder Jeste li sigurni da želite izbrisati ovu mapu?
+    ascending Ascending
     attach_image Priloži sliku
+    audio Audio
+    audio_playing Audio Playing
+    author Author
     back Nazad
+    back_to_login Back to Login
     back_to_subjects Povratak na Predmete
     best_for_quick_goals Najbolji za brze golove
     billing_disclaimer Pretplate se automatski obnavljaju osim ako se ne otkažu. Svojom pretplatom možete upravljati u postavkama trgovine.
     billing_title Naplata
+    bronze BRONZE
     browser Preglednik
     cancel Otkazati
+    cancel_request Cancel Request
+    cancel_request_confirm Are you sure you want to cancel the request to
+    cannot_delete_folder Cannot Delete Folder
     cannot_delete_folder_it_is_not_empty Nije moguće izbrisati mapu: nije prazna
+    card_details Card Details
     card_id ID kartice
+    card_label Card
+    card_level Razina kartice
+    card_plural Cards
+    cards cards
+    cards_label cards
+    cards_per_day cards per day
+    cards_per_session cards per session
+    change_avatar Change Avatar
+    change_password Promijeni lozinku
     check_your_email_for_code Provjerite svoju e-poštu za kôd
     clear Jasan
+    click_to_select_image Click to select image
     click_to_view_original Kliknite za prikaz originala
     close Zatvoriti
     close_request Zatvoriti zahtjev?
+    code_label Code
     collection_id ID zbirke
     colors Boje
+    common_settings Common Settings
+    compare_plans Usporedite besplatno i Premium
+    confirm Potvrdi
+    confirm_logout Are you sure you want to logout?
+    confirm_password Confirm Password
     confirm_subscription Potvrdite pretplatu
+    content_label Content
     context Kontekst
+    copy COPY
+    copy_all Copy All
+    core_features CORE FEATURES
     correct_answers Točni odgovori
     could_not_launch Nije moguće pokrenuti $url
     counting Brojanje
+    create_account Create Account
+    create_new_account Create New Account
+    create_new_card Create New Card
+    created_at Kreirano
+    current_streak Current Streak
     current_subscription Trenutna pretplata
+    daily_goal Daily Goal
+    daily_progress Daily Progress
+    dark Dark
+    dashboard_greeting Zdravo
+    day day
+    day_label Day
+    day_plural Days
+    days days
+    default Default
+    default_language Zadani jezik
+    default_testing_language Default Testing Language
+    default_testing_language_desc Pre-selects this language on the subjects page.
     delete Izbrisati
+    delete_account Delete Account
+    delete_account_confirm Are you sure you want to delete your account? This action is permanent.
+    delete_avatar Obriši avatar
+    delete_avatar_confirm Jeste li sigurni da želite ukloniti svoju profilnu sliku?
+    delete_card_confirm Delete this card?
+    delete_collection Obriši kolekciju
+    delete_collection_confirm Jeste li sigurni da želite obrisati ovu kolekciju?
+    delete_folder Obriši mapu
+    delete_selected_cards Delete selected cards?
+    delete_subject Delete Subject
+    delete_subject_confirm Delete subject '{subject}' and all {count} cards inside?
+    delete_subjects_first Please delete all sub-subjects inside this folder before deleting the folder itself.
+    descending Descending
+    description Description
     device Uređaj
+    digit_code 6-digit Code
+    discard Discard
+    discard_changes Odbaci promjene?
+    doc_autoplay_desc Aplikacija može automatski prijeći na sljedeću karticu nakon što odgovorite. Točni odgovori čekaju 1 s, dok netočni čekaju 2 s kako biste ih mogli pregledati.
+    doc_autoplay_title Automatsko učenje
+    doc_card_scope_desc Kartice su blokovi učenja i uvijek pripadaju određenom predmetu. Iako predmete možete organizirati u mape ili kolekcije, same kartice moraju biti kreirane unutar predmeta.
+    doc_card_scope_title Gdje žive kartice
+    doc_collections_purpose_desc Kolekcije su odabrane staze koje grupiraju predmete zajedno. Kada pokrenete sesiju iz kolekcije, sustav miješa kartice iz svih uključenih predmeta kako bi pružio sveobuhvatan test.
+    doc_collections_purpose_title Svrha kolekcija
     doc_create_intro_desc Ova kartica pokriva kako kreatori organiziraju sadržaj, lokaliziraju ga i objavljuju korisne materijale za učenje bez prekompliciranja tijeka rada.
     doc_create_intro_title Stvoriti
     doc_create_json_desc Stvaranje temeljeno na JSON-u napredni je tijek rada za strukturirani skupni sadržaj. Trebalo bi ostati izborno; većina kreatora trebala bi moći graditi i uređivati ​​sadržaj putem standardnih obrazaca.
@@ -86,6 +188,38 @@
     doc_create_model_title Model sadržaja
     doc_create_visibility_desc Koristite "moje" za rad na vlastitom sadržaju, favorite za prikvačivanje korisnih stavki i javnu biblioteku za pregledavanje zajedničkog materijala. Javna vidljivost utječe na otkrivanje, dok vlasništvo utječe na ono što možete uređivati ​​ili brisati.
     doc_create_visibility_title Vlasništvo i vidljivost
+    doc_creation_desc Izradite vlastite predmete i dodajte vizualne kartice. Svaka kartica podržava sliku i opcionalnu audio datoteku za izgovor.
+    doc_creation_title Stvaranje predmeta i kartica
+    doc_feedback_desc Pomozite nam da postanemo bolji! Koristite ikonu povratnih informacija (Icons.feedback) na bilo kojem predmetu ili mapi kako biste prijavili probleme. Također možete poslati opće povratne informacije o aplikaciji putem odjeljka Podrška.
+    doc_feedback_title Sustav povratnih informacija
+    doc_filters_desc Brzo pronađite sadržaj pomoću trake za pretraživanje. Možete filtrirati prema dobnoj skupini (rana do napredna) ili suziti pogled na određene kolekcije i mape.
+    doc_filters_title Pretraživanje i filtri
+    doc_flashcards_desc Svaki predmet sadrži skup kartica. Iako su slike i zvuk podržani, oni su opcionalni - sadržaj može biti isključivo tekstualni ili dinamički generiran.
+    doc_flashcards_title Vizualne kartice
+    doc_friends_desc Učenje je bolje zajedno! Pozovite prijatelje u Aliolo putem svog profila. Možete pratiti napredak jedni drugih i ostati motivirani gledajući tko održava najduži niz.
+    doc_friends_title Prijatelji i pozivnice
+    doc_goals_desc Postavite svoj dnevni cilj dovršetka kartica u postavkama. Promjene vašeg cilja stupaju na snagu od sljedećeg dana.
+    doc_goals_title Dnevni ciljevi
+    doc_json_desc Napredni kreatori mogu koristiti JSON podatke za pružanje lokaliziranih imena i opisa, čineći predmete dostupnima na svim podržanim jezicima.
+    doc_json_title JSON lokalizacija
+    doc_lang_desc Uvijek odaberite željeni jezik učenja u gornjem izborniku prije odabira predmeta. To osigurava učitavanje ispravnog zvuka i prijevoda.
+    doc_lang_title Jezik učenja
+    doc_leaderboard_desc Natječite se s učenicima diljem svijeta! Zaradite XP dovršavanjem sesija s karticama i penjite se na ljestvici. Vaša pozicija se ažurira u stvarnom vremenu kako svladavate nove predmete.
+    doc_leaderboard_title Globalna ljestvica
+    doc_localization_details_desc "\"Globalni\" jezik je vaš primarni rezervni jezik - to može biti bilo koji jezik koji odaberete. Ako navedete određene prijevode, oni će nadjačati globalne podatke samo kada korisnik odabere taj određeni jezik sučelja."
+    doc_localization_details_title Kako radi lokalizacija
+    doc_localization_ui_desc Za dodavanje lokaliziranih podataka jednostavno dodirnite ikonu koda jezika (npr. EN, ES, FR) u zaglavlju uređivača. To vam omogućuje da navedete specifična imena, opise i sadržaj kartica za svaki podržani jezik.
+    doc_localization_ui_title Dodavanje prijevoda
+    doc_math_desc Matematički predmeti koriste specijalizirane mehanizme za generiranje vizualizacija kartica u stvarnom vremenu. Ovi predmeti imaju jedinstvene načine učenja i testiranja prilagođene specifičnim matematičkim konceptima.
+    doc_math_title Matematički predmeti
+    doc_media_desc Kako biste osigurali brzu sinkronizaciju, neka slike budu manje od 5 MB, a audio datoteke manje od 10 MB.
+    doc_media_title Ograničenja učitavanja medija
+    doc_organization_desc Koristite mape za grupiranje srodnih predmeta. Također možete kreirati kolekcije za organiziranje predmeta u odabrane staze.
+    doc_organization_title Organiziranje sadržaja
+    doc_pillars_desc Sav sadržaj u Aliolu organiziran je u 8 temeljnih stupova: Akademski i profesionalni, Svijet, Priroda, Ljudsko tijelo, Humanističke znanosti, Slobodno vrijeme, Inženjerstvo i Ostalo. Ove kategorije pružaju strukturirani okvir za sve predmete na platformi.
+    doc_pillars_title 8 osnovnih stupova
+    doc_public_desc Predmeti mogu biti privatni (vidljivi samo vama) ili javni. Javni sadržaj dijeli se s cijelom Aliolo zajednicom, omogućujući svima da otkriju i uče iz vaših kreacija.
+    doc_public_title Javno naspram privatno
     doc_start_dashboard_desc Nadzorna ploča je vaša glavna biblioteka. Upotrijebite pretraživanje za brzo pronalaženje sadržaja, a zatim kombinirajte filtre izvora kao što su favoriti, moje i javna knjižnica s filtrima za dob kako biste smanjili šum.
     doc_start_dashboard_title Nadzorna ploča, pretraživanje i filtri
     doc_start_feedback_desc Koristite ulazne točke za povratne informacije u aplikaciji kada nešto nije u redu ili nejasno. Izvješća mogu uključivati ​​trenutni kontekst, što olakšava pregled i rješavanje problema sa sadržajem.
@@ -98,6 +232,8 @@
     doc_start_quick_title Brzi početak
     doc_start_structure_desc Subjekti drže kartice. Mape grupiraju povezani sadržaj unutar stupa. Zbirke su odabrani skupovi koji mogu kombinirati više tema za proučavanje i dijeljenje.
     doc_start_structure_title Predmeti, mape i zbirke
+    doc_streaks_desc Dosljednost je ključ! Ispunite svoj dnevni cilj svaki dan kako biste izgradili svoj niz. Ne propustite niti jedan dan, inače će se niz resetirati.
+    doc_streaks_title Sustav nizova
     doc_study_how_desc Započnite s Učiti kada gradite prepoznavanje, a zatim se prebacite na Test kada želite brže prisjećanje i strožu provjeru. Koristite kraće sesije za fokusirani pregled i veće sesije za širu pokrivenost.
     doc_study_how_title Kako učiti
     doc_study_intro_desc Ova kartica objašnjava kako se kretati kroz sadržaj, odabrati pravi način rada i podesiti svoje sesije za pregled ili opoziv.
@@ -108,67 +244,280 @@
     doc_study_modes_title Načini učenja i testiranja
     doc_study_scope_desc Studija može započeti od jednog predmeta, prikaza mape ili zbirke. Zbirke su korisne kada želite mješovitu sesiju s nekoliko predmeta bez napuštanja trenutnog tijeka.
     doc_study_scope_title Predmeti, mape i zbirke u proučavanju
+    doc_sync_desc Vaš napredak se automatski sinkronizira s oblakom. Možete se prebacivati između web i desktop verzija bez gubitka niza.
+    doc_sync_title Sinkronizacija u oblaku
     doc_tab_create Stvoriti
+    doc_tab_creator Stvaranje
+    doc_tab_general Općenito
+    doc_tab_learning Praksa
     doc_tab_start Start
     doc_tab_study Studija
+    doc_testing_desc Izazovite se pitanjima s višestrukim izborom (MCQ). Aplikacija će automatski napredovati dok odgovarate, pomažući vam da brže učite.
+    doc_testing_title Interaktivno testiranje
+    doc_welcome_desc Aliolo je platforma za vizualno učenje dizajnirana da vam pomogne svladati predmete putem kartica i interaktivnog testiranja.
+    doc_welcome_title Dobrodošli u Aliolo
     documentation Dokumentacija
+    done_today Done Today
+    down_arrow Down Arrow
+    edit Uredi
+    edit_card Edit Card
+    edit_collection Uredi kolekciju
+    edit_email Uredi e-poštu
+    edit_folder Uredi mapu
+    edit_name Edit Name
+    edit_subject Edit Subject
+    edit_subject_title Edit Subject
     edit_subscription Uredi pretplatu
+    email E-pošta
+    email_change_notice For security, a confirmation link will be sent to BOTH your old and new email addresses. You must click both to complete the change.
+    email_in_use Email is already in use
+    email_subject Subject
+    email_update_sent Confirmation emails sent. Please check both inboxes.
     email_updated_successfully E-pošta je uspješno ažurirana!
+    english English
     enter_current_password Unesite trenutnu lozinku
+    enter_new_email Unesite novu e-poštu
+    enter_new_name Enter New Name
+    enter_number Enter a number
+    enter_or_select_subject Please enter or select a subject
+    enter_pass_to_confirm Enter your password to confirm
+    enter_subject_name Enter subject name
     error Pogreška: $e
     error_deleting Pogreška pri brisanju: $e
+    error_deleting_account Could not delete account. Check your password.
     error_saving Pogreška pri spremanju: $e
     error_saving_card Pogreška pri spremanju kartice: $e
     error_updating_favorite Pogreška pri ažuriranju favorita: $e
+    exit Exit
+    exit_confirm_msg Are you sure you want to exit the application?
+    exit_confirm_title Exit Aliolo?
+    expiry_date Datum isteka
     failed_answers Neuspješni odgovori
     failed_to_send_reset_code Slanje koda za poništavanje nije uspjelo
     failed_to_send_verification_code Slanje kontrolnog koda nije uspjelo
     fake_only Samo lažni
+    fatal_startup_error Fatal Startup Error
+    feat_adaptive_desc The system monitors your recognition speed across MCQ options, dynamically adjusting intervals to push your boundaries.
+    feat_adaptive_title Adaptive Response Timing
+    feat_ages_desc Content curated for different age groups from early childhood to advanced learning.
+    feat_ages_title For All Ages
+    feat_gamified_desc Earn XP, badges, and build streaks while mastering complex visual subjects.
+    feat_gamified_title Gamified Experience
+    feat_mastery_desc Dynamic XP rewards difficulty, while real-time mastery badges (Bronze, Silver, Gold) track your journey from novice to expert.
+    feat_mastery_title Visual Mastery & XP
+    feat_multimedia_desc Learn with images, audio, and video support for immersive training.
+    feat_multimedia_title Multimedia Cards
+    feat_recognition_desc Immersive identification drills designed to build instant "muscle memory" for complex visual subjects.
+    feat_recognition_title Visual Pattern Training
+    feat_science_adaptive_desc Intervals automatically adjust based on your recognition speed and accuracy.
+    feat_science_adaptive_title Adaptive Timing
+    feat_science_spacing_desc Advanced cognitive spacing model that predicts memory decay and optimizes review cycles.
+    feat_science_spacing_title SuperMemo-2 (SM-2)
+    feat_spacing_desc A full implementation of the SuperMemo-2 model predicts your memory decay and schedules reviews at the peak of retention.
+    feat_spacing_title Cognitive Spacing (SM-2)
+    feature_autoplay Način automatske reprodukcije
+    feature_community_access Pristup društvenim predmetima
     feature_creation Alati za izradu
     feature_customize Napredna prilagodba
+    feature_favorites Omiljene stavke na upravljačkoj ploči
+    feature_feedback Izravne povratne informacije i prijedlozi
+    feature_free BESPLATNO
+    feature_friends Pozovi i poveži se s prijateljima
     feature_full_library Potpuni pristup knjižnici
+    feature_learn_all Nauči bilo koji predmet ili kolekciju
+    feature_private_mode Način privatnog profila
+    feature_pro PRO
+    feature_spaced_repetition Razmaknuto ponavljanje (SM-2)
     feature_testing Interaktivno testiranje
+    feedback Povratne informacije
+    feedback_add_image Dodaj sliku
+    feedback_attachments Privitci
+    feedback_bug Prijava pogreške
+    feedback_context Kontekst
+    feedback_details Pojedinosti
+    feedback_error Slanje povratnih informacija nije uspjelo. Pokušajte ponovno.
+    feedback_management_desc Pregledajte i upravljajte povratnim informacijama korisnika
+    feedback_management_title Zahtjevi za povratne informacije
+    feedback_other Ostalo
+    feedback_submit Pošalji povratne informacije
+    feedback_success Hvala vam na povratnim informacijama!
+    feedback_suggestion Prijedlog
+    feedback_title Pošaljite povratne informacije
+    feedback_title_hint Naslov
+    feedback_type Vrsta
+    fill_all_fields Please fill all fields
+    filter_all All
+    filter_dashboard Nadzorna ploča
+    filter_favorites Favoriti
+    filter_my_subjects My Subjects
+    filter_on_dashboard On Dashboard
+    filter_public Public
+    filter_public_library Javna knjižnica
+    filters Filtri
+    finish Završi
+    finished_session You finished {count} cards. XP bonus awarded!
+    folder Mapa
+    folder_already_exists Mapa s tim imenom već postoji u ovom stupu
     folder_id ID mape
+    folder_label Mapa
+    folder_not_empty_msg Nije moguće obrisati: mapa nije prazna.
+    folder_plural Mape
+    forgot_password Forgot Password?
     free_only Besplatni korisnici
+    general_preferences General Preferences
     generic Generički
+    go_to_manager Go to Library Manager
+    goal_change_hint Change your card goal for tomorrow
+    goal_change_notice Promjene vašeg dnevnog cilja stupit će na snagu sutra.
+    gold GOLD
+    hide_comparison Sakrij usporedbu planova
     home Dom
+    images Images
+    included_subjects Uključeni predmeti
+    info_copied Info copied to clipboard
+    initializing_aliolo Initializing Aliolo...
     invalid_code Neispravan kod
+    invalid_email Invalid email address
     invalid_email_address Nevažeća adresa e-pošte
     invalid_json Nevažeći JSON: $e
+    invalid_number Invalid number
     invalid_or_expired_invitation_link Veza pozivnice nije važeća ili je istekla.
     invalid_or_expired_reset_code Kôd za resetiranje nije valjan ili je istekao.
+    invalid_password Invalid password
+    invalid_password_delete Invalid Password
     invitation_sent_awaiting_registration Pozivnica poslana (čeka se registracija)
+    invite Pozovi
+    invite_user_content E-pošta {email} nije pronađena. Pozovite ih da se pridruže Aliolu?
+    invite_user_title Pozovi korisnika?
     invited_and_request_sent Pozvan i zahtjev poslan!
     json JSON
+    keyboard_shortcuts Keyboard Shortcuts
     label_suffix $label:
+    lang_abbr Lang
+    language Jezik
     leaderboard Leaderboard
+    learn_mode_desc Study cards and memorize answers
+    learn_mode_title Learn
+    learn_session_size Learn Session Size
+    learn_session_size_desc Broj novih kartica koje se uvode u jednoj sesiji učenja.
     learning_session_complete_description Odličan posao! Završili ste ovu sesiju učenja. Vaš napredak je spremljen.
+    left_arrow Left Arrow
+    level Level
+    level_range Must be between 1 and 20
+    level_tier_1 Razina 1
+    level_tier_2 Razina 2
+    level_tier_3 Razina 3
     licenses Licence
     licenses_aliolo_section_title Aliolo Komercijalna licenca
     licenses_aliolo_subtitle Vlasnički softver i premium uvjeti pristupa
     licenses_intro_desc Prvo se pojavljuje komercijalna licenca Aliolo. Licence paketa treće strane slijede u nastavku.
     licenses_intro_title Aliolo Obavijesti o licenci i paketu
     licenses_third_party_section_title Licence paketa treće strane
+    light Light
     linux_distro Linux distro
     loading Učitavanje...
     localized_data Lokalizirani podaci
+    login Prijava
+    logout Odjava
+    manage_cards Manage Cards
+    manage_friends Friends
+    manage_friends_desc View and manage your friend requests
+    manage_library Manage Library ({sCount} subjects, {cCount} cards)
+    manage_subjects Manage Subjects
+    manage_subscription Upravljanje pretplatom
+    manage_testing_langs Manage Testing Languages
+    manage_users Manage Users
+    master_visual_ease Master visual subjects with ease.
+    mastered mastered
+    mastery Ovladavanje
+    max_streak Max Streak
+    maybe_later Možda kasnije
+    mission_desc The smart companion that helps your brain learn and retain visual knowledge through science-backed algorithms.
+    mock_email_title Mock Email Inbox
+    mode_audio_to_image Audio to Image
+    mode_audio_to_text Audio to Text
+    mode_image_to_text Image to Text
+    mode_text_to_text Text to Text
     monthly_access Mjesečni pristup
     most_popular_choice Najpopularniji izbor
+    multi_lang_answers Multi-language Answers
+    multi_lang_prompts Multi-language Prompts
+    my_position My Position
+    name Name
+    names_descriptions Names & Descriptions
+    new NEW
     new_email Nova e-pošta
+    new_password New Password
+    next Sljedeće
+    next_card Next Card
+    next_daily_goal Sljedeći dnevni cilj
+    next_daily_goal_desc Ciljni broj kartica koje treba savladati svaki dan. Promjene stupaju na snagu sutra.
+    next_day_goal Next Day Goal
     no_cards_available_for_this_session Nema dostupnih kartica za ovu sesiju.
     no_cards_found Nema pronađenih kartica
+    no_cards_found_for_lang No cards found for this language
+    no_cards_in_library No cards found in the library.
+    no_feedback_found Nisu pronađene povratne informacije.
+    no_folder Nema mape (Korijen)
+    no_friends_found No friends found
+    no_images_added Nema dodanih slika
+    no_leaderboard_data No leaderboard data available.
+    no_localized_audio Nema lokaliziranog zvuka
+    no_localized_images Nema lokaliziranih slika
+    no_localized_video Nema lokaliziranog videa
+    no_subjects_available Nema dostupnih predmeta
     no_subjects_found Nema pronađenih predmeta
     no_subjects_found_in_this_collection U ovoj kolekciji nema predmeta
     no_users_found Nema pronađenih korisnika
+    ok OK
+    old_password Stara lozinka
+    old_password_required Stara lozinka je obavezna
+    onboarding_1_desc Učite vizualno. Savladajte trajno. Vaš pratitelj za vizualno učenje potpomognut SM-2 znanošću.
+    onboarding_1_title Dobrodošli u Aliolo
+    onboarding_2_desc To nam pomaže personalizirati vaše iskustvo učenja i preporučiti prave predmete.
+    onboarding_2_title Koliko imate godina?
+    onboarding_3_desc Odaberite svoj primarni interes kako biste prilagodili svoju početnu nadzornu ploču.
+    onboarding_3_title Što želite savladati?
+    onboarding_4_desc Sastavite vlastiti špil ili uronite u kartice koje dijele Aliolo polaznici diljem svijeta. Učite svojim tempom, a zatim se testirajte kada budete spremni.
+    onboarding_4_title Stvorite i podijelite
+    onboarding_5_desc Vaša knjižnica ostaje sinkronizirana na svim vašim uređajima. Podsjetit ćemo vas samo kada bude vrijeme da zaštitite svoj niz.
+    onboarding_5_title Savladajte bilo gdje
+    onboarding_6_desc Započnite svoje putovanje danas i savladajte sve što naumite.
+    onboarding_6_title Pridružite se zajednici
+    onboarding_7_joined Pridružile su se tisuće polaznika
+    onboarding_7_quote Aliolo je potpuno transformirao način na koji moja djeca i ja svladavamo nove teme. Vizualne kartice i ponavljanje u razmacima čine učenje igrom!
+    onboarding_get_started Započnite
+    onboarding_next Dalje
+    onboarding_skip Preskoči
+    options_count Number of Answers
+    options_count_desc Broj odgovora s višestrukim izborom prikazanih tijekom testova.
+    options_per_card options per card
+    order_id ID narudžbe
     os_version Verzija OS-a
+    our_mission OUR MISSION
+    page Page
+    parent_folder_label Parent Folder (hr)
+    password Lozinka
+    password_required Password is required
+    password_reset_success Password reset successful
     password_updated_successfully Lozinka je uspješno ažurirana!
+    passwords_dont_match Passwords do not match
+    paste PASTE
     payments_are_not_yet_integrated_on_web_please_use_the_mobile_app_to_upgrade Plaćanja još nisu integrirana na webu. Za nadogradnju koristite mobilnu aplikaciju.
     personal_data Osobni podaci
     pick_date Odaberite datum
+    picture Picture
+    pillar Pillar
+    plan_monthly Mjesečni pristup
+    plan_monthly_desc Najpopularniji izbor
     plan_monthly_tagline Najpopularniji izbor
     plan_monthly_title Mjesečni pristup
+    plan_weekly Tjedni pristup
+    plan_weekly_desc Najbolje za brze ciljeve
     plan_weekly_tagline Najbolji za brze golove
     plan_weekly_title Tjedni pristup
+    plan_yearly Godišnji pristup
+    plan_yearly_desc Uštedite 33% mjesečno
     plan_yearly_tagline Uštedite 33% mjesečno
     plan_yearly_title Godišnji pristup
     platform Platforma
@@ -177,58 +526,208 @@
     please_enter_the_6_digit_code Molimo unesite 6-znamenkasti kod
     please_wait_for_a_response_before_replying_again Pričekajte odgovor prije ponovnog odgovora.
     premium_expires_at Istječe u $date
+    premium_go Postani Premium
     premium_lifetime Doživotni pristup
     premium_only Samo premium
     premium_status_active Vi ste premium član
+    premium_title Aliolo Premium
     premium_unlock_desc Dobijte pristup svim temama, izradite neograničen broj kartica i podržite misiju Aliolo.
     premium_unlock_title Otključajte puni pristup
+    prev Prev
+    previous_card Previous Card
+    price_per_week ({price} / tjedan)
+    private Private
+    pro_label PRO
+    product_id ID proizvoda
     product_not_available_in_store Proizvod nije dostupan u trgovini.
     profile Profil
+    profile_title My Profile & Progress
+    prompt_label Prompt
+    prompt_optional Prompt / Question
+    prompts_answers Prompts & Answers
+    provide_at_least_one_answer Please provide at least one answer
+    provide_at_least_one_name Provide at least one name
+    provider Davatelj usluga
     public_other_subject Javni/Drugi predmet
+    public_profile Public Profile
+    public_profile_desc Show your XP and Streak on Hall of Fame.
+    public_subject Public Subject
+    public_subject_desc Make this subject visible to other users.
     purchase_failed Kupnja nije uspjela: $e
+    purchase_token Token za kupnju
+    record_shortcut Record Shortcut
     recovery_error Pogreška oporavka: $e
     refresh Osvježiti
     refresh_conversation Osvježi razgovor
+    remove_friend Remove Friend
+    remove_friend_confirm Are you sure you want to remove friend
     renderer Renderer
+    request_sent Request sent
+    request_sent_waiting Request sent (waiting)
+    required Required
     reset_code Poništi kod
+    reset_code_email_title Password Reset Code
+    reset_code_sent "Reset code for: "
     reset_code_sent_to_please_check_your_inbox Reset kod poslan na $email. Provjerite svoju pristiglu poštu.
+    reset_password_for "Reset Password for: "
+    restore_password Restore Password
     restore_purchases Obnovi kupnje
+    retry Retry
+    right_arrow Right Arrow
     save Uštedjeti
     save_33_per_month Uštedite 33% mjesečno
+    save_before_nav Do you want to save changes before navigating?
+    save_card Save Card
+    save_subject Save Subject
     saved_successfully Uspješno spremljeno
+    search_cards Search Cards
+    search_subjects Search Subjects
     search_users Pretražite korisnike
+    select_an_answer Select an Answer
+    select_lang Select Language
+    select_package_license Select Package License
+    select_user Select User
+    selected_count {count} Selected
+    send Send
+    send_code Send Code
+    send_verification_code Send verification code?
     session_complete Sesija završena!
     session_complete_description Odličan posao! Završili ste sve karte u ovoj sesiji.
+    setting_saved Setting saved
     settings Postavke
+    shortcuts_hint Press the key you want to use with Ctrl.
+    show_all_languages Show all languages
     show_documentation_btn Gumb Prikaži dokumentaciju
     show_documentation_btn_desc Prikaži gumb za dokumentaciju na traci aplikacije.
     show_fake_users Prikaži lažne korisnike
+    show_less_languages Show less languages
+    sidebar_left Sidebar on the left
+    sidebar_left_desc Move testing controls to the left side of the screen.
+    silver SILVER
+    social Social
+    sort_by Sort by
+    sound_effects Sound Effects
+    sound_effects_desc Enable audio feedback for correct and wrong answers.
+    source Izvor
+    status Status
+    status_closed Zatvoreno
+    status_open Otvoreno
+    status_replied Odgovoreno
+    streak Niz
+    subject Subject
+    subject_deleted Subject deleted
     subject_id ID subjekta
+    subject_label Subject
+    subject_plural Subjects
+    subject_type Subject Type (hr)
+    subjects Predmeti
     subscribe_now Pretplatite se sada
     subscription_data Podaci o pretplati
     subscription_updated Pretplata ažurirana
     subtraction_emoji Emotikoni oduzimanja
     subtraction_numbers Oduzimanje brojeva
+    support_and_management Podrška i upravljanje
+    system System
+    tap_to_replay Tap to Replay
     technical_context TEHNIČKI KONTEKST
+    test_mode_desc Challenge yourself with a quiz
+    test_mode_label Test Mode
+    test_mode_title Test
+    test_session_size Test Session Size
+    test_session_size_desc Broj kartica koje treba pregledati u jednoj sesiji testiranja.
+    testing Testing
     testing_mode Način testiranja
+    testing_section Testing Settings
     text Tekst
+    the_science THE SCIENCE
+    theme_color App Theme Color
+    theme_color_desc Customize the primary color used for buttons and highlights.
+    theme_dark Dark
+    theme_light Light
+    theme_mode Tema
+    theme_system System
     this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards Ovo je mapa. Možete koristiti gornje gumbe za učenje/testiranje za vježbanje svih kartica.
+    to_label To
     total_cards Ukupno kartica
+    total_xp Total XP
+    trust_cloud_desc Your progress is securely synced across all your devices in real-time.
+    trust_cloud_title Cloud Sync
+    trust_privacy TRUST & PRIVACY
+    trust_sync_desc Your data is private and encrypted to ensure the highest security standards.
+    trust_sync_title Encrypted Data
+    type_collection Kolekcija
+    type_folder Folder (Sub-subjects) (hr)
+    type_standard Standard (Cards) (hr)
     type_your_reply Upišite svoj odgovor...
     ua UA
+    ui_language Jezik sučelja
+    ukrainian Ukrainian
     unknown_user_profile_missing Nepoznati korisnik (nedostaje profil)
+    unsaved_changes Unsaved Changes
+    unsaved_changes_msg Imate nespremljene promjene. Želite li ih odbaciti?
+    up_arrow Up Arrow
+    update Update
     update_available Dostupna je nova verzija!
+    updated_at Ažurirano
+    upload_new_photo Prenesi novu fotografiju
     user Korisnik
+    user_exists User already exists
     user_id ID korisnika
+    user_not_found User not found
     user_with_this_email_already_exists_please_log_in_instead Korisnik s ovom e-poštom već postoji. Umjesto toga prijavite se.
+    username Korisničko ime
     users Korisnici
     users_filter Filtrirajte korisnike
     verification_code Kontrolni kod
     verification_code_sent_to Kontrolni kod poslan na $email
+    verify Verify
     version Verzija
+    video Video
+    video_link Video Link
+    video_url_optional Video URL (Optional)
+    view_card View Card
+    view_cards_title View Cards
     view_onboarding Pregledajte integraciju
+    visibility Visibility
+    visual_content_required Potreban je barem jedan vizualni sadržaj
+    visual_content_required_msg Mora se navesti barem jedan vizualni sadržaj (tekst, slika, zvuk ili video).
+    visual_text Vizualni tekst
+    wants_to_be_friend Wants to be your friend
     weekly_access Tjedni pristup
     welcome_complete_your_profile_to_join_aliolo Dobrodošli! Ispunite svoj profil da biste se pridružili aliolo.
+    xp XP
     yearly_access Godišnji pristup
+    you You
     you_do_not_have_permission_to_edit_this_card Nemate dozvolu za uređivanje ove kartice
     you_do_not_have_permission_to_view_this_card_details Nemate dozvolu za pregled pojedinosti ove kartice.
+    you_rank You are ranked #{rank}
+    active Aktivno
+    autoplay Automatska reprodukcija
+    card_limit Ograničenje kartica
+    card_limit_msg Dosegli ste ograničenje od {limit} kartica.
+    create_request Stvori zahtjev
+    edit_user Uredi korisnika
+    favorite Omiljeno
+    file_too_large Datoteka je prevelika
+    inactive Neaktivno
+    is_required je obavezno
+    languages Jezici
+    limit_reached Ograničenje dosegnuto
+    not_available Nije dostupno
+    toggle_languages Prebaci jezike
+    user_updated Korisnik je ažuriran
+    zoom Zumiranje
+    account_and_management Account & Management
+    back_to_plans Back to plans
+    confirm_password_required Confirm password is required
+    feat_autoplay_desc Focus on learning while the app automatically advances through cards at your pace.
+    feat_autoplay_title Hands-Free Autoplay
+    feat_create_share_desc Easily create your own subjects and cards, or share them with the community.
+    feat_create_share_title Create & Share
+    feat_science_smart_review_desc The algorithm calculates the optimal time to review each card for maximum retention.
+    feat_science_smart_review_title Smart Review Cycles
+    new_password_required New password is required
+    password_updated Password updated successfully
+    save_success Saved successfully
+    trust_ecosystem_desc Your progress and cards are seamlessly synced across all your devices.
+    trust_ecosystem_title Aliolo Ecosystem

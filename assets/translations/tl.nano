@@ -43,37 +43,139 @@
     about_support_settings_desc Ang wika ng UI, mode ng tema, kulay ng tema, tunog, pagkakalagay sa sidebar, at visibility ng dokumentasyon ay maaaring isaayos lahat mula sa mga setting.
     about_support_settings_title Personalization
     about_support_title Mga Setting, Feedback, at Suporta
+    about_tagline Matuto nang Visual. Kabisaduhin nang Lubusan.
+    account_created Nagawa ang account
+    account_created_billing_fail Nagawa ang iyong account, ngunit hindi nakumpleto ang pagbabayad. Subukang muli ang pagbabayad sa ibaba.
+    account_deleted Account deleted successfully
+    add_card Add Card
+    add_collection Magdagdag ng koleksyon
+    add_folder Magdagdag ng folder
+    add_friend_by_email Add Friend By Email
+    add_lang_translation Add Language Translation
+    add_prompt_translation Add Prompt Translation
+    add_subject Add Subject
     addition_emoji Dagdag Emoji
     addition_numbers Mga Numero ng Pagdaragdag
+    age Edad
+    age_0_6 0-6 taon
+    age_15_18 15 - 18
+    age_15_plus 15+ taon
+    age_19_25 19 - 25
+    age_26_35 26 - 35
+    age_36_50 36 - 50
+    age_7_14 7-14 taon
+    age_advanced Advanced
+    age_all Lahat ng Edad
+    age_early Maagang Pagkabata
+    age_group Pangkat ng Edad
+    age_intermediate Intermedya
+    age_over_50 Higit sa 50
+    age_primary Mababang Paaralan
+    age_under_14 Bata sa 14
+    algorithm_title THE ALIOLO ALGORITHM
     aliolo aliolo
+    all_matching_subjects Lahat ng magkatugmang paksa
     all_rights_reserved Lahat ng karapatan ay nakalaan
+    answer Sagot
+    answer_label answer
+    answers_label answers
     are_you_sure_you_want_to_close_this_feedback_request Sigurado ka bang gusto mong isara ang kahilingan sa feedback na ito?
     are_you_sure_you_want_to_delete_this_folder Sigurado ka bang gusto mong tanggalin ang folder na ito?
+    ascending Pataas
     attach_image Maglakip ng larawan
+    audio Audio
+    audio_playing Nagpe-play ang Audio
+    author Author
     back Bumalik
+    back_to_login Back to Login
     back_to_subjects Bumalik sa Mga Paksa
     best_for_quick_goals Pinakamahusay para sa mabilis na layunin
     billing_disclaimer Awtomatikong nagre-renew ang mga subscription maliban kung kinansela. Maaari mong pamahalaan ang iyong subscription sa mga setting ng iyong tindahan.
     billing_title Pagsingil
+    bronze BRONZE
     browser Browser
     cancel Kanselahin
+    cancel_request Cancel Request
+    cancel_request_confirm Are you sure you want to cancel the request to
+    cannot_delete_folder Cannot Delete Folder
     cannot_delete_folder_it_is_not_empty Hindi matanggal ang folder: hindi ito walang laman
+    card_details Card Details
     card_id Card ID
+    card_label Card
+    card_level Antas ng Card
+    card_plural Cards
+    cards cards
+    cards_label cards
+    cards_per_day cards per day
+    cards_per_session cards per session
+    change_avatar Change Avatar
+    change_password Baguhin ang Password
     check_your_email_for_code Tingnan ang iyong email para sa code
     clear Maaliwalas
+    click_to_select_image Click to select image
     click_to_view_original I-click upang tingnan ang orihinal
     close Isara
     close_request Isara ang Kahilingan?
+    code_label Code
     collection_id Collection ID
     colors Mga kulay
+    common_settings Common Settings
+    compare_plans Ipaghambing ang Libre vs Premium
+    confirm Kumpirmahin
+    confirm_logout Are you sure you want to logout?
+    confirm_password Confirm Password
     confirm_subscription Kumpirmahin ang Subscription
+    content_label Content
     context Konteksto
+    copy COPY
+    copy_all Copy All
+    core_features CORE FEATURES
     correct_answers Mga Tamang Sagot
     could_not_launch Hindi mailunsad ang $url
     counting Nagbibilang
+    create_account Create Account
+    create_new_account Create New Account
+    create_new_card Create New Card
+    created_at Nagawa Noong
+    current_streak Current Streak
     current_subscription Kasalukuyang Subscription
+    daily_goal Daily Goal
+    daily_progress Araw-araw na Pag-unlad
+    dark Dark
+    dashboard_greeting Halo
+    day day
+    day_label Day
+    day_plural Days
+    days days
+    default Default
+    default_language Default na Wika
+    default_testing_language Default Testing Language
+    default_testing_language_desc Pre-selects this language on the subjects page.
     delete Tanggalin
+    delete_account Delete Account
+    delete_account_confirm Are you sure you want to delete your account? This action is permanent.
+    delete_avatar I-delete ang avatar
+    delete_avatar_confirm Sigurado ka bang gusto mong alisin ang iyong profile picture?
+    delete_card_confirm Delete this card?
+    delete_collection Tanggalin ang koleksyon
+    delete_collection_confirm Sigurado ka bang gusto mong tanggalin ang koleksyong ito?
+    delete_folder Delete Folder
+    delete_selected_cards Delete selected cards?
+    delete_subject Delete Subject
+    delete_subject_confirm Delete subject '{subject}' and all {count} cards inside?
+    delete_subjects_first Please delete all sub-subjects inside this folder before deleting the folder itself.
+    descending Pababa
+    description Description
     device Device
+    digit_code 6-digit Code
+    discard Discard
+    discard_changes Ibalewala ang mga pagbabago?
+    doc_autoplay_desc Maaaring awtomatikong magpatuloy ang app sa susunod na card pagkatapos mong sumagot. Ang mga tamang sagot ay naghihintay ng 1s, habang ang mga maling sagot ay naghihintay ng 2s upang hayaan kang mag-review.
+    doc_autoplay_title Auto-Play na Pag-aaral
+    doc_card_scope_desc Ang mga card ay ang mga pangunahing bahagi ng pag-aaral at palaging kabilang sa isang partikular na Paksa. Bagama't maaari mong i-organisa ang mga Paksa sa mga Folder o Koleksyon, ang mga card mismo ay dapat gawin sa loob ng isang Paksa.
+    doc_card_scope_title Kung Saan Nakatira ang Mga Card
+    doc_collections_purpose_desc Ang mga koleksyon ay mga na-curate na landas na nagpapangkat-pangkat sa mga Paksa. Kapag nagsimula ka ng isang sesyon mula sa isang Koleksyon, pinaghahalo ng system ang mga card mula sa lahat ng kasamang paksa upang magbigay ng randomized at komprehensibong pagsubok.
+    doc_collections_purpose_title Ang Layunin ng Mga Koleksyon
     doc_create_intro_desc Sinasaklaw ng tab na ito kung paano inaayos ng mga creator ang content, nilo-localize ito, at nag-publish ng kapaki-pakinabang na materyal sa pag-aaral nang hindi nagpapasalimuot sa daloy ng trabaho.
     doc_create_intro_title Lumikha
     doc_create_json_desc Ang paggawa na nakabatay sa JSON ay isang advanced na workflow para sa structured bulk content. Dapat itong manatiling opsyonal; karamihan sa mga tagalikha ay dapat na makabuo at makapag-edit ng nilalaman sa pamamagitan ng mga karaniwang form.
@@ -86,6 +188,38 @@
     doc_create_model_title Modelo ng Nilalaman
     doc_create_visibility_desc Gamitin ang "akin" para gumawa sa sarili mong content, mga paborito para i-pin ang mga kapaki-pakinabang na item, at pampublikong library para mag-browse ng nakabahaging materyal. Ang pampublikong visibility ay nakakaapekto sa pagtuklas, habang ang pagmamay-ari ay nakakaapekto sa kung ano ang maaari mong i-edit o tanggalin.
     doc_create_visibility_title Pagmamay-ari at Visibility
+    doc_creation_desc Gumawa ng sarili mong mga Paksa at magdagdag ng mga visual na Flashcard. Sinusuportahan ng bawat card ang isang imahe at isang opsyonal na audio file para sa pagbigkas.
+    doc_creation_title Paggawa ng Mga Paksa at Card
+    doc_feedback_desc Tulungan kaming mapabuti! Gamitin ang icon ng feedback (Icons.feedback) sa anumang Paksa o Folder upang mag-ulat ng mga isyu. Maaari ka ring magpadala ng pangkalahatang feedback sa app sa pamamagitan ng seksyon ng Suporta.
+    doc_feedback_title Sistema ng Feedback
+    doc_filters_desc Mabilis na makahanap ng nilalaman gamit ang search bar. Maaari kang mag-filter ayon sa Age Group (Early hanggang Advanced) o pakitid ang iyong pananaw sa mga partikular na Koleksyon at Folder.
+    doc_filters_title Paghahanap at Mga Filter
+    doc_flashcards_desc Ang bawat paksa ay naglalaman ng isang hanay ng mga card. Bagama't suportado ang mga larawan at audio, opsyonal ang mga ito—ang nilalaman ay maaaring purong teksto o dynamic na binuo.
+    doc_flashcards_title Mga Visual Flashcard
+    doc_friends_desc Mas masaya ang pag-aaral nang magkakasama! Mag-imbita ng mga kaibigan sa Aliolo sa pamamagitan ng iyong profile. Maaari ninyong subaybayan ang pag-unlad ng isa't isa at manatiling motivated sa pamamagitan ng pagtingin kung sino ang nagpapanatili ng pinakamahabang streak.
+    doc_friends_title Mga Kaibigan at Imbitasyon
+    doc_goals_desc Itakda ang iyong pang-araw-araw na target sa pagkumpleto ng card sa mga setting. Ang mga pagbabago sa iyong layunin ay magkakabisa simula sa susunod na araw.
+    doc_goals_title Mga Pang-araw-araw na Layunin
+    doc_json_desc Ang mga advanced na creator ay maaaring gumamit ng JSON data upang magbigay ng mga naka-localize na pangalan at paglalarawan, na ginagawang accessible ang mga paksa sa lahat ng suportadong wika.
+    doc_json_title JSON Localization
+    doc_lang_desc Palaging piliin ang iyong gustong wika ng pag-aaral sa itaas na menu bago pumili ng paksa. Tinitiyak nito na ang tamang audio at mga pagsasalin ay nalo-load.
+    doc_lang_title Wika ng Pag-aaral
+    doc_leaderboard_desc Makipagkumpitensya sa mga mag-aaral sa buong mundo! Kumita ng XP sa pamamagitan ng pagkumpleto ng mga sesyon ng card at umakyat sa mga ranggo. Ang iyong posisyon ay ina-update nang real-time habang namamanata ka ng mga bagong paksa.
+    doc_leaderboard_title Global na Leaderboard
+    doc_localization_details_desc Ang wikang "Global" ay ang iyong pangunahing fallback—maaari itong maging anumang wika na pipiliin mo. Kung magbibigay ka ng mga partikular na pagsasalin (tulad ng Ingles o Espanyol), o-override ng mga ito ang Global na data kapag pinili lang ng isang user ang partikular na wika ng UI na iyon.
+    doc_localization_details_title Paano Gumagana ang Localization
+    doc_localization_ui_desc Upang magdagdag ng naka-localize na data, i-tap lang ang icon ng language code (hal., EN, ES, FR) sa header ng editor. Binibigyang-daan ka nito na magbigay ng mga partikular na pangalan, paglalarawan, at nilalaman ng card para sa bawat suportadong wika. Ang tab na "Global" ay nagsisilbing pangunahing fallback kung walang ibinigay na partikular na pagsasalin.
+    doc_localization_ui_title Pagdaragdag ng Mga Pagsasalin
+    doc_math_desc Ang mga paksa sa matematika ay gumagamit ng mga espesyal na engine upang bumuo ng mga visualization ng card nang real-time. Nagtatampok ang mga paksang ito ng mga natatanging mode ng pag-aaral at pagsubok na iniayon sa mga partikular na konsepto sa matematika, na tinitiyak ang isang mas epektibong kapaligiran sa pagsasanay.
+    doc_math_title Mga Paksa sa Matematika
+    doc_media_desc Upang matiyak ang mabilis na pag-sync, panatilihing mababa sa 5MB ang mga larawan at mababa sa 10MB ang mga audio file.
+    doc_media_title Mga Limitasyon sa Pag-upload ng Media
+    doc_organization_desc Gamitin ang mga Folder upang pagpangkatin ang mga kaugnay na Paksa. Maaari ka ring gumawa ng mga Koleksyon upang i-organisa ang mga Paksa sa mga na-curate na landas.
+    doc_organization_title Pag-oorganisa ng Nilalaman
+    doc_pillars_desc Ang lahat ng nilalaman sa Aliolo ay nakaorganisa sa 8 pundamental na haligi: Akademiko at Propesyonal, Mundo, Kalikasan, Katawan ng Tao, Humanidades, Paglilibang, Inhenyeriya, at Iba pa. Ang mga kategoryang ito ay nagbibigay ng estrukturadong balangkas para sa lahat ng paksa sa buong platform.
+    doc_pillars_title Ang 8 Pangunahing Haligi
+    doc_public_desc Ang mga paksa ay maaaring pribado (ikaw lang ang nakakakita) o publiko. Ang pampublikong nilalaman ay ibinabahagi sa buong komunidad ng Aliolo, na nagbibigay-daan sa lahat na matuklasan at matuto mula sa iyong mga likha.
+    doc_public_title Publiko vs Pribado
     doc_start_dashboard_desc Ang dashboard ay ang iyong pangunahing aklatan. Gamitin ang paghahanap para mabilis na makahanap ng content, pagkatapos ay pagsamahin ang mga source filter gaya ng mga paborito, minahan, at pampublikong library na may mga filter ng edad para mabawasan ang ingay.
     doc_start_dashboard_title Dashboard, Paghahanap, at Mga Filter
     doc_start_feedback_desc Gamitin ang mga entry point ng feedback sa buong app kapag may mali o hindi malinaw. Maaaring kasama sa mga ulat ang kasalukuyang konteksto, na ginagawang mas madaling suriin at ayusin ang mga isyu sa content.
@@ -98,6 +232,8 @@
     doc_start_quick_title Mabilis na Pagsisimula
     doc_start_structure_desc Ang mga paksa ay may hawak na mga card. Pinagpangkat ng mga folder ang nauugnay na nilalaman sa loob ng isang pillar. Ang mga koleksyon ay mga na-curate na hanay na maaaring pagsamahin ang maraming paksa para sa pag-aaral at pagbabahagi.
     doc_start_structure_title Mga Paksa, Folder, at Koleksyon
+    doc_streaks_desc Consistency ang susi! Kumpletuhin ang iyong pang-araw-araw na layunin bawat araw upang mabuo ang iyong streak. Huwag palampasin ang isang araw, kung hindi ay magre-reset ang streak.
+    doc_streaks_title Sistema ng Streak
     doc_study_how_desc Magsimula sa Learn kapag gumagawa ka ng recognition, pagkatapos ay lumipat sa Test kapag gusto mo ng mas mabilis na pag-recall at mas mahigpit na pagsusuri. Gumamit ng mas maiikling session para sa nakatutok na pagsusuri at mas malalaking session para sa mas malawak na saklaw.
     doc_study_how_title Paano Mag-aral
     doc_study_intro_desc Ipinapaliwanag ng tab na ito kung paano lumipat sa nilalaman, piliin ang tamang mode, at ibagay ang iyong mga session para sa pagsusuri o paggunita.
@@ -108,67 +244,280 @@
     doc_study_modes_title Matuto at Subukan ang Mga Mode
     doc_study_scope_desc Ang pag-aaral ay maaaring magsimula sa isang paksa, isang folder view, o isang koleksyon. Kapaki-pakinabang ang mga koleksyon kapag gusto mo ng halo-halong session sa ilang paksa nang hindi umaalis sa kasalukuyang daloy.
     doc_study_scope_title Mga Paksa, Folder, at Koleksyon sa Pag-aaral
+    doc_sync_desc Awtomatikong sina-sync ang iyong pag-unlad sa cloud. Maaari kang lumipat sa pagitan ng mga bersyon ng web at desktop nang hindi nawawala ang iyong streak.
+    doc_sync_title Cloud Sync
     doc_tab_create Lumikha
+    doc_tab_creator Paglikha
+    doc_tab_general Pangkalahatan
+    doc_tab_learning Pagsasanay
     doc_tab_start Magsimula
     doc_tab_study Mag-aral
+    doc_testing_desc Hamunin ang iyong sarili sa mga multiple-choice question (MCQ). Awtomatikong magpapatuloy ang app habang sumasagot ka, na tumutulong sa iyong matuto nang mas mabilis.
+    doc_testing_title Interactive na Pagsubok
+    doc_welcome_desc Ang Aliolo ay isang visual learning platform na idinisenyo upang tulungan kang masterin ang mga paksa sa pamamagitan ng mga flashcard at interactive na pagsubok.
+    doc_welcome_title Maligayang pagdating sa Aliolo
     documentation Dokumentasyon
+    done_today Tapos na Ngayon
+    down_arrow Down Arrow
+    edit I-edit
+    edit_card Edit Card
+    edit_collection I-edit ang koleksyon
+    edit_email I-edit ang Email
+    edit_folder I-edit ang folder
+    edit_name Edit Name
+    edit_subject Edit Subject
+    edit_subject_title Edit Subject
     edit_subscription I-edit ang subscription
+    email Email
+    email_change_notice For security, a confirmation link will be sent to BOTH your old and new email addresses. You must click both to complete the change.
+    email_in_use Email is already in use
+    email_subject Subject
+    email_update_sent Confirmation emails sent. Please check both inboxes.
     email_updated_successfully Matagumpay na na-update ang email!
+    english English
     enter_current_password Ipasok ang kasalukuyang password
+    enter_new_email Ilagay ang bagong email
+    enter_new_name Enter New Name
+    enter_number Enter a number
+    enter_or_select_subject Please enter or select a subject
+    enter_pass_to_confirm Enter your password to confirm
+    enter_subject_name Enter subject name
     error Error: $e
     error_deleting Error sa pagtanggal: $e
+    error_deleting_account Could not delete account. Check your password.
     error_saving Error sa pag-save: $e
     error_saving_card Error sa pag-save ng card: $e
     error_updating_favorite Error sa pag-update ng paborito: $e
+    exit Exit
+    exit_confirm_msg Are you sure you want to exit the application?
+    exit_confirm_title Exit Aliolo?
+    expiry_date Petsa ng Pag-expire
     failed_answers Mga Nabigong Sagot
     failed_to_send_reset_code Nabigong magpadala ng reset code
     failed_to_send_verification_code Nabigong ipadala ang verification code
     fake_only Fake lang
+    fatal_startup_error Fatal Startup Error
+    feat_adaptive_desc The system monitors your recognition speed across MCQ options, dynamically adjusting intervals to push your boundaries.
+    feat_adaptive_title Adaptive Response Timing
+    feat_ages_desc Content curated for different age groups from early childhood to advanced learning.
+    feat_ages_title For All Ages
+    feat_gamified_desc Earn XP, badges, and build streaks while mastering complex visual subjects.
+    feat_gamified_title Gamified Experience
+    feat_mastery_desc Dynamic XP rewards difficulty, while real-time mastery badges (Bronze, Silver, Gold) track your journey from novice to expert.
+    feat_mastery_title Visual Mastery & XP
+    feat_multimedia_desc Learn with images, audio, and video support for immersive training.
+    feat_multimedia_title Multimedia Cards
+    feat_recognition_desc Immersive identification drills designed to build instant "muscle memory" for complex visual subjects.
+    feat_recognition_title Visual Pattern Training
+    feat_science_adaptive_desc Intervals automatically adjust based on your recognition speed and accuracy.
+    feat_science_adaptive_title Adaptive Timing
+    feat_science_spacing_desc Advanced cognitive spacing model that predicts memory decay and optimizes review cycles.
+    feat_science_spacing_title SuperMemo-2 (SM-2)
+    feat_spacing_desc A full implementation of the SuperMemo-2 model predicts your memory decay and schedules reviews at the peak of retention.
+    feat_spacing_title Cognitive Spacing (SM-2)
+    feature_autoplay Auto-Play mode
+    feature_community_access Access sa mga paksa ng komunidad
     feature_creation Mga Tool sa Paglikha
     feature_customize Advanced na Pag-customize
+    feature_favorites Mga paboritong item sa dashboard
+    feature_feedback Direktang feedback at mga suhestyon
+    feature_free LIBRE
+    feature_friends Mag-imbita at kumonekta sa mga kaibigan
     feature_full_library Ganap na Access sa Aklatan
+    feature_learn_all Alamin ang anumang paksa o koleksyon
+    feature_private_mode Private profile mode
+    feature_pro PRO
+    feature_spaced_repetition Spaced Repetition (SM-2)
     feature_testing Interactive na Pagsubok
+    feedback Feedback
+    feedback_add_image Magdagdag ng Larawan
+    feedback_attachments Mga Attachment
+    feedback_bug Ulat ng Bug
+    feedback_context Konteksto
+    feedback_details Mga Detalye
+    feedback_error Bigo sa pagpapadala ng feedback. Pakisubukang muli.
+    feedback_management_desc Tingnan at pamahalaan ang feedback ng user
+    feedback_management_title Mga Kahilingan sa Feedback
+    feedback_other Iba pa
+    feedback_submit Isumite ang Feedback
+    feedback_success Salamat sa iyong feedback!
+    feedback_suggestion Mungkahi
+    feedback_title Magpadala ng Feedback
+    feedback_title_hint Pamagat
+    feedback_type Uri
+    fill_all_fields Please fill all fields
+    filter_all All
+    filter_dashboard Dashboard
+    filter_favorites Mga Paborito
+    filter_my_subjects My Subjects
+    filter_on_dashboard On Dashboard
+    filter_public Public
+    filter_public_library Pampublikong Aklatan
+    filters Mga Filter
+    finish Tapusin
+    finished_session You finished {count} cards. XP bonus awarded!
+    folder Folder
+    folder_already_exists Mayroon nang folder na may ganitong pangalan sa pilar na ito
     folder_id Folder ID
+    folder_label Folder
+    folder_not_empty_msg Hindi ma-delete: hindi walang laman ang folder.
+    folder_plural Mga Folder
+    forgot_password Forgot Password?
     free_only Libreng mga gumagamit
+    general_preferences General Preferences
     generic Generic
+    go_to_manager Go to Library Manager
+    goal_change_hint Baguhin ang iyong layunin ng card cho bukas
+    goal_change_notice Magkakabisa ang mga pagbabago sa iyong pang-araw-araw na layunin bukas.
+    gold GOLD
+    hide_comparison Itago ang Paghahambing ng Plano
     home Bahay
+    images Images
+    included_subjects Kasamang mga paksa
+    info_copied Info copied to clipboard
+    initializing_aliolo Initializing Aliolo...
     invalid_code Di-wastong code
+    invalid_email Invalid email address
     invalid_email_address Di-wastong email address
     invalid_json Di-wastong JSON: $e
+    invalid_number Invalid number
     invalid_or_expired_invitation_link Di-wasto o nag-expire na link ng imbitasyon.
     invalid_or_expired_reset_code Di-wasto o nag-expire na reset code.
+    invalid_password Invalid password
+    invalid_password_delete Invalid Password
     invitation_sent_awaiting_registration Ipinadala ang imbitasyon (naghihintay ng pagpaparehistro)
+    invite Imbitahan
+    invite_user_content Hindi nahanap ang email na {email}. Imbitahan silang sumali sa Aliolo?
+    invite_user_title Mag-imbita ng User?
     invited_and_request_sent Inimbitahan at ipinadala ang kahilingan!
     json JSON
+    keyboard_shortcuts Keyboard Shortcuts
     label_suffix $label:
+    lang_abbr Lang
+    language Language
     leaderboard Leaderboard
+    learn_mode_desc Study cards and memorize answers
+    learn_mode_title Learn
+    learn_session_size Laki ng session sa pag-aaral
+    learn_session_size_desc Bilang ng mga bagong card na ipakikilala sa isang learning session.
     learning_session_complete_description Mahusay na trabaho! Natapos mo ang sesyon ng pag-aaral na ito. Ang iyong pag-unlad ay nai-save.
+    left_arrow Left Arrow
+    level Level
+    level_range Must be between 1 and 20
+    level_tier_1 Antas 1
+    level_tier_2 Antas 2
+    level_tier_3 Antas 3
     licenses Mga lisensya
     licenses_aliolo_section_title Aliolo Komersyal na Lisensya
     licenses_aliolo_subtitle Mga tuntunin ng pagmamay-ari na software at premium na pag-access
     licenses_intro_desc Unang lumabas ang komersyal na lisensya ni Aliolo. Ang mga lisensya ng third-party na pakete ay sumusunod sa ibaba.
     licenses_intro_title Aliolo Mga Paunawa sa Lisensya at Package
     licenses_third_party_section_title Mga Lisensya ng Third-Party na Package
+    light Light
     linux_distro Linux Distro
     loading Naglo-load...
     localized_data Naka-localize na Data
+    login Mag-login
+    logout Logout
+    manage_cards Manage Cards
+    manage_friends Friends
+    manage_friends_desc View and manage your friend requests
+    manage_library Manage Library ({sCount} subjects, {cCount} cards)
+    manage_subjects Manage Subjects
+    manage_subscription Pamahalaan ang Subscription
+    manage_testing_langs Manage Testing Languages
+    manage_users Manage Users
+    master_visual_ease Master visual subjects with ease.
+    mastered mastered
+    mastery Mastery
+    max_streak Max Streak
+    maybe_later Siguro Mamaya
+    mission_desc The smart companion that helps your brain learn and retain visual knowledge through science-backed algorithms.
+    mock_email_title Mock Email Inbox
+    mode_audio_to_image Audio to Image
+    mode_audio_to_text Audio to Text
+    mode_image_to_text Image to Text
+    mode_text_to_text Text to Text
     monthly_access Buwanang Access
     most_popular_choice Pinakatanyag na pagpipilian
+    multi_lang_answers Multi-language Answers
+    multi_lang_prompts Multi-language Prompts
+    my_position My Position
+    name Name
+    names_descriptions Names & Descriptions
+    new NEW
     new_email Bagong Email
+    new_password New Password
+    next Next
+    next_card Next Card
+    next_daily_goal Susunod na Pang-araw-araw na Layunin
+    next_daily_goal_desc Target na bilang ng mga card na dapat makabisado bawat araw. Magkakabisa ang mga pagbabago bukas.
+    next_day_goal Layunin para sa Bukas
     no_cards_available_for_this_session Walang available na card para sa session na ito.
     no_cards_found Walang nakitang card
+    no_cards_found_for_lang No cards found for this language
+    no_cards_in_library No cards found in the library.
+    no_feedback_found Walang nahanap na feedback.
+    no_folder Walang folder (Root)
+    no_friends_found No friends found
+    no_images_added Walang idinagdag na mga larawan
+    no_leaderboard_data No leaderboard data available.
+    no_localized_audio Walang naka-localize na audio
+    no_localized_images Walang na-localize na mga larawan
+    no_localized_video Walang naka-localize na video
+    no_subjects_available Walang available na paksa
     no_subjects_found Walang nahanap na paksa
     no_subjects_found_in_this_collection Walang nakitang paksa sa koleksyong ito
     no_users_found Walang nakitang mga user
+    ok OK
+    old_password Lumang Password
+    old_password_required Kailangan ang lumang password
+    onboarding_1_desc Matuto nang Visual. Master nang Permanente. Ang iyong visual learning companion na pinatatakbo ng SM-2 science.
+    onboarding_1_title Maligayang Pagdating sa Aliolo
+    onboarding_2_desc Tinutulungan kami nito na i-personalize ang iyong karanasan sa pag-aaral at irekomenda ang tamang mga paksa.
+    onboarding_2_title Ilang taon ka na?
+    onboarding_3_desc Piliin ang iyong pangunahing interes upang i-customize ang iyong paunang dashboard.
+    onboarding_3_title Ano ang gusto mong i-master?
+    onboarding_4_desc Bumuo ng sarili mong deck o sumisid sa mga card na ibinahagi ng mga nag-aaral ng Aliolo sa buong mundo. Matuto sa sarili mong bilis, pagkatapos ay subukan ang iyong sarili kapag handa ka na.
+    onboarding_4_title Gumawa at Magbahagi
+    onboarding_5_desc Nananatiling naka-sync ang iyong library sa lahat ng iyong device. Bibigyan ka lang namin ng nudge kapag oras na para protektahan ang iyong streak.
+    onboarding_5_title I-master Kahit Saan
+    onboarding_6_desc Simulan ang iyong paglalakbay ngayon at i-master ang anumang itinakda mo sa iyong isip.
+    onboarding_6_title Sumali sa Komunidad
+    onboarding_7_joined Sinalihan ng libu-libong nag-aaral
+    onboarding_7_quote Ganap na binago ng Aliolo ang paraan ng pag-master namin ng aking mga anak sa mga bagong paksa. Ang mga visual card at spaced repetition ay nagpaparamdam sa pag-aaral na parang isang laro!
+    onboarding_get_started Magsimula Na
+    onboarding_next Susunod
+    onboarding_skip Laktawan
+    options_count Number of Answers
+    options_count_desc Bilang ng mga multiple-choice na sagot na ipinapakita sa panahon ng mga pagsusulit.
+    options_per_card options per card
+    order_id ID ng Order
     os_version Bersyon ng OS
+    our_mission OUR MISSION
+    page Page
+    parent_folder_label Parent Folder (tl)
+    password Password
+    password_required Password is required
+    password_reset_success Password reset successful
     password_updated_successfully Matagumpay na na-update ang password!
+    passwords_dont_match Passwords do not match
+    paste PASTE
     payments_are_not_yet_integrated_on_web_please_use_the_mobile_app_to_upgrade Ang mga pagbabayad ay hindi pa isinama sa Web. Mangyaring gamitin ang mobile app upang mag-upgrade.
     personal_data Personal na data
     pick_date Pumili ng petsa
+    picture Picture
+    pillar Pillar
+    plan_monthly Buwanang Access
+    plan_monthly_desc Pinakasikat na pagpipilian
     plan_monthly_tagline Pinakatanyag na pagpipilian
     plan_monthly_title Buwanang Access
+    plan_weekly Lingguhang Access
+    plan_weekly_desc Pinakamahusay para sa mabilis na mga layunin
     plan_weekly_tagline Pinakamahusay para sa mabilis na layunin
     plan_weekly_title Lingguhang Access
+    plan_yearly Taunang Access
+    plan_yearly_desc Makatipid ng 33% bawat buwan
     plan_yearly_tagline Makatipid ng 33% bawat buwan
     plan_yearly_title Taunang Access
     platform Plataporma
@@ -177,58 +526,208 @@
     please_enter_the_6_digit_code Pakilagay ang 6 na digit na code
     please_wait_for_a_response_before_replying_again Mangyaring maghintay ng tugon bago tumugon muli.
     premium_expires_at Mag-e-expire sa $date
+    premium_go Mag-Premium
     premium_lifetime Panghabambuhay na pag-access
     premium_only Premium lang
     premium_status_active Ikaw ay isang premium na miyembro
+    premium_title Aliolo Premium
     premium_unlock_desc Magkaroon ng access sa lahat ng paksa, gumawa ng walang limitasyong mga card, at suportahan ang misyon ni Aliolo.
     premium_unlock_title I-unlock ang Buong Access
+    prev Prev
+    previous_card Previous Card
+    price_per_week ({price} / linggo)
+    private Private
+    pro_label PRO
+    product_id ID ng Produkto
     product_not_available_in_store Hindi available ang produkto sa tindahan.
     profile Profile
+    profile_title My Profile & Progress
+    prompt_label Prompt
+    prompt_optional Prompt / Question
+    prompts_answers Prompts & Answers
+    provide_at_least_one_answer Please provide at least one answer
+    provide_at_least_one_name Provide at least one name
+    provider Provider
     public_other_subject Pampubliko/Iba Pang Paksa
+    public_profile Public Profile
+    public_profile_desc Show your XP and Streak on Hall of Fame.
+    public_subject Public Subject
+    public_subject_desc Make this subject visible to other users.
     purchase_failed Nabigo ang pagbili: $e
+    purchase_token Token ng Pagbili
+    record_shortcut Record Shortcut
     recovery_error Error sa pagbawi: $e
     refresh I-refresh
     refresh_conversation I-refresh ang pag-uusap
+    remove_friend Remove Friend
+    remove_friend_confirm Are you sure you want to remove friend
     renderer Tagapag-render
+    request_sent Request sent
+    request_sent_waiting Request sent (waiting)
+    required Required
     reset_code I-reset ang Code
+    reset_code_email_title Password Reset Code
+    reset_code_sent "Reset code for: "
     reset_code_sent_to_please_check_your_inbox I-reset ang code na ipinadala sa $email. Mangyaring suriin ang iyong inbox.
+    reset_password_for "Reset Password for: "
+    restore_password Restore Password
     restore_purchases Ibalik ang Mga Pagbili
+    retry Retry
+    right_arrow Right Arrow
     save I-save
     save_33_per_month Makatipid ng 33% bawat buwan
+    save_before_nav Do you want to save changes before navigating?
+    save_card Save Card
+    save_subject Save Subject
     saved_successfully Matagumpay na na-save
+    search_cards Search Cards
+    search_subjects Search Subjects
     search_users Maghanap ng mga gumagamit
+    select_an_answer Select an Answer
+    select_lang Select Language
+    select_package_license Select Package License
+    select_user Select User
+    selected_count {count} Selected
+    send Send
+    send_code Send Code
+    send_verification_code Send verification code?
     session_complete Kumpleto na ang Session!
     session_complete_description Mahusay na trabaho! Natapos mo na ang lahat ng card sa session na ito.
+    setting_saved Setting saved
     settings Mga setting
+    shortcuts_hint Press the key you want to use with Ctrl.
+    show_all_languages Show all languages
     show_documentation_btn Ipakita ang pindutan ng dokumentasyon
     show_documentation_btn_desc Ipakita ang button ng dokumentasyon sa app bar.
     show_fake_users Ipakita ang Mga Pekeng Gumagamit
+    show_less_languages Show less languages
+    sidebar_left Sidebar on the left
+    sidebar_left_desc Move testing controls to the left side of the screen.
+    silver SILVER
+    social Social
+    sort_by I-sort ayon sa
+    sound_effects Sound Effects
+    sound_effects_desc Enable audio feedback for correct and wrong answers.
+    source Pinagmulan
+    status Status
+    status_closed Nakasara
+    status_open Bukas
+    status_replied Sinagot
+    streak Streak
+    subject Subject
+    subject_deleted Subject deleted
     subject_id Subject ID
+    subject_label Subject
+    subject_plural Subjects
+    subject_type Subject Type (tl)
+    subjects Mga Paksa
     subscribe_now Mag-subscribe na
     subscription_data Data ng subscription
     subscription_updated Na-update ang subscription
     subtraction_emoji Emoji ng pagbabawas
     subtraction_numbers Mga Numero ng Pagbabawas
+    support_and_management Suporta at Pamamahala
+    system System
+    tap_to_replay I-tap para i-replay
     technical_context TEKNIKAL NA KONTEKSTO
+    test_mode_desc Challenge yourself with a quiz
+    test_mode_label Test Mode
+    test_mode_title Test
+    test_session_size Laki ng session sa pagsusulit
+    test_session_size_desc Bilang ng mga card na susuriin sa isang testing session.
+    testing Testing
     testing_mode Mode ng pagsubok
+    testing_section Testing Settings
     text Text
+    the_science THE SCIENCE
+    theme_color App Theme Color
+    theme_color_desc Customize the primary color used for buttons and highlights.
+    theme_dark Dark
+    theme_light Light
+    theme_mode Theme Mode
+    theme_system System
     this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards Ito ay isang folder. Maaari mong gamitin ang mga button na Matuto/Subukan sa itaas para sanayin ang lahat ng card.
+    to_label To
     total_cards Kabuuang mga Card
+    total_xp Total XP
+    trust_cloud_desc Your progress is securely synced across all your devices in real-time.
+    trust_cloud_title Cloud Sync
+    trust_privacy TRUST & PRIVACY
+    trust_sync_desc Your data is private and encrypted to ensure the highest security standards.
+    trust_sync_title Encrypted Data
+    type_collection Koleksyon
+    type_folder Folder (Sub-subjects) (tl)
+    type_standard Standard (Cards) (tl)
     type_your_reply I-type ang iyong tugon...
     ua UA
+    ui_language UI Language
+    ukrainian Ukrainian
     unknown_user_profile_missing Hindi Kilalang User (Nawawala ang profile)
+    unsaved_changes Unsaved Changes
+    unsaved_changes_msg Mayroon kang mga hindi nai-save na pagbabago. Gusto mo bang ibalewala ang mga ito?
+    up_arrow Up Arrow
+    update Update
     update_available Available ang isang bagong bersyon!
+    updated_at Na-update Noong
+    upload_new_photo Mag-upload ng bagong larawan
     user Gumagamit
+    user_exists User already exists
     user_id User ID
+    user_not_found User not found
     user_with_this_email_already_exists_please_log_in_instead Umiiral na ang user na may ganitong email. Mangyaring mag-log in sa halip.
+    username Username
     users Mga gumagamit
     users_filter I-filter ang mga user
     verification_code Verification Code
     verification_code_sent_to Ipinadala ang verification code sa $email
+    verify Verify
     version Bersyon
+    video Video
+    video_link Video Link
+    video_url_optional Video URL (Optional)
+    view_card View Card
+    view_cards_title View Cards
     view_onboarding Tingnan ang onboarding
+    visibility Visibility
+    visual_content_required Kinakailangan ng hindi bababa sa isang visual content
+    visual_content_required_msg Dapat magbigay ng hindi bababa sa isang visual content (text, larawan, audio, o video).
+    visual_text Visual Text
+    wants_to_be_friend Wants to be your friend
     weekly_access Lingguhang Access
     welcome_complete_your_profile_to_join_aliolo Maligayang pagdating! Kumpletuhin ang iyong profile para makasali sa aliolo.
+    xp XP
     yearly_access Taunang Access
+    you You
     you_do_not_have_permission_to_edit_this_card Wala kang pahintulot na i-edit ang card na ito
     you_do_not_have_permission_to_view_this_card_details Wala kang pahintulot na tingnan ang mga detalye ng card na ito.
+    you_rank You are ranked #{rank}
+    active Aktibo
+    autoplay Awtomatikong pag-play
+    card_limit Limitasyon ng Card
+    card_limit_msg Naabot mo na ang limitasyon na {limit} card.
+    create_request Gumawa ng kahilingan
+    edit_user I-edit ang User
+    favorite Paborito
+    file_too_large Masyadong malaki ang file
+    inactive Hindi aktibo
+    is_required ay kinakailangan
+    languages Mga Wika
+    limit_reached Naabot ang limitasyon
+    not_available Hindi available
+    toggle_languages I-toggle ang mga wika
+    user_updated Na-update ang user
+    zoom Zoom
+    account_and_management Account & Management
+    back_to_plans Back to plans
+    confirm_password_required Confirm password is required
+    feat_autoplay_desc Focus on learning while the app automatically advances through cards at your pace.
+    feat_autoplay_title Hands-Free Autoplay
+    feat_create_share_desc Easily create your own subjects and cards, or share them with the community.
+    feat_create_share_title Create & Share
+    feat_science_smart_review_desc The algorithm calculates the optimal time to review each card for maximum retention.
+    feat_science_smart_review_title Smart Review Cycles
+    new_password_required New password is required
+    password_updated Password updated successfully
+    save_success Saved successfully
+    trust_ecosystem_desc Your progress and cards are seamlessly synced across all your devices.
+    trust_ecosystem_title Aliolo Ecosystem

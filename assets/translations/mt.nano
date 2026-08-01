@@ -43,37 +43,139 @@
     about_support_settings_desc Il-lingwa tal-UI, il-mod tat-tema, il-kulur tat-tema, il-ħoss, it-tqegħid tal-sidebar, u l-viżibilità tad-dokumentazzjoni kollha jistgħu jiġu aġġustati mis-settings.
     about_support_settings_title Personalizzazzjoni
     about_support_title Settings, Feedback, u Appoġġ
+    about_tagline Tgħallem viżwalment. Ikkontrolla għal dejjem.
+    account_created Kont maħluq
+    account_created_billing_fail Il-kont tiegħek inħoloq, iżda l-ħlas ma tlestiex. Ipprova mill-ġdid il-ħlas hawn taħt.
+    account_deleted Account deleted successfully
+    add_card Add Card
+    add_collection Żid kollezzjoni
+    add_folder Żid folder
+    add_friend_by_email Add Friend By Email
+    add_lang_translation Add Language Translation
+    add_prompt_translation Add Prompt Translation
+    add_subject Add Subject
     addition_emoji Żieda Emoji
     addition_numbers Numri ta' Żieda
+    age Età
+    age_0_6 0-6 snin
+    age_15_18 15 - 18
+    age_15_plus 15-il sena 'l fuq
+    age_19_25 19 - 25
+    age_26_35 26 - 35
+    age_36_50 36 - 50
+    age_7_14 7-14-il sena
+    age_advanced Advanced
+    age_all All Ages
+    age_early Early Childhood
+    age_group Age Group
+    age_intermediate Intermediate
+    age_over_50 Fuq il-50
+    age_primary Primary School
+    age_under_14 Taħt l-14
+    algorithm_title THE ALIOLO ALGORITHM
     aliolo aliolo
+    all_matching_subjects Is-suġġetti kollha li jaqblu
     all_rights_reserved Id-drittijiet kollha riżervati
+    answer Tweġiba
+    answer_label answer
+    answers_label answers
     are_you_sure_you_want_to_close_this_feedback_request Żgur li trid tagħlaq din it-talba għal feedback?
     are_you_sure_you_want_to_delete_this_folder Int żgur li trid tħassar dan il-folder?
+    ascending Ascending
     attach_image Ehmeż immaġini
+    audio Awdjo
+    audio_playing Audio Playing
+    author Author
     back Lura
+    back_to_login Back to Login
     back_to_subjects Lura għas-Suġġetti
     best_for_quick_goals L-aħjar għal għanijiet ta' malajr
     billing_disclaimer L-abbonamenti jġeddu awtomatikament sakemm ma jiġux ikkanċellati. Tista' timmaniġġja l-abbonament tiegħek fis-settings tal-maħżen tiegħek.
     billing_title Kontijiet
+    bronze BRONZE
     browser Browser
     cancel Ikkanċella
+    cancel_request Cancel Request
+    cancel_request_confirm Are you sure you want to cancel the request to
+    cannot_delete_folder Cannot Delete Folder
     cannot_delete_folder_it_is_not_empty Ma tistax tħassar il-folder: mhuwiex vojt
+    card_details Card Details
     card_id ID tal-Karta
+    card_label Card
+    card_level Livell tal-Kard
+    card_plural Cards
+    cards cards
+    cards_label cards
+    cards_per_day cards per day
+    cards_per_session cards per session
+    change_avatar Change Avatar
+    change_password Biddel il-password
     check_your_email_for_code Iċċekkja l-email tiegħek għall-kodiċi
     clear Ċara
+    click_to_select_image Click to select image
     click_to_view_original Ikklikkja biex tara l-oriġinal
     close Agħlaq
     close_request Talba mill-qrib?
+    code_label Code
     collection_id ID tal-ġbir
     colors Kuluri
+    common_settings Common Settings
+    compare_plans Qabbel Free vs Premium
+    confirm Ikkonferma
+    confirm_logout Are you sure you want to logout?
+    confirm_password Confirm Password
     confirm_subscription Ikkonferma l-Abbonament
+    content_label Content
     context Kuntest
+    copy COPY
+    copy_all Copy All
+    core_features CORE FEATURES
     correct_answers Tweġibiet Korretti
     could_not_launch Ma setgħetx tniedi $url
     counting Għadd
+    create_account Create Account
+    create_new_account Create New Account
+    create_new_card Create New Card
+    created_at Maħluq fi
+    current_streak Current Streak
     current_subscription Abbonament kurrenti
+    daily_goal Daily Goal
+    daily_progress Daily Progress
+    dark Dark
+    dashboard_greeting Bongu
+    day day
+    day_label Day
+    day_plural Days
+    days days
+    default Default
+    default_language Lingwa Default
+    default_testing_language Default Testing Language
+    default_testing_language_desc Pre-selects this language on the subjects page.
     delete Ħassar
+    delete_account Delete Account
+    delete_account_confirm Are you sure you want to delete your account? This action is permanent.
+    delete_avatar Ħassar l-avatar
+    delete_avatar_confirm Int żgur li trid tneħħi l-istampa tal-profil tiegħek?
+    delete_card_confirm Delete this card?
+    delete_collection Ħassar kollezzjoni
+    delete_collection_confirm Inti żgur li trid tħassar din il-kollezzjoni?
+    delete_folder Ħassar il-folder
+    delete_selected_cards Delete selected cards?
+    delete_subject Delete Subject
+    delete_subject_confirm Delete subject '{subject}' and all {count} cards inside?
+    delete_subjects_first Please delete all sub-subjects inside this folder before deleting the folder itself.
+    descending Descending
+    description Description
     device Apparat
+    digit_code 6-digit Code
+    discard Discard
+    discard_changes Armi l-bidliet?
+    doc_autoplay_desc L-app tista' tavvanza awtomatikament għall-kard li jmiss wara li twieġeb. Tweġibiet korretti jistennew 1s, filwaqt li dawk żbaljati jistennew 2s biex iħalluk tirrevedi.
+    doc_autoplay_title Tagħlim Auto-Play
+    doc_card_scope_desc Il-kards huma l-elementi bażiċi tat-tagħlim u dejjem jappartjenu għal Suġġett speċifiku. Filwaqt li tista' torganizza s-Suġġetti f'Folders jew Kollezzjonijiet, il-kards infushom għandhom jinħolqu fi ħdan Suġġett.
+    doc_card_scope_title Fejn joqogħdu l-kards
+    doc_collections_purpose_desc Il-kollezzjonijiet huma mogħdijiet ikkurati li jiġbru s-Suġġetti flimkien. Meta tibda sessjoni minn Kollezzjoni, is-sistema tħallat kards mis-suġġetti kollha inklużi biex tipprovdi test każwali u komprensiv.
+    doc_collections_purpose_title L-Għan tal-Kollezzjonijiet
     doc_create_intro_desc Din it-tab tkopri kif il-ħallieqa jorganizzaw il-kontenut, jillokawh, u jippubblikaw materjal ta’ studju utli mingħajr ma jikkomplika żżejjed il-fluss tax-xogħol.
     doc_create_intro_title Oħloq
     doc_create_json_desc Il-ħolqien ibbażat fuq JSON huwa fluss tax-xogħol avvanzat għal kontenut bl-ingrossa strutturat. Għandu jibqa' fakultattiv; il-biċċa l-kbira tal-ħallieqa għandhom ikunu jistgħu jibnu u jeditjaw il-kontenut permezz tal-formoli standard.
@@ -86,6 +188,38 @@
     doc_create_model_title Mudell tal-Kontenut
     doc_create_visibility_desc Uża "minjiera" biex taħdem fuq il-kontenut tiegħek stess, favoriti biex tippinja oġġetti utli, u librerija pubblika biex tfittex materjal kondiviż. Il-viżibilità pubblika taffettwa l-iskoperta, filwaqt li s-sjieda taffettwa dak li tista’ teditja jew tħassar.
     doc_create_visibility_title Sjieda u Viżibilità
+    doc_creation_desc Oħloq is-Suġġetti tiegħek u żid Flashcards viżwali. Kull kard tappoġġja immaġni u fajl awdjo fakultattiv għall-pronunzja.
+    doc_creation_title Ħolqien ta' Suġġetti u Kards
+    doc_feedback_desc Għinna ntejbu! Uża l-ikona tal-feedback (Icons.feedback) fuq kwalunkwe Suġġett jew Folder biex tirrapporta problemi. Tista' wkoll tibgħat feedback ġenerali dwar l-app permezz tas-sezzjoni tas-Sostenn.
+    doc_feedback_title Sistema ta' Feedback
+    doc_filters_desc Sib il-kontenut malajr billi tuża l-istrixxa tat-tfittxija. Tista' tiffiltra skont il-Grupp tal-Età (Kmieni sa Avvanzat) jew tnaqqas il-viżjoni tiegħek għal Kollezzjonijiet u Folders speċifiċi.
+    doc_filters_title Fittex u Filtri
+    doc_flashcards_desc Kull suġġett fih sett ta' kards. Filwaqt li stampi u awdjo huma appoġġjati, huma fakultattivi—il-kontenut jista' jkun purament testwali jew iġġenerat b'mod dinamiku.
+    doc_flashcards_title Flashcards Viżwali
+    doc_friends_desc It-tagħlim huwa aħjar flimkien! Stieden ħbieb f'Aliolo permezz tal-profil tiegħek. Tista' ssegwi l-progress ta' xulxin u tibqa' mmotivata billi tara min iżomm l-itwal streak.
+    doc_friends_title Ħbieb u Stediniet
+    doc_goals_desc Issettja l-mira tiegħek ta' tlestija tal-kards ta' kuljum fis-settings. Il-bidliet fil-mira tiegħek jidħlu fis-seħħ mill-għada.
+    doc_goals_title Għanijiet ta' Kuljum
+    doc_json_desc Il-ħallieqa avvanzati jistgħu jużaw data JSON biex jipprovdu ismijiet u deskrizzjonijiet lokalizzati, u b'hekk is-suġġetti jkunu aċċessibbli fil-lingwi kollha appoġġjati.
+    doc_json_title Lokalizzazzjoni JSON
+    doc_lang_desc Dejjem agħżel il-lingwa tat-tagħlim preferuta tiegħek fil-menu ta' fuq qabel ma tagħżel suġġett. Dan jiżgura li l-awdjo u t-traduzzjonijiet korretti jitgħabbew.
+    doc_lang_title Lingwa tat-Tagħlim
+    doc_leaderboard_desc Ikkompeti ma' studenti madwar id-dinja! Aqla' XP billi tlesti sessjonijiet ta' kards u itla' fil-klassifika. Il-pożizzjoni tiegħek tiġi aġġornata f'ħin reali hekk kif tikkontrolla suġġetti ġodda.
+    doc_leaderboard_title Leaderboard Globali
+    doc_localization_details_desc Il-lingwa "Globali" hija l-fallback prinċipali tiegħek—tista' tkun kwalunkwe lingwa li tagħżel. Jekk tipprovdi traduzzjonijiet speċifiċi, dawn jissostitwixxu d-data Globali biss meta utent jagħżel dik il-lingwa speċifika tal-UI.
+    doc_localization_details_title Kif taħdem il-Lokalizzazzjoni
+    doc_localization_ui_desc Biex iżżid data lokalizzata, sempliċement taptap l-ikona tal-kodiċi tal-lingwa (eż., EN, ES, FR) fil-header tal-editur. Dan jippermettilek tipprovdi ismijiet speċifiċi, deskrizzjonijiet, u kontenut tal-kards għal kull lingwa appoġġjata.
+    doc_localization_ui_title Żieda ta' Traduzzjonijiet
+    doc_math_desc Suġġetti matematiċi jużaw magni speċjalizzati biex jiġġeneraw viżwalizzazzjonijiet tal-kards f'ħin reali. Dawn is-suġġetti għandhom modi uniku ta' tagħlim u ttestjar adattati għal kunċetti matematiċi speċifiċi.
+    doc_math_title Suġġetti Matematiċi
+    doc_media_desc Biex tiżgura sinkronizzazzjoni mgħaġġla, żomm l-immaġini taħt il-5MB u l-fajls awdjo taħt l-10MB.
+    doc_media_title Limiti ta' Upload tal-Midja
+    doc_organization_desc Uża Folders biex tiġbor flimkien Suġġetti relatati. Tista' wkoll toħloq Kollezzjonijiet biex torganizza s-Suġġetti f'mogħdijiet ikkurati.
+    doc_organization_title Organizzazzjoni tal-Kontenut
+    doc_pillars_desc Il-kontenut kollu f'Aliolo huwa organizzat fi 8 pilastri fundamentali: Akkademiku u Professjonali, Dinja, Natura, Korp tal-Bniedem, Umanitajiet, Divertiment, Inġinerija, u Oħrajn. Dawn il-kategoriji jipprovdu qafas strutturat għas-suġġetti kollha madwar il-pjattaforma.
+    doc_pillars_title It-8 Pilastri Ewlenin
+    doc_public_desc Is-suġġetti jistgħu jkunu privati (viżibbli għalik biss) jew pubbliċi. Kontenut pubbliku huwa kondiviż mal-komunità kollha ta' Aliolo, li jippermetti lil kulħadd jiskopri u jitgħallem mill-kreazzjonijiet tiegħek.
+    doc_public_title Pubbliku vs Privat
     doc_start_dashboard_desc Id-dashboard hija l-librerija ewlenija tiegħek. Uża t-tfittxija biex issib kontenut malajr, imbagħad għaqqad filtri tas-sors bħal favoriti, tiegħi, u librerija pubblika ma' filtri tal-età biex tnaqqas il-ħoss.
     doc_start_dashboard_title Dashboard, Tiftix, u Filtri
     doc_start_feedback_desc Uża l-punti tad-dħul tal-feedback madwar l-app meta xi ħaġa tkun ħażina jew mhux ċara. Ir-rapporti jistgħu jinkludu l-kuntest attwali, li jagħmel il-kwistjonijiet tal-kontenut aktar faċli biex jiġu riveduti u rranġati.
@@ -98,6 +232,8 @@
     doc_start_quick_title Bidu malajr
     doc_start_structure_desc Is-suġġetti jżommu karti. Il-folders jiġbru kontenut relatat ġewwa pilastru. Il-kollezzjonijiet huma settijiet ikkurati li jistgħu jgħaqqdu diversi suġġetti għall-istudju u l-qsim.
     doc_start_structure_title Suġġetti, Folders, u Kollezzjonijiet
+    doc_streaks_desc Il-konsistenza hija essenzjali! Tlesti l-mira tiegħek ta' kuljum biex tibni l-istreak tiegħek. Titlifx ġurnata, inkella l-istreak jerġa' lura għal żero.
+    doc_streaks_title Sistema ta' Streak
     doc_study_how_desc Ibda b'Tgħallem meta tkun qed tibni rikonoxximent, imbagħad aqleb għal Test meta trid tirtira aktar malajr u ċċekkjar aktar strett. Uża sessjonijiet iqsar għal reviżjoni ffukata u sessjonijiet akbar għal kopertura usa '.
     doc_study_how_title Kif Studja
     doc_study_intro_desc Din it-tab tispjega kif timxi permezz tal-kontenut, tagħżel il-mod it-tajjeb, u tixgħel is-sessjonijiet tiegħek għal reviżjoni jew sejħa lura.
@@ -108,67 +244,280 @@
     doc_study_modes_title Tgħallem u Ittestja Modi
     doc_study_scope_desc L-istudju jista' jibda minn suġġett wieħed, ħarsa ta' folder, jew ġabra. Il-kollezzjonijiet huma utli meta trid sessjoni mħallta fuq diversi suġġetti mingħajr ma tħalli l-fluss kurrenti.
     doc_study_scope_title Suġġetti, Folders, u Kollezzjonijiet fl-Istudju
+    doc_sync_desc Il-progress tiegħek huwa sinkronizzat awtomatikament mal-cloud. Tista' taqleb bejn il-verżjonijiet tal-web u tad-desktop mingħajr ma titlef l-istreak tiegħek.
+    doc_sync_title Sinkronizzazzjoni tal-Cloud
     doc_tab_create Oħloq
+    doc_tab_creator Ħolqien
+    doc_tab_general Ġenerali
+    doc_tab_learning Prattika
     doc_tab_start Ibda
     doc_tab_study Studju
+    doc_testing_desc Sfida lilek innifsek b'mistoqsijiet b'għażla multipla (MCQ). L-app tavvanza awtomatikament hekk kif twieġeb, u tgħinek titgħallem aktar malajr.
+    doc_testing_title Ittestjar Interattiv
+    doc_welcome_desc Aliolo hija pjattaforma ta' tagħlim viżiv iddisinjata biex tgħinek tikkontrolla s-suġġetti permezz ta' flashcards u ttestjar interattiv.
+    doc_welcome_title Merħba f'Aliolo
     documentation Dokumentazzjoni
+    done_today Done Today
+    down_arrow Down Arrow
+    edit Editja
+    edit_card Edit Card
+    edit_collection Editja kollezzjoni
+    edit_email Editja l-Email
+    edit_folder Editja l-folder
+    edit_name Edit Name
+    edit_subject Edit Subject
+    edit_subject_title Edit Subject
     edit_subscription Editja l-abbonament
+    email Email
+    email_change_notice For security, a confirmation link will be sent to BOTH your old and new email addresses. You must click both to complete the change.
+    email_in_use Email is already in use
+    email_subject Subject
+    email_update_sent Confirmation emails sent. Please check both inboxes.
     email_updated_successfully Email aġġornata b'suċċess!
+    english English
     enter_current_password Daħħal il-password attwali
+    enter_new_email Daħħal email ġdida
+    enter_new_name Enter New Name
+    enter_number Enter a number
+    enter_or_select_subject Please enter or select a subject
+    enter_pass_to_confirm Enter your password to confirm
+    enter_subject_name Enter subject name
     error Żball: $e
     error_deleting Żball fit-tħassir: $e
+    error_deleting_account Could not delete account. Check your password.
     error_saving Żball fl-iffrankar: $e
     error_saving_card Żball fl-iffrankar tal-karta: $e
     error_updating_favorite Żball fl-aġġornament tal-favorit: $e
+    exit Exit
+    exit_confirm_msg Are you sure you want to exit the application?
+    exit_confirm_title Exit Aliolo?
+    expiry_date Data ta' Skadenza
     failed_answers Tweġibiet falluti
     failed_to_send_reset_code Naqas milli jibgħat il-kodiċi reset
     failed_to_send_verification_code Naqas milli jintbagħat il-kodiċi ta' verifika
     fake_only Foloz biss
+    fatal_startup_error Fatal Startup Error
+    feat_adaptive_desc The system monitors your recognition speed across MCQ options, dynamically adjusting intervals to push your boundaries.
+    feat_adaptive_title Adaptive Response Timing
+    feat_ages_desc Content curated for different age groups from early childhood to advanced learning.
+    feat_ages_title For All Ages
+    feat_gamified_desc Earn XP, badges, and build streaks while mastering complex visual subjects.
+    feat_gamified_title Gamified Experience
+    feat_mastery_desc Dynamic XP rewards difficulty, while real-time mastery badges (Bronze, Silver, Gold) track your journey from novice to expert.
+    feat_mastery_title Visual Mastery & XP
+    feat_multimedia_desc Learn with images, audio, and video support for immersive training.
+    feat_multimedia_title Multimedia Cards
+    feat_recognition_desc Immersive identification drills designed to build instant "muscle memory" for complex visual subjects.
+    feat_recognition_title Visual Pattern Training
+    feat_science_adaptive_desc Intervals automatically adjust based on your recognition speed and accuracy.
+    feat_science_adaptive_title Adaptive Timing
+    feat_science_spacing_desc Advanced cognitive spacing model that predicts memory decay and optimizes review cycles.
+    feat_science_spacing_title SuperMemo-2 (SM-2)
+    feat_spacing_desc A full implementation of the SuperMemo-2 model predicts your memory decay and schedules reviews at the peak of retention.
+    feat_spacing_title Cognitive Spacing (SM-2)
+    feature_autoplay Modalità Auto-Play
+    feature_community_access Aċċess għas-suġġetti talmathrm-komunità
     feature_creation Għodda tal-Ħolqien
     feature_customize Personalizzazzjoni Avvanzata
+    feature_favorites Oġġetti favoriti fuq id-dashboard
+    feature_feedback Feedback dirett u suġġerimenti
+    feature_free B'XEJN
+    feature_friends Stieden u qabbad mal-ħbieb
     feature_full_library Aċċess sħiħ għall-Librerija
+    feature_learn_all Tgħallem kwalunkwe suġġett jew kollezzjoni
+    feature_private_mode Modalità tal-profil privat
+    feature_pro PRO
+    feature_spaced_repetition Ripetizzjoni Spazjata (SM-2)
     feature_testing Ittestjar Interattiv
+    feedback Feedback
+    feedback_add_image Żid Immaġni
+    feedback_attachments Attachments
+    feedback_bug Rapport ta' Bug
+    feedback_context Kuntest
+    feedback_details Dettalji
+    feedback_error Naqas milli jintbagħat il-feedback. Jekk jogħġbok erġa' pprova.
+    feedback_management_desc Ara u mmaniġġja l-feedback tal-utenti
+    feedback_management_title Talbiet għal Feedback
+    feedback_other Ieħor
+    feedback_submit Ibgħat Feedback
+    feedback_success Grazzi tal-feedback tiegħek!
+    feedback_suggestion Suġġeriment
+    feedback_title Ibgħat Feedback
+    feedback_title_hint Titlu
+    feedback_type Tip
+    fill_all_fields Please fill all fields
+    filter_all All
+    filter_dashboard Dashboard
+    filter_favorites Favoriti
+    filter_my_subjects My Subjects
+    filter_on_dashboard On Dashboard
+    filter_public Public
+    filter_public_library Librerija Pubblika
+    filters Filtri
+    finish Lest
+    finished_session You finished {count} cards. XP bonus awarded!
+    folder Folder
+    folder_already_exists Folder b'dan l-isem diġà jeżisti f'dan il-pilastru
     folder_id ID tal-folder
+    folder_label Fowlder
+    folder_not_empty_msg Ma jistax jitħassar: il-folder mhuwiex vojt.
+    folder_plural Fowlders
+    forgot_password Forgot Password?
     free_only Utenti b'xejn
+    general_preferences General Preferences
     generic Ġeneriċi
+    go_to_manager Go to Library Manager
+    goal_change_hint Change your card goal for tomorrow
+    goal_change_notice Il-bidliet fl-għan ta' kuljum tiegħek se jidħlu fis-seħħ għada.
+    gold GOLD
+    hide_comparison Aħbi l-Paragun tal-Pjan
     home Dar
+    images Images
+    included_subjects Suġġetti inklużi
+    info_copied Info copied to clipboard
+    initializing_aliolo Initializing Aliolo...
     invalid_code Kodiċi invalidu
+    invalid_email Invalid email address
     invalid_email_address Indirizz elettroniku mhux validu
     invalid_json JSON mhux validu: $e
+    invalid_number Invalid number
     invalid_or_expired_invitation_link Link tal-istedina invalida jew skaduta.
     invalid_or_expired_reset_code Kodiċi ta' reset mhux validu jew skadut.
+    invalid_password Invalid password
+    invalid_password_delete Invalid Password
     invitation_sent_awaiting_registration Stedina mibgħuta (li qed tistenna r-reġistrazzjoni)
+    invite Stieden
+    invite_user_content L-email {email} ma nstabitx. Trid tistedinhom jingħaqdu ma’ Aliolo?
+    invite_user_title Stieden utent?
     invited_and_request_sent Mistiedna u talba mibgħuta!
     json JSON
+    keyboard_shortcuts Keyboard Shortcuts
     label_suffix $label:
+    lang_abbr Lang
+    language Lingwa
     leaderboard Leaderboard
+    learn_mode_desc Study cards and memorize answers
+    learn_mode_title Learn
+    learn_session_size Learn Session Size
+    learn_session_size_desc Numru ta' kards ġodda li għandhom jiġu introdotti f'sessjoni ta' tagħlim waħda.
     learning_session_complete_description Xogħol kbir! Int lestejt din is-sessjoni ta’ tagħlim. Il-progress tiegħek ġie salvat.
+    left_arrow Left Arrow
+    level Level
+    level_range Must be between 1 and 20
+    level_tier_1 Livell 1
+    level_tier_2 Livell 2
+    level_tier_3 Livell 3
     licenses Liċenzji
     licenses_aliolo_section_title Aliolo Liċenzja Kummerċjali
     licenses_aliolo_subtitle Softwer proprjetarju u termini ta' aċċess premium
     licenses_intro_desc Il-liċenzja kummerċjali ta' Aliolo tidher l-ewwel. Liċenzji ta' pakketti ta' partijiet terzi isegwu hawn taħt.
     licenses_intro_title Aliolo Avviżi dwar il-Liċenzja u l-Pakketti
     licenses_third_party_section_title Liċenzji ta' Pakkett ta' Partijiet Terzi
+    light Light
     linux_distro Linux Distro
     loading Tagħbija...
     localized_data Dejta Lokalizzata
+    login Illoggja
+    logout Oħroġ
+    manage_cards Manage Cards
+    manage_friends Friends
+    manage_friends_desc View and manage your friend requests
+    manage_library Manage Library ({sCount} subjects, {cCount} cards)
+    manage_subjects Manage Subjects
+    manage_subscription Immaniġġja l-abbonament
+    manage_testing_langs Manage Testing Languages
+    manage_users Manage Users
+    master_visual_ease Master visual subjects with ease.
+    mastered mastered
+    mastery Padrunanza
+    max_streak Max Streak
+    maybe_later Forsi Aktar Tard
+    mission_desc The smart companion that helps your brain learn and retain visual knowledge through science-backed algorithms.
+    mock_email_title Mock Email Inbox
+    mode_audio_to_image Audio to Image
+    mode_audio_to_text Audio to Text
+    mode_image_to_text Image to Text
+    mode_text_to_text Text to Text
     monthly_access Aċċess ta' Kull Xahar
     most_popular_choice L-aktar għażla popolari
+    multi_lang_answers Multi-language Answers
+    multi_lang_prompts Multi-language Prompts
+    my_position My Position
+    name Name
+    names_descriptions Names & Descriptions
+    new NEW
     new_email Email Ġdid
+    new_password New Password
+    next Li jmiss
+    next_card Next Card
+    next_daily_goal L-Għan ta' Kuljum li Jmiss
+    next_daily_goal_desc Numru fil-mira ta' kards li għandhom jiġu mhaddma kull jum. Il-bidliet jidħlu fis-seħħ għada.
+    next_day_goal Next Day Goal
     no_cards_available_for_this_session Ebda cards disponibbli għal din is-sessjoni.
     no_cards_found L-ebda karta ma nstabet
+    no_cards_found_for_lang No cards found for this language
+    no_cards_in_library No cards found in the library.
+    no_feedback_found Ma nstab l-ebda feedback.
+    no_folder L-ebda folder (Għerq)
+    no_friends_found No friends found
+    no_images_added L-ebda immaġni miżjuda
+    no_leaderboard_data No leaderboard data available.
+    no_localized_audio L-ebda awdjo lokalizzat
+    no_localized_images L-ebda immaġni lokalizzata
+    no_localized_video L-ebda vidjo lokalizzat
+    no_subjects_available L-ebda suġġett disponibbli
     no_subjects_found Ma nstab l-ebda suġġett
     no_subjects_found_in_this_collection L-ebda suġġett ma nstab f'din il-ġabra
     no_users_found L-ebda utent ma nstab
+    ok OK
+    old_password Password antika
+    old_password_required Il-password antika hija meħtieġa
+    onboarding_1_desc Tgħallem Viżwalment. Ikkontrolla b'mod Permanenti. Il-kumpann tat-tagħlim viżwali tiegħek imħaddem mix-xjenza SM-2.
+    onboarding_1_title Merħba f'Aliolo
+    onboarding_2_desc Dan jgħinna nippersonalizzaw l-esperjenza tat-tagħlim tiegħek u nirrakkomandaw is-suġġetti t-tajba.
+    onboarding_2_title Kemm għandek żmien?
+    onboarding_3_desc Agħżel l-interess primarju tiegħek biex tippersonalizza d-dashboard inizjali tiegħek.
+    onboarding_3_title X'tixtieq tikkontrolla?
+    onboarding_4_desc Ibni l-gverta tiegħek jew idħol f'karti maqsuma mill-istudenti ta' Aliolo madwar id-dinja. Tgħallem bil-pass tiegħek, imbagħad ittestja lilek innifsek meta tkun lest.
+    onboarding_4_title Oħloq u Aqsam
+    onboarding_5_desc Il-librerija tiegħek tibqa' sinkronizzata fl-apparati kollha tiegħek. Aħna ninfurmak biss meta jkun wasal iż-żmien li tipproteġi l-istreak tiegħek.
+    onboarding_5_title Ikkontrolla Kullimkien
+    onboarding_6_desc Ibda l-vjaġġ tiegħek illum u kkontrolla kull ħaġa li tpoġġi f'moħħok.
+    onboarding_6_title Ingħaqad mal-Komunità
+    onboarding_7_joined Ingħaqdu eluf ta' studenti
+    onboarding_7_quote Aliolo bidlet kompletament il-mod kif uliedi u jien nikkontrollaw suġġetti ġodda. Il-karti viżwali u r-ripetizzjoni jagħmlu t-tagħlim iħossu bħal logħba!
+    onboarding_get_started Ibda
+    onboarding_next Li jmiss
+    onboarding_skip Aqbeż
+    options_count Number of Answers
+    options_count_desc Numru ta' tweġibiet b'għażla multipla murija waqt it-testijiet.
+    options_per_card options per card
+    order_id ID tal-Ordni
     os_version Verżjoni OS
+    our_mission OUR MISSION
+    page Page
+    parent_folder_label Parent Folder (mt)
+    password Password
+    password_required Password is required
+    password_reset_success Password reset successful
     password_updated_successfully Password aġġornata b'suċċess!
+    passwords_dont_match Passwords do not match
+    paste PASTE
     payments_are_not_yet_integrated_on_web_please_use_the_mobile_app_to_upgrade Il-ħlasijiet għadhom mhumiex integrati fuq il-Web. Jekk jogħġbok uża l-app mobbli biex taġġorna.
     personal_data Data personali
     pick_date Agħżel id-data
+    picture Picture
+    pillar Pillar
+    plan_monthly Aċċess fix-Xahar
+    plan_monthly_desc L-aktar għażla popolari
     plan_monthly_tagline L-aktar għażla popolari
     plan_monthly_title Aċċess ta' Kull Xahar
+    plan_weekly Aċċess fil-Ġimgħa
+    plan_weekly_desc L-aħjar għal għanijiet malajr
     plan_weekly_tagline L-aħjar għal għanijiet ta' malajr
     plan_weekly_title Aċċess fil-ġimgħa
+    plan_yearly Aċċess fis-Sena
+    plan_yearly_desc Iffranka 33% fix-xahar
     plan_yearly_tagline Iffranka 33% fix-xahar
     plan_yearly_title Aċċess annwali
     platform Pjattaforma
@@ -177,58 +526,208 @@
     please_enter_the_6_digit_code Jekk jogħġbok daħħal il-kodiċi b'6 ċifri
     please_wait_for_a_response_before_replying_again Jekk jogħġbok stenna għal tweġiba qabel ma terġa' twieġeb.
     premium_expires_at Tiskadi fi $date
+    premium_go Mur Premium
     premium_lifetime Aċċess tul il-ħajja
     premium_only Premium biss
     premium_status_active Inti membru premium
+    premium_title Aliolo Premium
     premium_unlock_desc Ikseb aċċess għas-suġġetti kollha, oħloq karti illimitati, u appoġġja l-missjoni ta' Aliolo.
     premium_unlock_title Nisfruttaw Aċċess Sħiħ
+    prev Prev
+    previous_card Previous Card
+    price_per_week ({price} / ġimgħa)
+    private Private
+    pro_label PRO
+    product_id ID tal-Prodott
     product_not_available_in_store Prodott mhux disponibbli fil-maħżen.
     profile Profil
+    profile_title My Profile & Progress
+    prompt_label Prompt
+    prompt_optional Prompt / Question
+    prompts_answers Prompts & Answers
+    provide_at_least_one_answer Please provide at least one answer
+    provide_at_least_one_name Provide at least one name
+    provider Fornitur
     public_other_subject Pubbliku/Suġġett Ieħor
+    public_profile Public Profile
+    public_profile_desc Show your XP and Streak on Hall of Fame.
+    public_subject Public Subject
+    public_subject_desc Make this subject visible to other users.
     purchase_failed Xiri falla: $e
+    purchase_token Token tax-Xiri
+    record_shortcut Record Shortcut
     recovery_error Żball fl-irkupru: $e
     refresh Aġġorna
     refresh_conversation Aġġorna l-konversazzjoni
+    remove_friend Remove Friend
+    remove_friend_confirm Are you sure you want to remove friend
     renderer Renderer
+    request_sent Request sent
+    request_sent_waiting Request sent (waiting)
+    required Required
     reset_code Irrisettja l-Kodiċi
+    reset_code_email_title Password Reset Code
+    reset_code_sent "Reset code for: "
     reset_code_sent_to_please_check_your_inbox Irrisettja l-kodiċi mibgħut lil $email. Jekk jogħġbok iċċekkja l-inbox tiegħek.
+    reset_password_for "Reset Password for: "
+    restore_password Restore Password
     restore_purchases Irrestawra Xiri
+    retry Retry
+    right_arrow Right Arrow
     save Ħlief
     save_33_per_month Iffranka 33% fix-xahar
+    save_before_nav Do you want to save changes before navigating?
+    save_card Save Card
+    save_subject Save Subject
     saved_successfully Salvat b'suċċess
+    search_cards Search Cards
+    search_subjects Search Subjects
     search_users Fittex l-utenti
+    select_an_answer Select an Answer
+    select_lang Select Language
+    select_package_license Select Package License
+    select_user Select User
+    selected_count {count} Selected
+    send Send
+    send_code Send Code
+    send_verification_code Send verification code?
     session_complete Sessjoni Lesta!
     session_complete_description Xogħol kbir! Int lestejt il-karti kollha f'din is-sessjoni.
+    setting_saved Setting saved
     settings Settings
+    shortcuts_hint Press the key you want to use with Ctrl.
+    show_all_languages Show all languages
     show_documentation_btn Uri l-buttuna tad-dokumentazzjoni
     show_documentation_btn_desc Uri l-buttuna tad-dokumentazzjoni fil-bar tal-app.
     show_fake_users Uri Utenti Foloz
+    show_less_languages Show less languages
+    sidebar_left Sidebar on the left
+    sidebar_left_desc Move testing controls to the left side of the screen.
+    silver SILVER
+    social Social
+    sort_by Sort by
+    sound_effects Sound Effects
+    sound_effects_desc Enable audio feedback for correct and wrong answers.
+    source Sors
+    status Status
+    status_closed Magħluq
+    status_open Miftuħ
+    status_replied Irrispondut
+    streak Streak
+    subject Subject
+    subject_deleted Subject deleted
     subject_id ID tas-suġġett
+    subject_label Subject
+    subject_plural Subjects
+    subject_type Subject Type (mt)
+    subjects Suġġetti
     subscribe_now Abbona Issa
     subscription_data Data ta' abbonament
     subscription_updated Abbonament aġġornat
     subtraction_emoji Tnaqqis Emoji
     subtraction_numbers Numri tat-Tnaqqis
+    support_and_management Appoġġ u Maniġment
+    system System
+    tap_to_replay Tap to Replay
     technical_context KUNTEST TEKNIKU
+    test_mode_desc Challenge yourself with a quiz
+    test_mode_label Test Mode
+    test_mode_title Test
+    test_session_size Test Session Size
+    test_session_size_desc Numru ta' kards li għandhom jiġu riveduti f'sessjoni ta' ttestjar waħda.
+    testing Testing
     testing_mode Mod ta 'ttestjar
+    testing_section Testing Settings
     text Test
+    the_science THE SCIENCE
+    theme_color App Theme Color
+    theme_color_desc Customize the primary color used for buttons and highlights.
+    theme_dark Dark
+    theme_light Light
+    theme_mode Modalità tat-tema
+    theme_system System
     this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards Dan huwa folder. Tista' tuża l-buttuni Tgħallem/Ittestja hawn fuq biex tipprattika l-karti kollha.
+    to_label To
     total_cards Karti Totali
+    total_xp Total XP
+    trust_cloud_desc Your progress is securely synced across all your devices in real-time.
+    trust_cloud_title Cloud Sync
+    trust_privacy TRUST & PRIVACY
+    trust_sync_desc Your data is private and encrypted to ensure the highest security standards.
+    trust_sync_title Encrypted Data
+    type_collection Kollezzjoni
+    type_folder Folder (Sub-subjects) (mt)
+    type_standard Standard (Cards) (mt)
     type_your_reply Ittajpja t-tweġiba tiegħek...
     ua UA
+    ui_language Lingwa tal-interface
+    ukrainian Ukrainian
     unknown_user_profile_missing Utent mhux magħruf (Profil nieqes)
+    unsaved_changes Unsaved Changes
+    unsaved_changes_msg Għandek bidliet mhux salvati. Trid tarmihom?
+    up_arrow Up Arrow
+    update Update
     update_available Verżjoni ġdida hija disponibbli!
+    updated_at Aġġornat fi
+    upload_new_photo Tella' ritratt ġdid
     user Utent
+    user_exists User already exists
     user_id ID tal-utent
+    user_not_found User not found
     user_with_this_email_already_exists_please_log_in_instead Utent b'din l-email diġà jeżisti. Jekk jogħġbok idħol minflok.
+    username Isem tal-utent
     users Utenti
     users_filter Iffiltra l-utenti
     verification_code Kodiċi ta' Verifika
     verification_code_sent_to Kodiċi ta' verifika mibgħut lil $email
+    verify Verify
     version Verżjoni
+    video Video
+    video_link Video Link
+    video_url_optional Video URL (Optional)
+    view_card View Card
+    view_cards_title View Cards
     view_onboarding Ara l-onboarding
+    visibility Visibility
+    visual_content_required Huwa meħtieġ mill-inqas kontenut viżwali wieħed
+    visual_content_required_msg Għandu jiġi pprovdut mill-inqas kontenut viżwali wieħed (test, immaġni, awdjo, jew vidjo).
+    visual_text Test Viżwali
+    wants_to_be_friend Wants to be your friend
     weekly_access Aċċess ta' kull ġimgħa
     welcome_complete_your_profile_to_join_aliolo Merħba! Imla l-profil tiegħek biex tingħaqad ma' aliolo.
+    xp XP
     yearly_access Aċċess annwali
+    you You
     you_do_not_have_permission_to_edit_this_card M'għandekx permess biex teditja din il-karta
     you_do_not_have_permission_to_view_this_card_details M'għandekx permess biex tara d-dettalji ta' din il-karta.
+    you_rank You are ranked #{rank}
+    active Attiv
+    autoplay Daqq awtomatiku
+    card_limit Limitu tal-Karti
+    card_limit_msg Int laħaqt il-limitu tiegħek ta’ {limit} karti.
+    create_request Oħloq talba
+    edit_user Editja l-utent
+    favorite Favorit
+    file_too_large Il-fajl huwa kbir wisq
+    inactive Mhux attiv
+    is_required huwa meħtieġ
+    languages Lingwi
+    limit_reached Intlaħaq il-limitu
+    not_available Mhux disponibbli
+    toggle_languages Aqleb il-lingwi
+    user_updated L-utent ġie aġġornat
+    zoom Żum
+    account_and_management Account & Management
+    back_to_plans Back to plans
+    confirm_password_required Confirm password is required
+    feat_autoplay_desc Focus on learning while the app automatically advances through cards at your pace.
+    feat_autoplay_title Hands-Free Autoplay
+    feat_create_share_desc Easily create your own subjects and cards, or share them with the community.
+    feat_create_share_title Create & Share
+    feat_science_smart_review_desc The algorithm calculates the optimal time to review each card for maximum retention.
+    feat_science_smart_review_title Smart Review Cycles
+    new_password_required New password is required
+    password_updated Password updated successfully
+    save_success Saved successfully
+    trust_ecosystem_desc Your progress and cards are seamlessly synced across all your devices.
+    trust_ecosystem_title Aliolo Ecosystem

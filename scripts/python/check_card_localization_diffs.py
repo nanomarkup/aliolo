@@ -25,6 +25,42 @@ DEFAULT_SKIP_FOLDER = "Languages"
 DEFAULT_OUTPUT = ROOT / "scripts" / ".tmp" / "card_localization_report.csv"
 DEFAULT_OPENAI_MODEL = "gpt-4o-mini"
 DEFAULT_BATCH_SIZE = 20
+SUPPORTED_LANGUAGES: tuple[tuple[str, str], ...] = (
+    ("en", "English"),
+    ("id", "Indonesian"),
+    ("bg", "Bulgarian"),
+    ("cs", "Czech"),
+    ("da", "Danish"),
+    ("de", "German"),
+    ("et", "Estonian"),
+    ("es", "Spanish"),
+    ("fr", "French"),
+    ("ga", "Irish"),
+    ("hr", "Croatian"),
+    ("it", "Italian"),
+    ("lv", "Latvian"),
+    ("lt", "Lithuanian"),
+    ("hu", "Hungarian"),
+    ("mt", "Maltese"),
+    ("nl", "Dutch"),
+    ("pl", "Polish"),
+    ("pt", "Portuguese"),
+    ("ro", "Romanian"),
+    ("sk", "Slovak"),
+    ("sl", "Slovenian"),
+    ("fi", "Finnish"),
+    ("sv", "Swedish"),
+    ("tl", "Tagalog"),
+    ("vi", "Vietnamese"),
+    ("tr", "Turkish"),
+    ("el", "Greek"),
+    ("uk", "Ukrainian"),
+    ("ar", "Arabic"),
+    ("hi", "Hindi"),
+    ("zh", "Chinese"),
+    ("ja", "Japanese"),
+    ("ko", "Korean"),
+)
 
 FIELD_SPECS: tuple[tuple[str, str], ...] = (
     ("answer", "answers"),
@@ -162,21 +198,10 @@ def fetch_cards() -> list[CardRecord]:
 
 
 def fetch_languages() -> dict[str, LanguageRecord]:
-    sql = """
-      SELECT id, name
-      FROM languages
-      ORDER BY name
-    """.strip()
-    payload = run_wrangler(["d1", "execute", DB_NAME, "--command", sql, "--remote", "--json"], json_output=True)
-    rows = payload[0].get("results", []) if payload else []
-
-    languages: dict[str, LanguageRecord] = {}
-    for row in rows:
-        code = str(row.get("id") or "").strip().lower()
-        name = str(row.get("name") or "").strip()
-        if code:
-            languages[code] = LanguageRecord(code=code, name=name or code.upper())
-    return languages
+    return {
+        code: LanguageRecord(code=code, name=name)
+        for code, name in SUPPORTED_LANGUAGES
+    }
 
 
 def parse_translation_map(raw: str) -> tuple[dict[str, str] | None, str | None]:

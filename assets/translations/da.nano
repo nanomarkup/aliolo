@@ -43,37 +43,139 @@
     about_support_settings_desc Brugergrænsefladesprog, tematilstand, temafarve, lyd, sidebjælkeplacering og dokumentationssynlighed kan alle justeres fra indstillingerne.
     about_support_settings_title Personalisering
     about_support_title Indstillinger, feedback og support
+    about_tagline Lær visuelt. Mestrer for altid.
+    account_created Konto oprettet
+    account_created_billing_fail Din konto blev oprettet, men betalingen blev ikke gennemført. Prøv nedenstående betaling igen.
+    account_deleted Account deleted successfully
+    add_card Add Card
+    add_collection Tilføj samling
+    add_folder Tilføj mappe
+    add_friend_by_email Add Friend By Email
+    add_lang_translation Add Language Translation
+    add_prompt_translation Add Prompt Translation
+    add_subject Add Subject
     addition_emoji Tilføjelse Emoji
     addition_numbers Tilføjelsesnumre
+    age Alder
+    age_0_6 0-6 år
+    age_15_18 15 - 18
+    age_15_plus 15+ år
+    age_19_25 19 - 25
+    age_26_35 26 - 35
+    age_36_50 36 - 50
+    age_7_14 7-14 år
+    age_advanced Advanced
+    age_all All Ages
+    age_early Early Childhood
+    age_group Age Group
+    age_intermediate Intermediate
+    age_over_50 Over 50
+    age_primary Primary School
+    age_under_14 Under 14
+    algorithm_title THE ALIOLO ALGORITHM
     aliolo aliolo
+    all_matching_subjects Alle matchende emner
     all_rights_reserved Alle rettigheder forbeholdes
+    answer Svar
+    answer_label answer
+    answers_label answers
     are_you_sure_you_want_to_close_this_feedback_request Er du sikker på, at du vil lukke denne feedbackanmodning?
     are_you_sure_you_want_to_delete_this_folder Er du sikker på, at du vil slette denne mappe?
+    ascending Ascending
     attach_image Vedhæft billede
+    audio Lyd
+    audio_playing Audio Playing
+    author Author
     back Tilbage
+    back_to_login Back to Login
     back_to_subjects Tilbage til emner
     best_for_quick_goals Bedst til hurtige mål
     billing_disclaimer Abonnementer fornyes automatisk, medmindre de opsiges. Du kan administrere dit abonnement i dine butiksindstillinger.
     billing_title Fakturering
+    bronze BRONZE
     browser Browser
     cancel Ophæve
+    cancel_request Cancel Request
+    cancel_request_confirm Are you sure you want to cancel the request to
+    cannot_delete_folder Cannot Delete Folder
     cannot_delete_folder_it_is_not_empty Kan ikke slette mappe: den er ikke tom
+    card_details Card Details
     card_id Kort ID
+    card_label Card
+    card_level Kort niveau
+    card_plural Cards
+    cards cards
+    cards_label cards
+    cards_per_day cards per day
+    cards_per_session cards per session
+    change_avatar Change Avatar
+    change_password Skift adgangskode
     check_your_email_for_code Tjek din e-mail for kode
     clear Klar
+    click_to_select_image Click to select image
     click_to_view_original Klik for at se originalen
     close Tæt
     close_request Luk anmodning?
+    code_label Code
     collection_id Samlings-id
     colors Farver
+    common_settings Common Settings
+    compare_plans Sammenlign gratis vs. premium
+    confirm Bekræft
+    confirm_logout Are you sure you want to logout?
+    confirm_password Confirm Password
     confirm_subscription Bekræft abonnement
+    content_label Content
     context Sammenhæng
+    copy COPY
+    copy_all Copy All
+    core_features CORE FEATURES
     correct_answers Korrekte svar
     could_not_launch Kunne ikke starte $url
     counting Tæller
+    create_account Create Account
+    create_new_account Create New Account
+    create_new_card Create New Card
+    created_at Oprettet den
+    current_streak Current Streak
     current_subscription Nuværende abonnement
+    daily_goal Daily Goal
+    daily_progress Daily Progress
+    dark Dark
+    dashboard_greeting Hej
+    day day
+    day_label Day
+    day_plural Days
+    days days
+    default Default
+    default_language Standardsprog
+    default_testing_language Default Testing Language
+    default_testing_language_desc Pre-selects this language on the subjects page.
     delete Slet
+    delete_account Delete Account
+    delete_account_confirm Are you sure you want to delete your account? This action is permanent.
+    delete_avatar Slet avatar
+    delete_avatar_confirm Er du sikker på, at du vil fjerne dit profilbillede?
+    delete_card_confirm Delete this card?
+    delete_collection Slet samling
+    delete_collection_confirm Er du sikker på, at du vil slette denne samling?
+    delete_folder Slet mappe
+    delete_selected_cards Delete selected cards?
+    delete_subject Delete Subject
+    delete_subject_confirm Delete subject '{subject}' and all {count} cards inside?
+    delete_subjects_first Please delete all sub-subjects inside this folder before deleting the folder itself.
+    descending Descending
+    description Description
     device Enhed
+    digit_code 6-digit Code
+    discard Discard
+    discard_changes Kassér ændringer?
+    doc_autoplay_desc Appen kan automatisk gå videre til næste kort, når du har svaret. Korrekte svar venter 1 sek., mens forkerte venter 2 sek. for at lade dig gennemse.
+    doc_autoplay_title Auto-play læring
+    doc_card_scope_desc Kort er byggestenene i læring og tilhører altid et bestemt emne. Selvom du kan organisere emner i mapper eller samlinger, skal selve kortene oprettes i et emne.
+    doc_card_scope_title Hvor kort bor
+    doc_collections_purpose_desc Samlinger are kuraterede stier, der grupperer emner sammen. Når du starter en session fra en samling, blander systemet kort fra alle inkluderede emner for at give en randomiseret, omfattende test.
+    doc_collections_purpose_title Formålet med samlinger
     doc_create_intro_desc Denne fane dækker, hvordan skabere organiserer indhold, lokaliserer det og udgiver nyttigt studiemateriale uden at overkomplicere arbejdsgangen.
     doc_create_intro_title Skabe
     doc_create_json_desc JSON-baseret oprettelse er en avanceret arbejdsgang til struktureret masseindhold. Det bør forblive valgfrit; de fleste skabere burde være i stand til at bygge og redigere indhold gennem standardformularerne.
@@ -86,6 +188,38 @@
     doc_create_model_title Indholdsmodel
     doc_create_visibility_desc Brug "mine" til at arbejde med dit eget indhold, favoritter til at fastgøre nyttige genstande og offentligt bibliotek til at gennemse delt materiale. Offentlig synlighed påvirker opdagelse, mens ejerskab påvirker, hvad du kan redigere eller slette.
     doc_create_visibility_title Ejerskab og synlighed
+    doc_creation_desc Opret dine egne emner og tilføj visuelle flashcards. Hvert kort understøtter et billede og en valgfri lydfil til udtale.
+    doc_creation_title Oprettelse af emner og kort
+    doc_feedback_desc Hjælp os med at forbedre os! Brug feedback-ikonet (Icons.feedback) på et emne oder en mappe for at rapportere problemer. Du kan også sende generel app-feedback via supportsektionen.
+    doc_feedback_title Feedback-system
+    doc_filters_desc Find hurtigt indhold ved hjælp af søgefeltet. Du kan filtrere efter aldersgruppe (tidlig til avanceret) eller indsnævre din visning til specifikke samlinger og mapper.
+    doc_filters_title Søgning og filtre
+    doc_flashcards_desc Hvert emne indeholder et sæt kort. Selvom billeder og lyd understøttes, er de valgfrie – indhold kan være rent tekstuelt eller dynamisk genereret.
+    doc_flashcards_title Visuelle flashcards
+    doc_friends_desc Læring er bedre sammen! Inviter venner til Aliolo via din profil. I kan følge hinandens fremskridt og forblive motiverede ved at se, hvem der opretholder den længste streak.
+    doc_friends_title Venner og invitationer
+    doc_goals_desc Indstil dit daglige mål for kortfærdiggørelse i indstillingerne. Ændringer af dit mål træder i kraft fra næste dag.
+    doc_goals_title Daglige mål
+    doc_json_desc Avancerede skabere kan bruge JSON-data til at levere lokaliserede navne og beskrivelser, hvilket gør emner tilgængelige på alle understøttede sprog.
+    doc_json_title JSON-lokalisering
+    doc_lang_desc Vælg altid dit foretrukne læringssprog i topmenuen, før du vælger et emne. Dette sikrer, at den korrekte lyd og oversættelser indlæses.
+    doc_lang_title Læringssprog
+    doc_leaderboard_desc Konkurrer med elever over hele verden! Optjen XP ved at gennemføre kortsessioner og kravl op ad ranglisten. Din position opdateres i realtid, efterhånden som du mestrer nye emner.
+    doc_leaderboard_title Global rangliste
+    doc_localization_details_desc "\"Global\"-sproget er dit primære fallback – det kan være et hvilket som helst sprog, du vælger. Hvis du leverer specifikke oversættelser (som engelsk eller spansk), vil de kun tilsidesætte de globale data, når en bruger vælger det specifikke UI-sprog."
+    doc_localization_details_title Sådan fungerer lokalisering
+    doc_localization_ui_desc For at tilføje lokaliserede data skal du blot trykke på sprogkode-ikonet (f.eks. EN, ES, FR) i editorens overskrift. Dette giver dig mulighed for at angive specifikke navne, beskrivelser og kortindhold for hvert understøttet sprog. Fanen "Global" fungerer som det primære fallback, hvis der ikke gives en specifik oversættelse.
+    doc_localization_ui_title Tilføjelse af oversættelser
+    doc_math_desc Matematiske emner bruger specialiserede motorer til at generere kortvisualiseringer i realtid. Disse emner har unikke lærings- og testtilstande, der er skræddersyet til specifikke matematiske koncepter, hvilket sikrer et mere effektivt øvelsesmiljø.
+    doc_math_title Matematiske emner
+    doc_media_desc For at sikre hurtig synkronisering skal du holde billeder under 5 MB og lydfiler under 10 MB.
+    doc_media_title Grænser for upload af medier
+    doc_organization_desc Brug mapper til at gruppere relaterede emner sammen. Du kan også oprette samlinger for at organisere emner i kuraterede stier.
+    doc_organization_title Organisering af indhold
+    doc_pillars_desc Alt indhold i Aliolo er organiseret i 8 grundlæggende søjler: Akademisk og professionel, Verden, Natur, Menneskekroppen, Humaniora, Fritid, Ingeniørvidenskab og Andet. Disse kategorier giver en struktureret ramme for alle emner på platformen.
+    doc_pillars_title De 8 kernesøjler
+    doc_public_desc Emner kan være private (kun synlige for dig) eller offentlige. Offentligt indhold deles med hele Aliolo-fællesskabet, hvilket giver alle mulighed for at opdage og lære af dine kreationer.
+    doc_public_title Offentlig vs. privat
     doc_start_dashboard_desc Dashboardet er dit hovedbibliotek. Brug søgning til hurtigt at finde indhold, og kombiner derefter kildefiltre såsom favoritter, mine og offentlige biblioteker med aldersfiltre for at reducere støj.
     doc_start_dashboard_title Dashboard, søgning og filtre
     doc_start_feedback_desc Brug feedback-indgangspunkterne på tværs af appen, når noget er galt eller uklart. Rapporter kan omfatte den aktuelle kontekst, hvilket gør indholdsproblemer nemmere at gennemgå og rette.
@@ -98,6 +232,8 @@
     doc_start_quick_title Hurtig start
     doc_start_structure_desc Emner holder kort. Mapper grupperer relateret indhold inde i en søjle. Samlinger er kuraterede sæt, der kan kombinere flere emner til undersøgelse og deling.
     doc_start_structure_title Emner, mapper og samlinger
+    doc_streaks_desc Konsistens er nøglen! Gennemfør dit daglige mål hver dag for at opbygge din streak. Gå ikke glip af en dag, ellers nulstilles streaken.
+    doc_streaks_title Streak-system
     doc_study_how_desc Start med Lær, når du bygger genkendelse, og skift derefter til Test, når du vil have hurtigere tilbagekaldelse og strengere kontrol. Brug kortere sessioner til fokuseret gennemgang og større sessioner for bredere dækning.
     doc_study_how_title Hvordan man studerer
     doc_study_intro_desc Denne fane forklarer, hvordan du bevæger dig gennem indhold, vælger den rigtige tilstand og indstiller dine sessioner til gennemgang eller genkaldelse.
@@ -108,67 +244,280 @@
     doc_study_modes_title Lær og test tilstande
     doc_study_scope_desc Studiet kan starte fra et enkelt emne, en mappevisning eller en samling. Samlinger er nyttige, når du ønsker en blandet session på tværs af flere emner uden at forlade det aktuelle flow.
     doc_study_scope_title Emner, mapper og samlinger i undersøgelse
+    doc_sync_desc Dine fremskridt synkroniseres automatisk til skyen. Du kan skifte mellem web- og desktopversioner uden at miste din streak.
+    doc_sync_title Cloud-synkronisering
     doc_tab_create Skabe
+    doc_tab_creator Skabelse
+    doc_tab_general Generelt
+    doc_tab_learning Praksis
     doc_tab_start Starte
     doc_tab_study Studere
+    doc_testing_desc Udfordr dig selv med multiple-choice spørgsmål (MCQ). Appen vil automatisk gå videre, når du svarer, hvilket hjælper dig med at lære hurtigere.
+    doc_testing_title Interaktiv test
+    doc_welcome_desc Aliolo er en visuel læringsplatform designet til at hjælpe dig med at mestre emner gennem flashcards og interaktiv test.
+    doc_welcome_title Velkommen til Aliolo
     documentation Dokumentation
+    done_today Done Today
+    down_arrow Down Arrow
+    edit Rediger
+    edit_card Edit Card
+    edit_collection Rediger samling
+    edit_email Rediger e-mail
+    edit_folder Rediger mappe
+    edit_name Edit Name
+    edit_subject Edit Subject
+    edit_subject_title Edit Subject
     edit_subscription Rediger abonnement
+    email E-mail
+    email_change_notice For security, a confirmation link will be sent to BOTH your old and new email addresses. You must click both to complete the change.
+    email_in_use Email is already in use
+    email_subject Subject
+    email_update_sent Confirmation emails sent. Please check both inboxes.
     email_updated_successfully E-mail blev opdateret!
+    english English
     enter_current_password Indtast den aktuelle adgangskode
+    enter_new_email Indtast ny e-mail
+    enter_new_name Enter New Name
+    enter_number Enter a number
+    enter_or_select_subject Please enter or select a subject
+    enter_pass_to_confirm Enter your password to confirm
+    enter_subject_name Enter subject name
     error Fejl: $e
     error_deleting Fejl ved sletning: $e
+    error_deleting_account Could not delete account. Check your password.
     error_saving Fejl ved lagring: $e
     error_saving_card Fejl ved lagring af kort: $e
     error_updating_favorite Fejl ved opdatering af favorit: $e
+    exit Exit
+    exit_confirm_msg Are you sure you want to exit the application?
+    exit_confirm_title Exit Aliolo?
+    expiry_date Udløbsdato
     failed_answers Mislykkede svar
     failed_to_send_reset_code Kunne ikke sende nulstillingskode
     failed_to_send_verification_code Kunne ikke sende bekræftelseskoden
     fake_only Kun falsk
+    fatal_startup_error Fatal Startup Error
+    feat_adaptive_desc The system monitors your recognition speed across MCQ options, dynamically adjusting intervals to push your boundaries.
+    feat_adaptive_title Adaptive Response Timing
+    feat_ages_desc Content curated for different age groups from early childhood to advanced learning.
+    feat_ages_title For All Ages
+    feat_gamified_desc Earn XP, badges, and build streaks while mastering complex visual subjects.
+    feat_gamified_title Gamified Experience
+    feat_mastery_desc Dynamic XP rewards difficulty, while real-time mastery badges (Bronze, Silver, Gold) track your journey from novice to expert.
+    feat_mastery_title Visual Mastery & XP
+    feat_multimedia_desc Learn with images, audio, and video support for immersive training.
+    feat_multimedia_title Multimedia Cards
+    feat_recognition_desc Immersive identification drills designed to build instant "muscle memory" for complex visual subjects.
+    feat_recognition_title Visual Pattern Training
+    feat_science_adaptive_desc Intervals automatically adjust based on your recognition speed and accuracy.
+    feat_science_adaptive_title Adaptive Timing
+    feat_science_spacing_desc Advanced cognitive spacing model that predicts memory decay and optimizes review cycles.
+    feat_science_spacing_title SuperMemo-2 (SM-2)
+    feat_spacing_desc A full implementation of the SuperMemo-2 model predicts your memory decay and schedules reviews at the peak of retention.
+    feat_spacing_title Cognitive Spacing (SM-2)
+    feature_autoplay Auto-Play tilstand
+    feature_community_access Adgang til fællesskabsemner
     feature_creation Værktøjer til oprettelse
     feature_customize Avanceret tilpasning
+    feature_favorites Favoritemner på dashboardet
+    feature_feedback Direkte feedback og forslag
+    feature_free GRATIS
+    feature_friends Inviter og forbind med venner
     feature_full_library Fuld adgang til biblioteket
+    feature_learn_all Lær ethvert emne eller samling
+    feature_private_mode Privat profil tilstand
+    feature_pro PRO
+    feature_spaced_repetition Spaced Repetition (SM-2)
     feature_testing Interaktiv test
+    feedback Feedback
+    feedback_add_image Tilføj billede
+    feedback_attachments Vedhæftede filer
+    feedback_bug Fejlrapport
+    feedback_context Kontekst
+    feedback_details Detaljer
+    feedback_error Kunne ikke sende feedback. Prøv venligst igen.
+    feedback_management_desc Se og administrer brugerfeedback
+    feedback_management_title Feedback-anmodninger
+    feedback_other Andet
+    feedback_submit Send feedback
+    feedback_success Tak for din feedback!
+    feedback_suggestion Forslag
+    feedback_title Send feedback
+    feedback_title_hint Titel
+    feedback_type Type
+    fill_all_fields Please fill all fields
+    filter_all All
+    filter_dashboard Kontrolpanel
+    filter_favorites Favoritter
+    filter_my_subjects My Subjects
+    filter_on_dashboard On Dashboard
+    filter_public Public
+    filter_public_library Offentligt bibliotek
+    filters Filtre
+    finish Afslut
+    finished_session You finished {count} cards. XP bonus awarded!
+    folder Mappe
+    folder_already_exists En mappe med dette navn findes allerede i denne søjle
     folder_id Mappe-id
+    folder_label Mappe
+    folder_not_empty_msg Kan ikke slette: mappen er ikke tom.
+    folder_plural Mapper
+    forgot_password Forgot Password?
     free_only Gratis brugere
+    general_preferences General Preferences
     generic Generisk
+    go_to_manager Go to Library Manager
+    goal_change_hint Change your card goal for tomorrow
+    goal_change_notice Ændringer i dit daglige mål træder i kraft i morgen.
+    gold GOLD
+    hide_comparison Skjul plansammenligning
     home Hjem
+    images Images
+    included_subjects Inkluderede emner
+    info_copied Info copied to clipboard
+    initializing_aliolo Initializing Aliolo...
     invalid_code Ugyldig kode
+    invalid_email Invalid email address
     invalid_email_address Ugyldig e-mailadresse
     invalid_json Ugyldig JSON: $e
+    invalid_number Invalid number
     invalid_or_expired_invitation_link Ugyldigt eller udløbet invitationslink.
     invalid_or_expired_reset_code Ugyldig eller udløbet nulstillingskode.
+    invalid_password Invalid password
+    invalid_password_delete Invalid Password
     invitation_sent_awaiting_registration Invitation sendt (afventer tilmelding)
+    invite Inviter
+    invite_user_content E-mail {email} blev ikke fundet. Inviter dem til at deltage i Aliolo?
+    invite_user_title Inviter bruger?
     invited_and_request_sent Inviteret og anmodning sendt!
     json JSON
+    keyboard_shortcuts Keyboard Shortcuts
     label_suffix $label:
+    lang_abbr Lang
+    language Sprog
     leaderboard Leaderboard
+    learn_mode_desc Study cards and memorize answers
+    learn_mode_title Learn
+    learn_session_size Learn Session Size
+    learn_session_size_desc Antal nye kort, der skal introduceres i en enkelt læringssession.
     learning_session_complete_description Godt arbejde! Du afsluttede denne læringssession. Dine fremskridt er blevet gemt.
+    left_arrow Left Arrow
+    level Level
+    level_range Must be between 1 and 20
+    level_tier_1 Niveau 1
+    level_tier_2 Niveau 2
+    level_tier_3 Niveau 3
     licenses Licenser
     licenses_aliolo_section_title Aliolo Kommerciel licens
     licenses_aliolo_subtitle Proprietær software og premium adgangsvilkår
     licenses_intro_desc Aliolos kommercielle licens vises først. Tredjeparts pakkelicenser følger nedenfor.
     licenses_intro_title Aliolo Licens- og pakkemeddelelser
     licenses_third_party_section_title Tredjeparts pakkelicenser
+    light Light
     linux_distro Linux Distro
     loading Indlæser...
     localized_data Lokaliserede data
+    login Log ind
+    logout Log ud
+    manage_cards Manage Cards
+    manage_friends Friends
+    manage_friends_desc View and manage your friend requests
+    manage_library Manage Library ({sCount} subjects, {cCount} cards)
+    manage_subjects Manage Subjects
+    manage_subscription Administrer abonnement
+    manage_testing_langs Manage Testing Languages
+    manage_users Manage Users
+    master_visual_ease Master visual subjects with ease.
+    mastered mastered
+    mastery Mestring
+    max_streak Max Streak
+    maybe_later Måske senere
+    mission_desc The smart companion that helps your brain learn and retain visual knowledge through science-backed algorithms.
+    mock_email_title Mock Email Inbox
+    mode_audio_to_image Audio to Image
+    mode_audio_to_text Audio to Text
+    mode_image_to_text Image to Text
+    mode_text_to_text Text to Text
     monthly_access Månedlig adgang
     most_popular_choice Mest populære valg
+    multi_lang_answers Multi-language Answers
+    multi_lang_prompts Multi-language Prompts
+    my_position My Position
+    name Name
+    names_descriptions Names & Descriptions
+    new NEW
     new_email Ny e-mail
+    new_password New Password
+    next Næste
+    next_card Next Card
+    next_daily_goal Næste daglige mål
+    next_daily_goal_desc Målantal kort, der skal mestres hver dag. Ændringer træder i kraft i morgen.
+    next_day_goal Next Day Goal
     no_cards_available_for_this_session Ingen kort tilgængelige for denne session.
     no_cards_found Ingen kort fundet
+    no_cards_found_for_lang No cards found for this language
+    no_cards_in_library No cards found in the library.
+    no_feedback_found Ingen feedback fundet.
+    no_folder Ingen mappe (Rod)
+    no_friends_found No friends found
+    no_images_added Ingen billeder tilføjet
+    no_leaderboard_data No leaderboard data available.
+    no_localized_audio Ingen lokaliseret lyd
+    no_localized_images Ingen lokaliserede billeder
+    no_localized_video Ingen lokaliseret video
+    no_subjects_available Ingen emner tilgængelige
     no_subjects_found Ingen emner fundet
     no_subjects_found_in_this_collection Ingen emner fundet i denne samling
     no_users_found Ingen brugere fundet
+    ok OK
+    old_password Gammel adgangskode
+    old_password_required Gammel adgangskode er påkrævet
+    onboarding_1_desc Lær visuelt. Mestre permanent. Din visuelle læringskammerat drevet af SM-2 videnskab.
+    onboarding_1_title Velkommen til Aliolo
+    onboarding_2_desc Dette hjælper os med at personliggøre din læringsoplevelse og anbefale de rigtige emner.
+    onboarding_2_title Hvor gammel er du?
+    onboarding_3_desc Vælg din primære interesse for at tilpasse dit indledende instrumentbræt.
+    onboarding_3_title Hvad vil du mestre?
+    onboarding_4_desc Byg dit eget dæk eller dyk ned i kort delt af Aliolo-lærende over hele verden. Lær i dit eget tempo, og test dig selv, når du er klar.
+    onboarding_4_title Opret og del
+    onboarding_5_desc Dit bibliotek forbliver synkroniseret på tværs af alle dine enheder. Vi giver dig kun et puf, når det er tid til at beskytte din streak.
+    onboarding_5_title Mestre overalt
+    onboarding_6_desc Start din rejse i dag og mestre alt, hvad du sætter dig for.
+    onboarding_6_title Bliv en del af fællesskabet
+    onboarding_7_joined Deltaget af tusindvis af lærende
+    onboarding_7_quote Aliolo har fuldstændig ændret den måde, mine børn og jeg mestrer nye emner på. De visuelle kort og spaced repetition får læring til at føles som en leg!
+    onboarding_get_started Kom i gang
+    onboarding_next Næste
+    onboarding_skip Spring over
+    options_count Number of Answers
+    options_count_desc Antal svarmuligheder, der vises under test.
+    options_per_card options per card
+    order_id Ordre-ID
     os_version OS version
+    our_mission OUR MISSION
+    page Page
+    parent_folder_label Parent Folder (da)
+    password Adgangskode
+    password_required Password is required
+    password_reset_success Password reset successful
     password_updated_successfully Adgangskoden blev opdateret!
+    passwords_dont_match Passwords do not match
+    paste PASTE
     payments_are_not_yet_integrated_on_web_please_use_the_mobile_app_to_upgrade Betalinger er endnu ikke integreret på web. Brug venligst mobilappen til at opgradere.
     personal_data Personlige data
     pick_date Vælg dato
+    picture Picture
+    pillar Pillar
+    plan_monthly Månedlig adgang
+    plan_monthly_desc Mest populære valg
     plan_monthly_tagline Mest populære valg
     plan_monthly_title Månedlig adgang
+    plan_weekly Ugentlig adgang
+    plan_weekly_desc Bedst til hurtige mål
     plan_weekly_tagline Bedst til hurtige mål
     plan_weekly_title Ugentlig adgang
+    plan_yearly Årlig adgang
+    plan_yearly_desc Spar 33% pr. måned
     plan_yearly_tagline Spar 33% om måneden
     plan_yearly_title Årlig adgang
     platform Platform
@@ -177,58 +526,208 @@
     please_enter_the_6_digit_code Indtast venligst den 6-cifrede kode
     please_wait_for_a_response_before_replying_again Vent venligst på et svar, før du svarer igen.
     premium_expires_at Udløber kl. $date
+    premium_go Bliv Premium
     premium_lifetime Livsvarig adgang
     premium_only Kun premium
     premium_status_active Du er premium-medlem
+    premium_title Aliolo Premium
     premium_unlock_desc Få adgang til alle emner, opret ubegrænsede kort, og støt Aliolos mission.
     premium_unlock_title Lås op for fuld adgang
+    prev Prev
+    previous_card Previous Card
+    price_per_week ({price} / uge)
+    private Private
+    pro_label PRO
+    product_id Produkt-ID
     product_not_available_in_store Produktet er ikke tilgængeligt i butikken.
     profile Profil
+    profile_title My Profile & Progress
+    prompt_label Prompt
+    prompt_optional Prompt / Question
+    prompts_answers Prompts & Answers
+    provide_at_least_one_answer Please provide at least one answer
+    provide_at_least_one_name Provide at least one name
+    provider Udbyder
     public_other_subject Offentligt/Andet emne
+    public_profile Public Profile
+    public_profile_desc Show your XP and Streak on Hall of Fame.
+    public_subject Public Subject
+    public_subject_desc Make this subject visible to other users.
     purchase_failed Køb mislykkedes: $e
+    purchase_token Købstoken
+    record_shortcut Record Shortcut
     recovery_error Gendannelsesfejl: $e
     refresh Opfriske
     refresh_conversation Opdater samtalen
+    remove_friend Remove Friend
+    remove_friend_confirm Are you sure you want to remove friend
     renderer Renderer
+    request_sent Request sent
+    request_sent_waiting Request sent (waiting)
+    required Required
     reset_code Nulstil kode
+    reset_code_email_title Password Reset Code
+    reset_code_sent "Reset code for: "
     reset_code_sent_to_please_check_your_inbox Nulstil kode sendt til $email. Tjek venligst din indbakke.
+    reset_password_for "Reset Password for: "
+    restore_password Restore Password
     restore_purchases Gendan køb
+    retry Retry
+    right_arrow Right Arrow
     save Spare
     save_33_per_month Spar 33% om måneden
+    save_before_nav Do you want to save changes before navigating?
+    save_card Save Card
+    save_subject Save Subject
     saved_successfully Gemt
+    search_cards Search Cards
+    search_subjects Search Subjects
     search_users Søg efter brugere
+    select_an_answer Select an Answer
+    select_lang Select Language
+    select_package_license Select Package License
+    select_user Select User
+    selected_count {count} Selected
+    send Send
+    send_code Send Code
+    send_verification_code Send verification code?
     session_complete Session færdig!
     session_complete_description Godt arbejde! Du er færdig med alle kortene i denne session.
+    setting_saved Setting saved
     settings Indstillinger
+    shortcuts_hint Press the key you want to use with Ctrl.
+    show_all_languages Show all languages
     show_documentation_btn Vis dokumentationsknap
     show_documentation_btn_desc Vis dokumentationsknappen i app-bjælken.
     show_fake_users Vis falske brugere
+    show_less_languages Show less languages
+    sidebar_left Sidebar on the left
+    sidebar_left_desc Move testing controls to the left side of the screen.
+    silver SILVER
+    social Social
+    sort_by Sort by
+    sound_effects Sound Effects
+    sound_effects_desc Enable audio feedback for correct and wrong answers.
+    source Kilde
+    status Status
+    status_closed Lukket
+    status_open Åben
+    status_replied Besvaret
+    streak Streak
+    subject Subject
+    subject_deleted Subject deleted
     subject_id Emne-id
+    subject_label Subject
+    subject_plural Subjects
+    subject_type Subject Type (da)
+    subjects Emner
     subscribe_now Abonner nu
     subscription_data Abonnementsdata
     subscription_updated Abonnement opdateret
     subtraction_emoji Subtraktions-emoji
     subtraction_numbers Subtraktionstal
+    support_and_management Support og administration
+    system System
+    tap_to_replay Tap to Replay
     technical_context TEKNISK KONTEKST
+    test_mode_desc Challenge yourself with a quiz
+    test_mode_label Test Mode
+    test_mode_title Test
+    test_session_size Test Session Size
+    test_session_size_desc Antal kort, der skal gennemgås i en enkelt testsession.
+    testing Testing
     testing_mode Testtilstand
+    testing_section Testing Settings
     text Tekst
+    the_science THE SCIENCE
+    theme_color App Theme Color
+    theme_color_desc Customize the primary color used for buttons and highlights.
+    theme_dark Dark
+    theme_light Light
+    theme_mode Tema
+    theme_system System
     this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards Dette er en mappe. Du kan bruge Lær/Test knapperne ovenfor til at øve alle kort.
+    to_label To
     total_cards Kort i alt
+    total_xp Total XP
+    trust_cloud_desc Your progress is securely synced across all your devices in real-time.
+    trust_cloud_title Cloud Sync
+    trust_privacy TRUST & PRIVACY
+    trust_sync_desc Your data is private and encrypted to ensure the highest security standards.
+    trust_sync_title Encrypted Data
+    type_collection Samling
+    type_folder Folder (Sub-subjects) (da)
+    type_standard Standard (Cards) (da)
     type_your_reply Skriv dit svar...
     ua UA
+    ui_language Brugerfladesprog
+    ukrainian Ukrainian
     unknown_user_profile_missing Ukendt bruger (profil mangler)
+    unsaved_changes Unsaved Changes
+    unsaved_changes_msg Du har ikke-gemte ændringer. Vil du kassere dem?
+    up_arrow Up Arrow
+    update Update
     update_available En ny version er tilgængelig!
+    updated_at Opdateret den
+    upload_new_photo Upload nyt foto
     user Bruger
+    user_exists User already exists
     user_id Bruger-id
+    user_not_found User not found
     user_with_this_email_already_exists_please_log_in_instead Bruger med denne e-mailadresse findes allerede. Log venligst ind i stedet.
+    username Brugernavn
     users Brugere
     users_filter Filtrer brugere
     verification_code Bekræftelseskode
     verification_code_sent_to Bekræftelseskode sendt til $email
+    verify Verify
     version Version
+    video Video
+    video_link Video Link
+    video_url_optional Video URL (Optional)
+    view_card View Card
+    view_cards_title View Cards
     view_onboarding Se onboarding
+    visibility Visibility
+    visual_content_required Mindst ét visuelt indhold er påkrævet
+    visual_content_required_msg Der skal angives mindst ét visuelt indhold (tekst, billede, lyd eller video).
+    visual_text Visuel tekst
+    wants_to_be_friend Wants to be your friend
     weekly_access Ugentlig adgang
     welcome_complete_your_profile_to_join_aliolo Velkomst! Udfyld din profil for at tilmelde dig aliolo.
+    xp XP
     yearly_access Årlig adgang
+    you You
     you_do_not_have_permission_to_edit_this_card Du har ikke tilladelse til at redigere dette kort
     you_do_not_have_permission_to_view_this_card_details Du har ikke tilladelse til at se disse kortoplysninger.
+    you_rank You are ranked #{rank}
+    active Aktiv
+    autoplay Automatisk afspilning
+    card_limit Kortgrænse
+    card_limit_msg Du har nået din grænse på {limit} kort.
+    create_request Opret anmodning
+    edit_user Rediger bruger
+    favorite Favorit
+    file_too_large Filen er for stor
+    inactive Inaktiv
+    is_required er påkrævet
+    languages Sprog
+    limit_reached Grænse nået
+    not_available Ikke tilgængelig
+    toggle_languages Skift sprog
+    user_updated Bruger opdateret
+    zoom Zoom
+    account_and_management Account & Management
+    back_to_plans Back to plans
+    confirm_password_required Confirm password is required
+    feat_autoplay_desc Focus on learning while the app automatically advances through cards at your pace.
+    feat_autoplay_title Hands-Free Autoplay
+    feat_create_share_desc Easily create your own subjects and cards, or share them with the community.
+    feat_create_share_title Create & Share
+    feat_science_smart_review_desc The algorithm calculates the optimal time to review each card for maximum retention.
+    feat_science_smart_review_title Smart Review Cycles
+    new_password_required New password is required
+    password_updated Password updated successfully
+    save_success Saved successfully
+    trust_ecosystem_desc Your progress and cards are seamlessly synced across all your devices.
+    trust_ecosystem_title Aliolo Ecosystem

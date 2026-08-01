@@ -43,37 +43,139 @@
     about_support_settings_desc Ngôn ngữ giao diện người dùng, chế độ chủ đề, màu chủ đề, âm thanh, vị trí thanh bên và khả năng hiển thị tài liệu đều có thể được điều chỉnh từ cài đặt.
     about_support_settings_title Cá nhân hóa
     about_support_title Cài đặt, phản hồi và hỗ trợ
+    about_tagline Học bằng hình ảnh. Làm chủ mãi mãi.
+    account_created Đã tạo tài khoản
+    account_created_billing_fail Tài khoản của bạn đã được tạo nhưng thanh toán chưa hoàn tất. Hãy thử thanh toán lại bên dưới.
+    account_deleted Account deleted successfully
+    add_card Add Card
+    add_collection Thêm bộ sưu tập
+    add_folder Thêm thư mục
+    add_friend_by_email Add Friend By Email
+    add_lang_translation Add Language Translation
+    add_prompt_translation Add Prompt Translation
+    add_subject Add Subject
     addition_emoji Biểu tượng cảm xúc bổ sung
     addition_numbers Số bổ sung
+    age Tuổi
+    age_0_6 0-6 tuổi
+    age_15_18 15 - 18
+    age_15_plus 15+ tuổi
+    age_19_25 19 - 25
+    age_26_35 26 - 35
+    age_36_50 36 - 50
+    age_7_14 7-14 tuổi
+    age_advanced Nâng cao
+    age_all Mọi lứa tuổi
+    age_early Tuổi thơ ấu
+    age_group Nhóm tuổi
+    age_intermediate Trung cấp
+    age_over_50 Trên 50
+    age_primary Trường tiểu học
+    age_under_14 Dưới 14
+    algorithm_title THE ALIOLO ALGORITHM
     aliolo aliolo
+    all_matching_subjects Tất cả các chủ đề phù hợp
     all_rights_reserved Mọi quyền được bảo lưu
+    answer Trả lời
+    answer_label answer
+    answers_label answers
     are_you_sure_you_want_to_close_this_feedback_request Bạn có chắc chắn muốn đóng yêu cầu phản hồi này không?
     are_you_sure_you_want_to_delete_this_folder Bạn có chắc chắn muốn xóa thư mục này?
+    ascending Tăng dần
     attach_image Đính kèm hình ảnh
+    audio Âm thanh
+    audio_playing Đang phát âm thanh
+    author Author
     back Mặt sau
+    back_to_login Back to Login
     back_to_subjects Quay lại chủ đề
     best_for_quick_goals Tốt nhất cho mục tiêu nhanh chóng
     billing_disclaimer Đăng ký tự động gia hạn trừ khi bị hủy. Bạn có thể quản lý đăng ký của mình trong cài đặt cửa hàng.
     billing_title Thanh toán
+    bronze BRONZE
     browser Trình duyệt
     cancel Hủy bỏ
+    cancel_request Cancel Request
+    cancel_request_confirm Are you sure you want to cancel the request to
+    cannot_delete_folder Cannot Delete Folder
     cannot_delete_folder_it_is_not_empty Không thể xóa thư mục: nó không trống
+    card_details Card Details
     card_id Mã thẻ
+    card_label Card
+    card_level Cấp thẻ
+    card_plural Cards
+    cards cards
+    cards_label cards
+    cards_per_day cards per day
+    cards_per_session cards per session
+    change_avatar Change Avatar
+    change_password Đổi mật khẩu
     check_your_email_for_code Kiểm tra email của bạn để lấy mã
     clear Thông thoáng
+    click_to_select_image Click to select image
     click_to_view_original Click để xem bản gốc
     close Đóng
     close_request Đóng yêu cầu?
+    code_label Code
     collection_id ID bộ sưu tập
     colors Màu sắc
+    common_settings Common Settings
+    compare_plans So sánh Miễn phí và Cao cấp
+    confirm Xác nhận
+    confirm_logout Are you sure you want to logout?
+    confirm_password Confirm Password
     confirm_subscription Xác nhận đăng ký
+    content_label Content
     context Bối cảnh
+    copy COPY
+    copy_all Copy All
+    core_features CORE FEATURES
     correct_answers Câu trả lời đúng
     could_not_launch Không thể khởi chạy $url
     counting Đếm
+    create_account Create Account
+    create_new_account Create New Account
+    create_new_card Create New Card
+    created_at Được tạo lúc
+    current_streak Current Streak
     current_subscription Đăng ký hiện tại
+    daily_goal Daily Goal
+    daily_progress Tiến độ hàng ngày
+    dark Dark
+    dashboard_greeting Xin chào
+    day day
+    day_label Day
+    day_plural Days
+    days days
+    default Mặc định
+    default_language Ngôn ngữ mặc định
+    default_testing_language Default Testing Language
+    default_testing_language_desc Pre-selects this language on the subjects page.
     delete Xóa bỏ
+    delete_account Delete Account
+    delete_account_confirm Are you sure you want to delete your account? This action is permanent.
+    delete_avatar Xóa ảnh đại diện
+    delete_avatar_confirm Bạn có chắc chắn muốn xóa ảnh hồ sơ của mình không?
+    delete_card_confirm Delete this card?
+    delete_collection Xóa bộ sưu tập
+    delete_collection_confirm Bạn có chắc chắn muốn xóa bộ sưu tập này không?
+    delete_folder Xóa thư mục
+    delete_selected_cards Delete selected cards?
+    delete_subject Delete Subject
+    delete_subject_confirm Delete subject '{subject}' and all {count} cards inside?
+    delete_subjects_first Please delete all sub-subjects inside this folder before deleting the folder itself.
+    descending Giảm dần
+    description Description
     device Thiết bị
+    digit_code 6-digit Code
+    discard Discard
+    discard_changes Hủy bỏ thay đổi?
+    doc_autoplay_desc Ứng dụng có thể tự động chuyển sang thẻ tiếp theo sau khi bạn trả lời. Câu trả lời đúng đợi 1 giây, trong khi câu trả lời sai đợi 2 giây để bạn xem lại.
+    doc_autoplay_title Học tập tự động phát
+    doc_card_scope_desc Thẻ là các khối xây dựng của việc học và luôn thuộc về một Chủ đề cụ thể. Mặc dù bạn có thể sắp xếp các Chủ đề vào Thư mục hoặc Bộ sưu tập, nhưng bản thân các thẻ phải được tạo trong một Chủ đề.
+    doc_card_scope_title Vị trí của thẻ
+    doc_collections_purpose_desc Bộ sưu tập là các lộ trình được tuyển chọn nhóm các Chủ đề lại với nhau. Khi bạn bắt đầu một phiên học từ một Bộ sưu tập, hệ thống sẽ trộn các thẻ từ tất cả các chủ đề bao gồm để cung cấp một bài kiểm tra toàn diện, ngẫu nhiên.
+    doc_collections_purpose_title Mục đích của Bộ sưu tập
     doc_create_intro_desc Tab này bao gồm cách người sáng tạo sắp xếp nội dung, bản địa hóa nội dung và xuất bản tài liệu nghiên cứu hữu ích mà không làm phức tạp quy trình làm việc.
     doc_create_intro_title Tạo nên
     doc_create_json_desc Tạo dựa trên JSON là một quy trình làm việc nâng cao dành cho nội dung hàng loạt có cấu trúc. Nó vẫn là tùy chọn; hầu hết người sáng tạo đều có thể xây dựng và chỉnh sửa nội dung thông qua các biểu mẫu tiêu chuẩn.
@@ -86,6 +188,38 @@
     doc_create_model_title Mô hình nội dung
     doc_create_visibility_desc Sử dụng "của tôi" để làm việc trên nội dung của riêng bạn, mục yêu thích để ghim các mục hữu ích và thư viện công cộng để duyệt tài liệu được chia sẻ. Khả năng hiển thị công khai ảnh hưởng đến khả năng khám phá, trong khi quyền sở hữu ảnh hưởng đến nội dung bạn có thể chỉnh sửa hoặc xóa.
     doc_create_visibility_title Quyền sở hữu và khả năng hiển thị
+    doc_creation_desc Tạo Chủ đề của riêng bạn và thêm Flashcards trực quan. Mỗi thẻ hỗ trợ một hình ảnh và một tệp âm thanh tùy chọn để phát âm.
+    doc_creation_title Tạo chủ đề & thẻ
+    doc_feedback_desc Giúp chúng tôi cải thiện! Sử dụng biểu tượng phản hồi (Icons.feedback) trên bất kỳ Chủ đề hoặc Thư mục nào để báo cáo sự cố. Bạn cũng có thể gửi phản hồi chung về ứng dụng thông qua phần Hỗ trợ.
+    doc_feedback_title Hệ thống phản hồi
+    doc_filters_desc Tìm kiếm nội dung nhanh chóng bằng thanh tìm kiếm. Bạn có thể lọc theo Nhóm tuổi (Từ Nhỏ đến Nâng cao) hoặc thu hẹp chế độ xem của mình thành các Bộ sưu tập và Thư mục cụ thể.
+    doc_filters_title Tìm kiếm & Bộ lọc
+    doc_flashcards_desc Mỗi chủ đề chứa một bộ thẻ. Mặc dù hình ảnh và âm thanh được hỗ trợ, nhưng chúng là tùy chọn—nội dung có thể thuần văn bản hoặc được tạo động.
+    doc_flashcards_title Flashcards trực quan
+    doc_friends_desc Học tập sẽ tốt hơn khi có nhau! Mời bạn bè tham gia Aliolo thông qua hồ sơ của bạn. Các bạn có thể theo dõi tiến trình của nhau và duy trì động lực bằng cách xem ai duy trì được chuỗi ngày (streak) dài nhất.
+    doc_friends_title Bạn bè & Lời mời
+    doc_goals_desc Thiết lập mục tiêu hoàn thành thẻ hàng ngày của bạn trong phần cài đặt. Các thay đổi đối với mục tiêu của bạn sẽ có hiệu lực bắt đầu từ ngày hôm sau.
+    doc_goals_title Mục tiêu hàng ngày
+    doc_json_desc Các nhà sáng tạo nâng cao có thể sử dụng dữ liệu JSON để cung cấp tên và mô tả được bản địa hóa, giúp các chủ đề có thể tiếp cận được trên tất cả các ngôn ngữ được hỗ trợ.
+    doc_json_title Bản địa hóa JSON
+    doc_lang_desc Luôn chọn ngôn ngữ học tập ưa thích của bạn ở menu trên cùng trước khi chọn một chủ đề. Điều này đảm bảo âm thanh và bản dịch chính xác được tải lên.
+    doc_lang_title Ngôn ngữ học tập
+    doc_leaderboard_desc Cạnh tranh với những người học trên toàn thế giới! Kiếm XP bằng cách hoàn thành các phiên học thẻ và thăng hạng. Vị trí của bạn được cập nhật theo thời gian thực khi bạn nắm vững các chủ đề mới.
+    doc_leaderboard_title Bảng xếp hạng toàn cầu
+    doc_localization_details_desc Ngôn ngữ "Toàn cầu" là phương án dự phòng chính của bạn—đó có thể là bất kỳ ngôn ngữ nào bạn chọn. Nếu bạn cung cấp các bản dịch cụ thể (như tiếng Anh hoặc tiếng Tây Ban Nha), chúng sẽ chỉ ghi đè dữ liệu Toàn cầu khi người dùng chọn ngôn ngữ giao diện người dùng cụ thể đó.
+    doc_localization_details_title Cách thức bản địa hóa hoạt động
+    doc_localization_ui_desc Để thêm dữ liệu được bản địa hóa, chỉ cần chạm vào biểu tượng mã ngôn ngữ (ví dụ: EN, ES, FR) trong tiêu đề trình chỉnh sửa. Điều này cho phép bạn cung cấp tên, mô tả và nội dung thẻ cụ thể cho từng ngôn ngữ được hỗ trợ. Tab "Toàn cầu" đóng vai trò là phương án dự phòng chính nếu không có bản dịch cụ thể nào được cung cấp.
+    doc_localization_ui_title Thêm bản dịch
+    doc_math_desc Các chủ đề toán học sử dụng các công cụ chuyên dụng để tạo trực quan hóa thẻ theo thời gian thực. Các chủ đề này có các chế độ học tập và kiểm tra độc đáo được điều chỉnh cho các khái niệm toán học cụ thể, đảm bảo môi trường thực hành hiệu quả hơn.
+    doc_math_title Các chủ đề toán học
+    doc_media_desc Để đảm bảo đồng bộ hóa nhanh chóng, hãy để hình ảnh dưới 5MB và tệp âm thanh dưới 10MB.
+    doc_media_title Giới hạn tải lên phương tiện
+    doc_organization_desc Sử dụng Thư mục để nhóm các Chủ đề liên quan lại với nhau. Bạn cũng có thể tạo Bộ sưu tập để sắp xếp các Chủ đề thành các lộ trình được tuyển chọn.
+    doc_organization_title Tổ chức nội dung
+    doc_pillars_desc Tất cả nội dung trong Aliolo được tổ chức thành 8 trụ cột nền tảng: Học thuật & Chuyên nghiệp, Thế giới, Tự nhiên, Cơ thể con người, Khoa học nhân văn, Giải trí, Kỹ thuật và Khác. Các danh mục này cung cấp một khung cấu trúc cho tất cả các chủ đề trên nền tảng.
+    doc_pillars_title 8 Trụ cột cốt lõi
+    doc_public_desc Các chủ đề có thể là riêng tư (chỉ bạn mới thấy) hoặc công khai. Nội dung công khai được chia sẻ với toàn bộ cộng đồng Aliolo, cho phép mọi người khám phá và học hỏi từ các sáng tạo của bạn.
+    doc_public_title Công khai và Riêng tư
     doc_start_dashboard_desc Bảng điều khiển là thư viện chính của bạn. Sử dụng tìm kiếm để tìm nội dung nhanh chóng, sau đó kết hợp các bộ lọc nguồn như mục yêu thích, của tôi và thư viện công cộng với các bộ lọc theo độ tuổi để giảm nhiễu.
     doc_start_dashboard_title Trang tổng quan, Tìm kiếm và Bộ lọc
     doc_start_feedback_desc Sử dụng các điểm nhập phản hồi trên ứng dụng khi có lỗi hoặc không rõ ràng. Các báo cáo có thể bao gồm bối cảnh hiện tại, giúp việc xem xét và khắc phục các vấn đề về nội dung trở nên dễ dàng hơn.
@@ -98,6 +232,8 @@
     doc_start_quick_title Bắt đầu nhanh
     doc_start_structure_desc Đối tượng cầm thẻ. Các thư mục nhóm nội dung liên quan bên trong một cột. Bộ sưu tập là các bộ được tuyển chọn có thể kết hợp nhiều chủ đề để nghiên cứu và chia sẻ.
     doc_start_structure_title Chủ đề, thư mục và bộ sưu tập
+    doc_streaks_desc Sự kiên trì là chìa khóa! Hoàn thành mục tiêu hàng ngày của bạn mỗi ngày để xây dựng chuỗi ngày của bạn. Đừng bỏ lỡ một ngày nào, nếu không chuỗi ngày sẽ bị đặt lại.
+    doc_streaks_title Hệ thống chuỗi ngày (Streak)
     doc_study_how_desc Hãy bắt đầu với Tìm hiểu khi bạn đang xây dựng khả năng nhận dạng, sau đó chuyển sang Kiểm tra khi bạn muốn nhớ lại nhanh hơn và kiểm tra chặt chẽ hơn. Sử dụng các phiên ngắn hơn để xem xét tập trung và các phiên lớn hơn để có phạm vi bao quát hơn.
     doc_study_how_title Cách học
     doc_study_intro_desc Tab này giải thích cách di chuyển qua nội dung, chọn chế độ phù hợp và điều chỉnh các phiên của bạn để xem lại hoặc thu hồi.
@@ -108,67 +244,280 @@
     doc_study_modes_title Chế độ học và kiểm tra
     doc_study_scope_desc Nghiên cứu có thể bắt đầu từ một chủ đề duy nhất, chế độ xem thư mục hoặc bộ sưu tập. Bộ sưu tập rất hữu ích khi bạn muốn có một phiên kết hợp giữa nhiều chủ đề mà không cần rời khỏi luồng hiện tại.
     doc_study_scope_title Chủ đề, Thư mục và Bộ sưu tập trong Nghiên cứu
+    doc_sync_desc Tiến trình của bạn được tự động đồng bộ hóa với đám mây. Bạn có thể chuyển đổi giữa phiên bản web và máy tính để bàn mà không bị mất chuỗi ngày của mình.
+    doc_sync_title Đồng bộ hóa đám mây
     doc_tab_create Tạo nên
+    doc_tab_creator Sáng tạo
+    doc_tab_general Chung
+    doc_tab_learning Thực hành
     doc_tab_start Bắt đầu
     doc_tab_study Học
+    doc_testing_desc Thử thách bản thân với các câu hỏi trắc nghiệm (MCQ). Ứng dụng sẽ tự động chuyển tiếp khi bạn trả lời, giúp bạn học nhanh hơn.
+    doc_testing_title Kiểm tra tương tác
+    doc_welcome_desc Aliolo là một nền tảng học tập trực quan được thiết kế để giúp bạn nắm vững các chủ đề thông qua flashcards và kiểm tra tương tác.
+    doc_welcome_title Chào mừng bạn đến với Aliolo
     documentation Tài liệu
+    done_today Hoàn thành hôm nay
+    down_arrow Down Arrow
+    edit Chỉnh sửa
+    edit_card Edit Card
+    edit_collection Chỉnh sửa bộ sưu tập
+    edit_email Chỉnh sửa Email
+    edit_folder Chỉnh sửa thư mục
+    edit_name Edit Name
+    edit_subject Edit Subject
+    edit_subject_title Edit Subject
     edit_subscription Chỉnh sửa đăng ký
+    email Email
+    email_change_notice For security, a confirmation link will be sent to BOTH your old and new email addresses. You must click both to complete the change.
+    email_in_use Email is already in use
+    email_subject Subject
+    email_update_sent Confirmation emails sent. Please check both inboxes.
     email_updated_successfully Email được cập nhật thành công!
+    english English
     enter_current_password Nhập mật khẩu hiện tại
+    enter_new_email Nhập email mới
+    enter_new_name Enter New Name
+    enter_number Enter a number
+    enter_or_select_subject Please enter or select a subject
+    enter_pass_to_confirm Enter your password to confirm
+    enter_subject_name Enter subject name
     error Lỗi: $e
     error_deleting Lỗi xóa: $e
+    error_deleting_account Could not delete account. Check your password.
     error_saving Lỗi lưu: $e
     error_saving_card Lỗi lưu thẻ: $e
     error_updating_favorite Lỗi cập nhật mục yêu thích: $e
+    exit Exit
+    exit_confirm_msg Are you sure you want to exit the application?
+    exit_confirm_title Exit Aliolo?
+    expiry_date Ngày hết hạn
     failed_answers Câu trả lời không thành công
     failed_to_send_reset_code Không gửi được mã đặt lại
     failed_to_send_verification_code Không gửi được mã xác minh
     fake_only Chỉ giả
+    fatal_startup_error Fatal Startup Error
+    feat_adaptive_desc The system monitors your recognition speed across MCQ options, dynamically adjusting intervals to push your boundaries.
+    feat_adaptive_title Adaptive Response Timing
+    feat_ages_desc Content curated for different age groups from early childhood to advanced learning.
+    feat_ages_title For All Ages
+    feat_gamified_desc Earn XP, badges, and build streaks while mastering complex visual subjects.
+    feat_gamified_title Gamified Experience
+    feat_mastery_desc Dynamic XP rewards difficulty, while real-time mastery badges (Bronze, Silver, Gold) track your journey from novice to expert.
+    feat_mastery_title Visual Mastery & XP
+    feat_multimedia_desc Learn with images, audio, and video support for immersive training.
+    feat_multimedia_title Multimedia Cards
+    feat_recognition_desc Immersive identification drills designed to build instant "muscle memory" for complex visual subjects.
+    feat_recognition_title Visual Pattern Training
+    feat_science_adaptive_desc Intervals automatically adjust based on your recognition speed and accuracy.
+    feat_science_adaptive_title Adaptive Timing
+    feat_science_spacing_desc Advanced cognitive spacing model that predicts memory decay and optimizes review cycles.
+    feat_science_spacing_title SuperMemo-2 (SM-2)
+    feat_spacing_desc A full implementation of the SuperMemo-2 model predicts your memory decay and schedules reviews at the peak of retention.
+    feat_spacing_title Cognitive Spacing (SM-2)
+    feature_autoplay Chế độ Tự động phát
+    feature_community_access Truy cập vào các chủ đề cộng đồng
     feature_creation Công cụ tạo
     feature_customize Tùy chỉnh nâng cao
+    feature_favorites Các mục yêu thích trên bảng điều khiển
+    feature_feedback Phản hồi và gợi ý trực tiếp
+    feature_free MIỄN PHÍ
+    feature_friends Mời và kết nối với bạn bè
     feature_full_library Truy cập toàn bộ thư viện
+    feature_learn_all Học bất kỳ chủ đề hoặc bộ sưu tập nào
+    feature_private_mode Chế độ hồ sơ riêng tư
+    feature_pro PRO
+    feature_spaced_repetition Lặp lại ngắt quãng (SM-2)
     feature_testing Thử nghiệm tương tác
+    feedback Phản hồi
+    feedback_add_image Thêm ảnh
+    feedback_attachments Tệp đính kèm
+    feedback_bug Báo lỗi
+    feedback_context Ngữ cảnh
+    feedback_details Chi tiết
+    feedback_error Gửi phản hồi thất bại. Vui lòng thử lại.
+    feedback_management_desc Xem và quản lý phản hồi của người dùng
+    feedback_management_title Yêu cầu phản hồi
+    feedback_other Khác
+    feedback_submit Gửi phản hồi
+    feedback_success Cảm ơn bạn đã phản hồi!
+    feedback_suggestion Gợi ý
+    feedback_title Gửi phản hồi
+    feedback_title_hint Tiêu đề
+    feedback_type Loại
+    fill_all_fields Please fill all fields
+    filter_all All
+    filter_dashboard Bảng điều khiển
+    filter_favorites Yêu thích
+    filter_my_subjects My Subjects
+    filter_on_dashboard On Dashboard
+    filter_public Public
+    filter_public_library Thư viện công cộng
+    filters Bộ lọc
+    finish Hoàn tất
+    finished_session You finished {count} cards. XP bonus awarded!
+    folder Thư mục
+    folder_already_exists Thư mục có tên này đã tồn tại trong trụ cột này
     folder_id Mã thư mục
+    folder_label Thư mục
+    folder_not_empty_msg Không thể xóa: thư mục không trống.
+    folder_plural Thư mục
+    forgot_password Forgot Password?
     free_only Người dùng miễn phí
+    general_preferences General Preferences
     generic Chung
+    go_to_manager Go to Library Manager
+    goal_change_hint Thay đổi mục tiêu thẻ của bạn cho ngày mai
+    goal_change_notice Các thay đổi đối với mục tiêu hàng ngày của bạn sẽ có hiệu lực vào ngày mai.
+    gold GOLD
+    hide_comparison Ẩn so sánh gói dịch vụ
     home Trang chủ
+    images Images
+    included_subjects Các chủ đề bao gồm
+    info_copied Info copied to clipboard
+    initializing_aliolo Initializing Aliolo...
     invalid_code Mã không hợp lệ
+    invalid_email Invalid email address
     invalid_email_address Địa chỉ email không hợp lệ
     invalid_json JSON không hợp lệ: $e
+    invalid_number Invalid number
     invalid_or_expired_invitation_link Liên kết lời mời không hợp lệ hoặc đã hết hạn.
     invalid_or_expired_reset_code Mã đặt lại không hợp lệ hoặc đã hết hạn.
+    invalid_password Invalid password
+    invalid_password_delete Invalid Password
     invitation_sent_awaiting_registration Đã gửi lời mời (đang chờ đăng ký)
+    invite Mời
+    invite_user_content Không tìm thấy email {email}. Mời họ tham gia Aliolo?
+    invite_user_title Mời người dùng?
     invited_and_request_sent Đã mời và yêu cầu đã được gửi!
     json JSON
+    keyboard_shortcuts Keyboard Shortcuts
     label_suffix $label:
+    lang_abbr Lang
+    language Language
     leaderboard Bảng xếp hạng
+    learn_mode_desc Study cards and memorize answers
+    learn_mode_title Learn
+    learn_session_size Kích thước phiên học
+    learn_session_size_desc Số lượng thẻ mới cần giới thiệu trong một phiên học.
     learning_session_complete_description Làm tốt lắm! Bạn đã hoàn thành buổi học này. Tiến trình của bạn đã được lưu.
+    left_arrow Left Arrow
+    level Level
+    level_range Must be between 1 and 20
+    level_tier_1 Cấp độ 1
+    level_tier_2 Cấp độ 2
+    level_tier_3 Cấp độ 3
     licenses Giấy phép
     licenses_aliolo_section_title Aliolo Giấy phép thương mại
     licenses_aliolo_subtitle Phần mềm độc quyền và các điều khoản truy cập cao cấp
     licenses_intro_desc Giấy phép thương mại của Aliolo xuất hiện đầu tiên. Giấy phép gói của bên thứ ba như sau.
     licenses_intro_title Aliolo Thông báo về gói và giấy phép
     licenses_third_party_section_title Giấy phép gói của bên thứ ba
+    light Light
     linux_distro Bản phân phối Linux
     loading Đang tải...
     localized_data Dữ liệu được bản địa hóa
+    login Đăng nhập
+    logout Logout
+    manage_cards Manage Cards
+    manage_friends Friends
+    manage_friends_desc View and manage your friend requests
+    manage_library Manage Library ({sCount} subjects, {cCount} cards)
+    manage_subjects Manage Subjects
+    manage_subscription Quản lý đăng ký
+    manage_testing_langs Manage Testing Languages
+    manage_users Manage Users
+    master_visual_ease Master visual subjects with ease.
+    mastered mastered
+    mastery Mastery
+    max_streak Max Streak
+    maybe_later Có lẽ Để sau
+    mission_desc The smart companion that helps your brain learn and retain visual knowledge through science-backed algorithms.
+    mock_email_title Mock Email Inbox
+    mode_audio_to_image Audio to Image
+    mode_audio_to_text Audio to Text
+    mode_image_to_text Image to Text
+    mode_text_to_text Text to Text
     monthly_access Truy cập hàng tháng
     most_popular_choice Sự lựa chọn phổ biến nhất
+    multi_lang_answers Multi-language Answers
+    multi_lang_prompts Multi-language Prompts
+    my_position My Position
+    name Name
+    names_descriptions Names & Descriptions
+    new NEW
     new_email Email mới
+    new_password New Password
+    next Next
+    next_card Next Card
+    next_daily_goal Mục tiêu hàng ngày tiếp theo
+    next_daily_goal_desc Số lượng thẻ mục tiêu cần nắm vững mỗi ngày. Thay đổi có hiệu lực từ ngày mai.
+    next_day_goal Mục tiêu ngày mai
     no_cards_available_for_this_session Không có thẻ nào cho phiên này.
     no_cards_found Không tìm thấy thẻ nào
+    no_cards_found_for_lang No cards found for this language
+    no_cards_in_library No cards found in the library.
+    no_feedback_found Không tìm thấy phản hồi nào.
+    no_folder Không có thư mục (Gốc)
+    no_friends_found No friends found
+    no_images_added Không có hình ảnh nào được thêm
+    no_leaderboard_data No leaderboard data available.
+    no_localized_audio Không có âm thanh được bản địa hóa
+    no_localized_images Không có hình ảnh được bản địa hóa
+    no_localized_video Không có video được bản địa hóa
+    no_subjects_available Không có chủ đề nào
     no_subjects_found Không tìm thấy chủ đề nào
     no_subjects_found_in_this_collection Không tìm thấy chủ đề nào trong bộ sưu tập này
     no_users_found Không tìm thấy người dùng nào
+    ok OK
+    old_password Mật khẩu cũ
+    old_password_required Cần có mật khẩu cũ
+    onboarding_1_desc Học qua hình ảnh. Làm chủ vĩnh viễn. Người bạn đồng hành học tập trực quan của bạn được hỗ trợ bởi khoa học SM-2.
+    onboarding_1_title Chào mừng bạn đến với Aliolo
+    onboarding_2_desc Điều này giúp chúng tôi cá nhân hóa trải nghiệm học tập của bạn và đề xuất các chủ đề phù hợp.
+    onboarding_2_title Bạn bao nhiêu tuổi?
+    onboarding_3_desc Chọn sở thích chính của bạn để tùy chỉnh bảng điều khiển ban đầu.
+    onboarding_3_title Bạn muốn làm chủ điều gì?
+    onboarding_4_desc Xây dựng bộ thẻ của riêng bạn hoặc khám phá các thẻ được chia sẻ bởi những người học Aliolo trên toàn thế giới. Học theo tốc độ của bạn, sau đó tự kiểm tra khi bạn đã sẵn sàng.
+    onboarding_4_title Tạo & Chia sẻ
+    onboarding_5_desc Thư viện của bạn luôn được đồng bộ hóa trên tất cả các thiết bị. Chúng tôi sẽ chỉ nhắc nhở bạn khi đến lúc bảo vệ chuỗi ngày học của mình.
+    onboarding_5_title Làm chủ ở mọi nơi
+    onboarding_6_desc Bắt đầu hành trình của bạn ngay hôm nay và làm chủ bất cứ điều gì bạn đặt tâm trí vào.
+    onboarding_6_title Tham gia cộng đồng
+    onboarding_7_joined Được tham gia bởi hàng ngàn người học
+    onboarding_7_quote Aliolo đã hoàn toàn thay đổi cách các con tôi và tôi làm chủ các chủ đề mới. Các thẻ hình ảnh và sự lặp lại ngắt quãng làm cho việc học giống như một trò chơi!
+    onboarding_get_started Bắt đầu
+    onboarding_next Tiếp theo
+    onboarding_skip Bỏ qua
+    options_count Number of Answers
+    options_count_desc Số lượng câu trả lời trắc nghiệm được hiển thị trong các bài kiểm tra.
+    options_per_card options per card
+    order_id ID đơn hàng
     os_version Phiên bản hệ điều hành
+    our_mission OUR MISSION
+    page Page
+    parent_folder_label Parent Folder (vi)
+    password Password
+    password_required Password is required
+    password_reset_success Password reset successful
     password_updated_successfully Đã cập nhật mật khẩu thành công!
+    passwords_dont_match Passwords do not match
+    paste PASTE
     payments_are_not_yet_integrated_on_web_please_use_the_mobile_app_to_upgrade Thanh toán chưa được tích hợp trên Web. Vui lòng sử dụng ứng dụng di động để nâng cấp.
     personal_data Dữ liệu cá nhân
     pick_date Chọn ngày
+    picture Picture
+    pillar Pillar
+    plan_monthly Truy cập hàng tháng
+    plan_monthly_desc Lựa chọn phổ biến nhất
     plan_monthly_tagline Sự lựa chọn phổ biến nhất
     plan_monthly_title Truy cập hàng tháng
+    plan_weekly Truy cập hàng tuần
+    plan_weekly_desc Tốt nhất cho các mục tiêu nhanh chóng
     plan_weekly_tagline Tốt nhất cho mục tiêu nhanh chóng
     plan_weekly_title Truy cập hàng tuần
+    plan_yearly Truy cập hàng năm
+    plan_yearly_desc Tiết kiệm 33% mỗi tháng
     plan_yearly_tagline Tiết kiệm 33% mỗi tháng
     plan_yearly_title Truy cập hàng năm
     platform Nền tảng
@@ -177,58 +526,208 @@
     please_enter_the_6_digit_code Vui lòng nhập mã gồm 6 chữ số
     please_wait_for_a_response_before_replying_again Vui lòng đợi phản hồi trước khi trả lời lại.
     premium_expires_at Hết hạn lúc $date
+    premium_go Lên Premium
     premium_lifetime Truy cập trọn đời
     premium_only Chỉ trả phí
     premium_status_active Bạn là thành viên cao cấp
+    premium_title Aliolo Premium
     premium_unlock_desc Có quyền truy cập vào tất cả các chủ đề, tạo thẻ không giới hạn và hỗ trợ sứ mệnh của Aliolo.
     premium_unlock_title Mở khóa toàn quyền truy cập
+    prev Prev
+    previous_card Previous Card
+    price_per_week ({price} / tuần)
+    private Private
+    pro_label PRO
+    product_id ID sản phẩm
     product_not_available_in_store Sản phẩm không có sẵn tại cửa hàng.
     profile Hồ sơ
+    profile_title My Profile & Progress
+    prompt_label Prompt
+    prompt_optional Prompt / Question
+    prompts_answers Prompts & Answers
+    provide_at_least_one_answer Please provide at least one answer
+    provide_at_least_one_name Provide at least one name
+    provider Nhà cung cấp
     public_other_subject Chủ đề công cộng/khác
+    public_profile Public Profile
+    public_profile_desc Show your XP and Streak on Hall of Fame.
+    public_subject Public Subject
+    public_subject_desc Make this subject visible to other users.
     purchase_failed Mua hàng không thành công: $e
+    purchase_token Mã mua hàng
+    record_shortcut Record Shortcut
     recovery_error Lỗi khôi phục: $e
     refresh Làm cho khỏe lại
     refresh_conversation Làm mới cuộc trò chuyện
+    remove_friend Remove Friend
+    remove_friend_confirm Are you sure you want to remove friend
     renderer Trình kết xuất
+    request_sent Request sent
+    request_sent_waiting Request sent (waiting)
+    required Required
     reset_code Đặt lại mã
+    reset_code_email_title Password Reset Code
+    reset_code_sent "Reset code for: "
     reset_code_sent_to_please_check_your_inbox Đặt lại mã được gửi tới $email. Vui lòng kiểm tra hộp thư đến của bạn.
+    reset_password_for "Reset Password for: "
+    restore_password Restore Password
     restore_purchases Khôi phục mua hàng
+    retry Retry
+    right_arrow Right Arrow
     save Cứu
     save_33_per_month Tiết kiệm 33% mỗi tháng
+    save_before_nav Do you want to save changes before navigating?
+    save_card Save Card
+    save_subject Save Subject
     saved_successfully Đã lưu thành công
+    search_cards Search Cards
+    search_subjects Search Subjects
     search_users Tìm kiếm người dùng
+    select_an_answer Select an Answer
+    select_lang Select Language
+    select_package_license Select Package License
+    select_user Select User
+    selected_count {count} Selected
+    send Send
+    send_code Send Code
+    send_verification_code Send verification code?
     session_complete Phiên hoàn tất!
     session_complete_description Làm tốt lắm! Bạn đã hoàn thành tất cả các thẻ trong phiên này.
+    setting_saved Setting saved
     settings Cài đặt
+    shortcuts_hint Press the key you want to use with Ctrl.
+    show_all_languages Show all languages
     show_documentation_btn Nút hiển thị tài liệu
     show_documentation_btn_desc Hiển thị nút tài liệu trên thanh ứng dụng.
     show_fake_users Hiển thị người dùng giả mạo
+    show_less_languages Show less languages
+    sidebar_left Sidebar on the left
+    sidebar_left_desc Move testing controls to the left side of the screen.
+    silver SILVER
+    social Social
+    sort_by Sắp xếp theo
+    sound_effects Sound Effects
+    sound_effects_desc Enable audio feedback for correct and wrong answers.
+    source Nguồn
+    status Trạng thái
+    status_closed Đã đóng
+    status_open Mở
+    status_replied Đã trả lời
+    streak Streak
+    subject Subject
+    subject_deleted Subject deleted
     subject_id ID chủ đề
+    subject_label Subject
+    subject_plural Subjects
+    subject_type Subject Type (vi)
+    subjects Chủ đề
     subscribe_now Đăng ký ngay
     subscription_data Dữ liệu đăng ký
     subscription_updated Đã cập nhật đăng ký
     subtraction_emoji Biểu tượng cảm xúc phép trừ
     subtraction_numbers Số trừ
+    support_and_management Hỗ trợ & Quản lý
+    system System
+    tap_to_replay Nhấn để phát lại
     technical_context BỐI CẢNH KỸ THUẬT
+    test_mode_desc Challenge yourself with a quiz
+    test_mode_label Test Mode
+    test_mode_title Test
+    test_session_size Kích thước phiên kiểm tra
+    test_session_size_desc Số lượng thẻ cần ôn tập trong một phiên kiểm tra.
+    testing Testing
     testing_mode Chế độ kiểm tra
+    testing_section Testing Settings
     text Chữ
+    the_science THE SCIENCE
+    theme_color App Theme Color
+    theme_color_desc Customize the primary color used for buttons and highlights.
+    theme_dark Tối
+    theme_light Sáng
+    theme_mode Theme Mode
+    theme_system Hệ thống
     this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards Đây là một thư mục. Bạn có thể sử dụng các nút Học/Kiểm tra ở trên để luyện tập tất cả các thẻ.
+    to_label To
     total_cards Tổng số thẻ
+    total_xp Total XP
+    trust_cloud_desc Your progress is securely synced across all your devices in real-time.
+    trust_cloud_title Cloud Sync
+    trust_privacy TRUST & PRIVACY
+    trust_sync_desc Your data is private and encrypted to ensure the highest security standards.
+    trust_sync_title Encrypted Data
+    type_collection Bộ sưu tập
+    type_folder Folder (Sub-subjects) (vi)
+    type_standard Standard (Cards) (vi)
     type_your_reply Nhập câu trả lời của bạn...
     ua UA
+    ui_language UI Language
+    ukrainian Ukrainian
     unknown_user_profile_missing Người dùng không xác định (Thiếu hồ sơ)
+    unsaved_changes Unsaved Changes
+    unsaved_changes_msg Bạn có thay đổi chưa lưu. Bạn có muốn hủy bỏ chúng không?
+    up_arrow Up Arrow
+    update Update
     update_available Đã có phiên bản mới!
+    updated_at Được cập nhật lúc
+    upload_new_photo Tải lên ảnh mới
     user Người dùng
+    user_exists User already exists
     user_id ID người dùng
+    user_not_found User not found
     user_with_this_email_already_exists_please_log_in_instead Người dùng có email này đã tồn tại. Vui lòng đăng nhập thay thế.
+    username Username
     users Người dùng
     users_filter Lọc người dùng
     verification_code Mã xác minh
     verification_code_sent_to Mã xác minh được gửi tới $email
+    verify Verify
     version Phiên bản
+    video Video
+    video_link Video Link
+    video_url_optional Video URL (Optional)
+    view_card View Card
+    view_cards_title View Cards
     view_onboarding Xem giới thiệu
+    visibility Visibility
+    visual_content_required Yêu cầu ít nhất một nội dung trực quan
+    visual_content_required_msg Phải cung cấp ít nhất một nội dung trực quan (văn bản, hình ảnh, âm thanh hoặc video).
+    visual_text Văn bản trực quan
+    wants_to_be_friend Wants to be your friend
     weekly_access Truy cập hàng tuần
     welcome_complete_your_profile_to_join_aliolo Chào mừng! Hoàn tất hồ sơ của bạn để tham gia aliolo.
+    xp XP
     yearly_access Truy cập hàng năm
+    you You
     you_do_not_have_permission_to_edit_this_card Bạn không có quyền chỉnh sửa thẻ này
     you_do_not_have_permission_to_view_this_card_details Bạn không có quyền xem chi tiết thẻ này.
+    you_rank You are ranked #{rank}
+    active Hoạt động
+    autoplay Tự động phát
+    card_limit Giới hạn thẻ
+    card_limit_msg Bạn đã đạt giới hạn {limit} thẻ.
+    create_request Tạo yêu cầu
+    edit_user Sửa người dùng
+    favorite Yêu thích
+    file_too_large Tệp quá lớn
+    inactive Không hoạt động
+    is_required là bắt buộc
+    languages Ngôn ngữ
+    limit_reached Đã đạt giới hạn
+    not_available Không khả dụng
+    toggle_languages Chuyển đổi ngôn ngữ
+    user_updated Người dùng đã được cập nhật
+    zoom Thu phóng
+    account_and_management Account & Management
+    back_to_plans Back to plans
+    confirm_password_required Confirm password is required
+    feat_autoplay_desc Focus on learning while the app automatically advances through cards at your pace.
+    feat_autoplay_title Hands-Free Autoplay
+    feat_create_share_desc Easily create your own subjects and cards, or share them with the community.
+    feat_create_share_title Create & Share
+    feat_science_smart_review_desc The algorithm calculates the optimal time to review each card for maximum retention.
+    feat_science_smart_review_title Smart Review Cycles
+    new_password_required New password is required
+    password_updated Password updated successfully
+    save_success Saved successfully
+    trust_ecosystem_desc Your progress and cards are seamlessly synced across all your devices.
+    trust_ecosystem_title Aliolo Ecosystem

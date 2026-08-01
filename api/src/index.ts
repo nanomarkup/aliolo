@@ -19,7 +19,6 @@ import progressRouter from './routes/progress';
 import feedbacksRouter from './routes/feedbacks';
 import friendshipsRouter from './routes/friendships';
 import subscriptionsRouter from './routes/subscriptions';
-import localizationRouter from './routes/localization';
 import adminRouter from './routes/admin';
 import analyticsRouter from './routes/analytics';
 import storageRouter from './routes/storage';
@@ -84,7 +83,6 @@ app.route('/api/admin', adminRouter);
 app.route('/api/analytics', analyticsRouter);
 app.route('/api', subjectsRouter);
 app.route('/api', feedbacksRouter);
-app.route('/api', localizationRouter);
 app.route('/', storageRouter);
 
 // Protect OpenAPI documentation

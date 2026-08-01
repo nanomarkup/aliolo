@@ -43,37 +43,139 @@
     about_support_settings_desc UI 言語、テーマ モード、テーマの色、サウンド、サイドバーの配置、ドキュメントの表示/非表示はすべて設定から調整できます。
     about_support_settings_title パーソナライゼーション
     about_support_title 設定、フィードバック、サポート
+    about_tagline 視覚で学び、一生モノの知識に。
+    account_created アカウントが作成されました
+    account_created_billing_fail アカウントは作成されましたが、支払いが完了していません。以下の支払いを再試行してください。
+    account_deleted アカウントを削除しました
+    add_card カードを追加
+    add_collection コレクションを追加
+    add_folder フォルダを追加
+    add_friend_by_email メールで友達を追加
+    add_lang_translation Add Language Translation
+    add_prompt_translation Add Prompt Translation
+    add_subject 科目を追加
     addition_emoji 絵文字の追加
     addition_numbers 加算番号
+    age 年齢
+    age_0_6 0-6 歳
+    age_15_18 15 - 18
+    age_15_plus 15歳以上
+    age_19_25 19 - 25
+    age_26_35 26 - 35
+    age_36_50 36 - 50
+    age_7_14 7-14 歳
+    age_advanced 上級
+    age_all 全年齢
+    age_early 幼児期
+    age_group 年齢層
+    age_intermediate 中等教育
+    age_over_50 50歳以上
+    age_primary 小学校
+    age_under_14 14歳未満
+    algorithm_title ALIOLO アルゴリズム
     aliolo aliolo
+    all_matching_subjects 一致するすべてのサブジェクト
     all_rights_reserved 無断転載を禁じます
+    answer 答え
+    answer_label 回答
+    answers_label 回答
     are_you_sure_you_want_to_close_this_feedback_request このフィードバックリクエストを閉じてもよろしいですか?
     are_you_sure_you_want_to_delete_this_folder このフォルダを削除してもよろしいですか?
+    ascending 昇順
     attach_image 画像を添付
+    audio オーディオ
+    audio_playing オーディオ再生中
+    author 著者
     back 戻る
+    back_to_login ログインに戻る
     back_to_subjects 主題に戻る
     best_for_quick_goals 素早い目標に最適
     billing_disclaimer キャンセルしない限り、サブスクリプションは自動的に更新されます。ストア設定でサブスクリプションを管理できます。
     billing_title 請求する
+    bronze ブロンズ
     browser ブラウザ
     cancel キャンセル
+    cancel_request リクエストをキャンセル
+    cancel_request_confirm ... へのリクエストをキャンセルしてもよろしいですか？
+    cannot_delete_folder フォルダーを削除できません
     cannot_delete_folder_it_is_not_empty フォルダを削除できません: フォルダは空ではありません
+    card_details カード詳細
     card_id カードID
+    card_label カード
+    card_level カードレベル
+    card_plural カード
+    cards 枚のカード
+    cards_label カード
+    cards_per_day 枚/日
+    cards_per_session 枚/セッション
+    change_avatar アバターを変更
+    change_password パスワードを変更
     check_your_email_for_code メールでコードを確認してください
     clear クリア
+    click_to_select_image クリックして画像を選択
     click_to_view_original クリックするとオリジナルが表示されます
     close 近い
     close_request リクエストを閉じますか?
+    code_label コード
     collection_id コレクションID
     colors 色
+    common_settings Common Settings
+    compare_plans 無料版とプレミアム版を比較
+    confirm 確認
+    confirm_logout ログアウトしてもよろしいですか？
+    confirm_password パスワードの確認
     confirm_subscription サブスクリプションの確認
+    content_label Content
     context コンテクスト
+    copy COPY
+    copy_all すべてコピー
+    core_features CORE FEATURES
     correct_answers 正解
-    could_not_launch $Url を起動できませんでした
+    could_not_launch $url を起動できませんでした
     counting 数える
+    create_account アカウント作成
+    create_new_account 新規アカウント作成
+    create_new_card 新規カード作成
+    created_at 作成日
+    current_streak 現在の継続日数
     current_subscription 現在のサブスクリプション
+    daily_goal 今日の目標
+    daily_progress 今日の進捗
+    dark ダーク
+    dashboard_greeting こんにちは
+    day 日
+    day_label 日
+    day_plural 日
+    days 日
+    default デフォルト
+    default_language デフォルト言語
+    default_testing_language デフォルトの学習言語
+    default_testing_language_desc 科目ページでこの言語をあらかじめ選択します。
     delete 消去
+    delete_account アカウントを削除
+    delete_account_confirm アカウントを削除してもよろしいですか？この操作は取り消せません。
+    delete_avatar アバターを削除
+    delete_avatar_confirm プロフィール写真を削除してもよろしいですか？
+    delete_card_confirm このカードを削除しますか？
+    delete_collection コレクションを削除
+    delete_collection_confirm このコレクションを削除してもよろしいですか？
+    delete_folder フォルダを削除
+    delete_selected_cards 選択したカードを削除しますか？
+    delete_subject テーマを削除
+    delete_subject_confirm 科目 '{subject}' と、その中の {count} 枚のカードをすべて削除しますか？
+    delete_subjects_first フォルダー自体を削除する前に、このフォルダー内のすべてのサブサブジェクトを削除してください。
+    descending 降順
+    description 説明
     device デバイス
+    digit_code 6桁のコード
+    discard 破棄
+    discard_changes 変更を破棄しますか？
+    doc_autoplay_desc 回答後、自動的に次のカードに進むことができます。正解は1秒、不正解は2秒待機して確認できます。
+    doc_autoplay_title オートプレイ学習
+    doc_card_scope_desc カードは学習の基本単位であり、常に特定の主題に属します。
+    doc_card_scope_title カードの場所
+    doc_collections_purpose_desc コレクションは主題をまとめた学習パスです。含まれるすべての主題からカードがシャッフルされ、総合的なテストが行われます。
+    doc_collections_purpose_title コレクションの目的
     doc_create_intro_desc このタブでは、クリエイターがワークフローを過度に複雑にすることなく、コンテンツを整理し、ローカライズし、有用な学習資料を公開する方法について説明します。
     doc_create_intro_title 作成する
     doc_create_json_desc JSON ベースの作成は、構造化されたバルク コンテンツの高度なワークフローです。これはオプションのままにする必要があります。ほとんどのクリエイターは、標準フォームを通じてコン​​テンツを作成および編集できるはずです。
@@ -86,6 +188,38 @@
     doc_create_model_title コンテンツモデル
     doc_create_visibility_desc 自分のコンテンツに取り組むには「mine」を使用し、便利なアイテムを固定するにはお気に入りを、共有マテリアルを閲覧するには公共ライブラリを使用します。公開可視性は検出に影響しますが、所有権は編集または削除できる内容に影響します。
     doc_create_visibility_title 所有権と可視性
+    doc_creation_desc 独自の主題を作成し、ビジュアルフラッシュカードを追加します。各カードは画像と発音用の音声ファイルをサポートしています。
+    doc_creation_title 主題とカードの作成
+    doc_feedback_desc 改善にご協力ください！主題やフォルダにあるフィードバックアイコンを使用して問題を報告できます。
+    doc_feedback_title フィードバックシステム
+    doc_filters_desc 検索バーを使用してコンテンツを素早く見つけます。年齢層でフィルタリングしたり、特定のコレクションに絞り込んだりできます。
+    doc_filters_title 検索とフィルタ
+    doc_flashcards_desc 各主題にはカードのセットが含まれています。画像と音声がサポートされていますが任意です。テキストのみでも作成可能です。
+    doc_flashcards_title ビジュアルフラッシュカード
+    doc_friends_desc 一緒に学ぶともっと楽しい！プロフィールから友達をAlioloに招待しましょう。お互いの進捗を確認できます。
+    doc_friends_title 友達と招待
+    doc_goals_desc 設定で1日のカード完了目標枚数を設定してください。目標の変更は翌日から適用されます。
+    doc_goals_title 毎日の目標
+    doc_json_desc 高度なクリエイターはJSONデータを使用して、翻訳済みの名称や説明を提供できます。
+    doc_json_title JSONローカライズ
+    doc_lang_desc 主題を選択する前に、必ず上部メニューで希望の学習言語を選択してください。これにより、正しい音声と翻訳が読み込まれます。
+    doc_lang_title 学習言語
+    doc_leaderboard_desc 世界中の学習者と競いましょう！カードセッションを完了してXPを獲得し、ランクを上げてください。順位はリアルタイムで更新されます。
+    doc_leaderboard_title グローバルリーダーボード
+    doc_localization_details_desc 「Global」言語が基本のフォールバックです。特定の翻訳がある場合、その言語が選択されたときのみ上書きされます。
+    doc_localization_details_title ローカライズの仕組み
+    doc_localization_ui_desc 多言語データを追加するには、エディタヘッダーの言語コードアイコンをタップするだけです。
+    doc_localization_ui_title 翻訳の追加
+    doc_math_desc 数学の主題では、カードの視覚化をリアルタイムで生成するために特殊なエンジンを使用します。
+    doc_math_title 数学の主題
+    doc_media_desc 高速な同期を保つため、画像は5MB以下、音声ファイルは10MB以下にしてください。
+    doc_media_title メディアのアップロード制限
+    doc_organization_desc フォルダを使用して関連する主題をグループ化します。また、コレクションを作成して主題を学習パスに整理できます。
+    doc_organization_title コンテンツの整理
+    doc_pillars_desc Alioloのすべてのコンテンツは、学術・専門、世界、自然、人体、人文、レジャー、工学、その他の8つの基礎的な柱に分類されています。
+    doc_pillars_title 8つの主要な柱
+    doc_public_desc 主題は非公開（自分のみ閲覧可能）または公開に設定できます。公開コンテンツはAlioloコミュニティ全体で共有されます。
+    doc_public_title 公開と非公開
     doc_start_dashboard_desc ダッシュボードはメインのライブラリです。検索を使用してコンテンツをすばやく見つけ、お気に入り、私のもの、公共ライブラリなどのソース フィルターと年齢フィルターを組み合わせてノイズを軽減します。
     doc_start_dashboard_title ダッシュボード、検索、フィルター
     doc_start_feedback_desc 何かが間違っている場合や不明瞭な場合は、アプリ全体のフィードバック エントリ ポイントを使用します。レポートには現在のコンテキストを含めることができるため、コンテンツの問題の確認と修正が容易になります。
@@ -98,6 +232,8 @@
     doc_start_quick_title クイックスタート
     doc_start_structure_desc 被験者はカードを持っています。フォルダーは、関連するコンテンツをピラー内にグループ化します。コレクションは、研究や共有のために複数の主題を組み合わせることができる厳選されたセットです。
     doc_start_structure_title 件名、フォルダー、およびコレクション
+    doc_streaks_desc 継続は力なり！毎日目標を達成して、連続記録（ストリーク）を築きましょう。1日でも休むとリセットされます。
+    doc_streaks_title 継続学習システム
     doc_study_how_desc 認識を構築する場合は学習から始めて、より迅速な呼び出しとより厳密なチェックが必要な場合はテストに切り替えます。集中的なレビューには短いセッションを使用し、より広範囲の内容をカバーするには大きなセッションを使用します。
     doc_study_how_title 勉強方法
     doc_study_intro_desc このタブでは、コンテンツ内を移動し、適切なモードを選択し、レビューまたはリコールのためにセッションを調整する方法を説明します。
@@ -108,67 +244,281 @@
     doc_study_modes_title 学習モードとテストモード
     doc_study_scope_desc 学習は、単一の主題、フォルダー ビュー、またはコレクションから開始できます。コレクションは、現在のフローから離れることなく、複数の主題にわたる混合セッションが必要な場合に便利です。
     doc_study_scope_title 研究内の件名、フォルダー、およびコレクション
+    doc_sync_desc 進捗は自動的にクラウドに同期されます。ストリークを失うことなく、ウェブ版とデスクトップ版を切り替えられます。
+    doc_sync_title クラウド同期
     doc_tab_create 作成する
+    doc_tab_creator 作成
+    doc_tab_general 一般
+    doc_tab_learning 練習
     doc_tab_start 始める
     doc_tab_study 勉強
+    doc_testing_desc 選択式クイズ（MCQ）で自分に挑戦しましょう。回答するとアプリが自動的に次の問題へ進みます。
+    doc_testing_title インタラクティブテスト
+    doc_welcome_desc Alioloは、フラッシュカードとインタラクティブなテストを通じて学習を支援するビジュアル学習プラットフォームです。
+    doc_welcome_title Alioloへようこそ
     documentation ドキュメント
+    done_today 今日の完了数
+    down_arrow 下矢印
+    edit 編集
+    edit_card カード編集
+    edit_collection コレクションを編集
+    edit_email メールアドレスを編集
+    edit_folder フォルダを編集
+    edit_name 名前を編集
+    edit_subject 科目を編集
+    edit_subject_title Edit Subject
     edit_subscription サブスクリプションの編集
+    email メールアドレス
+    email_change_notice For security, a confirmation link will be sent to BOTH your old and new email addresses. You must click both to complete the change.
+    email_in_use このメールアドレスは既に使用されています
+    email_subject 件名
+    email_update_sent Confirmation emails sent. Please check both inboxes.
     email_updated_successfully メールが正常に更新されました。
+    english 英語
     enter_current_password 現在のパスワードを入力してください
+    enter_new_email 新しいメールアドレスを入力
+    enter_new_name 新しい名前を入力
+    enter_number 数値を入力
+    enter_or_select_subject 科目名を入力または選択してください
+    enter_pass_to_confirm 確認のためパスワードを入力してください
+    enter_subject_name 科目名を入力
     error エラー: $e
     error_deleting 削除エラー: $e
+    error_deleting_account 削除できませんでした。パスワードを確認してください。
     error_saving 保存エラー: $e
     error_saving_card カードの保存中にエラーが発生しました: $e
     error_updating_favorite お気に入りの更新中にエラーが発生しました: $e
+    exit Exit
+    exit_confirm_msg Are you sure you want to exit the application?
+    exit_confirm_title Exit Aliolo?
+    expiry_date 有効期限
     failed_answers 失敗した回答
     failed_to_send_reset_code リセットコードの送信に失敗しました
     failed_to_send_verification_code 確認コードの送信に失敗しました
     fake_only 偽物のみ
+    fatal_startup_error 致命的な起動エラー
+    feat_adaptive_desc 認識速度を監視して、復習間隔を調整します。
+    feat_adaptive_title 適応型レスポンスタイム
+    feat_ages_desc Content curated for different age groups from early childhood to advanced learning.
+    feat_ages_title For All Ages
+    feat_gamified_desc Earn XP, badges, and build streaks while mastering complex visual subjects.
+    feat_gamified_title Gamified Experience
+    feat_mastery_desc XP報酬と習熟バッジ（ブロンズ、シルバー、ゴールド）。
+    feat_mastery_title 視覚的習熟とXP
+    feat_multimedia_desc Learn with images, audio, and video support for immersive training.
+    feat_multimedia_title Multimedia Cards
+    feat_recognition_desc 視覚的な「マッスルメモリー」を構築します。
+    feat_recognition_title 視覚パターン訓練
+    feat_science_adaptive_desc Intervals automatically adjust based on your recognition speed and accuracy.
+    feat_science_adaptive_title Adaptive Timing
+    feat_science_spacing_desc Advanced cognitive spacing model that predicts memory decay and optimizes review cycles.
+    feat_science_spacing_title SuperMemo-2 (SM-2)
+    feat_spacing_desc 忘却曲線を予測し、復習をスケジュールします。
+    feat_spacing_title 認知的間隔 (SM-2)
+    feature_autoplay オートプレイモード
+    feature_community_access コミュニティの主題にアクセス
     feature_creation 作成ツール
     feature_customize 高度なカスタマイズ
+    feature_favorites ダッシュボードにお気に入り項目を表示
+    feature_feedback 直接のフィードバックと提案
+    feature_free 無料
+    feature_friends 友達を招待してつながる
     feature_full_library 図書館への完全なアクセス
+    feature_learn_all あらゆる主題やコレクションを学習
+    feature_private_mode プライベートプロファイルモード
+    feature_pro プロ
+    feature_spaced_repetition 間隔反復 (SM-2)
     feature_testing インタラクティブなテスト
+    feedback フィードバック
+    feedback_add_image 画像を追加
+    feedback_attachments 添付ファイル
+    feedback_bug バグ報告
+    feedback_context コンテキスト
+    feedback_details 詳細
+    feedback_error フィードバックの送信に失敗しました。もう一度お試しください。
+    feedback_management_desc ユーザーフィードバックの表示と管理
+    feedback_management_title フィードバックリクエスト
+    feedback_other その他
+    feedback_submit フィードバックを送信
+    feedback_success フィードバックありがとうございます！
+    feedback_suggestion 提案
+    feedback_title フィードバックを送信
+    feedback_title_hint タイトル
+    feedback_type 種類
+    fill_all_fields すべての項目を入力してください
+    filter_all すべて
+    filter_dashboard ダッシュボード
+    filter_favorites お気に入り
+    filter_my_subjects マイ科目
+    filter_on_dashboard ダッシュボード上
+    filter_public 公開
+    filter_public_library 公共図書館
+    filters フィルター
+    finish 完了
+    finished_session {count} 枚のカードを完了しました。XPボーナス獲得！
+    folder フォルダ
+    folder_already_exists この名前のフォルダはこのピラーに既に存在します
     folder_id フォルダーID
+    folder_label フォルダー
+    folder_not_empty_msg 削除できません：フォルダが空ではありません。
+    folder_plural フォルダー
+    forgot_password パスワードを忘れた場合
     free_only 無料ユーザー
+    general_preferences 一般設定
     generic ジェネリック
+    go_to_manager ライブラリ管理へ
+    goal_change_hint 明日のカード目標を変更する
+    goal_change_notice 1日の目標への変更は明日から適用されます。
+    gold ゴールド
+    hide_comparison プラン比較を隠す
     home 家
+    images 画像
+    included_subjects 含まれる科目
+    info_copied クリップボードにコピーしました
+    initializing_aliolo Aliolo を初期化しています...
     invalid_code 無効なコード
+    invalid_email メールアドレスが無効です
     invalid_email_address 無効なメールアドレス
     invalid_json 無効な JSON: $e
+    invalid_number 無効な数値
     invalid_or_expired_invitation_link 招待リンクが無効または期限切れです。
     invalid_or_expired_reset_code リセット コードが無効または期限切れです。
+    invalid_password パスワードが無効です
+    invalid_password_delete 無効なパスワード
     invitation_sent_awaiting_registration 招待状を送信しました（登録待ち）
+    invite 招待
+    invite_user_content メールアドレス {email} が見つかりません。Aliolo に招待しますか？
+    invite_user_title ユーザーを招待しますか？
     invited_and_request_sent 招待され、リクエストが送信されました。
     json JSON
+    keyboard_shortcuts キーボードショートカット
     label_suffix $label:
+    lang_abbr 言語
+    language 言語
     leaderboard リーダーボード
+    learn_mode_desc Study cards and memorize answers
+    learn_mode_title Learn
+    learn_session_size 学習セッションのサイズ
+    learn_session_size_desc 1回の学習セッションで導入する新しいカードの枚数。
+    learning 学習中
     learning_session_complete_description 素晴らしい仕事だ！この学習セッションは終了しました。進行状況が保存されました。
+    left_arrow 左矢印
+    level レベル
+    level_range 1から20の間で指定してください
+    level_tier_1 レベル 1
+    level_tier_2 レベル 2
+    level_tier_3 レベル 3
     licenses ライセンス
     licenses_aliolo_section_title Aliolo 商用ライセンス
     licenses_aliolo_subtitle 独自のソフトウェアとプレミアム アクセス条件
     licenses_intro_desc Aliolo の商用ライセンスが最初に表示されます。サードパーティのパッケージライセンスは以下の通りです。
     licenses_intro_title Aliolo ライセンスとパッケージに関する通知
     licenses_third_party_section_title サードパーティのパッケージライセンス
+    light ライト
     linux_distro Linux ディストリビューション
     loading 読み込み中...
     localized_data ローカライズされたデータ
+    login ログイン
+    logout ログアウト
+    manage_cards カードを管理
+    manage_friends 友達を管理
+    manage_friends_desc 友達リクエストを表示および管理
+    manage_library ライブラリ管理 ({sCount} 科目, {cCount} 枚)
+    manage_subjects 科目を管理
+    manage_subscription サブスクリプションの管理
+    manage_testing_langs 学習言語を管理
+    manage_users ユーザーの管理
+    master_visual_ease 視覚的な科目を簡単に習得。
+    mastered 習得済み
+    mastery 習熟度
+    max_streak 最大ストリーク
+    maybe_later あとで
+    mission_desc The smart companion that helps your brain learn and retain visual knowledge through science-backed algorithms.
+    mock_email_title テスト用受信トレイ
+    mode_audio_to_image Audio to Image
+    mode_audio_to_text Audio to Text
+    mode_image_to_text Image to Text
+    mode_text_to_text Text to Text
     monthly_access 月間アクセス数
     most_popular_choice 最も人気のある選択肢
+    multi_lang_answers 多言語回答
+    multi_lang_prompts 多言語問い
+    my_position 自分の順位
+    name 名前
+    names_descriptions 名前と説明
+    new 新規
     new_email 新しいメール
+    new_password 新しいパスワード
+    next 次へ
+    next_card Next Card
+    next_daily_goal 次の1日の目標
+    next_daily_goal_desc 毎日マスターするカードの目標枚数。変更は明日から適用されます。
+    next_day_goal 明日の目標
     no_cards_available_for_this_session このセッションで使用できるカードはありません。
     no_cards_found カードが見つかりませんでした
+    no_cards_found_for_lang この言語のカードは見つかりませんでした
+    no_cards_in_library ライブラリにカードがありません。
+    no_feedback_found フィードバックが見つかりません。
+    no_folder フォルダなし (ルート)
+    no_friends_found 友達が見つかりません
+    no_images_added 画像が追加されていません
+    no_leaderboard_data ランキングデータがありません。
+    no_localized_audio ローカライズされたオーディオはありません
+    no_localized_images ローカライズされた画像はありません
+    no_localized_video ローカライズされたビデオはありません
+    no_subjects_available 利用可能な科目はありません
     no_subjects_found 被験者が見つかりませんでした
     no_subjects_found_in_this_collection このコレクションには主題が見つかりませんでした
     no_users_found ユーザーが見つかりませんでした
+    ok OK
+    old_password 古いパスワード
+    old_password_required 古いパスワードは必須です
+    onboarding_1_desc 視覚的に学び、永続的に習得。SM-2科学に基づいた、あなたの視覚学習コンパニオン。
+    onboarding_1_title Alioloへようこそ
+    onboarding_2_desc 学習体験をパーソナライズし、最適な主題を推奨するのに役立ちます。
+    onboarding_2_title 年齢を教えてください。
+    onboarding_3_desc 主な興味を選択して、初期ダッシュボードをカスタマイズします。
+    onboarding_3_title 何を習得したいですか？
+    onboarding_4_desc 自分だけのデッキを作ったり、世界中のAliolo学習者が共有するカードに飛び込んだりできます。自分のペースで学び、準備ができたらテストしましょう。
+    onboarding_4_title 作成と共有
+    onboarding_5_desc ライブラリはすべてのデバイスで同期されます。学習の継続記録を守る時期になったときだけ通知します。
+    onboarding_5_title どこでも習得
+    onboarding_6_desc 今日から旅を始めて、決心したことを何でも習得しましょう。
+    onboarding_6_title コミュニティに参加
+    onboarding_7_joined 数千人の学習者が参加中
+    onboarding_7_quote Alioloは、私と子供たちが新しいトピックを習得する方法を完全に変えました。視覚的なカードと間隔を空けた反復練習で、学習がゲームのように感じられます！
+    onboarding_get_started 始める
+    onboarding_next 次へ
+    onboarding_skip スキップ
+    options_count 回答の選択肢数
+    options_count_desc テスト中に表示される選択肢の数。
+    options_per_card 個/カード
+    order_id 注文ID
     os_version OSバージョン
+    our_mission OUR MISSION
+    page ページ
+    parent_folder_label 親フォルダー
+    password パスワード
+    password_required パスワードが必要です
+    password_reset_success パスワードをリセットしました
     password_updated_successfully パスワードが正常に更新されました。
+    passwords_dont_match パスワードが一致しません
+    paste PASTE
     payments_are_not_yet_integrated_on_web_please_use_the_mobile_app_to_upgrade 支払いはまだ Web に統合されていません。アップグレードするにはモバイルアプリを使用してください。
     personal_data 個人データ
     pick_date 日付の選択
+    picture 画像
+    pillar ピラー
+    plan_monthly 月間アクセス
+    plan_monthly_desc 最も人気の選択肢
     plan_monthly_tagline 最も人気のある選択肢
     plan_monthly_title 月間アクセス数
+    plan_weekly 週間アクセス
+    plan_weekly_desc クイックな目標に最適
     plan_weekly_tagline 素早いゴールに最適
     plan_weekly_title 週間アクセス
+    plan_yearly 年間アクセス
+    plan_yearly_desc 月額33%お得
     plan_yearly_tagline 毎月 33% 割引
     plan_yearly_title 年間アクセス
     platform プラットフォーム
@@ -176,59 +526,209 @@
     play_audio オーディオを再生する
     please_enter_the_6_digit_code 6桁のコードを入力してください
     please_wait_for_a_response_before_replying_again 返信を待ってから再度返信してください。
-    premium_expires_at $Date で期限切れになります
+    premium_expires_at $date で期限切れになります
+    premium_go プレミアムにアップグレード
     premium_lifetime 生涯アクセス
     premium_only プレミアムのみ
     premium_status_active あなたはプレミアム会員です
+    premium_title Alioloプレミアム
     premium_unlock_desc すべての主題にアクセスし、無制限のカードを作成し、Aliolo の使命をサポートします。
     premium_unlock_title フルアクセスのロックを解除する
+    prev 前へ
+    previous_card Previous Card
+    price_per_week ({price} / 週)
+    private 非公開
+    pro_label PRO
+    product_id 製品ID
     product_not_available_in_store 店頭では取り扱いのない商品です。
     profile プロフィール
+    profile_title マイプロフィールと進捗
+    prompt_label 問い
+    prompt_optional 問い / 質問
+    prompts_answers 問題と回答
+    provide_at_least_one_answer 少なくとも1つの回答を入力してください
+    provide_at_least_one_name 少なくとも1つの名前を指定してください
+    provider プロバイダー
     public_other_subject 公共/その他の主題
+    public_profile 公開プロフィール
+    public_profile_desc 殿堂入り画面にXPと継続日数を表示します。
+    public_subject 公開科目
+    public_subject_desc この科目を他のユーザーに公開します。
     purchase_failed 購入に失敗しました: $e
+    purchase_token 購入トークン
+    record_shortcut ショートカットを記録
     recovery_error リカバリエラー: $e
     refresh リフレッシュ
     refresh_conversation 会話を更新する
+    remove_friend 友達を削除
+    remove_friend_confirm 友達 ... を削除してもよろしいですか？
     renderer レンダラー
+    request_sent リクエストを送信しました
+    request_sent_waiting リクエストを送信しました（待機中）
+    required 必須
     reset_code リセットコード
+    reset_code_email_title パスワードリセットコード
+    reset_code_sent "リセットコード送信先: "
     reset_code_sent_to_please_check_your_inbox リセット コードが $email に送信されました。受信箱をご確認ください。
+    reset_password_for "パスワードリセット: "
+    restore_password パスワードをリセット
     restore_purchases 購入を復元する
+    retry 再試行
+    right_arrow 右矢印
     save 保存
     save_33_per_month 毎月 33% 割引
+    save_before_nav 移動する前に変更を保存しますか？
+    save_card カードを保存
+    save_subject テーマを保存
     saved_successfully 正常に保存されました
+    search_cards カードを検索
+    search_subjects 科目を検索
     search_users ユーザーを検索する
+    select_an_answer 回答を選択
+    select_lang 言語を選択
+    select_package_license パッケージライセンスを選択
+    select_user ユーザー選択
+    selected_count {count} 個選択中
+    send 送信
+    send_code コードを送信
+    send_verification_code 認証コードを送信しますか？
     session_complete セッション完了！
     session_complete_description 素晴らしい仕事だ！このセッションのすべてのカードが完成しました。
+    setting_saved 設定を保存しました
     settings 設定
+    shortcuts_hint Press the key you want to use with Ctrl.
+    show_all_languages すべての言語を表示
     show_documentation_btn 「ドキュメントを表示」ボタン
     show_documentation_btn_desc アプリバーにドキュメントボタンを表示します。
     show_fake_users 偽のユーザーを表示する
+    show_less_languages 表示する言語を減らす
+    sidebar_left サイドバーを左に表示
+    sidebar_left_desc 操作パネルを画面の左側に移動します。
+    silver シルバー
+    social ソーシャル
+    sort_by 並べ替え
+    sound_effects 効果音
+    sound_effects_desc 正解・不正解時の音声を有効にします。
+    source ソース
+    status ステータス
+    status_closed 終了
+    status_open オープン
+    status_replied 返信済み
+    streak 継続日数
+    subject 科目
+    subject_deleted テーマを削除しました
     subject_id 被験者ID
+    subject_label 科目
+    subject_plural 科目
+    subject_type サブジェクトタイプ
+    subjects 科目
     subscribe_now 今すぐ購読する
     subscription_data サブスクリプションデータ
     subscription_updated サブスクリプションが更新されました
     subtraction_emoji 引き算の絵文字
     subtraction_numbers 減算の数
+    support_and_management サポートと管理
+    system システム設定に従う
+    tap_to_replay タップしてもう一度再生
     technical_context 技術的背景
+    test_mode_desc Challenge yourself with a quiz
+    test_mode_label Test Mode
+    test_mode_title Test
+    test_session_size テストセッションのサイズ
+    test_session_size_desc 1回のテストセッションで復習するカードの枚数。
+    testing Testing
     testing_mode テストモード
+    testing_section 学習設定
     text 文章
+    the_science THE SCIENCE
+    theme_color App Theme Color
+    theme_color_desc Customize the primary color used for buttons and highlights.
+    theme_dark ダーク
+    theme_light ライト
+    theme_mode テーマモード
+    theme_system システム
     this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards これはフォルダーです。上の「学習/テスト」ボタンを使用して、すべてのカードを練習できます。
+    to_label 宛先
     total_cards カードの合計数
+    total_xp 累計XP
+    trust_cloud_desc Your progress is securely synced across all your devices in real-time.
+    trust_cloud_title Cloud Sync
+    trust_privacy TRUST & PRIVACY
+    trust_sync_desc Your data is private and encrypted to ensure the highest security standards.
+    trust_sync_title Encrypted Data
+    type_collection コレクション
+    type_folder フォルダー（サブサブジェクト）
+    type_standard 標準（カード）
     type_your_reply 返信を入力してください...
     ua UA
+    ui_language UI言語
+    ukrainian ウクライナ語
     unknown_user_profile_missing 不明なユーザー (プロファイルがありません)
+    unsaved_changes 未保存の変更
+    unsaved_changes_msg 保存されていない変更があります。破棄しますか？
+    up_arrow 上矢印
+    update 更新
     update_available 新しいバージョンが利用可能になりました。
+    updated_at 更新日
+    upload_new_photo 新しい写真をアップロード
     user ユーザー
+    user_exists ユーザーが既に存在します
     user_id ユーザーID
+    user_not_found ユーザーが見つかりません
     user_with_this_email_already_exists_please_log_in_instead このメールアドレスを持つユーザーはすでに存在します。代わりにログインしてください。
+    username ユーザー名
     users ユーザー
     users_filter ユーザーをフィルタリングする
     verification_code 検証コード
     verification_code_sent_to 検証コードが $email に送信されました
+    verify 認証
     version バージョン
+    video 動画
+    video_link ビデオリンク
+    video_url_optional ビデオURL（任意）
+    view_card カードを表示
+    view_cards_title View Cards
     view_onboarding オンボーディングを見る
+    visibility 公開設定
+    visual_content_required 少なくとも1つの視覚コンテンツが必要です
+    visual_content_required_msg 少なくとも1つの視覚コンテンツ（テキスト、画像、音声、またはビデオ）を提供する必要があります。
+    visual_text ビジュアルテキスト
+    wants_to_be_friend あなたと友達になりたがっています
     weekly_access 週間アクセス
     welcome_complete_your_profile_to_join_aliolo いらっしゃいませ！ aliolo に参加するには、プロフィールを完成させてください。
+    xp XP
     yearly_access 年間アクセス
+    you あなた
     you_do_not_have_permission_to_edit_this_card このカードを編集する権限がありません
     you_do_not_have_permission_to_view_this_card_details このカードの詳細を表示する権限がありません。
+    you_rank あなたの順位：#{rank}位
+    active 有効
+    autoplay 自動再生
+    card_limit カード上限
+    card_limit_msg {limit} 枚のカード上限に達しました。
+    create_request リクエストを作成
+    edit_user ユーザーを編集
+    favorite お気に入り
+    file_too_large ファイルが大きすぎます
+    inactive 無効
+    is_required は必須です
+    languages 言語
+    limit_reached 上限に達しました
+    not_available 利用不可
+    toggle_languages 言語を切り替え
+    user_updated ユーザーを更新しました
+    zoom ズーム
+    account_and_management Account & Management
+    back_to_plans Back to plans
+    confirm_password_required Confirm password is required
+    feat_autoplay_desc Focus on learning while the app automatically advances through cards at your pace.
+    feat_autoplay_title Hands-Free Autoplay
+    feat_create_share_desc Easily create your own subjects and cards, or share them with the community.
+    feat_create_share_title Create & Share
+    feat_science_smart_review_desc The algorithm calculates the optimal time to review each card for maximum retention.
+    feat_science_smart_review_title Smart Review Cycles
+    new_password_required New password is required
+    password_updated Password updated successfully
+    save_success Saved successfully
+    trust_ecosystem_desc Your progress and cards are seamlessly synced across all your devices.
+    trust_ecosystem_title Aliolo Ecosystem

@@ -267,12 +267,6 @@ CREATE TABLE IF NOT EXISTS sessions (
   expires_at INTEGER NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS languages (
-  id TEXT PRIMARY KEY,
-  name TEXT NOT NULL,
-  created_at TEXT DEFAULT CURRENT_TIMESTAMP
-);
-
 CREATE TABLE IF NOT EXISTS email_verification_codes (
   email TEXT PRIMARY KEY,
   code TEXT NOT NULL,

@@ -43,37 +43,139 @@
     about_support_settings_desc Мову інтерфейсу користувача, режим теми, колір теми, звук, розташування бічної панелі та видимість документації можна налаштувати в налаштуваннях.
     about_support_settings_title Персоналізація
     about_support_title Налаштування, відгуки та підтримка
+    about_tagline Навчайся візуально. Опановуй назавжди.
+    account_created Обліковий запис створено
+    account_created_billing_fail Ваш обліковий запис створено, але платіж не завершено. Повторіть спробу оплати нижче.
+    account_deleted Акаунт успішно видалено
+    add_card Додати картку
+    add_collection Додати колекцію
+    add_folder Додати папку
+    add_friend_by_email Додати друга за email
+    add_lang_translation Додати переклад
+    add_prompt_translation Додати варіант підказки
+    add_subject Додати предмет
     addition_emoji Додаток Emoji
     addition_numbers Додавання чисел
+    age Вік
+    age_0_6 0-6 років
+    age_15_18 15 - 18
+    age_15_plus 15+ років
+    age_19_25 19 - 25
+    age_26_35 26 - 35
+    age_36_50 36 - 50
+    age_7_14 7-14 років
+    age_advanced Просунутий
+    age_all Усі вікові групи
+    age_early Дошкільнята
+    age_group Вікова група
+    age_intermediate Середня школа
+    age_over_50 Понад 50
+    age_primary Початкова школа
+    age_under_14 До 14
+    algorithm_title АЛГОРИТМ ALIOLO
     aliolo aliolo
+    all_matching_subjects Усі відповідні теми
     all_rights_reserved Всі права захищені
+    answer Відповідь
+    answer_label відповідь
+    answers_label відповідей
     are_you_sure_you_want_to_close_this_feedback_request Ви впевнені, що бажаєте закрити цей запит на відгук?
     are_you_sure_you_want_to_delete_this_folder Ви впевнені, що хочете видалити цю папку?
+    ascending За зростанням
     attach_image Прикріпити зображення
+    audio Аудіо
+    audio_playing Грає аудіо
+    author Автор
     back Назад
+    back_to_login Назад до входу
     back_to_subjects Назад до тем
     best_for_quick_goals Найкраще для швидких голів
     billing_disclaimer Підписки автоматично поновлюються, якщо їх не скасовано. Ви можете керувати своєю підпискою в налаштуваннях магазину.
     billing_title Виставлення рахунків
+    bronze БРОНЗА
     browser Браузер
     cancel Скасувати
+    cancel_request Cancel Request
+    cancel_request_confirm Ви впевнені, що хочете скасувати запит до
+    cannot_delete_folder Cannot Delete Folder
     cannot_delete_folder_it_is_not_empty Неможливо видалити папку: вона не порожня
+    card_details Деталі картки
     card_id ID картки
+    card_label Картка
+    card_level Рівень карти
+    card_plural Картки
+    cards карток
+    cards_label карток
+    cards_per_day карток на день
+    cards_per_session карток на сесію
+    change_avatar Змінити аватар
+    change_password Змінити пароль
     check_your_email_for_code Перевірте свою електронну пошту на наявність коду
     clear Ясно
+    click_to_select_image Натисніть, щоб обрати зображення
     click_to_view_original Натисніть, щоб переглянути оригінал
     close Закрити
     close_request Закрити запит?
+    code_label Код
     collection_id ID колекції
     colors Кольори
+    common_settings Загальні налаштування
+    compare_plans Порівняти Безкоштовний та Преміум
+    confirm Підтвердити
+    confirm_logout Ви впевнені, що хочете вийти?
+    confirm_password Підтвердіть пароль
     confirm_subscription Підтвердити підписку
+    content_label Вміст
     context Контекст
+    copy КОПІЮВАТИ
+    copy_all Копіювати все
+    core_features ОСНОВНІ ФУНКЦІЇ
     correct_answers Правильні відповіді
     could_not_launch Не вдалося запустити $url
     counting Підрахунок
+    create_account Створити акаунт
+    create_new_account Створити новий акаунт
+    create_new_card Створити нову картку
+    created_at Створено
+    current_streak Поточна серія
     current_subscription Поточна підписка
+    daily_goal Денна мета
+    daily_progress Щоденний прогрес
+    dark Темна
+    dashboard_greeting Привіт
+    day день
+    day_label День
+    day_plural Дні
+    days дні
+    default За замовчуванням
+    default_language Мова за замовчуванням
+    default_testing_language Основна мова навчання
+    default_testing_language_desc Попередньо обирає цю мову на сторінці предметів.
     delete Видалити
+    delete_account Видалити акаунт
+    delete_account_confirm Ви впевнені, що хочете видалити свій акаунт? Ця дія є незворотною.
+    delete_avatar Видалити аватар
+    delete_avatar_confirm Ви впевнені, що хочете видалити фото профілю?
+    delete_card_confirm Видалити цю картку?
+    delete_collection Видалити колекцію
+    delete_collection_confirm Ви впевнені, що хочете видалити цю колекцію?
+    delete_folder Видалити папку
+    delete_selected_cards Видалити вибрані картки?
+    delete_subject Видалити предмет
+    delete_subject_confirm Видалити предмет '{subject}' та всі {count} карток всередині?
+    delete_subjects_first Please delete all sub-subjects inside this folder before deleting the folder itself.
+    descending За спаданням
+    description Опис
     device Пристрій
+    digit_code 6-значний код
+    discard Відхилити
+    discard_changes Скасувати зміни?
+    doc_autoplay_desc Додаток може автоматично переходити до наступної картки після вашої відповіді. Правильні відповіді чекають 1с, а неправильні — 2с.
+    doc_autoplay_title Автоматичне відтворення
+    doc_card_scope_desc Картки є будівельними блоками навчання і завжди належать до конкретного Предмета.
+    doc_card_scope_title Δе живуть картки
+    doc_collections_purpose_desc Колекції — це навчальні шляхи, що групують Предмети. Система змішує картки з усіх включених предметів для комплексного тесту.
+    doc_collections_purpose_title Призначення Колекцій
     doc_create_intro_desc Ця вкладка розповідає про те, як творці впорядковують вміст, локалізують його та публікують корисні навчальні матеріали, не надто ускладнюючи робочий процес.
     doc_create_intro_title Створити
     doc_create_json_desc Створення на основі JSON — це вдосконалений робочий процес для структурованого масового вмісту. Це має залишатися необов'язковим; більшість творців повинні мати можливість створювати та редагувати вміст за допомогою стандартних форм.
@@ -86,6 +188,38 @@
     doc_create_model_title Модель вмісту
     doc_create_visibility_desc Використовуйте «мій», щоб працювати над власним вмістом, вибране, щоб закріплювати корисні елементи, і публічну бібліотеку, щоб переглядати спільний матеріал. Видимість для всіх впливає на виявлення, тоді як право власності впливає на те, що ви можете редагувати або видаляти.
     doc_create_visibility_title Право власності та видимість
+    doc_creation_desc Створюйте власні Предмети та додавайте візуальні Флеш-картки. Кожна картка підтримує зображення та аудіофайл для вимови.
+    doc_creation_title Створення Предметів та Карток
+    doc_feedback_desc Допоможіть нам стати кращими! Використовуйте іконку відгуку (Icons.feedback) на будь-якому Предметі або Папці, щоб повідомити προ проблеми.
+    doc_feedback_title Система відгуків
+    doc_filters_desc Швидко знаходьте контент за допомогою рядка пошуку. Ви можете фільтрувати за віковою груποю або звузити перегляд до певних Колекцій.
+    doc_filters_title Пошук та фільтри
+    doc_flashcards_desc Кожен предмет містить набір карток. Зображення та аудіо підтримуються, але є необов'язковими — контент може бути суто текстовим.
+    doc_flashcards_title Візуальні флеш-картки
+    doc_friends_desc Навчатися разом краще! Запрошуйте друзів до Aliolo через свій профіль. Ви можете відстежувати прогрес один одного.
+    doc_friends_title Δрузі та запрошення
+    doc_goals_desc Встановіть щоденну ціль виконання карток у налаштуваннях. Зміни в цілі набувають чинності з наступного дня.
+    doc_goals_title Щοденні цілі
+    doc_json_desc Δосунуті розробники можуть використовувати дані JSON для надання локалізованих назв та описів.
+    doc_json_title JSON локалізація
+    doc_lang_desc Завжди вибирайте бажану мову навчання у верхньому меню перед вибором предмета. Це гарантує завантаження правильного аудіо та перекладів.
+    doc_lang_title Мова навчання
+    doc_leaderboard_desc Змагайтеся з учнями по всьому світу! Заробляйте XP, проходячи карткові сесії, і піднімайтеся в рейтингу. Ваша позиція оновлюεται в режимі реального часу.
+    doc_leaderboard_title Γлобальна таблиця лідерів
+    doc_localization_details_desc Мова "Global" є вашою основною запасною мовою. Специфічні переклади замінять її лише тоді, όταν обрано відповідну мову інтерфейсу.
+    doc_localization_details_title Як працює локалізація
+    doc_localization_ui_desc Щοб додати локалізовані дані, просто торкніться іконки коду мови в заголовку редактора.
+    doc_localization_ui_title Δοдавання перекладів
+    doc_math_desc Математичні предмети використовують спеціалізовані рушії для генерації візуалізацій карток у реальному часі.
+    doc_math_title Математичні предмети
+    doc_media_desc Для швидкої синхронізації розмір зображень не повинен перевищувати 5 МБ, а аудіофайлів — 10 МБ.
+    doc_media_title Ліміти завантаження медіа
+    doc_organization_desc Використовуйте Папки для групування схожих Предметів. Ви також можете створювати Колекції для організації Предметів у навчальні шляхи.
+    doc_organization_title Організація контенту
+    doc_pillars_desc Весь контент в Aliolo організований у 8 основних стовпів: Академічний та професійний, Світ, Природа, Тіло людини, Гуманітарні науки, Δозвілля, Інженерія та Інше.
+    doc_pillars_title 8 основних стовпів
+    doc_public_desc Предмети можуть бути приватними (видимими лише вам) або публічними. Публічний контент стає доступним для всієї спільноти Aliolo.
+    doc_public_title Публічне проти приватного
     doc_start_dashboard_desc Інформаційна панель — ваша основна бібліотека. Використовуйте пошук, щоб швидко знайти вміст, а потім об’єднайте фільтри джерел, як-от вибране, моя та загальнодоступна бібліотека, з віковими фільтрами, щоб зменшити шум.
     doc_start_dashboard_title Інформаційна панель, пошук і фільтри
     doc_start_feedback_desc Використовуйте точки входу для зворотного зв’язку в програмі, коли щось не так або незрозуміло. Звіти можуть містити поточний контекст, що спрощує перегляд і виправлення проблем із вмістом.
@@ -98,6 +232,8 @@
     doc_start_quick_title Швидкий старт
     doc_start_structure_desc Піддослідні тримають картки. Папки групують пов’язаний вміст у стовпі. Колекції – це підібрані набори, які можуть поєднувати кілька предметів для вивчення та обміну.
     doc_start_structure_title Предмети, папки та колекції
+    doc_streaks_desc Послідовність — це ключ! Виконуйте свою щоденну ціль щодня, щоб будувати серію. Не пропускайте жодного дня, інакше серія скинеться.
+    doc_streaks_title Система серій (Streak)
     doc_study_how_desc Почніть із «Навчання», коли ви розвиваєте розпізнавання, а потім перейдіть до «Тестувати», коли потрібно швидше відкликати та суворіше перевіряти. Використовуйте коротші сесії для зосередженого огляду та більші сесії для ширшого охоплення.
     doc_study_how_title Як вчитися
     doc_study_intro_desc На цій вкладці пояснюється, як переміщатися вмістом, вибирати правильний режим і налаштовувати сеанси для перегляду чи повторного виклику.
@@ -108,67 +244,287 @@
     doc_study_modes_title Режими навчання та тестування
     doc_study_scope_desc Вивчення може початися з одного предмета, перегляду папки або колекції. Збірки корисні, коли потрібно провести змішаний сеанс за кількома предметами, не залишаючи поточного потоку.
     doc_study_scope_title Предмети, папки та колекції, що вивчаються
+    doc_sync_desc Ваш прогрес автоматично синхронізується з хмарою. Ви можете перемикатися між веб- та десктопною версіями без втрати серії.
+    doc_sync_title Хмарна синхронізація
     doc_tab_create Створити
+    doc_tab_creator Створення
+    doc_tab_general Загальне
+    doc_tab_learning Практика
     doc_tab_start Старт
     doc_tab_study Дослідження
+    doc_testing_desc Перевірте свої знання за допомогою запитань з вибором відповіді (MCQ). Додаток автоматично переходитиме далі, коли ви відповідаєте.
+    doc_testing_title Інтерактивне тестування
+    doc_welcome_desc Aliolo — це платформа візуального навчання, розроблена, щоб допомогти вам засвоїти предмети за допомогою фλεш-карток та інтерактивного тестування.
+    doc_welcome_title Ласкаво просимо до Aliolo
     documentation Документація
+    done_today Виконано сьогодні
+    down_arrow Стрілка вниз
+    edit Редагувати
+    edit_card Редагувати картку
+    edit_collection Редагувати колекцію
+    edit_email Редагувати електронну пошту
+    edit_folder Редагувати папку
+    edit_name Редагувати назву
+    edit_subject Редагувати предмет
+    edit_subject_title Edit Subject
     edit_subscription Редагувати підписку
+    email Електронна пошта
+    email_change_notice Для безпеки посилання для підтвердження буде надіслано на ОБИДВІ ваші електронні адреси: стару та нову. Ви повинні натиснути обидва, щоб завершити зміну.
+    email_in_use Електронна пошта вже використовується
+    email_subject Тема
+    email_update_sent Електронні листи з підтвердженням надіслано. Будь ласка, перевірте обидві поштові скриньки.
     email_updated_successfully Електронну пошту успішно оновлено!
+    english Англійська
     enter_current_password Введіть поточний пароль
+    enter_new_email Введіть нову адресу
+    enter_new_name Введіть нову назву
+    enter_number Введіть число
+    enter_or_select_subject Будь ласка, введіть або оберіть предмет
+    enter_pass_to_confirm Введіть пароль для підтвердження
+    enter_subject_name Введіть назву предмета
     error Помилка: $e
     error_deleting Помилка видалення: $e
+    error_deleting_account Не вдалося видалити акаунт. Перевірте пароль.
     error_saving Помилка збереження: $e
     error_saving_card Помилка збереження картки: $e
     error_updating_favorite Помилка оновлення улюбленого: $e
+    exit Вийти
+    exit_confirm_msg Ви впевнені, що хочете вийти з програми?
+    exit_confirm_title Вийти з Aliolo?
+    expiry_date Термін дії
     failed_answers Невдалі відповіді
     failed_to_send_reset_code Не вдалося надіслати код скидання
     failed_to_send_verification_code Не вдалося надіслати код підтвердження
     fake_only Тільки фейк
+    fatal_startup_error Критична помилка запуску
+    feat_adaptive_desc Система відстежує швидкість розпізнавання варіантів відповіді, динамічно налаштовуючи інтервали для вашого розвитку.
+    feat_adaptive_title Адаптивна швидкість реакції
+    feat_ages_desc Контент підібраний для різних вікових груп: від раннього дитинства до поглибленого навчання.
+    feat_ages_title Для будь-якого віку
+    feat_autoplay_desc Зосередьтеся на навчанні, поки додаток автоматично перегортає картки у вашому темпі.
+    feat_autoplay_title Автоматичне відтворення
+    feat_create_share_desc Легко створюйте власні предмети та картки або діліться ними зі спільнотою.
+    feat_create_share_title Створюйте та діліться
+    feat_gamified_desc Заробляйте XP, значки та будуйте серії, опановуючи складні візуальні предмети.
+    feat_gamified_title Гейміфікований досвід
+    feat_mastery_desc Динамічні нагороди XP та значки майстерності (Бронза, Срібло, Золото) відстежують ваш шлях.
+    feat_mastery_title Візуальна майстерність та XP
+    feat_multimedia_desc Навчайтеся з підтримкою зображень, аудіо та відео для повного занурення.
+    feat_multimedia_title Мультимедійні картки
+    feat_recognition_desc Інтенсивні вправи на ідентифікацію, розроблені для побудови миттєвої "м'язової пам'яті" у візуальних предметах.
+    feat_recognition_title Тренування візуальних образів
+    feat_science_adaptive_desc Інтервали автоматично коригуються на основі вашої швидкості розпізнавання та точності.
+    feat_science_adaptive_title Адаптивний таймінг
+    feat_science_smart_review_desc Алгоритм обчислює оптимальний час для повторення кожної картки для максимального запам'ятовування.
+    feat_science_smart_review_title Розумні цикли повторення
+    feat_science_spacing_desc Удосконалена модель когнітивних інтервалів, яка прогнозує забування та оптимізує цикли перегляду.
+    feat_science_spacing_title SuperMemo-2 (SM-2)
+    feat_spacing_desc Повна імплементація моделі SuperMemo-2 передбачає згасання вашої пам'яті та призначає повторення на піку засвоєння.
+    feat_spacing_title Когнітивні повторення (SM-2)
+    feature_autoplay Режим автовідтворення
+    feature_community_access Доступ до спільнотних предметів
     feature_creation Інструменти створення
     feature_customize Розширене налаштування
+    feature_favorites Улюблені елементи на панелі приладів
+    feature_feedback Прямий зворотній зв’язок та пропозиції
+    feature_free БЕЗКОШТОВНО
+    feature_friends Запрошуйте друзів та спілкуйтеся з ними
     feature_full_library Повний доступ до бібліотеки
+    feature_learn_all Вивчайте будь-який предмет або колекцію
+    feature_private_mode Приватний режим профілю
+    feature_pro PRO
+    feature_spaced_repetition Інтервальні повторення (SM-2)
     feature_testing Інтерактивне тестування
+    feedback Відгук
+    feedback_add_image Додати зображення
+    feedback_attachments Вкладення
+    feedback_bug Звіт про помилку
+    feedback_context Контекст
+    feedback_details Деталі
+    feedback_error Не вдалося надіслати відгук. Будь ласка, спробуйте ще раз.
+    feedback_management_desc Перегляд та керування відгуками користувачів
+    feedback_management_title Запити на відгук
+    feedback_other Інше
+    feedback_submit Надіслати відгук
+    feedback_success Дякуємо за ваш відгук!
+    feedback_suggestion Пропозиція
+    feedback_title Надіслати відгук
+    feedback_title_hint Заголовок
+    feedback_type Тип
+    fill_all_fields Будь ласка, заповніть усі поля
+    filter_all Всі
+    filter_dashboard Дашборд
+    filter_favorites Обране
+    filter_my_subjects Мої предмети
+    filter_on_dashboard На головній
+    filter_public Публічні
+    filter_public_library Публічна бібліотека
+    filters Фільтри
+    finish Завершити
+    finished_session Ви завершили {count} карток. Нараховано бонус XP!
+    folder Папка
+    folder_already_exists Папка з такою назвою вже існує в цьому стовпі
     folder_id ID папки
+    folder_label Папка
+    folder_not_empty_msg Неможливо видалити: папка не порожня.
+    folder_plural Папки
+    forgot_password Забули пароль?
     free_only Безкоштовні користувачі
+    general_preferences Загальні налаштування
     generic Загальний
+    go_to_manager Перейти до менеджера бібліотеки
+    goal_change_hint Змінити ціль карток на завтра
+    goal_change_notice Зміни у вашій щоденній цілі наберуть чинності завтра.
+    gold ЗОЛОТО
+    hide_comparison Приховати порівняння планів
     home Додому
+    images Зображення
+    included_subjects Включені предмети
+    info_copied Інформацію скопійовано
+    initializing_aliolo Ініціалізація Aliolo...
     invalid_code Недійсний код
+    invalid_email Невірна адреса електронної пошти
     invalid_email_address Недійсна адреса електронної пошти
     invalid_json Недійсний JSON: $e
+    invalid_number Невірне число
     invalid_or_expired_invitation_link Недійсне або прострочене посилання для запрошення.
     invalid_or_expired_reset_code Недійсний або прострочений код скидання.
+    invalid_password Невірний пароль
+    invalid_password_delete Невірний пароль
     invitation_sent_awaiting_registration Запрошення надіслано (очікується реєстрація)
+    invite Запросити
+    invite_user_content Електронну адресу {email} не знайдено. Запросити приєднатися до Aliolo?
+    invite_user_title Запросити користувача?
     invited_and_request_sent Запрошено та запит надіслано!
     json JSON
+    keyboard_shortcuts Гарячі клавіші
     label_suffix $label:
+    lang_abbr Мова
+    language Мова
     leaderboard Таблиця лідерів
+    learn_mode_desc Study cards and memorize answers
+    learn_mode_title Вивчити
+    learn_session_size Розмір сесії навчання
+    learn_session_size_desc Кількість нових карток для введення в одному навчальному занятті.
+    learning Навчання
     learning_session_complete_description Чудова робота! Ви закінчили цей навчальний сеанс. Ваш прогрес збережено.
+    left_arrow Стрілка вліво
+    level Рівень
+    level_range Має бути від 1 до 20
+    level_tier_1 Рівень 1
+    level_tier_2 Рівень 2
+    level_tier_3 Рівень 3
     licenses Ліцензії
     licenses_aliolo_section_title Aliolo Комерційна ліцензія
     licenses_aliolo_subtitle Власне програмне забезпечення та умови преміум-доступу
     licenses_intro_desc Спочатку з’являється комерційна ліцензія Aliolo. Ліцензії пакетів сторонніх розробників наведено нижче.
     licenses_intro_title Aliolo Повідомлення про ліцензію та пакет
     licenses_third_party_section_title Пакетні ліцензії третіх сторін
+    light Світла
     linux_distro Дистрибутив Linux
     loading Завантаження...
     localized_data Локалізовані дані
+    login Увійти
+    logout Вийти
+    manage_cards Керування картками
+    manage_friends Друзі
+    manage_friends_desc Перегляд та керування запитами в друзі
+    manage_library Керування бібліотекою ({sCount} предметів, {cCount} карток)
+    manage_subjects Керування предметами
+    manage_subscription Керувати підпискою
+    manage_testing_langs Керування мовами навчання
+    manage_users Керування користувачами
+    master_visual_ease Опановуйте візуальні предмети з легкістю.
+    mastered засвоєно
+    mastery Майстерність
+    max_streak Найкраща серія
+    maybe_later Можливо пізніше
+    mission_desc Розумний помічник, який допомагає вашому мозку вивчати та зберігати візуальні знання за допомогою науково обґрунтованих алгоритмів.
+    mock_email_title Тестова поштова скринька
+    mode_audio_to_image Audio to Image
+    mode_audio_to_text Audio to Text
+    mode_image_to_text Image to Text
+    mode_text_to_text Text to Text
     monthly_access Щомісячний доступ
     most_popular_choice Найпопулярніший вибір
+    multi_lang_answers Мультимовні відповіді
+    multi_lang_prompts Мультимовні підказки
+    my_position Моя позиція
+    name Назва
+    names_descriptions Назви та описи
+    new НОВА
     new_email Нова електронна пошта
+    new_password Новий пароль
+    next Далі
+    next_card Наступна картка
+    next_daily_goal Наступна щоденна ціль
+    next_daily_goal_desc Цільова кількість карток для освоєння щодня. Зміни набудуть чинності завтра.
+    next_day_goal Ціль на завтра
     no_cards_available_for_this_session Немає доступних карток для цього сеансу.
     no_cards_found Карток не знайдено
+    no_cards_found_for_lang Для цієї мови карток не знайдено
+    no_cards_in_library У бібліотеці не знайдено карток.
+    no_feedback_found Відгуків не знайдено.
+    no_folder Немає папки (Коренева)
+    no_friends_found Друзів не знайдено
+    no_images_added Зображення не додано
+    no_leaderboard_data Дані лідерів відсутні.
+    no_localized_audio Немає локалізованого аудіо
+    no_localized_images Немає локалізованих зображень
+    no_localized_video Немає локалізованого відео
+    no_subjects_available Немає доступних предметів
     no_subjects_found Предметів не знайдено
     no_subjects_found_in_this_collection У цій колекції не знайдено предметів
     no_users_found Користувачів не знайдено
+    ok OK
+    old_password Старий пароль
+    old_password_required Старий пароль обов’язковий
+    onboarding_1_desc Навчайтеся візуально. Опановуйте назавжди. Ваш супутник для візуального навчання на базі науки SM-2.
+    onboarding_1_title Ласкаво просимо до Aliolo
+    onboarding_2_desc Це допоможе нам персоналізувати ваш досвід навчання та рекомендувати відповідні предмети.
+    onboarding_2_title Скільки вам років?
+    onboarding_3_desc Виберіть свій основний інтерес, щоб налаштувати початкову панель керування.
+    onboarding_3_title Що ви хочете опанувати?
+    onboarding_4_desc Створюйте власні колоди або занурюйтеся в картки, якими діляться учні Aliolo по всьому світу. Навчайтеся у своєму темпі, а потім перевірте себе, коли будете готові.
+    onboarding_4_title Створюйте та діліться
+    onboarding_5_desc Ваша бібліотека синхронізується на всіх ваших пристроях. Ми нагадаємо вам лише тоді, коли прийде час захистити вашу серію.
+    onboarding_5_title Опановуйте будь-де
+    onboarding_6_desc Почніть свою подорож сьогодні та опануйте все, що задумаєте.
+    onboarding_6_title Приєднуйтесь до спільноти
+    onboarding_7_joined Приєдналися тисячі учнів
+    onboarding_7_quote Aliolo повністю змінив те, як мої діти та я опановуємо нові теми. Візуальні картки та інтервальні повторення роблять навчання схожим на гру!
+    onboarding_get_started Почати
+    onboarding_next Далі
+    onboarding_skip Пропустити
+    options_count Кількість відповідей
+    options_count_desc Кількість варіантів відповіді, що відображаються під час тестів.
+    options_per_card варіантів на картку
+    order_id ID замовлення
     os_version Версія ОС
+    our_mission НАША МІСІЯ
+    page Сторінка
+    parent_folder_label Parent Folder (uk)
+    password Пароль
+    password_required Пароль обов'язковий
+    password_reset_success Пароль успішно змінено
     password_updated_successfully Пароль успішно оновлено!
+    passwords_dont_match Паролі не співпадають
+    paste ВСТАВИТИ
     payments_are_not_yet_integrated_on_web_please_use_the_mobile_app_to_upgrade Платежі ще не інтегровані в Інтернет. Для оновлення скористайтеся мобільним додатком.
     personal_data Персональні дані
     pick_date Виберіть дату
+    picture Зображення
+    pillar Категорія
+    plan_monthly Щомісячний доступ
+    plan_monthly_desc Найпопулярніший вибір
     plan_monthly_tagline Найпопулярніший вибір
     plan_monthly_title Щомісячний доступ
+    plan_weekly Щотижневий доступ
+    plan_weekly_desc Найкраще для швидких цілей
     plan_weekly_tagline Найкраще для швидких голів
     plan_weekly_title Щотижневий доступ
+    plan_yearly Щорічний доступ
+    plan_yearly_desc Заощаджуйте 33% на місяць
     plan_yearly_tagline Економія 33% на місяць
     plan_yearly_title Річний доступ
     platform Платформа
@@ -177,58 +533,202 @@
     please_enter_the_6_digit_code Будь ласка, введіть 6-значний код
     please_wait_for_a_response_before_replying_again Перш ніж відповісти знову, зачекайте на відповідь.
     premium_expires_at Термін дії закінчується $date
+    premium_go Стати Premium
     premium_lifetime Довічний доступ
     premium_only Тільки преміум
     premium_status_active Ви преміум-учасник
+    premium_title Aliolo Premium
     premium_unlock_desc Отримуйте доступ до всіх предметів, створюйте необмежену кількість карток і підтримуйте місію Aliolo.
     premium_unlock_title Розблокувати повний доступ
+    prev Попер.
+    previous_card Попередня картка
+    price_per_week ({price} / тиждень)
+    private Приватний
+    pro_label PRO
+    product_id ID продукту
     product_not_available_in_store Товар відсутній в магазині.
     profile Профіль
+    profile_title Мій профіль та прогрес
+    prompt_label Підказка
+    prompt_optional Підказка / Питання
+    prompts_answers Запитання та відповіді
+    provide_at_least_one_answer Будь ласка, вкажіть хоча б одну відповідь
+    provide_at_least_one_name Вкажіть хоча б одну назву
+    provider Постачальник
     public_other_subject Публічний/Інший предмет
+    public_profile Публічний профіль
+    public_profile_desc Показувати ваш XP та серію у Залі слави.
+    public_subject Публічний предмет
+    public_subject_desc Зробити цей предмет видимим для інших користувачів.
     purchase_failed Помилка покупки: $e
+    purchase_token Токен покупки
+    record_shortcut Записати клавішу
     recovery_error Помилка відновлення: $e
     refresh Оновити
     refresh_conversation Оновити бесіду
+    remove_friend Видалити друга
+    remove_friend_confirm Ви впевнені, що хочете видалити друга
     renderer Рендерер
+    request_sent Запит надіслано
+    request_sent_waiting Запит надіслано (очікування)
+    required Обов'язково
     reset_code Скинути код
+    reset_code_email_title Код для скидання пароля
+    reset_code_sent "Код скидання для: "
     reset_code_sent_to_please_check_your_inbox Код скидання, надісланий на $email. Будь ласка, перевірте свою поштову скриньку.
+    reset_password_for "Скидання пароля для: "
+    restore_password Відновити пароль
     restore_purchases Відновити покупки
+    retry Повторити
+    right_arrow Стрілка вправо
     save Зберегти
     save_33_per_month Економія 33% на місяць
+    save_before_nav Бажаєте зберегти зміни перед переходом?
+    save_card Зберегти картку
+    save_subject Зберегти предмет
+    save_success Збережено успішно
     saved_successfully Успішно збережено
+    search_cards Пошук карток
+    search_subjects Пошук предметів
     search_users Пошук користувачів
+    select_an_answer Оберіть відповідь
+    select_lang Оберіть мову
+    select_package_license Оберіть ліцензію пакета
+    select_user Оберіть користувача
+    selected_count Вибрано: {count}
+    send Надіслати
+    send_code Надіслати код
+    send_verification_code Надіслати код підтвердження?
     session_complete Сеанс завершено!
     session_complete_description Чудова робота! Ви закінчили всі картки в цьому сеансі.
+    setting_saved Налаштування збережено
     settings Налаштування
+    shortcuts_hint Натисніть клавішу, яку хочете використовувати з Ctrl.
+    show_all_languages Показати всі мови
     show_documentation_btn Кнопка «Показати документацію».
     show_documentation_btn_desc Відобразити кнопку документації на панелі програми.
     show_fake_users Показати підроблених користувачів
+    show_less_languages Приховати додаткові мови
+    sidebar_left Бічна панель зліва
+    sidebar_left_desc Перемістити елементи керування вліво.
+    silver СРІБЛО
+    social Соціальні мережі
+    sort_by Сортувати за
+    sound_effects Звукові ефекти
+    sound_effects_desc Увімкнути звуковий супровід відповідей.
+    source Джерело
+    status Статус
+    status_closed Закритий
+    status_open Відкритий
+    status_replied З відповіддю
+    streak Серія
+    subject Предмет
+    subject_deleted Предмет видалено
     subject_id ID суб'єкта
+    subject_label Предмет
+    subject_plural Предмети
+    subject_type Subject Type (uk)
+    subjects Предмети
     subscribe_now Підпишіться зараз
     subscription_data Дані підписки
     subscription_updated Підписку оновлено
     subtraction_emoji Віднімання Emoji
     subtraction_numbers Віднімання чисел
+    support_and_management Підтримка та управління
+    system Системна
+    tap_to_replay Натисніть для повтору
     technical_context ТЕХНІЧНИЙ КОНТЕКСТ
+    test_mode_desc Challenge yourself with a quiz
+    test_mode_label Test Mode
+    test_mode_title Тест
+    test_session_size Розмір сесії тестування
+    test_session_size_desc Кількість карток для перевірки в одному тестовому занятті.
+    testing Testing
     testing_mode Режим тестування
+    testing_section Налаштування навчання
     text Текст
+    the_science НАУКА
+    theme_color Колір теми додатка
+    theme_color_desc Налаштуйте основний колір для кнопок та підсвічування.
+    theme_dark Темна
+    theme_light Світла
+    theme_mode Тема
+    theme_system Системна
     this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards Це папка. Ви можете скористатися кнопками Вивчення/Перевірити вище, щоб відпрацювати всі картки.
+    to_label Кому
     total_cards Всього карток
+    total_xp Загальний XP
+    trust_cloud_desc Ваш прогрес надійно синхронізується між усіма вашими пристроями в режимі реального часу.
+    trust_cloud_title Хмарна синхронізація
+    trust_ecosystem_desc Ваш прогрес та картки легко синхронізуються між усіма вашими пристроями.
+    trust_ecosystem_title Екосистема Aliolo
+    trust_privacy ДОВІРА ТА КОНФІДЕНЦІЙНІСТЬ
+    trust_sync_desc Ваші дані є приватними та зашифрованими для забезпечення найвищих стандартів безпеки.
+    trust_sync_title Зашифровані дані
+    type_collection Колекція
+    type_folder Folder (Sub-subjects) (uk)
+    type_standard Standard (Cards) (uk)
     type_your_reply Введіть свою відповідь...
     ua UA
+    ui_language Мова інтерфейсу
+    ukrainian Українська
     unknown_user_profile_missing Невідомий користувач (профіль відсутній)
+    unsaved_changes Незбережені зміни
+    unsaved_changes_msg У вас є незбережені зміни. Бажаєте скасувати їх?
+    up_arrow Стрілка вгору
+    update Оновити
     update_available Доступна нова версія!
+    updated_at Оновлено
+    upload_new_photo Завантажити нове фото
     user Користувач
+    user_exists Користувач уже існує
     user_id ID користувача
+    user_not_found Користувача не знайдено
     user_with_this_email_already_exists_please_log_in_instead Користувач із цією електронною адресою вже існує. Увійдіть замість цього.
+    username Ім'я користувача
     users Користувачі
     users_filter Фільтрувати користувачів
     verification_code Код підтвердження
     verification_code_sent_to Код підтвердження надіслано на $email
+    verify Перевірити
     version Версія
+    video Відео
+    video_link Посилання на відео
+    video_url_optional URL відео (опційно)
+    view_card Переглянути картку
+    view_cards_title View Cards
     view_onboarding Переглянути адаптацію
+    visibility Видимість
+    visual_content_required Потрібен принаймні один візуальний вміст
+    visual_content_required_msg Необхідно надати принаймні один візуальний вміст (текст, зображення, аудіо або відео).
+    visual_text Візуальний текст
+    wants_to_be_friend Хоче стати вашим другом
     weekly_access Щотижневий доступ
     welcome_complete_your_profile_to_join_aliolo Ласкаво просимо! Заповніть свій профіль, щоб приєднатися до aliolo.
+    xp XP
     yearly_access Річний доступ
+    you Ви
     you_do_not_have_permission_to_edit_this_card Ви не маєте дозволу редагувати цю картку
     you_do_not_have_permission_to_view_this_card_details Ви не маєте дозволу переглядати дані цієї картки.
+    you_rank Ваш ранг: #{rank}
+    active Активний
+    autoplay Автовідтворення
+    card_limit Ліміт карток
+    card_limit_msg Ви досягли ліміту в {limit} карток.
+    create_request Створити запит
+    edit_user Редагувати користувача
+    favorite Обране
+    file_too_large Файл завеликий
+    inactive Неактивний
+    is_required є обов’язковим
+    languages Мови
+    limit_reached Ліміт досягнуто
+    not_available Недоступно
+    toggle_languages Перемкнути мови
+    user_updated Користувача оновлено
+    zoom Масштаб
+    account_and_management Account & Management
+    back_to_plans Back to plans
+    confirm_password_required Confirm password is required
+    new_password_required New password is required
+    password_updated Password updated successfully

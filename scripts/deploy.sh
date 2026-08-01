@@ -18,7 +18,6 @@ fi
 "$SCRIPT_DIR/build.sh"
 cd api && npx wrangler deploy --env production
 cd "$SCRIPT_DIR/.."
-python3 "$SCRIPT_DIR/python/distribute_ui_translations.py"
 "$SCRIPT_DIR/smoke_production.sh"
 
 echo ""

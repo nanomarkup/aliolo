@@ -1,10 +1,10 @@
-import 'package:aliolo/core/utils/io_utils.dart' if (dart.library.html) 'package:aliolo/core/utils/file_stub.dart';
+import 'package:aliolo/core/utils/io_utils.dart'
+    if (dart.library.html) 'package:aliolo/core/utils/file_stub.dart';
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:aliolo/core/network/cloudflare_client.dart';
 import 'package:aliolo/data/services/auth_service.dart';
 import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/core/utils/logger.dart';
@@ -27,11 +27,12 @@ class TestingLanguageService extends ChangeNotifier {
   factory TestingLanguageService() => _instance;
   TestingLanguageService._internal();
 
-  final _cfClient = getIt<CloudflareHttpClient>();
-
-  // Hardcoded fallback list
-  static const List<TestingLanguage> _fallbackLanguages = [
-    TestingLanguage(code: 'id', name: 'Indonesian', nativeName: 'Bahasa Indonesia'),
+  static const List<TestingLanguage> _supportedLanguages = [
+    TestingLanguage(
+      code: 'id',
+      name: 'Indonesian',
+      nativeName: 'Bahasa Indonesia',
+    ),
     TestingLanguage(code: 'bg', name: 'Bulgarian', nativeName: 'Български'),
     TestingLanguage(code: 'cs', name: 'Czech', nativeName: 'Čeština'),
     TestingLanguage(code: 'da', name: 'Danish', nativeName: 'Dansk'),
@@ -67,7 +68,7 @@ class TestingLanguageService extends ChangeNotifier {
     TestingLanguage(code: 'ko', name: 'Korean', nativeName: '한국어'),
   ];
 
-  List<TestingLanguage> _allLanguages = List.from(_fallbackLanguages);
+  List<TestingLanguage> _allLanguages = List.from(_supportedLanguages);
   List<TestingLanguage> get allLanguages => _allLanguages;
 
   List<String> _activeLanguageCodes = ['en'];
@@ -78,18 +79,16 @@ class TestingLanguageService extends ChangeNotifier {
   late dynamic _settingsFile;
 
   Future<void> init() async {
-    await fetchLanguagesFromCloudflare();
-
     try {
       final prefs = await SharedPreferences.getInstance();
       final lastLang = prefs.getString('last_testing_lang') ?? 'en';
-      currentLanguageCode.value = lastLang;
+      currentLanguageCode.value = _isSupported(lastLang) ? lastLang : 'en';
     } catch (e) {
       debugPrint('Error loading SharedPreferences for testing language: $e');
     }
 
     if (kIsWeb) return;
-    
+
     try {
       final dir = await getApplicationDocumentsDirectory();
       final alioloDir = dynamicDirectory(p.join(dir.path, '.aliolo'));
@@ -100,7 +99,13 @@ class TestingLanguageService extends ChangeNotifier {
       if (await _settingsFile.exists()) {
         final content = await _settingsFile.readAsString();
         final List<dynamic> data = jsonDecode(content);
-        _activeLanguageCodes = data.map((e) => e.toString()).toList();
+        final savedCodes =
+            data
+                .map((e) => e.toString().toLowerCase())
+                .where(_isSupported)
+                .toSet()
+                .toList();
+        _activeLanguageCodes = savedCodes.isEmpty ? ['en'] : savedCodes;
       } else {
         await _save();
       }
@@ -110,41 +115,28 @@ class TestingLanguageService extends ChangeNotifier {
   }
 
   Future<void> updateCurrentLanguage(String code) async {
-    if (currentLanguageCode.value == code) return;
-    currentLanguageCode.value = code;
+    final cleanCode = _isSupported(code) ? code.toLowerCase() : 'en';
+    if (currentLanguageCode.value == cleanCode) return;
+    currentLanguageCode.value = cleanCode;
     notifyListeners();
     try {
       final prefs = await SharedPreferences.getInstance();
-      await prefs.setString('last_testing_lang', code);
+      await prefs.setString('last_testing_lang', cleanCode);
 
       final auth = getIt<AuthService>();
       if (auth.currentUser != null) {
-        await auth.updateDefaultLanguage(code);
+        await auth.updateDefaultLanguage(cleanCode);
       }
     } catch (e) {
-      debugPrint('Error saving SharedPreferences or syncing for testing language: $e');
-    }
-  }
-
-
-  Future<void> fetchLanguagesFromCloudflare() async {
-    try {
-      final response = await _cfClient.client.get('/api/languages');
-      if (response.statusCode == 200) {
-        final List<dynamic> data = response.data;
-        _allLanguages = data.map((e) => TestingLanguage(
-          code: e['id'].toString().toLowerCase(),
-          name: e['name'].toString(),
-          nativeName: e['name'].toString(),
-        )).toList();
-        notifyListeners();
-      }
-    } catch (e) {
-      AppLogger.log('TestingLanguageService: Cloudflare fetch failed: $e');
+      debugPrint(
+        'Error saving SharedPreferences or syncing for testing language: $e',
+      );
     }
   }
 
   Future<void> toggleLanguage(String code) async {
+    if (!_isSupported(code)) return;
+    code = code.toLowerCase();
     if (_activeLanguageCodes.contains(code)) {
       if (_activeLanguageCodes.length > 1) {
         _activeLanguageCodes.remove(code);
@@ -157,7 +149,8 @@ class TestingLanguageService extends ChangeNotifier {
   }
 
   Future<void> setActiveLanguages(List<String> codes) async {
-    final cleanCodes = codes.map((c) => c.toLowerCase()).toSet().toList();
+    final cleanCodes =
+        codes.map((c) => c.toLowerCase()).where(_isSupported).toSet().toList();
     if (cleanCodes.isEmpty) return;
 
     _activeLanguageCodes = cleanCodes;
@@ -167,7 +160,7 @@ class TestingLanguageService extends ChangeNotifier {
 
   void addActiveLanguages(List<String> codes) {
     final newSet = _activeLanguageCodes.map((c) => c.toLowerCase()).toSet();
-    newSet.addAll(codes.map((c) => c.toLowerCase()));
+    newSet.addAll(codes.map((c) => c.toLowerCase()).where(_isSupported));
     if (newSet.length != _activeLanguageCodes.length) {
       _activeLanguageCodes = newSet.toList();
       _save();
@@ -198,5 +191,10 @@ class TestingLanguageService extends ChangeNotifier {
     } catch (_) {
       return code.toUpperCase();
     }
+  }
+
+  bool _isSupported(String code) {
+    final cleanCode = code.toLowerCase();
+    return _supportedLanguages.any((language) => language.code == cleanCode);
   }
 }

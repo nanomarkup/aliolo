@@ -43,37 +43,139 @@
     about_support_settings_desc A felhasználói felület nyelve, a téma mód, a téma színe, a hang, az oldalsáv elhelyezése és a dokumentáció láthatósága mind beállíthatók a beállításokból.
     about_support_settings_title Személyre szabás
     about_support_title Beállítások, visszajelzés és támogatás
+    about_tagline Tanulj vizuálisan. Sajátítsd el örökre.
+    account_created Fiók létrehozva
+    account_created_billing_fail Fiókja létrejött, de a fizetés nem fejeződött be. Próbálja újra az alábbi fizetést.
+    account_deleted Account deleted successfully
+    add_card Add Card
+    add_collection Gyűjtemény hozzáadása
+    add_folder Mappa hozzáadása
+    add_friend_by_email Add Friend By Email
+    add_lang_translation Add Language Translation
+    add_prompt_translation Add Prompt Translation
+    add_subject Add Subject
     addition_emoji Emoji kiegészítés
     addition_numbers Kiegészítő számok
+    age Kor
+    age_0_6 0-6 év
+    age_15_18 15 - 18
+    age_15_plus 15+ év
+    age_19_25 19 - 25
+    age_26_35 26 - 35
+    age_36_50 36 - 50
+    age_7_14 7-14 év
+    age_advanced Advanced
+    age_all All Ages
+    age_early Early Childhood
+    age_group Age Group
+    age_intermediate Intermediate
+    age_over_50 50 év felett
+    age_primary Primary School
+    age_under_14 14 év alatt
+    algorithm_title THE ALIOLO ALGORITHM
     aliolo aliolo
+    all_matching_subjects Minden egyező téma
     all_rights_reserved Minden jog fenntartva
+    answer Válasz
+    answer_label answer
+    answers_label answers
     are_you_sure_you_want_to_close_this_feedback_request Biztosan bezárja ezt a visszajelzési kérelmet?
     are_you_sure_you_want_to_delete_this_folder Biztosan törli ezt a mappát?
+    ascending Ascending
     attach_image Kép csatolása
+    audio Hang
+    audio_playing Audio Playing
+    author Author
     back Vissza
+    back_to_login Back to Login
     back_to_subjects Vissza a témákhoz
     best_for_quick_goals Legjobb gyors gólokhoz
     billing_disclaimer Az előfizetések automatikusan megújulnak, hacsak nem mondják le. Előfizetését az üzlet beállításaiban kezelheti.
     billing_title Számlázás
+    bronze BRONZE
     browser Böngésző
     cancel Mégse
+    cancel_request Cancel Request
+    cancel_request_confirm Are you sure you want to cancel the request to
+    cannot_delete_folder Cannot Delete Folder
     cannot_delete_folder_it_is_not_empty A mappa nem törölhető: nem üres
+    card_details Card Details
     card_id Kártyaazonosító
+    card_label Card
+    card_level Kártya szint
+    card_plural Cards
+    cards cards
+    cards_label cards
+    cards_per_day cards per day
+    cards_per_session cards per session
+    change_avatar Change Avatar
+    change_password Jelszó megváltoztatása
     check_your_email_for_code Ellenőrizze az e-mailben a kódot
     clear Világos
+    click_to_select_image Click to select image
     click_to_view_original Kattintson az eredeti megtekintéséhez
     close Közeli
     close_request Bezárja a kérést?
+    code_label Code
     collection_id Gyűjteményazonosító
     colors Színek
+    common_settings Common Settings
+    compare_plans Ingyenes vs. Premium összehasonlítása
+    confirm Megerősítés
+    confirm_logout Are you sure you want to logout?
+    confirm_password Confirm Password
     confirm_subscription Erősítse meg az előfizetést
+    content_label Content
     context Kontextus
+    copy COPY
+    copy_all Copy All
+    core_features CORE FEATURES
     correct_answers Helyes válaszok
     could_not_launch Nem sikerült elindítani a $url
     counting Számolás
+    create_account Create Account
+    create_new_account Create New Account
+    create_new_card Create New Card
+    created_at Létrehozva
+    current_streak Current Streak
     current_subscription Jelenlegi előfizetés
+    daily_goal Daily Goal
+    daily_progress Daily Progress
+    dark Dark
+    dashboard_greeting Szia
+    day day
+    day_label Day
+    day_plural Days
+    days days
+    default Default
+    default_language Alapértelmezett nyelv
+    default_testing_language Default Testing Language
+    default_testing_language_desc Pre-selects this language on the subjects page.
     delete Töröl
+    delete_account Delete Account
+    delete_account_confirm Are you sure you want to delete your account? This action is permanent.
+    delete_avatar Avatar törlése
+    delete_avatar_confirm Biztosan el akarja távolítani a profilképét?
+    delete_card_confirm Delete this card?
+    delete_collection Gyűjtemény törlése
+    delete_collection_confirm Biztosan törölni szeretné ezt a gyűjteményt?
+    delete_folder Mappa törlése
+    delete_selected_cards Delete selected cards?
+    delete_subject Delete Subject
+    delete_subject_confirm Delete subject '{subject}' and all {count} cards inside?
+    delete_subjects_first Please delete all sub-subjects inside this folder before deleting the folder itself.
+    descending Descending
+    description Description
     device Eszköz
+    digit_code 6-digit Code
+    discard Discard
+    discard_changes Módosítások elvetése?
+    doc_autoplay_desc Az alkalmazás a válaszadás után automatikusan továbbléphet a következő kártyára. A helyes válaszok 1 másodpercet, míg a helytelenek 2 másodpercet várnak, hogy átnézhesd őket.
+    doc_autoplay_title Automatikus lejátszás
+    doc_card_scope_desc A kártyák a tanulás építőkövei, és mindig egy konkrét tantárgyhoz tartoznak. Bár a tantárgyakat mappákba vagy gyűjteményekbe rendezheted, magukat a kártyákat egy tantárgyon belül kell létrehozni.
+    doc_card_scope_title Hol laknak a kártyák
+    doc_collections_purpose_desc A gyűjtemények kurátori útvonalak, amelyek tantárgyakat csoportosítanak. Ha gyűjteményből indítasz menetet, a rendszer összekeveri az összes benne lévő tantárgy kártyáit a véletlenszerű, átfogó teszt érdekében.
+    doc_collections_purpose_title A gyűjtemények célja
     doc_create_intro_desc Ez a lap azt mutatja be, hogy az alkotók hogyan rendszerezik a tartalmat, lokalizálják azt, és hogyan tesznek közzé hasznos tananyagokat a munkafolyamat túlbonyolítása nélkül.
     doc_create_intro_title Teremt
     doc_create_json_desc A JSON-alapú létrehozás egy fejlett munkafolyamat a strukturált tömeges tartalomhoz. Ennek opcionálisnak kell maradnia; a legtöbb alkotónak képesnek kell lennie a tartalom létrehozására és szerkesztésére a szabványos űrlapokon keresztül.
@@ -86,6 +188,38 @@
     doc_create_model_title Tartalommodell
     doc_create_visibility_desc Használja az „enyémet” a saját tartalmain való munkához, a kedvenceket a hasznos elemek rögzítéséhez, a nyilvános könyvtárat pedig a megosztott anyagok böngészéséhez. A nyilvános láthatóság befolyásolja a felfedezést, míg a tulajdonjog azt, hogy mit szerkeszthet vagy törölhet.
     doc_create_visibility_title Tulajdonjog és láthatóság
+    doc_creation_desc Hozd létre saját tantárgyaidat, és adj hozzá vizuális flashkártyákat. Minden kártya támogat egy képet és egy opcionális hangfájlt a kiejtéshez.
+    doc_creation_title Tantárgyak és kártyák létrehozása
+    doc_feedback_desc Segíts nekünk fejlődni! Használd a visszajelzés ikont (Icons.feedback) bármely tantárgynál vagy mappánál a problémák bejelentéséhez. Általános alkalmazás-visszajelzést is küldhetsz a Támogatás szekción keresztül.
+    doc_feedback_title Visszajelzési rendszer
+    doc_filters_desc Találd meg gyorsan a tartalmakat a keresősáv segítségével. Szűrhetsz korcsoport szerint (korai-haladó), vagy szűkítheted a nézetet konkrét gyűjteményekre és mappákra.
+    doc_filters_title Keresés és szűrők
+    doc_flashcards_desc Minden tantárgy egy kártyakészletet tartalmaz. Bár a képek és a hang támogatottak, opcionálisak – a tartalom lehet tisztán szöveges vagy dinamikusan generált.
+    doc_flashcards_title Vizuális flashkártyák
+    doc_friends_desc A tanulás jobb együtt! Hívj meg barátokat az Aliolóba a profilodon keresztül. Követhetitek egymás fejlődését, és motiváltak maradhattok, ha látjátok, ki tartja a leghosszabb sorozatot.
+    doc_friends_title Barátok és meghívók
+    doc_goals_desc Állítsd be napi kártyateljesítési célodat a beállításokban. A célod módosításai a következő naptól lépnek életbe.
+    doc_goals_title Napi célok
+    doc_json_desc A haladó alkotók JSON adatok segítségével lokalizált neveket és leírásokat adhatnak meg, így a tantárgyak minden támogatott nyelven elérhetővé válnak.
+    doc_json_title JSON lokalizáció
+    doc_lang_desc Mindig válaszd ki a preferált tanulási nyelvet a felső menüben, mielőtt tantárgyat választanál. Ez biztosítja a megfelelő hanganyag és fordítások betöltését.
+    doc_lang_title Tanulási nyelv
+    doc_leaderboard_desc Versenyezz tanulókkal világszerte! Szerezz XP-t kártyamenetek teljesítésével, és mássz fel a ranglistán. Pozíciód valós időben frissül, amint új tantárgyakat sajátítasz el.
+    doc_leaderboard_title Globális ranglista
+    doc_localization_details_desc A „Globális” nyelv az elsődleges tartalékod – ez bármilyen nyelv lehet, amit választasz. Ha konkrét fordításokat adsz meg, azok csak akkor írják felül a globális adatokat, ha a felhasználó azt a konkrét UI nyelvet választja.
+    doc_localization_details_title Hogyan működik a lokalizáció
+    doc_localization_ui_desc Lokalizált adatok hozzáadásához egyszerűen koppints a nyelv kódja ikonra (pl. EN, ES, FR) a szerkesztő fejlécében. Ez lehetővé teszi, hogy minden támogatott nyelvhez egyedi neveket, leírásokat és kártyatartalmakat adj meg.
+    doc_localization_ui_title Fordítások hozzáadása
+    doc_math_desc A matematikai tantárgyak speciális motorokat használnak a kártyavizualizációk valós idejű generálásához. Ezek a tantárgyak egyedi, konkrét matematikai fogalmakra szabott tanulási és tesztelési módokkal rendelkeznek.
+    doc_math_title Matematikai tantárgyak
+    doc_media_desc A gyors szinkronizálás érdekében a képeket 5 MB, a hangfájlokat pedig 10 MB alatt tartsd.
+    doc_media_title Médiafeltöltési korlátok
+    doc_organization_desc Használj mappákat a kapcsolódó tantárgyak csoportosításához. Gyűjteményeket is létrehozhatsz a tantárgyak kurátori útvonalakba rendezéséhez.
+    doc_organization_title Tartalom rendszerezése
+    doc_pillars_desc Az Aliolo összes tartalma 8 alappillérbe van szervezve: Akadémiai és szakmai, Világ, Természet, Emberi test, Bölcsészettudományok, Szabadidő, Mérnöki tudományok és Egyéb. Ezek a kategóriák strukturált keretet biztosítanak a platform összes tantárgyához.
+    doc_pillars_title A 8 alappillér
+    doc_public_desc A tantárgyak lehetnek privátak (csak számodra láthatóak) vagy nyilvánosak. A nyilvános tartalmakat megosztjuk az egész Aliolo közösséggel, lehetővé téve mindenki számára, hogy felfedezze és tanuljon az alkotásaidból.
+    doc_public_title Nyilvános vs Privát
     doc_start_dashboard_desc Az irányítópult a fő könyvtára. Használja a keresést a tartalom gyors megtalálásához, majd kombinálja a forrásszűrőket, például a kedvencek, az enyém és a nyilvános könyvtár életkorszűrőkkel a zaj csökkentése érdekében.
     doc_start_dashboard_title Irányítópult, Keresés és szűrők
     doc_start_feedback_desc Használja a visszajelzések belépési pontjait az alkalmazásban, ha valami nincs rendben vagy nem egyértelmű. A jelentések tartalmazhatják az aktuális kontextust, ami megkönnyíti a tartalmi problémák áttekintését és kijavítását.
@@ -98,6 +232,8 @@
     doc_start_quick_title Gyors kezdés
     doc_start_structure_desc Az alanyok kártyákat tartanak. A mappák a kapcsolódó tartalmakat egy oszlopon belül csoportosítják. A gyűjtemények olyan válogatott készletek, amelyek több tárgyat kombinálhatnak tanulmányozás és megosztás céljából.
     doc_start_structure_title Tárgyak, mappák és gyűjtemények
+    doc_streaks_desc A következetesség a kulcs! Teljesítsd napi célodat minden nap a sorozatod építéséhez. Ne hagyj ki egyetlen napot sem, különben a sorozat alaphelyzetbe áll.
+    doc_streaks_title Sorozat rendszer
     doc_study_how_desc Kezdje a Tanulás lehetőséggel, amikor felismeri a felismerést, majd váltson a Tesztre, ha gyorsabb visszahívást és szigorúbb ellenőrzést szeretne. Használjon rövidebb munkameneteket a célzott áttekintéshez, és nagyobb munkameneteket a szélesebb lefedettség érdekében.
     doc_study_how_title Hogyan tanuljunk
     doc_study_intro_desc Ez a lap elmagyarázza, hogyan mozoghat a tartalom között, hogyan választhatja ki a megfelelő módot, és hogyan hangolhatja át a munkameneteket áttekintésre vagy visszahívásra.
@@ -108,68 +244,281 @@
     doc_study_modes_title Tanulási és tesztelési módok
     doc_study_scope_desc A tanulmányozás kezdődhet egyetlen tárgyból, mappanézetből vagy gyűjteményből. A gyűjtemények akkor hasznosak, ha vegyes munkamenetet szeretne több témában anélkül, hogy elhagyná az aktuális folyamatot.
     doc_study_scope_title Tantárgyak, mappák és gyűjtemények a tanulmányban
+    doc_sync_desc Fejlődésed automatikusan szinkronizálódik a felhőbe. Váltogathatsz a webes és az asztali verziók között anélkül, hogy elveszítenéd a sorozatodat.
+    doc_sync_title Felhő szinkronizálás
     doc_tab_create Teremt
+    doc_tab_creator Létrehozás
+    doc_tab_general Általános
+    doc_tab_learning Gyakorlat
     doc_tab_start Indul
     doc_tab_study Tanulmány
+    doc_testing_desc Hívd ki magad feleletválasztós kérdésekkel (MCQ). Az alkalmazás automatikusan továbblép, amint válaszolsz, segítve a gyorsabb tanulást.
+    doc_testing_title Interaktív tesztelés
+    doc_welcome_desc Az Aliolo egy vizuális tanulási platform, amelyet arra terveztek, hogy segítsen elsajátítani a tantárgyakat flashkártyák és interaktív tesztelés segítségével.
+    doc_welcome_title Üdvözöljük az Aliolóban
     documentation Dokumentáció
+    done_today Done Today
+    down_arrow Down Arrow
+    edit Szerkesztés
+    edit_card Edit Card
+    edit_collection Gyűjtemény szerkesztése
+    edit_email E-mail szerkesztése
+    edit_folder Mappa szerkesztése
+    edit_name Edit Name
+    edit_subject Edit Subject
+    edit_subject_title Edit Subject
     edit_subscription Előfizetés szerkesztése
+    email Email
+    email_change_notice For security, a confirmation link will be sent to BOTH your old and new email addresses. You must click both to complete the change.
+    email_in_use Email is already in use
+    email_subject Subject
+    email_update_sent Confirmation emails sent. Please check both inboxes.
     email_updated_successfully Az e-mail sikeresen frissítve!
+    english English
     enter_current_password Adja meg az aktuális jelszót
+    enter_new_email Adja meg az új e-mail címet
+    enter_new_name Enter New Name
+    enter_number Enter a number
+    enter_or_select_subject Please enter or select a subject
+    enter_pass_to_confirm Enter your password to confirm
+    enter_subject_name Enter subject name
     error Hiba: $e
     error_deleting Hiba a törléskor: $e
+    error_deleting_account Could not delete account. Check your password.
     error_saving Hiba a mentéskor: $e
     error_saving_card Hiba a kártya mentésekor: $e
     error_updating_favorite Hiba történt a kedvenc frissítésekor: $e
+    exit Exit
+    exit_confirm_msg Are you sure you want to exit the application?
+    exit_confirm_title Exit Aliolo?
+    expiry_date Lejárati dátum
     failed_answers Sikertelen válaszok
     failed_to_send_reset_code Nem sikerült elküldeni a visszaállítási kódot
     failed_to_send_verification_code Nem sikerült elküldeni az ellenőrző kódot
     fake_only Csak hamisítvány
+    fatal_startup_error Fatal Startup Error
+    feat_adaptive_desc The system monitors your recognition speed across MCQ options, dynamically adjusting intervals to push your boundaries.
+    feat_adaptive_title Adaptive Response Timing
+    feat_ages_desc Content curated for different age groups from early childhood to advanced learning.
+    feat_ages_title For All Ages
+    feat_gamified_desc Earn XP, badges, and build streaks while mastering complex visual subjects.
+    feat_gamified_title Gamified Experience
+    feat_mastery_desc Dynamic XP rewards difficulty, while real-time mastery badges (Bronze, Silver, Gold) track your journey from novice to expert.
+    feat_mastery_title Visual Mastery & XP
+    feat_multimedia_desc Learn with images, audio, and video support for immersive training.
+    feat_multimedia_title Multimedia Cards
+    feat_recognition_desc Immersive identification drills designed to build instant "muscle memory" for complex visual subjects.
+    feat_recognition_title Visual Pattern Training
+    feat_science_adaptive_desc Intervals automatically adjust based on your recognition speed and accuracy.
+    feat_science_adaptive_title Adaptive Timing
+    feat_science_spacing_desc Advanced cognitive spacing model that predicts memory decay and optimizes review cycles.
+    feat_science_spacing_title SuperMemo-2 (SM-2)
+    feat_spacing_desc A full implementation of the SuperMemo-2 model predicts your memory decay and schedules reviews at the peak of retention.
+    feat_spacing_title Cognitive Spacing (SM-2)
+    feature_autoplay Automatikus lejátszás mód
+    feature_community_access Hozzáférés közösségi tantárgyakhoz
     feature_creation Létrehozási eszközök
     feature_customize Speciális testreszabás
+    feature_favorites Kedvenc elemek az irányítópulton
+    feature_feedback Közvetlen visszajelzés és javaslatok
+    feature_free INGYENES
+    feature_friends Hívj meg és kapcsolódj barátokhoz
     feature_full_library Teljes hozzáférés a könyvtárhoz
+    feature_learn_all Tanulj bármilyen tantárgyat vagy gyűjteményt
+    feature_private_mode Privát profil mód
+    feature_pro PRO
+    feature_spaced_repetition Szakaszos ismétlés (SM-2)
     feature_testing Interaktív tesztelés
+    feedback Visszajelzés
+    feedback_add_image Kép hozzáadása
+    feedback_attachments Mellékletek
+    feedback_bug Hibajelentés
+    feedback_context Kontextus
+    feedback_details Részletek
+    feedback_error Nem sikerült elküldeni a visszajelzést. Kérjük, próbálja újra.
+    feedback_management_desc Felhasználói visszajelzések megtekintése i kezelése
+    feedback_management_title Visszajelzési kérelmek
+    feedback_other Egyéb
+    feedback_submit Visszajelzés beküldése
+    feedback_success Köszönjük a visszajelzését!
+    feedback_suggestion Javaslat
+    feedback_title Visszajelzés küldése
+    feedback_title_hint Cím
+    feedback_type Típus
+    fill_all_fields Please fill all fields
+    filter_all All
+    filter_dashboard Vezérlőpult
+    filter_favorites Kedvencek
+    filter_my_subjects My Subjects
+    filter_on_dashboard On Dashboard
+    filter_public Public
+    filter_public_library Nyilvános könyvtár
+    filters Szűrők
+    finish Befejezés
+    finished_session You finished {count} cards. XP bonus awarded!
+    folder Mappa
+    folder_already_exists Egy ilyen nevű mappa már létezik ebben a pillérben
     folder_id Mappaazonosító
+    folder_label Mappa
+    folder_not_empty_msg Nem törölhető: a mappa nem üres.
+    folder_plural Mappák
+    forgot_password Forgot Password?
     free_only Ingyenes felhasználók
+    general_preferences General Preferences
     generic Általános
+    go_to_manager Go to Library Manager
+    goal_change_hint Change your card goal for tomorrow
+    goal_change_notice A napi célod módosításai holnap lépnek életbe.
+    gold GOLD
+    hide_comparison Csomagok összehasonlításának elrejtése
     home Otthon
+    images Images
+    included_subjects Tartalmazott témák
+    info_copied Info copied to clipboard
+    initializing_aliolo Initializing Aliolo...
     invalid_code Érvénytelen kód
+    invalid_email Invalid email address
     invalid_email_address Érvénytelen e-mail cím
     invalid_json Érvénytelen JSON: $e
+    invalid_number Invalid number
     invalid_or_expired_invitation_link Érvénytelen vagy lejárt meghívó link.
     invalid_or_expired_reset_code Érvénytelen vagy lejárt visszaállítási kód.
+    invalid_password Invalid password
+    invalid_password_delete Invalid Password
     invitation_sent_awaiting_registration Meghívó elküldve (regisztrációra vár)
+    invite Meghívás
+    invite_user_content A(z) {email} e-mail-cím nem található. Meghívja az Aliolo használatára?
+    invite_user_title Felhasználó meghívása?
     invited_and_request_sent Meghívott és kérés elküldve!
     json JSON
+    keyboard_shortcuts Keyboard Shortcuts
     label_suffix $label:
+    lang_abbr Lang
+    language Nyelv
     leaderboard Ranglista
+    learn_mode_desc Study cards and memorize answers
+    learn_mode_title Learn
+    learn_session_size Learn Session Size
+    learn_session_size_desc Egyetlen tanulási szakaszban bevezetendő új kártyák száma.
     learning_session_complete_description Remek munka! Befejezte ezt a tanulási folyamatot. Az előrehaladást elmentettük.
+    left_arrow Left Arrow
+    level Level
+    level_range Must be between 1 and 20
+    level_tier_1 1. szint
+    level_tier_2 2. szint
+    level_tier_3 3. szint
     licenses Licencek
     licenses_aliolo_section_title Aliolo Kereskedelmi engedély
     licenses_aliolo_subtitle Saját szoftver és prémium hozzáférési feltételek
     licenses_intro_desc Aliolo kereskedelmi licence jelenik meg először. A harmadik féltől származó csomaglicencek az alábbiakban olvashatók.
     licenses_intro_title Aliolo Licenc és csomag megjegyzések
     licenses_third_party_section_title Harmadik féltől származó csomaglicencek
+    light Light
     linux_distro Linux Distro
     loading Terhelés...
     localized_data Lokalizált adatok
+    login Bejelentkezés
+    logout Kijelentkezés
+    manage_cards Manage Cards
+    manage_friends Friends
+    manage_friends_desc View and manage your friend requests
+    manage_library Manage Library ({sCount} subjects, {cCount} cards)
+    manage_subjects Manage Subjects
+    manage_subscription Előfizetés kezelése
+    manage_testing_langs Manage Testing Languages
+    manage_users Manage Users
+    master_visual_ease Master visual subjects with ease.
+    mastered mastered
+    mastery Mesterfok
+    max_streak Max Streak
+    maybe_later Talán később
+    mission_desc The smart companion that helps your brain learn and retain visual knowledge through science-backed algorithms.
+    mock_email_title Mock Email Inbox
+    mode_audio_to_image Audio to Image
+    mode_audio_to_text Audio to Text
+    mode_image_to_text Image to Text
+    mode_text_to_text Text to Text
     monthly_access Havi hozzáférés
     most_popular_choice A legnépszerűbb választás
+    multi_lang_answers Multi-language Answers
+    multi_lang_prompts Multi-language Prompts
+    my_position My Position
+    name Name
+    names_descriptions Names & Descriptions
+    new NEW
     new_email Új e-mail
+    new_password New Password
+    next Következő
+    next_card Next Card
+    next_daily_goal Következő napi cél
+    next_daily_goal_desc A naponta elsajátítandó kártyák célszáma. A módosítások holnap lépnek életbe.
+    next_day_goal Next Day Goal
     no_cards_available_for_this_session Ehhez a munkamenethez nem áll rendelkezésre kártya.
     no_cards_found Nem található kártya
+    no_cards_found_for_lang No cards found for this language
+    no_cards_in_library No cards found in the library.
+    no_feedback_found Nem található visszajelzés.
+    no_folder Nincs mappa (Gyökér)
+    no_friends_found No friends found
+    no_images_added Nincs kép hozzáadva
+    no_leaderboard_data No leaderboard data available.
+    no_localized_audio Nincs lokalizált hang
+    no_localized_images Nincsenek lokalizált képek
+    no_localized_video Nincs lokalizált videó
+    no_subjects_available Nem állnak rendelkezésre témák
     no_subjects_found Nem található alany
     no_subjects_found_in_this_collection Nem található téma ebben a gyűjteményben
     no_users_found Nem található felhasználó
+    ok OK
+    old_password Régi jelszó
+    old_password_required A régi jelszó megadása kötelező
+    onboarding_1_desc Tanuljon vizuálisan. Sajátítsa el véglegesen. Vizuális tanulási társa az SM-2 tudomány erejével.
+    onboarding_1_title Üdvözöljük az Aliolo világában
+    onboarding_2_desc Ez segít nekünk személyre szabni a tanulási élményt, és a megfelelő tantárgyakat ajánlani.
+    onboarding_2_title Hány éves vagy?
+    onboarding_3_desc Válaszd ki az elsődleges érdeklődési körödet a kezdő irányítópult testreszabásához.
+    onboarding_3_title Mit szeretnél elsajátítani?
+    onboarding_4_desc Építsd fel saját paklidat, vagy merülj el az Aliolo tanulók által világszerte megosztott kártyákban. Tanulj a saját tempódban, majd teszteld magad, amikor készen állsz.
+    onboarding_4_title Létrehozás és megosztás
+    onboarding_5_desc A könyvtárad minden eszközödön szinkronban marad. Csak akkor fogunk figyelmeztetni, amikor ideje megvédeni a sorozatodat.
+    onboarding_5_title Sajátítsa el bárhol
+    onboarding_6_desc Kezdje el az utazást ma, és sajátítson el bármit, amit elhatározott.
+    onboarding_6_title Csatlakozz a közösséghez
+    onboarding_7_joined Tanulók ezrei csatlakoztak már
+    onboarding_7_quote Az Aliolo teljesen átalakította a gyermekeim és az én tanulási módszereinket. A vizuális kártyák és az ismétlés játéknak tűnik a tanulás közben!
+    onboarding_get_started Kezdés
+    onboarding_next Tovább
+    onboarding_skip Kihagyás
+    options_count Number of Answers
+    options_count_desc A tesztek során megjelenített feleletválasztós válaszok száma.
+    options_per_card options per card
+    order_id Rendelésazonosító
     os_version OS verzió
+    our_mission OUR MISSION
+    page Page
+    parent_folder_label Parent Folder (hu)
+    password Jelszó
+    password_required Password is required
+    password_reset_success Password reset successful
     password_updated_successfully A jelszó sikeresen frissítve!
+    passwords_dont_match Passwords do not match
+    paste PASTE
     payments_are_not_yet_integrated_on_web_please_use_the_mobile_app_to_upgrade A fizetések még nincsenek integrálva a weben. Kérjük, használja a mobilalkalmazást a frissítéshez.
     personal_data Személyes adatok
     pick_date Válassz dátumot
+    picture Picture
+    pillar Pillar
+    plan_monthly Havi hozzáférés
+    plan_monthly_desc Legnépszerűbb választás
     plan_monthly_tagline A legnépszerűbb választás
     plan_monthly_title Havi hozzáférés
+    plan_weekly Heti hozzáférés
+    plan_weekly_desc Legjobb gyors célokhoz
     plan_weekly_tagline Legjobb gyors gólokhoz
     plan_weekly_title Heti hozzáférés
-    plan_yearly_tagline 33% Megtakarítás havonta
+    plan_yearly Éves hozzáférés
+    plan_yearly_desc Spórolj 33%-ot havonta
+    plan_yearly_tagline 33% megtakarítás havonta
     plan_yearly_title Éves hozzáférés
     platform Platform
     play Játék
@@ -177,58 +526,208 @@
     please_enter_the_6_digit_code Kérjük, adja meg a 6 számjegyű kódot
     please_wait_for_a_response_before_replying_again Kérjük, várja meg a választ, mielőtt újra válaszolna.
     premium_expires_at Lejár: $date
+    premium_go Váltás Prémiumra
     premium_lifetime Életre szóló hozzáférés
     premium_only Csak prémium
     premium_status_active Ön prémium tag
+    premium_title Aliolo Premium
     premium_unlock_desc Szerezzen hozzáférést minden témához, hozzon létre korlátlan számú kártyát, és támogassa Aliolo küldetését.
     premium_unlock_title Teljes hozzáférés feloldása
+    prev Prev
+    previous_card Previous Card
+    price_per_week ({price} / hét)
+    private Private
+    pro_label PRO
+    product_id Termékazonosító
     product_not_available_in_store A termék az üzletben nem kapható.
     profile Profil
+    profile_title My Profile & Progress
+    prompt_label Prompt
+    prompt_optional Prompt / Question
+    prompts_answers Prompts & Answers
+    provide_at_least_one_answer Please provide at least one answer
+    provide_at_least_one_name Provide at least one name
+    provider Szolgáltató
     public_other_subject Nyilvános/Egyéb téma
+    public_profile Public Profile
+    public_profile_desc Show your XP and Streak on Hall of Fame.
+    public_subject Public Subject
+    public_subject_desc Make this subject visible to other users.
     purchase_failed Sikertelen vásárlás: $e
+    purchase_token Vásárlási token
+    record_shortcut Record Shortcut
     recovery_error Helyreállítási hiba: $e
     refresh Frissítés
     refresh_conversation Frissítse a beszélgetést
+    remove_friend Remove Friend
+    remove_friend_confirm Are you sure you want to remove friend
     renderer Renderer
+    request_sent Request sent
+    request_sent_waiting Request sent (waiting)
+    required Required
     reset_code Reset Code
+    reset_code_email_title Password Reset Code
+    reset_code_sent "Reset code for: "
     reset_code_sent_to_please_check_your_inbox A kód visszaállítása a következőre: $email. Kérjük, ellenőrizze beérkező leveleit.
+    reset_password_for "Reset Password for: "
+    restore_password Restore Password
     restore_purchases Vásárlások visszaállítása
+    retry Retry
+    right_arrow Right Arrow
     save Megtakarítás
-    save_33_per_month 33% Megtakarítás havonta
+    save_33_per_month 33% megtakarítás havonta
+    save_before_nav Do you want to save changes before navigating?
+    save_card Save Card
+    save_subject Save Subject
     saved_successfully Sikeresen mentve
+    search_cards Search Cards
+    search_subjects Search Subjects
     search_users Felhasználók keresése
+    select_an_answer Select an Answer
+    select_lang Select Language
+    select_package_license Select Package License
+    select_user Select User
+    selected_count {count} Selected
+    send Send
+    send_code Send Code
+    send_verification_code Send verification code?
     session_complete A munkamenet kész!
     session_complete_description Remek munka! Ebben a munkamenetben befejezte az összes kártyát.
+    setting_saved Setting saved
     settings Beállítások elemre
+    shortcuts_hint Press the key you want to use with Ctrl.
+    show_all_languages Show all languages
     show_documentation_btn Dokumentáció megjelenítése gomb
     show_documentation_btn_desc Jelenítse meg a dokumentáció gombot az alkalmazássávban.
     show_fake_users Hamis felhasználók megjelenítése
+    show_less_languages Show less languages
+    sidebar_left Sidebar on the left
+    sidebar_left_desc Move testing controls to the left side of the screen.
+    silver SILVER
+    social Social
+    sort_by Sort by
+    sound_effects Sound Effects
+    sound_effects_desc Enable audio feedback for correct and wrong answers.
+    source Forrás
+    status Állapot
+    status_closed Lezárt
+    status_open Nyitott
+    status_replied Megválaszolt
+    streak Sorozat
+    subject Subject
+    subject_deleted Subject deleted
     subject_id Tárgyazonosító
+    subject_label Subject
+    subject_plural Subjects
+    subject_type Subject Type (hu)
+    subjects Témák
     subscribe_now Iratkozz fel most
     subscription_data Előfizetési adatok
     subscription_updated Az előfizetés frissítve
     subtraction_emoji Kivonás Emoji
     subtraction_numbers Számok kivonása
+    support_and_management Támogatás és kezelés
+    system System
+    tap_to_replay Tap to Replay
     technical_context MŰSZAKI KÖRNYEZET
+    test_mode_desc Challenge yourself with a quiz
+    test_mode_label Test Mode
+    test_mode_title Test
+    test_session_size Test Session Size
+    test_session_size_desc Egyetlen tesztelési szakaszban áttekintendő kártyák száма.
+    testing Testing
     testing_mode Tesztelési mód
+    testing_section Testing Settings
     text Szöveg
+    the_science THE SCIENCE
+    theme_color App Theme Color
+    theme_color_desc Customize the primary color used for buttons and highlights.
+    theme_dark Dark
+    theme_light Light
+    theme_mode Témamód
+    theme_system System
     this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards Ez egy mappa. Az összes kártya gyakorlásához használhatja a fenti Tanulás/Teszt gombokat.
+    to_label To
     total_cards Összes kártya
+    total_xp Total XP
+    trust_cloud_desc Your progress is securely synced across all your devices in real-time.
+    trust_cloud_title Cloud Sync
+    trust_privacy TRUST & PRIVACY
+    trust_sync_desc Your data is private and encrypted to ensure the highest security standards.
+    trust_sync_title Encrypted Data
+    type_collection Gyűjtemény
+    type_folder Folder (Sub-subjects) (hu)
+    type_standard Standard (Cards) (hu)
     type_your_reply Írja be a válaszát...
     ua UA
+    ui_language Felület nyelve
+    ukrainian Ukrainian
     unknown_user_profile_missing Ismeretlen felhasználó (profil hiányzik)
+    unsaved_changes Unsaved Changes
+    unsaved_changes_msg Nem mentett módosításaid vannak. El szeretnéd vetni őket?
+    up_arrow Up Arrow
+    update Update
     update_available Új verzió érhető el!
+    updated_at Frissítve
+    upload_new_photo Új fotó feltöltése
     user Felhasználó
+    user_exists User already exists
     user_id Felhasználói azonosító
+    user_not_found User not found
     user_with_this_email_already_exists_please_log_in_instead Ezzel az e-mail-címmel már létezik felhasználó. Inkább jelentkezz be.
+    username Felhasználónév
     users Felhasználók
     users_filter Felhasználók szűrése
     verification_code Ellenőrző kód
     verification_code_sent_to Ellenőrző kód elküldve a következőnek: $email
+    verify Verify
     version Változat
+    video Video
+    video_link Video Link
+    video_url_optional Video URL (Optional)
+    view_card View Card
+    view_cards_title View Cards
     view_onboarding Belépés megtekintése
+    visibility Visibility
+    visual_content_required Legalább egy vizuális tartalom kötelező
+    visual_content_required_msg Legalább egy vizuális tartalmat (szöveg, kép, hang vagy videó) meg kell adni.
+    visual_text Vizuális szöveg
+    wants_to_be_friend Wants to be your friend
     weekly_access Heti hozzáférés
     welcome_complete_your_profile_to_join_aliolo Üdvözöljük! Töltse ki profilját a aliolo-hoz való csatlakozáshoz.
+    xp XP
     yearly_access Éves hozzáférés
+    you You
     you_do_not_have_permission_to_edit_this_card Nincs engedélye a kártya szerkesztésére
     you_do_not_have_permission_to_view_this_card_details Nincs jogosultsága a kártya adatainak megtekintéséhez.
+    you_rank You are ranked #{rank}
+    active Aktív
+    autoplay Automatikus lejátszás
+    card_limit Kártyalimit
+    card_limit_msg Elérte a(z) {limit} kártyás limitet.
+    create_request Kérés létrehozása
+    edit_user Felhasználó szerkesztése
+    favorite Kedvenc
+    file_too_large A fájl túl nagy
+    inactive Inaktív
+    is_required kötelező
+    languages Nyelvek
+    limit_reached Limit elérve
+    not_available Nem elérhető
+    toggle_languages Nyelvek váltása
+    user_updated Felhasználó frissítve
+    zoom Nagyítás
+    account_and_management Account & Management
+    back_to_plans Back to plans
+    confirm_password_required Confirm password is required
+    feat_autoplay_desc Focus on learning while the app automatically advances through cards at your pace.
+    feat_autoplay_title Hands-Free Autoplay
+    feat_create_share_desc Easily create your own subjects and cards, or share them with the community.
+    feat_create_share_title Create & Share
+    feat_science_smart_review_desc The algorithm calculates the optimal time to review each card for maximum retention.
+    feat_science_smart_review_title Smart Review Cycles
+    new_password_required New password is required
+    password_updated Password updated successfully
+    save_success Saved successfully
+    trust_ecosystem_desc Your progress and cards are seamlessly synced across all your devices.
+    trust_ecosystem_title Aliolo Ecosystem

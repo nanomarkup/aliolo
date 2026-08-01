@@ -43,37 +43,139 @@
     about_support_settings_desc Jazyk používateľského rozhrania, režim témy, farbu témy, zvuk, umiestnenie bočného panela a viditeľnosť dokumentácie je možné upraviť v nastaveniach.
     about_support_settings_title Personalizácia
     about_support_title Nastavenia, spätná väzba a podpora
+    about_tagline Učte sa vizuálne. Ovládnite navždy.
+    account_created Účet vytvorený
+    account_created_billing_fail Váš účet bol vytvorený, ale platba nebola dokončená. Zopakujte platbu nižšie.
+    account_deleted Account deleted successfully
+    add_card Add Card
+    add_collection Pridať kolekciu
+    add_folder Pridať priečinok
+    add_friend_by_email Add Friend By Email
+    add_lang_translation Add Language Translation
+    add_prompt_translation Add Prompt Translation
+    add_subject Add Subject
     addition_emoji Pridanie Emoji
     addition_numbers Sčítacie čísla
+    age Vek
+    age_0_6 0-6 rokov
+    age_15_18 15 - 18
+    age_15_plus 15+ rokov
+    age_19_25 19 - 25
+    age_26_35 26 - 35
+    age_36_50 36 - 50
+    age_7_14 7-14 rokov
+    age_advanced Advanced
+    age_all All Ages
+    age_early Early Childhood
+    age_group Age Group
+    age_intermediate Intermediate
+    age_over_50 Nad 50
+    age_primary Primary School
+    age_under_14 Pod 14
+    algorithm_title THE ALIOLO ALGORITHM
     aliolo aliolo
+    all_matching_subjects Všetky zodpovedajúce témy
     all_rights_reserved Všetky práva vyhradené
+    answer Odpoveď
+    answer_label answer
+    answers_label answers
     are_you_sure_you_want_to_close_this_feedback_request Naozaj chcete uzavrieť túto žiadosť o spätnú väzbu?
     are_you_sure_you_want_to_delete_this_folder Naozaj chcete odstrániť tento priečinok?
+    ascending Ascending
     attach_image Pripojte obrázok
+    audio Zvuk
+    audio_playing Audio Playing
+    author Author
     back Späť
+    back_to_login Back to Login
     back_to_subjects Späť na predmety
     best_for_quick_goals Najlepšie na rýchle góly
     billing_disclaimer Predplatné sa automaticky obnoví, pokiaľ nebude zrušené. Predplatné môžete spravovať v nastaveniach obchodu.
     billing_title Fakturácia
+    bronze BRONZE
     browser Prehliadač
     cancel Zrušiť
+    cancel_request Cancel Request
+    cancel_request_confirm Are you sure you want to cancel the request to
+    cannot_delete_folder Cannot Delete Folder
     cannot_delete_folder_it_is_not_empty Priečinok sa nedá odstrániť: nie je prázdny
+    card_details Card Details
     card_id ID karty
+    card_label Card
+    card_level Úroveň karty
+    card_plural Cards
+    cards cards
+    cards_label cards
+    cards_per_day cards per day
+    cards_per_session cards per session
+    change_avatar Change Avatar
+    change_password Zmeniť heslo
     check_your_email_for_code Skontrolujte svoj e-mail pre kód
     clear Jasné
+    click_to_select_image Click to select image
     click_to_view_original Kliknutím zobrazíte originál
     close Zavrieť
     close_request Zatvoriť žiadosť?
+    code_label Code
     collection_id ID zbierky
     colors Farby
+    common_settings Common Settings
+    compare_plans Porovnať zadarmo vs. Premium
+    confirm Potvrdiť
+    confirm_logout Are you sure you want to logout?
+    confirm_password Confirm Password
     confirm_subscription Potvrďte odber
+    content_label Content
     context Kontext
+    copy COPY
+    copy_all Copy All
+    core_features CORE FEATURES
     correct_answers Správne odpovede
     could_not_launch Nepodarilo sa spustiť $url
     counting Počítanie
+    create_account Create Account
+    create_new_account Create New Account
+    create_new_card Create New Card
+    created_at Vytvorené
+    current_streak Current Streak
     current_subscription Aktuálne predplatné
+    daily_goal Daily Goal
+    daily_progress Daily Progress
+    dark Dark
+    dashboard_greeting Ahoj
+    day day
+    day_label Day
+    day_plural Days
+    days days
+    default Default
+    default_language Predvolený jazyk
+    default_testing_language Default Testing Language
+    default_testing_language_desc Pre-selects this language on the subjects page.
     delete Odstrániť
+    delete_account Delete Account
+    delete_account_confirm Are you sure you want to delete your account? This action is permanent.
+    delete_avatar Vymazať avatara
+    delete_avatar_confirm Naozaj chcete odstrániť svoju profilovú fotku?
+    delete_card_confirm Delete this card?
+    delete_collection Vymazať kolekciu
+    delete_collection_confirm Naozaj chcete vymazať túto kolekciu?
+    delete_folder Vymazať priečinok
+    delete_selected_cards Delete selected cards?
+    delete_subject Delete Subject
+    delete_subject_confirm Delete subject '{subject}' and all {count} cards inside?
+    delete_subjects_first Please delete all sub-subjects inside this folder before deleting the folder itself.
+    descending Descending
+    description Description
     device Zariadenie
+    digit_code 6-digit Code
+    discard Discard
+    discard_changes Zahodiť zmeny?
+    doc_autoplay_desc Aplikácia môže po vašej odpovedi automaticky prejsť na ďalšiu kartu. Správne odpovede čakajú 1 s, zatiaľ čo nesprávne 2 s, aby ste si ich mohli prezrieť.
+    doc_autoplay_title Automatické učenie
+    doc_card_scope_desc Karty sú základnými stavebnými kameňmi učenia a vždy patria ku konkrétnemu predmetu. Aj keď môžete predmety organizovať do priečinkov alebo zbierok, samotné karty musia byť vytvorené v rámci predmetu.
+    doc_card_scope_title Kde karty žijú
+    doc_collections_purpose_desc Zbierky sú vybrané cesty, ktoré zoskupujú predmety. Keď spustíte lekciu zo zbierky, systém namieša karty zo všetkých zahrnutých predmetov, aby poskytol náhodný a komplexný test.
+    doc_collections_purpose_title Účel zbierok
     doc_create_intro_desc Táto karta obsahuje informácie o tom, ako tvorcovia organizujú obsah, lokalizujú ho a publikujú užitočný študijný materiál bez toho, aby príliš komplikovali pracovný postup.
     doc_create_intro_title Vytvorte
     doc_create_json_desc Vytváranie na báze JSON je pokročilý pracovný postup pre štruktúrovaný hromadný obsah. Malo by zostať nepovinné; väčšina tvorcov by mala byť schopná vytvárať a upravovať obsah prostredníctvom štandardných formulárov.
@@ -86,6 +188,38 @@
     doc_create_model_title Model obsahu
     doc_create_visibility_desc Použite „moje“ na prácu na svojom vlastnom obsahu, obľúbené položky na pripnutie užitočných položiek a verejnú knižnicu na prehliadanie zdieľaného materiálu. Verejná viditeľnosť ovplyvňuje objavovanie, zatiaľ čo vlastníctvo ovplyvňuje to, čo môžete upraviť alebo odstrániť.
     doc_create_visibility_title Vlastníctvo a viditeľnosť
+    doc_creation_desc Vytvárajte vlastné predmety a pridávajte vizuálne kartičky. Každá karta podporuje obrázok a voliteľný audio súbor pre výslovnosť.
+    doc_creation_title Vytváranie predmetov a kariet
+    doc_feedback_desc Pomôžte nám sa zlepšovať! Pomocou ikony spätnej väzby (Icons.feedback) na akomkoľvek predmete alebo priečinku nahláste problémy. Môžete tiež poslať všeobecnú spätnú väzbu k aplikácii prostredníctvom sekcie Podpora.
+    doc_feedback_title Systém spätnej väzby
+    doc_filters_desc Rýchlo nájdite obsah pomocou vyhľadávacieho panela. Môžete filtrovať podľa vekovej skupiny (od ranej po pokročilú) alebo zúžiť zobrazenie na konkrétne zbierky a priečinky.
+    doc_filters_title Hľadanie a filtre
+    doc_flashcards_desc Každý predmet obsahuje sústavu kariet. Aj keď sú obrázky a audio podporované, sú voliteľné – obsah môže byť čisto textový alebo dynamicky generovaný.
+    doc_flashcards_title Vizuálne kartičky
+    doc_friends_desc Učenie je lepšie spoločne! Pozvite priateľov do Aliolo prostredníctvom svojho profilu. Môžete sledovať pokrok jeden druhého a zostať motivovaní tým, že uvidíte, kto si udržuje najdlhšiu sériu.
+    doc_friends_title Priatelia a pozvánky
+    doc_goals_desc V nastaveniach si určte svoj denný cieľ dokončenia kariet. Zmeny v cieli sa prejavia až od nasledujúceho dňa.
+    doc_goals_title Denné ciele
+    doc_json_desc Pokročilí tvorcovia môžu pomocou údajov JSON poskytovať lokalizované názvy a popisy, vďaka čomu sú predmety prístupné vo všetkých podporovaných jazykoch.
+    doc_json_title JSON lokalizácia
+    doc_lang_desc Pred výberom predmetu si v hornom menu vždy vyberte preferovaný jazyk učenia. Tým sa zabezpečí načítanie správneho audia a prekladov.
+    doc_lang_title Jazyk učenia
+    doc_leaderboard_desc Súťažte so študentmi z celého sveta! Získajte XP dokončením lekcií s kartami a stúpajte v rebríčku. Vaša pozícia sa aktualizuje v reálnom čase, keď ovládnete nové predmety.
+    doc_leaderboard_title Globálny rebríček
+    doc_localization_details_desc „Globálny“ jazyk je vaša primárna záloha – môže to byť akýkoľvek jazyk, ktorý si vyberiete. Ak poskytnete konkrétne preklady (napríklad angličtinu alebo španielčinu), prepíšu globálne údaje len vtedy, keď si používateľ zvolí tento konkrétny jazyk používateľského rozhrania.
+    doc_localization_details_title Ako funguje lokalizácia
+    doc_localization_ui_desc Ak chcete pridať lokalizované údaje, jednoducho klepnite na ikonu kódu jazyka (napr. EN, ES, FR) v záhlaví editora. To vám umožní zadať konkrétne názvy, popisy a obsah kariet pre každý podporovaný jazyk. Karta „Globálne“ slúži ako primárna záloha, ak nie je k dispozícii žiadny konkrétny preklad.
+    doc_localization_ui_title Pridávanie prekladov
+    doc_math_desc Matematické predmety využívajú špecializované enginy na generovanie vizualizácií kariet v reálnom čase. Tieto predmety obsahujú jedinečné režimy učenia a testovania prispôsobené konkrétnym matematickým konceptom, čo zabezpečuje efektívnejšie prostredie na precvičovanie.
+    doc_math_title Matematické predmety
+    doc_media_desc Pro zabezpečenie rýchlej synchronizácie udržujte obrázky pod 5 MB a audio súbory pod 10 MB.
+    doc_media_title Limity pre nahrávanie médií
+    doc_organization_desc Pomocou priečinkov môžete zoskupovať súvisiace predmety. Môžete tiež vytvárať zbierky a organizovať predmety do vybraných ciest.
+    doc_organization_title Organizácia obsahu
+    doc_pillars_desc Všetok obsah v Aliolo je rozdelený do 8 základných pilierov: akademický a profesionálny, svet, príroda, ľudské telo, humanitné vedy, voľný čas, inžinierstvo a ostatné. Tieto kategórie poskytujú štruktúrovaný rámec pre všetky predmety v rámci platformy.
+    doc_pillars_title 8 hlavných pilierov
+    doc_public_desc Predmety môžu byť súkromné (viditeľné iba pre vás) alebo verejné. Verejný obsah je zdieľaný s celou komunitou Aliolo, čo umožňuje každému objavovať a učiť sa z vašich výtvorov.
+    doc_public_title Verejné vs súkromné
     doc_start_dashboard_desc Prístrojová doska je vaša hlavná knižnica. Použite vyhľadávanie na rýchle vyhľadanie obsahu a potom skombinujte zdrojové filtre, ako sú obľúbené, moje a verejné knižnice, s vekovými filtrami, aby ste znížili šum.
     doc_start_dashboard_title Dashboard, vyhľadávanie a filtre
     doc_start_feedback_desc Použite vstupné body spätnej väzby v aplikácii, keď je niečo nesprávne alebo nejasné. Správy môžu zahŕňať aktuálny kontext, čo uľahčuje kontrolu a opravu problémov s obsahom.
@@ -98,6 +232,8 @@
     doc_start_quick_title Rýchly štart
     doc_start_structure_desc Subjekty držia karty. Priečinky zoskupujú súvisiaci obsah v stĺpe. Kolekcie sú zostavené súbory, ktoré môžu kombinovať viacero predmetov na štúdium a zdieľanie.
     doc_start_structure_title Predmety, priečinky a zbierky
+    doc_streaks_desc Dôslednosť je kľúčová! Plňte svoj denný cieľ každý deň, aby ste si vybudovali sériu. Nevynechajte ani deň, inak sa séria vynuluje.
+    doc_streaks_title Systém sérií (Streaks)
     doc_study_how_desc Začnite s učením, keď vytvárate rozpoznávanie, potom prepnite na Test, keď chcete rýchlejšie vyvolať a prísnejšie kontrolovať. Použite kratšie relácie na cielenú kontrolu a väčšie relácie na širšie pokrytie.
     doc_study_how_title Ako študovať
     doc_study_intro_desc Táto karta vysvetľuje, ako sa pohybovať v obsahu, zvoliť správny režim a vyladiť svoje relácie na kontrolu alebo opätovné spustenie.
@@ -108,67 +244,280 @@
     doc_study_modes_title Režimy učenia a testovania
     doc_study_scope_desc Štúdium môže začať od jedného predmetu, zobrazenia priečinka alebo zbierky. Kolekcie sú užitočné, keď chcete zmiešanú reláciu viacerých predmetov bez toho, aby ste opustili aktuálny tok.
     doc_study_scope_title Predmety, priečinky a zbierky v štúdiu
+    doc_sync_desc Váš pokrok sa automaticky synchronizuje s cloudom. Môžete prepínať medzi webovou a desktopovou verziou bez straty série.
+    doc_sync_title Synchronizácia s cloudom
     doc_tab_create Vytvorte
+    doc_tab_creator Tvorba
+    doc_tab_general Všeobecné
+    doc_tab_learning Prax
     doc_tab_start Štart
     doc_tab_study Štúdium
+    doc_testing_desc Vyzvite sa otázkami s výberom odpovede (MCQ). Aplikácia bude po vašej odpovedi automaticky pokračovať, čo vám pomôže učiť sa rýchlejšie.
+    doc_testing_title Interaktívne testovanie
+    doc_welcome_desc Aliolo je vizuálna vzdelávacia platforma navrhnutá tak, aby vám pomohla ovládať predmety prostredníctvím kartičiek a interaktívneho testovania.
+    doc_welcome_title Vitajte v Aliolo
     documentation Dokumentácia
+    done_today Done Today
+    down_arrow Down Arrow
+    edit Upraviť
+    edit_card Edit Card
+    edit_collection Upraviť kolekciu
+    edit_email Upraviť e-mail
+    edit_folder Upraviť priečinok
+    edit_name Edit Name
+    edit_subject Edit Subject
+    edit_subject_title Edit Subject
     edit_subscription Upraviť odber
+    email Email
+    email_change_notice For security, a confirmation link will be sent to BOTH your old and new email addresses. You must click both to complete the change.
+    email_in_use Email is already in use
+    email_subject Subject
+    email_update_sent Confirmation emails sent. Please check both inboxes.
     email_updated_successfully E-mail bol úspešne aktualizovaný!
+    english English
     enter_current_password Zadajte aktuálne heslo
+    enter_new_email Zadajte nový e-mail
+    enter_new_name Enter New Name
+    enter_number Enter a number
+    enter_or_select_subject Please enter or select a subject
+    enter_pass_to_confirm Enter your password to confirm
+    enter_subject_name Enter subject name
     error Chyba: $e
     error_deleting Chyba pri odstraňovaní: $e
+    error_deleting_account Could not delete account. Check your password.
     error_saving Chyba pri ukladaní: $e
     error_saving_card Chyba pri ukladaní karty: $e
     error_updating_favorite Chyba pri aktualizácii obľúbeného: $e
+    exit Exit
+    exit_confirm_msg Are you sure you want to exit the application?
+    exit_confirm_title Exit Aliolo?
+    expiry_date Dátum vypršania platnosti
     failed_answers Neúspešné odpovede
     failed_to_send_reset_code Odoslanie resetovacieho kódu zlyhalo
     failed_to_send_verification_code Odoslanie overovacieho kódu zlyhalo
     fake_only Iba falošné
+    fatal_startup_error Fatal Startup Error
+    feat_adaptive_desc The system monitors your recognition speed across MCQ options, dynamically adjusting intervals to push your boundaries.
+    feat_adaptive_title Adaptive Response Timing
+    feat_ages_desc Content curated for different age groups from early childhood to advanced learning.
+    feat_ages_title For All Ages
+    feat_gamified_desc Earn XP, badges, and build streaks while mastering complex visual subjects.
+    feat_gamified_title Gamified Experience
+    feat_mastery_desc Dynamic XP rewards difficulty, while real-time mastery badges (Bronze, Silver, Gold) track your journey from novice to expert.
+    feat_mastery_title Visual Mastery & XP
+    feat_multimedia_desc Learn with images, audio, and video support for immersive training.
+    feat_multimedia_title Multimedia Cards
+    feat_recognition_desc Immersive identification drills designed to build instant "muscle memory" for complex visual subjects.
+    feat_recognition_title Visual Pattern Training
+    feat_science_adaptive_desc Intervals automatically adjust based on your recognition speed and accuracy.
+    feat_science_adaptive_title Adaptive Timing
+    feat_science_spacing_desc Advanced cognitive spacing model that predicts memory decay and optimizes review cycles.
+    feat_science_spacing_title SuperMemo-2 (SM-2)
+    feat_spacing_desc A full implementation of the SuperMemo-2 model predicts your memory decay and schedules reviews at the peak of retention.
+    feat_spacing_title Cognitive Spacing (SM-2)
+    feature_autoplay Režim automatického prehrávania
+    feature_community_access Prístup ku komunitným predmetom
     feature_creation Nástroje na tvorbu
     feature_customize Pokročilé prispôsobenie
+    feature_favorites Obľúbené položky na nástenke
+    feature_feedback Priama spätná väzba a návrhy
+    feature_free ZADARMO
+    feature_friends Pozývajte a spojte sa s priateľmi
     feature_full_library Úplný prístup do knižnice
+    feature_learn_all Učte sa akýkoľvek predmet alebo kolekciu
+    feature_private_mode Režim súkromného profilu
+    feature_pro PRO
+    feature_spaced_repetition Rozložené opakovanie (SM-2)
     feature_testing Interaktívne testovanie
+    feedback Spätná väzba
+    feedback_add_image Pridať obrázok
+    feedback_attachments Prílohy
+    feedback_bug Nahlásenie chyby
+    feedback_context Kontext
+    feedback_details Podrobnosti
+    feedback_error Spätnú väzbu sa nepodarilo odoslať. Skúste to znova.
+    feedback_management_desc Zobrazenie a správa používateľskej spätnej väzby
+    feedback_management_title Žiadosti o spätnú väzbu
+    feedback_other Iné
+    feedback_submit Odoslať spätnú väzbu
+    feedback_success Ďakujeme za vašu spätnú väzbu!
+    feedback_suggestion Návrh
+    feedback_title Odoslať spätnú väzbu
+    feedback_title_hint Nadpis
+    feedback_type Typ
+    fill_all_fields Please fill all fields
+    filter_all All
+    filter_dashboard Nástenka
+    filter_favorites Obľúbené
+    filter_my_subjects My Subjects
+    filter_on_dashboard On Dashboard
+    filter_public Public
+    filter_public_library Verejná knižnica
+    filters Filtre
+    finish Dokončiť
+    finished_session You finished {count} cards. XP bonus awarded!
+    folder Priečinok
+    folder_already_exists Priečinok s týmto názvom už v tomto pilieri existuje
     folder_id ID priečinka
+    folder_label Priečinok
+    folder_not_empty_msg Nemožno vymazať: priečinok nie je prázdny.
+    folder_plural Priečinky
+    forgot_password Forgot Password?
     free_only Bezplatní používatelia
+    general_preferences General Preferences
     generic Generic
+    go_to_manager Go to Library Manager
+    goal_change_hint Change your card goal for tomorrow
+    goal_change_notice Zmeny vášho denného cieľa nadobudnú účinnosť zajtra.
+    gold GOLD
+    hide_comparison Skryť porovnanie plánov
     home Domov
+    images Images
+    included_subjects Zahrnuté předměty
+    info_copied Info copied to clipboard
+    initializing_aliolo Initializing Aliolo...
     invalid_code Neplatný kód
+    invalid_email Invalid email address
     invalid_email_address Neplatná e-mailová adresa
     invalid_json Neplatný JSON: $e
+    invalid_number Invalid number
     invalid_or_expired_invitation_link Odkaz na pozvánku je neplatný alebo mu vypršala platnosť.
     invalid_or_expired_reset_code Neplatný alebo vypršaný resetovací kód.
+    invalid_password Invalid password
+    invalid_password_delete Invalid Password
     invitation_sent_awaiting_registration Pozvánka bola odoslaná (čaká sa na registráciu)
+    invite Pozvať
+    invite_user_content E-mail {email} sa nenašiel. Pozvať do Aliolo?
+    invite_user_title Pozvať používateľa?
     invited_and_request_sent Pozvaný a žiadosť odoslaná!
     json JSON
+    keyboard_shortcuts Keyboard Shortcuts
     label_suffix $label:
+    lang_abbr Lang
+    language Jazyk
     leaderboard Rebríček
+    learn_mode_desc Study cards and memorize answers
+    learn_mode_title Learn
+    learn_session_size Learn Session Size
+    learn_session_size_desc Počet nových kariet, ktoré sa majú zaviesť v jednej lekcii učenia.
     learning_session_complete_description Skvelá práca! Dokončili ste túto vzdelávaciu reláciu. Váš postup bol uložený.
+    left_arrow Left Arrow
+    level Level
+    level_range Must be between 1 and 20
+    level_tier_1 Úroveň 1
+    level_tier_2 Úroveň 2
+    level_tier_3 Úroveň 3
     licenses Licencie
     licenses_aliolo_section_title Aliolo Komerčná licencia
     licenses_aliolo_subtitle Proprietárny softvér a prémiové podmienky prístupu
     licenses_intro_desc Ako prvá sa zobrazí komerčná licencia Aliolo. Licencie balíkov tretích strán sú uvedené nižšie.
     licenses_intro_title Aliolo Oznámenia o licencii a balíku
     licenses_third_party_section_title Licencie na balíky tretích strán
+    light Light
     linux_distro Linuxová distribúcia
     loading Načítava sa...
     localized_data Lokalizované údaje
+    login Prihlásiť sa
+    logout Odhlásiť sa
+    manage_cards Manage Cards
+    manage_friends Friends
+    manage_friends_desc View and manage your friend requests
+    manage_library Manage Library ({sCount} subjects, {cCount} cards)
+    manage_subjects Manage Subjects
+    manage_subscription Spravovať predplatné
+    manage_testing_langs Manage Testing Languages
+    manage_users Manage Users
+    master_visual_ease Master visual subjects with ease.
+    mastered mastered
+    mastery Majstrovstvo
+    max_streak Max Streak
+    maybe_later Možno neskôr
+    mission_desc The smart companion that helps your brain learn and retain visual knowledge through science-backed algorithms.
+    mock_email_title Mock Email Inbox
+    mode_audio_to_image Audio to Image
+    mode_audio_to_text Audio to Text
+    mode_image_to_text Image to Text
+    mode_text_to_text Text to Text
     monthly_access Mesačný prístup
     most_popular_choice Najobľúbenejšia voľba
+    multi_lang_answers Multi-language Answers
+    multi_lang_prompts Multi-language Prompts
+    my_position My Position
+    name Name
+    names_descriptions Names & Descriptions
+    new NEW
     new_email Nový email
+    new_password New Password
+    next Ďalej
+    next_card Next Card
+    next_daily_goal Ďalší denný cieľ
+    next_daily_goal_desc Cieľový počet kariet, ktoré si treba každý deň osvojiť. Zmeny nadobudnú účinnosť zajtra.
+    next_day_goal Next Day Goal
     no_cards_available_for_this_session Pre túto reláciu nie sú k dispozícii žiadne karty.
     no_cards_found Nenašli sa žiadne karty
+    no_cards_found_for_lang No cards found for this language
+    no_cards_in_library No cards found in the library.
+    no_feedback_found Nenašla sa žiadna spätná väzba.
+    no_folder Žiadny priečinok (Koreň)
+    no_friends_found No friends found
+    no_images_added Žiadne pridané obrázky
+    no_leaderboard_data No leaderboard data available.
+    no_localized_audio Žiadny lokalizovaný zvuk
+    no_localized_images Žiadne lokalizované obrázky
+    no_localized_video Žiadne lokalizované video
+    no_subjects_available Nie sú k dispozícii žiadne predmety
     no_subjects_found Nenašli sa žiadne predmety
     no_subjects_found_in_this_collection V tejto kolekcii sa nenašli žiadne predmety
     no_users_found Nenašli sa žiadni používatelia
+    ok OK
+    old_password Staré heslo
+    old_password_required Staré heslo je povinné
+    onboarding_1_desc Učte sa vizuálne. Ovládajte trvalo. Váš vizuálny spoločník na učenie poháňaný vedou SM-2.
+    onboarding_1_title Vitajte v Aliolo
+    onboarding_2_desc To nám pomôže prispôsobiť vaše učenie a odporučiť tie správne predmety.
+    onboarding_2_title Koľko máte rokov?
+    onboarding_3_desc Vyberte svoj primárny záujem a prispôsobte si úvodný panel.
+    onboarding_3_title Čo chcete ovládnuť?
+    onboarding_4_desc Zostavte si vlastný balíček alebo sa ponorte do kariet zdieľaných študentmi Aliolo po celom svete. Učte sa vlastným tempom a otestujte sa, keď budete pripravení.
+    onboarding_4_title Vytvárajte a zdieľajte
+    onboarding_5_desc Vaša knižnica zostáva synchronizovaná vo všetkých vašich zariadeniach. Upozorníme vás, len keď bude čas chrániť vašu sériu.
+    onboarding_5_title Ovládajte kdekoľvek
+    onboarding_6_desc Začnite svoju cestu dnes a ovládnite čokoľvek, čo si zaumienite.
+    onboarding_6_title Pripojte sa ku komunite
+    onboarding_7_joined Pridali sa tisíce študentov
+    onboarding_7_quote Aliolo úplne zmenilo spôsob, akým moje deti aj ja ovládame nové témy. Vizuálne karty a rozložené opakovanie robia z učenia hru!
+    onboarding_get_started Začať
+    onboarding_next Ďalej
+    onboarding_skip Preskočiť
+    options_count Number of Answers
+    options_count_desc Počet odpovedí s výberom z viacerých možností zobrazených počas testov.
+    options_per_card options per card
+    order_id ID objednávky
     os_version Verzia OS
+    our_mission OUR MISSION
+    page Page
+    parent_folder_label Parent Folder (sk)
+    password Heslo
+    password_required Password is required
+    password_reset_success Password reset successful
     password_updated_successfully Heslo bolo úspešne aktualizované!
+    passwords_dont_match Passwords do not match
+    paste PASTE
     payments_are_not_yet_integrated_on_web_please_use_the_mobile_app_to_upgrade Platby ešte nie sú integrované na webe. Na inováciu použite mobilnú aplikáciu.
     personal_data Osobné údaje
     pick_date Vyberte dátum
+    picture Picture
+    pillar Pillar
+    plan_monthly Mesačný prístup
+    plan_monthly_desc Najobľúbenejšia voľba
     plan_monthly_tagline Najobľúbenejšia voľba
     plan_monthly_title Mesačný prístup
+    plan_weekly Týždenný prístup
+    plan_weekly_desc Najlepšie pre rýchle ciele
     plan_weekly_tagline Najlepšie na rýchle góly
     plan_weekly_title Týždenný prístup
+    plan_yearly Ročný prístup
+    plan_yearly_desc Ušetrite 33 % mesačne
     plan_yearly_tagline Ušetrite 33% mesačne
     plan_yearly_title Ročný prístup
     platform Platforma
@@ -177,58 +526,208 @@
     please_enter_the_6_digit_code Zadajte 6-miestny kód
     please_wait_for_a_response_before_replying_again Pred opätovnou odpoveďou počkajte na odpoveď.
     premium_expires_at Platnosť vyprší o $date
+    premium_go Prejsť na Premium
     premium_lifetime Doživotný prístup
     premium_only Iba prémiové
     premium_status_active Ste prémiovým členom
+    premium_title Aliolo Premium
     premium_unlock_desc Získajte prístup ku všetkým predmetom, vytvorte neobmedzený počet kariet a podporte misiu Aliolo.
     premium_unlock_title Odomknite úplný prístup
+    prev Prev
+    previous_card Previous Card
+    price_per_week ({price} / týždeň)
+    private Private
+    pro_label PRO
+    product_id ID produktu
     product_not_available_in_store Produkt nie je dostupný v predajni.
     profile Profil
+    profile_title My Profile & Progress
+    prompt_label Prompt
+    prompt_optional Prompt / Question
+    prompts_answers Prompts & Answers
+    provide_at_least_one_answer Please provide at least one answer
+    provide_at_least_one_name Provide at least one name
+    provider Poskytovateľ
     public_other_subject Verejný/iný subjekt
+    public_profile Public Profile
+    public_profile_desc Show your XP and Streak on Hall of Fame.
+    public_subject Public Subject
+    public_subject_desc Make this subject visible to other users.
     purchase_failed Nákup zlyhal: $e
+    purchase_token Nákupný token
+    record_shortcut Record Shortcut
     recovery_error Chyba obnovenia: $e
     refresh Obnoviť
     refresh_conversation Obnoviť konverzáciu
+    remove_friend Remove Friend
+    remove_friend_confirm Are you sure you want to remove friend
     renderer Renderer
+    request_sent Request sent
+    request_sent_waiting Request sent (waiting)
+    required Required
     reset_code Resetovať kód
+    reset_code_email_title Password Reset Code
+    reset_code_sent "Reset code for: "
     reset_code_sent_to_please_check_your_inbox Resetovať kód odoslaný na $email. Skontrolujte si doručenú poštu.
+    reset_password_for "Reset Password for: "
+    restore_password Restore Password
     restore_purchases Obnoviť nákupy
+    retry Retry
+    right_arrow Right Arrow
     save Uložiť
     save_33_per_month Ušetrite 33% mesačne
+    save_before_nav Do you want to save changes before navigating?
+    save_card Save Card
+    save_subject Save Subject
     saved_successfully Úspešne uložené
+    search_cards Search Cards
+    search_subjects Search Subjects
     search_users Vyhľadajte používateľov
+    select_an_answer Select an Answer
+    select_lang Select Language
+    select_package_license Select Package License
+    select_user Select User
+    selected_count {count} Selected
+    send Send
+    send_code Send Code
+    send_verification_code Send verification code?
     session_complete Relácia dokončená!
     session_complete_description Skvelá práca! Dokončili ste všetky karty v tejto relácii.
+    setting_saved Setting saved
     settings Nastavenia
+    shortcuts_hint Press the key you want to use with Ctrl.
+    show_all_languages Show all languages
     show_documentation_btn Tlačidlo Zobraziť dokumentáciu
     show_documentation_btn_desc Zobrazte tlačidlo dokumentácie na paneli aplikácií.
     show_fake_users Zobraziť falošných používateľov
+    show_less_languages Show less languages
+    sidebar_left Sidebar on the left
+    sidebar_left_desc Move testing controls to the left side of the screen.
+    silver SILVER
+    social Social
+    sort_by Sort by
+    sound_effects Sound Effects
+    sound_effects_desc Enable audio feedback for correct and wrong answers.
+    source Zdroj
+    status Stav
+    status_closed Uzavreté
+    status_open Otvorené
+    status_replied Odpovedané
+    streak Séria
+    subject Subject
+    subject_deleted Subject deleted
     subject_id ID subjektu
+    subject_label Subject
+    subject_plural Subjects
+    subject_type Subject Type (sk)
+    subjects Predmety
     subscribe_now Prihláste sa teraz
     subscription_data Údaje o predplatnom
     subscription_updated Predplatné bolo aktualizované
     subtraction_emoji Odčítanie Emoji
     subtraction_numbers Čísla odčítania
+    support_and_management Podpora a správa
+    system System
+    tap_to_replay Tap to Replay
     technical_context TECHNICKÝ KONTEXT
+    test_mode_desc Challenge yourself with a quiz
+    test_mode_label Test Mode
+    test_mode_title Test
+    test_session_size Test Session Size
+    test_session_size_desc Počet kariet, ktoré sa majú skontrolovať v jednej testovacej lekcii.
+    testing Testing
     testing_mode Testovací režim
+    testing_section Testing Settings
     text Text
+    the_science THE SCIENCE
+    theme_color App Theme Color
+    theme_color_desc Customize the primary color used for buttons and highlights.
+    theme_dark Dark
+    theme_light Light
+    theme_mode Režim témy
+    theme_system System
     this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards Toto je priečinok. Na precvičenie všetkých kariet môžete použiť tlačidlá Učiť/Test vyššie.
+    to_label To
     total_cards Celkový počet kariet
+    total_xp Total XP
+    trust_cloud_desc Your progress is securely synced across all your devices in real-time.
+    trust_cloud_title Cloud Sync
+    trust_privacy TRUST & PRIVACY
+    trust_sync_desc Your data is private and encrypted to ensure the highest security standards.
+    trust_sync_title Encrypted Data
+    type_collection Kolekcia
+    type_folder Folder (Sub-subjects) (sk)
+    type_standard Standard (Cards) (sk)
     type_your_reply Napíšte svoju odpoveď...
     ua UA
+    ui_language Jazyk rozhrania
+    ukrainian Ukrainian
     unknown_user_profile_missing Neznámy používateľ (chýba profil)
+    unsaved_changes Unsaved Changes
+    unsaved_changes_msg Máte neuložené zmeny. Chcete ich zahodiť?
+    up_arrow Up Arrow
+    update Update
     update_available K dispozícii je nová verzia!
+    updated_at Aktualizované
+    upload_new_photo Nahrať novú fotku
     user Používateľ
+    user_exists User already exists
     user_id ID používateľa
+    user_not_found User not found
     user_with_this_email_already_exists_please_log_in_instead Používateľ s týmto e-mailom už existuje. Namiesto toho sa prihláste.
+    username Používateľské meno
     users Používatelia
     users_filter Filtrovať používateľov
     verification_code Overovací kód
     verification_code_sent_to Overovací kód bol odoslaný na adresu $email
+    verify Verify
     version Verzia
+    video Video
+    video_link Video Link
+    video_url_optional Video URL (Optional)
+    view_card View Card
+    view_cards_title View Cards
     view_onboarding Zobraziť registráciu
+    visibility Visibility
+    visual_content_required Vyžaduje sa aspoň jeden vizuálny obsah
+    visual_content_required_msg Musí sa poskytnúť aspoň jeden vizuálny obsah (text, obrázok, zvuk alebo video).
+    visual_text Vizuálny text
+    wants_to_be_friend Wants to be your friend
     weekly_access Týždenný prístup
     welcome_complete_your_profile_to_join_aliolo Vitajte! Ak sa chcete pripojiť k aliolo, vyplňte svoj profil.
+    xp XP
     yearly_access Ročný prístup
+    you You
     you_do_not_have_permission_to_edit_this_card Nemáte povolenie na úpravu tejto karty
     you_do_not_have_permission_to_view_this_card_details Nemáte povolenie na zobrazenie podrobností o tejto karte.
+    you_rank You are ranked #{rank}
+    active Aktívny
+    autoplay Automatické prehrávanie
+    card_limit Limit kariet
+    card_limit_msg Dosiahli ste limit {limit} kariet.
+    create_request Vytvoriť požiadavku
+    edit_user Upraviť používateľa
+    favorite Obľúbené
+    file_too_large Súbor je príliš veľký
+    inactive Neaktívny
+    is_required je povinné
+    languages Jazyky
+    limit_reached Limit dosiahnutý
+    not_available Nie je k dispozícii
+    toggle_languages Prepnúť jazyky
+    user_updated Používateľ bol aktualizovaný
+    zoom Priblížiť
+    account_and_management Account & Management
+    back_to_plans Back to plans
+    confirm_password_required Confirm password is required
+    feat_autoplay_desc Focus on learning while the app automatically advances through cards at your pace.
+    feat_autoplay_title Hands-Free Autoplay
+    feat_create_share_desc Easily create your own subjects and cards, or share them with the community.
+    feat_create_share_title Create & Share
+    feat_science_smart_review_desc The algorithm calculates the optimal time to review each card for maximum retention.
+    feat_science_smart_review_title Smart Review Cycles
+    new_password_required New password is required
+    password_updated Password updated successfully
+    save_success Saved successfully
+    trust_ecosystem_desc Your progress and cards are seamlessly synced across all your devices.
+    trust_ecosystem_title Aliolo Ecosystem

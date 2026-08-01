@@ -43,37 +43,139 @@
     about_support_settings_desc يمكن تعديل لغة واجهة المستخدم ووضع السمة ولون السمة والصوت وموضع الشريط الجانبي ورؤية الوثائق من الإعدادات.
     about_support_settings_title التخصيص
     about_support_title الإعدادات والتعليقات والدعم
+    about_tagline تعلم بصرياً. أتقن للأبد.
+    account_created تم إنشاء الحساب
+    account_created_billing_fail تم إنشاء حسابك، ولكن لم يكتمل الدفع. أعد محاولة الدفع أدناه.
+    account_deleted Account deleted successfully
+    add_card Add Card
+    add_collection إضافة مجموعة
+    add_folder إضافة مجلد
+    add_friend_by_email Add Friend By Email
+    add_lang_translation Add Language Translation
+    add_prompt_translation Add Prompt Translation
+    add_subject Add Subject
     addition_emoji إضافة الرموز التعبيرية
     addition_numbers أرقام الإضافة
+    age العمر
+    age_0_6 0-6 سنوات
+    age_15_18 15 - 18
+    age_15_plus 15+ سنة
+    age_19_25 19 - 25
+    age_26_35 26 - 35
+    age_36_50 36 - 50
+    age_7_14 7-14 سنة
+    age_advanced متقدم
+    age_all جميع الأعمار
+    age_early الطفولة المبكرة
+    age_group الفئة العمرية
+    age_intermediate المرحلة المتوسطة
+    age_over_50 أكثر من 50
+    age_primary المدرسة الابتدائية
+    age_under_14 أقل من 14
+    algorithm_title THE ALIOLO ALGORITHM
     aliolo aliolo
+    all_matching_subjects جميع المواضيع المطابقة
     all_rights_reserved جميع الحقوق محفوظة
+    answer إجابة
+    answer_label answer
+    answers_label answers
     are_you_sure_you_want_to_close_this_feedback_request هل أنت متأكد أنك تريد إغلاق طلب التعليقات هذا؟
     are_you_sure_you_want_to_delete_this_folder هل أنت متأكد أنك تريد حذف هذا المجلد؟
+    ascending تصاعدي
     attach_image إرفاق الصورة
+    audio صوت
+    audio_playing جاري تشغيل الصوت
+    author Author
     back خلف
+    back_to_login Back to Login
     back_to_subjects العودة إلى المواضيع
     best_for_quick_goals الأفضل للأهداف السريعة
     billing_disclaimer يتم تجديد الاشتراكات تلقائيًا ما لم يتم إلغاؤها. يمكنك إدارة اشتراكك في إعدادات متجرك.
     billing_title الفواتير
+    bronze BRONZE
     browser المتصفح
     cancel يلغي
+    cancel_request Cancel Request
+    cancel_request_confirm Are you sure you want to cancel the request to
+    cannot_delete_folder لا يمكن حذف المجلد
     cannot_delete_folder_it_is_not_empty لا يمكن حذف المجلد: فهو ليس فارغاً
+    card_details Card Details
     card_id معرف البطاقة
+    card_label Card
+    card_level مستوى البطاقة
+    card_plural Cards
+    cards cards
+    cards_label cards
+    cards_per_day cards per day
+    cards_per_session cards per session
+    change_avatar Change Avatar
+    change_password تغيير كلمة المرور
     check_your_email_for_code تحقق من بريدك الإلكتروني للحصول على الرمز
     clear واضح
+    click_to_select_image Click to select image
     click_to_view_original انقر لعرض الأصلي
     close يغلق
     close_request هل تريد إغلاق الطلب؟
+    code_label Code
     collection_id معرف المجموعة
     colors الألوان
+    common_settings الإعدادات العامة
+    compare_plans قارن بين الخطط المجانية والمدفوعة
+    confirm تأكيد
+    confirm_logout Are you sure you want to logout?
+    confirm_password Confirm Password
     confirm_subscription تأكيد الاشتراك
+    content_label المحتوى
     context سياق
+    copy نسخ
+    copy_all Copy All
+    core_features الميزات الأساسية
     correct_answers الإجابات الصحيحة
     could_not_launch تعذر تشغيل $url
     counting عد
+    create_account Create Account
+    create_new_account Create New Account
+    create_new_card Create New Card
+    created_at تاريخ الإنشاء
+    current_streak Current Streak
     current_subscription الاشتراك الحالي
+    daily_goal Daily Goal
+    daily_progress التقدم اليومي
+    dark Dark
+    dashboard_greeting مرحبا
+    day day
+    day_label Day
+    day_plural Days
+    days days
+    default افتراضي
+    default_language اللغة الافتراضية
+    default_testing_language Default Testing Language
+    default_testing_language_desc Pre-selects this language on the subjects page.
     delete يمسح
+    delete_account Delete Account
+    delete_account_confirm Are you sure you want to delete your account? This action is permanent.
+    delete_avatar حذف الصورة الرمزية
+    delete_avatar_confirm هل أنت متأكد أنك تريد إزالة صورة ملفك الشخصي؟
+    delete_card_confirm Delete this card?
+    delete_collection حذف المجموعة
+    delete_collection_confirm هل أنت متأكد أنك تريد حذف هذه المجموعة؟
+    delete_folder حذف المجلد
+    delete_selected_cards Delete selected cards?
+    delete_subject Delete Subject
+    delete_subject_confirm Delete subject '{subject}' and all {count} cards inside?
+    delete_subjects_first يرجى حذف جميع المواضيع الفرعية داخل هذا المجلد قبل حذف المجلد نفسه.
+    descending تنازلي
+    description Description
     device جهاز
+    digit_code 6-digit Code
+    discard Discard
+    discard_changes تجاهل التغييرات؟
+    doc_autoplay_desc يمكن للتطبيق التقدم تلقائياً إلى البطاقة التالية بعد إجابتك. تنتظر الإجابات الصحيحة ثانية واحدة، بينما تنتظر الإجابات الخاطئة ثانيتين.
+    doc_autoplay_title التشغيل التلقائي
+    doc_card_scope_desc البطاقات هي وحدات البناء للتعلم وتنتمي دائماً إلى مادة محددة.
+    doc_card_scope_title أين توجد البطاقات
+    doc_collections_purpose_desc المجموعات هي مسارات منسقة تجمع المواد معاً. يقوم النظام بخلط البطاقات من جميع المواد المضمنة لاختبار شامل.
+    doc_collections_purpose_title الغرض من المجموعات
     doc_create_intro_desc تغطي علامة التبويب هذه كيفية قيام منشئي المحتوى بتنظيم المحتوى وتوطينه ونشر مواد دراسية مفيدة دون المبالغة في تعقيد سير العمل.
     doc_create_intro_title يخلق
     doc_create_json_desc يعد الإنشاء المستند إلى JSON بمثابة سير عمل متقدم للمحتوى المجمع المنظم. وينبغي أن تظل اختيارية؛ يجب أن يكون معظم منشئي المحتوى قادرين على إنشاء المحتوى وتحريره من خلال النماذج القياسية.
@@ -86,6 +188,38 @@
     doc_create_model_title نموذج المحتوى
     doc_create_visibility_desc استخدم "الخاص بي" للعمل على المحتوى الخاص بك، والمفضلات لتثبيت العناصر المفيدة، والمكتبة العامة لتصفح المواد المشتركة. تؤثر الرؤية العامة على الاكتشاف، بينما تؤثر الملكية على ما يمكنك تعديله أو حذفه.
     doc_create_visibility_title الملكية والرؤية
+    doc_creation_desc أنشئ موادك الخاصة وأضف بطاقات تعليمية بصرية. تدعم كل بطاقة صورة وملفاً صوتياً اختيارياً للنطق.
+    doc_creation_title إنشاء المواد والبطاقات
+    doc_feedback_desc ساعدنا على التحسن! استخدم أيقونة الملاحظات (Icons.feedback) على أي مادة أو مجلد للإبلاغ عن المشكلات.
+    doc_feedback_title نظام الملاحظات
+    doc_filters_desc ابحث عن المحتوى بسرعة باستخدام شريط البحث. يمكنك التصفية حسب الفئة العمرية أو حصر عرضك في مجموعات محددة.
+    doc_filters_title البحث والفلاتر
+    doc_flashcards_desc تحتوي كل مادة على مجموعة من البطاقات. الصور والصوت مدعومان ولكنهما اختياريان — يمكن أن يكون المحتوى نصياً فقط.
+    doc_flashcards_title البطاقات التعليمية البصرية
+    doc_friends_desc التعلم أفضل مع الأصدقاء! ادعُ الأصدقاء إلى Aliolo عبر ملفك الشخصي. يمكنك تتبع تقدم بعضكم البعض.
+    doc_friends_title الأصدقاء والدعوات
+    doc_goals_desc حدد هدفك اليومي لإكمال البطاقات في الإعدادات. تدخل التغييرات حيز التنفيذ اعتباراً من اليوم التالي.
+    doc_goals_title الأهداف اليومية
+    doc_json_desc يمكن لمنشئي المحتوى المتقدمين استخدام بيانات JSON لتوفير أسماء وأوصاف محلية.
+    doc_json_title ترجمة JSON
+    doc_lang_desc اختر دائماً لغة التعلم المفضلة لديك في القائمة العلوية قبل اختيار المادة. هذا يضمن تحميل الصوت والترجمات الصحيحة.
+    doc_lang_title لغة التعلم
+    doc_leaderboard_desc تنافس مع المتعلمين في جميع أنحاء العالم! اكسب نقاط الخبرة XP من خلال إكمال جلسات البطاقات واصعد في الترتيب. يتم تحديث موقعك في الوقت الفعلي.
+    doc_leaderboard_title لوحة المتصدرين العالمية
+    doc_localization_details_desc اللغة "العالمية" (Global) هي لغتك الاحتياطية الأساسية. الترجمات المحددة ستتجاوزها فقط عند اختيار لغة الواجهة تلك.
+    doc_localization_details_title كيف تعمل الترجمة المحلية
+    doc_localization_ui_desc لإضافة بيانات محلية، ما عليك سوى النقر على أيقونة رمز اللغة في رأس المحرر.
+    doc_localization_ui_title إضافة الترجمات
+    doc_math_desc تستخدم المواد الرياضية محركات متخصصة لتوليد تمثيلات بصرية للبطاقات في الوقت الفعلي.
+    doc_math_title المواد الرياضية
+    doc_media_desc لضمان المزامنة السريعة، حافظ على حجم الصور أقل من 5 ميجابايت وملفات الصوت أقل من 10 ميجابايت.
+    doc_media_title حدود تحميل الوسائط
+    doc_organization_desc استخدم المجلدات لتجميع المواد ذات الصلة. يمكنك أيضاً إنشاء مجموعات لتنظيم المواد في مسارات منسقة.
+    doc_organization_title تنظيم المحتوى
+    doc_pillars_desc يتم تنظيم جميع المحتويات في Aliolo في 8 ركائز أساسية: الأكاديمية والمهنية، العالم، الطبيعة، جسم الإنسان، العلوم الإنسانية، الترفيه، الهندسة، وأخرى.
+    doc_pillars_title الركائز الثمانية الأساسية
+    doc_public_desc يمكن أن تكون المواد خاصة (مرئية لك فقط) أو عامة. يتم مشاركة المحتوى العام مع مجتمع Aliolo بأكمله.
+    doc_public_title عام مقابل خاص
     doc_start_dashboard_desc لوحة القيادة هي مكتبتك الرئيسية. استخدم البحث للعثور على المحتوى بسرعة، ثم قم بدمج مرشحات المصدر مثل المفضلة والمفضلات الخاصة بي والمكتبة العامة مع مرشحات العمر لتقليل الضوضاء.
     doc_start_dashboard_title لوحة التحكم والبحث والمرشحات
     doc_start_feedback_desc استخدم نقاط إدخال التعليقات عبر التطبيق عندما يكون هناك خطأ ما أو غير واضح. يمكن أن تتضمن التقارير السياق الحالي، مما يسهل مراجعة مشكلات المحتوى وإصلاحها.
@@ -98,6 +232,8 @@
     doc_start_quick_title بداية سريعة
     doc_start_structure_desc المواضيع تحمل البطاقات. تقوم المجلدات بتجميع المحتوى ذي الصلة داخل عمود. المجموعات عبارة عن مجموعات منسقة يمكنها الجمع بين موضوعات متعددة للدراسة والمشاركة.
     doc_start_structure_title المواضيع والمجلدات والمجموعات
+    doc_streaks_desc الاستمرارية هي المفتاح! أكمل هدفك اليومي كل يوم لبناء متواليتك. لا تفوت يوماً، وإلا ستتم إعادة تعيين المتوالية.
+    doc_streaks_title نظام المتواليات (Streak)
     doc_study_how_desc ابدأ بـ "تعلم" عندما تقوم ببناء التعرف، ثم قم بالتبديل إلى "اختبار" عندما تريد استدعاء أسرع وفحصًا أكثر صرامة. استخدم جلسات أقصر للمراجعة المركزة وجلسات أكبر لتغطية أوسع.
     doc_study_how_title كيفية الدراسة
     doc_study_intro_desc تشرح علامة التبويب هذه كيفية التنقل عبر المحتوى واختيار الوضع المناسب وضبط جلساتك للمراجعة أو الاستدعاء.
@@ -108,67 +244,286 @@
     doc_study_modes_title أوضاع التعلم والاختبار
     doc_study_scope_desc يمكن أن تبدأ الدراسة من موضوع واحد، أو عرض مجلد، أو مجموعة. تكون المجموعات مفيدة عندما تريد جلسة مختلطة عبر عدة مواضيع دون مغادرة التدفق الحالي.
     doc_study_scope_title المواضيع والمجلدات والمجموعات في الدراسة
+    doc_sync_desc يتم مزامنة تقدمك تلقائياً مع السحابة. يمكنك التبديل بين إصدارات الويب والسطح المكتب دون فقدان متواليتك.
+    doc_sync_title مزامنة السحاب
     doc_tab_create يخلق
+    doc_tab_creator إنشاء
+    doc_tab_general عام
+    doc_tab_learning ممارسة
     doc_tab_start يبدأ
     doc_tab_study يذاكر
+    doc_testing_desc تحدَّ نفسك بأسئلة الاختيار من متعدد (MCQ). سيتقدم التطبيق تلقائياً أثناء إجابتك.
+    doc_testing_title الاختبار التفاعلي
+    doc_welcome_desc Aliolo هي منصة تعليمية بصرية مصممة لمساعدتك على إتقان المواد من خلال البطاقات التعليمية والاختبارات التفاعلية.
+    doc_welcome_title مرحباً بك في Aliolo
     documentation التوثيق
+    done_today تم اليوم
+    down_arrow Down Arrow
+    edit تعديل
+    edit_card Edit Card
+    edit_collection تعديل المجموعة
+    edit_email تعديل البريد الإلكتروني
+    edit_folder تعديل المجلد
+    edit_name Edit Name
+    edit_subject Edit Subject
+    edit_subject_title Edit Subject
     edit_subscription تحرير الاشتراك
+    email Email
+    email_change_notice لدواعي الأمان، سيتم إرسال رابط تأكيد إلى كل من عنوان بريدك الإلكتروني القديم والجديد. يجب عليك النقر فوق كليهما لإتمام التغيير.
+    email_in_use Email is already in use
+    email_subject Subject
+    email_update_sent تم إرسال رسائل تأكيد بالبريد الإلكتروني. يرجى التحقق من كلا البريدين.
     email_updated_successfully تم تحديث البريد الإلكتروني بنجاح!
+    english English
     enter_current_password أدخل كلمة المرور الحالية
+    enter_new_email أدخل البريد الإلكتروني الجديد
+    enter_new_name Enter New Name
+    enter_number Enter a number
+    enter_or_select_subject Please enter or select a subject
+    enter_pass_to_confirm Enter your password to confirm
+    enter_subject_name Enter subject name
     error خطأ: $e
     error_deleting حدث خطأ أثناء الحذف: $e
+    error_deleting_account Could not delete account. Check your password.
     error_saving حدث خطأ أثناء الحفظ: $e
     error_saving_card خطأ في حفظ البطاقة: $e
     error_updating_favorite حدث خطأ أثناء تحديث المفضلة: $e
+    exit Exit
+    exit_confirm_msg Are you sure you want to exit the application?
+    exit_confirm_title Exit Aliolo?
+    expiry_date تاريخ الانتهاء
     failed_answers الإجابات الفاشلة
     failed_to_send_reset_code فشل إرسال رمز إعادة التعيين
     failed_to_send_verification_code فشل في إرسال رمز التحقق
     fake_only وهمية فقط
+    fatal_startup_error Fatal Startup Error
+    feat_adaptive_desc The system monitors your recognition speed across MCQ options, dynamically adjusting intervals to push your boundaries.
+    feat_adaptive_title Adaptive Response Timing
+    feat_ages_desc محتوى منسق لمختلف الفئات العمرية من الطفولة المبكرة إلى التعلم المتقدم.
+    feat_ages_title لكل الأعمار
+    feat_autoplay_desc ركز على التعلم بينما يتقدم التطبيق تلقائياً عبر البطاقات بسرعتك الخاصة.
+    feat_autoplay_title التشغيل التلقائي بدون استخدام اليدين
+    feat_create_share_desc أنشئ موادك وبطاقاتك الخاصة بسهولة، أو شاركها مع المجتمع.
+    feat_create_share_title الإنشاء والمشاركة
+    feat_gamified_desc اكسب XP وشارات وابنِ سلاسل تفوق أثناء إتقان المواد المرئية المعقدة.
+    feat_gamified_title تجربة ممتعة
+    feat_mastery_desc Dynamic XP rewards difficulty, while real-time mastery badges (Bronze, Silver, Gold) track your journey from novice to expert.
+    feat_mastery_title Visual Mastery & XP
+    feat_multimedia_desc تعلم مع دعم الصور والصوت والفيديو لتدريب غامر.
+    feat_multimedia_title بطاقات الوسائط المتعددة
+    feat_recognition_desc Immersive identification drills designed to build instant "muscle memory" for complex visual subjects.
+    feat_recognition_title Visual Pattern Training
+    feat_science_adaptive_desc تعدل الفواصل الزمنية تلقائياً بناءً على سرعة التعرف ودقتك.
+    feat_science_adaptive_title توقيت تكيفي
+    feat_science_smart_review_desc تحسب الخوارزمية الوقت الأمثل لمراجعة كل بطاقة لتحقيق أقصى قدر من الاستبقاء.
+    feat_science_smart_review_title دورات المراجعة الذكية
+    feat_science_spacing_desc نموذج تباعد معرفي متقدم يتنبأ بتلاشي الذاكرة ويحسن دورات المراجعة.
+    feat_science_spacing_title SuperMemo-2 (SM-2)
+    feat_spacing_desc A full implementation of the SuperMemo-2 model predicts your memory decay and schedules reviews at the peak of retention.
+    feat_spacing_title Cognitive Spacing (SM-2)
+    feature_autoplay وضع التشغيل التلقائي
+    feature_community_access الوصول إلى مواد المجتمع
     feature_creation أدوات الإنشاء
     feature_customize التخصيص المتقدم
+    feature_favorites العناصر المفضلة على لوحة القيادة
+    feature_feedback ملاحظات واقتراحات مباشرة
+    feature_free مجاني
+    feature_friends دعوة الأصدقاء والتواصل معهم
     feature_full_library الوصول الكامل للمكتبة
+    feature_learn_all تعلم أي مادة أو مجموعة
+    feature_private_mode وضع الملف الشخصي الخاص
+    feature_pro برو
+    feature_spaced_repetition التكرار المتباعد (SM-2)
     feature_testing الاختبار التفاعلي
+    feedback ملاحظات
+    feedback_add_image إضافة صورة
+    feedback_attachments المرفقات
+    feedback_bug تقرير خلل
+    feedback_context السياق
+    feedback_details التفاصيل
+    feedback_error فشل في إرسال التعليق. يرجى المحاولة مرة أخرى.
+    feedback_management_desc عرض وإدارة تعليقات المستخدمين
+    feedback_management_title طلبات التعليقات
+    feedback_other آخر
+    feedback_submit إرسال التعليق
+    feedback_success شكراً لك على تعليقك!
+    feedback_suggestion اقتراح
+    feedback_title إرسال تعليق
+    feedback_title_hint العنوان
+    feedback_type النوع
+    fill_all_fields Please fill all fields
+    filter_all All
+    filter_dashboard لوحة القيادة
+    filter_favorites المفضلة
+    filter_my_subjects My Subjects
+    filter_on_dashboard On Dashboard
+    filter_public Public
+    filter_public_library المكتبة العامة
+    filters الفلاتر
+    finish إنهاء
+    finished_session You finished {count} cards. XP bonus awarded!
+    folder مجلد
+    folder_already_exists يوجد مجلد بهذا الاسم بالفعل في هذا الركن
     folder_id معرف المجلد
+    folder_label مجلد
+    folder_not_empty_msg لا يمكن الحذف: المجلد ليس فارغًا.
+    folder_plural مجلدات
+    forgot_password Forgot Password?
     free_only المستخدمين مجانا
+    general_preferences General Preferences
     generic نوعي
+    go_to_manager Go to Library Manager
+    goal_change_hint غيّر هدف بطاقاتك ليوم غد
+    goal_change_notice ستدخل التغييرات على هدفك اليومي حيز التنفيذ غداً.
+    gold GOLD
+    hide_comparison إخفاء مقارنة الخطط
     home بيت
+    images Images
+    included_subjects المواضيع المشمولة
+    info_copied Info copied to clipboard
+    initializing_aliolo Initializing Aliolo...
     invalid_code رمز غير صالح
+    invalid_email Invalid email address
     invalid_email_address عنوان البريد الإلكتروني غير صالح
     invalid_json JSON غير صالح: $e
+    invalid_number Invalid number
     invalid_or_expired_invitation_link رابط الدعوة غير صالح أو منتهية الصلاحية.
     invalid_or_expired_reset_code رمز إعادة التعيين غير صالح أو منتهي الصلاحية.
+    invalid_password Invalid password
+    invalid_password_delete Invalid Password
     invitation_sent_awaiting_registration تم إرسال الدعوة (في انتظار التسجيل)
+    invite دعوة
+    invite_user_content البريد الإلكتروني {email} غير موجود. هل تود دعوته للانضمام إلى Aliolo؟
+    invite_user_title دعوة مستخدم؟
     invited_and_request_sent تمت الدعوة وتم إرسال الطلب!
     json JSON
+    keyboard_shortcuts Keyboard Shortcuts
     label_suffix $label:
+    lang_abbr Lang
+    language Language
     leaderboard المتصدرين
+    learn_mode_desc Study cards and memorize answers
+    learn_mode_title Learn
+    learn_session_size حجم جلسة التعلم
+    learn_session_size_desc عدد البطاقات الجديدة التي سيتم تقديمها في جلسة تعلم واحدة.
     learning_session_complete_description عمل عظيم! لقد أنهيت هذه الجلسة التعليمية. لقد تم حفظ تقدمك.
+    left_arrow Left Arrow
+    level Level
+    level_range Must be between 1 and 20
+    level_tier_1 المستوى 1
+    level_tier_2 المستوى 2
+    level_tier_3 المستوى 3
     licenses التراخيص
     licenses_aliolo_section_title Aliolo رخصة تجارية
     licenses_aliolo_subtitle البرمجيات الاحتكارية وشروط الوصول المتميزة
     licenses_intro_desc يظهر الترخيص التجاري لـ Aliolo أولاً. تراخيص حزمة الطرف الثالث تتبع أدناه.
     licenses_intro_title Aliolo إشعارات الترخيص والحزمة
     licenses_third_party_section_title تراخيص حزمة الطرف الثالث
+    light Light
     linux_distro توزيعة لينكس
     loading تحميل...
     localized_data البيانات المترجمة
+    login تسجيل الدخول
+    logout Logout
+    manage_cards Manage Cards
+    manage_friends Friends
+    manage_friends_desc View and manage your friend requests
+    manage_library Manage Library ({sCount} subjects, {cCount} cards)
+    manage_subjects Manage Subjects
+    manage_subscription إدارة الاشتراك
+    manage_testing_langs Manage Testing Languages
+    manage_users Manage Users
+    master_visual_ease Master visual subjects with ease.
+    mastered mastered
+    mastery Mastery
+    max_streak Max Streak
+    maybe_later ربما لاحقاً
+    mission_desc الرفيق الذكي الذي يساعد عقلك على تعلم وتذكر المعرفة المرئية من خلال خوارزميات مدعومة علمياً.
+    mock_email_title Mock Email Inbox
+    mode_audio_to_image Audio to Image
+    mode_audio_to_text Audio to Text
+    mode_image_to_text Image to Text
+    mode_text_to_text Text to Text
     monthly_access الوصول الشهري
     most_popular_choice الاختيار الأكثر شعبية
+    multi_lang_answers Multi-language Answers
+    multi_lang_prompts Multi-language Prompts
+    my_position My Position
+    name Name
+    names_descriptions Names & Descriptions
+    new NEW
     new_email البريد الإلكتروني الجديد
+    new_password New Password
+    next Next
+    next_card Next Card
+    next_daily_goal الهدف اليومي التالي
+    next_daily_goal_desc عدد البطاقات المستهدف إتقانها كل يوم. تدخل التغييرات حيز التنفيذ غداً.
+    next_day_goal هدف الغد
     no_cards_available_for_this_session لا توجد بطاقات متاحة لهذه الجلسة.
     no_cards_found لم يتم العثور على بطاقات
+    no_cards_found_for_lang No cards found for this language
+    no_cards_in_library No cards found in the library.
+    no_feedback_found لم يتم العثور على أي تعليقات.
+    no_folder لا يوجد مجلد (الجذر)
+    no_friends_found No friends found
+    no_images_added لم تتم إضافة أي صور
+    no_leaderboard_data No leaderboard data available.
+    no_localized_audio لا يوجد صوت محلي
+    no_localized_images لا توجد صور محلية
+    no_localized_video لا يوجد فيديو محلي
+    no_subjects_available لا توجد مواضيع متاحة
     no_subjects_found لم يتم العثور على مواضيع
     no_subjects_found_in_this_collection لم يتم العثور على مواضيع في هذه المجموعة
     no_users_found لم يتم العثور على مستخدمين
+    ok موافق
+    old_password كلمة المرور القديمة
+    old_password_required كلمة المرور القديمة مطلوبة
+    onboarding_1_desc تعلم بصرياً. أتقن بشكل دائم. رفيقك في التعلم البصري المدعوم بعلم SM-2.
+    onboarding_1_title مرحباً بك في Aliolo
+    onboarding_2_desc هذا يساعدنا على تخصيص تجربة التعلم الخاصة بك والتوصية بالمواد المناسبة.
+    onboarding_2_title كم عمرك؟
+    onboarding_3_desc حدد اهتمامك الأساسي لتخصيص لوحة التحكم الأولية الخاصة بك.
+    onboarding_3_title ماذا تريد أن تتقن؟
+    onboarding_4_desc قم ببناء مجموعتك الخاصة أو استكشف البطاقات التي يشاركها متعلمو Aliolo في جميع أنحاء العالم. تعلم بالسرعة التي تناسبك، ثم اختبر نفسك عندما تكون مستعداً.
+    onboarding_4_title الإنشاء والمشاركة
+    onboarding_5_desc تظل مكتبتك متزامنة عبر جميع أجهزتك. سنقوم فقط بتذكيرك عندما يحين الوقت لحماية سلسلتك.
+    onboarding_5_title الإتقان في أي مكان
+    onboarding_6_desc ابدأ رحلتك اليوم وأتقن أي شيء تضعه في اعتبارك.
+    onboarding_6_title انضم إلى المجتمع
+    onboarding_7_joined انضم إليه آلاف المتعلمين
+    onboarding_7_quote لقد غيرت Aliolo تماماً الطريقة التي أتقن بها أنا وأطفالي موضوعات جديدة. البطاقات المرئية والتكرار المتباعد يجعل التعلم يبدو وكأنه لعبة!
+    onboarding_get_started ابدأ الآن
+    onboarding_next التالي
+    onboarding_skip تخطي
+    options_count Number of Answers
+    options_count_desc عدد إجابات الاختيار من متعدد المعروضة أثناء الاختبارات.
+    options_per_card options per card
+    order_id معرف الطلب
     os_version إصدار نظام التشغيل
+    our_mission مهمتنا
+    page Page
+    parent_folder_label المجلد الأصلي
+    password Password
+    password_required Password is required
+    password_reset_success Password reset successful
     password_updated_successfully تم تحديث كلمة المرور بنجاح!
+    passwords_dont_match Passwords do not match
+    paste لصق
     payments_are_not_yet_integrated_on_web_please_use_the_mobile_app_to_upgrade لم يتم بعد دمج المدفوعات على شبكة الإنترنت. يرجى استخدام تطبيق الهاتف المحمول للترقية.
     personal_data البيانات الشخصية
     pick_date اختر التاريخ
+    picture Picture
+    pillar Pillar
+    plan_monthly وصول شهري
+    plan_monthly_desc الخيار الأكثر شعبية
     plan_monthly_tagline الاختيار الأكثر شعبية
     plan_monthly_title الوصول الشهري
+    plan_weekly وصول أسبوعي
+    plan_weekly_desc الأفضل للأهداف السريعة
     plan_weekly_tagline الأفضل للأهداف السريعة
     plan_weekly_title الوصول الأسبوعي
+    plan_yearly وصول سنوي
+    plan_yearly_desc وفر 33% شهرياً
     plan_yearly_tagline وفر 33% شهريًا
     plan_yearly_title الوصول السنوي
     platform منصة
@@ -177,58 +532,202 @@
     please_enter_the_6_digit_code الرجاء إدخال الرمز المكون من 6 أرقام
     please_wait_for_a_response_before_replying_again الرجاء انتظار الرد قبل الرد مرة أخرى.
     premium_expires_at تنتهي صلاحيته في $date
+    premium_go اشترك في بريميوم
     premium_lifetime الوصول مدى الحياة
     premium_only قسط فقط
     premium_status_active أنت عضو مميز
+    premium_title Aliolo بريميوم
     premium_unlock_desc يمكنك الوصول إلى جميع المواضيع وإنشاء عدد غير محدود من البطاقات ودعم مهمة Aliolo.
     premium_unlock_title فتح الوصول الكامل
+    prev Prev
+    previous_card Previous Card
+    price_per_week ({price} / أسبوع)
+    private Private
+    pro_label PRO
+    product_id معرف المنتج
     product_not_available_in_store المنتج غير متوفر في المتجر.
     profile حساب تعريفي
+    profile_title My Profile & Progress
+    prompt_label Prompt
+    prompt_optional Prompt / Question
+    prompts_answers Prompts & Answers
+    provide_at_least_one_answer Please provide at least one answer
+    provide_at_least_one_name Provide at least one name
+    provider المزود
     public_other_subject موضوع عام/آخر
+    public_profile Public Profile
+    public_profile_desc Show your XP and Streak on Hall of Fame.
+    public_subject Public Subject
+    public_subject_desc Make this subject visible to other users.
     purchase_failed فشل الشراء: $e
+    purchase_token رمز الشراء
+    record_shortcut Record Shortcut
     recovery_error خطأ في الاسترداد: $e
     refresh ينعش
     refresh_conversation تحديث المحادثة
+    remove_friend Remove Friend
+    remove_friend_confirm Are you sure you want to remove friend
     renderer العارض
+    request_sent Request sent
+    request_sent_waiting Request sent (waiting)
+    required Required
     reset_code إعادة تعيين الرمز
+    reset_code_email_title Password Reset Code
+    reset_code_sent "Reset code for: "
     reset_code_sent_to_please_check_your_inbox تم إرسال رمز إعادة الضبط إلى $email. يرجى التحقق من البريد الوارد الخاص بك.
+    reset_password_for "Reset Password for: "
+    restore_password Restore Password
     restore_purchases استعادة المشتريات
+    retry Retry
+    right_arrow Right Arrow
     save يحفظ
     save_33_per_month وفر 33% شهريًا
+    save_before_nav Do you want to save changes before navigating?
+    save_card Save Card
+    save_subject Save Subject
     saved_successfully تم الحفظ بنجاح
+    search_cards Search Cards
+    search_subjects Search Subjects
     search_users بحث المستخدمين
+    select_an_answer Select an Answer
+    select_lang Select Language
+    select_package_license Select Package License
+    select_user Select User
+    selected_count {count} Selected
+    send Send
+    send_code Send Code
+    send_verification_code Send verification code?
     session_complete اكتملت الجلسة!
     session_complete_description عمل عظيم! لقد انتهيت من جميع البطاقات في هذه الجلسة.
+    setting_saved Setting saved
     settings إعدادات
+    shortcuts_hint Press the key you want to use with Ctrl.
+    show_all_languages Show all languages
     show_documentation_btn إظهار زر التوثيق
     show_documentation_btn_desc اعرض زر التوثيق في شريط التطبيقات.
     show_fake_users إظهار المستخدمين المزيفين
+    show_less_languages Show less languages
+    sidebar_left Sidebar on the left
+    sidebar_left_desc Move testing controls to the left side of the screen.
+    silver SILVER
+    social Social
+    sort_by فرز حسب
+    sound_effects Sound Effects
+    sound_effects_desc Enable audio feedback for correct and wrong answers.
+    source المصدر
+    status الحالة
+    status_closed مغلق
+    status_open مفتوح
+    status_replied تم الرد
+    streak Streak
+    subject Subject
+    subject_deleted Subject deleted
     subject_id معرف الموضوع
+    subject_label Subject
+    subject_plural Subjects
+    subject_type نوع الموضوع
+    subjects المواد
     subscribe_now اشترك الآن
     subscription_data بيانات الاشتراك
     subscription_updated تم تحديث الاشتراك
     subtraction_emoji رمز تعبيري الطرح
     subtraction_numbers أرقام الطرح
+    support_and_management الدعم والإدارة
+    system System
+    tap_to_replay اضغط لإعادة التشغيل
     technical_context السياق الفني
+    test_mode_desc Challenge yourself with a quiz
+    test_mode_label Test Mode
+    test_mode_title Test
+    test_session_size حجم جلسة الاختبار
+    test_session_size_desc عدد البطاقات التي سيتم مراجعتها في جلسة اختبار واحدة.
+    testing Testing
     testing_mode وضع الاختبار
+    testing_section Testing Settings
     text نص
+    the_science العلم
+    theme_color App Theme Color
+    theme_color_desc Customize the primary color used for buttons and highlights.
+    theme_dark داكن
+    theme_light فاتح
+    theme_mode Theme Mode
+    theme_system النظام
     this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards هذا مجلد. يمكنك استخدام أزرار التعلم/الاختبار أعلاه للتدرب على جميع البطاقات.
+    to_label To
     total_cards إجمالي البطاقات
+    total_xp Total XP
+    trust_cloud_desc يتم مزامنة تقدمك بشكل آمن عبر جميع أجهزتك في الوقت الفعلي.
+    trust_cloud_title مزامنة سحابية
+    trust_ecosystem_desc تتم مزامنة تقدمك وبطاقاتك بسلاسة عبر جميع أجهزتك.
+    trust_ecosystem_title نظام Aliolo البيئي
+    trust_privacy الثقة والخصوصية
+    trust_sync_desc بياناتك خاصة ومشفرة لضمان أعلى معايير الأمان.
+    trust_sync_title بيانات مشفرة
+    type_collection مجموعة
+    type_folder مجلد (مواضيع فرعية)
+    type_standard قياسي (بطاقات)
     type_your_reply اكتب ردك...
     ua تعميم الوصول إلى الخدمات
+    ui_language UI Language
+    ukrainian Ukrainian
     unknown_user_profile_missing مستخدم غير معروف (الملف الشخصي مفقود)
+    unsaved_changes Unsaved Changes
+    unsaved_changes_msg لديك تغييرات غير محفوظة. هل تريد تجاهلها؟
+    up_arrow Up Arrow
+    update Update
     update_available نسخة جديدة متاحة!
+    updated_at تاريخ التحديث
+    upload_new_photo تحميل صورة جديدة
     user مستخدم
+    user_exists User already exists
     user_id معرف المستخدم
+    user_not_found User not found
     user_with_this_email_already_exists_please_log_in_instead المستخدم الذي لديه هذا البريد الإلكتروني موجود بالفعل. الرجاء تسجيل الدخول بدلا من ذلك.
+    username Username
     users المستخدمين
     users_filter تصفية المستخدمين
     verification_code رمز التحقق
     verification_code_sent_to تم إرسال رمز التحقق إلى $email
+    verify Verify
     version إصدار
+    video Video
+    video_link Video Link
+    video_url_optional Video URL (Optional)
+    view_card View Card
+    view_cards_title View Cards
     view_onboarding عرض الإعداد
+    visibility Visibility
+    visual_content_required مطلوب محتوى مرئي واحد على الأقل
+    visual_content_required_msg يجب توفير محتوى مرئي واحد على الأقل (نص أو صورة أو صوت أو فيديو).
+    visual_text نص مرئي
+    wants_to_be_friend Wants to be your friend
     weekly_access الوصول الأسبوعي
     welcome_complete_your_profile_to_join_aliolo مرحباً! أكمل ملفك الشخصي للانضمام إلى aliolo.
+    xp XP
     yearly_access الوصول السنوي
+    you You
     you_do_not_have_permission_to_edit_this_card ليس لديك الإذن بتعديل هذه البطاقة
     you_do_not_have_permission_to_view_this_card_details ليس لديك إذن لعرض تفاصيل هذه البطاقة.
+    you_rank You are ranked #{rank}
+    active نشط
+    autoplay تشغيل تلقائي
+    card_limit حد البطاقات
+    card_limit_msg لقد وصلت إلى حد {limit} بطاقة.
+    create_request إنشاء طلب
+    edit_user تعديل المستخدم
+    favorite مفضل
+    file_too_large الملف كبير جدًا
+    inactive غير نشط
+    is_required مطلوب
+    languages اللغات
+    limit_reached تم الوصول إلى الحد
+    not_available غير متاح
+    toggle_languages تبديل اللغات
+    user_updated تم تحديث المستخدم
+    zoom تكبير
+    account_and_management Account & Management
+    back_to_plans Back to plans
+    confirm_password_required Confirm password is required
+    new_password_required New password is required
+    password_updated Password updated successfully
+    save_success Saved successfully

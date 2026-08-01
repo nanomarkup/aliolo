@@ -43,37 +43,139 @@
     about_support_settings_desc Die Sprache der Benutzeroberfläche, der Designmodus, die Designfarbe, der Ton, die Platzierung der Seitenleiste und die Sichtbarkeit der Dokumentation können alle über die Einstellungen angepasst werden.
     about_support_settings_title Personalisierung
     about_support_title Einstellungen, Feedback und Support
+    about_tagline Visuell lernen. Dauerhaft beherrschen.
+    account_created Konto erstellt
+    account_created_billing_fail Ihr Konto wurde erstellt, die Zahlung konnte jedoch nicht abgeschlossen werden. Versuchen Sie die Zahlung unten erneut.
+    account_deleted Konto erfolgreich gelöscht
+    add_card Karte hinzufügen
+    add_collection Kollektion hinzufügen
+    add_folder Ordner hinzufügen
+    add_friend_by_email Freund per E-Mail hinzufügen
+    add_lang_translation Add Language Translation
+    add_prompt_translation Add Prompt Translation
+    add_subject Fach hinzufügen
     addition_emoji Zusätzliches Emoji
     addition_numbers Zusatznummern
+    age Alter
+    age_0_6 0-6 Jahre
+    age_15_18 15 - 18
+    age_15_plus 15+ Jahre
+    age_19_25 19 - 25
+    age_26_35 26 - 35
+    age_36_50 36 - 50
+    age_7_14 7-14 Jahre
+    age_advanced Fortgeschritten
+    age_all Alle Altersgruppen
+    age_early Frühkindlich
+    age_group Altersgruppe
+    age_intermediate Mittelstufe
+    age_over_50 Über 50
+    age_primary Grundschule
+    age_under_14 Unter 14
+    algorithm_title DER ALIOLO-ALGORITHMUS
     aliolo aliolo
+    all_matching_subjects Alle passenden Themen
     all_rights_reserved Alle Rechte vorbehalten
+    answer Antwort
+    answer_label Antwort
+    answers_label Antworten
     are_you_sure_you_want_to_close_this_feedback_request Möchten Sie diese Feedback-Anfrage wirklich schließen?
     are_you_sure_you_want_to_delete_this_folder Sind Sie sicher, dass Sie diesen Ordner löschen möchten?
+    ascending Aufsteigend
     attach_image Bild anhängen
+    audio Audio
+    audio_playing Audio wird abgespielt
+    author Autor
     back Zurück
+    back_to_login Zurück zum Login
     back_to_subjects Zurück zu den Themen
     best_for_quick_goals Am besten für schnelle Ziele
     billing_disclaimer Abonnements verlängern sich automatisch, sofern sie nicht gekündigt werden. Sie können Ihr Abonnement in Ihren Shop-Einstellungen verwalten.
     billing_title Abrechnung
+    bronze BRONZE
     browser Browser
     cancel Stornieren
+    cancel_request Anfrage abbrechen
+    cancel_request_confirm Sind Sie sicher, dass Sie die Anfrage an ... abbrechen möchten?
+    cannot_delete_folder Ordner kann nicht gelöscht werden
     cannot_delete_folder_it_is_not_empty Ordner kann nicht gelöscht werden: Er ist nicht leer
+    card_details Kartendetails
     card_id Karten-ID
+    card_label Karte
+    card_level Kartenebene
+    card_plural Karten
+    cards Karten
+    cards_label Karten
+    cards_per_day Karten pro Tag
+    cards_per_session Karten pro Sitzung
+    change_avatar Avatar ändern
+    change_password Passwort ändern
     check_your_email_for_code Überprüfen Sie Ihre E-Mails auf Code
     clear Klar
+    click_to_select_image Klicken, um Bild auszuwählen
     click_to_view_original Klicken Sie hier, um das Original anzuzeigen
     close Schließen
     close_request Anfrage schließen?
+    code_label Code
     collection_id Sammlungs-ID
     colors Farben
+    common_settings Common Settings
+    compare_plans Kostenlos vs. Premium vergleichen
+    confirm Bestätigen
+    confirm_logout Sind Sie sicher, dass Sie sich abmelden möchten?
+    confirm_password Passwort bestätigen
     confirm_subscription Bestätigen Sie das Abonnement
+    content_label Content
     context Kontext
+    copy COPY
+    copy_all Alles kopieren
+    core_features HAUPTMERKMALE
     correct_answers Richtige Antworten
-    could_not_launch $Url konnte nicht gestartet werden
+    could_not_launch $url konnte nicht gestartet werden
     counting Zählen
+    create_account Konto erstellen
+    create_new_account Neues Konto erstellen
+    create_new_card Neue Karte erstellen
+    created_at Erstellt am
+    current_streak Aktuelle Serie
     current_subscription Aktuelles Abonnement
+    daily_goal Tagesziel
+    daily_progress Täglicher Fortschritt
+    dark Dunkel
+    dashboard_greeting Hallo
+    day Tag
+    day_label Tag
+    day_plural Tage
+    days Tage
+    default Standard
+    default_language Standardsprache
+    default_testing_language Standard-Lernsprache
+    default_testing_language_desc Wählt diese Sprache auf der Fächerseite vor.
     delete Löschen
+    delete_account Konto löschen
+    delete_account_confirm Sind Sie sicher, dass Sie Ihr Konto löschen möchten? Dies ist permanent.
+    delete_avatar Avatar löschen
+    delete_avatar_confirm Sind Sie sicher, dass Sie Ihr Profilbild entfernen möchten?
+    delete_card_confirm Diese Karte löschen?
+    delete_collection Kollektion löschen
+    delete_collection_confirm Möchten Sie diese Kollektion wirklich löschen?
+    delete_folder Ordner löschen
+    delete_selected_cards Ausgewählte Karten löschen?
+    delete_subject Thema löschen
+    delete_subject_confirm Fach '{subject}' und alle {count} Karten darin löschen?
+    delete_subjects_first Bitte löschen Sie alle Unterthemen in diesem Ordner, bevor Sie den Ordner selbst löschen.
+    descending Absteigend
+    description Beschreibung
     device Gerät
+    digit_code 6-stelliger Code
+    discard Verwerfen
+    discard_changes Änderungen verwerfen?
+    doc_autoplay_desc Die App kann nach Ihrer Antwort automatisch zur nächsten Karte weitergehen. Richtige Antworten warten 1s, während falsche 2s warten, damit Sie sie überprüfen können.
+    doc_autoplay_title Auto-Play-Lernen
+    doc_card_scope_desc Karten sind die Bausteine des Lernens und gehören immer zu einem bestimmten Thema. Während Sie Themen in Ordnern oder Sammlungen organisieren können, müssen Karten selbst innerhalb eines Themas erstellt werden.
+    doc_card_scope_title Wo Karten zu Hause sind
+    doc_collections_purpose_desc Sammlungen sind kuratierte Pfade, die Themen zusammenfassen. Wenn Sie eine Sitzung aus einer Sammlung starten, mischt das System Karten aus allen enthaltenen Themen, um einen randomisierten, umfassenden Test zu bieten.
+    doc_collections_purpose_title Zweck von Sammlungen
     doc_create_intro_desc Auf dieser Registerkarte erfahren Sie, wie Ersteller Inhalte organisieren, lokalisieren und nützliches Lernmaterial veröffentlichen, ohne den Arbeitsablauf zu verkomplizieren.
     doc_create_intro_title Erstellen
     doc_create_json_desc Die JSON-basierte Erstellung ist ein erweiterter Workflow für strukturierte Masseninhalte. Es sollte optional bleiben; Die meisten Ersteller sollten in der Lage sein, Inhalte mithilfe der Standardformulare zu erstellen und zu bearbeiten.
@@ -86,6 +188,38 @@
     doc_create_model_title Inhaltsmodell
     doc_create_visibility_desc Verwenden Sie „Meine“, um an Ihren eigenen Inhalten zu arbeiten, „Favoriten“, um nützliche Elemente anzuheften, und „Öffentliche Bibliothek“, um geteiltes Material zu durchsuchen. Die öffentliche Sichtbarkeit wirkt sich auf die Auffindbarkeit aus, während sich der Besitz darauf auswirkt, was Sie bearbeiten oder löschen können.
     doc_create_visibility_title Eigentum und Sichtbarkeit
+    doc_creation_desc Erstellen Sie Ihre eigenen Themen und fügen Sie visuelle Karteikarten hinzu. Jede Karte unterstützt ein Bild und eine optionale Audiodatei für die Aussprache.
+    doc_creation_title Themen & Karten erstellen
+    doc_feedback_desc Helfen Sie uns, besser zu werden! Verwenden Sie das Feedback-Symbol (Icons.feedback) bei einem Thema oder Ordner, um Probleme zu melden. Sie können auch allgemeines App-Feedback über den Support-Bereich senden.
+    doc_feedback_title Feedback-System
+    doc_filters_desc Finden Sie Inhalte schnell über die Suchleiste. Sie können nach Altersgruppen (Früh bis Fortgeschritten) filtern oder Ihre Ansicht auf bestimmte Sammlungen und Ordner einschränken.
+    doc_filters_title Suche & Filter
+    doc_flashcards_desc Jedes Thema enthält einen Satz Karten. Bilder und Audio werden zwar unterstützt, sind aber optional – Inhalte können rein textbasiert sein oder dynamisch generiert werden.
+    doc_flashcards_title Visuelle Karteikarten
+    doc_friends_desc Gemeinsam lernt es sich besser! Laden Sie Freunde über Ihr Profil zu Aliolo ein. Sie können den Fortschritt der anderen verfolgen und motiviert bleiben, indem Sie sehen, wer die längste Streak hält.
+    doc_friends_title Freunde & Einladungen
+    doc_goals_desc Legen Sie in den Einstellungen Ihr tägliches Ziel für das Abschließen von Karten fest. Änderungen an Ihrem Ziel werden ab dem nächsten Tag wirksam.
+    doc_goals_title Tagesziele
+    doc_json_desc Fortgeschrittene Ersteller können JSON-Daten verwenden, um lokalisierte Namen und Beschreibungen bereitzustellen und Themen so in allen unterstützten Sprachen zugänglich zu machen.
+    doc_json_title JSON-Lokalisierung
+    doc_lang_desc Wählen Sie im oberen Menü immer Ihre bevorzugte Lernsprache aus, bevor Sie ein Thema auswählen. Dies stellt sicher, dass die korrekten Audioaufnahmen und Übersetzungen geladen werden.
+    doc_lang_title Lernsprache
+    doc_leaderboard_desc Messen Sie sich mit Lernenden weltweit! Verdienen Sie XP durch das Abschließen von Kartensitzungen und steigen Sie in der Rangliste auf. Ihre Position wird in Echtzeit aktualisiert, während Sie neue Themen meistern.
+    doc_leaderboard_title Globale Bestenliste
+    doc_localization_details_desc Die Sprache „Global“ ist Ihr primärer Fallback – es kann jede Sprache sein, die Sie wählen. Wenn Sie spezifische Übersetzungen (wie Englisch oder Spanisch) bereitstellen, überschreiben diese die globalen Daten nur dann, wenn ein Benutzer diese spezifische UI-Sprache auswählt.
+    doc_localization_details_title Wie Lokalisierung funktioniert
+    doc_localization_ui_desc Um lokalisierte Daten hinzuzufügen, tippen Sie einfach auf das Sprachcode-Symbol (z. B. EN, ES, FR) in der Kopfzeile des Editors. Dies ermöglicht es Ihnen, spezifische Namen, Beschreibungen und Karteninhalte für jede unterstützte Sprache bereitzustellen. Der Tab „Global“ dient als primärer Fallback, wenn keine spezifische Übersetzung bereitgestellt wird.
+    doc_localization_ui_title Übersetzungen hinzufügen
+    doc_math_desc Mathematische Themen verwenden spezialisierte Engines, um Kartenvisualisierungen in Echtzeit zu generieren. Diese Themen bieten einzigartige Lern- und Testmodi, die auf spezifische mathematische Konzepte zugeschnitten sind und eine effektivere Übungsumgebung gewährleisten.
+    doc_math_title Mathematische Themen
+    doc_media_desc Um eine schnelle Synchronisierung zu gewährleisten, sollten Bilder unter 5 MB und Audiodateien unter 10 MB bleiben.
+    doc_media_title Upload-Limits für Medien
+    doc_organization_desc Verwenden Sie Ordner, um verwandte Themen zusammenzufassen. Sie können auch Sammlungen erstellen, um Themen in kuratierten Pfaden zu organisieren.
+    doc_organization_title Inhalte organisieren
+    doc_pillars_desc Alle Inhalte in Aliolo sind in 8 grundlegende Säulen unterteilt: Akademisch & Beruflich, Welt, Natur, Menschlicher Körper, Geisteswissenschaften, Freizeit, Ingenieurwesen und Sonstiges. Diese Kategorien bieten einen strukturierten Rahmen für alle Themen auf der Plattform.
+    doc_pillars_title Die 8 Kernsäulen
+    doc_public_desc Themen können privat (nur für Sie sichtbar) oder öffentlich sein. Öffentliche Inhalte werden mit der gesamten Aliolo-Community geteilt, sodass jeder Ihre Kreationen entdecken und von ihnen lernen kann.
+    doc_public_title Öffentlich vs. Privat
     doc_start_dashboard_desc Das Dashboard ist Ihre Hauptbibliothek. Verwenden Sie die Suche, um Inhalte schnell zu finden, und kombinieren Sie dann Quellfilter wie „Favoriten“, „Meine“ und „Öffentliche Bibliothek“ mit Altersfiltern, um Rauschen zu reduzieren.
     doc_start_dashboard_title Dashboard, Suche und Filter
     doc_start_feedback_desc Nutzen Sie die Feedback-Eingabepunkte in der App, wenn etwas nicht stimmt oder unklar ist. Berichte können den aktuellen Kontext enthalten, was die Überprüfung und Behebung von Inhaltsproblemen erleichtert.
@@ -98,6 +232,8 @@
     doc_start_quick_title Schnellstart
     doc_start_structure_desc Die Probanden halten Karten. Ordner gruppieren verwandte Inhalte innerhalb einer Säule. Sammlungen sind kuratierte Sammlungen, die mehrere Themen zum Studieren und Teilen kombinieren können.
     doc_start_structure_title Themen, Ordner und Sammlungen
+    doc_streaks_desc Beständigkeit ist der Schlüssel! Erfüllen Sie jeden Tag Ihr Tagesziel, um Ihre Streak aufzubauen. Verpassen Sie keinen Tag, sonst wird die Streak zurückgesetzt.
+    doc_streaks_title Streak-System
     doc_study_how_desc Beginnen Sie mit „Lernen“, wenn Sie die Erkennung aufbauen, und wechseln Sie dann zu „Testen“, wenn Sie einen schnelleren Abruf und eine strengere Prüfung wünschen. Nutzen Sie kürzere Sitzungen für eine gezielte Überprüfung und längere Sitzungen für eine breitere Abdeckung.
     doc_study_how_title Wie man lernt
     doc_study_intro_desc Auf dieser Registerkarte wird erklärt, wie Sie durch Inhalte navigieren, den richtigen Modus auswählen und Ihre Sitzungen für die Überprüfung oder den Abruf optimieren.
@@ -108,67 +244,287 @@
     doc_study_modes_title Lern- und Testmodi
     doc_study_scope_desc Das Studium kann mit einem einzelnen Thema, einer Ordneransicht oder einer Sammlung beginnen. Sammlungen sind nützlich, wenn Sie eine gemischte Sitzung über mehrere Themen hinweg wünschen, ohne den aktuellen Ablauf zu verlassen.
     doc_study_scope_title Themen, Ordner und Sammlungen im Studium
+    doc_sync_desc Ihr Fortschritt wird automatisch mit der Cloud synchronisiert. Sie können zwischen Web- und Desktop-Versionen wechseln, ohne Ihre Streak zu verlieren.
+    doc_sync_title Cloud-Synchronisierung
     doc_tab_create Erstellen
+    doc_tab_creator Erstellung
+    doc_tab_general Allgemein
+    doc_tab_learning Praxis
     doc_tab_start Start
     doc_tab_study Studie
+    doc_testing_desc Fordern Sie sich mit Multiple-Choice-Fragen (MCQ) heraus. Die App schaltet automatisch weiter, wenn Sie antworten, was Ihnen hilft, schneller zu lernen.
+    doc_testing_title Interaktives Testen
+    doc_welcome_desc Aliolo ist eine visuelle Lernplattform, die Ihnen hilft, Themen durch Karteikarten und interaktive Tests zu meistern.
+    doc_welcome_title Willkommen bei Aliolo
     documentation Dokumentation
+    done_today Heute erledigt
+    down_arrow Down Arrow
+    edit Bearbeiten
+    edit_card Karte bearbeiten
+    edit_collection Kollektion bearbeiten
+    edit_email E-Mail bearbeiten
+    edit_folder Ordner bearbeiten
+    edit_name Name bearbeiten
+    edit_subject Thema bearbeiten
+    edit_subject_title Edit Subject
     edit_subscription Abonnement bearbeiten
+    email E-Mail
+    email_change_notice Aus Sicherheitsgründen wird ein Bestätigungslink an SOWOHL deine alte als auch deine neue E-Mail-Adresse gesendet. Du musst beide anklicken, um die Änderung abzuschließen.
+    email_in_use E-Mail wird bereits verwendet
+    email_subject Betreff
+    email_update_sent Bestätigungs-E-Mails gesendet. Bitte überprüfe beide Posteingänge.
     email_updated_successfully E-Mail erfolgreich aktualisiert!
+    english English
     enter_current_password Geben Sie das aktuelle Passwort ein
+    enter_new_email Neue E-Mail eingeben
+    enter_new_name Neuen Namen eingeben
+    enter_number Nummer eingeben
+    enter_or_select_subject Bitte geben Sie ein Fach ein oder wählen Sie eines aus
+    enter_pass_to_confirm Passwort zur Bestätigung eingeben
+    enter_subject_name Fachnamen eingeben
     error Fehler: $e
     error_deleting Fehler beim Löschen: $e
+    error_deleting_account Konto konnte nicht gelöscht werden. Passwort prüfen.
     error_saving Fehler beim Speichern: $e
     error_saving_card Fehler beim Speichern der Karte: $e
     error_updating_favorite Fehler beim Aktualisieren des Favoriten: $e
+    exit Exit
+    exit_confirm_msg Are you sure you want to exit the application?
+    exit_confirm_title Exit Aliolo?
+    expiry_date Ablaufdatum
     failed_answers Fehlgeschlagene Antworten
     failed_to_send_reset_code Fehler beim Senden des Reset-Codes
     failed_to_send_verification_code Der Bestätigungscode konnte nicht gesendet werden
     fake_only Nur gefälscht
+    fatal_startup_error Fataler Startfehler
+    feat_adaptive_desc Das System überwacht die Erkennungsgeschwindigkeit, um die Intervalle anzupassen.
+    feat_adaptive_title Adaptive Reaktionszeit
+    feat_ages_desc Kuratierte Inhalte für verschiedene Altersgruppen, von der frühen Kindheit bis zum fortgeschrittenen Lernen.
+    feat_ages_title Für alle Altersgruppen
+    feat_autoplay_desc Konzentrieren Sie sich auf das Lernen, während die App Karten automatisch in Ihrem Tempo weiterblättert.
+    feat_autoplay_title Freihändiges Autoplay
+    feat_create_share_desc Erstelle ganz einfach deine eigenen Themen und Karten oder teile sie mit der Community.
+    feat_create_share_title Erstellen und Teilen
+    feat_gamified_desc Verdiene XP, Abzeichen und baue Serien auf, während du komplexe visuelle Themen meisterst.
+    feat_gamified_title Spielerische Erfahrung
+    feat_mastery_desc Dynamische XP-Belohnungen und Meisterschaftsabzeichen (Bronze, Silber, Gold).
+    feat_mastery_title Visuelle Meisterschaft & XP
+    feat_multimedia_desc Lerne mit Bildern, Audio- und Videounterstützung für ein immersives Training.
+    feat_multimedia_title Multimedia-Karten
+    feat_recognition_desc Identifikationsübungen, um ein visuelles Muskelgedächtnis aufzubauen.
+    feat_recognition_title Visuelles Mustertraining
+    feat_science_adaptive_desc Intervalle passen sich automatisch basierend auf deiner Erkennungsgeschwindigkeit und Genauigkeit an.
+    feat_science_adaptive_title Adaptive Zeitmessung
+    feat_science_smart_review_desc Der Algorithmus berechnet den optimalen Zeitpunkt für die Wiederholung jeder Karte für maximale Behaltensleistung.
+    feat_science_smart_review_title Intelligente Wiederholungszyklen
+    feat_science_spacing_desc Fortschrittliches kognitives Abstandsmodell, das den Gedächtniszerfall vorhersagt und die Wiederholungszyklen optimiert.
+    feat_science_spacing_title SuperMemo-2 (SM-2)
+    feat_spacing_desc Eine vollständige Implementierung des SuperMemo-2-Modells sagt das Vergessen voraus.
+    feat_spacing_title Kognitive Abstände (SM-2)
+    feature_autoplay Auto-Play-Modus
+    feature_community_access Zugriff auf Community-Themen
     feature_creation Erstellungswerkzeuge
     feature_customize Erweiterte Anpassung
+    feature_favorites Favoriten auf dem Dashboard
+    feature_feedback Direktes Feedback und Vorschläge
+    feature_free GRATIS
+    feature_friends Freunde einladen und verbinden
     feature_full_library Vollständiger Bibliothekszugriff
+    feature_learn_all Lernen Sie jedes Thema oder jede Sammlung
+    feature_private_mode Privater Profilmodus
+    feature_pro PRO
+    feature_spaced_repetition Spaced Repetition (SM-2)
     feature_testing Interaktives Testen
+    feedback Feedback
+    feedback_add_image Bild hinzufügen
+    feedback_attachments Anhänge
+    feedback_bug Fehlerbericht
+    feedback_context Kontext
+    feedback_details Details
+    feedback_error Feedback konnte nicht gesendet werden. Bitte versuchen Sie es erneut.
+    feedback_management_desc Benutzerfeedback anzeigen und verwalten
+    feedback_management_title Feedback-Anfragen
+    feedback_other Sonstiges
+    feedback_submit Feedback senden
+    feedback_success Vielen Dank für Ihr Feedback!
+    feedback_suggestion Vorschlag
+    feedback_title Feedback senden
+    feedback_title_hint Titel
+    feedback_type Typ
+    fill_all_fields Bitte füllen Sie alle Felder aus
+    filter_all Alle
+    filter_dashboard Dashboard
+    filter_favorites Favoriten
+    filter_my_subjects Meine Fächer
+    filter_on_dashboard Auf dem Dashboard
+    filter_public Öffentlich
+    filter_public_library Öffentliche Bibliothek
+    filters Filter
+    finish Abschließen
+    finished_session Sie haben {count} Karten abgeschlossen. XP-Bonus erhalten!
+    folder Ordner
+    folder_already_exists Ein Ordner mit diesem Namen existiert bereits in dieser Säule
     folder_id Ordner-ID
+    folder_label Ordner
+    folder_not_empty_msg Löschen nicht möglich: Ordner ist nicht leer.
+    folder_plural Ordner
+    forgot_password Passwort vergessen?
     free_only Kostenlose Benutzer
+    general_preferences Allgemeine Einstellungen
     generic Generisch
+    go_to_manager Zur Bibliotheksverwaltung
+    goal_change_hint Ändern Sie Ihr Kartenziel für morgen
+    goal_change_notice Änderungen an deinem Tagesziel werden morgen wirksam.
+    gold GOLD
+    hide_comparison Planvergleich ausblenden
     home Heim
+    images Bilder
+    included_subjects Enthaltene Fächer
+    info_copied Info in die Zwischenablage kopiert
+    initializing_aliolo Initialisiere Aliolo...
     invalid_code Ungültiger Code
+    invalid_email Ungültige E-Mail-Adresse
     invalid_email_address Ungültige E-Mail-Adresse
     invalid_json Ungültiger JSON: $e
+    invalid_number Ungültige Nummer
     invalid_or_expired_invitation_link Ungültiger oder abgelaufener Einladungslink.
     invalid_or_expired_reset_code Ungültiger oder abgelaufener Reset-Code.
+    invalid_password Ungültiges Passwort
+    invalid_password_delete Ungültiges Passwort
     invitation_sent_awaiting_registration Einladung gesendet (wartet auf Registrierung)
+    invite Einladen
+    invite_user_content E-Mail {email} nicht gefunden. Möchten Sie ihn/sie zu Aliolo einladen?
+    invite_user_title Benutzer einladen?
     invited_and_request_sent Eingeladen und Anfrage gesendet!
     json JSON
+    keyboard_shortcuts Tastenkombinationen
     label_suffix $label:
+    lang_abbr Spr.
+    language Sprache
     leaderboard Bestenliste
+    learn_mode_desc Study cards and memorize answers
+    learn_mode_title Learn
+    learn_session_size Größe der Lerneinheit
+    learn_session_size_desc Anzahl der neuen Karten, die in einer einzelnen Lernsitzung eingeführt werden.
+    learning Lernen
     learning_session_complete_description Tolle Arbeit! Sie haben diese Lernsitzung abgeschlossen. Ihr Fortschritt wurde gespeichert.
+    left_arrow Left Arrow
+    level Ebene
+    level_range Muss zwischen 1 und 20 liegen
+    level_tier_1 Stufe 1
+    level_tier_2 Stufe 2
+    level_tier_3 Stufe 3
     licenses Lizenzen
     licenses_aliolo_section_title Aliolo Kommerzielle Lizenz
     licenses_aliolo_subtitle Proprietäre Software und Premium-Zugriffsbedingungen
     licenses_intro_desc Die kommerzielle Lizenz von Aliolo erscheint zuerst. Nachfolgend finden Sie Paketlizenzen von Drittanbietern.
     licenses_intro_title Aliolo Lizenz- und Pakethinweise
     licenses_third_party_section_title Paketlizenzen von Drittanbietern
+    light Hell
     linux_distro Linux-Distribution
     loading Laden...
     localized_data Lokalisierte Daten
+    login Anmelden
+    logout Abmelden
+    manage_cards Karten verwalten
+    manage_friends Freunde verwalten
+    manage_friends_desc Freundschaftsanfragen ansehen und verwalten
+    manage_library Bibliothek verwalten ({sCount} Fächer, {cCount} Karten)
+    manage_subjects Fächer verwalten
+    manage_subscription Abonnement verwalten
+    manage_testing_langs Lernsprachen verwalten
+    manage_users Benutzer verwalten
+    master_visual_ease Visuelle Themen mühelos meistern.
+    mastered gelernt
+    mastery Meisterschaft
+    max_streak Beste Serie
+    maybe_later Vielleicht später
+    mission_desc Der smarte Begleiter, der deinem Gehirn hilft, visuelles Wissen durch wissenschaftlich fundierte Algorithmen zu lernen und zu behalten.
+    mock_email_title Test-Posteingang
+    mode_audio_to_image Audio to Image
+    mode_audio_to_text Audio to Text
+    mode_image_to_text Image to Text
+    mode_text_to_text Text to Text
     monthly_access Monatlicher Zugriff
     most_popular_choice Beliebteste Wahl
+    multi_lang_answers Mehrsprachige Antworten
+    multi_lang_prompts Mehrsprachige Fragen
+    my_position Meine Position
+    name Name
+    names_descriptions Namen & Beschreibungen
+    new NEU
     new_email Neue E-Mail
+    new_password Neues Passwort
+    next Weiter
+    next_card Next Card
+    next_daily_goal Nächstes Tagesziel
+    next_daily_goal_desc Zielanzahl der täglich zu beherrschenden Karten. Änderungen treten morgen in Kraft.
+    next_day_goal Ziel für morgen
     no_cards_available_for_this_session Für diese Sitzung sind keine Karten verfügbar.
     no_cards_found Keine Karten gefunden
+    no_cards_found_for_lang Keine Karten für diese Sprache gefunden
+    no_cards_in_library Keine Karten in der Bibliothek gefunden.
+    no_feedback_found Kein Feedback gefunden.
+    no_folder Kein Ordner (Stamm)
+    no_friends_found Keine Freunde gefunden
+    no_images_added Keine Bilder hinzugefügt
+    no_leaderboard_data Keine Bestenlistendaten verfügbar.
+    no_localized_audio Kein lokalisiertes Audio
+    no_localized_images Keine lokalisierten Bilder
+    no_localized_video Kein lokalisiertes Video
+    no_subjects_available Keine Fächer verfügbar
     no_subjects_found Keine Themen gefunden
     no_subjects_found_in_this_collection In dieser Sammlung wurden keine Themen gefunden
     no_users_found Keine Benutzer gefunden
+    ok OK
+    old_password Altes Passwort
+    old_password_required Altes Passwort ist erforderlich
+    onboarding_1_desc Visuell lernen. Dauerhaft meistern. Dein visueller Lernbegleiter, basierend auf SM-2-Wissenschaft.
+    onboarding_1_title Willkommen bei Aliolo
+    onboarding_2_desc Dies hilft uns, dein Lernerlebnis zu personalisieren und die richtigen Themen zu empfehlen.
+    onboarding_2_title Wie alt bist du?
+    onboarding_3_desc Wähle dein Hauptinteresse aus, um dein initiales Dashboard anzupassen.
+    onboarding_3_title Was möchtest du meistern?
+    onboarding_4_desc Erstelle dein eigenes Deck oder tauche in Karten ein, die von Aliolo-Lernern weltweit geteilt werden. Lerne in deinem Tempo und teste dich selbst, wenn du bereit bist.
+    onboarding_4_title Erstellen & Teilen
+    onboarding_5_desc Deine Bibliothek bleibt auf allen deinen Geräten synchron. Wir erinnern dich nur, wenn es Zeit ist, deine Serie zu schützen.
+    onboarding_5_title Überall meistern
+    onboarding_6_desc Beginne deine Reise heute und meistere alles, was du dir vornimmst.
+    onboarding_6_title Tritt der Community bei
+    onboarding_7_joined Tausende von Lernern sind dabei
+    onboarding_7_quote Aliolo hat die Art und Weise, wie meine Kinder und ich neue Themen meistern, völlig verändert. Die visuellen Karten und die abgestufte Wiederholung lassen das Lernen wie ein Spiel erscheinen!
+    onboarding_get_started Loslegen
+    onboarding_next Weiter
+    onboarding_skip Überspringen
+    options_count Anzahl der Antworten
+    options_count_desc Anzahl der bei Tests angezeigten Multiple-Choice-Antworten.
+    options_per_card Optionen pro Karte
+    order_id Bestell-ID
     os_version Betriebssystemversion
+    our_mission UNSERE MISSION
+    page Seite
+    parent_folder_label Übergeordneter Ordner
+    password Passwort
+    password_required Passwort ist erforderlich
+    password_reset_success Passwort erfolgreich zurückgesetzt
     password_updated_successfully Passwort erfolgreich aktualisiert!
+    passwords_dont_match Passwörter stimmen nicht überein
+    paste PASTE
     payments_are_not_yet_integrated_on_web_please_use_the_mobile_app_to_upgrade Zahlungen sind im Web noch nicht integriert. Bitte verwenden Sie für das Upgrade die mobile App.
     personal_data Persönliche Daten
     pick_date Datum auswählen
+    picture Bild
+    pillar Säule
+    plan_monthly Monatlicher Zugang
+    plan_monthly_desc Beliebteste Wahl
     plan_monthly_tagline Beliebteste Wahl
     plan_monthly_title Monatlicher Zugriff
+    plan_weekly Wöchentlicher Zugang
+    plan_weekly_desc Am besten für schnelle Ziele
     plan_weekly_tagline Am besten für schnelle Ziele
     plan_weekly_title Wöchentlicher Zugang
+    plan_yearly Jährlicher Zugang
+    plan_yearly_desc Sparen Sie 33% pro Monat
     plan_yearly_tagline Sparen Sie 33 % pro Monat
     plan_yearly_title Jährlicher Zugang
     platform Plattform
@@ -177,58 +533,202 @@
     please_enter_the_6_digit_code Bitte geben Sie den 6-stelligen Code ein
     please_wait_for_a_response_before_replying_again Bitte warten Sie auf eine Antwort, bevor Sie erneut antworten.
     premium_expires_at Läuft am $date ab
+    premium_go Premium werden
     premium_lifetime Lebenslanger Zugriff
     premium_only Nur Premium
     premium_status_active Sie sind Premium-Mitglied
+    premium_title Aliolo Premium
     premium_unlock_desc Erhalten Sie Zugriff auf alle Themen, erstellen Sie unbegrenzt Karten und unterstützen Sie die Mission von Aliolo.
     premium_unlock_title Schalten Sie den Vollzugriff frei
+    prev Zurück
+    previous_card Previous Card
+    price_per_week ({price} / Woche)
+    private Privat
+    pro_label PRO
+    product_id Produkt-ID
     product_not_available_in_store Produkt nicht im Laden verfügbar.
     profile Profil
+    profile_title Mein Profil & Fortschritt
+    prompt_label Frage
+    prompt_optional Frage / Hinweis
+    prompts_answers Fragen & Antworten
+    provide_at_least_one_answer Bitte geben Sie mindestens eine Antwort an
+    provide_at_least_one_name Bitte mindestens einen Namen angeben
+    provider Anbieter
     public_other_subject Öffentliches/anderes Thema
+    public_profile Öffentliches Profil
+    public_profile_desc Zeigen Sie XP und Streak in der Ruhmeshalle.
+    public_subject Öffentliches Thema
+    public_subject_desc Dieses Thema für andere Benutzer sichtbar machen.
     purchase_failed Kauf fehlgeschlagen: $e
+    purchase_token Kauftoken
+    record_shortcut Kombination aufnehmen
     recovery_error Wiederherstellungsfehler: $e
     refresh Aktualisieren
     refresh_conversation Gespräch auffrischen
+    remove_friend Freund entfernen
+    remove_friend_confirm Sind Sie sicher, dass Sie den Freund ... entfernen möchten?
     renderer Renderer
+    request_sent Anfrage gesendet
+    request_sent_waiting Anfrage gesendet (wartend)
+    required Erforderlich
     reset_code Code zurücksetzen
+    reset_code_email_title Code zum Zurücksetzen
+    reset_code_sent "Zurücksetzungscode für: "
     reset_code_sent_to_please_check_your_inbox Reset-Code an $email gesendet. Bitte überprüfen Sie Ihren Posteingang.
+    reset_password_for "Passwort zurücksetzen für: "
+    restore_password Passwort wiederherstellen
     restore_purchases Einkäufe wiederherstellen
+    retry Wiederholen
+    right_arrow Right Arrow
     save Speichern
     save_33_per_month Sparen Sie 33 % pro Monat
+    save_before_nav Änderungen vor dem Verlassen speichern?
+    save_card Karte speichern
+    save_subject Thema speichern
     saved_successfully Erfolgreich gespeichert
+    search_cards Karten suchen
+    search_subjects Fächer suchen
     search_users Benutzer suchen
+    select_an_answer Wählen Sie eine Antwort
+    select_lang Sprache wählen
+    select_package_license Paketlizenz auswählen
+    select_user Benutzer auswählen
+    selected_count {count} ausgewählt
+    send Senden
+    send_code Code senden
+    send_verification_code Verifizierungscode senden?
     session_complete Sitzung abgeschlossen!
     session_complete_description Tolle Arbeit! Sie haben in dieser Sitzung alle Karten fertiggestellt.
+    setting_saved Einstellung gespeichert
     settings Einstellungen
+    shortcuts_hint Press the key you want to use with Ctrl.
+    show_all_languages Alle Sprachen anzeigen
     show_documentation_btn Schaltfläche „Dokumentation anzeigen“.
     show_documentation_btn_desc Zeigen Sie die Dokumentationsschaltfläche in der App-Leiste an.
     show_fake_users Fake-Benutzer anzeigen
+    show_less_languages Weniger Sprachen anzeigen
+    sidebar_left Seitenleiste links
+    sidebar_left_desc Lernsteuerelemente nach links verschieben.
+    silver SILBER
+    social Soziale Medien
+    sort_by Sortieren nach
+    sound_effects Soundeffekte
+    sound_effects_desc Audio-Feedback für Antworten aktivieren.
+    source Quelle
+    status Status
+    status_closed Geschlossen
+    status_open Offen
+    status_replied Beantwortet
+    streak Serie
+    subject Fach
+    subject_deleted Thema gelöscht
     subject_id Betreff-ID
+    subject_label Fach
+    subject_plural Fächer
+    subject_type Thementyp
+    subjects Fächer
     subscribe_now Jetzt abonnieren
     subscription_data Abonnementdaten
     subscription_updated Abonnement aktualisiert
     subtraction_emoji Subtraktions-Emoji
     subtraction_numbers Subtraktionszahlen
+    support_and_management Support & Verwaltung
+    system System
+    tap_to_replay Zum Wiederholen tippen
     technical_context TECHNISCHER KONTEXT
+    test_mode_desc Challenge yourself with a quiz
+    test_mode_label Test Mode
+    test_mode_title Test
+    test_session_size Größe der Testeinheit
+    test_session_size_desc Anzahl der Karten, die in einer einzelnen Testsitzung überprüft werden.
+    testing Testing
     testing_mode Testmodus
+    testing_section Lerneinstellungen
     text Text
+    the_science DIE WISSENSCHAFT
+    theme_color App Theme Color
+    theme_color_desc Customize the primary color used for buttons and highlights.
+    theme_dark Dunkel
+    theme_light Hell
+    theme_mode Design-Modus
+    theme_system System
     this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards Dies ist ein Ordner. Sie können die Schaltflächen „Lernen/Testen“ oben verwenden, um alle Karten zu üben.
+    to_label An
     total_cards Gesamtkarten
+    total_xp Gesamt-XP
+    trust_cloud_desc Dein Fortschritt wird in Echtzeit sicher auf allen deinen Geräten synchronisiert.
+    trust_cloud_title Cloud-Synchronisierung
+    trust_ecosystem_desc Ihr Fortschritt und Ihre Karten werden nahtlos auf allen Ihren Geräten synchronisiert.
+    trust_ecosystem_title Aliolo-Ökosystem
+    trust_privacy VERTRAUEN & DATENSCHUTZ
+    trust_sync_desc Deine Daten sind privat und verschlüsselt, um die höchsten Sicherheitsstandards zu gewährleisten.
+    trust_sync_title Verschlüsselte Daten
+    type_collection Kollektion
+    type_folder Ordner (Unterthemen)
+    type_standard Standard (Karten)
     type_your_reply Geben Sie Ihre Antwort ein...
     ua UA
+    ui_language Sprache der Benutzeroberfläche
+    ukrainian Ukrainian
     unknown_user_profile_missing Unbekannter Benutzer (Profil fehlt)
+    unsaved_changes Ungespeicherte Änderungen
+    unsaved_changes_msg Sie haben nicht gespeicherte Änderungen. Möchten Sie diese verwerfen?
+    up_arrow Up Arrow
+    update Aktualisieren
     update_available Eine neue Version ist verfügbar!
+    updated_at Aktualisiert am
+    upload_new_photo Neues Foto hochladen
     user Benutzer
+    user_exists Benutzer existiert bereits
     user_id Benutzer-ID
+    user_not_found Benutzer nicht gefunden
     user_with_this_email_already_exists_please_log_in_instead Der Benutzer mit dieser E-Mail-Adresse existiert bereits. Bitte melden Sie sich stattdessen an.
+    username Benutzername
     users Benutzer
     users_filter Benutzer filtern
     verification_code Bestätigungscode
     verification_code_sent_to Bestätigungscode an $email gesendet
+    verify Verifizieren
     version Version
+    video Video
+    video_link Video-Link
+    video_url_optional Video-URL (optional)
+    view_card Karte anzeigen
+    view_cards_title View Cards
     view_onboarding Onboarding anzeigen
+    visibility Sichtbarkeit
+    visual_content_required Mindestens ein visueller Inhalt ist erforderlich
+    visual_content_required_msg Mindestens ein visueller Inhalt (Text, Bild, Audio oder Video) muss bereitgestellt werden.
+    visual_text Visueller Text
+    wants_to_be_friend Möchte dein Freund sein
     weekly_access Wöchentlicher Zugriff
     welcome_complete_your_profile_to_join_aliolo Willkommen! Vervollständigen Sie Ihr Profil, um aliolo beizutreten.
+    xp XP
     yearly_access Jährlicher Zugang
+    you Du
     you_do_not_have_permission_to_edit_this_card Sie sind nicht berechtigt, diese Karte zu bearbeiten
     you_do_not_have_permission_to_view_this_card_details Sie sind nicht berechtigt, diese Kartendetails anzuzeigen.
+    you_rank Du bist auf Platz #{rank}
+    active Aktiv
+    autoplay Automatische Wiedergabe
+    card_limit Kartenlimit
+    card_limit_msg Sie haben Ihr Limit von {limit} Karten erreicht.
+    create_request Anfrage erstellen
+    edit_user Benutzer bearbeiten
+    favorite Favorit
+    file_too_large Datei ist zu groß
+    inactive Inaktiv
+    is_required ist erforderlich
+    languages Sprachen
+    limit_reached Limit erreicht
+    not_available Nicht verfügbar
+    toggle_languages Sprachen umschalten
+    user_updated Benutzer aktualisiert
+    zoom Zoom
+    account_and_management Account & Management
+    back_to_plans Back to plans
+    confirm_password_required Confirm password is required
+    new_password_required New password is required
+    password_updated Password updated successfully
+    save_success Saved successfully

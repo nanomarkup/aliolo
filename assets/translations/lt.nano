@@ -43,37 +43,139 @@
     about_support_settings_desc UI kalbą, temos režimą, temos spalvą, garsą, šoninės juostos vietą ir dokumentacijos matomumą galima reguliuoti nustatymuose.
     about_support_settings_title Personalizavimas
     about_support_title Nustatymai, atsiliepimai ir palaikymas
+    about_tagline Mokykitės vizualiai. Įsisavinkite visam laikui.
+    account_created Paskyra sukurta
+    account_created_billing_fail Jūsų paskyra buvo sukurta, bet mokėjimas nebuvo baigtas. Pabandykite dar kartą atlikti mokėjimą toliau.
+    account_deleted Account deleted successfully
+    add_card Add Card
+    add_collection Pridėti kolekciją
+    add_folder Pridėti aplanką
+    add_friend_by_email Add Friend By Email
+    add_lang_translation Add Language Translation
+    add_prompt_translation Add Prompt Translation
+    add_subject Add Subject
     addition_emoji Papildymas jaustukais
     addition_numbers Papildomi numeriai
+    age Amžius
+    age_0_6 0-6 metai
+    age_15_18 15 - 18
+    age_15_plus 15+ metų
+    age_19_25 19 - 25
+    age_26_35 26 - 35
+    age_36_50 36 - 50
+    age_7_14 7-14 metai
+    age_advanced Advanced
+    age_all All Ages
+    age_early Early Childhood
+    age_group Age Group
+    age_intermediate Intermediate
+    age_over_50 Virš 50
+    age_primary Primary School
+    age_under_14 Iki 14
+    algorithm_title THE ALIOLO ALGORITHM
     aliolo aliolo
+    all_matching_subjects Visi atitinkantys subjektai
     all_rights_reserved Visos teisės saugomos
+    answer Atsakymas
+    answer_label answer
+    answers_label answers
     are_you_sure_you_want_to_close_this_feedback_request Ar tikrai norite uždaryti šią atsiliepimo užklausą?
     are_you_sure_you_want_to_delete_this_folder Ar tikrai norite ištrinti šį aplanką?
+    ascending Ascending
     attach_image Pridėti vaizdą
+    audio Garsas
+    audio_playing Audio Playing
+    author Author
     back Atgal
+    back_to_login Back to Login
     back_to_subjects Atgal į temas
     best_for_quick_goals Geriausiai tinka greitiems įvarčiams
     billing_disclaimer Prenumeratos automatiškai atnaujinamos, nebent jos atšauktos. Prenumeratą galite tvarkyti parduotuvės nustatymuose.
     billing_title Atsiskaitymas
+    bronze BRONZE
     browser Naršyklė
     cancel Atšaukti
+    cancel_request Cancel Request
+    cancel_request_confirm Are you sure you want to cancel the request to
+    cannot_delete_folder Cannot Delete Folder
     cannot_delete_folder_it_is_not_empty Nepavyko ištrinti aplanko: jis nėra tuščias
+    card_details Card Details
     card_id Kortelės ID
+    card_label Card
+    card_level Kortelės lygis
+    card_plural Cards
+    cards cards
+    cards_label cards
+    cards_per_day cards per day
+    cards_per_session cards per session
+    change_avatar Change Avatar
+    change_password Pakeisti slaptažodį
     check_your_email_for_code Patikrinkite kodą el. pašte
     clear Aišku
+    click_to_select_image Click to select image
     click_to_view_original Spustelėkite norėdami pamatyti originalą
     close Uždaryti
     close_request Uždaryti užklausą?
+    code_label Code
     collection_id Kolekcijos ID
     colors Spalvos
+    common_settings Common Settings
+    compare_plans Palyginkite nemokamą ir „Premium“
+    confirm Patvirtinti
+    confirm_logout Are you sure you want to logout?
+    confirm_password Confirm Password
     confirm_subscription Patvirtinkite prenumeratą
+    content_label Content
     context Kontekstas
+    copy COPY
+    copy_all Copy All
+    core_features CORE FEATURES
     correct_answers Teisingi atsakymai
     could_not_launch Nepavyko paleisti $url
     counting Skaičiavimas
+    create_account Create Account
+    create_new_account Create New Account
+    create_new_card Create New Card
+    created_at Sukurta
+    current_streak Current Streak
     current_subscription Dabartinė prenumerata
+    daily_goal Daily Goal
+    daily_progress Daily Progress
+    dark Dark
+    dashboard_greeting Labas
+    day day
+    day_label Day
+    day_plural Days
+    days days
+    default Default
+    default_language Numatytoji kalba
+    default_testing_language Default Testing Language
+    default_testing_language_desc Pre-selects this language on the subjects page.
     delete Ištrinti
+    delete_account Delete Account
+    delete_account_confirm Are you sure you want to delete your account? This action is permanent.
+    delete_avatar Ištrinti avatarą
+    delete_avatar_confirm Ar tikrai norite pašalinti savo profilio nuotrauką?
+    delete_card_confirm Delete this card?
+    delete_collection Ištrinti kolekciją
+    delete_collection_confirm Ar tikrai norite ištrinti šią kolekciją?
+    delete_folder Ištrinti aplanką
+    delete_selected_cards Delete selected cards?
+    delete_subject Delete Subject
+    delete_subject_confirm Delete subject '{subject}' and all {count} cards inside?
+    delete_subjects_first Please delete all sub-subjects inside this folder before deleting the folder itself.
+    descending Descending
+    description Description
     device Įrenginys
+    digit_code 6-digit Code
+    discard Discard
+    discard_changes Atmesti pakeitimus?
+    doc_autoplay_desc Atsakius programėlė gali automatiškai pereiti prie kitos kortelės. Teisingi atsakymai laukia 1 s, o neteisingi – 2 s, kad galėtumėte peržiūrėti.
+    doc_autoplay_title Automatinis mokymasis
+    doc_card_scope_desc Kortelės yra mokymosi pagrindas ir visada priklauso konkrečiam dalykui. Nors dalykus galite organizuoti į aplankus ar kolekcijas, pačios kortelės turi būti sukurtos dalyko viduje.
+    doc_card_scope_title Kur gyvena kortelės
+    doc_collections_purpose_desc Kolekcijos yra kuruojami keliai, jungiantys dalykus. Kai pradedate sesiją iš kolekcijos, sistema sumaišo korteles iš visų įtrauktų dalykų, kad pateiktų atsitiktinį, išsamų testą.
+    doc_collections_purpose_title Kolekcijų tikslas
     doc_create_intro_desc Šiame skirtuke aprašoma, kaip kūrėjai tvarko turinį, lokalizuoja jį ir skelbia naudingą studijų medžiagą, pernelyg neapsunkindami darbo eigos.
     doc_create_intro_title Sukurti
     doc_create_json_desc JSON pagrindu sukurtas kūrimas yra išplėstinė struktūrinio masinio turinio darbo eiga. Ji turėtų likti neprivaloma; dauguma kūrėjų turėtų turėti galimybę kurti ir redaguoti turinį naudodami standartines formas.
@@ -86,6 +188,38 @@
     doc_create_model_title Turinio modelis
     doc_create_visibility_desc Naudokite „mano“ norėdami dirbti su savo turiniu, parankinius, kad prisegtumėte naudingų elementų, ir viešąją biblioteką, kad naršytumėte bendrinamą medžiagą. Viešas matomumas turi įtakos atradimui, o nuosavybės teisė – ką galite redaguoti ar ištrinti.
     doc_create_visibility_title Nuosavybė ir matomumas
+    doc_creation_desc Kurkite savo dalykus ir pridėkite vizualines korteles. Kiekviena kortelė palaiko vaizdą ir pasirinktinį garso failą tarimui.
+    doc_creation_title Dalykų ir kortelių kūrimas
+    doc_feedback_desc Padėkite mums tobulėti! Norėdami pranešti apie problemas, naudokite grįžtamojo ryšio piktogramą (Icons.feedback) prie bet kurio dalyko ar aplanko. Taip pat galite siųsti bendrą programos grįžtamąjį ryšį per palaikymo skiltį.
+    doc_feedback_title Grįžtamojo ryšio sistema
+    doc_filters_desc Greitai raskite turinį naudodami paieškos juostą. Galite filtruoti pagal amžiaus grupę (nuo ankstyvosios iki pažengusiųjų) arba susiaurinti vaizdą iki konkrečių kolekcijų ir aplankų.
+    doc_filters_title Paieška ir filtrai
+    doc_flashcards_desc Kiekviename dalyke yra kortelių rinkinys. Nors vaizdai ir garsas palaikomi, jie yra neprivalomi – turinys gali būti grynai tekstinis arba dinamiškai sugeneruotas.
+    doc_flashcards_title Vizualinės kortelės
+    doc_friends_desc Mokytis kartu smagiau! Pakvieskite draugus į „Aliolo“ per savo profilį. Galite stebėti vieni kitų pažangą ir išlaikyti motyvaciją matydami, kas išlaiko ilgiausią mokymosi seriją.
+    doc_friends_title Draugai ir kvietimai
+    doc_goals_desc Nustatymuose nustatykite savo dienos kortelių užbaigimo tikslą. Tikslo pakeitimai įsigalios nuo kitos dienos.
+    doc_goals_title Dienos tikslai
+    doc_json_desc Pažangūs kūrėjai gali naudoti JSON duomenis lokalizuotiems pavadinimams ir aprašymams pateikti, kad dalykai būtų prieinami visomis palaikomomis kalbomis.
+    doc_json_title JSON lokalizavimas
+    doc_lang_desc Prieš pasirinkdami dalyką, viršutiniame meniu visada pasirinkite norimą mokymosi kalbą. Taip užtikrinsite, kad bus įkeltas tinkamas garsas ir vertimai.
+    doc_lang_title Mokymosi kalba
+    doc_leaderboard_desc Konkuruokite su besimokančiaisiais visame pasaulyje! Uždirbkite XP pildydami kortelių sesijas ir kilkite reitinguose. Jūsų pozicija atnaujinama realiuoju laiku, kai įsisavinate naujus dalykus.
+    doc_leaderboard_title Pasaulinė lyderių lentelė
+    doc_localization_details_desc „Globali“ kalba yra jūsų pagrindinis atsarginis variantas – tai gali būti bet kuri jūsų pasirinkta kalba. Jei pateiksite konkrečius vertimus, jie pakeis „Globalius“ duomenis tik tada, kai vartotojas pasirinks tą konkrečią vartotojo sąsajos kalbą.
+    doc_localization_details_title Kaip veikia lokalizavimas
+    doc_localization_ui_desc Norėdami pridėti lokalizuotus duomenis, redaktoriaus antraštėje tiesiog bakstelėkite kalbos kodo piktogramą (pvz., EN, ES, FR). Tai leidžia pateikti konkrečius pavadinimus, aprašymus ir kortelių turinį kiekvienai palaikomai kalbai.
+    doc_localization_ui_title Vertimų pridėjimas
+    doc_math_desc Matematiniuose dalykuose naudojami specializuoti varikliai, skirti kortelių vizualizacijoms generuoti realiuoju laiku. Šie dalykai pasižymi unikaliais mokymosi ir testavimo režimais, pritaikytais konkrečioms matematinėms sąvokoms.
+    doc_math_title Matematiniai dalykai
+    doc_media_desc Kad užtikrintumėte greitą sinchronizavimą, vaizdus laikykite iki 5 MB, o garso failus – iki 10 MB.
+    doc_media_title Medijos įkėlimo apribojimai
+    doc_organization_desc Naudokite aplankus susijusiems dalykams grupuoti. Taip pat galite kurti kolekcijas, kad organizuotumėte dalykus į kuruojamus kelius.
+    doc_organization_title Turinio organizavimas
+    doc_pillars_desc Visas „Aliolo“ turinys suskirstytas į 8 pagrindinius pilonus: akademinį ir profesinį, pasaulio, gamtos, žmogaus kūno, humanitarinių mokslų, laisvalaikio, inžinerijos ir kita. Šios kategorijos suteikia struktūrinį pagrindą visiems platformos dalykams.
+    doc_pillars_title 8 pagrindiniai pilonai
+    doc_public_desc Dalykai gali būti privatūs (matomi tik jums) arba vieši. Viešas turinys bendrinamas su visa „Aliolo“ bendruomene, todėl visi gali atrasti jūsų kūrinius ir iš jų mokytis.
+    doc_public_title Viešas prieš privatų
     doc_start_dashboard_desc Prietaisų skydelis yra pagrindinė jūsų biblioteka. Naudokite paiešką, kad greitai rastumėte turinį, tada sujunkite šaltinio filtrus, pvz., mėgstamiausius, mano ir viešosios bibliotekos, su amžiaus filtrais, kad sumažintumėte triukšmą.
     doc_start_dashboard_title Prietaisų skydelis, paieška ir filtrai
     doc_start_feedback_desc Jei kas nors negerai arba neaišku, naudokite atsiliepimų įvesties taškus programoje. Ataskaitose gali būti nurodytas dabartinis kontekstas, todėl turinio problemas lengviau peržiūrėti ir išspręsti.
@@ -98,6 +232,8 @@
     doc_start_quick_title Greita pradžia
     doc_start_structure_desc Tiriamieji laiko korteles. Aplankai sugrupuoja susijusį turinį ramstyje. Kolekcijos yra kuruojami rinkiniai, kuriuose galima sujungti kelis dalykus studijuoti ir dalytis.
     doc_start_structure_title Dalykai, aplankai ir kolekcijos
+    doc_streaks_desc Nuoseklumas yra raktas! Kasdien pasiekite savo dienos tikslą, kad sukurtumėte seriją. Nepraleiskite nė vienos dienos, kitaip serija bus nuliūdyta.
+    doc_streaks_title Serijų sistema
     doc_study_how_desc Pradėkite nuo Sužinokite, kai kuriate atpažinimą, tada perjunkite į „Tikrinti“, kai norite greitesnio atkūrimo ir griežtesnio tikrinimo. Naudokite trumpesnius seansus, kad peržiūrėtumėte tikslingai, o didesnes sesijas, kad aprėptis būtų platesnė.
     doc_study_how_title Kaip Studijuoti
     doc_study_intro_desc Šiame skirtuke paaiškinama, kaip pereiti per turinį, pasirinkti tinkamą režimą ir suderinti seansus peržiūrai ar atšaukimui.
@@ -108,67 +244,280 @@
     doc_study_modes_title Mokykitės ir išbandykite režimus
     doc_study_scope_desc Studijas galima pradėti nuo vieno dalyko, aplanko rodinio arba kolekcijos. Kolekcijos yra naudingos, kai norite sumaišyti kelis dalykus, neišeinant iš dabartinio srauto.
     doc_study_scope_title Studijų dalykai, aplankai ir kolekcijos
+    doc_sync_desc Jūsų pažanga automatiškai sinchronizuojama su debesimi. Galite perjungti žiniatinklio ir darbalaukio versijas neprarasdami serijos.
+    doc_sync_title Debesų sinchronizavimas
     doc_tab_create Sukurti
+    doc_tab_creator Kūrimas
+    doc_tab_general Bendra
+    doc_tab_learning Praktika
     doc_tab_start Pradėti
     doc_tab_study Studijuoti
+    doc_testing_desc Išbandykite save klausimais su keliais pasirinkimais (MCQ). Programėlė automatiškai judės pirmyn, kai atsakysite, padėdama mokytis greičiau.
+    doc_testing_title Interaktyvus testavimas
+    doc_welcome_desc Aliolo yra vizualinio mokymosi platforma, sukurta padėti jums įsisavinti dalykus naudojant korteles ir interaktyvų testavimą.
+    doc_welcome_title Sveiki atvykę į Aliolo
     documentation Dokumentacija
+    done_today Done Today
+    down_arrow Down Arrow
+    edit Redaguoti
+    edit_card Edit Card
+    edit_collection Redaguoti kolekciją
+    edit_email Redaguoti el. paštą
+    edit_folder Redaguoti aplanką
+    edit_name Edit Name
+    edit_subject Edit Subject
+    edit_subject_title Edit Subject
     edit_subscription Redaguoti prenumeratą
+    email El. paštas
+    email_change_notice For security, a confirmation link will be sent to BOTH your old and new email addresses. You must click both to complete the change.
+    email_in_use Email is already in use
+    email_subject Subject
+    email_update_sent Confirmation emails sent. Please check both inboxes.
     email_updated_successfully El. paštas sėkmingai atnaujintas!
+    english English
     enter_current_password Įveskite dabartinį slaptažodį
+    enter_new_email Įveskite naują el. paštą
+    enter_new_name Enter New Name
+    enter_number Enter a number
+    enter_or_select_subject Please enter or select a subject
+    enter_pass_to_confirm Enter your password to confirm
+    enter_subject_name Enter subject name
     error Klaida: $e
     error_deleting Klaida ištrinant: $e
+    error_deleting_account Could not delete account. Check your password.
     error_saving Išsaugant įvyko klaida: $e
     error_saving_card Klaida išsaugant kortelę: $e
     error_updating_favorite Klaida atnaujinant mėgstamiausią: $e
+    exit Exit
+    exit_confirm_msg Are you sure you want to exit the application?
+    exit_confirm_title Exit Aliolo?
+    expiry_date Galiojimo pabaigos data
     failed_answers Nepavykę atsakymai
     failed_to_send_reset_code Nepavyko išsiųsti nustatymo iš naujo kodo
     failed_to_send_verification_code Nepavyko išsiųsti patvirtinimo kodo
     fake_only Tik netikras
+    fatal_startup_error Fatal Startup Error
+    feat_adaptive_desc The system monitors your recognition speed across MCQ options, dynamically adjusting intervals to push your boundaries.
+    feat_adaptive_title Adaptive Response Timing
+    feat_ages_desc Content curated for different age groups from early childhood to advanced learning.
+    feat_ages_title For All Ages
+    feat_gamified_desc Earn XP, badges, and build streaks while mastering complex visual subjects.
+    feat_gamified_title Gamified Experience
+    feat_mastery_desc Dynamic XP rewards difficulty, while real-time mastery badges (Bronze, Silver, Gold) track your journey from novice to expert.
+    feat_mastery_title Visual Mastery & XP
+    feat_multimedia_desc Learn with images, audio, and video support for immersive training.
+    feat_multimedia_title Multimedia Cards
+    feat_recognition_desc Immersive identification drills designed to build instant "muscle memory" for complex visual subjects.
+    feat_recognition_title Visual Pattern Training
+    feat_science_adaptive_desc Intervals automatically adjust based on your recognition speed and accuracy.
+    feat_science_adaptive_title Adaptive Timing
+    feat_science_spacing_desc Advanced cognitive spacing model that predicts memory decay and optimizes review cycles.
+    feat_science_spacing_title SuperMemo-2 (SM-2)
+    feat_spacing_desc A full implementation of the SuperMemo-2 model predicts your memory decay and schedules reviews at the peak of retention.
+    feat_spacing_title Cognitive Spacing (SM-2)
+    feature_autoplay Automatinio paleidimo režimas
+    feature_community_access Prieiga prie bendruomenės dalykų
     feature_creation Kūrimo įrankiai
     feature_customize Išplėstinis pritaikymas
+    feature_favorites Mėgstamiausi elementai prietaisų skydelyje
+    feature_feedback Tiesioginis grįžtamasis ryšys ir pasiūlymai
+    feature_free NEMOKAMAI
+    feature_friends Kvieskite ir susisiekite su draugais
     feature_full_library Visa prieiga prie bibliotekos
+    feature_learn_all Mokykitės bet kurio dalyko ar kolekcijos
+    feature_private_mode Privataus profilio režimas
+    feature_pro PRO
+    feature_spaced_repetition Pasikartojimas intervalais (SM-2)
     feature_testing Interaktyvus testavimas
+    feedback Atsiliepimai
+    feedback_add_image Pridėti nuotrauką
+    feedback_attachments Priedai
+    feedback_bug Pranešti apie klaidą
+    feedback_context Kontekstas
+    feedback_details Informacija
+    feedback_error Nepavyko išsiųsti atsiliepimo. Bandykite dar kartą.
+    feedback_management_desc Peržiūrėti ir valdyti vartotojų atsiliepimus
+    feedback_management_title Atsiliepimų užklausos
+    feedback_other Kita
+    feedback_submit Siųsti atsiliepimą
+    feedback_success Dėkojame už jūsų atsiliepimą!
+    feedback_suggestion Pasiūlymas
+    feedback_title Siųsti atsiliepimą
+    feedback_title_hint Pavadinimas
+    feedback_type Tipas
+    fill_all_fields Please fill all fields
+    filter_all All
+    filter_dashboard Valdymo skydas
+    filter_favorites Mėgstami
+    filter_my_subjects My Subjects
+    filter_on_dashboard On Dashboard
+    filter_public Public
+    filter_public_library Viešoji biblioteka
+    filters Filtrai
+    finish Baigti
+    finished_session You finished {count} cards. XP bonus awarded!
+    folder Aplankas
+    folder_already_exists Aplankas tokiu pavadinimu jau egzistuoja šiame pilioriuje
     folder_id Aplanko ID
+    folder_label Aplankas
+    folder_not_empty_msg Negalima ištrinti: aplankas nėra tuščias.
+    folder_plural Aplankai
+    forgot_password Forgot Password?
     free_only Nemokami vartotojai
+    general_preferences General Preferences
     generic Bendras
+    go_to_manager Go to Library Manager
+    goal_change_hint Change your card goal for tomorrow
+    goal_change_notice Dienos tikslo pakeitimai įsigalios rytoj.
+    gold GOLD
+    hide_comparison Slėpti planų palyginimą
     home Pradžia
+    images Images
+    included_subjects Įtrauktos temos
+    info_copied Info copied to clipboard
+    initializing_aliolo Initializing Aliolo...
     invalid_code Neteisingas kodas
+    invalid_email Invalid email address
     invalid_email_address Neteisingas el. pašto adresas
     invalid_json Neteisingas JSON: $e
+    invalid_number Invalid number
     invalid_or_expired_invitation_link Netinkama arba nebegaliojanti kvietimo nuoroda.
     invalid_or_expired_reset_code Neteisingas arba pasibaigęs atstatymo kodas.
+    invalid_password Invalid password
+    invalid_password_delete Invalid Password
     invitation_sent_awaiting_registration Kvietimas išsiųstas (laukiama registracijos)
+    invite Pakviesti
+    invite_user_content El. paštas {email} nerastas. Pakviesti prisijungti prie „Aliolo“?
+    invite_user_title Pakviesti vartotoją?
     invited_and_request_sent Pakviestas ir prašymas išsiųstas!
     json JSON
+    keyboard_shortcuts Keyboard Shortcuts
     label_suffix $label:
+    lang_abbr Lang
+    language Kalba
     leaderboard Lyderių lentelė
+    learn_mode_desc Study cards and memorize answers
+    learn_mode_title Learn
+    learn_session_size Learn Session Size
+    learn_session_size_desc Naujų kortelių skaičius, kurį reikia pristatyti vienoje mokymosi sesijoje.
     learning_session_complete_description Puikus darbas! Baigėte šią mokymosi sesiją. Jūsų pažanga išsaugota.
+    left_arrow Left Arrow
+    level Level
+    level_range Must be between 1 and 20
+    level_tier_1 1 lygis
+    level_tier_2 2 lygis
+    level_tier_3 3 lygis
     licenses Licencijos
     licenses_aliolo_section_title Aliolo Komercinė licencija
     licenses_aliolo_subtitle Patentuota programinė įranga ir aukščiausios kokybės prieigos sąlygos
     licenses_intro_desc Aliolo komercinė licencija pasirodo pirmiausia. Toliau pateikiamos trečiųjų šalių paketų licencijos.
     licenses_intro_title Aliolo Pastabos apie licenciją ir paketą
     licenses_third_party_section_title Trečiųjų šalių paketų licencijos
+    light Light
     linux_distro Linux Distro
     loading Įkeliama...
     localized_data Lokalizuoti duomenys
+    login Prisijungti
+    logout Atsijungti
+    manage_cards Manage Cards
+    manage_friends Friends
+    manage_friends_desc View and manage your friend requests
+    manage_library Manage Library ({sCount} subjects, {cCount} cards)
+    manage_subjects Manage Subjects
+    manage_subscription Valdyti prenumeratą
+    manage_testing_langs Manage Testing Languages
+    manage_users Manage Users
+    master_visual_ease Master visual subjects with ease.
+    mastered mastered
+    mastery Meistriškumas
+    max_streak Max Streak
+    maybe_later Galbūt vėliau
+    mission_desc The smart companion that helps your brain learn and retain visual knowledge through science-backed algorithms.
+    mock_email_title Mock Email Inbox
+    mode_audio_to_image Audio to Image
+    mode_audio_to_text Audio to Text
+    mode_image_to_text Image to Text
+    mode_text_to_text Text to Text
     monthly_access Mėnesinė prieiga
     most_popular_choice Populiariausias pasirinkimas
+    multi_lang_answers Multi-language Answers
+    multi_lang_prompts Multi-language Prompts
+    my_position My Position
+    name Name
+    names_descriptions Names & Descriptions
+    new NEW
     new_email Naujas el
+    new_password New Password
+    next Toliau
+    next_card Next Card
+    next_daily_goal Kitas dienos tikslas
+    next_daily_goal_desc Tikslinis kortelių skaičius, kurį reikia išmokti kiekvieną dieną. Pakeitimai įsigalios rytoj.
+    next_day_goal Next Day Goal
     no_cards_available_for_this_session Šiam seansui kortelių nėra.
     no_cards_found Kortelių nerasta
+    no_cards_found_for_lang No cards found for this language
+    no_cards_in_library No cards found in the library.
+    no_feedback_found Atsiliepimų nerasta.
+    no_folder Nėra aplanko (Šaknis)
+    no_friends_found No friends found
+    no_images_added Nepridėta jokių vaizdų
+    no_leaderboard_data No leaderboard data available.
+    no_localized_audio Nėra lokalizuoto garso
+    no_localized_images Nėra lokalizuotų vaizdų
+    no_localized_video Nėra lokalizuoto vaizdo įrašo
+    no_subjects_available Temų nėra
     no_subjects_found Nerasta jokių dalykų
     no_subjects_found_in_this_collection Šioje kolekcijoje nerasta jokių temų
     no_users_found Nerasta jokių vartotojų
+    ok OK
+    old_password Senas slaptažodis
+    old_password_required Senas slaptažodis yra privalomas
+    onboarding_1_desc Mokykitės vizualiai. Įsisavinkite visam laikui. Jūsų vizualaus mokymosi palydovas, pagrįstas SM-2 mokslu.
+    onboarding_1_title Sveiki atvykę į Aliolo
+    onboarding_2_desc Tai padeda mums personalizuoti jūsų mokymosi patirtį ir rekomenduoti tinkamus dalykus.
+    onboarding_2_title Kiek jums metų?
+    onboarding_3_desc Pasirinkite pagrindinį interesą, kad pritaikytumėte pradinį prietaisų skydelį.
+    onboarding_3_title Ką norite įsisavinti?
+    onboarding_4_desc Susikurkite savo rinkinį arba pasinerkite į korteles, kuriomis dalijasi Aliolo mokiniai visame pasaulyje. Mokykitės savo tempu, tada išbandykite save, kai būsite pasiruošę.
+    onboarding_4_title Kurkite ir dalinkitės
+    onboarding_5_desc Jūsų biblioteka sinchronizuojama visuose įrenginiuose. Priminsime tik tada, kai ateis laikas apsaugoti savo seriją.
+    onboarding_5_title Įsisavinkite bet kur
+    onboarding_6_desc Pradėkite savo kelionę šiandien ir įsisavinkite viską, ką užsibrėžėte.
+    onboarding_6_title Prisijunkite prie bendruomenės
+    onboarding_7_joined Prisijungė tūkstančiai mokinių
+    onboarding_7_quote Aliolo visiškai pakeitė tai, jak aš ir mano vaikai įsisaviname naujas temas. Vizualios kortelės ir pasikartojimai daro mokymąsi panašų į žaidimą!
+    onboarding_get_started Pradėti
+    onboarding_next Toliau
+    onboarding_skip Praleisti
+    options_count Number of Answers
+    options_count_desc Testų metu rodomų pasirinkimo variantų skaičius.
+    options_per_card options per card
+    order_id Užsakymo ID
     os_version OS versija
+    our_mission OUR MISSION
+    page Page
+    parent_folder_label Parent Folder (lt)
+    password Slaptažodis
+    password_required Password is required
+    password_reset_success Password reset successful
     password_updated_successfully Slaptažodis sėkmingai atnaujintas!
+    passwords_dont_match Passwords do not match
+    paste PASTE
     payments_are_not_yet_integrated_on_web_please_use_the_mobile_app_to_upgrade Mokėjimai dar nėra integruoti į internetą. Norėdami atnaujinti, naudokite programą mobiliesiems.
     personal_data Asmens duomenys
     pick_date Pasirinkite datą
+    picture Picture
+    pillar Pillar
+    plan_monthly Mėnesio prieiga
+    plan_monthly_desc Populiariausias pasirinkimas
     plan_monthly_tagline Populiariausias pasirinkimas
     plan_monthly_title Mėnesinė prieiga
+    plan_weekly Savaitės prieiga
+    plan_weekly_desc Geriausia greitiems tikslams
     plan_weekly_tagline Geriausiai tinka greitiems įvarčiams
     plan_weekly_title Savaitinė prieiga
+    plan_yearly Metų prieiga
+    plan_yearly_desc Sutaupykite 33% per mėnesį
     plan_yearly_tagline Sutaupykite 33% per mėnesį
     plan_yearly_title Kasmetinė prieiga
     platform Platforma
@@ -177,58 +526,208 @@
     please_enter_the_6_digit_code Įveskite 6 skaitmenų kodą
     please_wait_for_a_response_before_replying_again Prieš atsakydami dar kartą, palaukite atsakymo.
     premium_expires_at Galiojimas baigiasi $date
+    premium_go Gauti Premium
     premium_lifetime Prieiga visą gyvenimą
     premium_only Tik Premium
     premium_status_active Jūs esate „premium“ narys
+    premium_title Aliolo Premium
     premium_unlock_desc Gaukite prieigą prie visų dalykų, kurkite neribotas korteles ir palaikykite Aliolo misiją.
     premium_unlock_title Atrakinkite visą prieigą
+    prev Prev
+    previous_card Previous Card
+    price_per_week ({price} / savaitę)
+    private Private
+    pro_label PRO
+    product_id Produkto ID
     product_not_available_in_store Prekės parduotuvėje nėra.
     profile Profilis
+    profile_title My Profile & Progress
+    prompt_label Prompt
+    prompt_optional Prompt / Question
+    prompts_answers Prompts & Answers
+    provide_at_least_one_answer Please provide at least one answer
+    provide_at_least_one_name Provide at least one name
+    provider Teikėjas
     public_other_subject Vieša / kita tema
+    public_profile Public Profile
+    public_profile_desc Show your XP and Streak on Hall of Fame.
+    public_subject Public Subject
+    public_subject_desc Make this subject visible to other users.
     purchase_failed Pirkimas nepavyko: $e
+    purchase_token Pirkimo žetonas
+    record_shortcut Record Shortcut
     recovery_error Atkūrimo klaida: $e
     refresh Atnaujinti
     refresh_conversation Atnaujinti pokalbį
+    remove_friend Remove Friend
+    remove_friend_confirm Are you sure you want to remove friend
     renderer Atvaizduotojas
+    request_sent Request sent
+    request_sent_waiting Request sent (waiting)
+    required Required
     reset_code Iš naujo nustatyti kodą
+    reset_code_email_title Password Reset Code
+    reset_code_sent "Reset code for: "
     reset_code_sent_to_please_check_your_inbox Iš naujo nustatyti kodas, išsiųstas $email. Patikrinkite gautuosius.
+    reset_password_for "Reset Password for: "
+    restore_password Restore Password
     restore_purchases Atkurti pirkinius
+    retry Retry
+    right_arrow Right Arrow
     save Išsaugoti
     save_33_per_month Sutaupykite 33% per mėnesį
+    save_before_nav Do you want to save changes before navigating?
+    save_card Save Card
+    save_subject Save Subject
     saved_successfully Sėkmingai išsaugota
+    search_cards Search Cards
+    search_subjects Search Subjects
     search_users Ieškoti vartotojų
+    select_an_answer Select an Answer
+    select_lang Select Language
+    select_package_license Select Package License
+    select_user Select User
+    selected_count {count} Selected
+    send Send
+    send_code Send Code
+    send_verification_code Send verification code?
     session_complete Sesija baigta!
     session_complete_description Puikus darbas! Baigėte visas šios sesijos korteles.
+    setting_saved Setting saved
     settings Nustatymai
+    shortcuts_hint Press the key you want to use with Ctrl.
+    show_all_languages Show all languages
     show_documentation_btn Rodyti dokumentacijos mygtuką
     show_documentation_btn_desc Programų juostoje parodykite dokumentacijos mygtuką.
     show_fake_users Rodyti netikrus vartotojus
+    show_less_languages Show less languages
+    sidebar_left Sidebar on the left
+    sidebar_left_desc Move testing controls to the left side of the screen.
+    silver SILVER
+    social Social
+    sort_by Sort by
+    sound_effects Sound Effects
+    sound_effects_desc Enable audio feedback for correct and wrong answers.
+    source Šaltinis
+    status Būsena
+    status_closed Uždarytas
+    status_open Atviras
+    status_replied Atsakyta
+    streak Serija
+    subject Subject
+    subject_deleted Subject deleted
     subject_id Dalyko ID
+    subject_label Subject
+    subject_plural Subjects
+    subject_type Subject Type (lt)
+    subjects Temos
     subscribe_now Prenumeruokite dabar
     subscription_data Prenumeratos duomenys
     subscription_updated Prenumerata atnaujinta
     subtraction_emoji Atimties jaustukai
     subtraction_numbers Atimties skaičiai
+    support_and_management Pagalba ir valdymas
+    system System
+    tap_to_replay Tap to Replay
     technical_context TECHNINIS KONTEKSTAS
+    test_mode_desc Challenge yourself with a quiz
+    test_mode_label Test Mode
+    test_mode_title Test
+    test_session_size Test Session Size
+    test_session_size_desc Peržiūrimų kortelių skaičius vienoje testavimo sesijoje.
+    testing Testing
     testing_mode Testavimo režimas
+    testing_section Testing Settings
     text Tekstas
+    the_science THE SCIENCE
+    theme_color App Theme Color
+    theme_color_desc Customize the primary color used for buttons and highlights.
+    theme_dark Dark
+    theme_light Light
+    theme_mode Temos režimas
+    theme_system System
     this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards Tai aplankas. Galite naudoti aukščiau esančius mygtukus „Mokytis / išbandyti“, kad galėtumėte praktikuoti visas kortas.
+    to_label To
     total_cards Iš viso kortelių
+    total_xp Total XP
+    trust_cloud_desc Your progress is securely synced across all your devices in real-time.
+    trust_cloud_title Cloud Sync
+    trust_privacy TRUST & PRIVACY
+    trust_sync_desc Your data is private and encrypted to ensure the highest security standards.
+    trust_sync_title Encrypted Data
+    type_collection Kolekcija
+    type_folder Folder (Sub-subjects) (lt)
+    type_standard Standard (Cards) (lt)
     type_your_reply Įveskite savo atsakymą...
     ua UA
+    ui_language Sąsajos kalba
+    ukrainian Ukrainian
     unknown_user_profile_missing Nežinomas naudotojas (trūksta profilio)
+    unsaved_changes Unsaved Changes
+    unsaved_changes_msg Turite neišsaugotų pakeitimų. Ar norite juos atmesti?
+    up_arrow Up Arrow
+    update Update
     update_available Yra nauja versija!
+    updated_at Atnaujinta
+    upload_new_photo Įkelti naują nuotrauką
     user Vartotojas
+    user_exists User already exists
     user_id Vartotojo ID
+    user_not_found User not found
     user_with_this_email_already_exists_please_log_in_instead Vartotojas su šiuo el. pašto adresu jau egzistuoja. Vietoj to prisijunkite.
+    username Vartotojo vardas
     users Vartotojai
     users_filter Filtruoti vartotojus
     verification_code Patvirtinimo kodas
     verification_code_sent_to Patvirtinimo kodas išsiųstas $email
+    verify Verify
     version Versija
+    video Video
+    video_link Video Link
+    video_url_optional Video URL (Optional)
+    view_card View Card
+    view_cards_title View Cards
     view_onboarding Žiūrėti prisijungimą
+    visibility Visibility
+    visual_content_required Reikalingas bent vienas vizualinis turinys
+    visual_content_required_msg Turi būti pateiktas bent vienas vizualinis turinys (tekstas, vaizdas, garsas arba vaizdo įrašas).
+    visual_text Vaizdinis tekstas
+    wants_to_be_friend Wants to be your friend
     weekly_access Savaitinė prieiga
     welcome_complete_your_profile_to_join_aliolo Sveiki atvykę! Užpildykite savo profilį, kad prisijungtumėte prie aliolo.
+    xp XP
     yearly_access Kasmetinė prieiga
+    you You
     you_do_not_have_permission_to_edit_this_card Neturite leidimo redaguoti šios kortelės
     you_do_not_have_permission_to_view_this_card_details Neturite leidimo peržiūrėti šios kortelės informacijos.
+    you_rank You are ranked #{rank}
+    active Aktyvus
+    autoplay Automatinis paleidimas
+    card_limit Kortelių limitas
+    card_limit_msg Pasiekėte {limit} kortelių limitą.
+    create_request Sukurti užklausą
+    edit_user Redaguoti vartotoją
+    favorite Mėgstamiausias
+    file_too_large Failas per didelis
+    inactive Neaktyvus
+    is_required yra privaloma
+    languages Kalbos
+    limit_reached Limitas pasiektas
+    not_available Nepasiekiama
+    toggle_languages Perjungti kalbas
+    user_updated Vartotojas atnaujintas
+    zoom Mastelis
+    account_and_management Account & Management
+    back_to_plans Back to plans
+    confirm_password_required Confirm password is required
+    feat_autoplay_desc Focus on learning while the app automatically advances through cards at your pace.
+    feat_autoplay_title Hands-Free Autoplay
+    feat_create_share_desc Easily create your own subjects and cards, or share them with the community.
+    feat_create_share_title Create & Share
+    feat_science_smart_review_desc The algorithm calculates the optimal time to review each card for maximum retention.
+    feat_science_smart_review_title Smart Review Cycles
+    new_password_required New password is required
+    password_updated Password updated successfully
+    save_success Saved successfully
+    trust_ecosystem_desc Your progress and cards are seamlessly synced across all your devices.
+    trust_ecosystem_title Aliolo Ecosystem

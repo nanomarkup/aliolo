@@ -10,10 +10,4 @@ describe('Production API Health Check', () => {
     expect(Array.isArray(data)).toBe(true);
   });
 
-  it('should return 200 for languages', async () => {
-    const res = await fetch(`${PROD_URL}/api/languages`);
-    expect(res.status).toBe(200);
-    const data = await res.json();
-    expect(Array.isArray(data)).toBe(true);
-  });
 });

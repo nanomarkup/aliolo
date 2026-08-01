@@ -43,37 +43,139 @@
     about_support_settings_desc Limba interfeței de utilizare, modul temă, culoarea temei, sunetul, plasarea barei laterale și vizibilitatea documentației pot fi ajustate din setări.
     about_support_settings_title Personalizare
     about_support_title Setări, feedback și asistență
+    about_tagline Învață vizual. Stăpânește permanent.
+    account_created Cont creat
+    account_created_billing_fail Contul dvs. a fost creat, dar plata nu s-a finalizat. Reîncercați plata de mai jos.
+    account_deleted Account deleted successfully
+    add_card Add Card
+    add_collection Adaugă colecție
+    add_folder Adaugă folder
+    add_friend_by_email Add Friend By Email
+    add_lang_translation Add Language Translation
+    add_prompt_translation Add Prompt Translation
+    add_subject Add Subject
     addition_emoji Emoji suplimentar
     addition_numbers Numere de adunare
+    age Vârstă
+    age_0_6 0-6 ani
+    age_15_18 15 - 18
+    age_15_plus 15+ ani
+    age_19_25 19 - 25
+    age_26_35 26 - 35
+    age_36_50 36 - 50
+    age_7_14 7-14 ani
+    age_advanced Advanced
+    age_all All Ages
+    age_early Early Childhood
+    age_group Age Group
+    age_intermediate Intermediate
+    age_over_50 Peste 50
+    age_primary Primary School
+    age_under_14 Sub 14
+    algorithm_title THE ALIOLO ALGORITHM
     aliolo aliolo
+    all_matching_subjects Toate subiectele potrivite
     all_rights_reserved Toate drepturile rezervate
+    answer Răspuns
+    answer_label answer
+    answers_label answers
     are_you_sure_you_want_to_close_this_feedback_request Sigur doriți să închideți această solicitare de feedback?
     are_you_sure_you_want_to_delete_this_folder Sigur doriți să ștergeți acest dosar?
+    ascending Ascending
     attach_image Atașați imaginea
+    audio Audio
+    audio_playing Audio Playing
+    author Author
     back Spate
+    back_to_login Back to Login
     back_to_subjects Înapoi la Subiecte
     best_for_quick_goals Cel mai bun pentru goluri rapide
     billing_disclaimer Abonamentele se reînnoiesc automat, dacă nu sunt anulate. Vă puteți gestiona abonamentul în setările magazinului.
     billing_title Facturare
+    bronze BRONZE
     browser Browser
     cancel Anula
+    cancel_request Cancel Request
+    cancel_request_confirm Are you sure you want to cancel the request to
+    cannot_delete_folder Cannot Delete Folder
     cannot_delete_folder_it_is_not_empty Nu se poate șterge folderul: nu este gol
+    card_details Card Details
     card_id ID card
+    card_label Card
+    card_level Nivelul cardului
+    card_plural Cards
+    cards cards
+    cards_label cards
+    cards_per_day cards per day
+    cards_per_session cards per session
+    change_avatar Change Avatar
+    change_password Schimbă parola
     check_your_email_for_code Verificați-vă e-mailul pentru cod
     clear Clar
+    click_to_select_image Click to select image
     click_to_view_original Click pentru a vizualiza originalul
     close Aproape
     close_request Închideți cererea?
+    code_label Code
     collection_id ID-ul colecției
     colors Culori
+    common_settings Common Settings
+    compare_plans Compară Gratuit vs Premium
+    confirm Confirmă
+    confirm_logout Are you sure you want to logout?
+    confirm_password Confirm Password
     confirm_subscription Confirmați abonamentul
+    content_label Content
     context Context
+    copy COPY
+    copy_all Copy All
+    core_features CORE FEATURES
     correct_answers Răspunsuri corecte
     could_not_launch Nu s-a putut lansa $url
     counting Numărând
+    create_account Create Account
+    create_new_account Create New Account
+    create_new_card Create New Card
+    created_at Creat la
+    current_streak Current Streak
     current_subscription Abonament curent
+    daily_goal Daily Goal
+    daily_progress Daily Progress
+    dark Dark
+    dashboard_greeting Bună
+    day day
+    day_label Day
+    day_plural Days
+    days days
+    default Default
+    default_language Limba implicită
+    default_testing_language Default Testing Language
+    default_testing_language_desc Pre-selects this language on the subjects page.
     delete Şterge
+    delete_account Delete Account
+    delete_account_confirm Are you sure you want to delete your account? This action is permanent.
+    delete_avatar Șterge avatar
+    delete_avatar_confirm Sigur doriți să eliminați fotografia de profil?
+    delete_card_confirm Delete this card?
+    delete_collection Ștergeți colecția
+    delete_collection_confirm Sigur doriți să ștergeți această colecție?
+    delete_folder Șterge folderul
+    delete_selected_cards Delete selected cards?
+    delete_subject Delete Subject
+    delete_subject_confirm Delete subject '{subject}' and all {count} cards inside?
+    delete_subjects_first Please delete all sub-subjects inside this folder before deleting the folder itself.
+    descending Descending
+    description Description
     device Dispozitiv
+    digit_code 6-digit Code
+    discard Discard
+    discard_changes Anulați modificările?
+    doc_autoplay_desc Aplicația poate avansa automat la următorul card după ce răspunzi. Răspunsurile corecte așteaptă 1 s, în timp ce cele incorecte așteaptă 2 s pentru a-ți permite să revizuiești.
+    doc_autoplay_title Învățare cu redare automată
+    doc_card_scope_desc Cardurile sunt elementele de bază ale învățării și aparțin întotdeauna unui anumit subiect. Deși poți organiza subiectele în dosare sau colecții, cardurile în sine trebuie create în cadrul unui subiect.
+    doc_card_scope_title Unde trăiesc cardurile
+    doc_collections_purpose_desc Colecțiile sunt căi curatoriate care grupează subiectele. Când începi o sesiune dintr-o colecție, sistemul amestecă carduri din toate subiectele incluse pentru a oferi un test cuprinzător, randomizat.
+    doc_collections_purpose_title Scopul colecțiilor
     doc_create_intro_desc Această filă acoperă modul în care creatorii organizează conținutul, îl localizează și publică material de studiu util fără a complica prea mult fluxul de lucru.
     doc_create_intro_title Crea
     doc_create_json_desc Crearea bazată pe JSON este un flux de lucru avansat pentru conținut structurat în vrac. Ar trebui să rămână opțional; majoritatea creatorilor ar trebui să poată construi și edita conținut prin intermediul formularelor standard.
@@ -86,6 +188,38 @@
     doc_create_model_title Model de conținut
     doc_create_visibility_desc Folosiți „al meu” pentru a lucra la propriul conținut, favoritele pentru a fixa elemente utile și biblioteca publică pentru a răsfoi materialele partajate. Vizibilitatea publică afectează descoperirea, în timp ce calitatea de proprietar afectează ceea ce puteți edita sau șterge.
     doc_create_visibility_title Proprietatea și vizibilitatea
+    doc_creation_desc Creează-ți propriile subiecte și adaugă flashcard-uri vizuale. Fiecare card acceptă o imagine și un fișier audio opțional pentru pronunție.
+    doc_creation_title Crearea subiectelor și cardurilor
+    doc_feedback_desc Ajută-ne să ne îmbunătățim! Folosește pictograma de feedback (Icons.feedback) de pe orice subiect sau dosar pentru a raporta probleme. De asemenea, poți trimite feedback general despre aplicație prin secțiunea Asistență.
+    doc_feedback_title Sistem de feedback
+    doc_filters_desc Găsește rapid conținut folosind bara de căutare. Poți filtra după grupă de vârstă (de la timpuriu la avansat) sau poți restrânge vizualizarea la colecții și dosare specifice.
+    doc_filters_title Căutare și filtre
+    doc_flashcards_desc Fiecare subiect conține un set de carduri. Deși imaginile și sunetul sunt acceptate, acestea sunt opționale – conținutul poate fi pur textual sau generat dinamic.
+    doc_flashcards_title Flashcard-uri vizuale
+    doc_friends_desc Învățarea este mai bună împreună! Invită prieteni la Aliolo prin profilul tău. Vă puteți urmări reciproc progresul și puteți rămâne motivați văzând cine menține cea mai lungă serie.
+    doc_friends_title Prieteni și invitații
+    doc_goals_desc Setează-ți obiectivul zilnic de completare a cardurilor în setări. Modificările aduse obiectivului tău intră în vigoare începând cu ziua următoare.
+    doc_goals_title Obiective zilnice
+    doc_json_desc Creatorii avansați pot folosi datele JSON pentru a furniza nume și descrieri localizate, făcând subiectele accesibile în toate limbile acceptate.
+    doc_json_title Localizare JSON
+    doc_lang_desc Selectează întotdeauna limba de învățare preferată în meniul de sus înainte de a selecta un subiect. Acest lucru asigură încărcarea corectă a sunetului și a traducerilor.
+    doc_lang_title Limba de învățare
+    doc_leaderboard_desc Concurează cu cursanți din întreaga lume! Câștigă XP completând sesiuni de carduri și urcă în clasament. Poziția ta este actualizată în timp real pe măsură ce stăpânești noi subiecte.
+    doc_leaderboard_title Clasament global
+    doc_localization_details_desc Limba „Global” este rezerva ta principală – poate fi orice limbă alegi. Dacă furnizezi traduceri specifice (cum ar fi engleza sau spaniola), acestea vor suprascrie datele globale numai atunci când un utilizator selectează acea limbă specifică a interfeței.
+    doc_localization_details_title Cum funcționează localizarea
+    doc_localization_ui_desc Pentru a adăuga date localizate, atinge pur și simplu pictograma codului de limbă (de exemplu, EN, ES, FR) în antetul editorului. Acest lucru îți permite să furnizezi nume, descrieri și conținut specific cardurilor pentru fiecare limbă acceptată. Fila „Global” servește drept rezervă principală dacă nu este furnizată nicio traducere specifică.
+    doc_localization_ui_title Adăugarea traducerilor
+    doc_math_desc Subiectele matematice utilizează motoare specializate pentru a genera vizualizări ale cardurilor în timp real. Aceste subiecte prezintă moduri unice de învățare și testare adaptate conceptelor matematice specifice, asigurând un mediu de practică mai eficient.
+    doc_math_title Subiecte matematice
+    doc_media_desc Pentru a asigura o sincronizare rapidă, păstrați imaginile sub 5 MB și fișierele audio sub 10 MB.
+    doc_media_title Limite de încărcare media
+    doc_organization_desc Folosește dosare pentru a grupa subiectele înrudite. De asemenea, poți crea colecții pentru a organiza subiectele în căi curatoriate.
+    doc_organization_title Organizarea conținutului
+    doc_pillars_desc Tot conținutul din Aliolo este organizat în 8 piloni fundamentali: academic și profesional, lume, natură, corp uman, științe umaniste, timp liber, inginerie și altele. Aceste categorii oferă un cadru structurat pentru toate subiectele de pe platformă.
+    doc_pillars_title Cei 8 piloni de bază
+    doc_public_desc Subiectele pot fi private (vizibile doar pentru tine) sau publice. Conținutul public este partajat cu întreaga comunitate Aliolo, permițând tuturor să descopere și să învețe din creațiile tale.
+    doc_public_title Public vs Privat
     doc_start_dashboard_desc Tabloul de bord este biblioteca dvs. principală. Utilizați căutarea pentru a găsi conținut rapid, apoi combinați filtrele sursă, cum ar fi favorite, ale mele și biblioteca publică, cu filtre de vârstă pentru a reduce zgomotul.
     doc_start_dashboard_title Tabloul de bord, căutarea și filtrele
     doc_start_feedback_desc Folosiți punctele de intrare pentru feedback din aplicație atunci când ceva este în neregulă sau neclar. Rapoartele pot include contextul actual, ceea ce face problemele de conținut mai ușor de revizuit și remediat.
@@ -98,6 +232,8 @@
     doc_start_quick_title Pornire rapidă
     doc_start_structure_desc Subiecții dețin carduri. Dosarele grupează conținutul asociat într-un pilon. Colecțiile sunt seturi organizate care pot combina mai multe subiecte pentru studiu și partajare.
     doc_start_structure_title Subiecte, foldere și colecții
+    doc_streaks_desc Consecvența este cheia! Îndeplinește-ți obiectivul zilnic în fiecare zi pentru a-ți construi seria. Nu rata nicio zi, altfel seria se va reseta.
+    doc_streaks_title Sistem de serii (Streaks)
     doc_study_how_desc Începeți cu Învățați când construiți recunoașterea, apoi treceți la Test când doriți o reamintire mai rapidă și o verificare mai strictă. Utilizați sesiuni mai scurte pentru o revizuire concentrată și sesiuni mai mari pentru o acoperire mai largă.
     doc_study_how_title Cum să studiezi
     doc_study_intro_desc Această filă explică cum să vă deplasați prin conținut, să alegeți modul potrivit și să vă reglați sesiunile pentru revizuire sau reamintire.
@@ -108,67 +244,280 @@
     doc_study_modes_title Moduri de învățare și testare
     doc_study_scope_desc Studiul poate începe de la un singur subiect, o vizualizare de folder sau o colecție. Colecțiile sunt utile atunci când doriți o sesiune mixtă pe mai multe subiecte, fără a părăsi fluxul curent.
     doc_study_scope_title Subiecte, foldere și colecții în studiu
+    doc_sync_desc Progresul tău este sincronizat automat în cloud. Poți comuta între versiunile web și desktop fără a-ți pierde seria.
+    doc_sync_title Sincronizare în cloud
     doc_tab_create Crea
+    doc_tab_creator Creație
+    doc_tab_general General
+    doc_tab_learning Practică
     doc_tab_start Început
     doc_tab_study Studiu
+    doc_testing_desc Provoacă-te cu întrebări cu alegere multiplă (MCQ). Aplicația va avansa automat pe măsură ce răspunzi, ajutându-te să înveți mai repede.
+    doc_testing_title Testare interactivă
+    doc_welcome_desc Aliolo este o platformă de învățare vizuală concepută pentru a vă ajuta să stăpâniți subiecte prin carduri de memorie și testare interactivă.
+    doc_welcome_title Bun venit la Aliolo
     documentation Documentare
+    done_today Done Today
+    down_arrow Down Arrow
+    edit Editează
+    edit_card Edit Card
+    edit_collection Editați colecția
+    edit_email Editează e-mailul
+    edit_folder Editează folder
+    edit_name Edit Name
+    edit_subject Edit Subject
+    edit_subject_title Edit Subject
     edit_subscription Editați abonamentul
+    email Email
+    email_change_notice For security, a confirmation link will be sent to BOTH your old and new email addresses. You must click both to complete the change.
+    email_in_use Email is already in use
+    email_subject Subject
+    email_update_sent Confirmation emails sent. Please check both inboxes.
     email_updated_successfully E-mailul a fost actualizat cu succes!
+    english English
     enter_current_password Introduceți parola curentă
+    enter_new_email Introdu noul e-mail
+    enter_new_name Enter New Name
+    enter_number Enter a number
+    enter_or_select_subject Please enter or select a subject
+    enter_pass_to_confirm Enter your password to confirm
+    enter_subject_name Enter subject name
     error Eroare: $e
     error_deleting Eroare la ștergere: $e
+    error_deleting_account Could not delete account. Check your password.
     error_saving Eroare la salvare: $e
     error_saving_card Eroare la salvarea cardului: $e
     error_updating_favorite Eroare la actualizarea preferatului: $e
+    exit Exit
+    exit_confirm_msg Are you sure you want to exit the application?
+    exit_confirm_title Exit Aliolo?
+    expiry_date Data expirării
     failed_answers Răspunsuri eșuate
     failed_to_send_reset_code Nu s-a trimis codul de resetare
     failed_to_send_verification_code Nu s-a putut trimite codul de verificare
     fake_only Numai fals
+    fatal_startup_error Fatal Startup Error
+    feat_adaptive_desc The system monitors your recognition speed across MCQ options, dynamically adjusting intervals to push your boundaries.
+    feat_adaptive_title Adaptive Response Timing
+    feat_ages_desc Content curated for different age groups from early childhood to advanced learning.
+    feat_ages_title For All Ages
+    feat_gamified_desc Earn XP, badges, and build streaks while mastering complex visual subjects.
+    feat_gamified_title Gamified Experience
+    feat_mastery_desc Dynamic XP rewards difficulty, while real-time mastery badges (Bronze, Silver, Gold) track your journey from novice to expert.
+    feat_mastery_title Visual Mastery & XP
+    feat_multimedia_desc Learn with images, audio, and video support for immersive training.
+    feat_multimedia_title Multimedia Cards
+    feat_recognition_desc Immersive identification drills designed to build instant "muscle memory" for complex visual subjects.
+    feat_recognition_title Visual Pattern Training
+    feat_science_adaptive_desc Intervals automatically adjust based on your recognition speed and accuracy.
+    feat_science_adaptive_title Adaptive Timing
+    feat_science_spacing_desc Advanced cognitive spacing model that predicts memory decay and optimizes review cycles.
+    feat_science_spacing_title SuperMemo-2 (SM-2)
+    feat_spacing_desc A full implementation of the SuperMemo-2 model predicts your memory decay and schedules reviews at the peak of retention.
+    feat_spacing_title Cognitive Spacing (SM-2)
+    feature_autoplay Mod Auto-Play
+    feature_community_access Acces la subiectele comunității
     feature_creation Instrumente de creație
     feature_customize Personalizare avansată
+    feature_favorites Elemente favorite pe tabloul de bord
+    feature_feedback Feedback și sugestii directe
+    feature_free GRATUIT
+    feature_friends Invită și conectează-te cu prietenii
     feature_full_library Acces complet la bibliotecă
+    feature_learn_all Învață orice subiect sau colecție
+    feature_private_mode Mod profil privat
+    feature_pro PRO
+    feature_spaced_repetition Repetiție Spațiată (SM-2)
     feature_testing Testare interactivă
+    feedback Feedback
+    feedback_add_image Adaugă imagine
+    feedback_attachments Atașamente
+    feedback_bug Raportează o eroare
+    feedback_context Context
+    feedback_details Detalii
+    feedback_error Trimiterea feedback-ului a eșuat. Vă rugăm să încercați din nou.
+    feedback_management_desc Vizualizați și gestionați feedback-ul utilizatorilor
+    feedback_management_title Solicitări de feedback
+    feedback_other Altul
+    feedback_submit Trimite feedback
+    feedback_success Vă mulțumim pentru feedback!
+    feedback_suggestion Sugestie
+    feedback_title Trimite feedback
+    feedback_title_hint Titlu
+    feedback_type Tip
+    fill_all_fields Please fill all fields
+    filter_all All
+    filter_dashboard Tablou de bord
+    filter_favorites Favorite
+    filter_my_subjects My Subjects
+    filter_on_dashboard On Dashboard
+    filter_public Public
+    filter_public_library Bibliotecă publică
+    filters Filtre
+    finish Finalizare
+    finished_session You finished {count} cards. XP bonus awarded!
+    folder Folder
+    folder_already_exists Un dosar cu acest nume există deja în acest pilon
     folder_id ID dosar
+    folder_label Dosar
+    folder_not_empty_msg Nu se poate șterge: folderul nu este gol.
+    folder_plural Dosare
+    forgot_password Forgot Password?
     free_only Utilizatori gratuiti
+    general_preferences General Preferences
     generic Generic
+    go_to_manager Go to Library Manager
+    goal_change_hint Change your card goal for tomorrow
+    goal_change_notice Modificările aduse obiectivului tău zilnic vor intra în vigoare mâine.
+    gold GOLD
+    hide_comparison Ascunde compararea planurilor
     home Acasă
+    images Images
+    included_subjects Subiecte incluse
+    info_copied Info copied to clipboard
+    initializing_aliolo Initializing Aliolo...
     invalid_code Cod nevalid
+    invalid_email Invalid email address
     invalid_email_address Adresă de e-mail nevalidă
     invalid_json JSON nevalid: $e
+    invalid_number Invalid number
     invalid_or_expired_invitation_link Link de invitație nevalid sau expirat.
     invalid_or_expired_reset_code Cod de resetare invalid sau expirat.
+    invalid_password Invalid password
+    invalid_password_delete Invalid Password
     invitation_sent_awaiting_registration Invitație trimisă (se așteaptă înregistrarea)
+    invite Invită
+    invite_user_content E-mailul {email} nu a fost găsit. Invită-i să se alăture Aliolo?
+    invite_user_title Invită utilizator?
     invited_and_request_sent Invitat și cerere trimisă!
     json JSON
+    keyboard_shortcuts Keyboard Shortcuts
     label_suffix $label:
+    lang_abbr Lang
+    language Limbă
     leaderboard Clasament
+    learn_mode_desc Study cards and memorize answers
+    learn_mode_title Learn
+    learn_session_size Learn Session Size
+    learn_session_size_desc Numărul de carduri noi de introdus într-o singură sesiune de învățare.
     learning_session_complete_description Mare treabă! Ai terminat această sesiune de învățare. Progresul dvs. a fost salvat.
+    left_arrow Left Arrow
+    level Level
+    level_range Must be between 1 and 20
+    level_tier_1 Nivelul 1
+    level_tier_2 Nivelul 2
+    level_tier_3 Nivelul 3
     licenses Licențe
     licenses_aliolo_section_title Aliolo Licență comercială
     licenses_aliolo_subtitle Software proprietar și condiții de acces premium
     licenses_intro_desc Licența comercială a Aliolo apare mai întâi. Licențele de pachete terță parte urmează mai jos.
     licenses_intro_title Aliolo Notificări privind licența și pachetul
     licenses_third_party_section_title Licențe de pachete de la terți
+    light Light
     linux_distro Linux Distro
     loading Încărcare...
     localized_data Date localizate
+    login Autentificare
+    logout Deconectare
+    manage_cards Manage Cards
+    manage_friends Friends
+    manage_friends_desc View and manage your friend requests
+    manage_library Manage Library ({sCount} subjects, {cCount} cards)
+    manage_subjects Manage Subjects
+    manage_subscription Gestionează abonamentul
+    manage_testing_langs Manage Testing Languages
+    manage_users Manage Users
+    master_visual_ease Master visual subjects with ease.
+    mastered mastered
+    mastery Măiestrie
+    max_streak Max Streak
+    maybe_later Poate mai târziu
+    mission_desc The smart companion that helps your brain learn and retain visual knowledge through science-backed algorithms.
+    mock_email_title Mock Email Inbox
+    mode_audio_to_image Audio to Image
+    mode_audio_to_text Audio to Text
+    mode_image_to_text Image to Text
+    mode_text_to_text Text to Text
     monthly_access Acces lunar
     most_popular_choice Cea mai populară alegere
+    multi_lang_answers Multi-language Answers
+    multi_lang_prompts Multi-language Prompts
+    my_position My Position
+    name Name
+    names_descriptions Names & Descriptions
+    new NEW
     new_email E-mail nou
+    new_password New Password
+    next Următorul
+    next_card Next Card
+    next_daily_goal Următorul obiectiv zilnic
+    next_daily_goal_desc Numărul țintă de carduri de stăpânit în fiecare zi. Modificările intră în vigoare mâine.
+    next_day_goal Next Day Goal
     no_cards_available_for_this_session Nu există carduri disponibile pentru această sesiune.
     no_cards_found Nu s-au găsit carduri
+    no_cards_found_for_lang No cards found for this language
+    no_cards_in_library No cards found in the library.
+    no_feedback_found Nu s-a găsit niciun feedback.
+    no_folder Niciun folder (Rădăcină)
+    no_friends_found No friends found
+    no_images_added Nicio imagine adăugată
+    no_leaderboard_data No leaderboard data available.
+    no_localized_audio Niciun sunet localizat
+    no_localized_images Nu există imagini localizate
+    no_localized_video Niciun videoclip localizat
+    no_subjects_available Nu existã subiecte disponibile
     no_subjects_found Nu s-au găsit subiecte
     no_subjects_found_in_this_collection Nu s-au găsit subiecte în această colecție
     no_users_found Nu s-au găsit utilizatori
+    ok OK
+    old_password Parola veche
+    old_password_required Parola veche este obligatorie
+    onboarding_1_desc Învață vizual. Stăpânește permanent. Partenerul tău de învățare vizuală bazat pe știința SM-2.
+    onboarding_1_title Bun venit la Aliolo
+    onboarding_2_desc Acest lucru ne ajută să îți personalizăm experiența de învățare și să îți recomandăm subiectele potrivite.
+    onboarding_2_title Câți ani ai?
+    onboarding_3_desc Selectează interesul principal pentru a-ți personaliza tabloul de bord inițial.
+    onboarding_3_title Ce vrei să stăpânești?
+    onboarding_4_desc Construiește-ți propriul set sau explorează cardurile partajate de cursanții Aliolo din întreaga lume. Învață în ritmul tău, apoi testează-te când ești gata.
+    onboarding_4_title Creează și Distribuie
+    onboarding_5_desc Biblioteca ta rămâne sincronizată pe toate dispozitivele tale. Te vom anunța doar când este timpul să îți protejezi seria.
+    onboarding_5_title Stăpânește oriunde
+    onboarding_6_desc Începe-ți călătoria astăzi și stăpânește orice îți propui.
+    onboarding_6_title Alătură-te comunității
+    onboarding_7_joined S-au alăturat mii de cursanți
+    onboarding_7_quote Aliolo a transformat complet modul în care copiii mei și cu mine stăpânim subiecte noi. Cardurile vizuale și repetiția distanțată fac învățarea să pară un joc!
+    onboarding_get_started Începe acum
+    onboarding_next Înainte
+    onboarding_skip Omite
+    options_count Number of Answers
+    options_count_desc Numărul de răspunsuri cu alegere multiplă afișate în timpul testelor.
+    options_per_card options per card
+    order_id ID comandă
     os_version Versiunea OS
+    our_mission OUR MISSION
+    page Page
+    parent_folder_label Parent Folder (ro)
+    password Parolă
+    password_required Password is required
+    password_reset_success Password reset successful
     password_updated_successfully Parola a fost actualizată cu succes!
+    passwords_dont_match Passwords do not match
+    paste PASTE
     payments_are_not_yet_integrated_on_web_please_use_the_mobile_app_to_upgrade Plățile nu sunt încă integrate pe Web. Vă rugăm să utilizați aplicația mobilă pentru a face upgrade.
     personal_data Date personale
     pick_date Alegeți data
+    picture Picture
+    pillar Pillar
+    plan_monthly Acces Lunar
+    plan_monthly_desc Cea mai populară alegere
     plan_monthly_tagline Cea mai populară alegere
     plan_monthly_title Acces lunar
+    plan_weekly Acces Săptămânal
+    plan_weekly_desc Cel mai bun pentru obiective rapide
     plan_weekly_tagline Cel mai bun pentru goluri rapide
     plan_weekly_title Acces săptămânal
+    plan_yearly Acces Anual
+    plan_yearly_desc Economisește 33% pe lună
     plan_yearly_tagline Economisiți 33% pe lună
     plan_yearly_title Acces anual
     platform Platformă
@@ -177,58 +526,208 @@
     please_enter_the_6_digit_code Vă rugăm să introduceți codul din 6 cifre
     please_wait_for_a_response_before_replying_again Vă rugăm să așteptați un răspuns înainte de a răspunde din nou.
     premium_expires_at Expiră la $date
+    premium_go Treci la Premium
     premium_lifetime Acces pe viață
     premium_only Doar Premium
     premium_status_active Sunteți membru premium
+    premium_title Aliolo Premium
     premium_unlock_desc Obțineți acces la toate subiectele, creați carduri nelimitate și sprijiniți misiunea lui Aliolo.
     premium_unlock_title Deblocați accesul complet
+    prev Prev
+    previous_card Previous Card
+    price_per_week ({price} / săptămână)
+    private Private
+    pro_label PRO
+    product_id ID produs
     product_not_available_in_store Produsul nu este disponibil în magazin.
     profile Profil
+    profile_title My Profile & Progress
+    prompt_label Prompt
+    prompt_optional Prompt / Question
+    prompts_answers Prompts & Answers
+    provide_at_least_one_answer Please provide at least one answer
+    provide_at_least_one_name Provide at least one name
+    provider Furnizor
     public_other_subject Public/Alt subiect
+    public_profile Public Profile
+    public_profile_desc Show your XP and Streak on Hall of Fame.
+    public_subject Public Subject
+    public_subject_desc Make this subject visible to other users.
     purchase_failed Achiziție eșuată: $e
+    purchase_token Token de achiziție
+    record_shortcut Record Shortcut
     recovery_error Eroare de recuperare: $e
     refresh Reîmprospăta
     refresh_conversation Reîmprospătați conversația
+    remove_friend Remove Friend
+    remove_friend_confirm Are you sure you want to remove friend
     renderer Renderer
+    request_sent Request sent
+    request_sent_waiting Request sent (waiting)
+    required Required
     reset_code Resetați codul
+    reset_code_email_title Password Reset Code
+    reset_code_sent "Reset code for: "
     reset_code_sent_to_please_check_your_inbox Resetează codul trimis către $email. Vă rugăm să vă verificați căsuța de e-mail.
+    reset_password_for "Reset Password for: "
+    restore_password Restore Password
     restore_purchases Restabiliți achizițiile
+    retry Retry
+    right_arrow Right Arrow
     save Salva
     save_33_per_month Economisiți 33% pe lună
+    save_before_nav Do you want to save changes before navigating?
+    save_card Save Card
+    save_subject Save Subject
     saved_successfully Salvat cu succes
+    search_cards Search Cards
+    search_subjects Search Subjects
     search_users Căutați utilizatori
+    select_an_answer Select an Answer
+    select_lang Select Language
+    select_package_license Select Package License
+    select_user Select User
+    selected_count {count} Selected
+    send Send
+    send_code Send Code
+    send_verification_code Send verification code?
     session_complete Sesiune finalizată!
     session_complete_description Mare treaba! Ai terminat toate cărțile din această sesiune.
+    setting_saved Setting saved
     settings Setări
+    shortcuts_hint Press the key you want to use with Ctrl.
+    show_all_languages Show all languages
     show_documentation_btn Butonul Afișați documentația
     show_documentation_btn_desc Afișați butonul de documentare în bara de aplicații.
     show_fake_users Afișați utilizatori falși
+    show_less_languages Show less languages
+    sidebar_left Sidebar on the left
+    sidebar_left_desc Move testing controls to the left side of the screen.
+    silver SILVER
+    social Social
+    sort_by Sort by
+    sound_effects Sound Effects
+    sound_effects_desc Enable audio feedback for correct and wrong answers.
+    source Sursă
+    status Stare
+    status_closed Închis
+    status_open Deschis
+    status_replied Răspuns
+    streak Serie
+    subject Subject
+    subject_deleted Subject deleted
     subject_id ID subiect
+    subject_label Subject
+    subject_plural Subjects
+    subject_type Subject Type (ro)
+    subjects Subiecte
     subscribe_now Abonați-vă acum
     subscription_data Datele abonamentului
     subscription_updated Abonamentul a fost actualizat
     subtraction_emoji Emoji de scădere
     subtraction_numbers Numerele de scădere
+    support_and_management Suport și management
+    system System
+    tap_to_replay Tap to Replay
     technical_context CONTEXT TEHNIC
+    test_mode_desc Challenge yourself with a quiz
+    test_mode_label Test Mode
+    test_mode_title Test
+    test_session_size Test Session Size
+    test_session_size_desc Numărul de carduri de revizuit într-o singură sesiune de testare.
+    testing Testing
     testing_mode Modul de testare
+    testing_section Testing Settings
     text Text
+    the_science THE SCIENCE
+    theme_color App Theme Color
+    theme_color_desc Customize the primary color used for buttons and highlights.
+    theme_dark Dark
+    theme_light Light
+    theme_mode Mod temă
+    theme_system System
     this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards Acesta este un folder. Puteți folosi butoanele de învățare/testare de mai sus pentru a exersa toate cărțile.
+    to_label To
     total_cards Total carduri
+    total_xp Total XP
+    trust_cloud_desc Your progress is securely synced across all your devices in real-time.
+    trust_cloud_title Cloud Sync
+    trust_privacy TRUST & PRIVACY
+    trust_sync_desc Your data is private and encrypted to ensure the highest security standards.
+    trust_sync_title Encrypted Data
+    type_collection Colecție
+    type_folder Folder (Sub-subjects) (ro)
+    type_standard Standard (Cards) (ro)
     type_your_reply Introduceți răspunsul...
     ua UA
+    ui_language Limba interfeței
+    ukrainian Ukrainian
     unknown_user_profile_missing Utilizator necunoscut (lipsește profilul)
+    unsaved_changes Unsaved Changes
+    unsaved_changes_msg Aveți modificări nerealizate. Doriți să le anulați?
+    up_arrow Up Arrow
+    update Update
     update_available Este disponibilă o nouă versiune!
+    updated_at Actualizat la
+    upload_new_photo Încărcați o fotografie nouă
     user Utilizator
+    user_exists User already exists
     user_id ID-ul de utilizator
+    user_not_found User not found
     user_with_this_email_already_exists_please_log_in_instead Utilizatorul cu acest e-mail există deja. Vă rugăm să vă conectați.
+    username Nume de utilizator
     users Utilizatori
     users_filter Filtrați utilizatorii
     verification_code Cod de verificare
     verification_code_sent_to Cod de verificare trimis către $email
+    verify Verify
     version Versiune
+    video Video
+    video_link Video Link
+    video_url_optional Video URL (Optional)
+    view_card View Card
+    view_cards_title View Cards
     view_onboarding Vedeți integrarea
+    visibility Visibility
+    visual_content_required Este necesar cel puțin un conținut vizual
+    visual_content_required_msg Trebuie furnizat cel puțin un conținut vizual (text, imagine, audio sau videoclip).
+    visual_text Text vizual
+    wants_to_be_friend Wants to be your friend
     weekly_access Acces săptămânal
     welcome_complete_your_profile_to_join_aliolo Bun venit! Completați-vă profilul pentru a vă alătura aliolo.
+    xp XP
     yearly_access Acces anual
+    you You
     you_do_not_have_permission_to_edit_this_card Nu aveți permisiunea de a edita acest card
     you_do_not_have_permission_to_view_this_card_details Nu aveți permisiunea de a vizualiza detaliile acestui card.
+    you_rank You are ranked #{rank}
+    active Activ
+    autoplay Redare automată
+    card_limit Limită de carduri
+    card_limit_msg Ați atins limita de {limit} carduri.
+    create_request Creează solicitare
+    edit_user Editează utilizatorul
+    favorite Favorit
+    file_too_large Fișierul este prea mare
+    inactive Inactiv
+    is_required este obligatoriu
+    languages Limbi
+    limit_reached Limită atinsă
+    not_available Indisponibil
+    toggle_languages Comută limbile
+    user_updated Utilizator actualizat
+    zoom Zoom
+    account_and_management Account & Management
+    back_to_plans Back to plans
+    confirm_password_required Confirm password is required
+    feat_autoplay_desc Focus on learning while the app automatically advances through cards at your pace.
+    feat_autoplay_title Hands-Free Autoplay
+    feat_create_share_desc Easily create your own subjects and cards, or share them with the community.
+    feat_create_share_title Create & Share
+    feat_science_smart_review_desc The algorithm calculates the optimal time to review each card for maximum retention.
+    feat_science_smart_review_title Smart Review Cycles
+    new_password_required New password is required
+    password_updated Password updated successfully
+    save_success Saved successfully
+    trust_ecosystem_desc Your progress and cards are seamlessly synced across all your devices.
+    trust_ecosystem_title Aliolo Ecosystem

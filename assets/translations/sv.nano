@@ -43,37 +43,139 @@
     about_support_settings_desc Användargränssnittsspråk, temaläge, temafärg, ljud, sidofältsplacering och dokumentationssynlighet kan alla justeras från inställningarna.
     about_support_settings_title Personalisering
     about_support_title Inställningar, feedback och support
+    about_tagline Lär dig visuellt. Bemästra för alltid.
+    account_created Konto skapat
+    account_created_billing_fail Ditt konto skapades, men betalningen slutfördes inte. Försök med betalningen nedan igen.
+    account_deleted Account deleted successfully
+    add_card Add Card
+    add_collection Lägg till samling
+    add_folder Lägg till mapp
+    add_friend_by_email Add Friend By Email
+    add_lang_translation Add Language Translation
+    add_prompt_translation Add Prompt Translation
+    add_subject Add Subject
     addition_emoji Tillägg Emoji
     addition_numbers Tilläggsnummer
+    age Ålder
+    age_0_6 0-6 år
+    age_15_18 15 - 18
+    age_15_plus 15+ år
+    age_19_25 19 - 25
+    age_26_35 26 - 35
+    age_36_50 36 - 50
+    age_7_14 7-14 år
+    age_advanced Advanced
+    age_all All Ages
+    age_early Early Childhood
+    age_group Age Group
+    age_intermediate Intermediate
+    age_over_50 Över 50
+    age_primary Primary School
+    age_under_14 Under 14
+    algorithm_title THE ALIOLO ALGORITHM
     aliolo aliolo
+    all_matching_subjects Alla matchande ämnen
     all_rights_reserved Alla rättigheter reserverade
+    answer Svar
+    answer_label answer
+    answers_label answers
     are_you_sure_you_want_to_close_this_feedback_request Är du säker på att du vill stänga denna feedbackförfrågan?
     are_you_sure_you_want_to_delete_this_folder Är du säker på att du vill ta bort den här mappen?
+    ascending Ascending
     attach_image Bifoga bild
+    audio Ljud
+    audio_playing Audio Playing
+    author Author
     back Tillbaka
+    back_to_login Back to Login
     back_to_subjects Tillbaka till Ämnen
     best_for_quick_goals Bäst för snabba mål
     billing_disclaimer Prenumerationer förnyas automatiskt om de inte avbryts. Du kan hantera din prenumeration i dina butiksinställningar.
     billing_title Fakturering
+    bronze BRONZE
     browser Webbläsare
     cancel Avboka
+    cancel_request Cancel Request
+    cancel_request_confirm Are you sure you want to cancel the request to
+    cannot_delete_folder Cannot Delete Folder
     cannot_delete_folder_it_is_not_empty Kan inte ta bort mapp: den är inte tom
+    card_details Card Details
     card_id Kort-ID
+    card_label Card
+    card_level Kortnivå
+    card_plural Cards
+    cards cards
+    cards_label cards
+    cards_per_day cards per day
+    cards_per_session cards per session
+    change_avatar Change Avatar
+    change_password Ändra lösenord
     check_your_email_for_code Kontrollera din e-post för kod
     clear Rensa
+    click_to_select_image Click to select image
     click_to_view_original Klicka för att se originalet
     close Nära
     close_request Stäng förfrågan?
+    code_label Code
     collection_id Samlings-ID
     colors Färger
+    common_settings Common Settings
+    compare_plans Jämför gratis vs. premium
+    confirm Bekräfta
+    confirm_logout Are you sure you want to logout?
+    confirm_password Confirm Password
     confirm_subscription Bekräfta prenumeration
+    content_label Content
     context Sammanhang
+    copy COPY
+    copy_all Copy All
+    core_features CORE FEATURES
     correct_answers Rätt svar
     could_not_launch Kunde inte starta $url
     counting Räkning
+    create_account Create Account
+    create_new_account Create New Account
+    create_new_card Create New Card
+    created_at Skapad
+    current_streak Current Streak
     current_subscription Aktuell prenumeration
+    daily_goal Daily Goal
+    daily_progress Daily Progress
+    dark Dark
+    dashboard_greeting Hej
+    day day
+    day_label Day
+    day_plural Days
+    days days
+    default Default
+    default_language Standardspråk
+    default_testing_language Default Testing Language
+    default_testing_language_desc Pre-selects this language on the subjects page.
     delete Radera
+    delete_account Delete Account
+    delete_account_confirm Are you sure you want to delete your account? This action is permanent.
+    delete_avatar Ta bort avatar
+    delete_avatar_confirm Är du säker på att du vill ta bort din profilbild?
+    delete_card_confirm Delete this card?
+    delete_collection Ta bort samling
+    delete_collection_confirm Är du säker på att du vill ta bort denna samling?
+    delete_folder Ta bort mapp
+    delete_selected_cards Delete selected cards?
+    delete_subject Delete Subject
+    delete_subject_confirm Delete subject '{subject}' and all {count} cards inside?
+    delete_subjects_first Please delete all sub-subjects inside this folder before deleting the folder itself.
+    descending Descending
+    description Description
     device Anordning
+    digit_code 6-digit Code
+    discard Discard
+    discard_changes Släng ändringar?
+    doc_autoplay_desc Appen kan automatiskt gå vidare till nästa kort efter att du svarat. Rätta svar väntar 1 sek, medan felaktiga väntar 2 sek för att låta dig granska.
+    doc_autoplay_title Lärande med automatisk uppspelning
+    doc_card_scope_desc Korten är byggstenarna i lärandet och tillhör alltid ett specifikt ämne. Även om du kan organisera ämnen i mappar eller samlingar, måste själva korten skapas inom ett ämne.
+    doc_card_scope_title Var korten bor
+    doc_collections_purpose_desc Samlingar är kurerade vägar som grupperar ämnen. När du startar en session från en samling blandar systemet kort från alla inkluderade ämnen för att ge ett randomiserat, omfattande test.
+    doc_collections_purpose_title Syftet med samlingar
     doc_create_intro_desc Den här fliken tar upp hur skapare organiserar innehåll, lokaliserar det och publicerar användbart studiematerial utan att överkomplicera arbetsflödet.
     doc_create_intro_title Skapa
     doc_create_json_desc JSON-baserat skapande är ett avancerat arbetsflöde för strukturerat massinnehåll. Det bör förbli valfritt; de flesta kreatörer bör kunna bygga och redigera innehåll genom standardformulären.
@@ -86,6 +188,38 @@
     doc_create_model_title Innehållsmodell
     doc_create_visibility_desc Använd "min" för att arbeta med ditt eget innehåll, favoriter för att fästa användbara föremål och offentligt bibliotek för att bläddra i delat material. Offentlig synlighet påverkar upptäckten, medan äganderätten påverkar vad du kan redigera eller ta bort.
     doc_create_visibility_title Ägarskap och synlighet
+    doc_creation_desc Skapa dina egna ämnen och lägg till visuella flashcards. Varje kort stöder en bild och en valfri ljudfil för uttal.
+    doc_creation_title Skapa ämnen & kort
+    doc_feedback_desc Hjälp oss att bli bättre! Använd feedback-ikonen (Icons.feedback) på ett ämne eller en mapp för att rapportera problem. Du kan också skicka allmän feedback om appen via supportsektionen.
+    doc_feedback_title Feedback-system
+    doc_filters_desc Hitta snabbt innehåll med hjälp av sökfältet. Du kan filtrera efter åldersgrupp (från tidig till avancerad) eller begränsa din vy till specifika samlingar och mappar.
+    doc_filters_title Sök & Filter
+    doc_flashcards_desc Varje ämne innehåller en uppsättning kort. Även om bilder och ljud stöds är de valfria – innehållet kan vara rent textbaserat eller genereras dynamiskt.
+    doc_flashcards_title Visuella flashcards
+    doc_friends_desc Lärande är bättre tillsammans! Bjuda in vänner till Aliolo via din profil. Ni kan följa varandras framsteg och hålla motivationen uppe genom att se vem som har den längsta streaken.
+    doc_friends_title Vänner & Inbjudningar
+    doc_goals_desc Ställ in ditt dagliga mål för kortgenomförande i inställningarna. Ändringar av ditt mål träder i kraft från och med nästa dag.
+    doc_goals_title Dagliga mål
+    doc_json_desc Avancerade skapare kan använda JSON-data för att tillhandahålla lokaliserade namn och beskrivningar, vilket gör ämnen tillgängliga på alla språk som stöds.
+    doc_json_title JSON-lokalisering
+    doc_lang_desc Välj alltid ditt föredragna lärspråk i toppmenyn innan du väljer ett ämne. Detta säkerställer att rätt ljud och översättningar laddas.
+    doc_lang_title Lärspråk
+    doc_leaderboard_desc Tävla med elever över hela världen! Tjäna XP genom att slutföra kortsessioner och klättra i rankingen. Din position uppdateras i realtid allt eftersom du bemästrar nya ämnen.
+    doc_leaderboard_title Global topplista
+    doc_localization_details_desc Språket "Global" är din primära reserv – det kan vara vilket språk du vill. Om du tillhandahåller specifika översättningar (som engelska eller spanska) kommer de att åsidosätta de globala data endast när en användare väljer det specifika UI-språket.
+    doc_localization_details_title Hur lokalisering fungerar
+    doc_localization_ui_desc För att lägga till lokaliserad data, tryck helt enkelt på språkkodikonen (t.ex. EN, ES, FR) i redigerarens rubrik. Detta gör att du kan ange specifika namn, beskrivningar och kortinnehåll för varje språk som stöds. Fliken "Global" fungerar som den primära reserven om ingen specifik översättning tillhandahålls.
+    doc_localization_ui_title Lägga till översättningar
+    doc_math_desc Matematiska ämnen använder specialiserade motorer för att generera kortvisualiseringer i realtid. Dessa ämnen har unika lär- och testlägen skräddarsydda för specifika matematiska koncept, vilket säkerställer en mer effektiv övningsmiljö.
+    doc_math_title Matematiska ämnen
+    doc_media_desc För att säkerställa snabb synkronisering, håll bilder under 5 MB och ljudfiler under 10 MB.
+    doc_media_title Uppladdningsgränser för media
+    doc_organization_desc Använd mappar för att gruppera relaterade ämnen. Du kan också skapa samlingar för att organisera ämnen i kurerade vägar.
+    doc_organization_title Organisera innehåll
+    doc_pillars_desc Allt innehåll i Aliolo är organiserat i 8 grundläggande pelare: Akademisk & Professionell, Världen, Natur, Människokroppen, Humaniora, Fritid, Teknik och Övrigt. Dessa kategorier ger ett strukturerat ramverk för alla ämnen på plattformen.
+    doc_pillars_title De 8 kärnpelarna
+    doc_public_desc Ämnen kan vara privata (synliga endast för dig) eller offentliga. Offentligt innehåll delas med hela Aliolo-communityn, vilket gör att alla kan upptäcka och lära sig av dina skapelser.
+    doc_public_title Offentlig vs Privat
     doc_start_dashboard_desc Instrumentpanelen är ditt huvudbibliotek. Använd sökning för att hitta innehåll snabbt, kombinera sedan källfilter som favoriter, mitt och offentliga bibliotek med åldersfilter för att minska brus.
     doc_start_dashboard_title Instrumentpanel, sökning och filter
     doc_start_feedback_desc Använd ingångspunkterna för feedback i appen när något är fel eller oklart. Rapporter kan innehålla det aktuella sammanhanget, vilket gör innehållsproblem lättare att granska och åtgärda.
@@ -98,6 +232,8 @@
     doc_start_quick_title Snabbstart
     doc_start_structure_desc Ämnen håller kort. Mappar grupperar relaterat innehåll i en pelare. Samlingar är utvalda uppsättningar som kan kombinera flera ämnen för studier och delning.
     doc_start_structure_title Ämnen, mappar och samlingar
+    doc_streaks_desc Konsistens är nyckeln! Uppnå ditt dagliga mål varje dag för att bygga din streak. Missa inte en dag, annars nollställs streaken.
+    doc_streaks_title Streak-system
     doc_study_how_desc Börja med Lär dig när du bygger igenkänning, byt sedan till Testa när du vill ha snabbare återkallning och striktare kontroll. Använd kortare sessioner för fokuserad granskning och större sessioner för bredare täckning.
     doc_study_how_title Hur man studerar
     doc_study_intro_desc Den här fliken förklarar hur du går igenom innehåll, väljer rätt läge och ställer in dina sessioner för granskning eller återkallelse.
@@ -108,67 +244,280 @@
     doc_study_modes_title Lär- och testlägen
     doc_study_scope_desc Studien kan starta från ett enskilt ämne, en mappvy eller en samling. Samlingar är användbara när du vill ha en blandad session över flera ämnen utan att lämna det aktuella flödet.
     doc_study_scope_title Ämnen, mappar och samlingar i studier
+    doc_sync_desc Dina framsteg synkroniseras automatiskt till molnet. Du kan växla mellan webb- och skrivbordsversioner utan att förlora din streak.
+    doc_sync_title Molnsynkronisering
     doc_tab_create Skapa
+    doc_tab_creator Skapande
+    doc_tab_general Allmänt
+    doc_tab_learning Övning
     doc_tab_start Start
     doc_tab_study Studera
+    doc_testing_desc Utmana dig själv med flervalsfrågor (MCQ). Appen går automatiskt vidare när du svarar, vilket hjälper dig att lära dig snabbare.
+    doc_testing_title Interaktiv testning
+    doc_welcome_desc Aliolo är en visuell lärplattform designad för att hjälpa dig att bemästra ämnen genom flashcards och interaktiv testning.
+    doc_welcome_title Välkommen till Aliolo
     documentation Dokumentation
+    done_today Done Today
+    down_arrow Down Arrow
+    edit Redigera
+    edit_card Edit Card
+    edit_collection Redigera samling
+    edit_email Redigera e-post
+    edit_folder Redigera mapp
+    edit_name Edit Name
+    edit_subject Edit Subject
+    edit_subject_title Edit Subject
     edit_subscription Redigera prenumeration
+    email E-post
+    email_change_notice For security, a confirmation link will be sent to BOTH your old and new email addresses. You must click both to complete the change.
+    email_in_use Email is already in use
+    email_subject Subject
+    email_update_sent Confirmation emails sent. Please check both inboxes.
     email_updated_successfully E-posten har uppdaterats!
+    english English
     enter_current_password Ange aktuellt lösenord
+    enter_new_email Ange ny e-postadress
+    enter_new_name Enter New Name
+    enter_number Enter a number
+    enter_or_select_subject Please enter or select a subject
+    enter_pass_to_confirm Enter your password to confirm
+    enter_subject_name Enter subject name
     error Fel: $e
     error_deleting Fel vid borttagning av: $e
+    error_deleting_account Could not delete account. Check your password.
     error_saving Fel när det skulle sparas: $e
     error_saving_card Fel när kortet skulle sparas: $e
     error_updating_favorite Fel vid uppdatering av favorit: $e
+    exit Exit
+    exit_confirm_msg Are you sure you want to exit the application?
+    exit_confirm_title Exit Aliolo?
+    expiry_date Utgångsdatum
     failed_answers Misslyckade svar
     failed_to_send_reset_code Det gick inte att skicka återställningskoden
     failed_to_send_verification_code Det gick inte att skicka verifieringskoden
     fake_only Endast falska
+    fatal_startup_error Fatal Startup Error
+    feat_adaptive_desc The system monitors your recognition speed across MCQ options, dynamically adjusting intervals to push your boundaries.
+    feat_adaptive_title Adaptive Response Timing
+    feat_ages_desc Content curated for different age groups from early childhood to advanced learning.
+    feat_ages_title For All Ages
+    feat_gamified_desc Earn XP, badges, and build streaks while mastering complex visual subjects.
+    feat_gamified_title Gamified Experience
+    feat_mastery_desc Dynamic XP rewards difficulty, while real-time mastery badges (Bronze, Silver, Gold) track your journey from novice to expert.
+    feat_mastery_title Visual Mastery & XP
+    feat_multimedia_desc Learn with images, audio, and video support for immersive training.
+    feat_multimedia_title Multimedia Cards
+    feat_recognition_desc Immersive identification drills designed to build instant "muscle memory" for complex visual subjects.
+    feat_recognition_title Visual Pattern Training
+    feat_science_adaptive_desc Intervals automatically adjust based on your recognition speed and accuracy.
+    feat_science_adaptive_title Adaptive Timing
+    feat_science_spacing_desc Advanced cognitive spacing model that predicts memory decay and optimizes review cycles.
+    feat_science_spacing_title SuperMemo-2 (SM-2)
+    feat_spacing_desc A full implementation of the SuperMemo-2 model predicts your memory decay and schedules reviews at the peak of retention.
+    feat_spacing_title Cognitive Spacing (SM-2)
+    feature_autoplay Auto-Play-läge
+    feature_community_access Tillgång till community-ämnen
     feature_creation Skapande verktyg
     feature_customize Avancerad anpassning
+    feature_favorites Favoritobjekt på instrumentpanelen
+    feature_feedback Direkt feedback och förslag
+    feature_free GRATIS
+    feature_friends Bjuda in och ansluta med vänner
     feature_full_library Fullständig tillgång till biblioteket
+    feature_learn_all Lär dig vilket ämne eller samling som helst
+    feature_private_mode Privat profilläge
+    feature_pro PRO
+    feature_spaced_repetition Spaced Repetition (SM-2)
     feature_testing Interaktiv testning
+    feedback Feedback
+    feedback_add_image Lägg till bild
+    feedback_attachments Bilagor
+    feedback_bug Felrapport
+    feedback_context Kontext
+    feedback_details Detaljer
+    feedback_error Misslyckades med att skicka feedback. Försök igen.
+    feedback_management_desc Visa och hantera användarfeedback
+    feedback_management_title Feedbackförfrågningar
+    feedback_other Annat
+    feedback_submit Skicka feedback
+    feedback_success Tack för din feedback!
+    feedback_suggestion Förslag
+    feedback_title Skicka feedback
+    feedback_title_hint Titel
+    feedback_type Typ
+    fill_all_fields Please fill all fields
+    filter_all All
+    filter_dashboard Instrumentpanel
+    filter_favorites Favoriter
+    filter_my_subjects My Subjects
+    filter_on_dashboard On Dashboard
+    filter_public Public
+    filter_public_library Offentligt bibliotek
+    filters Filter
+    finish Slutför
+    finished_session You finished {count} cards. XP bonus awarded!
+    folder Mapp
+    folder_already_exists En mapp med detta namn finns redan i denna pelare
     folder_id Mapp-ID
+    folder_label Mapp
+    folder_not_empty_msg Kan inte ta bort: mappen är inte tom.
+    folder_plural Mappar
+    forgot_password Forgot Password?
     free_only Gratis användare
+    general_preferences General Preferences
     generic Generisk
+    go_to_manager Go to Library Manager
+    goal_change_hint Change your card goal for tomorrow
+    goal_change_notice Ändringar i ditt dagliga mål træder i kraft i morgon.
+    gold GOLD
+    hide_comparison Dölj planjämförelse
     home Hem
+    images Images
+    included_subjects Inkluderade ämnen
+    info_copied Info copied to clipboard
+    initializing_aliolo Initializing Aliolo...
     invalid_code Ogiltig kod
+    invalid_email Invalid email address
     invalid_email_address Ogiltig e-postadress
     invalid_json Ogiltig JSON: $e
+    invalid_number Invalid number
     invalid_or_expired_invitation_link Ogiltig eller utgången inbjudningslänk.
     invalid_or_expired_reset_code Ogiltig eller utgången återställningskod.
+    invalid_password Invalid password
+    invalid_password_delete Invalid Password
     invitation_sent_awaiting_registration Inbjudan skickad (väntar på registrering)
+    invite Bjud in
+    invite_user_content E-postadressen {email} hittades inte. Vill du bjuda in dem till Aliolo?
+    invite_user_title Bjuda in användare?
     invited_and_request_sent Inbjuden och förfrågan skickad!
     json JSON
+    keyboard_shortcuts Keyboard Shortcuts
     label_suffix $label:
+    lang_abbr Lang
+    language Språk
     leaderboard Leaderboard
+    learn_mode_desc Study cards and memorize answers
+    learn_mode_title Learn
+    learn_session_size Learn Session Size
+    learn_session_size_desc Antal nya kort som ska introduceras i en enda inlärningssession.
     learning_session_complete_description Bra jobbat! Du avslutade denna inlärningssession. Dina framsteg har sparats.
+    left_arrow Left Arrow
+    level Level
+    level_range Must be between 1 and 20
+    level_tier_1 Nivå 1
+    level_tier_2 Nivå 2
+    level_tier_3 Nivå 3
     licenses Licenser
     licenses_aliolo_section_title Aliolo Kommersiell licens
     licenses_aliolo_subtitle Proprietär programvara och premiumåtkomstvillkor
     licenses_intro_desc Aliolos kommersiella licens visas först. Tredjepartspaketlicenser följer nedan.
     licenses_intro_title Aliolo Licens- och paketmeddelanden
     licenses_third_party_section_title Tredjepartspaketlicenser
+    light Light
     linux_distro Linux Distro
     loading Belastning...
     localized_data Lokaliserade data
+    login Logga in
+    logout Logga ut
+    manage_cards Manage Cards
+    manage_friends Friends
+    manage_friends_desc View and manage your friend requests
+    manage_library Manage Library ({sCount} subjects, {cCount} cards)
+    manage_subjects Manage Subjects
+    manage_subscription Hantera prenumeration
+    manage_testing_langs Manage Testing Languages
+    manage_users Manage Users
+    master_visual_ease Master visual subjects with ease.
+    mastered mastered
+    mastery Bemästring
+    max_streak Max Streak
+    maybe_later Kanske senare
+    mission_desc The smart companion that helps your brain learn and retain visual knowledge through science-backed algorithms.
+    mock_email_title Mock Email Inbox
+    mode_audio_to_image Audio to Image
+    mode_audio_to_text Audio to Text
+    mode_image_to_text Image to Text
+    mode_text_to_text Text to Text
     monthly_access Månatlig tillgång
     most_popular_choice Mest populära valet
+    multi_lang_answers Multi-language Answers
+    multi_lang_prompts Multi-language Prompts
+    my_position My Position
+    name Name
+    names_descriptions Names & Descriptions
+    new NEW
     new_email Ny e-post
+    new_password New Password
+    next Nästa
+    next_card Next Card
+    next_daily_goal Nästa dagliga mål
+    next_daily_goal_desc Målantal kort att bemästra varje dag. Ändringar träder i kraft i morgon.
+    next_day_goal Next Day Goal
     no_cards_available_for_this_session Inga kort tillgängliga för denna session.
     no_cards_found Inga kort hittades
+    no_cards_found_for_lang No cards found for this language
+    no_cards_in_library No cards found in the library.
+    no_feedback_found Ingen feedback hittades.
+    no_folder Ingen mapp (Rot)
+    no_friends_found No friends found
+    no_images_added Inga bilder har lagts till
+    no_leaderboard_data No leaderboard data available.
+    no_localized_audio Inget lokaliserat ljud
+    no_localized_images Inga lokaliserade bilder
+    no_localized_video Inget lokaliserat videoklipp
+    no_subjects_available Inga ämnen tillgängliga
     no_subjects_found Inga ämnen hittades
     no_subjects_found_in_this_collection Inga ämnen hittades i den här samlingen
     no_users_found Inga användare hittades
+    ok OK
+    old_password Gammalt lösenord
+    old_password_required Gammalt lösenord krävs
+    onboarding_1_desc Lär dig visuellt. Bemästra permanent. Din visuella lärkompis som drivs av SM-2-vetenskap.
+    onboarding_1_title Välkommen till Aliolo
+    onboarding_2_desc Detta hjälper oss att personanpassa din lärandeupplevelse och rekommendera rätt ämnen.
+    onboarding_2_title Hur gammal är du?
+    onboarding_3_desc Välj ditt primära intresse för att anpassa din första instrumentpanel.
+    onboarding_3_title Vad vill du bemästra?
+    onboarding_4_desc Bygg din egen kortlek eller dyk in i kort som delas av Aliolo-lärande över hela världen. Lär dig i din egen takt och testa dig själv när du är redo.
+    onboarding_4_title Skapa & Dela
+    onboarding_5_desc Ditt bibliotek förblir synkroniserat över alla dina enheter. Vi påminner dig bara när det är dags att skydda din streak.
+    onboarding_5_title Bemästra var som helst
+    onboarding_6_desc Börja din resa idag och bemästra vad du än tar dig för.
+    onboarding_6_title Gå med i gemenskapen
+    onboarding_7_joined Gått med av tusentals lärande
+    onboarding_7_quote Aliolo har helt förändrat sättet som mina barn och jag bemästrar nya ämnen. De visuella korten och den utspridda repetitionen gör att lärandet känns som en lek!
+    onboarding_get_started Kom igång
+    onboarding_next Nästa
+    onboarding_skip Hoppa över
+    options_count Number of Answers
+    options_count_desc Antal flervalsalternativ som visas under test.
+    options_per_card options per card
+    order_id Order-ID
     os_version OS-version
+    our_mission OUR MISSION
+    page Page
+    parent_folder_label Parent Folder (sv)
+    password Lösenord
+    password_required Password is required
+    password_reset_success Password reset successful
     password_updated_successfully Lösenordet har uppdaterats!
+    passwords_dont_match Passwords do not match
+    paste PASTE
     payments_are_not_yet_integrated_on_web_please_use_the_mobile_app_to_upgrade Betalningar är ännu inte integrerade på webben. Använd mobilappen för att uppgradera.
     personal_data Personuppgifter
     pick_date Välj datum
+    picture Picture
+    pillar Pillar
+    plan_monthly Månadsåtkomst
+    plan_monthly_desc Populäraste valet
     plan_monthly_tagline Mest populära valet
     plan_monthly_title Månatlig tillgång
+    plan_weekly Veckoåtkomst
+    plan_weekly_desc Bäst för snabba mål
     plan_weekly_tagline Bäst för snabba mål
     plan_weekly_title Veckovis tillgång
+    plan_yearly Årsåtkomst
+    plan_yearly_desc Spara 33 % per månad
     plan_yearly_tagline Spara 33 % per månad
     plan_yearly_title Årlig tillgång
     platform Plattform
@@ -177,58 +526,208 @@
     please_enter_the_6_digit_code Ange den 6-siffriga koden
     please_wait_for_a_response_before_replying_again Vänta på svar innan du svarar igen.
     premium_expires_at Upphör att gälla $date
+    premium_go Skaffa Premium
     premium_lifetime Livstidsåtkomst
     premium_only Endast premium
     premium_status_active Du är premiummedlem
+    premium_title Aliolo Premium
     premium_unlock_desc Få tillgång till alla ämnen, skapa ett obegränsat antal kort och stöd Aliolos uppdrag.
     premium_unlock_title Lås upp full åtkomst
+    prev Prev
+    previous_card Previous Card
+    price_per_week ({price} / vecka)
+    private Private
+    pro_label PRO
+    product_id Produkt-ID
     product_not_available_in_store Produkten finns inte i butik.
     profile Profil
+    profile_title My Profile & Progress
+    prompt_label Prompt
+    prompt_optional Prompt / Question
+    prompts_answers Prompts & Answers
+    provide_at_least_one_answer Please provide at least one answer
+    provide_at_least_one_name Provide at least one name
+    provider Leverantör
     public_other_subject Offentligt/annat ämne
+    public_profile Public Profile
+    public_profile_desc Show your XP and Streak on Hall of Fame.
+    public_subject Public Subject
+    public_subject_desc Make this subject visible to other users.
     purchase_failed Köp misslyckades: $e
+    purchase_token Köptoken
+    record_shortcut Record Shortcut
     recovery_error Återställningsfel: $e
     refresh Uppdatera
     refresh_conversation Uppdatera konversationen
+    remove_friend Remove Friend
+    remove_friend_confirm Are you sure you want to remove friend
     renderer Renderare
+    request_sent Request sent
+    request_sent_waiting Request sent (waiting)
+    required Required
     reset_code Återställ koden
+    reset_code_email_title Password Reset Code
+    reset_code_sent "Reset code for: "
     reset_code_sent_to_please_check_your_inbox Återställ koden skickad till $email. Kontrollera din inkorg.
+    reset_password_for "Reset Password for: "
+    restore_password Restore Password
     restore_purchases Återställ inköp
+    retry Retry
+    right_arrow Right Arrow
     save Spara
     save_33_per_month Spara 33 % per månad
+    save_before_nav Do you want to save changes before navigating?
+    save_card Save Card
+    save_subject Save Subject
     saved_successfully Sparad framgångsrikt
+    search_cards Search Cards
+    search_subjects Search Subjects
     search_users Sök användare
+    select_an_answer Select an Answer
+    select_lang Select Language
+    select_package_license Select Package License
+    select_user Select User
+    selected_count {count} Selected
+    send Send
+    send_code Send Code
+    send_verification_code Send verification code?
     session_complete Session klar!
     session_complete_description Bra jobbat! Du har avslutat alla kort i denna session.
+    setting_saved Setting saved
     settings Inställningar
+    shortcuts_hint Press the key you want to use with Ctrl.
+    show_all_languages Show all languages
     show_documentation_btn Visa dokumentationsknapp
     show_documentation_btn_desc Visa dokumentationsknappen i appfältet.
     show_fake_users Visa falska användare
+    show_less_languages Show less languages
+    sidebar_left Sidebar on the left
+    sidebar_left_desc Move testing controls to the left side of the screen.
+    silver SILVER
+    social Social
+    sort_by Sort by
+    sound_effects Sound Effects
+    sound_effects_desc Enable audio feedback for correct and wrong answers.
+    source Källa
+    status Status
+    status_closed Stängd
+    status_open Öppen
+    status_replied Besvarad
+    streak Svit
+    subject Subject
+    subject_deleted Subject deleted
     subject_id Ämnes-ID
+    subject_label Subject
+    subject_plural Subjects
+    subject_type Subject Type (sv)
+    subjects Ämnen
     subscribe_now Prenumerera nu
     subscription_data Prenumerationsdata
     subscription_updated Prenumerationen uppdaterad
     subtraction_emoji Subtraktionsemoji
     subtraction_numbers Subtraktionsnummer
+    support_and_management Support & hantering
+    system System
+    tap_to_replay Tap to Replay
     technical_context TEKNISK KONTEXT
+    test_mode_desc Challenge yourself with a quiz
+    test_mode_label Test Mode
+    test_mode_title Test
+    test_session_size Test Session Size
+    test_session_size_desc Antal kort som ska repeteras i en enda testsession.
+    testing Testing
     testing_mode Testläge
+    testing_section Testing Settings
     text Text
+    the_science THE SCIENCE
+    theme_color App Theme Color
+    theme_color_desc Customize the primary color used for buttons and highlights.
+    theme_dark Dark
+    theme_light Light
+    theme_mode Temaläge
+    theme_system System
     this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards Det här är en mapp. Du kan använda Learn/Test-knapparna ovan för att öva på alla kort.
+    to_label To
     total_cards Totalt antal kort
+    total_xp Total XP
+    trust_cloud_desc Your progress is securely synced across all your devices in real-time.
+    trust_cloud_title Cloud Sync
+    trust_privacy TRUST & PRIVACY
+    trust_sync_desc Your data is private and encrypted to ensure the highest security standards.
+    trust_sync_title Encrypted Data
+    type_collection Samling
+    type_folder Folder (Sub-subjects) (sv)
+    type_standard Standard (Cards) (sv)
     type_your_reply Skriv ditt svar...
     ua UA
+    ui_language Gränssnittsspråk
+    ukrainian Ukrainian
     unknown_user_profile_missing Okänd användare (profil saknas)
+    unsaved_changes Unsaved Changes
+    unsaved_changes_msg Du har osparade ändringar. Vill du slänga dem?
+    up_arrow Up Arrow
+    update Update
     update_available En ny version är tillgänglig!
+    updated_at Uppdaterad
+    upload_new_photo Ladda upp nytt foto
     user Användare
+    user_exists User already exists
     user_id Användar-ID
+    user_not_found User not found
     user_with_this_email_already_exists_please_log_in_instead Användare med denna e-postadress finns redan. Logga in istället.
+    username Användarnamn
     users Användare
     users_filter Filtrera användare
     verification_code Verifieringskod
     verification_code_sent_to Verifieringskod skickad till $email
+    verify Verify
     version Version
+    video Video
+    video_link Video Link
+    video_url_optional Video URL (Optional)
+    view_card View Card
+    view_cards_title View Cards
     view_onboarding Se onboarding
+    visibility Visibility
+    visual_content_required Minst ett visuellt innehåll krävs
+    visual_content_required_msg Minst ett visuellt innehåll (text, bild, ljud eller video) måste anges.
+    visual_text Visuell text
+    wants_to_be_friend Wants to be your friend
     weekly_access Veckovis tillgång
     welcome_complete_your_profile_to_join_aliolo Välkomna! Fyll i din profil för att gå med i aliolo.
+    xp XP
     yearly_access Årlig tillgång
+    you You
     you_do_not_have_permission_to_edit_this_card Du har inte behörighet att redigera detta kort
     you_do_not_have_permission_to_view_this_card_details Du har inte behörighet att se denna kortinformation.
+    you_rank You are ranked #{rank}
+    active Aktiv
+    autoplay Automatisk uppspelning
+    card_limit Kortgräns
+    card_limit_msg Du har nått din gräns på {limit} kort.
+    create_request Skapa begäran
+    edit_user Redigera användare
+    favorite Favorit
+    file_too_large Filen är för stor
+    inactive Inaktiv
+    is_required är obligatoriskt
+    languages Språk
+    limit_reached Gräns nådd
+    not_available Inte tillgänglig
+    toggle_languages Växla språk
+    user_updated Användaren har uppdaterats
+    zoom Zooma
+    account_and_management Account & Management
+    back_to_plans Back to plans
+    confirm_password_required Confirm password is required
+    feat_autoplay_desc Focus on learning while the app automatically advances through cards at your pace.
+    feat_autoplay_title Hands-Free Autoplay
+    feat_create_share_desc Easily create your own subjects and cards, or share them with the community.
+    feat_create_share_title Create & Share
+    feat_science_smart_review_desc The algorithm calculates the optimal time to review each card for maximum retention.
+    feat_science_smart_review_title Smart Review Cycles
+    new_password_required New password is required
+    password_updated Password updated successfully
+    save_success Saved successfully
+    trust_ecosystem_desc Your progress and cards are seamlessly synced across all your devices.
+    trust_ecosystem_title Aliolo Ecosystem

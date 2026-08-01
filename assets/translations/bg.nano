@@ -43,37 +43,140 @@
     about_support_settings_desc Езикът на потребителския интерфейс, режимът на темата, цветът на темата, звукът, разположението на страничната лента и видимостта на документацията могат да се регулират от настройките.
     about_support_settings_title Персонализиране
     about_support_title Настройки, обратна връзка и поддръжка
+    about_tagline Учете визуално. Овладейте завинаги.
+    account_created Акаунтът е създаден
+    account_created_billing_fail Вашият акаунт е създаден, но плащането не е завършено. Опитайте отново плащането по-долу.
+    account_deleted Account deleted successfully
+    add_card Add Card
+    add_collection Добавяне на колекция
+    add_folder Добавяне на папка
+    add_friend_by_email Add Friend By Email
+    add_lang_translation Add Language Translation
+    add_prompt_translation Add Prompt Translation
+    add_subject Add Subject
     addition_emoji Допълнение Emoji
     addition_numbers Събиране на числа
+    age Възраст
+    age_0_6 0-6 години
+    age_15_18 15 - 18
+    age_15_plus 15+ години
+    age_19_25 19 - 25
+    age_26_35 26 - 35
+    age_36_50 36 - 50
+    age_7_14 7-14 години
+    age_advanced Advanced
+    age_all All Ages
+    age_early Early Childhood
+    age_group Age Group
+    age_intermediate Intermediate
+    age_over_50 Над 50
+    age_primary Primary School
+    age_under_14 Под 14
+    algorithm_title THE ALIOLO ALGORITHM
     aliolo aliolo
+    all_matching_subjects Всички съвпадащи теми
     all_rights_reserved Всички права запазени
+    answer Отговор
+    answer_label answer
+    answers_label answers
     are_you_sure_you_want_to_close_this_feedback_request Сигурни ли сте, че искате да затворите тази заявка за обратна връзка?
     are_you_sure_you_want_to_delete_this_folder Сигурни ли сте, че искате да изтриете тази папка?
+    ascending Ascending
     attach_image Прикачете изображение
+    audio Аудио
+    audio_playing Audio Playing
+    author Author
     back Назад
+    back_to_login Back to Login
+    back_to_plans Назад към плановете
     back_to_subjects Обратно към Теми
     best_for_quick_goals Най-доброто за бързи голове
     billing_disclaimer Абонаментите се подновяват автоматично, освен ако не бъдат анулирани. Можете да управлявате абонамента си в настройките на вашия магазин.
     billing_title Таксуване
+    bronze BRONZE
     browser Браузър
     cancel Отказ
+    cancel_request Cancel Request
+    cancel_request_confirm Are you sure you want to cancel the request to
+    cannot_delete_folder Cannot Delete Folder
     cannot_delete_folder_it_is_not_empty Папката не може да се изтрие: не е празна
+    card_details Card Details
     card_id ID на картата
+    card_label Card
+    card_level Ниво на картата
+    card_plural Cards
+    cards cards
+    cards_label cards
+    cards_per_day cards per day
+    cards_per_session cards per session
+    change_avatar Change Avatar
+    change_password Промяна на паролата
     check_your_email_for_code Проверете имейла си за код
     clear Ясно
+    click_to_select_image Click to select image
     click_to_view_original Кликнете, за да видите оригинала
     close Затвори
     close_request Затваряне на заявката?
+    code_label Code
     collection_id ID на колекцията
     colors Цветове
+    common_settings Common Settings
+    compare_plans Сравнете безплатен срещу премиум
+    confirm Потвърждаване
+    confirm_logout Are you sure you want to logout?
+    confirm_password Confirm Password
     confirm_subscription Потвърдете абонамента
+    content_label Content
     context Контекст
+    copy COPY
+    copy_all Copy All
+    core_features CORE FEATURES
     correct_answers Правилни отговори
     could_not_launch Не можа да се стартира $url
     counting Броене
+    create_account Create Account
+    create_new_account Create New Account
+    create_new_card Create New Card
+    created_at Създадено на
+    current_streak Current Streak
     current_subscription Текущ абонамент
+    daily_goal Daily Goal
+    daily_progress Daily Progress
+    dark Dark
+    dashboard_greeting Здравей
+    day day
+    day_label Day
+    day_plural Days
+    days days
+    default Default
+    default_language Език по подразбиране
+    default_testing_language Default Testing Language
+    default_testing_language_desc Pre-selects this language on the subjects page.
     delete Изтриване
+    delete_account Delete Account
+    delete_account_confirm Are you sure you want to delete your account? This action is permanent.
+    delete_avatar Изтриване на аватара
+    delete_avatar_confirm Сигурни ли сте, че искате да премахнете профилната си снимка?
+    delete_card_confirm Delete this card?
+    delete_collection Изтриване на колекция
+    delete_collection_confirm Сигурни ли сте, че искате да изтриете тази колекция?
+    delete_folder Изтриване на папка
+    delete_selected_cards Delete selected cards?
+    delete_subject Delete Subject
+    delete_subject_confirm Delete subject '{subject}' and all {count} cards inside?
+    delete_subjects_first Please delete all sub-subjects inside this folder before deleting the folder itself.
+    descending Descending
+    description Description
     device Устройство
+    digit_code 6-digit Code
+    discard Discard
+    discard_changes Отхвърляне на промените?
+    doc_autoplay_desc Приложението може автоматично да премине към следващата карта, след като отговорите. Правилните отговори изчакват 1 сек., докато грешните изчакват 2 сек., за да ви позволят да прегледате.
+    doc_autoplay_title Обучение с автоматично възпроизвеждане
+    doc_card_scope_desc Картите са градивните елементи на обучението и винаги принадлежат към конкретен предмет. Въпреки че можете да организирате предмети в папки или колекции, самите карти трябва да бъдат създадени в рамките на предмет.
+    doc_card_scope_title Къде живеят картите
+    doc_collections_purpose_desc Колекциите са курирани пътеки, които групират предмети заедно. Когато започнете сесия от колекция, системата смесва карти от всички включени предмети, за да осигури рандомизиран, всеобхватен тест.
+    doc_collections_purpose_title Целта на колекциите
     doc_create_intro_desc Този раздел описва как създателите организират съдържание, локализират го и публикуват полезни учебни материали, без да усложняват прекалено работния процес.
     doc_create_intro_title Създавайте
     doc_create_json_desc Създаването, базирано на JSON, е усъвършенстван работен процес за структурирано масово съдържание. Трябва да остане незадължително; повечето създатели трябва да могат да създават и редактират съдържание чрез стандартните формуляри.
@@ -86,6 +189,38 @@
     doc_create_model_title Модел на съдържанието
     doc_create_visibility_desc Използвайте „moy“, за да работите върху собственото си съдържание, любими, за да закачите полезни елементи, и публична библиотека, за да разглеждате споделен материал. Публичната видимост засяга откриването, докато собствеността влияе върху това, което можете да редактирате или изтриете.
     doc_create_visibility_title Собственост и видимост
+    doc_creation_desc Създайте свои собствени предмети и добавете визуални флаш карти. Всяка карта поддържа изображение и незадължителен аудио файл за произношение.
+    doc_creation_title Създаване на предмети и карти
+    doc_feedback_desc Помогнете ни да се подобрим! Използвайте иконата за обратна връзка (Icons.feedback) на всеки предмет или папка, за да съобщите за проблеми. Можете също да изпратите обща обратна връзка за приложението чрез секцията за поддръжка.
+    doc_feedback_title Система за обратна връзка
+    doc_filters_desc Намерете съдържание бързо с помощта на лентата за търсене. Можете да филтрирате по възрастова група (от ранна до напреднала) или да стесните изгледа си до конкретни колекции и папки.
+    doc_filters_title Търсене и филтри
+    doc_flashcards_desc Всеки предмет съдържа набор от карти. Въпреки че се поддържат изображения и аудио, те не са задължителни – съдържанието може да бъде чисто текстово или динамично генерирано.
+    doc_flashcards_title Визуални флаш карти
+    doc_friends_desc Ученето е по-добро заедно! Поканете приятели в Aliolo чрез вашия профил. Можете да проследявате напредъка си един на друг и да останете мотивирани, като виждате кой поддържа най-дългата серия.
+    doc_friends_title Приятели и покани
+    doc_goals_desc Задайте вашата ежедневна цел за завършване на карти в настройките. Промените в целта ви влизат в сила от следващия ден.
+    doc_goals_title Ежедневни цели
+    doc_json_desc Напредналите създатели могат да използват JSON данни, за да предоставят локализирани имена и описания, правейки предметите достъпни на всички поддържани езици.
+    doc_json_title JSON локализация
+    doc_lang_desc Винаги избирайте предпочитания от вас език за обучение в горното меню, преди да изберете предмет. Това гарантира, че се зареждат правилните аудио и преводи.
+    doc_lang_title Език на обучение
+    doc_leaderboard_desc Състезавайте се с учащи от целия свят! Печелете XP чрез завършване на сесии с карти и се изкачвайте в ранговете. Вашата позиция се актуализира в реално време, докато усвоявате нови предмети.
+    doc_leaderboard_title Глобална класация
+    doc_localization_details_desc Езикът "Глобален" е вашият основен резервен вариант – той може да бъде всеки език, който изберете. Ако предоставите конкретни преводи (като английски или испански), те ще заменят глобалните данни само когато потребителят избере този конкретен език на потребителския интерфейс.
+    doc_localization_details_title Как работи локализацията
+    doc_localization_ui_desc За да добавите локализирани данни, просто докоснете иконата на езиковия код (напр. EN, ES, FR) в заглавката на редактора. Това ви позволява да предоставите конкретни имена, описания и съдържание на карти за всеки поддържан език. Разделът "Глобален" служи като основен резервен вариант, ако не е предоставен конкретен превод.
+    doc_localization_ui_title Добавяне на преводи
+    doc_math_desc Математическите предмети използват специализирани машини за генериране на визуализации на карти в реално време. Тези предмети включват уникални режими на обучение и тестване, съобразени с конкретни математически концепции, осигуряващи по-ефективна среда за практикуване.
+    doc_math_title Математически предмети
+    doc_media_desc За да осигурите бърза синхронизация, поддържайте изображенията под 5MB, а аудио файловете под 10MB.
+    doc_media_title Ограничения за качване на медия
+    doc_organization_desc Използвайте папки, за да групирате свързани предмети заедно. Можете също да създавате колекции, за да организирате предмети в курирани пътеки.
+    doc_organization_title Организиране на съдържанието
+    doc_pillars_desc Цялото съдържание в Aliolo е организирано в 8 фундаментални стълба: Академични и професионални, Свят, Природа, Човешко тяло, Хуманитарни науки, Свободно време, Инженерство и Други. Тези категории предоставят структурирана рамка за всички предмети в платформата.
+    doc_pillars_title 8-те основни стълба
+    doc_public_desc Предметите могат да бъдат частни (видими само за вас) или публични. Публичното съдържание се споделя с цялата общност на Aliolo, което позволява на всеки да открива и да се учи от вашите творения.
+    doc_public_title Публични срещу частни
     doc_start_dashboard_desc Таблото за управление е вашата основна библиотека. Използвайте търсене, за да намерите бързо съдържание, след което комбинирайте филтри за източници като любими, моя и публична библиотека с филтри за възраст, за да намалите шума.
     doc_start_dashboard_title Табло за управление, търсене и филтри
     doc_start_feedback_desc Използвайте точките за въвеждане на обратна връзка в приложението, когато нещо не е наред или не е ясно. Докладите могат да включват текущия контекст, което прави проблемите със съдържанието по-лесни за преглед и коригиране.
@@ -98,6 +233,8 @@
     doc_start_quick_title Бърз старт
     doc_start_structure_desc Субектите държат карти. Папките групират свързано съдържание вътре в колона. Колекциите са подбрани набори, които могат да комбинират множество теми за изучаване и споделяне.
     doc_start_structure_title Теми, папки и колекции
+    doc_streaks_desc Постоянството е ключово! Изпълнявайте ежедневната си цел всеки ден, за да изградите своята серия. Не пропускайте нито един ден, иначе серията ще се нулира.
+    doc_streaks_title Система от серии (Streaks)
     doc_study_how_desc Започнете с Научете, когато изграждате разпознаване, след това превключете на Тест, когато искате по-бързо извикване и по-строга проверка. Използвайте по-кратки сесии за фокусиран преглед и по-големи сесии за по-широко покритие.
     doc_study_how_title Как да учим
     doc_study_intro_desc Този раздел обяснява как да се движите през съдържание, да избирате правилния режим и да настройвате вашите сесии за преглед или извикване.
@@ -108,67 +245,280 @@
     doc_study_modes_title Режими на обучение и тестване
     doc_study_scope_desc Изследването може да започне от един предмет, изглед на папка или колекция. Колекциите са полезни, когато искате смесена сесия по няколко теми, без да напускате текущия поток.
     doc_study_scope_title Предмети, папки и колекции в проучването
+    doc_sync_desc Вашият напредък автоматично се синхронизира с облака. Можете да превключвате между уеб и десктоп версии, без да губите серията си.
+    doc_sync_title Облачна синхронизация
     doc_tab_create Създавайте
+    doc_tab_creator Създаване
+    doc_tab_general Общи
+    doc_tab_learning Практика
     doc_tab_start Започнете
     doc_tab_study Проучване
+    doc_testing_desc Предизвикайте себе си с въпроси с избор на отговор (MCQ). Приложението автоматично ще продължи напред, докато отговаряте, помагайки ви да учите по-бързо.
+    doc_testing_title Инрактивно тестване
+    doc_welcome_desc Aliolo е платформа за визуално обучение, създадена да ви помогне да овладеете предмети чрез флаш карти и интерактивно тестване.
+    doc_welcome_title Добре дошли в Aliolo
     documentation Документация
+    done_today Done Today
+    down_arrow Down Arrow
+    edit Редактиране
+    edit_card Edit Card
+    edit_collection Редактиране на колекция
+    edit_email Редактиране на имейл
+    edit_folder Редактиране на папка
+    edit_name Edit Name
+    edit_subject Edit Subject
+    edit_subject_title Edit Subject
     edit_subscription Редактиране на абонамента
+    email Имейл
+    email_change_notice For security, a confirmation link will be sent to BOTH your old and new email addresses. You must click both to complete the change.
+    email_in_use Email is already in use
+    email_subject Subject
+    email_update_sent Confirmation emails sent. Please check both inboxes.
     email_updated_successfully Имейлът е актуализиран успешно!
+    english English
     enter_current_password Въведете текущата парола
+    enter_new_email Въведете нов имейл
+    enter_new_name Enter New Name
+    enter_number Enter a number
+    enter_or_select_subject Please enter or select a subject
+    enter_pass_to_confirm Enter your password to confirm
+    enter_subject_name Enter subject name
     error Грешка: $e
     error_deleting Грешка при изтриването: $e
+    error_deleting_account Could not delete account. Check your password.
     error_saving Грешка при запазване: $e
     error_saving_card Грешка при запазване на картата: $e
     error_updating_favorite Грешка при актуализиране на любимите: $e
+    exit Exit
+    exit_confirm_msg Are you sure you want to exit the application?
+    exit_confirm_title Exit Aliolo?
+    expiry_date Дата на изтичане
     failed_answers Неуспешни отговори
     failed_to_send_reset_code Неуспешно изпращане на код за нулиране
     failed_to_send_verification_code Неуспешно изпращане на код за потвърждение
     fake_only Само фалшиви
+    fatal_startup_error Fatal Startup Error
+    feat_adaptive_desc The system monitors your recognition speed across MCQ options, dynamically adjusting intervals to push your boundaries.
+    feat_adaptive_title Adaptive Response Timing
+    feat_ages_desc Content curated for different age groups from early childhood to advanced learning.
+    feat_ages_title For All Ages
+    feat_gamified_desc Earn XP, badges, and build streaks while mastering complex visual subjects.
+    feat_gamified_title Gamified Experience
+    feat_mastery_desc Dynamic XP rewards difficulty, while real-time mastery badges (Bronze, Silver, Gold) track your journey from novice to expert.
+    feat_mastery_title Visual Mastery & XP
+    feat_multimedia_desc Learn with images, audio, and video support for immersive training.
+    feat_multimedia_title Multimedia Cards
+    feat_recognition_desc Immersive identification drills designed to build instant "muscle memory" for complex visual subjects.
+    feat_recognition_title Visual Pattern Training
+    feat_science_adaptive_desc Intervals automatically adjust based on your recognition speed and accuracy.
+    feat_science_adaptive_title Adaptive Timing
+    feat_science_spacing_desc Advanced cognitive spacing model that predicts memory decay and optimizes review cycles.
+    feat_science_spacing_title SuperMemo-2 (SM-2)
+    feat_spacing_desc A full implementation of the SuperMemo-2 model predicts your memory decay and schedules reviews at the peak of retention.
+    feat_spacing_title Cognitive Spacing (SM-2)
+    feature_autoplay Режим Авто-възпроизвеждане
+    feature_community_access Достъп до общностни предмети
     feature_creation Инструменти за създаване
     feature_customize Разширено персонализиране
+    feature_favorites Любими елементи на таблото
+    feature_feedback Директна обратна връзка и предложения
+    feature_free БЕЗПЛАТНО
+    feature_friends Покани и се свържи с приятели
     feature_full_library Пълен достъп до библиотеката
+    feature_learn_all Научи всеки предмет или колекция
+    feature_private_mode Режим на частен профил
+    feature_pro PRO
+    feature_spaced_repetition Интервално повторение (SM-2)
     feature_testing Интерактивно тестване
+    feedback Обратна връзка
+    feedback_add_image Добавяне на изображение
+    feedback_attachments Прикачени файлове
+    feedback_bug Доклад за грешка
+    feedback_context Контекст
+    feedback_details Подробности
+    feedback_error Неуспешно изпращане на обратна връзка. Моля, опитайте отново.
+    feedback_management_desc Преглед и управление на потребителска обратна връзка
+    feedback_management_title Заявки за обратна връзка
+    feedback_other Друго
+    feedback_submit Изпращане
+    feedback_success Благодарим ви за обратната връзка!
+    feedback_suggestion Предложение
+    feedback_title Изпращане на обратна връзка
+    feedback_title_hint Заглавие
+    feedback_type Тип
+    fill_all_fields Please fill all fields
+    filter_all All
+    filter_dashboard Табло
+    filter_favorites Любими
+    filter_my_subjects My Subjects
+    filter_on_dashboard On Dashboard
+    filter_public Public
+    filter_public_library Публична библиотека
+    filters Филтри
+    finish Край
+    finished_session You finished {count} cards. XP bonus awarded!
+    folder Папка
+    folder_already_exists Папка с това име вече съществува в този стълб
     folder_id ID на папка
+    folder_label Папка
+    folder_not_empty_msg Не може да се изтрие: папката не е празна.
+    folder_plural Папки
+    forgot_password Forgot Password?
     free_only Безплатни потребители
+    general_preferences General Preferences
     generic Generic
+    go_to_manager Go to Library Manager
+    goal_change_hint Change your card goal for tomorrow
+    goal_change_notice Промените в дневната ви цел ще влязат в сила от утре.
+    gold GOLD
+    hide_comparison Скриване на сравнението на плановете
     home Начало
+    images Images
+    included_subjects Включени предмети
+    info_copied Info copied to clipboard
+    initializing_aliolo Initializing Aliolo...
     invalid_code Невалиден код
+    invalid_email Invalid email address
     invalid_email_address Невалиден имейл адрес
     invalid_json Невалиден JSON: $e
+    invalid_number Invalid number
     invalid_or_expired_invitation_link Невалидна или изтекла връзка за покана.
     invalid_or_expired_reset_code Невалиден или изтекъл код за нулиране.
+    invalid_password Invalid password
+    invalid_password_delete Invalid Password
     invitation_sent_awaiting_registration Поканата е изпратена (очаква регистрация)
+    invite Покани
+    invite_user_content Имейлът {email} не е намерен. Поканете ги да се присъединят към Aliolo?
+    invite_user_title Покани потребител?
     invited_and_request_sent Поканен и изпратена заявка!
     json JSON
+    keyboard_shortcuts Keyboard Shortcuts
     label_suffix $label:
+    lang_abbr Lang
+    language Език
     leaderboard Класация
+    learn_mode_desc Study cards and memorize answers
+    learn_mode_title Learn
+    learn_session_size Learn Session Size
+    learn_session_size_desc Брой нови карти, които да бъдат въведени в една учебна сесия.
     learning_session_complete_description Страхотна работа! Завършихте тази учебна сесия. Вашият напредък е запазен.
+    left_arrow Left Arrow
+    level Level
+    level_range Must be between 1 and 20
+    level_tier_1 Ниво 1
+    level_tier_2 Ниво 2
+    level_tier_3 Ниво 3
     licenses Лицензи
     licenses_aliolo_section_title Aliolo Търговски лиценз
     licenses_aliolo_subtitle Собствен софтуер и премиум условия за достъп
     licenses_intro_desc Търговският лиценз на Aliolo се появява първи. Лицензите за пакети на трети страни следват по-долу.
     licenses_intro_title Aliolo Бележки за лиценз и пакет
     licenses_third_party_section_title Лицензи за пакети на трети страни
+    light Light
     linux_distro Дистрибуция на Linux
     loading Зареждане...
     localized_data Локализирани данни
+    login Вход
+    logout Изход
+    manage_cards Manage Cards
+    manage_friends Friends
+    manage_friends_desc View and manage your friend requests
+    manage_library Manage Library ({sCount} subjects, {cCount} cards)
+    manage_subjects Manage Subjects
+    manage_subscription Управление на абонамента
+    manage_testing_langs Manage Testing Languages
+    manage_users Manage Users
+    master_visual_ease Master visual subjects with ease.
+    mastered mastered
+    mastery Усъвършенстване
+    max_streak Max Streak
+    maybe_later Може би по-късно
+    mission_desc The smart companion that helps your brain learn and retain visual knowledge through science-backed algorithms.
+    mock_email_title Mock Email Inbox
+    mode_audio_to_image Audio to Image
+    mode_audio_to_text Audio to Text
+    mode_image_to_text Image to Text
+    mode_text_to_text Text to Text
     monthly_access Месечен достъп
     most_popular_choice Най-популярният избор
+    multi_lang_answers Multi-language Answers
+    multi_lang_prompts Multi-language Prompts
+    my_position My Position
+    name Name
+    names_descriptions Names & Descriptions
+    new NEW
     new_email Нов имейл
+    new_password New Password
+    next Напред
+    next_card Next Card
+    next_daily_goal Следваща дневна цел
+    next_daily_goal_desc Целеви брой карти за усвояване всеки ден. Промените влизат в сила от утре.
+    next_day_goal Next Day Goal
     no_cards_available_for_this_session Няма налични карти за тази сесия.
     no_cards_found Няма намерени карти
+    no_cards_found_for_lang No cards found for this language
+    no_cards_in_library No cards found in the library.
+    no_feedback_found Няма намерена обратна връзка.
+    no_folder Няма папка (Основна)
+    no_friends_found No friends found
+    no_images_added Няма добавени изображения
+    no_leaderboard_data No leaderboard data available.
+    no_localized_audio Няма локализирано аудио
+    no_localized_images Няма локализирани изображения
+    no_localized_video Няма локализирано видео
+    no_subjects_available Няма налични предмети
     no_subjects_found Няма намерени теми
     no_subjects_found_in_this_collection Няма намерени теми в тази колекция
     no_users_found Няма намерени потребители
+    ok OK
+    old_password Стара парола
+    old_password_required Старата парола е задължителна
+    onboarding_1_desc Учете визуално. Овладейте перманентно. Вашият спътник за визуално обучение, задвижван от науката SM-2.
+    onboarding_1_title Добре дошли в Aliolo
+    onboarding_2_desc Това ни помага да персонализираме вашето учебно изживяване и да препоръчаме правилните предмети.
+    onboarding_2_title На колко години сте?
+    onboarding_3_desc Изберете основния си интерес, за да персонализирате началното си табло.
+    onboarding_3_title Какво искате да овладеете?
+    onboarding_4_desc Изградете своя собствена колода или се потопете в карти, споделени от учащи в Aliolo по целия свят. Учете със свое собствено темпо, след което се тествайте, когато сте готови.
+    onboarding_4_title Създавайте и споделяйте
+    onboarding_5_desc Вашата библиотека остава синхронизирана на всички ваши устройства. Ще ви подсещаме само когато е време да защитите серията си.
+    onboarding_5_title Овладявайте навсякъде
+    onboarding_6_desc Започнете своето пътуване днес и овладейте всичко, което си наумите.
+    onboarding_6_title Присъединете се към общността
+    onboarding_7_joined Присъединиха се хиляди учащи
+    onboarding_7_quote Aliolo напълно трансформира начина, по който децата ми и аз овладяваме нови теми. Визуалните карти и интервалното повторение правят ученето да изглежда като игра!
+    onboarding_get_started Започни сега
+    onboarding_next Напред
+    onboarding_skip Пропусни
+    options_count Number of Answers
+    options_count_desc Брой отговори с избор от няколко възможности, показвани по време на тестовете.
+    options_per_card options per card
+    order_id ID на поръчка
     os_version Версия на ОС
+    our_mission OUR MISSION
+    page Page
+    parent_folder_label Parent Folder (bg)
+    password Парола
+    password_required Password is required
+    password_reset_success Password reset successful
     password_updated_successfully Паролата е актуализирана успешно!
+    passwords_dont_match Passwords do not match
+    paste PASTE
     payments_are_not_yet_integrated_on_web_please_use_the_mobile_app_to_upgrade Плащанията все още не са интегрирани в мрежата. Моля, използвайте мобилното приложение за надграждане.
     personal_data Лични данни
     pick_date Изберете дата
+    picture Picture
+    pillar Pillar
+    plan_monthly Месечен достъп
+    plan_monthly_desc Най-популярен избор
     plan_monthly_tagline Най-популярният избор
     plan_monthly_title Месечен достъп
+    plan_weekly Седмичен достъп
+    plan_weekly_desc Най-добро за бързи цели
     plan_weekly_tagline Най-доброто за бързи голове
     plan_weekly_title Седмичен достъп
+    plan_yearly Годишен достъп
+    plan_yearly_desc Спестете 33% на месец
     plan_yearly_tagline Спестете 33% на месец
     plan_yearly_title Годишен достъп
     platform Платформа
@@ -177,58 +527,207 @@
     please_enter_the_6_digit_code Моля, въведете 6-цифрения код
     please_wait_for_a_response_before_replying_again Моля, изчакайте отговор, преди да отговорите отново.
     premium_expires_at Изтича на $date
+    premium_go Стани Премиум
     premium_lifetime Доживотен достъп
     premium_only Само премиум
     premium_status_active Вие сте премиум член
+    premium_title Aliolo Premium
     premium_unlock_desc Получете достъп до всички теми, създайте неограничен брой карти и подкрепете мисията на Aliolo.
     premium_unlock_title Отключете пълен достъп
+    prev Prev
+    previous_card Previous Card
+    price_per_week ({price} / седмица)
+    private Private
+    pro_label PRO
+    product_id ID на продукт
     product_not_available_in_store Продуктът не е наличен в магазина.
     profile Профил
+    profile_title My Profile & Progress
+    prompt_label Prompt
+    prompt_optional Prompt / Question
+    prompts_answers Prompts & Answers
+    provide_at_least_one_answer Please provide at least one answer
+    provide_at_least_one_name Provide at least one name
+    provider Доставчик
     public_other_subject Обществен/друг субект
+    public_profile Public Profile
+    public_profile_desc Show your XP and Streak on Hall of Fame.
+    public_subject Public Subject
+    public_subject_desc Make this subject visible to other users.
     purchase_failed Неуспешна покупка: $e
+    purchase_token Токен за покупка
+    record_shortcut Record Shortcut
     recovery_error Грешка при възстановяване: $e
     refresh Опресняване
     refresh_conversation Опресняване на разговора
+    remove_friend Remove Friend
+    remove_friend_confirm Are you sure you want to remove friend
     renderer Renderer
+    request_sent Request sent
+    request_sent_waiting Request sent (waiting)
+    required Required
     reset_code Нулиране на кода
+    reset_code_email_title Password Reset Code
+    reset_code_sent "Reset code for: "
     reset_code_sent_to_please_check_your_inbox Кодът за нулиране, изпратен до $email. Моля, проверете входящата си кутия.
+    reset_password_for "Reset Password for: "
+    restore_password Restore Password
     restore_purchases Възстановяване на покупките
+    retry Retry
+    right_arrow Right Arrow
     save Запазване
     save_33_per_month Спестете 33% на месец
+    save_before_nav Do you want to save changes before navigating?
+    save_card Save Card
+    save_subject Save Subject
     saved_successfully Запазено успешно
+    search_cards Search Cards
+    search_subjects Search Subjects
     search_users Търсете потребители
+    select_an_answer Select an Answer
+    select_lang Select Language
+    select_package_license Select Package License
+    select_user Select User
+    selected_count {count} Selected
+    send Send
+    send_code Send Code
+    send_verification_code Send verification code?
     session_complete Сесията завършена!
     session_complete_description Страхотна работа! Завършихте всички карти в тази сесия.
+    setting_saved Setting saved
     settings Настройки
+    shortcuts_hint Press the key you want to use with Ctrl.
+    show_all_languages Show all languages
     show_documentation_btn Бутон за показване на документацията
     show_documentation_btn_desc Покажете бутона за документация в лентата на приложението.
     show_fake_users Показване на фалшиви потребители
+    show_less_languages Show less languages
+    sidebar_left Sidebar on the left
+    sidebar_left_desc Move testing controls to the left side of the screen.
+    silver SILVER
+    social Social
+    sort_by Sort by
+    sound_effects Sound Effects
+    sound_effects_desc Enable audio feedback for correct and wrong answers.
+    source Източник
+    status Статус
+    status_closed Затворен
+    status_open Отворен
+    status_replied С отговор
+    streak Серия
+    subject Subject
+    subject_deleted Subject deleted
     subject_id ID на субекта
+    subject_label Subject
+    subject_plural Subjects
+    subject_type Subject Type (bg)
+    subjects Предмети
     subscribe_now Абонирайте се сега
     subscription_data Данни за абонамент
     subscription_updated Абонаментът е актуализиран
     subtraction_emoji Емотикони за изваждане
     subtraction_numbers Числа за изваждане
+    support_and_management Поддръжка и управление
+    system System
+    tap_to_replay Tap to Replay
     technical_context ТЕХНИЧЕСКИ КОНТЕКСТ
+    test_mode_desc Challenge yourself with a quiz
+    test_mode_label Test Mode
+    test_mode_title Test
+    test_session_size Test Session Size
+    test_session_size_desc Брой карти за преглед в една сесия за тестване.
+    testing Testing
     testing_mode Режим на тестване
+    testing_section Testing Settings
     text Текст
+    the_science THE SCIENCE
+    theme_color App Theme Color
+    theme_color_desc Customize the primary color used for buttons and highlights.
+    theme_dark Dark
+    theme_light Light
+    theme_mode Тема
+    theme_system System
     this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards Това е папка. Можете да използвате бутоните Научете/Тествайте по-горе, за да тренирате всички карти.
+    to_label To
     total_cards Общо карти
+    total_xp Total XP
+    trust_cloud_desc Your progress is securely synced across all your devices in real-time.
+    trust_cloud_title Cloud Sync
+    trust_privacy TRUST & PRIVACY
+    trust_sync_desc Your data is private and encrypted to ensure the highest security standards.
+    trust_sync_title Encrypted Data
+    type_collection Колекция
+    type_folder Folder (Sub-subjects) (bg)
+    type_standard Standard (Cards) (bg)
     type_your_reply Въведете отговора си...
     ua UA
+    ui_language Език на интерфейса
+    ukrainian Ukrainian
     unknown_user_profile_missing Неизвестен потребител (липсва профил)
+    unsaved_changes Unsaved Changes
+    unsaved_changes_msg Имате незапазени промени. Іскате ли да ги отхвърлите?
+    up_arrow Up Arrow
+    update Update
     update_available Налична е нова версия!
+    updated_at Актуализирано на
+    upload_new_photo Качване на нова снимка
     user Потребител
+    user_exists User already exists
     user_id Потребителско име
+    user_not_found User not found
     user_with_this_email_already_exists_please_log_in_instead Потребител с този имейл вече съществува. Моля, влезте вместо това.
+    username Потребителско име
     users Потребители
     users_filter Филтриране на потребители
     verification_code Код за потвърждение
     verification_code_sent_to Кодът за потвърждение е изпратен до $email
+    verify Verify
     version Версия
+    video Video
+    video_link Video Link
+    video_url_optional Video URL (Optional)
+    view_card View Card
+    view_cards_title View Cards
     view_onboarding Преглед на включването
+    visibility Visibility
+    visual_content_required Изисква се поне едно визуално съдържание
+    visual_content_required_msg Трябва да бъде предоставено поне едно визуално съдържание (текст, изображение, аудио или видео).
+    visual_text Визуален текст
+    wants_to_be_friend Wants to be your friend
     weekly_access Седмичен достъп
     welcome_complete_your_profile_to_join_aliolo Добре дошли! Попълнете своя профил, за да се присъедините към aliolo.
+    xp Опит (XP)
     yearly_access Годишен достъп
+    you You
     you_do_not_have_permission_to_edit_this_card Нямате разрешение да редактирате тази карта
     you_do_not_have_permission_to_view_this_card_details Нямате разрешение да видите подробностите за тази карта.
+    you_rank You are ranked #{rank}
+    active Активен
+    autoplay Автоматично възпроизвеждане
+    card_limit Лимит на карти
+    card_limit_msg Достигнахте лимита си от {limit} карти.
+    create_request Създай заявка
+    edit_user Редактиране на потребител
+    favorite Любимо
+    file_too_large Файлът е твърде голям
+    inactive Неактивен
+    is_required е задължително
+    languages Езици
+    limit_reached Лимитът е достигнат
+    not_available Не е налично
+    toggle_languages Превключване на езици
+    user_updated Потребителят е актуализиран
+    zoom Мащабиране
+    account_and_management Account & Management
+    confirm_password_required Confirm password is required
+    feat_autoplay_desc Focus on learning while the app automatically advances through cards at your pace.
+    feat_autoplay_title Hands-Free Autoplay
+    feat_create_share_desc Easily create your own subjects and cards, or share them with the community.
+    feat_create_share_title Create & Share
+    feat_science_smart_review_desc The algorithm calculates the optimal time to review each card for maximum retention.
+    feat_science_smart_review_title Smart Review Cycles
+    new_password_required New password is required
+    password_updated Password updated successfully
+    save_success Saved successfully
+    trust_ecosystem_desc Your progress and cards are seamlessly synced across all your devices.
+    trust_ecosystem_title Aliolo Ecosystem

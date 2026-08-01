@@ -43,37 +43,139 @@
     about_support_settings_desc Käyttöliittymän kieltä, teematilaa, teeman väriä, ääntä, sivupalkin sijoittelua ja dokumentaation näkyvyyttä voidaan säätää asetuksista.
     about_support_settings_title Personointi
     about_support_title Asetukset, Palaute ja tuki
+    about_tagline Opi visuaalisesti. Hallitse pysyvästi.
+    account_created Tili luotu
+    account_created_billing_fail Tilisi luotiin, mutta maksua ei suoritettu loppuun. Yritä maksua uudelleen alla.
+    account_deleted Account deleted successfully
+    add_card Add Card
+    add_collection Lisää kokoelma
+    add_folder Lisää kansio
+    add_friend_by_email Add Friend By Email
+    add_lang_translation Add Language Translation
+    add_prompt_translation Add Prompt Translation
+    add_subject Add Subject
     addition_emoji Lisäys Emoji
     addition_numbers Lisäysnumerot
+    age Ikä
+    age_0_6 0-6 vuotta
+    age_15_18 15 - 18
+    age_15_plus 15+ vuotta
+    age_19_25 19 - 25
+    age_26_35 26 - 35
+    age_36_50 36 - 50
+    age_7_14 7-14 vuotta
+    age_advanced Advanced
+    age_all All Ages
+    age_early Early Childhood
+    age_group Age Group
+    age_intermediate Intermediate
+    age_over_50 Yli 50
+    age_primary Primary School
+    age_under_14 Alle 14
+    algorithm_title THE ALIOLO ALGORITHM
     aliolo aliolo
+    all_matching_subjects Kaikki vastaavat aiheet
     all_rights_reserved Kaikki oikeudet pidätetään
+    answer Vastaus
+    answer_label answer
+    answers_label answers
     are_you_sure_you_want_to_close_this_feedback_request Haluatko varmasti sulkea tämän palautepyynnön?
     are_you_sure_you_want_to_delete_this_folder Haluatko varmasti poistaa tämän kansion?
+    ascending Ascending
     attach_image Liitä kuva
+    audio Ääni
+    audio_playing Audio Playing
+    author Author
     back Takaisin
+    back_to_login Back to Login
     back_to_subjects Takaisin aiheisiin
     best_for_quick_goals Paras nopeille maaleille
     billing_disclaimer Tilaukset uusiutuvat automaattisesti, ellei niitä peruuteta. Voit hallita tilaustasi myymäläsi asetuksista.
     billing_title Laskutus
+    bronze BRONZE
     browser Selain
     cancel Peruuttaa
+    cancel_request Cancel Request
+    cancel_request_confirm Are you sure you want to cancel the request to
+    cannot_delete_folder Cannot Delete Folder
     cannot_delete_folder_it_is_not_empty Kansiota ei voi poistaa: se ei ole tyhjä
+    card_details Card Details
     card_id Kortin tunnus
+    card_label Card
+    card_level Kortin taso
+    card_plural Cards
+    cards cards
+    cards_label cards
+    cards_per_day cards per day
+    cards_per_session cards per session
+    change_avatar Change Avatar
+    change_password Vaihda salasana
     check_your_email_for_code Tarkista koodi sähköpostistasi
     clear Selkeä
+    click_to_select_image Click to select image
     click_to_view_original Napsauta nähdäksesi alkuperäisen
     close Lähellä
     close_request Sulje pyyntö?
+    code_label Code
     collection_id Kokoelman tunnus
     colors Värit
+    common_settings Common Settings
+    compare_plans Vertaa ilmaista ja Premiumia
+    confirm Vahvista
+    confirm_logout Are you sure you want to logout?
+    confirm_password Confirm Password
     confirm_subscription Vahvista tilaus
+    content_label Content
     context Konteksti
+    copy COPY
+    copy_all Copy All
+    core_features CORE FEATURES
     correct_answers Oikeat vastaukset
     could_not_launch Ei voitu käynnistää $url
     counting Laskeminen
+    create_account Create Account
+    create_new_account Create New Account
+    create_new_card Create New Card
+    created_at Luotu
+    current_streak Current Streak
     current_subscription Nykyinen tilaus
+    daily_goal Daily Goal
+    daily_progress Daily Progress
+    dark Dark
+    dashboard_greeting Hei
+    day day
+    day_label Day
+    day_plural Days
+    days days
+    default Default
+    default_language Oletuskieli
+    default_testing_language Default Testing Language
+    default_testing_language_desc Pre-selects this language on the subjects page.
     delete Poistaa
+    delete_account Delete Account
+    delete_account_confirm Are you sure you want to delete your account? This action is permanent.
+    delete_avatar Poista avatar
+    delete_avatar_confirm Haluatko varmasti poistaa profiilikuvasi?
+    delete_card_confirm Delete this card?
+    delete_collection Poista kokoelma
+    delete_collection_confirm Haluatko varmasti poistaa tämän kokoelman?
+    delete_folder Poista kansio
+    delete_selected_cards Delete selected cards?
+    delete_subject Delete Subject
+    delete_subject_confirm Delete subject '{subject}' and all {count} cards inside?
+    delete_subjects_first Please delete all sub-subjects inside this folder before deleting the folder itself.
+    descending Descending
+    description Description
     device Laite
+    digit_code 6-digit Code
+    discard Discard
+    discard_changes Hylätä muutokset?
+    doc_autoplay_desc Sovellus voi siirtyä automaattisesti seuraavaan korttiin vastauksesi jälkeen. Oikeat vastaukset odottavat 1 s, kun taas väärät odottavat 2 s, jotta ehdit tarkistaa ne.
+    doc_autoplay_title Automaattinen oppiminen
+    doc_card_scope_desc Kortit ovat oppimisen rakennuspalikoita ja kuuluvat aina tiettyyn aiheeseen. Vaikka voit järjestää aiheita kansioihin tai kokoelmiin, itse kortit on luotava aiheen sisällä.
+    doc_card_scope_title Missä kortit asuvat
+    doc_collections_purpose_desc Kokoelmat ovat kuratoituja polkuja, jotka ryhmittelevät aiheita. Kun aloitat istunnon kokoelmasta, järjestelmä sekoittaa kortteja kaikista mukana olevista aiheista tarjotakseen satunnaistetun, kattavan testin.
+    doc_collections_purpose_title Kokoelmien tarkoitus
     doc_create_intro_desc Tämä välilehti kattaa, kuinka sisällöntuottajat järjestävät sisältöä, lokalisoivat sen ja julkaisevat hyödyllistä oppimateriaalia mutkistamatta työnkulkua liikaa.
     doc_create_intro_title Luoda
     doc_create_json_desc JSON-pohjainen luonti on edistynyt työnkulku strukturoidulle joukkosisällölle. Sen pitäisi pysyä valinnaisena; useimpien sisällöntuottajien pitäisi pystyä rakentamaan ja muokkaamaan sisältöä vakiolomakkeiden avulla.
@@ -86,6 +188,38 @@
     doc_create_model_title Sisältömalli
     doc_create_visibility_desc Käytä "minun" työstääksesi omaa sisältöäsi, suosikkeja kiinnittääksesi hyödyllisiä kohteita ja julkista kirjastoa selataksesi jaettua materiaalia. Julkinen näkyvyys vaikuttaa löytämiseen, kun taas omistajuus vaikuttaa siihen, mitä voit muokata tai poistaa.
     doc_create_visibility_title Omistajuus ja näkyvyys
+    doc_creation_desc Luo omia aiheita ja lisää visuaalisia muistikortteja. Jokainen kortti tukee kuvaa ja valinnaista äänitiedostoa ääntämistä varten.
+    doc_creation_title Aiheiden ja korttien luominen
+    doc_feedback_desc Auta meitä parantamaan! Käytä palautekuvaketta (Icons.feedback) missä tahansa aiheessa tai kansiossa ilmoittaaksesi ongelmista. Voit myös lähettää yleistä sovelluspalautetta tuki-osion kautta.
+    doc_feedback_title Palautejärjestelmä
+    doc_filters_desc Löydä sisältöä nopeasti hakupalkin avulla. Voit suodattaa ikäryhmän mukaan (varhaisesta edistyneeseen) tai rajata näkymän tiettyihin kokoelmiin ja kansioihin.
+    doc_filters_title Haku ja suodattimet
+    doc_flashcards_desc Jokainen aihe sisältää sarjan kortteja. Vaikka kuvia ja ääntä tuetaan, ne ovat valinnaisia – sisältö voi olla puhtaasti tekstuaalista tai dynaamisesti luotua.
+    doc_flashcards_title Visuaaliset muistikortit
+    doc_friends_desc Oppiminen on parempaa yhdessä! Kutsu ystäviä Alioloon profiilisi kautta. Voitte seurata toistenne edistymistä ja pysyä motivoituneina näkemällä, kuka ylläpitää pisintä putkea.
+    doc_friends_title Ystävät ja kutsut
+    doc_goals_desc Aseta päivittäinen korttien suoritustavoitteesi asetuksista. Tavoitteen muutokset astuvat voimaan seuraavasta päivästä alkaen.
+    doc_goals_title Päivittäiset tavoitteet
+    doc_json_desc Edistyneet luojat voivat käyttää JSON-dataa lokalisoitujen nimien ja kuvausten tarjoamiseen, mikä tekee aiheista saavutettavia kaikilla tuetuilla kielillä.
+    doc_json_title JSON-lokalisointi
+    doc_lang_desc Valitse aina haluamasi oppimiskieli ylävalikosta ennen aiheen valitsemista. Tämä varmistaa, että oikeat äänet ja käännökset ladataan.
+    doc_lang_title Oppimiskieli
+    doc_leaderboard_desc Kilpaile oppijoiden kanssa ympäri maailmaa! Ansaitse XP-pisteitä suorittamalla korttisessioita ja nouse sijoituksissa. Sijaintisi päivittyy reaaliajassa, kun hallitset uusia aiheita.
+    doc_leaderboard_title Globaali tulostaulu
+    doc_localization_details_desc Global-kieli on ensisijainen varasi – se voi olla mikä tahansa valitsemasi kieli. Jos annat erityisiä käännöksiä (kuten englanti tai espanja), ne korvaavat Global-tiedot vain, kun käyttäjä valitsee kyseisen UI-kielen.
+    doc_localization_details_title Kuinka lokalisointi toimii
+    doc_localization_ui_desc Lisää lokalisoitua dataa napauttamalla kielikoodikuvaketta (esim. EN, ES, FR) editorin otsikossa. Tämän avulla voit antaa tietyt nimet, kuvaukset ja korttien sisällön jokaiselle tuetulle kielelle. Global-välilehti toimii ensisijaisena varana, jos erityistä käännöstä ei ole annettu.
+    doc_localization_ui_title Käännösten lisääminen
+    doc_math_desc Matemaattisissa aiheissa käytetään erikoistuneita moottoreita korttivizualisointien luomiseen reaaliajassa. Näissä aiheissa on ainutlaatuisia oppimis- ja testaustiloja, jotka on räätälöity tiettyihin matemaattisiin käsitteisiin, mikä varmistaa tehokkaamman harjoitteluympäristön.
+    doc_math_title Matemaattiset aiheet
+    doc_media_desc Nopean synkronoinnin varmistamiseksi pidä kuvat alle 5 megatavussa ja äänitiedostot alle 10 megatavussa.
+    doc_media_title Median latausrajat
+    doc_organization_desc Käytä kansioita aiheeseen liittyvien aiheiden ryhmittelemiseen. Voit myös luoda kokoelmia järjestääksesi aiheet kuratoiduiksi poluiksi.
+    doc_organization_title Sisällön järjestäminen
+    doc_pillars_desc Kaikki Aliolon sisältö on järjestetty 8 peruspilariin: akateeminen ja ammatillinen, maailma, luonto, ihmiskeho, humanistiset tieteet, vapaa-aika, tekniikka ja muut. Nämä kategoriat tarjoavat jäsennellyn kehyksen kaikille alustan aiheille.
+    doc_pillars_title 8 ydinpilaria
+    doc_public_desc Aiheet voivat olla yksityisiä (näkyvissä vain sinulle) tai julkisia. Julkinen sisältö jaetaan koko Aliolo-yhteisölle, jolloin kaikki voivat löytää luomuksesi ja oppia niistä.
+    doc_public_title Julkinen vs. yksityinen
     doc_start_dashboard_desc Kojelauta on pääkirjastosi. Käytä hakua löytääksesi sisältöä nopeasti ja yhdistä sitten lähdesuodattimet, kuten suosikit, omani ja julkinen kirjasto, ikäsuodattimiin melun vähentämiseksi.
     doc_start_dashboard_title Kojelauta, haku ja suodattimet
     doc_start_feedback_desc Käytä palautteen syöttöpisteitä sovelluksessa, kun jokin on vialla tai epäselvä. Raportit voivat sisältää nykyisen kontekstin, mikä tekee sisältöongelmien tarkastelusta ja korjaamisesta helpompaa.
@@ -98,6 +232,8 @@
     doc_start_quick_title Pika-aloitus
     doc_start_structure_desc Koehenkilöillä on kortit. Kansiot ryhmittelevät liittyvän sisällön pilarin sisällä. Kokoelmat ovat kuratoituja sarjoja, joissa voidaan yhdistää useita aiheita opiskelua ja jakamista varten.
     doc_start_structure_title Aiheet, kansiot ja kokoelmat
+    doc_streaks_desc Johdonmukaisuus on avain! Saavuta päivittäinen tavoitteesi joka päivä kasvattaaksesi putkeasi. Älä jätä päivääkään väliin, muuten putki nollautuu.
+    doc_streaks_title Putkijärjestelmä (Streaks)
     doc_study_how_desc Aloita Opi, kun rakennat tunnistusta, ja vaihda sitten Testiin, kun haluat nopeamman palauttamisen ja tarkemman tarkistuksen. Käytä lyhyempiä istuntoja tarkennettuun tarkasteluun ja suurempia istuntoja laajempaan kattamiseen.
     doc_study_how_title Kuinka opiskella
     doc_study_intro_desc Tämä välilehti selittää, kuinka voit liikkua sisällössä, valita oikean tilan ja virittää istuntojasi tarkistusta tai muistamista varten.
@@ -108,67 +244,280 @@
     doc_study_modes_title Opi ja testaa tilat
     doc_study_scope_desc Opiskelu voi alkaa yhdestä aiheesta, kansionäkymästä tai kokoelmasta. Kokoelmat ovat hyödyllisiä, kun haluat yhdistetyn istunnon useille aiheille poistumatta nykyisestä virtauksesta.
     doc_study_scope_title Opiskelun aiheet, kansiot ja kokoelmat
+    doc_sync_desc Edistymisesi synkronoidaan automaattisesti pilveen. Voit vaihtaa verkko- ja työpöytäversioiden välillä menettämättä putkeasi.
+    doc_sync_title Pilvisynkronointi
     doc_tab_create Luoda
+    doc_tab_creator Luominen
+    doc_tab_general Yleinen
+    doc_tab_learning Harjoitus
     doc_tab_start Aloita
     doc_tab_study Opiskelu
+    doc_testing_desc Haasta itsesi monivalintakysymyksillä (MCQ). Sovellus etenee automaattisesti vastatessasi, mikä auttaa sinua oppimaan nopeammin.
+    doc_testing_title Interaktiivinen testaus
+    doc_welcome_desc Aliolo on visuaalinen oppimisalusta, joka on suunniteltu auttamaan sinua hallitsemaan aiheita muistikorttien ja interaktiivisen testauksen avulla.
+    doc_welcome_title Tervetuloa Alioloon
     documentation Dokumentaatio
+    done_today Done Today
+    down_arrow Down Arrow
+    edit Muokkaa
+    edit_card Edit Card
+    edit_collection Muokkaa kokoelmaa
+    edit_email Muokkaa sähköpostia
+    edit_folder Muokkaa kansiota
+    edit_name Edit Name
+    edit_subject Edit Subject
+    edit_subject_title Edit Subject
     edit_subscription Muokkaa tilausta
+    email Sähköposti
+    email_change_notice For security, a confirmation link will be sent to BOTH your old and new email addresses. You must click both to complete the change.
+    email_in_use Email is already in use
+    email_subject Subject
+    email_update_sent Confirmation emails sent. Please check both inboxes.
     email_updated_successfully Sähköposti päivitetty onnistuneesti!
+    english English
     enter_current_password Anna nykyinen salasana
+    enter_new_email Kirjoita uusi sähköpostiosoite
+    enter_new_name Enter New Name
+    enter_number Enter a number
+    enter_or_select_subject Please enter or select a subject
+    enter_pass_to_confirm Enter your password to confirm
+    enter_subject_name Enter subject name
     error Virhe: $e
     error_deleting Virhe poistettaessa: $e
+    error_deleting_account Could not delete account. Check your password.
     error_saving Virhe tallennettaessa: $e
     error_saving_card Virhe tallennettaessa korttia: $e
     error_updating_favorite Virhe päivitettäessä suosikkia: $e
+    exit Exit
+    exit_confirm_msg Are you sure you want to exit the application?
+    exit_confirm_title Exit Aliolo?
+    expiry_date Päättymispäivä
     failed_answers Epäonnistuneet vastaukset
     failed_to_send_reset_code Nollauskoodin lähettäminen epäonnistui
     failed_to_send_verification_code Vahvistuskoodin lähettäminen epäonnistui
     fake_only Vain väärennös
+    fatal_startup_error Fatal Startup Error
+    feat_adaptive_desc The system monitors your recognition speed across MCQ options, dynamically adjusting intervals to push your boundaries.
+    feat_adaptive_title Adaptive Response Timing
+    feat_ages_desc Content curated for different age groups from early childhood to advanced learning.
+    feat_ages_title For All Ages
+    feat_gamified_desc Earn XP, badges, and build streaks while mastering complex visual subjects.
+    feat_gamified_title Gamified Experience
+    feat_mastery_desc Dynamic XP rewards difficulty, while real-time mastery badges (Bronze, Silver, Gold) track your journey from novice to expert.
+    feat_mastery_title Visual Mastery & XP
+    feat_multimedia_desc Learn with images, audio, and video support for immersive training.
+    feat_multimedia_title Multimedia Cards
+    feat_recognition_desc Immersive identification drills designed to build instant "muscle memory" for complex visual subjects.
+    feat_recognition_title Visual Pattern Training
+    feat_science_adaptive_desc Intervals automatically adjust based on your recognition speed and accuracy.
+    feat_science_adaptive_title Adaptive Timing
+    feat_science_spacing_desc Advanced cognitive spacing model that predicts memory decay and optimizes review cycles.
+    feat_science_spacing_title SuperMemo-2 (SM-2)
+    feat_spacing_desc A full implementation of the SuperMemo-2 model predicts your memory decay and schedules reviews at the peak of retention.
+    feat_spacing_title Cognitive Spacing (SM-2)
+    feature_autoplay Automaattinen toistotila
+    feature_community_access Pääsy yhteisön aiheisiin
     feature_creation Luontityökalut
     feature_customize Edistynyt mukauttaminen
+    feature_favorites Suosikkikohteet kojelaudalla
+    feature_feedback Suora palaute ja ehdotukset
+    feature_free ILMAINEN
+    feature_friends Kutsu ystäviä ja verkostoidu
     feature_full_library Täysi pääsy kirjastoon
+    feature_learn_all Opi mikä tahansa aihe tai kokoelma
+    feature_private_mode Yksityinen profiilitila
+    feature_pro PRO
+    feature_spaced_repetition Jaksotettu kertaaminen (SM-2)
     feature_testing Interaktiivinen testaus
+    feedback Palaute
+    feedback_add_image Lisää kuva
+    feedback_attachments Liitteet
+    feedback_bug Virheraportti
+    feedback_context Konteksti
+    feedback_details Lisätiedot
+    feedback_error Palautteen lähettäminen epäonnistui. Yritä uudelleen.
+    feedback_management_desc Tarkastele ja hallitse käyttäjäpalautetta
+    feedback_management_title Palautepyynnöt
+    feedback_other Muu
+    feedback_submit Lähetä palaute
+    feedback_success Kiitos palautteestasi!
+    feedback_suggestion Ehdotus
+    feedback_title Lähetä palautetta
+    feedback_title_hint Otsikko
+    feedback_type Tyyppi
+    fill_all_fields Please fill all fields
+    filter_all All
+    filter_dashboard Hallintapaneeli
+    filter_favorites Suosikit
+    filter_my_subjects My Subjects
+    filter_on_dashboard On Dashboard
+    filter_public Public
+    filter_public_library Yleinen kirjasto
+    filters Suodattimet
+    finish Valmis
+    finished_session You finished {count} cards. XP bonus awarded!
+    folder Kansio
+    folder_already_exists Tämänniminen kansio on jo olemassa tässä pilarissa
     folder_id Kansion tunnus
+    folder_label Kansio
+    folder_not_empty_msg Ei voi poistaa: kansio ei ole tyhjä.
+    folder_plural Kansiot
+    forgot_password Forgot Password?
     free_only Ilmaiset käyttäjät
+    general_preferences General Preferences
     generic Yleinen
+    go_to_manager Go to Library Manager
+    goal_change_hint Change your card goal for tomorrow
+    goal_change_notice Päivätavoitteesi muutokset tulevat voimaan huomenna.
+    gold GOLD
+    hide_comparison Piilota tilausvertailu
     home Kotiin
+    images Images
+    included_subjects Sisältyvät aiheet
+    info_copied Info copied to clipboard
+    initializing_aliolo Initializing Aliolo...
     invalid_code Virheellinen koodi
+    invalid_email Invalid email address
     invalid_email_address Virheellinen sähköpostiosoite
     invalid_json Virheellinen JSON: $e
+    invalid_number Invalid number
     invalid_or_expired_invitation_link Virheellinen tai vanhentunut kutsulinkki.
     invalid_or_expired_reset_code Virheellinen tai vanhentunut palautuskoodi.
+    invalid_password Invalid password
+    invalid_password_delete Invalid Password
     invitation_sent_awaiting_registration Kutsu lähetetty (odottaa rekisteröitymistä)
+    invite Kutsu
+    invite_user_content Sähköpostia {email} ei löytynyt. Kutsu hänet Alioloon?
+    invite_user_title Kutsu käyttäjä?
     invited_and_request_sent Kutsuttu ja pyyntö lähetetty!
     json JSON
+    keyboard_shortcuts Keyboard Shortcuts
     label_suffix $label:
+    lang_abbr Lang
+    language Kieli
     leaderboard Tulostaulukko
+    learn_mode_desc Study cards and memorize answers
+    learn_mode_title Learn
+    learn_session_size Learn Session Size
+    learn_session_size_desc Yhdessä oppimisistunnossa esiteltävien uusien korttien määrä.
     learning_session_complete_description Hienoa työtä! Olet lopettanut tämän oppimisistunnon. Edistymisesi on tallennettu.
+    left_arrow Left Arrow
+    level Level
+    level_range Must be between 1 and 20
+    level_tier_1 Taso 1
+    level_tier_2 Taso 2
+    level_tier_3 Taso 3
     licenses Lisenssit
     licenses_aliolo_section_title Aliolo Kaupallinen lisenssi
     licenses_aliolo_subtitle Oma ohjelmisto ja premium-käyttöehdot
     licenses_intro_desc Aliolo:n kaupallinen lisenssi ilmestyy ensimmäisenä. Kolmannen osapuolen pakettilisenssit ovat alla.
     licenses_intro_title Aliolo Lisenssi- ja pakettiilmoitukset
     licenses_third_party_section_title Kolmannen osapuolen pakettilisenssit
+    light Light
     linux_distro Linux Distro
     loading Ladataan...
     localized_data Lokalisoitu data
+    login Kirjaudu sisään
+    logout Kirjaudu ulos
+    manage_cards Manage Cards
+    manage_friends Friends
+    manage_friends_desc View and manage your friend requests
+    manage_library Manage Library ({sCount} subjects, {cCount} cards)
+    manage_subjects Manage Subjects
+    manage_subscription Hallitse tilausta
+    manage_testing_langs Manage Testing Languages
+    manage_users Manage Users
+    master_visual_ease Master visual subjects with ease.
+    mastered mastered
+    mastery Hallinta
+    max_streak Max Streak
+    maybe_later Ehkä myöhemmin
+    mission_desc The smart companion that helps your brain learn and retain visual knowledge through science-backed algorithms.
+    mock_email_title Mock Email Inbox
+    mode_audio_to_image Audio to Image
+    mode_audio_to_text Audio to Text
+    mode_image_to_text Image to Text
+    mode_text_to_text Text to Text
     monthly_access Kuukausittainen pääsy
     most_popular_choice Suosituin valinta
+    multi_lang_answers Multi-language Answers
+    multi_lang_prompts Multi-language Prompts
+    my_position My Position
+    name Name
+    names_descriptions Names & Descriptions
+    new NEW
     new_email Uusi sähköposti
+    new_password New Password
+    next Seuraava
+    next_card Next Card
+    next_daily_goal Seuraava päivätavoite
+    next_daily_goal_desc Päivittäinen tavoitemäärä hallittavia kortteja. Muutokset astuvat voimaan huomenna.
+    next_day_goal Next Day Goal
     no_cards_available_for_this_session Tälle istunnolle ei ole saatavilla kortteja.
     no_cards_found Kortteja ei löytynyt
+    no_cards_found_for_lang No cards found for this language
+    no_cards_in_library No cards found in the library.
+    no_feedback_found Palautetta ei löytynyt.
+    no_folder Ei kansiota (Juuri)
+    no_friends_found No friends found
+    no_images_added Ei lisättyjä kuvia
+    no_leaderboard_data No leaderboard data available.
+    no_localized_audio Ei lokalisoitua ääntä
+    no_localized_images Ei lokalisoituja kuvia
+    no_localized_video Ei lokalisoitua videota
+    no_subjects_available Aiheita ei ole saatavilla
     no_subjects_found Aiheita ei löytynyt
     no_subjects_found_in_this_collection Tästä kokoelmasta ei löytynyt aiheita
     no_users_found Käyttäjiä ei löytynyt
+    ok OK
+    old_password Vanha salasana
+    old_password_required Vanha salasana on pakollinen
+    onboarding_1_desc Opi visuaalisesti. Hallitse pysyvästi. Visuaalinen oppimiskumppanisi, joka perustuu SM-2-tieteeseen.
+    onboarding_1_title Tervetuloa Alioloon
+    onboarding_2_desc Tämä auttaa meitä personoimaan oppimiskokemuksesi ja suosittelemaan oikeita aiheita.
+    onboarding_2_title Kuinka vanha olet?
+    onboarding_3_desc Valitse ensisijainen kiinnostuksesi mukauttaaksesi aloitusnäkymäsi.
+    onboarding_3_title Mitä haluat hallita?
+    onboarding_4_desc Rakenna oma pakkasi tai sukella Aliolo-oppijoiden jakamiin kortteihin ympäri maailmaa. Opi omaan tahtiisi ja testaa itsesi, kun olet valmis.
+    onboarding_4_title Luo ja jaa
+    onboarding_5_desc Kirjastosi pysyy synkronoituna kaikilla laitteillasi. Muistutamme sinua vain silloin, kun on aika suojata putkesi.
+    onboarding_5_title Hallitse missä tahansa
+    onboarding_6_desc Aloita matkasi tänään ja hallitse mitä tahansa päätätkin.
+    onboarding_6_title Liity yhteisöön
+    onboarding_7_joined Tuhannet oppijat ovat liittyneet
+    onboarding_7_quote Aliolo on täysin muuttanut tavan, jolla lapseni ja minä hallitsemme uusia aiheita. Visuaaliset kortit ja jaksotettu kertaus saavat oppimisen tuntumaan peliltä!
+    onboarding_get_started Aloita
+    onboarding_next Seuraava
+    onboarding_skip Ohita
+    options_count Number of Answers
+    options_count_desc Testeissä näytettävien monivalintavastausten määrä.
+    options_per_card options per card
+    order_id Tilaustunnus
     os_version OS-versio
+    our_mission OUR MISSION
+    page Page
+    parent_folder_label Parent Folder (fi)
+    password Salasana
+    password_required Password is required
+    password_reset_success Password reset successful
     password_updated_successfully Salasana päivitetty onnistuneesti!
+    passwords_dont_match Passwords do not match
+    paste PASTE
     payments_are_not_yet_integrated_on_web_please_use_the_mobile_app_to_upgrade Maksuja ei ole vielä integroitu verkkoon. Käytä mobiilisovellusta päivittämiseen.
     personal_data Henkilötiedot
     pick_date Valitse päivämäärä
+    picture Picture
+    pillar Pillar
+    plan_monthly Kuukausittainen pääsy
+    plan_monthly_desc Suosituin valinta
     plan_monthly_tagline Suosituin valinta
     plan_monthly_title Kuukausittainen pääsy
+    plan_weekly Viikoittainen pääsy
+    plan_weekly_desc Paras nopeisiin tavoitteisiin
     plan_weekly_tagline Paras nopeille maaleille
     plan_weekly_title Viikoittainen pääsy
+    plan_yearly Vuosittainen pääsy
+    plan_yearly_desc Säästä 33 % kuukaudessa
     plan_yearly_tagline Säästä 33 % kuukaudessa
     plan_yearly_title Vuosittainen pääsy
     platform Alusta
@@ -177,58 +526,208 @@
     please_enter_the_6_digit_code Anna 6-numeroinen koodi
     please_wait_for_a_response_before_replying_again Odota vastausta ennen kuin vastaat uudelleen.
     premium_expires_at Vanhenee $date
+    premium_go Hanki Premium
     premium_lifetime Elinikäinen pääsy
     premium_only Vain Premium
     premium_status_active Olet premium-jäsen
+    premium_title Aliolo Premium
     premium_unlock_desc Pääset kaikkiin aiheisiin, luo rajattomasti kortteja ja tue Aliolo:n tehtävää.
     premium_unlock_title Avaa täysi käyttöoikeus
+    prev Prev
+    previous_card Previous Card
+    price_per_week ({price} / viikko)
+    private Private
+    pro_label PRO
+    product_id Tuotetunnus
     product_not_available_in_store Tuotetta ei ole saatavilla myymälästä.
     profile Profiili
+    profile_title My Profile & Progress
+    prompt_label Prompt
+    prompt_optional Prompt / Question
+    prompts_answers Prompts & Answers
+    provide_at_least_one_answer Please provide at least one answer
+    provide_at_least_one_name Provide at least one name
+    provider Tarjoaja
     public_other_subject Julkinen/Muu aihe
+    public_profile Public Profile
+    public_profile_desc Show your XP and Streak on Hall of Fame.
+    public_subject Public Subject
+    public_subject_desc Make this subject visible to other users.
     purchase_failed Osto epäonnistui: $e
+    purchase_token Ostotunnus
+    record_shortcut Record Shortcut
     recovery_error Palautusvirhe: $e
     refresh Päivitä
     refresh_conversation Päivitä keskustelu
+    remove_friend Remove Friend
+    remove_friend_confirm Are you sure you want to remove friend
     renderer Renderöijä
+    request_sent Request sent
+    request_sent_waiting Request sent (waiting)
+    required Required
     reset_code Nollaa koodi
+    reset_code_email_title Password Reset Code
+    reset_code_sent "Reset code for: "
     reset_code_sent_to_please_check_your_inbox Nollaa koodi lähetetty osoitteeseen $email. Tarkista postilaatikkosi.
+    reset_password_for "Reset Password for: "
+    restore_password Restore Password
     restore_purchases Palauta ostokset
+    retry Retry
+    right_arrow Right Arrow
     save Tallentaa
     save_33_per_month Säästä 33 % kuukaudessa
+    save_before_nav Do you want to save changes before navigating?
+    save_card Save Card
+    save_subject Save Subject
     saved_successfully Tallennettu onnistuneesti
+    search_cards Search Cards
+    search_subjects Search Subjects
     search_users Etsi käyttäjiä
+    select_an_answer Select an Answer
+    select_lang Select Language
+    select_package_license Select Package License
+    select_user Select User
+    selected_count {count} Selected
+    send Send
+    send_code Send Code
+    send_verification_code Send verification code?
     session_complete Istunto valmis!
     session_complete_description Hienoa työtä! Olet saanut kaikki tämän istunnon kortit valmiiksi.
+    setting_saved Setting saved
     settings Asetukset
+    shortcuts_hint Press the key you want to use with Ctrl.
+    show_all_languages Show all languages
     show_documentation_btn Näytä dokumentaatio -painike
     show_documentation_btn_desc Näytä dokumentaatiopainike sovelluspalkissa.
     show_fake_users Näytä väärennetyt käyttäjät
+    show_less_languages Show less languages
+    sidebar_left Sidebar on the left
+    sidebar_left_desc Move testing controls to the left side of the screen.
+    silver SILVER
+    social Social
+    sort_by Sort by
+    sound_effects Sound Effects
+    sound_effects_desc Enable audio feedback for correct and wrong answers.
+    source Lähde
+    status Tila
+    status_closed Suljettu
+    status_open Avoin
+    status_replied Vastattu
+    streak Putki
+    subject Subject
+    subject_deleted Subject deleted
     subject_id Aiheen tunnus
+    subject_label Subject
+    subject_plural Subjects
+    subject_type Subject Type (fi)
+    subjects Aiheet
     subscribe_now Tilaa nyt
     subscription_data Tilaustiedot
     subscription_updated Tilaus päivitetty
     subtraction_emoji Vähennysemoji
     subtraction_numbers Vähennysnumerot
+    support_and_management Tuki ja hallinta
+    system System
+    tap_to_replay Tap to Replay
     technical_context TEKNINEN KONTEKSTI
+    test_mode_desc Challenge yourself with a quiz
+    test_mode_label Test Mode
+    test_mode_title Test
+    test_session_size Test Session Size
+    test_session_size_desc Yhdessä testausistunnossa kerrattavien korttien määrä.
+    testing Testing
     testing_mode Testaustila
+    testing_section Testing Settings
     text Teksti
+    the_science THE SCIENCE
+    theme_color App Theme Color
+    theme_color_desc Customize the primary color used for buttons and highlights.
+    theme_dark Dark
+    theme_light Light
+    theme_mode Teema
+    theme_system System
     this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards Tämä on kansio. Voit käyttää yllä olevia Opi/Testi-painikkeita harjoitellaksesi kaikkia kortteja.
+    to_label To
     total_cards Kortteja yhteensä
+    total_xp Total XP
+    trust_cloud_desc Your progress is securely synced across all your devices in real-time.
+    trust_cloud_title Cloud Sync
+    trust_privacy TRUST & PRIVACY
+    trust_sync_desc Your data is private and encrypted to ensure the highest security standards.
+    trust_sync_title Encrypted Data
+    type_collection Kokoelma
+    type_folder Folder (Sub-subjects) (fi)
+    type_standard Standard (Cards) (fi)
     type_your_reply Kirjoita vastauksesi...
     ua UA
+    ui_language Käyttöliittymän kieli
+    ukrainian Ukrainian
     unknown_user_profile_missing Tuntematon käyttäjä (profiili puuttuu)
+    unsaved_changes Unsaved Changes
+    unsaved_changes_msg Sinulla on tallentamattomia muutoksia. Haluatko hylätä ne?
+    up_arrow Up Arrow
+    update Update
     update_available Uusi versio on saatavilla!
+    updated_at Päivitetty
+    upload_new_photo Lataa uusi kuva
     user Käyttäjä
+    user_exists User already exists
     user_id Käyttäjätunnus
+    user_not_found User not found
     user_with_this_email_already_exists_please_log_in_instead Käyttäjä, jolla on tämä sähköpostiosoite, on jo olemassa. Ole hyvä ja kirjaudu sisään.
+    username Käyttäjänimi
     users Käyttäjät
     users_filter Suodata käyttäjät
     verification_code Vahvistuskoodi
     verification_code_sent_to Vahvistuskoodi lähetetty osoitteeseen $email
+    verify Verify
     version Versio
+    video Video
+    video_link Video Link
+    video_url_optional Video URL (Optional)
+    view_card View Card
+    view_cards_title View Cards
     view_onboarding Katso perehdytys
+    visibility Visibility
+    visual_content_required Vähintään yksi visuaalinen sisältö vaaditaan
+    visual_content_required_msg Vähintään yksi visuaalinen sisältö (teksti, kuva, ääni tai video) on annettava.
+    visual_text Visuaalinen teksti
+    wants_to_be_friend Wants to be your friend
     weekly_access Viikoittainen pääsy
     welcome_complete_your_profile_to_join_aliolo Tervetuloa! Täytä profiilisi liittyäksesi aliolo.
+    xp XP
     yearly_access Vuosittainen pääsy
+    you You
     you_do_not_have_permission_to_edit_this_card Sinulla ei ole lupaa muokata tätä korttia
     you_do_not_have_permission_to_view_this_card_details Sinulla ei ole lupaa tarkastella tämän kortin tietoja.
+    you_rank You are ranked #{rank}
+    active Aktiivinen
+    autoplay Automaattinen toisto
+    card_limit Korttiraja
+    card_limit_msg Olet saavuttanut {limit} kortin rajan.
+    create_request Luo pyyntö
+    edit_user Muokkaa käyttäjää
+    favorite Suosikki
+    file_too_large Tiedosto on liian suuri
+    inactive Ei aktiivinen
+    is_required on pakollinen
+    languages Kielet
+    limit_reached Raja saavutettu
+    not_available Ei saatavilla
+    toggle_languages Vaihda kieliä
+    user_updated Käyttäjä päivitetty
+    zoom Zoomaa
+    account_and_management Account & Management
+    back_to_plans Back to plans
+    confirm_password_required Confirm password is required
+    feat_autoplay_desc Focus on learning while the app automatically advances through cards at your pace.
+    feat_autoplay_title Hands-Free Autoplay
+    feat_create_share_desc Easily create your own subjects and cards, or share them with the community.
+    feat_create_share_title Create & Share
+    feat_science_smart_review_desc The algorithm calculates the optimal time to review each card for maximum retention.
+    feat_science_smart_review_title Smart Review Cycles
+    new_password_required New password is required
+    password_updated Password updated successfully
+    save_success Saved successfully
+    trust_ecosystem_desc Your progress and cards are seamlessly synced across all your devices.
+    trust_ecosystem_title Aliolo Ecosystem

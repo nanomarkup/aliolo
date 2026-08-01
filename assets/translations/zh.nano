@@ -43,37 +43,139 @@
     about_support_settings_desc UI 语言、主题模式、主题颜色、声音、侧边栏位置和文档可见性都可以通过设置进行调整。
     about_support_settings_title 个性化
     about_support_title 设置、反馈和支持
+    about_tagline 视觉学习，终身掌握。
+    account_created 帐户已创建
+    account_created_billing_fail 您的帐户已创建，但付款未完成。重试以下付款。
+    account_deleted 账户已成功注销
+    add_card 添加卡片
+    add_collection 添加收藏
+    add_folder 添加文件夹
+    add_friend_by_email 通过电子邮件添加好友
+    add_lang_translation 添加语言翻译
+    add_prompt_translation 添加提示翻译
+    add_subject 添加主题
     addition_emoji 添加表情符号
     addition_numbers 加法数字
+    age 年龄
+    age_0_6 0-6 岁
+    age_15_18 15 - 18
+    age_15_plus 15 岁以上
+    age_19_25 19 - 25
+    age_26_35 26 - 35
+    age_36_50 36 - 50
+    age_7_14 7-14 岁
+    age_advanced 高级
+    age_all 所有年龄
+    age_early 幼儿期
+    age_group 年龄组
+    age_intermediate 中级
+    age_over_50 50 岁以上
+    age_primary 小学
+    age_under_14 14 岁以下
+    algorithm_title ALIOLO 算法
     aliolo aliolo
+    all_matching_subjects 所有匹配的主题
     all_rights_reserved 版权所有
+    answer 回答
+    answer_label 答案
+    answers_label 答案
     are_you_sure_you_want_to_close_this_feedback_request 您确定要关闭此反馈请求吗？
     are_you_sure_you_want_to_delete_this_folder 您确定要删除该文件夹吗？
+    ascending 升序
     attach_image 附上图片
+    audio 音频
+    audio_playing 正在播放音频
+    author 作者
     back 后退
+    back_to_login 返回登录
     back_to_subjects 返回主题
     best_for_quick_goals 最适合快速目标
     billing_disclaimer 除非取消，否则订阅会自动续订。您可以在商店设置中管理您的订阅。
     billing_title 计费
+    bronze 青铜
     browser 浏览器
     cancel 取消
+    cancel_request 取消请求
+    cancel_request_confirm 您确定要取消对 ... 的请求吗？
+    cannot_delete_folder 无法删除文件夹
     cannot_delete_folder_it_is_not_empty 无法删除文件夹：它不为空
+    card_details 卡片详情
     card_id 卡号
+    card_label 卡片
+    card_level 卡牌等级
+    card_plural 卡片
+    cards 张卡片
+    cards_label 卡片
+    cards_per_day 张卡片/天
+    cards_per_session 张卡片/次
+    change_avatar 更换头像
+    change_password 更改密码
     check_your_email_for_code 检查您的电子邮件中是否有代码
     clear 清除
+    click_to_select_image 点击选择图片
     click_to_view_original 点击查看原文
     close 关闭
     close_request 关闭请求？
+    code_label 代码
     collection_id 集合ID
     colors 颜色
+    common_settings Common Settings
+    compare_plans 比较免费版 vs 高级版
+    confirm 确认
+    confirm_logout 确定要登出吗？
+    confirm_password 确认密码
     confirm_subscription 确认订阅
+    content_label Content
     context 语境
+    copy COPY
+    copy_all 复制全部
+    core_features CORE FEATURES
     correct_answers 正确答案
     could_not_launch 无法启动 $url
     counting 计数
+    create_account 创建账户
+    create_new_account 创建新账户
+    create_new_card 创建新卡片
+    created_at 创建时间
+    current_streak 当前连续天数
     current_subscription 当前订阅
+    daily_goal 每日目标
+    daily_progress 每日进度
+    dark 深色
+    dashboard_greeting 你好
+    day 天
+    day_label 天
+    day_plural 天
+    days 天
+    default 默认
+    default_language 默认语言
+    default_testing_language 默认学习语言
+    default_testing_language_desc 在主题页预选此语言。
     delete 删除
+    delete_account 注销账户
+    delete_account_confirm 确定要注销吗？此操作不可逆。
+    delete_avatar 删除头像
+    delete_avatar_confirm 您确定要删除您的个人资料照片吗？
+    delete_card_confirm 删除这张卡片？
+    delete_collection 删除收藏
+    delete_collection_confirm 你确定要删除这个收藏吗？
+    delete_folder 删除文件夹
+    delete_selected_cards 删除选中的卡片？
+    delete_subject 删除主题
+    delete_subject_confirm 删除主题 “{subject}” 及其包含的 {count} 张卡片？
+    delete_subjects_first 删除文件夹本身之前，请删除此文件夹中的所有子主题。
+    descending 降序
+    description 描述
     device 设备
+    digit_code 6 位验证码
+    discard 放弃
+    discard_changes 放弃更改？
+    doc_autoplay_desc 回答后，应用程序可以自动前进到下一张卡片。正确答案等待 1 秒，错误答案等待 2 秒。
+    doc_autoplay_title 自动播放学习
+    doc_card_scope_desc 卡片是学习的基石，始终属于特定的主题。
+    doc_card_scope_title 卡片存放位置
+    doc_collections_purpose_desc 系列是将主题分组在一起的路径。系统混合所有包含主题的卡片以提供全面的测试。
+    doc_collections_purpose_title 系列的目的
     doc_create_intro_desc 此选项卡涵盖了创建者如何组织内容、本地化内容以及发布有用的学习材料，而不会使工作流程过于复杂。
     doc_create_intro_title 创造
     doc_create_json_desc 基于 JSON 的创建是结构化批量内容的高级工作流程。它应该保持可选；大多数创作者应该能够通过标准形式构建和编辑内容。
@@ -86,6 +188,38 @@
     doc_create_model_title 内容模型
     doc_create_visibility_desc 使用“我的”来处理您自己的内容，使用收藏夹来固定有用的项目，使用公共图书馆来浏览共享材料。公众可见性影响发现，而所有权影响您可以编辑或删除的内容。
     doc_create_visibility_title 所有权和可见性
+    doc_creation_desc 创建您自己的主题并添加视觉闪卡。每张卡片都支持图像和用于发音的可选音频文件。
+    doc_creation_title 创建主题与卡片
+    doc_feedback_desc 帮助我们改进！在任何主题或文件夹上使用反馈图标 (Icons.feedback) 来报告问题。
+    doc_feedback_title 反馈系统
+    doc_filters_desc 使用搜索栏快速查找内容。您可以按年龄组进行筛选，或将视图缩小到特定的系列。
+    doc_filters_title 搜索与筛选
+    doc_flashcards_desc 每个主题都包含一组卡片。虽然支持图像和音频，但它们是可选的——内容可以是纯文本。
+    doc_flashcards_title 视觉闪卡
+    doc_friends_desc 一起学习更好！通过您的个人资料邀请朋友加入 Aliolo。您可以跟踪彼此的进度。
+    doc_friends_title 好友与邀请
+    doc_goals_desc 在设置中设定您的每日闪卡完成目标。目标的更改将于次日生效。
+    doc_goals_title 每日目标
+    doc_json_desc 高级创作者可以使用 JSON 数据提供本地化的名称和描述。
+    doc_json_title JSON 本地化
+    doc_lang_desc 在选择主题之前，请务必在顶部菜单中选择您首选的学习语言。这可确保加载正确的音频和翻译。
+    doc_lang_title 学习语言
+    doc_leaderboard_desc 与全球学习者竞争！通过完成闪卡课程赚取 XP 并提升排名。您的位置会实时更新。
+    doc_leaderboard_title 全球排行榜
+    doc_localization_details_desc “Global”语言是您的主要备用语言。只有当用户选择该特定 UI 语言时，特定翻译才会覆盖它。
+    doc_localization_details_title 本地化如何工作
+    doc_localization_ui_desc 要添加本地化数据，只需点击编辑器标题中的语言代码图标。
+    doc_localization_ui_title 添加翻译
+    doc_math_desc 数学主题使用专门的引擎实时生成卡片可视化。
+    doc_math_title 数学主题
+    doc_media_desc 为确保快速同步，请将图像保持在 5MB 以下，音频文件保持在 10MB 以下。
+    doc_media_title 媒体上传限制
+    doc_organization_desc 使用文件夹将相关主题分组。您还可以创建系列以将主题组织成精心规划的路径。
+    doc_organization_title 组织内容
+    doc_pillars_desc Aliolo 中的所有内容都组织在 8 个基本支柱中：学术与专业、世界、自然、人体、人文、休闲、工程和其他。
+    doc_pillars_title 8 大核心支柱
+    doc_public_desc 主题可以是私有的（仅对自己可见）或公开的。公开内容将与整个 Aliolo 社区共享。
+    doc_public_title 公开与私有
     doc_start_dashboard_desc 仪表板是您的主要库。使用搜索快速查找内容，然后将收藏夹、我的和公共图书馆等源过滤器与年龄过滤器结合起来以减少噪音。
     doc_start_dashboard_title 仪表板、搜索和过滤器
     doc_start_feedback_desc 当出现问题或不清楚时，请使用应用程序中的反馈入口点。报告可以包含当前上下文，这使得内容问题更容易审查和修复。
@@ -98,6 +232,8 @@
     doc_start_quick_title 快速入门
     doc_start_structure_desc 受试者持有卡片。文件夹将相关内容分组在一个支柱内。集合是精心策划的集合，可以结合多个主题进行研究和共享。
     doc_start_structure_title 主题、文件夹和集合
+    doc_streaks_desc 持之以恒是关键！每天完成您的每日目标以建立连续学习记录。不要错过任何一天，否则记录将重置。
+    doc_streaks_title 连续学习系统
     doc_study_how_desc 当您建立识别时从学习开始，然后当您需要更快的回忆和更严格的检查时切换到测试。使用较短的会议进行重点审查，使用较大的会议进行更广泛的覆盖。
     doc_study_how_title 如何学习
     doc_study_intro_desc 此选项卡说明如何浏览内容、选择正确的模式以及调整您的会话以供回顾或回忆。
@@ -108,67 +244,281 @@
     doc_study_modes_title 学习和测试模式
     doc_study_scope_desc 研究可以从单个主题、文件夹视图或集合开始。当您想要跨多个主题进行混合会话而不离开当前流程时，集合非常有用。
     doc_study_scope_title 研究中的主题、文件夹和收藏
+    doc_sync_desc 您的进度会自动同步到云端。您可以在网络版和桌面版之间切换，而不会丢失连续学习记录。
+    doc_sync_title 云同步
     doc_tab_create 创造
+    doc_tab_creator 创建
+    doc_tab_general 常规
+    doc_tab_learning 练习
     doc_tab_start 开始
     doc_tab_study 学习
+    doc_testing_desc 通过多选题 (MCQ) 挑战自己。应用程序会在您回答时自动推进。
+    doc_testing_title 互动测试
+    doc_welcome_desc Aliolo 是一个视觉学习平台，旨在通过闪卡和互动测试帮助您掌握各种主题。
+    doc_welcome_title 欢迎来到 Aliolo
     documentation 文档
+    done_today 今日已完成
+    down_arrow 下箭头
+    edit 编辑
+    edit_card 编辑卡片
+    edit_collection 编辑收藏
+    edit_email 编辑电子邮件
+    edit_folder 编辑文件夹
+    edit_name 编辑名称
+    edit_subject 编辑主题
+    edit_subject_title Edit Subject
     edit_subscription 编辑订阅
+    email 电子邮件
+    email_change_notice For security, a confirmation link will be sent to BOTH your old and new email addresses. You must click both to complete the change.
+    email_in_use 电子邮件已被占用
+    email_subject 主题
+    email_update_sent Confirmation emails sent. Please check both inboxes.
     email_updated_successfully 邮箱更新成功！
+    english 英语
     enter_current_password 输入当前密码
+    enter_new_email 输入新电子邮件
+    enter_new_name 输入新名称
+    enter_number 输入数字
+    enter_or_select_subject 请进入或选择一个主题
+    enter_pass_to_confirm 输入密码确认
+    enter_subject_name 输入主题名称
     error 错误：$e
     error_deleting 删除时出错：$e
+    error_deleting_account 无法注销，请检查密码。
     error_saving 保存时出错：$e
     error_saving_card 保存卡时出错：$e
     error_updating_favorite 更新收藏夹时出错：$e
+    exit Exit
+    exit_confirm_msg Are you sure you want to exit the application?
+    exit_confirm_title Exit Aliolo?
+    expiry_date 到期时间
     failed_answers 失败的答案
     failed_to_send_reset_code 发送重置代码失败
     failed_to_send_verification_code 发送验证码失败
     fake_only 仅限假货
+    fatal_startup_error 致命的启动错误
+    feat_adaptive_desc 通过识别速度动态调整间隔。
+    feat_adaptive_title 自适应反应时间
+    feat_ages_desc Content curated for different age groups from early childhood to advanced learning.
+    feat_ages_title For All Ages
+    feat_gamified_desc Earn XP, badges, and build streaks while mastering complex visual subjects.
+    feat_gamified_title Gamified Experience
+    feat_mastery_desc 动态经验奖励与掌握勋章。
+    feat_mastery_title 视觉精通与经验值
+    feat_multimedia_desc Learn with images, audio, and video support for immersive training.
+    feat_multimedia_title Multimedia Cards
+    feat_recognition_desc 建立视觉瞬间记忆。
+    feat_recognition_title 视觉模式训练
+    feat_science_adaptive_desc Intervals automatically adjust based on your recognition speed and accuracy.
+    feat_science_adaptive_title Adaptive Timing
+    feat_science_spacing_desc Advanced cognitive spacing model that predicts memory decay and optimizes review cycles.
+    feat_science_spacing_title SuperMemo-2 (SM-2)
+    feat_spacing_desc 完整实现的间隔重复模型。
+    feat_spacing_title 认知间隔 (SM-2)
+    feature_autoplay 自动播放模式
+    feature_community_access 访问社区主题
     feature_creation 创作工具
     feature_customize 高级定制
+    feature_favorites 仪表板上的收藏项目
+    feature_feedback 直接反馈和建议
+    feature_free 免费
+    feature_friends 邀请并与朋友联系
     feature_full_library 完整的图书馆访问权限
+    feature_learn_all 学习任何主题或合集
+    feature_private_mode 隐私个人资料模式
+    feature_pro 专业版
+    feature_spaced_repetition 间隔复习 (SM-2)
     feature_testing 交互式测试
+    feedback 反馈
+    feedback_add_image 添加图片
+    feedback_attachments 附件
+    feedback_bug 错误报告
+    feedback_context 背景
+    feedback_details 详情
+    feedback_error 发送反馈失败。请稍后重试。
+    feedback_management_desc 查看并管理用户反馈
+    feedback_management_title 反馈请求
+    feedback_other 其他
+    feedback_submit 提交反馈
+    feedback_success 感谢您的反馈！
+    feedback_suggestion 建议
+    feedback_title 发送反馈
+    feedback_title_hint 标题
+    feedback_type 类型
+    fill_all_fields 请填写所有字段
+    filter_all 全部
+    filter_dashboard 仪表板
+    filter_favorites 收藏夹
+    filter_my_subjects 我的主题
+    filter_on_dashboard 在仪表板上
+    filter_public 公开
+    filter_public_library 公共图书馆
+    filters 筛选
+    finish 完成
+    finished_session 你完成了 {count} 张卡片。获得经验加成！
+    folder 文件夹
+    folder_already_exists 该名称的文件夹已在此支柱中存在
     folder_id 文件夹ID
+    folder_label 文件夹
+    folder_not_empty_msg 无法删除：文件夹非空。
+    folder_plural 文件夹
+    forgot_password 忘记密码？
     free_only 免费用户
+    general_preferences 常规设置
     generic 通用的
+    go_to_manager 前往库管理器
+    goal_change_hint 更改明天的卡片目标
+    goal_change_notice 您每日目标的更改将于明天生效。
+    gold 黄金
+    hide_comparison 隐藏方案对比
     home 家
+    images 图片
+    included_subjects 包含的主题
+    info_copied 信息已复制到剪贴板
+    initializing_aliolo 正在初始化 Aliolo...
     invalid_code 代码无效
+    invalid_email 无效的电子邮件地址
     invalid_email_address 电子邮件地址无效
     invalid_json 无效 JSON：$e
+    invalid_number 数字无效
     invalid_or_expired_invitation_link 邀请链接无效或过期。
     invalid_or_expired_reset_code 重置代码无效或过期。
+    invalid_password 密码错误
+    invalid_password_delete 密码无效
     invitation_sent_awaiting_registration 邀请已发送（等待注册）
+    invite 邀请
+    invite_user_content 未找到电子邮件 {email}。 邀请他们加入 Aliolo？
+    invite_user_title 邀请用户？
     invited_and_request_sent 已邀请并已发送请求！
     json JSON
+    keyboard_shortcuts 键盘快捷键
     label_suffix $label:
+    lang_abbr 语言
+    language 语言
     leaderboard 排行榜
+    learn_mode_desc Study cards and memorize answers
+    learn_mode_title Learn
+    learn_session_size 单次学习量
+    learn_session_size_desc 单个学习环节中引入的新卡片数量。
+    learning 学习中
     learning_session_complete_description 干得好！您已完成本次学习课程。您的进度已保存。
+    left_arrow 左箭头
+    level 等级
+    level_range 必须在 1 到 20 之间
+    level_tier_1 级别 1
+    level_tier_2 级别 2
+    level_tier_3 级别 3
     licenses 许可证
     licenses_aliolo_section_title Aliolo 商业许可证
     licenses_aliolo_subtitle 专有软件和高级访问条款
     licenses_intro_desc Aliolo 的商业许可证首先出现。第三方软件包许可证如下。
     licenses_intro_title Aliolo 许可证和软件包声明
     licenses_third_party_section_title 第三方软件包许可证
+    light 浅色
     linux_distro Linux发行版
     loading 加载中...
     localized_data 本地化数据
+    login 登录
+    logout 登出
+    manage_cards 管理卡片
+    manage_friends 管理好友
+    manage_friends_desc 查看和管理您的好友请求
+    manage_library 管理库（{sCount} 个主题，{cCount} 张卡片）
+    manage_subjects 管理主题
+    manage_subscription 管理订阅
+    manage_testing_langs 管理学习语言
+    manage_users 管理用户
+    master_visual_ease 轻松掌握视觉主题。
+    mastered 已掌握
+    mastery 掌握度
+    max_streak 最高纪录
+    maybe_later 以后再说
+    mission_desc The smart companion that helps your brain learn and retain visual knowledge through science-backed algorithms.
+    mock_email_title 模拟邮箱
+    mode_audio_to_image Audio to Image
+    mode_audio_to_text Audio to Text
+    mode_image_to_text Image to Text
+    mode_text_to_text Text to Text
     monthly_access 每月访问
     most_popular_choice 最受欢迎的选择
+    multi_lang_answers 多语言答案
+    multi_lang_prompts 多语言提示
+    my_position 我的排名
+    name 名称
+    names_descriptions 名称和描述
+    new 新内容
     new_email 新电子邮件
+    new_password 新密码
+    next 下一步
+    next_card Next Card
+    next_daily_goal 下一个每日目标
+    next_daily_goal_desc 每日计划掌握的卡片目标数量。更改将于明天生效。
+    next_day_goal 明日目标
     no_cards_available_for_this_session 此会话没有可用的卡片。
     no_cards_found 没有找到卡片
+    no_cards_found_for_lang 找不到该语言的卡片
+    no_cards_in_library 库中未找到卡片。
+    no_feedback_found 未发现反馈。
+    no_folder 无文件夹 (根目录)
+    no_friends_found 未找到好友
+    no_images_added 未添加图像
+    no_leaderboard_data 暂无排行榜数据。
+    no_localized_audio 没有本地化音频
+    no_localized_images 没有本地化图像
+    no_localized_video 没有本地化视频
+    no_subjects_available 无可用主题
     no_subjects_found 没有找到主题
     no_subjects_found_in_this_collection 在此集合中找不到主题
     no_users_found 没有找到用户
+    ok 确定
+    old_password 旧密码
+    old_password_required 必须填写旧密码
+    onboarding_1_desc 视觉化学习，永久掌握。由 SM-2 科学支持的视觉学习伴侣。
+    onboarding_1_title 欢迎来到 Aliolo
+    onboarding_2_desc 这有助于我们个性化你的学习体验并推荐合适的主题。
+    onboarding_2_title 你多大了？
+    onboarding_3_desc 选择你的主要兴趣以自定义初始仪表板。
+    onboarding_3_title 你想掌握什么？
+    onboarding_4_desc 构建你自己的卡组或深入研究全球 Aliolo 学习者分享的卡片。按照你自己的节奏学习，然后在准备好时测试自己。
+    onboarding_4_title 创建与分享
+    onboarding_5_desc 你的库在所有设备上保持同步。我们只会在需要保护你的连续记录时提醒你。
+    onboarding_5_title 随时随地掌握
+    onboarding_6_desc 今天就开始你的旅程，掌握你下定决心要做的任何事情。
+    onboarding_6_title 加入社区
+    onboarding_7_joined 已有成千上万的学习者加入
+    onboarding_7_quote Aliolo 完全改变了我及我的孩子掌握新主题的方式。视觉卡片和间隔重复让学习感觉像是一场游戏！
+    onboarding_get_started 开始体验
+    onboarding_next 下一步
+    onboarding_skip 跳过
+    options_count 选项数量
+    options_count_desc 测试期间显示的多选题答案数量。
+    options_per_card 个选项/卡片
+    order_id 订单 ID
     os_version 操作系统版本
+    our_mission OUR MISSION
+    page 页面
+    parent_folder_label 父文件夹
+    password 密码
+    password_required 需要密码
+    password_reset_success 密码重置成功
     password_updated_successfully 密码更新成功！
+    passwords_dont_match 密码不匹配
+    paste PASTE
     payments_are_not_yet_integrated_on_web_please_use_the_mobile_app_to_upgrade 支付尚未集成到 Web 上。请使用移动应用程序进行升级。
     personal_data 个人资料
     pick_date 选择日期
+    picture 图片
+    pillar 类目
+    plan_monthly 每月访问
+    plan_monthly_desc 最受欢迎的选择
     plan_monthly_tagline 最受欢迎的选择
     plan_monthly_title 每月访问
+    plan_weekly 每周访问
+    plan_weekly_desc 快速目标的最佳选择
     plan_weekly_tagline 最适合快速目标
     plan_weekly_title 每周访问
+    plan_yearly 每年访问
+    plan_yearly_desc 每月节省 33%
     plan_yearly_tagline 每月节省 33%
     plan_yearly_title 每年访问
     platform 平台
@@ -177,58 +527,208 @@
     please_enter_the_6_digit_code 请输入6位数字代码
     please_wait_for_a_response_before_replying_again 请等待回复后再回复。
     premium_expires_at 于 $date 到期
+    premium_go 升级到高级版
     premium_lifetime 终身访问
     premium_only 仅限高级版
     premium_status_active 您是高级会员
+    premium_title Aliolo 高级版
     premium_unlock_desc 访问所有主题、创建无限卡牌并支持 Aliolo 的使命。
     premium_unlock_title 解锁完全访问权限
+    prev 上一个
+    previous_card Previous Card
+    price_per_week ({price} / 周)
+    private 私有
+    pro_label 专业版
+    product_id 产品 ID
     product_not_available_in_store 产品在商店不可用。
     profile 轮廓
+    profile_title 我的资料与进度
+    prompt_label 提示
+    prompt_optional 提示 / 问题
+    prompts_answers 问题与答案
+    provide_at_least_one_answer 请至少提供一个答案
+    provide_at_least_one_name 请至少提供一个名称
+    provider 提供商
     public_other_subject 公共/其他主题
+    public_profile 公开资料
+    public_profile_desc 在名人堂显示经验和连续天数。
+    public_subject 公开主题
+    public_subject_desc 使此主题对其他用户可见。
     purchase_failed 购买失败：$e
+    purchase_token 购买凭证
+    record_shortcut 录制快捷键
     recovery_error 恢复错误：$e
     refresh 刷新
     refresh_conversation 刷新对话
+    remove_friend 删除好友
+    remove_friend_confirm 您确定要删除好友 ... 吗？
     renderer 渲染器
+    request_sent 请求已发送
+    request_sent_waiting 请求已发送（等待中）
+    required 必填
     reset_code 重置代码
+    reset_code_email_title 重置验证码
+    reset_code_sent 重置码已发送至：
     reset_code_sent_to_please_check_your_inbox 重置代码发送至 $email。请检查您的收件箱。
+    reset_password_for 重置密码：
+    restore_password 重置密码
     restore_purchases 恢复购买
+    retry 重试
+    right_arrow 右箭头
     save 节省
     save_33_per_month 每月节省 33%
+    save_before_nav 离开前是否保存？
+    save_card 保存卡片
+    save_subject 保存主题
     saved_successfully 保存成功
+    search_cards 搜索卡片
+    search_subjects 搜索主题
     search_users 搜索用户
+    select_an_answer 选择答案
+    select_lang 选择语言
+    select_package_license 选择包许可证
+    select_user 选择用户
+    selected_count 已选 {count} 项
+    send 发送
+    send_code 发送代码
+    send_verification_code 发送验证码？
     session_complete 会议结束！
     session_complete_description 干得好！您已完成本节中的所有卡片。
+    setting_saved 设置已保存
     settings 设置
+    shortcuts_hint Press the key you want to use with Ctrl.
+    show_all_languages 显示所有语言
     show_documentation_btn 显示文档按钮
     show_documentation_btn_desc 在应用栏中显示文档按钮。
     show_fake_users 显示虚假用户
+    show_less_languages 显示较少语言
+    sidebar_left 侧边栏居左
+    sidebar_left_desc 将控制栏移至屏幕左侧。
+    silver 白银
+    social 社交
+    sort_by 排序方式
+    sound_effects 音效
+    sound_effects_desc 开启回答音效反馈。
+    source 来源
+    status 状态
+    status_closed 已关闭
+    status_open 开启
+    status_replied 已回复
+    streak 连续天数
+    subject 主题
+    subject_deleted 主题已删除
     subject_id 主题 ID
+    subject_label 主题
+    subject_plural 主题
+    subject_type 主题类型
+    subjects 主题
     subscribe_now 立即订阅
     subscription_data 订阅数据
     subscription_updated 订阅已更新
     subtraction_emoji 减法表情符号
     subtraction_numbers 减法数字
+    support_and_management 支持与管理
+    system 跟随系统
+    tap_to_replay 点击重新播放
     technical_context 技术背景
+    test_mode_desc Challenge yourself with a quiz
+    test_mode_label Test Mode
+    test_mode_title Test
+    test_session_size 单次测试量
+    test_session_size_desc 单个测试环节中复习的卡片数量。
+    testing Testing
     testing_mode 测试方式
+    testing_section 学习设置
     text 文本
+    the_science THE SCIENCE
+    theme_color App Theme Color
+    theme_color_desc Customize the primary color used for buttons and highlights.
+    theme_dark 深色
+    theme_light 浅色
+    theme_mode 主题模式
+    theme_system 系统
     this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards 这是一个文件夹。您可以使用上面的学习/测试按钮来练习所有卡片。
+    to_label 至
     total_cards 总牌数
+    total_xp 总经验值
+    trust_cloud_desc Your progress is securely synced across all your devices in real-time.
+    trust_cloud_title Cloud Sync
+    trust_privacy TRUST & PRIVACY
+    trust_sync_desc Your data is private and encrypted to ensure the highest security standards.
+    trust_sync_title Encrypted Data
+    type_collection 收藏
+    type_folder 文件夹（子主题）
+    type_standard 标准（卡片）
     type_your_reply 输入您的回复...
     ua UA
+    ui_language 界面语言
+    ukrainian 乌克兰语
     unknown_user_profile_missing 未知用户（缺少配置文件）
+    unsaved_changes 未保存的更改
+    unsaved_changes_msg 您有未保存的更改。您要放弃它们吗？
+    up_arrow 上箭头
+    update 更新
     update_available 新版本已推出！
+    updated_at 更新时间
+    upload_new_photo 上传新照片
     user 用户
+    user_exists 用户已存在
     user_id 用户身份
+    user_not_found 找不到用户
     user_with_this_email_already_exists_please_log_in_instead 使用此电子邮件的用户已存在。请改为登录。
+    username 用户名
     users 用户
     users_filter 过滤用户
     verification_code 验证码
     verification_code_sent_to 验证码发送至$email
+    verify 验证
     version 版本
+    video 视频
+    video_link 视频链接
+    video_url_optional 视频链接（可选）
+    view_card 查看卡片
+    view_cards_title View Cards
     view_onboarding 查看入职流程
+    visibility 可见性
+    visual_content_required 至少需要一个视觉内容
+    visual_content_required_msg 必须提供至少一个视觉内容（文本、图像、音频或视频）。
+    visual_text 视觉文本
+    wants_to_be_friend 想成为你的朋友
     weekly_access 每周访问
     welcome_complete_your_profile_to_join_aliolo 欢迎！填写您的个​​人资料以加入 aliolo。
+    xp 经验值
     yearly_access 每年访问
+    you 你
     you_do_not_have_permission_to_edit_this_card 您无权编辑此卡
     you_do_not_have_permission_to_view_this_card_details 您无权查看此卡的详细信息。
+    you_rank 你的排名：第 #{rank} 名
+    active 活跃
+    autoplay 自动播放
+    card_limit 卡片限制
+    card_limit_msg 您已达到 {limit} 张卡片的限制。
+    create_request 创建请求
+    edit_user 编辑用户
+    favorite 收藏
+    file_too_large 文件太大
+    inactive 不活跃
+    is_required 为必填项
+    languages 语言
+    limit_reached 已达到限制
+    not_available 不可用
+    toggle_languages 切换语言
+    user_updated 用户已更新
+    zoom 缩放
+    account_and_management Account & Management
+    back_to_plans Back to plans
+    confirm_password_required Confirm password is required
+    feat_autoplay_desc Focus on learning while the app automatically advances through cards at your pace.
+    feat_autoplay_title Hands-Free Autoplay
+    feat_create_share_desc Easily create your own subjects and cards, or share them with the community.
+    feat_create_share_title Create & Share
+    feat_science_smart_review_desc The algorithm calculates the optimal time to review each card for maximum retention.
+    feat_science_smart_review_title Smart Review Cycles
+    new_password_required New password is required
+    password_updated Password updated successfully
+    save_success Saved successfully
+    trust_ecosystem_desc Your progress and cards are seamlessly synced across all your devices.
+    trust_ecosystem_title Aliolo Ecosystem
