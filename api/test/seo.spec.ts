@@ -252,4 +252,18 @@ describe('SEO and crawlability', () => {
 
     expect(res.status).toBe(200);
   });
+
+  it('redirects /en and /en/:page to their clean counterparts', async () => {
+    const resRoot = await app.request('https://aliolo.com/en', {}, mockEnv);
+    expect(resRoot.status).toBe(301);
+    expect(resRoot.headers.get('location')).toBe('/');
+
+    const resPrivacy = await app.request('https://aliolo.com/en/privacy', {}, mockEnv);
+    expect(resPrivacy.status).toBe(301);
+    expect(resPrivacy.headers.get('location')).toBe('/privacy');
+
+    const resUnknown = await app.request('https://aliolo.com/en/unknown', {}, mockEnv);
+    expect(resUnknown.status).toBe(301);
+    expect(resUnknown.headers.get('location')).toBe('/');
+  });
 });

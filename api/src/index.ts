@@ -210,6 +210,16 @@ const handleLocalizedStaticPageRoute = async (c: any, page: string) => {
   return renderStaticPage(c, page, lang);
 };
 
+app.get('/en', (c) => c.redirect('/', 301));
+app.get('/en/:page', (c) => {
+  const page = c.req.param('page');
+  const allowedPages = ['privacy', 'terms', 'refund', 'pricing', 'pay'];
+  if (allowedPages.includes(page)) {
+    return c.redirect(`/${page}`, 301);
+  }
+  return c.redirect('/', 301);
+});
+
 app.get('/privacy', (c) => handleCleanStaticPageRoute(c, 'privacy'));
 app.get('/:lang/privacy', (c) => handleLocalizedStaticPageRoute(c, 'privacy'));
 
