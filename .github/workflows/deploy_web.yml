@@ -1,0 +1,71 @@
+name: Deploy Web
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  backend_tests:
+    name: Backend tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: api
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: api/package-lock.json
+      - name: Install backend dependencies
+        run: npm ci
+      - name: Run isolated backend tests
+        run: npm run test:run
+
+  build_web:
+    uses: ./.github/workflows/build_web.yml
+
+  deploy_production:
+    name: Deploy production
+    needs:
+      - backend_tests
+      - build_web
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment:
+      name: production
+      url: https://aliolo.com
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: api/package-lock.json
+      - name: Install deployment dependencies
+        working-directory: api
+        run: npm ci
+      - name: Download tested web artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: aliolo-web
+          path: build/web
+      - name: Verify deployment artifact
+        run: test -f build/web/index.html && test -f build/web/main.dart.js
+      - name: Deploy Worker and web assets
+        working-directory: api
+        run: npx wrangler deploy --env production
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      - name: Distribute UI translations to R2
+        run: python3 scripts/python/distribute_ui_translations.py
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      - name: Smoke-test production
+        run: ./scripts/smoke_production.sh

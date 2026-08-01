@@ -1,0 +1,31 @@
+name: Build Windows
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build_windows:
+    name: Build Windows
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - name: Sync app version to commit count
+        shell: bash
+        run: ./scripts/sync_version.sh
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.44.2'
+          channel: 'stable'
+          cache: true
+      - run: flutter pub get
+      - run: flutter build windows --release --dart-define=API_URL=https://aliolo.com
+      - name: Upload Windows Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: aliolo-windows
+          path: build\windows\x64\runner\Release\
