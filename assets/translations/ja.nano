@@ -68,7 +68,8 @@
     colors 色
     confirm_subscription サブスクリプションの確認
     context コンテクスト
-    could_not_launch $url を起動できませんでした
+    correct_answers 正解
+    could_not_launch $Url を起動できませんでした
     counting 数える
     current_subscription 現在のサブスクリプション
     delete 消去
@@ -119,6 +120,7 @@
     error_saving 保存エラー: $e
     error_saving_card カードの保存中にエラーが発生しました: $e
     error_updating_favorite お気に入りの更新中にエラーが発生しました: $e
+    failed_answers 失敗した回答
     failed_to_send_reset_code リセットコードの送信に失敗しました
     failed_to_send_verification_code 確認コードの送信に失敗しました
     fake_only 偽物のみ
@@ -140,6 +142,7 @@
     json JSON
     label_suffix $label:
     leaderboard リーダーボード
+    learning_session_complete_description 素晴らしい仕事だ！この学習セッションは終了しました。進行状況が保存されました。
     licenses ライセンス
     licenses_aliolo_section_title Aliolo 商用ライセンス
     licenses_aliolo_subtitle 独自のソフトウェアとプレミアム アクセス条件
@@ -173,7 +176,7 @@
     play_audio オーディオを再生する
     please_enter_the_6_digit_code 6桁のコードを入力してください
     please_wait_for_a_response_before_replying_again 返信を待ってから再度返信してください。
-    premium_expires_at $date で期限切れになります
+    premium_expires_at $Date で期限切れになります
     premium_lifetime 生涯アクセス
     premium_only プレミアムのみ
     premium_status_active あなたはプレミアム会員です
@@ -184,6 +187,7 @@
     public_other_subject 公共/その他の主題
     purchase_failed 購入に失敗しました: $e
     recovery_error リカバリエラー: $e
+    refresh リフレッシュ
     refresh_conversation 会話を更新する
     renderer レンダラー
     reset_code リセットコード
@@ -209,9 +213,11 @@
     testing_mode テストモード
     text 文章
     this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards これはフォルダーです。上の「学習/テスト」ボタンを使用して、すべてのカードを練習できます。
+    total_cards カードの合計数
     type_your_reply 返信を入力してください...
     ua UA
     unknown_user_profile_missing 不明なユーザー (プロファイルがありません)
+    update_available 新しいバージョンが利用可能になりました。
     user ユーザー
     user_id ユーザーID
     user_with_this_email_already_exists_please_log_in_instead このメールアドレスを持つユーザーはすでに存在します。代わりにログインしてください。

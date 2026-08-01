@@ -68,6 +68,7 @@
     colors Spalvos
     confirm_subscription Patvirtinkite prenumeratą
     context Kontekstas
+    correct_answers Teisingi atsakymai
     could_not_launch Nepavyko paleisti $url
     counting Skaičiavimas
     current_subscription Dabartinė prenumerata
@@ -119,6 +120,7 @@
     error_saving Išsaugant įvyko klaida: $e
     error_saving_card Klaida išsaugant kortelę: $e
     error_updating_favorite Klaida atnaujinant mėgstamiausią: $e
+    failed_answers Nepavykę atsakymai
     failed_to_send_reset_code Nepavyko išsiųsti nustatymo iš naujo kodo
     failed_to_send_verification_code Nepavyko išsiųsti patvirtinimo kodo
     fake_only Tik netikras
@@ -140,6 +142,7 @@
     json JSON
     label_suffix $label:
     leaderboard Lyderių lentelė
+    learning_session_complete_description Puikus darbas! Baigėte šią mokymosi sesiją. Jūsų pažanga išsaugota.
     licenses Licencijos
     licenses_aliolo_section_title Aliolo Komercinė licencija
     licenses_aliolo_subtitle Patentuota programinė įranga ir aukščiausios kokybės prieigos sąlygos
@@ -184,6 +187,7 @@
     public_other_subject Vieša / kita tema
     purchase_failed Pirkimas nepavyko: $e
     recovery_error Atkūrimo klaida: $e
+    refresh Atnaujinti
     refresh_conversation Atnaujinti pokalbį
     renderer Atvaizduotojas
     reset_code Iš naujo nustatyti kodą
@@ -209,9 +213,11 @@
     testing_mode Testavimo režimas
     text Tekstas
     this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards Tai aplankas. Galite naudoti aukščiau esančius mygtukus „Mokytis / išbandyti“, kad galėtumėte praktikuoti visas kortas.
+    total_cards Iš viso kortelių
     type_your_reply Įveskite savo atsakymą...
     ua UA
     unknown_user_profile_missing Nežinomas naudotojas (trūksta profilio)
+    update_available Yra nauja versija!
     user Vartotojas
     user_id Vartotojo ID
     user_with_this_email_already_exists_please_log_in_instead Vartotojas su šiuo el. pašto adresu jau egzistuoja. Vietoj to prisijunkite.

@@ -68,6 +68,7 @@
     colors الألوان
     confirm_subscription تأكيد الاشتراك
     context سياق
+    correct_answers الإجابات الصحيحة
     could_not_launch تعذر تشغيل $url
     counting عد
     current_subscription الاشتراك الحالي
@@ -119,6 +120,7 @@
     error_saving حدث خطأ أثناء الحفظ: $e
     error_saving_card خطأ في حفظ البطاقة: $e
     error_updating_favorite حدث خطأ أثناء تحديث المفضلة: $e
+    failed_answers الإجابات الفاشلة
     failed_to_send_reset_code فشل إرسال رمز إعادة التعيين
     failed_to_send_verification_code فشل في إرسال رمز التحقق
     fake_only وهمية فقط
@@ -140,6 +142,7 @@
     json JSON
     label_suffix $label:
     leaderboard المتصدرين
+    learning_session_complete_description عمل عظيم! لقد أنهيت هذه الجلسة التعليمية. لقد تم حفظ تقدمك.
     licenses التراخيص
     licenses_aliolo_section_title Aliolo رخصة تجارية
     licenses_aliolo_subtitle البرمجيات الاحتكارية وشروط الوصول المتميزة
@@ -184,6 +187,7 @@
     public_other_subject موضوع عام/آخر
     purchase_failed فشل الشراء: $e
     recovery_error خطأ في الاسترداد: $e
+    refresh ينعش
     refresh_conversation تحديث المحادثة
     renderer العارض
     reset_code إعادة تعيين الرمز
@@ -209,9 +213,11 @@
     testing_mode وضع الاختبار
     text نص
     this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards هذا مجلد. يمكنك استخدام أزرار التعلم/الاختبار أعلاه للتدرب على جميع البطاقات.
+    total_cards إجمالي البطاقات
     type_your_reply اكتب ردك...
     ua تعميم الوصول إلى الخدمات
     unknown_user_profile_missing مستخدم غير معروف (الملف الشخصي مفقود)
+    update_available نسخة جديدة متاحة!
     user مستخدم
     user_id معرف المستخدم
     user_with_this_email_already_exists_please_log_in_instead المستخدم الذي لديه هذا البريد الإلكتروني موجود بالفعل. الرجاء تسجيل الدخول بدلا من ذلك.

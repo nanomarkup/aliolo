@@ -68,6 +68,7 @@
     colors Boje
     confirm_subscription Potvrdite pretplatu
     context Kontekst
+    correct_answers Točni odgovori
     could_not_launch Nije moguće pokrenuti $url
     counting Brojanje
     current_subscription Trenutna pretplata
@@ -119,6 +120,7 @@
     error_saving Pogreška pri spremanju: $e
     error_saving_card Pogreška pri spremanju kartice: $e
     error_updating_favorite Pogreška pri ažuriranju favorita: $e
+    failed_answers Neuspješni odgovori
     failed_to_send_reset_code Slanje koda za poništavanje nije uspjelo
     failed_to_send_verification_code Slanje kontrolnog koda nije uspjelo
     fake_only Samo lažni
@@ -140,6 +142,7 @@
     json JSON
     label_suffix $label:
     leaderboard Leaderboard
+    learning_session_complete_description Odličan posao! Završili ste ovu sesiju učenja. Vaš napredak je spremljen.
     licenses Licence
     licenses_aliolo_section_title Aliolo Komercijalna licenca
     licenses_aliolo_subtitle Vlasnički softver i premium uvjeti pristupa
@@ -184,6 +187,7 @@
     public_other_subject Javni/Drugi predmet
     purchase_failed Kupnja nije uspjela: $e
     recovery_error Pogreška oporavka: $e
+    refresh Osvježiti
     refresh_conversation Osvježi razgovor
     renderer Renderer
     reset_code Poništi kod
@@ -209,9 +213,11 @@
     testing_mode Način testiranja
     text Tekst
     this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards Ovo je mapa. Možete koristiti gornje gumbe za učenje/testiranje za vježbanje svih kartica.
+    total_cards Ukupno kartica
     type_your_reply Upišite svoj odgovor...
     ua UA
     unknown_user_profile_missing Nepoznati korisnik (nedostaje profil)
+    update_available Dostupna je nova verzija!
     user Korisnik
     user_id ID korisnika
     user_with_this_email_already_exists_please_log_in_instead Korisnik s ovom e-poštom već postoji. Umjesto toga prijavite se.

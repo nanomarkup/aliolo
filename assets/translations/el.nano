@@ -68,6 +68,7 @@
     colors Χρωματιστά
     confirm_subscription Επιβεβαίωση εγγραφής
     context Συμφραζόμενα
+    correct_answers Σωστές Απαντήσεις
     could_not_launch Δεν ήταν δυνατή η εκκίνηση του $url
     counting Αρίθμηση
     current_subscription Τρέχουσα συνδρομή
@@ -119,6 +120,7 @@
     error_saving Σφάλμα αποθήκευσης: $e
     error_saving_card Σφάλμα αποθήκευσης κάρτας: $e
     error_updating_favorite Σφάλμα ενημέρωσης αγαπημένου: $e
+    failed_answers Αποτυχημένες απαντήσεις
     failed_to_send_reset_code Αποτυχία αποστολής κωδικού επαναφοράς
     failed_to_send_verification_code Αποτυχία αποστολής κωδικού επαλήθευσης
     fake_only Μόνο ψεύτικο
@@ -140,6 +142,7 @@
     json JSON
     label_suffix $label:
     leaderboard Leaderboard
+    learning_session_complete_description Μεγάλη δουλειά! Ολοκληρώσατε αυτήν τη συνεδρία εκμάθησης. Η πρόοδός σας έχει αποθηκευτεί.
     licenses Άδειες
     licenses_aliolo_section_title Aliolo Εμπορική Άδεια
     licenses_aliolo_subtitle Ιδιόκτητο λογισμικό και όροι πρόσβασης premium
@@ -184,6 +187,7 @@
     public_other_subject Δημόσιο/Άλλο Θέμα
     purchase_failed Η αγορά απέτυχε: $e
     recovery_error Σφάλμα ανάκτησης: $e
+    refresh Φρεσκάρω
     refresh_conversation Ανανεώστε τη συνομιλία
     renderer Καθιστών
     reset_code Επαναφορά κωδικού
@@ -209,9 +213,11 @@
     testing_mode Λειτουργία δοκιμής
     text Κείμενο
     this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards Αυτός είναι ένας φάκελος. Μπορείτε να χρησιμοποιήσετε τα κουμπιά Learn/Test παραπάνω για να εξασκήσετε όλες τις κάρτες.
+    total_cards Σύνολο καρτών
     type_your_reply Πληκτρολογήστε την απάντησή σας...
     ua UA
     unknown_user_profile_missing Άγνωστος χρήστης (Λείπει το προφίλ)
+    update_available Μια νέα έκδοση είναι διαθέσιμη!
     user Μεταχειριζόμενος
     user_id Αναγνωριστικό χρήστη
     user_with_this_email_already_exists_please_log_in_instead Ο χρήστης με αυτό το email υπάρχει ήδη. Παρακαλώ συνδεθείτε.

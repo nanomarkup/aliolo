@@ -68,6 +68,7 @@
     colors Kleuren
     confirm_subscription Bevestig abonnement
     context Context
+    correct_answers Juiste antwoorden
     could_not_launch Kan $url niet starten
     counting Tellen
     current_subscription Huidig ​​abonnement
@@ -119,6 +120,7 @@
     error_saving Fout bij opslaan: $e
     error_saving_card Fout bij opslaan kaart: $e
     error_updating_favorite Fout bij bijwerken favoriet: $e
+    failed_answers Mislukte antwoorden
     failed_to_send_reset_code Kan de resetcode niet verzenden
     failed_to_send_verification_code Kan verificatiecode niet verzenden
     fake_only Alleen nep
@@ -140,6 +142,7 @@
     json JSON
     label_suffix $label:
     leaderboard Leiderbord
+    learning_session_complete_description Geweldig werk! Je hebt deze leersessie afgerond. Je voortgang is opgeslagen.
     licenses Licenties
     licenses_aliolo_section_title Aliolo Commerciële licentie
     licenses_aliolo_subtitle Eigen software en premium toegangsvoorwaarden
@@ -184,6 +187,7 @@
     public_other_subject Openbaar/ander onderwerp
     purchase_failed Aankoop mislukt: $e
     recovery_error Herstelfout: $e
+    refresh Vernieuwen
     refresh_conversation Ververs het gesprek
     renderer Renderer
     reset_code Code opnieuw instellen
@@ -209,9 +213,11 @@
     testing_mode Testmodus
     text Tekst
     this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards Dit is een map. Je kunt de Leer/Test-knoppen hierboven gebruiken om alle kaarten te oefenen.
+    total_cards Totaal kaarten
     type_your_reply Typ uw antwoord...
     ua UA
     unknown_user_profile_missing Onbekende gebruiker (profiel ontbreekt)
+    update_available Er is een nieuwe versie beschikbaar!
     user Gebruiker
     user_id Gebruikers-ID
     user_with_this_email_already_exists_please_log_in_instead Gebruiker met dit e-mailadres bestaat al. Log in plaats daarvan in.

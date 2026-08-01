@@ -68,6 +68,7 @@
     colors Bandera
     confirm_subscription Confirmar suscripción
     context Contexto
+    correct_answers Respuestas correctas
     could_not_launch No se pudo iniciar $url
     counting Cálculo
     current_subscription Suscripción actual
@@ -119,6 +120,7 @@
     error_saving Error al guardar: $e
     error_saving_card Error al guardar la tarjeta: $e
     error_updating_favorite Error al actualizar favorito: $e
+    failed_answers Respuestas fallidas
     failed_to_send_reset_code No se pudo enviar el código de reinicio
     failed_to_send_verification_code No se pudo enviar el código de verificación
     fake_only Solo falso
@@ -140,6 +142,7 @@
     json JSON
     label_suffix $label:
     leaderboard Tabla de clasificación
+    learning_session_complete_description ¡Buen trabajo! Terminaste esta sesión de aprendizaje. Tu progreso ha sido guardado.
     licenses Licencias
     licenses_aliolo_section_title Aliolo Licencia Comercial
     licenses_aliolo_subtitle Software propietario y condiciones de acceso premium
@@ -184,6 +187,7 @@
     public_other_subject Público/Otro tema
     purchase_failed Compra fallida: $e
     recovery_error Error de recuperación: $e
+    refresh Refrescar
     refresh_conversation Actualizar conversación
     renderer Renderizador
     reset_code Restablecer código
@@ -209,9 +213,11 @@
     testing_mode Modo de prueba
     text Texto
     this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards Esta es una carpeta. Puede utilizar los botones Aprender/Probar de arriba para practicar todas las cartas.
+    total_cards Tarjetas totales
     type_your_reply Escribe tu respuesta...
     ua UA
     unknown_user_profile_missing Usuario desconocido (falta perfil)
+    update_available ¡Una nueva versión está disponible!
     user Usuario
     user_id ID de usuario
     user_with_this_email_already_exists_please_log_in_instead El usuario con este correo electrónico ya existe. En su lugar, inicie sesión.

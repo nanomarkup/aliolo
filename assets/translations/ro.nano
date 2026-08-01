@@ -68,6 +68,7 @@
     colors Culori
     confirm_subscription Confirmați abonamentul
     context Context
+    correct_answers Răspunsuri corecte
     could_not_launch Nu s-a putut lansa $url
     counting Numărând
     current_subscription Abonament curent
@@ -119,6 +120,7 @@
     error_saving Eroare la salvare: $e
     error_saving_card Eroare la salvarea cardului: $e
     error_updating_favorite Eroare la actualizarea preferatului: $e
+    failed_answers Răspunsuri eșuate
     failed_to_send_reset_code Nu s-a trimis codul de resetare
     failed_to_send_verification_code Nu s-a putut trimite codul de verificare
     fake_only Numai fals
@@ -140,6 +142,7 @@
     json JSON
     label_suffix $label:
     leaderboard Clasament
+    learning_session_complete_description Mare treabă! Ai terminat această sesiune de învățare. Progresul dvs. a fost salvat.
     licenses Licențe
     licenses_aliolo_section_title Aliolo Licență comercială
     licenses_aliolo_subtitle Software proprietar și condiții de acces premium
@@ -184,6 +187,7 @@
     public_other_subject Public/Alt subiect
     purchase_failed Achiziție eșuată: $e
     recovery_error Eroare de recuperare: $e
+    refresh Reîmprospăta
     refresh_conversation Reîmprospătați conversația
     renderer Renderer
     reset_code Resetați codul
@@ -209,9 +213,11 @@
     testing_mode Modul de testare
     text Text
     this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards Acesta este un folder. Puteți folosi butoanele de învățare/testare de mai sus pentru a exersa toate cărțile.
+    total_cards Total carduri
     type_your_reply Introduceți răspunsul...
     ua UA
     unknown_user_profile_missing Utilizator necunoscut (lipsește profilul)
+    update_available Este disponibilă o nouă versiune!
     user Utilizator
     user_id ID-ul de utilizator
     user_with_this_email_already_exists_please_log_in_instead Utilizatorul cu acest e-mail există deja. Vă rugăm să vă conectați.

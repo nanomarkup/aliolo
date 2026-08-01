@@ -68,6 +68,7 @@
     colors Цветове
     confirm_subscription Потвърдете абонамента
     context Контекст
+    correct_answers Правилни отговори
     could_not_launch Не можа да се стартира $url
     counting Броене
     current_subscription Текущ абонамент
@@ -119,6 +120,7 @@
     error_saving Грешка при запазване: $e
     error_saving_card Грешка при запазване на картата: $e
     error_updating_favorite Грешка при актуализиране на любимите: $e
+    failed_answers Неуспешни отговори
     failed_to_send_reset_code Неуспешно изпращане на код за нулиране
     failed_to_send_verification_code Неуспешно изпращане на код за потвърждение
     fake_only Само фалшиви
@@ -140,6 +142,7 @@
     json JSON
     label_suffix $label:
     leaderboard Класация
+    learning_session_complete_description Страхотна работа! Завършихте тази учебна сесия. Вашият напредък е запазен.
     licenses Лицензи
     licenses_aliolo_section_title Aliolo Търговски лиценз
     licenses_aliolo_subtitle Собствен софтуер и премиум условия за достъп
@@ -184,6 +187,7 @@
     public_other_subject Обществен/друг субект
     purchase_failed Неуспешна покупка: $e
     recovery_error Грешка при възстановяване: $e
+    refresh Опресняване
     refresh_conversation Опресняване на разговора
     renderer Renderer
     reset_code Нулиране на кода
@@ -209,9 +213,11 @@
     testing_mode Режим на тестване
     text Текст
     this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards Това е папка. Можете да използвате бутоните Научете/Тествайте по-горе, за да тренирате всички карти.
+    total_cards Общо карти
     type_your_reply Въведете отговора си...
     ua UA
     unknown_user_profile_missing Неизвестен потребител (липсва профил)
+    update_available Налична е нова версия!
     user Потребител
     user_id Потребителско име
     user_with_this_email_already_exists_please_log_in_instead Потребител с този имейл вече съществува. Моля, влезте вместо това.

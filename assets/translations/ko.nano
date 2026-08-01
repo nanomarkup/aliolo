@@ -68,7 +68,8 @@
     colors 그림 물감
     confirm_subscription 구독 확인
     context 문맥
-    could_not_launch $url을(를) 시작할 수 없습니다.
+    correct_answers 정답
+    could_not_launch $Url을(를) 시작할 수 없습니다.
     counting 계산
     current_subscription 현재 구독
     delete 삭제
@@ -119,6 +120,7 @@
     error_saving 저장 오류: $e
     error_saving_card 카드 저장 오류: $e
     error_updating_favorite 즐겨찾기 업데이트 중 오류 발생: $e
+    failed_answers 실패한 답변
     failed_to_send_reset_code 재설정 코드를 보내지 못했습니다.
     failed_to_send_verification_code 인증코드 전송 실패
     fake_only 가짜만
@@ -140,6 +142,7 @@
     json JSON
     label_suffix $label:
     leaderboard 리더보드
+    learning_session_complete_description 정말 잘했어요! 이 학습 세션을 마쳤습니다. 진행 상황이 저장되었습니다.
     licenses 라이센스
     licenses_aliolo_section_title Aliolo 상업용 라이센스
     licenses_aliolo_subtitle 독점 소프트웨어 및 프리미엄 액세스 조건
@@ -173,7 +176,7 @@
     play_audio 오디오 재생
     please_enter_the_6_digit_code 6자리 코드를 입력해주세요
     please_wait_for_a_response_before_replying_again 다시 응답하기 전에 응답을 기다려 주십시오.
-    premium_expires_at $date에 만료됩니다.
+    premium_expires_at $Date에 만료됩니다.
     premium_lifetime 평생 이용 가능
     premium_only 프리미엄 전용
     premium_status_active 당신은 프리미엄 회원입니다
@@ -184,6 +187,7 @@
     public_other_subject 공개/기타 주제
     purchase_failed 구매 실패: $e
     recovery_error 복구 오류: $e
+    refresh 새로 고치다
     refresh_conversation 대화 새로고침
     renderer 렌더러
     reset_code 코드 재설정
@@ -209,16 +213,18 @@
     testing_mode 테스트 모드
     text 텍스트
     this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards 이것은 폴더입니다. 위의 학습/테스트 버튼을 사용하여 모든 카드를 연습할 수 있습니다.
+    total_cards 총 카드 수
     type_your_reply 답장을 입력하세요...
     ua UA
     unknown_user_profile_missing 알 수 없는 사용자(프로필 누락)
+    update_available 새 버전을 사용할 수 있습니다!
     user 사용자
     user_id 사용자 ID
     user_with_this_email_already_exists_please_log_in_instead 이 이메일을 사용하는 사용자가 이미 존재합니다. 대신 로그인해 주세요.
     users 사용자
     users_filter 사용자 필터링
     verification_code 인증코드
-    verification_code_sent_to $email(으)로 인증 코드가 전송되었습니다.
+    verification_code_sent_to $Email(으)로 인증 코드가 전송되었습니다.
     version 버전
     view_onboarding 온보딩 보기
     weekly_access 주간 액세스

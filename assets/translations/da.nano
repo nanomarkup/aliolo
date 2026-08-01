@@ -68,6 +68,7 @@
     colors Farver
     confirm_subscription Bekræft abonnement
     context Sammenhæng
+    correct_answers Korrekte svar
     could_not_launch Kunne ikke starte $url
     counting Tæller
     current_subscription Nuværende abonnement
@@ -119,6 +120,7 @@
     error_saving Fejl ved lagring: $e
     error_saving_card Fejl ved lagring af kort: $e
     error_updating_favorite Fejl ved opdatering af favorit: $e
+    failed_answers Mislykkede svar
     failed_to_send_reset_code Kunne ikke sende nulstillingskode
     failed_to_send_verification_code Kunne ikke sende bekræftelseskoden
     fake_only Kun falsk
@@ -140,6 +142,7 @@
     json JSON
     label_suffix $label:
     leaderboard Leaderboard
+    learning_session_complete_description Godt arbejde! Du afsluttede denne læringssession. Dine fremskridt er blevet gemt.
     licenses Licenser
     licenses_aliolo_section_title Aliolo Kommerciel licens
     licenses_aliolo_subtitle Proprietær software og premium adgangsvilkår
@@ -184,6 +187,7 @@
     public_other_subject Offentligt/Andet emne
     purchase_failed Køb mislykkedes: $e
     recovery_error Gendannelsesfejl: $e
+    refresh Opfriske
     refresh_conversation Opdater samtalen
     renderer Renderer
     reset_code Nulstil kode
@@ -209,9 +213,11 @@
     testing_mode Testtilstand
     text Tekst
     this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards Dette er en mappe. Du kan bruge Lær/Test knapperne ovenfor til at øve alle kort.
+    total_cards Kort i alt
     type_your_reply Skriv dit svar...
     ua UA
     unknown_user_profile_missing Ukendt bruger (profil mangler)
+    update_available En ny version er tilgængelig!
     user Bruger
     user_id Bruger-id
     user_with_this_email_already_exists_please_log_in_instead Bruger med denne e-mailadresse findes allerede. Log venligst ind i stedet.

@@ -68,7 +68,8 @@
     colors रंग
     confirm_subscription सदस्यता की पुष्टि करें
     context प्रसंग
-    could_not_launch $url लॉन्च नहीं किया जा सका
+    correct_answers सही उत्तर
+    could_not_launch $Url लॉन्च नहीं किया जा सका
     counting गिनती
     current_subscription वर्तमान सदस्यता
     delete मिटाना
@@ -119,6 +120,7 @@
     error_saving सहेजने में त्रुटि: $e
     error_saving_card कार्ड सहेजने में त्रुटि: $e
     error_updating_favorite पसंदीदा अपडेट करने में त्रुटि: $e
+    failed_answers असफल उत्तर
     failed_to_send_reset_code रीसेट कोड भेजने में विफल
     failed_to_send_verification_code सत्यापन कोड भेजने में विफल
     fake_only केवल नकली
@@ -140,6 +142,7 @@
     json JSON
     label_suffix $label:
     leaderboard लीडरबोर्ड
+    learning_session_complete_description अच्छा काम! आपने यह शिक्षण सत्र समाप्त कर दिया। आपकी प्रगति सहेज ली गई है.
     licenses लाइसेंस
     licenses_aliolo_section_title Aliolo वाणिज्यिक लाइसेंस
     licenses_aliolo_subtitle मालिकाना सॉफ़्टवेयर और प्रीमियम एक्सेस शर्तें
@@ -173,7 +176,7 @@
     play_audio ऑडियो चलाएं
     please_enter_the_6_digit_code कृपया 6 अंकीय कोड दर्ज करें
     please_wait_for_a_response_before_replying_again कृपया दोबारा उत्तर देने से पहले प्रतिक्रिया की प्रतीक्षा करें।
-    premium_expires_at $date पर समाप्त होता है
+    premium_expires_at $Date पर समाप्त होता है
     premium_lifetime आजीवन पहुंच
     premium_only केवल प्रीमियम
     premium_status_active आप एक प्रीमियम सदस्य हैं
@@ -184,6 +187,7 @@
     public_other_subject सार्वजनिक/अन्य विषय
     purchase_failed खरीदारी विफल: $e
     recovery_error पुनर्प्राप्ति त्रुटि: $e
+    refresh ताज़ा करना
     refresh_conversation बातचीत ताज़ा करें
     renderer रेंडरर
     reset_code कोड फिर ठीक करें
@@ -209,9 +213,11 @@
     testing_mode परीक्षण मोड
     text मूलपाठ
     this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards यह एक फ़ोल्डर है. आप सभी कार्डों का अभ्यास करने के लिए ऊपर दिए गए लर्न/टेस्ट बटन का उपयोग कर सकते हैं।
+    total_cards कुल कार्ड
     type_your_reply अपना उत्तर लिखें...
     ua यूए
     unknown_user_profile_missing अज्ञात उपयोगकर्ता (प्रोफ़ाइल अनुपलब्ध)
+    update_available एक नया संस्करण उपलब्ध है!
     user उपयोगकर्ता
     user_id उपयोगकर्ता पहचान
     user_with_this_email_already_exists_please_log_in_instead इस ईमेल के साथ पहले से प्रयोगकर्ता मौजूद है। कृपया इसके बजाय लॉग इन करें.

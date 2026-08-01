@@ -68,6 +68,7 @@
     colors Zabarwienie
     confirm_subscription Potwierdź subskrypcję
     context Kontekst
+    correct_answers Prawidłowe odpowiedzi
     could_not_launch Nie można uruchomić $url
     counting Rachunkowość
     current_subscription Aktualna subskrypcja
@@ -119,6 +120,7 @@
     error_saving Błąd podczas zapisywania: $e
     error_saving_card Błąd podczas zapisywania karty: $e
     error_updating_favorite Błąd aktualizacji ulubionego: $e
+    failed_answers Nieudane odpowiedzi
     failed_to_send_reset_code Nie udało się wysłać kodu resetującego
     failed_to_send_verification_code Nie udało się wysłać kodu weryfikacyjnego
     fake_only Tylko fałszywe
@@ -140,6 +142,7 @@
     json JSON
     label_suffix $label:
     leaderboard Tabela liderów
+    learning_session_complete_description Świetna robota! Zakończyłeś tę sesję szkoleniową. Twoje postępy zostały zapisane.
     licenses Licencje
     licenses_aliolo_section_title Aliolo Licencja komercyjna
     licenses_aliolo_subtitle Zastrzeżone oprogramowanie i warunki dostępu premium
@@ -184,6 +187,7 @@
     public_other_subject Temat publiczny/inny
     purchase_failed Zakup nie powiódł się: $e
     recovery_error Błąd odzyskiwania: $e
+    refresh Odświeżać
     refresh_conversation Odśwież rozmowę
     renderer Renderer
     reset_code Zresetuj kod
@@ -209,9 +213,11 @@
     testing_mode Tryb testowy
     text Tekst
     this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards To jest folder. Możesz użyć powyższych przycisków Ucz się/Testuj, aby przećwiczyć wszystkie karty.
+    total_cards Wszystkie karty
     type_your_reply Wpisz swoją odpowiedź...
     ua UA
     unknown_user_profile_missing Nieznany użytkownik (brak profilu)
+    update_available Dostępna jest nowa wersja!
     user Użytkownik
     user_id Identyfikator użytkownika
     user_with_this_email_already_exists_please_log_in_instead Użytkownik o tym adresie e-mail już istnieje. Zamiast tego zaloguj się.

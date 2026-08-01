@@ -68,7 +68,8 @@
     colors Renkler
     confirm_subscription Aboneliği Onayla
     context Bağlam
-    could_not_launch $url başlatılamadı
+    correct_answers Doğru Cevaplar
+    could_not_launch $Url başlatılamadı
     counting Sayma
     current_subscription Mevcut Abonelik
     delete Silmek
@@ -119,6 +120,7 @@
     error_saving Kaydederken hata oluştu: $e
     error_saving_card Kart kaydedilirken hata oluştu: $e
     error_updating_favorite Favori güncellenirken hata oluştu: $e
+    failed_answers Başarısız Yanıtlar
     failed_to_send_reset_code Sıfırlama kodu gönderilemedi
     failed_to_send_verification_code Doğrulama kodu gönderilemedi
     fake_only Yalnızca sahte
@@ -140,6 +142,7 @@
     json JSON
     label_suffix $label:
     leaderboard Liderlik tablosu
+    learning_session_complete_description Harika iş! Bu öğrenme oturumunu tamamladınız. İlerlemeniz kaydedildi.
     licenses Lisanslar
     licenses_aliolo_section_title Aliolo Ticari Lisans
     licenses_aliolo_subtitle Tescilli yazılım ve premium erişim koşulları
@@ -173,7 +176,7 @@
     play_audio Ses Çal
     please_enter_the_6_digit_code Lütfen 6 haneli kodu giriniz
     please_wait_for_a_response_before_replying_again Lütfen tekrar yanıt vermeden önce yanıt bekleyin.
-    premium_expires_at $date tarihinde sona eriyor
+    premium_expires_at $Date tarihinde sona eriyor
     premium_lifetime Ömür boyu erişim
     premium_only Yalnızca premium
     premium_status_active Premium üyesin
@@ -184,10 +187,11 @@
     public_other_subject Kamu/Diğer Konu
     purchase_failed Satın alma başarısız oldu: $e
     recovery_error Kurtarma hatası: $e
+    refresh Yenile
     refresh_conversation Konuşmayı yenile
     renderer Oluşturucu
     reset_code Kodu Sıfırla
-    reset_code_sent_to_please_check_your_inbox $email'ye gönderilen kodu sıfırlayın. Lütfen gelen kutunuzu kontrol edin.
+    reset_code_sent_to_please_check_your_inbox $Email'ye gönderilen kodu sıfırlayın. Lütfen gelen kutunuzu kontrol edin.
     restore_purchases Satın Alınanları Geri Yükle
     save Kaydetmek
     save_33_per_month Ayda %33 tasarruf edin
@@ -209,9 +213,11 @@
     testing_mode Test modu
     text Metin
     this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards Bu bir klasör. Tüm kartların alıştırmasını yapmak için yukarıdaki Öğren/Test düğmelerini kullanabilirsiniz.
+    total_cards Toplam Kartlar
     type_your_reply Cevabınızı yazın...
     ua Birleşik Arap Emirlikleri
     unknown_user_profile_missing Bilinmeyen Kullanıcı (Profil eksik)
+    update_available Yeni bir sürüm mevcut!
     user Kullanıcı
     user_id Kullanıcı kimliği
     user_with_this_email_already_exists_please_log_in_instead Bu e-postaya sahip kullanıcı zaten mevcut. Lütfen bunun yerine giriş yapın.

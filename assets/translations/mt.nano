@@ -68,6 +68,7 @@
     colors Kuluri
     confirm_subscription Ikkonferma l-Abbonament
     context Kuntest
+    correct_answers Tweġibiet Korretti
     could_not_launch Ma setgħetx tniedi $url
     counting Għadd
     current_subscription Abbonament kurrenti
@@ -119,6 +120,7 @@
     error_saving Żball fl-iffrankar: $e
     error_saving_card Żball fl-iffrankar tal-karta: $e
     error_updating_favorite Żball fl-aġġornament tal-favorit: $e
+    failed_answers Tweġibiet falluti
     failed_to_send_reset_code Naqas milli jibgħat il-kodiċi reset
     failed_to_send_verification_code Naqas milli jintbagħat il-kodiċi ta' verifika
     fake_only Foloz biss
@@ -140,6 +142,7 @@
     json JSON
     label_suffix $label:
     leaderboard Leaderboard
+    learning_session_complete_description Xogħol kbir! Int lestejt din is-sessjoni ta’ tagħlim. Il-progress tiegħek ġie salvat.
     licenses Liċenzji
     licenses_aliolo_section_title Aliolo Liċenzja Kummerċjali
     licenses_aliolo_subtitle Softwer proprjetarju u termini ta' aċċess premium
@@ -184,6 +187,7 @@
     public_other_subject Pubbliku/Suġġett Ieħor
     purchase_failed Xiri falla: $e
     recovery_error Żball fl-irkupru: $e
+    refresh Aġġorna
     refresh_conversation Aġġorna l-konversazzjoni
     renderer Renderer
     reset_code Irrisettja l-Kodiċi
@@ -209,9 +213,11 @@
     testing_mode Mod ta 'ttestjar
     text Test
     this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards Dan huwa folder. Tista' tuża l-buttuni Tgħallem/Ittestja hawn fuq biex tipprattika l-karti kollha.
+    total_cards Karti Totali
     type_your_reply Ittajpja t-tweġiba tiegħek...
     ua UA
     unknown_user_profile_missing Utent mhux magħruf (Profil nieqes)
+    update_available Verżjoni ġdida hija disponibbli!
     user Utent
     user_id ID tal-utent
     user_with_this_email_already_exists_please_log_in_instead Utent b'din l-email diġà jeżisti. Jekk jogħġbok idħol minflok.

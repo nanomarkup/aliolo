@@ -68,6 +68,7 @@
     colors Färger
     confirm_subscription Bekräfta prenumeration
     context Sammanhang
+    correct_answers Rätt svar
     could_not_launch Kunde inte starta $url
     counting Räkning
     current_subscription Aktuell prenumeration
@@ -119,6 +120,7 @@
     error_saving Fel när det skulle sparas: $e
     error_saving_card Fel när kortet skulle sparas: $e
     error_updating_favorite Fel vid uppdatering av favorit: $e
+    failed_answers Misslyckade svar
     failed_to_send_reset_code Det gick inte att skicka återställningskoden
     failed_to_send_verification_code Det gick inte att skicka verifieringskoden
     fake_only Endast falska
@@ -140,6 +142,7 @@
     json JSON
     label_suffix $label:
     leaderboard Leaderboard
+    learning_session_complete_description Bra jobbat! Du avslutade denna inlärningssession. Dina framsteg har sparats.
     licenses Licenser
     licenses_aliolo_section_title Aliolo Kommersiell licens
     licenses_aliolo_subtitle Proprietär programvara och premiumåtkomstvillkor
@@ -184,6 +187,7 @@
     public_other_subject Offentligt/annat ämne
     purchase_failed Köp misslyckades: $e
     recovery_error Återställningsfel: $e
+    refresh Uppdatera
     refresh_conversation Uppdatera konversationen
     renderer Renderare
     reset_code Återställ koden
@@ -209,9 +213,11 @@
     testing_mode Testläge
     text Text
     this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards Det här är en mapp. Du kan använda Learn/Test-knapparna ovan för att öva på alla kort.
+    total_cards Totalt antal kort
     type_your_reply Skriv ditt svar...
     ua UA
     unknown_user_profile_missing Okänd användare (profil saknas)
+    update_available En ny version är tillgänglig!
     user Användare
     user_id Användar-ID
     user_with_this_email_already_exists_please_log_in_instead Användare med denna e-postadress finns redan. Logga in istället.

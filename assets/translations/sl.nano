@@ -68,6 +68,7 @@
     colors Barve
     confirm_subscription Potrdite naročnino
     context Kontekst
+    correct_answers Pravilni odgovori
     could_not_launch Ni bilo mogoče zagnati $url
     counting Štetje
     current_subscription Trenutna naročnina
@@ -119,6 +120,7 @@
     error_saving Napaka pri shranjevanju: $e
     error_saving_card Napaka pri shranjevanju kartice: $e
     error_updating_favorite Napaka pri posodabljanju priljubljenega: $e
+    failed_answers Neuspeli odgovori
     failed_to_send_reset_code Pošiljanje kode za ponastavitev ni uspelo
     failed_to_send_verification_code Kode za preverjanje ni bilo mogoče poslati
     fake_only Samo ponaredek
@@ -140,6 +142,7 @@
     json JSON
     label_suffix $label:
     leaderboard Lestvica najboljših
+    learning_session_complete_description Odlično delo! Končali ste to učno sejo. Vaš napredek je shranjen.
     licenses Licence
     licenses_aliolo_section_title Aliolo Komercialna licenca
     licenses_aliolo_subtitle Lastniška programska oprema in pogoji premium dostopa
@@ -184,6 +187,7 @@
     public_other_subject Javno/Drugi predmet
     purchase_failed Nakup ni uspel: $e
     recovery_error Napaka pri obnovitvi: $e
+    refresh Osveži
     refresh_conversation Osveži pogovor
     renderer Upodabljalnik
     reset_code Ponastavi kodo
@@ -209,9 +213,11 @@
     testing_mode Testni način
     text Besedilo
     this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards To je mapa. Za vadbo vseh kart lahko uporabite zgornje gumbe za učenje/preizkus.
+    total_cards Skupaj kartic
     type_your_reply Vnesite svoj odgovor ...
     ua UA
     unknown_user_profile_missing Neznani uporabnik (manjka profil)
+    update_available Na voljo je nova različica!
     user Uporabnik
     user_id ID uporabnika
     user_with_this_email_already_exists_please_log_in_instead Uporabnik s tem e-poštnim naslovom že obstaja. Prijavite se namesto tega.

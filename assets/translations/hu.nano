@@ -68,6 +68,7 @@
     colors Színek
     confirm_subscription Erősítse meg az előfizetést
     context Kontextus
+    correct_answers Helyes válaszok
     could_not_launch Nem sikerült elindítani a $url
     counting Számolás
     current_subscription Jelenlegi előfizetés
@@ -119,6 +120,7 @@
     error_saving Hiba a mentéskor: $e
     error_saving_card Hiba a kártya mentésekor: $e
     error_updating_favorite Hiba történt a kedvenc frissítésekor: $e
+    failed_answers Sikertelen válaszok
     failed_to_send_reset_code Nem sikerült elküldeni a visszaállítási kódot
     failed_to_send_verification_code Nem sikerült elküldeni az ellenőrző kódot
     fake_only Csak hamisítvány
@@ -140,6 +142,7 @@
     json JSON
     label_suffix $label:
     leaderboard Ranglista
+    learning_session_complete_description Remek munka! Befejezte ezt a tanulási folyamatot. Az előrehaladást elmentettük.
     licenses Licencek
     licenses_aliolo_section_title Aliolo Kereskedelmi engedély
     licenses_aliolo_subtitle Saját szoftver és prémium hozzáférési feltételek
@@ -166,7 +169,7 @@
     plan_monthly_title Havi hozzáférés
     plan_weekly_tagline Legjobb gyors gólokhoz
     plan_weekly_title Heti hozzáférés
-    plan_yearly_tagline 33% megtakarítás havonta
+    plan_yearly_tagline 33% Megtakarítás havonta
     plan_yearly_title Éves hozzáférés
     platform Platform
     play Játék
@@ -184,13 +187,14 @@
     public_other_subject Nyilvános/Egyéb téma
     purchase_failed Sikertelen vásárlás: $e
     recovery_error Helyreállítási hiba: $e
+    refresh Frissítés
     refresh_conversation Frissítse a beszélgetést
     renderer Renderer
     reset_code Reset Code
     reset_code_sent_to_please_check_your_inbox A kód visszaállítása a következőre: $email. Kérjük, ellenőrizze beérkező leveleit.
     restore_purchases Vásárlások visszaállítása
     save Megtakarítás
-    save_33_per_month 33% megtakarítás havonta
+    save_33_per_month 33% Megtakarítás havonta
     saved_successfully Sikeresen mentve
     search_users Felhasználók keresése
     session_complete A munkamenet kész!
@@ -209,9 +213,11 @@
     testing_mode Tesztelési mód
     text Szöveg
     this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards Ez egy mappa. Az összes kártya gyakorlásához használhatja a fenti Tanulás/Teszt gombokat.
+    total_cards Összes kártya
     type_your_reply Írja be a válaszát...
     ua UA
     unknown_user_profile_missing Ismeretlen felhasználó (profil hiányzik)
+    update_available Új verzió érhető el!
     user Felhasználó
     user_id Felhasználói azonosító
     user_with_this_email_already_exists_please_log_in_instead Ezzel az e-mail-címmel már létezik felhasználó. Inkább jelentkezz be.
