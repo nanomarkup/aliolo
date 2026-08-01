@@ -17,7 +17,7 @@ const mockEnv = {
       const url = new URL(request.url);
       const filepath = url.pathname;
       let html = '';
-      if (filepath === '/landing.html' || filepath === '/') {
+      if (filepath === '/landing.html' || filepath === '/' || filepath === '/landing') {
         html = landingHtml;
       } else if (filepath === '/pricing.html' || filepath === '/pricing') {
         html = pricingHtml;

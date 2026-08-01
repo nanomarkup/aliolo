@@ -132,7 +132,7 @@ const serveAsset = async (c: any, filepath: string) => {
 
 const renderStaticPage = async (c: any, page: string, lang: string = 'en') => {
   const targetLang = SUPPORTED_LANGS.includes(lang) ? lang : 'en';
-  const filepath = targetLang === 'en' ? `/${page}.html` : `/${targetLang}/${page}.html`;
+  const filepath = targetLang === 'en' ? `/${page}` : `/${targetLang}/${page}`;
   
   if (page === 'pay') {
     const res = await serveAsset(c, filepath);
