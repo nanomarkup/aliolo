@@ -233,17 +233,18 @@ LEGAL_STYLES = """
     .page-tabs {
       order: 3;
       flex: 1 0 100%;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
       justify-content: center;
-      overflow: visible;
+      overflow-x: auto;
+      overflow-y: hidden;
       margin-inline: 0;
       padding-inline: 0;
-      gap: 8px;
+      gap: 4px;
       scroll-padding-inline: 0;
     }
     .page-tabs a {
-      padding: 9px 12px;
-      font-size: 14px;
+      padding: 9px 8px;
+      font-size: 13px;
     }
   }
   main { padding: 34px 0 78px; }
@@ -683,17 +684,18 @@ PAY_STYLES = """
       .page-tabs {
         order: 3;
         flex: 1 0 100%;
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
         justify-content: center;
-        overflow: visible;
+        overflow-x: auto;
+        overflow-y: hidden;
         margin-inline: 0;
         padding-inline: 0;
-        gap: 8px;
+        gap: 4px;
         scroll-padding-inline: 0;
       }
       .page-tabs a {
-        padding: 9px 12px;
-        font-size: 14px;
+        padding: 9px 8px;
+        font-size: 13px;
       }
     }
     @media (max-width: 920px) {
@@ -1872,21 +1874,22 @@ LANDING_STYLES = """
       border-radius: 10px;
     }
     .landing-tabs {
-      width: auto;
+      width: 100%;
       display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
+      flex-wrap: nowrap;
+      gap: 3px;
       justify-content: center;
-      justify-self: center;
+      justify-self: stretch;
     }
     .landing-tabs a {
       display: inline-flex;
       align-items: center;
       min-height: 40px;
       justify-content: center;
-      padding: 8px 10px;
-      font-size: 14px;
-      line-height: 1.2;
+      padding: 8px 3px;
+      font-size: 12px;
+      line-height: 1.1;
+      white-space: nowrap;
     }
     .lang-select {
       flex: 0 0 136px;
@@ -1907,7 +1910,7 @@ LANDING_STYLES = """
       white-space: nowrap;
       text-align: center;
       min-height: 40px;
-      padding: 8px 10px;
+      padding: 8px 3px;
     }
     .nav-cta {
       flex: 0 0 auto;
@@ -1918,7 +1921,7 @@ LANDING_STYLES = """
       white-space: nowrap;
       text-align: center;
       min-height: 40px;
-      padding: 8px 10px;
+      padding: 8px 3px;
     }
     main { padding-top: 20px; }
     .hero-copy { padding-top: 18px; }
@@ -1952,7 +1955,7 @@ LANDING_STYLES = """
     .final-cta .btn { width: 100%; }
   }
   @media (max-width: 420px) {
-    .section[id] { scroll-margin-top: 176px; }
+    .section[id] { scroll-margin-top: 128px; }
   }
 """
 

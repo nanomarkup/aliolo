@@ -210,17 +210,18 @@
     .page-tabs {
       order: 3;
       flex: 1 0 100%;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
       justify-content: center;
-      overflow: visible;
+      overflow-x: auto;
+      overflow-y: hidden;
       margin-inline: 0;
       padding-inline: 0;
-      gap: 8px;
+      gap: 4px;
       scroll-padding-inline: 0;
     }
     .page-tabs a {
-      padding: 9px 12px;
-      font-size: 14px;
+      padding: 9px 8px;
+      font-size: 13px;
     }
   }
   main { padding: 34px 0 78px; }
