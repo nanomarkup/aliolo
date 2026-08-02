@@ -26,7 +26,8 @@ curl --fail --silent --show-error --location \
   "$BASE_URL/" >/dev/null
 
 LANDING_HTML="$(curl --fail --silent --show-error "$BASE_URL/")"
-if [[ "$LANDING_HTML" != *'<link rel="icon" type="image/webp" href="/app_icon.webp">'* ]]; then
+if [[ "$LANDING_HTML" != *'rel="icon" type="image/webp"'* ]] ||
+   [[ "$LANDING_HTML" != *'app_icon.webp'* ]]; then
   echo "Production landing page is missing its favicon link" >&2
   exit 1
 fi

@@ -22,9 +22,9 @@ void main() {
       );
       expect(
         html,
-        contains('<link rel="icon" type="image/webp" href="app_icon.webp">'),
+        contains('<link rel="icon" type="image/webp" href="/app_icon.webp">'),
       );
-      expect(html, contains('<link rel="manifest" href="manifest.json">'));
+      expect(html, contains('<link rel="manifest" href="/manifest.json">'));
       expect(
         html,
         contains('<script src="flutter_bootstrap.js" async></script>'),

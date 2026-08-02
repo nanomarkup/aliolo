@@ -55,7 +55,12 @@ jobs:
           name: aliolo-web
           path: build/web
       - name: Verify deployment artifact
-        run: test -f build/web/index.html && test -f build/web/main.dart.js
+        run: |
+          test -f build/web/index.html
+          test -f build/web/main.dart.js
+          test -f build/web/landing.html
+          grep -F 'rel="icon" type="image/webp"' build/web/landing.html
+          grep -F 'app_icon.webp' build/web/landing.html
       - name: Deploy Worker and web assets
         working-directory: api
         run: npx wrangler deploy --env production
