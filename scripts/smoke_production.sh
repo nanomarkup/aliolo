@@ -25,7 +25,9 @@ curl --fail --silent --show-error --location \
   --retry 5 --retry-delay 2 --retry-all-errors \
   "$BASE_URL/" >/dev/null
 
-LANDING_HTML="$(curl --fail --silent --show-error "$BASE_URL/")"
+LANDING_HTML="$(curl --fail --silent --show-error --location \
+  --retry 5 --retry-delay 2 --retry-all-errors \
+  "$BASE_URL/")"
 if [[ "$LANDING_HTML" != *'rel="icon" type="image/webp"'* ]] ||
    [[ "$LANDING_HTML" != *'app_icon.webp'* ]]; then
   echo "Production landing page is missing its favicon link" >&2
@@ -48,7 +50,9 @@ if [[ "$SITEMAP_XML" != *'<loc>https://aliolo.com/landing.html</loc>'* ]] ||
   exit 1
 fi
 
-LOGIN_HTML="$(curl --fail --silent --show-error "$BASE_URL/login")"
+LOGIN_HTML="$(curl --fail --silent --show-error --location \
+  --retry 5 --retry-delay 2 --retry-all-errors \
+  "$BASE_URL/login")"
 if [[ "$LOGIN_HTML" != *'<meta name="robots" content="noindex,nofollow">'* ]]; then
   echo "Production login shell is missing noindex" >&2
   exit 1
