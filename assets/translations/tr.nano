@@ -44,9 +44,12 @@
     about_support_settings_title Kişiselleştirme
     about_support_title Ayarlar, Geri Bildirim ve Destek
     about_tagline Görselle Öğren. Kalıcı Olarak Ustalaş.
+    account_and_management Account & Management
     account_created Hesap oluşturuldu
     account_created_billing_fail Hesabınız oluşturuldu ancak ödeme tamamlanmadı. Aşağıdaki ödemeyi yeniden deneyin.
     account_deleted Account deleted successfully
+    account_setup_completed Hesap kurulumu tamamlandı.
+    active Aktif
     add_card Add Card
     add_collection Koleksiyon ekle
     add_folder Klasör ekle
@@ -76,6 +79,7 @@
     aliolo aliolo
     all_matching_subjects Tüm eşleşen konular
     all_rights_reserved Her hakkı saklıdır
+    all_time Tüm Zamanlar
     answer Cevap
     answer_label answer
     answers_label answers
@@ -86,8 +90,10 @@
     audio Ses
     audio_playing Ses Çalınıyor
     author Author
+    autoplay Otomatik oynatma
     back Geri
     back_to_login Back to Login
+    back_to_plans Back to plans
     back_to_subjects Konulara Geri Dön
     best_for_quick_goals Hızlı hedefler için en iyisi
     billing_disclaimer Abonelikler iptal edilmediği sürece otomatik olarak yenilenir. Aboneliğinizi mağaza ayarlarınızdan yönetebilirsiniz.
@@ -95,6 +101,7 @@
     bronze BRONZE
     browser Tarayıcı
     cancel İptal etmek
+    cancel_in_paddle Paddle'da iptal et
     cancel_request Cancel Request
     cancel_request_confirm Are you sure you want to cancel the request to
     cannot_delete_folder Cannot Delete Folder
@@ -103,6 +110,8 @@
     card_id Kart Kimliği
     card_label Card
     card_level Kart Seviyesi
+    card_limit Kart sınırı
+    card_limit_msg {limit} kart sınırınıza ulaştınız.
     card_plural Cards
     cards cards
     cards_label cards
@@ -111,31 +120,44 @@
     change_avatar Change Avatar
     change_password Şifreyi Değiştir
     check_your_email_for_code Kod için e-postanızı kontrol edin
+    checkout_email_before_payment_desc Ödeme yapmadan önce e-postanızı girin, böylece Aliolo hesabınızı oluşturabilir ve aboneliği size bağlayabilir.
+    checkout_finish_account_desc Ödemenin iptal edilmesi veya kesintiye uğraması durumunda daha sonra tekrar giriş yapabilmek için şimdi kullanıcı adınızı ve şifrenizi seçin.
+    checkout_verification_desc Mağaza ödeme sayfasını açmadan önce hızlı bir doğrulamaya ihtiyacımız var.
     clear Temizlemek
     click_to_select_image Click to select image
     click_to_view_original Orijinali görmek için tıklayın
     close Kapalı
+    close_feedback_request_confirm Bu geri bildirim isteğini kapatmak istediğinizden emin misiniz?
     close_request İsteği Kapat?
     code_label Code
     collection_id Koleksiyon Kimliği
     colors Renkler
     common_settings Common Settings
     compare_plans Ücretsiz ve Premium'u Karşılaştır
+    complete_account Hesabı tamamla
+    complete_account_setup Hesap kurulumunu tamamla
+    complete_account_setup_desc Gelecekteki girişler ve geri yüklemeler için bir kullanıcı adı ve şifre ekleyin.
+    complete_account_subscription_desc Aboneliğiniz zaten bu hesaba bağlı. Herhangi bir yerden giriş yapabilmek ve satın alımlarınızı daha sonra kurtarabilmek için bir kullanıcı adı ve şifre ekleyin.
     confirm Onayla
     confirm_logout Are you sure you want to logout?
     confirm_password Confirm Password
+    confirm_password_required Confirm password is required
     confirm_subscription Aboneliği Onayla
     content_label Content
     context Bağlam
+    continue_to_checkout Ödemeye devam et
     copy COPY
     copy_all Copy All
     core_features CORE FEATURES
     correct_answers Doğru Cevaplar
     could_not_launch $url başlatılamadı
+    could_not_open_paddle_cancellation Paddle iptali açılamadı: {error}
     counting Sayma
     create_account Create Account
+    create_account_to_continue Devam etmek için hesabınızı oluşturun
     create_new_account Create New Account
     create_new_card Create New Card
+    create_request İstek oluştur
     created_at Oluşturulma Tarihi
     current_streak Current Streak
     current_subscription Mevcut Abonelik
@@ -160,6 +182,7 @@
     delete_collection Koleksiyonu Sil
     delete_collection_confirm Bu koleksiyonu silmek istediğinizden emin misiniz?
     delete_folder Klasörü sil
+    delete_folder_confirm Bu klasörü silmek istediğinizden emin misiniz?
     delete_selected_cards Delete selected cards?
     delete_subject Delete Subject
     delete_subject_confirm Delete subject '{subject}' and all {count} cards inside?
@@ -258,6 +281,7 @@
     doc_welcome_title Aliolo'ya Hoş Geldiniz
     documentation Dokümantasyon
     done_today Bugün Yapıldı
+    dont_show_again_for_this_subject Bu konu için tekrar gösterme
     down_arrow Down Arrow
     edit Düzenle
     edit_card Edit Card
@@ -268,6 +292,7 @@
     edit_subject Edit Subject
     edit_subject_title Edit Subject
     edit_subscription Aboneliği düzenle
+    edit_user Kullanıcıyı düzenle
     email Email
     email_change_notice For security, a confirmation link will be sent to BOTH your old and new email addresses. You must click both to complete the change.
     email_in_use Email is already in use
@@ -275,6 +300,7 @@
     email_update_sent Confirmation emails sent. Please check both inboxes.
     email_updated_successfully E-posta başarıyla güncellendi!
     english English
+    enter_code_sent_to_email {email} adresine gönderilen 6 haneli kodu girin
     enter_current_password Mevcut şifreyi girin
     enter_new_email Yeni e-postayı girin
     enter_new_name Enter New Name
@@ -297,10 +323,15 @@
     failed_to_send_verification_code Doğrulama kodu gönderilemedi
     fake_only Yalnızca sahte
     fatal_startup_error Fatal Startup Error
+    favorite Favori
     feat_adaptive_desc The system monitors your recognition speed across MCQ options, dynamically adjusting intervals to push your boundaries.
     feat_adaptive_title Adaptive Response Timing
     feat_ages_desc Content curated for different age groups from early childhood to advanced learning.
     feat_ages_title For All Ages
+    feat_autoplay_desc Focus on learning while the app automatically advances through cards at your pace.
+    feat_autoplay_title Hands-Free Autoplay
+    feat_create_share_desc Easily create your own subjects and cards, or share them with the community.
+    feat_create_share_title Create & Share
     feat_gamified_desc Earn XP, badges, and build streaks while mastering complex visual subjects.
     feat_gamified_title Gamified Experience
     feat_mastery_desc Dynamic XP rewards difficulty, while real-time mastery badges (Bronze, Silver, Gold) track your journey from novice to expert.
@@ -311,6 +342,8 @@
     feat_recognition_title Visual Pattern Training
     feat_science_adaptive_desc Intervals automatically adjust based on your recognition speed and accuracy.
     feat_science_adaptive_title Adaptive Timing
+    feat_science_smart_review_desc The algorithm calculates the optimal time to review each card for maximum retention.
+    feat_science_smart_review_title Smart Review Cycles
     feat_science_spacing_desc Advanced cognitive spacing model that predicts memory decay and optimizes review cycles.
     feat_science_spacing_title SuperMemo-2 (SM-2)
     feat_spacing_desc A full implementation of the SuperMemo-2 model predicts your memory decay and schedules reviews at the peak of retention.
@@ -345,6 +378,7 @@
     feedback_title Geri Bildirim Gönder
     feedback_title_hint Başlık
     feedback_type Tür
+    file_too_large Dosya çok büyük
     fill_all_fields Please fill all fields
     filter_all All
     filter_dashboard Kontrol Paneli
@@ -355,6 +389,7 @@
     filter_public_library Halk Kütüphanesi
     filters Filtreler
     finish Bitir
+    finish_account_setup Hesap kurulumunu bitir
     finished_session You finished {count} cards. XP bonus awarded!
     folder Klasör
     folder_already_exists Bu isimde bir klasör bu sütunda zaten var
@@ -362,6 +397,7 @@
     folder_label Klasör
     folder_not_empty_msg Silinemiyor: klasör boş değil.
     folder_plural Klasörler
+    folder_practice_all_cards_desc Bu bir klasör. Tüm kartlarda pratik yapmak için yukarıdaki Öğren/Test Et düğmelerini kullanabilirsiniz.
     forgot_password Forgot Password?
     free_only Ücretsiz kullanıcılar
     general_preferences General Preferences
@@ -373,6 +409,7 @@
     hide_comparison Plan Karşılaştırmasını Gizle
     home Ev
     images Images
+    inactive Pasif
     included_subjects Dahil edilen konular
     info_copied Info copied to clipboard
     initializing_aliolo Initializing Aliolo...
@@ -390,11 +427,17 @@
     invite_user_content {email} e-posta adresi bulunamadı. Aliolo’ya katılmaya davet et?
     invite_user_title Kullanıcıyı Davet Et?
     invited_and_request_sent Davet edildi ve istek gönderildi!
+    is_required zorunludur
     json JSON
     keyboard_shortcuts Keyboard Shortcuts
     label_suffix $label:
     lang_abbr Lang
     language Language
+    languages Diller
+    last_3_months Son 3 Ay
+    last_6_months Son 6 Ay
+    last_month Geçen Ay
+    last_slide Son slayt
     leaderboard Liderlik tablosu
     learn_mode_desc Study cards and memorize answers
     learn_mode_title Learn
@@ -414,9 +457,11 @@
     licenses_intro_title Aliolo Lisans ve Paket Bildirimleri
     licenses_third_party_section_title Üçüncü Taraf Paket Lisansları
     light Light
+    limit_reached Sınıra ulaşıldı
     linux_distro Linux Dağıtımı
     loading Yükleniyor...
     localized_data Yerelleştirilmiş Veriler
+    log_in_instead Bunun yerine giriş yap
     login Giriş
     logout Logout
     manage_cards Manage Cards
@@ -448,12 +493,15 @@
     new NEW
     new_email Yeni E-posta
     new_password New Password
+    new_password_required New password is required
     next Next
     next_card Next Card
     next_daily_goal Sonraki Günlük Hedef
     next_daily_goal_desc Her gün ustalaşılacak hedef kart sayısı. Değişiklikler yarın yürürlüğe girecek.
     next_day_goal Yarınki Hedef
+    no_age_data_yet Henüz yaş verisi yok
     no_cards_available_for_this_session Bu oturum için kullanılabilir kart yok.
+    no_cards_due_yet Henüz vadesi gelen kart yok
     no_cards_found Kart bulunamadı
     no_cards_found_for_lang No cards found for this language
     no_cards_in_library No cards found in the library.
@@ -465,10 +513,19 @@
     no_localized_audio Yerelleştirilmiş ses yok
     no_localized_images Yerelleştirilmiş resim yok
     no_localized_video Yerelleştirilmiş video yok
+    no_onboarding_sessions_yet Henüz işe alım oturumu yok
+    no_permission_view_card_details Bu kart ayrıntılarını görüntüleme izniniz yok.
+    no_pillar_data_yet Henüz sütun verisi yok
+    no_slide_data_yet Henüz slayt verisi yok
     no_subjects_available Mevcut konu yok
     no_subjects_found Hiçbir konu bulunamadı
+    no_subjects_found_in_collection Bu koleksiyonda konu bulunamadı
     no_subjects_found_in_this_collection Bu koleksiyonda konu bulunamadı
+    no_usage_data_yet Henüz kullanım verisi yok
     no_users_found Kullanıcı bulunamadı
+    not_available Kullanılamaz
+    not_set Ayarlanmadı
+    official_website Resmi web sitesi
     ok OK
     old_password Eski Şifre
     old_password_required Eski şifre gereklidir
@@ -486,6 +543,7 @@
     onboarding_6_title Topluluğa Katılın
     onboarding_7_joined Binlerce öğrenci katıldı
     onboarding_7_quote Aliolo, çocuklarımın ve benim yeni konularda ustalaşma şeklimizi tamamen değiştirdi. Görsel kartlar ve aralıklı tekrar, öğrenmeyi bir oyun gibi hissettiriyor!
+    onboarding_analytics İşe Alım Analitiği
     onboarding_get_started Başlayın
     onboarding_next Sonraki
     onboarding_skip Atla
@@ -495,11 +553,13 @@
     order_id Sipariş Kimliği
     os_version İşletim Sistemi Sürümü
     our_mission OUR MISSION
+    paddle_cancel_subscription_desc Bir Paddle aboneliğini iptal etmeniz mi gerekiyor? Aşağıdaki Paddle iptal akışını açın.
     page Page
     parent_folder_label Parent Folder (tr)
     password Password
     password_required Password is required
     password_reset_success Password reset successful
+    password_updated Password updated successfully
     password_updated_successfully Şifre başarıyla güncellendi!
     passwords_dont_match Passwords do not match
     paste PASTE
@@ -534,6 +594,7 @@
     premium_unlock_desc Tüm konulara erişim kazanın, sınırsız kart oluşturun ve Aliolo'nin misyonunu destekleyin.
     premium_unlock_title Tam Erişimin Kilidini Açın
     prev Prev
+    previous Önceki
     previous_card Previous Card
     price_per_week ({price} / hafta)
     private Private
@@ -562,6 +623,12 @@
     remove_friend Remove Friend
     remove_friend_confirm Are you sure you want to remove friend
     renderer Oluşturucu
+    renderer_addition_emoji Toplama Emojisi
+    renderer_addition_numbers Toplama Sayıları
+    renderer_counting Sayma
+    renderer_generic Genel
+    renderer_subtraction_emoji Çıkarma Emojisi
+    renderer_subtraction_numbers Çıkarma Sayıları
     request_sent Request sent
     request_sent_waiting Request sent (waiting)
     required Required
@@ -572,13 +639,17 @@
     reset_password_for "Reset Password for: "
     restore_password Restore Password
     restore_purchases Satın Alınanları Geri Yükle
+    restore_purchases_started Geri yükleme başladı. Aliolo, geçerli tüm satın alımları bu hesaba yeniden bağlayacak.
+    retest_anyway Yine de yeniden test et
     retry Retry
     right_arrow Right Arrow
     save Kaydetmek
     save_33_per_month Ayda %33 tasarruf edin
+    save_account Hesabı kaydet
     save_before_nav Do you want to save changes before navigating?
     save_card Save Card
     save_subject Save Subject
+    save_success Saved successfully
     saved_successfully Başarıyla kaydedildi
     search_cards Search Cards
     search_subjects Search Subjects
@@ -591,8 +662,10 @@
     send Send
     send_code Send Code
     send_verification_code Send verification code?
+    session Oturum
     session_complete Oturum Tamamlandı!
     session_complete_description Harika iş! Bu oturumdaki tüm kartları bitirdiniz.
+    set_your_password Şifrenizi Belirleyin
     setting_saved Setting saved
     settings Ayarlar
     shortcuts_hint Press the key you want to use with Ctrl.
@@ -620,6 +693,8 @@
     subject_label Subject
     subject_plural Subjects
     subject_type Subject Type (tr)
+    subject_up_to_date_retest_desc Bu konu için güncelsiniz. Yine de tüm kartları şimdi yeniden test edebilirsiniz.
+    subject_usage Konu Kullanımı
     subjects Konular
     subscribe_now Şimdi Abone Ol
     subscription_data Abonelik verileri
@@ -648,10 +723,13 @@
     theme_system Sistem
     this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards Bu bir klasör. Tüm kartların alıştırmasını yapmak için yukarıdaki Öğren/Test düğmelerini kullanabilirsiniz.
     to_label To
+    toggle_languages Dilleri değiştir
     total_cards Toplam Kartlar
     total_xp Total XP
     trust_cloud_desc Your progress is securely synced across all your devices in real-time.
     trust_cloud_title Cloud Sync
+    trust_ecosystem_desc Your progress and cards are seamlessly synced across all your devices.
+    trust_ecosystem_title Aliolo Ecosystem
     trust_privacy TRUST & PRIVACY
     trust_sync_desc Your data is private and encrypted to ensure the highest security standards.
     trust_sync_title Encrypted Data
@@ -668,12 +746,14 @@
     up_arrow Up Arrow
     update Update
     update_available Yeni bir sürüm mevcut!
+    updated Güncellendi
     updated_at Güncellenme Tarihi
     upload_new_photo Yeni fotoğraf yükle
     user Kullanıcı
     user_exists User already exists
     user_id Kullanıcı kimliği
     user_not_found User not found
+    user_updated Kullanıcı güncellendi
     user_with_this_email_already_exists_please_log_in_instead Bu e-postaya sahip kullanıcı zaten mevcut. Lütfen bunun yerine giriş yapın.
     username Username
     users Kullanıcılar
@@ -681,6 +761,8 @@
     verification_code Doğrulama Kodu
     verification_code_sent_to Doğrulama kodu $email adresine gönderildi
     verify Verify
+    verify_email_change E-posta Değişikliğini Doğrula
+    verify_your_email E-postanızı doğrulayın
     version Sürüm
     video Video
     video_link Video Link
@@ -692,6 +774,7 @@
     visual_content_required En az bir görsel içerik gereklidir
     visual_content_required_msg En az bir görsel içerik (metin, resim, ses veya video) sağlanmalıdır.
     visual_text Görsel Metin
+    wait_for_response_before_replying Lütfen tekrar yanıtlamadan önce bir yanıt bekleyin.
     wants_to_be_friend Wants to be your friend
     weekly_access Haftalık Erişim
     welcome_complete_your_profile_to_join_aliolo Hoş geldin! aliolo'e katılmak için profilinizi tamamlayın.
@@ -701,33 +784,4 @@
     you_do_not_have_permission_to_edit_this_card Bu kartı düzenleme izniniz yok
     you_do_not_have_permission_to_view_this_card_details Bu kart ayrıntılarını görüntüleme izniniz yok.
     you_rank You are ranked #{rank}
-    active Aktif
-    autoplay Otomatik oynatma
-    card_limit Kart sınırı
-    card_limit_msg {limit} kart sınırınıza ulaştınız.
-    create_request İstek oluştur
-    edit_user Kullanıcıyı düzenle
-    favorite Favori
-    file_too_large Dosya çok büyük
-    inactive Pasif
-    is_required zorunludur
-    languages Diller
-    limit_reached Sınıra ulaşıldı
-    not_available Kullanılamaz
-    toggle_languages Dilleri değiştir
-    user_updated Kullanıcı güncellendi
     zoom Yakınlaştır
-    account_and_management Account & Management
-    back_to_plans Back to plans
-    confirm_password_required Confirm password is required
-    feat_autoplay_desc Focus on learning while the app automatically advances through cards at your pace.
-    feat_autoplay_title Hands-Free Autoplay
-    feat_create_share_desc Easily create your own subjects and cards, or share them with the community.
-    feat_create_share_title Create & Share
-    feat_science_smart_review_desc The algorithm calculates the optimal time to review each card for maximum retention.
-    feat_science_smart_review_title Smart Review Cycles
-    new_password_required New password is required
-    password_updated Password updated successfully
-    save_success Saved successfully
-    trust_ecosystem_desc Your progress and cards are seamlessly synced across all your devices.
-    trust_ecosystem_title Aliolo Ecosystem

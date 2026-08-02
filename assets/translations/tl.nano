@@ -44,9 +44,12 @@
     about_support_settings_title Personalization
     about_support_title Mga Setting, Feedback, at Suporta
     about_tagline Matuto nang Visual. Kabisaduhin nang Lubusan.
+    account_and_management Account & Management
     account_created Nagawa ang account
     account_created_billing_fail Nagawa ang iyong account, ngunit hindi nakumpleto ang pagbabayad. Subukang muli ang pagbabayad sa ibaba.
     account_deleted Account deleted successfully
+    account_setup_completed Nakumpleto na ang pag-setup ng account.
+    active Aktibo
     add_card Add Card
     add_collection Magdagdag ng koleksyon
     add_folder Magdagdag ng folder
@@ -76,6 +79,7 @@
     aliolo aliolo
     all_matching_subjects Lahat ng magkatugmang paksa
     all_rights_reserved Lahat ng karapatan ay nakalaan
+    all_time Kahit Kailan
     answer Sagot
     answer_label answer
     answers_label answers
@@ -86,8 +90,10 @@
     audio Audio
     audio_playing Nagpe-play ang Audio
     author Author
+    autoplay Awtomatikong pag-play
     back Bumalik
     back_to_login Back to Login
+    back_to_plans Back to plans
     back_to_subjects Bumalik sa Mga Paksa
     best_for_quick_goals Pinakamahusay para sa mabilis na layunin
     billing_disclaimer Awtomatikong nagre-renew ang mga subscription maliban kung kinansela. Maaari mong pamahalaan ang iyong subscription sa mga setting ng iyong tindahan.
@@ -95,6 +101,7 @@
     bronze BRONZE
     browser Browser
     cancel Kanselahin
+    cancel_in_paddle Kanselahin sa Paddle
     cancel_request Cancel Request
     cancel_request_confirm Are you sure you want to cancel the request to
     cannot_delete_folder Cannot Delete Folder
@@ -103,6 +110,8 @@
     card_id Card ID
     card_label Card
     card_level Antas ng Card
+    card_limit Limitasyon ng Card
+    card_limit_msg Naabot mo na ang limitasyon na {limit} card.
     card_plural Cards
     cards cards
     cards_label cards
@@ -111,31 +120,44 @@
     change_avatar Change Avatar
     change_password Baguhin ang Password
     check_your_email_for_code Tingnan ang iyong email para sa code
+    checkout_email_before_payment_desc Ilagay ang iyong email bago mag-checkout para magawa ng Aliolo ang iyong account at ma-attach ang subscription sa iyo.
+    checkout_finish_account_desc Piliin ang iyong username at password ngayon para makapag-log in ka muli mamaya kung ang pagbabayad ay nakansela o naantala.
+    checkout_verification_desc Kailangan namin ng isang mabilis na pag-verify bago buksan ang payment sheet ng store.
     clear Maaliwalas
     click_to_select_image Click to select image
     click_to_view_original I-click upang tingnan ang orihinal
     close Isara
+    close_feedback_request_confirm Sigurado ka bang gusto mong isara ang feedback request na ito?
     close_request Isara ang Kahilingan?
     code_label Code
     collection_id Collection ID
     colors Mga kulay
     common_settings Common Settings
     compare_plans Ipaghambing ang Libre vs Premium
+    complete_account Kumpletuhin ang account
+    complete_account_setup Kumpletuhin ang pag-setup ng account
+    complete_account_setup_desc Magdagdag ng username at password para sa mga susunod na pag-log in at pag-restore.
+    complete_account_subscription_desc Naka-attach na ang iyong subscription sa account na ito. Magdagdag ng username at password para makapag-log in ka kahit saan at ma-recover ang mga binili mo mamaya.
     confirm Kumpirmahin
     confirm_logout Are you sure you want to logout?
     confirm_password Confirm Password
+    confirm_password_required Confirm password is required
     confirm_subscription Kumpirmahin ang Subscription
     content_label Content
     context Konteksto
+    continue_to_checkout Magpatuloy sa checkout
     copy COPY
     copy_all Copy All
     core_features CORE FEATURES
     correct_answers Mga Tamang Sagot
     could_not_launch Hindi mailunsad ang $url
+    could_not_open_paddle_cancellation Hindi mabuksan ang pagkansela sa Paddle: {error}
     counting Nagbibilang
     create_account Create Account
+    create_account_to_continue Gumawa ng iyong account para magpatuloy
     create_new_account Create New Account
     create_new_card Create New Card
+    create_request Gumawa ng kahilingan
     created_at Nagawa Noong
     current_streak Current Streak
     current_subscription Kasalukuyang Subscription
@@ -160,6 +182,7 @@
     delete_collection Tanggalin ang koleksyon
     delete_collection_confirm Sigurado ka bang gusto mong tanggalin ang koleksyong ito?
     delete_folder Delete Folder
+    delete_folder_confirm Sigurado ka bang gusto mong tanggalin ang folder na ito?
     delete_selected_cards Delete selected cards?
     delete_subject Delete Subject
     delete_subject_confirm Delete subject '{subject}' and all {count} cards inside?
@@ -258,6 +281,7 @@
     doc_welcome_title Maligayang pagdating sa Aliolo
     documentation Dokumentasyon
     done_today Tapos na Ngayon
+    dont_show_again_for_this_subject Huwag nang ipakita muli para sa subject na ito
     down_arrow Down Arrow
     edit I-edit
     edit_card Edit Card
@@ -268,6 +292,7 @@
     edit_subject Edit Subject
     edit_subject_title Edit Subject
     edit_subscription I-edit ang subscription
+    edit_user I-edit ang User
     email Email
     email_change_notice For security, a confirmation link will be sent to BOTH your old and new email addresses. You must click both to complete the change.
     email_in_use Email is already in use
@@ -275,6 +300,7 @@
     email_update_sent Confirmation emails sent. Please check both inboxes.
     email_updated_successfully Matagumpay na na-update ang email!
     english English
+    enter_code_sent_to_email Ilagay ang 6-digit na code na ipinadala sa {email}
     enter_current_password Ipasok ang kasalukuyang password
     enter_new_email Ilagay ang bagong email
     enter_new_name Enter New Name
@@ -297,10 +323,15 @@
     failed_to_send_verification_code Nabigong ipadala ang verification code
     fake_only Fake lang
     fatal_startup_error Fatal Startup Error
+    favorite Paborito
     feat_adaptive_desc The system monitors your recognition speed across MCQ options, dynamically adjusting intervals to push your boundaries.
     feat_adaptive_title Adaptive Response Timing
     feat_ages_desc Content curated for different age groups from early childhood to advanced learning.
     feat_ages_title For All Ages
+    feat_autoplay_desc Focus on learning while the app automatically advances through cards at your pace.
+    feat_autoplay_title Hands-Free Autoplay
+    feat_create_share_desc Easily create your own subjects and cards, or share them with the community.
+    feat_create_share_title Create & Share
     feat_gamified_desc Earn XP, badges, and build streaks while mastering complex visual subjects.
     feat_gamified_title Gamified Experience
     feat_mastery_desc Dynamic XP rewards difficulty, while real-time mastery badges (Bronze, Silver, Gold) track your journey from novice to expert.
@@ -311,6 +342,8 @@
     feat_recognition_title Visual Pattern Training
     feat_science_adaptive_desc Intervals automatically adjust based on your recognition speed and accuracy.
     feat_science_adaptive_title Adaptive Timing
+    feat_science_smart_review_desc The algorithm calculates the optimal time to review each card for maximum retention.
+    feat_science_smart_review_title Smart Review Cycles
     feat_science_spacing_desc Advanced cognitive spacing model that predicts memory decay and optimizes review cycles.
     feat_science_spacing_title SuperMemo-2 (SM-2)
     feat_spacing_desc A full implementation of the SuperMemo-2 model predicts your memory decay and schedules reviews at the peak of retention.
@@ -345,6 +378,7 @@
     feedback_title Magpadala ng Feedback
     feedback_title_hint Pamagat
     feedback_type Uri
+    file_too_large Masyadong malaki ang file
     fill_all_fields Please fill all fields
     filter_all All
     filter_dashboard Dashboard
@@ -355,6 +389,7 @@
     filter_public_library Pampublikong Aklatan
     filters Mga Filter
     finish Tapusin
+    finish_account_setup Tapusin ang pag-setup ng account
     finished_session You finished {count} cards. XP bonus awarded!
     folder Folder
     folder_already_exists Mayroon nang folder na may ganitong pangalan sa pilar na ito
@@ -362,6 +397,7 @@
     folder_label Folder
     folder_not_empty_msg Hindi ma-delete: hindi walang laman ang folder.
     folder_plural Mga Folder
+    folder_practice_all_cards_desc Ito ay isang folder. Maaari mong gamitin ang mga pindutan ng Matuto/Subukan sa itaas para mag-practice sa lahat ng cards.
     forgot_password Forgot Password?
     free_only Libreng mga gumagamit
     general_preferences General Preferences
@@ -373,6 +409,7 @@
     hide_comparison Itago ang Paghahambing ng Plano
     home Bahay
     images Images
+    inactive Hindi aktibo
     included_subjects Kasamang mga paksa
     info_copied Info copied to clipboard
     initializing_aliolo Initializing Aliolo...
@@ -390,11 +427,17 @@
     invite_user_content Hindi nahanap ang email na {email}. Imbitahan silang sumali sa Aliolo?
     invite_user_title Mag-imbita ng User?
     invited_and_request_sent Inimbitahan at ipinadala ang kahilingan!
+    is_required ay kinakailangan
     json JSON
     keyboard_shortcuts Keyboard Shortcuts
     label_suffix $label:
     lang_abbr Lang
     language Language
+    languages Mga Wika
+    last_3_months Nakalipas na 3 Buwan
+    last_6_months Nakalipas na 6 na Buwan
+    last_month Nakalipas na Buwan
+    last_slide Huling slide
     leaderboard Leaderboard
     learn_mode_desc Study cards and memorize answers
     learn_mode_title Learn
@@ -414,9 +457,11 @@
     licenses_intro_title Aliolo Mga Paunawa sa Lisensya at Package
     licenses_third_party_section_title Mga Lisensya ng Third-Party na Package
     light Light
+    limit_reached Naabot ang limitasyon
     linux_distro Linux Distro
     loading Naglo-load...
     localized_data Naka-localize na Data
+    log_in_instead Mag-log in na lang
     login Mag-login
     logout Logout
     manage_cards Manage Cards
@@ -448,12 +493,15 @@
     new NEW
     new_email Bagong Email
     new_password New Password
+    new_password_required New password is required
     next Next
     next_card Next Card
     next_daily_goal Susunod na Pang-araw-araw na Layunin
     next_daily_goal_desc Target na bilang ng mga card na dapat makabisado bawat araw. Magkakabisa ang mga pagbabago bukas.
     next_day_goal Layunin para sa Bukas
+    no_age_data_yet Wala pang data ng edad
     no_cards_available_for_this_session Walang available na card para sa session na ito.
+    no_cards_due_yet Wala pang mga card na due
     no_cards_found Walang nakitang card
     no_cards_found_for_lang No cards found for this language
     no_cards_in_library No cards found in the library.
@@ -465,10 +513,19 @@
     no_localized_audio Walang naka-localize na audio
     no_localized_images Walang na-localize na mga larawan
     no_localized_video Walang naka-localize na video
+    no_onboarding_sessions_yet Wala pang mga onboarding session
+    no_permission_view_card_details Wala kang pahintulot na tingnan ang mga detalye ng card na ito.
+    no_pillar_data_yet Wala pang data ng pillar
+    no_slide_data_yet Wala pang data ng slide
     no_subjects_available Walang available na paksa
     no_subjects_found Walang nahanap na paksa
+    no_subjects_found_in_collection Walang mga subject na natagpuan sa koleksyong ito
     no_subjects_found_in_this_collection Walang nakitang paksa sa koleksyong ito
+    no_usage_data_yet Wala pang data ng paggamit
     no_users_found Walang nakitang mga user
+    not_available Hindi available
+    not_set Hindi naka-set
+    official_website Opisyal na website
     ok OK
     old_password Lumang Password
     old_password_required Kailangan ang lumang password
@@ -486,6 +543,7 @@
     onboarding_6_title Sumali sa Komunidad
     onboarding_7_joined Sinalihan ng libu-libong nag-aaral
     onboarding_7_quote Ganap na binago ng Aliolo ang paraan ng pag-master namin ng aking mga anak sa mga bagong paksa. Ang mga visual card at spaced repetition ay nagpaparamdam sa pag-aaral na parang isang laro!
+    onboarding_analytics Analytics ng Pag-onboard
     onboarding_get_started Magsimula Na
     onboarding_next Susunod
     onboarding_skip Laktawan
@@ -495,11 +553,13 @@
     order_id ID ng Order
     os_version Bersyon ng OS
     our_mission OUR MISSION
+    paddle_cancel_subscription_desc Kailangang kanselahin ang isang subscription sa Paddle? Buksan ang daloy ng pagkansela sa Paddle sa ibaba.
     page Page
     parent_folder_label Parent Folder (tl)
     password Password
     password_required Password is required
     password_reset_success Password reset successful
+    password_updated Password updated successfully
     password_updated_successfully Matagumpay na na-update ang password!
     passwords_dont_match Passwords do not match
     paste PASTE
@@ -534,6 +594,7 @@
     premium_unlock_desc Magkaroon ng access sa lahat ng paksa, gumawa ng walang limitasyong mga card, at suportahan ang misyon ni Aliolo.
     premium_unlock_title I-unlock ang Buong Access
     prev Prev
+    previous Nakaraan
     previous_card Previous Card
     price_per_week ({price} / linggo)
     private Private
@@ -562,6 +623,12 @@
     remove_friend Remove Friend
     remove_friend_confirm Are you sure you want to remove friend
     renderer Tagapag-render
+    renderer_addition_emoji Addition Emoji
+    renderer_addition_numbers Addition Numbers
+    renderer_counting Pagbibilang
+    renderer_generic Pangkalahatan
+    renderer_subtraction_emoji Subtraction Emoji
+    renderer_subtraction_numbers Subtraction Numbers
     request_sent Request sent
     request_sent_waiting Request sent (waiting)
     required Required
@@ -572,13 +639,17 @@
     reset_password_for "Reset Password for: "
     restore_password Restore Password
     restore_purchases Ibalik ang Mga Pagbili
+    restore_purchases_started Sinimulan na ang pag-restore. Iko-konekta muli ng Aliolo ang anumang valid na binili sa account na ito.
+    retest_anyway I-retest pa rin
     retry Retry
     right_arrow Right Arrow
     save I-save
     save_33_per_month Makatipid ng 33% bawat buwan
+    save_account I-save ang account
     save_before_nav Do you want to save changes before navigating?
     save_card Save Card
     save_subject Save Subject
+    save_success Saved successfully
     saved_successfully Matagumpay na na-save
     search_cards Search Cards
     search_subjects Search Subjects
@@ -591,8 +662,10 @@
     send Send
     send_code Send Code
     send_verification_code Send verification code?
+    session Session
     session_complete Kumpleto na ang Session!
     session_complete_description Mahusay na trabaho! Natapos mo na ang lahat ng card sa session na ito.
+    set_your_password I-set Ang Iyong Password
     setting_saved Setting saved
     settings Mga setting
     shortcuts_hint Press the key you want to use with Ctrl.
@@ -620,6 +693,8 @@
     subject_label Subject
     subject_plural Subjects
     subject_type Subject Type (tl)
+    subject_up_to_date_retest_desc Up to date ka para sa subject na ito. Maaari mo pa ring i-retest ang lahat ng cards ngayon.
+    subject_usage Paggamit ng Subject
     subjects Mga Paksa
     subscribe_now Mag-subscribe na
     subscription_data Data ng subscription
@@ -648,10 +723,13 @@
     theme_system System
     this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards Ito ay isang folder. Maaari mong gamitin ang mga button na Matuto/Subukan sa itaas para sanayin ang lahat ng card.
     to_label To
+    toggle_languages I-toggle ang mga wika
     total_cards Kabuuang mga Card
     total_xp Total XP
     trust_cloud_desc Your progress is securely synced across all your devices in real-time.
     trust_cloud_title Cloud Sync
+    trust_ecosystem_desc Your progress and cards are seamlessly synced across all your devices.
+    trust_ecosystem_title Aliolo Ecosystem
     trust_privacy TRUST & PRIVACY
     trust_sync_desc Your data is private and encrypted to ensure the highest security standards.
     trust_sync_title Encrypted Data
@@ -668,12 +746,14 @@
     up_arrow Up Arrow
     update Update
     update_available Available ang isang bagong bersyon!
+    updated Na-update
     updated_at Na-update Noong
     upload_new_photo Mag-upload ng bagong larawan
     user Gumagamit
     user_exists User already exists
     user_id User ID
     user_not_found User not found
+    user_updated Na-update ang user
     user_with_this_email_already_exists_please_log_in_instead Umiiral na ang user na may ganitong email. Mangyaring mag-log in sa halip.
     username Username
     users Mga gumagamit
@@ -681,6 +761,8 @@
     verification_code Verification Code
     verification_code_sent_to Ipinadala ang verification code sa $email
     verify Verify
+    verify_email_change I-verify ang Pagbabago ng Email
+    verify_your_email I-verify ang iyong email
     version Bersyon
     video Video
     video_link Video Link
@@ -692,6 +774,7 @@
     visual_content_required Kinakailangan ng hindi bababa sa isang visual content
     visual_content_required_msg Dapat magbigay ng hindi bababa sa isang visual content (text, larawan, audio, o video).
     visual_text Visual Text
+    wait_for_response_before_replying Mangyaring maghintay ng tugon bago sumagot muli.
     wants_to_be_friend Wants to be your friend
     weekly_access Lingguhang Access
     welcome_complete_your_profile_to_join_aliolo Maligayang pagdating! Kumpletuhin ang iyong profile para makasali sa aliolo.
@@ -701,33 +784,4 @@
     you_do_not_have_permission_to_edit_this_card Wala kang pahintulot na i-edit ang card na ito
     you_do_not_have_permission_to_view_this_card_details Wala kang pahintulot na tingnan ang mga detalye ng card na ito.
     you_rank You are ranked #{rank}
-    active Aktibo
-    autoplay Awtomatikong pag-play
-    card_limit Limitasyon ng Card
-    card_limit_msg Naabot mo na ang limitasyon na {limit} card.
-    create_request Gumawa ng kahilingan
-    edit_user I-edit ang User
-    favorite Paborito
-    file_too_large Masyadong malaki ang file
-    inactive Hindi aktibo
-    is_required ay kinakailangan
-    languages Mga Wika
-    limit_reached Naabot ang limitasyon
-    not_available Hindi available
-    toggle_languages I-toggle ang mga wika
-    user_updated Na-update ang user
     zoom Zoom
-    account_and_management Account & Management
-    back_to_plans Back to plans
-    confirm_password_required Confirm password is required
-    feat_autoplay_desc Focus on learning while the app automatically advances through cards at your pace.
-    feat_autoplay_title Hands-Free Autoplay
-    feat_create_share_desc Easily create your own subjects and cards, or share them with the community.
-    feat_create_share_title Create & Share
-    feat_science_smart_review_desc The algorithm calculates the optimal time to review each card for maximum retention.
-    feat_science_smart_review_title Smart Review Cycles
-    new_password_required New password is required
-    password_updated Password updated successfully
-    save_success Saved successfully
-    trust_ecosystem_desc Your progress and cards are seamlessly synced across all your devices.
-    trust_ecosystem_title Aliolo Ecosystem

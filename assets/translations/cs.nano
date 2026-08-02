@@ -44,9 +44,12 @@
     about_support_settings_title Personalizace
     about_support_title Nastavení, zpětná vazba a podpora
     about_tagline Učte se vizuálně. Ovládněte natrvalo.
+    account_and_management Account & Management
     account_created Účet vytvořen
     account_created_billing_fail Váš účet byl vytvořen, ale platba nebyla dokončena. Zopakujte platbu níže.
     account_deleted Account deleted successfully
+    account_setup_completed Nastavení účtu bylo dokončeno.
+    active Aktivní
     add_card Add Card
     add_collection Přidat kolekci
     add_folder Přidat složku
@@ -76,6 +79,7 @@
     aliolo aliolo
     all_matching_subjects Všechna odpovídající témata
     all_rights_reserved Všechna práva vyhrazena
+    all_time Za celou dobu
     answer Odpověď
     answer_label answer
     answers_label answers
@@ -86,8 +90,10 @@
     audio Zvuk
     audio_playing Audio Playing
     author Author
+    autoplay Automatické přehrávání
     back Zadní
     back_to_login Back to Login
+    back_to_plans Back to plans
     back_to_subjects Zpět na Předměty
     best_for_quick_goals Nejlepší na rychlé góly
     billing_disclaimer Předplatné se automaticky obnoví, pokud nebude zrušeno. Své předplatné můžete spravovat v nastavení obchodu.
@@ -95,6 +101,7 @@
     bronze BRONZE
     browser Prohlížeč
     cancel Zrušit
+    cancel_in_paddle Zrušit v Paddle
     cancel_request Cancel Request
     cancel_request_confirm Are you sure you want to cancel the request to
     cannot_delete_folder Cannot Delete Folder
@@ -103,6 +110,8 @@
     card_id ID karty
     card_label Card
     card_level Úroveň karty
+    card_limit Limit karet
+    card_limit_msg Dosáhli jste limitu {limit} karet.
     card_plural Cards
     cards cards
     cards_label cards
@@ -111,31 +120,44 @@
     change_avatar Change Avatar
     change_password Změnit heslo
     check_your_email_for_code Zkontrolujte svůj e-mail pro kód
+    checkout_email_before_payment_desc Zadejte svůj e-mail před platbou, aby pro vás Aliolo mohl vytvořit účet a připojit k němu předplatné.
+    checkout_finish_account_desc Vyberte si uživatelské jméno a heslo, abyste se mohli později znovu přihlásit, pokud bude platba zrušena nebo přerušena.
+    checkout_verification_desc Před otevřením platební brány obchodu potřebujeme jedno rychlé ověření.
     clear Jasný
     click_to_select_image Click to select image
     click_to_view_original Kliknutím zobrazíte originál
     close Blízko
+    close_feedback_request_confirm Opravdu chcete uzavřít tento požadavek na zpětnou vazbu?
     close_request Zavřít požadavek?
     code_label Code
     collection_id ID sbírky
     colors Barvy
     common_settings Common Settings
     compare_plans Porovnat zdarma vs. prémiové
+    complete_account Dokončit účet
+    complete_account_setup Dokončit nastavení účtu
+    complete_account_setup_desc Přidejte uživatelské jméno a heslo pro budoucí přihlášení a obnovení.
+    complete_account_subscription_desc Vaše předplatné je již k tomuto účtu připojeno. Přidejte uživatelské jméno a heslo, abyste se mohli přihlásit kdekoli a později obnovit nákupy.
     confirm Potvrdit
     confirm_logout Are you sure you want to logout?
     confirm_password Confirm Password
+    confirm_password_required Confirm password is required
     confirm_subscription Potvrďte odběr
     content_label Content
     context Kontext
+    continue_to_checkout Pokračovat k platbě
     copy COPY
     copy_all Copy All
     core_features CORE FEATURES
     correct_answers Správné odpovědi
     could_not_launch Nelze spustit $url
+    could_not_open_paddle_cancellation Nepodařilo se otevřít zrušení Paddle: {error}
     counting Počítací
     create_account Create Account
+    create_account_to_continue Vytvořte si účet, abyste mohli pokračovat
     create_new_account Create New Account
     create_new_card Create New Card
+    create_request Vytvořit požadavek
     created_at Vytvořeno
     current_streak Current Streak
     current_subscription Aktuální předplatné
@@ -160,6 +182,7 @@
     delete_collection Smazat kolekci
     delete_collection_confirm Opravdu chcete tuto kolekci smazat?
     delete_folder Smazat složku
+    delete_folder_confirm Opravdu chcete tuto složku smazat?
     delete_selected_cards Delete selected cards?
     delete_subject Delete Subject
     delete_subject_confirm Delete subject '{subject}' and all {count} cards inside?
@@ -258,6 +281,7 @@
     doc_welcome_title Vítejte v Aliolo
     documentation Dokumentace
     done_today Done Today
+    dont_show_again_for_this_subject Pro tento předmět již nezobrazovat
     down_arrow Down Arrow
     edit Upravit
     edit_card Edit Card
@@ -268,6 +292,7 @@
     edit_subject Edit Subject
     edit_subject_title Edit Subject
     edit_subscription Upravit předplatné
+    edit_user Upravit uživatele
     email Email
     email_change_notice For security, a confirmation link will be sent to BOTH your old and new email addresses. You must click both to complete the change.
     email_in_use Email is already in use
@@ -275,6 +300,7 @@
     email_update_sent Confirmation emails sent. Please check both inboxes.
     email_updated_successfully E-mail byl úspěšně aktualizován!
     english English
+    enter_code_sent_to_email Zadejte šestimístný kód zaslaný na {email}
     enter_current_password Zadejte aktuální heslo
     enter_new_email Zadejte nový e-mail
     enter_new_name Enter New Name
@@ -297,10 +323,15 @@
     failed_to_send_verification_code Odeslání ověřovacího kódu se nezdařilo
     fake_only Pouze falešný
     fatal_startup_error Fatal Startup Error
+    favorite Oblíbené
     feat_adaptive_desc The system monitors your recognition speed across MCQ options, dynamically adjusting intervals to push your boundaries.
     feat_adaptive_title Adaptive Response Timing
     feat_ages_desc Content curated for different age groups from early childhood to advanced learning.
     feat_ages_title For All Ages
+    feat_autoplay_desc Focus on learning while the app automatically advances through cards at your pace.
+    feat_autoplay_title Hands-Free Autoplay
+    feat_create_share_desc Easily create your own subjects and cards, or share them with the community.
+    feat_create_share_title Create & Share
     feat_gamified_desc Earn XP, badges, and build streaks while mastering complex visual subjects.
     feat_gamified_title Gamified Experience
     feat_mastery_desc Dynamic XP rewards difficulty, while real-time mastery badges (Bronze, Silver, Gold) track your journey from novice to expert.
@@ -311,6 +342,8 @@
     feat_recognition_title Visual Pattern Training
     feat_science_adaptive_desc Intervals automatically adjust based on your recognition speed and accuracy.
     feat_science_adaptive_title Adaptive Timing
+    feat_science_smart_review_desc The algorithm calculates the optimal time to review each card for maximum retention.
+    feat_science_smart_review_title Smart Review Cycles
     feat_science_spacing_desc Advanced cognitive spacing model that predicts memory decay and optimizes review cycles.
     feat_science_spacing_title SuperMemo-2 (SM-2)
     feat_spacing_desc A full implementation of the SuperMemo-2 model predicts your memory decay and schedules reviews at the peak of retention.
@@ -345,6 +378,7 @@
     feedback_title Odeslat zpětnou vazbu
     feedback_title_hint Nadpis
     feedback_type Typ
+    file_too_large Soubor je příliš velký
     fill_all_fields Please fill all fields
     filter_all All
     filter_dashboard Nástěnka
@@ -355,6 +389,7 @@
     filter_public_library Veřejná knihovna
     filters Filtry
     finish Dokončit
+    finish_account_setup Dokončit nastavení účtu
     finished_session You finished {count} cards. XP bonus awarded!
     folder Složka
     folder_already_exists Složka s tímto názvem již v tomto pilíři existuje
@@ -362,6 +397,7 @@
     folder_label Složka
     folder_not_empty_msg Nelze smazat: složka není prázdná.
     folder_plural Složky
+    folder_practice_all_cards_desc Toto je složka. K procvičení všech karet můžete použít tlačítka Učit se/Testovat výše.
     forgot_password Forgot Password?
     free_only Volní uživatelé
     general_preferences General Preferences
@@ -373,6 +409,7 @@
     hide_comparison Skrýt porovnání plánů
     home Domov
     images Images
+    inactive Neaktivní
     included_subjects Zahrnuté předměty
     info_copied Info copied to clipboard
     initializing_aliolo Initializing Aliolo...
@@ -390,11 +427,17 @@
     invite_user_content E-mail {email} nebyl nalezen. Pozvat k připojení k Aliolo?
     invite_user_title Pozvat uživatele?
     invited_and_request_sent Pozváni a žádost odeslána!
+    is_required je povinné
     json JSON
     keyboard_shortcuts Keyboard Shortcuts
     label_suffix $label:
     lang_abbr Lang
     language Jazyk
+    languages Jazyky
+    last_3_months Poslední 3 měsíce
+    last_6_months Posledních 6 měsíců
+    last_month Minulý měsíc
+    last_slide Poslední snímek
     leaderboard Žebříček
     learn_mode_desc Study cards and memorize answers
     learn_mode_title Learn
@@ -414,9 +457,11 @@
     licenses_intro_title Aliolo Oznámení o licenci a balíčku
     licenses_third_party_section_title Licence na balíčky třetích stran
     light Light
+    limit_reached Limit dosažen
     linux_distro Linuxová distribuce
     loading Načítání...
     localized_data Lokalizovaná data
+    log_in_instead Místo toho se přihlaste
     login Přihlásit se
     logout Odhlásit se
     manage_cards Manage Cards
@@ -448,12 +493,15 @@
     new NEW
     new_email Nový email
     new_password New Password
+    new_password_required New password is required
     next Další
     next_card Next Card
     next_daily_goal Další denní cíl
     next_daily_goal_desc Cílový počet karet k osvojení každý den. Změny vstoupí v platnost zítra.
     next_day_goal Next Day Goal
+    no_age_data_yet Zatím žádná data o věku
     no_cards_available_for_this_session Pro tuto relaci nejsou k dispozici žádné karty.
+    no_cards_due_yet Zatím nejsou k dispozici žádné karty
     no_cards_found Nebyly nalezeny žádné karty
     no_cards_found_for_lang No cards found for this language
     no_cards_in_library No cards found in the library.
@@ -465,10 +513,19 @@
     no_localized_audio Žádný lokalizovaný zvuk
     no_localized_images Žádné lokalizované obrázky
     no_localized_video Žádné lokalizované video
+    no_onboarding_sessions_yet Zatím žádné úvodní relace
+    no_permission_view_card_details Nemáte oprávnění prohlížet podrobnosti této karty.
+    no_pillar_data_yet Zatím žádná data o pilířích
+    no_slide_data_yet Zatím žádná data o snímcích
     no_subjects_available Nejsou k dispozici žádné předměty
     no_subjects_found Nebyly nalezeny žádné předměty
+    no_subjects_found_in_collection V této sbírce nebyly nalezeny žádné předměty
     no_subjects_found_in_this_collection V této sbírce nebyly nalezeny žádné předměty
+    no_usage_data_yet Zatím žádná data o používání
     no_users_found Nebyli nalezeni žádní uživatelé
+    not_available Není k dispozici
+    not_set Nenastaveno
+    official_website Oficiální webové stránky
     ok OK
     old_password Staré heslo
     old_password_required Staré heslo je povinné
@@ -486,6 +543,7 @@
     onboarding_6_title Připojte se ke komunitě
     onboarding_7_joined Připojily se tisíce studentů
     onboarding_7_quote Aliolo zcela změnilo způsob, jakým moje děti i já ovládáme nová témata. Vizuální karty a rozložené opakování dělají z učení hru!
+    onboarding_analytics Analytika pro Onboarding
     onboarding_get_started Začít
     onboarding_next Další
     onboarding_skip Přeskočit
@@ -495,11 +553,13 @@
     order_id ID objednávky
     os_version Verze OS
     our_mission OUR MISSION
+    paddle_cancel_subscription_desc Potřebujete zrušit předplatné Paddle? Otevřete proces zrušení v Paddle níže.
     page Page
     parent_folder_label Parent Folder (cs)
     password Heslo
     password_required Password is required
     password_reset_success Password reset successful
+    password_updated Password updated successfully
     password_updated_successfully Heslo bylo úspěšně aktualizováno!
     passwords_dont_match Passwords do not match
     paste PASTE
@@ -534,6 +594,7 @@
     premium_unlock_desc Získejte přístup ke všem předmětům, vytvořte neomezený počet karet a podpořte misi Aliolo.
     premium_unlock_title Odemkněte plný přístup
     prev Prev
+    previous Předchozí
     previous_card Previous Card
     price_per_week ({price} / týden)
     private Private
@@ -562,6 +623,12 @@
     remove_friend Remove Friend
     remove_friend_confirm Are you sure you want to remove friend
     renderer Renderer
+    renderer_addition_emoji Sčítání emotikonů
+    renderer_addition_numbers Sčítání čísel
+    renderer_counting Počítání
+    renderer_generic Obecné
+    renderer_subtraction_emoji Odčítání emotikonů
+    renderer_subtraction_numbers Odčítání čísel
     request_sent Request sent
     request_sent_waiting Request sent (waiting)
     required Required
@@ -572,13 +639,17 @@
     reset_password_for "Reset Password for: "
     restore_password Restore Password
     restore_purchases Obnovit nákupy
+    restore_purchases_started Obnova zahájena. Aliolo znovu propojí všechny platné nákupy s tímto účtem.
+    retest_anyway Přesto znovu otestovat
     retry Retry
     right_arrow Right Arrow
     save Uložit
     save_33_per_month Ušetřete 33 % měsíčně
+    save_account Uložit účet
     save_before_nav Do you want to save changes before navigating?
     save_card Save Card
     save_subject Save Subject
+    save_success Saved successfully
     saved_successfully Úspěšně uloženo
     search_cards Search Cards
     search_subjects Search Subjects
@@ -591,8 +662,10 @@
     send Send
     send_code Send Code
     send_verification_code Send verification code?
+    session Relace
     session_complete Relace dokončena!
     session_complete_description Skvělá práce! Dokončili jste všechny karty v této relaci.
+    set_your_password Nastavte své heslo
     setting_saved Setting saved
     settings Nastavení
     shortcuts_hint Press the key you want to use with Ctrl.
@@ -620,6 +693,8 @@
     subject_label Subject
     subject_plural Subjects
     subject_type Subject Type (cs)
+    subject_up_to_date_retest_desc Pro tento předmět jste aktuální. Stále můžete znovu otestovat všechny karty.
+    subject_usage Využití předmětu
     subjects Předměty
     subscribe_now Přihlaste se k odběru
     subscription_data Údaje o předplatném
@@ -648,10 +723,13 @@
     theme_system System
     this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards Toto je složka. K procvičení všech karet můžete použít tlačítka Učit/Test výše.
     to_label To
+    toggle_languages Přepnout jazyky
     total_cards Celkem karet
     total_xp Total XP
     trust_cloud_desc Your progress is securely synced across all your devices in real-time.
     trust_cloud_title Cloud Sync
+    trust_ecosystem_desc Your progress and cards are seamlessly synced across all your devices.
+    trust_ecosystem_title Aliolo Ecosystem
     trust_privacy TRUST & PRIVACY
     trust_sync_desc Your data is private and encrypted to ensure the highest security standards.
     trust_sync_title Encrypted Data
@@ -668,12 +746,14 @@
     up_arrow Up Arrow
     update Update
     update_available K dispozici je nová verze!
+    updated Aktualizováno
     updated_at Aktualizováno
     upload_new_photo Nahrát novou fotku
     user Uživatel
     user_exists User already exists
     user_id ID uživatele
     user_not_found User not found
+    user_updated Uživatel aktualizován
     user_with_this_email_already_exists_please_log_in_instead Uživatel s tímto e-mailem již existuje. Přihlaste se místo toho.
     username Uživatelské jméno
     users Uživatelé
@@ -681,6 +761,8 @@
     verification_code Ověřovací kód
     verification_code_sent_to Ověřovací kód byl odeslán na adresu $email
     verify Verify
+    verify_email_change Ověřit změnu e-mailu
+    verify_your_email Ověřte svůj e-mail
     version Verze
     video Video
     video_link Video Link
@@ -692,6 +774,7 @@
     visual_content_required Je vyžadován alespoň jeden vizuální obsah
     visual_content_required_msg Musí být poskytnut alespoň jeden vizuální obsah (text, obrázek, zvuk nebo video).
     visual_text Vizuální text
+    wait_for_response_before_replying Než znovu odpovíte, počkejte na odpověď.
     wants_to_be_friend Wants to be your friend
     weekly_access Týdenní přístup
     welcome_complete_your_profile_to_join_aliolo Vítejte! Chcete-li se připojit k aliolo, vyplňte svůj profil.
@@ -701,33 +784,4 @@
     you_do_not_have_permission_to_edit_this_card Nemáte oprávnění upravovat tuto kartu
     you_do_not_have_permission_to_view_this_card_details Nemáte oprávnění zobrazit podrobnosti této karty.
     you_rank You are ranked #{rank}
-    active Aktivní
-    autoplay Automatické přehrávání
-    card_limit Limit karet
-    card_limit_msg Dosáhli jste limitu {limit} karet.
-    create_request Vytvořit požadavek
-    edit_user Upravit uživatele
-    favorite Oblíbené
-    file_too_large Soubor je příliš velký
-    inactive Neaktivní
-    is_required je povinné
-    languages Jazyky
-    limit_reached Limit dosažen
-    not_available Není k dispozici
-    toggle_languages Přepnout jazyky
-    user_updated Uživatel aktualizován
     zoom Přiblížit
-    account_and_management Account & Management
-    back_to_plans Back to plans
-    confirm_password_required Confirm password is required
-    feat_autoplay_desc Focus on learning while the app automatically advances through cards at your pace.
-    feat_autoplay_title Hands-Free Autoplay
-    feat_create_share_desc Easily create your own subjects and cards, or share them with the community.
-    feat_create_share_title Create & Share
-    feat_science_smart_review_desc The algorithm calculates the optimal time to review each card for maximum retention.
-    feat_science_smart_review_title Smart Review Cycles
-    new_password_required New password is required
-    password_updated Password updated successfully
-    save_success Saved successfully
-    trust_ecosystem_desc Your progress and cards are seamlessly synced across all your devices.
-    trust_ecosystem_title Aliolo Ecosystem

@@ -44,9 +44,12 @@
     about_support_settings_title Personalizzazione
     about_support_title Impostazioni, feedback e supporto
     about_tagline Impara visivamente. Padroneggia per sempre.
+    account_and_management Account & Management
     account_created Conto creato
     account_created_billing_fail Il tuo account è stato creato, ma il pagamento non è stato completato. Riprova il pagamento di seguito.
     account_deleted Account eliminato
+    account_setup_completed Configurazione dell'account completata.
+    active Attivo
     add_card Aggiungi carta
     add_collection Aggiungi collezione
     add_folder Aggiungi cartella
@@ -76,6 +79,7 @@
     aliolo aliolo
     all_matching_subjects Tutti i soggetti corrispondenti
     all_rights_reserved Tutti i diritti riservati
+    all_time Di sempre
     answer Risposta
     answer_label risposta
     answers_label risposte
@@ -86,8 +90,10 @@
     audio Audio
     audio_playing Riproduzione audio
     author Autore
+    autoplay Riproduzione automatica
     back Indietro
     back_to_login Torna al login
+    back_to_plans Back to plans
     back_to_subjects Ritorno agli argomenti
     best_for_quick_goals Ideale per obiettivi rapidi
     billing_disclaimer Gli abbonamenti si rinnovano automaticamente a meno che non vengano annullati. Puoi gestire il tuo abbonamento nelle impostazioni del tuo negozio.
@@ -95,6 +101,7 @@
     bronze BRONZO
     browser Navigatore
     cancel Cancellare
+    cancel_in_paddle Annulla in Paddle
     cancel_request Annulla richiesta
     cancel_request_confirm Sei sicuro di voler annullare la richiesta a
     cannot_delete_folder Impossibile eliminare la cartella
@@ -103,6 +110,8 @@
     card_id Carta d'identità
     card_label Scheda
     card_level Livello della carta
+    card_limit Limite carte
+    card_limit_msg Hai raggiunto il limite di {limit} carte.
     card_plural Schede
     cards schede
     cards_label schede
@@ -111,31 +120,44 @@
     change_avatar Cambia avatar
     change_password Cambia password
     check_your_email_for_code Controlla la tua email per il codice
+    checkout_email_before_payment_desc Inserisci la tua email prima del pagamento in modo que Aliolo possa creare il tuo account e collegarti l'abbonamento.
+    checkout_finish_account_desc Scegli ora il tuo nome utente e la tua password in modo da poter accedere di nuovo in seguito se il pagamento viene annullato o interrotto.
+    checkout_verification_desc Abbiamo bisogno di una rapida verifica prima di aprire la schermata di pagamento del negozio.
     clear Chiaro
     click_to_select_image Clicca per scegliere immagine
     click_to_view_original Fare clic per visualizzare l'originale
     close Vicino
+    close_feedback_request_confirm Sei sicuro di voler chiudere questa richiesta di feedback?
     close_request Chiudi richiesta?
     code_label Codice
     collection_id Identificativo della raccolta
     colors Colori
     common_settings Common Settings
     compare_plans Confronta Gratis vs Premium
+    complete_account Completa account
+    complete_account_setup Completa la configurazione dell'account
+    complete_account_setup_desc Aggiungi un nome utente e una password per accessi e ripristini futuri.
+    complete_account_subscription_desc Il tuo abbonamento è già collegato a questo account. Aggiungi un nome utente e una password in modo da poterti accedere ovunque e recuperare gli acquisti in seguito.
     confirm Conferma
     confirm_logout Sei sicuro di voler uscire?
     confirm_password Conferma password
+    confirm_password_required Confirm password is required
     confirm_subscription Conferma iscrizione
     content_label Content
     context Contesto
+    continue_to_checkout Continua al pagamento
     copy COPY
     copy_all Copia tutto
     core_features CORE FEATURES
     correct_answers Risposte corrette
     could_not_launch Impossibile avviare $url
+    could_not_open_paddle_cancellation Impossibile aprire l'annullamento di Paddle: {error}
     counting Conteggio
     create_account Crea account
+    create_account_to_continue Crea il tuo account per continuare
     create_new_account Crea nuovo account
     create_new_card Crea nuova scheda
+    create_request Crea richiesta
     created_at Creato il
     current_streak Serie attuale
     current_subscription Abbonamento attuale
@@ -160,6 +182,7 @@
     delete_collection Elimina collezione
     delete_collection_confirm Sei sicuro di voler eliminare questa collezione?
     delete_folder Elimina cartella
+    delete_folder_confirm Sei sicuro di voler eliminare questa cartella?
     delete_selected_cards Elimina schede selezionate?
     delete_subject Elimina materia
     delete_subject_confirm Elimina materia '{subject}' e le {count} schede?
@@ -258,6 +281,7 @@
     doc_welcome_title Benvenuti su Aliolo
     documentation Documentazione
     done_today Completato oggi
+    dont_show_again_for_this_subject Non mostrare più per questo argomento
     down_arrow Down Arrow
     edit Modifica
     edit_card Modifica scheda
@@ -268,6 +292,7 @@
     edit_subject Modifica materia
     edit_subject_title Edit Subject
     edit_subscription Modifica abbonamento
+    edit_user Modifica utente
     email Email
     email_change_notice For security, a confirmation link will be sent to BOTH your old and new email addresses. You must click both to complete the change.
     email_in_use Email già in uso
@@ -275,6 +300,7 @@
     email_update_sent Confirmation emails sent. Please check both inboxes.
     email_updated_successfully Email aggiornata con successo!
     english Inglese
+    enter_code_sent_to_email Inserisci il codice a 6 cifre inviato a {email}
     enter_current_password Inserisci la password attuale
     enter_new_email Inserisci nuova email
     enter_new_name Inserisci nuovo nome
@@ -297,10 +323,15 @@
     failed_to_send_verification_code Impossibile inviare il codice di verifica
     fake_only Solo falso
     fatal_startup_error Errore fatale di avvio
+    favorite Preferito
     feat_adaptive_desc Monitora la velocità di riconoscimento.
     feat_adaptive_title Risposta adattiva
     feat_ages_desc Content curated for different age groups from early childhood to advanced learning.
     feat_ages_title For All Ages
+    feat_autoplay_desc Focus on learning while the app automatically advances through cards at your pace.
+    feat_autoplay_title Hands-Free Autoplay
+    feat_create_share_desc Easily create your own subjects and cards, or share them with the community.
+    feat_create_share_title Create & Share
     feat_gamified_desc Earn XP, badges, and build streaks while mastering complex visual subjects.
     feat_gamified_title Gamified Experience
     feat_mastery_desc Premi XP e medaglie.
@@ -311,6 +342,8 @@
     feat_recognition_title Pattern visivi
     feat_science_adaptive_desc Intervals automatically adjust based on your recognition speed and accuracy.
     feat_science_adaptive_title Adaptive Timing
+    feat_science_smart_review_desc The algorithm calculates the optimal time to review each card for maximum retention.
+    feat_science_smart_review_title Smart Review Cycles
     feat_science_spacing_desc Advanced cognitive spacing model that predicts memory decay and optimizes review cycles.
     feat_science_spacing_title SuperMemo-2 (SM-2)
     feat_spacing_desc Implementazione del modello SuperMemo-2.
@@ -345,6 +378,7 @@
     feedback_title Invia feedback
     feedback_title_hint Titolo
     feedback_type Tipo
+    file_too_large File troppo grande
     fill_all_fields Compila tutti i campi
     filter_all Tutti
     filter_dashboard Dashboard
@@ -355,6 +389,7 @@
     filter_public_library Biblioteca pubblica
     filters Filtri
     finish Fine
+    finish_account_setup Termina configurazione account
     finished_session Hai finito {count} schede. Bonus XP!
     folder Cartella
     folder_already_exists Una cartella con questo nome esiste già in questo pilastro
@@ -362,6 +397,7 @@
     folder_label Cartella
     folder_not_empty_msg Impossibile eliminare: la cartella non è vuota.
     folder_plural Cartelle
+    folder_practice_all_cards_desc Questa è una cartella. Puoi usare i pulsanti Impara/Testa in alto per esercitarti con tutte le carte.
     forgot_password Password dimenticata?
     free_only Utenti gratuiti
     general_preferences Preferenze generali
@@ -373,6 +409,7 @@
     hide_comparison Nascondi Confronto Piani
     home Casa
     images Immagini
+    inactive Inattivo
     included_subjects Materie incluse
     info_copied Info copiate negli appunti
     initializing_aliolo Inizializzazione di Aliolo...
@@ -390,17 +427,22 @@
     invite_user_content L’e-mail {email} non è stata trovata. Invitarlo a unirsi a Aliolo?
     invite_user_title Invitare utente?
     invited_and_request_sent Invitato e richiesta inviata!
+    is_required è obbligatorio
     json JSON
     keyboard_shortcuts Scorciatoie
     label_suffix $label:
     lang_abbr Ling
     language Lingua
+    languages Lingue
+    last_3_months Ultimi 3 mesi
+    last_6_months Ultimi 6 mesi
+    last_month Ultimo mese
+    last_slide Ultima diapositiva
     leaderboard Classifica
     learn_mode_desc Study cards and memorize answers
     learn_mode_title Learn
     learn_session_size Dimensione sessione di apprendimento
     learn_session_size_desc Numero di nuove carte da introdurre in una singola sessione di apprendimento.
-    learning Apprendimento
     learning_session_complete_description Ottimo lavoro! Hai terminato questa sessione di apprendimento. I tuoi progressi sono stati salvati.
     left_arrow Left Arrow
     level Livello
@@ -415,9 +457,11 @@
     licenses_intro_title Aliolo Avvisi sulla licenza e sul pacchetto
     licenses_third_party_section_title Licenze di pacchetti di terze parti
     light Chiaro
+    limit_reached Limite raggiunto
     linux_distro Distribuzione Linux
     loading Caricamento...
     localized_data Dati localizzati
+    log_in_instead Accedi invece
     login Accedi
     logout Esci
     manage_cards Gestisci schede
@@ -449,12 +493,15 @@
     new NUOVO
     new_email Nuova e-mail
     new_password Nuova password
+    new_password_required New password is required
     next Avanti
     next_card Next Card
     next_daily_goal Prossimo obiettivo giornaliero
     next_daily_goal_desc Numero target di carte da padroneggiare ogni giorno. Le modifiche avranno effetto da domani.
     next_day_goal Obiettivo di domani
+    no_age_data_yet Ancora nessun dato sull'età
     no_cards_available_for_this_session Nessuna carta disponibile per questa sessione.
+    no_cards_due_yet Ancora nessuna carta in scadenza
     no_cards_found Nessuna carta trovata
     no_cards_found_for_lang Nessuna carta trovata per questa lingua
     no_cards_in_library Nessuna scheda nella libreria.
@@ -466,10 +513,19 @@
     no_localized_audio Nessun audio localizzato
     no_localized_images Nessuna immagine localizzata
     no_localized_video Nessun video localizzato
+    no_onboarding_sessions_yet Ancora nessuna sessione di onboarding
+    no_permission_view_card_details Non hai il permesso di visualizzare i dettagli di questa carta.
+    no_pillar_data_yet Ancora nessun dato sui pilastri
+    no_slide_data_yet Ancora nessun dato sulle diapositive
     no_subjects_available Nessuna materia disponibile
     no_subjects_found Nessun argomento trovato
+    no_subjects_found_in_collection Nessun argomento trovato in questa raccolta
     no_subjects_found_in_this_collection Nessun argomento trovato in questa raccolta
+    no_usage_data_yet Ancora nessun dato di utilizzo
     no_users_found Nessun utente trovato
+    not_available Non disponibile
+    not_set Non impostato
+    official_website Sito web ufficiale
     ok OK
     old_password Vecchia password
     old_password_required La vecchia password è obbligatoria
@@ -487,6 +543,7 @@
     onboarding_6_title Unisciti alla Community
     onboarding_7_joined Uniti a migliaia di studenti
     onboarding_7_quote Aliolo ha completamente trasformato il modo in cui io e i miei figli padroneggiamo nuovi argomenti. Le carte visive e la ripetizione spaziata fanno sembrare l'apprendimento un gioco!
+    onboarding_analytics Analisi dell'onboarding
     onboarding_get_started Inizia
     onboarding_next Avanti
     onboarding_skip Salta
@@ -496,11 +553,13 @@
     order_id ID ordine
     os_version Versione del sistema operativo
     our_mission OUR MISSION
+    paddle_cancel_subscription_desc Hai bisogno di annullare un abbonamento Paddle? Apri il flusso di annullamento di Paddle qui sotto.
     page Pagina
     parent_folder_label Cartella superiore
     password Password
     password_required Password richiesta
     password_reset_success Reset riuscito
+    password_updated Password updated successfully
     password_updated_successfully Password aggiornata con successo!
     passwords_dont_match Le password non corrispondono
     paste PASTE
@@ -535,6 +594,7 @@
     premium_unlock_desc Ottieni l'accesso a tutti gli argomenti, crea carte illimitate e sostieni la missione di Aliolo.
     premium_unlock_title Sblocca l'accesso completo
     prev Prec.
+    previous Precedente
     previous_card Previous Card
     price_per_week ({price} / settimana)
     private Privato
@@ -563,6 +623,12 @@
     remove_friend Rimuovi amico
     remove_friend_confirm Sei sicuro di voler rimuovere l'amico
     renderer Render
+    renderer_addition_emoji Addizione Emoji
+    renderer_addition_numbers Addizione Numeri
+    renderer_counting Conteggio
+    renderer_generic Generico
+    renderer_subtraction_emoji Sottrazione Emoji
+    renderer_subtraction_numbers Sottrazione Numeri
     request_sent Richiesta inviata
     request_sent_waiting Richiesta inviata (in attesa)
     required Obbligatorio
@@ -573,13 +639,17 @@
     reset_password_for "Reset per: "
     restore_password Ripristina password
     restore_purchases Ripristina gli acquisti
+    restore_purchases_started Ripristino avviato. Aliolo ricollegherà eventuali acquisti validi a questo account.
+    retest_anyway Testa di nuovo comunque
     retry Riprova
     right_arrow Right Arrow
     save Salva
     save_33_per_month Risparmia il 33% al mese
+    save_account Salva account
     save_before_nav Vuoi salvare prima di uscire?
     save_card Salva carta
     save_subject Salva materia
+    save_success Saved successfully
     saved_successfully Salvato con successo
     search_cards Cerca carte
     search_subjects Cerca materie
@@ -592,8 +662,10 @@
     send Invia
     send_code Invia codice
     send_verification_code Inviare codice di verifica?
+    session Sessione
     session_complete Sessione completata!
     session_complete_description Ottimo lavoro! Hai finito tutte le carte in questa sessione.
+    set_your_password Imposta La Tua Password
     setting_saved Impostazione salvata
     settings Impostazioni
     shortcuts_hint Press the key you want to use with Ctrl.
@@ -621,6 +693,8 @@
     subject_label Materia
     subject_plural Materie
     subject_type Tipo di soggetto
+    subject_up_to_date_retest_desc Sei aggiornato per questo argomento. Puoi ancora testare di nuovo tutte le carte ora.
+    subject_usage Utilizzo dell'argomento
     subjects Materie
     subscribe_now Iscriviti ora
     subscription_data Dati di abbonamento
@@ -649,10 +723,13 @@
     theme_system Sistema
     this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards Questa è una cartella. Puoi utilizzare i pulsanti Impara/Test in alto per esercitarti con tutte le carte.
     to_label A
+    toggle_languages Cambia lingue
     total_cards Carte totali
     total_xp XP totali
     trust_cloud_desc Your progress is securely synced across all your devices in real-time.
     trust_cloud_title Cloud Sync
+    trust_ecosystem_desc Your progress and cards are seamlessly synced across all your devices.
+    trust_ecosystem_title Aliolo Ecosystem
     trust_privacy TRUST & PRIVACY
     trust_sync_desc Your data is private and encrypted to ensure the highest security standards.
     trust_sync_title Encrypted Data
@@ -669,12 +746,14 @@
     up_arrow Up Arrow
     update Aggiorna
     update_available Una nuova versione è disponibile!
+    updated Aggiornato
     updated_at Aggiornato il
     upload_new_photo Carica nuova foto
     user Utente
     user_exists Utente già esistente
     user_id ID utente
     user_not_found Utente non trovato
+    user_updated Utente aggiornato
     user_with_this_email_already_exists_please_log_in_instead L'utente con questa email esiste già. Effettua invece l'accesso.
     username Nome utente
     users Utenti
@@ -682,6 +761,8 @@
     verification_code Codice di verifica
     verification_code_sent_to Codice di verifica inviato a $email
     verify Verifica
+    verify_email_change Verifica Modifica Email
+    verify_your_email Verifica la tua email
     version Versione
     video Video
     video_link Link video
@@ -693,6 +774,7 @@
     visual_content_required È richiesto almeno un contenuto visivo
     visual_content_required_msg Deve essere fornito almeno un contenuto visivo (testo, immagine, audio o video).
     visual_text Testo visivo
+    wait_for_response_before_replying Si prega di attendere una risposta prima di rispondere di nuovo.
     wants_to_be_friend Vuole essere tuo amico
     weekly_access Accesso settimanale
     welcome_complete_your_profile_to_join_aliolo Benvenuto! Completa il tuo profilo per unirti a aliolo.
@@ -702,33 +784,4 @@
     you_do_not_have_permission_to_edit_this_card Non hai l'autorizzazione per modificare questa carta
     you_do_not_have_permission_to_view_this_card_details Non hai il permesso per visualizzare i dettagli di questa carta.
     you_rank Sei al posto #{rank}
-    active Attivo
-    autoplay Riproduzione automatica
-    card_limit Limite carte
-    card_limit_msg Hai raggiunto il limite di {limit} carte.
-    create_request Crea richiesta
-    edit_user Modifica utente
-    favorite Preferito
-    file_too_large File troppo grande
-    inactive Inattivo
-    is_required è obbligatorio
-    languages Lingue
-    limit_reached Limite raggiunto
-    not_available Non disponibile
-    toggle_languages Cambia lingue
-    user_updated Utente aggiornato
     zoom Zoom
-    account_and_management Account & Management
-    back_to_plans Back to plans
-    confirm_password_required Confirm password is required
-    feat_autoplay_desc Focus on learning while the app automatically advances through cards at your pace.
-    feat_autoplay_title Hands-Free Autoplay
-    feat_create_share_desc Easily create your own subjects and cards, or share them with the community.
-    feat_create_share_title Create & Share
-    feat_science_smart_review_desc The algorithm calculates the optimal time to review each card for maximum retention.
-    feat_science_smart_review_title Smart Review Cycles
-    new_password_required New password is required
-    password_updated Password updated successfully
-    save_success Saved successfully
-    trust_ecosystem_desc Your progress and cards are seamlessly synced across all your devices.
-    trust_ecosystem_title Aliolo Ecosystem

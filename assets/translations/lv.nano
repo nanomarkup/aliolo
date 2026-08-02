@@ -44,9 +44,12 @@
     about_support_settings_title Personalizēšana
     about_support_title Iestatījumi, atsauksmes un atbalsts
     about_tagline Mācieties vizuāli. Apgūstiet uz visiem laikiem.
+    account_and_management Account & Management
     account_created Konts izveidots
     account_created_billing_fail Jūsu konts tika izveidots, bet maksājums netika pabeigts. Mēģiniet vēlreiz veikt tālāk norādīto maksājumu.
     account_deleted Account deleted successfully
+    account_setup_completed Konta iestatīšana pabeigta.
+    active Aktīvs
     add_card Add Card
     add_collection Pievienot kolekciju
     add_folder Pievienot mapi
@@ -76,6 +79,7 @@
     aliolo aliolo
     all_matching_subjects Visi atbilstošie temati
     all_rights_reserved Visas tiesības paturētas
+    all_time Viss laiks
     answer Atbilde
     answer_label answer
     answers_label answers
@@ -86,8 +90,10 @@
     audio Audio
     audio_playing Audio Playing
     author Author
+    autoplay Automātiska atskaņošana
     back Atpakaļ
     back_to_login Back to Login
+    back_to_plans Back to plans
     back_to_subjects Atgriezties pie priekšmetiem
     best_for_quick_goals Vislabāk ātriem mērķiem
     billing_disclaimer Abonementi tiek automātiski atjaunoti, ja vien tie netiek atcelti. Varat pārvaldīt savu abonementu veikala iestatījumos.
@@ -95,6 +101,7 @@
     bronze BRONZE
     browser Pārlūkprogramma
     cancel Atcelt
+    cancel_in_paddle Atcelt Paddle
     cancel_request Cancel Request
     cancel_request_confirm Are you sure you want to cancel the request to
     cannot_delete_folder Cannot Delete Folder
@@ -103,6 +110,8 @@
     card_id Kartes ID
     card_label Card
     card_level Kartes līmenis
+    card_limit Kartīšu limits
+    card_limit_msg Jūs esat sasniedzis {limit} kartīšu limitu.
     card_plural Cards
     cards cards
     cards_label cards
@@ -111,31 +120,44 @@
     change_avatar Change Avatar
     change_password Mainīt paroli
     check_your_email_for_code Pārbaudiet kodu, lai atrastu savu e-pastu
+    checkout_email_before_payment_desc Pirms norēķināšanās ievadiet savu e-pastu, lai Aliolo varētu izveidot jūsu kontu un piesaistīt tam abonementu.
+    checkout_finish_account_desc Izvēlieties savu lietotājvārdu un paroli tagad, lai vēlāk varētu atkal pieteikties, ja maksājums tiek atcelts vai pārtraukts.
+    checkout_verification_desc Pirms veikala maksājumu lapas atvēršanas mums nepieciešama viena ātra pārbaude.
     clear Skaidrs
     click_to_select_image Click to select image
     click_to_view_original Noklikšķiniet, lai skatītu oriģinālu
     close Aizvērt
+    close_feedback_request_confirm Vai tiešām vēlaties aizvērt šo atsauksmes pieprasījumu?
     close_request Vai aizvērt pieprasījumu?
     code_label Code
     collection_id Kolekcijas ID
     colors Krāsas
     common_settings Common Settings
     compare_plans Salīdzināt bezmaksas pret Premium
+    complete_account Pabeigt kontu
+    complete_account_setup Pabeigt konta iestatīšanu
+    complete_account_setup_desc Pievienojiet lietotājvārdu un paroli turpmākai pieteikšanās un atjaunošanas reizēm.
+    complete_account_subscription_desc Jūsu abonements jau ir piesaistīts šim kontam. Pievienojiet lietotājvārdu un paroli, lai varētu pieteikties jebkur un vēlāk atgūt pirkumus.
     confirm Apstiprināt
     confirm_logout Are you sure you want to logout?
     confirm_password Confirm Password
+    confirm_password_required Confirm password is required
     confirm_subscription Apstipriniet abonementu
     content_label Content
     context Konteksts
+    continue_to_checkout Turpināt norēķināties
     copy COPY
     copy_all Copy All
     core_features CORE FEATURES
     correct_answers Pareizās atbildes
     could_not_launch Nevarēja palaist $url
+    could_not_open_paddle_cancellation Neizdevās atvērt Paddle atcelšanu: {error}
     counting Skaitīšana
     create_account Create Account
+    create_account_to_continue Izveidojiet savu kontu, lai turpinātu
     create_new_account Create New Account
     create_new_card Create New Card
+    create_request Izveidot pieprasījumu
     created_at Izveidots
     current_streak Current Streak
     current_subscription Pašreizējais abonements
@@ -160,6 +182,7 @@
     delete_collection Dzēst kolekciju
     delete_collection_confirm Vai tiešām vēlaties dzēst šo kolekciju?
     delete_folder Dzēst mapi
+    delete_folder_confirm Vai tiešām vēlaties dzēst šo mapi?
     delete_selected_cards Delete selected cards?
     delete_subject Delete Subject
     delete_subject_confirm Delete subject '{subject}' and all {count} cards inside?
@@ -258,6 +281,7 @@
     doc_welcome_title Laipni lūdzam Aliolo
     documentation Dokumentācija
     done_today Done Today
+    dont_show_again_for_this_subject Vairs nerādīt šim priekšmetam
     down_arrow Down Arrow
     edit Rediģēt
     edit_card Edit Card
@@ -268,6 +292,7 @@
     edit_subject Edit Subject
     edit_subject_title Edit Subject
     edit_subscription Rediģēt abonementu
+    edit_user Rediģēt lietotāju
     email E-pasts
     email_change_notice For security, a confirmation link will be sent to BOTH your old and new email addresses. You must click both to complete the change.
     email_in_use Email is already in use
@@ -275,6 +300,7 @@
     email_update_sent Confirmation emails sent. Please check both inboxes.
     email_updated_successfully E-pasts ir veiksmīgi atjaunināts!
     english English
+    enter_code_sent_to_email Ievadiet 6 ciparu kodu, kas nosūtīts uz {email}
     enter_current_password Ievadiet pašreizējo paroli
     enter_new_email Ievadiet jaunu e-pastu
     enter_new_name Enter New Name
@@ -297,10 +323,15 @@
     failed_to_send_verification_code Neizdevās nosūtīt verifikācijas kodu
     fake_only Tikai viltojums
     fatal_startup_error Fatal Startup Error
+    favorite Izlase
     feat_adaptive_desc The system monitors your recognition speed across MCQ options, dynamically adjusting intervals to push your boundaries.
     feat_adaptive_title Adaptive Response Timing
     feat_ages_desc Content curated for different age groups from early childhood to advanced learning.
     feat_ages_title For All Ages
+    feat_autoplay_desc Focus on learning while the app automatically advances through cards at your pace.
+    feat_autoplay_title Hands-Free Autoplay
+    feat_create_share_desc Easily create your own subjects and cards, or share them with the community.
+    feat_create_share_title Create & Share
     feat_gamified_desc Earn XP, badges, and build streaks while mastering complex visual subjects.
     feat_gamified_title Gamified Experience
     feat_mastery_desc Dynamic XP rewards difficulty, while real-time mastery badges (Bronze, Silver, Gold) track your journey from novice to expert.
@@ -311,6 +342,8 @@
     feat_recognition_title Visual Pattern Training
     feat_science_adaptive_desc Intervals automatically adjust based on your recognition speed and accuracy.
     feat_science_adaptive_title Adaptive Timing
+    feat_science_smart_review_desc The algorithm calculates the optimal time to review each card for maximum retention.
+    feat_science_smart_review_title Smart Review Cycles
     feat_science_spacing_desc Advanced cognitive spacing model that predicts memory decay and optimizes review cycles.
     feat_science_spacing_title SuperMemo-2 (SM-2)
     feat_spacing_desc A full implementation of the SuperMemo-2 model predicts your memory decay and schedules reviews at the peak of retention.
@@ -345,6 +378,7 @@
     feedback_title Sūtīt atsauksmi
     feedback_title_hint Virsraksts
     feedback_type Veids
+    file_too_large Fails ir pārāk liels
     fill_all_fields Please fill all fields
     filter_all All
     filter_dashboard Informācijas panelis
@@ -355,6 +389,7 @@
     filter_public_library Publiskā bibliotēka
     filters Filtri
     finish Pabeigt
+    finish_account_setup Pabeigt konta iestatīšanu
     finished_session You finished {count} cards. XP bonus awarded!
     folder Mape
     folder_already_exists Mape ar šādu nosaukumu šajā pīlārā jau eksistē
@@ -362,6 +397,7 @@
     folder_label Mape
     folder_not_empty_msg Nevar dzēst: mape nav tukša.
     folder_plural Mapes
+    folder_practice_all_cards_desc Šī ir mape. Varat izmantot iepriekš esošās pogas Mācīties/Pārbaudīt, lai praktizētu visas kartītes.
     forgot_password Forgot Password?
     free_only Bezmaksas lietotāji
     general_preferences General Preferences
@@ -373,6 +409,7 @@
     hide_comparison Paslēpt plānu salīdzinājumu
     home Sākums
     images Images
+    inactive Neaktīvs
     included_subjects Iekļautie priekšmeti
     info_copied Info copied to clipboard
     initializing_aliolo Initializing Aliolo...
@@ -390,11 +427,17 @@
     invite_user_content E-pasts {email} netika atrasts. Uzaicināt pievienoties Aliolo?
     invite_user_title Uzaicināt lietotāju?
     invited_and_request_sent Uzaicināts un pieprasījums nosūtīts!
+    is_required ir obligāts
     json JSON
     keyboard_shortcuts Keyboard Shortcuts
     label_suffix $label:
     lang_abbr Lang
     language Valoda
+    languages Valodas
+    last_3_months Pēdējie 3 mēneši
+    last_6_months Pēdējie 6 mēneši
+    last_month Pēdējais mēnesis
+    last_slide Pēdējais slaids
     leaderboard Līderu saraksts
     learn_mode_desc Study cards and memorize answers
     learn_mode_title Learn
@@ -414,9 +457,11 @@
     licenses_intro_title Aliolo Paziņojumi par licenci un paketi
     licenses_third_party_section_title Trešās puses pakotņu licences
     light Light
+    limit_reached Limits sasniegts
     linux_distro Linux Distro
     loading Notiek ielāde...
     localized_data Lokalizēti dati
+    log_in_instead Pieteikties tā vietā
     login Pieteikties
     logout Izrakstīties
     manage_cards Manage Cards
@@ -448,12 +493,15 @@
     new NEW
     new_email Jauns e-pasts
     new_password New Password
+    new_password_required New password is required
     next Tālāk
     next_card Next Card
     next_daily_goal Nākamais dienas mērķis
     next_daily_goal_desc Katru dienu apgūstamo karšu mērķa skaits. Izmaiņas stājas spēkā rīt.
     next_day_goal Next Day Goal
+    no_age_data_yet Vēl nav vecuma datu
     no_cards_available_for_this_session Šai sesijai nav pieejama neviena karte.
+    no_cards_due_yet Vēl nav kartīšu ar termiņu
     no_cards_found Nav atrasta neviena karte
     no_cards_found_for_lang No cards found for this language
     no_cards_in_library No cards found in the library.
@@ -465,10 +513,19 @@
     no_localized_audio Nav lokalizēta audio
     no_localized_images Nav lokalizētu attēlu
     no_localized_video Nav lokalizēta video
+    no_onboarding_sessions_yet Vēl nav ievadīšanas sesiju
+    no_permission_view_card_details Jums nav atļaujas skatīt šīs kartītes informāciju.
+    no_pillar_data_yet Vēl nav pīlāru datu
+    no_slide_data_yet Vēl nav slaidu datu
     no_subjects_available Priekšmeti nav pieejami
     no_subjects_found Nav atrasts neviens priekšmets
+    no_subjects_found_in_collection Šajā kolekcijā nav atrasts neviens priekšmets
     no_subjects_found_in_this_collection Šajā kolekcijā nav atrasts neviens priekšmets
+    no_usage_data_yet Vēl nav lietošanas datu
     no_users_found Nav atrasts neviens lietotājs
+    not_available Nav pieejams
+    not_set Nav iestatīts
+    official_website Oficiālā tīmekļa vietne
     ok OK
     old_password Vecā parole
     old_password_required Vecā parole ir obligāta
@@ -486,6 +543,7 @@
     onboarding_6_title Pievienojieties kopienai
     onboarding_7_joined Pievienojušies tūkstošiem izglītojamo
     onboarding_7_quote Aliolo ir pilnībā mainījis veidu, kā es un mani bērni apgūstam jaunas tēmas. Vizuālās kartītes un intervālu atkārtošana liek mācībām justies kā spēlei!
+    onboarding_analytics Ievadīšanas analītika
     onboarding_get_started Sākt
     onboarding_next Tālāk
     onboarding_skip Izlaist
@@ -495,11 +553,13 @@
     order_id Pasūtījuma ID
     os_version OS versija
     our_mission OUR MISSION
+    paddle_cancel_subscription_desc Vai jāatceļ Paddle abonements? Atveriet Paddle atcelšanas plūsmu zemāk.
     page Page
     parent_folder_label Parent Folder (lv)
     password Parole
     password_required Password is required
     password_reset_success Password reset successful
+    password_updated Password updated successfully
     password_updated_successfully Parole veiksmīgi atjaunināta!
     passwords_dont_match Passwords do not match
     paste PASTE
@@ -534,6 +594,7 @@
     premium_unlock_desc Iegūstiet piekļuvi visiem priekšmetiem, izveidojiet neierobežotu skaitu kartīšu un atbalstiet Aliolo misiju.
     premium_unlock_title Atbloķējiet pilnu piekļuvi
     prev Prev
+    previous Iepriekšējais
     previous_card Previous Card
     price_per_week ({price} / nedēļā)
     private Private
@@ -562,6 +623,12 @@
     remove_friend Remove Friend
     remove_friend_confirm Are you sure you want to remove friend
     renderer Renderētājs
+    renderer_addition_emoji Saskaitīšana Emoji
+    renderer_addition_numbers Saskaitīšana Cipari
+    renderer_counting Skaitīšana
+    renderer_generic Vispārīgi
+    renderer_subtraction_emoji Atņemšana Emoji
+    renderer_subtraction_numbers Atņemšana Cipari
     request_sent Request sent
     request_sent_waiting Request sent (waiting)
     required Required
@@ -572,13 +639,17 @@
     reset_password_for "Reset Password for: "
     restore_password Restore Password
     restore_purchases Atjaunot pirkumus
+    restore_purchases_started Atjaunošana sākta. Aliolo atkārtoti sasaistīs visus derīgos pirkumus ar šo kontu.
+    retest_anyway Pārbaudīt vēlreiz tik un tā
     retry Retry
     right_arrow Right Arrow
     save Saglabāt
     save_33_per_month Ietaupiet 33% mēnesī
+    save_account Saglabāt kontu
     save_before_nav Do you want to save changes before navigating?
     save_card Save Card
     save_subject Save Subject
+    save_success Saved successfully
     saved_successfully Veiksmīgi saglabāts
     search_cards Search Cards
     search_subjects Search Subjects
@@ -591,8 +662,10 @@
     send Send
     send_code Send Code
     send_verification_code Send verification code?
+    session Sesija
     session_complete Sesija pabeigta!
     session_complete_description Lielisks darbs! Jūs esat pabeidzis visas šīs sesijas kārtis.
+    set_your_password Iestatiet Savu Paroli
     setting_saved Setting saved
     settings Iestatījumi
     shortcuts_hint Press the key you want to use with Ctrl.
@@ -620,6 +693,8 @@
     subject_label Subject
     subject_plural Subjects
     subject_type Subject Type (lv)
+    subject_up_to_date_retest_desc Jūs esat atjaunināts attiecībā uz šo priekšmetu. Tagad joprojām varat atkārtoti pārbaudīt visas kartītes.
+    subject_usage Priekšmeta lietojums
     subjects Priekšmeti
     subscribe_now Abonējiet tūlīt
     subscription_data Abonēšanas dati
@@ -648,10 +723,13 @@
     theme_system System
     this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards Šī ir mape. Varat izmantot iepriekš esošās pogas Mācīties/Pārbaudīt, lai trenētu visas kārtis.
     to_label To
+    toggle_languages Pārslēgt valodas
     total_cards Kopējais karšu skaits
     total_xp Total XP
     trust_cloud_desc Your progress is securely synced across all your devices in real-time.
     trust_cloud_title Cloud Sync
+    trust_ecosystem_desc Your progress and cards are seamlessly synced across all your devices.
+    trust_ecosystem_title Aliolo Ecosystem
     trust_privacy TRUST & PRIVACY
     trust_sync_desc Your data is private and encrypted to ensure the highest security standards.
     trust_sync_title Encrypted Data
@@ -668,12 +746,14 @@
     up_arrow Up Arrow
     update Update
     update_available Ir pieejama jauna versija!
+    updated Atjaunināts
     updated_at Atjaunināts
     upload_new_photo Augšupielādēt jaunu fotoattēlu
     user Lietotājs
     user_exists User already exists
     user_id Lietotāja ID
     user_not_found User not found
+    user_updated Lietotājs atjaunināts
     user_with_this_email_already_exists_please_log_in_instead Lietotājs ar šo e-pasta adresi jau pastāv. Lūdzu, piesakieties.
     username Lietotājvārds
     users Lietotāji
@@ -681,6 +761,8 @@
     verification_code Verifikācijas kods
     verification_code_sent_to Verifikācijas kods nosūtīts uz $email
     verify Verify
+    verify_email_change Pārbaudīt E-pasta Maiņu
+    verify_your_email Pārbaudiet savu e-pastu
     version Versija
     video Video
     video_link Video Link
@@ -692,6 +774,7 @@
     visual_content_required Nepieciešams vismaz viens vizuālais saturs
     visual_content_required_msg Jānorāda vismaz viens vizuālais saturs (teksts, attēls, audio vai video).
     visual_text Vizuālais teksts
+    wait_for_response_before_replying Lūdzu, uzgaidiet atbildi pirms atkal atbildat.
     wants_to_be_friend Wants to be your friend
     weekly_access Iknedēļas piekļuve
     welcome_complete_your_profile_to_join_aliolo Laipni lūdzam! Aizpildiet savu profilu, lai pievienotos aliolo.
@@ -701,33 +784,4 @@
     you_do_not_have_permission_to_edit_this_card Jums nav atļaujas rediģēt šo kartīti
     you_do_not_have_permission_to_view_this_card_details Jums nav atļaujas skatīt šīs kartes informāciju.
     you_rank You are ranked #{rank}
-    active Aktīvs
-    autoplay Automātiska atskaņošana
-    card_limit Kartīšu limits
-    card_limit_msg Jūs esat sasniedzis {limit} kartīšu limitu.
-    create_request Izveidot pieprasījumu
-    edit_user Rediģēt lietotāju
-    favorite Izlase
-    file_too_large Fails ir pārāk liels
-    inactive Neaktīvs
-    is_required ir obligāts
-    languages Valodas
-    limit_reached Limits sasniegts
-    not_available Nav pieejams
-    toggle_languages Pārslēgt valodas
-    user_updated Lietotājs atjaunināts
     zoom Tālummaiņa
-    account_and_management Account & Management
-    back_to_plans Back to plans
-    confirm_password_required Confirm password is required
-    feat_autoplay_desc Focus on learning while the app automatically advances through cards at your pace.
-    feat_autoplay_title Hands-Free Autoplay
-    feat_create_share_desc Easily create your own subjects and cards, or share them with the community.
-    feat_create_share_title Create & Share
-    feat_science_smart_review_desc The algorithm calculates the optimal time to review each card for maximum retention.
-    feat_science_smart_review_title Smart Review Cycles
-    new_password_required New password is required
-    password_updated Password updated successfully
-    save_success Saved successfully
-    trust_ecosystem_desc Your progress and cards are seamlessly synced across all your devices.
-    trust_ecosystem_title Aliolo Ecosystem

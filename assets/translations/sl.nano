@@ -44,9 +44,12 @@
     about_support_settings_title Personalizacija
     about_support_title Nastavitve, povratne informacije in podpora
     about_tagline Učite se vizuálne. Obvladajte trajno.
+    account_and_management Account & Management
     account_created Račun ustvarjen
     account_created_billing_fail Vaš račun je bil ustvarjen, vendar plačilo ni bilo dokončano. Ponovno poskusite s plačilom spodaj.
     account_deleted Account deleted successfully
+    account_setup_completed Nastavitev računa je zaključena.
+    active Aktivno
     add_card Add Card
     add_collection Dodaj zbirko
     add_folder Dodaj mapo
@@ -76,6 +79,7 @@
     aliolo aliolo
     all_matching_subjects Vsi ujemajoči se subjekti
     all_rights_reserved Vse pravice pridržane
+    all_time Ves čas
     answer Odgovori
     answer_label answer
     answers_label answers
@@ -86,8 +90,10 @@
     audio Zvok
     audio_playing Audio Playing
     author Author
+    autoplay Samodejno predvajanje
     back Nazaj
     back_to_login Back to Login
+    back_to_plans Back to plans
     back_to_subjects Nazaj na Zadeve
     best_for_quick_goals Najboljši za hitre gole
     billing_disclaimer Naročnine se samodejno obnovijo, razen če so preklicane. Svojo naročnino lahko upravljate v nastavitvah trgovine.
@@ -95,6 +101,7 @@
     bronze BRONZE
     browser Brskalnik
     cancel Prekliči
+    cancel_in_paddle Prekliči v Paddle
     cancel_request Cancel Request
     cancel_request_confirm Are you sure you want to cancel the request to
     cannot_delete_folder Cannot Delete Folder
@@ -103,6 +110,8 @@
     card_id ID kartice
     card_label Card
     card_level Raven kartice
+    card_limit Omejitev kartic
+    card_limit_msg Dosegli ste omejitev {limit} kartic.
     card_plural Cards
     cards cards
     cards_label cards
@@ -111,31 +120,44 @@
     change_avatar Change Avatar
     change_password Spremeni geslo
     check_your_email_for_code Preverite svojo e-pošto za kodo
+    checkout_email_before_payment_desc Vnesite svoj e-poštni naslov pred plačilom, da vam bo Aliolo lahko ustvaril račun in dodal naročnino.
+    checkout_finish_account_desc Izberite si uporabniško ime in geslo zdaj, da se boste lahko pozneje znova prijavili, če bo plačilo preklicano ali prekinjeno.
+    checkout_verification_desc Preden odpremo plačilni list trgovine, potrebujemo hitro preverjanje.
     clear Jasno
     click_to_select_image Click to select image
     click_to_view_original Kliknite za ogled originala
     close Zapri
+    close_feedback_request_confirm Ali ste prepričani, da želite zapreti to zahtevo za povratne informacije?
     close_request Zapreti zahtevo?
     code_label Code
     collection_id ID zbirke
     colors Barve
     common_settings Common Settings
     compare_plans Primerjajte brezplačno in Premium
+    complete_account Dokončajte račun
+    complete_account_setup Dokončaj nastavitev računa
+    complete_account_setup_desc Dodajte uporabniško ime in geslo za prihodnje prijave in obnovitve.
+    complete_account_subscription_desc Vaša naročnina je že povezana s tem računom. Dodajte uporabniško ime in geslo, da se boste lahko prijavili kjer koli in pozneje obnovili nakupe.
     confirm Potrdi
     confirm_logout Are you sure you want to logout?
     confirm_password Confirm Password
+    confirm_password_required Confirm password is required
     confirm_subscription Potrdite naročnino
     content_label Content
     context Kontekst
+    continue_to_checkout Nadaljuj na blagajno
     copy COPY
     copy_all Copy All
     core_features CORE FEATURES
     correct_answers Pravilni odgovori
     could_not_launch Ni bilo mogoče zagnati $url
+    could_not_open_paddle_cancellation Preklica Paddle ni bilo mogoče odpreti: {error}
     counting Štetje
     create_account Create Account
+    create_account_to_continue Ustvarite svoj račun za nadaljevanje
     create_new_account Create New Account
     create_new_card Create New Card
+    create_request Ustvari zahtevo
     created_at Ustvarjeno
     current_streak Current Streak
     current_subscription Trenutna naročnina
@@ -160,6 +182,7 @@
     delete_collection Izbriši zbirko
     delete_collection_confirm Ste prepričani, da želite izbrisati to zbirko?
     delete_folder Izbriši mapo
+    delete_folder_confirm Ali ste prepričani, da želite izbrisati to mapo?
     delete_selected_cards Delete selected cards?
     delete_subject Delete Subject
     delete_subject_confirm Delete subject '{subject}' and all {count} cards inside?
@@ -258,6 +281,7 @@
     doc_welcome_title Dobrodošli v Aliolo
     documentation Dokumentacija
     done_today Done Today
+    dont_show_again_for_this_subject Ne prikaži več za ta predmet
     down_arrow Down Arrow
     edit Uredi
     edit_card Edit Card
@@ -268,6 +292,7 @@
     edit_subject Edit Subject
     edit_subject_title Edit Subject
     edit_subscription Uredi naročnino
+    edit_user Uredi uporabnika
     email E-pošta
     email_change_notice For security, a confirmation link will be sent to BOTH your old and new email addresses. You must click both to complete the change.
     email_in_use Email is already in use
@@ -275,6 +300,7 @@
     email_update_sent Confirmation emails sent. Please check both inboxes.
     email_updated_successfully E-pošta je bila uspešno posodobljena!
     english English
+    enter_code_sent_to_email Vnesite 6-mestno kodo, poslano na naslov {email}
     enter_current_password Vnesite trenutno geslo
     enter_new_email Vnesite novo e-pošto
     enter_new_name Enter New Name
@@ -297,10 +323,15 @@
     failed_to_send_verification_code Kode za preverjanje ni bilo mogoče poslati
     fake_only Samo ponaredek
     fatal_startup_error Fatal Startup Error
+    favorite Priljubljeno
     feat_adaptive_desc The system monitors your recognition speed across MCQ options, dynamically adjusting intervals to push your boundaries.
     feat_adaptive_title Adaptive Response Timing
     feat_ages_desc Content curated for different age groups from early childhood to advanced learning.
     feat_ages_title For All Ages
+    feat_autoplay_desc Focus on learning while the app automatically advances through cards at your pace.
+    feat_autoplay_title Hands-Free Autoplay
+    feat_create_share_desc Easily create your own subjects and cards, or share them with the community.
+    feat_create_share_title Create & Share
     feat_gamified_desc Earn XP, badges, and build streaks while mastering complex visual subjects.
     feat_gamified_title Gamified Experience
     feat_mastery_desc Dynamic XP rewards difficulty, while real-time mastery badges (Bronze, Silver, Gold) track your journey from novice to expert.
@@ -311,6 +342,8 @@
     feat_recognition_title Visual Pattern Training
     feat_science_adaptive_desc Intervals automatically adjust based on your recognition speed and accuracy.
     feat_science_adaptive_title Adaptive Timing
+    feat_science_smart_review_desc The algorithm calculates the optimal time to review each card for maximum retention.
+    feat_science_smart_review_title Smart Review Cycles
     feat_science_spacing_desc Advanced cognitive spacing model that predicts memory decay and optimizes review cycles.
     feat_science_spacing_title SuperMemo-2 (SM-2)
     feat_spacing_desc A full implementation of the SuperMemo-2 model predicts your memory decay and schedules reviews at the peak of retention.
@@ -345,6 +378,7 @@
     feedback_title Pošlji povratne informacije
     feedback_title_hint Naslov
     feedback_type Vrsta
+    file_too_large Datoteka je prevelika
     fill_all_fields Please fill all fields
     filter_all All
     filter_dashboard Nadzorna plošča
@@ -355,6 +389,7 @@
     filter_public_library Splošna knjižnica
     filters Filtri
     finish Končaj
+    finish_account_setup Dokončaj nastavitev računa
     finished_session You finished {count} cards. XP bonus awarded!
     folder Mapa
     folder_already_exists Mapa s tem imenom v tem stebru že obstaja
@@ -362,6 +397,7 @@
     folder_label Mapa
     folder_not_empty_msg Ni mogoče izbrisati: mapa ni prazna.
     folder_plural Mape
+    folder_practice_all_cards_desc To je mapa. Za vadbo vseh kartic lahko uporabite zgornja gumba Uči se/Testiraj.
     forgot_password Forgot Password?
     free_only Brezplačni uporabniki
     general_preferences General Preferences
@@ -373,6 +409,7 @@
     hide_comparison Skrij primerjavo paketov
     home Domov
     images Images
+    inactive Neaktivno
     included_subjects Vključeni predmeti
     info_copied Info copied to clipboard
     initializing_aliolo Initializing Aliolo...
@@ -390,11 +427,17 @@
     invite_user_content E-pošta {email} ni bila najdena. Ali jih želite povabiti v Aliolo?
     invite_user_title Povabi uporabnika?
     invited_and_request_sent Vabljeni in zahteva poslana!
+    is_required je obvezno
     json JSON
     keyboard_shortcuts Keyboard Shortcuts
     label_suffix $label:
     lang_abbr Lang
     language Jezik
+    languages Jeziki
+    last_3_months Zadnji 3 meseci
+    last_6_months Zadnjih 6 mesecev
+    last_month Prejšnji mesec
+    last_slide Zadnji diapozitiv
     leaderboard Lestvica najboljših
     learn_mode_desc Study cards and memorize answers
     learn_mode_title Learn
@@ -414,9 +457,11 @@
     licenses_intro_title Aliolo Obvestila o licencah in paketih
     licenses_third_party_section_title Licence za pakete tretjih oseb
     light Light
+    limit_reached Omejitev dosežena
     linux_distro Linux Distro
     loading Nalaganje...
     localized_data Lokalizirani podatki
+    log_in_instead Raje se prijavite
     login Prijava
     logout Odjava
     manage_cards Manage Cards
@@ -448,12 +493,15 @@
     new NEW
     new_email Nova e-pošta
     new_password New Password
+    new_password_required New password is required
     next Naprej
     next_card Next Card
     next_daily_goal Naslednji dnevni cilj
     next_daily_goal_desc Ciljno število kartic, ki jih je treba osvojiti vsak dan. Spremembe začnejo veljati jutri.
     next_day_goal Next Day Goal
+    no_age_data_yet Še ni podatkov o starosti
     no_cards_available_for_this_session Za to sejo ni na voljo nobena kartica.
+    no_cards_due_yet Na vrsti ni še nobene kartice
     no_cards_found Ni najdenih kartic
     no_cards_found_for_lang No cards found for this language
     no_cards_in_library No cards found in the library.
@@ -465,10 +513,19 @@
     no_localized_audio Ni lokaliziranega zvoka
     no_localized_images Ni lokaliziranih slik
     no_localized_video Ni lokaliziranega videa
+    no_onboarding_sessions_yet Še ni sej za uvajanje
+    no_permission_view_card_details Nimate dovoljenja za ogled podrobnosti te kartice.
+    no_pillar_data_yet Še ni podatkov o stebru
+    no_slide_data_yet Še ni podatkov o diapozitivu
     no_subjects_available Na voljo ni nobenega predmeta
     no_subjects_found Ni predmetov
+    no_subjects_found_in_collection V tej zbirki nismo našli nobenih predmetov
     no_subjects_found_in_this_collection V tej zbirki ni najdenih predmetov
+    no_usage_data_yet Še ni podatkov o uporabi
     no_users_found Ni najdenih uporabnikov
+    not_available Ni na voljo
+    not_set Ni nastavljeno
+    official_website Uradna spletna stran
     ok OK
     old_password Staro geslo
     old_password_required Staro geslo je obvezno
@@ -486,6 +543,7 @@
     onboarding_6_title Pridružite se skupnosti
     onboarding_7_joined Pridružilo se je na tisoče učencev
     onboarding_7_quote Aliolo je popolnoma spremenil način, kako moji otroci in jaz obvladujemo nove teme. Vizualne kartice in ponavljanje v razmikih naredijo učenje kot igro!
+    onboarding_analytics Analitika uvajanja
     onboarding_get_started Začni
     onboarding_next Naprej
     onboarding_skip Preskoči
@@ -495,11 +553,13 @@
     order_id ID naročila
     os_version Različica OS
     our_mission OUR MISSION
+    paddle_cancel_subscription_desc Ali morate preklicati naročnino na Paddle? Odprite spodnji postopek preklica Paddle.
     page Page
     parent_folder_label Parent Folder (sl)
     password Geslo
     password_required Password is required
     password_reset_success Password reset successful
+    password_updated Password updated successfully
     password_updated_successfully Geslo je uspešno posodobljeno!
     passwords_dont_match Passwords do not match
     paste PASTE
@@ -534,6 +594,7 @@
     premium_unlock_desc Pridobite dostop do vseh predmetov, ustvarite neomejeno število kartic in podprite misijo Aliolo.
     premium_unlock_title Odkleni polni dostop
     prev Prev
+    previous Prejšnji
     previous_card Previous Card
     price_per_week ({price} / teden)
     private Private
@@ -562,6 +623,12 @@
     remove_friend Remove Friend
     remove_friend_confirm Are you sure you want to remove friend
     renderer Upodabljalnik
+    renderer_addition_emoji Seštevanje z emojiji
+    renderer_addition_numbers Seštevanje s številkami
+    renderer_counting Štetje
+    renderer_generic Splošno
+    renderer_subtraction_emoji Odštevanje z emojiji
+    renderer_subtraction_numbers Odštevanje s številkami
     request_sent Request sent
     request_sent_waiting Request sent (waiting)
     required Required
@@ -572,13 +639,17 @@
     reset_password_for "Reset Password for: "
     restore_password Restore Password
     restore_purchases Obnovi nakupe
+    restore_purchases_started Obnovitev se je začela. Aliolo bo morebitne veljavne nakupe znova povezala s tem računom.
+    retest_anyway Vseeno ponovno preizkusite
     retry Retry
     right_arrow Right Arrow
     save Shrani
     save_33_per_month Prihranite 33 % na mesec
+    save_account Shrani račun
     save_before_nav Do you want to save changes before navigating?
     save_card Save Card
     save_subject Save Subject
+    save_success Saved successfully
     saved_successfully Uspešno shranjeno
     search_cards Search Cards
     search_subjects Search Subjects
@@ -591,8 +662,10 @@
     send Send
     send_code Send Code
     send_verification_code Send verification code?
+    session Seja
     session_complete Seja končana!
     session_complete_description Odlično delo! Končali ste z vsemi kartami v tej seji.
+    set_your_password Nastavite svoje geslo
     setting_saved Setting saved
     settings Nastavitve
     shortcuts_hint Press the key you want to use with Ctrl.
@@ -620,6 +693,8 @@
     subject_label Subject
     subject_plural Subjects
     subject_type Subject Type (sl)
+    subject_up_to_date_retest_desc Za ta predmet ste na tekočem. Še vedno lahko ponovno preizkusite vse kartice zdaj.
+    subject_usage Uporaba predmeta
     subjects Predmeti
     subscribe_now Naročite se zdaj
     subscription_data Naročniški podatki
@@ -648,10 +723,13 @@
     theme_system System
     this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards To je mapa. Za vadbo vseh kart lahko uporabite zgornje gumbe za učenje/preizkus.
     to_label To
+    toggle_languages Preklopi jezike
     total_cards Skupaj kartic
     total_xp Total XP
     trust_cloud_desc Your progress is securely synced across all your devices in real-time.
     trust_cloud_title Cloud Sync
+    trust_ecosystem_desc Your progress and cards are seamlessly synced across all your devices.
+    trust_ecosystem_title Aliolo Ecosystem
     trust_privacy TRUST & PRIVACY
     trust_sync_desc Your data is private and encrypted to ensure the highest security standards.
     trust_sync_title Encrypted Data
@@ -668,12 +746,14 @@
     up_arrow Up Arrow
     update Update
     update_available Na voljo je nova različica!
+    updated Posodobljeno
     updated_at Posodobljeno
     upload_new_photo Naloži novo fotografijo
     user Uporabnik
     user_exists User already exists
     user_id ID uporabnika
     user_not_found User not found
+    user_updated Uporabnik posodobljen
     user_with_this_email_already_exists_please_log_in_instead Uporabnik s tem e-poštnim naslovom že obstaja. Prijavite se namesto tega.
     username Uporabniško ime
     users Uporabniki
@@ -681,6 +761,8 @@
     verification_code Koda za preverjanje
     verification_code_sent_to Koda za preverjanje poslana na $email
     verify Verify
+    verify_email_change Preverite spremembo e-pošte
+    verify_your_email Preverite svoj e-poštni naslov
     version Različica
     video Video
     video_link Video Link
@@ -692,6 +774,7 @@
     visual_content_required Potrebna je vsaj ena vizualna vsebina
     visual_content_required_msg Zagotoviti je treba vsaj eno vizualno vsebino (besedilo, slika, zvok ali video).
     visual_text Vizualno besedilo
+    wait_for_response_before_replying Pred ponovnim odgovorom počakajte na odgovor.
     wants_to_be_friend Wants to be your friend
     weekly_access Tedenski dostop
     welcome_complete_your_profile_to_join_aliolo Dobrodošli! Izpolnite svoj profil, da se pridružite aliolo.
@@ -701,33 +784,4 @@
     you_do_not_have_permission_to_edit_this_card Nimate dovoljenja za urejanje te kartice
     you_do_not_have_permission_to_view_this_card_details Nimate dovoljenja za ogled podrobnosti te kartice.
     you_rank You are ranked #{rank}
-    active Aktivno
-    autoplay Samodejno predvajanje
-    card_limit Omejitev kartic
-    card_limit_msg Dosegli ste omejitev {limit} kartic.
-    create_request Ustvari zahtevo
-    edit_user Uredi uporabnika
-    favorite Priljubljeno
-    file_too_large Datoteka je prevelika
-    inactive Neaktivno
-    is_required je obvezno
-    languages Jeziki
-    limit_reached Omejitev dosežena
-    not_available Ni na voljo
-    toggle_languages Preklopi jezike
-    user_updated Uporabnik posodobljen
     zoom Povečava
-    account_and_management Account & Management
-    back_to_plans Back to plans
-    confirm_password_required Confirm password is required
-    feat_autoplay_desc Focus on learning while the app automatically advances through cards at your pace.
-    feat_autoplay_title Hands-Free Autoplay
-    feat_create_share_desc Easily create your own subjects and cards, or share them with the community.
-    feat_create_share_title Create & Share
-    feat_science_smart_review_desc The algorithm calculates the optimal time to review each card for maximum retention.
-    feat_science_smart_review_title Smart Review Cycles
-    new_password_required New password is required
-    password_updated Password updated successfully
-    save_success Saved successfully
-    trust_ecosystem_desc Your progress and cards are seamlessly synced across all your devices.
-    trust_ecosystem_title Aliolo Ecosystem

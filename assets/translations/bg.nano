@@ -44,9 +44,12 @@
     about_support_settings_title Персонализиране
     about_support_title Настройки, обратна връзка и поддръжка
     about_tagline Учете визуално. Овладейте завинаги.
+    account_and_management Account & Management
     account_created Акаунтът е създаден
     account_created_billing_fail Вашият акаунт е създаден, но плащането не е завършено. Опитайте отново плащането по-долу.
     account_deleted Account deleted successfully
+    account_setup_completed Настройката на акаунта е завършена.
+    active Активен
     add_card Add Card
     add_collection Добавяне на колекция
     add_folder Добавяне на папка
@@ -76,6 +79,7 @@
     aliolo aliolo
     all_matching_subjects Всички съвпадащи теми
     all_rights_reserved Всички права запазени
+    all_time За всички времена
     answer Отговор
     answer_label answer
     answers_label answers
@@ -86,6 +90,7 @@
     audio Аудио
     audio_playing Audio Playing
     author Author
+    autoplay Автоматично възпроизвеждане
     back Назад
     back_to_login Back to Login
     back_to_plans Назад към плановете
@@ -96,6 +101,7 @@
     bronze BRONZE
     browser Браузър
     cancel Отказ
+    cancel_in_paddle Отказ в Paddle
     cancel_request Cancel Request
     cancel_request_confirm Are you sure you want to cancel the request to
     cannot_delete_folder Cannot Delete Folder
@@ -104,6 +110,8 @@
     card_id ID на картата
     card_label Card
     card_level Ниво на картата
+    card_limit Лимит на карти
+    card_limit_msg Достигнахте лимита си от {limit} карти.
     card_plural Cards
     cards cards
     cards_label cards
@@ -112,31 +120,44 @@
     change_avatar Change Avatar
     change_password Промяна на паролата
     check_your_email_for_code Проверете имейла си за код
+    checkout_email_before_payment_desc Въведете имейла си преди плащане, за да може Aliolo да създаде вашия акаунт и да прикачи абонамента към вас.
+    checkout_finish_account_desc Изберете потребителско име и парола сега, за да можете да влезете отново по-късно, ако плащането бъде отменено или прекъснато.
+    checkout_verification_desc Нуждаем се от една бърза проверка, преди да отворим страницата за плащане в магазина.
     clear Ясно
     click_to_select_image Click to select image
     click_to_view_original Кликнете, за да видите оригинала
     close Затвори
+    close_feedback_request_confirm Сигурни ли сте, че искате да затворите тази заявка за обратна връзка?
     close_request Затваряне на заявката?
     code_label Code
     collection_id ID на колекцията
     colors Цветове
     common_settings Common Settings
     compare_plans Сравнете безплатен срещу премиум
+    complete_account Завършване на акаунта
+    complete_account_setup Завършване на настройката на акаунта
+    complete_account_setup_desc Добавете потребителско име и парола за бъдещи влизания и възстановявания.
+    complete_account_subscription_desc Вашият абонамент вече е прикачен към този акаунт. Добавете потребителско име и парола, за да можете да влизате отвсякъде и да възстановявате покупки по-късно.
     confirm Потвърждаване
     confirm_logout Are you sure you want to logout?
     confirm_password Confirm Password
+    confirm_password_required Confirm password is required
     confirm_subscription Потвърдете абонамента
     content_label Content
     context Контекст
+    continue_to_checkout Продължи към плащане
     copy COPY
     copy_all Copy All
     core_features CORE FEATURES
     correct_answers Правилни отговори
     could_not_launch Не можа да се стартира $url
+    could_not_open_paddle_cancellation Неуспешно отваряне на анулирането в Paddle: {error}
     counting Броене
     create_account Create Account
+    create_account_to_continue Създайте акаунт, за да продължите
     create_new_account Create New Account
     create_new_card Create New Card
+    create_request Създай заявка
     created_at Създадено на
     current_streak Current Streak
     current_subscription Текущ абонамент
@@ -161,6 +182,7 @@
     delete_collection Изтриване на колекция
     delete_collection_confirm Сигурни ли сте, че искате да изтриете тази колекция?
     delete_folder Изтриване на папка
+    delete_folder_confirm Сигурни ли сте, че искате да изтриете тази папка?
     delete_selected_cards Delete selected cards?
     delete_subject Delete Subject
     delete_subject_confirm Delete subject '{subject}' and all {count} cards inside?
@@ -259,6 +281,7 @@
     doc_welcome_title Добре дошли в Aliolo
     documentation Документация
     done_today Done Today
+    dont_show_again_for_this_subject Не показвай отново за тази тема
     down_arrow Down Arrow
     edit Редактиране
     edit_card Edit Card
@@ -269,6 +292,7 @@
     edit_subject Edit Subject
     edit_subject_title Edit Subject
     edit_subscription Редактиране на абонамента
+    edit_user Редактиране на потребител
     email Имейл
     email_change_notice For security, a confirmation link will be sent to BOTH your old and new email addresses. You must click both to complete the change.
     email_in_use Email is already in use
@@ -276,6 +300,7 @@
     email_update_sent Confirmation emails sent. Please check both inboxes.
     email_updated_successfully Имейлът е актуализиран успешно!
     english English
+    enter_code_sent_to_email Въведете 6-цифрения код, изпратен на {email}
     enter_current_password Въведете текущата парола
     enter_new_email Въведете нов имейл
     enter_new_name Enter New Name
@@ -298,10 +323,15 @@
     failed_to_send_verification_code Неуспешно изпращане на код за потвърждение
     fake_only Само фалшиви
     fatal_startup_error Fatal Startup Error
+    favorite Любимо
     feat_adaptive_desc The system monitors your recognition speed across MCQ options, dynamically adjusting intervals to push your boundaries.
     feat_adaptive_title Adaptive Response Timing
     feat_ages_desc Content curated for different age groups from early childhood to advanced learning.
     feat_ages_title For All Ages
+    feat_autoplay_desc Focus on learning while the app automatically advances through cards at your pace.
+    feat_autoplay_title Hands-Free Autoplay
+    feat_create_share_desc Easily create your own subjects and cards, or share them with the community.
+    feat_create_share_title Create & Share
     feat_gamified_desc Earn XP, badges, and build streaks while mastering complex visual subjects.
     feat_gamified_title Gamified Experience
     feat_mastery_desc Dynamic XP rewards difficulty, while real-time mastery badges (Bronze, Silver, Gold) track your journey from novice to expert.
@@ -312,6 +342,8 @@
     feat_recognition_title Visual Pattern Training
     feat_science_adaptive_desc Intervals automatically adjust based on your recognition speed and accuracy.
     feat_science_adaptive_title Adaptive Timing
+    feat_science_smart_review_desc The algorithm calculates the optimal time to review each card for maximum retention.
+    feat_science_smart_review_title Smart Review Cycles
     feat_science_spacing_desc Advanced cognitive spacing model that predicts memory decay and optimizes review cycles.
     feat_science_spacing_title SuperMemo-2 (SM-2)
     feat_spacing_desc A full implementation of the SuperMemo-2 model predicts your memory decay and schedules reviews at the peak of retention.
@@ -346,6 +378,7 @@
     feedback_title Изпращане на обратна връзка
     feedback_title_hint Заглавие
     feedback_type Тип
+    file_too_large Файлът е твърде голям
     fill_all_fields Please fill all fields
     filter_all All
     filter_dashboard Табло
@@ -356,6 +389,7 @@
     filter_public_library Публична библиотека
     filters Филтри
     finish Край
+    finish_account_setup Приключване на настройката на акаунта
     finished_session You finished {count} cards. XP bonus awarded!
     folder Папка
     folder_already_exists Папка с това име вече съществува в този стълб
@@ -363,6 +397,7 @@
     folder_label Папка
     folder_not_empty_msg Не може да се изтрие: папката не е празна.
     folder_plural Папки
+    folder_practice_all_cards_desc Това е папка. Можете да използвате бутоните Учене/Тест по-горе, за да упражнявате всички карти.
     forgot_password Forgot Password?
     free_only Безплатни потребители
     general_preferences General Preferences
@@ -374,6 +409,7 @@
     hide_comparison Скриване на сравнението на плановете
     home Начало
     images Images
+    inactive Неактивен
     included_subjects Включени предмети
     info_copied Info copied to clipboard
     initializing_aliolo Initializing Aliolo...
@@ -391,11 +427,17 @@
     invite_user_content Имейлът {email} не е намерен. Поканете ги да се присъединят към Aliolo?
     invite_user_title Покани потребител?
     invited_and_request_sent Поканен и изпратена заявка!
+    is_required е задължително
     json JSON
     keyboard_shortcuts Keyboard Shortcuts
     label_suffix $label:
     lang_abbr Lang
     language Език
+    languages Езици
+    last_3_months Последните 3 месеца
+    last_6_months Последните 6 месеца
+    last_month Миналият месец
+    last_slide Последен слайд
     leaderboard Класация
     learn_mode_desc Study cards and memorize answers
     learn_mode_title Learn
@@ -415,9 +457,11 @@
     licenses_intro_title Aliolo Бележки за лиценз и пакет
     licenses_third_party_section_title Лицензи за пакети на трети страни
     light Light
+    limit_reached Лимитът е достигнат
     linux_distro Дистрибуция на Linux
     loading Зареждане...
     localized_data Локализирани данни
+    log_in_instead Влезте вместо това
     login Вход
     logout Изход
     manage_cards Manage Cards
@@ -449,12 +493,15 @@
     new NEW
     new_email Нов имейл
     new_password New Password
+    new_password_required New password is required
     next Напред
     next_card Next Card
     next_daily_goal Следваща дневна цел
     next_daily_goal_desc Целеви брой карти за усвояване всеки ден. Промените влизат в сила от утре.
     next_day_goal Next Day Goal
+    no_age_data_yet Все още няма данни за възрастта
     no_cards_available_for_this_session Няма налични карти за тази сесия.
+    no_cards_due_yet Все още няма карти за преговор
     no_cards_found Няма намерени карти
     no_cards_found_for_lang No cards found for this language
     no_cards_in_library No cards found in the library.
@@ -466,10 +513,19 @@
     no_localized_audio Няма локализирано аудио
     no_localized_images Няма локализирани изображения
     no_localized_video Няма локализирано видео
+    no_onboarding_sessions_yet Все още няма онбординг сесии
+    no_permission_view_card_details Нямате разрешение да преглеждате подробностите за тази карта.
+    no_pillar_data_yet Все още няма данни за стълбовете
+    no_slide_data_yet Все още няма данни за слайдове
     no_subjects_available Няма налични предмети
     no_subjects_found Няма намерени теми
+    no_subjects_found_in_collection Няма намерени теми в тази колекция
     no_subjects_found_in_this_collection Няма намерени теми в тази колекция
+    no_usage_data_yet Все още няма данни за използването
     no_users_found Няма намерени потребители
+    not_available Не е налично
+    not_set Не е зададено
+    official_website Официален уебсайт
     ok OK
     old_password Стара парола
     old_password_required Старата парола е задължителна
@@ -487,6 +543,7 @@
     onboarding_6_title Присъединете се към общността
     onboarding_7_joined Присъединиха се хиляди учащи
     onboarding_7_quote Aliolo напълно трансформира начина, по който децата ми и аз овладяваме нови теми. Визуалните карти и интервалното повторение правят ученето да изглежда като игра!
+    onboarding_analytics Онбординг Анализи
     onboarding_get_started Започни сега
     onboarding_next Напред
     onboarding_skip Пропусни
@@ -496,11 +553,13 @@
     order_id ID на поръчка
     os_version Версия на ОС
     our_mission OUR MISSION
+    paddle_cancel_subscription_desc Трябва да отмените абонамент в Paddle? Отворете процеса по анулиране в Paddle по-долу.
     page Page
     parent_folder_label Parent Folder (bg)
     password Парола
     password_required Password is required
     password_reset_success Password reset successful
+    password_updated Password updated successfully
     password_updated_successfully Паролата е актуализирана успешно!
     passwords_dont_match Passwords do not match
     paste PASTE
@@ -535,6 +594,7 @@
     premium_unlock_desc Получете достъп до всички теми, създайте неограничен брой карти и подкрепете мисията на Aliolo.
     premium_unlock_title Отключете пълен достъп
     prev Prev
+    previous Предишен
     previous_card Previous Card
     price_per_week ({price} / седмица)
     private Private
@@ -563,6 +623,12 @@
     remove_friend Remove Friend
     remove_friend_confirm Are you sure you want to remove friend
     renderer Renderer
+    renderer_addition_emoji Събиране с емоджита
+    renderer_addition_numbers Събиране с числа
+    renderer_counting Броене
+    renderer_generic Общи
+    renderer_subtraction_emoji Изваждане с емоджита
+    renderer_subtraction_numbers Изваждане с числа
     request_sent Request sent
     request_sent_waiting Request sent (waiting)
     required Required
@@ -573,13 +639,17 @@
     reset_password_for "Reset Password for: "
     restore_password Restore Password
     restore_purchases Възстановяване на покупките
+    restore_purchases_started Възстановяването започна. Aliolo ще свърже отново всички валидни покупки към този акаунт.
+    retest_anyway Повторен тест въпреки това
     retry Retry
     right_arrow Right Arrow
     save Запазване
     save_33_per_month Спестете 33% на месец
+    save_account Запазване на акаунта
     save_before_nav Do you want to save changes before navigating?
     save_card Save Card
     save_subject Save Subject
+    save_success Saved successfully
     saved_successfully Запазено успешно
     search_cards Search Cards
     search_subjects Search Subjects
@@ -592,8 +662,10 @@
     send Send
     send_code Send Code
     send_verification_code Send verification code?
+    session Сесия
     session_complete Сесията завършена!
     session_complete_description Страхотна работа! Завършихте всички карти в тази сесия.
+    set_your_password Задайте вашата парола
     setting_saved Setting saved
     settings Настройки
     shortcuts_hint Press the key you want to use with Ctrl.
@@ -621,6 +693,8 @@
     subject_label Subject
     subject_plural Subjects
     subject_type Subject Type (bg)
+    subject_up_to_date_retest_desc Вие сте в крак с тази тема. Все още можете да тествате отново всички карти сега.
+    subject_usage Използване на темата
     subjects Предмети
     subscribe_now Абонирайте се сега
     subscription_data Данни за абонамент
@@ -649,10 +723,13 @@
     theme_system System
     this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards Това е папка. Можете да използвате бутоните Научете/Тествайте по-горе, за да тренирате всички карти.
     to_label To
+    toggle_languages Превключване на езици
     total_cards Общо карти
     total_xp Total XP
     trust_cloud_desc Your progress is securely synced across all your devices in real-time.
     trust_cloud_title Cloud Sync
+    trust_ecosystem_desc Your progress and cards are seamlessly synced across all your devices.
+    trust_ecosystem_title Aliolo Ecosystem
     trust_privacy TRUST & PRIVACY
     trust_sync_desc Your data is private and encrypted to ensure the highest security standards.
     trust_sync_title Encrypted Data
@@ -669,12 +746,14 @@
     up_arrow Up Arrow
     update Update
     update_available Налична е нова версия!
+    updated Актуализирано
     updated_at Актуализирано на
     upload_new_photo Качване на нова снимка
     user Потребител
     user_exists User already exists
     user_id Потребителско име
     user_not_found User not found
+    user_updated Потребителят е актуализиран
     user_with_this_email_already_exists_please_log_in_instead Потребител с този имейл вече съществува. Моля, влезте вместо това.
     username Потребителско име
     users Потребители
@@ -682,6 +761,8 @@
     verification_code Код за потвърждение
     verification_code_sent_to Кодът за потвърждение е изпратен до $email
     verify Verify
+    verify_email_change Потвърждаване на промяната на имейл
+    verify_your_email Потвърдете имейла си
     version Версия
     video Video
     video_link Video Link
@@ -693,6 +774,7 @@
     visual_content_required Изисква се поне едно визуално съдържание
     visual_content_required_msg Трябва да бъде предоставено поне едно визуално съдържание (текст, изображение, аудио или видео).
     visual_text Визуален текст
+    wait_for_response_before_replying Моля, изчакайте отговор, преди да отговорите отново.
     wants_to_be_friend Wants to be your friend
     weekly_access Седмичен достъп
     welcome_complete_your_profile_to_join_aliolo Добре дошли! Попълнете своя профил, за да се присъедините към aliolo.
@@ -702,32 +784,4 @@
     you_do_not_have_permission_to_edit_this_card Нямате разрешение да редактирате тази карта
     you_do_not_have_permission_to_view_this_card_details Нямате разрешение да видите подробностите за тази карта.
     you_rank You are ranked #{rank}
-    active Активен
-    autoplay Автоматично възпроизвеждане
-    card_limit Лимит на карти
-    card_limit_msg Достигнахте лимита си от {limit} карти.
-    create_request Създай заявка
-    edit_user Редактиране на потребител
-    favorite Любимо
-    file_too_large Файлът е твърде голям
-    inactive Неактивен
-    is_required е задължително
-    languages Езици
-    limit_reached Лимитът е достигнат
-    not_available Не е налично
-    toggle_languages Превключване на езици
-    user_updated Потребителят е актуализиран
     zoom Мащабиране
-    account_and_management Account & Management
-    confirm_password_required Confirm password is required
-    feat_autoplay_desc Focus on learning while the app automatically advances through cards at your pace.
-    feat_autoplay_title Hands-Free Autoplay
-    feat_create_share_desc Easily create your own subjects and cards, or share them with the community.
-    feat_create_share_title Create & Share
-    feat_science_smart_review_desc The algorithm calculates the optimal time to review each card for maximum retention.
-    feat_science_smart_review_title Smart Review Cycles
-    new_password_required New password is required
-    password_updated Password updated successfully
-    save_success Saved successfully
-    trust_ecosystem_desc Your progress and cards are seamlessly synced across all your devices.
-    trust_ecosystem_title Aliolo Ecosystem

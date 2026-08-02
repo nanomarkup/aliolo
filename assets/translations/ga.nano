@@ -44,9 +44,12 @@
     about_support_settings_title Pearsanú
     about_support_title Socruithe, Aiseolas agus Tacaíocht
     about_tagline Foghlaim go hamhairc. Máistir go buan.
+    account_and_management Account & Management
     account_created Cuntas cruthaithe
     account_created_billing_fail Cruthaíodh do chuntas, ach níor cuireadh an íocaíocht i gcrích. Bain triail eile as an íocaíocht thíos.
     account_deleted Account deleted successfully
+    account_setup_completed Socrú cuntais críochnaithe.
+    active Gníomhach
     add_card Add Card
     add_collection Cuir bailiúchán leis
     add_folder Cuir fillteán leis
@@ -76,6 +79,7 @@
     aliolo aliolo
     all_matching_subjects Gach ábhar meaitseála
     all_rights_reserved Gach ceart ar cosaint
+    all_time An tAm ar Fad
     answer Freagra
     answer_label answer
     answers_label answers
@@ -86,8 +90,10 @@
     audio Fuaim
     audio_playing Audio Playing
     author Author
+    autoplay Uathsheinm
     back Ar ais
     back_to_login Back to Login
+    back_to_plans Back to plans
     back_to_subjects Ar Ais go Ábhair
     best_for_quick_goals Is fearr le haghaidh spriocanna tapa
     billing_disclaimer Déanfar síntiúis a athnuachan go huathoibríoch mura gcuirtear ar ceal iad. Is féidir leat do shíntiús a bhainistiú i do shocruithe siopa.
@@ -95,6 +101,7 @@
     bronze BRONZE
     browser Brabhsálaí
     cancel Cealaigh
+    cancel_in_paddle Cealaigh in Paddle
     cancel_request Cancel Request
     cancel_request_confirm Are you sure you want to cancel the request to
     cannot_delete_folder Cannot Delete Folder
@@ -103,6 +110,8 @@
     card_id ID cárta
     card_label Card
     card_level Leibhéal Cárta
+    card_limit Teorainn Cártaí
+    card_limit_msg Tá do theorainn de {limit} cárta sroichte agat.
     card_plural Cards
     cards cards
     cards_label cards
@@ -111,31 +120,44 @@
     change_avatar Change Avatar
     change_password Athraigh pasfhocal
     check_your_email_for_code Seiceáil do r-phost le haghaidh cód
+    checkout_email_before_payment_desc Cuir isteach do ríomhphost roimh íocaíocht ionas gur féidir le Aliolo do chuntas a chruthú agus an síntiús a cheangal leat.
+    checkout_finish_account_desc Roghnaigh d'ainm úsáideora agus pasfhocal anois ionas gur féidir leat logáil isteach arís níos deireanaí má chuirtear an íocaíocht ar ceal nó má chuirtear isteach uirthi.
+    checkout_verification_desc Teastaíonn fíorú tapa amháin uainn sula n-osclaítear bileog íocaíochta an tsiopa.
     clear Glan
     click_to_select_image Click to select image
     click_to_view_original Cliceáil chun an bunleagan a fheiceáil
     close Dún
+    close_feedback_request_confirm An bhfuil tú cinnte gur mhaith leat an t-iarratas aiseolais seo a dhúnadh?
     close_request Dún an Iarratas?
     code_label Code
     collection_id ID bailiúcháin
     colors Dathanna
     common_settings Common Settings
     compare_plans Déan comparáid idir Saor in aisce agus Préimh
+    complete_account Comhlánaigh cuntas
+    complete_account_setup Comhlánaigh socrú cuntais
+    complete_account_setup_desc Cuir ainm úsáideora agus pasfhocal leis le haghaidh logálacha isteach agus athchóirithe amach anseo.
+    complete_account_subscription_desc Tá do shíntiús ceangailte leis an gcuntas seo cheana féin. Cuir ainm úsáideora agus pasfhocal leis ionas gur féidir leat logáil isteach in áit ar bith agus ceannacháin a ghnóthú níos deireanaí.
     confirm Deimhnigh
     confirm_logout Are you sure you want to logout?
     confirm_password Confirm Password
+    confirm_password_required Confirm password is required
     confirm_subscription Deimhnigh Síntiús
     content_label Content
     context Comhthéacs
+    continue_to_checkout Lean ar aghaidh chuig an tseiceáil amach
     copy COPY
     copy_all Copy All
     core_features CORE FEATURES
     correct_answers Freagraí Cearta
     could_not_launch Níorbh fhéidir $url a sheoladh
+    could_not_open_paddle_cancellation Níorbh fhéidir cealú Paddle a oscailt: {error}
     counting Ag comhaireamh
     create_account Create Account
+    create_account_to_continue Cruthaigh do chuntas chun leanúint ar aghaidh
     create_new_account Create New Account
     create_new_card Create New Card
+    create_request Cruthaigh iarratas
     created_at Cruthaithe ag
     current_streak Current Streak
     current_subscription Síntiús Reatha
@@ -160,6 +182,7 @@
     delete_collection Scrios bailiúchán
     delete_collection_confirm An bhfuil tú cinnte go dteastaíonn uait an bailiúchán seo a scriosadh?
     delete_folder Scrios Fillteán
+    delete_folder_confirm An bhfuil tú cinnte gur mhaith leat an fillteán seo a scriosadh?
     delete_selected_cards Delete selected cards?
     delete_subject Delete Subject
     delete_subject_confirm Delete subject '{subject}' and all {count} cards inside?
@@ -258,6 +281,7 @@
     doc_welcome_title Fáilte go Aliolo
     documentation Doiciméadúchán
     done_today Done Today
+    dont_show_again_for_this_subject Ná taispeáin arís don ábhar seo
     down_arrow Down Arrow
     edit Cuir in eagar
     edit_card Edit Card
@@ -268,6 +292,7 @@
     edit_subject Edit Subject
     edit_subject_title Edit Subject
     edit_subscription Cuir síntiús in eagar
+    edit_user Cuir Úsáideoir in Eagar
     email Ríomhphost
     email_change_notice For security, a confirmation link will be sent to BOTH your old and new email addresses. You must click both to complete the change.
     email_in_use Email is already in use
@@ -275,6 +300,7 @@
     email_update_sent Confirmation emails sent. Please check both inboxes.
     email_updated_successfully D'éirigh le nuashonrú an ríomhphoist!
     english English
+    enter_code_sent_to_email Cuir isteach an cód 6-dhigit a seoladh chuig {email}
     enter_current_password Cuir isteach an pasfhocal reatha
     enter_new_email Iontráil ríomhphost nua
     enter_new_name Enter New Name
@@ -297,10 +323,15 @@
     failed_to_send_verification_code Theip ar an gcód fíorúcháin a sheoladh
     fake_only Bréige amháin
     fatal_startup_error Fatal Startup Error
+    favorite Ceanán
     feat_adaptive_desc The system monitors your recognition speed across MCQ options, dynamically adjusting intervals to push your boundaries.
     feat_adaptive_title Adaptive Response Timing
     feat_ages_desc Content curated for different age groups from early childhood to advanced learning.
     feat_ages_title For All Ages
+    feat_autoplay_desc Focus on learning while the app automatically advances through cards at your pace.
+    feat_autoplay_title Hands-Free Autoplay
+    feat_create_share_desc Easily create your own subjects and cards, or share them with the community.
+    feat_create_share_title Create & Share
     feat_gamified_desc Earn XP, badges, and build streaks while mastering complex visual subjects.
     feat_gamified_title Gamified Experience
     feat_mastery_desc Dynamic XP rewards difficulty, while real-time mastery badges (Bronze, Silver, Gold) track your journey from novice to expert.
@@ -311,6 +342,8 @@
     feat_recognition_title Visual Pattern Training
     feat_science_adaptive_desc Intervals automatically adjust based on your recognition speed and accuracy.
     feat_science_adaptive_title Adaptive Timing
+    feat_science_smart_review_desc The algorithm calculates the optimal time to review each card for maximum retention.
+    feat_science_smart_review_title Smart Review Cycles
     feat_science_spacing_desc Advanced cognitive spacing model that predicts memory decay and optimizes review cycles.
     feat_science_spacing_title SuperMemo-2 (SM-2)
     feat_spacing_desc A full implementation of the SuperMemo-2 model predicts your memory decay and schedules reviews at the peak of retention.
@@ -345,6 +378,7 @@
     feedback_title Seol Aiseolas
     feedback_title_hint Teideal
     feedback_type Cineál
+    file_too_large Tá an comhad rómhór
     fill_all_fields Please fill all fields
     filter_all All
     filter_dashboard Painéal
@@ -355,6 +389,7 @@
     filter_public_library Leabharlann Phoiblí
     filters Scagairí
     finish Críochnaigh
+    finish_account_setup Críochnaigh socrú cuntais
     finished_session You finished {count} cards. XP bonus awarded!
     folder Fillteán
     folder_already_exists Tá fillteán leis an ainm seo ann cheana féin sa cholún seo
@@ -362,6 +397,7 @@
     folder_label Fillteán
     folder_not_empty_msg Ní féidir scriosadh: níl an fillteán folamh.
     folder_plural Fillteáin
+    folder_practice_all_cards_desc Is fillteán é seo. Is féidir leat na cnaipí Foghlaim/Tástáil thuas a úsáid chun gach cárta a chleachtadh.
     forgot_password Forgot Password?
     free_only Úsáideoirí saor in aisce,
     general_preferences General Preferences
@@ -373,6 +409,7 @@
     hide_comparison Folaigh Comparáid Plean
     home Baile
     images Images
+    inactive Neamhghníomhach
     included_subjects Ábhair san áireamh
     info_copied Info copied to clipboard
     initializing_aliolo Initializing Aliolo...
@@ -390,11 +427,17 @@
     invite_user_content Níor aimsíodh an ríomhphost {email}. Tabhair cuireadh dóibh páirt a ghlacadh in Aliolo?
     invite_user_title Cuireadh d’úsáideoir?
     invited_and_request_sent Cuireadh agus iarratas seolta!
+    is_required riachtanach
     json JSON
     keyboard_shortcuts Keyboard Shortcuts
     label_suffix $label:
     lang_abbr Lang
     language Teanga
+    languages Teangacha
+    last_3_months Na 3 Mhí Dheireanacha
+    last_6_months Na 6 Mhí Dheireanacha
+    last_month An Mhí Seo Caite
+    last_slide Sleamhnán deireanach
     leaderboard Clár ceannaire
     learn_mode_desc Study cards and memorize answers
     learn_mode_title Learn
@@ -414,9 +457,11 @@
     licenses_intro_title Aliolo Fógraí Ceadúnais agus Pacáiste
     licenses_third_party_section_title Ceadúnais Pacáiste Tríú Páirtí
     light Light
+    limit_reached Teorainn sroichte
     linux_distro Diosca le haghaidh Linux
     loading Á lódáil...
     localized_data Sonraí Logánta
+    log_in_instead Logáil isteach ina ionad sin
     login Logáil isteach
     logout Logáil amach
     manage_cards Manage Cards
@@ -448,12 +493,15 @@
     new NEW
     new_email Ríomhphost Nua
     new_password New Password
+    new_password_required New password is required
     next Ar aghaidh
     next_card Next Card
     next_daily_goal An chéad sprioc laethúil eile
     next_daily_goal_desc Sprioclíon cártaí le máistir gach lá. Tiocfaidh athruithe i bhfeidhm amárach.
     next_day_goal Next Day Goal
+    no_age_data_yet Níl aon sonraí aoise ann fós
     no_cards_available_for_this_session Níl cártaí ar fáil don seisiún seo.
+    no_cards_due_yet Níl aon chártaí dlite fós
     no_cards_found Níor aimsíodh cártaí
     no_cards_found_for_lang No cards found for this language
     no_cards_in_library No cards found in the library.
@@ -465,10 +513,19 @@
     no_localized_audio Gan aon fhuaim logánta
     no_localized_images Níl aon íomhánna logánta
     no_localized_video Gan aon fhíseán logánta
+    no_onboarding_sessions_yet Níl aon seisiúin d'oiliúint ionduchtaithe ann fós
+    no_permission_view_card_details Níl cead agat sonraí an chárta seo a fheiceáil.
+    no_pillar_data_yet Níl aon sonraí colúin ann fós
+    no_slide_data_yet Níl aon sonraí sleamhnáin ann fós
     no_subjects_available Níl aon ábhair ar fáil
     no_subjects_found Níor aimsíodh aon ábhar
+    no_subjects_found_in_collection Níor aimsíodh aon ábhair sa bhailiúchán seo
     no_subjects_found_in_this_collection Níl aon ábhar le fáil sa bhailiúchán seo
+    no_usage_data_yet Níl aon sonraí úsáide ann fós
     no_users_found Níor aimsíodh aon úsáideoir
+    not_available Níl ar fáil
+    not_set Níl socraithe
+    official_website Suíomh gréasáin oifigiúil
     ok OK
     old_password Sean-phasfhocal
     old_password_required Tá an sean-phasfhocal ag teastáil
@@ -486,6 +543,7 @@
     onboarding_6_title Bí sa Phobal
     onboarding_7_joined Na mílte foghlaimeoirí tar éis dul isteach
     onboarding_7_quote D'athraigh Aliolo go hiomlán an bealach a n-éiríonn liom féin agus mo pháistí máistreacht a fháil ar thopaicí nua. Is cosúil le cluiche é an fhoghlaim mar gheall ar na cártaí amhairc!
+    onboarding_analytics Anailísíocht Ionduchtaithe
     onboarding_get_started Tosaigh
     onboarding_next Ar aghaidh
     onboarding_skip Scipeáil
@@ -495,11 +553,13 @@
     order_id Aitheantas Ordaithe
     os_version Leagan OS
     our_mission OUR MISSION
+    paddle_cancel_subscription_desc An gá duit síntiús Paddle a chealú? Oscail an sreabhadh cealaithe Paddle thíos.
     page Page
     parent_folder_label Parent Folder (ga)
     password Pasfhocal
     password_required Password is required
     password_reset_success Password reset successful
+    password_updated Password updated successfully
     password_updated_successfully D'éirigh le nuashonrú an phasfhocail!
     passwords_dont_match Passwords do not match
     paste PASTE
@@ -534,6 +594,7 @@
     premium_unlock_desc Faigh rochtain ar gach ábhar, cruthaigh cártaí neamhtheoranta, agus tacaigh le misean Aliolo.
     premium_unlock_title Díghlasáil Rochtain Iomlán
     prev Prev
+    previous Roimhe seo
     previous_card Previous Card
     price_per_week ({price} / seachtain)
     private Private
@@ -562,6 +623,12 @@
     remove_friend Remove Friend
     remove_friend_confirm Are you sure you want to remove friend
     renderer Rindreálaí
+    renderer_addition_emoji Emoji Suimiúcháin
+    renderer_addition_numbers Uimhreacha Suimiúcháin
+    renderer_counting Comhaireamh
+    renderer_generic Cineálach
+    renderer_subtraction_emoji Emoji Dealaithe
+    renderer_subtraction_numbers Uimhreacha Dealaithe
     request_sent Request sent
     request_sent_waiting Request sent (waiting)
     required Required
@@ -572,13 +639,17 @@
     reset_password_for "Reset Password for: "
     restore_password Restore Password
     restore_purchases Athchóirigh Ceannacháin
+    restore_purchases_started Athchóiriú tosaithe. Nascfaidh Aliolo aon cheannacháin bhailí leis an gcuntas seo arís.
+    retest_anyway Déan tástáil arís ar aon nós
     retry Retry
     right_arrow Right Arrow
     save Sábháil
     save_33_per_month Sábháil 33% in aghaidh na míosa
+    save_account Sábháil cuntas
     save_before_nav Do you want to save changes before navigating?
     save_card Save Card
     save_subject Save Subject
+    save_success Saved successfully
     saved_successfully Sábháilte go rathúil
     search_cards Search Cards
     search_subjects Search Subjects
@@ -591,8 +662,10 @@
     send Send
     send_code Send Code
     send_verification_code Send verification code?
+    session Seisiún
     session_complete Seisiún Críochnaithe!
     session_complete_description Jab iontach! Tá na cártaí go léir sa seisiún seo críochnaithe agat.
+    set_your_password Socraigh Do Phasfhocal
     setting_saved Setting saved
     settings Socruithe
     shortcuts_hint Press the key you want to use with Ctrl.
@@ -620,6 +693,8 @@
     subject_label Subject
     subject_plural Subjects
     subject_type Subject Type (ga)
+    subject_up_to_date_retest_desc Tá tú cothrom le dáta don ábhar seo. Is féidir leat gach cárta a thástáil arís anois.
+    subject_usage Úsáid Ábhair
     subjects Ábhair
     subscribe_now Liostáil Anois
     subscription_data Sonraí síntiús
@@ -648,10 +723,13 @@
     theme_system System
     this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards Is fillteán é seo. Is féidir leat na cnaipí Foghlaim/Tástáil thuas a úsáid chun gach cárta a chleachtadh.
     to_label To
+    toggle_languages Scoránaigh teangacha
     total_cards Iomlán Cártaí
     total_xp Total XP
     trust_cloud_desc Your progress is securely synced across all your devices in real-time.
     trust_cloud_title Cloud Sync
+    trust_ecosystem_desc Your progress and cards are seamlessly synced across all your devices.
+    trust_ecosystem_title Aliolo Ecosystem
     trust_privacy TRUST & PRIVACY
     trust_sync_desc Your data is private and encrypted to ensure the highest security standards.
     trust_sync_title Encrypted Data
@@ -668,12 +746,14 @@
     up_arrow Up Arrow
     update Update
     update_available Tá leagan nua ar fáil!
+    updated Nuashonraithe
     updated_at Nuashonraithe ag
     upload_new_photo Uaslódáil grianghraf nua
     user Úsáideoir
     user_exists User already exists
     user_id Aitheantas Úsáideora
     user_not_found User not found
+    user_updated Nuashonraíodh an t-úsáideoir
     user_with_this_email_already_exists_please_log_in_instead Tá an t-úsáideoir leis an ríomhphost seo ann cheana. Logáil isteach ina ionad sin le do thoil.
     username Ainm úsáideora
     users Úsáideoirí
@@ -681,6 +761,8 @@
     verification_code Cód Fíoraithe
     verification_code_sent_to Cód fíoraithe seolta chuig $email
     verify Verify
+    verify_email_change Fíoraigh Athrú Ríomhphoist
+    verify_your_email Fíoraigh do ríomhphost
     version Leagan
     video Video
     video_link Video Link
@@ -692,6 +774,7 @@
     visual_content_required Tá gá le hábhar físiúil amháin ar a laghad
     visual_content_required_msg Ní mór ábhar físiúil amháin ar a laghad (téacs, íomhá, fuaim nó físeán) a sholáthar.
     visual_text Téacs Físiúil
+    wait_for_response_before_replying Fan le do thoil le freagra sula dtabharfaidh tú freagra arís.
     wants_to_be_friend Wants to be your friend
     weekly_access Rochtain Seachtainiúil
     welcome_complete_your_profile_to_join_aliolo Fáilte romhat! Críochnaigh do phróifíl chun páirt a ghlacadh i aliolo.
@@ -701,33 +784,4 @@
     you_do_not_have_permission_to_edit_this_card Níl cead agat an cárta seo a chur in eagar
     you_do_not_have_permission_to_view_this_card_details Níl cead agat sonraí an chárta seo a fheiceáil.
     you_rank You are ranked #{rank}
-    active Gníomhach
-    autoplay Uathsheinm
-    card_limit Teorainn Cártaí
-    card_limit_msg Tá do theorainn de {limit} cárta sroichte agat.
-    create_request Cruthaigh iarratas
-    edit_user Cuir Úsáideoir in Eagar
-    favorite Ceanán
-    file_too_large Tá an comhad rómhór
-    inactive Neamhghníomhach
-    is_required riachtanach
-    languages Teangacha
-    limit_reached Teorainn sroichte
-    not_available Níl ar fáil
-    toggle_languages Scoránaigh teangacha
-    user_updated Nuashonraíodh an t-úsáideoir
     zoom Súmáil
-    account_and_management Account & Management
-    back_to_plans Back to plans
-    confirm_password_required Confirm password is required
-    feat_autoplay_desc Focus on learning while the app automatically advances through cards at your pace.
-    feat_autoplay_title Hands-Free Autoplay
-    feat_create_share_desc Easily create your own subjects and cards, or share them with the community.
-    feat_create_share_title Create & Share
-    feat_science_smart_review_desc The algorithm calculates the optimal time to review each card for maximum retention.
-    feat_science_smart_review_title Smart Review Cycles
-    new_password_required New password is required
-    password_updated Password updated successfully
-    save_success Saved successfully
-    trust_ecosystem_desc Your progress and cards are seamlessly synced across all your devices.
-    trust_ecosystem_title Aliolo Ecosystem

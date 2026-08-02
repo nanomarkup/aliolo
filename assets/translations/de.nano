@@ -44,9 +44,12 @@
     about_support_settings_title Personalisierung
     about_support_title Einstellungen, Feedback und Support
     about_tagline Visuell lernen. Dauerhaft beherrschen.
+    account_and_management Account & Management
     account_created Konto erstellt
     account_created_billing_fail Ihr Konto wurde erstellt, die Zahlung konnte jedoch nicht abgeschlossen werden. Versuchen Sie die Zahlung unten erneut.
     account_deleted Konto erfolgreich gelöscht
+    account_setup_completed Kontoeinrichtung abgeschlossen.
+    active Aktiv
     add_card Karte hinzufügen
     add_collection Kollektion hinzufügen
     add_folder Ordner hinzufügen
@@ -76,6 +79,7 @@
     aliolo aliolo
     all_matching_subjects Alle passenden Themen
     all_rights_reserved Alle Rechte vorbehalten
+    all_time Gesamte Zeit
     answer Antwort
     answer_label Antwort
     answers_label Antworten
@@ -86,8 +90,10 @@
     audio Audio
     audio_playing Audio wird abgespielt
     author Autor
+    autoplay Automatische Wiedergabe
     back Zurück
     back_to_login Zurück zum Login
+    back_to_plans Back to plans
     back_to_subjects Zurück zu den Themen
     best_for_quick_goals Am besten für schnelle Ziele
     billing_disclaimer Abonnements verlängern sich automatisch, sofern sie nicht gekündigt werden. Sie können Ihr Abonnement in Ihren Shop-Einstellungen verwalten.
@@ -95,6 +101,7 @@
     bronze BRONZE
     browser Browser
     cancel Stornieren
+    cancel_in_paddle In Paddle kündigen
     cancel_request Anfrage abbrechen
     cancel_request_confirm Sind Sie sicher, dass Sie die Anfrage an ... abbrechen möchten?
     cannot_delete_folder Ordner kann nicht gelöscht werden
@@ -103,6 +110,8 @@
     card_id Karten-ID
     card_label Karte
     card_level Kartenebene
+    card_limit Kartenlimit
+    card_limit_msg Sie haben Ihr Limit von {limit} Karten erreicht.
     card_plural Karten
     cards Karten
     cards_label Karten
@@ -111,31 +120,44 @@
     change_avatar Avatar ändern
     change_password Passwort ändern
     check_your_email_for_code Überprüfen Sie Ihre E-Mails auf Code
+    checkout_email_before_payment_desc Geben Sie Ihre E-Mail-Adresse vor der Zahlung ein, damit Aliolo Ihr Konto erstellen und Ihnen das Abonnement zuweisen kann.
+    checkout_finish_account_desc Wählen Sie jetzt Ihren Benutzernamen und Ihr Passwort, damit Sie sich später wiederanmelden können, falls die Zahlung storniert oder unterbrochen wird.
+    checkout_verification_desc Wir benötigen eine kurze Verifizierung, bevor wir die Zahlungsseite des Shops öffnen.
     clear Klar
     click_to_select_image Klicken, um Bild auszuwählen
     click_to_view_original Klicken Sie hier, um das Original anzuzeigen
     close Schließen
+    close_feedback_request_confirm Sind Sie sicher, dass Sie diese Feedback-Anfrage schließen möchten?
     close_request Anfrage schließen?
     code_label Code
     collection_id Sammlungs-ID
     colors Farben
     common_settings Common Settings
     compare_plans Kostenlos vs. Premium vergleichen
+    complete_account Konto vervollständigen
+    complete_account_setup Kontoeinrichtung abschließen
+    complete_account_setup_desc Fügen Sie einen Benutzernamen und ein Passwort für zukünftige Anmeldungen und Wiederherstellungen hinzu.
+    complete_account_subscription_desc Ihr Abonnement ist bereits mit diesem Konto verknüpft. Fügen Sie einen Benutzernamen und ein Passwort hinzu, damit Sie sich überall anmelden und Käufe später wiederherstellen können.
     confirm Bestätigen
     confirm_logout Sind Sie sicher, dass Sie sich abmelden möchten?
     confirm_password Passwort bestätigen
+    confirm_password_required Confirm password is required
     confirm_subscription Bestätigen Sie das Abonnement
     content_label Content
     context Kontext
+    continue_to_checkout Weiter zur Kasse
     copy COPY
     copy_all Alles kopieren
     core_features HAUPTMERKMALE
     correct_answers Richtige Antworten
     could_not_launch $url konnte nicht gestartet werden
+    could_not_open_paddle_cancellation Paddle-Kündigung konnte nicht geöffnet werden: {error}
     counting Zählen
     create_account Konto erstellen
+    create_account_to_continue Erstellen Sie Ihr Konto, um fortzufahren
     create_new_account Neues Konto erstellen
     create_new_card Neue Karte erstellen
+    create_request Anfrage erstellen
     created_at Erstellt am
     current_streak Aktuelle Serie
     current_subscription Aktuelles Abonnement
@@ -160,6 +182,7 @@
     delete_collection Kollektion löschen
     delete_collection_confirm Möchten Sie diese Kollektion wirklich löschen?
     delete_folder Ordner löschen
+    delete_folder_confirm Sind Sie sicher, dass Sie diesen Ordner löschen möchten?
     delete_selected_cards Ausgewählte Karten löschen?
     delete_subject Thema löschen
     delete_subject_confirm Fach '{subject}' und alle {count} Karten darin löschen?
@@ -258,6 +281,7 @@
     doc_welcome_title Willkommen bei Aliolo
     documentation Dokumentation
     done_today Heute erledigt
+    dont_show_again_for_this_subject Für dieses Thema nicht mehr anzeigen
     down_arrow Down Arrow
     edit Bearbeiten
     edit_card Karte bearbeiten
@@ -268,6 +292,7 @@
     edit_subject Thema bearbeiten
     edit_subject_title Edit Subject
     edit_subscription Abonnement bearbeiten
+    edit_user Benutzer bearbeiten
     email E-Mail
     email_change_notice Aus Sicherheitsgründen wird ein Bestätigungslink an SOWOHL deine alte als auch deine neue E-Mail-Adresse gesendet. Du musst beide anklicken, um die Änderung abzuschließen.
     email_in_use E-Mail wird bereits verwendet
@@ -275,6 +300,7 @@
     email_update_sent Bestätigungs-E-Mails gesendet. Bitte überprüfe beide Posteingänge.
     email_updated_successfully E-Mail erfolgreich aktualisiert!
     english English
+    enter_code_sent_to_email Geben Sie den 6-stelligen Code ein, der an {email} gesendet wurde
     enter_current_password Geben Sie das aktuelle Passwort ein
     enter_new_email Neue E-Mail eingeben
     enter_new_name Neuen Namen eingeben
@@ -297,6 +323,7 @@
     failed_to_send_verification_code Der Bestätigungscode konnte nicht gesendet werden
     fake_only Nur gefälscht
     fatal_startup_error Fataler Startfehler
+    favorite Favorit
     feat_adaptive_desc Das System überwacht die Erkennungsgeschwindigkeit, um die Intervalle anzupassen.
     feat_adaptive_title Adaptive Reaktionszeit
     feat_ages_desc Kuratierte Inhalte für verschiedene Altersgruppen, von der frühen Kindheit bis zum fortgeschrittenen Lernen.
@@ -351,6 +378,7 @@
     feedback_title Feedback senden
     feedback_title_hint Titel
     feedback_type Typ
+    file_too_large Datei ist zu groß
     fill_all_fields Bitte füllen Sie alle Felder aus
     filter_all Alle
     filter_dashboard Dashboard
@@ -361,6 +389,7 @@
     filter_public_library Öffentliche Bibliothek
     filters Filter
     finish Abschließen
+    finish_account_setup Kontoeinrichtung beenden
     finished_session Sie haben {count} Karten abgeschlossen. XP-Bonus erhalten!
     folder Ordner
     folder_already_exists Ein Ordner mit diesem Namen existiert bereits in dieser Säule
@@ -368,6 +397,7 @@
     folder_label Ordner
     folder_not_empty_msg Löschen nicht möglich: Ordner ist nicht leer.
     folder_plural Ordner
+    folder_practice_all_cards_desc Dies ist ein Ordner. Sie können die Schaltflächen Lernen/Testen oben verwenden, um alle Karten zu üben.
     forgot_password Passwort vergessen?
     free_only Kostenlose Benutzer
     general_preferences Allgemeine Einstellungen
@@ -379,6 +409,7 @@
     hide_comparison Planvergleich ausblenden
     home Heim
     images Bilder
+    inactive Inaktiv
     included_subjects Enthaltene Fächer
     info_copied Info in die Zwischenablage kopiert
     initializing_aliolo Initialisiere Aliolo...
@@ -396,17 +427,22 @@
     invite_user_content E-Mail {email} nicht gefunden. Möchten Sie ihn/sie zu Aliolo einladen?
     invite_user_title Benutzer einladen?
     invited_and_request_sent Eingeladen und Anfrage gesendet!
+    is_required ist erforderlich
     json JSON
     keyboard_shortcuts Tastenkombinationen
     label_suffix $label:
     lang_abbr Spr.
     language Sprache
+    languages Sprachen
+    last_3_months Letzte 3 Monate
+    last_6_months Letzte 6 Monate
+    last_month Letzter Monat
+    last_slide Letzte Folie
     leaderboard Bestenliste
     learn_mode_desc Study cards and memorize answers
     learn_mode_title Learn
     learn_session_size Größe der Lerneinheit
     learn_session_size_desc Anzahl der neuen Karten, die in einer einzelnen Lernsitzung eingeführt werden.
-    learning Lernen
     learning_session_complete_description Tolle Arbeit! Sie haben diese Lernsitzung abgeschlossen. Ihr Fortschritt wurde gespeichert.
     left_arrow Left Arrow
     level Ebene
@@ -421,9 +457,11 @@
     licenses_intro_title Aliolo Lizenz- und Pakethinweise
     licenses_third_party_section_title Paketlizenzen von Drittanbietern
     light Hell
+    limit_reached Limit erreicht
     linux_distro Linux-Distribution
     loading Laden...
     localized_data Lokalisierte Daten
+    log_in_instead Stattdessen anmelden
     login Anmelden
     logout Abmelden
     manage_cards Karten verwalten
@@ -455,12 +493,15 @@
     new NEU
     new_email Neue E-Mail
     new_password Neues Passwort
+    new_password_required New password is required
     next Weiter
     next_card Next Card
     next_daily_goal Nächstes Tagesziel
     next_daily_goal_desc Zielanzahl der täglich zu beherrschenden Karten. Änderungen treten morgen in Kraft.
     next_day_goal Ziel für morgen
+    no_age_data_yet Noch keine Altersdaten
     no_cards_available_for_this_session Für diese Sitzung sind keine Karten verfügbar.
+    no_cards_due_yet Noch keine Karten fällig
     no_cards_found Keine Karten gefunden
     no_cards_found_for_lang Keine Karten für diese Sprache gefunden
     no_cards_in_library Keine Karten in der Bibliothek gefunden.
@@ -472,10 +513,19 @@
     no_localized_audio Kein lokalisiertes Audio
     no_localized_images Keine lokalisierten Bilder
     no_localized_video Kein lokalisiertes Video
+    no_onboarding_sessions_yet Noch keine Onboarding-Sitzungen
+    no_permission_view_card_details Sie haben keine Berechtigung, die Details dieser Karte anzuzeigen.
+    no_pillar_data_yet Noch keine Säulendaten
+    no_slide_data_yet Noch keine Foliendaten
     no_subjects_available Keine Fächer verfügbar
     no_subjects_found Keine Themen gefunden
+    no_subjects_found_in_collection In dieser Sammlung wurden keine Themen gefunden
     no_subjects_found_in_this_collection In dieser Sammlung wurden keine Themen gefunden
+    no_usage_data_yet Noch keine Nutzungsdaten
     no_users_found Keine Benutzer gefunden
+    not_available Nicht verfügbar
+    not_set Nicht festgelegt
+    official_website Offizielle Website
     ok OK
     old_password Altes Passwort
     old_password_required Altes Passwort ist erforderlich
@@ -493,6 +543,7 @@
     onboarding_6_title Tritt der Community bei
     onboarding_7_joined Tausende von Lernern sind dabei
     onboarding_7_quote Aliolo hat die Art und Weise, wie meine Kinder und ich neue Themen meistern, völlig verändert. Die visuellen Karten und die abgestufte Wiederholung lassen das Lernen wie ein Spiel erscheinen!
+    onboarding_analytics Onboarding-Analysen
     onboarding_get_started Loslegen
     onboarding_next Weiter
     onboarding_skip Überspringen
@@ -502,11 +553,13 @@
     order_id Bestell-ID
     os_version Betriebssystemversion
     our_mission UNSERE MISSION
+    paddle_cancel_subscription_desc Möchten Sie ein Paddle-Abonnement kündigen? Öffnen Sie unten den Kündigungsablauf von Paddle.
     page Seite
     parent_folder_label Übergeordneter Ordner
     password Passwort
     password_required Passwort ist erforderlich
     password_reset_success Passwort erfolgreich zurückgesetzt
+    password_updated Password updated successfully
     password_updated_successfully Passwort erfolgreich aktualisiert!
     passwords_dont_match Passwörter stimmen nicht überein
     paste PASTE
@@ -541,6 +594,7 @@
     premium_unlock_desc Erhalten Sie Zugriff auf alle Themen, erstellen Sie unbegrenzt Karten und unterstützen Sie die Mission von Aliolo.
     premium_unlock_title Schalten Sie den Vollzugriff frei
     prev Zurück
+    previous Zurück
     previous_card Previous Card
     price_per_week ({price} / Woche)
     private Privat
@@ -569,6 +623,12 @@
     remove_friend Freund entfernen
     remove_friend_confirm Sind Sie sicher, dass Sie den Freund ... entfernen möchten?
     renderer Renderer
+    renderer_addition_emoji Additions-Emoji
+    renderer_addition_numbers Additions-Zahlen
+    renderer_counting Zählen
+    renderer_generic Allgemein
+    renderer_subtraction_emoji Subtraktions-Emoji
+    renderer_subtraction_numbers Subtraktions-Zahlen
     request_sent Anfrage gesendet
     request_sent_waiting Anfrage gesendet (wartend)
     required Erforderlich
@@ -579,13 +639,17 @@
     reset_password_for "Passwort zurücksetzen für: "
     restore_password Passwort wiederherstellen
     restore_purchases Einkäufe wiederherstellen
+    restore_purchases_started Wiederherstellung gestartet. Aliolo wird alle gültigen Käufe wieder mit diesem Konto verknüpfen.
+    retest_anyway Trotzdem erneut testen
     retry Wiederholen
     right_arrow Right Arrow
     save Speichern
     save_33_per_month Sparen Sie 33 % pro Monat
+    save_account Konto speichern
     save_before_nav Änderungen vor dem Verlassen speichern?
     save_card Karte speichern
     save_subject Thema speichern
+    save_success Saved successfully
     saved_successfully Erfolgreich gespeichert
     search_cards Karten suchen
     search_subjects Fächer suchen
@@ -598,8 +662,10 @@
     send Senden
     send_code Code senden
     send_verification_code Verifizierungscode senden?
+    session Sitzung
     session_complete Sitzung abgeschlossen!
     session_complete_description Tolle Arbeit! Sie haben in dieser Sitzung alle Karten fertiggestellt.
+    set_your_password Passwort festlegen
     setting_saved Einstellung gespeichert
     settings Einstellungen
     shortcuts_hint Press the key you want to use with Ctrl.
@@ -627,6 +693,8 @@
     subject_label Fach
     subject_plural Fächer
     subject_type Thementyp
+    subject_up_to_date_retest_desc Sie sind für dieses Thema auf dem neuesten Stand. Sie können jetzt trotzdem alle Karten erneut testen.
+    subject_usage Themennutzung
     subjects Fächer
     subscribe_now Jetzt abonnieren
     subscription_data Abonnementdaten
@@ -655,6 +723,7 @@
     theme_system System
     this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards Dies ist ein Ordner. Sie können die Schaltflächen „Lernen/Testen“ oben verwenden, um alle Karten zu üben.
     to_label An
+    toggle_languages Sprachen umschalten
     total_cards Gesamtkarten
     total_xp Gesamt-XP
     trust_cloud_desc Dein Fortschritt wird in Echtzeit sicher auf allen deinen Geräten synchronisiert.
@@ -677,12 +746,14 @@
     up_arrow Up Arrow
     update Aktualisieren
     update_available Eine neue Version ist verfügbar!
+    updated Aktualisiert
     updated_at Aktualisiert am
     upload_new_photo Neues Foto hochladen
     user Benutzer
     user_exists Benutzer existiert bereits
     user_id Benutzer-ID
     user_not_found Benutzer nicht gefunden
+    user_updated Benutzer aktualisiert
     user_with_this_email_already_exists_please_log_in_instead Der Benutzer mit dieser E-Mail-Adresse existiert bereits. Bitte melden Sie sich stattdessen an.
     username Benutzername
     users Benutzer
@@ -690,6 +761,8 @@
     verification_code Bestätigungscode
     verification_code_sent_to Bestätigungscode an $email gesendet
     verify Verifizieren
+    verify_email_change E-Mail-Änderung bestätigen
+    verify_your_email Bestätigen Sie Ihre E-Mail
     version Version
     video Video
     video_link Video-Link
@@ -701,6 +774,7 @@
     visual_content_required Mindestens ein visueller Inhalt ist erforderlich
     visual_content_required_msg Mindestens ein visueller Inhalt (Text, Bild, Audio oder Video) muss bereitgestellt werden.
     visual_text Visueller Text
+    wait_for_response_before_replying Bitte warten Sie auf eine Antwort, bevor Sie erneut antworten.
     wants_to_be_friend Möchte dein Freund sein
     weekly_access Wöchentlicher Zugriff
     welcome_complete_your_profile_to_join_aliolo Willkommen! Vervollständigen Sie Ihr Profil, um aliolo beizutreten.
@@ -710,25 +784,4 @@
     you_do_not_have_permission_to_edit_this_card Sie sind nicht berechtigt, diese Karte zu bearbeiten
     you_do_not_have_permission_to_view_this_card_details Sie sind nicht berechtigt, diese Kartendetails anzuzeigen.
     you_rank Du bist auf Platz #{rank}
-    active Aktiv
-    autoplay Automatische Wiedergabe
-    card_limit Kartenlimit
-    card_limit_msg Sie haben Ihr Limit von {limit} Karten erreicht.
-    create_request Anfrage erstellen
-    edit_user Benutzer bearbeiten
-    favorite Favorit
-    file_too_large Datei ist zu groß
-    inactive Inaktiv
-    is_required ist erforderlich
-    languages Sprachen
-    limit_reached Limit erreicht
-    not_available Nicht verfügbar
-    toggle_languages Sprachen umschalten
-    user_updated Benutzer aktualisiert
     zoom Zoom
-    account_and_management Account & Management
-    back_to_plans Back to plans
-    confirm_password_required Confirm password is required
-    new_password_required New password is required
-    password_updated Password updated successfully
-    save_success Saved successfully

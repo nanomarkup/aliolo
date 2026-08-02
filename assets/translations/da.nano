@@ -44,9 +44,12 @@
     about_support_settings_title Personalisering
     about_support_title Indstillinger, feedback og support
     about_tagline Lær visuelt. Mestrer for altid.
+    account_and_management Account & Management
     account_created Konto oprettet
     account_created_billing_fail Din konto blev oprettet, men betalingen blev ikke gennemført. Prøv nedenstående betaling igen.
     account_deleted Account deleted successfully
+    account_setup_completed Kontoopsætning fuldført.
+    active Aktiv
     add_card Add Card
     add_collection Tilføj samling
     add_folder Tilføj mappe
@@ -76,6 +79,7 @@
     aliolo aliolo
     all_matching_subjects Alle matchende emner
     all_rights_reserved Alle rettigheder forbeholdes
+    all_time Hele tiden
     answer Svar
     answer_label answer
     answers_label answers
@@ -86,8 +90,10 @@
     audio Lyd
     audio_playing Audio Playing
     author Author
+    autoplay Automatisk afspilning
     back Tilbage
     back_to_login Back to Login
+    back_to_plans Back to plans
     back_to_subjects Tilbage til emner
     best_for_quick_goals Bedst til hurtige mål
     billing_disclaimer Abonnementer fornyes automatisk, medmindre de opsiges. Du kan administrere dit abonnement i dine butiksindstillinger.
@@ -95,6 +101,7 @@
     bronze BRONZE
     browser Browser
     cancel Ophæve
+    cancel_in_paddle Annuller i Paddle
     cancel_request Cancel Request
     cancel_request_confirm Are you sure you want to cancel the request to
     cannot_delete_folder Cannot Delete Folder
@@ -103,6 +110,8 @@
     card_id Kort ID
     card_label Card
     card_level Kort niveau
+    card_limit Kortgrænse
+    card_limit_msg Du har nået din grænse på {limit} kort.
     card_plural Cards
     cards cards
     cards_label cards
@@ -111,31 +120,44 @@
     change_avatar Change Avatar
     change_password Skift adgangskode
     check_your_email_for_code Tjek din e-mail for kode
+    checkout_email_before_payment_desc Indtast din e-mail inden kassen, så Aliolo kan oprette din konto og vedhæfte abonnementet til dig.
+    checkout_finish_account_desc Vælg dit brugernavn og din adgangskode nu, så du kan logge ind igen senere, hvis betalingen annulleres eller afbrydes.
+    checkout_verification_desc Vi har brug for en hurtig bekræftelse, før vi åbner butikkens betalingsside.
     clear Klar
     click_to_select_image Click to select image
     click_to_view_original Klik for at se originalen
     close Tæt
+    close_feedback_request_confirm Er du sikker på, at du vil lukke denne anmodning om feedback?
     close_request Luk anmodning?
     code_label Code
     collection_id Samlings-id
     colors Farver
     common_settings Common Settings
     compare_plans Sammenlign gratis vs. premium
+    complete_account Færdiggør konto
+    complete_account_setup Færdiggør kontoopsætning
+    complete_account_setup_desc Tilføj et brugernavn og en adgangskode til fremtidige logins og gendannelser.
+    complete_account_subscription_desc Dit abonnement er allerede knyttet til denne konto. Tilføj et brugernavn og en adgangskode, så du kan logge ind overalt og gendanne køb senere.
     confirm Bekræft
     confirm_logout Are you sure you want to logout?
     confirm_password Confirm Password
+    confirm_password_required Confirm password is required
     confirm_subscription Bekræft abonnement
     content_label Content
     context Sammenhæng
+    continue_to_checkout Fortsæt til kassen
     copy COPY
     copy_all Copy All
     core_features CORE FEATURES
     correct_answers Korrekte svar
     could_not_launch Kunne ikke starte $url
+    could_not_open_paddle_cancellation Kunne ikke åbne aflysning af Paddle: {error}
     counting Tæller
     create_account Create Account
+    create_account_to_continue Opret din konto for at fortsætte
     create_new_account Create New Account
     create_new_card Create New Card
+    create_request Opret anmodning
     created_at Oprettet den
     current_streak Current Streak
     current_subscription Nuværende abonnement
@@ -160,6 +182,7 @@
     delete_collection Slet samling
     delete_collection_confirm Er du sikker på, at du vil slette denne samling?
     delete_folder Slet mappe
+    delete_folder_confirm Er du sikker på, at du vil slette denne mappe?
     delete_selected_cards Delete selected cards?
     delete_subject Delete Subject
     delete_subject_confirm Delete subject '{subject}' and all {count} cards inside?
@@ -258,6 +281,7 @@
     doc_welcome_title Velkommen til Aliolo
     documentation Dokumentation
     done_today Done Today
+    dont_show_again_for_this_subject Vis ikke igen for dette emne
     down_arrow Down Arrow
     edit Rediger
     edit_card Edit Card
@@ -268,6 +292,7 @@
     edit_subject Edit Subject
     edit_subject_title Edit Subject
     edit_subscription Rediger abonnement
+    edit_user Rediger bruger
     email E-mail
     email_change_notice For security, a confirmation link will be sent to BOTH your old and new email addresses. You must click both to complete the change.
     email_in_use Email is already in use
@@ -275,6 +300,7 @@
     email_update_sent Confirmation emails sent. Please check both inboxes.
     email_updated_successfully E-mail blev opdateret!
     english English
+    enter_code_sent_to_email Indtast den 6-cifrede kode sendt til {email}
     enter_current_password Indtast den aktuelle adgangskode
     enter_new_email Indtast ny e-mail
     enter_new_name Enter New Name
@@ -297,10 +323,15 @@
     failed_to_send_verification_code Kunne ikke sende bekræftelseskoden
     fake_only Kun falsk
     fatal_startup_error Fatal Startup Error
+    favorite Favorit
     feat_adaptive_desc The system monitors your recognition speed across MCQ options, dynamically adjusting intervals to push your boundaries.
     feat_adaptive_title Adaptive Response Timing
     feat_ages_desc Content curated for different age groups from early childhood to advanced learning.
     feat_ages_title For All Ages
+    feat_autoplay_desc Focus on learning while the app automatically advances through cards at your pace.
+    feat_autoplay_title Hands-Free Autoplay
+    feat_create_share_desc Easily create your own subjects and cards, or share them with the community.
+    feat_create_share_title Create & Share
     feat_gamified_desc Earn XP, badges, and build streaks while mastering complex visual subjects.
     feat_gamified_title Gamified Experience
     feat_mastery_desc Dynamic XP rewards difficulty, while real-time mastery badges (Bronze, Silver, Gold) track your journey from novice to expert.
@@ -311,6 +342,8 @@
     feat_recognition_title Visual Pattern Training
     feat_science_adaptive_desc Intervals automatically adjust based on your recognition speed and accuracy.
     feat_science_adaptive_title Adaptive Timing
+    feat_science_smart_review_desc The algorithm calculates the optimal time to review each card for maximum retention.
+    feat_science_smart_review_title Smart Review Cycles
     feat_science_spacing_desc Advanced cognitive spacing model that predicts memory decay and optimizes review cycles.
     feat_science_spacing_title SuperMemo-2 (SM-2)
     feat_spacing_desc A full implementation of the SuperMemo-2 model predicts your memory decay and schedules reviews at the peak of retention.
@@ -345,6 +378,7 @@
     feedback_title Send feedback
     feedback_title_hint Titel
     feedback_type Type
+    file_too_large Filen er for stor
     fill_all_fields Please fill all fields
     filter_all All
     filter_dashboard Kontrolpanel
@@ -355,6 +389,7 @@
     filter_public_library Offentligt bibliotek
     filters Filtre
     finish Afslut
+    finish_account_setup Afslut kontoopsætning
     finished_session You finished {count} cards. XP bonus awarded!
     folder Mappe
     folder_already_exists En mappe med dette navn findes allerede i denne søjle
@@ -362,6 +397,7 @@
     folder_label Mappe
     folder_not_empty_msg Kan ikke slette: mappen er ikke tom.
     folder_plural Mapper
+    folder_practice_all_cards_desc Dette er en mappe. Du kan bruge Lær/Test-knapperne ovenfor til at øve alle kort.
     forgot_password Forgot Password?
     free_only Gratis brugere
     general_preferences General Preferences
@@ -373,6 +409,7 @@
     hide_comparison Skjul plansammenligning
     home Hjem
     images Images
+    inactive Inaktiv
     included_subjects Inkluderede emner
     info_copied Info copied to clipboard
     initializing_aliolo Initializing Aliolo...
@@ -390,11 +427,17 @@
     invite_user_content E-mail {email} blev ikke fundet. Inviter dem til at deltage i Aliolo?
     invite_user_title Inviter bruger?
     invited_and_request_sent Inviteret og anmodning sendt!
+    is_required er påkrævet
     json JSON
     keyboard_shortcuts Keyboard Shortcuts
     label_suffix $label:
     lang_abbr Lang
     language Sprog
+    languages Sprog
+    last_3_months Seneste 3 måneder
+    last_6_months Seneste 6 måneder
+    last_month Sidste måned
+    last_slide Sidste dias
     leaderboard Leaderboard
     learn_mode_desc Study cards and memorize answers
     learn_mode_title Learn
@@ -414,9 +457,11 @@
     licenses_intro_title Aliolo Licens- og pakkemeddelelser
     licenses_third_party_section_title Tredjeparts pakkelicenser
     light Light
+    limit_reached Grænse nået
     linux_distro Linux Distro
     loading Indlæser...
     localized_data Lokaliserede data
+    log_in_instead Log ind i stedet
     login Log ind
     logout Log ud
     manage_cards Manage Cards
@@ -448,12 +493,15 @@
     new NEW
     new_email Ny e-mail
     new_password New Password
+    new_password_required New password is required
     next Næste
     next_card Next Card
     next_daily_goal Næste daglige mål
     next_daily_goal_desc Målantal kort, der skal mestres hver dag. Ændringer træder i kraft i morgen.
     next_day_goal Next Day Goal
+    no_age_data_yet Ingen aldersdata endnu
     no_cards_available_for_this_session Ingen kort tilgængelige for denne session.
+    no_cards_due_yet Ingen kort forfalder endnu
     no_cards_found Ingen kort fundet
     no_cards_found_for_lang No cards found for this language
     no_cards_in_library No cards found in the library.
@@ -465,10 +513,19 @@
     no_localized_audio Ingen lokaliseret lyd
     no_localized_images Ingen lokaliserede billeder
     no_localized_video Ingen lokaliseret video
+    no_onboarding_sessions_yet Ingen onboarding-sessioner endnu
+    no_permission_view_card_details Du har ikke tilladelse til at se disse kortoplysninger.
+    no_pillar_data_yet Ingen søjledata endnu
+    no_slide_data_yet Ingen diasdata endnu
     no_subjects_available Ingen emner tilgængelige
     no_subjects_found Ingen emner fundet
+    no_subjects_found_in_collection Ingen emner fundet i denne samling
     no_subjects_found_in_this_collection Ingen emner fundet i denne samling
+    no_usage_data_yet Ingen brugsdata endnu
     no_users_found Ingen brugere fundet
+    not_available Ikke tilgængelig
+    not_set Ikke angivet
+    official_website Officiel hjemmeside
     ok OK
     old_password Gammel adgangskode
     old_password_required Gammel adgangskode er påkrævet
@@ -486,6 +543,7 @@
     onboarding_6_title Bliv en del af fællesskabet
     onboarding_7_joined Deltaget af tusindvis af lærende
     onboarding_7_quote Aliolo har fuldstændig ændret den måde, mine børn og jeg mestrer nye emner på. De visuelle kort og spaced repetition får læring til at føles som en leg!
+    onboarding_analytics Onboarding Analytics
     onboarding_get_started Kom i gang
     onboarding_next Næste
     onboarding_skip Spring over
@@ -495,11 +553,13 @@
     order_id Ordre-ID
     os_version OS version
     our_mission OUR MISSION
+    paddle_cancel_subscription_desc Brug for at annullere et Paddle-abonnement? Åbn aflysningsflowet for Paddle nedenfor.
     page Page
     parent_folder_label Parent Folder (da)
     password Adgangskode
     password_required Password is required
     password_reset_success Password reset successful
+    password_updated Password updated successfully
     password_updated_successfully Adgangskoden blev opdateret!
     passwords_dont_match Passwords do not match
     paste PASTE
@@ -534,6 +594,7 @@
     premium_unlock_desc Få adgang til alle emner, opret ubegrænsede kort, og støt Aliolos mission.
     premium_unlock_title Lås op for fuld adgang
     prev Prev
+    previous Tidligere
     previous_card Previous Card
     price_per_week ({price} / uge)
     private Private
@@ -562,6 +623,12 @@
     remove_friend Remove Friend
     remove_friend_confirm Are you sure you want to remove friend
     renderer Renderer
+    renderer_addition_emoji Tilføjelsesemoji
+    renderer_addition_numbers Tilføjelsestal
+    renderer_counting Tæller
+    renderer_generic Generisk
+    renderer_subtraction_emoji Subtraktionsemoji
+    renderer_subtraction_numbers Subtraktionstal
     request_sent Request sent
     request_sent_waiting Request sent (waiting)
     required Required
@@ -572,13 +639,17 @@
     reset_password_for "Reset Password for: "
     restore_password Restore Password
     restore_purchases Gendan køb
+    restore_purchases_started Gendannelse startet. Aliolo vil knytte eventuelle gyldige køb til denne konto igen.
+    retest_anyway Test igen alligevel
     retry Retry
     right_arrow Right Arrow
     save Spare
     save_33_per_month Spar 33% om måneden
+    save_account Gem konto
     save_before_nav Do you want to save changes before navigating?
     save_card Save Card
     save_subject Save Subject
+    save_success Saved successfully
     saved_successfully Gemt
     search_cards Search Cards
     search_subjects Search Subjects
@@ -591,8 +662,10 @@
     send Send
     send_code Send Code
     send_verification_code Send verification code?
+    session Session
     session_complete Session færdig!
     session_complete_description Godt arbejde! Du er færdig med alle kortene i denne session.
+    set_your_password Angiv din adgangskode
     setting_saved Setting saved
     settings Indstillinger
     shortcuts_hint Press the key you want to use with Ctrl.
@@ -620,6 +693,8 @@
     subject_label Subject
     subject_plural Subjects
     subject_type Subject Type (da)
+    subject_up_to_date_retest_desc Du er opdateret for dette emne. Du kan stadig teste alle kort igen nu.
+    subject_usage Brug af emne
     subjects Emner
     subscribe_now Abonner nu
     subscription_data Abonnementsdata
@@ -648,10 +723,13 @@
     theme_system System
     this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards Dette er en mappe. Du kan bruge Lær/Test knapperne ovenfor til at øve alle kort.
     to_label To
+    toggle_languages Skift sprog
     total_cards Kort i alt
     total_xp Total XP
     trust_cloud_desc Your progress is securely synced across all your devices in real-time.
     trust_cloud_title Cloud Sync
+    trust_ecosystem_desc Your progress and cards are seamlessly synced across all your devices.
+    trust_ecosystem_title Aliolo Ecosystem
     trust_privacy TRUST & PRIVACY
     trust_sync_desc Your data is private and encrypted to ensure the highest security standards.
     trust_sync_title Encrypted Data
@@ -668,12 +746,14 @@
     up_arrow Up Arrow
     update Update
     update_available En ny version er tilgængelig!
+    updated Opdateret
     updated_at Opdateret den
     upload_new_photo Upload nyt foto
     user Bruger
     user_exists User already exists
     user_id Bruger-id
     user_not_found User not found
+    user_updated Bruger opdateret
     user_with_this_email_already_exists_please_log_in_instead Bruger med denne e-mailadresse findes allerede. Log venligst ind i stedet.
     username Brugernavn
     users Brugere
@@ -681,6 +761,8 @@
     verification_code Bekræftelseskode
     verification_code_sent_to Bekræftelseskode sendt til $email
     verify Verify
+    verify_email_change Bekræft e-mail-ændring
+    verify_your_email Bekræft din e-mail
     version Version
     video Video
     video_link Video Link
@@ -692,6 +774,7 @@
     visual_content_required Mindst ét visuelt indhold er påkrævet
     visual_content_required_msg Der skal angives mindst ét visuelt indhold (tekst, billede, lyd eller video).
     visual_text Visuel tekst
+    wait_for_response_before_replying Vent på et svar, før du svarer igen.
     wants_to_be_friend Wants to be your friend
     weekly_access Ugentlig adgang
     welcome_complete_your_profile_to_join_aliolo Velkomst! Udfyld din profil for at tilmelde dig aliolo.
@@ -701,33 +784,4 @@
     you_do_not_have_permission_to_edit_this_card Du har ikke tilladelse til at redigere dette kort
     you_do_not_have_permission_to_view_this_card_details Du har ikke tilladelse til at se disse kortoplysninger.
     you_rank You are ranked #{rank}
-    active Aktiv
-    autoplay Automatisk afspilning
-    card_limit Kortgrænse
-    card_limit_msg Du har nået din grænse på {limit} kort.
-    create_request Opret anmodning
-    edit_user Rediger bruger
-    favorite Favorit
-    file_too_large Filen er for stor
-    inactive Inaktiv
-    is_required er påkrævet
-    languages Sprog
-    limit_reached Grænse nået
-    not_available Ikke tilgængelig
-    toggle_languages Skift sprog
-    user_updated Bruger opdateret
     zoom Zoom
-    account_and_management Account & Management
-    back_to_plans Back to plans
-    confirm_password_required Confirm password is required
-    feat_autoplay_desc Focus on learning while the app automatically advances through cards at your pace.
-    feat_autoplay_title Hands-Free Autoplay
-    feat_create_share_desc Easily create your own subjects and cards, or share them with the community.
-    feat_create_share_title Create & Share
-    feat_science_smart_review_desc The algorithm calculates the optimal time to review each card for maximum retention.
-    feat_science_smart_review_title Smart Review Cycles
-    new_password_required New password is required
-    password_updated Password updated successfully
-    save_success Saved successfully
-    trust_ecosystem_desc Your progress and cards are seamlessly synced across all your devices.
-    trust_ecosystem_title Aliolo Ecosystem

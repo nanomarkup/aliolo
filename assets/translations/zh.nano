@@ -44,9 +44,12 @@
     about_support_settings_title 个性化
     about_support_title 设置、反馈和支持
     about_tagline 视觉学习，终身掌握。
+    account_and_management Account & Management
     account_created 帐户已创建
     account_created_billing_fail 您的帐户已创建，但付款未完成。重试以下付款。
     account_deleted 账户已成功注销
+    account_setup_completed 账户设置已完成。
+    active 活跃
     add_card 添加卡片
     add_collection 添加收藏
     add_folder 添加文件夹
@@ -76,6 +79,7 @@
     aliolo aliolo
     all_matching_subjects 所有匹配的主题
     all_rights_reserved 版权所有
+    all_time 所有时间
     answer 回答
     answer_label 答案
     answers_label 答案
@@ -86,8 +90,10 @@
     audio 音频
     audio_playing 正在播放音频
     author 作者
+    autoplay 自动播放
     back 后退
     back_to_login 返回登录
+    back_to_plans Back to plans
     back_to_subjects 返回主题
     best_for_quick_goals 最适合快速目标
     billing_disclaimer 除非取消，否则订阅会自动续订。您可以在商店设置中管理您的订阅。
@@ -95,6 +101,7 @@
     bronze 青铜
     browser 浏览器
     cancel 取消
+    cancel_in_paddle 在 Paddle 中取消
     cancel_request 取消请求
     cancel_request_confirm 您确定要取消对 ... 的请求吗？
     cannot_delete_folder 无法删除文件夹
@@ -103,6 +110,8 @@
     card_id 卡号
     card_label 卡片
     card_level 卡牌等级
+    card_limit 卡片限制
+    card_limit_msg 您已达到 {limit} 张卡片的限制。
     card_plural 卡片
     cards 张卡片
     cards_label 卡片
@@ -111,31 +120,44 @@
     change_avatar 更换头像
     change_password 更改密码
     check_your_email_for_code 检查您的电子邮件中是否有代码
+    checkout_email_before_payment_desc 在结账前输入您的电子邮件，以便 Aliolo 创建您的帐户并将订阅附加到您身上。
+    checkout_finish_account_desc 立即选择您的用户名和密码，以便如果付款被取消或中断，您以后可以再次登录。
+    checkout_verification_desc 在打开商店付款页面之前，我们需要进行一次快速验证。
     clear 清除
     click_to_select_image 点击选择图片
     click_to_view_original 点击查看原文
     close 关闭
+    close_feedback_request_confirm 您确定要关闭此反馈请求吗？
     close_request 关闭请求？
     code_label 代码
     collection_id 集合ID
     colors 颜色
     common_settings Common Settings
     compare_plans 比较免费版 vs 高级版
+    complete_account 完善账户
+    complete_account_setup 完成账户设置
+    complete_account_setup_desc 为将来的登录和恢复添加用户名和密码。
+    complete_account_subscription_desc 您的订阅已附加到此账户。添加一个用户名和密码，以便您可以在任何地方登录并在以后恢复购买。
     confirm 确认
     confirm_logout 确定要登出吗？
     confirm_password 确认密码
+    confirm_password_required Confirm password is required
     confirm_subscription 确认订阅
     content_label Content
     context 语境
+    continue_to_checkout 继续结账
     copy COPY
     copy_all 复制全部
     core_features CORE FEATURES
     correct_answers 正确答案
     could_not_launch 无法启动 $url
+    could_not_open_paddle_cancellation 无法打开 Paddle 取消页面：{error}
     counting 计数
     create_account 创建账户
+    create_account_to_continue 创建您的账户以继续
     create_new_account 创建新账户
     create_new_card 创建新卡片
+    create_request 创建请求
     created_at 创建时间
     current_streak 当前连续天数
     current_subscription 当前订阅
@@ -160,6 +182,7 @@
     delete_collection 删除收藏
     delete_collection_confirm 你确定要删除这个收藏吗？
     delete_folder 删除文件夹
+    delete_folder_confirm 您确定要删除此文件夹吗？
     delete_selected_cards 删除选中的卡片？
     delete_subject 删除主题
     delete_subject_confirm 删除主题 “{subject}” 及其包含的 {count} 张卡片？
@@ -258,6 +281,7 @@
     doc_welcome_title 欢迎来到 Aliolo
     documentation 文档
     done_today 今日已完成
+    dont_show_again_for_this_subject 不再针对此主题显示
     down_arrow 下箭头
     edit 编辑
     edit_card 编辑卡片
@@ -268,6 +292,7 @@
     edit_subject 编辑主题
     edit_subject_title Edit Subject
     edit_subscription 编辑订阅
+    edit_user 编辑用户
     email 电子邮件
     email_change_notice For security, a confirmation link will be sent to BOTH your old and new email addresses. You must click both to complete the change.
     email_in_use 电子邮件已被占用
@@ -275,6 +300,7 @@
     email_update_sent Confirmation emails sent. Please check both inboxes.
     email_updated_successfully 邮箱更新成功！
     english 英语
+    enter_code_sent_to_email 输入发送到 {email} 的 6 位代码
     enter_current_password 输入当前密码
     enter_new_email 输入新电子邮件
     enter_new_name 输入新名称
@@ -297,10 +323,15 @@
     failed_to_send_verification_code 发送验证码失败
     fake_only 仅限假货
     fatal_startup_error 致命的启动错误
+    favorite 收藏
     feat_adaptive_desc 通过识别速度动态调整间隔。
     feat_adaptive_title 自适应反应时间
     feat_ages_desc Content curated for different age groups from early childhood to advanced learning.
     feat_ages_title For All Ages
+    feat_autoplay_desc Focus on learning while the app automatically advances through cards at your pace.
+    feat_autoplay_title Hands-Free Autoplay
+    feat_create_share_desc Easily create your own subjects and cards, or share them with the community.
+    feat_create_share_title Create & Share
     feat_gamified_desc Earn XP, badges, and build streaks while mastering complex visual subjects.
     feat_gamified_title Gamified Experience
     feat_mastery_desc 动态经验奖励与掌握勋章。
@@ -311,6 +342,8 @@
     feat_recognition_title 视觉模式训练
     feat_science_adaptive_desc Intervals automatically adjust based on your recognition speed and accuracy.
     feat_science_adaptive_title Adaptive Timing
+    feat_science_smart_review_desc The algorithm calculates the optimal time to review each card for maximum retention.
+    feat_science_smart_review_title Smart Review Cycles
     feat_science_spacing_desc Advanced cognitive spacing model that predicts memory decay and optimizes review cycles.
     feat_science_spacing_title SuperMemo-2 (SM-2)
     feat_spacing_desc 完整实现的间隔重复模型。
@@ -345,6 +378,7 @@
     feedback_title 发送反馈
     feedback_title_hint 标题
     feedback_type 类型
+    file_too_large 文件太大
     fill_all_fields 请填写所有字段
     filter_all 全部
     filter_dashboard 仪表板
@@ -355,6 +389,7 @@
     filter_public_library 公共图书馆
     filters 筛选
     finish 完成
+    finish_account_setup 完成账户设置
     finished_session 你完成了 {count} 张卡片。获得经验加成！
     folder 文件夹
     folder_already_exists 该名称的文件夹已在此支柱中存在
@@ -362,6 +397,7 @@
     folder_label 文件夹
     folder_not_empty_msg 无法删除：文件夹非空。
     folder_plural 文件夹
+    folder_practice_all_cards_desc 这是一个文件夹。您可以使用上面的学习/测试按钮来练习所有卡片。
     forgot_password 忘记密码？
     free_only 免费用户
     general_preferences 常规设置
@@ -373,6 +409,7 @@
     hide_comparison 隐藏方案对比
     home 家
     images 图片
+    inactive 不活跃
     included_subjects 包含的主题
     info_copied 信息已复制到剪贴板
     initializing_aliolo 正在初始化 Aliolo...
@@ -390,17 +427,22 @@
     invite_user_content 未找到电子邮件 {email}。 邀请他们加入 Aliolo？
     invite_user_title 邀请用户？
     invited_and_request_sent 已邀请并已发送请求！
+    is_required 为必填项
     json JSON
     keyboard_shortcuts 键盘快捷键
     label_suffix $label:
     lang_abbr 语言
     language 语言
+    languages 语言
+    last_3_months 过去 3 个月
+    last_6_months 过去 6 个月
+    last_month 上个月
+    last_slide 最后一张幻灯片
     leaderboard 排行榜
     learn_mode_desc Study cards and memorize answers
     learn_mode_title Learn
     learn_session_size 单次学习量
     learn_session_size_desc 单个学习环节中引入的新卡片数量。
-    learning 学习中
     learning_session_complete_description 干得好！您已完成本次学习课程。您的进度已保存。
     left_arrow 左箭头
     level 等级
@@ -415,9 +457,11 @@
     licenses_intro_title Aliolo 许可证和软件包声明
     licenses_third_party_section_title 第三方软件包许可证
     light 浅色
+    limit_reached 已达到限制
     linux_distro Linux发行版
     loading 加载中...
     localized_data 本地化数据
+    log_in_instead 改为登录
     login 登录
     logout 登出
     manage_cards 管理卡片
@@ -449,12 +493,15 @@
     new 新内容
     new_email 新电子邮件
     new_password 新密码
+    new_password_required New password is required
     next 下一步
     next_card Next Card
     next_daily_goal 下一个每日目标
     next_daily_goal_desc 每日计划掌握的卡片目标数量。更改将于明天生效。
     next_day_goal 明日目标
+    no_age_data_yet 暂无年龄数据
     no_cards_available_for_this_session 此会话没有可用的卡片。
+    no_cards_due_yet 尚无到期卡片
     no_cards_found 没有找到卡片
     no_cards_found_for_lang 找不到该语言的卡片
     no_cards_in_library 库中未找到卡片。
@@ -466,10 +513,19 @@
     no_localized_audio 没有本地化音频
     no_localized_images 没有本地化图像
     no_localized_video 没有本地化视频
+    no_onboarding_sessions_yet 尚无入职引导会话
+    no_permission_view_card_details 您没有权限查看此卡片详情。
+    no_pillar_data_yet 暂无支柱数据
+    no_slide_data_yet 暂无幻灯片数据
     no_subjects_available 无可用主题
     no_subjects_found 没有找到主题
+    no_subjects_found_in_collection 在此集合中未找到任何主题
     no_subjects_found_in_this_collection 在此集合中找不到主题
+    no_usage_data_yet 暂无使用数据
     no_users_found 没有找到用户
+    not_available 不可用
+    not_set 未设置
+    official_website 官方网站
     ok 确定
     old_password 旧密码
     old_password_required 必须填写旧密码
@@ -487,6 +543,7 @@
     onboarding_6_title 加入社区
     onboarding_7_joined 已有成千上万的学习者加入
     onboarding_7_quote Aliolo 完全改变了我及我的孩子掌握新主题的方式。视觉卡片和间隔重复让学习感觉像是一场游戏！
+    onboarding_analytics 入职引导分析
     onboarding_get_started 开始体验
     onboarding_next 下一步
     onboarding_skip 跳过
@@ -496,11 +553,13 @@
     order_id 订单 ID
     os_version 操作系统版本
     our_mission OUR MISSION
+    paddle_cancel_subscription_desc 需要取消 Paddle 订阅吗？打开下面的 Paddle 取消流程。
     page 页面
     parent_folder_label 父文件夹
     password 密码
     password_required 需要密码
     password_reset_success 密码重置成功
+    password_updated Password updated successfully
     password_updated_successfully 密码更新成功！
     passwords_dont_match 密码不匹配
     paste PASTE
@@ -535,6 +594,7 @@
     premium_unlock_desc 访问所有主题、创建无限卡牌并支持 Aliolo 的使命。
     premium_unlock_title 解锁完全访问权限
     prev 上一个
+    previous 上一步
     previous_card Previous Card
     price_per_week ({price} / 周)
     private 私有
@@ -563,6 +623,12 @@
     remove_friend 删除好友
     remove_friend_confirm 您确定要删除好友 ... 吗？
     renderer 渲染器
+    renderer_addition_emoji 加法表情符号
+    renderer_addition_numbers 加法数字
+    renderer_counting 计数
+    renderer_generic 通用
+    renderer_subtraction_emoji 减法表情符号
+    renderer_subtraction_numbers 减法数字
     request_sent 请求已发送
     request_sent_waiting 请求已发送（等待中）
     required 必填
@@ -573,13 +639,17 @@
     reset_password_for 重置密码：
     restore_password 重置密码
     restore_purchases 恢复购买
+    restore_purchases_started 已开始恢复。Aliolo 会将任何有效的购买重新链接到此账户。
+    retest_anyway 仍然重新测试
     retry 重试
     right_arrow 右箭头
     save 节省
     save_33_per_month 每月节省 33%
+    save_account 保存账户
     save_before_nav 离开前是否保存？
     save_card 保存卡片
     save_subject 保存主题
+    save_success Saved successfully
     saved_successfully 保存成功
     search_cards 搜索卡片
     search_subjects 搜索主题
@@ -592,8 +662,10 @@
     send 发送
     send_code 发送代码
     send_verification_code 发送验证码？
+    session 会话
     session_complete 会议结束！
     session_complete_description 干得好！您已完成本节中的所有卡片。
+    set_your_password 设置您的密码
     setting_saved 设置已保存
     settings 设置
     shortcuts_hint Press the key you want to use with Ctrl.
@@ -621,6 +693,8 @@
     subject_label 主题
     subject_plural 主题
     subject_type 主题类型
+    subject_up_to_date_retest_desc 您的此主题是最新的。您现在仍然可以重新测试所有卡片。
+    subject_usage 主题使用情况
     subjects 主题
     subscribe_now 立即订阅
     subscription_data 订阅数据
@@ -649,10 +723,13 @@
     theme_system 系统
     this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards 这是一个文件夹。您可以使用上面的学习/测试按钮来练习所有卡片。
     to_label 至
+    toggle_languages 切换语言
     total_cards 总牌数
     total_xp 总经验值
     trust_cloud_desc Your progress is securely synced across all your devices in real-time.
     trust_cloud_title Cloud Sync
+    trust_ecosystem_desc Your progress and cards are seamlessly synced across all your devices.
+    trust_ecosystem_title Aliolo Ecosystem
     trust_privacy TRUST & PRIVACY
     trust_sync_desc Your data is private and encrypted to ensure the highest security standards.
     trust_sync_title Encrypted Data
@@ -669,12 +746,14 @@
     up_arrow 上箭头
     update 更新
     update_available 新版本已推出！
+    updated 已更新
     updated_at 更新时间
     upload_new_photo 上传新照片
     user 用户
     user_exists 用户已存在
     user_id 用户身份
     user_not_found 找不到用户
+    user_updated 用户已更新
     user_with_this_email_already_exists_please_log_in_instead 使用此电子邮件的用户已存在。请改为登录。
     username 用户名
     users 用户
@@ -682,6 +761,8 @@
     verification_code 验证码
     verification_code_sent_to 验证码发送至$email
     verify 验证
+    verify_email_change 验证电子邮件更改
+    verify_your_email 验证您的电子邮件
     version 版本
     video 视频
     video_link 视频链接
@@ -693,6 +774,7 @@
     visual_content_required 至少需要一个视觉内容
     visual_content_required_msg 必须提供至少一个视觉内容（文本、图像、音频或视频）。
     visual_text 视觉文本
+    wait_for_response_before_replying 请在再次回复前等待响应。
     wants_to_be_friend 想成为你的朋友
     weekly_access 每周访问
     welcome_complete_your_profile_to_join_aliolo 欢迎！填写您的个​​人资料以加入 aliolo。
@@ -702,33 +784,4 @@
     you_do_not_have_permission_to_edit_this_card 您无权编辑此卡
     you_do_not_have_permission_to_view_this_card_details 您无权查看此卡的详细信息。
     you_rank 你的排名：第 #{rank} 名
-    active 活跃
-    autoplay 自动播放
-    card_limit 卡片限制
-    card_limit_msg 您已达到 {limit} 张卡片的限制。
-    create_request 创建请求
-    edit_user 编辑用户
-    favorite 收藏
-    file_too_large 文件太大
-    inactive 不活跃
-    is_required 为必填项
-    languages 语言
-    limit_reached 已达到限制
-    not_available 不可用
-    toggle_languages 切换语言
-    user_updated 用户已更新
     zoom 缩放
-    account_and_management Account & Management
-    back_to_plans Back to plans
-    confirm_password_required Confirm password is required
-    feat_autoplay_desc Focus on learning while the app automatically advances through cards at your pace.
-    feat_autoplay_title Hands-Free Autoplay
-    feat_create_share_desc Easily create your own subjects and cards, or share them with the community.
-    feat_create_share_title Create & Share
-    feat_science_smart_review_desc The algorithm calculates the optimal time to review each card for maximum retention.
-    feat_science_smart_review_title Smart Review Cycles
-    new_password_required New password is required
-    password_updated Password updated successfully
-    save_success Saved successfully
-    trust_ecosystem_desc Your progress and cards are seamlessly synced across all your devices.
-    trust_ecosystem_title Aliolo Ecosystem

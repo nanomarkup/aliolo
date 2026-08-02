@@ -274,4 +274,35 @@ describe('SEO and crawlability', () => {
     expect(html).toContain('flutter_bootstrap.js');
   });
 
+  it('applies Cache-Control no-cache, must-revalidate to critical files', async () => {
+    const customAssetsEnv = {
+      ...env,
+      ASSETS: {
+        fetch: async (request: Request) => {
+          const url = new URL(request.url);
+          const filepath = url.pathname;
+          return new Response('dummy content', {
+            status: 200,
+            headers: { 'Content-Type': filepath.endsWith('.js') ? 'application/javascript' : 'text/plain' }
+          });
+        }
+      }
+    };
+
+    // Test a .nano file
+    const resNano = await app.request('https://aliolo.com/assets/translations/en.nano', {}, customAssetsEnv);
+    expect(resNano.status).toBe(200);
+    expect(resNano.headers.get('Cache-Control')).toBe('no-cache, must-revalidate');
+
+    // Test service worker js
+    const resSW = await app.request('https://aliolo.com/flutter_service_worker.js', {}, customAssetsEnv);
+    expect(resSW.status).toBe(200);
+    expect(resSW.headers.get('Cache-Control')).toBe('no-cache, must-revalidate');
+
+    // Test landing page HTML
+    const resHtml = await app.request('https://aliolo.com/privacy', {}, mockEnv);
+    expect(resHtml.status).toBe(200);
+    expect(resHtml.headers.get('Cache-Control')).toBe('no-cache, must-revalidate');
+  });
+
 });

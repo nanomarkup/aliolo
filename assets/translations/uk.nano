@@ -44,9 +44,12 @@
     about_support_settings_title Персоналізація
     about_support_title Налаштування, відгуки та підтримка
     about_tagline Навчайся візуально. Опановуй назавжди.
+    account_and_management Account & Management
     account_created Обліковий запис створено
     account_created_billing_fail Ваш обліковий запис створено, але платіж не завершено. Повторіть спробу оплати нижче.
     account_deleted Акаунт успішно видалено
+    account_setup_completed Налаштування облікового запису завершено.
+    active Активний
     add_card Додати картку
     add_collection Додати колекцію
     add_folder Додати папку
@@ -76,6 +79,7 @@
     aliolo aliolo
     all_matching_subjects Усі відповідні теми
     all_rights_reserved Всі права захищені
+    all_time За весь час
     answer Відповідь
     answer_label відповідь
     answers_label відповідей
@@ -86,8 +90,10 @@
     audio Аудіо
     audio_playing Грає аудіо
     author Автор
+    autoplay Автовідтворення
     back Назад
     back_to_login Назад до входу
+    back_to_plans Back to plans
     back_to_subjects Назад до тем
     best_for_quick_goals Найкраще для швидких голів
     billing_disclaimer Підписки автоматично поновлюються, якщо їх не скасовано. Ви можете керувати своєю підпискою в налаштуваннях магазину.
@@ -95,6 +101,7 @@
     bronze БРОНЗА
     browser Браузер
     cancel Скасувати
+    cancel_in_paddle Скасувати в Paddle
     cancel_request Cancel Request
     cancel_request_confirm Ви впевнені, що хочете скасувати запит до
     cannot_delete_folder Cannot Delete Folder
@@ -103,6 +110,8 @@
     card_id ID картки
     card_label Картка
     card_level Рівень карти
+    card_limit Ліміт карток
+    card_limit_msg Ви досягли ліміту в {limit} карток.
     card_plural Картки
     cards карток
     cards_label карток
@@ -111,31 +120,44 @@
     change_avatar Змінити аватар
     change_password Змінити пароль
     check_your_email_for_code Перевірте свою електронну пошту на наявність коду
+    checkout_email_before_payment_desc Введіть свою електронну пошту перед оплатою, щоб Aliolo міг створити ваш обліковий запис і прив'язати підписку до вас.
+    checkout_finish_account_desc Виберіть своє ім’я користувача та пароль зараз, щоб ви могли увійти знову пізніше, якщо платіж буде скасовано або перервано.
+    checkout_verification_desc Нам потрібна швидка перевірка перед тим, як відкрити сторінку оплати магазину.
     clear Ясно
     click_to_select_image Натисніть, щоб обрати зображення
     click_to_view_original Натисніть, щоб переглянути оригінал
     close Закрити
+    close_feedback_request_confirm Ви впевнені, що хочете закрити цей запит на відгук?
     close_request Закрити запит?
     code_label Код
     collection_id ID колекції
     colors Кольори
     common_settings Загальні налаштування
     compare_plans Порівняти Безкоштовний та Преміум
+    complete_account Завершити налаштування облікового запису
+    complete_account_setup Завершити налаштування облікового запису
+    complete_account_setup_desc Додайте ім'я користувача та пароль для майбутніх входів та відновлень.
+    complete_account_subscription_desc Ваша підписка вже прив'язана до цього облікового запису. Додайте ім'я користувача та пароль, щоб ви могли увійти будь-де та відновити покупки пізніше.
     confirm Підтвердити
     confirm_logout Ви впевнені, що хочете вийти?
     confirm_password Підтвердіть пароль
+    confirm_password_required Confirm password is required
     confirm_subscription Підтвердити підписку
     content_label Вміст
     context Контекст
+    continue_to_checkout Перейти до оплати
     copy КОПІЮВАТИ
     copy_all Копіювати все
     core_features ОСНОВНІ ФУНКЦІЇ
     correct_answers Правильні відповіді
     could_not_launch Не вдалося запустити $url
+    could_not_open_paddle_cancellation Не вдалося відкрити скасування Paddle: {error}
     counting Підрахунок
     create_account Створити акаунт
+    create_account_to_continue Створіть свій обліковий запис, щоб продовжити
     create_new_account Створити новий акаунт
     create_new_card Створити нову картку
+    create_request Створити запит
     created_at Створено
     current_streak Поточна серія
     current_subscription Поточна підписка
@@ -160,6 +182,7 @@
     delete_collection Видалити колекцію
     delete_collection_confirm Ви впевнені, що хочете видалити цю колекцію?
     delete_folder Видалити папку
+    delete_folder_confirm Ви впевнені, що хочете видалити цю папку?
     delete_selected_cards Видалити вибрані картки?
     delete_subject Видалити предмет
     delete_subject_confirm Видалити предмет '{subject}' та всі {count} карток всередині?
@@ -258,6 +281,7 @@
     doc_welcome_title Ласкаво просимо до Aliolo
     documentation Документація
     done_today Виконано сьогодні
+    dont_show_again_for_this_subject Більше не показувати для цього предмета
     down_arrow Стрілка вниз
     edit Редагувати
     edit_card Редагувати картку
@@ -268,6 +292,7 @@
     edit_subject Редагувати предмет
     edit_subject_title Edit Subject
     edit_subscription Редагувати підписку
+    edit_user Редагувати користувача
     email Електронна пошта
     email_change_notice Для безпеки посилання для підтвердження буде надіслано на ОБИДВІ ваші електронні адреси: стару та нову. Ви повинні натиснути обидва, щоб завершити зміну.
     email_in_use Електронна пошта вже використовується
@@ -275,6 +300,7 @@
     email_update_sent Електронні листи з підтвердженням надіслано. Будь ласка, перевірте обидві поштові скриньки.
     email_updated_successfully Електронну пошту успішно оновлено!
     english Англійська
+    enter_code_sent_to_email Введіть 6-значний код, надісланий на {email}
     enter_current_password Введіть поточний пароль
     enter_new_email Введіть нову адресу
     enter_new_name Введіть нову назву
@@ -297,6 +323,7 @@
     failed_to_send_verification_code Не вдалося надіслати код підтвердження
     fake_only Тільки фейк
     fatal_startup_error Критична помилка запуску
+    favorite Обране
     feat_adaptive_desc Система відстежує швидкість розпізнавання варіантів відповіді, динамічно налаштовуючи інтервали для вашого розвитку.
     feat_adaptive_title Адаптивна швидкість реакції
     feat_ages_desc Контент підібраний для різних вікових груп: від раннього дитинства до поглибленого навчання.
@@ -351,6 +378,7 @@
     feedback_title Надіслати відгук
     feedback_title_hint Заголовок
     feedback_type Тип
+    file_too_large Файл завеликий
     fill_all_fields Будь ласка, заповніть усі поля
     filter_all Всі
     filter_dashboard Дашборд
@@ -361,6 +389,7 @@
     filter_public_library Публічна бібліотека
     filters Фільтри
     finish Завершити
+    finish_account_setup Завершити налаштування облікового запису
     finished_session Ви завершили {count} карток. Нараховано бонус XP!
     folder Папка
     folder_already_exists Папка з такою назвою вже існує в цьому стовпі
@@ -368,6 +397,7 @@
     folder_label Папка
     folder_not_empty_msg Неможливо видалити: папка не порожня.
     folder_plural Папки
+    folder_practice_all_cards_desc Це папка. Ви можете скористатися кнопками Вчити/Тест вище, щоб практикувати всі картки.
     forgot_password Забули пароль?
     free_only Безкоштовні користувачі
     general_preferences Загальні налаштування
@@ -379,6 +409,7 @@
     hide_comparison Приховати порівняння планів
     home Додому
     images Зображення
+    inactive Неактивний
     included_subjects Включені предмети
     info_copied Інформацію скопійовано
     initializing_aliolo Ініціалізація Aliolo...
@@ -396,17 +427,22 @@
     invite_user_content Електронну адресу {email} не знайдено. Запросити приєднатися до Aliolo?
     invite_user_title Запросити користувача?
     invited_and_request_sent Запрошено та запит надіслано!
+    is_required є обов’язковим
     json JSON
     keyboard_shortcuts Гарячі клавіші
     label_suffix $label:
     lang_abbr Мова
     language Мова
+    languages Мови
+    last_3_months Останні 3 місяці
+    last_6_months Останні 6 місяців
+    last_month Минулий місяць
+    last_slide Останній слайд
     leaderboard Таблиця лідерів
     learn_mode_desc Study cards and memorize answers
     learn_mode_title Вивчити
     learn_session_size Розмір сесії навчання
     learn_session_size_desc Кількість нових карток для введення в одному навчальному занятті.
-    learning Навчання
     learning_session_complete_description Чудова робота! Ви закінчили цей навчальний сеанс. Ваш прогрес збережено.
     left_arrow Стрілка вліво
     level Рівень
@@ -421,9 +457,11 @@
     licenses_intro_title Aliolo Повідомлення про ліцензію та пакет
     licenses_third_party_section_title Пакетні ліцензії третіх сторін
     light Світла
+    limit_reached Ліміт досягнуто
     linux_distro Дистрибутив Linux
     loading Завантаження...
     localized_data Локалізовані дані
+    log_in_instead Увійти замість цього
     login Увійти
     logout Вийти
     manage_cards Керування картками
@@ -455,12 +493,15 @@
     new НОВА
     new_email Нова електронна пошта
     new_password Новий пароль
+    new_password_required New password is required
     next Далі
     next_card Наступна картка
     next_daily_goal Наступна щоденна ціль
     next_daily_goal_desc Цільова кількість карток для освоєння щодня. Зміни набудуть чинності завтра.
     next_day_goal Ціль на завтра
+    no_age_data_yet Ще немає даних про вік
     no_cards_available_for_this_session Немає доступних карток для цього сеансу.
+    no_cards_due_yet Ще немає карток для повторення
     no_cards_found Карток не знайдено
     no_cards_found_for_lang Для цієї мови карток не знайдено
     no_cards_in_library У бібліотеці не знайдено карток.
@@ -472,10 +513,19 @@
     no_localized_audio Немає локалізованого аудіо
     no_localized_images Немає локалізованих зображень
     no_localized_video Немає локалізованого відео
+    no_onboarding_sessions_yet Ще немає сеансів ознайомлення
+    no_permission_view_card_details У вас немає дозволу на перегляд деталей цієї картки.
+    no_pillar_data_yet Ще немає даних по стовпах
+    no_slide_data_yet Ще немає даних про слайди
     no_subjects_available Немає доступних предметів
     no_subjects_found Предметів не знайдено
+    no_subjects_found_in_collection У цій колекції не знайдено предметів
     no_subjects_found_in_this_collection У цій колекції не знайдено предметів
+    no_usage_data_yet Ще немає даних про використання
     no_users_found Користувачів не знайдено
+    not_available Недоступно
+    not_set Не встановлено
+    official_website Офіційний сайт
     ok OK
     old_password Старий пароль
     old_password_required Старий пароль обов’язковий
@@ -493,6 +543,7 @@
     onboarding_6_title Приєднуйтесь до спільноти
     onboarding_7_joined Приєдналися тисячі учнів
     onboarding_7_quote Aliolo повністю змінив те, як мої діти та я опановуємо нові теми. Візуальні картки та інтервальні повторення роблять навчання схожим на гру!
+    onboarding_analytics Аналітика ознайомлення
     onboarding_get_started Почати
     onboarding_next Далі
     onboarding_skip Пропустити
@@ -502,11 +553,13 @@
     order_id ID замовлення
     os_version Версія ОС
     our_mission НАША МІСІЯ
+    paddle_cancel_subscription_desc Потрібно скасувати підписку Paddle? Відкрийте процедуру скасування Paddle нижче.
     page Сторінка
     parent_folder_label Parent Folder (uk)
     password Пароль
     password_required Пароль обов'язковий
     password_reset_success Пароль успішно змінено
+    password_updated Password updated successfully
     password_updated_successfully Пароль успішно оновлено!
     passwords_dont_match Паролі не співпадають
     paste ВСТАВИТИ
@@ -541,6 +594,7 @@
     premium_unlock_desc Отримуйте доступ до всіх предметів, створюйте необмежену кількість карток і підтримуйте місію Aliolo.
     premium_unlock_title Розблокувати повний доступ
     prev Попер.
+    previous Попередній
     previous_card Попередня картка
     price_per_week ({price} / тиждень)
     private Приватний
@@ -569,6 +623,12 @@
     remove_friend Видалити друга
     remove_friend_confirm Ви впевнені, що хочете видалити друга
     renderer Рендерер
+    renderer_addition_emoji Емодзі додавання
+    renderer_addition_numbers Числа додавання
+    renderer_counting Рахунок
+    renderer_generic Загальне
+    renderer_subtraction_emoji Емодзі віднімання
+    renderer_subtraction_numbers Числа віднімання
     request_sent Запит надіслано
     request_sent_waiting Запит надіслано (очікування)
     required Обов'язково
@@ -579,10 +639,13 @@
     reset_password_for "Скидання пароля для: "
     restore_password Відновити пароль
     restore_purchases Відновити покупки
+    restore_purchases_started Відновлення розпочато. Aliolo знову прив'яже будь-які дійсні покупки до цього облікового запису.
+    retest_anyway Все одно перевірити
     retry Повторити
     right_arrow Стрілка вправо
     save Зберегти
     save_33_per_month Економія 33% на місяць
+    save_account Зберегти обліковий запис
     save_before_nav Бажаєте зберегти зміни перед переходом?
     save_card Зберегти картку
     save_subject Зберегти предмет
@@ -599,8 +662,10 @@
     send Надіслати
     send_code Надіслати код
     send_verification_code Надіслати код підтвердження?
+    session Сеанс
     session_complete Сеанс завершено!
     session_complete_description Чудова робота! Ви закінчили всі картки в цьому сеансі.
+    set_your_password Встановіть пароль
     setting_saved Налаштування збережено
     settings Налаштування
     shortcuts_hint Натисніть клавішу, яку хочете використовувати з Ctrl.
@@ -628,6 +693,8 @@
     subject_label Предмет
     subject_plural Предмети
     subject_type Subject Type (uk)
+    subject_up_to_date_retest_desc Ви не маєте нових карток для цього предмету. Ви все одно можете перевірити всі картки зараз.
+    subject_usage Використання предмету
     subjects Предмети
     subscribe_now Підпишіться зараз
     subscription_data Дані підписки
@@ -656,6 +723,7 @@
     theme_system Системна
     this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards Це папка. Ви можете скористатися кнопками Вивчення/Перевірити вище, щоб відпрацювати всі картки.
     to_label Кому
+    toggle_languages Перемкнути мови
     total_cards Всього карток
     total_xp Загальний XP
     trust_cloud_desc Ваш прогрес надійно синхронізується між усіма вашими пристроями в режимі реального часу.
@@ -678,12 +746,14 @@
     up_arrow Стрілка вгору
     update Оновити
     update_available Доступна нова версія!
+    updated Оновлено
     updated_at Оновлено
     upload_new_photo Завантажити нове фото
     user Користувач
     user_exists Користувач уже існує
     user_id ID користувача
     user_not_found Користувача не знайдено
+    user_updated Користувача оновлено
     user_with_this_email_already_exists_please_log_in_instead Користувач із цією електронною адресою вже існує. Увійдіть замість цього.
     username Ім'я користувача
     users Користувачі
@@ -691,6 +761,8 @@
     verification_code Код підтвердження
     verification_code_sent_to Код підтвердження надіслано на $email
     verify Перевірити
+    verify_email_change Підтвердити зміну електронної пошти
+    verify_your_email Підтвердіть вашу електронну пошту
     version Версія
     video Відео
     video_link Посилання на відео
@@ -702,6 +774,7 @@
     visual_content_required Потрібен принаймні один візуальний вміст
     visual_content_required_msg Необхідно надати принаймні один візуальний вміст (текст, зображення, аудіо або відео).
     visual_text Візуальний текст
+    wait_for_response_before_replying Будь ласка, дочекайтеся відповіді, преш ніж відповідати знову.
     wants_to_be_friend Хоче стати вашим другом
     weekly_access Щотижневий доступ
     welcome_complete_your_profile_to_join_aliolo Ласкаво просимо! Заповніть свій профіль, щоб приєднатися до aliolo.
@@ -711,24 +784,4 @@
     you_do_not_have_permission_to_edit_this_card Ви не маєте дозволу редагувати цю картку
     you_do_not_have_permission_to_view_this_card_details Ви не маєте дозволу переглядати дані цієї картки.
     you_rank Ваш ранг: #{rank}
-    active Активний
-    autoplay Автовідтворення
-    card_limit Ліміт карток
-    card_limit_msg Ви досягли ліміту в {limit} карток.
-    create_request Створити запит
-    edit_user Редагувати користувача
-    favorite Обране
-    file_too_large Файл завеликий
-    inactive Неактивний
-    is_required є обов’язковим
-    languages Мови
-    limit_reached Ліміт досягнуто
-    not_available Недоступно
-    toggle_languages Перемкнути мови
-    user_updated Користувача оновлено
     zoom Масштаб
-    account_and_management Account & Management
-    back_to_plans Back to plans
-    confirm_password_required Confirm password is required
-    new_password_required New password is required
-    password_updated Password updated successfully

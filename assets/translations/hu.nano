@@ -44,9 +44,12 @@
     about_support_settings_title Személyre szabás
     about_support_title Beállítások, visszajelzés és támogatás
     about_tagline Tanulj vizuálisan. Sajátítsd el örökre.
+    account_and_management Account & Management
     account_created Fiók létrehozva
     account_created_billing_fail Fiókja létrejött, de a fizetés nem fejeződött be. Próbálja újra az alábbi fizetést.
     account_deleted Account deleted successfully
+    account_setup_completed A fiók beállítása befejeződött.
+    active Aktív
     add_card Add Card
     add_collection Gyűjtemény hozzáadása
     add_folder Mappa hozzáadása
@@ -76,6 +79,7 @@
     aliolo aliolo
     all_matching_subjects Minden egyező téma
     all_rights_reserved Minden jog fenntartva
+    all_time Összes idő
     answer Válasz
     answer_label answer
     answers_label answers
@@ -86,8 +90,10 @@
     audio Hang
     audio_playing Audio Playing
     author Author
+    autoplay Automatikus lejátszás
     back Vissza
     back_to_login Back to Login
+    back_to_plans Back to plans
     back_to_subjects Vissza a témákhoz
     best_for_quick_goals Legjobb gyors gólokhoz
     billing_disclaimer Az előfizetések automatikusan megújulnak, hacsak nem mondják le. Előfizetését az üzlet beállításaiban kezelheti.
@@ -95,6 +101,7 @@
     bronze BRONZE
     browser Böngésző
     cancel Mégse
+    cancel_in_paddle Mégse a Paddle-ben
     cancel_request Cancel Request
     cancel_request_confirm Are you sure you want to cancel the request to
     cannot_delete_folder Cannot Delete Folder
@@ -103,6 +110,8 @@
     card_id Kártyaazonosító
     card_label Card
     card_level Kártya szint
+    card_limit Kártyalimit
+    card_limit_msg Elérte a(z) {limit} kártyás limitet.
     card_plural Cards
     cards cards
     cards_label cards
@@ -111,31 +120,44 @@
     change_avatar Change Avatar
     change_password Jelszó megváltoztatása
     check_your_email_for_code Ellenőrizze az e-mailben a kódot
+    checkout_email_before_payment_desc Fizetés előtt adja meg az e-mail címét, hogy az Aliolo létrehozhassa a fiókját és hozzárendelhesse az előfizetését.
+    checkout_finish_account_desc Válassza ki a felhasználónevét és jelszavát most, hogy később újra be tudjon jelentkezni, ha a fizetés megszakad vagy törlésre kerül.
+    checkout_verification_desc Szükségünk van egy gyors ellenőrzésre, mielőtt megnyitnánk az áruház fizetési lapját.
     clear Világos
     click_to_select_image Click to select image
     click_to_view_original Kattintson az eredeti megtekintéséhez
     close Közeli
+    close_feedback_request_confirm Biztosan be akarja zárni ezt a visszajelzési kérelmet?
     close_request Bezárja a kérést?
     code_label Code
     collection_id Gyűjteményazonosító
     colors Színek
     common_settings Common Settings
     compare_plans Ingyenes vs. Premium összehasonlítása
+    complete_account Fiók befejezése
+    complete_account_setup Fiók beállításának befejezése
+    complete_account_setup_desc Adjon hozzá egy felhasználónevet és jelszót a jövőbeli bejelentkezésekhez és visszaállításokhoz.
+    complete_account_subscription_desc Az előfizetése már hozzá van rendelve ehhez a fiókhoz. Adjon hozzá egy felhasználónevet és jelszót, hogy bárhol bejelentkezhessen és később visszaállíthassa a vásárlásokat.
     confirm Megerősítés
     confirm_logout Are you sure you want to logout?
     confirm_password Confirm Password
+    confirm_password_required Confirm password is required
     confirm_subscription Erősítse meg az előfizetést
     content_label Content
     context Kontextus
+    continue_to_checkout Tovább a fizetéshez
     copy COPY
     copy_all Copy All
     core_features CORE FEATURES
     correct_answers Helyes válaszok
     could_not_launch Nem sikerült elindítani a $url
+    could_not_open_paddle_cancellation Nem sikerült megnyitni a Paddle törlését: {error}
     counting Számolás
     create_account Create Account
+    create_account_to_continue Hozza létre fiókját a folytatáshoz
     create_new_account Create New Account
     create_new_card Create New Card
+    create_request Kérés létrehozása
     created_at Létrehozva
     current_streak Current Streak
     current_subscription Jelenlegi előfizetés
@@ -160,6 +182,7 @@
     delete_collection Gyűjtemény törlése
     delete_collection_confirm Biztosan törölni szeretné ezt a gyűjteményt?
     delete_folder Mappa törlése
+    delete_folder_confirm Biztosan törölni szeretné ezt a mappát?
     delete_selected_cards Delete selected cards?
     delete_subject Delete Subject
     delete_subject_confirm Delete subject '{subject}' and all {count} cards inside?
@@ -258,6 +281,7 @@
     doc_welcome_title Üdvözöljük az Aliolóban
     documentation Dokumentáció
     done_today Done Today
+    dont_show_again_for_this_subject Ne mutassa többet ehhez a tantárgyhoz
     down_arrow Down Arrow
     edit Szerkesztés
     edit_card Edit Card
@@ -268,6 +292,7 @@
     edit_subject Edit Subject
     edit_subject_title Edit Subject
     edit_subscription Előfizetés szerkesztése
+    edit_user Felhasználó szerkesztése
     email Email
     email_change_notice For security, a confirmation link will be sent to BOTH your old and new email addresses. You must click both to complete the change.
     email_in_use Email is already in use
@@ -275,6 +300,7 @@
     email_update_sent Confirmation emails sent. Please check both inboxes.
     email_updated_successfully Az e-mail sikeresen frissítve!
     english English
+    enter_code_sent_to_email Adja meg a(z) {email} címre küldött 6 számjegyű kódot
     enter_current_password Adja meg az aktuális jelszót
     enter_new_email Adja meg az új e-mail címet
     enter_new_name Enter New Name
@@ -297,10 +323,15 @@
     failed_to_send_verification_code Nem sikerült elküldeni az ellenőrző kódot
     fake_only Csak hamisítvány
     fatal_startup_error Fatal Startup Error
+    favorite Kedvenc
     feat_adaptive_desc The system monitors your recognition speed across MCQ options, dynamically adjusting intervals to push your boundaries.
     feat_adaptive_title Adaptive Response Timing
     feat_ages_desc Content curated for different age groups from early childhood to advanced learning.
     feat_ages_title For All Ages
+    feat_autoplay_desc Focus on learning while the app automatically advances through cards at your pace.
+    feat_autoplay_title Hands-Free Autoplay
+    feat_create_share_desc Easily create your own subjects and cards, or share them with the community.
+    feat_create_share_title Create & Share
     feat_gamified_desc Earn XP, badges, and build streaks while mastering complex visual subjects.
     feat_gamified_title Gamified Experience
     feat_mastery_desc Dynamic XP rewards difficulty, while real-time mastery badges (Bronze, Silver, Gold) track your journey from novice to expert.
@@ -311,6 +342,8 @@
     feat_recognition_title Visual Pattern Training
     feat_science_adaptive_desc Intervals automatically adjust based on your recognition speed and accuracy.
     feat_science_adaptive_title Adaptive Timing
+    feat_science_smart_review_desc The algorithm calculates the optimal time to review each card for maximum retention.
+    feat_science_smart_review_title Smart Review Cycles
     feat_science_spacing_desc Advanced cognitive spacing model that predicts memory decay and optimizes review cycles.
     feat_science_spacing_title SuperMemo-2 (SM-2)
     feat_spacing_desc A full implementation of the SuperMemo-2 model predicts your memory decay and schedules reviews at the peak of retention.
@@ -345,6 +378,7 @@
     feedback_title Visszajelzés küldése
     feedback_title_hint Cím
     feedback_type Típus
+    file_too_large A fájl túl nagy
     fill_all_fields Please fill all fields
     filter_all All
     filter_dashboard Vezérlőpult
@@ -355,6 +389,7 @@
     filter_public_library Nyilvános könyvtár
     filters Szűrők
     finish Befejezés
+    finish_account_setup Fiók beállításának befejezése
     finished_session You finished {count} cards. XP bonus awarded!
     folder Mappa
     folder_already_exists Egy ilyen nevű mappa már létezik ebben a pillérben
@@ -362,6 +397,7 @@
     folder_label Mappa
     folder_not_empty_msg Nem törölhető: a mappa nem üres.
     folder_plural Mappák
+    folder_practice_all_cards_desc Ez egy mappa. A fenti Tanulás/Teszt gombokkal az összes kártyát gyakorolhatja.
     forgot_password Forgot Password?
     free_only Ingyenes felhasználók
     general_preferences General Preferences
@@ -373,6 +409,7 @@
     hide_comparison Csomagok összehasonlításának elrejtése
     home Otthon
     images Images
+    inactive Inaktív
     included_subjects Tartalmazott témák
     info_copied Info copied to clipboard
     initializing_aliolo Initializing Aliolo...
@@ -390,11 +427,17 @@
     invite_user_content A(z) {email} e-mail-cím nem található. Meghívja az Aliolo használatára?
     invite_user_title Felhasználó meghívása?
     invited_and_request_sent Meghívott és kérés elküldve!
+    is_required kötelező
     json JSON
     keyboard_shortcuts Keyboard Shortcuts
     label_suffix $label:
     lang_abbr Lang
     language Nyelv
+    languages Nyelvek
+    last_3_months Elmúlt 3 hónap
+    last_6_months Elmúlt 6 hónap
+    last_month Elmúlt hónap
+    last_slide Utolsó dia
     leaderboard Ranglista
     learn_mode_desc Study cards and memorize answers
     learn_mode_title Learn
@@ -414,9 +457,11 @@
     licenses_intro_title Aliolo Licenc és csomag megjegyzések
     licenses_third_party_section_title Harmadik féltől származó csomaglicencek
     light Light
+    limit_reached Limit elérve
     linux_distro Linux Distro
     loading Terhelés...
     localized_data Lokalizált adatok
+    log_in_instead Inkább bejelentkezés
     login Bejelentkezés
     logout Kijelentkezés
     manage_cards Manage Cards
@@ -448,12 +493,15 @@
     new NEW
     new_email Új e-mail
     new_password New Password
+    new_password_required New password is required
     next Következő
     next_card Next Card
     next_daily_goal Következő napi cél
     next_daily_goal_desc A naponta elsajátítandó kártyák célszáma. A módosítások holnap lépnek életbe.
     next_day_goal Next Day Goal
+    no_age_data_yet Még nincsenek életkori adatok
     no_cards_available_for_this_session Ehhez a munkamenethez nem áll rendelkezésre kártya.
+    no_cards_due_yet Még nincsenek esedékes kártyák
     no_cards_found Nem található kártya
     no_cards_found_for_lang No cards found for this language
     no_cards_in_library No cards found in the library.
@@ -465,10 +513,19 @@
     no_localized_audio Nincs lokalizált hang
     no_localized_images Nincsenek lokalizált képek
     no_localized_video Nincs lokalizált videó
+    no_onboarding_sessions_yet Még nincsenek bevezető munkamenetek
+    no_permission_view_card_details Nincs jogosultsága megtekinteni a kártya részleteit.
+    no_pillar_data_yet Még nincsenek pillér adatok
+    no_slide_data_yet Még nincsenek dia adatok
     no_subjects_available Nem állnak rendelkezésre témák
     no_subjects_found Nem található alany
+    no_subjects_found_in_collection Nem találhatók tantárgyak ebben a gyűjteményben
     no_subjects_found_in_this_collection Nem található téma ebben a gyűjteményben
+    no_usage_data_yet Még nincsenek használati adatok
     no_users_found Nem található felhasználó
+    not_available Nem elérhető
+    not_set Nincs beállítva
+    official_website Hivatalos weboldal
     ok OK
     old_password Régi jelszó
     old_password_required A régi jelszó megadása kötelező
@@ -486,6 +543,7 @@
     onboarding_6_title Csatlakozz a közösséghez
     onboarding_7_joined Tanulók ezrei csatlakoztak már
     onboarding_7_quote Az Aliolo teljesen átalakította a gyermekeim és az én tanulási módszereinket. A vizuális kártyák és az ismétlés játéknak tűnik a tanulás közben!
+    onboarding_analytics Bevezető analitika
     onboarding_get_started Kezdés
     onboarding_next Tovább
     onboarding_skip Kihagyás
@@ -495,11 +553,13 @@
     order_id Rendelésazonosító
     os_version OS verzió
     our_mission OUR MISSION
+    paddle_cancel_subscription_desc Törölnie kell egy Paddle előfizetést? Nyissa meg a Paddle törlési folyamatát alább.
     page Page
     parent_folder_label Parent Folder (hu)
     password Jelszó
     password_required Password is required
     password_reset_success Password reset successful
+    password_updated Password updated successfully
     password_updated_successfully A jelszó sikeresen frissítve!
     passwords_dont_match Passwords do not match
     paste PASTE
@@ -534,6 +594,7 @@
     premium_unlock_desc Szerezzen hozzáférést minden témához, hozzon létre korlátlan számú kártyát, és támogassa Aliolo küldetését.
     premium_unlock_title Teljes hozzáférés feloldása
     prev Prev
+    previous Előző
     previous_card Previous Card
     price_per_week ({price} / hét)
     private Private
@@ -562,6 +623,12 @@
     remove_friend Remove Friend
     remove_friend_confirm Are you sure you want to remove friend
     renderer Renderer
+    renderer_addition_emoji Összeadás Emoji
+    renderer_addition_numbers Összeadás Számok
+    renderer_counting Számolás
+    renderer_generic Általános
+    renderer_subtraction_emoji Kivonás Emoji
+    renderer_subtraction_numbers Kivonás Számok
     request_sent Request sent
     request_sent_waiting Request sent (waiting)
     required Required
@@ -572,13 +639,17 @@
     reset_password_for "Reset Password for: "
     restore_password Restore Password
     restore_purchases Vásárlások visszaállítása
+    restore_purchases_started Visszaállítás elindítva. Az Aliolo újra összekapcsol minden érvényes vásárlást ezzel a fiókkal.
+    retest_anyway Újratesztelés mindenképp
     retry Retry
     right_arrow Right Arrow
     save Megtakarítás
     save_33_per_month 33% megtakarítás havonta
+    save_account Fiók mentése
     save_before_nav Do you want to save changes before navigating?
     save_card Save Card
     save_subject Save Subject
+    save_success Saved successfully
     saved_successfully Sikeresen mentve
     search_cards Search Cards
     search_subjects Search Subjects
@@ -591,8 +662,10 @@
     send Send
     send_code Send Code
     send_verification_code Send verification code?
+    session Munkamenet
     session_complete A munkamenet kész!
     session_complete_description Remek munka! Ebben a munkamenetben befejezte az összes kártyát.
+    set_your_password Állítsa Be A Jelszavát
     setting_saved Setting saved
     settings Beállítások elemre
     shortcuts_hint Press the key you want to use with Ctrl.
@@ -620,6 +693,8 @@
     subject_label Subject
     subject_plural Subjects
     subject_type Subject Type (hu)
+    subject_up_to_date_retest_desc Naprakész ehhez a tantárgyhoz. Most még mindig újratesztelheti az összes kártyát.
+    subject_usage Tantárgy használata
     subjects Témák
     subscribe_now Iratkozz fel most
     subscription_data Előfizetési adatok
@@ -648,10 +723,13 @@
     theme_system System
     this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards Ez egy mappa. Az összes kártya gyakorlásához használhatja a fenti Tanulás/Teszt gombokat.
     to_label To
+    toggle_languages Nyelvek váltása
     total_cards Összes kártya
     total_xp Total XP
     trust_cloud_desc Your progress is securely synced across all your devices in real-time.
     trust_cloud_title Cloud Sync
+    trust_ecosystem_desc Your progress and cards are seamlessly synced across all your devices.
+    trust_ecosystem_title Aliolo Ecosystem
     trust_privacy TRUST & PRIVACY
     trust_sync_desc Your data is private and encrypted to ensure the highest security standards.
     trust_sync_title Encrypted Data
@@ -668,12 +746,14 @@
     up_arrow Up Arrow
     update Update
     update_available Új verzió érhető el!
+    updated Frissítve
     updated_at Frissítve
     upload_new_photo Új fotó feltöltése
     user Felhasználó
     user_exists User already exists
     user_id Felhasználói azonosító
     user_not_found User not found
+    user_updated Felhasználó frissítve
     user_with_this_email_already_exists_please_log_in_instead Ezzel az e-mail-címmel már létezik felhasználó. Inkább jelentkezz be.
     username Felhasználónév
     users Felhasználók
@@ -681,6 +761,8 @@
     verification_code Ellenőrző kód
     verification_code_sent_to Ellenőrző kód elküldve a következőnek: $email
     verify Verify
+    verify_email_change E-mail Változás Ellenőrzése
+    verify_your_email Erősítse meg e-mail címét
     version Változat
     video Video
     video_link Video Link
@@ -692,6 +774,7 @@
     visual_content_required Legalább egy vizuális tartalom kötelező
     visual_content_required_msg Legalább egy vizuális tartalmat (szöveg, kép, hang vagy videó) meg kell adni.
     visual_text Vizuális szöveg
+    wait_for_response_before_replying Kérjük, várja meg a választ, mielőtt újra válaszolna.
     wants_to_be_friend Wants to be your friend
     weekly_access Heti hozzáférés
     welcome_complete_your_profile_to_join_aliolo Üdvözöljük! Töltse ki profilját a aliolo-hoz való csatlakozáshoz.
@@ -701,33 +784,4 @@
     you_do_not_have_permission_to_edit_this_card Nincs engedélye a kártya szerkesztésére
     you_do_not_have_permission_to_view_this_card_details Nincs jogosultsága a kártya adatainak megtekintéséhez.
     you_rank You are ranked #{rank}
-    active Aktív
-    autoplay Automatikus lejátszás
-    card_limit Kártyalimit
-    card_limit_msg Elérte a(z) {limit} kártyás limitet.
-    create_request Kérés létrehozása
-    edit_user Felhasználó szerkesztése
-    favorite Kedvenc
-    file_too_large A fájl túl nagy
-    inactive Inaktív
-    is_required kötelező
-    languages Nyelvek
-    limit_reached Limit elérve
-    not_available Nem elérhető
-    toggle_languages Nyelvek váltása
-    user_updated Felhasználó frissítve
     zoom Nagyítás
-    account_and_management Account & Management
-    back_to_plans Back to plans
-    confirm_password_required Confirm password is required
-    feat_autoplay_desc Focus on learning while the app automatically advances through cards at your pace.
-    feat_autoplay_title Hands-Free Autoplay
-    feat_create_share_desc Easily create your own subjects and cards, or share them with the community.
-    feat_create_share_title Create & Share
-    feat_science_smart_review_desc The algorithm calculates the optimal time to review each card for maximum retention.
-    feat_science_smart_review_title Smart Review Cycles
-    new_password_required New password is required
-    password_updated Password updated successfully
-    save_success Saved successfully
-    trust_ecosystem_desc Your progress and cards are seamlessly synced across all your devices.
-    trust_ecosystem_title Aliolo Ecosystem

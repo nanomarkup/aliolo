@@ -44,9 +44,12 @@
     about_support_settings_title वैयक्तिकरण
     about_support_title सेटिंग्स, फीडबैक और समर्थन
     about_tagline विज़ुअली सीखें। स्थायी महारत पाएं।
+    account_and_management Account & Management
     account_created खाता बनाया गया
     account_created_billing_fail आपका खाता तो बन गया, लेकिन भुगतान पूरा नहीं हुआ. नीचे भुगतान का पुनः प्रयास करें.
     account_deleted Account deleted successfully
+    account_setup_completed खाता सेटअप पूरा हुआ।
+    active सक्रिय
     add_card Add Card
     add_collection संग्रह जोड़ें
     add_folder फ़ोल्डर जोड़ें
@@ -76,6 +79,7 @@
     aliolo aliolo
     all_matching_subjects सभी मिलान विषय
     all_rights_reserved सर्वाधिकार सुरक्षित
+    all_time सभी समय
     answer उत्तर
     answer_label answer
     answers_label answers
@@ -86,8 +90,10 @@
     audio ऑडियो
     audio_playing ऑडियो चल रहा है
     author Author
+    autoplay ऑटोप्ले
     back पीछे
     back_to_login Back to Login
+    back_to_plans Back to plans
     back_to_subjects विषयों पर वापस जाएँ
     best_for_quick_goals त्वरित लक्ष्यों के लिए सर्वोत्तम
     billing_disclaimer रद्द न होने तक सदस्यताएँ स्वचालित रूप से नवीनीकृत हो जाती हैं। आप अपनी सदस्यता को अपनी स्टोर सेटिंग में प्रबंधित कर सकते हैं.
@@ -95,6 +101,7 @@
     bronze BRONZE
     browser ब्राउज़र
     cancel रद्द करना
+    cancel_in_paddle Paddle में रद्द करें
     cancel_request Cancel Request
     cancel_request_confirm Are you sure you want to cancel the request to
     cannot_delete_folder फ़ोल्डर हटा नहीं सकते
@@ -103,6 +110,8 @@
     card_id कार्ड आईडी
     card_label Card
     card_level कार्ड स्तर
+    card_limit कार्ड सीमा
+    card_limit_msg आप {limit} कार्ड की सीमा तक पहुँच चुके हैं।
     card_plural Cards
     cards cards
     cards_label cards
@@ -111,31 +120,44 @@
     change_avatar Change Avatar
     change_password पासवर्ड बदलें
     check_your_email_for_code कोड के लिए अपना ईमेल जांचें
+    checkout_email_before_payment_desc चेकआउट से पहले अपना ईमेल दर्ज करें ताकि Aliolo आपका खाता बना सके और सदस्यता को आपसे जोड़ सके।
+    checkout_finish_account_desc अब अपना उपयोगकर्ता नाम और पासवर्ड चुनें ताकि भुगतान रद्द होने या बाधित होने पर आप बाद में फिर से लॉग इन कर सकें।
+    checkout_verification_desc स्टोर भुगतान शीट खोलने से पहले हमें एक त्वरित सत्यापन की आवश्यकता है।
     clear स्पष्ट
     click_to_select_image Click to select image
     click_to_view_original मूल देखने के लिए क्लिक करें
     close बंद करना
+    close_feedback_request_confirm क्या आप वाकई इस फीडबैक अनुरोध को बंद करना चाहते हैं?
     close_request अनुरोध बंद करें?
     code_label Code
     collection_id संग्रह आईडी
     colors रंग
     common_settings Common Settings
     compare_plans मुफ्त बनाम प्रीमियम की तुलना करें
+    complete_account खाता पूरा करें
+    complete_account_setup खाता सेटअप पूरा करें
+    complete_account_setup_desc भविष्य के लॉगिन और पुनर्स्थापना के लिए एक उपयोगकर्ता नाम और पासवर्ड जोड़ें।
+    complete_account_subscription_desc आपकी सदस्यता पहले से ही इस खाते से जुड़ी हुई है। एक उपयोगकर्ता नाम और पासवर्ड जोड़ें ताकि आप कहीं भी लॉग इन कर सकें और बाद में खरीदारी पुनर्प्राप्त कर सकें।
     confirm पुष्टि करें
     confirm_logout Are you sure you want to logout?
     confirm_password Confirm Password
+    confirm_password_required Confirm password is required
     confirm_subscription सदस्यता की पुष्टि करें
     content_label Content
     context प्रसंग
+    continue_to_checkout चेकआउट पर जारी रखें
     copy COPY
     copy_all Copy All
     core_features CORE FEATURES
     correct_answers सही उत्तर
     could_not_launch $url लॉन्च नहीं किया जा सका
+    could_not_open_paddle_cancellation Paddle रद्दीकरण नहीं खोला जा सका: {error}
     counting गिनती
     create_account Create Account
+    create_account_to_continue जारी रखने के लिए अपना खाता बनाएं
     create_new_account Create New Account
     create_new_card Create New Card
+    create_request अनुरोध बनाएँ
     created_at बनाया गया
     current_streak Current Streak
     current_subscription वर्तमान सदस्यता
@@ -160,6 +182,7 @@
     delete_collection संग्रह हटाएं
     delete_collection_confirm क्या आप वाकई इस संग्रह को हटाना चाहते हैं?
     delete_folder फ़ोल्डर हटाएँ
+    delete_folder_confirm क्या आप वाकई इस फ़ोल्डर को हटाना चाहते हैं?
     delete_selected_cards Delete selected cards?
     delete_subject Delete Subject
     delete_subject_confirm Delete subject '{subject}' and all {count} cards inside?
@@ -258,6 +281,7 @@
     doc_welcome_title Aliolo में आपका स्वागत है
     documentation प्रलेखन
     done_today आज पूरा हुआ
+    dont_show_again_for_this_subject इस विषय के लिए फिर से न दिखाएं
     down_arrow Down Arrow
     edit संपादित करें
     edit_card Edit Card
@@ -268,6 +292,7 @@
     edit_subject Edit Subject
     edit_subject_title Edit Subject
     edit_subscription सदस्यता संपादित करें
+    edit_user उपयोगकर्ता संपादित करें
     email Email
     email_change_notice For security, a confirmation link will be sent to BOTH your old and new email addresses. You must click both to complete the change.
     email_in_use Email is already in use
@@ -275,6 +300,7 @@
     email_update_sent Confirmation emails sent. Please check both inboxes.
     email_updated_successfully ईमेल सफलतापूर्वक अपडेट किया गया!
     english English
+    enter_code_sent_to_email {email} पर भेजा गया 6-अंकीय कोड दर्ज करें
     enter_current_password वर्तमान पासवर्ड दर्ज करें
     enter_new_email नया ईमेल दर्ज करें
     enter_new_name Enter New Name
@@ -297,10 +323,15 @@
     failed_to_send_verification_code सत्यापन कोड भेजने में विफल
     fake_only केवल नकली
     fatal_startup_error Fatal Startup Error
+    favorite पसंदीदा
     feat_adaptive_desc The system monitors your recognition speed across MCQ options, dynamically adjusting intervals to push your boundaries.
     feat_adaptive_title Adaptive Response Timing
     feat_ages_desc Content curated for different age groups from early childhood to advanced learning.
     feat_ages_title For All Ages
+    feat_autoplay_desc Focus on learning while the app automatically advances through cards at your pace.
+    feat_autoplay_title Hands-Free Autoplay
+    feat_create_share_desc Easily create your own subjects and cards, or share them with the community.
+    feat_create_share_title Create & Share
     feat_gamified_desc Earn XP, badges, and build streaks while mastering complex visual subjects.
     feat_gamified_title Gamified Experience
     feat_mastery_desc Dynamic XP rewards difficulty, while real-time mastery badges (Bronze, Silver, Gold) track your journey from novice to expert.
@@ -311,6 +342,8 @@
     feat_recognition_title Visual Pattern Training
     feat_science_adaptive_desc Intervals automatically adjust based on your recognition speed and accuracy.
     feat_science_adaptive_title Adaptive Timing
+    feat_science_smart_review_desc The algorithm calculates the optimal time to review each card for maximum retention.
+    feat_science_smart_review_title Smart Review Cycles
     feat_science_spacing_desc Advanced cognitive spacing model that predicts memory decay and optimizes review cycles.
     feat_science_spacing_title SuperMemo-2 (SM-2)
     feat_spacing_desc A full implementation of the SuperMemo-2 model predicts your memory decay and schedules reviews at the peak of retention.
@@ -345,6 +378,7 @@
     feedback_title प्रतिक्रिया भेजें
     feedback_title_hint शीर्षक
     feedback_type प्रकार
+    file_too_large फ़ाइल बहुत बड़ी है
     fill_all_fields Please fill all fields
     filter_all All
     filter_dashboard डैशबोर्ड
@@ -355,6 +389,7 @@
     filter_public_library सार्वजनिक पुस्तकालय
     filters फ़िल्टर
     finish समाप्त करें
+    finish_account_setup खाता सेटअप समाप्त करें
     finished_session You finished {count} cards. XP bonus awarded!
     folder फ़ोल्डर
     folder_already_exists इस नाम का फोल्डर इस पिलर में पहले से मौजूद है
@@ -362,6 +397,7 @@
     folder_label फ़ोल्डर
     folder_not_empty_msg हटा नहीं सकते: फ़ोल्डर खाली नहीं है।
     folder_plural फ़ोल्डर
+    folder_practice_all_cards_desc यह एक फ़ोल्डर है। आप सभी कार्ड्स का अभ्यास करने के लिए ऊपर दिए गए सीखें/परीक्षण बटन का उपयोग कर सकते हैं।
     forgot_password Forgot Password?
     free_only निःशुल्क उपयोगकर्ता
     general_preferences General Preferences
@@ -373,6 +409,7 @@
     hide_comparison प्लान तुलना छिपाएं
     home घर
     images Images
+    inactive निष्क्रिय
     included_subjects शामिल विषय
     info_copied Info copied to clipboard
     initializing_aliolo Initializing Aliolo...
@@ -390,11 +427,17 @@
     invite_user_content ईमेल {email} नहीं मिला। क्या आप उन्हें Aliolo में शामिल होने के लिए आमंत्रित करना चाहते हैं?
     invite_user_title उपयोगकर्ता को आमंत्रित करें?
     invited_and_request_sent आमंत्रित किया गया और अनुरोध भेजा गया!
+    is_required आवश्यक है
     json JSON
     keyboard_shortcuts Keyboard Shortcuts
     label_suffix $label:
     lang_abbr Lang
     language Language
+    languages भाषाएँ
+    last_3_months पिछले 3 महीने
+    last_6_months पिछले 6 महीने
+    last_month पिछले महीने
+    last_slide अंतिम स्लाइड
     leaderboard लीडरबोर्ड
     learn_mode_desc Study cards and memorize answers
     learn_mode_title Learn
@@ -414,9 +457,11 @@
     licenses_intro_title Aliolo लाइसेंस और पैकेज नोटिस
     licenses_third_party_section_title तृतीय-पक्ष पैकेज लाइसेंस
     light Light
+    limit_reached सीमा पूरी हुई
     linux_distro लिनक्स डिस्ट्रो
     loading लोड हो रहा है...
     localized_data स्थानीयकृत डेटा
+    log_in_instead इसके बजाय लॉग इन करें
     login लॉगिन
     logout Logout
     manage_cards Manage Cards
@@ -448,12 +493,15 @@
     new NEW
     new_email नया ईमेल
     new_password New Password
+    new_password_required New password is required
     next Next
     next_card Next Card
     next_daily_goal अगला दैनिक लक्ष्य
     next_daily_goal_desc प्रत्येक दिन महारत हासिल करने के लिए कार्डों की लक्षित संख्या। परिवर्तन कल से प्रभावी होंगे।
     next_day_goal कल का लक्ष्य
+    no_age_data_yet अभी तक कोई आयु डेटा नहीं
     no_cards_available_for_this_session इस सत्र के लिए कोई कार्ड उपलब्ध नहीं है.
+    no_cards_due_yet अभी तक कोई कार्ड देय नहीं है
     no_cards_found कोई कार्ड नहीं मिला
     no_cards_found_for_lang No cards found for this language
     no_cards_in_library No cards found in the library.
@@ -465,10 +513,19 @@
     no_localized_audio कोई स्थानीयकृत ऑडियो नहीं
     no_localized_images कोई स्थानीयकृत चित्र नहीं
     no_localized_video कोई स्थानीयकृत वीडियो नहीं
+    no_onboarding_sessions_yet अभी तक कोई ऑनबोर्डिंग सत्र नहीं
+    no_permission_view_card_details आपके पास इस कार्ड के विवरण देखने की अनुमति नहीं है।
+    no_pillar_data_yet अभी तक कोई पिलर डेटा नहीं
+    no_slide_data_yet अभी तक कोई स्लाइड डेटा नहीं
     no_subjects_available कोई विषय उपलब्ध नहीं है
     no_subjects_found कोई विषय नहीं मिला
+    no_subjects_found_in_collection इस संग्रह में कोई विषय नहीं मिला
     no_subjects_found_in_this_collection इस संग्रह में कोई विषय नहीं मिला
+    no_usage_data_yet अभी तक कोई उपयोग डेटा नहीं
     no_users_found कोई उपयोगकर्ता नहीं मिला
+    not_available उपलब्ध नहीं
+    not_set सेट नहीं किया गया
+    official_website आधिकारिक वेबसाइट
     ok ठीक है
     old_password पुराना पासवर्ड
     old_password_required पुराना पासवर्ड आवश्यक है
@@ -486,6 +543,7 @@
     onboarding_6_title समुदाय में शामिल हों
     onboarding_7_joined हजारों शिक्षार्थियों द्वारा शामिल हुए
     onboarding_7_quote Aliolo ने मेरे बच्चों और मेरे नए विषयों में महारत हासिल करने के तरीके को पूरी तरह से बदल दिया है। विजुअल कार्ड और अंतराल पुनरावृत्ति सीखने को एक खेल की तरह महसूस कराते हैं!
+    onboarding_analytics ऑनबोर्डिंग एनालिटिक्स
     onboarding_get_started शुरू करें
     onboarding_next अगला
     onboarding_skip छोड़ें
@@ -495,11 +553,13 @@
     order_id ऑर्डर आईडी
     os_version ओएस संस्करण
     our_mission OUR MISSION
+    paddle_cancel_subscription_desc Paddle सदस्यता रद्द करने की आवश्यकता है? नीचे Paddle रद्दीकरण प्रवाह खोलें।
     page Page
     parent_folder_label पैरेंट फ़ोल्डर
     password Password
     password_required Password is required
     password_reset_success Password reset successful
+    password_updated Password updated successfully
     password_updated_successfully पासवर्ड सफलतापूर्वक अद्यतन!
     passwords_dont_match Passwords do not match
     paste PASTE
@@ -534,6 +594,7 @@
     premium_unlock_desc सभी विषयों तक पहुंच प्राप्त करें, असीमित कार्ड बनाएं और Aliolo के मिशन का समर्थन करें।
     premium_unlock_title पूर्ण पहुँच अनलॉक करें
     prev Prev
+    previous पिछला
     previous_card Previous Card
     price_per_week ({price} / सप्ताह)
     private Private
@@ -562,6 +623,12 @@
     remove_friend Remove Friend
     remove_friend_confirm Are you sure you want to remove friend
     renderer रेंडरर
+    renderer_addition_emoji जोड़ इमोजी
+    renderer_addition_numbers जोड़ संख्याएँ
+    renderer_counting गिनती
+    renderer_generic सामान्य
+    renderer_subtraction_emoji घटाव इमोजी
+    renderer_subtraction_numbers घटाव संख्याएँ
     request_sent Request sent
     request_sent_waiting Request sent (waiting)
     required Required
@@ -572,13 +639,17 @@
     reset_password_for "Reset Password for: "
     restore_password Restore Password
     restore_purchases खरीदारी वापस लौटाएं
+    restore_purchases_started पुनर्स्थापना शुरू हो गई। Aliolo किसी भी मान्य खरीदारी को इस खाते से फिर से जोड़ देगा।
+    retest_anyway फिर भी पुनः परीक्षण करें
     retry Retry
     right_arrow Right Arrow
     save बचाना
     save_33_per_month प्रति माह 33% बचाएं
+    save_account खाता सहेजें
     save_before_nav Do you want to save changes before navigating?
     save_card Save Card
     save_subject Save Subject
+    save_success Saved successfully
     saved_successfully सफलतापूर्वक बचाया
     search_cards Search Cards
     search_subjects Search Subjects
@@ -591,8 +662,10 @@
     send Send
     send_code Send Code
     send_verification_code Send verification code?
+    session सत्र
     session_complete सत्र पूरा!
     session_complete_description अच्छा काम! आपने इस सत्र में सभी कार्ड समाप्त कर लिए हैं।
+    set_your_password अपना पासवर्ड सेट करें
     setting_saved Setting saved
     settings सेटिंग्स
     shortcuts_hint Press the key you want to use with Ctrl.
@@ -620,6 +693,8 @@
     subject_label Subject
     subject_plural Subjects
     subject_type विषय प्रकार
+    subject_up_to_date_retest_desc आप इस विषय के लिए अप-टू-डेत हैं। आप अभी भी सभी कार्डों का पुनः परीक्षण कर सकते हैं।
+    subject_usage विषय का उपयोग
     subjects विषय
     subscribe_now अब सदस्यता लें
     subscription_data सदस्यता डेटा
@@ -648,10 +723,13 @@
     theme_system सिस्टम
     this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards यह एक फ़ोल्डर है. आप सभी कार्डों का अभ्यास करने के लिए ऊपर दिए गए लर्न/टेस्ट बटन का उपयोग कर सकते हैं।
     to_label To
+    toggle_languages भाषाएँ बदलें
     total_cards कुल कार्ड
     total_xp Total XP
     trust_cloud_desc Your progress is securely synced across all your devices in real-time.
     trust_cloud_title Cloud Sync
+    trust_ecosystem_desc Your progress and cards are seamlessly synced across all your devices.
+    trust_ecosystem_title Aliolo Ecosystem
     trust_privacy TRUST & PRIVACY
     trust_sync_desc Your data is private and encrypted to ensure the highest security standards.
     trust_sync_title Encrypted Data
@@ -668,12 +746,14 @@
     up_arrow Up Arrow
     update Update
     update_available एक नया संस्करण उपलब्ध है!
+    updated अपडेट किया गया
     updated_at अपडेट किया गया
     upload_new_photo नई फ़ोटो अपलोड करें
     user उपयोगकर्ता
     user_exists User already exists
     user_id उपयोगकर्ता पहचान
     user_not_found User not found
+    user_updated उपयोगकर्ता अपडेट किया गया
     user_with_this_email_already_exists_please_log_in_instead इस ईमेल के साथ पहले से प्रयोगकर्ता मौजूद है। कृपया इसके बजाय लॉग इन करें.
     username Username
     users उपयोगकर्ताओं
@@ -681,6 +761,8 @@
     verification_code सत्यापन कोड
     verification_code_sent_to सत्यापन कोड $email को भेजा गया
     verify Verify
+    verify_email_change ईमेल परिवर्तन सत्यापित करें
+    verify_your_email अपना ईमेल सत्यापित करें
     version संस्करण
     video Video
     video_link Video Link
@@ -692,6 +774,7 @@
     visual_content_required कम से कम एक विज़ुअल सामग्री आवश्यक है
     visual_content_required_msg कम से कम एक विज़ुअल सामग्री (टेक्स्ट, छवि, ऑडियो या वीडियो) प्रदान की जानी चाहिए।
     visual_text विज़ुअल टेक्स्ट
+    wait_for_response_before_replying कृपया फिर से उत्तर देने से पहले प्रतिक्रिया की प्रतीक्षा करें।
     wants_to_be_friend Wants to be your friend
     weekly_access साप्ताहिक प्रवेश
     welcome_complete_your_profile_to_join_aliolo स्वागत! aliolo से जुड़ने के लिए अपनी प्रोफ़ाइल पूरी करें।
@@ -701,33 +784,4 @@
     you_do_not_have_permission_to_edit_this_card आपको इस कार्ड को संपादित करने की अनुमति नहीं है
     you_do_not_have_permission_to_view_this_card_details आपको इस कार्ड विवरण को देखने की अनुमति नहीं है.
     you_rank You are ranked #{rank}
-    active सक्रिय
-    autoplay ऑटोप्ले
-    card_limit कार्ड सीमा
-    card_limit_msg आप {limit} कार्ड की सीमा तक पहुँच चुके हैं।
-    create_request अनुरोध बनाएँ
-    edit_user उपयोगकर्ता संपादित करें
-    favorite पसंदीदा
-    file_too_large फ़ाइल बहुत बड़ी है
-    inactive निष्क्रिय
-    is_required आवश्यक है
-    languages भाषाएँ
-    limit_reached सीमा पूरी हुई
-    not_available उपलब्ध नहीं
-    toggle_languages भाषाएँ बदलें
-    user_updated उपयोगकर्ता अपडेट किया गया
     zoom ज़ूम
-    account_and_management Account & Management
-    back_to_plans Back to plans
-    confirm_password_required Confirm password is required
-    feat_autoplay_desc Focus on learning while the app automatically advances through cards at your pace.
-    feat_autoplay_title Hands-Free Autoplay
-    feat_create_share_desc Easily create your own subjects and cards, or share them with the community.
-    feat_create_share_title Create & Share
-    feat_science_smart_review_desc The algorithm calculates the optimal time to review each card for maximum retention.
-    feat_science_smart_review_title Smart Review Cycles
-    new_password_required New password is required
-    password_updated Password updated successfully
-    save_success Saved successfully
-    trust_ecosystem_desc Your progress and cards are seamlessly synced across all your devices.
-    trust_ecosystem_title Aliolo Ecosystem

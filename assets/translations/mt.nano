@@ -44,9 +44,12 @@
     about_support_settings_title Personalizzazzjoni
     about_support_title Settings, Feedback, u Appoġġ
     about_tagline Tgħallem viżwalment. Ikkontrolla għal dejjem.
+    account_and_management Account & Management
     account_created Kont maħluq
     account_created_billing_fail Il-kont tiegħek inħoloq, iżda l-ħlas ma tlestiex. Ipprova mill-ġdid il-ħlas hawn taħt.
     account_deleted Account deleted successfully
+    account_setup_completed Is-setup tal-kont tlesta.
+    active Attiv
     add_card Add Card
     add_collection Żid kollezzjoni
     add_folder Żid folder
@@ -76,6 +79,7 @@
     aliolo aliolo
     all_matching_subjects Is-suġġetti kollha li jaqblu
     all_rights_reserved Id-drittijiet kollha riżervati
+    all_time Il-Ħin Kollu
     answer Tweġiba
     answer_label answer
     answers_label answers
@@ -86,8 +90,10 @@
     audio Awdjo
     audio_playing Audio Playing
     author Author
+    autoplay Daqq awtomatiku
     back Lura
     back_to_login Back to Login
+    back_to_plans Back to plans
     back_to_subjects Lura għas-Suġġetti
     best_for_quick_goals L-aħjar għal għanijiet ta' malajr
     billing_disclaimer L-abbonamenti jġeddu awtomatikament sakemm ma jiġux ikkanċellati. Tista' timmaniġġja l-abbonament tiegħek fis-settings tal-maħżen tiegħek.
@@ -95,6 +101,7 @@
     bronze BRONZE
     browser Browser
     cancel Ikkanċella
+    cancel_in_paddle Ikkonċella f'Paddle
     cancel_request Cancel Request
     cancel_request_confirm Are you sure you want to cancel the request to
     cannot_delete_folder Cannot Delete Folder
@@ -103,6 +110,8 @@
     card_id ID tal-Karta
     card_label Card
     card_level Livell tal-Kard
+    card_limit Limitu tal-Karti
+    card_limit_msg Int laħaqt il-limitu tiegħek ta’ {limit} karti.
     card_plural Cards
     cards cards
     cards_label cards
@@ -111,31 +120,44 @@
     change_avatar Change Avatar
     change_password Biddel il-password
     check_your_email_for_code Iċċekkja l-email tiegħek għall-kodiċi
+    checkout_email_before_payment_desc Daħħal l-email tiegħek qabel iċ-checkout biex Aliolo jkun jista' joħloq il-kont tiegħek u jwaħħal l-abbonament miegħek.
+    checkout_finish_account_desc Agħżel il-username u l-password tiegħek issa biex tkun tista' tilloggja mill-ġdid aktar tard jekk il-ħlas jiġi kkanċellat u interrott.
+    checkout_verification_desc Għandna bżonn verifika ta' malajr waħda qabel niftħu l-paġna tal-ħlas tal-ħanut.
     clear Ċara
     click_to_select_image Click to select image
     click_to_view_original Ikklikkja biex tara l-oriġinal
     close Agħlaq
+    close_feedback_request_confirm Int żgur li trid tagħlaq din it-talba għal feedback?
     close_request Talba mill-qrib?
     code_label Code
     collection_id ID tal-ġbir
     colors Kuluri
     common_settings Common Settings
     compare_plans Qabbel Free vs Premium
+    complete_account Imla l-kont
+    complete_account_setup Imla s-setup tal-kont
+    complete_account_setup_desc Żid username u password għal logins u rkupru futuri.
+    complete_account_subscription_desc L-abbonament tiegħek diġà huwa mwaħħal ma' dan il-kont. Żid username u password biex tkun tista' tilloggja kullimkien u tirkupra x-xiri aktar tard.
     confirm Ikkonferma
     confirm_logout Are you sure you want to logout?
     confirm_password Confirm Password
+    confirm_password_required Confirm password is required
     confirm_subscription Ikkonferma l-Abbonament
     content_label Content
     context Kuntest
+    continue_to_checkout Kompli għaċ-checkout
     copy COPY
     copy_all Copy All
     core_features CORE FEATURES
     correct_answers Tweġibiet Korretti
     could_not_launch Ma setgħetx tniedi $url
+    could_not_open_paddle_cancellation Ma stajniex niftħu l-kanċellazzjoni ta' Paddle: {error}
     counting Għadd
     create_account Create Account
+    create_account_to_continue Oħloq il-kont tiegħek biex tkompli
     create_new_account Create New Account
     create_new_card Create New Card
+    create_request Oħloq talba
     created_at Maħluq fi
     current_streak Current Streak
     current_subscription Abbonament kurrenti
@@ -160,6 +182,7 @@
     delete_collection Ħassar kollezzjoni
     delete_collection_confirm Inti żgur li trid tħassar din il-kollezzjoni?
     delete_folder Ħassar il-folder
+    delete_folder_confirm Int żgur li trid tħassar dan il-folder?
     delete_selected_cards Delete selected cards?
     delete_subject Delete Subject
     delete_subject_confirm Delete subject '{subject}' and all {count} cards inside?
@@ -258,6 +281,7 @@
     doc_welcome_title Merħba f'Aliolo
     documentation Dokumentazzjoni
     done_today Done Today
+    dont_show_again_for_this_subject Turix mill-ġdid għal dan is-suġġett
     down_arrow Down Arrow
     edit Editja
     edit_card Edit Card
@@ -268,6 +292,7 @@
     edit_subject Edit Subject
     edit_subject_title Edit Subject
     edit_subscription Editja l-abbonament
+    edit_user Editja l-utent
     email Email
     email_change_notice For security, a confirmation link will be sent to BOTH your old and new email addresses. You must click both to complete the change.
     email_in_use Email is already in use
@@ -275,6 +300,7 @@
     email_update_sent Confirmation emails sent. Please check both inboxes.
     email_updated_successfully Email aġġornata b'suċċess!
     english English
+    enter_code_sent_to_email Daħħal il-kodiċi ta' 6 numri mibgħut lil {email}
     enter_current_password Daħħal il-password attwali
     enter_new_email Daħħal email ġdida
     enter_new_name Enter New Name
@@ -297,10 +323,15 @@
     failed_to_send_verification_code Naqas milli jintbagħat il-kodiċi ta' verifika
     fake_only Foloz biss
     fatal_startup_error Fatal Startup Error
+    favorite Favorit
     feat_adaptive_desc The system monitors your recognition speed across MCQ options, dynamically adjusting intervals to push your boundaries.
     feat_adaptive_title Adaptive Response Timing
     feat_ages_desc Content curated for different age groups from early childhood to advanced learning.
     feat_ages_title For All Ages
+    feat_autoplay_desc Focus on learning while the app automatically advances through cards at your pace.
+    feat_autoplay_title Hands-Free Autoplay
+    feat_create_share_desc Easily create your own subjects and cards, or share them with the community.
+    feat_create_share_title Create & Share
     feat_gamified_desc Earn XP, badges, and build streaks while mastering complex visual subjects.
     feat_gamified_title Gamified Experience
     feat_mastery_desc Dynamic XP rewards difficulty, while real-time mastery badges (Bronze, Silver, Gold) track your journey from novice to expert.
@@ -311,6 +342,8 @@
     feat_recognition_title Visual Pattern Training
     feat_science_adaptive_desc Intervals automatically adjust based on your recognition speed and accuracy.
     feat_science_adaptive_title Adaptive Timing
+    feat_science_smart_review_desc The algorithm calculates the optimal time to review each card for maximum retention.
+    feat_science_smart_review_title Smart Review Cycles
     feat_science_spacing_desc Advanced cognitive spacing model that predicts memory decay and optimizes review cycles.
     feat_science_spacing_title SuperMemo-2 (SM-2)
     feat_spacing_desc A full implementation of the SuperMemo-2 model predicts your memory decay and schedules reviews at the peak of retention.
@@ -345,6 +378,7 @@
     feedback_title Ibgħat Feedback
     feedback_title_hint Titlu
     feedback_type Tip
+    file_too_large Il-fajl huwa kbir wisq
     fill_all_fields Please fill all fields
     filter_all All
     filter_dashboard Dashboard
@@ -355,6 +389,7 @@
     filter_public_library Librerija Pubblika
     filters Filtri
     finish Lest
+    finish_account_setup Lesti s-setup tal-kont
     finished_session You finished {count} cards. XP bonus awarded!
     folder Folder
     folder_already_exists Folder b'dan l-isem diġà jeżisti f'dan il-pilastru
@@ -362,6 +397,7 @@
     folder_label Fowlder
     folder_not_empty_msg Ma jistax jitħassar: il-folder mhuwiex vojt.
     folder_plural Fowlders
+    folder_practice_all_cards_desc Dan huwa folder. Tista' tuża l-buttuni Tgħallem/Ittestja hawn fuq biex tipprattika l-karti kollha.
     forgot_password Forgot Password?
     free_only Utenti b'xejn
     general_preferences General Preferences
@@ -373,6 +409,7 @@
     hide_comparison Aħbi l-Paragun tal-Pjan
     home Dar
     images Images
+    inactive Mhux attiv
     included_subjects Suġġetti inklużi
     info_copied Info copied to clipboard
     initializing_aliolo Initializing Aliolo...
@@ -390,11 +427,17 @@
     invite_user_content L-email {email} ma nstabitx. Trid tistedinhom jingħaqdu ma’ Aliolo?
     invite_user_title Stieden utent?
     invited_and_request_sent Mistiedna u talba mibgħuta!
+    is_required huwa meħtieġ
     json JSON
     keyboard_shortcuts Keyboard Shortcuts
     label_suffix $label:
     lang_abbr Lang
     language Lingwa
+    languages Lingwi
+    last_3_months L-Aħħar 3 Xhur
+    last_6_months L-Aħħar 6 Xhur
+    last_month L-Aħħar Xahar
+    last_slide L-aħħar slide
     leaderboard Leaderboard
     learn_mode_desc Study cards and memorize answers
     learn_mode_title Learn
@@ -414,9 +457,11 @@
     licenses_intro_title Aliolo Avviżi dwar il-Liċenzja u l-Pakketti
     licenses_third_party_section_title Liċenzji ta' Pakkett ta' Partijiet Terzi
     light Light
+    limit_reached Intlaħaq il-limitu
     linux_distro Linux Distro
     loading Tagħbija...
     localized_data Dejta Lokalizzata
+    log_in_instead Illoggja minflok
     login Illoggja
     logout Oħroġ
     manage_cards Manage Cards
@@ -448,12 +493,15 @@
     new NEW
     new_email Email Ġdid
     new_password New Password
+    new_password_required New password is required
     next Li jmiss
     next_card Next Card
     next_daily_goal L-Għan ta' Kuljum li Jmiss
     next_daily_goal_desc Numru fil-mira ta' kards li għandhom jiġu mhaddma kull jum. Il-bidliet jidħlu fis-seħħ għada.
     next_day_goal Next Day Goal
+    no_age_data_yet Għadu m'heemm l-ebda dejta tal-età
     no_cards_available_for_this_session Ebda cards disponibbli għal din is-sessjoni.
+    no_cards_due_yet L-ebda kard ma hija dovuta s'issa
     no_cards_found L-ebda karta ma nstabet
     no_cards_found_for_lang No cards found for this language
     no_cards_in_library No cards found in the library.
@@ -465,10 +513,19 @@
     no_localized_audio L-ebda awdjo lokalizzat
     no_localized_images L-ebda immaġni lokalizzata
     no_localized_video L-ebda vidjo lokalizzat
+    no_onboarding_sessions_yet Għadu m'hemm l-ebda sessjoni ta' onboarding
+    no_permission_view_card_details M'għandekx permess tara d-dettalji ta' din il-karta.
+    no_pillar_data_yet Għadu m'hemm l-ebda dejta tal-pilastri
+    no_slide_data_yet Għadu m'hemm l-ebda dejta tal-islides
     no_subjects_available L-ebda suġġett disponibbli
     no_subjects_found Ma nstab l-ebda suġġett
+    no_subjects_found_in_collection Ma nstab l-ebda suġġett f'din il-kollezzjoni
     no_subjects_found_in_this_collection L-ebda suġġett ma nstab f'din il-ġabra
+    no_usage_data_yet Għadu m'hemm l-ebda dejta tal-użu
     no_users_found L-ebda utent ma nstab
+    not_available Mhux disponibbli
+    not_set Mhux issettjat
+    official_website Websajt uffiċjali
     ok OK
     old_password Password antika
     old_password_required Il-password antika hija meħtieġa
@@ -486,6 +543,7 @@
     onboarding_6_title Ingħaqad mal-Komunità
     onboarding_7_joined Ingħaqdu eluf ta' studenti
     onboarding_7_quote Aliolo bidlet kompletament il-mod kif uliedi u jien nikkontrollaw suġġetti ġodda. Il-karti viżwali u r-ripetizzjoni jagħmlu t-tagħlim iħossu bħal logħba!
+    onboarding_analytics Analitika tal-Onboarding
     onboarding_get_started Ibda
     onboarding_next Li jmiss
     onboarding_skip Aqbeż
@@ -495,11 +553,13 @@
     order_id ID tal-Ordni
     os_version Verżjoni OS
     our_mission OUR MISSION
+    paddle_cancel_subscription_desc Għandek bżonn tikkanċella abbonament ta' Paddle? Iftaħ il-proċess tal-kanċellazzjoni ta' Paddle hawn taħt.
     page Page
     parent_folder_label Parent Folder (mt)
     password Password
     password_required Password is required
     password_reset_success Password reset successful
+    password_updated Password updated successfully
     password_updated_successfully Password aġġornata b'suċċess!
     passwords_dont_match Passwords do not match
     paste PASTE
@@ -534,6 +594,7 @@
     premium_unlock_desc Ikseb aċċess għas-suġġetti kollha, oħloq karti illimitati, u appoġġja l-missjoni ta' Aliolo.
     premium_unlock_title Nisfruttaw Aċċess Sħiħ
     prev Prev
+    previous Preċedenti
     previous_card Previous Card
     price_per_week ({price} / ġimgħa)
     private Private
@@ -562,6 +623,12 @@
     remove_friend Remove Friend
     remove_friend_confirm Are you sure you want to remove friend
     renderer Renderer
+    renderer_addition_emoji Żieda bl-Emoji
+    renderer_addition_numbers Żieda bin-Numri
+    renderer_counting Għadd
+    renderer_generic Ġeneriku
+    renderer_subtraction_emoji Tnaqqis bl-Emoji
+    renderer_subtraction_numbers Tnaqqis bin-Numri
     request_sent Request sent
     request_sent_waiting Request sent (waiting)
     required Required
@@ -572,13 +639,17 @@
     reset_password_for "Reset Password for: "
     restore_password Restore Password
     restore_purchases Irrestawra Xiri
+    restore_purchases_started L-irkupru beda. Aliolo se jerġa' jillinkja kwalunkwe xiri validu ma' dan il-kont.
+    retest_anyway Erġa' ttestja xorta waħda
     retry Retry
     right_arrow Right Arrow
     save Ħlief
     save_33_per_month Iffranka 33% fix-xahar
+    save_account Issejvja l-kont
     save_before_nav Do you want to save changes before navigating?
     save_card Save Card
     save_subject Save Subject
+    save_success Saved successfully
     saved_successfully Salvat b'suċċess
     search_cards Search Cards
     search_subjects Search Subjects
@@ -591,8 +662,10 @@
     send Send
     send_code Send Code
     send_verification_code Send verification code?
+    session Sessjoni
     session_complete Sessjoni Lesta!
     session_complete_description Xogħol kbir! Int lestejt il-karti kollha f'din is-sessjoni.
+    set_your_password Issettja L-Password Tiegħek
     setting_saved Setting saved
     settings Settings
     shortcuts_hint Press the key you want to use with Ctrl.
@@ -620,6 +693,8 @@
     subject_label Subject
     subject_plural Subjects
     subject_type Subject Type (mt)
+    subject_up_to_date_retest_desc Int aġġornat għal dan is-suġġett. Għadek tista' terġa' tittestja l-karti kollha issa.
+    subject_usage Użu tas-Suġġett
     subjects Suġġetti
     subscribe_now Abbona Issa
     subscription_data Data ta' abbonament
@@ -648,10 +723,13 @@
     theme_system System
     this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards Dan huwa folder. Tista' tuża l-buttuni Tgħallem/Ittestja hawn fuq biex tipprattika l-karti kollha.
     to_label To
+    toggle_languages Aqleb il-lingwi
     total_cards Karti Totali
     total_xp Total XP
     trust_cloud_desc Your progress is securely synced across all your devices in real-time.
     trust_cloud_title Cloud Sync
+    trust_ecosystem_desc Your progress and cards are seamlessly synced across all your devices.
+    trust_ecosystem_title Aliolo Ecosystem
     trust_privacy TRUST & PRIVACY
     trust_sync_desc Your data is private and encrypted to ensure the highest security standards.
     trust_sync_title Encrypted Data
@@ -668,12 +746,14 @@
     up_arrow Up Arrow
     update Update
     update_available Verżjoni ġdida hija disponibbli!
+    updated Aġġornat
     updated_at Aġġornat fi
     upload_new_photo Tella' ritratt ġdid
     user Utent
     user_exists User already exists
     user_id ID tal-utent
     user_not_found User not found
+    user_updated L-utent ġie aġġornat
     user_with_this_email_already_exists_please_log_in_instead Utent b'din l-email diġà jeżisti. Jekk jogħġbok idħol minflok.
     username Isem tal-utent
     users Utenti
@@ -681,6 +761,8 @@
     verification_code Kodiċi ta' Verifika
     verification_code_sent_to Kodiċi ta' verifika mibgħut lil $email
     verify Verify
+    verify_email_change Ivverifika l-Bidla fl-Email
+    verify_your_email Ivverifika l-email tiegħek
     version Verżjoni
     video Video
     video_link Video Link
@@ -692,6 +774,7 @@
     visual_content_required Huwa meħtieġ mill-inqas kontenut viżwali wieħed
     visual_content_required_msg Għandu jiġi pprovdut mill-inqas kontenut viżwali wieħed (test, immaġni, awdjo, jew vidjo).
     visual_text Test Viżwali
+    wait_for_response_before_replying Jekk jogħġbok stenna għal tweġiba qabel terġa' tirrispondi.
     wants_to_be_friend Wants to be your friend
     weekly_access Aċċess ta' kull ġimgħa
     welcome_complete_your_profile_to_join_aliolo Merħba! Imla l-profil tiegħek biex tingħaqad ma' aliolo.
@@ -701,33 +784,4 @@
     you_do_not_have_permission_to_edit_this_card M'għandekx permess biex teditja din il-karta
     you_do_not_have_permission_to_view_this_card_details M'għandekx permess biex tara d-dettalji ta' din il-karta.
     you_rank You are ranked #{rank}
-    active Attiv
-    autoplay Daqq awtomatiku
-    card_limit Limitu tal-Karti
-    card_limit_msg Int laħaqt il-limitu tiegħek ta’ {limit} karti.
-    create_request Oħloq talba
-    edit_user Editja l-utent
-    favorite Favorit
-    file_too_large Il-fajl huwa kbir wisq
-    inactive Mhux attiv
-    is_required huwa meħtieġ
-    languages Lingwi
-    limit_reached Intlaħaq il-limitu
-    not_available Mhux disponibbli
-    toggle_languages Aqleb il-lingwi
-    user_updated L-utent ġie aġġornat
     zoom Żum
-    account_and_management Account & Management
-    back_to_plans Back to plans
-    confirm_password_required Confirm password is required
-    feat_autoplay_desc Focus on learning while the app automatically advances through cards at your pace.
-    feat_autoplay_title Hands-Free Autoplay
-    feat_create_share_desc Easily create your own subjects and cards, or share them with the community.
-    feat_create_share_title Create & Share
-    feat_science_smart_review_desc The algorithm calculates the optimal time to review each card for maximum retention.
-    feat_science_smart_review_title Smart Review Cycles
-    new_password_required New password is required
-    password_updated Password updated successfully
-    save_success Saved successfully
-    trust_ecosystem_desc Your progress and cards are seamlessly synced across all your devices.
-    trust_ecosystem_title Aliolo Ecosystem

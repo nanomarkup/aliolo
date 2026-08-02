@@ -44,8 +44,12 @@
     about_support_settings_title Personalisasi
     about_support_title Pengaturan, Umpan Balik, dan Dukungan
     about_tagline Belajar Visual. Kuasai Selamanya.
+    account_and_management Account & Management
     account_created Account created!
+    account_created_billing_fail Your account was created, but payment did not complete. Retry the payment below.
     account_deleted Account deleted successfully
+    account_setup_completed Penyiapan akun selesai.
+    active Aktif
     add_card Add Card
     add_collection Tambah Koleksi
     add_folder Tambah Folder
@@ -75,6 +79,7 @@
     aliolo aliolo
     all_matching_subjects Semua subjek yang cocok
     all_rights_reserved Semua hak dilindungi undang-undang
+    all_time Sepanjang Waktu
     answer Answer
     answer_label answer
     answers_label answers
@@ -85,8 +90,10 @@
     audio Audio
     audio_playing Audio Sedang Diputar
     author Author
+    autoplay Putar otomatis
     back Kembali
     back_to_login Back to Login
+    back_to_plans Back to plans
     back_to_subjects Kembali ke Subjek
     best_for_quick_goals Terbaik untuk tujuan cepat
     billing_disclaimer Langganan diperpanjang secara otomatis kecuali dibatalkan. Anda dapat mengelola langganan Anda di pengaturan toko Anda.
@@ -94,6 +101,7 @@
     bronze BRONZE
     browser Peramban
     cancel Membatalkan
+    cancel_in_paddle Batal di Paddle
     cancel_request Cancel Request
     cancel_request_confirm Are you sure you want to cancel the request to
     cannot_delete_folder Cannot Delete Folder
@@ -102,6 +110,8 @@
     card_id ID Kartu
     card_label Card
     card_level Tingkat Kartu
+    card_limit Batas Kartu
+    card_limit_msg Anda telah mencapai batas {limit} kartu.
     card_plural Cards
     cards cards
     cards_label cards
@@ -110,31 +120,44 @@
     change_avatar Change Avatar
     change_password Ubah Kata Sandi
     check_your_email_for_code Periksa email Anda untuk kode
+    checkout_email_before_payment_desc Masukkan email Anda sebelum checkout agar Aliolo dapat membuat akun Anda dan melampirkan langganan kepada Anda.
+    checkout_finish_account_desc Pilih nama pengguna dan kata sandi Anda sekarang agar Anda dapat masuk lagi nanti jika pembayaran dibatalkan atau terganggu.
+    checkout_verification_desc Kami memerlukan satu verifikasi cepat sebelum membuka lembar pembayaran toko.
     clear Jernih
     click_to_select_image Click to select image
     click_to_view_original Klik untuk melihat yang asli
     close Menutup
+    close_feedback_request_confirm Apakah Anda yakin ingin menutup permintaan umpan balik ini?
     close_request Tutup Permintaan?
     code_label Code
     collection_id ID Koleksi
     colors Warna
     common_settings Common Settings
     compare_plans Bandingkan Gratis vs Premium
+    complete_account Lengkapi akun
+    complete_account_setup Lengkapi penyiapan akun
+    complete_account_setup_desc Tambahkan nama pengguna dan kata sandi untuk login dan pemulihan di masa mendatang.
+    complete_account_subscription_desc Langganan Anda sudah terlampir pada akun ini. Tambahkan nama pengguna dan kata sandi agar Anda dapat masuk di mana saja dan memulihkan pembelian nanti.
     confirm Konfirmasi
     confirm_logout Are you sure you want to logout?
     confirm_password Confirm Password
+    confirm_password_required Confirm password is required
     confirm_subscription Konfirmasi Berlangganan
     content_label Content
     context Konteks
+    continue_to_checkout Lanjutkan ke pembayaran
     copy COPY
     copy_all Copy All
     core_features CORE FEATURES
     correct_answers Jawaban yang Benar
     could_not_launch Tidak dapat meluncurkan $url
+    could_not_open_paddle_cancellation Tidak dapat membuka pembatalan Paddle: {error}
     counting Perhitungan
     create_account Create Account
+    create_account_to_continue Buat akun Anda untuk melanjutkan
     create_new_account Create New Account
     create_new_card Create New Card
+    create_request Buat permintaan
     created_at Dibuat Pada
     current_streak Current Streak
     current_subscription Langganan Saat Ini
@@ -159,6 +182,7 @@
     delete_collection Hapus Koleksi
     delete_collection_confirm Apakah Anda yakin ingin menghapus koleksi ini?
     delete_folder Delete Folder
+    delete_folder_confirm Apakah Anda yakin ingin menghapus folder ini?
     delete_selected_cards Delete selected cards?
     delete_subject Delete Subject
     delete_subject_confirm Delete subject '{subject}' and all {count} cards inside?
@@ -257,6 +281,7 @@
     doc_welcome_title Selamat datang di Aliolo
     documentation Dokumentasi
     done_today Selesai Hari Ini
+    dont_show_again_for_this_subject Jangan tampilkan lagi untuk subjek ini
     down_arrow Down Arrow
     edit Edit
     edit_card Edit Card
@@ -267,6 +292,7 @@
     edit_subject Edit Subject
     edit_subject_title Edit Subject
     edit_subscription Sunting langganan
+    edit_user Edit Pengguna
     email Email
     email_change_notice For security, a confirmation link will be sent to BOTH your old and new email addresses. You must click both to complete the change.
     email_in_use Email is already in use
@@ -274,6 +300,7 @@
     email_update_sent Confirmation emails sent. Please check both inboxes.
     email_updated_successfully Email berhasil diperbarui!
     english English
+    enter_code_sent_to_email Masukkan 6 digit kode yang dikirim ke {email}
     enter_current_password Masukkan kata sandi saat ini
     enter_new_email Masukkan email baru
     enter_new_name Enter New Name
@@ -296,10 +323,15 @@
     failed_to_send_verification_code Gagal mengirim kode verifikasi
     fake_only Hanya palsu
     fatal_startup_error Fatal Startup Error
+    favorite Favorit
     feat_adaptive_desc The system monitors your recognition speed across MCQ options, dynamically adjusting intervals to push your boundaries.
     feat_adaptive_title Adaptive Response Timing
     feat_ages_desc Content curated for different age groups from early childhood to advanced learning.
     feat_ages_title For All Ages
+    feat_autoplay_desc Focus on learning while the app automatically advances through cards at your pace.
+    feat_autoplay_title Hands-Free Autoplay
+    feat_create_share_desc Easily create your own subjects and cards, or share them with the community.
+    feat_create_share_title Create & Share
     feat_gamified_desc Earn XP, badges, and build streaks while mastering complex visual subjects.
     feat_gamified_title Gamified Experience
     feat_mastery_desc Dynamic XP rewards difficulty, while real-time mastery badges (Bronze, Silver, Gold) track your journey from novice to expert.
@@ -310,6 +342,8 @@
     feat_recognition_title Visual Pattern Training
     feat_science_adaptive_desc Intervals automatically adjust based on your recognition speed and accuracy.
     feat_science_adaptive_title Adaptive Timing
+    feat_science_smart_review_desc The algorithm calculates the optimal time to review each card for maximum retention.
+    feat_science_smart_review_title Smart Review Cycles
     feat_science_spacing_desc Advanced cognitive spacing model that predicts memory decay and optimizes review cycles.
     feat_science_spacing_title SuperMemo-2 (SM-2)
     feat_spacing_desc A full implementation of the SuperMemo-2 model predicts your memory decay and schedules reviews at the peak of retention.
@@ -344,6 +378,7 @@
     feedback_title Kirim Masukan
     feedback_title_hint Judul
     feedback_type Tipe
+    file_too_large File terlalu besar
     fill_all_fields Please fill all fields
     filter_all All
     filter_dashboard Dasbor
@@ -354,6 +389,7 @@
     filter_public_library Perpustakaan Umum
     filters Filter
     finish Selesai
+    finish_account_setup Selesaikan penyiapan akun
     finished_session You finished {count} cards. XP bonus awarded!
     folder Folder
     folder_already_exists Folder dengan nama ini sudah ada di pilar ini
@@ -361,6 +397,7 @@
     folder_label Folder
     folder_not_empty_msg Tidak dapat menghapus: folder tidak kosong.
     folder_plural Folder
+    folder_practice_all_cards_desc Ini adalah sebuah folder. Anda dapat menggunakan tombol Pelajari/Uji di atas untuk melatih semua kartu.
     forgot_password Forgot Password?
     free_only Pengguna gratis
     general_preferences General Preferences
@@ -372,6 +409,7 @@
     hide_comparison Sembunyikan Perbandingan Paket
     home Rumah
     images Images
+    inactive Tidak aktif
     included_subjects Subjek yang disertakan
     info_copied Info copied to clipboard
     initializing_aliolo Initializing Aliolo...
@@ -389,11 +427,17 @@
     invite_user_content Email {email} tidak ditemukan. Undang mereka untuk bergabung dengan Aliolo?
     invite_user_title Undang Pengguna?
     invited_and_request_sent Diundang dan permintaan dikirim!
+    is_required wajib diisi
     json JSON
     keyboard_shortcuts Keyboard Shortcuts
     label_suffix $label:
     lang_abbr Lang
     language Language
+    languages Bahasa
+    last_3_months 3 Bulan Terakhir
+    last_6_months 6 Bulan Terakhir
+    last_month Bulan Lalu
+    last_slide Slide terakhir
     leaderboard Papan peringkat
     learn_mode_desc Study cards and memorize answers
     learn_mode_title Learn
@@ -413,9 +457,11 @@
     licenses_intro_title Aliolo Pemberitahuan Lisensi dan Paket
     licenses_third_party_section_title Lisensi Paket Pihak Ketiga
     light Light
+    limit_reached Batas tercapai
     linux_distro Distro Linux
     loading Memuat...
     localized_data Data yang Dilokalkan
+    log_in_instead Masuk sebagai gantinya
     login Login
     logout Logout
     manage_cards Manage Cards
@@ -447,12 +493,15 @@
     new NEW
     new_email Surel Baru
     new_password New Password
+    new_password_required New password is required
     next Next
     next_card Next Card
     next_daily_goal Target Harian Berikutnya
     next_daily_goal_desc Target jumlah kartu yang harus dikuasai setiap hari. Perubahan berlaku mulai besok.
     next_day_goal Target Besok
+    no_age_data_yet Belum ada data usia
     no_cards_available_for_this_session Tidak ada kartu yang tersedia untuk sesi ini.
+    no_cards_due_yet Belum ada kartu yang jatuh tempo
     no_cards_found Tidak ada kartu yang ditemukan
     no_cards_found_for_lang No cards found for this language
     no_cards_in_library No cards found in the library.
@@ -464,10 +513,19 @@
     no_localized_audio Tidak ada audio yang dilokalkan
     no_localized_images Tidak ada gambar yang dilokalkan
     no_localized_video Tidak ada video yang dilokalkan
+    no_onboarding_sessions_yet Belum ada sesi orientasi
+    no_permission_view_card_details Anda tidak memiliki izin untuk melihat detail kartu ini.
+    no_pillar_data_yet Belum ada data pilar
+    no_slide_data_yet Belum ada data slide
     no_subjects_available Tidak ada subjek yang tersedia
     no_subjects_found Tidak ada subjek yang ditemukan
+    no_subjects_found_in_collection Tidak ada subjek yang ditemukan dalam koleksi ini
     no_subjects_found_in_this_collection Tidak ada subjek yang ditemukan dalam koleksi ini
+    no_usage_data_yet Belum ada data penggunaan
     no_users_found Tidak ada pengguna yang ditemukan
+    not_available Tidak tersedia
+    not_set Belum diatur
+    official_website Situs web resmi
     ok OK
     old_password Kata Sandi Lama
     old_password_required Kata sandi lama wajib diisi
@@ -485,6 +543,7 @@
     onboarding_6_title Bergabunglah dengan Komunitas
     onboarding_7_joined Bergabung dengan ribuan pelajar
     onboarding_7_quote Aliolo telah sepenuhnya mengubah cara anak-anak saya dan saya menguasai topik baru. Kartu visual dan pengulangan berjarak membuat belajar terasa seperti permainan!
+    onboarding_analytics Analitik Orientasi
     onboarding_get_started Mulai
     onboarding_next Berikutnya
     onboarding_skip Lewati
@@ -494,11 +553,13 @@
     order_id ID Pesanan
     os_version Versi OS
     our_mission OUR MISSION
+    paddle_cancel_subscription_desc Perlu membatalkan langganan Paddle? Buka alur pembatalan Paddle di bawah ini.
     page Page
     parent_folder_label Parent Folder (id)
     password Password
     password_required Password is required
     password_reset_success Password reset successful
+    password_updated Password updated successfully
     password_updated_successfully Kata sandi berhasil diperbarui!
     passwords_dont_match Passwords do not match
     paste PASTE
@@ -533,6 +594,7 @@
     premium_unlock_desc Dapatkan akses ke semua mata pelajaran, buat kartu tanpa batas, dan dukung misi Aliolo.
     premium_unlock_title Buka Kunci Akses Penuh
     prev Prev
+    previous Sebelumnya
     previous_card Previous Card
     price_per_week ({price} / minggu)
     private Private
@@ -561,6 +623,12 @@
     remove_friend Remove Friend
     remove_friend_confirm Are you sure you want to remove friend
     renderer Penyaji
+    renderer_addition_emoji Emoji Penjumlahan
+    renderer_addition_numbers Angka Penjumlahan
+    renderer_counting Menghitung
+    renderer_generic Generik
+    renderer_subtraction_emoji Emoji Pengurangan
+    renderer_subtraction_numbers Angka Pengurangan
     request_sent Request sent
     request_sent_waiting Request sent (waiting)
     required Required
@@ -571,13 +639,17 @@
     reset_password_for "Reset Password for: "
     restore_password Restore Password
     restore_purchases Pulihkan Pembelian
+    restore_purchases_started Pemulihan dimulai. Aliolo akan menautkan kembali setiap pembelian yang valid ke akun ini.
+    retest_anyway Tetap uji ulang
     retry Retry
     right_arrow Right Arrow
     save Menyimpan
     save_33_per_month Hemat 33% per bulan
+    save_account Simpan akun
     save_before_nav Do you want to save changes before navigating?
     save_card Save Card
     save_subject Save Subject
+    save_success Saved successfully
     saved_successfully Berhasil disimpan
     search_cards Search Cards
     search_subjects Search Subjects
@@ -590,8 +662,10 @@
     send Send
     send_code Send Code
     send_verification_code Send verification code?
+    session Sesi
     session_complete Sesi Selesai!
     session_complete_description Kerja bagus! Anda telah menyelesaikan semua kartu di sesi ini.
+    set_your_password Atur Kata Sandi Anda
     setting_saved Setting saved
     settings Pengaturan
     shortcuts_hint Press the key you want to use with Ctrl.
@@ -619,6 +693,8 @@
     subject_label Subject
     subject_plural Subjects
     subject_type Subject Type (id)
+    subject_up_to_date_retest_desc Anda sudah up to date untuk subjek ini. Anda masih dapat menguji ulang semua kartu sekarang.
+    subject_usage Penggunaan Subjek
     subjects Subjek
     subscribe_now Berlangganan Sekarang
     subscription_data Data langganan
@@ -647,10 +723,13 @@
     theme_system Sistem
     this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards Ini adalah sebuah map. Anda dapat menggunakan tombol Pelajari/Uji di atas untuk melatih semua kartu.
     to_label To
+    toggle_languages Alihkan bahasa
     total_cards Jumlah Kartu
     total_xp Total XP
     trust_cloud_desc Your progress is securely synced across all your devices in real-time.
     trust_cloud_title Cloud Sync
+    trust_ecosystem_desc Your progress and cards are seamlessly synced across all your devices.
+    trust_ecosystem_title Aliolo Ecosystem
     trust_privacy TRUST & PRIVACY
     trust_sync_desc Your data is private and encrypted to ensure the highest security standards.
     trust_sync_title Encrypted Data
@@ -667,12 +746,14 @@
     up_arrow Up Arrow
     update Update
     update_available Versi baru telah tersedia!
+    updated Diperbarui
     updated_at Diperbarui Pada
     upload_new_photo Unggah foto baru
     user Pengguna
     user_exists User already exists
     user_id ID Pengguna
     user_not_found User not found
+    user_updated Pengguna diperbarui
     user_with_this_email_already_exists_please_log_in_instead Pengguna dengan email ini sudah ada. Silakan masuk sebagai gantinya.
     username Username
     users Pengguna
@@ -680,6 +761,8 @@
     verification_code Kode Verifikasi
     verification_code_sent_to Kode verifikasi dikirim ke $email
     verify Verify
+    verify_email_change Verifikasi Perubahan Email
+    verify_your_email Verifikasi email Anda
     version Versi
     video Video
     video_link Video Link
@@ -691,6 +774,7 @@
     visual_content_required Setidaknya satu konten visual diperlukan
     visual_content_required_msg Setidaknya satu konten visual (teks, gambar, audio, atau video) harus disediakan.
     visual_text Teks Visual
+    wait_for_response_before_replying Harap tunggu tanggapan sebelum membalas lagi.
     wants_to_be_friend Wants to be your friend
     weekly_access Akses Mingguan
     welcome_complete_your_profile_to_join_aliolo Selamat datang! Lengkapi profil Anda untuk bergabung aliolo.
@@ -700,34 +784,4 @@
     you_do_not_have_permission_to_edit_this_card Anda tidak memiliki izin untuk mengedit kartu ini
     you_do_not_have_permission_to_view_this_card_details Anda tidak memiliki izin untuk melihat detail kartu ini.
     you_rank You are ranked #{rank}
-    active Aktif
-    autoplay Putar otomatis
-    card_limit Batas Kartu
-    card_limit_msg Anda telah mencapai batas {limit} kartu.
-    create_request Buat permintaan
-    edit_user Edit Pengguna
-    favorite Favorit
-    file_too_large File terlalu besar
-    inactive Tidak aktif
-    is_required wajib diisi
-    languages Bahasa
-    limit_reached Batas tercapai
-    not_available Tidak tersedia
-    toggle_languages Alihkan bahasa
-    user_updated Pengguna diperbarui
     zoom Perbesar
-    account_and_management Account & Management
-    account_created_billing_fail Your account was created, but payment did not complete. Retry the payment below.
-    back_to_plans Back to plans
-    confirm_password_required Confirm password is required
-    feat_autoplay_desc Focus on learning while the app automatically advances through cards at your pace.
-    feat_autoplay_title Hands-Free Autoplay
-    feat_create_share_desc Easily create your own subjects and cards, or share them with the community.
-    feat_create_share_title Create & Share
-    feat_science_smart_review_desc The algorithm calculates the optimal time to review each card for maximum retention.
-    feat_science_smart_review_title Smart Review Cycles
-    new_password_required New password is required
-    password_updated Password updated successfully
-    save_success Saved successfully
-    trust_ecosystem_desc Your progress and cards are seamlessly synced across all your devices.
-    trust_ecosystem_title Aliolo Ecosystem

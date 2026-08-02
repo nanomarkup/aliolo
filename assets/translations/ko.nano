@@ -44,9 +44,12 @@
     about_support_settings_title 개인화
     about_support_title 설정, 피드백 및 지원
     about_tagline 시각적으로 배우고 영원히 마스터하세요.
+    account_and_management Account & Management
     account_created 계정이 생성되었습니다
     account_created_billing_fail 계정이 생성되었으나 결제가 완료되지 않았습니다. 아래에서 결제를 다시 시도하세요.
     account_deleted 계정이 삭제되었습니다
+    account_setup_completed 계정 설정이 완료되었습니다.
+    active 활성
     add_card 카드 추가
     add_collection 컬렉션 추가
     add_folder 폴더 추가
@@ -76,6 +79,7 @@
     aliolo aliolo
     all_matching_subjects 일치하는 모든 주제
     all_rights_reserved 모든 권리 보유
+    all_time 전체 기간
     answer 답변
     answer_label 답변
     answers_label 답변
@@ -86,8 +90,10 @@
     audio 오디오
     audio_playing 오디오 재생 중
     author 저자
+    autoplay 자동 재생
     back 뒤쪽에
     back_to_login 로그인으로 돌아가기
+    back_to_plans Back to plans
     back_to_subjects 주제로 돌아가기
     best_for_quick_goals 빠른 목표에 가장 적합
     billing_disclaimer 취소하지 않는 한 구독은 자동으로 갱신됩니다. 스토어 설정에서 구독을 관리할 수 있습니다.
@@ -95,6 +101,7 @@
     bronze 브론즈
     browser 브라우저
     cancel 취소
+    cancel_in_paddle Paddle에서 취소
     cancel_request 요청 취소
     cancel_request_confirm ... 에게 보낸 요청을 취소하시겠습니까?
     cannot_delete_folder 폴더를 삭제할 수 없습니다
@@ -103,6 +110,8 @@
     card_id 카드 아이디
     card_label 카드
     card_level 카드 레벨
+    card_limit 카드 제한
+    card_limit_msg {limit}장 카드 제한에 도달했습니다.
     card_plural 카드
     cards 장의 카드
     cards_label 카드
@@ -111,31 +120,44 @@
     change_avatar 아바타 변경
     change_password 비밀번호 변경
     check_your_email_for_code 이메일에서 코드를 확인하세요.
+    checkout_email_before_payment_desc Aliolo가 계정을 생성하고 구독을 연결할 수 있도록 결제 전에 이메일을 입력하세요.
+    checkout_finish_account_desc 결제가 취소되거나 중단될 경우 나중에 다시 로그인할 수 있도록 지금 사용자 이름과 비밀번호를 선택하세요.
+    checkout_verification_desc 스토어 결제 시트를 열기 전에 간단한 확인이 필요합니다.
     clear 분명한
     click_to_select_image 클릭하여 이미지 선택
     click_to_view_original 원본을 보시려면 클릭하세요
     close 닫다
+    close_feedback_request_confirm 이 피드백 요청을 닫으시겠습니까?
     close_request 요청을 종료하시겠습니까?
     code_label 코드
     collection_id 컬렉션 ID
     colors 그림 물감
     common_settings Common Settings
     compare_plans 무료 vs 프리미엄 비교
+    complete_account 계정 완료
+    complete_account_setup 계정 설정 완료
+    complete_account_setup_desc 향후 로그인 및 복원을 위해 사용자 이름과 비밀번호를 추가하세요.
+    complete_account_subscription_desc 구독이 이미 이 계정에 연결되어 있습니다. 어디서든 로그인하고 나중에 구매를 복원할 수 있도록 사용자 이름과 비밀번호를 추가하세요.
     confirm 확인
     confirm_logout 로그아웃하시겠습니까?
     confirm_password 비밀번호 확인
+    confirm_password_required Confirm password is required
     confirm_subscription 구독 확인
     content_label Content
     context 문맥
+    continue_to_checkout 결제 계속하기
     copy COPY
     copy_all 모두 복사
     core_features CORE FEATURES
     correct_answers 정답
     could_not_launch $url을(를) 시작할 수 없습니다.
+    could_not_open_paddle_cancellation Paddle 취소를 열 수 없습니다: {error}
     counting 계산
     create_account 계정 생성
+    create_account_to_continue 계속하려면 계정을 만드세요
     create_new_account 새 계정 생성
     create_new_card 새 카드 생성
+    create_request 요청 만들기
     created_at 생성일
     current_streak 현재 연속 학습일
     current_subscription 현재 구독
@@ -160,6 +182,7 @@
     delete_collection 컬렉션 삭제
     delete_collection_confirm 이 컬렉션을 삭제하시겠습니까?
     delete_folder 폴더 삭제
+    delete_folder_confirm 이 폴더를 삭제하시겠습니까?
     delete_selected_cards 선택한 카드를 삭제하시겠습니까?
     delete_subject 주제 삭제
     delete_subject_confirm 주제 '{subject}'와(과) 내부의 카드 {count}장을 모두 삭제하시겠습니까?
@@ -258,6 +281,7 @@
     doc_welcome_title Aliolo에 오신 것을 환영합니다
     documentation 선적 서류 비치
     done_today 오늘 완료
+    dont_show_again_for_this_subject 이 주제에 대해 다시 표시하지 않음
     down_arrow 아래쪽 화살표
     edit 편집
     edit_card 카드 편집
@@ -268,6 +292,7 @@
     edit_subject 주제 편집
     edit_subject_title Edit Subject
     edit_subscription 구독 수정
+    edit_user 사용자 편집
     email 이메일
     email_change_notice For security, a confirmation link will be sent to BOTH your old and new email addresses. You must click both to complete the change.
     email_in_use 이미 사용 중인 이메일입니다
@@ -275,6 +300,7 @@
     email_update_sent Confirmation emails sent. Please check both inboxes.
     email_updated_successfully 이메일이 업데이트되었습니다!
     english 영어
+    enter_code_sent_to_email {email}(으)로 전송된 6자리 코드를 입력하세요
     enter_current_password 현재 비밀번호를 입력하세요
     enter_new_email 새 이메일 입력
     enter_new_name 새 이름 입력
@@ -297,10 +323,15 @@
     failed_to_send_verification_code 인증코드 전송 실패
     fake_only 가짜만
     fatal_startup_error 치명적인 시작 오류
+    favorite 즐겨찾기
     feat_adaptive_desc 인식 속도를 모니터링하여 간격을 조정합니다.
     feat_adaptive_title 적응형 반응 시간
     feat_ages_desc Content curated for different age groups from early childhood to advanced learning.
     feat_ages_title For All Ages
+    feat_autoplay_desc Focus on learning while the app automatically advances through cards at your pace.
+    feat_autoplay_title Hands-Free Autoplay
+    feat_create_share_desc Easily create your own subjects and cards, or share them with the community.
+    feat_create_share_title Create & Share
     feat_gamified_desc Earn XP, badges, and build streaks while mastering complex visual subjects.
     feat_gamified_title Gamified Experience
     feat_mastery_desc XP 보상과 숙달 배지 (브론즈, 실버, 골드).
@@ -311,6 +342,8 @@
     feat_recognition_title 시각적 패턴 훈련
     feat_science_adaptive_desc Intervals automatically adjust based on your recognition speed and accuracy.
     feat_science_adaptive_title Adaptive Timing
+    feat_science_smart_review_desc The algorithm calculates the optimal time to review each card for maximum retention.
+    feat_science_smart_review_title Smart Review Cycles
     feat_science_spacing_desc Advanced cognitive spacing model that predicts memory decay and optimizes review cycles.
     feat_science_spacing_title SuperMemo-2 (SM-2)
     feat_spacing_desc 망각 곡선을 예측하고 복습 일정을 예약합니다.
@@ -345,6 +378,7 @@
     feedback_title 피드백 보내기
     feedback_title_hint 제목
     feedback_type 유형
+    file_too_large 파일이 너무 큽니다
     fill_all_fields 모든 필드를 입력해주세요
     filter_all 전체
     filter_dashboard 대시보드
@@ -355,6 +389,7 @@
     filter_public_library 공공 도서관
     filters 필터
     finish 완료
+    finish_account_setup 계정 설정 완료
     finished_session {count}장의 카드를 완료했습니다. XP 보너스!
     folder 폴더
     folder_already_exists 이 이름의 폴더가 이 기둥에 이미 존재합니다
@@ -362,6 +397,7 @@
     folder_label 폴더
     folder_not_empty_msg 삭제할 수 없음: 폴더가 비어있지 않습니다.
     folder_plural 폴더
+    folder_practice_all_cards_desc 이것은 폴더입니다. 위의 학습/테스트 버튼을 사용하여 모든 카드를 연습할 수 있습니다.
     forgot_password 비밀번호를 잊으셨나요?
     free_only 무료 사용자
     general_preferences 일반 설정
@@ -373,6 +409,7 @@
     hide_comparison 요금제 비교 숨기기
     home 집
     images 이미지
+    inactive 비활성
     included_subjects 포함된 주제
     info_copied 클립보드에 복사되었습니다
     initializing_aliolo Aliolo 초기화 중...
@@ -390,17 +427,22 @@
     invite_user_content 이메일 {email}을(를) 찾을 수 없습니다. Aliolo에 초대할까요?
     invite_user_title 사용자를 초대할까요?
     invited_and_request_sent 초대되었으며 요청이 전송되었습니다!
+    is_required 필수입니다
     json JSON
     keyboard_shortcuts 단축키
     label_suffix $label:
     lang_abbr 언어
     language 언어
+    languages 언어
+    last_3_months 최근 3개월
+    last_6_months 최근 6개월
+    last_month 지난달
+    last_slide 마지막 슬라이드
     leaderboard 리더보드
     learn_mode_desc Study cards and memorize answers
     learn_mode_title Learn
     learn_session_size 학습 세션 크기
     learn_session_size_desc 단일 학습 세션에서 도입할 새 카드의 수입니다.
-    learning 학습 중
     learning_session_complete_description 정말 잘했어요! 이 학습 세션을 마쳤습니다. 진행 상황이 저장되었습니다.
     left_arrow 왼쪽 화살표
     level 레벨
@@ -415,9 +457,11 @@
     licenses_intro_title Aliolo 라이센스 및 패키지 고지 사항
     licenses_third_party_section_title 타사 패키지 라이센스
     light 라이트
+    limit_reached 제한에 도달함
     linux_distro 리눅스 배포판
     loading 로드 중...
     localized_data 현지화된 데이터
+    log_in_instead 대신 로그인
     login 로그인
     logout 로그아웃
     manage_cards 카드 관리
@@ -449,12 +493,15 @@
     new 신규
     new_email 새 이메일
     new_password 새 비밀번호
+    new_password_required New password is required
     next 다음
     next_card Next Card
     next_daily_goal 다음 일일 목표
     next_daily_goal_desc 매일 마스터할 카드 목표 수입니다. 변경 사항은 내일부터 적용됩니다.
     next_day_goal 내일의 목표
+    no_age_data_yet 아직 연령 데이터가 없습니다
     no_cards_available_for_this_session 이 세션에 사용할 수 있는 카드가 없습니다.
+    no_cards_due_yet 아직 복습할 카드가 없습니다
     no_cards_found 카드를 찾을 수 없습니다.
     no_cards_found_for_lang 이 언어의 카드를 찾을 수 없습니다
     no_cards_in_library 라이브러리에 카드가 없습니다.
@@ -466,10 +513,19 @@
     no_localized_audio 현지화된 오디오 없음
     no_localized_images 현지화된 이미지 없음
     no_localized_video 현지화된 비디오 없음
+    no_onboarding_sessions_yet 아직 온보딩 세션이 없습니다
+    no_permission_view_card_details 이 카드 세부 정보를 볼 권한이 없습니다.
+    no_pillar_data_yet 아직 기둥 데이터가 없습니다
+    no_slide_data_yet 아직 슬라이드 데이터가 없습니다
     no_subjects_available 사용 가능한 주제가 없습니다
     no_subjects_found 주제를 찾을 수 없습니다.
+    no_subjects_found_in_collection 이 컬렉션에서 주제를 찾을 수 없습니다
     no_subjects_found_in_this_collection 이 컬렉션에는 주제가 없습니다.
+    no_usage_data_yet 아직 사용 데이터가 없습니다
     no_users_found 사용자를 찾을 수 없습니다.
+    not_available 사용할 수 없음
+    not_set 설정되지 않음
+    official_website 공식 웹사이트
     ok 확인
     old_password 기존 비밀번호
     old_password_required 기존 비밀번호가 필요합니다
@@ -487,6 +543,7 @@
     onboarding_6_title 커뮤니티 가입
     onboarding_7_joined 수천 명의 학습자가 가입함
     onboarding_7_quote Aliolo는 저와 아이들이 새로운 주제를 마스터하는 방식을 완전히 바꾸어 놓았습니다. 시각적 카드와 간격 반복 덕분에 학습이 게임처럼 느껴집니다!
+    onboarding_analytics 온보딩 분석
     onboarding_get_started 시작하기
     onboarding_next 다음
     onboarding_skip 건너뛰기
@@ -496,11 +553,13 @@
     order_id 주문 ID
     os_version OS 버전
     our_mission OUR MISSION
+    paddle_cancel_subscription_desc Paddle 구독을 취소해야 하나요? 아래의 Paddle 취소 절차를 엽니다.
     page 페이지
     parent_folder_label 상위 폴더
     password 비밀번호
     password_required 비밀번호가 필요합니다
     password_reset_success 비밀번호가 재설정되었습니다
+    password_updated Password updated successfully
     password_updated_successfully 비밀번호가 성공적으로 업데이트되었습니다!
     passwords_dont_match 비밀번호가 일치하지 않습니다
     paste PASTE
@@ -535,6 +594,7 @@
     premium_unlock_desc 모든 주제에 접근하고, 무제한 카드를 만들고, Aliolo의 사명을 지원하세요.
     premium_unlock_title 전체 액세스 잠금 해제
     prev 이전
+    previous 이전
     previous_card Previous Card
     price_per_week ({price} / 주)
     private 비공개
@@ -563,6 +623,12 @@
     remove_friend 친구 삭제
     remove_friend_confirm 친구 ... 를 삭제하시겠습니까?
     renderer 렌더러
+    renderer_addition_emoji 덧셈 이모지
+    renderer_addition_numbers 덧셈 숫자
+    renderer_counting 세기
+    renderer_generic 일반
+    renderer_subtraction_emoji 뺄셈 이모지
+    renderer_subtraction_numbers 뺄셈 숫자
     request_sent 요청이 전송되었습니다
     request_sent_waiting 요청이 전송되었습니다 (대기 중)
     required 필수
@@ -573,13 +639,17 @@
     reset_password_for "비밀번호 재설정: "
     restore_password 비밀번호 재설정
     restore_purchases 구매 복원
+    restore_purchases_started 복원이 시작되었습니다. Aliolo가 유효한 구매를 이 계정에 다시 연결합니다.
+    retest_anyway 어쨌든 재테스트
     retry 재시도
     right_arrow 오른쪽 화살표
     save 구하다
     save_33_per_month 월 33% 할인
+    save_account 계정 저장
     save_before_nav 이동하기 전에 저장하시겠습니까?
     save_card 카드 저장
     save_subject 주제 저장
+    save_success Saved successfully
     saved_successfully 성공적으로 저장되었습니다
     search_cards 카드 검색
     search_subjects 주제 검색
@@ -592,8 +662,10 @@
     send 보내기
     send_code 코드 전송
     send_verification_code 인증 코드를 보내시겠습니까?
+    session 세션
     session_complete 세션이 완료되었습니다!
     session_complete_description 정말 잘했어요! 이번 세션의 모든 카드를 완성했습니다.
+    set_your_password 비밀번호 설정
     setting_saved 설정 저장됨
     settings 설정
     shortcuts_hint Press the key you want to use with Ctrl.
@@ -621,6 +693,8 @@
     subject_label 주제
     subject_plural 주제
     subject_type 주제 유형
+    subject_up_to_date_retest_desc 이 주제에 대한 최신 상태입니다. 지금 모든 카드를 다시 테스트할 수 있습니다.
+    subject_usage 주제 사용
     subjects 주제
     subscribe_now 지금 구독하세요
     subscription_data 구독 데이터
@@ -649,10 +723,13 @@
     theme_system 시스템
     this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards 이것은 폴더입니다. 위의 학습/테스트 버튼을 사용하여 모든 카드를 연습할 수 있습니다.
     to_label 받는 사람
+    toggle_languages 언어 전환
     total_cards 총 카드 수
     total_xp 총 XP
     trust_cloud_desc Your progress is securely synced across all your devices in real-time.
     trust_cloud_title Cloud Sync
+    trust_ecosystem_desc Your progress and cards are seamlessly synced across all your devices.
+    trust_ecosystem_title Aliolo Ecosystem
     trust_privacy TRUST & PRIVACY
     trust_sync_desc Your data is private and encrypted to ensure the highest security standards.
     trust_sync_title Encrypted Data
@@ -669,12 +746,14 @@
     up_arrow 위쪽 화살표
     update 업데이트
     update_available 새 버전을 사용할 수 있습니다!
+    updated 업데이트됨
     updated_at 수정일
     upload_new_photo 새 사진 업로드
     user 사용자
     user_exists 이미 존재하는 사용자입니다
     user_id 사용자 ID
     user_not_found 사용자를 찾을 수 없음
+    user_updated 사용자가 업데이트되었습니다
     user_with_this_email_already_exists_please_log_in_instead 이 이메일을 사용하는 사용자가 이미 존재합니다. 대신 로그인해 주세요.
     username 사용자 이름
     users 사용자
@@ -682,6 +761,8 @@
     verification_code 인증코드
     verification_code_sent_to $email(으)로 인증 코드가 전송되었습니다.
     verify 인증
+    verify_email_change 이메일 변경 확인
+    verify_your_email 이메일 확인
     version 버전
     video 비디오
     video_link 비디오 링크
@@ -693,6 +774,7 @@
     visual_content_required 하나 이상의 시각적 콘텐츠가 필요합니다
     visual_content_required_msg 하나 이상의 시각적 콘텐츠(텍스트, 이미지, 오디오 또는 비디오)를 제공해야 합니다.
     visual_text 시각적 텍스트
+    wait_for_response_before_replying 다시 답장하기 전에 응답을 기다려 주십시오.
     wants_to_be_friend 친구 요청
     weekly_access 주간 액세스
     welcome_complete_your_profile_to_join_aliolo 환영! aliolo에 가입하려면 프로필을 작성하세요.
@@ -702,33 +784,4 @@
     you_do_not_have_permission_to_edit_this_card 이 카드를 편집할 권한이 없습니다.
     you_do_not_have_permission_to_view_this_card_details 이 카드 세부정보를 볼 수 있는 권한이 없습니다.
     you_rank 현재 순위: #{rank}위
-    active 활성
-    autoplay 자동 재생
-    card_limit 카드 제한
-    card_limit_msg {limit}장 카드 제한에 도달했습니다.
-    create_request 요청 만들기
-    edit_user 사용자 편집
-    favorite 즐겨찾기
-    file_too_large 파일이 너무 큽니다
-    inactive 비활성
-    is_required 필수입니다
-    languages 언어
-    limit_reached 제한에 도달함
-    not_available 사용할 수 없음
-    toggle_languages 언어 전환
-    user_updated 사용자가 업데이트되었습니다
     zoom 확대
-    account_and_management Account & Management
-    back_to_plans Back to plans
-    confirm_password_required Confirm password is required
-    feat_autoplay_desc Focus on learning while the app automatically advances through cards at your pace.
-    feat_autoplay_title Hands-Free Autoplay
-    feat_create_share_desc Easily create your own subjects and cards, or share them with the community.
-    feat_create_share_title Create & Share
-    feat_science_smart_review_desc The algorithm calculates the optimal time to review each card for maximum retention.
-    feat_science_smart_review_title Smart Review Cycles
-    new_password_required New password is required
-    password_updated Password updated successfully
-    save_success Saved successfully
-    trust_ecosystem_desc Your progress and cards are seamlessly synced across all your devices.
-    trust_ecosystem_title Aliolo Ecosystem

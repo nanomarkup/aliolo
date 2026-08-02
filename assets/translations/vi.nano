@@ -44,9 +44,12 @@
     about_support_settings_title Cá nhân hóa
     about_support_title Cài đặt, phản hồi và hỗ trợ
     about_tagline Học bằng hình ảnh. Làm chủ mãi mãi.
+    account_and_management Account & Management
     account_created Đã tạo tài khoản
     account_created_billing_fail Tài khoản của bạn đã được tạo nhưng thanh toán chưa hoàn tất. Hãy thử thanh toán lại bên dưới.
     account_deleted Account deleted successfully
+    account_setup_completed Thiết lập tài khoản hoàn tất.
+    active Hoạt động
     add_card Add Card
     add_collection Thêm bộ sưu tập
     add_folder Thêm thư mục
@@ -76,6 +79,7 @@
     aliolo aliolo
     all_matching_subjects Tất cả các chủ đề phù hợp
     all_rights_reserved Mọi quyền được bảo lưu
+    all_time Toàn thời gian
     answer Trả lời
     answer_label answer
     answers_label answers
@@ -86,8 +90,10 @@
     audio Âm thanh
     audio_playing Đang phát âm thanh
     author Author
+    autoplay Tự động phát
     back Mặt sau
     back_to_login Back to Login
+    back_to_plans Back to plans
     back_to_subjects Quay lại chủ đề
     best_for_quick_goals Tốt nhất cho mục tiêu nhanh chóng
     billing_disclaimer Đăng ký tự động gia hạn trừ khi bị hủy. Bạn có thể quản lý đăng ký của mình trong cài đặt cửa hàng.
@@ -95,6 +101,7 @@
     bronze BRONZE
     browser Trình duyệt
     cancel Hủy bỏ
+    cancel_in_paddle Hủy trong Paddle
     cancel_request Cancel Request
     cancel_request_confirm Are you sure you want to cancel the request to
     cannot_delete_folder Cannot Delete Folder
@@ -103,6 +110,8 @@
     card_id Mã thẻ
     card_label Card
     card_level Cấp thẻ
+    card_limit Giới hạn thẻ
+    card_limit_msg Bạn đã đạt giới hạn {limit} thẻ.
     card_plural Cards
     cards cards
     cards_label cards
@@ -111,31 +120,44 @@
     change_avatar Change Avatar
     change_password Đổi mật khẩu
     check_your_email_for_code Kiểm tra email của bạn để lấy mã
+    checkout_email_before_payment_desc Nhập email của bạn trước khi thanh toán để Aliolo có thể tạo tài khoản và gắn đăng ký cho bạn.
+    checkout_finish_account_desc Chọn tên người dùng và mật khẩu ngay bây giờ để bạn có thể đăng nhập lại sau nếu quá trình thanh toán bị hủy hoặc gián đoạn.
+    checkout_verification_desc Chúng tôi cần một bước xác minh nhanh trước khi mở trang thanh toán của cửa hàng.
     clear Thông thoáng
     click_to_select_image Click to select image
     click_to_view_original Click để xem bản gốc
     close Đóng
+    close_feedback_request_confirm Bạn có chắc chắn muốn đóng yêu cầu phản hồi này không?
     close_request Đóng yêu cầu?
     code_label Code
     collection_id ID bộ sưu tập
     colors Màu sắc
     common_settings Common Settings
     compare_plans So sánh Miễn phí và Cao cấp
+    complete_account Hoàn tất tài khoản
+    complete_account_setup Hoàn tất thiết lập tài khoản
+    complete_account_setup_desc Thêm tên người dùng và mật khẩu cho các lần đăng nhập và khôi phục trong tương lai.
+    complete_account_subscription_desc Đăng ký của bạn đã được gắn với tài khoản này. Thêm tên người dùng và mật khẩu để bạn có thể đăng nhập ở bất cứ đâu và khôi phục giao dịch mua sau này.
     confirm Xác nhận
     confirm_logout Are you sure you want to logout?
     confirm_password Confirm Password
+    confirm_password_required Confirm password is required
     confirm_subscription Xác nhận đăng ký
     content_label Content
     context Bối cảnh
+    continue_to_checkout Tiếp tục thanh toán
     copy COPY
     copy_all Copy All
     core_features CORE FEATURES
     correct_answers Câu trả lời đúng
     could_not_launch Không thể khởi chạy $url
+    could_not_open_paddle_cancellation Không thể mở phần hủy Paddle: {error}
     counting Đếm
     create_account Create Account
+    create_account_to_continue Tạo tài khoản của bạn để tiếp tục
     create_new_account Create New Account
     create_new_card Create New Card
+    create_request Tạo yêu cầu
     created_at Được tạo lúc
     current_streak Current Streak
     current_subscription Đăng ký hiện tại
@@ -160,6 +182,7 @@
     delete_collection Xóa bộ sưu tập
     delete_collection_confirm Bạn có chắc chắn muốn xóa bộ sưu tập này không?
     delete_folder Xóa thư mục
+    delete_folder_confirm Bạn có chắc chắn muốn xóa thư mục này không?
     delete_selected_cards Delete selected cards?
     delete_subject Delete Subject
     delete_subject_confirm Delete subject '{subject}' and all {count} cards inside?
@@ -258,6 +281,7 @@
     doc_welcome_title Chào mừng bạn đến với Aliolo
     documentation Tài liệu
     done_today Hoàn thành hôm nay
+    dont_show_again_for_this_subject Không hiển thị lại cho chủ đề này
     down_arrow Down Arrow
     edit Chỉnh sửa
     edit_card Edit Card
@@ -268,6 +292,7 @@
     edit_subject Edit Subject
     edit_subject_title Edit Subject
     edit_subscription Chỉnh sửa đăng ký
+    edit_user Sửa người dùng
     email Email
     email_change_notice For security, a confirmation link will be sent to BOTH your old and new email addresses. You must click both to complete the change.
     email_in_use Email is already in use
@@ -275,6 +300,7 @@
     email_update_sent Confirmation emails sent. Please check both inboxes.
     email_updated_successfully Email được cập nhật thành công!
     english English
+    enter_code_sent_to_email Nhập mã gồm 6 chữ số đã được gửi tới {email}
     enter_current_password Nhập mật khẩu hiện tại
     enter_new_email Nhập email mới
     enter_new_name Enter New Name
@@ -297,10 +323,15 @@
     failed_to_send_verification_code Không gửi được mã xác minh
     fake_only Chỉ giả
     fatal_startup_error Fatal Startup Error
+    favorite Yêu thích
     feat_adaptive_desc The system monitors your recognition speed across MCQ options, dynamically adjusting intervals to push your boundaries.
     feat_adaptive_title Adaptive Response Timing
     feat_ages_desc Content curated for different age groups from early childhood to advanced learning.
     feat_ages_title For All Ages
+    feat_autoplay_desc Focus on learning while the app automatically advances through cards at your pace.
+    feat_autoplay_title Hands-Free Autoplay
+    feat_create_share_desc Easily create your own subjects and cards, or share them with the community.
+    feat_create_share_title Create & Share
     feat_gamified_desc Earn XP, badges, and build streaks while mastering complex visual subjects.
     feat_gamified_title Gamified Experience
     feat_mastery_desc Dynamic XP rewards difficulty, while real-time mastery badges (Bronze, Silver, Gold) track your journey from novice to expert.
@@ -311,6 +342,8 @@
     feat_recognition_title Visual Pattern Training
     feat_science_adaptive_desc Intervals automatically adjust based on your recognition speed and accuracy.
     feat_science_adaptive_title Adaptive Timing
+    feat_science_smart_review_desc The algorithm calculates the optimal time to review each card for maximum retention.
+    feat_science_smart_review_title Smart Review Cycles
     feat_science_spacing_desc Advanced cognitive spacing model that predicts memory decay and optimizes review cycles.
     feat_science_spacing_title SuperMemo-2 (SM-2)
     feat_spacing_desc A full implementation of the SuperMemo-2 model predicts your memory decay and schedules reviews at the peak of retention.
@@ -345,6 +378,7 @@
     feedback_title Gửi phản hồi
     feedback_title_hint Tiêu đề
     feedback_type Loại
+    file_too_large Tệp quá lớn
     fill_all_fields Please fill all fields
     filter_all All
     filter_dashboard Bảng điều khiển
@@ -355,6 +389,7 @@
     filter_public_library Thư viện công cộng
     filters Bộ lọc
     finish Hoàn tất
+    finish_account_setup Hoàn tất thiết lập tài khoản
     finished_session You finished {count} cards. XP bonus awarded!
     folder Thư mục
     folder_already_exists Thư mục có tên này đã tồn tại trong trụ cột này
@@ -362,6 +397,7 @@
     folder_label Thư mục
     folder_not_empty_msg Không thể xóa: thư mục không trống.
     folder_plural Thư mục
+    folder_practice_all_cards_desc Đây là một thư mục. Bạn có thể sử dụng các nút Học/Kiểm tra ở trên để thực hành tất cả các thẻ.
     forgot_password Forgot Password?
     free_only Người dùng miễn phí
     general_preferences General Preferences
@@ -373,6 +409,7 @@
     hide_comparison Ẩn so sánh gói dịch vụ
     home Trang chủ
     images Images
+    inactive Không hoạt động
     included_subjects Các chủ đề bao gồm
     info_copied Info copied to clipboard
     initializing_aliolo Initializing Aliolo...
@@ -390,11 +427,17 @@
     invite_user_content Không tìm thấy email {email}. Mời họ tham gia Aliolo?
     invite_user_title Mời người dùng?
     invited_and_request_sent Đã mời và yêu cầu đã được gửi!
+    is_required là bắt buộc
     json JSON
     keyboard_shortcuts Keyboard Shortcuts
     label_suffix $label:
     lang_abbr Lang
     language Language
+    languages Ngôn ngữ
+    last_3_months 3 tháng qua
+    last_6_months 6 tháng qua
+    last_month Tháng trước
+    last_slide Trang trình bày cuối cùng
     leaderboard Bảng xếp hạng
     learn_mode_desc Study cards and memorize answers
     learn_mode_title Learn
@@ -414,9 +457,11 @@
     licenses_intro_title Aliolo Thông báo về gói và giấy phép
     licenses_third_party_section_title Giấy phép gói của bên thứ ba
     light Light
+    limit_reached Đã đạt giới hạn
     linux_distro Bản phân phối Linux
     loading Đang tải...
     localized_data Dữ liệu được bản địa hóa
+    log_in_instead Đăng nhập thay thế
     login Đăng nhập
     logout Logout
     manage_cards Manage Cards
@@ -448,12 +493,15 @@
     new NEW
     new_email Email mới
     new_password New Password
+    new_password_required New password is required
     next Next
     next_card Next Card
     next_daily_goal Mục tiêu hàng ngày tiếp theo
     next_daily_goal_desc Số lượng thẻ mục tiêu cần nắm vững mỗi ngày. Thay đổi có hiệu lực từ ngày mai.
     next_day_goal Mục tiêu ngày mai
+    no_age_data_yet Chưa có dữ liệu độ tuổi
     no_cards_available_for_this_session Không có thẻ nào cho phiên này.
+    no_cards_due_yet Chưa có thẻ nào đến hạn
     no_cards_found Không tìm thấy thẻ nào
     no_cards_found_for_lang No cards found for this language
     no_cards_in_library No cards found in the library.
@@ -465,10 +513,19 @@
     no_localized_audio Không có âm thanh được bản địa hóa
     no_localized_images Không có hình ảnh được bản địa hóa
     no_localized_video Không có video được bản địa hóa
+    no_onboarding_sessions_yet Chưa có phiên giới thiệu nào
+    no_permission_view_card_details Bạn không có quyền xem chi tiết thẻ này.
+    no_pillar_data_yet Chưa có dữ liệu trụ cột
+    no_slide_data_yet Chưa có dữ liệu trang trình bày
     no_subjects_available Không có chủ đề nào
     no_subjects_found Không tìm thấy chủ đề nào
+    no_subjects_found_in_collection Không tìm thấy chủ đề nào trong bộ sưu tập này
     no_subjects_found_in_this_collection Không tìm thấy chủ đề nào trong bộ sưu tập này
+    no_usage_data_yet Chưa có dữ liệu sử dụng
     no_users_found Không tìm thấy người dùng nào
+    not_available Không khả dụng
+    not_set Chưa thiết lập
+    official_website Trang web chính thức
     ok OK
     old_password Mật khẩu cũ
     old_password_required Cần có mật khẩu cũ
@@ -486,6 +543,7 @@
     onboarding_6_title Tham gia cộng đồng
     onboarding_7_joined Được tham gia bởi hàng ngàn người học
     onboarding_7_quote Aliolo đã hoàn toàn thay đổi cách các con tôi và tôi làm chủ các chủ đề mới. Các thẻ hình ảnh và sự lặp lại ngắt quãng làm cho việc học giống như một trò chơi!
+    onboarding_analytics Phân tích giới thiệu
     onboarding_get_started Bắt đầu
     onboarding_next Tiếp theo
     onboarding_skip Bỏ qua
@@ -495,11 +553,13 @@
     order_id ID đơn hàng
     os_version Phiên bản hệ điều hành
     our_mission OUR MISSION
+    paddle_cancel_subscription_desc Cần hủy đăng ký Paddle? Mở quy trình hủy Paddle bên dưới.
     page Page
     parent_folder_label Parent Folder (vi)
     password Password
     password_required Password is required
     password_reset_success Password reset successful
+    password_updated Password updated successfully
     password_updated_successfully Đã cập nhật mật khẩu thành công!
     passwords_dont_match Passwords do not match
     paste PASTE
@@ -534,6 +594,7 @@
     premium_unlock_desc Có quyền truy cập vào tất cả các chủ đề, tạo thẻ không giới hạn và hỗ trợ sứ mệnh của Aliolo.
     premium_unlock_title Mở khóa toàn quyền truy cập
     prev Prev
+    previous Trước
     previous_card Previous Card
     price_per_week ({price} / tuần)
     private Private
@@ -562,6 +623,12 @@
     remove_friend Remove Friend
     remove_friend_confirm Are you sure you want to remove friend
     renderer Trình kết xuất
+    renderer_addition_emoji Cộng biểu tượng cảm xúc
+    renderer_addition_numbers Cộng số
+    renderer_counting Đếm
+    renderer_generic Chung
+    renderer_subtraction_emoji Trừ biểu tượng cảm xúc
+    renderer_subtraction_numbers Trừ số
     request_sent Request sent
     request_sent_waiting Request sent (waiting)
     required Required
@@ -572,13 +639,17 @@
     reset_password_for "Reset Password for: "
     restore_password Restore Password
     restore_purchases Khôi phục mua hàng
+    restore_purchases_started Đã bắt đầu khôi phục. Aliolo sẽ liên kết lại mọi giao dịch mua hợp lệ với tài khoản này.
+    retest_anyway Vẫn kiểm tra lại
     retry Retry
     right_arrow Right Arrow
     save Cứu
     save_33_per_month Tiết kiệm 33% mỗi tháng
+    save_account Lưu tài khoản
     save_before_nav Do you want to save changes before navigating?
     save_card Save Card
     save_subject Save Subject
+    save_success Saved successfully
     saved_successfully Đã lưu thành công
     search_cards Search Cards
     search_subjects Search Subjects
@@ -591,8 +662,10 @@
     send Send
     send_code Send Code
     send_verification_code Send verification code?
+    session Phiên
     session_complete Phiên hoàn tất!
     session_complete_description Làm tốt lắm! Bạn đã hoàn thành tất cả các thẻ trong phiên này.
+    set_your_password Đặt mật khẩu của bạn
     setting_saved Setting saved
     settings Cài đặt
     shortcuts_hint Press the key you want to use with Ctrl.
@@ -620,6 +693,8 @@
     subject_label Subject
     subject_plural Subjects
     subject_type Subject Type (vi)
+    subject_up_to_date_retest_desc Bạn đã cập nhật chủ đề này. Bạn vẫn có thể kiểm tra lại tất cả các thẻ ngay bây giờ.
+    subject_usage Sử dụng chủ đề
     subjects Chủ đề
     subscribe_now Đăng ký ngay
     subscription_data Dữ liệu đăng ký
@@ -648,10 +723,13 @@
     theme_system Hệ thống
     this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards Đây là một thư mục. Bạn có thể sử dụng các nút Học/Kiểm tra ở trên để luyện tập tất cả các thẻ.
     to_label To
+    toggle_languages Chuyển đổi ngôn ngữ
     total_cards Tổng số thẻ
     total_xp Total XP
     trust_cloud_desc Your progress is securely synced across all your devices in real-time.
     trust_cloud_title Cloud Sync
+    trust_ecosystem_desc Your progress and cards are seamlessly synced across all your devices.
+    trust_ecosystem_title Aliolo Ecosystem
     trust_privacy TRUST & PRIVACY
     trust_sync_desc Your data is private and encrypted to ensure the highest security standards.
     trust_sync_title Encrypted Data
@@ -668,12 +746,14 @@
     up_arrow Up Arrow
     update Update
     update_available Đã có phiên bản mới!
+    updated Đã cập nhật
     updated_at Được cập nhật lúc
     upload_new_photo Tải lên ảnh mới
     user Người dùng
     user_exists User already exists
     user_id ID người dùng
     user_not_found User not found
+    user_updated Người dùng đã được cập nhật
     user_with_this_email_already_exists_please_log_in_instead Người dùng có email này đã tồn tại. Vui lòng đăng nhập thay thế.
     username Username
     users Người dùng
@@ -681,6 +761,8 @@
     verification_code Mã xác minh
     verification_code_sent_to Mã xác minh được gửi tới $email
     verify Verify
+    verify_email_change Xác minh thay đổi email
+    verify_your_email Xác minh email của bạn
     version Phiên bản
     video Video
     video_link Video Link
@@ -692,6 +774,7 @@
     visual_content_required Yêu cầu ít nhất một nội dung trực quan
     visual_content_required_msg Phải cung cấp ít nhất một nội dung trực quan (văn bản, hình ảnh, âm thanh hoặc video).
     visual_text Văn bản trực quan
+    wait_for_response_before_replying Vui lòng đợi phản hồi trước khi trả lời lại.
     wants_to_be_friend Wants to be your friend
     weekly_access Truy cập hàng tuần
     welcome_complete_your_profile_to_join_aliolo Chào mừng! Hoàn tất hồ sơ của bạn để tham gia aliolo.
@@ -701,33 +784,4 @@
     you_do_not_have_permission_to_edit_this_card Bạn không có quyền chỉnh sửa thẻ này
     you_do_not_have_permission_to_view_this_card_details Bạn không có quyền xem chi tiết thẻ này.
     you_rank You are ranked #{rank}
-    active Hoạt động
-    autoplay Tự động phát
-    card_limit Giới hạn thẻ
-    card_limit_msg Bạn đã đạt giới hạn {limit} thẻ.
-    create_request Tạo yêu cầu
-    edit_user Sửa người dùng
-    favorite Yêu thích
-    file_too_large Tệp quá lớn
-    inactive Không hoạt động
-    is_required là bắt buộc
-    languages Ngôn ngữ
-    limit_reached Đã đạt giới hạn
-    not_available Không khả dụng
-    toggle_languages Chuyển đổi ngôn ngữ
-    user_updated Người dùng đã được cập nhật
     zoom Thu phóng
-    account_and_management Account & Management
-    back_to_plans Back to plans
-    confirm_password_required Confirm password is required
-    feat_autoplay_desc Focus on learning while the app automatically advances through cards at your pace.
-    feat_autoplay_title Hands-Free Autoplay
-    feat_create_share_desc Easily create your own subjects and cards, or share them with the community.
-    feat_create_share_title Create & Share
-    feat_science_smart_review_desc The algorithm calculates the optimal time to review each card for maximum retention.
-    feat_science_smart_review_title Smart Review Cycles
-    new_password_required New password is required
-    password_updated Password updated successfully
-    save_success Saved successfully
-    trust_ecosystem_desc Your progress and cards are seamlessly synced across all your devices.
-    trust_ecosystem_title Aliolo Ecosystem

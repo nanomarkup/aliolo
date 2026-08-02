@@ -149,6 +149,32 @@ function getPreferredLanguage(acceptLanguageHeader: string | undefined): string 
   return 'en';
 }
 
+const applyCacheHeaders = (response: Response, pathname: string): Response => {
+  const path = pathname.toLowerCase();
+  const lastSegment = path.split('/').pop() || '';
+  const hasExtension = lastSegment.includes('.');
+  const isNoCacheFile = 
+    !hasExtension ||
+    path.endsWith('.html') ||
+    path.endsWith('.nano') ||
+    path.endsWith('/flutter_service_worker.js') ||
+    path.endsWith('/flutter_bootstrap.js') ||
+    path.endsWith('/main.dart.js') ||
+    path.endsWith('/manifest.json') ||
+    path.includes('/assetmanifest');
+
+  if (isNoCacheFile) {
+    const headers = new Headers(response.headers);
+    headers.set('Cache-Control', 'no-cache, must-revalidate');
+    return new Response(response.body, {
+      status: response.status,
+      statusText: response.statusText,
+      headers
+    });
+  }
+  return response;
+};
+
 const serveAsset = async (c: any, filepath: string) => {
   if (!c.env.ASSETS) {
     return c.text('Not Found', 404);
@@ -158,7 +184,8 @@ const serveAsset = async (c: any, filepath: string) => {
   if (response.status === 404) {
     return c.text('Not Found', 404);
   }
-  return response;
+
+  return applyCacheHeaders(response, url.pathname);
 };
 
 const renderStaticPage = async (c: any, page: string, lang: string = 'en') => {
@@ -423,10 +450,13 @@ app.get('*', async (c) => {
 
     // Try to fetch the specific asset
     const assetResponse = await c.env.ASSETS.fetch(c.req.raw);
+    if (assetResponse.status !== 404) {
+        return applyCacheHeaders(assetResponse, url.pathname);
+    }
     
     // If the asset is not found (404), only known app routes should bootstrap
     // the Flutter shell. web/index.html is the sole app-shell source.
-    if (assetResponse.status === 404 && !url.pathname.includes('.') && shouldServeAppShell(url.pathname)) {
+    if (!url.pathname.includes('.') && shouldServeAppShell(url.pathname)) {
         const indexUrl = new URL('/index.html', c.req.url);
         const appShellResponse = await c.env.ASSETS.fetch(
             new Request(indexUrl.toString(), { headers: c.req.raw.headers }),
@@ -452,10 +482,13 @@ app.get('*', async (c) => {
         newHeaders.delete('content-length');
         newHeaders.set('content-type', 'text/html;charset=UTF-8');
 
-        return new Response(htmlBody, {
-            status: 200,
-            headers: newHeaders,
-        });
+        return applyCacheHeaders(
+            new Response(htmlBody, {
+                status: 200,
+                headers: newHeaders,
+            }),
+            '/index.html'
+        );
     }
     
     return assetResponse;

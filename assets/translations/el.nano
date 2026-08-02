@@ -44,9 +44,12 @@
     about_support_settings_title Εξατομίκευση
     about_support_title Ρυθμίσεις, σχόλια και υποστήριξη
     about_tagline Μάθετε οπτικά. Κατακτήστε μόνιμα.
+    account_and_management Account & Management
     account_created Ο λογαριασμός δημιουργήθηκε
     account_created_billing_fail Ο λογαριασμός σας δημιουργήθηκε, αλλά η πληρωμή δεν ολοκληρώθηκε. Δοκιμάστε ξανά την πληρωμή παρακάτω.
     account_deleted Account deleted successfully
+    account_setup_completed Η ρύθμιση του λογαριασμού ολοκληρώθηκε.
+    active Ενεργό
     add_card Add Card
     add_collection Προσθήκη συλλογής
     add_folder Προσθήκη φακέλου
@@ -76,6 +79,7 @@
     aliolo aliolo
     all_matching_subjects Όλα τα θέματα που ταιριάζουν
     all_rights_reserved Με την επιφύλαξη παντός δικαιώματος
+    all_time Συνολικά
     answer Απάντηση
     answer_label answer
     answers_label answers
@@ -86,8 +90,10 @@
     audio Ήχος
     audio_playing Αναπαραγωγή ήχου
     author Author
+    autoplay Αυτόματη αναπαραγωγή
     back Πίσω
     back_to_login Back to Login
+    back_to_plans Back to plans
     back_to_subjects Επιστροφή στα Θέματα
     best_for_quick_goals Το καλύτερο για γρήγορους στόχους
     billing_disclaimer Οι συνδρομές ανανεώνονται αυτόματα εκτός και αν ακυρωθούν. Μπορείτε να διαχειριστείτε τη συνδρομή σας στις ρυθμίσεις του καταστήματός σας.
@@ -95,6 +101,7 @@
     bronze BRONZE
     browser Πρόγραμμα περιήγησης
     cancel Ματαίωση
+    cancel_in_paddle Ακύρωση στο Paddle
     cancel_request Cancel Request
     cancel_request_confirm Are you sure you want to cancel the request to
     cannot_delete_folder Cannot Delete Folder
@@ -103,6 +110,8 @@
     card_id Ταυτότητα κάρτας
     card_label Card
     card_level Επίπεδο κάρτας
+    card_limit Όριο καρτών
+    card_limit_msg Έχετε φτάσει το όριο των {limit} καρτών.
     card_plural Cards
     cards cards
     cards_label cards
@@ -111,31 +120,44 @@
     change_avatar Change Avatar
     change_password Αλλαγή κωδικού πρόσβασης
     check_your_email_for_code Ελέγξτε το email σας για κωδικό
+    checkout_email_before_payment_desc Εισαγάγετε το email σας πριν από την ολοκλήρωση της αγοράς, ώστε το Aliolo να δημιουργήσει τον λογαριασμό σας και να συνδέσει τη συνδρομή σε εσάς.
+    checkout_finish_account_desc Επιλέξτε το όνομα χρήστη και τον κωδικό πρόσβασής σας τώρα, ώστε να μπορείτε να συνδεθείτε ξανά αργότερα εάν η πληρωμή ακυρωθεί ή διακοπεί.
+    checkout_verification_desc Χρειαζόμαστε μια γρήγορη επαλήθευση πριν ανοίξουμε τη σελίδα πληρωμής του καταστήματος.
     clear Σαφής
     click_to_select_image Click to select image
     click_to_view_original Κάντε κλικ για να δείτε το πρωτότυπο
     close Κοντά
+    close_feedback_request_confirm Είστε βέβαιοι ότι θέλετε να κλείσετε αυτό το αίτημα σχολίων;
     close_request Κλείσιμο αιτήματος;
     code_label Code
     collection_id Αναγνωριστικό συλλογής
     colors Χρωματιστά
     common_settings Common Settings
     compare_plans Σύγκριση Δωρεάν έναντι Premium
+    complete_account Ολοκλήρωση λογαριασμού
+    complete_account_setup Ολοκλήρωση ρύθμισης λογαριασμού
+    complete_account_setup_desc Προσθέστε ένα όνομα χρήστη και κωδικό πρόσβασης για μελλοντικές συνδέσεις και επαναφορές.
+    complete_account_subscription_desc Η συνδρομή σας είναι ήδη συνδεδεμένη με αυτόν τον λογαριασμό. Προσθέστε ένα όνομα χρήστη και κωδικό πρόσβαση, ώστε να μπορείτε να συνδεθείτε οπουδήποτε και να ανακτήσετε αγορές αργότερα.
     confirm Επιβεβαίωση
     confirm_logout Are you sure you want to logout?
     confirm_password Confirm Password
+    confirm_password_required Confirm password is required
     confirm_subscription Επιβεβαίωση εγγραφής
     content_label Content
     context Συμφραζόμενα
+    continue_to_checkout Συνέχεια στην ολοκλήρωση αγοράς
     copy COPY
     copy_all Copy All
     core_features CORE FEATURES
     correct_answers Σωστές Απαντήσεις
     could_not_launch Δεν ήταν δυνατή η εκκίνηση του $url
+    could_not_open_paddle_cancellation Δεν ήταν δυνατό το άνοιγμα της ακύρωσης του Paddle: {error}
     counting Αρίθμηση
     create_account Create Account
+    create_account_to_continue Δημιουργήστε τον λογαριασμό σας για να συνεχίσετε
     create_new_account Create New Account
     create_new_card Create New Card
+    create_request Δημιουργία αιτήματος
     created_at Δημιουργήθηκε στις
     current_streak Current Streak
     current_subscription Τρέχουσα συνδρομή
@@ -160,6 +182,7 @@
     delete_collection Διαγραφή συλλογής
     delete_collection_confirm Είστε σίγουροι ότι θέλετε να διαγράψετε αυτήν τη συλλογή;
     delete_folder Διαγραφή φακέλου
+    delete_folder_confirm Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτόν τον φάκελο;
     delete_selected_cards Delete selected cards?
     delete_subject Delete Subject
     delete_subject_confirm Delete subject '{subject}' and all {count} cards inside?
@@ -258,6 +281,7 @@
     doc_welcome_title Καλώς ήρθατε στο Aliolo
     documentation Απόδειξη με έγγραφα
     done_today Ολοκληρώθηκαν σήμερα
+    dont_show_again_for_this_subject Να μην εμφανιστεί ξανά για αυτό το θέμα
     down_arrow Down Arrow
     edit Επεξεργασία
     edit_card Edit Card
@@ -268,6 +292,7 @@
     edit_subject Edit Subject
     edit_subject_title Edit Subject
     edit_subscription Επεξεργασία συνδρομής
+    edit_user Επεξεργασία χρήστη
     email Email
     email_change_notice For security, a confirmation link will be sent to BOTH your old and new email addresses. You must click both to complete the change.
     email_in_use Email is already in use
@@ -275,6 +300,7 @@
     email_update_sent Confirmation emails sent. Please check both inboxes.
     email_updated_successfully Το email ενημερώθηκε με επιτυχία!
     english English
+    enter_code_sent_to_email Εισαγάγετε τον 6ψήφιο κωδικό που στάλθηκε στο {email}
     enter_current_password Εισαγάγετε τον τρέχοντα κωδικό πρόσβασης
     enter_new_email Εισαγάγετε νέο email
     enter_new_name Enter New Name
@@ -297,10 +323,15 @@
     failed_to_send_verification_code Αποτυχία αποστολής κωδικού επαλήθευσης
     fake_only Μόνο ψεύτικο
     fatal_startup_error Fatal Startup Error
+    favorite Αγαπημένο
     feat_adaptive_desc The system monitors your recognition speed across MCQ options, dynamically adjusting intervals to push your boundaries.
     feat_adaptive_title Adaptive Response Timing
     feat_ages_desc Content curated for different age groups from early childhood to advanced learning.
     feat_ages_title For All Ages
+    feat_autoplay_desc Focus on learning while the app automatically advances through cards at your pace.
+    feat_autoplay_title Hands-Free Autoplay
+    feat_create_share_desc Easily create your own subjects and cards, or share them with the community.
+    feat_create_share_title Create & Share
     feat_gamified_desc Earn XP, badges, and build streaks while mastering complex visual subjects.
     feat_gamified_title Gamified Experience
     feat_mastery_desc Dynamic XP rewards difficulty, while real-time mastery badges (Bronze, Silver, Gold) track your journey from novice to expert.
@@ -311,6 +342,8 @@
     feat_recognition_title Visual Pattern Training
     feat_science_adaptive_desc Intervals automatically adjust based on your recognition speed and accuracy.
     feat_science_adaptive_title Adaptive Timing
+    feat_science_smart_review_desc The algorithm calculates the optimal time to review each card for maximum retention.
+    feat_science_smart_review_title Smart Review Cycles
     feat_science_spacing_desc Advanced cognitive spacing model that predicts memory decay and optimizes review cycles.
     feat_science_spacing_title SuperMemo-2 (SM-2)
     feat_spacing_desc A full implementation of the SuperMemo-2 model predicts your memory decay and schedules reviews at the peak of retention.
@@ -345,6 +378,7 @@
     feedback_title Αποστολή σχολίων
     feedback_title_hint Τίτλος
     feedback_type Τύπος
+    file_too_large Το αρχείο είναι πολύ μεγάλο
     fill_all_fields Please fill all fields
     filter_all All
     filter_dashboard Πίνακας ελέγχου
@@ -355,6 +389,7 @@
     filter_public_library Δημόσια Βιβλιοθήκη
     filters Φίλτρα
     finish Τέλος
+    finish_account_setup Ολοκλήρωση ρύθμισης λογαριασμού
     finished_session You finished {count} cards. XP bonus awarded!
     folder Φάκελος
     folder_already_exists Ένας φάκελος με αυτό το όνομα υπάρχει ήδη σε αυτόν τον πυλώνα
@@ -362,6 +397,7 @@
     folder_label Φάκελος
     folder_not_empty_msg Δεν είναι δυνατή η διαγραφή: ο φάκελος δεν είναι άδειος.
     folder_plural Φάκελοι
+    folder_practice_all_cards_desc Αυτός είναι ένας φάκελος. Μπορείτε να χρησιμοποιήσετε τα κουμπιά Μάθηση/Δοκιμή παραπάνω για να εξασκηθείτε σε όλες τις κάρτες.
     forgot_password Forgot Password?
     free_only Δωρεάν χρήστες
     general_preferences General Preferences
@@ -373,6 +409,7 @@
     hide_comparison Απόκρυψη σύγκρισης προγραμμάτων
     home Σπίτι
     images Images
+    inactive Ανενεργό
     included_subjects Περιλαμβανόμενα θέματα
     info_copied Info copied to clipboard
     initializing_aliolo Initializing Aliolo...
@@ -390,11 +427,17 @@
     invite_user_content Το email {email} δεν βρέθηκε. Θέλετε να τον προσκαλέσετε στο Aliolo;
     invite_user_title Πρόσκληση χρήστη;
     invited_and_request_sent Προσκλήθηκε και το αίτημα εστάλη!
+    is_required είναι υποχρεωτικό
     json JSON
     keyboard_shortcuts Keyboard Shortcuts
     label_suffix $label:
     lang_abbr Lang
     language Language
+    languages Γλώσσες
+    last_3_months Τελευταίους 3 μήνες
+    last_6_months Τελευταίους 6 μήνες
+    last_month Τον προηγούμενο μήνα
+    last_slide Τελευταία διαφάνεια
     leaderboard Leaderboard
     learn_mode_desc Study cards and memorize answers
     learn_mode_title Learn
@@ -414,9 +457,11 @@
     licenses_intro_title Aliolo Ειδοποιήσεις άδειας χρήσης και πακέτων
     licenses_third_party_section_title Άδειες πακέτων τρίτων
     light Light
+    limit_reached Το όριο επιτεύχθηκε
     linux_distro Linux Distro
     loading Φόρτωση...
     localized_data Τοπικά δεδομένα
+    log_in_instead Συνδεθείτε αντ' αυτού
     login Σύνδεση
     logout Logout
     manage_cards Manage Cards
@@ -448,12 +493,15 @@
     new NEW
     new_email Νέο email
     new_password New Password
+    new_password_required New password is required
     next Next
     next_card Next Card
     next_daily_goal Επόμενος καθημερινός στόχος
     next_daily_goal_desc Στόχος αριθμού καρτών προς εκμάθηση κάθε μέρα. Οι αλλαγές τίθενται σε ισχύ από αύριο.
     next_day_goal Στόχος αυριαнής ημέρας
+    no_age_data_yet Δεν υπάρχουν δεδομένα ηλικίας ακόμα
     no_cards_available_for_this_session Δεν υπάρχουν διαθέσιμες κάρτες για αυτήν την περίοδο σύνδεσης.
+    no_cards_due_yet Καμία κάρτα δεν είναι διαθέσιμη ακόμα
     no_cards_found Δεν βρέθηκαν κάρτες
     no_cards_found_for_lang No cards found for this language
     no_cards_in_library No cards found in the library.
@@ -465,10 +513,19 @@
     no_localized_audio Δεν υπάρχει τοπικός ήχος
     no_localized_images Δεν υπάρχουν τοπικοποιημένες εικόνες
     no_localized_video Δεν υπάρχει τοπικό βίντεο
+    no_onboarding_sessions_yet Καμία συνεδρία ενσωμάτωσης ακόμα
+    no_permission_view_card_details Δεν έχετε άδεια να προβάλετε τα στοιχεία αυτής της κάρτας.
+    no_pillar_data_yet Δεν υπάρχουν δεδομένα πυλώνα ακόμα
+    no_slide_data_yet Δεν υπάρχουν δεδομένα διαφάνειας ακόμα
     no_subjects_available Δεν υπάρχουν διαθέсиμα θέματα
     no_subjects_found Δεν βρέθηκαν θέματα
+    no_subjects_found_in_collection Δεν βρέθηκαν θέματα σε αυτή τη συλλογή
     no_subjects_found_in_this_collection Δεν βρέθηκαν θέματα σε αυτή τη συλλογή
+    no_usage_data_yet Δεν υπάρχουν δεδομένα χρήσης ακόμα
     no_users_found Δεν βρέθηκαν χρήστες
+    not_available Μη διαθέσιμο
+    not_set Δεν έχει οριστεί
+    official_website Επίσημος ιστότοπος
     ok OK
     old_password Παλιός κωδικός πρόσβασης
     old_password_required Ο παλιός κωδικός πρόσβασης είναι υποχρεωτικός
@@ -486,6 +543,7 @@
     onboarding_6_title Γίνετε μέλος της κοινότητας
     onboarding_7_joined Συμμετέχουν χιλιάδες μαθητές
     onboarding_7_quote Το Aliolo έχει αλλάξει εντελώς τον τρόπο με τον οποίο τα παιδιά μου και εγώ κατακτούμε νέα θέματα. Οι οπτικές κάρτες και η επανάληψη σε διαστήματα κάνουν τη μάθηση να μοιάζει με παιχνίδι!
+    onboarding_analytics Αναλυτικά στοιχεία ενσωμάτωσης
     onboarding_get_started Ξεκινήστε
     onboarding_next Επόμενο
     onboarding_skip Παράλειψη
@@ -495,11 +553,13 @@
     order_id Αναγνωριστικό Παραγγελίας
     os_version Έκδοση OS
     our_mission OUR MISSION
+    paddle_cancel_subscription_desc Πρέπει να ακυρώσετε μια συνδρομή Paddle; Ανοίξτε τη ροή ακύρωσης του Paddle παρακάτω.
     page Page
     parent_folder_label Parent Folder (el)
     password Password
     password_required Password is required
     password_reset_success Password reset successful
+    password_updated Password updated successfully
     password_updated_successfully Ο κωδικός ενημερώθηκε με επιτυχία!
     passwords_dont_match Passwords do not match
     paste PASTE
@@ -534,6 +594,7 @@
     premium_unlock_desc Αποκτήστε πρόσβαση σε όλα τα θέματα, δημιουργήστε απεριόριστες κάρτες και υποστηρίξτε την αποστολή του Aliolo.
     premium_unlock_title Ξεκλείδωμα Πλήρους Πρόσβασης
     prev Prev
+    previous Προηγούμενο
     previous_card Previous Card
     price_per_week ({price} / εβδομάδα)
     private Private
@@ -562,6 +623,12 @@
     remove_friend Remove Friend
     remove_friend_confirm Are you sure you want to remove friend
     renderer Καθιστών
+    renderer_addition_emoji Emoji πρόσθεσης
+    renderer_addition_numbers Αριθμοί πρόσθεσης
+    renderer_counting Καταμέτρηση
+    renderer_generic Γενικό
+    renderer_subtraction_emoji Emoji αφαίρεσης
+    renderer_subtraction_numbers Αριθμοί αφαίρεσης
     request_sent Request sent
     request_sent_waiting Request sent (waiting)
     required Required
@@ -572,13 +639,17 @@
     reset_password_for "Reset Password for: "
     restore_password Restore Password
     restore_purchases Επαναφορά αγορών
+    restore_purchases_started Η επαναφορά ξεκίνησε. Το Aliolo θα επανασυνδέσει τυχόν έγκυρες αγορές σε αυτόν τον λογαριασμό.
+    retest_anyway Εκ νέου δοκιμή ούτως ή άλλως
     retry Retry
     right_arrow Right Arrow
     save Εκτός
     save_33_per_month Εξοικονομήστε 33% ανά μήνα
+    save_account Αποθήκευση λογαριασμού
     save_before_nav Do you want to save changes before navigating?
     save_card Save Card
     save_subject Save Subject
+    save_success Saved successfully
     saved_successfully Αποθηκεύτηκε με επιτυχία
     search_cards Search Cards
     search_subjects Search Subjects
@@ -591,8 +662,10 @@
     send Send
     send_code Send Code
     send_verification_code Send verification code?
+    session Συνεδρία
     session_complete Η συνεδρία ολοκληρώθηκε!
     session_complete_description Μεγάλη δουλειά! Έχετε ολοκληρώσει όλες τις κάρτες σε αυτήν τη συνεδρία.
+    set_your_password Ορίστε τον κωδικό πρόσβασής σας
     setting_saved Setting saved
     settings Ρυθμίσεις
     shortcuts_hint Press the key you want to use with Ctrl.
@@ -620,6 +693,8 @@
     subject_label Subject
     subject_plural Subjects
     subject_type Subject Type (el)
+    subject_up_to_date_retest_desc Είστε ενημερωμένοι για αυτό το θέμα. Μπορείτε να δοκιμάσετε ξανά όλες τις κάρτες τώρα.
+    subject_usage Χρήση θέματος
     subjects Θέματα
     subscribe_now Εγγραφείτε τώρα
     subscription_data Δεδομένα συνδρομής
@@ -648,10 +723,13 @@
     theme_system Σύστημα
     this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards Αυτός είναι ένας φάκελος. Μπορείτε να χρησιμοποιήσετε τα κουμπιά Learn/Test παραπάνω για να εξασκήσετε όλες τις κάρτες.
     to_label To
+    toggle_languages Εναλλαγή γλωσσών
     total_cards Σύνολο καρτών
     total_xp Total XP
     trust_cloud_desc Your progress is securely synced across all your devices in real-time.
     trust_cloud_title Cloud Sync
+    trust_ecosystem_desc Your progress and cards are seamlessly synced across all your devices.
+    trust_ecosystem_title Aliolo Ecosystem
     trust_privacy TRUST & PRIVACY
     trust_sync_desc Your data is private and encrypted to ensure the highest security standards.
     trust_sync_title Encrypted Data
@@ -668,12 +746,14 @@
     up_arrow Up Arrow
     update Update
     update_available Μια νέα έκδοση είναι διαθέσιμη!
+    updated Ενημερώθηκε
     updated_at Ενημερώθηκε στις
     upload_new_photo Μεταφόρτωση νέας φωτογραφίας
     user Μεταχειριζόμενος
     user_exists User already exists
     user_id Αναγνωριστικό χρήστη
     user_not_found User not found
+    user_updated Ο χρήστης ενημερώθηκε
     user_with_this_email_already_exists_please_log_in_instead Ο χρήστης με αυτό το email υπάρχει ήδη. Παρακαλώ συνδεθείτε.
     username Username
     users Χρήστες
@@ -681,6 +761,8 @@
     verification_code Κωδικός επαλήθευσης
     verification_code_sent_to Ο κωδικός επαλήθευσης στάλθηκε στο $email
     verify Verify
+    verify_email_change Επαλήθευση αλλαγής email
+    verify_your_email Επαληθεύστε το email σας
     version Εκδοχή
     video Video
     video_link Video Link
@@ -692,6 +774,7 @@
     visual_content_required Απαιτείται τουλάχιστον ένα οπτικό περιεχόμενο
     visual_content_required_msg Πρέπει να παρέχεται τουλάχιστον ένα οπτικό περιεχόμενο (κείμενο, εικόνα, ήχος ή βίντεο).
     visual_text Οπτικό κείμενο
+    wait_for_response_before_replying Περιμένετε για μια απάντηση πριν απαντήσετε ξανά.
     wants_to_be_friend Wants to be your friend
     weekly_access Εβδομαδιαία πρόσβαση
     welcome_complete_your_profile_to_join_aliolo Καλωσόρισμα! Ολοκληρώστε το προφίλ σας για να εγγραφείτε aliolo.
@@ -701,33 +784,4 @@
     you_do_not_have_permission_to_edit_this_card Δεν έχετε άδεια να επεξεργαστείτε αυτήν την κάρτα
     you_do_not_have_permission_to_view_this_card_details Δεν έχετε άδεια να δείτε τα στοιχεία αυτής της κάρτας.
     you_rank You are ranked #{rank}
-    active Ενεργό
-    autoplay Αυτόματη αναπαραγωγή
-    card_limit Όριο καρτών
-    card_limit_msg Έχετε φτάσει το όριο των {limit} καρτών.
-    create_request Δημιουργία αιτήματος
-    edit_user Επεξεργασία χρήστη
-    favorite Αγαπημένο
-    file_too_large Το αρχείο είναι πολύ μεγάλο
-    inactive Ανενεργό
-    is_required είναι υποχρεωτικό
-    languages Γλώσσες
-    limit_reached Το όριο επιτεύχθηκε
-    not_available Μη διαθέσιμο
-    toggle_languages Εναλλαγή γλωσσών
-    user_updated Ο χρήστης ενημερώθηκε
     zoom Ζουμ
-    account_and_management Account & Management
-    back_to_plans Back to plans
-    confirm_password_required Confirm password is required
-    feat_autoplay_desc Focus on learning while the app automatically advances through cards at your pace.
-    feat_autoplay_title Hands-Free Autoplay
-    feat_create_share_desc Easily create your own subjects and cards, or share them with the community.
-    feat_create_share_title Create & Share
-    feat_science_smart_review_desc The algorithm calculates the optimal time to review each card for maximum retention.
-    feat_science_smart_review_title Smart Review Cycles
-    new_password_required New password is required
-    password_updated Password updated successfully
-    save_success Saved successfully
-    trust_ecosystem_desc Your progress and cards are seamlessly synced across all your devices.
-    trust_ecosystem_title Aliolo Ecosystem

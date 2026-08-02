@@ -44,9 +44,12 @@
     about_support_settings_title Personalizavimas
     about_support_title Nustatymai, atsiliepimai ir palaikymas
     about_tagline Mokykitės vizualiai. Įsisavinkite visam laikui.
+    account_and_management Account & Management
     account_created Paskyra sukurta
     account_created_billing_fail Jūsų paskyra buvo sukurta, bet mokėjimas nebuvo baigtas. Pabandykite dar kartą atlikti mokėjimą toliau.
     account_deleted Account deleted successfully
+    account_setup_completed Paskyros sąranka baigta.
+    active Aktyvus
     add_card Add Card
     add_collection Pridėti kolekciją
     add_folder Pridėti aplanką
@@ -76,6 +79,7 @@
     aliolo aliolo
     all_matching_subjects Visi atitinkantys subjektai
     all_rights_reserved Visos teisės saugomos
+    all_time Visas laikas
     answer Atsakymas
     answer_label answer
     answers_label answers
@@ -86,8 +90,10 @@
     audio Garsas
     audio_playing Audio Playing
     author Author
+    autoplay Automatinis paleidimas
     back Atgal
     back_to_login Back to Login
+    back_to_plans Back to plans
     back_to_subjects Atgal į temas
     best_for_quick_goals Geriausiai tinka greitiems įvarčiams
     billing_disclaimer Prenumeratos automatiškai atnaujinamos, nebent jos atšauktos. Prenumeratą galite tvarkyti parduotuvės nustatymuose.
@@ -95,6 +101,7 @@
     bronze BRONZE
     browser Naršyklė
     cancel Atšaukti
+    cancel_in_paddle Atšaukti „Paddle“
     cancel_request Cancel Request
     cancel_request_confirm Are you sure you want to cancel the request to
     cannot_delete_folder Cannot Delete Folder
@@ -103,6 +110,8 @@
     card_id Kortelės ID
     card_label Card
     card_level Kortelės lygis
+    card_limit Kortelių limitas
+    card_limit_msg Pasiekėte {limit} kortelių limitą.
     card_plural Cards
     cards cards
     cards_label cards
@@ -111,31 +120,44 @@
     change_avatar Change Avatar
     change_password Pakeisti slaptažodį
     check_your_email_for_code Patikrinkite kodą el. pašte
+    checkout_email_before_payment_desc Prieš apmokėdami įveskite savo el. paštą, kad „Aliolo“ galėtų sukurti jūsų paskyrą ir priskirti jums prenumeratą.
+    checkout_finish_account_desc Pasirinkite savo vartotojo vardą ir slaptažodį dabar, kad galėtumėte vėliau vėl prisijungti, jei mokėjimas bus atšauktas ar nutrauktas.
+    checkout_verification_desc Prieš atidarant parduotuvės mokėjimo lapą mums reikia vieno greito patvirtinimo.
     clear Aišku
     click_to_select_image Click to select image
     click_to_view_original Spustelėkite norėdami pamatyti originalą
     close Uždaryti
+    close_feedback_request_confirm Ar tikrai norite uždaryti šią atsiliepimo užklausą?
     close_request Uždaryti užklausą?
     code_label Code
     collection_id Kolekcijos ID
     colors Spalvos
     common_settings Common Settings
     compare_plans Palyginkite nemokamą ir „Premium“
+    complete_account Užbaigti paskyrą
+    complete_account_setup Užbaigti paskyros sąranką
+    complete_account_setup_desc Pridėkite vartotojo vardą ir slaptažodį būsimiems prisijungimams ir atkūrimams.
+    complete_account_subscription_desc Jūsų prenumerata jau priskirta šiai paskyrai. Pridėkite vartotojo vardą ir slaptažodį, kad galėtumėte bet kur prisijungti ir vėliau atkurti pirkinius.
     confirm Patvirtinti
     confirm_logout Are you sure you want to logout?
     confirm_password Confirm Password
+    confirm_password_required Confirm password is required
     confirm_subscription Patvirtinkite prenumeratą
     content_label Content
     context Kontekstas
+    continue_to_checkout Tęsti apmokėjimą
     copy COPY
     copy_all Copy All
     core_features CORE FEATURES
     correct_answers Teisingi atsakymai
     could_not_launch Nepavyko paleisti $url
+    could_not_open_paddle_cancellation Nepavyko atidaryti „Paddle“ atšaukimo: {error}
     counting Skaičiavimas
     create_account Create Account
+    create_account_to_continue Sukurkite paskyrą, kad galėtumėte tęsti
     create_new_account Create New Account
     create_new_card Create New Card
+    create_request Sukurti užklausą
     created_at Sukurta
     current_streak Current Streak
     current_subscription Dabartinė prenumerata
@@ -160,6 +182,7 @@
     delete_collection Ištrinti kolekciją
     delete_collection_confirm Ar tikrai norite ištrinti šią kolekciją?
     delete_folder Ištrinti aplanką
+    delete_folder_confirm Ar tikrai norite ištrinti šį aplanką?
     delete_selected_cards Delete selected cards?
     delete_subject Delete Subject
     delete_subject_confirm Delete subject '{subject}' and all {count} cards inside?
@@ -258,6 +281,7 @@
     doc_welcome_title Sveiki atvykę į Aliolo
     documentation Dokumentacija
     done_today Done Today
+    dont_show_again_for_this_subject Daugiau nerodyti šiam dalykui
     down_arrow Down Arrow
     edit Redaguoti
     edit_card Edit Card
@@ -268,6 +292,7 @@
     edit_subject Edit Subject
     edit_subject_title Edit Subject
     edit_subscription Redaguoti prenumeratą
+    edit_user Redaguoti vartotoją
     email El. paštas
     email_change_notice For security, a confirmation link will be sent to BOTH your old and new email addresses. You must click both to complete the change.
     email_in_use Email is already in use
@@ -275,6 +300,7 @@
     email_update_sent Confirmation emails sent. Please check both inboxes.
     email_updated_successfully El. paštas sėkmingai atnaujintas!
     english English
+    enter_code_sent_to_email Įveskite 6 skaitmenų kodą, išsiųstą į {email}
     enter_current_password Įveskite dabartinį slaptažodį
     enter_new_email Įveskite naują el. paštą
     enter_new_name Enter New Name
@@ -297,10 +323,15 @@
     failed_to_send_verification_code Nepavyko išsiųsti patvirtinimo kodo
     fake_only Tik netikras
     fatal_startup_error Fatal Startup Error
+    favorite Mėgstamiausias
     feat_adaptive_desc The system monitors your recognition speed across MCQ options, dynamically adjusting intervals to push your boundaries.
     feat_adaptive_title Adaptive Response Timing
     feat_ages_desc Content curated for different age groups from early childhood to advanced learning.
     feat_ages_title For All Ages
+    feat_autoplay_desc Focus on learning while the app automatically advances through cards at your pace.
+    feat_autoplay_title Hands-Free Autoplay
+    feat_create_share_desc Easily create your own subjects and cards, or share them with the community.
+    feat_create_share_title Create & Share
     feat_gamified_desc Earn XP, badges, and build streaks while mastering complex visual subjects.
     feat_gamified_title Gamified Experience
     feat_mastery_desc Dynamic XP rewards difficulty, while real-time mastery badges (Bronze, Silver, Gold) track your journey from novice to expert.
@@ -311,6 +342,8 @@
     feat_recognition_title Visual Pattern Training
     feat_science_adaptive_desc Intervals automatically adjust based on your recognition speed and accuracy.
     feat_science_adaptive_title Adaptive Timing
+    feat_science_smart_review_desc The algorithm calculates the optimal time to review each card for maximum retention.
+    feat_science_smart_review_title Smart Review Cycles
     feat_science_spacing_desc Advanced cognitive spacing model that predicts memory decay and optimizes review cycles.
     feat_science_spacing_title SuperMemo-2 (SM-2)
     feat_spacing_desc A full implementation of the SuperMemo-2 model predicts your memory decay and schedules reviews at the peak of retention.
@@ -345,6 +378,7 @@
     feedback_title Siųsti atsiliepimą
     feedback_title_hint Pavadinimas
     feedback_type Tipas
+    file_too_large Failas per didelis
     fill_all_fields Please fill all fields
     filter_all All
     filter_dashboard Valdymo skydas
@@ -355,6 +389,7 @@
     filter_public_library Viešoji biblioteka
     filters Filtrai
     finish Baigti
+    finish_account_setup Baigti paskyros sąranką
     finished_session You finished {count} cards. XP bonus awarded!
     folder Aplankas
     folder_already_exists Aplankas tokiu pavadinimu jau egzistuoja šiame pilioriuje
@@ -362,6 +397,7 @@
     folder_label Aplankas
     folder_not_empty_msg Negalima ištrinti: aplankas nėra tuščias.
     folder_plural Aplankai
+    folder_practice_all_cards_desc Tai yra aplankas. Galite naudoti aukščiau esančius Mokytis/Testuoti mygtukus, kad galėtumėte praktikuoti visas korteles.
     forgot_password Forgot Password?
     free_only Nemokami vartotojai
     general_preferences General Preferences
@@ -373,6 +409,7 @@
     hide_comparison Slėpti planų palyginimą
     home Pradžia
     images Images
+    inactive Neaktyvus
     included_subjects Įtrauktos temos
     info_copied Info copied to clipboard
     initializing_aliolo Initializing Aliolo...
@@ -390,11 +427,17 @@
     invite_user_content El. paštas {email} nerastas. Pakviesti prisijungti prie „Aliolo“?
     invite_user_title Pakviesti vartotoją?
     invited_and_request_sent Pakviestas ir prašymas išsiųstas!
+    is_required yra privaloma
     json JSON
     keyboard_shortcuts Keyboard Shortcuts
     label_suffix $label:
     lang_abbr Lang
     language Kalba
+    languages Kalbos
+    last_3_months Paskutiniai 3 mėnesiai
+    last_6_months Paskutiniai 6 mėnesiai
+    last_month Praėjęs mėnuo
+    last_slide Paskutinė skaidrė
     leaderboard Lyderių lentelė
     learn_mode_desc Study cards and memorize answers
     learn_mode_title Learn
@@ -414,9 +457,11 @@
     licenses_intro_title Aliolo Pastabos apie licenciją ir paketą
     licenses_third_party_section_title Trečiųjų šalių paketų licencijos
     light Light
+    limit_reached Limitas pasiektas
     linux_distro Linux Distro
     loading Įkeliama...
     localized_data Lokalizuoti duomenys
+    log_in_instead Prisijungti vietoje to
     login Prisijungti
     logout Atsijungti
     manage_cards Manage Cards
@@ -448,12 +493,15 @@
     new NEW
     new_email Naujas el
     new_password New Password
+    new_password_required New password is required
     next Toliau
     next_card Next Card
     next_daily_goal Kitas dienos tikslas
     next_daily_goal_desc Tikslinis kortelių skaičius, kurį reikia išmokti kiekvieną dieną. Pakeitimai įsigalios rytoj.
     next_day_goal Next Day Goal
+    no_age_data_yet Dar nėra amžiaus duomenų
     no_cards_available_for_this_session Šiam seansui kortelių nėra.
+    no_cards_due_yet Dar nėra kortelių, kurias reikėtų kartoti
     no_cards_found Kortelių nerasta
     no_cards_found_for_lang No cards found for this language
     no_cards_in_library No cards found in the library.
@@ -465,10 +513,19 @@
     no_localized_audio Nėra lokalizuoto garso
     no_localized_images Nėra lokalizuotų vaizdų
     no_localized_video Nėra lokalizuoto vaizdo įrašo
+    no_onboarding_sessions_yet Dar nėra įvedimo sesijų
+    no_permission_view_card_details Neturite leidimo peržiūrėti šios kortelės informacijos.
+    no_pillar_data_yet Dar nėra stulpų duomenų
+    no_slide_data_yet Dar nėra skaidrių duomenų
     no_subjects_available Temų nėra
     no_subjects_found Nerasta jokių dalykų
+    no_subjects_found_in_collection Šioje kolekcijoje nerasta jokių dalykų
     no_subjects_found_in_this_collection Šioje kolekcijoje nerasta jokių temų
+    no_usage_data_yet Dar nėra naudojimo duomenų
     no_users_found Nerasta jokių vartotojų
+    not_available Nepasiekiama
+    not_set Nenustatyta
+    official_website Oficiali svetainė
     ok OK
     old_password Senas slaptažodis
     old_password_required Senas slaptažodis yra privalomas
@@ -486,6 +543,7 @@
     onboarding_6_title Prisijunkite prie bendruomenės
     onboarding_7_joined Prisijungė tūkstančiai mokinių
     onboarding_7_quote Aliolo visiškai pakeitė tai, jak aš ir mano vaikai įsisaviname naujas temas. Vizualios kortelės ir pasikartojimai daro mokymąsi panašų į žaidimą!
+    onboarding_analytics Įvedimo analitika
     onboarding_get_started Pradėti
     onboarding_next Toliau
     onboarding_skip Praleisti
@@ -495,11 +553,13 @@
     order_id Užsakymo ID
     os_version OS versija
     our_mission OUR MISSION
+    paddle_cancel_subscription_desc Reikia atšaukti „Paddle“ prenumeratą? Atidarykite „Paddle“ atšaukimo srautą žemiau.
     page Page
     parent_folder_label Parent Folder (lt)
     password Slaptažodis
     password_required Password is required
     password_reset_success Password reset successful
+    password_updated Password updated successfully
     password_updated_successfully Slaptažodis sėkmingai atnaujintas!
     passwords_dont_match Passwords do not match
     paste PASTE
@@ -534,6 +594,7 @@
     premium_unlock_desc Gaukite prieigą prie visų dalykų, kurkite neribotas korteles ir palaikykite Aliolo misiją.
     premium_unlock_title Atrakinkite visą prieigą
     prev Prev
+    previous Ankstesnis
     previous_card Previous Card
     price_per_week ({price} / savaitę)
     private Private
@@ -562,6 +623,12 @@
     remove_friend Remove Friend
     remove_friend_confirm Are you sure you want to remove friend
     renderer Atvaizduotojas
+    renderer_addition_emoji Sudėtis Emoji
+    renderer_addition_numbers Sudėtis Skaičiai
+    renderer_counting Skaičiavimas
+    renderer_generic Bendra
+    renderer_subtraction_emoji Atimtis Emoji
+    renderer_subtraction_numbers Atimtis Skaičiai
     request_sent Request sent
     request_sent_waiting Request sent (waiting)
     required Required
@@ -572,13 +639,17 @@
     reset_password_for "Reset Password for: "
     restore_password Restore Password
     restore_purchases Atkurti pirkinius
+    restore_purchases_started Atkūrimas pradėtas. „Aliolo“ iš naujo susies visus galiojančius pirkinius su šia paskyra.
+    retest_anyway Vis tiek testuoti iš naujo
     retry Retry
     right_arrow Right Arrow
     save Išsaugoti
     save_33_per_month Sutaupykite 33% per mėnesį
+    save_account Išsaugoti paskyrą
     save_before_nav Do you want to save changes before navigating?
     save_card Save Card
     save_subject Save Subject
+    save_success Saved successfully
     saved_successfully Sėkmingai išsaugota
     search_cards Search Cards
     search_subjects Search Subjects
@@ -591,8 +662,10 @@
     send Send
     send_code Send Code
     send_verification_code Send verification code?
+    session Sesija
     session_complete Sesija baigta!
     session_complete_description Puikus darbas! Baigėte visas šios sesijos korteles.
+    set_your_password Nustatykite Savo Slaptažodį
     setting_saved Setting saved
     settings Nustatymai
     shortcuts_hint Press the key you want to use with Ctrl.
@@ -620,6 +693,8 @@
     subject_label Subject
     subject_plural Subjects
     subject_type Subject Type (lt)
+    subject_up_to_date_retest_desc Jūs neatsiliekate nuo šio dalyko. Dabar vis tiek galite iš naujo testuoti visas korteles.
+    subject_usage Dalyko naudojimas
     subjects Temos
     subscribe_now Prenumeruokite dabar
     subscription_data Prenumeratos duomenys
@@ -648,10 +723,13 @@
     theme_system System
     this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards Tai aplankas. Galite naudoti aukščiau esančius mygtukus „Mokytis / išbandyti“, kad galėtumėte praktikuoti visas kortas.
     to_label To
+    toggle_languages Perjungti kalbas
     total_cards Iš viso kortelių
     total_xp Total XP
     trust_cloud_desc Your progress is securely synced across all your devices in real-time.
     trust_cloud_title Cloud Sync
+    trust_ecosystem_desc Your progress and cards are seamlessly synced across all your devices.
+    trust_ecosystem_title Aliolo Ecosystem
     trust_privacy TRUST & PRIVACY
     trust_sync_desc Your data is private and encrypted to ensure the highest security standards.
     trust_sync_title Encrypted Data
@@ -668,12 +746,14 @@
     up_arrow Up Arrow
     update Update
     update_available Yra nauja versija!
+    updated Atnaujinta
     updated_at Atnaujinta
     upload_new_photo Įkelti naują nuotrauką
     user Vartotojas
     user_exists User already exists
     user_id Vartotojo ID
     user_not_found User not found
+    user_updated Vartotojas atnaujintas
     user_with_this_email_already_exists_please_log_in_instead Vartotojas su šiuo el. pašto adresu jau egzistuoja. Vietoj to prisijunkite.
     username Vartotojo vardas
     users Vartotojai
@@ -681,6 +761,8 @@
     verification_code Patvirtinimo kodas
     verification_code_sent_to Patvirtinimo kodas išsiųstas $email
     verify Verify
+    verify_email_change Patvirtinti El. Pašto Keitimą
+    verify_your_email Patvirtinkite savo el. paštą
     version Versija
     video Video
     video_link Video Link
@@ -692,6 +774,7 @@
     visual_content_required Reikalingas bent vienas vizualinis turinys
     visual_content_required_msg Turi būti pateiktas bent vienas vizualinis turinys (tekstas, vaizdas, garsas arba vaizdo įrašas).
     visual_text Vaizdinis tekstas
+    wait_for_response_before_replying Prašome palaukti atsakymo prieš atsakant vėl.
     wants_to_be_friend Wants to be your friend
     weekly_access Savaitinė prieiga
     welcome_complete_your_profile_to_join_aliolo Sveiki atvykę! Užpildykite savo profilį, kad prisijungtumėte prie aliolo.
@@ -701,33 +784,4 @@
     you_do_not_have_permission_to_edit_this_card Neturite leidimo redaguoti šios kortelės
     you_do_not_have_permission_to_view_this_card_details Neturite leidimo peržiūrėti šios kortelės informacijos.
     you_rank You are ranked #{rank}
-    active Aktyvus
-    autoplay Automatinis paleidimas
-    card_limit Kortelių limitas
-    card_limit_msg Pasiekėte {limit} kortelių limitą.
-    create_request Sukurti užklausą
-    edit_user Redaguoti vartotoją
-    favorite Mėgstamiausias
-    file_too_large Failas per didelis
-    inactive Neaktyvus
-    is_required yra privaloma
-    languages Kalbos
-    limit_reached Limitas pasiektas
-    not_available Nepasiekiama
-    toggle_languages Perjungti kalbas
-    user_updated Vartotojas atnaujintas
     zoom Mastelis
-    account_and_management Account & Management
-    back_to_plans Back to plans
-    confirm_password_required Confirm password is required
-    feat_autoplay_desc Focus on learning while the app automatically advances through cards at your pace.
-    feat_autoplay_title Hands-Free Autoplay
-    feat_create_share_desc Easily create your own subjects and cards, or share them with the community.
-    feat_create_share_title Create & Share
-    feat_science_smart_review_desc The algorithm calculates the optimal time to review each card for maximum retention.
-    feat_science_smart_review_title Smart Review Cycles
-    new_password_required New password is required
-    password_updated Password updated successfully
-    save_success Saved successfully
-    trust_ecosystem_desc Your progress and cards are seamlessly synced across all your devices.
-    trust_ecosystem_title Aliolo Ecosystem

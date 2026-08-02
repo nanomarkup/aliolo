@@ -44,9 +44,12 @@
     about_support_settings_title التخصيص
     about_support_title الإعدادات والتعليقات والدعم
     about_tagline تعلم بصرياً. أتقن للأبد.
+    account_and_management Account & Management
     account_created تم إنشاء الحساب
     account_created_billing_fail تم إنشاء حسابك، ولكن لم يكتمل الدفع. أعد محاولة الدفع أدناه.
     account_deleted Account deleted successfully
+    account_setup_completed اكتمل إعداد الحساب.
+    active نشط
     add_card Add Card
     add_collection إضافة مجموعة
     add_folder إضافة مجلد
@@ -76,6 +79,7 @@
     aliolo aliolo
     all_matching_subjects جميع المواضيع المطابقة
     all_rights_reserved جميع الحقوق محفوظة
+    all_time كل الوقت
     answer إجابة
     answer_label answer
     answers_label answers
@@ -86,8 +90,10 @@
     audio صوت
     audio_playing جاري تشغيل الصوت
     author Author
+    autoplay تشغيل تلقائي
     back خلف
     back_to_login Back to Login
+    back_to_plans Back to plans
     back_to_subjects العودة إلى المواضيع
     best_for_quick_goals الأفضل للأهداف السريعة
     billing_disclaimer يتم تجديد الاشتراكات تلقائيًا ما لم يتم إلغاؤها. يمكنك إدارة اشتراكك في إعدادات متجرك.
@@ -95,6 +101,7 @@
     bronze BRONZE
     browser المتصفح
     cancel يلغي
+    cancel_in_paddle إلغاء في Paddle
     cancel_request Cancel Request
     cancel_request_confirm Are you sure you want to cancel the request to
     cannot_delete_folder لا يمكن حذف المجلد
@@ -103,6 +110,8 @@
     card_id معرف البطاقة
     card_label Card
     card_level مستوى البطاقة
+    card_limit حد البطاقات
+    card_limit_msg لقد وصلت إلى حد {limit} بطاقة.
     card_plural Cards
     cards cards
     cards_label cards
@@ -111,31 +120,44 @@
     change_avatar Change Avatar
     change_password تغيير كلمة المرور
     check_your_email_for_code تحقق من بريدك الإلكتروني للحصول على الرمز
+    checkout_email_before_payment_desc أدخل بريدك الإلكتروني قبل الدفع حتى تتمكن Aliolo من إنشاء حسابك وربط الاشتراك بك.
+    checkout_finish_account_desc اختر اسم المستخدم وكلمة المرور الخاصة بك الآن حتى تتمكن من تسجيل الدخول مرة أخرى لاحقًا في حالة إلغاء الدفع أو مقاطعته.
+    checkout_verification_desc نحتاج إلى تحقق سريع قبل فتح صفحة دفع المتجر.
     clear واضح
     click_to_select_image Click to select image
     click_to_view_original انقر لعرض الأصلي
     close يغلق
+    close_feedback_request_confirm هل أنت متأكد أنك تريد إغلاق طلب التعليقات هذا؟
     close_request هل تريد إغلاق الطلب؟
     code_label Code
     collection_id معرف المجموعة
     colors الألوان
     common_settings الإعدادات العامة
     compare_plans قارن بين الخطط المجانية والمدفوعة
+    complete_account إكمال الحساب
+    complete_account_setup إكمال إعداد الحساب
+    complete_account_setup_desc أضف اسم مستخدم وكلمة مرور لعمليات تسجيل الدخول والاسترداد المستقبلية.
+    complete_account_subscription_desc اشتراكك مرتبط بالفعل بهذا الحساب. أضف اسم مستخدم وكلمة مرور حتى تتمكن من تسجيل الدخول في أي مكان واسترداد المشتريات لاحقًا.
     confirm تأكيد
     confirm_logout Are you sure you want to logout?
     confirm_password Confirm Password
+    confirm_password_required Confirm password is required
     confirm_subscription تأكيد الاشتراك
     content_label المحتوى
     context سياق
+    continue_to_checkout المتابعة للدفع
     copy نسخ
     copy_all Copy All
     core_features الميزات الأساسية
     correct_answers الإجابات الصحيحة
     could_not_launch تعذر تشغيل $url
+    could_not_open_paddle_cancellation تعذر فتح إلغاء Paddle: {error}
     counting عد
     create_account Create Account
+    create_account_to_continue قم بإنشاء حسابك للمتابعة
     create_new_account Create New Account
     create_new_card Create New Card
+    create_request إنشاء طلب
     created_at تاريخ الإنشاء
     current_streak Current Streak
     current_subscription الاشتراك الحالي
@@ -160,6 +182,7 @@
     delete_collection حذف المجموعة
     delete_collection_confirm هل أنت متأكد أنك تريد حذف هذه المجموعة؟
     delete_folder حذف المجلد
+    delete_folder_confirm هل أنت متأكد أنك تريد حذف هذا المجلد؟
     delete_selected_cards Delete selected cards?
     delete_subject Delete Subject
     delete_subject_confirm Delete subject '{subject}' and all {count} cards inside?
@@ -258,6 +281,7 @@
     doc_welcome_title مرحباً بك في Aliolo
     documentation التوثيق
     done_today تم اليوم
+    dont_show_again_for_this_subject لا تظهر هذا مرة أخرى لهذا الموضوع
     down_arrow Down Arrow
     edit تعديل
     edit_card Edit Card
@@ -268,6 +292,7 @@
     edit_subject Edit Subject
     edit_subject_title Edit Subject
     edit_subscription تحرير الاشتراك
+    edit_user تعديل المستخدم
     email Email
     email_change_notice لدواعي الأمان، سيتم إرسال رابط تأكيد إلى كل من عنوان بريدك الإلكتروني القديم والجديد. يجب عليك النقر فوق كليهما لإتمام التغيير.
     email_in_use Email is already in use
@@ -275,6 +300,7 @@
     email_update_sent تم إرسال رسائل تأكيد بالبريد الإلكتروني. يرجى التحقق من كلا البريدين.
     email_updated_successfully تم تحديث البريد الإلكتروني بنجاح!
     english English
+    enter_code_sent_to_email أدخل الرمز المكون من 6 أرقام المرسل إلى {email}
     enter_current_password أدخل كلمة المرور الحالية
     enter_new_email أدخل البريد الإلكتروني الجديد
     enter_new_name Enter New Name
@@ -297,6 +323,7 @@
     failed_to_send_verification_code فشل في إرسال رمز التحقق
     fake_only وهمية فقط
     fatal_startup_error Fatal Startup Error
+    favorite مفضل
     feat_adaptive_desc The system monitors your recognition speed across MCQ options, dynamically adjusting intervals to push your boundaries.
     feat_adaptive_title Adaptive Response Timing
     feat_ages_desc محتوى منسق لمختلف الفئات العمرية من الطفولة المبكرة إلى التعلم المتقدم.
@@ -351,6 +378,7 @@
     feedback_title إرسال تعليق
     feedback_title_hint العنوان
     feedback_type النوع
+    file_too_large الملف كبير جدًا
     fill_all_fields Please fill all fields
     filter_all All
     filter_dashboard لوحة القيادة
@@ -361,6 +389,7 @@
     filter_public_library المكتبة العامة
     filters الفلاتر
     finish إنهاء
+    finish_account_setup إنهاء إعداد الحساب
     finished_session You finished {count} cards. XP bonus awarded!
     folder مجلد
     folder_already_exists يوجد مجلد بهذا الاسم بالفعل في هذا الركن
@@ -368,6 +397,7 @@
     folder_label مجلد
     folder_not_empty_msg لا يمكن الحذف: المجلد ليس فارغًا.
     folder_plural مجلدات
+    folder_practice_all_cards_desc هذا مجلد. يمكنك استخدام أزرار التعلم/الاختبار أعلاه للتدرب على جميع البطاقات.
     forgot_password Forgot Password?
     free_only المستخدمين مجانا
     general_preferences General Preferences
@@ -379,6 +409,7 @@
     hide_comparison إخفاء مقارنة الخطط
     home بيت
     images Images
+    inactive غير نشط
     included_subjects المواضيع المشمولة
     info_copied Info copied to clipboard
     initializing_aliolo Initializing Aliolo...
@@ -396,11 +427,17 @@
     invite_user_content البريد الإلكتروني {email} غير موجود. هل تود دعوته للانضمام إلى Aliolo؟
     invite_user_title دعوة مستخدم؟
     invited_and_request_sent تمت الدعوة وتم إرسال الطلب!
+    is_required مطلوب
     json JSON
     keyboard_shortcuts Keyboard Shortcuts
     label_suffix $label:
     lang_abbr Lang
     language Language
+    languages اللغات
+    last_3_months آخر 3 أشهر
+    last_6_months آخر 6 أشهر
+    last_month الشهر الماضي
+    last_slide الشريحة الأخيرة
     leaderboard المتصدرين
     learn_mode_desc Study cards and memorize answers
     learn_mode_title Learn
@@ -420,9 +457,11 @@
     licenses_intro_title Aliolo إشعارات الترخيص والحزمة
     licenses_third_party_section_title تراخيص حزمة الطرف الثالث
     light Light
+    limit_reached تم الوصول إلى الحد
     linux_distro توزيعة لينكس
     loading تحميل...
     localized_data البيانات المترجمة
+    log_in_instead تسجيل الدخول بدلاً من ذلك
     login تسجيل الدخول
     logout Logout
     manage_cards Manage Cards
@@ -454,12 +493,15 @@
     new NEW
     new_email البريد الإلكتروني الجديد
     new_password New Password
+    new_password_required New password is required
     next Next
     next_card Next Card
     next_daily_goal الهدف اليومي التالي
     next_daily_goal_desc عدد البطاقات المستهدف إتقانها كل يوم. تدخل التغييرات حيز التنفيذ غداً.
     next_day_goal هدف الغد
+    no_age_data_yet لا توجد بيانات عمرية بعد
     no_cards_available_for_this_session لا توجد بطاقات متاحة لهذه الجلسة.
+    no_cards_due_yet لا توجد بطاقات مستحقة بعد
     no_cards_found لم يتم العثور على بطاقات
     no_cards_found_for_lang No cards found for this language
     no_cards_in_library No cards found in the library.
@@ -471,10 +513,19 @@
     no_localized_audio لا يوجد صوت محلي
     no_localized_images لا توجد صور محلية
     no_localized_video لا يوجد فيديو محلي
+    no_onboarding_sessions_yet لا توجد جلسات تأهيل بعد
+    no_permission_view_card_details ليس لديك إذن لعرض تفاصيل هذه البطاقة.
+    no_pillar_data_yet لا توجد بيانات ركيزة بعد
+    no_slide_data_yet لا توجد بيانات شريحة بعد
     no_subjects_available لا توجد مواضيع متاحة
     no_subjects_found لم يتم العثور على مواضيع
+    no_subjects_found_in_collection لم يتم العثور على أي مواضيع في هذه المجموعة
     no_subjects_found_in_this_collection لم يتم العثور على مواضيع في هذه المجموعة
+    no_usage_data_yet لا توجد بيانات استخدام بعد
     no_users_found لم يتم العثور على مستخدمين
+    not_available غير متاح
+    not_set لم يتم تعيينه
+    official_website الموقع الرسمي
     ok موافق
     old_password كلمة المرور القديمة
     old_password_required كلمة المرور القديمة مطلوبة
@@ -492,6 +543,7 @@
     onboarding_6_title انضم إلى المجتمع
     onboarding_7_joined انضم إليه آلاف المتعلمين
     onboarding_7_quote لقد غيرت Aliolo تماماً الطريقة التي أتقن بها أنا وأطفالي موضوعات جديدة. البطاقات المرئية والتكرار المتباعد يجعل التعلم يبدو وكأنه لعبة!
+    onboarding_analytics تحليلات التأهيل
     onboarding_get_started ابدأ الآن
     onboarding_next التالي
     onboarding_skip تخطي
@@ -501,11 +553,13 @@
     order_id معرف الطلب
     os_version إصدار نظام التشغيل
     our_mission مهمتنا
+    paddle_cancel_subscription_desc هل تحتاج إلى إلغاء اشتراك Paddle؟ افتح مسار إلغاء Paddle أدناه.
     page Page
     parent_folder_label المجلد الأصلي
     password Password
     password_required Password is required
     password_reset_success Password reset successful
+    password_updated Password updated successfully
     password_updated_successfully تم تحديث كلمة المرور بنجاح!
     passwords_dont_match Passwords do not match
     paste لصق
@@ -540,6 +594,7 @@
     premium_unlock_desc يمكنك الوصول إلى جميع المواضيع وإنشاء عدد غير محدود من البطاقات ودعم مهمة Aliolo.
     premium_unlock_title فتح الوصول الكامل
     prev Prev
+    previous السابق
     previous_card Previous Card
     price_per_week ({price} / أسبوع)
     private Private
@@ -568,6 +623,12 @@
     remove_friend Remove Friend
     remove_friend_confirm Are you sure you want to remove friend
     renderer العارض
+    renderer_addition_emoji رمز الجمع التعبيري
+    renderer_addition_numbers أرقام الجمع
+    renderer_counting عد
+    renderer_generic عام
+    renderer_subtraction_emoji رمز الطرح التعبيري
+    renderer_subtraction_numbers أرقام الطرح
     request_sent Request sent
     request_sent_waiting Request sent (waiting)
     required Required
@@ -578,13 +639,17 @@
     reset_password_for "Reset Password for: "
     restore_password Restore Password
     restore_purchases استعادة المشتريات
+    restore_purchases_started بدأت الاستعادة. ستقوم Aliolo بإعادة ربط أي مشتريات صالحة بهذا الحساب.
+    retest_anyway أعد الاختبار على أي حال
     retry Retry
     right_arrow Right Arrow
     save يحفظ
     save_33_per_month وفر 33% شهريًا
+    save_account حفظ الحساب
     save_before_nav Do you want to save changes before navigating?
     save_card Save Card
     save_subject Save Subject
+    save_success Saved successfully
     saved_successfully تم الحفظ بنجاح
     search_cards Search Cards
     search_subjects Search Subjects
@@ -597,8 +662,10 @@
     send Send
     send_code Send Code
     send_verification_code Send verification code?
+    session الجلسة
     session_complete اكتملت الجلسة!
     session_complete_description عمل عظيم! لقد انتهيت من جميع البطاقات في هذه الجلسة.
+    set_your_password قم بتعيين كلمة المرور الخاصة بك
     setting_saved Setting saved
     settings إعدادات
     shortcuts_hint Press the key you want to use with Ctrl.
@@ -626,6 +693,8 @@
     subject_label Subject
     subject_plural Subjects
     subject_type نوع الموضوع
+    subject_up_to_date_retest_desc أنت محدث لهذا الموضوع. لا يزال بإمكانك إعادة اختبار جميع البطاقات الآن.
+    subject_usage استخدام الموضوع
     subjects المواد
     subscribe_now اشترك الآن
     subscription_data بيانات الاشتراك
@@ -654,6 +723,7 @@
     theme_system النظام
     this_is_a_folder_you_can_use_learn_test_buttons_above_to_practice_all_cards هذا مجلد. يمكنك استخدام أزرار التعلم/الاختبار أعلاه للتدرب على جميع البطاقات.
     to_label To
+    toggle_languages تبديل اللغات
     total_cards إجمالي البطاقات
     total_xp Total XP
     trust_cloud_desc يتم مزامنة تقدمك بشكل آمن عبر جميع أجهزتك في الوقت الفعلي.
@@ -676,12 +746,14 @@
     up_arrow Up Arrow
     update Update
     update_available نسخة جديدة متاحة!
+    updated تم التحديث
     updated_at تاريخ التحديث
     upload_new_photo تحميل صورة جديدة
     user مستخدم
     user_exists User already exists
     user_id معرف المستخدم
     user_not_found User not found
+    user_updated تم تحديث المستخدم
     user_with_this_email_already_exists_please_log_in_instead المستخدم الذي لديه هذا البريد الإلكتروني موجود بالفعل. الرجاء تسجيل الدخول بدلا من ذلك.
     username Username
     users المستخدمين
@@ -689,6 +761,8 @@
     verification_code رمز التحقق
     verification_code_sent_to تم إرسال رمز التحقق إلى $email
     verify Verify
+    verify_email_change التحقق من تغيير البريد الإلكتروني
+    verify_your_email تحقق من بريدك الإلكتروني
     version إصدار
     video Video
     video_link Video Link
@@ -700,6 +774,7 @@
     visual_content_required مطلوب محتوى مرئي واحد على الأقل
     visual_content_required_msg يجب توفير محتوى مرئي واحد على الأقل (نص أو صورة أو صوت أو فيديو).
     visual_text نص مرئي
+    wait_for_response_before_replying يرجى انتظار الرد قبل الرد مرة أخرى.
     wants_to_be_friend Wants to be your friend
     weekly_access الوصول الأسبوعي
     welcome_complete_your_profile_to_join_aliolo مرحباً! أكمل ملفك الشخصي للانضمام إلى aliolo.
@@ -709,25 +784,4 @@
     you_do_not_have_permission_to_edit_this_card ليس لديك الإذن بتعديل هذه البطاقة
     you_do_not_have_permission_to_view_this_card_details ليس لديك إذن لعرض تفاصيل هذه البطاقة.
     you_rank You are ranked #{rank}
-    active نشط
-    autoplay تشغيل تلقائي
-    card_limit حد البطاقات
-    card_limit_msg لقد وصلت إلى حد {limit} بطاقة.
-    create_request إنشاء طلب
-    edit_user تعديل المستخدم
-    favorite مفضل
-    file_too_large الملف كبير جدًا
-    inactive غير نشط
-    is_required مطلوب
-    languages اللغات
-    limit_reached تم الوصول إلى الحد
-    not_available غير متاح
-    toggle_languages تبديل اللغات
-    user_updated تم تحديث المستخدم
     zoom تكبير
-    account_and_management Account & Management
-    back_to_plans Back to plans
-    confirm_password_required Confirm password is required
-    new_password_required New password is required
-    password_updated Password updated successfully
-    save_success Saved successfully
