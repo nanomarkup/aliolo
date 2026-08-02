@@ -20,6 +20,8 @@ jobs:
         uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: '26.1.1'
+      - name: Download iOS Platform SDK
+        run: xcodebuild -downloadPlatform iOS
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.44.2'
