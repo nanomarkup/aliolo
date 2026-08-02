@@ -40,7 +40,7 @@ if [[ "$ROBOTS_TXT" != *'Sitemap: https://aliolo.com/sitemap.xml'* ]] ||
 fi
 
 SITEMAP_XML="$(curl --fail --silent --show-error "$BASE_URL/sitemap.xml")"
-if [[ "$SITEMAP_XML" != *'<loc>https://aliolo.com/</loc>'* ]] ||
+if [[ "$SITEMAP_XML" != *'<loc>https://aliolo.com/landing.html</loc>'* ]] ||
    [[ "$SITEMAP_XML" == *'<changefreq>'* ]] ||
    [[ "$SITEMAP_XML" == *'<priority>'* ]]; then
   echo "Production sitemap.xml failed SEO checks" >&2
