@@ -82,9 +82,14 @@ describe('SEO and crawlability', () => {
     expect(html).toContain('<meta property="og:image:height" content="630">');
     expect(html).toContain('<a class="skip-link" href="#main-content">Skip to content</a>');
     expect(html).toContain('id="main-content"');
-    expect(html).toContain('src="/landing-product-preview.jpg"');
-    expect(html).toContain('href="/login" class="btn btn-primary">Create free account</a>');
-    expect(html).toContain('href="/login?login=1" class="btn btn-secondary">Log in</a>');
+    expect(html).toContain('class="visual-stage"');
+    expect(html).toContain('What breed is shown?');
+    expect(html).toContain('Explore visual learning across every pillar.');
+    expect(html).toContain('href="#workflow">How it works</a>');
+    expect(html).toContain('href="#features">Learning</a>');
+    expect(html).toContain('href="/login?login=1" class="nav-login">Log in</a>');
+    expect(html).toContain('href="/login" class="nav-cta">Sign up</a>');
+    expect(html).not.toContain('class="cta-group"');
     expect(html).toContain('aria-label="View monthly plan details"');
     expect(html).not.toContain('payment partners');
     expect(html).not.toContain('Paddle review');

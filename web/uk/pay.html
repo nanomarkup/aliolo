@@ -25,6 +25,7 @@
     * { box-sizing: border-box; }
     body {
       margin: 0;
+      min-width: 320px;
       min-height: 100vh;
       font-family: "Source Sans 3", system-ui, -apple-system, sans-serif;
       color: var(--ink);
@@ -40,6 +41,9 @@
       margin: 0 auto;
     }
     header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
       padding: 16px 0 12px;
       border-bottom: 1px solid rgba(18, 35, 56, 0.06);
       background: rgba(249, 252, 253, 0.88);
@@ -72,13 +76,18 @@
       display: flex;
       align-items: center;
       justify-content: flex-end;
+      order: 2;
+      flex: 0 0 auto;
       min-width: 0;
     }
     .page-tabs {
       display: flex;
       gap: 10px;
       align-items: center;
-      margin-top: 12px;
+      justify-content: center;
+      flex: 1 1 auto;
+      order: 1;
+      margin-top: 0;
       overflow-x: auto;
       overflow-y: hidden;
       -webkit-overflow-scrolling: touch;
@@ -228,16 +237,27 @@
     @media (max-width: 760px) {
       header { padding: 12px 0 10px; }
       .shell { width: min(100% - 28px, 1120px); }
+      .brand {
+        flex-wrap: wrap;
+        justify-content: space-between;
+      }
+      .brand-name { order: 1; }
       .brand-name { font-size: 24px; }
       .brand-name img { width: 40px; height: 40px; }
+      .header-controls { margin-left: auto; }
       .lang-select {
         max-width: min(58vw, 220px);
       }
       .page-tabs {
-        margin-inline: -14px;
-        padding-inline: 14px;
+        order: 3;
+        flex: 1 0 100%;
+        flex-wrap: wrap;
+        justify-content: center;
+        overflow: visible;
+        margin-inline: 0;
+        padding-inline: 0;
         gap: 8px;
-        scroll-padding-inline: 14px;
+        scroll-padding-inline: 0;
       }
       .page-tabs a {
         padding: 9px 12px;
@@ -259,18 +279,18 @@
         <img src="/app_icon.webp" alt="Aliolo logo" />
         aliolo
       </a>
+      <nav class="page-tabs" aria-label="Checkout page navigation">
+        <a href="/uk/pricing.html">Ціноутворення</a>
+        <a href="/uk/terms.html">Терміни</a>
+        <a href="/uk/privacy.html">Конфіденційність</a>
+        <a href="/uk/refund.html">Повернення коштів</a>
+      </nav>
       <div class="header-controls">
         <select class="lang-select" onchange="document.cookie='aliolo_lang=' + this.options[this.selectedIndex].getAttribute('data-lang') + '; path=/; max-age=31536000; SameSite=Lax; Secure'; window.location.href=this.value" aria-label="Change language">
       <option value="/pay.html" data-lang="en">English</option><option value="/id/pay.html" data-lang="id">Bahasa Indonesia</option><option value="/bg/pay.html" data-lang="bg">Български</option><option value="/cs/pay.html" data-lang="cs">Čeština</option><option value="/da/pay.html" data-lang="da">Dansk</option><option value="/de/pay.html" data-lang="de">Deutsch</option><option value="/et/pay.html" data-lang="et">Eesti</option><option value="/es/pay.html" data-lang="es">Español</option><option value="/fr/pay.html" data-lang="fr">Français</option><option value="/ga/pay.html" data-lang="ga">Gaeilge</option><option value="/hr/pay.html" data-lang="hr">Hrvatski</option><option value="/it/pay.html" data-lang="it">Italiano</option><option value="/lv/pay.html" data-lang="lv">Latviešu</option><option value="/lt/pay.html" data-lang="lt">Lietuvių</option><option value="/hu/pay.html" data-lang="hu">Magyar</option><option value="/mt/pay.html" data-lang="mt">Malti</option><option value="/nl/pay.html" data-lang="nl">Nederlands</option><option value="/pl/pay.html" data-lang="pl">Polski</option><option value="/pt/pay.html" data-lang="pt">Português</option><option value="/ro/pay.html" data-lang="ro">Română</option><option value="/sk/pay.html" data-lang="sk">Slovenčina</option><option value="/sl/pay.html" data-lang="sl">Slovenščina</option><option value="/fi/pay.html" data-lang="fi">Suomi</option><option value="/sv/pay.html" data-lang="sv">Svenska</option><option value="/tl/pay.html" data-lang="tl">Tagalog</option><option value="/vi/pay.html" data-lang="vi">Tiếng Việt</option><option value="/tr/pay.html" data-lang="tr">Türkçe</option><option value="/el/pay.html" data-lang="el">Ελληνικά</option><option value="/uk/pay.html" data-lang="uk" selected>Українська</option><option value="/ar/pay.html" data-lang="ar">العربية</option><option value="/hi/pay.html" data-lang="hi">हिन्दी</option><option value="/zh/pay.html" data-lang="zh">中文</option><option value="/ja/pay.html" data-lang="ja">日本語</option><option value="/ko/pay.html" data-lang="ko">한국어</option>
     </select>
       </div>
     </div>
-    <nav class="shell page-tabs" aria-label="Checkout page navigation">
-      <a href="/uk/pricing.html">Ціноутворення</a>
-      <a href="/uk/terms.html">Терміни</a>
-      <a href="/uk/privacy.html">Конфіденційність</a>
-      <a href="/uk/refund.html">Повернення коштів</a>
-    </nav>
   </header>
   <main class="shell">
     <section class="layout">

@@ -81,9 +81,12 @@
     --page: #eef5f8;
   }
   * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
+  html {
+    scroll-behavior: smooth;
+  }
   body {
     margin: 0;
+    min-width: 320px;
     color: var(--ink);
     font-family: "Roboto", system-ui, -apple-system, sans-serif;
     line-height: 1.58;
@@ -123,11 +126,10 @@
     border-bottom: 1px solid rgba(18, 34, 53, 0.06);
   }
   .brand {
-    display: flex;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
     align-items: center;
-    justify-content: space-between;
     gap: 20px;
-    flex-wrap: nowrap;
   }
   .brand-name {
     display: inline-flex;
@@ -141,6 +143,7 @@
     letter-spacing: 0.03em;
     color: var(--brand);
     text-transform: lowercase;
+    justify-self: start;
   }
   .brand-name:hover { text-decoration: none; }
   .brand-name img {
@@ -157,6 +160,13 @@
     justify-content: flex-end;
     min-width: 0;
   }
+  .landing-tabs {
+    grid-column: 2;
+    justify-self: center;
+    flex: 0 0 auto;
+    justify-content: center;
+    margin-top: 0;
+  }
   nav a {
     color: var(--ink);
     font-size: 14px;
@@ -172,6 +182,7 @@
     background: rgba(255, 255, 255, 0.84);
   }
   .lang-select {
+    justify-self: end;
     font-family: inherit;
     font-size: 14px;
     font-weight: 600;
@@ -193,10 +204,8 @@
     background-color: rgba(255, 255, 255, 0.96);
   }
   .nav-cta {
-    border-color: var(--line-strong);
-    background: rgba(24, 95, 144, 0.08);
-    color: var(--brand);
-    font-weight: 700;
+    color: var(--accent);
+    font-weight: 800;
   }
   .nav-login { color: var(--brand); font-weight: 700; }
   h1, h2, h3, p, li, .btn, .eyebrow, .price-amount, .preview-caption, .final-cta {
@@ -402,6 +411,9 @@
   }
   .section {
     margin-bottom: 74px;
+  }
+  .section[id] {
+    scroll-margin-top: 88px;
   }
   .section-heading {
     max-width: 720px;
@@ -668,36 +680,499 @@
     line-height: 1.6;
   }
   .legal-note strong { color: var(--ink); }
+  .visual-stage {
+    position: relative;
+    min-height: 620px;
+    padding: 24px;
+    border-radius: 42px;
+    border: 1px solid rgba(255, 255, 255, 0.78);
+    background:
+      radial-gradient(circle at 24% 12%, rgba(255, 255, 255, 0.95), transparent 18rem),
+      linear-gradient(145deg, rgba(255, 255, 255, 0.88), rgba(238, 247, 250, 0.82));
+    box-shadow: 0 28px 70px rgba(18, 35, 56, 0.12);
+    overflow: hidden;
+  }
+  .visual-stage::before {
+    content: "";
+    position: absolute;
+    inset: 32px;
+    border-radius: 34px;
+    background-image:
+      linear-gradient(rgba(24, 95, 144, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(24, 95, 144, 0.06) 1px, transparent 1px);
+    background-size: 38px 38px;
+    mask-image: radial-gradient(circle at center, #000 0%, transparent 72%);
+    pointer-events: none;
+  }
+  .study-card {
+    position: relative;
+    z-index: 1;
+    width: min(100%, 430px);
+    margin: 26px auto 0;
+    padding: 18px;
+    border-radius: 32px;
+    background: #fff;
+    border: 1px solid rgba(18, 35, 56, 0.08);
+    box-shadow: 0 28px 60px rgba(18, 35, 56, 0.16);
+    transform: rotate(-1deg);
+  }
+  .card-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    min-height: 32px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(24, 95, 144, 0.10);
+    color: var(--brand);
+    font-size: 13px;
+    font-weight: 800;
+    white-space: nowrap;
+  }
+  .dot-row {
+    display: flex;
+    gap: 6px;
+  }
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: rgba(24, 95, 144, 0.22);
+  }
+  .dot.active { background: var(--brand); }
+  .image-window {
+    min-height: 230px;
+    display: grid;
+    place-items: center;
+    border-radius: 24px;
+    background:
+      radial-gradient(circle at 34% 30%, rgba(255, 255, 255, 0.78), transparent 7rem),
+      linear-gradient(145deg, #e8f3f6, #d9edf1);
+    border: 1px solid rgba(18, 35, 56, 0.08);
+    overflow: hidden;
+  }
+  .akita {
+    position: relative;
+    width: 178px;
+    height: 178px;
+    border-radius: 44% 44% 46% 46%;
+    background: linear-gradient(145deg, #d98f43, #b96d2f);
+    box-shadow: inset -18px -22px 0 rgba(89, 48, 26, 0.13);
+  }
+  .akita::before,
+  .akita::after {
+    content: "";
+    position: absolute;
+    top: -26px;
+    width: 64px;
+    height: 72px;
+    background: #c97732;
+    border-radius: 16px 60px 14px 54px;
+    transform: rotate(-20deg);
+    z-index: -1;
+  }
+  .akita::before { left: 12px; }
+  .akita::after {
+    right: 12px;
+    transform: rotate(20deg) scaleX(-1);
+  }
+  .face {
+    position: absolute;
+    inset: 44px 28px 24px;
+    border-radius: 46% 46% 52% 52%;
+    background: #fff6e9;
+  }
+  .eye {
+    position: absolute;
+    top: 36px;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: #172235;
+  }
+  .eye.left { left: 38px; }
+  .eye.right { right: 38px; }
+  .nose {
+    position: absolute;
+    left: 50%;
+    top: 64px;
+    width: 22px;
+    height: 16px;
+    border-radius: 60% 60% 70% 70%;
+    background: #172235;
+    transform: translateX(-50%);
+  }
+  .card-question {
+    margin: 16px 2px 10px;
+    font-size: 15px;
+    color: var(--muted);
+    font-weight: 700;
+  }
+  .card-answer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 16px;
+    border-radius: 18px;
+    background: #f6fbfc;
+    border: 1px solid rgba(18, 35, 56, 0.08);
+  }
+  .card-answer strong {
+    display: block;
+    font-size: 24px;
+    letter-spacing: -0.03em;
+  }
+  .card-answer span {
+    display: block;
+    color: var(--muted);
+    font-size: 14px;
+    margin-top: 2px;
+  }
+  .audio-button {
+    flex: 0 0 auto;
+    width: 46px;
+    height: 46px;
+    display: grid;
+    place-items: center;
+    border-radius: 16px;
+    color: #fff;
+    background: linear-gradient(135deg, var(--accent), #b85d19);
+    font-weight: 900;
+    box-shadow: 0 12px 22px rgba(217, 119, 40, 0.22);
+  }
+  .progress-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+    align-items: center;
+    margin-top: 16px;
+  }
+  .progress-track {
+    height: 10px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: rgba(24, 95, 144, 0.10);
+  }
+  .progress-fill {
+    width: 68%;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, var(--brand), #46b1a5);
+  }
+  .progress-row span {
+    color: var(--brand);
+    font-size: 13px;
+    font-weight: 900;
+  }
+  .floating-card {
+    position: absolute;
+    z-index: 2;
+    width: 174px;
+    padding: 14px;
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.94);
+    border: 1px solid rgba(18, 35, 56, 0.10);
+    box-shadow: 0 20px 42px rgba(18, 35, 56, 0.12);
+  }
+  .floating-card strong {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+  }
+  .floating-card span {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.25;
+  }
+  .float-one {
+    left: 28px;
+    top: 74px;
+    transform: rotate(-6deg);
+  }
+  .float-two {
+    right: 26px;
+    top: 132px;
+    transform: rotate(5deg);
+  }
+  .float-three {
+    left: 52px;
+    bottom: 70px;
+    transform: rotate(4deg);
+  }
+  .float-four {
+    right: 46px;
+    bottom: 42px;
+    transform: rotate(-4deg);
+  }
+  .section-heading.center {
+    margin-inline: auto;
+    text-align: center;
+  }
+  .flow-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .flow-card,
+  .subject-card,
+  .demo-card {
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 18px 44px rgba(18, 35, 56, 0.07);
+  }
+  .flow-card {
+    position: relative;
+    min-height: 260px;
+    display: grid;
+    align-content: space-between;
+    padding: 20px;
+    border-radius: 28px;
+    overflow: hidden;
+  }
+  .flow-card::after {
+    content: "";
+    position: absolute;
+    right: -42px;
+    top: -42px;
+    width: 128px;
+    height: 128px;
+    border-radius: 999px;
+    background: rgba(24, 95, 144, 0.10);
+  }
+  .flow-number {
+    width: 46px;
+    height: 46px;
+    display: grid;
+    place-items: center;
+    border-radius: 16px;
+    background: #fff;
+    color: var(--brand);
+    font-weight: 900;
+    border: 1px solid var(--line);
+  }
+  .flow-visual {
+    min-height: 92px;
+    display: grid;
+    place-items: center;
+    margin: 12px 0 18px;
+  }
+  .mini-image,
+  .mini-lines,
+  .mini-test,
+  .mini-review {
+    width: 112px;
+    height: 82px;
+    border-radius: 20px;
+    background: #fff;
+    border: 1px solid rgba(18, 35, 56, 0.09);
+    box-shadow: 0 12px 30px rgba(18, 35, 56, 0.08);
+  }
+  .mini-image {
+    background:
+      radial-gradient(circle at 42% 38%, #d97728 0 18px, transparent 19px),
+      linear-gradient(135deg, #eef8fa, #ffffff);
+  }
+  .mini-lines {
+    padding: 16px;
+  }
+  .mini-lines i,
+  .mini-test i,
+  .mini-review i {
+    display: block;
+    height: 8px;
+    margin-bottom: 8px;
+    border-radius: 999px;
+    background: rgba(24, 95, 144, 0.18);
+  }
+  .mini-lines i:nth-child(1) { width: 80%; background: rgba(24, 95, 144, 0.38); }
+  .mini-lines i:nth-child(2) { width: 58%; }
+  .mini-lines i:nth-child(3) { width: 70%; }
+  .mini-test {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    padding: 14px;
+  }
+  .mini-test i {
+    height: auto;
+    margin: 0;
+    border-radius: 12px;
+  }
+  .mini-test i:nth-child(3) {
+    background: rgba(70, 177, 165, 0.14);
+    outline: 2px solid rgba(70, 177, 165, 0.28);
+  }
+  .mini-review {
+    display: grid;
+    align-content: center;
+    padding: 16px;
+  }
+  .mini-review i:nth-child(1) { width: 100%; background: linear-gradient(90deg, var(--brand) 72%, rgba(24, 95, 144, 0.12) 72%); }
+  .mini-review i:nth-child(2) { width: 78%; background: linear-gradient(90deg, var(--accent) 46%, rgba(217, 119, 40, 0.14) 46%); }
+  .mini-review i:nth-child(3) { width: 88%; background: linear-gradient(90deg, #46b1a5 60%, rgba(70, 177, 165, 0.14) 60%); }
+  .flow-card h3,
+  .demo-card h3,
+  .subject-card h3 {
+    margin: 0 0 8px;
+    font-family: "Poppins", system-ui, sans-serif;
+    font-size: 21px;
+    letter-spacing: -0.025em;
+  }
+  .flow-card p,
+  .demo-card p,
+  .subject-card p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.5;
+  }
+  .demo-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 18px;
+    align-items: stretch;
+  }
+  .demo-card {
+    padding: 24px;
+    border-radius: 30px;
+    overflow: hidden;
+  }
+  .demo-card.large {
+    display: grid;
+    grid-template-columns: minmax(0, 0.92fr) minmax(260px, 1.08fr);
+    gap: 22px;
+    align-items: center;
+    background:
+      radial-gradient(circle at 88% 20%, rgba(70, 177, 165, 0.18), transparent 20rem),
+      rgba(255, 255, 255, 0.92);
+  }
+  .media-stack {
+    display: grid;
+    gap: 10px;
+  }
+  .media-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    border-radius: 18px;
+    background: #fff;
+    border: 1px solid rgba(18, 35, 56, 0.08);
+  }
+  .media-icon {
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    border-radius: 14px;
+    background: rgba(24, 95, 144, 0.10);
+    color: var(--brand);
+    font-weight: 900;
+  }
+  .demo-visual {
+    min-height: 286px;
+    padding: 18px;
+    border-radius: 26px;
+    background: #fff;
+    border: 1px solid rgba(18, 35, 56, 0.08);
+  }
+  .library-map {
+    display: grid;
+    gap: 12px;
+  }
+  .library-node {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 12px;
+    border-radius: 16px;
+    background: #f6fbfc;
+    color: var(--ink);
+    font-weight: 800;
+  }
+  .library-node span {
+    width: 32px;
+    height: 32px;
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+    border-radius: 12px;
+    background: #fff;
+    color: var(--brand);
+  }
+  .subject-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+  }
+  .subject-card {
+    min-height: 210px;
+    display: grid;
+    align-content: space-between;
+    padding: 18px;
+    border-radius: 26px;
+    overflow: hidden;
+    position: relative;
+  }
+  .subject-visual {
+    height: 90px;
+    display: grid;
+    place-items: center;
+    margin-bottom: 16px;
+    border-radius: 20px;
+    background: #fff;
+    border: 1px solid rgba(18, 35, 56, 0.08);
+    font-size: 42px;
+  }
   @media (max-width: 820px) {
-    .hero, .trust-grid, .footer-grid { grid-template-columns: 1fr; }
+    .hero, .trust-grid, .footer-grid, .demo-grid, .demo-card.large { grid-template-columns: 1fr; }
     .feature-grid, .steps, .pricing-grid { grid-template-columns: 1fr; }
-    .hero-panel { display: none; }
+    .flow-grid, .subject-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .footer-links { justify-content: flex-start; }
     .price-card.featured { transform: none; }
     .hero-copy { padding-top: 24px; }
+    .visual-stage { min-height: 580px; }
   }
-  @media (max-width: 960px) {
+  @media (max-width: 860px) {
+    .section[id] { scroll-margin-top: 144px; }
     .brand {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
       align-items: center;
       gap: 12px;
     }
-    nav {
-      flex: 1 1 auto;
-      width: auto;
-      margin-left: auto;
-      justify-content: flex-end;
-      gap: 8px;
-      min-width: 0;
+    .brand-name {
+      grid-column: 1;
+      grid-row: 1;
     }
-    .desktop-link,
-    .nav-cta,
-    .hero .btn-secondary {
-      display: none;
+    .landing-tabs {
+      grid-column: 1 / -1;
+      grid-row: 2;
+      order: 3;
+      justify-self: center;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 0;
     }
     .lang-select {
-      flex: 1 1 auto;
+      grid-column: 2;
+      grid-row: 1;
+      justify-self: end;
+      order: 2;
+      margin-left: auto;
+      flex: 0 0 180px;
+      width: 180px;
       min-width: 0;
-      max-width: min(42vw, 220px);
+      max-width: 180px;
       min-height: 44px;
     }
     .nav-login {
@@ -706,12 +1181,45 @@
       align-items: center;
       justify-content: center;
     }
+    .nav-cta {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  @media (max-width: 720px) {
+    .section[id] { scroll-margin-top: 136px; }
+    header { padding: 10px 0; }
+    .brand {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 8px 12px;
+      align-items: center;
+    }
+    .brand-name {
+      grid-column: 1;
+      grid-row: 1;
+    }
+    .lang-select {
+      grid-column: 2;
+      grid-row: 1;
+      justify-self: end;
+    }
+    .landing-tabs {
+      grid-column: 1 / -1;
+      grid-row: 2;
+      justify-self: center;
+      width: auto;
+      flex: 0 1 auto;
+      display: flex;
+      flex-wrap: nowrap;
+    }
   }
   @media (max-width: 520px) {
+    .section[id] { scroll-margin-top: 128px; }
     .shell { width: min(100% - 20px, 1160px); }
-    header { position: static; }
     .brand {
-      align-items: center;
       gap: 8px;
     }
     .brand-name {
@@ -723,18 +1231,28 @@
       height: 36px;
       border-radius: 10px;
     }
-    nav {
-      display: flex;
-      flex: 1 1 auto;
+    .landing-tabs {
       width: auto;
+      display: flex;
+      flex-wrap: wrap;
       gap: 6px;
-      min-width: 0;
+      justify-content: center;
+      justify-self: center;
+    }
+    .landing-tabs a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 40px;
+      justify-content: center;
+      padding: 8px 10px;
+      font-size: 14px;
+      line-height: 1.2;
     }
     .lang-select {
-      flex: 1 1 auto;
-      width: auto;
+      flex: 0 0 136px;
+      width: 136px;
       min-width: 72px;
-      max-width: min(38vw, 180px);
+      max-width: 136px;
       min-height: 40px;
       padding: 5px 24px 5px 10px;
       background-position: right 8px center;
@@ -743,7 +1261,18 @@
     .nav-login {
       flex: 0 0 auto;
       width: auto;
-      max-width: min(24vw, 92px);
+      max-width: none;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      text-align: center;
+      min-height: 40px;
+      padding: 8px 10px;
+    }
+    .nav-cta {
+      flex: 0 0 auto;
+      width: auto;
+      max-width: none;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -758,17 +1287,32 @@
       line-height: 1.04;
     }
     .hero p { font-size: 17px; }
-    .cta-group {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
+    .visual-stage {
+      min-height: auto;
+      padding: 14px;
     }
-    .cta-group .btn { width: 100%; }
+    .study-card {
+      margin-top: 0;
+      transform: none;
+    }
+    .floating-card {
+      position: static;
+      width: auto;
+      margin-top: 10px;
+      transform: none;
+    }
+    .flow-grid,
+    .subject-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
     .final-cta {
       align-items: stretch;
       flex-direction: column;
     }
     .final-cta .btn { width: 100%; }
+  }
+  @media (max-width: 420px) {
+    .section[id] { scroll-margin-top: 176px; }
   }
 </style>
 </head>
@@ -780,16 +1324,16 @@
         <img src="/app_icon.webp" alt="Aliolo logo">
         aliolo
       </a>
-      <nav aria-label="Site navigation">
-        <a class="desktop-link" href="#features">Caractéristiques</a>
+      <nav class="landing-tabs" aria-label="Landing page navigation">
         <a class="desktop-link" href="#workflow">Comment ça marche</a>
+        <a class="desktop-link" href="#features">Learning</a>
         <a class="desktop-link" href="#pricing">Tarifs</a>
-        <select class="lang-select" onchange="document.cookie='aliolo_lang=' + this.options[this.selectedIndex].getAttribute('data-lang') + '; path=/; max-age=31536000; SameSite=Lax; Secure'; window.location.href=this.value" aria-label="Change language">
-      <option value="/landing.html" data-lang="en">English</option><option value="/id/landing.html" data-lang="id">Bahasa Indonesia</option><option value="/bg/landing.html" data-lang="bg">Български</option><option value="/cs/landing.html" data-lang="cs">Čeština</option><option value="/da/landing.html" data-lang="da">Dansk</option><option value="/de/landing.html" data-lang="de">Deutsch</option><option value="/et/landing.html" data-lang="et">Eesti</option><option value="/es/landing.html" data-lang="es">Español</option><option value="/fr/landing.html" data-lang="fr" selected>Français</option><option value="/ga/landing.html" data-lang="ga">Gaeilge</option><option value="/hr/landing.html" data-lang="hr">Hrvatski</option><option value="/it/landing.html" data-lang="it">Italiano</option><option value="/lv/landing.html" data-lang="lv">Latviešu</option><option value="/lt/landing.html" data-lang="lt">Lietuvių</option><option value="/hu/landing.html" data-lang="hu">Magyar</option><option value="/mt/landing.html" data-lang="mt">Malti</option><option value="/nl/landing.html" data-lang="nl">Nederlands</option><option value="/pl/landing.html" data-lang="pl">Polski</option><option value="/pt/landing.html" data-lang="pt">Português</option><option value="/ro/landing.html" data-lang="ro">Română</option><option value="/sk/landing.html" data-lang="sk">Slovenčina</option><option value="/sl/landing.html" data-lang="sl">Slovenščina</option><option value="/fi/landing.html" data-lang="fi">Suomi</option><option value="/sv/landing.html" data-lang="sv">Svenska</option><option value="/tl/landing.html" data-lang="tl">Tagalog</option><option value="/vi/landing.html" data-lang="vi">Tiếng Việt</option><option value="/tr/landing.html" data-lang="tr">Türkçe</option><option value="/el/landing.html" data-lang="el">Ελληνικά</option><option value="/uk/landing.html" data-lang="uk">Українська</option><option value="/ar/landing.html" data-lang="ar">العربية</option><option value="/hi/landing.html" data-lang="hi">हिन्दी</option><option value="/zh/landing.html" data-lang="zh">中文</option><option value="/ja/landing.html" data-lang="ja">日本語</option><option value="/ko/landing.html" data-lang="ko">한국어</option>
-    </select>
         <a href="/fr/login?login=1" class="nav-login">Se connecter</a>
         <a href="/fr/login" class="nav-cta">Créer un compte gratuit</a>
       </nav>
+      <select class="lang-select" onchange="document.cookie='aliolo_lang=' + this.options[this.selectedIndex].getAttribute('data-lang') + '; path=/; max-age=31536000; SameSite=Lax; Secure'; window.location.href=this.value" aria-label="Change language">
+      <option value="/landing.html" data-lang="en">English</option><option value="/id/landing.html" data-lang="id">Bahasa Indonesia</option><option value="/bg/landing.html" data-lang="bg">Български</option><option value="/cs/landing.html" data-lang="cs">Čeština</option><option value="/da/landing.html" data-lang="da">Dansk</option><option value="/de/landing.html" data-lang="de">Deutsch</option><option value="/et/landing.html" data-lang="et">Eesti</option><option value="/es/landing.html" data-lang="es">Español</option><option value="/fr/landing.html" data-lang="fr" selected>Français</option><option value="/ga/landing.html" data-lang="ga">Gaeilge</option><option value="/hr/landing.html" data-lang="hr">Hrvatski</option><option value="/it/landing.html" data-lang="it">Italiano</option><option value="/lv/landing.html" data-lang="lv">Latviešu</option><option value="/lt/landing.html" data-lang="lt">Lietuvių</option><option value="/hu/landing.html" data-lang="hu">Magyar</option><option value="/mt/landing.html" data-lang="mt">Malti</option><option value="/nl/landing.html" data-lang="nl">Nederlands</option><option value="/pl/landing.html" data-lang="pl">Polski</option><option value="/pt/landing.html" data-lang="pt">Português</option><option value="/ro/landing.html" data-lang="ro">Română</option><option value="/sk/landing.html" data-lang="sk">Slovenčina</option><option value="/sl/landing.html" data-lang="sl">Slovenščina</option><option value="/fi/landing.html" data-lang="fi">Suomi</option><option value="/sv/landing.html" data-lang="sv">Svenska</option><option value="/tl/landing.html" data-lang="tl">Tagalog</option><option value="/vi/landing.html" data-lang="vi">Tiếng Việt</option><option value="/tr/landing.html" data-lang="tr">Türkçe</option><option value="/el/landing.html" data-lang="el">Ελληνικά</option><option value="/uk/landing.html" data-lang="uk">Українська</option><option value="/ar/landing.html" data-lang="ar">العربية</option><option value="/hi/landing.html" data-lang="hi">हिन्दी</option><option value="/zh/landing.html" data-lang="zh">中文</option><option value="/ja/landing.html" data-lang="ja">日本語</option><option value="/ko/landing.html" data-lang="ko">한국어</option>
+    </select>
     </div>
   </header>
 
@@ -799,37 +1343,113 @@
         <div class="eyebrow">Plateforme d'apprentissage visuel</div>
         <h1>Apprenez visuellement. Maîtriser définitivement.</h1>
         <p>Transformez les images, l'audio, la vidéo et le texte en cartes mémoire structurées. Apprenez avec le contexte, révisez au bon moment et testez ce dont vous vous souvenez vraiment.</p>
-        <div class="cta-group">
-          <a href="/fr/login" class="btn btn-primary">Créer un compte gratuit</a>
-          <a href="/fr/login?login=1" class="btn btn-secondary">Se connecter</a>
-        </div>
-        <div class="proof-row" aria-label="Product highlights">
-          <div class="proof">
-            <strong>Visuel</strong>
-            <span>Cartes mémoire compatibles avec les images, l'audio et la vidéo pour un apprentissage intensif en reconnaissance.</span>
-          </div>
-          <div class="proof">
-            <strong>Adaptatif</strong>
-            <span>Répétition espacée et suivi des progrès pour revisiter le matériel au bon moment.</span>
-          </div>
-          <div class="proof">
-            <strong>Structuré</strong>
-            <span>Piliers, dossiers, sujets et collections qui vont au-delà d’un simple deck.</span>
-          </div>
-        </div>
       </div>
-      <aside class="hero-panel" aria-label="Aliolo study workflow preview">
-        <figure class="product-preview">
-          <img src="/landing-product-preview.jpg" alt="Aliolo visual flashcard lesson showing an Akita Inu on a tablet" width="1200" height="675" fetchpriority="high">
-          <figcaption class="preview-caption">
-            <div>
-              <strong>Reconnaissance avant rappel</strong>
-              <span>Une véritable leçon d'Aliolo utilisant l'image, le texte, l'audio et la navigation guidée.</span>
+      <aside class="visual-stage" aria-label="Aliolo visual learning card preview">
+        <div class="floating-card float-one">
+          <strong>See it</strong>
+          <span>Start with an image-rich card.</span>
+        </div>
+        <div class="floating-card float-two">
+          <strong>Hear it</strong>
+          <span>Audio helps names and pronunciation stick.</span>
+        </div>
+        <div class="floating-card float-three">
+          <strong>Recall it</strong>
+          <span>Test without hints when ready.</span>
+        </div>
+        <div class="floating-card float-four">
+          <strong>Review it</strong>
+          <span>Bring cards back at the right moment.</span>
+        </div>
+
+        <div class="study-card">
+          <div class="card-toolbar">
+            <span class="pill">Mode apprentissage</span>
+            <div class="dot-row" aria-hidden="true">
+              <span class="dot active"></span>
+              <span class="dot active"></span>
+              <span class="dot"></span>
+              <span class="dot"></span>
             </div>
-            <div class="preview-chip">Mode apprentissage</div>
-          </figcaption>
-        </figure>
+          </div>
+          <div class="image-window" aria-hidden="true">
+            <div class="akita">
+              <div class="face">
+                <span class="eye left"></span>
+                <span class="eye right"></span>
+                <span class="nose"></span>
+              </div>
+            </div>
+          </div>
+          <div class="card-question">What breed is shown?</div>
+          <div class="card-answer">
+            <div>
+              <strong>Akita Inu</strong>
+              <span>Japanese dog breed · visual recognition</span>
+            </div>
+            <div class="audio-button" aria-label="Audio sample">♪</div>
+          </div>
+          <div class="progress-row">
+            <div class="progress-track"><div class="progress-fill"></div></div>
+            <span>68%</span>
+          </div>
+        </div>
       </aside>
+    </section>
+
+    <section class="section" id="workflow">
+      <div class="section-heading center">
+        <h2>Un chemin clair entre « je devrais étudier » et « je sais ceci ».</h2>
+        <p>Un flux de travail ciblé permet de garder l'étape suivante évidente sans aplatir chaque sujet dans le même type de carte.</p>
+      </div>
+      <div class="flow-grid">
+        <article class="flow-card">
+          <div>
+            <div class="flow-number">01</div>
+            <div class="flow-visual"><div class="mini-image"></div></div>
+          </div>
+          <div>
+            <h3>See</h3>
+            <p>Start with a visual card that gives the brain a strong hook.</p>
+          </div>
+        </article>
+        <article class="flow-card">
+          <div>
+            <div class="flow-number">02</div>
+            <div class="flow-visual">
+              <div class="mini-lines"><i></i><i></i><i></i></div>
+            </div>
+          </div>
+          <div>
+            <h3>Understand</h3>
+            <p>Add context, labels, pronunciation, examples, and meaning.</p>
+          </div>
+        </article>
+        <article class="flow-card">
+          <div>
+            <div class="flow-number">03</div>
+            <div class="flow-visual">
+              <div class="mini-test"><i></i><i></i><i></i><i></i></div>
+            </div>
+          </div>
+          <div>
+            <h3>Recall</h3>
+            <p>Move from recognition into active testing and real memory.</p>
+          </div>
+        </article>
+        <article class="flow-card">
+          <div>
+            <div class="flow-number">04</div>
+            <div class="flow-visual">
+              <div class="mini-review"><i></i><i></i><i></i></div>
+            </div>
+          </div>
+          <div>
+            <h3>Review</h3>
+            <p>Return to the right cards before knowledge disappears.</p>
+          </div>
+        </article>
+      </div>
     </section>
 
     <section class="section" id="features">
@@ -837,45 +1457,82 @@
         <h2>Tout ce dont vous avez besoin pour transformer l'exposition en rappel.</h2>
         <p>Développez la reconnaissance grâce aux médias riches, organisez les grandes bibliothèques et revisitez les documents avant qu'ils ne disparaissent.</p>
       </div>
-      <div class="feature-grid">
-        <article class="feature-card">
-          <div class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="m5 18 5-5 3 3 2-2 4 4"/></svg></div>
-          <h3>Apprenez avec plus que du texte</h3>
-          <p>Utilisez des images, de l'audio, de la vidéo et des invites flexibles lorsque le sujet dépend de la reconnaissance et du contexte.</p>
+      <div class="demo-grid">
+        <article class="demo-card large">
+          <div>
+            <span class="pill">Apprenez avec plus que du texte</span>
+            <h3>Images, audio, video, and text work together.</h3>
+            <p>Utilisez des images, de l'audio, de la vidéo et des invites flexibles lorsque le sujet dépend de la reconnaissance et du contexte.</p>
+          </div>
+          <div class="demo-visual">
+            <div class="media-stack">
+              <div class="media-row"><span class="media-icon">✦</span><strong>Image prompt</strong></div>
+              <div class="media-row"><span class="media-icon">♪</span><strong>Audio pronunciation</strong></div>
+              <div class="media-row"><span class="media-icon">▶</span><strong>Video context</strong></div>
+              <div class="media-row"><span class="media-icon">Aa</span><strong>Text explanation</strong></div>
+            </div>
+          </div>
         </article>
-        <article class="feature-card">
-          <div class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.34-5.66"/><path d="M20 4v6h-6"/><path d="M9.5 12.5 11 14l3.5-4"/></svg></div>
-          <h3>Révisez avant qu'il ne disparaisse</h3>
-          <p>La répétition espacée et le suivi des progrès ramènent les éléments importants à un moment utile.</p>
-        </article>
-        <article class="feature-card">
-          <div class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 6.5 12 3l8 3.5-8 3.5z"/><path d="M6 9v6.5L12 19l6-3.5V9"/><path d="M20 7v6"/></svg></div>
-          <h3>Développez-vous au-delà d’un seul deck</h3>
+
+        <article class="demo-card">
+          <span class="pill">Développez-vous au-delà d’un seul deck</span>
+          <h3>More than one deck.</h3>
           <p>Organisez le matériel organisé ou personnalisé en piliers, dossiers, sujets et collections qui restent utilisables.</p>
+          <div class="library-map" style="margin-top: 18px;">
+            <div class="library-node"><span>1</span> Human Body & Health</div>
+            <div class="library-node"><span>2</span> Anatomy subject</div>
+            <div class="library-node"><span>3</span> Muscle cards</div>
+            <div class="library-node"><span>4</span> Exam collection</div>
+          </div>
         </article>
       </div>
     </section>
 
-    <section class="section" id="workflow">
-      <div class="section-heading">
-        <h2>Un chemin clair entre « je devrais étudier » et « je sais ceci ».</h2>
-        <p>Un flux de travail ciblé permet de garder l'étape suivante évidente sans aplatir chaque sujet dans le même type de carte.</p>
+    <section class="section" id="pillars">
+      <div class="section-heading center">
+        <h2>Explore visual learning across every pillar.</h2>
+        <p>Aliolo’s real learning pillars show visitors what the app can organize and teach.</p>
       </div>
-      <div class="steps">
-        <article class="step">
-          <strong>01</strong>
-          <h3>Choisissez le bon matériau</h3>
-          <p>Commencez par un sujet sélectionné ou créez une bibliothèque ciblée pour un examen, une langue, une profession ou un objectif personnel.</p>
+      <div class="subject-grid">
+        <article class="subject-card">
+          <div class="subject-visual">🎓</div>
+          <h3>Education</h3>
+          <p>Alphabets, numbers, shapes, and exam foundations.</p>
         </article>
-        <article class="step">
-          <strong>02</strong>
-          <h3>Apprendre avec le contexte</h3>
-          <p>Développez la reconnaissance grâce aux cartes guidées et aux médias disponibles avant de demander à votre mémoire de travailler sans aide.</p>
+        <article class="subject-card">
+          <div class="subject-visual">🦊</div>
+          <h3>Animals & Nature</h3>
+          <p>Animals, insects, plants, and natural patterns.</p>
         </article>
-        <article class="step">
-          <strong>03</strong>
-          <h3>Testez le rappel réel</h3>
-          <p>Passez à des tests ciblés pour exposer les points faibles, renforcer la récupération et rendre les progrès mesurables.</p>
+        <article class="subject-card">
+          <div class="subject-visual">🫀</div>
+          <h3>Human Body & Health</h3>
+          <p>Anatomy, organs, body systems, and wellbeing.</p>
+        </article>
+        <article class="subject-card">
+          <div class="subject-visual">🌍</div>
+          <h3>World & Geography</h3>
+          <p>Countries, flags, landmarks, maps, and places.</p>
+        </article>
+        <article class="subject-card">
+          <div class="subject-visual">🎨</div>
+          <h3>Arts & Culture</h3>
+          <p>Paintings, music, architecture, food, and history.</p>
+        </article>
+        <article class="subject-card">
+          <div class="subject-visual">⚽</div>
+          <h3>Sports & Recreation</h3>
+          <p>Games, sports, movement, and recreation topics.</p>
+        </article>
+        <article class="subject-card">
+          <div class="subject-visual">⚙️</div>
+          <h3>Engineering & Transport</h3>
+          <p>Vehicles, machines, tools, and engineered systems.</p>
+        </article>
+        <article class="subject-card">
+          <div class="subject-visual">✨</div>
+          <h3>And more</h3>
+          <p>Flexible topics that do not fit neatly elsewhere.</p>
         </article>
       </div>
     </section>

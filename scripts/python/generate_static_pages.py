@@ -3,6 +3,7 @@ import os
 import json
 import re
 from pathlib import Path
+from typing import Optional
 
 # Supported languages
 SUPPORTED_LANGUAGES = [
@@ -96,9 +97,12 @@ LEGAL_STYLES = """
     --shadow: 0 22px 58px rgba(17, 32, 52, 0.08);
   }
   * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
+  html {
+    scroll-behavior: smooth;
+  }
   body {
     margin: 0;
+    min-width: 320px;
     color: var(--ink);
     font-family: "Source Sans 3", system-ui, -apple-system, sans-serif;
     line-height: 1.6;
@@ -151,13 +155,18 @@ LEGAL_STYLES = """
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    order: 2;
+    flex: 0 0 auto;
     min-width: 0;
   }
   .page-tabs {
     display: flex;
     gap: 10px;
     align-items: center;
-    margin-top: 12px;
+    justify-content: center;
+    flex: 1 1 auto;
+    order: 1;
+    margin-top: 0;
     overflow-x: auto;
     overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
@@ -210,16 +219,27 @@ LEGAL_STYLES = """
   @media (max-width: 760px) {
     header { padding: 12px 0 10px; }
     .shell { width: min(100% - 28px, 1100px); }
+    .brand {
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+    .brand-name { order: 1; }
     .brand-name { font-size: 24px; }
     .brand-name img { width: 40px; height: 40px; }
+    .header-controls { margin-left: auto; }
     .lang-select {
       max-width: min(58vw, 220px);
     }
     .page-tabs {
-      margin-inline: -14px;
-      padding-inline: 14px;
+      order: 3;
+      flex: 1 0 100%;
+      flex-wrap: wrap;
+      justify-content: center;
+      overflow: visible;
+      margin-inline: 0;
+      padding-inline: 0;
       gap: 8px;
-      scroll-padding-inline: 14px;
+      scroll-padding-inline: 0;
     }
     .page-tabs a {
       padding: 9px 12px;
@@ -437,6 +457,7 @@ PAY_STYLES = """
     * { box-sizing: border-box; }
     body {
       margin: 0;
+      min-width: 320px;
       min-height: 100vh;
       font-family: "Source Sans 3", system-ui, -apple-system, sans-serif;
       color: var(--ink);
@@ -452,6 +473,9 @@ PAY_STYLES = """
       margin: 0 auto;
     }
     header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
       padding: 16px 0 12px;
       border-bottom: 1px solid rgba(18, 35, 56, 0.06);
       background: rgba(249, 252, 253, 0.88);
@@ -484,13 +508,18 @@ PAY_STYLES = """
       display: flex;
       align-items: center;
       justify-content: flex-end;
+      order: 2;
+      flex: 0 0 auto;
       min-width: 0;
     }
     .page-tabs {
       display: flex;
       gap: 10px;
       align-items: center;
-      margin-top: 12px;
+      justify-content: center;
+      flex: 1 1 auto;
+      order: 1;
+      margin-top: 0;
       overflow-x: auto;
       overflow-y: hidden;
       -webkit-overflow-scrolling: touch;
@@ -640,16 +669,27 @@ PAY_STYLES = """
     @media (max-width: 760px) {
       header { padding: 12px 0 10px; }
       .shell { width: min(100% - 28px, 1120px); }
+      .brand {
+        flex-wrap: wrap;
+        justify-content: space-between;
+      }
+      .brand-name { order: 1; }
       .brand-name { font-size: 24px; }
       .brand-name img { width: 40px; height: 40px; }
+      .header-controls { margin-left: auto; }
       .lang-select {
         max-width: min(58vw, 220px);
       }
       .page-tabs {
-        margin-inline: -14px;
-        padding-inline: 14px;
+        order: 3;
+        flex: 1 0 100%;
+        flex-wrap: wrap;
+        justify-content: center;
+        overflow: visible;
+        margin-inline: 0;
+        padding-inline: 0;
         gap: 8px;
-        scroll-padding-inline: 14px;
+        scroll-padding-inline: 0;
       }
       .page-tabs a {
         padding: 9px 12px;
@@ -681,9 +721,12 @@ LANDING_STYLES = """
     --page: #eef5f8;
   }
   * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
+  html {
+    scroll-behavior: smooth;
+  }
   body {
     margin: 0;
+    min-width: 320px;
     color: var(--ink);
     font-family: "Roboto", system-ui, -apple-system, sans-serif;
     line-height: 1.58;
@@ -723,11 +766,10 @@ LANDING_STYLES = """
     border-bottom: 1px solid rgba(18, 34, 53, 0.06);
   }
   .brand {
-    display: flex;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
     align-items: center;
-    justify-content: space-between;
     gap: 20px;
-    flex-wrap: nowrap;
   }
   .brand-name {
     display: inline-flex;
@@ -741,6 +783,7 @@ LANDING_STYLES = """
     letter-spacing: 0.03em;
     color: var(--brand);
     text-transform: lowercase;
+    justify-self: start;
   }
   .brand-name:hover { text-decoration: none; }
   .brand-name img {
@@ -757,6 +800,13 @@ LANDING_STYLES = """
     justify-content: flex-end;
     min-width: 0;
   }
+  .landing-tabs {
+    grid-column: 2;
+    justify-self: center;
+    flex: 0 0 auto;
+    justify-content: center;
+    margin-top: 0;
+  }
   nav a {
     color: var(--ink);
     font-size: 14px;
@@ -772,6 +822,7 @@ LANDING_STYLES = """
     background: rgba(255, 255, 255, 0.84);
   }
   .lang-select {
+    justify-self: end;
     font-family: inherit;
     font-size: 14px;
     font-weight: 600;
@@ -793,10 +844,8 @@ LANDING_STYLES = """
     background-color: rgba(255, 255, 255, 0.96);
   }
   .nav-cta {
-    border-color: var(--line-strong);
-    background: rgba(24, 95, 144, 0.08);
-    color: var(--brand);
-    font-weight: 700;
+    color: var(--accent);
+    font-weight: 800;
   }
   .nav-login { color: var(--brand); font-weight: 700; }
   h1, h2, h3, p, li, .btn, .eyebrow, .price-amount, .preview-caption, .final-cta {
@@ -1002,6 +1051,9 @@ LANDING_STYLES = """
   }
   .section {
     margin-bottom: 74px;
+  }
+  .section[id] {
+    scroll-margin-top: 88px;
   }
   .section-heading {
     max-width: 720px;
@@ -1268,36 +1320,499 @@ LANDING_STYLES = """
     line-height: 1.6;
   }
   .legal-note strong { color: var(--ink); }
+  .visual-stage {
+    position: relative;
+    min-height: 620px;
+    padding: 24px;
+    border-radius: 42px;
+    border: 1px solid rgba(255, 255, 255, 0.78);
+    background:
+      radial-gradient(circle at 24% 12%, rgba(255, 255, 255, 0.95), transparent 18rem),
+      linear-gradient(145deg, rgba(255, 255, 255, 0.88), rgba(238, 247, 250, 0.82));
+    box-shadow: 0 28px 70px rgba(18, 35, 56, 0.12);
+    overflow: hidden;
+  }
+  .visual-stage::before {
+    content: "";
+    position: absolute;
+    inset: 32px;
+    border-radius: 34px;
+    background-image:
+      linear-gradient(rgba(24, 95, 144, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(24, 95, 144, 0.06) 1px, transparent 1px);
+    background-size: 38px 38px;
+    mask-image: radial-gradient(circle at center, #000 0%, transparent 72%);
+    pointer-events: none;
+  }
+  .study-card {
+    position: relative;
+    z-index: 1;
+    width: min(100%, 430px);
+    margin: 26px auto 0;
+    padding: 18px;
+    border-radius: 32px;
+    background: #fff;
+    border: 1px solid rgba(18, 35, 56, 0.08);
+    box-shadow: 0 28px 60px rgba(18, 35, 56, 0.16);
+    transform: rotate(-1deg);
+  }
+  .card-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    min-height: 32px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(24, 95, 144, 0.10);
+    color: var(--brand);
+    font-size: 13px;
+    font-weight: 800;
+    white-space: nowrap;
+  }
+  .dot-row {
+    display: flex;
+    gap: 6px;
+  }
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: rgba(24, 95, 144, 0.22);
+  }
+  .dot.active { background: var(--brand); }
+  .image-window {
+    min-height: 230px;
+    display: grid;
+    place-items: center;
+    border-radius: 24px;
+    background:
+      radial-gradient(circle at 34% 30%, rgba(255, 255, 255, 0.78), transparent 7rem),
+      linear-gradient(145deg, #e8f3f6, #d9edf1);
+    border: 1px solid rgba(18, 35, 56, 0.08);
+    overflow: hidden;
+  }
+  .akita {
+    position: relative;
+    width: 178px;
+    height: 178px;
+    border-radius: 44% 44% 46% 46%;
+    background: linear-gradient(145deg, #d98f43, #b96d2f);
+    box-shadow: inset -18px -22px 0 rgba(89, 48, 26, 0.13);
+  }
+  .akita::before,
+  .akita::after {
+    content: "";
+    position: absolute;
+    top: -26px;
+    width: 64px;
+    height: 72px;
+    background: #c97732;
+    border-radius: 16px 60px 14px 54px;
+    transform: rotate(-20deg);
+    z-index: -1;
+  }
+  .akita::before { left: 12px; }
+  .akita::after {
+    right: 12px;
+    transform: rotate(20deg) scaleX(-1);
+  }
+  .face {
+    position: absolute;
+    inset: 44px 28px 24px;
+    border-radius: 46% 46% 52% 52%;
+    background: #fff6e9;
+  }
+  .eye {
+    position: absolute;
+    top: 36px;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: #172235;
+  }
+  .eye.left { left: 38px; }
+  .eye.right { right: 38px; }
+  .nose {
+    position: absolute;
+    left: 50%;
+    top: 64px;
+    width: 22px;
+    height: 16px;
+    border-radius: 60% 60% 70% 70%;
+    background: #172235;
+    transform: translateX(-50%);
+  }
+  .card-question {
+    margin: 16px 2px 10px;
+    font-size: 15px;
+    color: var(--muted);
+    font-weight: 700;
+  }
+  .card-answer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 16px;
+    border-radius: 18px;
+    background: #f6fbfc;
+    border: 1px solid rgba(18, 35, 56, 0.08);
+  }
+  .card-answer strong {
+    display: block;
+    font-size: 24px;
+    letter-spacing: -0.03em;
+  }
+  .card-answer span {
+    display: block;
+    color: var(--muted);
+    font-size: 14px;
+    margin-top: 2px;
+  }
+  .audio-button {
+    flex: 0 0 auto;
+    width: 46px;
+    height: 46px;
+    display: grid;
+    place-items: center;
+    border-radius: 16px;
+    color: #fff;
+    background: linear-gradient(135deg, var(--accent), #b85d19);
+    font-weight: 900;
+    box-shadow: 0 12px 22px rgba(217, 119, 40, 0.22);
+  }
+  .progress-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+    align-items: center;
+    margin-top: 16px;
+  }
+  .progress-track {
+    height: 10px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: rgba(24, 95, 144, 0.10);
+  }
+  .progress-fill {
+    width: 68%;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, var(--brand), #46b1a5);
+  }
+  .progress-row span {
+    color: var(--brand);
+    font-size: 13px;
+    font-weight: 900;
+  }
+  .floating-card {
+    position: absolute;
+    z-index: 2;
+    width: 174px;
+    padding: 14px;
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.94);
+    border: 1px solid rgba(18, 35, 56, 0.10);
+    box-shadow: 0 20px 42px rgba(18, 35, 56, 0.12);
+  }
+  .floating-card strong {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+  }
+  .floating-card span {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.25;
+  }
+  .float-one {
+    left: 28px;
+    top: 74px;
+    transform: rotate(-6deg);
+  }
+  .float-two {
+    right: 26px;
+    top: 132px;
+    transform: rotate(5deg);
+  }
+  .float-three {
+    left: 52px;
+    bottom: 70px;
+    transform: rotate(4deg);
+  }
+  .float-four {
+    right: 46px;
+    bottom: 42px;
+    transform: rotate(-4deg);
+  }
+  .section-heading.center {
+    margin-inline: auto;
+    text-align: center;
+  }
+  .flow-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .flow-card,
+  .subject-card,
+  .demo-card {
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 18px 44px rgba(18, 35, 56, 0.07);
+  }
+  .flow-card {
+    position: relative;
+    min-height: 260px;
+    display: grid;
+    align-content: space-between;
+    padding: 20px;
+    border-radius: 28px;
+    overflow: hidden;
+  }
+  .flow-card::after {
+    content: "";
+    position: absolute;
+    right: -42px;
+    top: -42px;
+    width: 128px;
+    height: 128px;
+    border-radius: 999px;
+    background: rgba(24, 95, 144, 0.10);
+  }
+  .flow-number {
+    width: 46px;
+    height: 46px;
+    display: grid;
+    place-items: center;
+    border-radius: 16px;
+    background: #fff;
+    color: var(--brand);
+    font-weight: 900;
+    border: 1px solid var(--line);
+  }
+  .flow-visual {
+    min-height: 92px;
+    display: grid;
+    place-items: center;
+    margin: 12px 0 18px;
+  }
+  .mini-image,
+  .mini-lines,
+  .mini-test,
+  .mini-review {
+    width: 112px;
+    height: 82px;
+    border-radius: 20px;
+    background: #fff;
+    border: 1px solid rgba(18, 35, 56, 0.09);
+    box-shadow: 0 12px 30px rgba(18, 35, 56, 0.08);
+  }
+  .mini-image {
+    background:
+      radial-gradient(circle at 42% 38%, #d97728 0 18px, transparent 19px),
+      linear-gradient(135deg, #eef8fa, #ffffff);
+  }
+  .mini-lines {
+    padding: 16px;
+  }
+  .mini-lines i,
+  .mini-test i,
+  .mini-review i {
+    display: block;
+    height: 8px;
+    margin-bottom: 8px;
+    border-radius: 999px;
+    background: rgba(24, 95, 144, 0.18);
+  }
+  .mini-lines i:nth-child(1) { width: 80%; background: rgba(24, 95, 144, 0.38); }
+  .mini-lines i:nth-child(2) { width: 58%; }
+  .mini-lines i:nth-child(3) { width: 70%; }
+  .mini-test {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    padding: 14px;
+  }
+  .mini-test i {
+    height: auto;
+    margin: 0;
+    border-radius: 12px;
+  }
+  .mini-test i:nth-child(3) {
+    background: rgba(70, 177, 165, 0.14);
+    outline: 2px solid rgba(70, 177, 165, 0.28);
+  }
+  .mini-review {
+    display: grid;
+    align-content: center;
+    padding: 16px;
+  }
+  .mini-review i:nth-child(1) { width: 100%; background: linear-gradient(90deg, var(--brand) 72%, rgba(24, 95, 144, 0.12) 72%); }
+  .mini-review i:nth-child(2) { width: 78%; background: linear-gradient(90deg, var(--accent) 46%, rgba(217, 119, 40, 0.14) 46%); }
+  .mini-review i:nth-child(3) { width: 88%; background: linear-gradient(90deg, #46b1a5 60%, rgba(70, 177, 165, 0.14) 60%); }
+  .flow-card h3,
+  .demo-card h3,
+  .subject-card h3 {
+    margin: 0 0 8px;
+    font-family: "Poppins", system-ui, sans-serif;
+    font-size: 21px;
+    letter-spacing: -0.025em;
+  }
+  .flow-card p,
+  .demo-card p,
+  .subject-card p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.5;
+  }
+  .demo-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 18px;
+    align-items: stretch;
+  }
+  .demo-card {
+    padding: 24px;
+    border-radius: 30px;
+    overflow: hidden;
+  }
+  .demo-card.large {
+    display: grid;
+    grid-template-columns: minmax(0, 0.92fr) minmax(260px, 1.08fr);
+    gap: 22px;
+    align-items: center;
+    background:
+      radial-gradient(circle at 88% 20%, rgba(70, 177, 165, 0.18), transparent 20rem),
+      rgba(255, 255, 255, 0.92);
+  }
+  .media-stack {
+    display: grid;
+    gap: 10px;
+  }
+  .media-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    border-radius: 18px;
+    background: #fff;
+    border: 1px solid rgba(18, 35, 56, 0.08);
+  }
+  .media-icon {
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    border-radius: 14px;
+    background: rgba(24, 95, 144, 0.10);
+    color: var(--brand);
+    font-weight: 900;
+  }
+  .demo-visual {
+    min-height: 286px;
+    padding: 18px;
+    border-radius: 26px;
+    background: #fff;
+    border: 1px solid rgba(18, 35, 56, 0.08);
+  }
+  .library-map {
+    display: grid;
+    gap: 12px;
+  }
+  .library-node {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 12px;
+    border-radius: 16px;
+    background: #f6fbfc;
+    color: var(--ink);
+    font-weight: 800;
+  }
+  .library-node span {
+    width: 32px;
+    height: 32px;
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+    border-radius: 12px;
+    background: #fff;
+    color: var(--brand);
+  }
+  .subject-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+  }
+  .subject-card {
+    min-height: 210px;
+    display: grid;
+    align-content: space-between;
+    padding: 18px;
+    border-radius: 26px;
+    overflow: hidden;
+    position: relative;
+  }
+  .subject-visual {
+    height: 90px;
+    display: grid;
+    place-items: center;
+    margin-bottom: 16px;
+    border-radius: 20px;
+    background: #fff;
+    border: 1px solid rgba(18, 35, 56, 0.08);
+    font-size: 42px;
+  }
   @media (max-width: 820px) {
-    .hero, .trust-grid, .footer-grid { grid-template-columns: 1fr; }
+    .hero, .trust-grid, .footer-grid, .demo-grid, .demo-card.large { grid-template-columns: 1fr; }
     .feature-grid, .steps, .pricing-grid { grid-template-columns: 1fr; }
-    .hero-panel { display: none; }
+    .flow-grid, .subject-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .footer-links { justify-content: flex-start; }
     .price-card.featured { transform: none; }
     .hero-copy { padding-top: 24px; }
+    .visual-stage { min-height: 580px; }
   }
-  @media (max-width: 960px) {
+  @media (max-width: 860px) {
+    .section[id] { scroll-margin-top: 144px; }
     .brand {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
       align-items: center;
       gap: 12px;
     }
-    nav {
-      flex: 1 1 auto;
-      width: auto;
-      margin-left: auto;
-      justify-content: flex-end;
-      gap: 8px;
-      min-width: 0;
+    .brand-name {
+      grid-column: 1;
+      grid-row: 1;
     }
-    .desktop-link,
-    .nav-cta,
-    .hero .btn-secondary {
-      display: none;
+    .landing-tabs {
+      grid-column: 1 / -1;
+      grid-row: 2;
+      order: 3;
+      justify-self: center;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 0;
     }
     .lang-select {
-      flex: 1 1 auto;
+      grid-column: 2;
+      grid-row: 1;
+      justify-self: end;
+      order: 2;
+      margin-left: auto;
+      flex: 0 0 180px;
+      width: 180px;
       min-width: 0;
-      max-width: min(42vw, 220px);
+      max-width: 180px;
       min-height: 44px;
     }
     .nav-login {
@@ -1306,12 +1821,45 @@ LANDING_STYLES = """
       align-items: center;
       justify-content: center;
     }
+    .nav-cta {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  @media (max-width: 720px) {
+    .section[id] { scroll-margin-top: 136px; }
+    header { padding: 10px 0; }
+    .brand {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 8px 12px;
+      align-items: center;
+    }
+    .brand-name {
+      grid-column: 1;
+      grid-row: 1;
+    }
+    .lang-select {
+      grid-column: 2;
+      grid-row: 1;
+      justify-self: end;
+    }
+    .landing-tabs {
+      grid-column: 1 / -1;
+      grid-row: 2;
+      justify-self: center;
+      width: auto;
+      flex: 0 1 auto;
+      display: flex;
+      flex-wrap: nowrap;
+    }
   }
   @media (max-width: 520px) {
+    .section[id] { scroll-margin-top: 128px; }
     .shell { width: min(100% - 20px, 1160px); }
-    header { position: static; }
     .brand {
-      align-items: center;
       gap: 8px;
     }
     .brand-name {
@@ -1323,18 +1871,28 @@ LANDING_STYLES = """
       height: 36px;
       border-radius: 10px;
     }
-    nav {
-      display: flex;
-      flex: 1 1 auto;
+    .landing-tabs {
       width: auto;
+      display: flex;
+      flex-wrap: wrap;
       gap: 6px;
-      min-width: 0;
+      justify-content: center;
+      justify-self: center;
+    }
+    .landing-tabs a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 40px;
+      justify-content: center;
+      padding: 8px 10px;
+      font-size: 14px;
+      line-height: 1.2;
     }
     .lang-select {
-      flex: 1 1 auto;
-      width: auto;
+      flex: 0 0 136px;
+      width: 136px;
       min-width: 72px;
-      max-width: min(38vw, 180px);
+      max-width: 136px;
       min-height: 40px;
       padding: 5px 24px 5px 10px;
       background-position: right 8px center;
@@ -1343,7 +1901,18 @@ LANDING_STYLES = """
     .nav-login {
       flex: 0 0 auto;
       width: auto;
-      max-width: min(24vw, 92px);
+      max-width: none;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      text-align: center;
+      min-height: 40px;
+      padding: 8px 10px;
+    }
+    .nav-cta {
+      flex: 0 0 auto;
+      width: auto;
+      max-width: none;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -1358,17 +1927,32 @@ LANDING_STYLES = """
       line-height: 1.04;
     }
     .hero p { font-size: 17px; }
-    .cta-group {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
+    .visual-stage {
+      min-height: auto;
+      padding: 14px;
     }
-    .cta-group .btn { width: 100%; }
+    .study-card {
+      margin-top: 0;
+      transform: none;
+    }
+    .floating-card {
+      position: static;
+      width: auto;
+      margin-top: 10px;
+      transform: none;
+    }
+    .flow-grid,
+    .subject-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
     .final-cta {
       align-items: stretch;
       flex-direction: column;
     }
     .final-cta .btn { width: 100%; }
+  }
+  @media (max-width: 420px) {
+    .section[id] { scroll-margin-top: 176px; }
   }
 """
 
@@ -1409,13 +1993,13 @@ LEGAL_LAYOUT = """<!DOCTYPE html>
         <img src="/app_icon.webp" alt="Aliolo Logo" />
         aliolo
       </a>
+      <nav class="page-tabs" aria-label="Legal page navigation">
+        {{NAV_LINKS}}
+      </nav>
       <div class="header-controls">
         {{LANG_SWITCHER}}
       </div>
     </div>
-    <nav class="shell page-tabs" aria-label="Legal page navigation">
-      {{NAV_LINKS}}
-    </nav>
   </header>
     </div>
   </header>
@@ -1462,16 +2046,16 @@ PAY_LAYOUT = """<!DOCTYPE html>
         <img src="/app_icon.webp" alt="Aliolo logo" />
         aliolo
       </a>
+      <nav class="page-tabs" aria-label="Checkout page navigation">
+        <a href="{{PRICING_HREF}}">{{PRICING_LABEL}}</a>
+        <a href="{{TERMS_HREF}}">{{TERMS_LABEL}}</a>
+        <a href="{{PRIVACY_HREF}}">{{PRIVACY_LABEL}}</a>
+        <a href="{{REFUND_HREF}}">{{REFUND_LABEL}}</a>
+      </nav>
       <div class="header-controls">
         {{LANG_SWITCHER}}
       </div>
     </div>
-    <nav class="shell page-tabs" aria-label="Checkout page navigation">
-      <a href="{{PRICING_HREF}}">{{PRICING_LABEL}}</a>
-      <a href="{{TERMS_HREF}}">{{TERMS_LABEL}}</a>
-      <a href="{{PRIVACY_HREF}}">{{PRIVACY_LABEL}}</a>
-      <a href="{{REFUND_HREF}}">{{REFUND_LABEL}}</a>
-    </nav>
   </header>
   <main class="shell">
     <section class="layout">
@@ -1636,14 +2220,14 @@ LANDING_LAYOUT = """<!DOCTYPE html>
         <img src="/app_icon.webp" alt="Aliolo logo">
         aliolo
       </a>
-      <nav aria-label="Site navigation">
-        <a class="desktop-link" href="#features">{{T_landing_nav_features}}</a>
+      <nav class="landing-tabs" aria-label="Landing page navigation">
         <a class="desktop-link" href="#workflow">{{T_landing_nav_how_it_works}}</a>
+        <a class="desktop-link" href="#features">{{T_landing_nav_learning}}</a>
         <a class="desktop-link" href="#pricing">{{T_landing_nav_pricing}}</a>
-        {{LANG_SWITCHER}}
         <a href="{{LOGIN_URL}}?login=1" class="nav-login">{{T_landing_nav_login}}</a>
         <a href="{{PREFIX}}/login" class="nav-cta">{{T_landing_nav_cta}}</a>
       </nav>
+      {{LANG_SWITCHER}}
     </div>
   </header>
 
@@ -1653,37 +2237,113 @@ LANDING_LAYOUT = """<!DOCTYPE html>
         <div class="eyebrow">{{T_landing_hero_eyebrow}}</div>
         <h1>{{T_landing_hero_h1}}</h1>
         <p>{{T_landing_hero_p}}</p>
-        <div class="cta-group">
-          <a href="{{PREFIX}}/login" class="btn btn-primary">{{T_landing_hero_btn_primary}}</a>
-          <a href="{{LOGIN_URL}}?login=1" class="btn btn-secondary">{{T_landing_hero_btn_secondary}}</a>
-        </div>
-        <div class="proof-row" aria-label="Product highlights">
-          <div class="proof">
-            <strong>{{T_landing_hero_proof_1_title}}</strong>
-            <span>{{T_landing_hero_proof_1_desc}}</span>
-          </div>
-          <div class="proof">
-            <strong>{{T_landing_hero_proof_2_title}}</strong>
-            <span>{{T_landing_hero_proof_2_desc}}</span>
-          </div>
-          <div class="proof">
-            <strong>{{T_landing_hero_proof_3_title}}</strong>
-            <span>{{T_landing_hero_proof_3_desc}}</span>
-          </div>
-        </div>
       </div>
-      <aside class="hero-panel" aria-label="Aliolo study workflow preview">
-        <figure class="product-preview">
-          <img src="/landing-product-preview.jpg" alt="Aliolo visual flashcard lesson showing an Akita Inu on a tablet" width="1200" height="675" fetchpriority="high">
-          <figcaption class="preview-caption">
-            <div>
-              <strong>{{T_landing_hero_preview_title}}</strong>
-              <span>{{T_landing_hero_preview_desc}}</span>
+      <aside class="visual-stage" aria-label="Aliolo visual learning card preview">
+        <div class="floating-card float-one">
+          <strong>{{T_landing_float_see_title}}</strong>
+          <span>{{T_landing_float_see_desc}}</span>
+        </div>
+        <div class="floating-card float-two">
+          <strong>{{T_landing_float_hear_title}}</strong>
+          <span>{{T_landing_float_hear_desc}}</span>
+        </div>
+        <div class="floating-card float-three">
+          <strong>{{T_landing_float_recall_title}}</strong>
+          <span>{{T_landing_float_recall_desc}}</span>
+        </div>
+        <div class="floating-card float-four">
+          <strong>{{T_landing_float_review_title}}</strong>
+          <span>{{T_landing_float_review_desc}}</span>
+        </div>
+
+        <div class="study-card">
+          <div class="card-toolbar">
+            <span class="pill">{{T_landing_hero_preview_chip}}</span>
+            <div class="dot-row" aria-hidden="true">
+              <span class="dot active"></span>
+              <span class="dot active"></span>
+              <span class="dot"></span>
+              <span class="dot"></span>
             </div>
-            <div class="preview-chip">{{T_landing_hero_preview_chip}}</div>
-          </figcaption>
-        </figure>
+          </div>
+          <div class="image-window" aria-hidden="true">
+            <div class="akita">
+              <div class="face">
+                <span class="eye left"></span>
+                <span class="eye right"></span>
+                <span class="nose"></span>
+              </div>
+            </div>
+          </div>
+          <div class="card-question">{{T_landing_mock_question}}</div>
+          <div class="card-answer">
+            <div>
+              <strong>{{T_landing_mock_answer}}</strong>
+              <span>{{T_landing_mock_context}}</span>
+            </div>
+            <div class="audio-button" aria-label="{{T_landing_mock_audio_label}}">♪</div>
+          </div>
+          <div class="progress-row">
+            <div class="progress-track"><div class="progress-fill"></div></div>
+            <span>68%</span>
+          </div>
+        </div>
       </aside>
+    </section>
+
+    <section class="section" id="workflow">
+      <div class="section-heading center">
+        <h2>{{T_landing_workflow_h2}}</h2>
+        <p>{{T_landing_workflow_p}}</p>
+      </div>
+      <div class="flow-grid">
+        <article class="flow-card">
+          <div>
+            <div class="flow-number">01</div>
+            <div class="flow-visual"><div class="mini-image"></div></div>
+          </div>
+          <div>
+            <h3>{{T_landing_flow_see_title}}</h3>
+            <p>{{T_landing_flow_see_desc}}</p>
+          </div>
+        </article>
+        <article class="flow-card">
+          <div>
+            <div class="flow-number">02</div>
+            <div class="flow-visual">
+              <div class="mini-lines"><i></i><i></i><i></i></div>
+            </div>
+          </div>
+          <div>
+            <h3>{{T_landing_flow_understand_title}}</h3>
+            <p>{{T_landing_flow_understand_desc}}</p>
+          </div>
+        </article>
+        <article class="flow-card">
+          <div>
+            <div class="flow-number">03</div>
+            <div class="flow-visual">
+              <div class="mini-test"><i></i><i></i><i></i><i></i></div>
+            </div>
+          </div>
+          <div>
+            <h3>{{T_landing_flow_recall_title}}</h3>
+            <p>{{T_landing_flow_recall_desc}}</p>
+          </div>
+        </article>
+        <article class="flow-card">
+          <div>
+            <div class="flow-number">04</div>
+            <div class="flow-visual">
+              <div class="mini-review"><i></i><i></i><i></i></div>
+            </div>
+          </div>
+          <div>
+            <h3>{{T_landing_flow_review_title}}</h3>
+            <p>{{T_landing_flow_review_desc}}</p>
+          </div>
+        </article>
+      </div>
     </section>
 
     <section class="section" id="features">
@@ -1691,45 +2351,82 @@ LANDING_LAYOUT = """<!DOCTYPE html>
         <h2>{{T_landing_features_h2}}</h2>
         <p>{{T_landing_features_p}}</p>
       </div>
-      <div class="feature-grid">
-        <article class="feature-card">
-          <div class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="m5 18 5-5 3 3 2-2 4 4"/></svg></div>
-          <h3>{{T_landing_feature_1_title}}</h3>
-          <p>{{T_landing_feature_1_desc}}</p>
+      <div class="demo-grid">
+        <article class="demo-card large">
+          <div>
+            <span class="pill">{{T_landing_feature_1_title}}</span>
+            <h3>{{T_landing_demo_media_h3}}</h3>
+            <p>{{T_landing_feature_1_desc}}</p>
+          </div>
+          <div class="demo-visual">
+            <div class="media-stack">
+              <div class="media-row"><span class="media-icon">✦</span><strong>{{T_landing_media_image}}</strong></div>
+              <div class="media-row"><span class="media-icon">♪</span><strong>{{T_landing_media_audio}}</strong></div>
+              <div class="media-row"><span class="media-icon">▶</span><strong>{{T_landing_media_video}}</strong></div>
+              <div class="media-row"><span class="media-icon">Aa</span><strong>{{T_landing_media_text}}</strong></div>
+            </div>
+          </div>
         </article>
-        <article class="feature-card">
-          <div class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.34-5.66"/><path d="M20 4v6h-6"/><path d="M9.5 12.5 11 14l3.5-4"/></svg></div>
-          <h3>{{T_landing_feature_2_title}}</h3>
-          <p>{{T_landing_feature_2_desc}}</p>
-        </article>
-        <article class="feature-card">
-          <div class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 6.5 12 3l8 3.5-8 3.5z"/><path d="M6 9v6.5L12 19l6-3.5V9"/><path d="M20 7v6"/></svg></div>
-          <h3>{{T_landing_feature_3_title}}</h3>
+
+        <article class="demo-card">
+          <span class="pill">{{T_landing_feature_3_title}}</span>
+          <h3>{{T_landing_demo_library_h3}}</h3>
           <p>{{T_landing_feature_3_desc}}</p>
+          <div class="library-map" style="margin-top: 18px;">
+            <div class="library-node"><span>1</span> {{T_landing_pillar_health_title}}</div>
+            <div class="library-node"><span>2</span> {{T_landing_library_subject}}</div>
+            <div class="library-node"><span>3</span> {{T_landing_library_cards}}</div>
+            <div class="library-node"><span>4</span> {{T_landing_library_collection}}</div>
+          </div>
         </article>
       </div>
     </section>
 
-    <section class="section" id="workflow">
-      <div class="section-heading">
-        <h2>{{T_landing_workflow_h2}}</h2>
-        <p>{{T_landing_workflow_p}}</p>
+    <section class="section" id="pillars">
+      <div class="section-heading center">
+        <h2>{{T_landing_pillars_h2}}</h2>
+        <p>{{T_landing_pillars_p}}</p>
       </div>
-      <div class="steps">
-        <article class="step">
-          <strong>01</strong>
-          <h3>{{T_landing_step_1_title}}</h3>
-          <p>{{T_landing_step_1_desc}}</p>
+      <div class="subject-grid">
+        <article class="subject-card">
+          <div class="subject-visual">🎓</div>
+          <h3>{{T_landing_pillar_education_title}}</h3>
+          <p>{{T_landing_pillar_education_desc}}</p>
         </article>
-        <article class="step">
-          <strong>02</strong>
-          <h3>{{T_landing_step_2_title}}</h3>
-          <p>{{T_landing_step_2_desc}}</p>
+        <article class="subject-card">
+          <div class="subject-visual">🦊</div>
+          <h3>{{T_landing_pillar_nature_title}}</h3>
+          <p>{{T_landing_pillar_nature_desc}}</p>
         </article>
-        <article class="step">
-          <strong>03</strong>
-          <h3>{{T_landing_step_3_title}}</h3>
-          <p>{{T_landing_step_3_desc}}</p>
+        <article class="subject-card">
+          <div class="subject-visual">🫀</div>
+          <h3>{{T_landing_pillar_health_title}}</h3>
+          <p>{{T_landing_pillar_health_desc}}</p>
+        </article>
+        <article class="subject-card">
+          <div class="subject-visual">🌍</div>
+          <h3>{{T_landing_pillar_world_title}}</h3>
+          <p>{{T_landing_pillar_world_desc}}</p>
+        </article>
+        <article class="subject-card">
+          <div class="subject-visual">🎨</div>
+          <h3>{{T_landing_pillar_culture_title}}</h3>
+          <p>{{T_landing_pillar_culture_desc}}</p>
+        </article>
+        <article class="subject-card">
+          <div class="subject-visual">⚽</div>
+          <h3>{{T_landing_pillar_sports_title}}</h3>
+          <p>{{T_landing_pillar_sports_desc}}</p>
+        </article>
+        <article class="subject-card">
+          <div class="subject-visual">⚙️</div>
+          <h3>{{T_landing_pillar_engineering_title}}</h3>
+          <p>{{T_landing_pillar_engineering_desc}}</p>
+        </article>
+        <article class="subject-card">
+          <div class="subject-visual">✨</div>
+          <h3>{{T_landing_pillar_more_title}}</h3>
+          <p>{{T_landing_pillar_more_desc}}</p>
         </article>
       </div>
     </section>
@@ -2006,10 +2703,11 @@ def render_pay(lang: str, t: dict) -> str:
     html = html.replace("{{PAY_STYLES}", PAY_STYLES)
     return html
 
-def render_landing(lang: str, t: dict) -> str:
+def render_landing(lang: str, t: dict, fallback_t: Optional[dict] = None) -> str:
     prefix = "" if lang == "en" else f"/{lang}"
     home_url = static_page_href(lang, "landing")
     login_url = "/login" if lang == "en" else f"/{lang}/login"
+    landing_t = {**(fallback_t or {}), **t}
     
     canonical_url = "https://aliolo.com/landing.html" if lang == "en" else f"https://aliolo.com/{lang}/landing.html"
     
@@ -2034,7 +2732,7 @@ def render_landing(lang: str, t: dict) -> str:
     html = html.replace("{{LANDING_STYLES}", LANDING_STYLES)
     
     # Replace all translations keys dynamically
-    for key, val in t.items():
+    for key, val in landing_t.items():
         html = html.replace(f"{{{{T_{key}}}}}", val)
         
     return html
@@ -2048,6 +2746,7 @@ def main():
     web_dir.mkdir(parents=True, exist_ok=True)
     
     translations_dir = project_root / "assets" / "translations" / "web"
+    english_translations = parse_nano_map((translations_dir / "en.nano").read_text(encoding="utf-8"))
     
     # Updates legal date mod
     updated_date = "April 28, 2026"
@@ -2125,7 +2824,7 @@ def main():
         pay_html = render_pay(lang, t)
         
         # Generate landing page
-        landing_html = render_landing(lang, t)
+        landing_html = render_landing(lang, t, english_translations)
         
         # Write files
         (out_dir / "privacy.html").write_text(privacy_html, encoding="utf-8")

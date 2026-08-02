@@ -74,9 +74,12 @@
     --shadow: 0 22px 58px rgba(17, 32, 52, 0.08);
   }
   * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
+  html {
+    scroll-behavior: smooth;
+  }
   body {
     margin: 0;
+    min-width: 320px;
     color: var(--ink);
     font-family: "Source Sans 3", system-ui, -apple-system, sans-serif;
     line-height: 1.6;
@@ -129,13 +132,18 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    order: 2;
+    flex: 0 0 auto;
     min-width: 0;
   }
   .page-tabs {
     display: flex;
     gap: 10px;
     align-items: center;
-    margin-top: 12px;
+    justify-content: center;
+    flex: 1 1 auto;
+    order: 1;
+    margin-top: 0;
     overflow-x: auto;
     overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
@@ -188,16 +196,27 @@
   @media (max-width: 760px) {
     header { padding: 12px 0 10px; }
     .shell { width: min(100% - 28px, 1100px); }
+    .brand {
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+    .brand-name { order: 1; }
     .brand-name { font-size: 24px; }
     .brand-name img { width: 40px; height: 40px; }
+    .header-controls { margin-left: auto; }
     .lang-select {
       max-width: min(58vw, 220px);
     }
     .page-tabs {
-      margin-inline: -14px;
-      padding-inline: 14px;
+      order: 3;
+      flex: 1 0 100%;
+      flex-wrap: wrap;
+      justify-content: center;
+      overflow: visible;
+      margin-inline: 0;
+      padding-inline: 0;
       gap: 8px;
-      scroll-padding-inline: 14px;
+      scroll-padding-inline: 0;
     }
     .page-tabs a {
       padding: 9px 12px;
@@ -406,19 +425,19 @@
         <img src="/app_icon.webp" alt="Aliolo Logo" />
         aliolo
       </a>
+      <nav class="page-tabs" aria-label="Legal page navigation">
+        <a class="" href="/ar/landing.html">بيت</a>
+        <a class="" href="/ar/privacy.html">خصوصية</a>
+        <a class="" href="/ar/terms.html">شروط</a>
+        <a class="active" href="/ar/refund.html">Refunds</a>
+        <a class="" href="/ar/pricing.html">التسعير</a>
+      </nav>
       <div class="header-controls">
         <select class="lang-select" onchange="document.cookie='aliolo_lang=' + this.options[this.selectedIndex].getAttribute('data-lang') + '; path=/; max-age=31536000; SameSite=Lax; Secure'; window.location.href=this.value" aria-label="Change language">
       <option value="/refund.html" data-lang="en">English</option><option value="/id/refund.html" data-lang="id">Bahasa Indonesia</option><option value="/bg/refund.html" data-lang="bg">Български</option><option value="/cs/refund.html" data-lang="cs">Čeština</option><option value="/da/refund.html" data-lang="da">Dansk</option><option value="/de/refund.html" data-lang="de">Deutsch</option><option value="/et/refund.html" data-lang="et">Eesti</option><option value="/es/refund.html" data-lang="es">Español</option><option value="/fr/refund.html" data-lang="fr">Français</option><option value="/ga/refund.html" data-lang="ga">Gaeilge</option><option value="/hr/refund.html" data-lang="hr">Hrvatski</option><option value="/it/refund.html" data-lang="it">Italiano</option><option value="/lv/refund.html" data-lang="lv">Latviešu</option><option value="/lt/refund.html" data-lang="lt">Lietuvių</option><option value="/hu/refund.html" data-lang="hu">Magyar</option><option value="/mt/refund.html" data-lang="mt">Malti</option><option value="/nl/refund.html" data-lang="nl">Nederlands</option><option value="/pl/refund.html" data-lang="pl">Polski</option><option value="/pt/refund.html" data-lang="pt">Português</option><option value="/ro/refund.html" data-lang="ro">Română</option><option value="/sk/refund.html" data-lang="sk">Slovenčina</option><option value="/sl/refund.html" data-lang="sl">Slovenščina</option><option value="/fi/refund.html" data-lang="fi">Suomi</option><option value="/sv/refund.html" data-lang="sv">Svenska</option><option value="/tl/refund.html" data-lang="tl">Tagalog</option><option value="/vi/refund.html" data-lang="vi">Tiếng Việt</option><option value="/tr/refund.html" data-lang="tr">Türkçe</option><option value="/el/refund.html" data-lang="el">Ελληνικά</option><option value="/uk/refund.html" data-lang="uk">Українська</option><option value="/ar/refund.html" data-lang="ar" selected>العربية</option><option value="/hi/refund.html" data-lang="hi">हिन्दी</option><option value="/zh/refund.html" data-lang="zh">中文</option><option value="/ja/refund.html" data-lang="ja">日本語</option><option value="/ko/refund.html" data-lang="ko">한국어</option>
     </select>
       </div>
     </div>
-    <nav class="shell page-tabs" aria-label="Legal page navigation">
-      <a class="" href="/ar/landing.html">بيت</a>
-        <a class="" href="/ar/privacy.html">خصوصية</a>
-        <a class="" href="/ar/terms.html">شروط</a>
-        <a class="active" href="/ar/refund.html">Refunds</a>
-        <a class="" href="/ar/pricing.html">التسعير</a>
-    </nav>
   </header>
     </div>
   </header>
