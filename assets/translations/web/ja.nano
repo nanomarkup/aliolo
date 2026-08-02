@@ -44,7 +44,7 @@
         <h2>キャンセル</h2>
         <p>使用した購入チャネルのルールに従ってキャンセルできます。キャンセルすると、今後の更新が停止されます。購入チャネルに別途の記載がない限り、現在の請求期間が終了するまで有料アクセスは利用可能です。</p>
         <h2>払い戻し</h2>
-        <p>返金は弊社の規定に従って処理されます <a href="/refund">返金ポリシー</a>、購入チャネルのルール、および適用される消費者法。 App Store での購入は通常、関連する App Store によって処理されます。</p>
+        <p>返金は弊社の規定に従って処理されます <a href="/refund.html">返金ポリシー</a>、購入チャネルのルール、および適用される消費者法。 App Store での購入は通常、関連する App Store によって処理されます。</p>
         <h2>許容される使用方法</h2>
         <p>Aliolo の悪用、サービスの妨害、不正アクセスの試み、大規模なコンテンツのスクレイピングまたはコピー、アプリの保護された部分のリバース エンジニアリング、違法な素材のアップロード、または他のユーザーや Aliolo に損害を与える方法でサービスを使用することはできません。</p>
         <h2>コンテンツと可用性</h2>
@@ -158,7 +158,7 @@
         <h2>プラットフォームの価格差</h2>
         <p>価格とオファーは、Web チェックアウト、Google Play、Apple App Store、国、通貨、期間限定のプロモーションによって異なる場合があります。最終チェックアウト画面では、購入の実際の価格と更新条件を制御します。</p>
         <h2>関連ポリシー</h2>
-        <p>購読する前に、 <a href="/terms">サブスクリプション規約</a>, <a href="/refund">返金ポリシー</a>、 そして <a href="/privacy">プライバシーポリシー</a>.</p>
+        <p>購読する前に、 <a href="/terms.html">サブスクリプション規約</a>, <a href="/refund.html">返金ポリシー</a>、 そして <a href="/privacy.html">プライバシーポリシー</a>.</p>
     checkout_title アリオロ チェックアウト
     checkout_subtitle Aliolo プレミアム サブスクリプションの安全なチェックアウト。
     checkout_eyebrow 安全なチェックアウト
@@ -179,7 +179,7 @@
     landing_nav_login ログイン
     landing_nav_cta 無料アカウントを作成する
     landing_hero_eyebrow 視覚的な学習プラットフォーム
-    landing_hero_h1 視覚的に学びましょう。もっと長く覚えておいてください。
+    landing_hero_h1 視覚的に学びましょう。永久マスター。
     landing_hero_p 画像、音声、ビデオ、テキストを構造化されたフラッシュカードに変換します。文脈を踏まえて学習し、適切なタイミングで復習し、本当に思い出せるものをテストします。
     landing_hero_btn_primary 無料アカウントを作成する
     landing_hero_btn_secondary ログイン
@@ -210,6 +210,12 @@
     landing_step_3_desc 集中的なテストに移行して、弱点を明らかにし、回復を強化し、進歩を測定可能にします。
     landing_pricing_h2 無料で始めましょう。完全なワークフローが必要な場合はアップグレードしてください。
     landing_pricing_p 支払いなしでアカウントを作成します。プレミアムでは、間隔をあけた繰り返し、作成、テスト、自動再生、プライベート編成、およびより深いカスタマイズが追加されます。
+    plan_weekly_title 週間アクセス
+    plan_weekly_tagline 素早いゴールに最適
+    plan_monthly_title 月間アクセス数
+    plan_monthly_tagline 最も人気のある選択肢
+    plan_yearly_title 年間アクセス
+    plan_yearly_tagline 毎月 33% 割引
     landing_plan_weekly_desc 短期間の復習、簡単な復習、または試験週間の準備に適しています。
     landing_plan_weekly_item_1 短いコミットメントウィンドウ
     landing_plan_weekly_item_2 プレミアム ワークフローをすぐに試す方法

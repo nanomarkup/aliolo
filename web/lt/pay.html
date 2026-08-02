@@ -6,7 +6,7 @@
   <title>„Aliolo Checkout“.</title>
   <meta name="description" content="Saugus „Aliolo Premium“ prenumeratos apmokėjimas.">
   <meta name="robots" content="noindex,nofollow">
-  <link rel="canonical" href="https://aliolo.com/lt/pay">
+  <link rel="canonical" href="https://aliolo.com/lt/pay.html">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -40,7 +40,7 @@
       margin: 0 auto;
     }
     header {
-      padding: 22px 0;
+      padding: 16px 0 12px;
       border-bottom: 1px solid rgba(18, 35, 56, 0.06);
       background: rgba(249, 252, 253, 0.88);
       backdrop-filter: blur(14px);
@@ -49,8 +49,8 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 18px;
-      flex-wrap: wrap;
+      gap: 16px;
+      flex-wrap: nowrap;
     }
     .brand-name {
       display: inline-flex;
@@ -68,12 +68,25 @@
       width: 44px;
       height: 44px;
     }
-    nav {
+    .header-controls {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      min-width: 0;
+    }
+    .page-tabs {
       display: flex;
       gap: 10px;
-      flex-wrap: wrap;
+      align-items: center;
+      margin-top: 12px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
     }
-    nav a {
+    .page-tabs::-webkit-scrollbar { display: none; }
+    .page-tabs a {
+      flex: 0 0 auto;
       color: var(--ink);
       font-size: 15px;
       font-weight: 600;
@@ -81,7 +94,7 @@
       border-radius: 999px;
       border: 1px solid transparent;
     }
-    nav a:hover {
+    .page-tabs a:hover {
       background: rgba(255, 255, 255, 0.84);
       border-color: var(--line);
       text-decoration: none;
@@ -212,6 +225,26 @@
       border-color: var(--brand);
       background-color: rgba(255, 255, 255, 0.96);
     }
+    @media (max-width: 760px) {
+      header { padding: 12px 0 10px; }
+      .shell { width: min(100% - 28px, 1120px); }
+      .brand-name { font-size: 24px; }
+      .brand-name img { width: 40px; height: 40px; }
+      .lang-select {
+        max-width: min(58vw, 220px);
+      }
+      .page-tabs {
+        margin-inline: -14px;
+        padding-inline: 14px;
+        gap: 8px;
+        scroll-padding-inline: 14px;
+      }
+      .page-tabs a {
+        padding: 9px 12px;
+        font-size: 14px;
+      }
+      .page-tabs a.active { order: -1; }
+    }
     @media (max-width: 920px) {
       .layout {
         grid-template-columns: 1fr;
@@ -223,20 +256,22 @@
 <body>
   <header>
     <div class="shell brand">
-      <a class="brand-name" href="/lt" aria-label="Aliolo home">
+      <a class="brand-name" href="/lt/landing.html" aria-label="Aliolo home">
         <img src="/app_icon.webp" alt="Aliolo logo" />
         aliolo
       </a>
-      <nav aria-label="Checkout page navigation">
-        <a href="/lt/pricing">Kainodara</a>
-        <a href="/lt/terms">Sąlygos</a>
-        <a href="/lt/privacy">Privatumas</a>
-        <a href="/lt/refund">Grąžinamos lėšos</a>
+      <div class="header-controls">
         <select class="lang-select" onchange="document.cookie='aliolo_lang=' + this.options[this.selectedIndex].getAttribute('data-lang') + '; path=/; max-age=31536000; SameSite=Lax; Secure'; window.location.href=this.value" aria-label="Change language">
-      <option value="/pay" data-lang="en">English</option><option value="/id/pay" data-lang="id">Bahasa Indonesia</option><option value="/bg/pay" data-lang="bg">Български</option><option value="/cs/pay" data-lang="cs">Čeština</option><option value="/da/pay" data-lang="da">Dansk</option><option value="/de/pay" data-lang="de">Deutsch</option><option value="/et/pay" data-lang="et">Eesti</option><option value="/es/pay" data-lang="es">Español</option><option value="/fr/pay" data-lang="fr">Français</option><option value="/ga/pay" data-lang="ga">Gaeilge</option><option value="/hr/pay" data-lang="hr">Hrvatski</option><option value="/it/pay" data-lang="it">Italiano</option><option value="/lv/pay" data-lang="lv">Latviešu</option><option value="/lt/pay" data-lang="lt" selected>Lietuvių</option><option value="/hu/pay" data-lang="hu">Magyar</option><option value="/mt/pay" data-lang="mt">Malti</option><option value="/nl/pay" data-lang="nl">Nederlands</option><option value="/pl/pay" data-lang="pl">Polski</option><option value="/pt/pay" data-lang="pt">Português</option><option value="/ro/pay" data-lang="ro">Română</option><option value="/sk/pay" data-lang="sk">Slovenčina</option><option value="/sl/pay" data-lang="sl">Slovenščina</option><option value="/fi/pay" data-lang="fi">Suomi</option><option value="/sv/pay" data-lang="sv">Svenska</option><option value="/tl/pay" data-lang="tl">Tagalog</option><option value="/vi/pay" data-lang="vi">Tiếng Việt</option><option value="/tr/pay" data-lang="tr">Türkçe</option><option value="/el/pay" data-lang="el">Ελληνικά</option><option value="/uk/pay" data-lang="uk">Українська</option><option value="/ar/pay" data-lang="ar">العربية</option><option value="/hi/pay" data-lang="hi">हिन्दी</option><option value="/zh/pay" data-lang="zh">中文</option><option value="/ja/pay" data-lang="ja">日本語</option><option value="/ko/pay" data-lang="ko">한국어</option>
+      <option value="/pay.html" data-lang="en">English</option><option value="/id/pay.html" data-lang="id">Bahasa Indonesia</option><option value="/bg/pay.html" data-lang="bg">Български</option><option value="/cs/pay.html" data-lang="cs">Čeština</option><option value="/da/pay.html" data-lang="da">Dansk</option><option value="/de/pay.html" data-lang="de">Deutsch</option><option value="/et/pay.html" data-lang="et">Eesti</option><option value="/es/pay.html" data-lang="es">Español</option><option value="/fr/pay.html" data-lang="fr">Français</option><option value="/ga/pay.html" data-lang="ga">Gaeilge</option><option value="/hr/pay.html" data-lang="hr">Hrvatski</option><option value="/it/pay.html" data-lang="it">Italiano</option><option value="/lv/pay.html" data-lang="lv">Latviešu</option><option value="/lt/pay.html" data-lang="lt" selected>Lietuvių</option><option value="/hu/pay.html" data-lang="hu">Magyar</option><option value="/mt/pay.html" data-lang="mt">Malti</option><option value="/nl/pay.html" data-lang="nl">Nederlands</option><option value="/pl/pay.html" data-lang="pl">Polski</option><option value="/pt/pay.html" data-lang="pt">Português</option><option value="/ro/pay.html" data-lang="ro">Română</option><option value="/sk/pay.html" data-lang="sk">Slovenčina</option><option value="/sl/pay.html" data-lang="sl">Slovenščina</option><option value="/fi/pay.html" data-lang="fi">Suomi</option><option value="/sv/pay.html" data-lang="sv">Svenska</option><option value="/tl/pay.html" data-lang="tl">Tagalog</option><option value="/vi/pay.html" data-lang="vi">Tiếng Việt</option><option value="/tr/pay.html" data-lang="tr">Türkçe</option><option value="/el/pay.html" data-lang="el">Ελληνικά</option><option value="/uk/pay.html" data-lang="uk">Українська</option><option value="/ar/pay.html" data-lang="ar">العربية</option><option value="/hi/pay.html" data-lang="hi">हिन्दी</option><option value="/zh/pay.html" data-lang="zh">中文</option><option value="/ja/pay.html" data-lang="ja">日本語</option><option value="/ko/pay.html" data-lang="ko">한국어</option>
     </select>
-      </nav>
+      </div>
     </div>
+    <nav class="shell page-tabs" aria-label="Checkout page navigation">
+      <a href="/lt/pricing.html">Kainodara</a>
+      <a href="/lt/terms.html">Sąlygos</a>
+      <a href="/lt/privacy.html">Privatumas</a>
+      <a href="/lt/refund.html">Grąžinamos lėšos</a>
+    </nav>
   </header>
   <main class="shell">
     <section class="layout">
@@ -263,10 +298,10 @@
           </div>
         </div>
         <div class="links">
-          <a href="/lt/pricing">Kainodara</a>
-          <a href="/lt/terms">Sąlygos</a>
-          <a href="/lt/privacy">Privatumas</a>
-          <a href="/lt/refund">Grąžinamos lėšos</a>
+          <a href="/lt/pricing.html">Kainodara</a>
+          <a href="/lt/terms.html">Sąlygos</a>
+          <a href="/lt/privacy.html">Privatumas</a>
+          <a href="/lt/refund.html">Grąžinamos lėšos</a>
         </div>
       </article>
       <aside class="card checkout-shell">

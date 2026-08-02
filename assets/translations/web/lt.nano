@@ -44,7 +44,7 @@
         <h2>Atšaukimas</h2>
         <p>Galite atšaukti pagal jūsų naudojamo pirkimo kanalo taisykles. Atšaukimas sustabdo būsimą atnaujinimą. Jei pirkimo kanale nenurodyta kitaip, mokama prieiga išlieka iki dabartinio atsiskaitymo laikotarpio pabaigos.</p>
         <h2>Grąžinamos lėšos</h2>
-        <p>Pinigų grąžinimas tvarkomas pagal mūsų <a href="/refund">Grąžinimo politika</a>, pirkimo kanalo taisyklės ir taikomi vartotojų teisės aktai. Pirkinius programų parduotuvėje paprastai tvarko atitinkama programų parduotuvė.</p>
+        <p>Pinigų grąžinimas tvarkomas pagal mūsų <a href="/refund.html">Grąžinimo politika</a>, pirkimo kanalo taisyklės ir taikomi vartotojų teisės aktai. Pirkinius programų parduotuvėje paprastai tvarko atitinkama programų parduotuvė.</p>
         <h2>Priimtinas naudojimas</h2>
         <p>Negalite piktnaudžiauti „Aliolo“, kištis į paslaugą, bandyti neteisėtai pasiekti, išgryninti ar kopijuoti turinį dideliu mastu, pakeisti apsaugotas programos dalis, įkelti neteisėtos medžiagos arba naudoti paslaugą taip, kad būtų pakenkta kitiems naudotojams arba „Aliolo“.</p>
         <h2>Turinys ir prieinamumas</h2>
@@ -158,7 +158,7 @@
         <h2>Platformos kainų skirtumai</h2>
         <p>Kainos ir pasiūlymai gali skirtis priklausomai nuo internetinės kasos, „Google Play“, „Apple App Store“, šalių, valiutų ir riboto laiko reklamų. Galutinis atsiskaitymo ekranas valdo tikrąją pirkinio kainą ir atnaujinimo sąlygas.</p>
         <h2>Susijusi politika</h2>
-        <p>Prieš užsiprenumeruodami peržiūrėkite <a href="/terms">Prenumeratos sąlygos</a>, <a href="/refund">Grąžinimo politika</a>, ir <a href="/privacy">Privatumo politika</a>.</p>
+        <p>Prieš užsiprenumeruodami peržiūrėkite <a href="/terms.html">Prenumeratos sąlygos</a>, <a href="/refund.html">Grąžinimo politika</a>, ir <a href="/privacy.html">Privatumo politika</a>.</p>
     checkout_title „Aliolo Checkout“.
     checkout_subtitle Saugus „Aliolo Premium“ prenumeratos apmokėjimas.
     checkout_eyebrow Saugus atsiskaitymas
@@ -179,7 +179,7 @@
     landing_nav_login Prisijunkite
     landing_nav_cta Sukurti nemokamą paskyrą
     landing_hero_eyebrow Vizualinio mokymosi platforma
-    landing_hero_h1 Mokykitės vizualiai. Prisiminkite ilgiau.
+    landing_hero_h1 Mokykitės vizualiai. Meistras visam laikui.
     landing_hero_p Paverskite vaizdus, ​​​​garsą, vaizdo įrašus ir tekstą į struktūrines korteles. Mokykitės atsižvelgdami į kontekstą, peržiūrėkite tinkamu laiku ir patikrinkite, ką tikrai galite prisiminti.
     landing_hero_btn_primary Sukurti nemokamą paskyrą
     landing_hero_btn_secondary Prisijunkite
@@ -210,6 +210,12 @@
     landing_step_3_desc Pereikite prie tikslinio testavimo, kad atskleistumėte silpnąsias vietas, sustiprintumėte paiešką ir pažangą būtų galima išmatuoti.
     landing_pricing_h2 Pradėkite nemokamai. Atnaujinkite, kai jums reikia visos darbo eigos.
     landing_pricing_p Sukurti paskyrą be mokėjimo. „Premium“ prideda intervalų pasikartojimo, kūrimo, testavimo, automatinio paleidimo, privataus organizavimo ir gilesnio tinkinimo.
+    plan_weekly_title Savaitinė prieiga
+    plan_weekly_tagline Geriausiai tinka greitiems įvarčiams
+    plan_monthly_title Mėnesinė prieiga
+    plan_monthly_tagline Populiariausias pasirinkimas
+    plan_yearly_title Kasmetinė prieiga
+    plan_yearly_tagline Sutaupykite 33% per mėnesį
     landing_plan_weekly_desc Tinka trumpalaikiams postūmiams, greitoms apžvalgoms ar pasirengimui egzaminų savaitei.
     landing_plan_weekly_item_1 Trumpas įsipareigojimų langas
     landing_plan_weekly_item_2 Greitas būdas išbandyti aukščiausios kokybės darbo eigą

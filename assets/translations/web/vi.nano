@@ -44,7 +44,7 @@
         <h2>Hủy bỏ</h2>
         <p>Bạn có thể hủy theo quy định của kênh mua hàng bạn đã sử dụng. Việc hủy sẽ ngừng gia hạn trong tương lai. Trừ khi kênh mua hàng có quy định khác, quyền truy cập trả phí vẫn có sẵn cho đến khi kết thúc thời hạn thanh toán hiện tại.</p>
         <h2>Hoàn tiền</h2>
-        <p>Việc hoàn tiền được xử lý theo quy định của chúng tôi <a href="/refund">Chính sách hoàn tiền</a>, quy tắc kênh mua hàng và luật tiêu dùng hiện hành. Việc mua hàng trên cửa hàng ứng dụng thường được xử lý bởi cửa hàng ứng dụng có liên quan.</p>
+        <p>Việc hoàn tiền được xử lý theo quy định của chúng tôi <a href="/refund.html">Chính sách hoàn tiền</a>, quy tắc kênh mua hàng và luật tiêu dùng hiện hành. Việc mua hàng trên cửa hàng ứng dụng thường được xử lý bởi cửa hàng ứng dụng có liên quan.</p>
         <h2>Sử dụng được chấp nhận</h2>
         <p>Bạn không được lạm dụng Aliolo, can thiệp vào dịch vụ, cố gắng truy cập trái phép, sao chép hoặc sao chép nội dung trên quy mô lớn, đảo ngược các phần được bảo vệ của ứng dụng, tải lên tài liệu bất hợp pháp hoặc sử dụng dịch vụ theo cách gây hại cho người dùng khác hoặc Aliolo.</p>
         <h2>Nội dung và tính sẵn có</h2>
@@ -158,7 +158,7 @@
         <h2>Chênh lệch giá nền tảng</h2>
         <p>Giá và ưu đãi có thể khác nhau giữa thanh toán trên web, Google Play, Apple App Store, quốc gia, đơn vị tiền tệ và các chương trình khuyến mãi trong thời gian giới hạn. Màn hình thanh toán cuối cùng kiểm soát giá thực tế và các điều khoản gia hạn cho giao dịch mua hàng của bạn.</p>
         <h2>Chính sách liên quan</h2>
-        <p>Trước khi đăng ký, hãy xem lại <a href="/terms">Điều khoản đăng ký</a>, <a href="/refund">Chính sách hoàn tiền</a>, Và <a href="/privacy">Chính sách bảo mật</a>.</p>
+        <p>Trước khi đăng ký, hãy xem lại <a href="/terms.html">Điều khoản đăng ký</a>, <a href="/refund.html">Chính sách hoàn tiền</a>, Và <a href="/privacy.html">Chính sách bảo mật</a>.</p>
     checkout_title Thanh toán Aliolo
     checkout_subtitle Thanh toán an toàn cho đăng ký Aliolo Premium.
     checkout_eyebrow Thanh toán an toàn
@@ -179,7 +179,7 @@
     landing_nav_login Đăng nhập
     landing_nav_cta Tạo tài khoản miễn phí
     landing_hero_eyebrow Nền tảng học tập trực quan
-    landing_hero_h1 Học trực quan. Nhớ lâu hơn.
+    landing_hero_h1 Học trực quan. Làm chủ vĩnh viễn.
     landing_hero_p Biến hình ảnh, âm thanh, video và văn bản thành các thẻ ghi chú có cấu trúc. Học theo ngữ cảnh, xem lại vào đúng thời điểm và kiểm tra những gì bạn thực sự có thể nhớ lại.
     landing_hero_btn_primary Tạo tài khoản miễn phí
     landing_hero_btn_secondary Đăng nhập
@@ -210,6 +210,12 @@
     landing_step_3_desc Chuyển sang thử nghiệm tập trung để phát hiện những điểm yếu, củng cố khả năng truy xuất và đo lường tiến độ.
     landing_pricing_h2 Bắt đầu miễn phí. Nâng cấp khi bạn cần quy trình làm việc đầy đủ.
     landing_pricing_p Tạo một tài khoản mà không cần thanh toán. Premium bổ sung tính năng lặp lại, tạo, thử nghiệm, tự động phát, tổ chức riêng tư và tùy chỉnh sâu hơn.
+    plan_weekly_title Truy cập hàng tuần
+    plan_weekly_tagline Tốt nhất cho mục tiêu nhanh chóng
+    plan_monthly_title Truy cập hàng tháng
+    plan_monthly_tagline Sự lựa chọn phổ biến nhất
+    plan_yearly_title Truy cập hàng năm
+    plan_yearly_tagline Tiết kiệm 33% mỗi tháng
     landing_plan_weekly_desc Phù hợp cho những đợt thúc đẩy ngắn hạn, ôn tập nhanh hoặc chuẩn bị cho tuần thi.
     landing_plan_weekly_item_1 Thời hạn cam kết ngắn
     landing_plan_weekly_item_2 Cách nhanh chóng để thử quy trình làm việc cao cấp

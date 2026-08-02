@@ -44,7 +44,7 @@
         <h2>Törlés</h2>
         <p>Az Ön által használt vásárlási csatorna szabályai szerint lemondhatja. A lemondás leállítja a jövőbeni megújítást. Ha a vásárlási csatorna másként nem rendelkezik, a fizetős hozzáférés az aktuális számlázási időszak végéig elérhető marad.</p>
         <h2>Visszatérítések</h2>
-        <p>A visszatérítést a mieink szerint kezeljük <a href="/refund">Visszatérítési szabályzat</a>, a vásárlási csatornára vonatkozó szabályok és az alkalmazandó fogyasztóvédelmi jogszabályok. Az App Store vásárlásokat általában az érintett alkalmazásbolt kezeli.</p>
+        <p>A visszatérítést a mieink szerint kezeljük <a href="/refund.html">Visszatérítési szabályzat</a>, a vásárlási csatornára vonatkozó szabályok és az alkalmazandó fogyasztóvédelmi jogszabályok. Az App Store vásárlásokat általában az érintett alkalmazásbolt kezeli.</p>
         <h2>Elfogadható használat</h2>
         <p>Nem használhatja vissza az Aliolo-t, nem zavarhatja meg a szolgáltatást, nem kísérelhet meg jogosulatlan hozzáférést, nem másolhat vagy másolhat nagy mennyiségben tartalmat, nem fejtheti vissza az alkalmazás védett részeit, nem tölthet fel jogellenes anyagokat, és nem használhatja a szolgáltatást más felhasználóknak vagy az Aliolónak károsító módon.</p>
         <h2>Tartalom és elérhetőség</h2>
@@ -158,7 +158,7 @@
         <h2>Platform árkülönbségek</h2>
         <p>Az árak és az ajánlatok a webes fizetés, a Google Play, az Apple App Store, az országok, a pénznemek és a korlátozott idejű promóciók között változhatnak. Az utolsó fizetési képernyő szabályozza a vásárlás tényleges árát és megújítási feltételeit.</p>
         <h2>Kapcsolódó irányelvek</h2>
-        <p>Előfizetés előtt tekintse át a <a href="/terms">Előfizetési feltételek</a>, <a href="/refund">Visszatérítési szabályzat</a>, és <a href="/privacy">Adatvédelmi szabályzat</a>.</p>
+        <p>Előfizetés előtt tekintse át a <a href="/terms.html">Előfizetési feltételek</a>, <a href="/refund.html">Visszatérítési szabályzat</a>, és <a href="/privacy.html">Adatvédelmi szabályzat</a>.</p>
     checkout_title Aliolo Checkout
     checkout_subtitle Biztonságos fizetés az Aliolo Premium előfizetésekhez.
     checkout_eyebrow Biztonságos fizetés
@@ -179,7 +179,7 @@
     landing_nav_login Jelentkezzen be
     landing_nav_cta Hozzon létre ingyenes fiókot
     landing_hero_eyebrow Vizuális tanulási platform
-    landing_hero_h1 Tanuljon vizuálisan. Emlékezz tovább.
+    landing_hero_h1 Tanuljon vizuálisan. Mester végleg.
     landing_hero_p A képeket, hangokat, videókat és szövegeket strukturált kártyákká alakíthatja. Tanuljon a kontextus alapján, tekintse át a megfelelő időben, és tesztelje, hogy mire tud igazán visszaemlékezni.
     landing_hero_btn_primary Hozzon létre ingyenes fiókot
     landing_hero_btn_secondary Jelentkezzen be
@@ -210,6 +210,12 @@
     landing_step_3_desc Váltson fókuszált tesztelésre, hogy feltárja a gyenge pontokat, megerősítse a visszakeresést, és mérhetővé tegye a fejlődést.
     landing_pricing_h2 Kezdje ingyen. Frissítsen, amikor szüksége van a teljes munkafolyamatra.
     landing_pricing_p Hozzon létre egy fiókot fizetés nélkül. A Premium rendszeres ismétlést, létrehozást, tesztelést, automatikus lejátszást, privát rendszerezést és mélyebb testreszabást kínál.
+    plan_weekly_title Heti hozzáférés
+    plan_weekly_tagline Legjobb gyors gólokhoz
+    plan_monthly_title Havi hozzáférés
+    plan_monthly_tagline A legnépszerűbb választás
+    plan_yearly_title Éves hozzáférés
+    plan_yearly_tagline 33% megtakarítás havonta
     landing_plan_weekly_desc Jó a rövid távú lökésekhez, gyors áttekintésekhez vagy a vizsgahetes felkészüléshez.
     landing_plan_weekly_item_1 Rövid kötelezettségvállalási időszak
     landing_plan_weekly_item_2 Gyors módja annak, hogy kipróbálja a prémium munkafolyamatot

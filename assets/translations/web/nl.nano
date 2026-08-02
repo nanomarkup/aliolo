@@ -44,7 +44,7 @@
         <h2>Annulering</h2>
         <p>Je kunt opzeggen volgens de regels van het aankoopkanaal dat je hebt gebruikt. Annulering stopt toekomstige verlenging. Tenzij het aankoopkanaal anders aangeeft, blijft betaalde toegang beschikbaar tot het einde van de huidige factureringsperiode.</p>
         <h2>Terugbetalingen</h2>
-        <p>Terugbetalingen worden afgehandeld volgens onze <a href="/refund">Terugbetalingsbeleid</a>, de regels voor het aankoopkanaal en het toepasselijke consumentenrecht. Aankopen in de App Store worden normaal gesproken afgehandeld door de betreffende App Store.</p>
+        <p>Terugbetalingen worden afgehandeld volgens onze <a href="/refund.html">Terugbetalingsbeleid</a>, de regels voor het aankoopkanaal en het toepasselijke consumentenrecht. Aankopen in de App Store worden normaal gesproken afgehandeld door de betreffende App Store.</p>
         <h2>Aanvaardbaar gebruik</h2>
         <p>U mag Aliolo niet misbruiken, de dienst verstoren, ongeoorloofde toegang proberen, inhoud op grote schaal schrapen of kopiëren, beschermde delen van de app reverse-engineeren, onwettig materiaal uploaden of de dienst gebruiken op een manier die andere gebruikers of Aliolo schaadt.</p>
         <h2>Inhoud en beschikbaarheid</h2>
@@ -158,7 +158,7 @@
         <h2>Platformprijsverschillen</h2>
         <p>Prijzen en aanbiedingen kunnen variëren tussen internetkassa, Google Play, Apple App Store, landen, valuta's en tijdelijke promoties. Het laatste afrekenscherm controleert de werkelijke prijs en verlengingsvoorwaarden voor uw aankoop.</p>
         <h2>Gerelateerd beleid</h2>
-        <p>Voordat u zich abonneert, bekijkt u de <a href="/terms">Abonnementsvoorwaarden</a>, <a href="/refund">Terugbetalingsbeleid</a>, En <a href="/privacy">Privacybeleid</a>.</p>
+        <p>Voordat u zich abonneert, bekijkt u de <a href="/terms.html">Abonnementsvoorwaarden</a>, <a href="/refund.html">Terugbetalingsbeleid</a>, En <a href="/privacy.html">Privacybeleid</a>.</p>
     checkout_title Aliolo-afrekening
     checkout_subtitle Veilig afrekenen voor Aliolo Premium-abonnementen.
     checkout_eyebrow Veilig afrekenen
@@ -179,7 +179,7 @@
     landing_nav_login Inloggen
     landing_nav_cta Maak een gratis account aan
     landing_hero_eyebrow Visueel leerplatform
-    landing_hero_h1 Visueel leren. Onthoud langer.
+    landing_hero_h1 Visueel leren. Meester permanent.
     landing_hero_p Zet afbeeldingen, audio, video en tekst om in gestructureerde flashcards. Leer met context, bekijk het op het juiste moment en test wat u zich echt kunt herinneren.
     landing_hero_btn_primary Maak een gratis account aan
     landing_hero_btn_secondary Inloggen
@@ -210,6 +210,12 @@
     landing_step_3_desc Ga gericht testen om zwakke plekken bloot te leggen, het ophalen te versterken en de voortgang meetbaar te maken.
     landing_pricing_h2 Begin gratis. Upgrade wanneer u de volledige workflow nodig heeft.
     landing_pricing_p Maak een account aan zonder betaling. Premium voegt gespreide herhaling, creatie, testen, autoplay, privé-organisatie en diepere aanpassingen toe.
+    plan_weekly_title Wekelijkse toegang
+    plan_weekly_tagline Beste voor snelle doelpunten
+    plan_monthly_title Maandelijkse toegang
+    plan_monthly_tagline Meest populaire keuze
+    plan_yearly_title Jaarlijkse toegang
+    plan_yearly_tagline Bespaar 33% per maand
     landing_plan_weekly_desc Goed voor kortetermijnsessies, snelle beoordelingen of voorbereiding op een examenweek.
     landing_plan_weekly_item_1 Korte verbintenisperiode
     landing_plan_weekly_item_2 Snelle manier om de premium workflow uit te proberen

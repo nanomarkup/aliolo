@@ -68,7 +68,7 @@ ENGLISH_CONTENT = {
 <h2>Cancellation</h2>
 <p>You can cancel according to the rules of the purchase channel you used. Cancellation stops future renewal. Unless the purchase channel states otherwise, paid access remains available until the end of the current billing period.</p>
 <h2>Refunds</h2>
-<p>Refunds are handled according to our <a href="/refund">Refund Policy</a>, the purchase channel rules, and applicable consumer law. App store purchases are normally handled by the relevant app store.</p>
+<p>Refunds are handled according to our <a href="/refund.html">Refund Policy</a>, the purchase channel rules, and applicable consumer law. App store purchases are normally handled by the relevant app store.</p>
 <h2>Acceptable Use</h2>
 <p>You may not misuse Aliolo, interfere with the service, attempt unauthorized access, scrape or copy content at scale, reverse engineer protected parts of the app, upload unlawful material, or use the service in a way that harms other users or Aliolo.</p>
 <h2>Content and Availability</h2>
@@ -184,7 +184,7 @@ ENGLISH_CONTENT = {
 <h2>Platform Price Differences</h2>
 <p>Prices and offers may vary between web checkout, Google Play, Apple App Store, countries, currencies, and limited-time promotions. The final checkout screen controls the actual price and renewal terms for your purchase.</p>
 <h2>Related Policies</h2>
-<p>Before subscribing, review the <a href="/terms">Subscription Terms</a>, <a href="/refund">Refund Policy</a>, and <a href="/privacy">Privacy Policy</a>.</p>""",
+<p>Before subscribing, review the <a href="/terms.html">Subscription Terms</a>, <a href="/refund.html">Refund Policy</a>, and <a href="/privacy.html">Privacy Policy</a>.</p>""",
 
     # Checkout Page
     "checkout_title": "Aliolo Checkout",
@@ -211,7 +211,7 @@ ENGLISH_CONTENT = {
 
     # Landing Hero Section
     "landing_hero_eyebrow": "Visual learning platform",
-    "landing_hero_h1": "Learn visually. Remember longer.",
+    "landing_hero_h1": "Learn visually. Master permanently.",
     "landing_hero_p": "Turn images, audio, video, and text into structured flashcards. Learn with context, review at the right time, and test what you can truly recall.",
     "landing_hero_btn_primary": "Create free account",
     "landing_hero_btn_secondary": "Log in",
@@ -258,18 +258,24 @@ ENGLISH_CONTENT = {
     "landing_pricing_p": "Create an account without payment. Premium adds spaced repetition, creation, testing, autoplay, private organization, and deeper customization.",
 
     # Pricing Plans
+    "plan_weekly_title": "Weekly Access",
+    "plan_weekly_tagline": "Best for quick goals",
     "landing_plan_weekly_desc": "Good for short-term pushes, quick reviews, or exam-week prep.",
     "landing_plan_weekly_item_1": "Short commitment window",
     "landing_plan_weekly_item_2": "Fast way to try the premium workflow",
     "landing_plan_weekly_item_3": "Renews automatically until canceled",
     "landing_plan_weekly_btn": "View plan details",
 
+    "plan_monthly_title": "Monthly Access",
+    "plan_monthly_tagline": "Most popular choice",
     "landing_plan_monthly_desc": "Balanced access for students building a steady learning habit.",
     "landing_plan_monthly_item_1": "Best for regular weekly study",
     "landing_plan_monthly_item_2": "Enough time to organize larger subject libraries",
     "landing_plan_monthly_item_3": "Renews automatically until canceled",
     "landing_plan_monthly_btn": "View plan details",
 
+    "plan_yearly_title": "Yearly Access",
+    "plan_yearly_tagline": "Save 33% per month",
     "landing_plan_yearly_desc": "Lowest effective monthly cost for learners who want a durable study system.",
     "landing_plan_yearly_item_1": "Ideal for long-term language and professional study",
     "landing_plan_yearly_item_2": "Lower cost over time",

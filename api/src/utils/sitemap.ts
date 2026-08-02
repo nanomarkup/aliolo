@@ -44,11 +44,11 @@ export async function generateSitemapXml(db: D1Database, baseUrl: string): Promi
 
         // Static routes
         const staticRoutes = [
-            { path: '/', lastmod: '2026-08-01' },
-            { path: '/privacy', lastmod: '2026-04-28' },
-            { path: '/terms', lastmod: '2026-04-28' },
-            { path: '/refund', lastmod: '2026-04-28' },
-            { path: '/pricing', lastmod: '2026-04-28' },
+            { path: '/landing.html', lastmod: '2026-08-01' },
+            { path: '/privacy.html', lastmod: '2026-04-28' },
+            { path: '/terms.html', lastmod: '2026-04-28' },
+            { path: '/refund.html', lastmod: '2026-04-28' },
+            { path: '/pricing.html', lastmod: '2026-04-28' },
         ];
 
         const SUPPORTED_LANGS = [
@@ -63,11 +63,7 @@ export async function generateSitemapXml(db: D1Database, baseUrl: string): Promi
                 if (lang !== 'en') {
                     loc += `/${lang}`;
                 }
-                if (route.path !== '/') {
-                    loc += route.path;
-                } else if (lang === 'en') {
-                    loc += '/';
-                }
+                loc += route.path;
                 xml += `  <url>\n`;
                 xml += `    <loc>${escapeXml(loc)}</loc>\n`;
                 xml += `    <lastmod>${route.lastmod}</lastmod>\n`;

@@ -44,7 +44,7 @@
         <h2>Atcelšana</h2>
         <p>Jūs varat atcelt saskaņā ar jūsu izmantotā pirkuma kanāla noteikumiem. Atcelšana aptur turpmāko atjaunošanu. Ja vien pirkuma kanālā nav norādīts citādi, maksas piekļuve ir pieejama līdz pašreizējā norēķinu perioda beigām.</p>
         <h2>Atmaksas</h2>
-        <p>Atmaksa tiek veikta saskaņā ar mūsu <a href="/refund">Atmaksas politika</a>, pirkuma kanālu noteikumi un piemērojamie patērētāju tiesību akti. Pirkumus lietotņu veikalā parasti veic attiecīgais lietotņu veikals.</p>
+        <p>Atmaksa tiek veikta saskaņā ar mūsu <a href="/refund.html">Atmaksas politika</a>, pirkuma kanālu noteikumi un piemērojamie patērētāju tiesību akti. Pirkumus lietotņu veikalā parasti veic attiecīgais lietotņu veikals.</p>
         <h2>Pieņemama lietošana</h2>
         <p>Jūs nedrīkstat ļaunprātīgi izmantot Aliolo, traucēt pakalpojumam, mēģināt nesankcionēti piekļūt, skrāpēt vai kopēt saturu lielā mērogā, veikt reverso inženieriju aizsargātas lietotnes daļas, augšupielādēt nelikumīgu materiālu vai izmantot pakalpojumu veidā, kas kaitē citiem lietotājiem vai Aliolo.</p>
         <h2>Saturs un pieejamība</h2>
@@ -158,7 +158,7 @@
         <h2>Platformu cenu atšķirības</h2>
         <p>Cenas un piedāvājumi var atšķirties atkarībā no norēķināšanās tīmeklī, Google Play, Apple App Store, valstīm, valūtām un ierobežota laika akcijām. Pēdējā norēķināšanās ekrānā tiek kontrolēta pirkuma faktiskā cena un atjaunošanas noteikumi.</p>
         <h2>Saistītās politikas</h2>
-        <p>Pirms abonēšanas pārskatiet <a href="/terms">Abonēšanas noteikumi</a>, <a href="/refund">Atmaksas politika</a>, un <a href="/privacy">Privātuma politika</a>.</p>
+        <p>Pirms abonēšanas pārskatiet <a href="/terms.html">Abonēšanas noteikumi</a>, <a href="/refund.html">Atmaksas politika</a>, un <a href="/privacy.html">Privātuma politika</a>.</p>
     checkout_title Aliolo Checkout
     checkout_subtitle Droša izrakstīšanās Aliolo Premium abonementiem.
     checkout_eyebrow Droša izrakstīšanās
@@ -179,7 +179,7 @@
     landing_nav_login Piesakieties
     landing_nav_cta Izveidojiet bezmaksas kontu
     landing_hero_eyebrow Vizuālā mācību platforma
-    landing_hero_h1 Mācieties vizuāli. Atcerieties ilgāk.
+    landing_hero_h1 Mācieties vizuāli. Apgūstiet pastāvīgi.
     landing_hero_p Pārvērtiet attēlus, audio, video un tekstu strukturētās kartītēs. Mācieties, ņemot vērā kontekstu, pārskatiet to īstajā laikā un pārbaudiet, ko patiešām varat atcerēties.
     landing_hero_btn_primary Izveidojiet bezmaksas kontu
     landing_hero_btn_secondary Piesakieties
@@ -210,6 +210,12 @@
     landing_step_3_desc Pārejiet uz mērķtiecīgu testēšanu, lai atklātu vājās vietas, pastiprinātu atgūšanu un padarītu progresu izmērāmu.
     landing_pricing_h2 Sāciet bez maksas. Jauniniet, kad nepieciešama pilna darbplūsma.
     landing_pricing_p Izveidojiet kontu bez maksājuma. Premium nodrošina atkārtotu atkārtošanos, izveidi, testēšanu, automātisko atskaņošanu, privātu organizēšanu un padziļinātu pielāgošanu.
+    plan_weekly_title Iknedēļas piekļuve
+    plan_weekly_tagline Vislabāk ātriem mērķiem
+    plan_monthly_title Ikmēneša piekļuve
+    plan_monthly_tagline Populārākā izvēle
+    plan_yearly_title Ikgadējā piekļuve
+    plan_yearly_tagline Ietaupiet 33% mēnesī
     landing_plan_weekly_desc Piemērots īstermiņa grūdieniem, ātrai pārskatīšanai vai eksāmenu nedēļas sagatavošanai.
     landing_plan_weekly_item_1 Īss saistību periods
     landing_plan_weekly_item_2 Ātrs veids, kā izmēģināt augstākās kvalitātes darbplūsmu

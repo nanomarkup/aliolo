@@ -44,7 +44,7 @@
         <h2>해제</h2>
         <p>이용하신 구매 채널의 규정에 따라 취소가 가능합니다. 취소하면 향후 갱신이 중단됩니다. 구매 채널에 달리 명시되지 않는 한, 현재 청구 기간이 끝날 때까지 유료 액세스를 계속 사용할 수 있습니다.</p>
         <h2>환불</h2>
-        <p>환불은 당사 규정에 따라 처리됩니다. <a href="/refund">환불 정책</a>, 구매 채널 규칙 및 관련 소비자법. 앱 스토어 구매는 일반적으로 해당 앱 스토어에서 처리됩니다.</p>
+        <p>환불은 당사 규정에 따라 처리됩니다. <a href="/refund.html">환불 정책</a>, 구매 채널 규칙 및 관련 소비자법. 앱 스토어 구매는 일반적으로 해당 앱 스토어에서 처리됩니다.</p>
         <h2>허용되는 사용</h2>
         <p>귀하는 Aliolo를 오용하거나, 서비스를 방해하거나, 무단 액세스를 시도하거나, 콘텐츠를 대규모로 스크랩 또는 복사하거나, 앱의 보호된 부분을 리버스 엔지니어링하거나, 불법 자료를 업로드하거나, 다른 사용자나 Aliolo에게 해를 끼치는 방식으로 서비스를 사용할 수 없습니다.</p>
         <h2>콘텐츠 및 가용성</h2>
@@ -158,7 +158,7 @@
         <h2>플랫폼 가격 차이</h2>
         <p>가격과 제안은 웹 결제, Google Play, Apple App Store, 국가, 통화 및 기간 한정 프로모션에 따라 다를 수 있습니다. 최종 결제 화면에서는 구매에 대한 실제 가격과 갱신 조건을 제어합니다.</p>
         <h2>관련 정책</h2>
-        <p>구독하기 전에 다음 사항을 검토하세요. <a href="/terms">구독 조건</a>, <a href="/refund">환불 정책</a>, 그리고 <a href="/privacy">개인 정보 보호 정책</a>.</p>
+        <p>구독하기 전에 다음 사항을 검토하세요. <a href="/terms.html">구독 조건</a>, <a href="/refund.html">환불 정책</a>, 그리고 <a href="/privacy.html">개인 정보 보호 정책</a>.</p>
     checkout_title 알리올로 체크아웃
     checkout_subtitle Aliolo Premium 구독을 안전하게 결제하세요.
     checkout_eyebrow 안전한 결제
@@ -179,7 +179,7 @@
     landing_nav_login 로그인
     landing_nav_cta 무료 계정 만들기
     landing_hero_eyebrow 시각적 학습 플랫폼
-    landing_hero_h1 시각적으로 배워보세요. 더 오래 기억하세요.
+    landing_hero_h1 시각적으로 배워보세요. 영구적으로 마스터하세요.
     landing_hero_p 이미지, 오디오, 비디오, 텍스트를 구조화된 플래시카드로 바꿔보세요. 상황에 맞게 학습하고, 적절한 시기에 검토하고, 실제로 기억할 수 있는 내용을 테스트하세요.
     landing_hero_btn_primary 무료 계정 만들기
     landing_hero_btn_secondary 로그인
@@ -210,6 +210,12 @@
     landing_step_3_desc 약점을 노출하고, 검색을 강화하고, 진행 상황을 측정 가능하게 만들기 위해 집중적인 테스트로 전환하세요.
     landing_pricing_h2 무료로 시작하세요. 전체 워크플로가 필요할 때 업그레이드하세요.
     landing_pricing_p 결제 없이 계정을 만드세요. Premium에는 간격 반복, 생성, 테스트, 자동 재생, 비공개 구성 및 심층적인 사용자 정의 기능이 추가되어 있습니다.
+    plan_weekly_title 주간 액세스
+    plan_weekly_tagline 빠른 목표에 가장 적합
+    plan_monthly_title 월간 액세스
+    plan_monthly_tagline 가장 인기있는 선택
+    plan_yearly_title 연간 액세스
+    plan_yearly_tagline 월 33% 할인
     landing_plan_weekly_desc 단기 추진, 빠른 검토 또는 시험 주간 준비에 적합합니다.
     landing_plan_weekly_item_1 짧은 약정 기간
     landing_plan_weekly_item_2 프리미엄 워크플로우를 빠르게 체험해 볼 수 있는 방법

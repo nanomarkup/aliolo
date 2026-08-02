@@ -44,7 +44,7 @@
         <h2>Kanċellazzjoni</h2>
         <p>Tista 'tikkanċella skont ir-regoli tal-kanal tax-xiri li użajt. Il-kanċellazzjoni twaqqaf it-tiġdid fil-futur. Sakemm il-kanal tax-xiri ma jiddikjarax mod ieħor, l-aċċess imħallas jibqa’ disponibbli sa tmiem il-perjodu attwali tal-kontijiet.</p>
         <h2>Rifużjonijiet</h2>
-        <p>Ir-rifużjonijiet huma ttrattati skond tagħna <a href="/refund">Politika ta' Rifużjoni</a>, ir-regoli tal-kanal tax-xiri, u l-liġi applikabbli tal-konsumatur. Ix-xiri tal-app store normalment jiġi ttrattat mill-app store rilevanti.</p>
+        <p>Ir-rifużjonijiet huma ttrattati skond tagħna <a href="/refund.html">Politika ta' Rifużjoni</a>, ir-regoli tal-kanal tax-xiri, u l-liġi applikabbli tal-konsumatur. Ix-xiri tal-app store normalment jiġi ttrattat mill-app store rilevanti.</p>
         <h2>Użu Aċċettabbli</h2>
         <p>Inti ma tistax tuża ħażin Aliolo, tinterferixxi mas-servizz, tipprova aċċess mhux awtorizzat, tobrox jew tikkopja kontenut fuq skala, tagħmel reverse engineering partijiet protetti tal-app, ittella materjal illegali, jew tuża s-servizz b'mod li jagħmel ħsara lil utenti oħra jew lil Aliolo.</p>
         <h2>Kontenut u Disponibbiltà</h2>
@@ -158,7 +158,7 @@
         <h2>Differenzi fil-prezzijiet tal-Pjattaforma</h2>
         <p>Prezzijiet u offerti jistgħu jvarjaw bejn web checkout, Google Play, Apple App Store, pajjiżi, muniti, u promozzjonijiet għal żmien limitat. L-iskrin tal-kontroll finali jikkontrolla l-prezz attwali u t-termini tat-tiġdid għax-xiri tiegħek.</p>
         <h2>Politiki Relatati</h2>
-        <p>Qabel ma tissottoskrivi, irrevedi l- <a href="/terms">Termini ta' Abbonament</a>, <a href="/refund">Politika ta' Rifużjoni</a>, u <a href="/privacy">Politika ta' Privatezza</a>.</p>
+        <p>Qabel ma tissottoskrivi, irrevedi l- <a href="/terms.html">Termini ta' Abbonament</a>, <a href="/refund.html">Politika ta' Rifużjoni</a>, u <a href="/privacy.html">Politika ta' Privatezza</a>.</p>
     checkout_title Aliolo Checkout
     checkout_subtitle Checkout sigur għall-abbonamenti Aliolo Premium.
     checkout_eyebrow Checkout sigur
@@ -179,7 +179,7 @@
     landing_nav_login Idħol
     landing_nav_cta Oħloq kont b'xejn
     landing_hero_eyebrow Pjattaforma ta' tagħlim viżwali
-    landing_hero_h1 Tgħallem viżwalment. Ftakar itwal.
+    landing_hero_h1 Tgħallem viżwalment. Kaptan b'mod permanenti.
     landing_hero_p Dawwar immaġini, awdjo, vidjo, u test fi flashcards strutturati. Tgħallem bil-kuntest, irrevedi fil-ħin it-tajjeb, u ttestja dak li tista' verament tiftakar.
     landing_hero_btn_primary Oħloq kont b'xejn
     landing_hero_btn_secondary Idħol
@@ -210,6 +210,12 @@
     landing_step_3_desc Imxi f'ttestjar iffukat biex tesponi punti dgħajfa, issaħħaħ l-irkupru, u tagħmel il-progress jitkejjel.
     landing_pricing_h2 Ibda b'xejn. Aġġorna meta jkollok bżonn il-fluss tax-xogħol sħiħ.
     landing_pricing_p Oħloq kont mingħajr ħlas. Il-premium iżid ripetizzjoni spazjata, ħolqien, ittestjar, awtoplay, organizzazzjoni privata, u customization aktar profonda.
+    plan_weekly_title Aċċess fil-ġimgħa
+    plan_weekly_tagline L-aħjar għal għanijiet ta' malajr
+    plan_monthly_title Aċċess ta' Kull Xahar
+    plan_monthly_tagline L-aktar għażla popolari
+    plan_yearly_title Aċċess annwali
+    plan_yearly_tagline Iffranka 33% fix-xahar
     landing_plan_weekly_desc Tajjeb għal pushes għal żmien qasir, reviżjonijiet malajr, jew preparazzjoni għall-ġimgħa tal-eżami.
     landing_plan_weekly_item_1 Tieqa ta' impenn qasir
     landing_plan_weekly_item_2 Mod mgħaġġel biex tipprova l-fluss tax-xogħol premium

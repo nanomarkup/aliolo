@@ -44,7 +44,7 @@
         <h2>Tühistamine</h2>
         <p>Saate tühistada vastavalt kasutatud ostukanali reeglitele. Tühistamine peatab tulevase pikendamise. Kui ostukanal ei teata teisiti, jääb tasuline juurdepääs kättesaadavaks kuni jooksva arveldusperioodi lõpuni.</p>
         <h2>Tagasimaksed</h2>
-        <p>Tagasimakseid käsitletakse vastavalt meie <a href="/refund">Tagasimaksepoliitika</a>, ostukanali reeglid ja kohaldatavad tarbijaõigused. Rakenduste poe ostudega tegeleb tavaliselt vastav rakenduste pood.</p>
+        <p>Tagasimakseid käsitletakse vastavalt meie <a href="/refund.html">Tagasimaksepoliitika</a>, ostukanali reeglid ja kohaldatavad tarbijaõigused. Rakenduste poe ostudega tegeleb tavaliselt vastav rakenduste pood.</p>
         <h2>Vastuvõetav kasutamine</h2>
         <p>Te ei tohi Aliolot kuritarvitada, teenust segada, volitamata juurdepääsu üritada, sisu ulatuslikult kraapida või kopeerida, rakenduse kaitstud osi pöördprojekteerida, ebaseaduslikku materjali üles laadida ega kasutada teenust viisil, mis kahjustab teisi kasutajaid või Aliolot.</p>
         <h2>Sisu ja saadavus</h2>
@@ -158,7 +158,7 @@
         <h2>Platvormide hinnaerinevused</h2>
         <p>Hinnad ja pakkumised võivad veebikassa, Google Play, Apple App Store'i, riikide, valuutade ja piiratud aja pakkumiste lõikes erineda. Lõplik kassaekraan kontrollib teie ostu tegelikku hinda ja pikendamise tingimusi.</p>
         <h2>Seotud eeskirjad</h2>
-        <p>Enne tellimist vaadake üle <a href="/terms">Tellimistingimused</a>, <a href="/refund">Tagasimaksepoliitika</a>ja <a href="/privacy">Privaatsuspoliitika</a>.</p>
+        <p>Enne tellimist vaadake üle <a href="/terms.html">Tellimistingimused</a>, <a href="/refund.html">Tagasimaksepoliitika</a>ja <a href="/privacy.html">Privaatsuspoliitika</a>.</p>
     checkout_title Aliolo kassa
     checkout_subtitle Aliolo Premiumi tellimuste turvaline maksmine.
     checkout_eyebrow Turvaline kassa
@@ -179,7 +179,7 @@
     landing_nav_login Logi sisse
     landing_nav_cta Loo tasuta konto
     landing_hero_eyebrow Visuaalne õppeplatvorm
-    landing_hero_h1 Õppige visuaalselt. Pidage meeles kauem.
+    landing_hero_h1 Õppige visuaalselt. Õpetage püsivalt.
     landing_hero_p Muutke pildid, heli, video ja tekst struktureeritud mälukaartideks. Õppige kontekstiga, vaadake üle õigel ajal ja testige, mida saate tõeliselt meelde jätta.
     landing_hero_btn_primary Loo tasuta konto
     landing_hero_btn_secondary Logi sisse
@@ -210,6 +210,12 @@
     landing_step_3_desc Liikuge keskendunud testimisele, et paljastada nõrgad kohad, tugevdada otsimist ja muuta edusammud mõõdetavaks.
     landing_pricing_h2 Alusta tasuta. Uuendage, kui vajate täielikku töövoogu.
     landing_pricing_p Looge konto ilma makseta. Premium lisab vahedega kordamise, loomise, testimise, automaatesituse, privaatse korraldamise ja põhjalikuma kohandamise.
+    plan_weekly_title Iganädalane juurdepääs
+    plan_weekly_tagline Parim kiirete eesmärkide saavutamiseks
+    plan_monthly_title Igakuine juurdepääs
+    plan_monthly_tagline Kõige populaarsem valik
+    plan_yearly_title Aastane juurdepääs
+    plan_yearly_tagline Säästa 33% kuus
     landing_plan_weekly_desc Sobib lühiajaliseks tõukejõuks, kiireks ülevaateks või eksaminädalaks valmistumiseks.
     landing_plan_weekly_item_1 Lühike kohustuste aken
     landing_plan_weekly_item_2 Kiire viis esmaklassilise töövoo proovimiseks

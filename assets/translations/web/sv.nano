@@ -44,7 +44,7 @@
         <h2>Annullering</h2>
         <p>Du kan avbryta enligt reglerna för köpkanalen du använde. Avbokning stoppar framtida förnyelse. Om inte köpkanalen anger något annat förblir betald åtkomst tillgänglig till slutet av den aktuella faktureringsperioden.</p>
         <h2>Återbetalningar</h2>
-        <p>Återbetalningar hanteras enligt vår <a href="/refund">Återbetalningspolicy</a>, köpkanalreglerna och tillämplig konsumentlagstiftning. Appstore-köp hanteras normalt av den aktuella appbutiken.</p>
+        <p>Återbetalningar hanteras enligt vår <a href="/refund.html">Återbetalningspolicy</a>, köpkanalreglerna och tillämplig konsumentlagstiftning. Appstore-köp hanteras normalt av den aktuella appbutiken.</p>
         <h2>Acceptabel användning</h2>
         <p>Du får inte missbruka Aliolo, störa tjänsten, försöka obehörig åtkomst, skrapa eller kopiera innehåll i stor skala, bakåtkonstruera skyddade delar av appen, ladda upp olagligt material eller använda tjänsten på ett sätt som skadar andra användare eller Aliolo.</p>
         <h2>Innehåll och tillgänglighet</h2>
@@ -158,7 +158,7 @@
         <h2>Plattformsprisskillnader</h2>
         <p>Priser och erbjudanden kan variera mellan webbkassa, Google Play, Apple App Store, länder, valutor och tidsbegränsade kampanjer. Den sista kassan kontrollerar det faktiska priset och förnyelsevillkoren för ditt köp.</p>
         <h2>Relaterade policyer</h2>
-        <p>Innan du prenumererar, granska <a href="/terms">Prenumerationsvillkor</a>, <a href="/refund">Återbetalningspolicy</a>, och <a href="/privacy">Sekretesspolicy</a>.</p>
+        <p>Innan du prenumererar, granska <a href="/terms.html">Prenumerationsvillkor</a>, <a href="/refund.html">Återbetalningspolicy</a>, och <a href="/privacy.html">Sekretesspolicy</a>.</p>
     checkout_title Aliolo kassan
     checkout_subtitle Säker utcheckning för Aliolo Premium-prenumerationer.
     checkout_eyebrow Säker utcheckning
@@ -179,7 +179,7 @@
     landing_nav_login Logga in
     landing_nav_cta Skapa ett gratis konto
     landing_hero_eyebrow Visuell lärplattform
-    landing_hero_h1 Lär dig visuellt. Kom ihåg längre.
+    landing_hero_h1 Lär dig visuellt. Mästare permanent.
     landing_hero_p Förvandla bilder, ljud, video och text till strukturerade flashcards. Lär dig med sammanhang, granska vid rätt tidpunkt och testa vad du verkligen kan komma ihåg.
     landing_hero_btn_primary Skapa ett gratis konto
     landing_hero_btn_secondary Logga in
@@ -210,6 +210,12 @@
     landing_step_3_desc Gå till fokuserad testning för att exponera svaga punkter, förstärka hämtning och göra framsteg mätbara.
     landing_pricing_h2 Börja gratis. Uppgradera när du behöver hela arbetsflödet.
     landing_pricing_p Skapa ett konto utan betalning. Premium lägger till spridd upprepning, skapande, testning, autoplay, privat organisation och djupare anpassning.
+    plan_weekly_title Veckovis tillgång
+    plan_weekly_tagline Bäst för snabba mål
+    plan_monthly_title Månatlig tillgång
+    plan_monthly_tagline Mest populära valet
+    plan_yearly_title Årlig tillgång
+    plan_yearly_tagline Spara 33 % per månad
     landing_plan_weekly_desc Bra för kortvariga push, snabba recensioner eller förberedelser för tentamensveckan.
     landing_plan_weekly_item_1 Kort åtagandefönster
     landing_plan_weekly_item_2 Snabbt sätt att prova premium-arbetsflödet

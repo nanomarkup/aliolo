@@ -44,7 +44,7 @@
         <h2>Pembatalan</h2>
         <p>Anda dapat membatalkan sesuai aturan saluran pembelian yang Anda gunakan. Pembatalan menghentikan pembaruan di masa mendatang. Kecuali saluran pembelian menyatakan sebaliknya, akses berbayar tetap tersedia hingga akhir periode penagihan saat ini.</p>
         <h2>Pengembalian dana</h2>
-        <p>Pengembalian dana ditangani sesuai dengan kami <a href="/refund">Kebijakan Pengembalian Dana</a>, aturan saluran pembelian, dan hukum konsumen yang berlaku. Pembelian toko aplikasi biasanya ditangani oleh toko aplikasi terkait.</p>
+        <p>Pengembalian dana ditangani sesuai dengan kami <a href="/refund.html">Kebijakan Pengembalian Dana</a>, aturan saluran pembelian, dan hukum konsumen yang berlaku. Pembelian toko aplikasi biasanya ditangani oleh toko aplikasi terkait.</p>
         <h2>Penggunaan yang Dapat Diterima</h2>
         <p>Anda tidak boleh menyalahgunakan Aliolo, mengganggu layanan, mencoba akses tidak sah, mengikis atau menyalin konten dalam skala besar, merekayasa balik bagian aplikasi yang dilindungi, mengunggah materi yang melanggar hukum, atau menggunakan layanan dengan cara yang merugikan pengguna lain atau Aliolo.</p>
         <h2>Konten dan Ketersediaan</h2>
@@ -158,7 +158,7 @@
         <h2>Perbedaan Harga Platform</h2>
         <p>Harga dan penawaran dapat bervariasi antara pembayaran web, Google Play, Apple App Store, negara, mata uang, dan promosi waktu terbatas. Layar pembayaran terakhir mengontrol harga sebenarnya dan ketentuan perpanjangan untuk pembelian Anda.</p>
         <h2>Kebijakan Terkait</h2>
-        <p>Sebelum berlangganan, tinjau <a href="/terms">Ketentuan Berlangganan</a>, <a href="/refund">Kebijakan Pengembalian Dana</a>, Dan <a href="/privacy">Kebijakan Privasi</a>.</p>
+        <p>Sebelum berlangganan, tinjau <a href="/terms.html">Ketentuan Berlangganan</a>, <a href="/refund.html">Kebijakan Pengembalian Dana</a>, Dan <a href="/privacy.html">Kebijakan Privasi</a>.</p>
     checkout_title Pembayaran Aliolo
     checkout_subtitle Pembayaran aman untuk langganan Aliolo Premium.
     checkout_eyebrow Pembayaran aman
@@ -179,7 +179,7 @@
     landing_nav_login Masuk
     landing_nav_cta Buat akun gratis
     landing_hero_eyebrow Platform pembelajaran visual
-    landing_hero_h1 Belajar secara visual. Ingat lebih lama.
+    landing_hero_h1 Belajar secara visual. Kuasai secara permanen.
     landing_hero_p Ubah gambar, audio, video, dan teks menjadi kartu flash terstruktur. Belajar sesuai konteks, tinjau pada waktu yang tepat, dan uji apa yang benar-benar dapat Anda ingat.
     landing_hero_btn_primary Buat akun gratis
     landing_hero_btn_secondary Masuk
@@ -210,6 +210,12 @@
     landing_step_3_desc Lanjutkan ke pengujian terfokus untuk mengungkap titik lemah, memperkuat pengambilan, dan membuat kemajuan dapat diukur.
     landing_pricing_h2 Mulai gratis. Tingkatkan versi saat Anda memerlukan alur kerja penuh.
     landing_pricing_p Buat akun tanpa pembayaran. Premium menambahkan pengulangan spasi, pembuatan, pengujian, putar otomatis, organisasi pribadi, dan penyesuaian yang lebih dalam.
+    plan_weekly_title Akses Mingguan
+    plan_weekly_tagline Terbaik untuk tujuan cepat
+    plan_monthly_title Akses Bulanan
+    plan_monthly_tagline Pilihan paling populer
+    plan_yearly_title Akses Tahunan
+    plan_yearly_tagline Hemat 33% per bulan
     landing_plan_weekly_desc Cocok untuk dorongan jangka pendek, tinjauan singkat, atau persiapan minggu ujian.
     landing_plan_weekly_item_1 Jendela komitmen singkat
     landing_plan_weekly_item_2 Cara cepat untuk mencoba alur kerja premium

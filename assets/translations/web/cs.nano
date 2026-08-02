@@ -44,7 +44,7 @@
         <h2>Zrušení</h2>
         <p>Můžete zrušit podle pravidel nákupního kanálu, který jste použili. Zrušení zastaví budoucí obnovení. Pokud není v nákupním kanálu uvedeno jinak, placený přístup zůstává dostupný až do konce aktuálního fakturačního období.</p>
         <h2>Vrácení peněz</h2>
-        <p>Vrácení peněz probíhá podle našeho <a href="/refund">Zásady vrácení peněz</a>, pravidla nákupního kanálu a platné spotřebitelské právo. Nákupy v obchodě s aplikacemi obvykle zpracovává příslušný obchod s aplikacemi.</p>
+        <p>Vrácení peněz probíhá podle našeho <a href="/refund.html">Zásady vrácení peněz</a>, pravidla nákupního kanálu a platné spotřebitelské právo. Nákupy v obchodě s aplikacemi obvykle zpracovává příslušný obchod s aplikacemi.</p>
         <h2>Přijatelné použití</h2>
         <p>Nesmíte Aliolo zneužívat, zasahovat do služby, pokoušet se o neoprávněný přístup, seškrabovat nebo kopírovat obsah ve velkém měřítku, zpětně analyzovat chráněné části aplikace, nahrávat nezákonný materiál nebo používat službu způsobem, který poškozuje ostatní uživatele nebo Aliolo.</p>
         <h2>Obsah a dostupnost</h2>
@@ -158,7 +158,7 @@
         <h2>Cenové rozdíly platformy</h2>
         <p>Ceny a nabídky se mohou lišit podle webové pokladny, Google Play, Apple App Store, zemí, měn a časově omezených akcí. Poslední obrazovka pokladny kontroluje skutečnou cenu a podmínky obnovení vašeho nákupu.</p>
         <h2>Související zásady</h2>
-        <p>Před přihlášením k odběru si prostudujte <a href="/terms">Podmínky předplatného</a>, <a href="/refund">Zásady vrácení peněz</a>a <a href="/privacy">Zásady ochrany osobních údajů</a>.</p>
+        <p>Před přihlášením k odběru si prostudujte <a href="/terms.html">Podmínky předplatného</a>, <a href="/refund.html">Zásady vrácení peněz</a>a <a href="/privacy.html">Zásady ochrany osobních údajů</a>.</p>
     checkout_title Aliolo Pokladna
     checkout_subtitle Bezpečná pokladna za předplatné Aliolo Premium.
     checkout_eyebrow Bezpečná pokladna
@@ -179,7 +179,7 @@
     landing_nav_login Přihlaste se
     landing_nav_cta Vytvořte si bezplatný účet
     landing_hero_eyebrow Platforma vizuálního učení
-    landing_hero_h1 Učte se vizuálně. Pamatuj déle.
+    landing_hero_h1 Učte se vizuálně. Mistr natrvalo.
     landing_hero_p Proměňte obrázky, zvuk, video a text na strukturované kartičky. Učte se s kontextem, opakujte si ve správný čas a vyzkoušejte, co si skutečně vybavíte.
     landing_hero_btn_primary Vytvořte si bezplatný účet
     landing_hero_btn_secondary Přihlaste se
@@ -210,6 +210,12 @@
     landing_step_3_desc Přejděte do cíleného testování, abyste odhalili slabá místa, posílili vyhledávání a zajistili měřitelný pokrok.
     landing_pricing_h2 Začněte zdarma. Upgradujte, když potřebujete úplný pracovní postup.
     landing_pricing_p Vytvořte si účet bez platby. Premium přidává opakované opakování, vytváření, testování, automatické přehrávání, soukromou organizaci a hlubší přizpůsobení.
+    plan_weekly_title Týdenní přístup
+    plan_weekly_tagline Nejlepší na rychlé góly
+    plan_monthly_title Měsíční přístup
+    plan_monthly_tagline Nejoblíbenější volba
+    plan_yearly_title Roční přístup
+    plan_yearly_tagline Ušetřete 33 % měsíčně
     landing_plan_weekly_desc Dobré pro krátkodobé nátlaky, rychlé recenze nebo přípravu na zkouškový týden.
     landing_plan_weekly_item_1 Krátké okno závazku
     landing_plan_weekly_item_2 Rychlý způsob, jak vyzkoušet prémiový pracovní postup

@@ -44,7 +44,7 @@
         <h2>Cancelamento</h2>
         <p>Você pode cancelar de acordo com as regras do canal de compra utilizado. O cancelamento impede renovações futuras. Salvo indicação em contrário no canal de compra, o acesso pago permanece disponível até ao final do período de faturação atual.</p>
         <h2>Reembolsos</h2>
-        <p>Os reembolsos são tratados de acordo com nossos <a href="/refund">Política de Reembolso</a>, as regras do canal de compra e a legislação do consumidor aplicável. As compras na App Store são normalmente feitas pela App Store relevante.</p>
+        <p>Os reembolsos são tratados de acordo com nossos <a href="/refund.html">Política de Reembolso</a>, as regras do canal de compra e a legislação do consumidor aplicável. As compras na App Store são normalmente feitas pela App Store relevante.</p>
         <h2>Uso aceitável</h2>
         <p>Você não pode fazer uso indevido do Aliolo, interferir no serviço, tentar acesso não autorizado, copiar ou copiar conteúdo em grande escala, fazer engenharia reversa de partes protegidas do aplicativo, fazer upload de material ilegal ou usar o serviço de uma forma que prejudique outros usuários ou o Aliolo.</p>
         <h2>Conteúdo e Disponibilidade</h2>
@@ -158,7 +158,7 @@
         <h2>Diferenças de preços de plataforma</h2>
         <p>Os preços e ofertas podem variar entre checkout na web, Google Play, Apple App Store, países, moedas e promoções por tempo limitado. A tela de finalização da compra controla o preço real e os termos de renovação da sua compra.</p>
         <h2>Políticas Relacionadas</h2>
-        <p>Antes de assinar, revise o <a href="/terms">Termos de assinatura</a>, <a href="/refund">Política de Reembolso</a>, e <a href="/privacy">política de Privacidade</a>.</p>
+        <p>Antes de assinar, revise o <a href="/terms.html">Termos de assinatura</a>, <a href="/refund.html">Política de Reembolso</a>, e <a href="/privacy.html">política de Privacidade</a>.</p>
     checkout_title Check-out Aliolo
     checkout_subtitle Check-out seguro para assinaturas Aliolo Premium.
     checkout_eyebrow Check-out seguro
@@ -179,7 +179,7 @@
     landing_nav_login Conecte-se
     landing_nav_cta Crie uma conta gratuita
     landing_hero_eyebrow Plataforma de aprendizagem visual
-    landing_hero_h1 Aprenda visualmente. Lembre-se por mais tempo.
+    landing_hero_h1 Aprenda visualmente. Domine permanentemente.
     landing_hero_p Transforme imagens, áudio, vídeo e texto em flashcards estruturados. Aprenda com o contexto, revise no momento certo e teste o que você realmente consegue lembrar.
     landing_hero_btn_primary Crie uma conta gratuita
     landing_hero_btn_secondary Conecte-se
@@ -210,6 +210,12 @@
     landing_step_3_desc Passe para testes focados para expor pontos fracos, reforçar a recuperação e tornar o progresso mensurável.
     landing_pricing_h2 Comece gratuitamente. Atualize quando precisar do fluxo de trabalho completo.
     landing_pricing_p Crie uma conta sem pagamento. Premium adiciona repetição espaçada, criação, teste, reprodução automática, organização privada e personalização mais profunda.
+    plan_weekly_title Acesso Semanal
+    plan_weekly_tagline Melhor para metas rápidas
+    plan_monthly_title Acesso Mensal
+    plan_monthly_tagline Escolha mais popular
+    plan_yearly_title Acesso Anual
+    plan_yearly_tagline Economize 33% ao mês
     landing_plan_weekly_desc Bom para esforços de curto prazo, revisões rápidas ou preparação para a semana de exames.
     landing_plan_weekly_item_1 Janela de compromisso curta
     landing_plan_weekly_item_2 Maneira rápida de experimentar o fluxo de trabalho premium

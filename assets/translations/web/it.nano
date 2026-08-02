@@ -44,7 +44,7 @@
         <h2>Cancellazione</h2>
         <p>Puoi annullare secondo le regole del canale di acquisto che hai utilizzato. La cancellazione interrompe il futuro rinnovo. A meno che il canale di acquisto non disponga diversamente, l'accesso a pagamento rimane disponibile fino alla fine del periodo di fatturazione corrente.</p>
         <h2>Rimborsi</h2>
-        <p>I rimborsi vengono gestiti secondo la ns <a href="/refund">Politica di rimborso</a>, le norme sul canale di acquisto e la normativa applicabile in materia di tutela dei consumatori. Gli acquisti sull'App Store vengono normalmente gestiti dall'App Store pertinente.</p>
+        <p>I rimborsi vengono gestiti secondo la ns <a href="/refund.html">Politica di rimborso</a>, le norme sul canale di acquisto e la normativa applicabile in materia di tutela dei consumatori. Gli acquisti sull'App Store vengono normalmente gestiti dall'App Store pertinente.</p>
         <h2>Uso accettabile</h2>
         <p>Non è consentito utilizzare in modo improprio Aliolo, interferire con il servizio, tentare l'accesso non autorizzato, eseguire lo scraping o copiare contenuti su larga scala, eseguire il reverse engineering di parti protette dell'app, caricare materiale illegale o utilizzare il servizio in modo da danneggiare altri utenti o Aliolo.</p>
         <h2>Contenuto e disponibilità</h2>
@@ -158,7 +158,7 @@
         <h2>Differenze di prezzo della piattaforma</h2>
         <p>I prezzi e le offerte possono variare in base al pagamento online, a Google Play, all'Apple App Store, ai paesi, alle valute e alle promozioni a tempo limitato. La schermata di pagamento finale controlla il prezzo effettivo e i termini di rinnovo per il tuo acquisto.</p>
         <h2>Politiche correlate</h2>
-        <p>Prima di iscriverti, rivedi il <a href="/terms">Termini di abbonamento</a>, <a href="/refund">Politica di rimborso</a>, E <a href="/privacy">politica sulla riservatezza</a>.</p>
+        <p>Prima di iscriverti, rivedi il <a href="/terms.html">Termini di abbonamento</a>, <a href="/refund.html">Politica di rimborso</a>, E <a href="/privacy.html">politica sulla riservatezza</a>.</p>
     checkout_title Aliolo Checkout
     checkout_subtitle Checkout sicuro per gli abbonamenti Aliolo Premium.
     checkout_eyebrow Pagamento sicuro
@@ -179,7 +179,7 @@
     landing_nav_login Login
     landing_nav_cta Crea un account gratuito
     landing_hero_eyebrow Piattaforma di apprendimento visivo
-    landing_hero_h1 Impara visivamente. Ricorda più a lungo.
+    landing_hero_h1 Impara visivamente. Padroneggiare permanentemente.
     landing_hero_p Trasforma immagini, audio, video e testo in flashcard strutturate. Impara dal contesto, rivedi al momento giusto e verifica ciò che puoi veramente ricordare.
     landing_hero_btn_primary Crea un account gratuito
     landing_hero_btn_secondary Login
@@ -210,6 +210,12 @@
     landing_step_3_desc Passare a test mirati per evidenziare punti deboli, rafforzare il recupero e rendere misurabili i progressi.
     landing_pricing_h2 Inizia gratis. Esegui l'upgrade quando ti serve il flusso di lavoro completo.
     landing_pricing_p Crea un account senza pagamento. Premium aggiunge ripetizione distanziata, creazione, test, riproduzione automatica, organizzazione privata e personalizzazione più profonda.
+    plan_weekly_title Accesso settimanale
+    plan_weekly_tagline Ideale per obiettivi rapidi
+    plan_monthly_title Accesso mensile
+    plan_monthly_tagline La scelta più popolare
+    plan_yearly_title Accesso annuale
+    plan_yearly_tagline Risparmia il 33% al mese
     landing_plan_weekly_desc Ottimo per spinte a breve termine, revisioni rapide o preparazione alla settimana degli esami.
     landing_plan_weekly_item_1 Finestra di impegno breve
     landing_plan_weekly_item_2 Un modo rapido per provare il flusso di lavoro premium

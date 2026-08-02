@@ -58,9 +58,9 @@ def render_lang_switcher(lang: str, page: str) -> str:
             prefix = f"/{l}"
             
         if page == "landing":
-            url = prefix if prefix else "/"
+            url = f"{prefix}/landing.html" if prefix else "/landing.html"
         else:
-            url = f"{prefix}/{page}"
+            url = f"{prefix}/{page}.html"
             
         selected = " selected" if l == lang else ""
         disp_name = LANGUAGE_DISPLAY_NAMES.get(l, l.upper())
@@ -69,6 +69,15 @@ def render_lang_switcher(lang: str, page: str) -> str:
     return f"""<select class="lang-select" onchange="document.cookie='aliolo_lang=' + this.options[this.selectedIndex].getAttribute('data-lang') + '; path=/; max-age=31536000; SameSite=Lax; Secure'; window.location.href=this.value" aria-label="Change language">
       {"".join(lang_options)}
     </select>"""
+
+def static_page_href(lang: str, page: str) -> str:
+    prefix = "" if lang == "en" else f"/{lang}"
+    return f"{prefix}/{page}.html"
+
+def rewrite_static_page_links(html: str, lang: str) -> str:
+    for page in ("privacy", "terms", "refund", "pricing", "pay", "landing"):
+        html = html.replace(f'href="/{page}"', f'href="{static_page_href(lang, page)}"')
+    return html
 
 # Legal layout CSS styles
 LEGAL_STYLES = """
@@ -109,7 +118,7 @@ LEGAL_STYLES = """
     position: sticky;
     top: 0;
     z-index: 20;
-    padding: 20px 0;
+    padding: 16px 0 12px;
     backdrop-filter: blur(18px);
     background: rgba(249, 252, 253, 0.88);
     border-bottom: 1px solid rgba(17, 32, 52, 0.06);
@@ -118,8 +127,8 @@ LEGAL_STYLES = """
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 20px;
-    flex-wrap: wrap;
+    gap: 16px;
+    flex-wrap: nowrap;
   }
   .brand-name {
     display: inline-flex;
@@ -138,8 +147,25 @@ LEGAL_STYLES = """
     width: 46px;
     height: 46px;
   }
-  nav { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
-  nav a {
+  .header-controls {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    min-width: 0;
+  }
+  .page-tabs {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-top: 12px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .page-tabs::-webkit-scrollbar { display: none; }
+  .page-tabs a {
+    flex: 0 0 auto;
     color: var(--ink);
     font-size: 15px;
     font-weight: 600;
@@ -148,13 +174,13 @@ LEGAL_STYLES = """
     border-radius: 999px;
     transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
   }
-  nav a:hover {
+  .page-tabs a:hover {
     border-color: var(--line);
     background: rgba(255, 255, 255, 0.84);
     transform: translateY(-1px);
     text-decoration: none;
   }
-  nav a.active {
+  .page-tabs a.active {
     border-color: var(--line-strong);
     background: rgba(23, 95, 144, 0.08);
     color: var(--brand);
@@ -180,6 +206,26 @@ LEGAL_STYLES = """
   .lang-select:hover {
     border-color: var(--brand);
     background-color: rgba(255, 255, 255, 0.96);
+  }
+  @media (max-width: 760px) {
+    header { padding: 12px 0 10px; }
+    .shell { width: min(100% - 28px, 1100px); }
+    .brand-name { font-size: 24px; }
+    .brand-name img { width: 40px; height: 40px; }
+    .lang-select {
+      max-width: min(58vw, 220px);
+    }
+    .page-tabs {
+      margin-inline: -14px;
+      padding-inline: 14px;
+      gap: 8px;
+      scroll-padding-inline: 14px;
+    }
+    .page-tabs a {
+      padding: 9px 12px;
+      font-size: 14px;
+    }
+    .page-tabs a.active { order: -1; }
   }
   main { padding: 34px 0 78px; }
   .hero {
@@ -361,11 +407,8 @@ LEGAL_STYLES = """
   }
   @media (max-width: 760px) {
     .shell { width: min(100% - 28px, 1100px); }
-    header { padding: 16px 0; }
     .hero, .plans { grid-template-columns: 1fr; }
     .hero { gap: 16px; }
-    nav { gap: 6px; }
-    nav a { padding: 9px 12px; }
     main { padding-top: 24px; }
     h1 { font-size: clamp(32px, 12vw, 44px); }
     .subtitle { font-size: 16px; }
@@ -410,7 +453,7 @@ PAY_STYLES = """
       margin: 0 auto;
     }
     header {
-      padding: 22px 0;
+      padding: 16px 0 12px;
       border-bottom: 1px solid rgba(18, 35, 56, 0.06);
       background: rgba(249, 252, 253, 0.88);
       backdrop-filter: blur(14px);
@@ -419,8 +462,8 @@ PAY_STYLES = """
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 18px;
-      flex-wrap: wrap;
+      gap: 16px;
+      flex-wrap: nowrap;
     }
     .brand-name {
       display: inline-flex;
@@ -438,12 +481,25 @@ PAY_STYLES = """
       width: 44px;
       height: 44px;
     }
-    nav {
+    .header-controls {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      min-width: 0;
+    }
+    .page-tabs {
       display: flex;
       gap: 10px;
-      flex-wrap: wrap;
+      align-items: center;
+      margin-top: 12px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
     }
-    nav a {
+    .page-tabs::-webkit-scrollbar { display: none; }
+    .page-tabs a {
+      flex: 0 0 auto;
       color: var(--ink);
       font-size: 15px;
       font-weight: 600;
@@ -451,7 +507,7 @@ PAY_STYLES = """
       border-radius: 999px;
       border: 1px solid transparent;
     }
-    nav a:hover {
+    .page-tabs a:hover {
       background: rgba(255, 255, 255, 0.84);
       border-color: var(--line);
       text-decoration: none;
@@ -581,6 +637,26 @@ PAY_STYLES = """
     .lang-select:hover {
       border-color: var(--brand);
       background-color: rgba(255, 255, 255, 0.96);
+    }
+    @media (max-width: 760px) {
+      header { padding: 12px 0 10px; }
+      .shell { width: min(100% - 28px, 1120px); }
+      .brand-name { font-size: 24px; }
+      .brand-name img { width: 40px; height: 40px; }
+      .lang-select {
+        max-width: min(58vw, 220px);
+      }
+      .page-tabs {
+        margin-inline: -14px;
+        padding-inline: 14px;
+        gap: 8px;
+        scroll-padding-inline: 14px;
+      }
+      .page-tabs a {
+        padding: 9px 12px;
+        font-size: 14px;
+      }
+      .page-tabs a.active { order: -1; }
     }
     @media (max-width: 920px) {
       .layout {
@@ -1301,10 +1377,14 @@ LEGAL_LAYOUT = """<!DOCTYPE html>
         <img src="/app_icon.webp" alt="Aliolo Logo" />
         aliolo
       </a>
-      <nav aria-label="Legal page navigation">
-        {{NAV_LINKS}}
+      <div class="header-controls">
         {{LANG_SWITCHER}}
-      </nav>
+      </div>
+    </div>
+    <nav class="shell page-tabs" aria-label="Legal page navigation">
+      {{NAV_LINKS}}
+    </nav>
+  </header>
     </div>
   </header>
   <main class="shell">
@@ -1336,7 +1416,7 @@ PAY_LAYOUT = """<!DOCTYPE html>
   <title>{{CHECKOUT_TITLE}}</title>
   <meta name="description" content="{{CHECKOUT_SUBTITLE}}">
   <meta name="robots" content="noindex,nofollow">
-  <link rel="canonical" href="https://aliolo.com{{PREFIX}}/pay">
+  <link rel="canonical" href="https://aliolo.com{{PREFIX}}/pay.html">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -1350,14 +1430,16 @@ PAY_LAYOUT = """<!DOCTYPE html>
         <img src="/app_icon.webp" alt="Aliolo logo" />
         aliolo
       </a>
-      <nav aria-label="Checkout page navigation">
-        <a href="{{PREFIX}}/pricing">{{PRICING_LABEL}}</a>
-        <a href="{{PREFIX}}/terms">{{TERMS_LABEL}}</a>
-        <a href="{{PREFIX}}/privacy">{{PRIVACY_LABEL}}</a>
-        <a href="{{PREFIX}}/refund">{{REFUND_LABEL}}</a>
+      <div class="header-controls">
         {{LANG_SWITCHER}}
-      </nav>
+      </div>
     </div>
+    <nav class="shell page-tabs" aria-label="Checkout page navigation">
+      <a href="{{PRICING_HREF}}">{{PRICING_LABEL}}</a>
+      <a href="{{TERMS_HREF}}">{{TERMS_LABEL}}</a>
+      <a href="{{PRIVACY_HREF}}">{{PRIVACY_LABEL}}</a>
+      <a href="{{REFUND_HREF}}">{{REFUND_LABEL}}</a>
+    </nav>
   </header>
   <main class="shell">
     <section class="layout">
@@ -1384,10 +1466,10 @@ PAY_LAYOUT = """<!DOCTYPE html>
           </div>
         </div>
         <div class="links">
-          <a href="{{PREFIX}}/pricing">{{PRICING_LABEL}}</a>
-          <a href="{{PREFIX}}/terms">{{TERMS_LABEL}}</a>
-          <a href="{{PREFIX}}/privacy">{{PRIVACY_LABEL}}</a>
-          <a href="{{PREFIX}}/refund">{{REFUND_LABEL}}</a>
+          <a href="{{PRICING_HREF}}">{{PRICING_LABEL}}</a>
+          <a href="{{TERMS_HREF}}">{{TERMS_LABEL}}</a>
+          <a href="{{PRIVACY_HREF}}">{{PRIVACY_LABEL}}</a>
+          <a href="{{REFUND_HREF}}">{{REFUND_LABEL}}</a>
         </div>
       </article>
       <aside class="card checkout-shell">
@@ -1627,8 +1709,8 @@ LANDING_LAYOUT = """<!DOCTYPE html>
       </div>
       <div class="pricing-grid">
         <article class="price-card">
-          <span class="price-tag">{{T_pricing}}</span>
-          <h3>{{T_pricing}}</h3>
+          <span class="price-tag">{{T_plan_weekly_tagline}}</span>
+          <h3>{{T_plan_weekly_title}}</h3>
           <div class="price-amount">$2.99</div>
           <p>{{T_landing_plan_weekly_desc}}</p>
           <ul>
@@ -1636,11 +1718,11 @@ LANDING_LAYOUT = """<!DOCTYPE html>
             <li>{{T_landing_plan_weekly_item_2}}</li>
             <li>{{T_landing_plan_weekly_item_3}}</li>
           </ul>
-          <a href="{{PREFIX}}/pricing" class="btn btn-secondary" aria-label="View weekly plan details">{{T_landing_plan_weekly_btn}}</a>
+          <a href="{{PRICING_HREF}}" class="btn btn-secondary" aria-label="View weekly plan details">{{T_landing_plan_weekly_btn}}</a>
         </article>
         <article class="price-card featured">
-          <span class="price-tag">{{T_pricing}}</span>
-          <h3>{{T_pricing}}</h3>
+          <span class="price-tag">{{T_plan_monthly_tagline}}</span>
+          <h3>{{T_plan_monthly_title}}</h3>
           <div class="price-amount">$8.99</div>
           <p>{{T_landing_plan_monthly_desc}}</p>
           <ul>
@@ -1648,11 +1730,11 @@ LANDING_LAYOUT = """<!DOCTYPE html>
             <li>{{T_landing_plan_monthly_item_2}}</li>
             <li>{{T_landing_plan_monthly_item_3}}</li>
           </ul>
-          <a href="{{PREFIX}}/pricing" class="btn btn-primary" aria-label="View monthly plan details">{{T_landing_plan_monthly_btn}}</a>
+          <a href="{{PRICING_HREF}}" class="btn btn-primary" aria-label="View monthly plan details">{{T_landing_plan_monthly_btn}}</a>
         </article>
         <article class="price-card">
-          <span class="price-tag">{{T_pricing}}</span>
-          <h3>{{T_pricing}}</h3>
+          <span class="price-tag">{{T_plan_yearly_tagline}}</span>
+          <h3>{{T_plan_yearly_title}}</h3>
           <div class="price-amount">$80.99</div>
           <p>{{T_landing_plan_yearly_desc}}</p>
           <ul>
@@ -1660,7 +1742,7 @@ LANDING_LAYOUT = """<!DOCTYPE html>
             <li>{{T_landing_plan_yearly_item_2}}</li>
             <li>{{T_landing_plan_yearly_item_3}}</li>
           </ul>
-          <a href="{{PREFIX}}/pricing" class="btn btn-secondary" aria-label="View yearly plan details">{{T_landing_plan_yearly_btn}}</a>
+          <a href="{{PRICING_HREF}}" class="btn btn-secondary" aria-label="View yearly plan details">{{T_landing_plan_yearly_btn}}</a>
         </article>
       </div>
     </section>
@@ -1711,10 +1793,10 @@ LANDING_LAYOUT = """<!DOCTYPE html>
           <p>{{T_landing_footer_desc}}</p>
         </div>
         <div class="footer-links">
-          <a href="{{PREFIX}}/privacy">{{T_privacy}}</a>
-          <a href="{{PREFIX}}/terms">{{T_terms}}</a>
-          <a href="{{PREFIX}}/refund">{{T_refunds}}</a>
-          <a href="{{PREFIX}}/pricing">{{T_pricing}}</a>
+          <a href="{{PRIVACY_HREF}}">{{T_privacy}}</a>
+          <a href="{{TERMS_HREF}}">{{T_terms}}</a>
+          <a href="{{REFUND_HREF}}">{{T_refunds}}</a>
+          <a href="{{PRICING_HREF}}">{{T_pricing}}</a>
           <a href="mailto:vitalii@nohainc.com">{{T_support}}</a>
         </div>
       </div>
@@ -1778,15 +1860,15 @@ def parse_nano_map(content: str) -> dict:
 
 def render_legal(lang: str, t: dict, active: str, page_path: str, body_content: str, updated_date: str, structured_data = None) -> str:
     nav_list = [
-        ('home', 'Home', '/'),
-        ('privacy', 'Privacy', '/privacy'),
-        ('terms', 'Terms', '/terms'),
-        ('refund', 'Refunds', '/refund'),
-        ('pricing', 'Pricing', '/pricing'),
+        ('home', 'Home', 'landing'),
+        ('privacy', 'Privacy', 'privacy'),
+        ('terms', 'Terms', 'terms'),
+        ('refund', 'Refunds', 'refund'),
+        ('pricing', 'Pricing', 'pricing'),
     ]
     
     prefix = "" if lang == "en" else f"/{lang}"
-    home_url = "/" if lang == "en" else f"/{lang}"
+    home_url = static_page_href(lang, "landing")
     
     seo_alternate_links = []
     for l in SUPPORTED_LANGUAGES:
@@ -1798,10 +1880,10 @@ def render_legal(lang: str, t: dict, active: str, page_path: str, body_content: 
     support_label = t.get('support', 'Support')
     
     nav_html = []
-    for key, label_default, href in nav_list:
+    for key, label_default, page in nav_list:
         label = t.get(key, label_default)
         active_class = "active" if active == key else ""
-        link_href = home_url if (key == 'home') else f"{prefix}{href}"
+        link_href = static_page_href(lang, page)
         nav_html.append(f'<a class="{active_class}" href="{link_href}">{label}</a>')
     nav_links_html = "\n        ".join(nav_html)
     
@@ -1838,14 +1920,14 @@ def render_legal(lang: str, t: dict, active: str, page_path: str, body_content: 
     html = html.replace("{{LAST_UPDATED_LABEL}}", last_updated_label)
     html = html.replace("{{UPDATED_DATE}}", updated_date)
     html = html.replace("{{SUPPORT_LABEL}}", support_label)
-    html = html.replace("{{BODY_CONTENT}}", body_content)
+    html = html.replace("{{BODY_CONTENT}}", rewrite_static_page_links(body_content, lang))
     html = html.replace("{{LANG_SWITCHER}}", render_lang_switcher(lang, active))
     html = html.replace("{{LEGAL_STYLES}", LEGAL_STYLES)
     return html
 
 def render_pay(lang: str, t: dict) -> str:
     prefix = "" if lang == "en" else f"/{lang}"
-    home_url = "/" if lang == "en" else f"/{lang}"
+    home_url = static_page_href(lang, "landing")
     
     checkout_title = t.get("checkout_title", "Aliolo Checkout")
     checkout_subtitle = t.get("checkout_subtitle", "Secure checkout for Aliolo Premium subscriptions.")
@@ -1868,6 +1950,10 @@ def render_pay(lang: str, t: dict) -> str:
     html = html.replace("{{LANG}}", lang)
     html = html.replace("{{PREFIX}}", prefix)
     html = html.replace("{{HOME_URL}}", home_url)
+    html = html.replace("{{PRICING_HREF}}", static_page_href(lang, "pricing"))
+    html = html.replace("{{TERMS_HREF}}", static_page_href(lang, "terms"))
+    html = html.replace("{{PRIVACY_HREF}}", static_page_href(lang, "privacy"))
+    html = html.replace("{{REFUND_HREF}}", static_page_href(lang, "refund"))
     html = html.replace("{{CHECKOUT_TITLE}}", checkout_title)
     html = html.replace("{{CHECKOUT_SUBTITLE}}", checkout_subtitle)
     html = html.replace("{{CHECKOUT_EYEBROW}}", checkout_eyebrow)
@@ -1890,14 +1976,14 @@ def render_pay(lang: str, t: dict) -> str:
 
 def render_landing(lang: str, t: dict) -> str:
     prefix = "" if lang == "en" else f"/{lang}"
-    home_url = "/" if lang == "en" else f"/{lang}"
+    home_url = static_page_href(lang, "landing")
     login_url = "/login" if lang == "en" else f"/{lang}/login"
     
-    canonical_url = "https://aliolo.com/" if lang == "en" else f"https://aliolo.com/{lang}"
+    canonical_url = "https://aliolo.com/landing.html" if lang == "en" else f"https://aliolo.com/{lang}/landing.html"
     
     seo_alternate_links = []
     for l in SUPPORTED_LANGUAGES:
-        alt_url = "https://aliolo.com/" if l == "en" else f"https://aliolo.com/{l}"
+        alt_url = "https://aliolo.com/landing.html" if l == "en" else f"https://aliolo.com/{l}/landing.html"
         seo_alternate_links.append(f'  <link rel="alternate" hreflang="{l}" href="{alt_url}">')
     seo_alternates_html = "\n  ".join(seo_alternate_links)
 
@@ -1905,6 +1991,10 @@ def render_landing(lang: str, t: dict) -> str:
     html = html.replace("{{LANG}}", lang)
     html = html.replace("{{PREFIX}}", prefix)
     html = html.replace("{{HOME_URL}}", home_url)
+    html = html.replace("{{PRICING_HREF}}", static_page_href(lang, "pricing"))
+    html = html.replace("{{TERMS_HREF}}", static_page_href(lang, "terms"))
+    html = html.replace("{{PRIVACY_HREF}}", static_page_href(lang, "privacy"))
+    html = html.replace("{{REFUND_HREF}}", static_page_href(lang, "refund"))
     html = html.replace("{{LOGIN_URL}}", login_url)
     html = html.replace("{{CANONICAL_URL}}", canonical_url)
     html = html.replace("{{SEO_ALTERNATES}}", seo_alternates_html)
@@ -1946,9 +2036,9 @@ def main():
         out_dir.mkdir(parents=True, exist_ok=True)
         
         # Generate legal pages
-        privacy_html = render_legal(lang, t, "privacy", "/privacy", t.get("privacy_body", ""), updated_date)
-        terms_html = render_legal(lang, t, "terms", "/terms", t.get("terms_body", ""), updated_date)
-        refund_html = render_legal(lang, t, "refund", "/refund", t.get("refund_body", ""), updated_date)
+        privacy_html = render_legal(lang, t, "privacy", "/privacy.html", t.get("privacy_body", ""), updated_date)
+        terms_html = render_legal(lang, t, "terms", "/terms.html", t.get("terms_body", ""), updated_date)
+        refund_html = render_legal(lang, t, "refund", "/refund.html", t.get("refund_body", ""), updated_date)
         
         # Pricing page structured data
         prefix = "" if lang == "en" else f"/{lang}"
@@ -1958,7 +2048,7 @@ def main():
                 '@type': 'WebPage',
                 'name': t.get('pricing_title', 'Aliolo Premium Pricing'),
                 'description': t.get('pricing_subtitle', 'Simple subscription options for unlocking the full Aliolo visual learning experience.'),
-                'url': f'https://aliolo.com{prefix}/pricing',
+                'url': f'https://aliolo.com{prefix}/pricing.html',
                 'isPartOf': {
                     '@type': 'WebSite',
                     'name': 'Aliolo',
@@ -1996,7 +2086,7 @@ def main():
         ]
         
         pricing_html = render_legal(
-            lang, t, "pricing", "/pricing", t.get("pricing_body", ""), updated_date, pricing_structured_data
+            lang, t, "pricing", "/pricing.html", t.get("pricing_body", ""), updated_date, pricing_structured_data
         )
         
         # Generate checkout page

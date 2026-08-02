@@ -44,7 +44,7 @@
         <h2>Anulare</h2>
         <p>Puteți anula conform regulilor canalului de achiziție pe care l-ați folosit. Anularea oprește reînnoirea viitoare. Cu excepția cazului în care canalul de achiziție prevede altfel, accesul cu plată rămâne disponibil până la sfârșitul perioadei curente de facturare.</p>
         <h2>Rambursări</h2>
-        <p>Rambursările sunt gestionate conform noastre <a href="/refund">Politica de rambursare</a>, regulile canalului de achiziție și legislația aplicabilă privind consumatorii. Achizițiile din magazinul de aplicații sunt în mod normal gestionate de magazinul de aplicații relevant.</p>
+        <p>Rambursările sunt gestionate conform noastre <a href="/refund.html">Politica de rambursare</a>, regulile canalului de achiziție și legislația aplicabilă privind consumatorii. Achizițiile din magazinul de aplicații sunt în mod normal gestionate de magazinul de aplicații relevant.</p>
         <h2>Utilizare acceptabilă</h2>
         <p>Nu aveți voie să utilizați greșit Aliolo, să interferați cu serviciul, să încercați accesul neautorizat, să răzuiți sau să copiați conținut la scară, să faceți inginerie inversă a părților protejate ale aplicației, să încărcați materiale ilegale sau să utilizați serviciul într-un mod care dăunează altor utilizatori sau Aliolo.</p>
         <h2>Conținut și disponibilitate</h2>
@@ -158,7 +158,7 @@
         <h2>Diferențele de preț pe platformă</h2>
         <p>Prețurile și ofertele pot varia în funcție de achiziție pe web, Google Play, Apple App Store, țări, monede și promoții pe durată limitată. Ecranul final de plată controlează prețul real și termenii de reînnoire pentru achiziția dvs.</p>
         <h2>Politici aferente</h2>
-        <p>Înainte de a vă abona, examinați <a href="/terms">Termenii de abonament</a>, <a href="/refund">Politica de rambursare</a>, și <a href="/privacy">Politica de confidențialitate</a>.</p>
+        <p>Înainte de a vă abona, examinați <a href="/terms.html">Termenii de abonament</a>, <a href="/refund.html">Politica de rambursare</a>, și <a href="/privacy.html">Politica de confidențialitate</a>.</p>
     checkout_title Aliolo Checkout
     checkout_subtitle Checkout securizat pentru abonamentele Aliolo Premium.
     checkout_eyebrow Checkout securizat
@@ -179,7 +179,7 @@
     landing_nav_login Log in
     landing_nav_cta Creează cont gratuit
     landing_hero_eyebrow Platformă de învățare vizuală
-    landing_hero_h1 Învață vizual. Amintește-ți mai mult.
+    landing_hero_h1 Învață vizual. Stăpânește permanent.
     landing_hero_p Transformați imagini, sunet, video și text în carduri structurate. Învățați cu contextul, revizuiți la momentul potrivit și testați ceea ce vă puteți aminti cu adevărat.
     landing_hero_btn_primary Creează cont gratuit
     landing_hero_btn_secondary Log in
@@ -210,6 +210,12 @@
     landing_step_3_desc Treceți la testarea concentrată pentru a expune punctele slabe, pentru a consolida recuperarea și pentru a face progresul măsurabil.
     landing_pricing_h2 Începe gratuit. Faceți upgrade atunci când aveți nevoie de fluxul de lucru complet.
     landing_pricing_p Creați un cont fără plată. Premium adaugă repetare distanțată, creare, testare, redare automată, organizare privată și personalizare mai profundă.
+    plan_weekly_title Acces săptămânal
+    plan_weekly_tagline Cel mai bun pentru goluri rapide
+    plan_monthly_title Acces lunar
+    plan_monthly_tagline Cea mai populară alegere
+    plan_yearly_title Acces anual
+    plan_yearly_tagline Economisiți 33% pe lună
     landing_plan_weekly_desc Bun pentru impulsuri pe termen scurt, recenzii rapide sau pregătire pentru săptămâna examenului.
     landing_plan_weekly_item_1 Scurtă fereastră de angajament
     landing_plan_weekly_item_2 Mod rapid de a încerca fluxul de lucru premium

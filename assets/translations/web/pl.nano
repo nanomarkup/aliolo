@@ -44,7 +44,7 @@
         <h2>Anulowanie</h2>
         <p>Możesz anulować zgodnie z zasadami kanału zakupu, z którego korzystałeś. Anulowanie uniemożliwia przyszłe odnowienie. O ile kanał zakupu nie określi inaczej, dostęp płatny pozostaje dostępny do końca bieżącego okresu rozliczeniowego.</p>
         <h2>Zwroty pieniędzy</h2>
-        <p>Zwroty środków są realizowane zgodnie z naszymi <a href="/refund">Polityka zwrotów</a>, regulamin kanału zakupów oraz obowiązujące prawo konsumenckie. Zakupy w sklepie z aplikacjami są zwykle obsługiwane przez odpowiedni sklep z aplikacjami.</p>
+        <p>Zwroty środków są realizowane zgodnie z naszymi <a href="/refund.html">Polityka zwrotów</a>, regulamin kanału zakupów oraz obowiązujące prawo konsumenckie. Zakupy w sklepie z aplikacjami są zwykle obsługiwane przez odpowiedni sklep z aplikacjami.</p>
         <h2>Dopuszczalne użycie</h2>
         <p>Nie możesz nadużywać Aliolo, ingerować w usługę, podejmować prób nieautoryzowanego dostępu, wycinać lub kopiować treści na dużą skalę, dokonywać inżynierii wstecznej chronionych części aplikacji, przesyłać materiałów niezgodnych z prawem ani korzystać z usługi w sposób szkodzący innym użytkownikom lub Aliolo.</p>
         <h2>Treść i dostępność</h2>
@@ -158,7 +158,7 @@
         <h2>Różnice cen platform</h2>
         <p>Ceny i oferty mogą się różnić w zależności od płatności internetowej, Google Play, Apple App Store, krajów, walut i promocji ograniczonych czasowo. Ostatni ekran kasy kontroluje rzeczywistą cenę i warunki odnowienia Twojego zakupu.</p>
         <h2>Powiązane zasady</h2>
-        <p>Zanim zasubskrybujesz, przejrzyj <a href="/terms">Warunki subskrypcji</a>, <a href="/refund">Polityka zwrotów</a>, I <a href="/privacy">Polityka prywatności</a>.</p>
+        <p>Zanim zasubskrybujesz, przejrzyj <a href="/terms.html">Warunki subskrypcji</a>, <a href="/refund.html">Polityka zwrotów</a>, I <a href="/privacy.html">Polityka prywatności</a>.</p>
     checkout_title Kasa Aliolo
     checkout_subtitle Bezpieczna płatność za subskrypcje Aliolo Premium.
     checkout_eyebrow Bezpieczna płatność
@@ -179,7 +179,7 @@
     landing_nav_login Zaloguj się
     landing_nav_cta Utwórz darmowe konto
     landing_hero_eyebrow Platforma do nauki wizualnej
-    landing_hero_h1 Ucz się wizualnie. Pamiętaj dłużej.
+    landing_hero_h1 Ucz się wizualnie. Mistrz na stałe.
     landing_hero_p Zamień obrazy, dźwięk, wideo i tekst w uporządkowane fiszki. Ucz się z kontekstem, przeglądaj we właściwym czasie i testuj to, co naprawdę pamiętasz.
     landing_hero_btn_primary Utwórz darmowe konto
     landing_hero_btn_secondary Zaloguj się
@@ -210,6 +210,12 @@
     landing_step_3_desc Przejdź do ukierunkowanych testów, aby ujawnić słabe punkty, usprawnić wyszukiwanie i sprawić, że postęp będzie mierzalny.
     landing_pricing_h2 Zacznij bezpłatnie. Uaktualnij, gdy potrzebujesz pełnego przepływu pracy.
     landing_pricing_p Utwórz konto bez płatności. Premium dodaje powtarzanie w odstępach czasu, tworzenie, testowanie, autoodtwarzanie, prywatną organizację i głębsze dostosowywanie.
+    plan_weekly_title Dostęp tygodniowy
+    plan_weekly_tagline Najlepszy do szybkich bramek
+    plan_monthly_title Dostęp miesięczny
+    plan_monthly_tagline Najpopularniejszy wybór
+    plan_yearly_title Dostęp roczny
+    plan_yearly_tagline Oszczędzaj 33% miesięcznie
     landing_plan_weekly_desc Dobre do krótkotrwałych pobudek, szybkich powtórek lub przygotowań do tygodnia egzaminacyjnego.
     landing_plan_weekly_item_1 Krótkie okno zobowiązań
     landing_plan_weekly_item_2 Szybki sposób na wypróbowanie przepływu pracy premium

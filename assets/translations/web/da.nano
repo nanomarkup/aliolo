@@ -44,7 +44,7 @@
         <h2>Aflysning</h2>
         <p>Du kan annullere i henhold til reglerne for den købskanal, du brugte. Annullering stopper fremtidig fornyelse. Medmindre købskanalen angiver andet, forbliver betalt adgang tilgængelig indtil udgangen af ​​den aktuelle faktureringsperiode.</p>
         <h2>Tilbagebetalinger</h2>
-        <p>Tilbagebetalinger håndteres i henhold til vores <a href="/refund">Refusionspolitik</a>, købskanalreglerne og gældende forbrugerlovgivning. App store køb håndteres normalt af den relevante app store.</p>
+        <p>Tilbagebetalinger håndteres i henhold til vores <a href="/refund.html">Refusionspolitik</a>, købskanalreglerne og gældende forbrugerlovgivning. App store køb håndteres normalt af den relevante app store.</p>
         <h2>Acceptabel brug</h2>
         <p>Du må ikke misbruge Aliolo, forstyrre tjenesten, forsøge uautoriseret adgang, skrabe eller kopiere indhold i skala, omvendt manipulere beskyttede dele af appen, uploade ulovligt materiale eller bruge tjenesten på en måde, der skader andre brugere eller Aliolo.</p>
         <h2>Indhold og tilgængelighed</h2>
@@ -158,7 +158,7 @@
         <h2>Platforms prisforskelle</h2>
         <p>Priser og tilbud kan variere mellem webcheckout, Google Play, Apple App Store, lande, valutaer og tidsbegrænsede kampagner. Den endelige betalingsskærm styrer den faktiske pris og fornyelsesbetingelser for dit køb.</p>
         <h2>Relaterede politikker</h2>
-        <p>Før du tilmelder dig, skal du gennemgå <a href="/terms">Abonnementsbetingelser</a>, <a href="/refund">Refusionspolitik</a>, og <a href="/privacy">Privatlivspolitik</a>.</p>
+        <p>Før du tilmelder dig, skal du gennemgå <a href="/terms.html">Abonnementsbetingelser</a>, <a href="/refund.html">Refusionspolitik</a>, og <a href="/privacy.html">Privatlivspolitik</a>.</p>
     checkout_title Aliolo Checkout
     checkout_subtitle Sikker betaling for Aliolo Premium-abonnementer.
     checkout_eyebrow Sikker checkout
@@ -179,7 +179,7 @@
     landing_nav_login Log ind
     landing_nav_cta Opret gratis konto
     landing_hero_eyebrow Visuel læringsplatform
-    landing_hero_h1 Lær visuelt. Husk længere.
+    landing_hero_h1 Lær visuelt. Mester permanent.
     landing_hero_p Gør billeder, lyd, video og tekst om til strukturerede flashcards. Lær med kontekst, gennemgå på det rigtige tidspunkt, og test, hvad du virkelig kan huske.
     landing_hero_btn_primary Opret gratis konto
     landing_hero_btn_secondary Log ind
@@ -210,6 +210,12 @@
     landing_step_3_desc Gå ind i fokuseret test for at afsløre svage punkter, forstærke genfinding og gøre fremskridt målbare.
     landing_pricing_h2 Start gratis. Opgrader, når du har brug for den fulde arbejdsgang.
     landing_pricing_p Opret en konto uden betaling. Premium tilføjer adskilt gentagelse, oprettelse, test, autoplay, privat organisering og dybere tilpasning.
+    plan_weekly_title Ugentlig adgang
+    plan_weekly_tagline Bedst til hurtige mål
+    plan_monthly_title Månedlig adgang
+    plan_monthly_tagline Mest populære valg
+    plan_yearly_title Årlig adgang
+    plan_yearly_tagline Spar 33% om måneden
     landing_plan_weekly_desc God til kortvarige skub, hurtige anmeldelser eller forberedelse til eksamensuge.
     landing_plan_weekly_item_1 Kort forpligtelsesvindue
     landing_plan_weekly_item_2 Hurtig måde at prøve premium workflowet

@@ -44,7 +44,7 @@
         <h2>Annulation</h2>
         <p>Vous pouvez annuler selon les règles du canal d'achat que vous avez utilisé. L'annulation met fin au renouvellement futur. Sauf indication contraire du canal d'achat, l'accès payant reste disponible jusqu'à la fin de la période de facturation en cours.</p>
         <h2>Remboursements</h2>
-        <p>Les remboursements sont traités selon nos <a href="/refund">Politique de remboursement</a>, les règles du canal d'achat et le droit de la consommation applicable. Les achats sur l’App Store sont normalement gérés par l’App Store concerné.</p>
+        <p>Les remboursements sont traités selon nos <a href="/refund.html">Politique de remboursement</a>, les règles du canal d'achat et le droit de la consommation applicable. Les achats sur l’App Store sont normalement gérés par l’App Store concerné.</p>
         <h2>Utilisation acceptable</h2>
         <p>Vous ne pouvez pas utiliser Aliolo à mauvais escient, interférer avec le service, tenter un accès non autorisé, récupérer ou copier du contenu à grande échelle, faire de l'ingénierie inverse sur les parties protégées de l'application, télécharger du matériel illégal ou utiliser le service d'une manière qui nuit aux autres utilisateurs ou à Aliolo.</p>
         <h2>Contenu et disponibilité</h2>
@@ -158,7 +158,7 @@
         <h2>Différences de prix de la plateforme</h2>
         <p>Les prix et les offres peuvent varier selon les paiements en ligne, Google Play, Apple App Store, les pays, les devises et les promotions à durée limitée. L'écran de paiement final contrôle le prix réel et les conditions de renouvellement de votre achat.</p>
         <h2>Politiques connexes</h2>
-        <p>Avant de vous abonner, consultez le <a href="/terms">Conditions d'abonnement</a>, <a href="/refund">Politique de remboursement</a>, et <a href="/privacy">politique de confidentialité</a>.</p>
+        <p>Avant de vous abonner, consultez le <a href="/terms.html">Conditions d'abonnement</a>, <a href="/refund.html">Politique de remboursement</a>, et <a href="/privacy.html">politique de confidentialité</a>.</p>
     checkout_title Aliolo Commander
     checkout_subtitle Paiement sécurisé pour les abonnements Aliolo Premium.
     checkout_eyebrow Paiement sécurisé
@@ -179,7 +179,7 @@
     landing_nav_login Se connecter
     landing_nav_cta Créer un compte gratuit
     landing_hero_eyebrow Plateforme d'apprentissage visuel
-    landing_hero_h1 Apprenez visuellement. Rappelez-vous plus longtemps.
+    landing_hero_h1 Apprenez visuellement. Maîtriser définitivement.
     landing_hero_p Transformez les images, l'audio, la vidéo et le texte en cartes mémoire structurées. Apprenez avec le contexte, révisez au bon moment et testez ce dont vous vous souvenez vraiment.
     landing_hero_btn_primary Créer un compte gratuit
     landing_hero_btn_secondary Se connecter
@@ -210,6 +210,12 @@
     landing_step_3_desc Passez à des tests ciblés pour exposer les points faibles, renforcer la récupération et rendre les progrès mesurables.
     landing_pricing_h2 Commencez gratuitement. Mettez à niveau lorsque vous avez besoin du flux de travail complet.
     landing_pricing_p Créez un compte sans paiement. Premium ajoute une répétition espacée, une création, des tests, une lecture automatique, une organisation privée et une personnalisation plus approfondie.
+    plan_weekly_title Accès hebdomadaire
+    plan_weekly_tagline Idéal pour les objectifs rapides
+    plan_monthly_title Accès mensuel
+    plan_monthly_tagline Choix le plus populaire
+    plan_yearly_title Accès annuel
+    plan_yearly_tagline Économisez 33 % par mois
     landing_plan_weekly_desc Idéal pour les poussées à court terme, les révisions rapides ou la préparation d’une semaine d’examen.
     landing_plan_weekly_item_1 Fenêtre d'engagement courte
     landing_plan_weekly_item_2 Un moyen rapide d'essayer le flux de travail premium

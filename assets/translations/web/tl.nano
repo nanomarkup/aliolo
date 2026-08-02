@@ -44,7 +44,7 @@
         <h2>Pagkansela</h2>
         <p>Maaari kang magkansela ayon sa mga panuntunan ng channel ng pagbili na iyong ginamit. Ang pagkansela ay huminto sa pag-renew sa hinaharap. Maliban kung iba ang sinabi ng channel ng pagbili, mananatiling available ang bayad na access hanggang sa katapusan ng kasalukuyang panahon ng pagsingil.</p>
         <h2>Mga refund</h2>
-        <p>Ang mga refund ay pinangangasiwaan ayon sa aming <a href="/refund">Patakaran sa Pag-refund</a>, ang mga panuntunan sa channel ng pagbili, at naaangkop na batas ng consumer. Karaniwang pinangangasiwaan ng nauugnay na app store ang mga pagbili sa app store.</p>
+        <p>Ang mga refund ay pinangangasiwaan ayon sa aming <a href="/refund.html">Patakaran sa Pag-refund</a>, ang mga panuntunan sa channel ng pagbili, at naaangkop na batas ng consumer. Karaniwang pinangangasiwaan ng nauugnay na app store ang mga pagbili sa app store.</p>
         <h2>Katanggap-tanggap na Paggamit</h2>
         <p>Hindi mo maaaring gamitin sa maling paraan ang Aliolo, manghimasok sa serbisyo, subukan ang hindi awtorisadong pag-access, simot o kumopya ng content nang malaki, ang mga bahagi ng app na protektado ng reverse engineer, mag-upload ng labag sa batas na materyal, o gamitin ang serbisyo sa paraang makapipinsala sa ibang mga user o Aliolo.</p>
         <h2>Nilalaman at Availability</h2>
@@ -158,7 +158,7 @@
         <h2>Mga Pagkakaiba sa Presyo ng Platform</h2>
         <p>Maaaring mag-iba ang mga presyo at alok sa pagitan ng web checkout, Google Play, Apple App Store, mga bansa, currency, at limitadong oras na mga promosyon. Kinokontrol ng huling screen ng pag-checkout ang aktwal na presyo at mga tuntunin sa pag-renew para sa iyong pagbili.</p>
         <h2>Mga Kaugnay na Patakaran</h2>
-        <p>Bago mag-subscribe, suriin ang <a href="/terms">Mga Tuntunin sa Subscription</a>, <a href="/refund">Patakaran sa Pag-refund</a>, at <a href="/privacy">Patakaran sa Privacy</a>.</p>
+        <p>Bago mag-subscribe, suriin ang <a href="/terms.html">Mga Tuntunin sa Subscription</a>, <a href="/refund.html">Patakaran sa Pag-refund</a>, at <a href="/privacy.html">Patakaran sa Privacy</a>.</p>
     checkout_title Aliolo Checkout
     checkout_subtitle Secure na pag-checkout para sa mga subscription sa Aliolo Premium.
     checkout_eyebrow Secure na pag-checkout
@@ -179,7 +179,7 @@
     landing_nav_login Mag-log in
     landing_nav_cta Lumikha ng libreng account
     landing_hero_eyebrow Visual na platform sa pag-aaral
-    landing_hero_h1 Matuto nang biswal. Alalahanin nang mas matagal.
+    landing_hero_h1 Matuto nang biswal. Master ng permanente.
     landing_hero_p Gawing mga structured na flashcard ang mga larawan, audio, video, at text. Matuto nang may konteksto, suriin sa tamang oras, at subukan kung ano ang tunay mong maaalala.
     landing_hero_btn_primary Lumikha ng libreng account
     landing_hero_btn_secondary Mag-log in
@@ -210,6 +210,12 @@
     landing_step_3_desc Lumipat sa nakatutok na pagsubok upang ilantad ang mga mahihinang lugar, palakasin ang pagkuha, at gawing nasusukat ang pag-unlad.
     landing_pricing_h2 Magsimula nang libre. Mag-upgrade kapag kailangan mo ang buong daloy ng trabaho.
     landing_pricing_p Gumawa ng account nang walang bayad. Ang Premium ay nagdaragdag ng spaced repetition, paggawa, pagsubok, autoplay, pribadong organisasyon, at mas malalim na pag-customize.
+    plan_weekly_title Lingguhang Access
+    plan_weekly_tagline Pinakamahusay para sa mabilis na layunin
+    plan_monthly_title Buwanang Access
+    plan_monthly_tagline Pinakatanyag na pagpipilian
+    plan_yearly_title Taunang Access
+    plan_yearly_tagline Makatipid ng 33% bawat buwan
     landing_plan_weekly_desc Mabuti para sa mga panandaliang push, mabilis na pagsusuri, o paghahanda sa linggo ng pagsusulit.
     landing_plan_weekly_item_1 Maikling window ng pangako
     landing_plan_weekly_item_2 Mabilis na paraan upang subukan ang premium na daloy ng trabaho

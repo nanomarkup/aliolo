@@ -44,7 +44,7 @@
         <h2>Peruutus</h2>
         <p>Voit peruuttaa käyttämäsi ostokanavan sääntöjen mukaisesti. Peruutus pysäyttää tulevan uusimisen. Ellei ostokanavassa toisin mainita, maksullinen käyttöoikeus on käytettävissä kuluvan laskutuskauden loppuun asti.</p>
         <h2>Hyvitykset</h2>
-        <p>Palautukset käsitellään meidän ohjeidemme mukaan <a href="/refund">Hyvityskäytäntö</a>, ostokanavasäännöt ja sovellettava kuluttajalaki. Sovelluskaupan ostot hoitaa yleensä asianomainen sovelluskauppa.</p>
+        <p>Palautukset käsitellään meidän ohjeidemme mukaan <a href="/refund.html">Hyvityskäytäntö</a>, ostokanavasäännöt ja sovellettava kuluttajalaki. Sovelluskaupan ostot hoitaa yleensä asianomainen sovelluskauppa.</p>
         <h2>Hyväksyttävä käyttö</h2>
         <p>Et saa käyttää Alioloa väärin, häiritä palvelua, yrittää luvatonta pääsyä, kaapata tai kopioida sisältöä suuressa mittakaavassa, suunnitella suojattuja osia sovelluksesta, ladata laitonta materiaalia tai käyttää palvelua tavalla, joka vahingoittaa muita käyttäjiä tai Alioloa.</p>
         <h2>Sisältö ja saatavuus</h2>
@@ -158,7 +158,7 @@
         <h2>Alustan hintaerot</h2>
         <p>Hinnat ja tarjoukset voivat vaihdella verkkokassan, Google Playn, Apple App Storen, maiden, valuuttojen ja rajoitetun ajan tarjousten välillä. Viimeinen kassanäyttö hallitsee ostoksesi todellista hintaa ja uusimisehtoja.</p>
         <h2>Aiheeseen liittyvät käytännöt</h2>
-        <p>Tarkista ennen tilaamista <a href="/terms">Tilausehdot</a>, <a href="/refund">Hyvityskäytäntö</a>, ja <a href="/privacy">Tietosuojakäytäntö</a>.</p>
+        <p>Tarkista ennen tilaamista <a href="/terms.html">Tilausehdot</a>, <a href="/refund.html">Hyvityskäytäntö</a>, ja <a href="/privacy.html">Tietosuojakäytäntö</a>.</p>
     checkout_title Aliolo Checkout
     checkout_subtitle Suojattu kassalla Aliolo Premium -tilauksille.
     checkout_eyebrow Turvallinen kassa
@@ -179,7 +179,7 @@
     landing_nav_login Kirjaudu sisään
     landing_nav_cta Luo ilmainen tili
     landing_hero_eyebrow Visuaalinen oppimisalusta
-    landing_hero_h1 Opi visuaalisesti. Muista pidempään.
+    landing_hero_h1 Opi visuaalisesti. Master pysyvästi.
     landing_hero_p Muuta kuvat, ääni, video ja teksti jäsennellyiksi muistikorteiksi. Opi kontekstin avulla, tarkista oikeaan aikaan ja testaa, mitä voit todella muistaa.
     landing_hero_btn_primary Luo ilmainen tili
     landing_hero_btn_secondary Kirjaudu sisään
@@ -210,6 +210,12 @@
     landing_step_3_desc Siirry kohdennettuun testaukseen paljastaaksesi heikot kohdat, tehostaaksesi hakua ja tehdäksesi edistymisestä mitattavissa.
     landing_pricing_h2 Aloita ilmaiseksi. Päivitä, kun tarvitset täyden työnkulun.
     landing_pricing_p Luo tili ilman maksua. Premium lisää väliajoin toistoa, luomista, testausta, automaattista toistoa, yksityistä järjestämistä ja syvempää räätälöintiä.
+    plan_weekly_title Viikoittainen pääsy
+    plan_weekly_tagline Paras nopeille maaleille
+    plan_monthly_title Kuukausittainen pääsy
+    plan_monthly_tagline Suosituin valinta
+    plan_yearly_title Vuosittainen pääsy
+    plan_yearly_tagline Säästä 33 % kuukaudessa
     landing_plan_weekly_desc Sopii lyhytaikaisiin työntöihin, pikaarviointeihin tai koeviikon valmisteluihin.
     landing_plan_weekly_item_1 Lyhyt sitoutumisikkuna
     landing_plan_weekly_item_2 Nopea tapa kokeilla premium-työnkulkua

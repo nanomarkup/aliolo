@@ -44,7 +44,7 @@
         <h2>Stornierung</h2>
         <p>Sie können gemäß den Regeln des von Ihnen verwendeten Kaufkanals stornieren. Durch die Stornierung wird eine zukünftige Verlängerung verhindert. Sofern der Kaufkanal nichts anderes angibt, bleibt der kostenpflichtige Zugang bis zum Ende des aktuellen Abrechnungszeitraums verfügbar.</p>
         <h2>Rückerstattungen</h2>
-        <p>Rückerstattungen werden gemäß unserer Abwicklung abgewickelt <a href="/refund">Rückerstattungsrichtlinie</a>, die Kaufkanalregeln und das geltende Verbraucherrecht. Die Abwicklung von App-Store-Käufen erfolgt in der Regel über den jeweiligen App-Store.</p>
+        <p>Rückerstattungen werden gemäß unserer Abwicklung abgewickelt <a href="/refund.html">Rückerstattungsrichtlinie</a>, die Kaufkanalregeln und das geltende Verbraucherrecht. Die Abwicklung von App-Store-Käufen erfolgt in der Regel über den jeweiligen App-Store.</p>
         <h2>Akzeptable Verwendung</h2>
         <p>Es ist Ihnen nicht gestattet, Aliolo zu missbrauchen, den Dienst zu stören, unbefugten Zugriff zu versuchen, Inhalte in großem Umfang zu scrapen oder zu kopieren, geschützte Teile der App zurückzuentwickeln, rechtswidriges Material hochzuladen oder den Dienst auf eine Weise zu nutzen, die anderen Benutzern oder Aliolo schadet.</p>
         <h2>Inhalt und Verfügbarkeit</h2>
@@ -158,7 +158,7 @@
         <h2>Preisunterschiede bei Plattformen</h2>
         <p>Preise und Angebote können je nach Web-Checkout, Google Play, Apple App Store, Ländern, Währungen und zeitlich begrenzten Werbeaktionen variieren. Der letzte Checkout-Bildschirm kontrolliert den tatsächlichen Preis und die Verlängerungsbedingungen für Ihren Kauf.</p>
         <h2>Verwandte Richtlinien</h2>
-        <p>Lesen Sie vor dem Abonnieren die <a href="/terms">Abonnementbedingungen</a>, <a href="/refund">Rückerstattungsrichtlinie</a>, Und <a href="/privacy">Datenschutzrichtlinie</a>.</p>
+        <p>Lesen Sie vor dem Abonnieren die <a href="/terms.html">Abonnementbedingungen</a>, <a href="/refund.html">Rückerstattungsrichtlinie</a>, Und <a href="/privacy.html">Datenschutzrichtlinie</a>.</p>
     checkout_title Aliolo-Kaufabwicklung
     checkout_subtitle Sicherer Checkout für Aliolo Premium-Abonnements.
     checkout_eyebrow Sicherer Checkout
@@ -179,7 +179,7 @@
     landing_nav_login Einloggen
     landing_nav_cta Kostenloses Konto erstellen
     landing_hero_eyebrow Visuelle Lernplattform
-    landing_hero_h1 Visuell lernen. Erinnern Sie sich länger.
+    landing_hero_h1 Visuell lernen. Meistere dauerhaft.
     landing_hero_p Verwandeln Sie Bilder, Audio, Video und Text in strukturierte Lernkarten. Lernen Sie im Kontext, wiederholen Sie zum richtigen Zeitpunkt und testen Sie, woran Sie sich wirklich erinnern können.
     landing_hero_btn_primary Kostenloses Konto erstellen
     landing_hero_btn_secondary Einloggen
@@ -210,6 +210,12 @@
     landing_step_3_desc Führen Sie gezielte Tests durch, um Schwachstellen aufzudecken, die Wiedererkennung zu verbessern und Fortschritte messbar zu machen.
     landing_pricing_h2 Kostenlos starten. Führen Sie ein Upgrade durch, wenn Sie den vollständigen Workflow benötigen.
     landing_pricing_p Erstellen Sie ein Konto ohne Zahlung. Premium bietet räumliche Wiederholung, Erstellung, Test, automatische Wiedergabe, private Organisation und umfassendere Anpassungsmöglichkeiten.
+    plan_weekly_title Wöchentlicher Zugang
+    plan_weekly_tagline Am besten für schnelle Ziele
+    plan_monthly_title Monatlicher Zugriff
+    plan_monthly_tagline Beliebteste Wahl
+    plan_yearly_title Jährlicher Zugang
+    plan_yearly_tagline Sparen Sie 33 % pro Monat
     landing_plan_weekly_desc Gut für kurzfristige Impulse, schnelle Überprüfungen oder die Vorbereitung auf die Prüfungswoche.
     landing_plan_weekly_item_1 Kurzes Verpflichtungsfenster
     landing_plan_weekly_item_2 Schnelle Möglichkeit, den Premium-Workflow auszuprobieren

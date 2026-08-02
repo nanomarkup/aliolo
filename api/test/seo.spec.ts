@@ -25,22 +25,20 @@ const mockEnv = {
       const parts = filepath.split('/');
       if (parts.length > 2 && SUPPORTED_LANGS.includes(parts[1])) {
         filepath = '/' + parts.slice(2).join('/');
-      } else if (parts.length === 2 && SUPPORTED_LANGS.includes(parts[1])) {
-        filepath = '/';
       }
 
       let html = '';
-      if (filepath === '/landing.html' || filepath === '/' || filepath === '/landing') {
+      if (filepath === '/landing.html') {
         html = landingHtml;
-      } else if (filepath === '/pricing.html' || filepath === '/pricing') {
+      } else if (filepath === '/pricing.html') {
         html = pricingHtml;
-      } else if (filepath === '/privacy.html' || filepath === '/privacy') {
+      } else if (filepath === '/privacy.html') {
         html = privacyHtml;
-      } else if (filepath === '/terms.html' || filepath === '/terms') {
+      } else if (filepath === '/terms.html') {
         html = termsHtml;
-      } else if (filepath === '/refund.html' || filepath === '/refund') {
+      } else if (filepath === '/refund.html') {
         html = refundHtml;
-      } else if (filepath === '/pay.html' || filepath === '/pay') {
+      } else if (filepath === '/pay.html') {
         html = payHtml;
       } else if (filepath === '/index.html') {
         html = indexHtml;
@@ -61,10 +59,10 @@ function uniqueId(prefix: string) {
 
 describe('SEO and crawlability', () => {
   it('redirects the public HTTP origin to HTTPS', async () => {
-    const res = await app.request('http://aliolo.com/pricing?source=test', {}, mockEnv);
+    const res = await app.request('http://aliolo.com/pricing.html?source=test', {}, mockEnv);
 
     expect(res.status).toBe(308);
-    expect(res.headers.get('location')).toBe('https://aliolo.com/pricing?source=test');
+    expect(res.headers.get('location')).toBe('https://aliolo.com/pricing.html?source=test');
   });
 
   it('allows local HTTP development', async () => {
@@ -76,7 +74,7 @@ describe('SEO and crawlability', () => {
     const res = await app.request('https://aliolo.com/', {}, mockEnv);
     const html = await res.text();
     expect(res.status).toBe(200);
-    expect(html).toContain('<link rel="canonical" href="https://aliolo.com/">');
+    expect(html).toContain('<link rel="canonical" href="https://aliolo.com/landing.html">');
     expect(html).toContain('<link rel="icon" type="image/webp" href="/app_icon.webp">');
     expect(html).toContain('<link rel="manifest" href="/manifest.json">');
     expect(html).toContain('https://aliolo.com/aliolo-social-preview.png');
@@ -110,14 +108,14 @@ describe('SEO and crawlability', () => {
 
     expect(res.status).toBe(200);
     expect(res.headers.get('content-type')).toContain('application/xml');
-    expect(xml).toContain('<loc>https://aliolo.com/</loc>');
+    expect(xml).toContain('<loc>https://aliolo.com/landing.html</loc>');
     expect(xml).toContain('<lastmod>2026-08-01</lastmod>');
     expect(xml).not.toContain('<changefreq>');
     expect(xml).not.toContain('<priority>');
   });
 
   it('renders pricing page with social metadata', async () => {
-    const res = await app.request('https://aliolo.com/pricing', {}, mockEnv);
+    const res = await app.request('https://aliolo.com/pricing.html', {}, mockEnv);
     const html = await res.text();
     expect(res.status).toBe(200);
     expect(html).toContain('<meta property="og:title" content="Aliolo Premium Pricing">');
@@ -213,37 +211,36 @@ describe('SEO and crawlability', () => {
     expect(res.status).toBe(404);
   });
 
-  it('redirects to preferred language based on Accept-Language header', async () => {
+  it('does not redirect clean static aliases based on Accept-Language header', async () => {
     const res = await app.request('https://aliolo.com/privacy', {
       headers: {
         'Accept-Language': 'es-MX,es;q=0.9,en;q=0.8'
       }
     }, mockEnv);
 
-    expect(res.status).toBe(307);
-    expect(res.headers.get('location')).toBe('/es/privacy');
-    expect(res.headers.get('set-cookie')).toContain('aliolo_lang=es');
+    expect(res.status).toBe(404);
+    expect(res.headers.get('location')).toBeNull();
   });
 
-  it('redirects to preferred language based on aliolo_lang cookie', async () => {
+  it('does not redirect clean static aliases based on aliolo_lang cookie', async () => {
     const res = await app.request('https://aliolo.com/terms', {
       headers: {
         'Cookie': 'aliolo_lang=de'
       }
     }, mockEnv);
 
-    expect(res.status).toBe(307);
-    expect(res.headers.get('location')).toBe('/de/terms');
+    expect(res.status).toBe(404);
+    expect(res.headers.get('location')).toBeNull();
   });
 
-  it('sets aliolo_lang cookie when visiting localized page directly', async () => {
-    const res = await app.request('https://aliolo.com/fr/refund', {}, mockEnv);
+  it('serves localized static html pages directly', async () => {
+    const res = await app.request('https://aliolo.com/fr/refund.html', {}, mockEnv);
     expect(res.status).toBe(200);
-    expect(res.headers.get('set-cookie')).toContain('aliolo_lang=fr');
+    expect(res.headers.get('location')).toBeNull();
   });
 
-  it('does not redirect search engine bots', async () => {
-    const res = await app.request('https://aliolo.com/pricing', {
+  it('serves direct static html pages to search engine bots', async () => {
+    const res = await app.request('https://aliolo.com/pricing.html', {
       headers: {
         'User-Agent': 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)',
         'Accept-Language': 'es-ES,es;q=0.9'
@@ -253,18 +250,18 @@ describe('SEO and crawlability', () => {
     expect(res.status).toBe(200);
   });
 
-  it('redirects /en and /en/:page to their clean counterparts', async () => {
+  it('does not keep legacy /en static redirects before release', async () => {
     const resRoot = await app.request('https://aliolo.com/en', {}, mockEnv);
-    expect(resRoot.status).toBe(301);
-    expect(resRoot.headers.get('location')).toBe('/');
+    expect(resRoot.status).toBe(404);
+    expect(resRoot.headers.get('location')).toBeNull();
 
     const resPrivacy = await app.request('https://aliolo.com/en/privacy', {}, mockEnv);
-    expect(resPrivacy.status).toBe(301);
-    expect(resPrivacy.headers.get('location')).toBe('/privacy');
+    expect(resPrivacy.status).toBe(404);
+    expect(resPrivacy.headers.get('location')).toBeNull();
 
     const resUnknown = await app.request('https://aliolo.com/en/unknown', {}, mockEnv);
-    expect(resUnknown.status).toBe(301);
-    expect(resUnknown.headers.get('location')).toBe('/');
+    expect(resUnknown.status).toBe(404);
+    expect(resUnknown.headers.get('location')).toBeNull();
   });
 
   it('serves the SPA app shell for localized app paths', async () => {
@@ -300,7 +297,7 @@ describe('SEO and crawlability', () => {
     expect(resSW.headers.get('Cache-Control')).toBe('no-cache, must-revalidate');
 
     // Test landing page HTML
-    const resHtml = await app.request('https://aliolo.com/privacy', {}, mockEnv);
+    const resHtml = await app.request('https://aliolo.com/privacy.html', {}, mockEnv);
     expect(resHtml.status).toBe(200);
     expect(resHtml.headers.get('Cache-Control')).toBe('no-cache, must-revalidate');
   });

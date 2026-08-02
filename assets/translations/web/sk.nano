@@ -44,7 +44,7 @@
         <h2>Zrušenie</h2>
         <p>Môžete zrušiť podľa pravidiel nákupného kanála, ktorý ste použili. Zrušenie zastaví budúce obnovenie. Ak nie je v nákupnom kanáli uvedené inak, platený prístup zostáva dostupný až do konca aktuálneho fakturačného obdobia.</p>
         <h2>Vrátenie peňazí</h2>
-        <p>Vrátenie peňazí prebieha podľa nášho <a href="/refund">Pravidlá pre vrátenie platby</a>, pravidlá nákupného kanála a príslušné spotrebiteľské právo. Nákupy v obchode s aplikáciami zvyčajne spravuje príslušný obchod s aplikáciami.</p>
+        <p>Vrátenie peňazí prebieha podľa nášho <a href="/refund.html">Pravidlá pre vrátenie platby</a>, pravidlá nákupného kanála a príslušné spotrebiteľské právo. Nákupy v obchode s aplikáciami zvyčajne spravuje príslušný obchod s aplikáciami.</p>
         <h2>Prijateľné použitie</h2>
         <p>Nesmiete zneužívať Aliolo, zasahovať do služby, pokúšať sa o neoprávnený prístup, zoškrabovať alebo kopírovať obsah vo veľkom rozsahu, spätne analyzovať chránené časti aplikácie, nahrávať nezákonný materiál alebo používať službu spôsobom, ktorý poškodzuje iných používateľov alebo Aliolo.</p>
         <h2>Obsah a dostupnosť</h2>
@@ -158,7 +158,7 @@
         <h2>Cenové rozdiely platformy</h2>
         <p>Ceny a ponuky sa môžu líšiť medzi webovou pokladňou, Google Play, Apple App Store, krajinami, menami a časovo obmedzenými akciami. Posledná obrazovka platby kontroluje skutočnú cenu a podmienky obnovenia vášho nákupu.</p>
         <h2>Súvisiace zásady</h2>
-        <p>Pred prihlásením na odber si prečítajte <a href="/terms">Podmienky predplatného</a>, <a href="/refund">Pravidlá pre vrátenie platby</a>, a <a href="/privacy">Zásady ochrany osobných údajov</a>.</p>
+        <p>Pred prihlásením na odber si prečítajte <a href="/terms.html">Podmienky predplatného</a>, <a href="/refund.html">Pravidlá pre vrátenie platby</a>, a <a href="/privacy.html">Zásady ochrany osobných údajov</a>.</p>
     checkout_title Pokladňa Aliolo
     checkout_subtitle Bezpečná platba za predplatné Aliolo Premium.
     checkout_eyebrow Bezpečná pokladňa
@@ -179,7 +179,7 @@
     landing_nav_login Prihláste sa
     landing_nav_cta Vytvorte si bezplatný účet
     landing_hero_eyebrow Platforma vizuálneho vzdelávania
-    landing_hero_h1 Učte sa vizuálne. Pamätaj dlhšie.
+    landing_hero_h1 Učte sa vizuálne. Majster natrvalo.
     landing_hero_p Premeňte obrázky, zvuk, video a text na štruktúrované kartičky. Učte sa s kontextom, prehodnoťte v správnom čase a otestujte, čo si skutočne pamätáte.
     landing_hero_btn_primary Vytvorte si bezplatný účet
     landing_hero_btn_secondary Prihláste sa
@@ -210,6 +210,12 @@
     landing_step_3_desc Prejdite do sústredeného testovania, aby ste odhalili slabé miesta, posilnili vyhľadávanie a dosiahli merateľný pokrok.
     landing_pricing_h2 Začnite zadarmo. Inovujte, keď potrebujete úplný pracovný postup.
     landing_pricing_p Vytvorte si účet bez platby. Premium pridáva opakované opakovanie, vytváranie, testovanie, automatické hranie, súkromnú organizáciu a hlbšie prispôsobenie.
+    plan_weekly_title Týždenný prístup
+    plan_weekly_tagline Najlepšie na rýchle góly
+    plan_monthly_title Mesačný prístup
+    plan_monthly_tagline Najobľúbenejšia voľba
+    plan_yearly_title Ročný prístup
+    plan_yearly_tagline Ušetrite 33% mesačne
     landing_plan_weekly_desc Dobré pre krátkodobé nátlaky, rýchle recenzie alebo prípravu na týždeň na skúšku.
     landing_plan_weekly_item_1 Krátke obdobie viazanosti
     landing_plan_weekly_item_2 Rýchly spôsob, ako vyskúšať prémiový pracovný postup

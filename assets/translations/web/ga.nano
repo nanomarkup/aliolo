@@ -44,7 +44,7 @@
         <h2>Cealú</h2>
         <p>Is féidir leat a chealú de réir rialacha an chainéil cheannaigh a d’úsáid tú. Cuireann cealú stop le hathnuachan amach anseo. Mura sonraítear a mhalairt sa chainéal ceannacháin, beidh rochtain íoctha fós ar fáil go dtí deireadh na tréimhse billeála reatha.</p>
         <h2>Aisíocaíochtaí</h2>
-        <p>Déantar aisíocaíochtaí a láimhseáil de réir ár <a href="/refund">Beartas Aisíocaíochta</a>, rialacha an chainéil cheannaigh, agus an dlí tomhaltóra is infheidhme. Is iondúil go láimhseálann an siopa app ábhartha ceannacháin appstore.</p>
+        <p>Déantar aisíocaíochtaí a láimhseáil de réir ár <a href="/refund.html">Beartas Aisíocaíochta</a>, rialacha an chainéil cheannaigh, agus an dlí tomhaltóra is infheidhme. Is iondúil go láimhseálann an siopa app ábhartha ceannacháin appstore.</p>
         <h2>Úsáid Inghlactha</h2>
         <p>Ní fhéadfaidh tú mí-úsáid a bhaint as Aliolo, cur isteach ar an tseirbhís, iarracht a dhéanamh ar rochtain neamhúdaraithe, ábhar a scrapeadh nó a chóipeáil ar scála, páirteanna cosanta den aip ó innealtóir droim ar ais, ábhar neamhdhleathach a uaslódáil, nó an tseirbhís a úsáid ar bhealach a dhéanann dochar d’úsáideoirí eile nó Aliolo.</p>
         <h2>Ábhar agus Infhaighteacht</h2>
@@ -158,7 +158,7 @@
         <h2>Difríochtaí Praghsanna Ardán</h2>
         <p>D’fhéadfadh go n-athródh praghsanna agus tairiscintí idir Seiceáil Gréasáin, Google Play, Apple App Store, tíortha, airgeadraí, agus promóisin am teoranta. Rialaíonn an scáileán seiceáil amach deiridh an praghas iarbhír agus na téarmaí athnuachana do do cheannachán.</p>
         <h2>Beartais Ghaolmhara</h2>
-        <p>Sula síntiúis, déan athbhreithniú ar an <a href="/terms">Téarmaí Síntiúis</a>, <a href="/refund">Beartas Aisíocaíochta</a>, agus <a href="/privacy">Beartas Príobháideachta</a>.</p>
+        <p>Sula síntiúis, déan athbhreithniú ar an <a href="/terms.html">Téarmaí Síntiúis</a>, <a href="/refund.html">Beartas Aisíocaíochta</a>, agus <a href="/privacy.html">Beartas Príobháideachta</a>.</p>
     checkout_title Seiceáil Amach Aliolo
     checkout_subtitle Seiceáil amach slán le haghaidh síntiúis Aliolo Premium.
     checkout_eyebrow Seiceáil amach slán
@@ -179,7 +179,7 @@
     landing_nav_login Logáil isteach
     landing_nav_cta Cruthaigh cuntas saor in aisce
     landing_hero_eyebrow Ardán foghlama amhairc
-    landing_hero_h1 Foghlaim ó thaobh amhairc. Cuimhnigh níos faide.
+    landing_hero_h1 Foghlaim ó thaobh amhairc. Máistir go buan.
     landing_hero_p Cas íomhánna, fuaime, físeáin agus téacs ina luaschártaí struchtúrtha. Foghlaim le comhthéacs, déan athbhreithniú ag an am ceart, agus tástála cad is féidir leat a thabhairt chun cuimhne go fírinneach.
     landing_hero_btn_primary Cruthaigh cuntas saor in aisce
     landing_hero_btn_secondary Logáil isteach
@@ -210,6 +210,12 @@
     landing_step_3_desc Téigh isteach i dtástáil dhírithe chun spotaí laga a nochtadh, aisghabháil a threisiú, agus dul chun cinn intomhaiste a dhéanamh.
     landing_pricing_h2 Tosaigh saor in aisce. Uasghrádú nuair is gá duit an sreabhadh oibre iomlán.
     landing_pricing_p Cruthaigh cuntas gan íocaíocht. Cuireann Préimh athrá spásáilte, cruthú, tástáil, uath-imirt, eagrú príobháideach, agus saincheaptha níos doimhne.
+    plan_weekly_title Rochtain Seachtainiúil
+    plan_weekly_tagline Is fearr le haghaidh spriocanna tapa
+    plan_monthly_title Rochtain Mhíosúil
+    plan_monthly_tagline Rogha is coitianta
+    plan_yearly_title Rochtain Bhliantúil
+    plan_yearly_tagline Sábháil 33% in aghaidh na míosa
     landing_plan_weekly_desc Go maith le haghaidh brúnna gearrthéarmacha, léirmheasanna tapa, nó ullmhúcháin seachtaine scrúdaithe.
     landing_plan_weekly_item_1 Fuinneog gealltanas gearr
     landing_plan_weekly_item_2 Bealach tapa chun an sreabhadh oibre préimhe a thriail

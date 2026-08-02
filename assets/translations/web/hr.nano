@@ -44,7 +44,7 @@
         <h2>Otkazivanje</h2>
         <p>Možete otkazati prema pravilima kanala kupnje koji ste koristili. Otkazivanje zaustavlja buduće obnavljanje. Osim ako kanal kupnje ne navodi drugačije, plaćeni pristup ostaje dostupan do kraja tekućeg obračunskog razdoblja.</p>
         <h2>Povrat novca</h2>
-        <p>Povrati se obrađuju u skladu s našim <a href="/refund">Politika povrata novca</a>, pravila kanala kupnje i primjenjivi zakon o zaštiti potrošača. Kupnje u trgovini aplikacija obično obavlja odgovarajuća trgovina aplikacija.</p>
+        <p>Povrati se obrađuju u skladu s našim <a href="/refund.html">Politika povrata novca</a>, pravila kanala kupnje i primjenjivi zakon o zaštiti potrošača. Kupnje u trgovini aplikacija obično obavlja odgovarajuća trgovina aplikacija.</p>
         <h2>Prihvatljiva uporaba</h2>
         <p>Ne smijete zloupotrijebiti Aliolo, ometati uslugu, pokušavati neovlašteni pristup, strugati ili kopirati sadržaj u većem broju, obrnutim inženjeringom zaštićene dijelove aplikacije, učitavati nezakonit materijal ili koristiti uslugu na način koji šteti drugim korisnicima ili Aliolu.</p>
         <h2>Sadržaj i dostupnost</h2>
@@ -158,7 +158,7 @@
         <h2>Razlike u cijeni platforme</h2>
         <p>Cijene i ponude mogu se razlikovati ovisno o web-naplati, Google Playu, Apple App Storeu, zemljama, valutama i vremenski ograničenim promocijama. Posljednji zaslon za naplatu kontrolira stvarnu cijenu i uvjete obnove za vašu kupnju.</p>
         <h2>Povezana pravila</h2>
-        <p>Prije pretplate pregledajte <a href="/terms">Uvjeti pretplate</a>, <a href="/refund">Politika povrata novca</a>, i <a href="/privacy">Politika privatnosti</a>.</p>
+        <p>Prije pretplate pregledajte <a href="/terms.html">Uvjeti pretplate</a>, <a href="/refund.html">Politika povrata novca</a>, i <a href="/privacy.html">Politika privatnosti</a>.</p>
     checkout_title Aliolo Blagajna
     checkout_subtitle Sigurna naplata za Aliolo Premium pretplate.
     checkout_eyebrow Sigurna naplata
@@ -179,7 +179,7 @@
     landing_nav_login Prijavite se
     landing_nav_cta Stvorite besplatni račun
     landing_hero_eyebrow Vizualna platforma za učenje
-    landing_hero_h1 Učite vizualno. Zapamti dulje.
+    landing_hero_h1 Učite vizualno. Majstor za stalno.
     landing_hero_p Pretvorite slike, audio, video i tekst u strukturirane kartice. Učite s kontekstom, pregledajte u pravo vrijeme i testirajte čega se doista možete sjetiti.
     landing_hero_btn_primary Stvorite besplatni račun
     landing_hero_btn_secondary Prijavite se
@@ -210,6 +210,12 @@
     landing_step_3_desc Prijeđite na fokusirano testiranje kako biste otkrili slabe točke, ojačali pronalaženje i učinili napredak mjerljivim.
     landing_pricing_h2 Počni besplatno. Nadogradite kada vam zatreba potpuni tijek rada.
     landing_pricing_p Kreirajte račun bez plaćanja. Premium dodaje ponavljanje s razmakom, stvaranje, testiranje, automatsku reprodukciju, privatnu organizaciju i dublju prilagodbu.
+    plan_weekly_title Tjedni pristup
+    plan_weekly_tagline Najbolji za brze golove
+    plan_monthly_title Mjesečni pristup
+    plan_monthly_tagline Najpopularniji izbor
+    plan_yearly_title Godišnji pristup
+    plan_yearly_tagline Uštedite 33% mjesečno
     landing_plan_weekly_desc Dobar za kratkoročna guranja, brze preglede ili pripreme za ispitni tjedan.
     landing_plan_weekly_item_1 Kratki prozor obveze
     landing_plan_weekly_item_2 Brz način isprobavanja vrhunskog tijeka rada
