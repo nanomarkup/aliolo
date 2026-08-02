@@ -1201,18 +1201,22 @@ LANDING_STYLES = """
     .hero-copy { padding-top: 24px; }
   }
   @media (max-width: 960px) {
-    .brand { align-items: flex-start; }
+    .brand { align-items: center; }
     nav {
-      width: 100%;
-      justify-content: flex-start;
+      width: auto;
+      margin-left: auto;
+      justify-content: flex-end;
     }
-    .desktop-link { display: none; }
+    .desktop-link,
+    .nav-cta,
+    .hero .btn-secondary {
+      display: none;
+    }
     .lang-select {
       max-width: 100%;
       min-height: 44px;
     }
-    .nav-login,
-    .nav-cta {
+    .nav-login {
       min-height: 44px;
       display: inline-flex;
       align-items: center;
@@ -1222,22 +1226,22 @@ LANDING_STYLES = """
   @media (max-width: 520px) {
     .shell { width: min(100% - 28px, 1160px); }
     header { position: static; }
+    .brand { align-items: center; }
     .brand-name { font-size: 24px; }
     nav {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: minmax(0, 1fr) auto;
       width: 100%;
       gap: 8px;
     }
     .lang-select {
-      grid-column: 1 / -1;
       width: 100%;
+      min-width: 0;
     }
-    .nav-login,
-    .nav-cta {
-      width: 100%;
+    .nav-login {
+      width: auto;
       text-align: center;
-      padding-inline: 10px;
+      padding-inline: 14px;
     }
     main { padding-top: 20px; }
     .hero-copy { padding-top: 18px; }
