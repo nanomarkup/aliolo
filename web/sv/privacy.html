@@ -172,6 +172,25 @@
     color: var(--brand);
     text-decoration: none;
   }
+  .menu-toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    color: var(--ink);
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.18s ease;
+  }
+  .menu-toggle:hover {
+    background: rgba(0, 0, 0, 0.04);
+  }
+  .menu-icon-svg {
+    width: 24px;
+    height: 24px;
+  }
   .lang-select {
     font-family: inherit;
     font-size: 14px;
@@ -191,18 +210,67 @@
   .lang-select:hover {
     color: var(--brand);
   }
-  @media (max-width: 760px) {
+  @media (max-width: 640px) {
     .shell { width: min(100% - 28px, 1100px); }
-    .brand-text {
-      display: none;
+    .brand {
+      flex-wrap: nowrap;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
     }
-
+    .brand-name {
+      order: 1;
+    }
+    .header-controls {
+      order: 2;
+      margin-left: auto;
+      margin-right: 8px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .menu-toggle {
+      display: inline-flex;
+    }
     .page-tabs {
-      gap: 6px;
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: 48px;
+      width: 220px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      box-shadow: 0 20px 48px rgba(18, 35, 56, 0.12);
+      flex-direction: column;
+      align-items: stretch;
+      padding: 8px;
+      gap: 2px;
+      z-index: 100;
+    }
+    .page-tabs.open {
+      display: flex;
     }
     .page-tabs a {
-      padding: 10px 12px;
+      display: block;
+      width: 100%;
+      padding: 10px 16px;
+      border-radius: 10px;
+      border: 1px solid transparent;
       font-size: 14px;
+      font-weight: 700;
+      color: var(--ink);
+      text-align: left;
+    }
+    .page-tabs a:hover {
+      background: rgba(23, 95, 144, 0.05);
+      border-color: transparent;
+      color: var(--brand);
+    }
+    .page-tabs a.active {
+      border-color: transparent;
+      background: rgba(23, 95, 144, 0.08);
+      color: var(--brand);
     }
   }
   main { padding: 34px 0 78px; }
@@ -407,7 +475,8 @@
         <img src="/app_icon.webp" alt="Aliolo Logo" />
         <span class="brand-text">aliolo</span>
       </a>
-      <nav class="page-tabs" aria-label="Legal page navigation">
+
+      <nav class="page-tabs" aria-label="Legal page navigation" id="mobile-menu">
         <a class="" href="/sv/landing.html">Hem</a>
         <a class="active" href="/sv/privacy.html">Privatliv</a>
         <a class="" href="/sv/terms.html">Villkor</a>
@@ -415,6 +484,13 @@
         <a class="" href="/sv/pricing.html">Prissättning</a>
       </nav>
       <div class="header-controls">
+        <button class="menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false" onclick="const menu = document.getElementById('mobile-menu'); const expanded = this.getAttribute('aria-expanded') === 'true'; this.setAttribute('aria-expanded', !expanded); menu.classList.toggle('open');">
+          <svg class="menu-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="4" y1="12" x2="20" y2="12"></line>
+            <line x1="4" y1="6" x2="20" y2="6"></line>
+            <line x1="4" y1="18" x2="20" y2="18"></line>
+          </svg>
+        </button>
         <select class="lang-select" onchange="document.cookie='aliolo_lang=' + this.options[this.selectedIndex].getAttribute('data-lang') + '; path=/; max-age=31536000; SameSite=Lax; Secure'; window.location.href=this.value" aria-label="Change language">
       <option value="/privacy.html" data-lang="en" data-name="English">EN</option><option value="/id/privacy.html" data-lang="id" data-name="Bahasa Indonesia">ID</option><option value="/bg/privacy.html" data-lang="bg" data-name="Български">BG</option><option value="/cs/privacy.html" data-lang="cs" data-name="Čeština">CS</option><option value="/da/privacy.html" data-lang="da" data-name="Dansk">DA</option><option value="/de/privacy.html" data-lang="de" data-name="Deutsch">DE</option><option value="/et/privacy.html" data-lang="et" data-name="Eesti">ET</option><option value="/es/privacy.html" data-lang="es" data-name="Español">ES</option><option value="/fr/privacy.html" data-lang="fr" data-name="Français">FR</option><option value="/ga/privacy.html" data-lang="ga" data-name="Gaeilge">GA</option><option value="/hr/privacy.html" data-lang="hr" data-name="Hrvatski">HR</option><option value="/it/privacy.html" data-lang="it" data-name="Italiano">IT</option><option value="/lv/privacy.html" data-lang="lv" data-name="Latviešu">LV</option><option value="/lt/privacy.html" data-lang="lt" data-name="Lietuvių">LT</option><option value="/hu/privacy.html" data-lang="hu" data-name="Magyar">HU</option><option value="/mt/privacy.html" data-lang="mt" data-name="Malti">MT</option><option value="/nl/privacy.html" data-lang="nl" data-name="Nederlands">NL</option><option value="/pl/privacy.html" data-lang="pl" data-name="Polski">PL</option><option value="/pt/privacy.html" data-lang="pt" data-name="Português">PT</option><option value="/ro/privacy.html" data-lang="ro" data-name="Română">RO</option><option value="/sk/privacy.html" data-lang="sk" data-name="Slovenčina">SK</option><option value="/sl/privacy.html" data-lang="sl" data-name="Slovenščina">SL</option><option value="/fi/privacy.html" data-lang="fi" data-name="Suomi">FI</option><option value="/sv/privacy.html" data-lang="sv" data-name="Svenska" selected>SV</option><option value="/tl/privacy.html" data-lang="tl" data-name="Tagalog">TL</option><option value="/vi/privacy.html" data-lang="vi" data-name="Tiếng Việt">VI</option><option value="/tr/privacy.html" data-lang="tr" data-name="Türkçe">TR</option><option value="/el/privacy.html" data-lang="el" data-name="Ελληνικά">EL</option><option value="/uk/privacy.html" data-lang="uk" data-name="Українська">UK</option><option value="/ar/privacy.html" data-lang="ar" data-name="العربية">AR</option><option value="/hi/privacy.html" data-lang="hi" data-name="हिन्दी">HI</option><option value="/zh/privacy.html" data-lang="zh" data-name="中文">ZH</option><option value="/ja/privacy.html" data-lang="ja" data-name="日本語">JA</option><option value="/ko/privacy.html" data-lang="ko" data-name="한국어">KO</option>
     </select>

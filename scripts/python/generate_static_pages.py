@@ -218,6 +218,25 @@ LEGAL_STYLES = """
     color: var(--brand);
     text-decoration: none;
   }
+  .menu-toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    color: var(--ink);
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.18s ease;
+  }
+  .menu-toggle:hover {
+    background: rgba(0, 0, 0, 0.04);
+  }
+  .menu-icon-svg {
+    width: 24px;
+    height: 24px;
+  }
   .lang-select {
     font-family: inherit;
     font-size: 14px;
@@ -237,18 +256,67 @@ LEGAL_STYLES = """
   .lang-select:hover {
     color: var(--brand);
   }
-  @media (max-width: 760px) {
+  @media (max-width: 640px) {
     .shell { width: min(100% - 28px, 1100px); }
-    .brand-text {
-      display: none;
+    .brand {
+      flex-wrap: nowrap;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
     }
-
+    .brand-name {
+      order: 1;
+    }
+    .header-controls {
+      order: 2;
+      margin-left: auto;
+      margin-right: 8px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .menu-toggle {
+      display: inline-flex;
+    }
     .page-tabs {
-      gap: 6px;
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: 48px;
+      width: 220px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      box-shadow: 0 20px 48px rgba(18, 35, 56, 0.12);
+      flex-direction: column;
+      align-items: stretch;
+      padding: 8px;
+      gap: 2px;
+      z-index: 100;
+    }
+    .page-tabs.open {
+      display: flex;
     }
     .page-tabs a {
-      padding: 10px 12px;
+      display: block;
+      width: 100%;
+      padding: 10px 16px;
+      border-radius: 10px;
+      border: 1px solid transparent;
       font-size: 14px;
+      font-weight: 700;
+      color: var(--ink);
+      text-align: left;
+    }
+    .page-tabs a:hover {
+      background: rgba(23, 95, 144, 0.05);
+      border-color: transparent;
+      color: var(--brand);
+    }
+    .page-tabs a.active {
+      border-color: transparent;
+      background: rgba(23, 95, 144, 0.08);
+      color: var(--brand);
     }
   }
   main { padding: 34px 0 78px; }
@@ -545,6 +613,25 @@ PAY_STYLES = """
       border-color: var(--line);
       text-decoration: none;
     }
+    .menu-toggle {
+      display: none;
+      background: transparent;
+      border: none;
+      color: var(--ink);
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 8px;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.18s ease;
+    }
+    .menu-toggle:hover {
+      background: rgba(0, 0, 0, 0.04);
+    }
+    .menu-icon-svg {
+      width: 24px;
+      height: 24px;
+    }
     main {
       padding: 42px 0 72px;
     }
@@ -669,18 +756,62 @@ PAY_STYLES = """
     .lang-select:hover {
       color: var(--brand);
     }
-    @media (max-width: 760px) {
+    @media (max-width: 640px) {
       .shell { width: min(100% - 28px, 1120px); }
-      .brand-text {
-        display: none;
+      .brand {
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
       }
-
+      .brand-name {
+        order: 1;
+      }
+      .header-controls {
+        order: 2;
+        margin-left: auto;
+        margin-right: 8px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .menu-toggle {
+        display: inline-flex;
+      }
       .page-tabs {
-        gap: 6px;
+        display: none;
+        position: absolute;
+        top: 100%;
+        right: 48px;
+        width: 220px;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        box-shadow: 0 20px 48px rgba(18, 35, 56, 0.12);
+        flex-direction: column;
+        align-items: stretch;
+        padding: 8px;
+        gap: 2px;
+        z-index: 100;
+      }
+      .page-tabs.open {
+        display: flex;
       }
       .page-tabs a {
-        padding: 10px 12px;
+        display: block;
+        width: 100%;
+        padding: 10px 16px;
+        border-radius: 10px;
+        border: 1px solid transparent;
         font-size: 14px;
+        font-weight: 700;
+        color: var(--ink);
+        text-align: left;
+      }
+      .page-tabs a:hover {
+        background: rgba(23, 95, 144, 0.05);
+        border-color: transparent;
+        color: var(--brand);
       }
     }
     @media (max-width: 920px) {
@@ -797,7 +928,7 @@ LANDING_STYLES = """
   nav a, .header-actions a {
     color: var(--ink);
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 700;
     padding: 10px 14px;
     border-radius: 999px;
     border: 1px solid transparent;
@@ -842,6 +973,25 @@ LANDING_STYLES = """
   }
   .lang-select:hover {
     color: var(--brand);
+  }
+  .menu-toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    color: var(--ink);
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.18s ease;
+  }
+  .menu-toggle:hover {
+    background: rgba(0, 0, 0, 0.04);
+  }
+  .menu-icon-svg {
+    width: 24px;
+    height: 24px;
   }
   .header-actions .nav-cta {
     color: var(--accent);
@@ -1781,25 +1931,27 @@ LANDING_STYLES = """
     .hero-copy { padding-top: 24px; }
     .visual-stage { min-height: 580px; }
   }
-  @media (max-width: 860px) {
+  @media (max-width: 980px) {
     .section[id] { scroll-margin-top: 144px; }
     .brand {
-      grid-template-columns: auto 1fr auto;
-      gap: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: nowrap;
+      gap: 16px;
     }
-    .brand-text {
-      display: none;
+    .brand-name {
+      flex: 0 0 auto;
     }
     .landing-tabs {
-      grid-column: 2;
-      justify-self: center;
-    }
-    .landing-tabs a {
-      padding: 8px 10px;
+      flex: 0 0 auto;
+      margin: 0 auto;
     }
     .header-actions {
-      grid-column: 3;
-      justify-self: end;
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
     .header-actions .nav-text {
       display: none;
@@ -1815,31 +1967,67 @@ LANDING_STYLES = """
   @media (max-width: 720px) {
     .section[id] { scroll-margin-top: 136px; }
   }
-  @media (max-width: 520px) {
+  @media (max-width: 640px) {
     .section[id] { scroll-margin-top: 128px; }
     .shell { width: min(100% - 20px, 1160px); }
     .brand {
-      grid-template-columns: auto 1fr auto;
-      gap: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: nowrap;
+      gap: 8px;
+      position: relative;
+    }
+    .brand-name {
+      flex: 0 0 auto;
     }
     .landing-tabs {
-      gap: 6px;
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: 124px;
+      width: 220px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      box-shadow: 0 20px 48px rgba(18, 35, 56, 0.12);
+      flex-direction: column;
+      align-items: stretch;
+      padding: 8px;
+      gap: 2px;
+      z-index: 100;
+    }
+    .landing-tabs.open {
+      display: flex;
     }
     .landing-tabs a {
-      padding: 10px 10px;
+      display: block;
+      width: 100%;
+      padding: 10px 16px;
+      border-radius: 10px;
+      border: 1px solid transparent;
       font-size: 14px;
-      white-space: nowrap;
+      font-weight: 700;
+      color: var(--ink);
+      text-align: left;
+    }
+    .landing-tabs a:hover {
+      background: rgba(23, 95, 144, 0.05);
+      border-color: transparent;
+      color: var(--brand);
+    }
+    .menu-toggle {
+      display: inline-flex;
     }
     .header-actions {
-      gap: 6px;
-    }
-    .header-actions a {
-      padding: 8px;
+      margin-left: auto;
+      margin-right: 4px;
+      gap: 4px;
     }
     .lang-select {
       font-size: 14px;
-      padding: 0 12px 0 0;
-      background-size: 9px;
+      padding: 0 10px 0 0;
+      background-size: 8px;
       min-height: 36px;
     }
     main { padding-top: 20px; }
@@ -1915,10 +2103,18 @@ LEGAL_LAYOUT = """<!DOCTYPE html>
         <img src="/app_icon.webp" alt="Aliolo Logo" />
         <span class="brand-text">aliolo</span>
       </a>
-      <nav class="page-tabs" aria-label="Legal page navigation">
+
+      <nav class="page-tabs" aria-label="Legal page navigation" id="mobile-menu">
         {{NAV_LINKS}}
       </nav>
       <div class="header-controls">
+        <button class="menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false" onclick="const menu = document.getElementById('mobile-menu'); const expanded = this.getAttribute('aria-expanded') === 'true'; this.setAttribute('aria-expanded', !expanded); menu.classList.toggle('open');">
+          <svg class="menu-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="4" y1="12" x2="20" y2="12"></line>
+            <line x1="4" y1="6" x2="20" y2="6"></line>
+            <line x1="4" y1="18" x2="20" y2="18"></line>
+          </svg>
+        </button>
         {{LANG_SWITCHER}}
       </div>
     </div>
@@ -1966,13 +2162,21 @@ PAY_LAYOUT = """<!DOCTYPE html>
         <img src="/app_icon.webp" alt="Aliolo logo" />
         <span class="brand-text">aliolo</span>
       </a>
-      <nav class="page-tabs" aria-label="Checkout page navigation">
+
+      <nav class="page-tabs" aria-label="Checkout page navigation" id="mobile-menu">
         <a href="{{PRICING_HREF}}">{{PRICING_LABEL}}</a>
         <a href="{{TERMS_HREF}}">{{TERMS_LABEL}}</a>
         <a href="{{PRIVACY_HREF}}">{{PRIVACY_LABEL}}</a>
         <a href="{{REFUND_HREF}}">{{REFUND_LABEL}}</a>
       </nav>
       <div class="header-controls">
+        <button class="menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false" onclick="const menu = document.getElementById('mobile-menu'); const expanded = this.getAttribute('aria-expanded') === 'true'; this.setAttribute('aria-expanded', !expanded); menu.classList.toggle('open');">
+          <svg class="menu-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="4" y1="12" x2="20" y2="12"></line>
+            <line x1="4" y1="6" x2="20" y2="6"></line>
+            <line x1="4" y1="18" x2="20" y2="18"></line>
+          </svg>
+        </button>
         {{LANG_SWITCHER}}
       </div>
     </div>
@@ -2140,12 +2344,20 @@ LANDING_LAYOUT = """<!DOCTYPE html>
         <img src="/app_icon.webp" alt="Aliolo logo">
         <span class="brand-text">aliolo</span>
       </a>
-      <nav class="landing-tabs" aria-label="Landing page navigation">
-        <a class="desktop-link" href="#workflow">{{T_landing_nav_how_it_works}}</a>
-        <a class="desktop-link" href="#features">{{T_landing_nav_learning}}</a>
-        <a class="desktop-link" href="#pricing">{{T_landing_nav_pricing}}</a>
+
+      <nav class="landing-tabs" aria-label="Landing page navigation" id="mobile-menu">
+        <a href="#workflow" onclick="document.getElementById('mobile-menu').classList.remove('open'); document.querySelector('.menu-toggle').setAttribute('aria-expanded', 'false');">{{T_landing_nav_how_it_works}}</a>
+        <a href="#features" onclick="document.getElementById('mobile-menu').classList.remove('open'); document.querySelector('.menu-toggle').setAttribute('aria-expanded', 'false');">{{T_landing_nav_learning}}</a>
+        <a href="#pricing" onclick="document.getElementById('mobile-menu').classList.remove('open'); document.querySelector('.menu-toggle').setAttribute('aria-expanded', 'false');">{{T_landing_nav_pricing}}</a>
       </nav>
       <div class="header-actions">
+        <button class="menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false" onclick="const menu = document.getElementById('mobile-menu'); const expanded = this.getAttribute('aria-expanded') === 'true'; this.setAttribute('aria-expanded', !expanded); menu.classList.toggle('open');">
+          <svg class="menu-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="4" y1="12" x2="20" y2="12"></line>
+            <line x1="4" y1="6" x2="20" y2="6"></line>
+            <line x1="4" y1="18" x2="20" y2="18"></line>
+          </svg>
+        </button>
         <a href="{{LOGIN_URL}}?login=1" class="nav-login" aria-label="{{T_landing_nav_login}}">
           <span class="nav-text">{{T_landing_nav_login}}</span>
           <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">

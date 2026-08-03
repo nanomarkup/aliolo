@@ -170,7 +170,7 @@
   nav a, .header-actions a {
     color: var(--ink);
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 700;
     padding: 10px 14px;
     border-radius: 999px;
     border: 1px solid transparent;
@@ -215,6 +215,25 @@
   }
   .lang-select:hover {
     color: var(--brand);
+  }
+  .menu-toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    color: var(--ink);
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.18s ease;
+  }
+  .menu-toggle:hover {
+    background: rgba(0, 0, 0, 0.04);
+  }
+  .menu-icon-svg {
+    width: 24px;
+    height: 24px;
   }
   .header-actions .nav-cta {
     color: var(--accent);
@@ -1154,25 +1173,27 @@
     .hero-copy { padding-top: 24px; }
     .visual-stage { min-height: 580px; }
   }
-  @media (max-width: 860px) {
+  @media (max-width: 980px) {
     .section[id] { scroll-margin-top: 144px; }
     .brand {
-      grid-template-columns: auto 1fr auto;
-      gap: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: nowrap;
+      gap: 16px;
     }
-    .brand-text {
-      display: none;
+    .brand-name {
+      flex: 0 0 auto;
     }
     .landing-tabs {
-      grid-column: 2;
-      justify-self: center;
-    }
-    .landing-tabs a {
-      padding: 8px 10px;
+      flex: 0 0 auto;
+      margin: 0 auto;
     }
     .header-actions {
-      grid-column: 3;
-      justify-self: end;
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
     .header-actions .nav-text {
       display: none;
@@ -1188,31 +1209,67 @@
   @media (max-width: 720px) {
     .section[id] { scroll-margin-top: 136px; }
   }
-  @media (max-width: 520px) {
+  @media (max-width: 640px) {
     .section[id] { scroll-margin-top: 128px; }
     .shell { width: min(100% - 20px, 1160px); }
     .brand {
-      grid-template-columns: auto 1fr auto;
-      gap: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: nowrap;
+      gap: 8px;
+      position: relative;
+    }
+    .brand-name {
+      flex: 0 0 auto;
     }
     .landing-tabs {
-      gap: 6px;
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: 124px;
+      width: 220px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      box-shadow: 0 20px 48px rgba(18, 35, 56, 0.12);
+      flex-direction: column;
+      align-items: stretch;
+      padding: 8px;
+      gap: 2px;
+      z-index: 100;
+    }
+    .landing-tabs.open {
+      display: flex;
     }
     .landing-tabs a {
-      padding: 10px 10px;
+      display: block;
+      width: 100%;
+      padding: 10px 16px;
+      border-radius: 10px;
+      border: 1px solid transparent;
       font-size: 14px;
-      white-space: nowrap;
+      font-weight: 700;
+      color: var(--ink);
+      text-align: left;
+    }
+    .landing-tabs a:hover {
+      background: rgba(23, 95, 144, 0.05);
+      border-color: transparent;
+      color: var(--brand);
+    }
+    .menu-toggle {
+      display: inline-flex;
     }
     .header-actions {
-      gap: 6px;
-    }
-    .header-actions a {
-      padding: 8px;
+      margin-left: auto;
+      margin-right: 4px;
+      gap: 4px;
     }
     .lang-select {
       font-size: 14px;
-      padding: 0 12px 0 0;
-      background-size: 9px;
+      padding: 0 10px 0 0;
+      background-size: 8px;
       min-height: 36px;
     }
     main { padding-top: 20px; }
@@ -1259,12 +1316,20 @@
         <img src="/app_icon.webp" alt="Aliolo logo">
         <span class="brand-text">aliolo</span>
       </a>
-      <nav class="landing-tabs" aria-label="Landing page navigation">
-        <a class="desktop-link" href="#workflow">Hvordan det virker</a>
-        <a class="desktop-link" href="#features">Learning</a>
-        <a class="desktop-link" href="#pricing">Prissætning</a>
+
+      <nav class="landing-tabs" aria-label="Landing page navigation" id="mobile-menu">
+        <a href="#workflow" onclick="document.getElementById('mobile-menu').classList.remove('open'); document.querySelector('.menu-toggle').setAttribute('aria-expanded', 'false');">Hvordan det virker</a>
+        <a href="#features" onclick="document.getElementById('mobile-menu').classList.remove('open'); document.querySelector('.menu-toggle').setAttribute('aria-expanded', 'false');">Learning</a>
+        <a href="#pricing" onclick="document.getElementById('mobile-menu').classList.remove('open'); document.querySelector('.menu-toggle').setAttribute('aria-expanded', 'false');">Prissætning</a>
       </nav>
       <div class="header-actions">
+        <button class="menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false" onclick="const menu = document.getElementById('mobile-menu'); const expanded = this.getAttribute('aria-expanded') === 'true'; this.setAttribute('aria-expanded', !expanded); menu.classList.toggle('open');">
+          <svg class="menu-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="4" y1="12" x2="20" y2="12"></line>
+            <line x1="4" y1="6" x2="20" y2="6"></line>
+            <line x1="4" y1="18" x2="20" y2="18"></line>
+          </svg>
+        </button>
         <a href="/da/login?login=1" class="nav-login" aria-label="Log ind">
           <span class="nav-text">Log ind</span>
           <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">

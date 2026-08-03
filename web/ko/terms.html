@@ -172,6 +172,25 @@
     color: var(--brand);
     text-decoration: none;
   }
+  .menu-toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    color: var(--ink);
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.18s ease;
+  }
+  .menu-toggle:hover {
+    background: rgba(0, 0, 0, 0.04);
+  }
+  .menu-icon-svg {
+    width: 24px;
+    height: 24px;
+  }
   .lang-select {
     font-family: inherit;
     font-size: 14px;
@@ -191,18 +210,67 @@
   .lang-select:hover {
     color: var(--brand);
   }
-  @media (max-width: 760px) {
+  @media (max-width: 640px) {
     .shell { width: min(100% - 28px, 1100px); }
-    .brand-text {
-      display: none;
+    .brand {
+      flex-wrap: nowrap;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
     }
-
+    .brand-name {
+      order: 1;
+    }
+    .header-controls {
+      order: 2;
+      margin-left: auto;
+      margin-right: 8px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .menu-toggle {
+      display: inline-flex;
+    }
     .page-tabs {
-      gap: 6px;
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: 48px;
+      width: 220px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      box-shadow: 0 20px 48px rgba(18, 35, 56, 0.12);
+      flex-direction: column;
+      align-items: stretch;
+      padding: 8px;
+      gap: 2px;
+      z-index: 100;
+    }
+    .page-tabs.open {
+      display: flex;
     }
     .page-tabs a {
-      padding: 10px 12px;
+      display: block;
+      width: 100%;
+      padding: 10px 16px;
+      border-radius: 10px;
+      border: 1px solid transparent;
       font-size: 14px;
+      font-weight: 700;
+      color: var(--ink);
+      text-align: left;
+    }
+    .page-tabs a:hover {
+      background: rgba(23, 95, 144, 0.05);
+      border-color: transparent;
+      color: var(--brand);
+    }
+    .page-tabs a.active {
+      border-color: transparent;
+      background: rgba(23, 95, 144, 0.08);
+      color: var(--brand);
     }
   }
   main { padding: 34px 0 78px; }
@@ -407,7 +475,8 @@
         <img src="/app_icon.webp" alt="Aliolo Logo" />
         <span class="brand-text">aliolo</span>
       </a>
-      <nav class="page-tabs" aria-label="Legal page navigation">
+
+      <nav class="page-tabs" aria-label="Legal page navigation" id="mobile-menu">
         <a class="" href="/ko/landing.html">집</a>
         <a class="" href="/ko/privacy.html">은둔</a>
         <a class="active" href="/ko/terms.html">자귀</a>
@@ -415,6 +484,13 @@
         <a class="" href="/ko/pricing.html">가격</a>
       </nav>
       <div class="header-controls">
+        <button class="menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false" onclick="const menu = document.getElementById('mobile-menu'); const expanded = this.getAttribute('aria-expanded') === 'true'; this.setAttribute('aria-expanded', !expanded); menu.classList.toggle('open');">
+          <svg class="menu-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="4" y1="12" x2="20" y2="12"></line>
+            <line x1="4" y1="6" x2="20" y2="6"></line>
+            <line x1="4" y1="18" x2="20" y2="18"></line>
+          </svg>
+        </button>
         <select class="lang-select" onchange="document.cookie='aliolo_lang=' + this.options[this.selectedIndex].getAttribute('data-lang') + '; path=/; max-age=31536000; SameSite=Lax; Secure'; window.location.href=this.value" aria-label="Change language">
       <option value="/terms.html" data-lang="en" data-name="English">EN</option><option value="/id/terms.html" data-lang="id" data-name="Bahasa Indonesia">ID</option><option value="/bg/terms.html" data-lang="bg" data-name="Български">BG</option><option value="/cs/terms.html" data-lang="cs" data-name="Čeština">CS</option><option value="/da/terms.html" data-lang="da" data-name="Dansk">DA</option><option value="/de/terms.html" data-lang="de" data-name="Deutsch">DE</option><option value="/et/terms.html" data-lang="et" data-name="Eesti">ET</option><option value="/es/terms.html" data-lang="es" data-name="Español">ES</option><option value="/fr/terms.html" data-lang="fr" data-name="Français">FR</option><option value="/ga/terms.html" data-lang="ga" data-name="Gaeilge">GA</option><option value="/hr/terms.html" data-lang="hr" data-name="Hrvatski">HR</option><option value="/it/terms.html" data-lang="it" data-name="Italiano">IT</option><option value="/lv/terms.html" data-lang="lv" data-name="Latviešu">LV</option><option value="/lt/terms.html" data-lang="lt" data-name="Lietuvių">LT</option><option value="/hu/terms.html" data-lang="hu" data-name="Magyar">HU</option><option value="/mt/terms.html" data-lang="mt" data-name="Malti">MT</option><option value="/nl/terms.html" data-lang="nl" data-name="Nederlands">NL</option><option value="/pl/terms.html" data-lang="pl" data-name="Polski">PL</option><option value="/pt/terms.html" data-lang="pt" data-name="Português">PT</option><option value="/ro/terms.html" data-lang="ro" data-name="Română">RO</option><option value="/sk/terms.html" data-lang="sk" data-name="Slovenčina">SK</option><option value="/sl/terms.html" data-lang="sl" data-name="Slovenščina">SL</option><option value="/fi/terms.html" data-lang="fi" data-name="Suomi">FI</option><option value="/sv/terms.html" data-lang="sv" data-name="Svenska">SV</option><option value="/tl/terms.html" data-lang="tl" data-name="Tagalog">TL</option><option value="/vi/terms.html" data-lang="vi" data-name="Tiếng Việt">VI</option><option value="/tr/terms.html" data-lang="tr" data-name="Türkçe">TR</option><option value="/el/terms.html" data-lang="el" data-name="Ελληνικά">EL</option><option value="/uk/terms.html" data-lang="uk" data-name="Українська">UK</option><option value="/ar/terms.html" data-lang="ar" data-name="العربية">AR</option><option value="/hi/terms.html" data-lang="hi" data-name="हिन्दी">HI</option><option value="/zh/terms.html" data-lang="zh" data-name="中文">ZH</option><option value="/ja/terms.html" data-lang="ja" data-name="日本語">JA</option><option value="/ko/terms.html" data-lang="ko" data-name="한국어" selected>KO</option>
     </select>

@@ -85,8 +85,8 @@ describe('SEO and crawlability', () => {
     expect(html).toContain('class="visual-stage"');
     expect(html).toContain('What breed is shown?');
     expect(html).toContain('Explore visual learning across every pillar.');
-    expect(html).toContain('href="#workflow">How it works</a>');
-    expect(html).toContain('href="#features">Learning</a>');
+    expect(html).toContain('href="#workflow"');
+    expect(html).toContain('href="#features"');
     expect(html).toContain('href="/login?login=1" class="nav-login"');
     expect(html).toContain('href="/login" class="nav-cta"');
     expect(html).toContain('class="cta-group"');
