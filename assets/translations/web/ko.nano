@@ -251,3 +251,51 @@
     landing_footer_desc 마찰 없는 구조를 원하는 학습자를 위한 시각적 플래시 카드, 간격 있는 반복, 유연한 주제 구성 및 집중적인 테스트 워크플로입니다.
     landing_footer_mor 기록된 판매자:
     landing_footer_mor_desc 당사의 주문 프로세스는 Paddle.com, 당사의 온라인 리셀러이자 웹 주문에 대한 등록된 판매자에 의해 수행될 수 있습니다. Paddle은 결제 처리, 결제 관련 고객 서비스 및 해당 주문에 대한 반품을 처리합니다.
+    landing_nav_learning 학습
+    landing_float_see_title 보세요
+    landing_float_see_desc 이미지가 풍부한 카드로 시작하세요.
+    landing_float_hear_title 들어보세요
+    landing_float_hear_desc 오디오는 이름과 발음을 유지하는 데 도움이 됩니다.
+    landing_float_recall_title 그것을 기억해
+    landing_float_recall_desc 준비되면 힌트 없이 테스트하세요.
+    landing_float_review_title 검토해 보세요
+    landing_float_review_desc 적절한 순간에 카드를 다시 가져오세요.
+    landing_mock_question 어떤 품종이 표시되나요?
+    landing_mock_answer 아키타견
+    landing_mock_context 일본 개 품종 · 시각 인식
+    landing_mock_audio_label 오디오 샘플
+    landing_flow_see_title 보다
+    landing_flow_see_desc 뇌에 강한 훅을 주는 비주얼 카드부터 시작해 보세요.
+    landing_flow_understand_title 이해하다
+    landing_flow_understand_desc 문맥, 라벨, 발음, 예시, 의미를 추가하세요.
+    landing_flow_recall_title 상기하다
+    landing_flow_recall_desc 인식에서 활성 테스트 및 실제 메모리로 이동합니다.
+    landing_flow_review_title 검토
+    landing_flow_review_desc 지식이 사라지기 전에 올바른 카드로 돌아가세요.
+    landing_demo_media_h3 이미지, 오디오, 비디오 및 텍스트가 함께 작동합니다.
+    landing_media_image 이미지 프롬프트
+    landing_media_audio 오디오 발음
+    landing_media_video 비디오 컨텍스트
+    landing_media_text 텍스트 설명
+    landing_demo_library_h3 하나 이상의 데크.
+    landing_library_subject 해부학 과목
+    landing_library_cards 근육 카드
+    landing_library_collection 시험 수집
+    landing_pillars_h2 모든 요소에 걸쳐 시각적 학습을 살펴보세요.
+    landing_pillars_p Aliolo의 실제 학습 기둥은 방문자에게 앱이 무엇을 구성하고 가르칠 수 있는지 보여줍니다.
+    landing_pillar_education_title 교육
+    landing_pillar_education_desc 알파벳, 숫자, 모양 및 시험 기초.
+    landing_pillar_nature_title 동물과 자연
+    landing_pillar_nature_desc 동물, 곤충, 식물, 그리고 자연의 패턴.
+    landing_pillar_health_title 인체 및 건강
+    landing_pillar_health_desc 해부학, 장기, 신체 시스템 및 웰빙.
+    landing_pillar_world_title 세계와 지리
+    landing_pillar_world_desc 국가, 국기, 랜드마크, 지도, 장소.
+    landing_pillar_culture_title 예술과 문화
+    landing_pillar_culture_desc 그림, 음악, 건축, 음식, 역사.
+    landing_pillar_sports_title 스포츠 및 레크리에이션
+    landing_pillar_sports_desc 게임, 스포츠, 운동, 레크리에이션 주제.
+    landing_pillar_engineering_title 엔지니어링 및 운송
+    landing_pillar_engineering_desc 차량, 기계, 도구 및 엔지니어링 시스템.
+    landing_pillar_more_title 그리고 더
+    landing_pillar_more_desc 다른 곳에 딱 맞지 않는 유연한 주제.

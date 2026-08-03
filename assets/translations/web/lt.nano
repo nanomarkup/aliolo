@@ -175,6 +175,7 @@
     landing_meta_desc „Aliolo“ padeda besimokantiesiems išmokti kalbas, gamtos mokslus, anatomiją, pasirengimą egzaminams ir kuruojamus dalykus naudojant vaizdines korteles, kartojimą intervalais ir interaktyvius testavimo režimus.
     landing_nav_features Savybės
     landing_nav_how_it_works Kaip tai veikia
+    landing_nav_learning Mokymasis
     landing_nav_pricing Kainodara
     landing_nav_login Prisijunkite
     landing_nav_cta Sukurti nemokamą paskyrą
@@ -192,6 +193,18 @@
     landing_hero_preview_title Atpažinimas prieš atšaukimą
     landing_hero_preview_desc Tikra Aliolo pamoka naudojant vaizdą, tekstą, garsą ir vadovaujamą navigaciją.
     landing_hero_preview_chip Mokymosi režimas
+    landing_float_see_title Pamatykite
+    landing_float_see_desc Pradėkite nuo daug vaizdų turinčios kortelės.
+    landing_float_hear_title Išgirsk
+    landing_float_hear_desc Garsas padeda išlaikyti vardus ir tarimą.
+    landing_float_recall_title Prisiminkite tai
+    landing_float_recall_desc Išbandykite be užuominų, kai būsite pasiruošę.
+    landing_float_review_title Peržiūrėkite jį
+    landing_float_review_desc Tinkamu momentu grąžinkite korteles.
+    landing_mock_question Kokia veislė parodyta?
+    landing_mock_answer Akita Inu
+    landing_mock_context Japonų šunų veislė · vizualinis atpažinimas
+    landing_mock_audio_label Garso pavyzdys
     landing_features_h2 Viskas, ko reikia, kad ekspozicija virstų prisiminimu.
     landing_features_p Sukurkite atpažinimą naudodami raiškiąją mediją, tvarkykite didesnes bibliotekas ir peržiūrėkite medžiagą, kol ji neišnyks.
     landing_feature_1_title Sužinokite daugiau nei naudodami tekstą
@@ -208,6 +221,41 @@
     landing_step_2_desc Prieš prašydami, kad atmintis veiktų be pagalbos, sukurkite atpažinimą naudodami valdomas korteles ir turimą laikmeną.
     landing_step_3_title Išbandykite tikrąjį prisiminimą
     landing_step_3_desc Pereikite prie tikslinio testavimo, kad atskleistumėte silpnąsias vietas, sustiprintumėte paiešką ir pažangą būtų galima išmatuoti.
+    landing_flow_see_title Žr
+    landing_flow_see_desc Pradėkite nuo vizualinės kortelės, kuri suteikia smegenims tvirtą kabliuką.
+    landing_flow_understand_title Suprask
+    landing_flow_understand_desc Pridėkite kontekstą, etiketes, tarimą, pavyzdžius ir reikšmę.
+    landing_flow_recall_title Prisiminkite
+    landing_flow_recall_desc Nuo atpažinimo pereikite prie aktyvaus testavimo ir realios atminties.
+    landing_flow_review_title Apžvalga
+    landing_flow_review_desc Grįžkite į tinkamas korteles, kol žinios nedings.
+    landing_demo_media_h3 Vaizdai, garsas, vaizdo įrašas ir tekstas veikia kartu.
+    landing_media_image Vaizdo raginimas
+    landing_media_audio Garso tarimas
+    landing_media_video Vaizdo įrašo kontekstas
+    landing_media_text Teksto paaiškinimas
+    landing_demo_library_h3 Daugiau nei vienas denis.
+    landing_library_subject Anatomijos dalykas
+    landing_library_cards Raumenų kortos
+    landing_library_collection Egzamino kolekcija
+    landing_pillars_h2 Ištirkite vizualinį mokymąsi kiekviename ramstyje.
+    landing_pillars_p Tikrieji Aliolo mokymosi ramsčiai parodo lankytojams, ką programa gali organizuoti ir išmokyti.
+    landing_pillar_education_title Išsilavinimas
+    landing_pillar_education_desc Abėcėlė, skaičiai, formos ir egzamino pagrindai.
+    landing_pillar_nature_title Gyvūnai ir gamta
+    landing_pillar_nature_desc Gyvūnai, vabzdžiai, augalai ir natūralūs raštai.
+    landing_pillar_health_title Žmogaus kūnas ir sveikata
+    landing_pillar_health_desc Anatomija, organai, kūno sistemos ir gerovė.
+    landing_pillar_world_title Pasaulis ir geografija
+    landing_pillar_world_desc Šalys, vėliavos, orientyrai, žemėlapiai ir vietos.
+    landing_pillar_culture_title Menai ir kultūra
+    landing_pillar_culture_desc Paveikslai, muzika, architektūra, maistas ir istorija.
+    landing_pillar_sports_title Sportas ir poilsis
+    landing_pillar_sports_desc Žaidimų, sporto, judėjimo ir poilsio temos.
+    landing_pillar_engineering_title Inžinerija ir transportas
+    landing_pillar_engineering_desc Transporto priemonės, mašinos, įrankiai ir inžinerinės sistemos.
+    landing_pillar_more_title Ir dar daugiau
+    landing_pillar_more_desc Lanksčios temos, kurios kitur netinka.
     landing_pricing_h2 Pradėkite nemokamai. Atnaujinkite, kai jums reikia visos darbo eigos.
     landing_pricing_p Sukurti paskyrą be mokėjimo. „Premium“ prideda intervalų pasikartojimo, kūrimo, testavimo, automatinio paleidimo, privataus organizavimo ir gilesnio tinkinimo.
     plan_weekly_title Savaitinė prieiga

@@ -175,6 +175,7 @@
     landing_meta_desc Aliolo ajuda os alunos a dominar idiomas, ciências, anatomia, preparação para exames e assuntos selecionados com flashcards visuais, repetição espaçada e modos de teste interativos.
     landing_nav_features Características
     landing_nav_how_it_works Como funciona
+    landing_nav_learning Aprendizado
     landing_nav_pricing Preços
     landing_nav_login Conecte-se
     landing_nav_cta Crie uma conta gratuita
@@ -192,6 +193,18 @@
     landing_hero_preview_title Reconhecimento antes do recall
     landing_hero_preview_desc Uma verdadeira aula de Aliolo usando imagem, texto, áudio e navegação guiada.
     landing_hero_preview_chip Modo de aprendizagem
+    landing_float_see_title Veja
+    landing_float_see_desc Comece com um cartão rico em imagens.
+    landing_float_hear_title Ouça
+    landing_float_hear_desc O áudio ajuda a manter os nomes e a pronúncia.
+    landing_float_recall_title Lembre-se
+    landing_float_recall_desc Teste sem dicas quando estiver pronto.
+    landing_float_review_title Revise-o
+    landing_float_review_desc Traga as cartas de volta no momento certo.
+    landing_mock_question Qual raça é mostrada?
+    landing_mock_answer Akita Inu
+    landing_mock_context Raça de cachorro japonês · reconhecimento visual
+    landing_mock_audio_label Amostra de áudio
     landing_features_h2 Tudo que você precisa para transformar exposição em recall.
     landing_features_p Crie reconhecimento com rich media, mantenha bibliotecas maiores organizadas e revise o material antes que ele desapareça.
     landing_feature_1_title Aprenda com mais do que texto
@@ -208,6 +221,41 @@
     landing_step_2_desc Crie reconhecimento por meio de cartões guiados e mídias disponíveis antes de fazer com que sua memória funcione sem ajuda.
     landing_step_3_title Teste o recall real
     landing_step_3_desc Passe para testes focados para expor pontos fracos, reforçar a recuperação e tornar o progresso mensurável.
+    landing_flow_see_title Ver
+    landing_flow_see_desc Comece com um mapa visual que dê ao cérebro um gancho forte.
+    landing_flow_understand_title Entender
+    landing_flow_understand_desc Adicione contexto, rótulos, pronúncia, exemplos e significado.
+    landing_flow_recall_title Lembrar
+    landing_flow_recall_desc Passe do reconhecimento para o teste ativo e a memória real.
+    landing_flow_review_title Análise
+    landing_flow_review_desc Volte às cartas certas antes que o conhecimento desapareça.
+    landing_demo_media_h3 Imagens, áudio, vídeo e texto funcionam juntos.
+    landing_media_image Solicitação de imagem
+    landing_media_audio Pronúncia de áudio
+    landing_media_video Contexto do vídeo
+    landing_media_text Explicação de texto
+    landing_demo_library_h3 Mais de um baralho.
+    landing_library_subject Assunto de anatomia
+    landing_library_cards Cartas musculares
+    landing_library_collection Coleta de exames
+    landing_pillars_h2 Explore a aprendizagem visual em todos os pilares.
+    landing_pillars_p Os verdadeiros pilares de aprendizagem do Aliolo mostram aos visitantes o que o aplicativo pode organizar e ensinar.
+    landing_pillar_education_title Educação
+    landing_pillar_education_desc Alfabetos, números, formas e fundamentos do exame.
+    landing_pillar_nature_title Animais e Natureza
+    landing_pillar_nature_desc Animais, insetos, plantas e padrões naturais.
+    landing_pillar_health_title Corpo Humano e Saúde
+    landing_pillar_health_desc Anatomia, órgãos, sistemas corporais e bem-estar.
+    landing_pillar_world_title Mundo e Geografia
+    landing_pillar_world_desc Países, bandeiras, pontos de referência, mapas e lugares.
+    landing_pillar_culture_title Artes e Cultura
+    landing_pillar_culture_desc Pinturas, música, arquitetura, comida e história.
+    landing_pillar_sports_title Esportes e Recreação
+    landing_pillar_sports_desc Tópicos de jogos, esportes, movimento e recreação.
+    landing_pillar_engineering_title Engenharia e Transporte
+    landing_pillar_engineering_desc Veículos, máquinas, ferramentas e sistemas de engenharia.
+    landing_pillar_more_title E mais
+    landing_pillar_more_desc Tópicos flexíveis que não cabem perfeitamente em outros lugares.
     landing_pricing_h2 Comece gratuitamente. Atualize quando precisar do fluxo de trabalho completo.
     landing_pricing_p Crie uma conta sem pagamento. Premium adiciona repetição espaçada, criação, teste, reprodução automática, organização privada e personalização mais profunda.
     plan_weekly_title Acesso Semanal

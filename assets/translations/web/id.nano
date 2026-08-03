@@ -175,6 +175,7 @@
     landing_meta_desc Aliolo membantu pelajar menguasai bahasa, sains, anatomi, persiapan ujian, dan mata pelajaran yang dikurasi dengan kartu flash visual, pengulangan spasi, dan mode tes interaktif.
     landing_nav_features Fitur
     landing_nav_how_it_works Bagaimana cara kerjanya
+    landing_nav_learning Sedang belajar
     landing_nav_pricing Harga
     landing_nav_login Masuk
     landing_nav_cta Buat akun gratis
@@ -192,6 +193,18 @@
     landing_hero_preview_title Pengakuan sebelum penarikan kembali
     landing_hero_preview_desc Pelajaran Aliolo nyata menggunakan gambar, teks, audio, dan navigasi terpandu.
     landing_hero_preview_chip Modus belajar
+    landing_float_see_title Lihat itu
+    landing_float_see_desc Mulailah dengan kartu kaya gambar.
+    landing_float_hear_title Dengarkan itu
+    landing_float_hear_desc Audio membantu nama dan pengucapan melekat.
+    landing_float_recall_title Ingat itu
+    landing_float_recall_desc Uji tanpa petunjuk jika sudah siap.
+    landing_float_review_title Tinjau itu
+    landing_float_review_desc Bawa kembali kartu pada saat yang tepat.
+    landing_mock_question Trah apa yang ditampilkan?
+    landing_mock_answer Akita Inu
+    landing_mock_context Jenis anjing Jepang · pengenalan visual
+    landing_mock_audio_label Sampel audio
     landing_features_h2 Semua yang Anda perlukan untuk mengubah eksposur menjadi ingatan.
     landing_features_p Bangun pengenalan dengan media yang kaya, atur perpustakaan yang lebih besar, dan tinjau kembali materi sebelum memudar.
     landing_feature_1_title Belajar dengan lebih dari sekedar teks
@@ -208,6 +221,41 @@
     landing_step_2_desc Bangun pengenalan melalui kartu yang dipandu dan media yang tersedia sebelum meminta ingatan Anda bekerja tanpa bantuan.
     landing_step_3_title Uji ingatan nyata
     landing_step_3_desc Lanjutkan ke pengujian terfokus untuk mengungkap titik lemah, memperkuat pengambilan, dan membuat kemajuan dapat diukur.
+    landing_flow_see_title Melihat
+    landing_flow_see_desc Mulailah dengan kartu visual yang memberikan daya tarik yang kuat pada otak.
+    landing_flow_understand_title Memahami
+    landing_flow_understand_desc Tambahkan konteks, label, pengucapan, contoh, dan makna.
+    landing_flow_recall_title Mengingat
+    landing_flow_recall_desc Beralih dari pengenalan ke pengujian aktif dan memori nyata.
+    landing_flow_review_title Tinjauan
+    landing_flow_review_desc Kembali ke kartu yang tepat sebelum pengetahuan hilang.
+    landing_demo_media_h3 Gambar, audio, video, dan teks bekerja sama.
+    landing_media_image Perintah gambar
+    landing_media_audio Pengucapan audio
+    landing_media_video Konteks video
+    landing_media_text Penjelasan teks
+    landing_demo_library_h3 Lebih dari satu dek.
+    landing_library_subject Mata pelajaran anatomi
+    landing_library_cards Kartu otot
+    landing_library_collection Koleksi ujian
+    landing_pillars_h2 Jelajahi pembelajaran visual di setiap pilar.
+    landing_pillars_p Pilar pembelajaran Aliolo yang sebenarnya menunjukkan kepada pengunjung apa yang dapat diatur dan diajarkan oleh aplikasi.
+    landing_pillar_education_title Pendidikan
+    landing_pillar_education_desc Abjad, angka, bentuk, dan dasar ujian.
+    landing_pillar_nature_title Hewan & Alam
+    landing_pillar_nature_desc Hewan, serangga, tumbuhan, dan pola alam.
+    landing_pillar_health_title Tubuh & Kesehatan Manusia
+    landing_pillar_health_desc Anatomi, organ, sistem tubuh, dan kesejahteraan.
+    landing_pillar_world_title Dunia & Geografi
+    landing_pillar_world_desc Negara, bendera, landmark, peta, dan tempat.
+    landing_pillar_culture_title Seni & Budaya
+    landing_pillar_culture_desc Lukisan, musik, arsitektur, makanan, dan sejarah.
+    landing_pillar_sports_title Olahraga & Rekreasi
+    landing_pillar_sports_desc Topik permainan, olah raga, gerak, dan rekreasi.
+    landing_pillar_engineering_title Teknik & Transportasi
+    landing_pillar_engineering_desc Kendaraan, mesin, peralatan, dan sistem rekayasa.
+    landing_pillar_more_title Dan banyak lagi
+    landing_pillar_more_desc Topik fleksibel yang tidak cocok dengan topik lain.
     landing_pricing_h2 Mulai gratis. Tingkatkan versi saat Anda memerlukan alur kerja penuh.
     landing_pricing_p Buat akun tanpa pembayaran. Premium menambahkan pengulangan spasi, pembuatan, pengujian, putar otomatis, organisasi pribadi, dan penyesuaian yang lebih dalam.
     plan_weekly_title Akses Mingguan

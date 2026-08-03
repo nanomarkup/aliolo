@@ -1,253 +1,301 @@
 ..
-    legal_info Legal information
-    last_updated Last updated
-    support Support
-    home Home
-    privacy Privacy
-    terms Terms
-    refunds Refunds
-    pricing Pricing
-    privacy_title Aliolo Privacy Policy
-    privacy_subtitle How Aliolo collects, uses, stores, and protects account, learning, and payment-related information.
+    legal_info Teisinė informacija
+    last_updated Paskutinį kartą atnaujinta
+    support Palaikymas
+    home Pradžia
+    privacy Privatumas
+    terms Sąlygos
+    refunds Grąžinamos lėšos
+    pricing Kainodara
+    privacy_title Aliolo privatumo politika
+    privacy_subtitle Kaip „Aliolo“ renka, naudoja, saugo ir saugo paskyros, mokymosi ir su mokėjimu susijusią informaciją.
     privacy_body|
-        <h2>Information We Collect</h2>
-        <p>We collect the information needed to operate Aliolo, including account details such as email address, username, password authentication data, avatar settings, preferences, and profile settings.</p>
-        <p>We also store learning activity such as subjects, folders, collections, cards, progress, streaks, daily goals, test and learn settings, feedback, and basic app usage events needed to provide the learning experience.</p>
-        <h2>How We Use Information</h2>
-        <p>We use this information to create and secure your account, synchronize your learning data, personalize your study experience, provide premium access, respond to support requests, improve the app, and prevent misuse or service abuse.</p>
-        <h2>Payments and Subscriptions</h2>
-        <p>Aliolo does not directly store complete payment card details. Web payments are processed by Paddle, and mobile purchases may be processed by Google Play or Apple App Store when those purchase channels are available.</p>
-        <p>For subscription access, we may store payment-provider identifiers, product identifiers, subscription status, renewal period dates, and related webhook or transaction metadata. This lets us activate, renew, cancel, or restore premium access.</p>
-        <h2>Third-Party Services</h2>
-        <p>We use service providers for hosting, infrastructure, storage, analytics or operational logs, authentication, and payments. These providers process information only as needed to provide their services to Aliolo.</p>
-        <div class="notice"><strong>Paddle notice:</strong> Our order process may be conducted by Paddle.com, our online reseller and Merchant of Record. Paddle handles payment processing, tax calculation where applicable, payment security, and payment-related customer service.</div>
-        <h2>Cookies and Local Storage</h2>
-        <p>Aliolo may use cookies, session identifiers, browser storage, or similar technologies to keep you signed in, remember preferences, secure the service, and operate the web app.</p>
-        <h2>Data Retention and Deletion</h2>
-        <p>We keep account and learning data while your account is active or as needed to provide the service, comply with legal obligations, resolve disputes, prevent abuse, and maintain transaction records. You may request account deletion or data-related support by contacting us.</p>
-        <h2>Children and Education Use</h2>
-        <p>Aliolo is an educational product. If a parent, guardian, or school believes that a child has provided personal information without appropriate permission, contact us so we can review and take appropriate action.</p>
-        <h2>Security</h2>
-        <p>We use reasonable technical and organizational safeguards to protect personal information. No online service can guarantee perfect security, but we work to limit access and protect data from unauthorized use.</p>
-        <h2>Your Choices and Rights</h2>
-        <p>Depending on your location, you may have rights to access, correct, delete, export, or restrict use of your personal information. Contact us at <a href="mailto:vitalii@nohainc.com">vitalii@nohainc.com</a> to make a request.</p>
-    terms_title Aliolo Subscription Terms
-    terms_subtitle The rules for Aliolo accounts, premium access, subscription billing, cancellation, and acceptable use.
+        <h2>Informacija, kurią renkame</h2>
+        <p>Mes renkame informaciją, reikalingą „Aliolo“ veikimui, įskaitant paskyros duomenis, pvz., el. pašto adresą, vartotojo vardą, slaptažodžio autentifikavimo duomenis, pseudoportreto nustatymus, nuostatas ir profilio nustatymus.</p>
+        <p>Taip pat saugome mokymosi veiklą, pvz., dalykus, aplankus, kolekcijas, korteles, pažangą, juosteles, kasdienius tikslus, testavimo ir mokymosi nustatymus, atsiliepimus ir pagrindinius programos naudojimo įvykius, reikalingus mokymosi patirčiai.</p>
+        <h2>Kaip mes naudojame informaciją</h2>
+        <p>Šią informaciją naudojame siekdami sukurti ir apsaugoti jūsų paskyrą, sinchronizuoti mokymosi duomenis, individualizuoti studijų patirtį, suteikti aukščiausios kokybės prieigą, atsakyti į palaikymo užklausas, tobulinti programą ir užkirsti kelią piktnaudžiavimui ar paslauga.</p>
+        <h2>Mokėjimai ir abonementai</h2>
+        <p>„Aliolo“ tiesiogiai nesaugo visos mokėjimo kortelės informacijos. Interneto mokėjimus apdoroja „Paddle“, o mobiliuosius pirkinius gali apdoroti „Google Play“ arba „Apple App Store“, kai šie pirkimo kanalai yra pasiekiami.</p>
+        <p>Norėdami gauti prieigą prie prenumeratos, galime saugoti mokėjimo teikėjo identifikatorius, produktų identifikatorius, prenumeratos būseną, atnaujinimo laikotarpio datas ir susijusius „Webhook“ arba operacijų metaduomenis. Tai leidžia suaktyvinti, atnaujinti, atšaukti arba atkurti aukščiausios kokybės prieigą.</p>
+        <h2>Trečiųjų šalių paslaugos</h2>
+        <p>Mes naudojame paslaugų teikėjus prieglobai, infrastruktūrai, saugyklai, analizei ar veiklos žurnalams, autentifikavimui ir mokėjimams. Šie teikėjai apdoroja informaciją tik tiek, kiek reikia, kad galėtų teikti savo paslaugas Aliolo.</p>
+        <div class="notice"><strong>Pastaba apie irklą:</strong> Mūsų užsakymo procesą gali atlikti Paddle.com, mūsų internetinis perpardavėjas ir „Merchant of Record“. „Paddle“ tvarko mokėjimų apdorojimą, mokesčių apskaičiavimą, kai taikoma, mokėjimo saugumą ir su mokėjimu susijusį klientų aptarnavimą.</div>
+        <h2>Slapukai ir vietinė saugykla</h2>
+        <p>„Aliolo“ gali naudoti slapukus, seanso identifikatorius, naršyklės saugyklą ar panašias technologijas, kad liktumėte prisijungę, prisimintų nuostatas, apsaugotų paslaugą ir valdytų žiniatinklio programą.</p>
+        <h2>Duomenų saugojimas ir ištrynimas</h2>
+        <p>Saugome paskyros ir mokymosi duomenis, kol jūsų paskyra yra aktyvi arba kai to reikia norint teikti paslaugą, laikytis teisinių įsipareigojimų, išspręsti ginčus, užkirsti kelią piktnaudžiavimui ir tvarkyti operacijų įrašus. Susisiekę su mumis galite prašyti ištrinti paskyrą arba su duomenimis susijusio palaikymo.</p>
+        <h2>Naudojimas vaikams ir švietimui</h2>
+        <p>„Aliolo“ yra mokomasis produktas. Jei tėvai, globėjai ar mokykla mano, kad vaikas pateikė asmeninę informaciją be atitinkamo leidimo, susisiekite su mumis, kad galėtume peržiūrėti ir imtis atitinkamų veiksmų.</p>
+        <h2>Saugumas</h2>
+        <p>Mes naudojame pagrįstas technines ir organizacines apsaugos priemones, kad apsaugotume asmeninę informaciją. Jokia internetinė paslauga negali garantuoti tobulo saugumo, tačiau stengiamės apriboti prieigą ir apsaugoti duomenis nuo neteisėto naudojimo.</p>
+        <h2>Jūsų pasirinkimai ir teisės</h2>
+        <p>Priklausomai nuo jūsų buvimo vietos, galite turėti teises pasiekti, taisyti, ištrinti, eksportuoti arba apriboti savo asmeninės informacijos naudojimą. Susisiekite su mumis adresu <a href="mailto:vitalii@nohainc.com">vitalii@nohainc.com</a> pateikti prašymą.</p>
+    terms_title „Aliolo“ prenumeratos sąlygos
+    terms_subtitle „Aliolo“ paskyrų, aukščiausios kokybės prieigos, atsiskaitymo už prenumeratą, atšaukimo ir priimtino naudojimo taisyklės.
     terms_body|
-        <h2>Using Aliolo</h2>
-        <p>Aliolo provides visual learning tools, curated educational content, flashcards, progress tracking, and premium learning features. You are responsible for keeping your account credentials secure and for using the service lawfully.</p>
-        <h2>Premium Access</h2>
-        <p>Premium access unlocks paid features shown in the app or on the pricing page. Available features may change as the product improves, but active subscribers will continue to receive access to the paid Aliolo experience during their valid subscription period.</p>
-        <h2>Billing and Renewal</h2>
-        <p>Subscriptions renew automatically unless canceled before the end of the current billing period. Prices, billing cadence, taxes, local currency conversion, and renewal rules are shown at checkout and may vary by purchase channel, region, platform, or active offer.</p>
-        <div class="notice"><strong>Paddle notice:</strong> For web purchases, our order process may be conducted by Paddle.com. Paddle.com is the Merchant of Record for those orders and provides payment-related customer service, tax handling, and returns processing.</div>
-        <h2>Cancellation</h2>
-        <p>You can cancel according to the rules of the purchase channel you used. Cancellation stops future renewal. Unless the purchase channel states otherwise, paid access remains available until the end of the current billing period.</p>
-        <h2>Refunds</h2>
-        <p>Refunds are handled according to our <a href="/refund.html">Refund Policy</a>, the purchase channel rules, and applicable consumer law. App store purchases are normally handled by the relevant app store.</p>
-        <h2>Acceptable Use</h2>
-        <p>You may not misuse Aliolo, interfere with the service, attempt unauthorized access, scrape or copy content at scale, reverse engineer protected parts of the app, upload unlawful material, or use the service in a way that harms other users or Aliolo.</p>
-        <h2>Content and Availability</h2>
-        <p>Aliolo may update, add, remove, or reorganize subjects, cards, features, and design. We aim to keep the service reliable, but availability can be affected by maintenance, third-party providers, network issues, or product changes.</p>
-        <h2>Disclaimer and Liability</h2>
-        <p>Aliolo is provided as an educational and study-support tool. We do not guarantee specific learning, exam, professional, or financial outcomes. To the maximum extent permitted by law, Aliolo is provided without warranties beyond those required by applicable law.</p>
-        <h2>Changes to These Terms</h2>
-        <p>We may update these terms to reflect product, legal, billing, or operational changes. The current version is published on this page.</p>
-    refund_title Aliolo Refund Policy
-    refund_subtitle How refunds, cancellations, chargebacks, and payment support work for Aliolo Premium.
+        <h2>Naudojant Aliolo</h2>
+        <p>„Aliolo“ teikia vaizdinius mokymosi įrankius, kuruojamą mokomąjį turinį, korteles, pažangos stebėjimą ir aukščiausios kokybės mokymosi funkcijas. Jūs esate atsakingi už paskyros kredencialų saugumą ir teisėtą paslaugos naudojimą.</p>
+        <h2>Premium prieiga</h2>
+        <p>Premium prieiga atrakina mokamas funkcijas, rodomas programoje arba kainų puslapyje. Galimos funkcijos gali keistis tobulėjant produktui, tačiau aktyvūs prenumeratoriai ir toliau gaus prieigą prie mokamos „Aliolo“ patirties galiojančiu prenumeratos laikotarpiu.</p>
+        <h2>Atsiskaitymas ir atnaujinimas</h2>
+        <p>Prenumeratos atnaujinamos automatiškai, nebent jos atšauktos iki dabartinio atsiskaitymo laikotarpio pabaigos. Kainos, atsiskaitymo dažnis, mokesčiai, vietinės valiutos konvertavimas ir atnaujinimo taisyklės rodomos atsiskaitant ir gali skirtis atsižvelgiant į pirkimo kanalą, regioną, platformą ar aktyvų pasiūlymą.</p>
+        <div class="notice"><strong>Pastaba apie irklą:</strong> Perkant internetu, mūsų užsakymo procesą gali atlikti Paddle.com. Paddle.com yra šių užsakymų įrašų prekybininkas ir teikia su mokėjimu susijusias klientų paslaugas, mokesčių tvarkymą ir grąžinimų apdorojimą.</div>
+        <h2>Atšaukimas</h2>
+        <p>Galite atšaukti pagal jūsų naudojamo pirkimo kanalo taisykles. Atšaukimas sustabdo būsimą atnaujinimą. Jei pirkimo kanale nenurodyta kitaip, mokama prieiga išlieka iki dabartinio atsiskaitymo laikotarpio pabaigos.</p>
+        <h2>Grąžinamos lėšos</h2>
+        <p>Pinigų grąžinimas tvarkomas pagal mūsų <a href="/refund.html">Grąžinimo politika</a>, pirkimo kanalo taisyklės ir taikomi vartotojų teisės aktai. Pirkinius programų parduotuvėje paprastai tvarko atitinkama programų parduotuvė.</p>
+        <h2>Priimtinas naudojimas</h2>
+        <p>Negalite piktnaudžiauti „Aliolo“, kištis į paslaugą, bandyti neteisėtai pasiekti, išgryninti ar kopijuoti turinį dideliu mastu, pakeisti apsaugotas programos dalis, įkelti neteisėtos medžiagos arba naudoti paslaugą taip, kad būtų pakenkta kitiems naudotojams arba „Aliolo“.</p>
+        <h2>Turinys ir prieinamumas</h2>
+        <p>„Aliolo“ gali atnaujinti, pridėti, pašalinti arba pertvarkyti temas, korteles, funkcijas ir dizainą. Siekiame, kad paslauga būtų patikima, tačiau pasiekiamumą gali paveikti priežiūra, trečiųjų šalių tiekėjai, tinklo problemos arba produktų pakeitimai.</p>
+        <h2>Atsisakymas ir atsakomybė</h2>
+        <p>„Aliolo“ teikiama kaip švietimo ir studijų pagalbos priemonė. Negarantuojame konkrečių mokymosi, egzaminų, profesinių ar finansinių rezultatų. Tiek, kiek leidžia įstatymai, „Aliolo“ suteikiama be garantijų, išskyrus tas, kurios reikalaujama pagal galiojančius įstatymus.</p>
+        <h2>Šių sąlygų pakeitimai</h2>
+        <p>Galime atnaujinti šias sąlygas, kad atspindėtų produkto, teisinius, atsiskaitymo ar veiklos pakeitimus. Dabartinė versija paskelbta šiame puslapyje.</p>
+    refund_title Aliolo pinigų grąžinimo politika
+    refund_subtitle Kaip veikia „Aliolo Premium“ pinigų grąžinimas, atšaukimas, mokėjimų grąžinimas ir mokėjimo palaikymas.
     refund_body|
-        <h2>Overview</h2>
-        <p>Aliolo Premium is a digital subscription. Because premium access can be activated immediately, purchases are generally final once the subscription is active and used, except where this policy, the purchase channel, or applicable law provides otherwise.</p>
-        <h2>7-Day Refund Window</h2>
-        <p>If you accidentally purchased a web subscription or have a technical issue that prevents you from using premium features, you may request a refund within 7 days of the initial purchase. Include the account email, order details, and a short description of the issue.</p>
-        <h2>No Prorated Mid-Cycle Refunds</h2>
-        <p>We do not generally provide prorated refunds for cancellations after the initial refund window. If you cancel after that period, you will normally keep premium access until the end of the paid billing period.</p>
-        <h2>Purchase Channel Rules</h2>
-        <p>Refunds for purchases made through Google Play or Apple App Store must usually be requested through the relevant app store. Those platforms apply their own refund rules and review process.</p>
-        <div class="notice"><strong>Paddle notice:</strong> For web orders, Paddle.com may act as Merchant of Record. Paddle handles payment-related customer service, tax handling, and returns processing for those orders.</div>
-        <h2>How to Request a Refund</h2>
-        <p>For web orders, contact Paddle buyer support using the order information from your receipt, or contact Aliolo support at <a href="mailto:vitalii@nohainc.com">vitalii@nohainc.com</a>. We may direct payment-specific requests to Paddle when Paddle is the Merchant of Record.</p>
-        <h2>Chargebacks and Abuse</h2>
-        <p>If a payment is reversed, disputed, refunded, or identified as fraudulent, Aliolo may suspend or remove premium access associated with that transaction.</p>
-    pricing_title Aliolo Premium Pricing
-    pricing_subtitle Simple subscription options for unlocking the full Aliolo visual learning experience.
+        <h2>Apžvalga</h2>
+        <p>„Aliolo Premium“ yra skaitmeninė prenumerata. Kadangi aukščiausios kokybės prieigą galima suaktyvinti iš karto, pirkimai paprastai yra galutiniai, kai prenumerata yra aktyvi ir naudojama, išskyrus atvejus, kai ši politika, pirkimo kanalas arba taikomi įstatymai numato kitaip.</p>
+        <h2>7 dienų grąžinimo langas</h2>
+        <p>Jei netyčia įsigijote žiniatinklio prenumeratą arba iškilo techninė problema, dėl kurios negalite naudotis aukščiausios kokybės funkcijomis, galite paprašyti grąžinti lėšas per 7 dienas nuo pradinio pirkimo. Įtraukite paskyros el. pašto adresą, išsamią užsakymo informaciją ir trumpą problemos aprašymą.</p>
+        <h2>Jokio proporcingo laikotarpio vidurio grąžinimo</h2>
+        <p>Paprastai neteikiame proporcingų lėšų grąžinimo už atšaukimą pasibaigus pradiniam lėšų grąžinimo laikotarpiui. Jei atšauksite pasibaigus šiam laikotarpiui, paprastai turėsite aukščiausios kokybės prieigą iki apmokamo atsiskaitymo laikotarpio pabaigos.</p>
+        <h2>Kanalo pirkimo taisyklės</h2>
+        <p>Pinigų grąžinimo už pirkinius, įsigytus per „Google Play“ arba „Apple App Store“, paprastai reikia pateikti atitinkamoje programų parduotuvėje. Šios platformos taiko savo pinigų grąžinimo taisykles ir peržiūros procesą.</p>
+        <div class="notice"><strong>Pastaba apie irklą:</strong> Internetinių užsakymų atveju Paddle.com gali veikti kaip įrašų prekybininkas. „Paddle“ tvarko su mokėjimu susijusį klientų aptarnavimą, mokesčių tvarkymą ir tų užsakymų grąžinimų apdorojimą.</div>
+        <h2>Kaip pateikti prašymą grąžinti lėšas</h2>
+        <p>Norėdami gauti internetinių užsakymų, susisiekite su „Paddle“ pirkėjų palaikymo komanda naudodami užsakymo informaciją kvite arba susisiekite su „Aliolo“ palaikymo komanda adresu <a href="mailto:vitalii@nohainc.com">vitalii@nohainc.com</a>. Galime nukreipti su mokėjimu susijusias užklausas „Paddle“, kai „Paddle“ yra rekordinis prekybininkas.</p>
+        <h2>Mokesčių grąžinimas ir piktnaudžiavimas</h2>
+        <p>Jei mokėjimas atšaukiamas, ginčijamas, grąžinamas arba nustatomas kaip apgaulingas, „Aliolo“ gali sustabdyti arba pašalinti su ta operacija susijusią priemoką.</p>
+    pricing_title Aliolo Premium Kainos
+    pricing_subtitle Paprastos prenumeratos parinktys, leidžiančios atrakinti visą „Aliolo“ vizualinio mokymosi patirtį.
     pricing_body|
         <div class="plans">
         <section class="plan">
-        <span class="tag">Flexible</span>
-        <h2>Weekly</h2>
+        <span class="tag">Lankstus</span>
+        <h2>Kas savaitę</h2>
         <div class="price">$2.99</div>
-        <p>Per week. Useful for short-term studying, review, or exam preparation.</p>
+        <p>Per savaitę. Naudinga trumpalaikėms studijoms, peržiūrai ar ruošiantis egzaminams.</p>
         </section>
         <section class="plan">
-        <span class="tag">Popular</span>
-        <h2>Monthly</h2>
+        <span class="tag">Populiarus</span>
+        <h2>Kas mėnesį</h2>
         <div class="price">$8.99</div>
-        <p>Per month. Best for consistent learning without a long commitment.</p>
+        <p>Per mėnesį. Geriausiai tinka nuosekliam mokymuisi be ilgo įsipareigojimo.</p>
         </section>
         <section class="plan">
-        <span class="tag">Best value</span>
-        <h2>Yearly</h2>
+        <span class="tag">Geriausia vertė</span>
+        <h2>Kasmet</h2>
         <div class="price">$80.99</div>
-        <p>Per year. Lower effective monthly cost for long-term learners.</p>
+        <p>Per metus. Mažesnės efektyvios mėnesinės išlaidos ilgalaikiams besimokantiesiems.</p>
         </section>
         </div>
-        <h2>What Premium Includes</h2>
+        <h2>Kas apima „Premium“.</h2>
         <ul>
-        <li>Full access to premium curated subjects and learning libraries.</li>
-        <li>Advanced spaced repetition and progress tracking features.</li>
-        <li>Custom flashcard, subject, folder, and collection creation where available.</li>
-        <li>Interactive learn and test modes, including autoplay settings.</li>
-        <li>Private learning organization features for personal study workflows.</li>
+        <li>Visa prieiga prie aukščiausios kokybės kuruojamų dalykų ir mokymosi bibliotekų.</li>
+        <li>Pažangios pasikartojimo intervalais ir pažangos stebėjimo funkcijos.</li>
+        <li>Pasirinktinė kortelės, temos, aplanko ir kolekcijos kūrimas, jei įmanoma.</li>
+        <li>Interaktyvūs mokymosi ir testavimo režimai, įskaitant automatinio paleidimo nustatymus.</li>
+        <li>Privačios mokymosi organizavimo funkcijos asmeninėms studijų darbo eigoms.</li>
         </ul>
-        <h2>Billing Details</h2>
-        <p>Prices are listed in USD for this public pricing page. Checkout may show local currency, taxes, and final billing details depending on your location, payment method, and purchase channel.</p>
-        <p>Subscriptions renew automatically until canceled. You can cancel according to the rules of the channel where you purchased. Access normally continues until the end of the paid billing period.</p>
-        <div class="notice"><strong>Paddle notice:</strong> Web orders may be processed by Paddle.com, our online reseller and Merchant of Record. Paddle may calculate and collect applicable taxes and provide payment-related buyer support.</div>
+        <h2>Atsiskaitymo informacija</h2>
+        <p>Šiame viešame kainodaros puslapyje kainos nurodytos USD. Patikra gali rodyti vietinę valiutą, mokesčius ir galutinę atsiskaitymo informaciją, atsižvelgiant į jūsų vietą, mokėjimo metodą ir pirkimo kanalą.</p>
+        <p>Prenumeratos atnaujinamos automatiškai, kol jos bus atšauktos. Galite atšaukti pagal kanalo, kuriame pirkote, taisykles. Prieiga paprastai tęsiasi iki apmokėto atsiskaitymo laikotarpio pabaigos.</p>
+        <div class="notice"><strong>Pastaba apie irklą:</strong> Interneto užsakymus gali apdoroti Paddle.com, mūsų internetinis perpardavėjas ir „Merchant of Record“. „Paddle“ gali apskaičiuoti ir rinkti taikomus mokesčius bei teikti su mokėjimu susijusią pirkėjo pagalbą.</div>
         <div class="comparison-card">
-        <h2>Free vs Premium Comparison</h2>
-        <p>This table matches the current app experience and makes the premium upgrade easier to evaluate at a glance.</p>
+        <h2>Nemokamas vs Premium palyginimas</h2>
+        <p>Ši lentelė atitinka dabartinę programos patirtį ir leidžia iš pirmo žvilgsnio lengviau įvertinti aukščiausios kokybės naujovinimą.</p>
         <table class="comparison-table" aria-label="Aliolo free and premium feature comparison">
         <thead>
         <tr>
-        <th>Feature</th>
-        <th>Free</th>
+        <th>Funkcija</th>
+        <th>Nemokama</th>
         <th>Premium</th>
         </tr>
         </thead>
         <tbody>
         <tr>
-        <td>Full library</td>
+        <td>Pilna biblioteka</td>
         <td><span class="comparison-check">✓</span></td>
         <td><span class="comparison-check pro">✓</span></td>
         </tr>
         <tr>
-        <td>Spaced repetition</td>
+        <td>Kartojimas tarpais</td>
         <td><span class="comparison-cross">✕</span></td>
         <td><span class="comparison-check pro">✓</span></td>
         </tr>
         <tr>
-        <td>Creation</td>
+        <td>Kūrimas</td>
         <td><span class="comparison-cross">✕</span></td>
         <td><span class="comparison-check pro">✓</span></td>
         </tr>
         <tr>
-        <td>Testing</td>
+        <td>Testavimas</td>
         <td><span class="comparison-cross">✕</span></td>
         <td><span class="comparison-check pro">✓</span></td>
         </tr>
         <tr>
-        <td>Autoplay</td>
+        <td>Automatinis paleidimas</td>
         <td><span class="comparison-cross">✕</span></td>
         <td><span class="comparison-check pro">✓</span></td>
         </tr>
         <tr>
-        <td>Private mode</td>
+        <td>Privatus režimas</td>
         <td><span class="comparison-cross">✕</span></td>
         <td><span class="comparison-check pro">✓</span></td>
         </tr>
         <tr>
-        <td>Customize</td>
+        <td>Tinkinti</td>
         <td><span class="comparison-cross">✕</span></td>
         <td><span class="comparison-check pro">✓</span></td>
         </tr>
         </tbody>
         </table>
-        <div class="comparison-note">Premium unlocks the full study workflow: adaptive review, creation tools, advanced testing, autoplay controls, private organization, and deeper personalization.</div>
+        <div class="comparison-note">„Premium“ atveria visą studijų darbo eigą: adaptyvią peržiūrą, kūrimo įrankius, išplėstinį testavimą, automatinio paleidimo valdiklius, privatų organizavimą ir gilesnį personalizavimą.</div>
         </div>
-        <h2>Platform Price Differences</h2>
-        <p>Prices and offers may vary between web checkout, Google Play, Apple App Store, countries, currencies, and limited-time promotions. The final checkout screen controls the actual price and renewal terms for your purchase.</p>
-        <h2>Related Policies</h2>
-        <p>Before subscribing, review the <a href="/terms.html">Subscription Terms</a>, <a href="/refund.html">Refund Policy</a>, and <a href="/privacy.html">Privacy Policy</a>.</p>
-    checkout_title Aliolo Checkout
-    checkout_subtitle Secure checkout for Aliolo Premium subscriptions.
-    checkout_eyebrow Secure checkout
-    checkout_h1 Complete your Aliolo Premium purchase.
-    checkout_status_title Waiting for checkout
-    checkout_status_desc If you opened this page from Aliolo billing, the payment form should appear automatically.
-    checkout_payment_support_title Payment support
-    checkout_payment_support_desc Web payments are processed by Paddle.com as Merchant of Record.
-    checkout_billing_title Subscription billing
-    checkout_billing_desc Aliolo Premium renews automatically until canceled. You can cancel later through Paddle or your Aliolo account.
-    checkout_policy_title Need policy details?
-    checkout_policy_desc Review pricing, subscription terms, privacy, and refund information before completing your purchase.
-    landing_meta_title Aliolo | Visual Flashcards, Spaced Repetition, and Smarter Study Workflows
-    landing_meta_desc Aliolo helps learners master languages, science, anatomy, exam prep, and curated subjects with visual flashcards, spaced repetition, and interactive test modes.
-    landing_nav_features Features
-    landing_nav_how_it_works How it works
-    landing_nav_pricing Pricing
-    landing_nav_login Log in
-    landing_nav_cta Sign up
-    landing_hero_eyebrow Visual learning platform
-    landing_hero_h1 Learn visually. Master permanently.
-    landing_hero_p Turn images, audio, video, and text into structured flashcards. Learn with context, review at the right time, and test what you can truly recall.
-    landing_hero_btn_primary Create free account
-    landing_hero_btn_secondary Log in
-    landing_hero_proof_1_title Visual
-    landing_hero_proof_1_desc Image, audio, and video friendly flashcards for recognition-heavy learning.
-    landing_hero_proof_2_title Adaptive
-    landing_hero_proof_2_desc Spaced repetition and progress tracking to revisit material at the right time.
-    landing_hero_proof_3_title Structured
-    landing_hero_proof_3_desc Pillars, folders, subjects, and collections that scale beyond a simple deck.
-    landing_hero_preview_title Recognition before recall
-    landing_hero_preview_desc A real Aliolo lesson using image, text, audio, and guided navigation.
-    landing_hero_preview_chip Learn mode
-    landing_features_h2 Everything you need to turn exposure into recall.
-    landing_features_p Build recognition with rich media, keep larger libraries organized, and revisit material before it fades.
-    landing_feature_1_title Learn with more than text
-    landing_feature_1_desc Use images, audio, video, and flexible prompts when the subject depends on recognition and context.
-    landing_feature_2_title Review before it fades
-    landing_feature_2_desc Spaced repetition and progress tracking bring important material back at a useful time.
-    landing_feature_3_title Grow beyond one deck
-    landing_feature_3_desc Organize curated or custom material into pillars, folders, subjects, and collections that stay usable.
-    landing_workflow_h2 A clear path from "I should study" to "I know this."
-    landing_workflow_p One focused workflow keeps the next step obvious without flattening every subject into the same kind of card.
-    landing_step_1_title Choose the right material
-    landing_step_1_desc Start with a curated subject or build a focused library for an exam, language, profession, or personal goal.
-    landing_step_2_title Learn with context
-    landing_step_2_desc Build recognition through guided cards and available media before asking your memory to work unaided.
-    landing_step_3_title Test real recall
-    landing_step_3_desc Move into focused testing to expose weak spots, reinforce retrieval, and make progress measurable.
-    landing_pricing_h2 Start free. Upgrade when you need the full workflow.
-    landing_pricing_p Create an account without payment. Premium adds spaced repetition, creation, testing, autoplay, private organization, and deeper customization.
-    plan_weekly_title Weekly Access
-    plan_weekly_tagline Best for quick goals
-    landing_plan_weekly_desc Good for short-term pushes, quick reviews, or exam-week prep.
-    landing_plan_weekly_item_1 Short commitment window
-    landing_plan_weekly_item_2 Fast way to try the premium workflow
-    landing_plan_weekly_item_3 Renews automatically until canceled
-    landing_plan_weekly_btn View plan details
-    plan_monthly_title Monthly Access
-    plan_monthly_tagline Most popular choice
-    landing_plan_monthly_desc Balanced access for students building a steady learning habit.
-    landing_plan_monthly_item_1 Best for regular weekly study
-    landing_plan_monthly_item_2 Enough time to organize larger subject libraries
-    landing_plan_monthly_item_3 Renews automatically until canceled
-    landing_plan_monthly_btn View plan details
-    plan_yearly_title Yearly Access
-    plan_yearly_tagline Save 33% per month
-    landing_plan_yearly_desc Lowest effective monthly cost for learners who want a durable study system.
-    landing_plan_yearly_item_1 Ideal for long-term language and professional study
-    landing_plan_yearly_item_2 Lower cost over time
-    landing_plan_yearly_item_3 Renews automatically until canceled
-    landing_plan_yearly_btn View plan details
-    landing_trust_h2 Study with clarity. Subscribe with confidence.
-    landing_trust_p Know what is free, what Premium adds, and where to get help before you commit.
-    landing_trust_item_1_title Free entry:
-    landing_trust_item_1_desc Create an account and explore available learning material without entering payment details.
-    landing_trust_item_2_title Transparent terms:
-    landing_trust_item_2_desc Pricing, renewal, cancellation, privacy, and refund information are available before checkout.
-    landing_trust_item_3_title Human support:
-    landing_trust_item_3_desc Contact vitalii@nohainc.com when you need help.
-    landing_faq_1_q Do I need to create every card myself?
-    landing_faq_1_a No. Start with available curated subjects, then create your own material when your goal becomes more specific.
-    landing_faq_2_q Can I use Aliolo for free?
-    landing_faq_2_a Yes. A free account provides an entry point to the library; the pricing page explains which advanced workflows require Premium.
-    landing_faq_3_q Can I cancel a subscription?
-    landing_faq_3_a Yes. Subscriptions can be canceled through the channel where they were purchased, with access normally continuing through the paid period.
-    landing_final_h2 Ready to make your next study session count?
-    landing_final_p Create a free account, choose a subject, and start learning visually.
-    landing_final_btn Create free account
-    landing_footer_desc Visual flashcards, spaced repetition, flexible subject organization, and focused testing workflows for learners who want structure without friction.
-    landing_footer_mor Merchant of Record:
-    landing_footer_mor_desc Our order process may be conducted by Paddle.com, our online reseller and Merchant of Record for web orders. Paddle handles payment processing, payment-related customer service, and returns for those orders.
+        <h2>Platformos kainų skirtumai</h2>
+        <p>Kainos ir pasiūlymai gali skirtis priklausomai nuo internetinės kasos, „Google Play“, „Apple App Store“, šalių, valiutų ir riboto laiko reklamų. Galutinis atsiskaitymo ekranas valdo tikrąją pirkinio kainą ir atnaujinimo sąlygas.</p>
+        <h2>Susijusi politika</h2>
+        <p>Prieš užsiprenumeruodami peržiūrėkite <a href="/terms.html">Prenumeratos sąlygos</a>, <a href="/refund.html">Grąžinimo politika</a>, ir <a href="/privacy.html">Privatumo politika</a>.</p>
+    checkout_title „Aliolo Checkout“.
+    checkout_subtitle Saugus „Aliolo Premium“ prenumeratos apmokėjimas.
+    checkout_eyebrow Saugus atsiskaitymas
+    checkout_h1 Užbaikite „Aliolo Premium“ pirkimą.
+    checkout_status_title Laukiu atsiskaitymo
+    checkout_status_desc Jei atidarėte šį puslapį iš Aliolo atsiskaitymo, mokėjimo forma turėtų būti rodoma automatiškai.
+    checkout_payment_support_title Mokėjimo palaikymas
+    checkout_payment_support_desc Interneto mokėjimus apdoroja Paddle.com kaip įrašų prekybininkas.
+    checkout_billing_title Prenumeratos atsiskaitymas
+    checkout_billing_desc „Aliolo Premium“ atnaujinama automatiškai, kol bus atšaukta. Vėliau galėsite atšaukti naudodami „Paddle“ arba „Aliolo“ paskyrą.
+    checkout_policy_title Reikia išsamios politikos informacijos?
+    checkout_policy_desc Prieš pirkdami peržiūrėkite kainodarą, prenumeratos sąlygas, privatumo ir pinigų grąžinimo informaciją.
+    landing_meta_title Aliolo | Vaizdinės kortelės, kartojimas tarpais ir pažangesnės studijų eigos
+    landing_meta_desc „Aliolo“ padeda besimokantiesiems išmokti kalbas, gamtos mokslus, anatomiją, pasirengimą egzaminams ir kuruojamus dalykus naudojant vaizdines korteles, kartojimą intervalais ir interaktyvius testavimo režimus.
+    landing_nav_features Savybės
+    landing_nav_how_it_works Kaip tai veikia
+    landing_nav_learning Mokymasis
+    landing_nav_pricing Kainodara
+    landing_nav_login Prisijunkite
+    landing_nav_cta Sukurti nemokamą paskyrą
+    landing_hero_eyebrow Vizualinio mokymosi platforma
+    landing_hero_h1 Mokykitės vizualiai. Meistras visam laikui.
+    landing_hero_p Paverskite vaizdus, ​​​​garsą, vaizdo įrašus ir tekstą į struktūrines korteles. Mokykitės atsižvelgdami į kontekstą, peržiūrėkite tinkamu laiku ir patikrinkite, ką tikrai galite prisiminti.
+    landing_hero_btn_primary Sukurti nemokamą paskyrą
+    landing_hero_btn_secondary Prisijunkite
+    landing_hero_proof_1_title Vizualinis
+    landing_hero_proof_1_desc Vaizdams, garsui ir vaizdo įrašams pritaikytos kortelės, skirtos atpažinimo reikalaujančiam mokymuisi.
+    landing_hero_proof_2_title Prisitaikantis
+    landing_hero_proof_2_desc Skirtingas kartojimas ir pažangos stebėjimas, kad tinkamu laiku peržiūrėtumėte medžiagą.
+    landing_hero_proof_3_title Struktūrizuotas
+    landing_hero_proof_3_desc Stulpai, aplankai, temos ir kolekcijos, kurių dydis ne tik paprastas.
+    landing_hero_preview_title Atpažinimas prieš atšaukimą
+    landing_hero_preview_desc Tikra Aliolo pamoka naudojant vaizdą, tekstą, garsą ir vadovaujamą navigaciją.
+    landing_hero_preview_chip Mokymosi režimas
+    landing_float_see_title Pamatykite
+    landing_float_see_desc Pradėkite nuo daug vaizdų turinčios kortelės.
+    landing_float_hear_title Išgirsk
+    landing_float_hear_desc Garsas padeda išlaikyti vardus ir tarimą.
+    landing_float_recall_title Prisiminkite tai
+    landing_float_recall_desc Išbandykite be užuominų, kai būsite pasiruošę.
+    landing_float_review_title Peržiūrėkite jį
+    landing_float_review_desc Tinkamu momentu grąžinkite korteles.
+    landing_mock_question Kokia veislė parodyta?
+    landing_mock_answer Akita Inu
+    landing_mock_context Japonų šunų veislė · vizualinis atpažinimas
+    landing_mock_audio_label Garso pavyzdys
+    landing_features_h2 Viskas, ko reikia, kad ekspozicija virstų prisiminimu.
+    landing_features_p Sukurkite atpažinimą naudodami raiškiąją mediją, tvarkykite didesnes bibliotekas ir peržiūrėkite medžiagą, kol ji neišnyks.
+    landing_feature_1_title Sužinokite daugiau nei naudodami tekstą
+    landing_feature_1_desc Naudokite vaizdus, ​​garsą, vaizdo įrašus ir lanksčius raginimus, kai objektas priklauso nuo atpažinimo ir konteksto.
+    landing_feature_2_title Peržiūrėkite, kol ji neišnyks
+    landing_feature_2_desc Skirtingas kartojimas ir pažangos stebėjimas sugrąžina svarbią medžiagą tinkamu laiku.
+    landing_feature_3_title Augti už vieno denio
+    landing_feature_3_desc Suskirstykite kuruojamą arba tinkintą medžiagą į ramsčius, aplankus, temas ir kolekcijas, kurias galima naudoti.
+    landing_workflow_h2 Aiškus kelias nuo „turėčiau mokytis“ iki „aš tai žinau“.
+    landing_workflow_p Viena sufokusuota darbo eiga išlaiko kitą žingsnį akivaizdų, nesuplodamas kiekvieno objekto į tą pačią kortelę.
+    landing_step_1_title Pasirinkite tinkamą medžiagą
+    landing_step_1_desc Pradėkite nuo kuruojamo dalyko arba sukurkite tikslią biblioteką, skirtą egzaminui, kalbai, profesijai ar asmeniniam tikslui.
+    landing_step_2_title Mokykitės su kontekstu
+    landing_step_2_desc Prieš prašydami, kad atmintis veiktų be pagalbos, sukurkite atpažinimą naudodami valdomas korteles ir turimą laikmeną.
+    landing_step_3_title Išbandykite tikrąjį prisiminimą
+    landing_step_3_desc Pereikite prie tikslinio testavimo, kad atskleistumėte silpnąsias vietas, sustiprintumėte paiešką ir pažangą būtų galima išmatuoti.
+    landing_flow_see_title Žr
+    landing_flow_see_desc Pradėkite nuo vizualinės kortelės, kuri suteikia smegenims tvirtą kabliuką.
+    landing_flow_understand_title Suprask
+    landing_flow_understand_desc Pridėkite kontekstą, etiketes, tarimą, pavyzdžius ir reikšmę.
+    landing_flow_recall_title Prisiminkite
+    landing_flow_recall_desc Nuo atpažinimo pereikite prie aktyvaus testavimo ir realios atminties.
+    landing_flow_review_title Apžvalga
+    landing_flow_review_desc Grįžkite į tinkamas korteles, kol žinios nedings.
+    landing_demo_media_h3 Vaizdai, garsas, vaizdo įrašas ir tekstas veikia kartu.
+    landing_media_image Vaizdo raginimas
+    landing_media_audio Garso tarimas
+    landing_media_video Vaizdo įrašo kontekstas
+    landing_media_text Teksto paaiškinimas
+    landing_demo_library_h3 Daugiau nei vienas denis.
+    landing_library_subject Anatomijos dalykas
+    landing_library_cards Raumenų kortos
+    landing_library_collection Egzamino kolekcija
+    landing_pillars_h2 Ištirkite vizualinį mokymąsi kiekviename ramstyje.
+    landing_pillars_p Tikrieji Aliolo mokymosi ramsčiai parodo lankytojams, ką programa gali organizuoti ir išmokyti.
+    landing_pillar_education_title Išsilavinimas
+    landing_pillar_education_desc Abėcėlė, skaičiai, formos ir egzamino pagrindai.
+    landing_pillar_nature_title Gyvūnai ir gamta
+    landing_pillar_nature_desc Gyvūnai, vabzdžiai, augalai ir natūralūs raštai.
+    landing_pillar_health_title Žmogaus kūnas ir sveikata
+    landing_pillar_health_desc Anatomija, organai, kūno sistemos ir gerovė.
+    landing_pillar_world_title Pasaulis ir geografija
+    landing_pillar_world_desc Šalys, vėliavos, orientyrai, žemėlapiai ir vietos.
+    landing_pillar_culture_title Menai ir kultūra
+    landing_pillar_culture_desc Paveikslai, muzika, architektūra, maistas ir istorija.
+    landing_pillar_sports_title Sportas ir poilsis
+    landing_pillar_sports_desc Žaidimų, sporto, judėjimo ir poilsio temos.
+    landing_pillar_engineering_title Inžinerija ir transportas
+    landing_pillar_engineering_desc Transporto priemonės, mašinos, įrankiai ir inžinerinės sistemos.
+    landing_pillar_more_title Ir dar daugiau
+    landing_pillar_more_desc Lanksčios temos, kurios kitur netinka.
+    landing_pricing_h2 Pradėkite nemokamai. Atnaujinkite, kai jums reikia visos darbo eigos.
+    landing_pricing_p Sukurti paskyrą be mokėjimo. „Premium“ prideda intervalų pasikartojimo, kūrimo, testavimo, automatinio paleidimo, privataus organizavimo ir gilesnio tinkinimo.
+    plan_weekly_title Savaitinė prieiga
+    plan_weekly_tagline Geriausiai tinka greitiems įvarčiams
+    plan_monthly_title Mėnesinė prieiga
+    plan_monthly_tagline Populiariausias pasirinkimas
+    plan_yearly_title Kasmetinė prieiga
+    plan_yearly_tagline Sutaupykite 33% per mėnesį
+    landing_plan_weekly_desc Tinka trumpalaikiams postūmiams, greitoms apžvalgoms ar pasirengimui egzaminų savaitei.
+    landing_plan_weekly_item_1 Trumpas įsipareigojimų langas
+    landing_plan_weekly_item_2 Greitas būdas išbandyti aukščiausios kokybės darbo eigą
+    landing_plan_weekly_item_3 Atnaujinamas automatiškai, kol atšaukiamas
+    landing_plan_weekly_btn Peržiūrėkite išsamią plano informaciją
+    landing_plan_monthly_desc Subalansuota prieiga studentams, kurie formuoja nuolatinį mokymosi įprotį.
+    landing_plan_monthly_item_1 Geriausiai tinka įprastoms savaitinėms studijoms
+    landing_plan_monthly_item_2 Pakanka laiko organizuoti didesnes dalykų bibliotekas
+    landing_plan_monthly_item_3 Atnaujinamas automatiškai, kol atšaukiamas
+    landing_plan_monthly_btn Peržiūrėkite išsamią plano informaciją
+    landing_plan_yearly_desc Mažiausios efektyvios mėnesinės išlaidos besimokantiesiems, norintiems patvarios studijų sistemos.
+    landing_plan_yearly_item_1 Idealiai tinka ilgalaikėms kalbos ir profesinėms studijoms
+    landing_plan_yearly_item_2 Mažesnės išlaidos laikui bėgant
+    landing_plan_yearly_item_3 Atnaujinamas automatiškai, kol atšaukiamas
+    landing_plan_yearly_btn Peržiūrėkite išsamią plano informaciją
+    landing_trust_h2 Studijuokite aiškiai. Prenumeruokite su pasitikėjimu.
+    landing_trust_p Prieš įsipareigodami žinokite, kas yra nemokama, ką prideda „Premium“ ir kur gauti pagalbos.
+    landing_trust_item_1_title Nemokamas įėjimas:
+    landing_trust_item_1_desc Susikurkite paskyrą ir peržiūrėkite turimą mokymosi medžiagą neįvesdami mokėjimo informacijos.
+    landing_trust_item_2_title Skaidrios sąlygos:
+    landing_trust_item_2_desc Informacija apie kainas, atnaujinimą, atšaukimą, privatumą ir pinigų grąžinimą pateikiama prieš atsiskaitant.
+    landing_trust_item_3_title Žmogaus parama:
+    landing_trust_item_3_desc Jei jums reikia pagalbos, susisiekite su vitalii@nohainc.com.
+    landing_faq_1_q Ar kiekvieną kortelę turiu susikurti pačiam?
+    landing_faq_1_a Ne. Pradėkite nuo turimų kuruojamų temų, tada kurkite savo medžiagą, kai jūsų tikslas taps konkretesnis.
+    landing_faq_2_q Ar galiu nemokamai naudotis „Aliolo“?
+    landing_faq_2_a Taip. Nemokama paskyra suteikia įėjimo į biblioteką tašką; kainodaros puslapyje paaiškinama, kurioms išplėstinėms darbo eigoms reikalinga „Premium“.
+    landing_faq_3_q Ar galiu atšaukti prenumeratą?
+    landing_faq_3_a Taip. Prenumeratas galima atšaukti per kanalą, kuriame jos buvo įsigytos, o prieiga paprastai tęsiama per mokamą laikotarpį.
+    landing_final_h2 Pasiruošę, kad kita studijų sesija būtų svarbi?
+    landing_final_p Susikurkite nemokamą paskyrą, pasirinkite dalyką ir pradėkite mokytis vizualiai.
+    landing_final_btn Sukurti nemokamą paskyrą
+    landing_footer_desc Vaizdinės kortelės, pasikartojimas intervalais, lankstus dalyko organizavimas ir tikslingos testavimo darbo eigos besimokantiesiems, kurie nori struktūros be trinties.
+    landing_footer_mor Įrašų prekybininkas:
+    landing_footer_mor_desc Mūsų užsakymo procesą gali atlikti Paddle.com, mūsų internetinis perpardavėjas ir registruojamas prekybininkas, teikiantis užsakymus internetu. „Paddle“ tvarko mokėjimų apdorojimą, su mokėjimu susijusį klientų aptarnavimą ir tų užsakymų grąžinimą.

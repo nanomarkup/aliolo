@@ -175,6 +175,7 @@
     landing_meta_desc Aliolo hjælper elever med at mestre sprog, videnskab, anatomi, eksamensforberedelse og kurerede emner med visuelle flashcards, gentagelser med afstand og interaktive testtilstande.
     landing_nav_features Funktioner
     landing_nav_how_it_works Hvordan det virker
+    landing_nav_learning Læring
     landing_nav_pricing Prissætning
     landing_nav_login Log ind
     landing_nav_cta Opret gratis konto
@@ -192,6 +193,18 @@
     landing_hero_preview_title Anerkendelse før tilbagekaldelse
     landing_hero_preview_desc En rigtig Aliolo-lektion ved hjælp af billede, tekst, lyd og guidet navigation.
     landing_hero_preview_chip Lær tilstand
+    landing_float_see_title Se det
+    landing_float_see_desc Start med et billedrigt kort.
+    landing_float_hear_title Hør det
+    landing_float_hear_desc Lyd hjælper navne og udtale med at holde fast.
+    landing_float_recall_title Husk det
+    landing_float_recall_desc Test uden tip, når du er klar.
+    landing_float_review_title Gennemgå det
+    landing_float_review_desc Bring kortene tilbage på det rigtige tidspunkt.
+    landing_mock_question Hvilken race vises?
+    landing_mock_answer Akita Inu
+    landing_mock_context Japansk hunderace · visuel genkendelse
+    landing_mock_audio_label Lydprøve
     landing_features_h2 Alt hvad du behøver for at gøre eksponering til genkaldelse.
     landing_features_p Opbyg genkendelse med rige medier, hold større biblioteker organiseret, og gense materiale, før det falmer.
     landing_feature_1_title Lær med mere end tekst
@@ -208,6 +221,41 @@
     landing_step_2_desc Byg genkendelse gennem guidede kort og tilgængelige medier, før du beder din hukommelse om at arbejde uden hjælp.
     landing_step_3_title Test reel tilbagekaldelse
     landing_step_3_desc Gå ind i fokuseret test for at afsløre svage punkter, forstærke genfinding og gøre fremskridt målbare.
+    landing_flow_see_title Se
+    landing_flow_see_desc Start med et visuelt kort, der giver hjernen en stærk krog.
+    landing_flow_understand_title Forstå
+    landing_flow_understand_desc Tilføj kontekst, etiketter, udtale, eksempler og betydning.
+    landing_flow_recall_title Minde om
+    landing_flow_recall_desc Gå fra genkendelse til aktiv testning og ægte hukommelse.
+    landing_flow_review_title Gennemgå
+    landing_flow_review_desc Vend tilbage til de rigtige kort, før viden forsvinder.
+    landing_demo_media_h3 Billeder, lyd, video og tekst arbejder sammen.
+    landing_media_image Billedprompt
+    landing_media_audio Lydudtale
+    landing_media_video Video kontekst
+    landing_media_text Tekstforklaring
+    landing_demo_library_h3 Mere end et dæk.
+    landing_library_subject Anatomi emne
+    landing_library_cards Muskelkort
+    landing_library_collection Eksamenssamling
+    landing_pillars_h2 Udforsk visuel læring på tværs af hver søjle.
+    landing_pillars_p Aliolos rigtige læringssøjler viser besøgende, hvad appen kan organisere og lære.
+    landing_pillar_education_title Undervisning
+    landing_pillar_education_desc Alfabeter, tal, former og eksamensgrundlag.
+    landing_pillar_nature_title Dyr & Natur
+    landing_pillar_nature_desc Dyr, insekter, planter og naturlige mønstre.
+    landing_pillar_health_title Menneskelig krop og sundhed
+    landing_pillar_health_desc Anatomi, organer, kropssystemer og velvære.
+    landing_pillar_world_title Verden og geografi
+    landing_pillar_world_desc Lande, flag, vartegn, kort og steder.
+    landing_pillar_culture_title Kunst & Kultur
+    landing_pillar_culture_desc Malerier, musik, arkitektur, mad og historie.
+    landing_pillar_sports_title Sport & Fritid
+    landing_pillar_sports_desc Emner om spil, sport, bevægelse og rekreation.
+    landing_pillar_engineering_title Teknik & Transport
+    landing_pillar_engineering_desc Køretøjer, maskiner, værktøj og konstruerede systemer.
+    landing_pillar_more_title Og mere
+    landing_pillar_more_desc Fleksible emner, der ikke passer pænt andre steder.
     landing_pricing_h2 Start gratis. Opgrader, når du har brug for den fulde arbejdsgang.
     landing_pricing_p Opret en konto uden betaling. Premium tilføjer adskilt gentagelse, oprettelse, test, autoplay, privat organisering og dybere tilpasning.
     plan_weekly_title Ugentlig adgang

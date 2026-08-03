@@ -175,6 +175,7 @@
     landing_meta_desc Aliolo hilft Lernenden, Sprachen, Naturwissenschaften, Anatomie, Prüfungsvorbereitung und kuratierte Themen mit visuellen Lernkarten, räumlichen Wiederholungen und interaktiven Testmodi zu meistern.
     landing_nav_features Merkmale
     landing_nav_how_it_works Wie es funktioniert
+    landing_nav_learning Lernen
     landing_nav_pricing Preise
     landing_nav_login Einloggen
     landing_nav_cta Kostenloses Konto erstellen
@@ -192,6 +193,18 @@
     landing_hero_preview_title Anerkennung vor Rückruf
     landing_hero_preview_desc Eine echte Aliolo-Lektion mit Bild, Text, Audio und geführter Navigation.
     landing_hero_preview_chip Lernmodus
+    landing_float_see_title Sehen Sie es
+    landing_float_see_desc Beginnen Sie mit einer bildreichen Karte.
+    landing_float_hear_title Hören Sie es
+    landing_float_hear_desc Audio hilft dabei, Namen und Aussprache festzuhalten.
+    landing_float_recall_title Erinnern Sie sich daran
+    landing_float_recall_desc Testen Sie ohne Hinweise, wenn Sie fertig sind.
+    landing_float_review_title Überprüfen Sie es
+    landing_float_review_desc Bringen Sie die Karten im richtigen Moment zurück.
+    landing_mock_question Welche Rasse wird angezeigt?
+    landing_mock_answer Akita Inu
+    landing_mock_context Japanische Hunderasse · visuelle Erkennung
+    landing_mock_audio_label Hörprobe
     landing_features_h2 Alles, was Sie brauchen, um aus der Bekanntheit eine Erinnerung zu machen.
     landing_features_p Steigern Sie den Bekanntheitsgrad mit Rich Media, sorgen Sie für die Organisation größerer Bibliotheken und greifen Sie auf Materialien zurück, bevor sie verblassen.
     landing_feature_1_title Lernen Sie mit mehr als nur Text
@@ -208,6 +221,41 @@
     landing_step_2_desc Bauen Sie die Erkennung durch geführte Karten und verfügbare Medien auf, bevor Sie Ihr Gedächtnis auffordern, ohne Hilfe zu arbeiten.
     landing_step_3_title Testen Sie den echten Rückruf
     landing_step_3_desc Führen Sie gezielte Tests durch, um Schwachstellen aufzudecken, die Wiedererkennung zu verbessern und Fortschritte messbar zu machen.
+    landing_flow_see_title Sehen
+    landing_flow_see_desc Beginnen Sie mit einer visuellen Karte, die dem Gehirn einen starken Reiz verleiht.
+    landing_flow_understand_title Verstehen
+    landing_flow_understand_desc Fügen Sie Kontext, Beschriftungen, Aussprache, Beispiele und Bedeutung hinzu.
+    landing_flow_recall_title Abrufen
+    landing_flow_recall_desc Gehen Sie von der Erkennung zu aktivem Testen und echtem Gedächtnis über.
+    landing_flow_review_title Rezension
+    landing_flow_review_desc Kehren Sie zu den richtigen Karten zurück, bevor das Wissen verschwindet.
+    landing_demo_media_h3 Bilder, Audio, Video und Text arbeiten zusammen.
+    landing_media_image Bildaufforderung
+    landing_media_audio Audioaussprache
+    landing_media_video Videokontext
+    landing_media_text Texterklärung
+    landing_demo_library_h3 Mehr als ein Deck.
+    landing_library_subject Fach Anatomie
+    landing_library_cards Muskelkarten
+    landing_library_collection Prüfungssammlung
+    landing_pillars_h2 Entdecken Sie visuelles Lernen in allen Bereichen.
+    landing_pillars_p Die echten Lernsäulen von Aliolo zeigen Besuchern, was die App organisieren und lehren kann.
+    landing_pillar_education_title Ausbildung
+    landing_pillar_education_desc Alphabete, Zahlen, Formen und Prüfungsgrundlagen.
+    landing_pillar_nature_title Tiere & Natur
+    landing_pillar_nature_desc Tiere, Insekten, Pflanzen und natürliche Muster.
+    landing_pillar_health_title Menschlicher Körper und Gesundheit
+    landing_pillar_health_desc Anatomie, Organe, Körpersysteme und Wohlbefinden.
+    landing_pillar_world_title Welt & Geographie
+    landing_pillar_world_desc Länder, Flaggen, Sehenswürdigkeiten, Karten und Orte.
+    landing_pillar_culture_title Kunst und Kultur
+    landing_pillar_culture_desc Gemälde, Musik, Architektur, Essen und Geschichte.
+    landing_pillar_sports_title Sport & Freizeit
+    landing_pillar_sports_desc Spiel-, Sport-, Bewegungs- und Freizeitthemen.
+    landing_pillar_engineering_title Ingenieurwesen und Verkehr
+    landing_pillar_engineering_desc Fahrzeuge, Maschinen, Werkzeuge und technische Systeme.
+    landing_pillar_more_title Und mehr
+    landing_pillar_more_desc Flexible Themen, die woanders nicht reinpassen.
     landing_pricing_h2 Kostenlos starten. Führen Sie ein Upgrade durch, wenn Sie den vollständigen Workflow benötigen.
     landing_pricing_p Erstellen Sie ein Konto ohne Zahlung. Premium bietet räumliche Wiederholung, Erstellung, Test, automatische Wiedergabe, private Organisation und umfassendere Anpassungsmöglichkeiten.
     plan_weekly_title Wöchentlicher Zugang

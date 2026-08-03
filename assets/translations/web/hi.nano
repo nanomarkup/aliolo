@@ -251,3 +251,51 @@
     landing_footer_desc जो शिक्षार्थी बिना घर्षण के संरचना चाहते हैं, उनके लिए विज़ुअल फ्लैशकार्ड, अंतराल पर दोहराव, लचीला विषय संगठन और केंद्रित परीक्षण वर्कफ़्लो।
     landing_footer_mor मर्चेंट ऑफ़ रिकॉर्ड:
     landing_footer_mor_desc हमारी ऑर्डर प्रक्रिया Paddle.com, हमारे ऑनलाइन पुनर्विक्रेता और वेब ऑर्डर के लिए मर्चेंट ऑफ रिकॉर्ड द्वारा संचालित की जा सकती है। पैडल भुगतान प्रसंस्करण, भुगतान-संबंधी ग्राहक सेवा और उन ऑर्डरों के रिटर्न को संभालता है।
+    landing_nav_learning सीखना
+    landing_float_see_title इसे देखें
+    landing_float_see_desc छवि-समृद्ध कार्ड से प्रारंभ करें.
+    landing_float_hear_title यह सुनकर
+    landing_float_hear_desc ऑडियो नाम और उच्चारण को ठीक रखने में मदद करता है।
+    landing_float_recall_title इसे याद करो
+    landing_float_recall_desc तैयार होने पर संकेत के बिना परीक्षण करें।
+    landing_float_review_title इसकी समीक्षा करें
+    landing_float_review_desc सही समय पर कार्ड वापस लाएँ।
+    landing_mock_question कौन सी नस्ल दिखाई गई है?
+    landing_mock_answer अकिता इनु
+    landing_mock_context जापानी कुत्ते की नस्ल · दृश्य पहचान
+    landing_mock_audio_label ऑडियो नमूना
+    landing_flow_see_title देखना
+    landing_flow_see_desc एक विज़ुअल कार्ड से शुरुआत करें जो मस्तिष्क को एक मजबूत हुक देता है।
+    landing_flow_understand_title समझना
+    landing_flow_understand_desc संदर्भ, लेबल, उच्चारण, उदाहरण और अर्थ जोड़ें।
+    landing_flow_recall_title याद करना
+    landing_flow_recall_desc पहचान से सक्रिय परीक्षण और वास्तविक मेमोरी की ओर बढ़ें।
+    landing_flow_review_title समीक्षा
+    landing_flow_review_desc ज्ञान गायब होने से पहले सही कार्ड पर लौटें।
+    landing_demo_media_h3 छवियाँ, ऑडियो, वीडियो और टेक्स्ट एक साथ काम करते हैं।
+    landing_media_image छवि संकेत
+    landing_media_audio ऑडियो उच्चारण
+    landing_media_video वीडियो प्रसंग
+    landing_media_text पाठ स्पष्टीकरण
+    landing_demo_library_h3 एक से अधिक डेक.
+    landing_library_subject एनाटॉमी विषय
+    landing_library_cards स्नायु कार्ड
+    landing_library_collection परीक्षा संग्रह
+    landing_pillars_h2 प्रत्येक स्तंभ पर दृश्य शिक्षण का अन्वेषण करें।
+    landing_pillars_p एलिओलो के वास्तविक शिक्षण स्तंभ आगंतुकों को दिखाते हैं कि ऐप क्या व्यवस्थित और सिखा सकता है।
+    landing_pillar_education_title शिक्षा
+    landing_pillar_education_desc अक्षर, संख्याएँ, आकार और परीक्षा आधार।
+    landing_pillar_nature_title पशु और प्रकृति
+    landing_pillar_nature_desc जानवर, कीड़े-मकौड़े, पौधे और प्राकृतिक पैटर्न।
+    landing_pillar_health_title मानव शरीर एवं स्वास्थ्य
+    landing_pillar_health_desc शरीर रचना, अंग, शरीर प्रणालियाँ, और भलाई।
+    landing_pillar_world_title विश्व और भूगोल
+    landing_pillar_world_desc देश, झंडे, स्थलचिह्न, मानचित्र और स्थान।
+    landing_pillar_culture_title कला एवं संस्कृति
+    landing_pillar_culture_desc पेंटिंग, संगीत, वास्तुकला, भोजन और इतिहास।
+    landing_pillar_sports_title खेल एवं मनोरंजन
+    landing_pillar_sports_desc खेल, खेल, आंदोलन और मनोरंजन विषय।
+    landing_pillar_engineering_title इंजीनियरिंग एवं परिवहन
+    landing_pillar_engineering_desc वाहन, मशीनें, उपकरण और इंजीनियर्ड सिस्टम।
+    landing_pillar_more_title और अधिक
+    landing_pillar_more_desc लचीले विषय जो अन्यत्र सटीक रूप से फिट नहीं बैठते।

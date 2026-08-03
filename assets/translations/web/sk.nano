@@ -175,6 +175,7 @@
     landing_meta_desc Aliolo pomáha študentom zvládnuť jazyky, vedu, anatómiu, prípravu na skúšky a vybrané predmety pomocou vizuálnych kartičiek, opakovania s rozstupom a interaktívnych testovacích režimov.
     landing_nav_features Vlastnosti
     landing_nav_how_it_works Ako to funguje
+    landing_nav_learning Učenie
     landing_nav_pricing Stanovenie cien
     landing_nav_login Prihláste sa
     landing_nav_cta Vytvorte si bezplatný účet
@@ -192,6 +193,18 @@
     landing_hero_preview_title Rozpoznanie pred odvolaním
     landing_hero_preview_desc Skutočná lekcia Aliolo s použitím obrázkov, textu, zvuku a navigácie so sprievodcom.
     landing_hero_preview_chip Režim učenia
+    landing_float_see_title Vidieť to
+    landing_float_see_desc Začnite s kartou bohatou na obrázky.
+    landing_float_hear_title Vypočujte si to
+    landing_float_hear_desc Zvuk pomáha pri menách a výslovnosti.
+    landing_float_recall_title Pripomeň si to
+    landing_float_recall_desc Keď budete pripravený, otestujte bez rád.
+    landing_float_review_title Skontrolujte to
+    landing_float_review_desc Prineste karty späť v správnom momente.
+    landing_mock_question Aké plemeno je zobrazené?
+    landing_mock_answer Akita Inu
+    landing_mock_context Japonské plemeno psa · vizuálne rozpoznávanie
+    landing_mock_audio_label Zvuková ukážka
     landing_features_h2 Všetko, čo potrebujete na premenu expozície na pripomenutie.
     landing_features_p Budujte rozpoznávanie pomocou multimédií, udržujte organizáciu väčších knižníc a znova si prezerajte materiál skôr, ako vybledne.
     landing_feature_1_title Učte sa viac než len textom
@@ -208,6 +221,41 @@
     landing_step_2_desc Vybudujte si rozpoznávanie pomocou riadených kariet a dostupných médií predtým, ako požiadate svoju pamäť, aby pracovala bez pomoci.
     landing_step_3_title Otestujte skutočné zapamätanie
     landing_step_3_desc Prejdite do sústredeného testovania, aby ste odhalili slabé miesta, posilnili vyhľadávanie a dosiahli merateľný pokrok.
+    landing_flow_see_title Pozri
+    landing_flow_see_desc Začnite s vizuálnou kartou, ktorá dáva mozgu silný hák.
+    landing_flow_understand_title Pochopte
+    landing_flow_understand_desc Pridajte kontext, štítky, výslovnosť, príklady a význam.
+    landing_flow_recall_title Odvolanie
+    landing_flow_recall_desc Prejdite od rozpoznávania k aktívnemu testovaniu a skutočnej pamäti.
+    landing_flow_review_title Recenzia
+    landing_flow_review_desc Vráťte sa k správnym kartám skôr, ako vedomosti zmiznú.
+    landing_demo_media_h3 Obrázky, zvuk, video a text spolupracujú.
+    landing_media_image Výzva k obrázku
+    landing_media_audio Zvuková výslovnosť
+    landing_media_video Kontext videa
+    landing_media_text Textové vysvetlenie
+    landing_demo_library_h3 Viac ako jedna paluba.
+    landing_library_subject Predmet anatómie
+    landing_library_cards Svalové karty
+    landing_library_collection Zbierka skúšok
+    landing_pillars_h2 Preskúmajte vizuálne vzdelávanie naprieč každým pilierom.
+    landing_pillars_p Skutočné piliere učenia Aliolo ukazujú návštevníkom, čo môže aplikácia organizovať a učiť.
+    landing_pillar_education_title Vzdelávanie
+    landing_pillar_education_desc Abecedy, čísla, tvary a základy skúšok.
+    landing_pillar_nature_title Zvieratá a príroda
+    landing_pillar_nature_desc Zvieratá, hmyz, rastliny a prírodné vzory.
+    landing_pillar_health_title Ľudské telo a zdravie
+    landing_pillar_health_desc Anatómia, orgány, telesné systémy a pohoda.
+    landing_pillar_world_title Svet a geografia
+    landing_pillar_world_desc Krajiny, vlajky, orientačné body, mapy a miesta.
+    landing_pillar_culture_title Umenie a kultúra
+    landing_pillar_culture_desc Obrazy, hudba, architektúra, jedlo a história.
+    landing_pillar_sports_title Šport a rekreácia
+    landing_pillar_sports_desc Témy hier, športu, pohybu a rekreácie.
+    landing_pillar_engineering_title Strojárstvo a doprava
+    landing_pillar_engineering_desc Vozidlá, stroje, nástroje a inžinierske systémy.
+    landing_pillar_more_title A ešte viac
+    landing_pillar_more_desc Flexibilné témy, ktoré sa inde nezmestia.
     landing_pricing_h2 Začnite zadarmo. Inovujte, keď potrebujete úplný pracovný postup.
     landing_pricing_p Vytvorte si účet bez platby. Premium pridáva opakované opakovanie, vytváranie, testovanie, automatické hranie, súkromnú organizáciu a hlbšie prispôsobenie.
     plan_weekly_title Týždenný prístup

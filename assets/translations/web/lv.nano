@@ -175,6 +175,7 @@
     landing_meta_desc Aliolo palīdz izglītojamajiem apgūt valodas, dabaszinātnes, anatomiju, sagatavošanos eksāmeniem un atlasītos priekšmetus, izmantojot vizuālas zibatmiņas kartes, intervālu atkārtojumus un interaktīvus testa režīmus.
     landing_nav_features Funkcijas
     landing_nav_how_it_works Kā tas darbojas
+    landing_nav_learning Mācīšanās
     landing_nav_pricing Cenu noteikšana
     landing_nav_login Piesakieties
     landing_nav_cta Izveidojiet bezmaksas kontu
@@ -192,6 +193,18 @@
     landing_hero_preview_title Atpazīšana pirms atsaukšanas
     landing_hero_preview_desc Īsta Aliolo nodarbība, izmantojot attēlu, tekstu, audio un vadītu navigāciju.
     landing_hero_preview_chip Mācīšanās režīms
+    landing_float_see_title Skaties
+    landing_float_see_desc Sāciet ar attēlu bagātu karti.
+    landing_float_hear_title Klausieties to
+    landing_float_hear_desc Audio palīdz nosaukumiem un izrunai.
+    landing_float_recall_title Atgādiniet to
+    landing_float_recall_desc Kad esat gatavs, pārbaudiet bez mājieniem.
+    landing_float_review_title Pārskatiet to
+    landing_float_review_desc Atgrieziet kartītes īstajā brīdī.
+    landing_mock_question Kāda šķirne ir parādīta?
+    landing_mock_answer Akita Inu
+    landing_mock_context Japāņu suņu šķirne · vizuālā atpazīšana
+    landing_mock_audio_label Audio paraugs
     landing_features_h2 Viss, kas nepieciešams, lai ekspozīciju pārvērstu par atsaukšanu.
     landing_features_p Veidojiet atpazīstamību, izmantojot bagātināto multividi, organizējiet lielākas bibliotēkas un atkārtoti apskatiet materiālu, pirms tas pazūd.
     landing_feature_1_title Uzziniet, izmantojot vairāk nekā tekstu
@@ -208,6 +221,41 @@
     landing_step_2_desc Veidojiet atpazīšanu, izmantojot vadītas kartes un pieejamos datu nesējus, pirms lūdzat atmiņai darboties bez palīdzības.
     landing_step_3_title Pārbaudiet īstu atsaukšanu
     landing_step_3_desc Pārejiet uz mērķtiecīgu testēšanu, lai atklātu vājās vietas, pastiprinātu atgūšanu un padarītu progresu izmērāmu.
+    landing_flow_see_title Skat
+    landing_flow_see_desc Sāciet ar vizuālo karti, kas smadzenēm piešķir spēcīgu āķi.
+    landing_flow_understand_title Saprast
+    landing_flow_understand_desc Pievienojiet kontekstu, etiķetes, izrunu, piemērus un nozīmi.
+    landing_flow_recall_title Atsaukt
+    landing_flow_recall_desc Pārejiet no atpazīšanas uz aktīvu testēšanu un reālu atmiņu.
+    landing_flow_review_title Pārskats
+    landing_flow_review_desc Atgriezieties pie pareizajām kartēm, pirms zināšanas pazūd.
+    landing_demo_media_h3 Attēli, audio, video un teksts darbojas kopā.
+    landing_media_image Attēla uzvedne
+    landing_media_audio Audio izruna
+    landing_media_video Video konteksts
+    landing_media_text Teksta skaidrojums
+    landing_demo_library_h3 Vairāk nekā viens klājs.
+    landing_library_subject Anatomijas priekšmets
+    landing_library_cards Muskuļu kārtis
+    landing_library_collection Eksāmenu kolekcija
+    landing_pillars_h2 Izpētiet vizuālo mācīšanos visos pīlāros.
+    landing_pillars_p Aliolo patiesie mācību pīlāri parāda apmeklētājiem, ko lietotne var organizēt un iemācīt.
+    landing_pillar_education_title Izglītība
+    landing_pillar_education_desc Alfabēts, cipari, formas un eksāmenu pamati.
+    landing_pillar_nature_title Dzīvnieki un daba
+    landing_pillar_nature_desc Dzīvnieki, kukaiņi, augi un dabas raksti.
+    landing_pillar_health_title Cilvēka ķermenis un veselība
+    landing_pillar_health_desc Anatomija, orgāni, ķermeņa sistēmas un labklājība.
+    landing_pillar_world_title Pasaule un ģeogrāfija
+    landing_pillar_world_desc Valstis, karogi, orientieri, kartes un vietas.
+    landing_pillar_culture_title Māksla un kultūra
+    landing_pillar_culture_desc Gleznas, mūzika, arhitektūra, pārtika un vēsture.
+    landing_pillar_sports_title Sports un atpūta
+    landing_pillar_sports_desc Spēļu, sporta, kustību un atpūtas tēmas.
+    landing_pillar_engineering_title Inženierzinātnes un transports
+    landing_pillar_engineering_desc Transportlīdzekļi, mašīnas, instrumenti un inženiertehniskās sistēmas.
+    landing_pillar_more_title Un vēl
+    landing_pillar_more_desc Elastīgas tēmas, kas citur īsti neiederas.
     landing_pricing_h2 Sāciet bez maksas. Jauniniet, kad nepieciešama pilna darbplūsma.
     landing_pricing_p Izveidojiet kontu bez maksājuma. Premium nodrošina atkārtotu atkārtošanos, izveidi, testēšanu, automātisko atskaņošanu, privātu organizēšanu un padziļinātu pielāgošanu.
     plan_weekly_title Iknedēļas piekļuve

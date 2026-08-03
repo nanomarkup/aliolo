@@ -175,6 +175,7 @@
     landing_meta_desc Aliolo pomaže učenicima u svladavanju jezika, znanosti, anatomije, priprema za ispite i odabranih predmeta pomoću vizualnih kartica, ponavljanja s razmakom i interaktivnih načina testiranja.
     landing_nav_features Značajke
     landing_nav_how_it_works Kako radi
+    landing_nav_learning Učenje
     landing_nav_pricing Cijene
     landing_nav_login Prijavite se
     landing_nav_cta Stvorite besplatni račun
@@ -192,6 +193,18 @@
     landing_hero_preview_title Prepoznavanje prije opoziva
     landing_hero_preview_desc Prava Aliolo lekcija koja koristi sliku, tekst, zvuk i vođenu navigaciju.
     landing_hero_preview_chip Način učenja
+    landing_float_see_title Vidi to
+    landing_float_see_desc Počnite s karticom bogatom slikom.
+    landing_float_hear_title Čuj to
+    landing_float_hear_desc Zvuk pomaže u održavanju imena i izgovora.
+    landing_float_recall_title Prisjetite se toga
+    landing_float_recall_desc Testirajte bez savjeta kada budete spremni.
+    landing_float_review_title Pregledajte ga
+    landing_float_review_desc Vratite karte u pravom trenutku.
+    landing_mock_question Koja je pasmina prikazana?
+    landing_mock_answer Akita Inu
+    landing_mock_context Japanska pasmina pasa · vizualno prepoznavanje
+    landing_mock_audio_label Audio uzorak
     landing_features_h2 Sve što vam je potrebno da izlaganje pretvorite u prisjećanje.
     landing_features_p Izgradite prepoznatljivost s bogatim medijima, organizirajte veće knjižnice i ponovno pregledajte materijal prije nego što izblijedi.
     landing_feature_1_title Učite s više od teksta
@@ -208,6 +221,41 @@
     landing_step_2_desc Izgradite prepoznavanje putem navođenih kartica i dostupnih medija prije nego zatražite od svoje memorije da radi bez pomoći.
     landing_step_3_title Testirajte pravo sjećanje
     landing_step_3_desc Prijeđite na fokusirano testiranje kako biste otkrili slabe točke, ojačali pronalaženje i učinili napredak mjerljivim.
+    landing_flow_see_title Vidjeti
+    landing_flow_see_desc Počnite s vizualnom karticom koja daje mozgu jaku udicu.
+    landing_flow_understand_title Razumjeti
+    landing_flow_understand_desc Dodajte kontekst, oznake, izgovor, primjere i značenje.
+    landing_flow_recall_title Podsjetiti
+    landing_flow_recall_desc Prijeđite s prepoznavanja na aktivno testiranje i stvarno pamćenje.
+    landing_flow_review_title Pregled
+    landing_flow_review_desc Vratite se na prave karte prije nego znanje nestane.
+    landing_demo_media_h3 Slike, zvuk, video i tekst rade zajedno.
+    landing_media_image Upit za sliku
+    landing_media_audio Audio izgovor
+    landing_media_video Video kontekst
+    landing_media_text Objašnjenje teksta
+    landing_demo_library_h3 Više od jednog špila.
+    landing_library_subject Predmet anatomija
+    landing_library_cards Karte mišića
+    landing_library_collection Zbirka ispita
+    landing_pillars_h2 Istražite vizualno učenje na svakom stupu.
+    landing_pillars_p Aliolovi pravi stupovi učenja pokazuju posjetiteljima što aplikacija može organizirati i naučiti.
+    landing_pillar_education_title Obrazovanje
+    landing_pillar_education_desc Abecede, brojevi, oblici i temelji ispita.
+    landing_pillar_nature_title Životinje i priroda
+    landing_pillar_nature_desc Životinje, insekti, biljke i prirodni uzorci.
+    landing_pillar_health_title Ljudsko tijelo i zdravlje
+    landing_pillar_health_desc Anatomija, organi, tjelesni sustavi i dobrobit.
+    landing_pillar_world_title Svijet i geografija
+    landing_pillar_world_desc Zemlje, zastave, znamenitosti, karte i mjesta.
+    landing_pillar_culture_title Umjetnost i kultura
+    landing_pillar_culture_desc Slike, glazba, arhitektura, hrana i povijest.
+    landing_pillar_sports_title Sport i rekreacija
+    landing_pillar_sports_desc Teme o igrama, sportu, kretanju i rekreaciji.
+    landing_pillar_engineering_title Inženjering & Transport
+    landing_pillar_engineering_desc Vozila, strojevi, alati i projektirani sustavi.
+    landing_pillar_more_title I više od toga
+    landing_pillar_more_desc Fleksibilne teme koje se ne uklapaju nigdje drugdje.
     landing_pricing_h2 Počni besplatno. Nadogradite kada vam zatreba potpuni tijek rada.
     landing_pricing_p Kreirajte račun bez plaćanja. Premium dodaje ponavljanje s razmakom, stvaranje, testiranje, automatsku reprodukciju, privatnu organizaciju i dublju prilagodbu.
     plan_weekly_title Tjedni pristup

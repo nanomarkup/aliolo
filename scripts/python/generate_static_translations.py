@@ -391,52 +391,162 @@ def align_capitalization(en_val: str, target_val: str) -> str:
         new_char = target_char.lower()
     return target_val[:target_first_letter_idx] + new_char + target_val[target_first_letter_idx + 1:]
 
+def parse_nano_map(content: str) -> dict:
+    result = {}
+    lines = content.splitlines()
+    current_key = None
+    current_value_lines = []
+    in_multiline = False
+    
+    for line in lines:
+        trimmed = line.strip()
+        if not trimmed or trimmed.startswith('#'):
+            if in_multiline:
+                current_value_lines.append('')
+            continue
+            
+        leading_spaces = len(line) - len(line.lstrip())
+        
+        if in_multiline:
+            if leading_spaces >= 8:
+                current_value_lines.append(line[8:])
+                continue
+            else:
+                result[current_key] = "\n".join(current_value_lines)
+                in_multiline = False
+                current_key = None
+                current_value_lines = []
+                
+        if trimmed == '..':
+            continue
+            
+        if leading_spaces == 4:
+            if trimmed.endswith('|'):
+                current_key = trimmed[:-1].strip()
+                in_multiline = True
+                current_value_lines = []
+            else:
+                first_space = trimmed.find(' ')
+                if first_space != -1:
+                    key = trimmed[:first_space].strip()
+                    val = trimmed[first_space+1:].strip()
+                    if val.startswith('"') and val.endswith('"'):
+                        val = json.loads(val)
+                    result[key] = val
+                else:
+                    result[trimmed] = ""
+                    
+    if in_multiline and current_key:
+        result[current_key] = "\n".join(current_value_lines)
+        
+    return result
+
+def translate_keys_concurrently(keys_to_translate: list, lang: str) -> dict:
+    results = {}
+    
+    def worker(item):
+        key, val = item
+        try:
+            if key.endswith("_body") or key in ["landing_meta_desc", "landing_hero_p", "landing_features_p", "landing_workflow_p", "landing_pillars_p", "landing_pricing_p", "landing_trust_p", "landing_final_p", "landing_footer_desc", "landing_footer_mor_desc"]:
+                translated = translate_html(val, lang)
+            else:
+                translated_val = translate_google(val, lang)
+                translated = align_capitalization(val, translated_val)
+            return key, translated
+        except Exception as e:
+            print(f"  Error translating key '{key}': {e}")
+            return key, val
+            
+    from concurrent.futures import ThreadPoolExecutor
+    with ThreadPoolExecutor(max_workers=15) as executor:
+        for key, translated in executor.map(worker, keys_to_translate):
+            results[key] = translated
+            
+    return results
+
 def main():
     script_dir = Path(__file__).resolve().parent
-    # Set api translations directory
-    trans_dir = script_dir.parent.parent / "api" / "src" / "translations"
-    trans_dir.mkdir(parents=True, exist_ok=True)
+    project_root = script_dir.parent.parent
+    
+    web_trans_dir = project_root / "assets" / "translations" / "web"
+    api_trans_dir = project_root / "api" / "src" / "translations"
+    
+    # Load source English keys from assets/translations/web/en.nano
+    en_file_path = web_trans_dir / "en.nano"
+    if not en_file_path.exists():
+        print(f"Error: English source file {en_file_path} not found.")
+        sys.exit(1)
+        
+    en_content = en_file_path.read_text(encoding="utf-8")
+    english_keys = parse_nano_map(en_content)
+    
+    print(f"Loaded {len(english_keys)} keys from English source of truth.")
     
     translations_map = {}
 
     for lang in SUPPORTED_LANGUAGES:
-        print(f"Translating static pages for language: {lang}...")
+        print(f"Processing static pages for language: {lang}...")
         
-        nano_file_path = trans_dir / f"{lang}.nano"
-        
-        # If english, save original
         if lang == "en":
-            translated_dict = ENGLISH_CONTENT.copy()
+            # For English, keep the original content
+            final_dict = english_keys.copy()
         else:
-            translated_dict = {}
-            for key, val in ENGLISH_CONTENT.items():
-                if key.endswith("_body") or key == "landing_meta_desc" or key == "landing_hero_p":
-                    translated_dict[key] = translate_html(val, lang)
+            # Load existing translations if any
+            existing_web_file = web_trans_dir / f"{lang}.nano"
+            existing_dict = {}
+            if existing_web_file.exists():
+                existing_dict = parse_nano_map(existing_web_file.read_text(encoding="utf-8"))
+                
+            # If there's an existing api translation file, we can also merge from it
+            existing_api_file = api_trans_dir / f"{lang}.nano"
+            if existing_api_file.exists():
+                api_dict = parse_nano_map(existing_api_file.read_text(encoding="utf-8"))
+                for k, v in api_dict.items():
+                    if k not in existing_dict and v:
+                        existing_dict[k] = v
+                        
+            final_dict = {}
+            missing_items = []
+            for k, val in english_keys.items():
+                if k in existing_dict and existing_dict[k].strip():
+                    # Preserve existing translation!
+                    final_dict[k] = existing_dict[k]
                 else:
-                    translated_val = translate_google(val, lang)
-                    translated_dict[key] = align_capitalization(val, translated_val)
-                # Sleep a tiny bit to prevent rate limits
-                time.sleep(0.08)
-        
-        # Write nano file
+                    missing_items.append((k, val))
+                    
+            if missing_items:
+                print(f"  [{lang}] Translating {len(missing_items)} missing keys concurrently...")
+                translated_missing = translate_keys_concurrently(missing_items, lang)
+                final_dict.update(translated_missing)
+                    
+        # Format the dict as a .nano file
         nano_lines = [".."]
-        for key, val in translated_dict.items():
+        for key, val in final_dict.items():
             if "\n" not in val:
                 nano_lines.append(f"    {key} {val}")
             else:
                 nano_lines.append(f"    {key}|")
                 for line in val.split("\n"):
                     nano_lines.append(f"        {line}")
-        
         nano_content = "\n".join(nano_lines)
-        nano_file_path.write_text(nano_content, encoding="utf-8")
-        print(f"  Saved {lang}.nano ({len(nano_content)} bytes)")
         
-        # Save raw content to list
+        # Write to assets/translations/web/{lang}.nano
+        web_trans_dir.mkdir(parents=True, exist_ok=True)
+        web_nano_path = web_trans_dir / f"{lang}.nano"
+        web_nano_path.write_text(nano_content, encoding="utf-8")
+        print(f"  Saved web translation: {web_nano_path.name} ({len(nano_content)} bytes)")
+        
+        # Write to api/src/translations/{lang}.nano
+        api_trans_dir.mkdir(parents=True, exist_ok=True)
+        api_nano_path = api_trans_dir / f"{lang}.nano"
+        api_nano_path.write_text(nano_content, encoding="utf-8")
+        print(f"  Saved api translation: {api_nano_path.name} ({len(nano_content)} bytes)")
+        
+        # Save raw content to list for the index.ts compilation
         translations_map[lang] = nano_content
         
     # Compile index.ts file containing all translations
-    index_file_path = trans_dir / "index.ts"
+    index_file_path = api_trans_dir / "index.ts"
     
     ts_lines = [
         "// Auto-generated translations module containing all raw Nano Markup maps",

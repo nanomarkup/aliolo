@@ -175,6 +175,7 @@
     landing_meta_desc Το Aliolo βοηθά τους μαθητές να κατακτήσουν τις γλώσσες, την επιστήμη, την ανατομία, την προετοιμασία για τις εξετάσεις και τα επιμελημένα θέματα με οπτικές κάρτες flash, επαναλήψεις σε απόσταση και διαδραστικούς τρόπους δοκιμής.
     landing_nav_features Χαρακτηριστικά
     landing_nav_how_it_works Πώς λειτουργεί
+    landing_nav_learning Μάθηση
     landing_nav_pricing Τιμολόγηση
     landing_nav_login Συνδεθείτε
     landing_nav_cta Δημιουργία δωρεάν λογαριασμού
@@ -192,6 +193,18 @@
     landing_hero_preview_title Αναγνώριση πριν από την ανάκληση
     landing_hero_preview_desc Ένα πραγματικό μάθημα Aliolo χρησιμοποιώντας εικόνα, κείμενο, ήχο και καθοδηγούμενη πλοήγηση.
     landing_hero_preview_chip Λειτουργία εκμάθησης
+    landing_float_see_title Δείτε το
+    landing_float_see_desc Ξεκινήστε με μια κάρτα πλούσια σε εικόνες.
+    landing_float_hear_title Ακούστε το
+    landing_float_hear_desc Ο ήχος βοηθά τα ονόματα και την προφορά να κολλήσουν.
+    landing_float_recall_title Θυμηθείτε το
+    landing_float_recall_desc Δοκιμή χωρίς υποδείξεις όταν είναι έτοιμο.
+    landing_float_review_title Αναθεωρήστε το
+    landing_float_review_desc Φέρτε πίσω κάρτες την κατάλληλη στιγμή.
+    landing_mock_question Ποια ράτσα εμφανίζεται;
+    landing_mock_answer Akita Inu
+    landing_mock_context Ιαπωνική ράτσα σκύλου · οπτική αναγνώριση
+    landing_mock_audio_label Δείγμα ήχου
     landing_features_h2 Όλα όσα χρειάζεστε για να μετατρέψετε την έκθεση σε ανάκληση.
     landing_features_p Δημιουργήστε αναγνώριση με εμπλουτισμένα μέσα, διατηρήστε τις μεγαλύτερες βιβλιοθήκες οργανωμένες και επανεξετάστε το υλικό προτού εξασθενίσει.
     landing_feature_1_title Μάθετε με περισσότερα από κείμενο
@@ -208,6 +221,41 @@
     landing_step_2_desc Δημιουργήστε αναγνώριση μέσω καθοδηγούμενων καρτών και διαθέσιμων μέσων προτού ζητήσετε από τη μνήμη σας να λειτουργήσει χωρίς βοήθεια.
     landing_step_3_title Δοκιμή πραγματικής ανάκλησης
     landing_step_3_desc Μεταβείτε σε εστιασμένες δοκιμές για να εκθέσετε τα αδύναμα σημεία, να ενισχύσετε την ανάκτηση και να κάνετε μετρήσιμη την πρόοδο.
+    landing_flow_see_title Βλέπω
+    landing_flow_see_desc Ξεκινήστε με μια οπτική κάρτα που δίνει στον εγκέφαλο ένα δυνατό γάντζο.
+    landing_flow_understand_title Καταλαβαίνω
+    landing_flow_understand_desc Προσθέστε πλαίσιο, ετικέτες, προφορά, παραδείγματα και νόημα.
+    landing_flow_recall_title Ανάκληση
+    landing_flow_recall_desc Μεταβείτε από την αναγνώριση στην ενεργή δοκιμή και την πραγματική μνήμη.
+    landing_flow_review_title Κριτική
+    landing_flow_review_desc Επιστρέψτε στις σωστές κάρτες πριν εξαφανιστεί η γνώση.
+    landing_demo_media_h3 Οι εικόνες, ο ήχος, το βίντεο και το κείμενο συνεργάζονται.
+    landing_media_image Προτροπή εικόνας
+    landing_media_audio Ηχητική προφορά
+    landing_media_video Περιεχόμενο βίντεο
+    landing_media_text Επεξήγηση κειμένου
+    landing_demo_library_h3 Περισσότερα από ένα κατάστρωμα.
+    landing_library_subject Θέμα ανατομίας
+    landing_library_cards Μυϊκές κάρτες
+    landing_library_collection Συλλογή εξετάσεων
+    landing_pillars_h2 Εξερευνήστε την οπτική μάθηση σε κάθε πυλώνα.
+    landing_pillars_p Οι πραγματικοί πυλώνες μάθησης του Aliolo δείχνουν στους επισκέπτες τι μπορεί να οργανώσει και να διδάξει η εφαρμογή.
+    landing_pillar_education_title Εκπαίδευση
+    landing_pillar_education_desc Αλφάβητα, αριθμοί, σχήματα και θεμέλια εξετάσεων.
+    landing_pillar_nature_title Ζώα & Φύση
+    landing_pillar_nature_desc Ζώα, έντομα, φυτά και φυσικά μοτίβα.
+    landing_pillar_health_title Ανθρώπινο Σώμα & Υγεία
+    landing_pillar_health_desc Ανατομία, όργανα, συστήματα σώματος και ευεξία.
+    landing_pillar_world_title Κόσμος & Γεωγραφία
+    landing_pillar_world_desc Χώρες, σημαίες, ορόσημα, χάρτες και μέρη.
+    landing_pillar_culture_title Τέχνες & Πολιτισμός
+    landing_pillar_culture_desc Πίνακες ζωγραφικής, μουσική, αρχιτεκτονική, φαγητό και ιστορία.
+    landing_pillar_sports_title Αθλητισμός & Αναψυχή
+    landing_pillar_sports_desc Θέματα παιχνίδια, αθλήματα, κίνηση και ψυχαγωγία.
+    landing_pillar_engineering_title Μηχανικών & Μεταφορών
+    landing_pillar_engineering_desc Οχήματα, μηχανήματα, εργαλεία και μηχανικά συστήματα.
+    landing_pillar_more_title Και περισσότερα
+    landing_pillar_more_desc Ευέλικτα θέματα που δεν ταιριάζουν καλά αλλού.
     landing_pricing_h2 Ξεκινήστε δωρεάν. Κάντε αναβάθμιση όταν χρειάζεστε την πλήρη ροή εργασίας.
     landing_pricing_p Δημιουργία λογαριασμού χωρίς πληρωμή. Το Premium προσθέτει επανάληψη σε απόσταση, δημιουργία, δοκιμή, αυτόματη αναπαραγωγή, ιδιωτική οργάνωση και βαθύτερη προσαρμογή.
     plan_weekly_title Εβδομαδιαία πρόσβαση

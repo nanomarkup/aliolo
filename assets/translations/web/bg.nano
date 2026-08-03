@@ -175,6 +175,7 @@
     landing_meta_desc Aliolo помага на учащите да овладеят езици, наука, анатомия, подготовка за изпити и подбрани предмети с визуални флаш карти, повторение на интервали и интерактивни тестови режими.
     landing_nav_features Характеристики
     landing_nav_how_it_works Как работи
+    landing_nav_learning Учене
     landing_nav_pricing Ценообразуване
     landing_nav_login Влезте
     landing_nav_cta Създайте безплатен акаунт
@@ -192,6 +193,18 @@
     landing_hero_preview_title Разпознаване преди отзоваване
     landing_hero_preview_desc Истински урок по Aliolo, използващ изображение, текст, аудио и навигация с насочване.
     landing_hero_preview_chip Режим на обучение
+    landing_float_see_title Вижте го
+    landing_float_see_desc Започнете с богата на изображения карта.
+    landing_float_hear_title Чуй го
+    landing_float_hear_desc Аудиото помага за запазване на имената и произношението.
+    landing_float_recall_title Припомнете си го
+    landing_float_recall_desc Тествайте без съвети, когато сте готови.
+    landing_float_review_title Прегледайте го
+    landing_float_review_desc Върнете картите обратно в точния момент.
+    landing_mock_question Каква порода е показана?
+    landing_mock_answer Акита ину
+    landing_mock_context Японска порода кучета · визуално разпознаване
+    landing_mock_audio_label Аудио извадка
     landing_features_h2 Всичко, от което се нуждаете, за да превърнете излагането в припомняне.
     landing_features_p Изградете разпознаваемост с богата медия, поддържайте организирани по-големи библиотеки и преразглеждайте материала, преди да избледнее.
     landing_feature_1_title Учете с повече от текст
@@ -208,6 +221,41 @@
     landing_step_2_desc Изградете разпознаване чрез насочвани карти и налични медии, преди да поискате паметта ви да работи без чужда помощ.
     landing_step_3_title Тествайте истинското припомняне
     landing_step_3_desc Преминете към фокусирано тестване, за да разкриете слабите места, да подсилите извличането и да направите напредъка измерим.
+    landing_flow_see_title Вижте
+    landing_flow_see_desc Започнете с визуална карта, която дава на мозъка силна кука.
+    landing_flow_understand_title Разберете
+    landing_flow_understand_desc Добавете контекст, етикети, произношение, примери и значение.
+    landing_flow_recall_title Припомнете си
+    landing_flow_recall_desc Преминете от разпознаване към активно тестване и реална памет.
+    landing_flow_review_title Преглед
+    landing_flow_review_desc Върнете се към правилните карти, преди знанията да изчезнат.
+    landing_demo_media_h3 Изображения, аудио, видео и текст работят заедно.
+    landing_media_image Подкана за изображение
+    landing_media_audio Аудио произношение
+    landing_media_video Видео контекст
+    landing_media_text Текстово обяснение
+    landing_demo_library_h3 Повече от една колода.
+    landing_library_subject Тема по анатомия
+    landing_library_cards Мускулни карти
+    landing_library_collection Изпитен сборник
+    landing_pillars_h2 Изследвайте визуалното обучение във всеки стълб.
+    landing_pillars_p Истинските стълбове за обучение на Aliolo показват на посетителите какво може да организира и научи приложението.
+    landing_pillar_education_title Образование
+    landing_pillar_education_desc Азбуки, числа, форми и основи на изпита.
+    landing_pillar_nature_title Животни и природа
+    landing_pillar_nature_desc Животни, насекоми, растения и природни модели.
+    landing_pillar_health_title Човешко тяло и здраве
+    landing_pillar_health_desc Анатомия, органи, телесни системи и благосъстояние.
+    landing_pillar_world_title Свят и география
+    landing_pillar_world_desc Държави, знамена, забележителности, карти и места.
+    landing_pillar_culture_title Изкуство и култура
+    landing_pillar_culture_desc Картини, музика, архитектура, храна и история.
+    landing_pillar_sports_title Спорт и отдих
+    landing_pillar_sports_desc Теми за игри, спорт, движение и отдих.
+    landing_pillar_engineering_title Инженеринг и транспорт
+    landing_pillar_engineering_desc Превозни средства, машини, инструменти и инженерни системи.
+    landing_pillar_more_title И още
+    landing_pillar_more_desc Гъвкави теми, които не се вписват добре другаде.
     landing_pricing_h2 Започнете безплатно. Надстройте, когато имате нужда от пълния работен процес.
     landing_pricing_p Създайте акаунт без плащане. Premium добавя интервално повторение, създаване, тестване, автоматично пускане, частна организация и по-задълбочено персонализиране.
     plan_weekly_title Седмичен достъп

@@ -175,6 +175,7 @@
     landing_meta_desc Aliolo auttaa oppijoita hallitsemaan kieliä, luonnontieteitä, anatomiaa, kokeisiin valmistautumista ja kuratoituja aiheita visuaalisilla muistikorteilla, toistovälillä ja interaktiivisilla testitiloilla.
     landing_nav_features Ominaisuudet
     landing_nav_how_it_works Miten se toimii
+    landing_nav_learning Oppiminen
     landing_nav_pricing Hinnoittelu
     landing_nav_login Kirjaudu sisään
     landing_nav_cta Luo ilmainen tili
@@ -192,6 +193,18 @@
     landing_hero_preview_title Tunnistus ennen muistamista
     landing_hero_preview_desc Todellinen Aliolo-tunti käyttämällä kuvaa, tekstiä, ääntä ja ohjattua navigointia.
     landing_hero_preview_chip Opi-tila
+    landing_float_see_title Katso se
+    landing_float_see_desc Aloita kuvarikkaalla kortilla.
+    landing_float_hear_title Kuule se
+    landing_float_hear_desc Ääni auttaa nimissä ja ääntämisessä pysymään.
+    landing_float_recall_title Muista se
+    landing_float_recall_desc Testaa ilman vihjeitä, kun olet valmis.
+    landing_float_review_title Tarkista se
+    landing_float_review_desc Tuo kortit takaisin oikealla hetkellä.
+    landing_mock_question Mikä rotu on esillä?
+    landing_mock_answer Akita Inu
+    landing_mock_context Japanilainen koirarotu · visuaalinen tunnistus
+    landing_mock_audio_label Äänite näyte
     landing_features_h2 Kaikki mitä tarvitset altistumisesta muistamiseen.
     landing_features_p Rakenna tunnistettavuutta multimedian avulla, pidä suuremmat kirjastot järjestyksessä ja tutustu materiaaliin uudelleen ennen kuin se haalistuu.
     landing_feature_1_title Opi muustakin kuin tekstistä
@@ -208,6 +221,41 @@
     landing_step_2_desc Rakenna tunnistusta ohjattujen korttien ja käytettävissä olevien tietovälineiden avulla, ennen kuin pyydät muistiasi toimimaan ilman apua.
     landing_step_3_title Testaa todellista muistamista
     landing_step_3_desc Siirry kohdennettuun testaukseen paljastaaksesi heikot kohdat, tehostaaksesi hakua ja tehdäksesi edistymisestä mitattavissa.
+    landing_flow_see_title Katso
+    landing_flow_see_desc Aloita visuaalisella kortilla, joka antaa aivoille vahvan koukun.
+    landing_flow_understand_title Ymmärtää
+    landing_flow_understand_desc Lisää konteksti, tunnisteet, ääntäminen, esimerkkejä ja merkitys.
+    landing_flow_recall_title Muista
+    landing_flow_recall_desc Siirry tunnistamisesta aktiiviseen testaukseen ja todelliseen muistiin.
+    landing_flow_review_title Arvostelu
+    landing_flow_review_desc Palaa oikeisiin kortteihin ennen kuin tieto katoaa.
+    landing_demo_media_h3 Kuvat, ääni, video ja teksti toimivat yhdessä.
+    landing_media_image Kuvakehote
+    landing_media_audio Äänen ääntäminen
+    landing_media_video Videon konteksti
+    landing_media_text Tekstin selitys
+    landing_demo_library_h3 Enemmän kuin yksi kansi.
+    landing_library_subject Anatomian aihe
+    landing_library_cards Lihaskortit
+    landing_library_collection Tenttikokoelma
+    landing_pillars_h2 Tutustu visuaaliseen oppimiseen kaikissa pilareissa.
+    landing_pillars_p Aliolon todelliset oppimispilarit näyttävät vierailijoille, mitä sovellus voi järjestää ja opettaa.
+    landing_pillar_education_title Koulutus
+    landing_pillar_education_desc Aakkoset, numerot, muodot ja kokeen perusteet.
+    landing_pillar_nature_title Eläimet & Luonto
+    landing_pillar_nature_desc Eläimiä, hyönteisiä, kasveja ja luonnollisia kuvioita.
+    landing_pillar_health_title Ihmiskeho ja terveys
+    landing_pillar_health_desc Anatomia, elimet, kehon järjestelmät ja hyvinvointi.
+    landing_pillar_world_title Maailma ja maantiede
+    landing_pillar_world_desc Maat, liput, maamerkit, kartat ja paikat.
+    landing_pillar_culture_title Taide ja kulttuuri
+    landing_pillar_culture_desc Maalauksia, musiikkia, arkkitehtuuria, ruokaa ja historiaa.
+    landing_pillar_sports_title Urheilu ja vapaa-aika
+    landing_pillar_sports_desc Pelit, urheilu, liike ja virkistysaiheet.
+    landing_pillar_engineering_title Tekniikka ja kuljetus
+    landing_pillar_engineering_desc Ajoneuvot, koneet, työkalut ja suunnitellut järjestelmät.
+    landing_pillar_more_title Ja enemmän
+    landing_pillar_more_desc Joustavia aiheita, jotka eivät sovi muualle.
     landing_pricing_h2 Aloita ilmaiseksi. Päivitä, kun tarvitset täyden työnkulun.
     landing_pricing_p Luo tili ilman maksua. Premium lisää väliajoin toistoa, luomista, testausta, automaattista toistoa, yksityistä järjestämistä ja syvempää räätälöintiä.
     plan_weekly_title Viikoittainen pääsy

@@ -175,6 +175,7 @@
     landing_meta_desc Cuidíonn Aliolo le foghlaimeoirí máistreacht a fháil ar theangacha, ar eolaíocht, ar anatamaíocht, ar ullmhú don scrúdú, agus ar ábhair choimeádta le luaschártaí amhairc, athrá spásáilte, agus modhanna tástála idirghníomhacha.
     landing_nav_features Gnéithe
     landing_nav_how_it_works Conas a oibríonn sé
+    landing_nav_learning Ag foghlaim
     landing_nav_pricing Praghsáil
     landing_nav_login Logáil isteach
     landing_nav_cta Cruthaigh cuntas saor in aisce
@@ -192,6 +193,18 @@
     landing_hero_preview_title Aitheantas roimh athghairm
     landing_hero_preview_desc Ceacht fíor Aliolo ag baint úsáide as íomhá, téacs, fuaime, agus nascleanúint threoraithe.
     landing_hero_preview_chip Foghlaim mód
+    landing_float_see_title Féach é
+    landing_float_see_desc Tosaigh le cárta íomhá-saibhir.
+    landing_float_hear_title Éist leis
+    landing_float_hear_desc Cuidíonn fuaim le hainmneacha agus le fuaimniú a chloí.
+    landing_float_recall_title Athghairm é
+    landing_float_recall_desc Tástáil gan leideanna nuair a bheidh tú réidh.
+    landing_float_review_title Déan athbhreithniú air
+    landing_float_review_desc Tabhair cártaí ar ais ag an nóiméad ceart.
+    landing_mock_question Cén cine a léirítear?
+    landing_mock_answer Akita Inu
+    landing_mock_context Pór madraí Seapánach · aitheantas amhairc
+    landing_mock_audio_label Sampla fuaime
     landing_features_h2 Gach rud a theastaíonn uait chun nochtadh a iompú ina aisghairm.
     landing_features_p Tóg aitheantas le meáin shaibhre, coimeád leabharlanna níos mó eagraithe, agus tabhair cuairt ar ábhar arís sula n-imíonn sé.
     landing_feature_1_title Foghlaim le níos mó ná téacs
@@ -208,6 +221,41 @@
     landing_step_2_desc Tóg aitheantas trí chártaí treoraithe agus na meáin atá ar fáil sula n-iarrtar ar do chuimhne oibriú gan chúnamh.
     landing_step_3_title Tástáil cuimhne fíor
     landing_step_3_desc Téigh isteach i dtástáil dhírithe chun spotaí laga a nochtadh, aisghabháil a threisiú, agus dul chun cinn intomhaiste a dhéanamh.
+    landing_flow_see_title Féach
+    landing_flow_see_desc Tosaigh le cárta amhairc a thugann duán láidir don inchinn.
+    landing_flow_understand_title Tuig
+    landing_flow_understand_desc Cuir comhthéacs, lipéid, fuaimniú, samplaí agus brí leis.
+    landing_flow_recall_title Athghairm
+    landing_flow_recall_desc Bog ó aitheantas go tástáil ghníomhach agus fíorchuimhne.
+    landing_flow_review_title Léirmheas
+    landing_flow_review_desc Fill ar na cártaí cearta sula n-imíonn eolas.
+    landing_demo_media_h3 Oibríonn íomhánna, fuaime, físeáin agus téacs le chéile.
+    landing_media_image Íomhá leid
+    landing_media_audio Fuaimniú fuaime
+    landing_media_video Comhthéacs físeán
+    landing_media_text Míniú téacs
+    landing_demo_library_h3 Níos mó ná deic amháin.
+    landing_library_subject Ábhar anatamaíochta
+    landing_library_cards Cártaí muscle
+    landing_library_collection Bailiúchán scrúduithe
+    landing_pillars_h2 Déan iniúchadh ar an bhfoghlaim amhairc trasna gach colúin.
+    landing_pillars_p Léiríonn fíorphiléir foghlama Aliolo do chuairteoirí cad is féidir leis an aip a eagrú agus a mhúineadh.
+    landing_pillar_education_title Oideachas
+    landing_pillar_education_desc Aibítir, uimhreacha, cruthanna, agus fondúireachtaí scrúduithe....
+    landing_pillar_nature_title Ainmhithe & Dúlra
+    landing_pillar_nature_desc Ainmhithe, feithidí, plandaí, agus patrúin nádúrtha.
+    landing_pillar_health_title Coirp Daonna & Sláinte
+    landing_pillar_health_desc Anatamaíocht, orgáin, córais choirp, agus folláine.
+    landing_pillar_world_title Domhan & Tíreolaíocht
+    landing_pillar_world_desc Tíortha, bratacha, sainchomharthaí tíre, léarscáileanna, agus áiteanna.
+    landing_pillar_culture_title Ealaíona & Cultúr
+    landing_pillar_culture_desc Pictiúir, ceol, ailtireacht, bia, agus stair.
+    landing_pillar_sports_title Spóirt & Caitheamh Aimsire
+    landing_pillar_sports_desc Ábhair cluichí, spóirt, gluaiseachta agus caitheamh aimsire.
+    landing_pillar_engineering_title Innealtóireacht & Iompar
+    landing_pillar_engineering_desc Feithiclí, meaisíní, uirlisí, agus córais innealtóireacht....
+    landing_pillar_more_title Agus níos mó
+    landing_pillar_more_desc Ábhair sholúbtha nach n-oireann go néata in aon áit eile.
     landing_pricing_h2 Tosaigh saor in aisce. Uasghrádú nuair is gá duit an sreabhadh oibre iomlán.
     landing_pricing_p Cruthaigh cuntas gan íocaíocht. Cuireann Préimh athrá spásáilte, cruthú, tástáil, uath-imirt, eagrú príobháideach, agus saincheaptha níos doimhne.
     plan_weekly_title Rochtain Seachtainiúil

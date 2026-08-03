@@ -175,6 +175,7 @@
     landing_meta_desc Aliolo îi ajută pe cursanți să stăpânească limbi străine, știință, anatomie, pregătire pentru examene și subiecte organizate cu carduri vizuale, repetare distanțată și moduri de testare interactive.
     landing_nav_features Caracteristici
     landing_nav_how_it_works Cum funcționează
+    landing_nav_learning Învăţare
     landing_nav_pricing Prețuri
     landing_nav_login Log in
     landing_nav_cta Creează cont gratuit
@@ -192,6 +193,18 @@
     landing_hero_preview_title Recunoaștere înainte de rechemare
     landing_hero_preview_desc O adevărată lecție de Aliolo folosind imagini, text, audio și navigare ghidată.
     landing_hero_preview_chip Modul de învățare
+    landing_float_see_title Vezi
+    landing_float_see_desc Începeți cu un card bogat în imagini.
+    landing_float_hear_title Auzi
+    landing_float_hear_desc Audio ajută numele și pronunția să se lipească.
+    landing_float_recall_title Amintiți-vă
+    landing_float_recall_desc Testați fără indicii când este gata.
+    landing_float_review_title Revizuiește-o
+    landing_float_review_desc Aduceți cărțile înapoi la momentul potrivit.
+    landing_mock_question Ce rasă este prezentată?
+    landing_mock_answer Akita Inu
+    landing_mock_context Rasa de câini japoneză · recunoaștere vizuală
+    landing_mock_audio_label Eșantion audio
     landing_features_h2 Tot ce ai nevoie pentru a transforma expunerea în amintire.
     landing_features_p Creați recunoaștere cu conținut media îmbogățit, păstrați bibliotecile mai mari organizate și revizuiți materialul înainte ca acesta să dispară.
     landing_feature_1_title Învață mai mult decât text
@@ -208,6 +221,41 @@
     landing_step_2_desc Construiți recunoașterea prin carduri ghidate și medii disponibile înainte de a cere memoriei să funcționeze fără ajutor.
     landing_step_3_title Testează reamintirea reală
     landing_step_3_desc Treceți la testarea concentrată pentru a expune punctele slabe, pentru a consolida recuperarea și pentru a face progresul măsurabil.
+    landing_flow_see_title Vedea
+    landing_flow_see_desc Începeți cu un card vizual care oferă creierului un cârlig puternic.
+    landing_flow_understand_title Înţelege
+    landing_flow_understand_desc Adăugați context, etichete, pronunție, exemple și semnificație.
+    landing_flow_recall_title Amintiți-vă
+    landing_flow_recall_desc Treceți de la recunoaștere la testare activă și memorie reală.
+    landing_flow_review_title Recenzie
+    landing_flow_review_desc Reveniți la cărțile potrivite înainte ca cunoștințele să dispară.
+    landing_demo_media_h3 Imaginile, audio, video și text lucrează împreună.
+    landing_media_image Solicitare imagine
+    landing_media_audio Pronunție audio
+    landing_media_video Contextul video
+    landing_media_text Explicația textului
+    landing_demo_library_h3 Mai mult de o punte.
+    landing_library_subject Anatomy subject
+    landing_library_cards Carduri musculare
+    landing_library_collection Colecția de examene
+    landing_pillars_h2 Explorați învățarea vizuală în fiecare pilon.
+    landing_pillars_p Adevărații stâlpi de învățare ai lui Aliolo arată vizitatorilor ce poate organiza și preda aplicația.
+    landing_pillar_education_title Educaţie
+    landing_pillar_education_desc Alfabete, numere, forme și baze de examen.
+    landing_pillar_nature_title Animale și natură
+    landing_pillar_nature_desc Animale, insecte, plante și modele naturale.
+    landing_pillar_health_title Corpul uman și sănătatea
+    landing_pillar_health_desc Anatomie, organe, sisteme ale corpului și bunăstare.
+    landing_pillar_world_title Lume și Geografie
+    landing_pillar_world_desc Țări, steaguri, repere, hărți și locuri.
+    landing_pillar_culture_title Artă și cultură
+    landing_pillar_culture_desc Picturi, muzică, arhitectură, mâncare și istorie.
+    landing_pillar_sports_title Sport și recreere
+    landing_pillar_sports_desc Jocuri, sport, mișcare și subiecte de recreere.
+    landing_pillar_engineering_title Inginerie & Transport
+    landing_pillar_engineering_desc Vehicule, mașini, unelte și sisteme de inginerie.
+    landing_pillar_more_title Și mai mult
+    landing_pillar_more_desc Subiecte flexibile care nu se potrivesc bine în altă parte.
     landing_pricing_h2 Începe gratuit. Faceți upgrade atunci când aveți nevoie de fluxul de lucru complet.
     landing_pricing_p Creați un cont fără plată. Premium adaugă repetare distanțată, creare, testare, redare automată, organizare privată și personalizare mai profundă.
     plan_weekly_title Acces săptămânal

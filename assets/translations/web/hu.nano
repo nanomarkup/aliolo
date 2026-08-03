@@ -175,6 +175,7 @@
     landing_meta_desc Az Aliolo vizuális kártyákkal, osztott ismétléssel és interaktív tesztmódokkal segíti a tanulókat a nyelvek, a természettudományok, az anatómia, a vizsgára való felkészülés és a kiválasztott tárgyak elsajátításában.
     landing_nav_features Jellemzők
     landing_nav_how_it_works Hogyan működik
+    landing_nav_learning Tanulás
     landing_nav_pricing Árképzés
     landing_nav_login Jelentkezzen be
     landing_nav_cta Hozzon létre ingyenes fiókot
@@ -192,6 +193,18 @@
     landing_hero_preview_title Felismerés visszahívás előtt
     landing_hero_preview_desc Egy igazi Aliolo lecke kép, szöveg, hang és irányított navigáció használatával.
     landing_hero_preview_chip Tanulási mód
+    landing_float_see_title Lásd
+    landing_float_see_desc Kezdje egy képben gazdag kártyával.
+    landing_float_hear_title Halld
+    landing_float_hear_desc A hang segíti a nevek és a kiejtés megtartását.
+    landing_float_recall_title Idézd fel
+    landing_float_recall_desc Tesztelje tippek nélkül, ha készen áll.
+    landing_float_review_title Tekintse át
+    landing_float_review_desc Hozza vissza a kártyákat a megfelelő pillanatban.
+    landing_mock_question Milyen fajta látható?
+    landing_mock_answer Akita Inu
+    landing_mock_context Japán kutyafajta · vizuális felismerés
+    landing_mock_audio_label Hangminta
     landing_features_h2 Minden, amire szüksége van ahhoz, hogy az expozíciót felidézéssé változtassa.
     landing_features_p Építsen felismerést a multimédiával, tartsa rendszerezve a nagyobb könyvtárakat, és nézze meg újra az anyagot, mielőtt elhalványulna.
     landing_feature_1_title Tanuljon többről, mint szövegből
@@ -208,6 +221,41 @@
     landing_step_2_desc Az irányított kártyákon és a rendelkezésre álló adathordozókon keresztül építse fel a felismerést, mielőtt a memóriáját segítség nélkül kell működnie.
     landing_step_3_title Tesztelje a valódi visszaemlékezést
     landing_step_3_desc Váltson fókuszált tesztelésre, hogy feltárja a gyenge pontokat, megerősítse a visszakeresést, és mérhetővé tegye a fejlődést.
+    landing_flow_see_title Lásd
+    landing_flow_see_desc Kezdje egy vizuális kártyával, amely erős horgot ad az agynak.
+    landing_flow_understand_title Értsd
+    landing_flow_understand_desc Adjon hozzá szövegkörnyezetet, címkéket, kiejtést, példákat és jelentést.
+    landing_flow_recall_title Visszahívás
+    landing_flow_recall_desc Lépjen át a felismerésből az aktív tesztelésbe és a valós memóriába.
+    landing_flow_review_title Tekintse át
+    landing_flow_review_desc Térj vissza a megfelelő kártyákhoz, mielőtt a tudás eltűnne.
+    landing_demo_media_h3 A képek, hang, videó és szöveg együtt működnek.
+    landing_media_image Képprompt
+    landing_media_audio Hang kiejtése
+    landing_media_video Videó kontextusa
+    landing_media_text Szöveges magyarázat
+    landing_demo_library_h3 Egynél több pakli.
+    landing_library_subject Anatómia tárgy
+    landing_library_cards Izomkártyák
+    landing_library_collection Vizsgagyűjtemény
+    landing_pillars_h2 Fedezze fel a vizuális tanulást minden pilléren belül.
+    landing_pillars_p Az Aliolo valódi tanulási pillérei megmutatják a látogatóknak, hogy az alkalmazás mit tud szervezni és tanítani.
+    landing_pillar_education_title Oktatás
+    landing_pillar_education_desc ABC, számok, alakzatok és vizsgaalapok.
+    landing_pillar_nature_title Állatok és természet
+    landing_pillar_nature_desc Állatok, rovarok, növények és természetes minták.
+    landing_pillar_health_title Emberi test és egészség
+    landing_pillar_health_desc Anatómia, szervek, testrendszerek és jólét.
+    landing_pillar_world_title Világ és Földrajz
+    landing_pillar_world_desc Országok, zászlók, tereptárgyak, térképek és helyek.
+    landing_pillar_culture_title Művészetek és kultúra
+    landing_pillar_culture_desc Festmények, zene, építészet, ételek és történelem.
+    landing_pillar_sports_title Sport és szabadidő
+    landing_pillar_sports_desc Játék, sport, mozgás és rekreációs témák.
+    landing_pillar_engineering_title Mérnöki és Közlekedési
+    landing_pillar_engineering_desc Járművek, gépek, szerszámok és tervezett rendszerek.
+    landing_pillar_more_title És még több
+    landing_pillar_more_desc Rugalmas témák, amelyek máshol nem illenek jól.
     landing_pricing_h2 Kezdje ingyen. Frissítsen, amikor szüksége van a teljes munkafolyamatra.
     landing_pricing_p Hozzon létre egy fiókot fizetés nélkül. A Premium rendszeres ismétlést, létrehozást, tesztelést, automatikus lejátszást, privát rendszerezést és mélyebb testreszabást kínál.
     plan_weekly_title Heti hozzáférés

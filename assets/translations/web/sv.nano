@@ -175,6 +175,7 @@
     landing_meta_desc Aliolo hjälper elever att bemästra språk, vetenskap, anatomi, tentamensförberedelser och kurerade ämnen med visuella flashcards, upprepning med mellanrum och interaktiva testlägen.
     landing_nav_features Drag
     landing_nav_how_it_works Hur det fungerar
+    landing_nav_learning Inlärning
     landing_nav_pricing Prissättning
     landing_nav_login Logga in
     landing_nav_cta Skapa ett gratis konto
@@ -192,6 +193,18 @@
     landing_hero_preview_title Erkännande före återkallelse
     landing_hero_preview_desc En riktig Aliolo-lektion med bild, text, ljud och guidad navigering.
     landing_hero_preview_chip Lärläge
+    landing_float_see_title Se den
+    landing_float_see_desc Börja med ett bildrikt kort.
+    landing_float_hear_title Hör det
+    landing_float_hear_desc Ljud hjälper namn och uttal att hålla fast.
+    landing_float_recall_title Kom ihåg det
+    landing_float_recall_desc Testa utan tips när du är klar.
+    landing_float_review_title Granska det
+    landing_float_review_desc Ta tillbaka korten i rätt ögonblick.
+    landing_mock_question Vilken ras visas?
+    landing_mock_answer Akita Inu
+    landing_mock_context Japansk hundras · visuell igenkänning
+    landing_mock_audio_label Ljudexempel
     landing_features_h2 Allt du behöver för att förvandla exponering till återkallelse.
     landing_features_p Skapa igenkänning med rich media, håll ordning på större bibliotek och besök material igen innan det bleknar.
     landing_feature_1_title Lär dig med mer än text
@@ -208,6 +221,41 @@
     landing_step_2_desc Skapa igenkänning genom guidade kort och tillgängliga media innan du ber ditt minne att arbeta utan hjälp.
     landing_step_3_title Testa riktig återkallelse
     landing_step_3_desc Gå till fokuserad testning för att exponera svaga punkter, förstärka hämtning och göra framsteg mätbara.
+    landing_flow_see_title Se
+    landing_flow_see_desc Börja med ett visuellt kort som ger hjärnan en stark krok.
+    landing_flow_understand_title Förstå
+    landing_flow_understand_desc Lägg till sammanhang, etiketter, uttal, exempel och betydelse.
+    landing_flow_recall_title Återkallande
+    landing_flow_recall_desc Gå från igenkänning till aktiv testning och verkligt minne.
+    landing_flow_review_title Recension
+    landing_flow_review_desc Återgå till rätt kort innan kunskapen försvinner.
+    landing_demo_media_h3 Bilder, ljud, video och text fungerar tillsammans.
+    landing_media_image Bildprompt
+    landing_media_audio Ljuduttal
+    landing_media_video Videokontext
+    landing_media_text Textförklaring
+    landing_demo_library_h3 Mer än ett däck.
+    landing_library_subject Anatomi ämne
+    landing_library_cards Muskelkort
+    landing_library_collection Tentamenssamling
+    landing_pillars_h2 Utforska visuell inlärning över alla pelare.
+    landing_pillars_p Aliolos verkliga lärandepelare visar besökarna vad appen kan organisera och lära ut.
+    landing_pillar_education_title Utbildning
+    landing_pillar_education_desc Alfabet, siffror, former och examensgrunder.
+    landing_pillar_nature_title Djur & Natur
+    landing_pillar_nature_desc Djur, insekter, växter och naturliga mönster.
+    landing_pillar_health_title Människokropp och hälsa
+    landing_pillar_health_desc Anatomi, organ, kroppssystem och välbefinnande.
+    landing_pillar_world_title Värld & Geografi
+    landing_pillar_world_desc Länder, flaggor, landmärken, kartor och platser.
+    landing_pillar_culture_title Konst & Kultur
+    landing_pillar_culture_desc Målningar, musik, arkitektur, mat och historia.
+    landing_pillar_sports_title Sport & Fritid
+    landing_pillar_sports_desc Teman för spel, sport, rörelse och rekreation.
+    landing_pillar_engineering_title Teknik & Transport
+    landing_pillar_engineering_desc Fordon, maskiner, verktyg och konstruerade system.
+    landing_pillar_more_title Och mer
+    landing_pillar_more_desc Flexibla ämnen som inte passar bra någon annanstans.
     landing_pricing_h2 Börja gratis. Uppgradera när du behöver hela arbetsflödet.
     landing_pricing_p Skapa ett konto utan betalning. Premium lägger till spridd upprepning, skapande, testning, autoplay, privat organisation och djupare anpassning.
     plan_weekly_title Veckovis tillgång

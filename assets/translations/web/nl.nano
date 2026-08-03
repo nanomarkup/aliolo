@@ -175,6 +175,7 @@
     landing_meta_desc Aliolo helpt leerlingen talen, wetenschap, anatomie, examenvoorbereiding en samengestelde onderwerpen onder de knie te krijgen met visuele flashcards, gespreide herhaling en interactieve testmodi.
     landing_nav_features Functies
     landing_nav_how_it_works Hoe het werkt
+    landing_nav_learning Leren
     landing_nav_pricing Prijzen
     landing_nav_login Inloggen
     landing_nav_cta Maak een gratis account aan
@@ -192,6 +193,18 @@
     landing_hero_preview_title Erkenning vóór herinnering
     landing_hero_preview_desc Een echte Aliolo-les met beeld, tekst, audio en begeleide navigatie.
     landing_hero_preview_chip Leermodus
+    landing_float_see_title Zie het
+    landing_float_see_desc Begin met een kaart met veel afbeeldingen.
+    landing_float_hear_title Hoor het
+    landing_float_hear_desc Audio zorgt ervoor dat namen en uitspraak blijven hangen.
+    landing_float_recall_title Herinner het
+    landing_float_recall_desc Test zonder hints wanneer u klaar bent.
+    landing_float_review_title Beoordeel het
+    landing_float_review_desc Breng kaarten op het juiste moment terug.
+    landing_mock_question Welk ras wordt getoond?
+    landing_mock_answer Akita Inu
+    landing_mock_context Japans hondenras · visuele herkenning
+    landing_mock_audio_label Audiovoorbeeld
     landing_features_h2 Alles wat je nodig hebt om exposure om te zetten in herinnering.
     landing_features_p Creëer herkenning met rich media, houd grotere bibliotheken georganiseerd en bekijk materiaal opnieuw voordat het vervaagt.
     landing_feature_1_title Leer met meer dan alleen tekst
@@ -208,6 +221,41 @@
     landing_step_2_desc Bouw herkenning op via geleide kaarten en beschikbare media voordat u uw geheugen vraagt ​​om zonder hulp te werken.
     landing_step_3_title Test echte herinnering
     landing_step_3_desc Ga gericht testen om zwakke plekken bloot te leggen, het ophalen te versterken en de voortgang meetbaar te maken.
+    landing_flow_see_title Zien
+    landing_flow_see_desc Begin met een visuele kaart die de hersenen een sterke haak geeft.
+    landing_flow_understand_title Begrijpen
+    landing_flow_understand_desc Voeg context, labels, uitspraak, voorbeelden en betekenis toe.
+    landing_flow_recall_title Herinneren
+    landing_flow_recall_desc Ga van herkenning naar actief testen en echt geheugen.
+    landing_flow_review_title Beoordeling
+    landing_flow_review_desc Keer terug naar de juiste kaarten voordat de kennis verdwijnt.
+    landing_demo_media_h3 Afbeeldingen, audio, video en tekst werken samen.
+    landing_media_image Afbeelding prompt
+    landing_media_audio Audio-uitspraak
+    landing_media_video Videocontext
+    landing_media_text Tekst uitleg
+    landing_demo_library_h3 Meer dan één dek.
+    landing_library_subject Anatomie onderwerp
+    landing_library_cards Spierkaarten
+    landing_library_collection Examen collectie
+    landing_pillars_h2 Ontdek visueel leren binnen elke pijler.
+    landing_pillars_p De echte leerpijlers van Aliolo laten bezoekers zien wat de app kan organiseren en leren.
+    landing_pillar_education_title Onderwijs
+    landing_pillar_education_desc Alfabetten, cijfers, vormen en examenbasissen.
+    landing_pillar_nature_title Dieren & Natuur
+    landing_pillar_nature_desc Dieren, insecten, planten en natuurlijke patronen.
+    landing_pillar_health_title Menselijk lichaam en gezondheid
+    landing_pillar_health_desc Anatomie, organen, lichaamssystemen en welzijn.
+    landing_pillar_world_title Wereld & Aardrijkskunde
+    landing_pillar_world_desc Landen, vlaggen, oriëntatiepunten, kaarten en plaatsen.
+    landing_pillar_culture_title Kunst & Cultuur
+    landing_pillar_culture_desc Schilderijen, muziek, architectuur, eten en geschiedenis.
+    landing_pillar_sports_title Sport & Recreatie
+    landing_pillar_sports_desc Spel-, sport-, bewegings- en recreatieonderwerpen.
+    landing_pillar_engineering_title Techniek & Transport
+    landing_pillar_engineering_desc Voertuigen, machines, gereedschappen en technische systemen.
+    landing_pillar_more_title En meer
+    landing_pillar_more_desc Flexibele onderwerpen die elders niet netjes passen.
     landing_pricing_h2 Begin gratis. Upgrade wanneer u de volledige workflow nodig heeft.
     landing_pricing_p Maak een account aan zonder betaling. Premium voegt gespreide herhaling, creatie, testen, autoplay, privé-organisatie en diepere aanpassingen toe.
     plan_weekly_title Wekelijkse toegang

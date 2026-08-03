@@ -175,6 +175,7 @@
     landing_meta_desc Aliolo giúp người học nắm vững ngôn ngữ, khoa học, giải phẫu, luyện thi và các môn học được tuyển chọn bằng thẻ ghi chú trực quan, lặp lại cách quãng và các chế độ kiểm tra tương tác.
     landing_nav_features Đặc trưng
     landing_nav_how_it_works Nó hoạt động như thế nào
+    landing_nav_learning Học hỏi
     landing_nav_pricing Định giá
     landing_nav_login Đăng nhập
     landing_nav_cta Tạo tài khoản miễn phí
@@ -192,6 +193,18 @@
     landing_hero_preview_title Nhận biết trước khi thu hồi
     landing_hero_preview_desc Một bài học Aliolo thực sự sử dụng hình ảnh, văn bản, âm thanh và điều hướng có hướng dẫn.
     landing_hero_preview_chip Chế độ tìm hiểu
+    landing_float_see_title Xem nó
+    landing_float_see_desc Bắt đầu với một thẻ giàu hình ảnh.
+    landing_float_hear_title Hãy nghe nó
+    landing_float_hear_desc Âm thanh giúp gắn tên và cách phát âm.
+    landing_float_recall_title Nhớ lại nó
+    landing_float_recall_desc Kiểm tra mà không có gợi ý khi đã sẵn sàng.
+    landing_float_review_title Xem lại nó
+    landing_float_review_desc Mang thẻ trở lại vào đúng thời điểm.
+    landing_mock_question Giống nào được hiển thị?
+    landing_mock_answer Akita Inu
+    landing_mock_context Giống chó Nhật Bản · nhận dạng trực quan
+    landing_mock_audio_label Mẫu âm thanh
     landing_features_h2 Mọi thứ bạn cần để biến khả năng hiển thị thành thu hồi.
     landing_features_p Xây dựng sự công nhận với đa phương tiện, sắp xếp các thư viện lớn hơn và xem lại tài liệu trước khi nó mất dần.
     landing_feature_1_title Học không chỉ bằng văn bản
@@ -208,6 +221,41 @@
     landing_step_2_desc Xây dựng sự công nhận thông qua thẻ hướng dẫn và phương tiện có sẵn trước khi yêu cầu trí nhớ của bạn hoạt động mà không cần trợ giúp.
     landing_step_3_title Kiểm tra khả năng thu hồi thực tế
     landing_step_3_desc Chuyển sang thử nghiệm tập trung để phát hiện những điểm yếu, củng cố khả năng truy xuất và đo lường tiến độ.
+    landing_flow_see_title Nhìn thấy
+    landing_flow_see_desc Bắt đầu với một thẻ hình ảnh giúp não bộ có ấn tượng mạnh mẽ.
+    landing_flow_understand_title Hiểu
+    landing_flow_understand_desc Thêm ngữ cảnh, nhãn, cách phát âm, ví dụ và ý nghĩa.
+    landing_flow_recall_title Nhớ lại
+    landing_flow_recall_desc Chuyển từ nhận dạng sang thử nghiệm tích cực và bộ nhớ thực.
+    landing_flow_review_title Ôn tập
+    landing_flow_review_desc Quay lại các thẻ phù hợp trước khi kiến ​​thức biến mất.
+    landing_demo_media_h3 Hình ảnh, âm thanh, video và văn bản phối hợp với nhau.
+    landing_media_image Lời nhắc hình ảnh
+    landing_media_audio Phát âm âm thanh
+    landing_media_video Bối cảnh video
+    landing_media_text Giải thích văn bản
+    landing_demo_library_h3 Nhiều hơn một bộ bài.
+    landing_library_subject Môn giải phẫu
+    landing_library_cards Thẻ cơ
+    landing_library_collection Tuyển tập bài thi
+    landing_pillars_h2 Khám phá phương pháp học tập trực quan trên mọi trụ cột.
+    landing_pillars_p Trụ cột học tập thực sự của Aliolo cho khách truy cập thấy ứng dụng có thể tổ chức và dạy những gì.
+    landing_pillar_education_title Giáo dục
+    landing_pillar_education_desc Bảng chữ cái, số, hình dạng và nền tảng thi.
+    landing_pillar_nature_title Động vật & Thiên nhiên
+    landing_pillar_nature_desc Động vật, côn trùng, thực vật và các mẫu tự nhiên.
+    landing_pillar_health_title Cơ Thể Con Người & Sức Khỏe
+    landing_pillar_health_desc Giải phẫu, các cơ quan, hệ thống cơ thể và sức khỏe.
+    landing_pillar_world_title Thế giới & Địa lý
+    landing_pillar_world_desc Quốc gia, cờ, địa danh, bản đồ và địa điểm.
+    landing_pillar_culture_title Nghệ thuật & Văn hóa
+    landing_pillar_culture_desc Tranh vẽ, âm nhạc, kiến ​​trúc, ẩm thực và lịch sử.
+    landing_pillar_sports_title Thể thao & Giải trí
+    landing_pillar_sports_desc Các chủ đề về trò chơi, thể thao, vận động và giải trí.
+    landing_pillar_engineering_title Kỹ thuật & Vận tải
+    landing_pillar_engineering_desc Xe cộ, máy móc, công cụ và hệ thống kỹ thuật.
+    landing_pillar_more_title Và hơn thế nữa
+    landing_pillar_more_desc Các chủ đề linh hoạt không phù hợp ở nơi khác.
     landing_pricing_h2 Bắt đầu miễn phí. Nâng cấp khi bạn cần quy trình làm việc đầy đủ.
     landing_pricing_p Tạo một tài khoản mà không cần thanh toán. Premium bổ sung tính năng lặp lại, tạo, thử nghiệm, tự động phát, tổ chức riêng tư và tùy chỉnh sâu hơn.
     plan_weekly_title Truy cập hàng tuần

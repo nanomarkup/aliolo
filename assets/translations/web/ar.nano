@@ -251,3 +251,51 @@
     landing_footer_desc البطاقات التعليمية المرئية، والتكرار المتباعد، والتنظيم المرن للموضوع، وسير عمل الاختبار المركز للمتعلمين الذين يريدون بنية دون احتكاك.
     landing_footer_mor تاجر السجل:
     landing_footer_mor_desc يمكن إجراء عملية الطلب الخاصة بنا عن طريق Paddle.com، البائع عبر الإنترنت والتاجر المسجل لطلبات الويب. يتعامل Paddle مع معالجة الدفع وخدمة العملاء المتعلقة بالدفع وإرجاع تلك الطلبات.
+    landing_nav_learning تعلُّم
+    landing_float_see_title شاهده
+    landing_float_see_desc ابدأ ببطاقة غنية بالصور.
+    landing_float_hear_title اسمعها
+    landing_float_hear_desc الصوت يساعد على الحفاظ على الأسماء والنطق.
+    landing_float_recall_title أذكر ذلك
+    landing_float_recall_desc اختبار دون تلميحات عندما تكون جاهزة.
+    landing_float_review_title قم بمراجعته
+    landing_float_review_desc أعد البطاقات في اللحظة المناسبة.
+    landing_mock_question ما السلالة المعروضة؟
+    landing_mock_answer اكيتا اينو
+    landing_mock_context سلالة الكلاب اليابانية · التعرف البصري
+    landing_mock_audio_label عينة صوتية
+    landing_flow_see_title يرى
+    landing_flow_see_desc ابدأ ببطاقة مرئية تمنح الدماغ خطافًا قويًا.
+    landing_flow_understand_title يفهم
+    landing_flow_understand_desc أضف السياق والتسميات والنطق والأمثلة والمعنى.
+    landing_flow_recall_title يتذكر
+    landing_flow_recall_desc الانتقال من التعرف إلى الاختبار النشط والذاكرة الحقيقية.
+    landing_flow_review_title مراجعة
+    landing_flow_review_desc العودة إلى البطاقات الصحيحة قبل أن تختفي المعرفة.
+    landing_demo_media_h3 تعمل الصور والصوت والفيديو والنص معًا.
+    landing_media_image موجه الصورة
+    landing_media_audio النطق الصوتي
+    landing_media_video سياق الفيديو
+    landing_media_text شرح النص
+    landing_demo_library_h3 أكثر من سطح واحد.
+    landing_library_subject مادة التشريح
+    landing_library_cards بطاقات العضلات
+    landing_library_collection جمع الامتحان
+    landing_pillars_h2 استكشف التعلم البصري عبر كل ركيزة.
+    landing_pillars_p تُظهر ركائز التعلم الحقيقية في Aliolo للزائرين ما يمكن للتطبيق تنظيمه وتعليمه.
+    landing_pillar_education_title تعليم
+    landing_pillar_education_desc الحروف الهجائية والأرقام والأشكال وأسس الامتحان.
+    landing_pillar_nature_title الحيوانات والطبيعة
+    landing_pillar_nature_desc الحيوانات والحشرات والنباتات والأنماط الطبيعية.
+    landing_pillar_health_title جسم الإنسان والصحة
+    landing_pillar_health_desc التشريح والأعضاء وأجهزة الجسم والرفاهية.
+    landing_pillar_world_title العالم والجغرافيا
+    landing_pillar_world_desc الدول والأعلام والمعالم والخرائط والأماكن.
+    landing_pillar_culture_title الفنون والثقافة
+    landing_pillar_culture_desc اللوحات والموسيقى والهندسة المعمارية والطعام والتاريخ.
+    landing_pillar_sports_title الرياضة والترفيه
+    landing_pillar_sports_desc موضوعات الألعاب والرياضة والحركة والترفيه.
+    landing_pillar_engineering_title الهندسة والنقل
+    landing_pillar_engineering_desc المركبات والآلات والأدوات والأنظمة الهندسية.
+    landing_pillar_more_title وأكثر
+    landing_pillar_more_desc مواضيع مرنة لا تتناسب بشكل جيد مع أي مكان آخر.

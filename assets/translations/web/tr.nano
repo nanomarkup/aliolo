@@ -175,6 +175,7 @@
     landing_meta_desc Aliolo, görsel bilgi kartları, aralıklı tekrar ve etkileşimli test modlarıyla öğrencilerin dil, bilim, anatomi, sınav hazırlığı ve özel olarak seçilmiş konularda uzmanlaşmasına yardımcı olur.
     landing_nav_features Özellikler
     landing_nav_how_it_works Nasıl çalışır?
+    landing_nav_learning Öğrenme
     landing_nav_pricing Fiyatlandırma
     landing_nav_login Giriş yapmak
     landing_nav_cta Ücretsiz hesap oluştur
@@ -192,6 +193,18 @@
     landing_hero_preview_title Geri çağırmadan önce tanıma
     landing_hero_preview_desc Resim, metin, ses ve rehberli navigasyonu kullanan gerçek bir Aliolo dersi.
     landing_hero_preview_chip Öğrenme modu
+    landing_float_see_title Gör onu
+    landing_float_see_desc Görüntü açısından zengin bir kartla başlayın.
+    landing_float_hear_title Duy onu
+    landing_float_hear_desc Ses, adların ve telaffuzun kalıcı olmasına yardımcı olur.
+    landing_float_recall_title Hatırla
+    landing_float_recall_desc Hazır olduğunuzda ipuçları olmadan test edin.
+    landing_float_review_title İnceleyin
+    landing_float_review_desc Kartları doğru zamanda geri getirin.
+    landing_mock_question Hangi cins gösteriliyor?
+    landing_mock_answer Akita Inu
+    landing_mock_context Japon köpek ırkı · görsel tanıma
+    landing_mock_audio_label Ses örneği
     landing_features_h2 Maruz kalmayı hatırlamaya dönüştürmek için ihtiyacınız olan her şey.
     landing_features_p Zengin medyayla tanınma sağlayın, daha büyük kitaplıkları düzenli tutun ve materyaller kaybolmadan önce yeniden ziyaret edin.
     landing_feature_1_title Metinden daha fazlasıyla öğrenin
@@ -208,6 +221,41 @@
     landing_step_2_desc Belleğinizin yardımsız çalışmasını istemeden önce, rehberli kartlar ve mevcut medya aracılığıyla tanınırlığınızı artırın.
     landing_step_3_title Gerçek hatırlamayı test edin
     landing_step_3_desc Zayıf noktaları ortaya çıkarmak, geri kazanımı güçlendirmek ve ilerlemeyi ölçülebilir hale getirmek için odaklanmış testlere geçin.
+    landing_flow_see_title Görmek
+    landing_flow_see_desc Beyne güçlü bir kanca veren görsel bir kartla başlayın.
+    landing_flow_understand_title Anlamak
+    landing_flow_understand_desc Bağlam, etiketler, telaffuz, örnekler ve anlam ekleyin.
+    landing_flow_recall_title Hatırlamak
+    landing_flow_recall_desc Tanınmadan aktif teste ve gerçek belleğe geçin.
+    landing_flow_review_title Gözden geçirmek
+    landing_flow_review_desc Bilgi kaybolmadan önce doğru kartlara dönün.
+    landing_demo_media_h3 Görüntüler, ses, video ve metin birlikte çalışır.
+    landing_media_image Resim istemi
+    landing_media_audio Ses telaffuzu
+    landing_media_video Video bağlamı
+    landing_media_text Metin açıklaması
+    landing_demo_library_h3 Birden fazla güverte.
+    landing_library_subject Anatomi konusu
+    landing_library_cards Kas kartları
+    landing_library_collection Sınav koleksiyonu
+    landing_pillars_h2 Her sütunda görsel öğrenmeyi keşfedin.
+    landing_pillars_p Aliolo'nun gerçek öğrenme unsurları, ziyaretçilere uygulamanın neler düzenleyebileceğini ve öğretebileceğini gösterir.
+    landing_pillar_education_title Eğitim
+    landing_pillar_education_desc Alfabeler, sayılar, şekiller ve sınav temelleri.
+    landing_pillar_nature_title Hayvanlar ve Doğa
+    landing_pillar_nature_desc Hayvanlar, böcekler, bitkiler ve doğal desenler.
+    landing_pillar_health_title İnsan Vücudu ve Sağlığı
+    landing_pillar_health_desc Anatomi, organlar, vücut sistemleri ve refah.
+    landing_pillar_world_title Dünya ve Coğrafya
+    landing_pillar_world_desc Ülkeler, bayraklar, önemli noktalar, haritalar ve yerler.
+    landing_pillar_culture_title Sanat ve Kültür
+    landing_pillar_culture_desc Resimler, müzik, mimari, yemek ve tarih.
+    landing_pillar_sports_title Spor ve Rekreasyon
+    landing_pillar_sports_desc Oyunlar, spor, hareket ve rekreasyon konuları.
+    landing_pillar_engineering_title Mühendislik ve Taşımacılık
+    landing_pillar_engineering_desc Araçlar, makineler, aletler ve mühendislik sistemleri.
+    landing_pillar_more_title Ve daha fazlası
+    landing_pillar_more_desc Başka bir yere tam olarak uymayan esnek konular.
     landing_pricing_h2 Ücretsiz başlayın. Tam iş akışına ihtiyaç duyduğunuzda yükseltin.
     landing_pricing_p Ödeme yapmadan bir hesap oluşturun. Premium, aralıklı tekrarlama, oluşturma, test etme, otomatik oynatma, özel organizasyon ve daha derin özelleştirme özellikleri ekler.
     plan_weekly_title Haftalık Erişim

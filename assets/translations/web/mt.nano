@@ -175,6 +175,7 @@
     landing_meta_desc Aliolo jgħin lill-istudenti jikkontrollaw il-lingwi, ix-xjenza, l-anatomija, il-preparazzjoni tal-eżami, u suġġetti kkurati bi flashcards viżwali, ripetizzjoni spazjata, u modi ta 'test interattivi.
     landing_nav_features Karatteristiċi
     landing_nav_how_it_works Kif taħdem
+    landing_nav_learning Tagħlim
     landing_nav_pricing Ipprezzar
     landing_nav_login Idħol
     landing_nav_cta Oħloq kont b'xejn
@@ -192,6 +193,18 @@
     landing_hero_preview_title Rikonoxximent qabel l-irtirar
     landing_hero_preview_desc Lezzjoni reali ta' Aliolo bl-użu ta' immaġini, test, awdjo, u navigazzjoni ggwidata.
     landing_hero_preview_chip Tgħallem il-mod
+    landing_float_see_title Araha
+    landing_float_see_desc Ibda b'karta b'ħafna immaġini.
+    landing_float_hear_title Ismagħha
+    landing_float_hear_desc Awdjo jgħin ismijiet u pronunzja jeħel.
+    landing_float_recall_title Ftakarha
+    landing_float_recall_desc Ittestja mingħajr ħjiel meta jkun lest.
+    landing_float_review_title Irrevediha
+    landing_float_review_desc Ġib il-karti lura fil-mument it-tajjeb.
+    landing_mock_question Liema razza hija murija?
+    landing_mock_answer Akita Inu
+    landing_mock_context Razza tal-klieb Ġappuniża · rikonoxximent viżwali
+    landing_mock_audio_label Kampjun awdjo
     landing_features_h2 Dak kollu li għandek bżonn biex iddawwar l-espożizzjoni f'recall.
     landing_features_p Ibni rikonoxximent mal-midja sinjuri, żomm libreriji akbar organizzati, u erġa' jara l-materjal qabel ma jisparixxi.
     landing_feature_1_title Tgħallem b'aktar minn test
@@ -208,6 +221,41 @@
     landing_step_2_desc Ibni rikonoxximent permezz ta' karti ggwidati u midja disponibbli qabel ma titlob lill-memorja tiegħek taħdem mingħajr għajnuna.
     landing_step_3_title Test recall reali
     landing_step_3_desc Imxi f'ttestjar iffukat biex tesponi punti dgħajfa, issaħħaħ l-irkupru, u tagħmel il-progress jitkejjel.
+    landing_flow_see_title Ara
+    landing_flow_see_desc Ibda b'karta viżwali li tagħti lill-moħħ ganċ qawwi.
+    landing_flow_understand_title Ifhem
+    landing_flow_understand_desc Żid il-kuntest, it-tikketti, il-pronunzja, l-eżempji u t-tifsira.
+    landing_flow_recall_title Recall
+    landing_flow_recall_desc Iċċaqlaq mir-rikonoxximent għal ttestjar attiv u memorja reali.
+    landing_flow_review_title Reviżjoni
+    landing_flow_review_desc Irritorna għall-karti t-tajba qabel ma jisparixxi l-għarfien.
+    landing_demo_media_h3 Immaġini, awdjo, vidjo u test jaħdmu flimkien.
+    landing_media_image Immaġini fil-pront
+    landing_media_audio Pronunzja awdjo
+    landing_media_video Kuntest tal-vidjo
+    landing_media_text Spjegazzjoni tat-test
+    landing_demo_library_h3 Aktar minn gverta waħda.
+    landing_library_subject Suġġett tal-anatomija
+    landing_library_cards Karti tal-muskoli
+    landing_library_collection Ġbir tal-eżamijiet
+    landing_pillars_h2 Esplora t-tagħlim viżwali f'kull pilastru.
+    landing_pillars_p Il-pilastri tat-tagħlim reali ta’ Aliolo juru lill-viżitaturi x’tista’ torganizza u tgħallem l-app.
+    landing_pillar_education_title Edukazzjoni
+    landing_pillar_education_desc Alfabeti, numri, forom, u pedamenti tal-eżami.
+    landing_pillar_nature_title Annimali u Natura
+    landing_pillar_nature_desc Annimali, insetti, pjanti, u mudelli naturali.
+    landing_pillar_health_title Ġisem tal-Bniedem u Saħħa
+    landing_pillar_health_desc Anatomija, organi, sistemi tal-ġisem, u benesseri.
+    landing_pillar_world_title Dinja u Ġeografija
+    landing_pillar_world_desc Pajjiżi, bnadar, postijiet familjari, mapep, u postijiet.
+    landing_pillar_culture_title Arti u Kultura
+    landing_pillar_culture_desc Pitturi, mużika, arkitettura, ikel, u storja.
+    landing_pillar_sports_title Sports u Rikreazzjoni
+    landing_pillar_sports_desc Logħob, sports, moviment, u suġġetti ta' rikreazzjoni.
+    landing_pillar_engineering_title Inġinerija u Trasport
+    landing_pillar_engineering_desc Vetturi, magni, għodod, u sistemi ta 'inġinerija.
+    landing_pillar_more_title U aktar
+    landing_pillar_more_desc Suġġetti flessibbli li ma jaqblux sewwa x'imkien ieħor.
     landing_pricing_h2 Ibda b'xejn. Aġġorna meta jkollok bżonn il-fluss tax-xogħol sħiħ.
     landing_pricing_p Oħloq kont mingħajr ħlas. Il-premium iżid ripetizzjoni spazjata, ħolqien, ittestjar, awtoplay, organizzazzjoni privata, u customization aktar profonda.
     plan_weekly_title Aċċess fil-ġimgħa

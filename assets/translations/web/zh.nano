@@ -251,3 +251,51 @@
     landing_footer_desc 视觉抽认卡、间隔重复、灵活的主题组织以及针对想要无摩擦结构的学习者的集中测试工作流程。
     landing_footer_mor 记录商户：
     landing_footer_mor_desc 我们的订单流程可能由我们的在线经销商和网络订单记录商户 Paddle.com 进行。 Paddle 处理付款处理、付款相关的客户服务以及这些订单的退货。
+    landing_nav_learning 学习
+    landing_float_see_title 看到它
+    landing_float_see_desc 从一张图像丰富的卡片开始。
+    landing_float_hear_title 听到它
+    landing_float_hear_desc 音频有助于记住名字和发音。
+    landing_float_recall_title 回想一下
+    landing_float_recall_desc 准备好后在没有提示的情况下进行测试。
+    landing_float_review_title 回顾一下
+    landing_float_review_desc 在适当的时候带回卡片。
+    landing_mock_question 显示什么品种？
+    landing_mock_answer 秋田犬
+    landing_mock_context 日本犬种·视觉识别
+    landing_mock_audio_label 音频样本
+    landing_flow_see_title 看
+    landing_flow_see_desc 从给大脑一个强有力的钩子的视觉卡开始。
+    landing_flow_understand_title 理解
+    landing_flow_understand_desc 添加上下文、标签、发音、示例和含义。
+    landing_flow_recall_title 记起
+    landing_flow_recall_desc 从识别转向主动测试和真实记忆。
+    landing_flow_review_title 审查
+    landing_flow_review_desc 在知识消失之前返回正确的卡片。
+    landing_demo_media_h3 图像、音频、视频和文本协同工作。
+    landing_media_image 图片提示
+    landing_media_audio 音频发音
+    landing_media_video 视频背景
+    landing_media_text 文字说明
+    landing_demo_library_h3 不止一层。
+    landing_library_subject 解剖学科目
+    landing_library_cards 肌肉卡
+    landing_library_collection 考试合集
+    landing_pillars_h2 探索各个支柱的视觉学习。
+    landing_pillars_p Aliolo 的真正学习支柱向访问者展示了该应用程序可以组织和教授什么。
+    landing_pillar_education_title 教育
+    landing_pillar_education_desc 字母、数字、形状和考试基础。
+    landing_pillar_nature_title 动物与自然
+    landing_pillar_nature_desc 动物、昆虫、植物和自然图案。
+    landing_pillar_health_title 人体与健康
+    landing_pillar_health_desc 解剖学、器官、身体系统和健康。
+    landing_pillar_world_title 世界与地理
+    landing_pillar_world_desc 国家、旗帜、地标、地图和地点。
+    landing_pillar_culture_title 艺术与文化
+    landing_pillar_culture_desc 绘画、音乐、建筑、美食和历史。
+    landing_pillar_sports_title 运动与休闲
+    landing_pillar_sports_desc 游戏、体育、运动和娱乐主题。
+    landing_pillar_engineering_title 工程与运输
+    landing_pillar_engineering_desc 车辆、机器、工具和工程系统。
+    landing_pillar_more_title 还有更多
+    landing_pillar_more_desc 灵活的主题不适合其他地方。

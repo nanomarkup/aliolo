@@ -1,253 +1,301 @@
 ..
-    legal_info Legal information
-    last_updated Last updated
-    support Support
-    home Home
-    privacy Privacy
-    terms Terms
-    refunds Refunds
-    pricing Pricing
-    privacy_title Aliolo Privacy Policy
-    privacy_subtitle How Aliolo collects, uses, stores, and protects account, learning, and payment-related information.
+    legal_info Informacje prawne
+    last_updated Ostatnia aktualizacja
+    support Wsparcie
+    home Dom
+    privacy Prywatność
+    terms Warunki
+    refunds Zwroty pieniędzy
+    pricing Wycena
+    privacy_title Polityka prywatności Aliolo
+    privacy_subtitle W jaki sposób Aliolo gromadzi, wykorzystuje, przechowuje i chroni informacje dotyczące konta, nauki i płatności.
     privacy_body|
-        <h2>Information We Collect</h2>
-        <p>We collect the information needed to operate Aliolo, including account details such as email address, username, password authentication data, avatar settings, preferences, and profile settings.</p>
-        <p>We also store learning activity such as subjects, folders, collections, cards, progress, streaks, daily goals, test and learn settings, feedback, and basic app usage events needed to provide the learning experience.</p>
-        <h2>How We Use Information</h2>
-        <p>We use this information to create and secure your account, synchronize your learning data, personalize your study experience, provide premium access, respond to support requests, improve the app, and prevent misuse or service abuse.</p>
-        <h2>Payments and Subscriptions</h2>
-        <p>Aliolo does not directly store complete payment card details. Web payments are processed by Paddle, and mobile purchases may be processed by Google Play or Apple App Store when those purchase channels are available.</p>
-        <p>For subscription access, we may store payment-provider identifiers, product identifiers, subscription status, renewal period dates, and related webhook or transaction metadata. This lets us activate, renew, cancel, or restore premium access.</p>
-        <h2>Third-Party Services</h2>
-        <p>We use service providers for hosting, infrastructure, storage, analytics or operational logs, authentication, and payments. These providers process information only as needed to provide their services to Aliolo.</p>
-        <div class="notice"><strong>Paddle notice:</strong> Our order process may be conducted by Paddle.com, our online reseller and Merchant of Record. Paddle handles payment processing, tax calculation where applicable, payment security, and payment-related customer service.</div>
-        <h2>Cookies and Local Storage</h2>
-        <p>Aliolo may use cookies, session identifiers, browser storage, or similar technologies to keep you signed in, remember preferences, secure the service, and operate the web app.</p>
-        <h2>Data Retention and Deletion</h2>
-        <p>We keep account and learning data while your account is active or as needed to provide the service, comply with legal obligations, resolve disputes, prevent abuse, and maintain transaction records. You may request account deletion or data-related support by contacting us.</p>
-        <h2>Children and Education Use</h2>
-        <p>Aliolo is an educational product. If a parent, guardian, or school believes that a child has provided personal information without appropriate permission, contact us so we can review and take appropriate action.</p>
-        <h2>Security</h2>
-        <p>We use reasonable technical and organizational safeguards to protect personal information. No online service can guarantee perfect security, but we work to limit access and protect data from unauthorized use.</p>
-        <h2>Your Choices and Rights</h2>
-        <p>Depending on your location, you may have rights to access, correct, delete, export, or restrict use of your personal information. Contact us at <a href="mailto:vitalii@nohainc.com">vitalii@nohainc.com</a> to make a request.</p>
-    terms_title Aliolo Subscription Terms
-    terms_subtitle The rules for Aliolo accounts, premium access, subscription billing, cancellation, and acceptable use.
+        <h2>Informacje, które zbieramy</h2>
+        <p>Gromadzimy informacje potrzebne do obsługi Aliolo, w tym dane konta, takie jak adres e-mail, nazwa użytkownika, dane uwierzytelniające hasło, ustawienia awatara, preferencje i ustawienia profilu.</p>
+        <p>Przechowujemy również aktywność związaną z nauką, taką jak przedmioty, foldery, kolekcje, karty, postępy, passy, ​​codzienne cele, ustawienia testowania i uczenia się, opinie i podstawowe zdarzenia związane z użytkowaniem aplikacji potrzebne do zapewnienia nauki.</p>
+        <h2>Jak wykorzystujemy informacje</h2>
+        <p>Używamy tych informacji do tworzenia i zabezpieczania Twojego konta, synchronizowania Twoich danych edukacyjnych, personalizowania doświadczeń związanych z nauką, zapewniania dostępu premium, odpowiadania na prośby o pomoc, ulepszania aplikacji oraz zapobiegania niewłaściwemu użyciu lub nadużyciom usług.</p>
+        <h2>Płatności i subskrypcje</h2>
+        <p>Aliolo nie przechowuje bezpośrednio pełnych danych karty płatniczej. Płatności internetowe są przetwarzane przez Paddle, a zakupy mobilne mogą być przetwarzane przez Google Play lub Apple App Store, jeśli te kanały zakupów są dostępne.</p>
+        <p>W przypadku dostępu do subskrypcji możemy przechowywać identyfikatory dostawców płatności, identyfikatory produktów, status subskrypcji, daty okresu odnowienia oraz powiązane metadane webhooka lub transakcji. Dzięki temu możemy aktywować, odnawiać, anulować lub przywracać dostęp premium.</p>
+        <h2>Usługi stron trzecich</h2>
+        <p>Korzystamy z usług dostawców usług w zakresie hostingu, infrastruktury, przechowywania, analiz lub dzienników operacyjnych, uwierzytelniania i płatności. Dostawcy ci przetwarzają informacje wyłącznie w zakresie niezbędnym do świadczenia usług na rzecz Aliolo.</p>
+        <div class="notice"><strong>Uwaga dotycząca wiosła:</strong> Nasz proces składania zamówień może być prowadzony przez Paddle.com, naszego sprzedawcę internetowego i zarejestrowanego sprzedawcę. Paddle obsługuje przetwarzanie płatności, obliczanie podatków, jeśli ma to zastosowanie, bezpieczeństwo płatności i obsługę klienta związaną z płatnościami.</div>
+        <h2>Pliki cookie i pamięć lokalna</h2>
+        <p>Aliolo może używać plików cookie, identyfikatorów sesji, pamięci przeglądarki lub podobnych technologii, aby zapewnić Ci zalogowanie, zapamiętywanie preferencji, zabezpieczanie usługi i obsługę aplikacji internetowej.</p>
+        <h2>Przechowywanie i usuwanie danych</h2>
+        <p>Przechowujemy dane dotyczące konta i danych edukacyjnych, gdy Twoje konto jest aktywne lub gdy jest to konieczne do świadczenia usługi, wywiązania się z obowiązków prawnych, rozwiązywania sporów, zapobiegania nadużyciom i prowadzenia rejestrów transakcji. Możesz poprosić o usunięcie konta lub pomoc związaną z danymi, kontaktując się z nami.</p>
+        <h2>Dzieci i edukacja</h2>
+        <p>Aliolo to produkt edukacyjny. Jeśli rodzic, opiekun lub szkoła uważa, że ​​dziecko przekazało dane osobowe bez odpowiedniego pozwolenia, skontaktuj się z nami, abyśmy mogli to sprawdzić i podjąć odpowiednie działania.</p>
+        <h2>Bezpieczeństwo</h2>
+        <p>W celu ochrony danych osobowych stosujemy rozsądne zabezpieczenia techniczne i organizacyjne. Żadna usługa online nie gwarantuje doskonałego bezpieczeństwa, ale staramy się ograniczać dostęp i chronić dane przed nieuprawnionym użyciem.</p>
+        <h2>Twoje wybory i prawa</h2>
+        <p>W zależności od Twojej lokalizacji możesz mieć prawo do dostępu, poprawiania, usuwania, eksportowania lub ograniczania wykorzystania swoich danych osobowych. Skontaktuj się z nami pod adresem <a href="mailto:vitalii@nohainc.com">Vitalii@nohainc.com</a> aby złożyć prośbę.</p>
+    terms_title Warunki subskrypcji Aliolo
+    terms_subtitle Zasady dotyczące kont Aliolo, dostępu premium, rozliczania subskrypcji, anulowania i dopuszczalnego użytkowania.
     terms_body|
-        <h2>Using Aliolo</h2>
-        <p>Aliolo provides visual learning tools, curated educational content, flashcards, progress tracking, and premium learning features. You are responsible for keeping your account credentials secure and for using the service lawfully.</p>
-        <h2>Premium Access</h2>
-        <p>Premium access unlocks paid features shown in the app or on the pricing page. Available features may change as the product improves, but active subscribers will continue to receive access to the paid Aliolo experience during their valid subscription period.</p>
-        <h2>Billing and Renewal</h2>
-        <p>Subscriptions renew automatically unless canceled before the end of the current billing period. Prices, billing cadence, taxes, local currency conversion, and renewal rules are shown at checkout and may vary by purchase channel, region, platform, or active offer.</p>
-        <div class="notice"><strong>Paddle notice:</strong> For web purchases, our order process may be conducted by Paddle.com. Paddle.com is the Merchant of Record for those orders and provides payment-related customer service, tax handling, and returns processing.</div>
-        <h2>Cancellation</h2>
-        <p>You can cancel according to the rules of the purchase channel you used. Cancellation stops future renewal. Unless the purchase channel states otherwise, paid access remains available until the end of the current billing period.</p>
-        <h2>Refunds</h2>
-        <p>Refunds are handled according to our <a href="/refund.html">Refund Policy</a>, the purchase channel rules, and applicable consumer law. App store purchases are normally handled by the relevant app store.</p>
-        <h2>Acceptable Use</h2>
-        <p>You may not misuse Aliolo, interfere with the service, attempt unauthorized access, scrape or copy content at scale, reverse engineer protected parts of the app, upload unlawful material, or use the service in a way that harms other users or Aliolo.</p>
-        <h2>Content and Availability</h2>
-        <p>Aliolo may update, add, remove, or reorganize subjects, cards, features, and design. We aim to keep the service reliable, but availability can be affected by maintenance, third-party providers, network issues, or product changes.</p>
-        <h2>Disclaimer and Liability</h2>
-        <p>Aliolo is provided as an educational and study-support tool. We do not guarantee specific learning, exam, professional, or financial outcomes. To the maximum extent permitted by law, Aliolo is provided without warranties beyond those required by applicable law.</p>
-        <h2>Changes to These Terms</h2>
-        <p>We may update these terms to reflect product, legal, billing, or operational changes. The current version is published on this page.</p>
-    refund_title Aliolo Refund Policy
-    refund_subtitle How refunds, cancellations, chargebacks, and payment support work for Aliolo Premium.
+        <h2>Korzystanie z Aliolo</h2>
+        <p>Aliolo zapewnia wizualne narzędzia do nauki, wyselekcjonowane treści edukacyjne, fiszki, śledzenie postępów i dodatkowe funkcje edukacyjne. Użytkownik odpowiada za bezpieczeństwo danych uwierzytelniających swojego konta i korzystanie z usługi zgodnie z prawem.</p>
+        <h2>Dostęp premium</h2>
+        <p>Dostęp premium odblokowuje płatne funkcje widoczne w aplikacji lub na stronie z cennikiem. Dostępne funkcje mogą się zmieniać w miarę ulepszania produktu, ale aktywni subskrybenci będą nadal otrzymywać dostęp do płatnego doświadczenia Aliolo przez cały ważny okres subskrypcji.</p>
+        <h2>Rozliczenia i odnowienie</h2>
+        <p>Subskrypcje odnawiają się automatycznie, chyba że zostaną anulowane przed końcem bieżącego okresu rozliczeniowego. Ceny, częstotliwość rozliczeń, podatki, przeliczenie waluty lokalnej i zasady odnawiania są wyświetlane przy kasie i mogą się różnić w zależności od kanału zakupu, regionu, platformy lub aktywnej oferty.</p>
+        <div class="notice"><strong>Uwaga dotycząca wiosła:</strong> W przypadku zakupów internetowych nasz proces zamówienia może być prowadzony przez Paddle.com. Paddle.com jest zarejestrowanym sprzedawcą tych zamówień i zapewnia obsługę klienta związaną z płatnościami, obsługę podatkową i przetwarzanie zwrotów.</div>
+        <h2>Anulowanie</h2>
+        <p>Możesz anulować zgodnie z zasadami kanału zakupu, z którego korzystałeś. Anulowanie uniemożliwia przyszłe odnowienie. O ile kanał zakupu nie określi inaczej, dostęp płatny pozostaje dostępny do końca bieżącego okresu rozliczeniowego.</p>
+        <h2>Zwroty pieniędzy</h2>
+        <p>Zwroty środków są realizowane zgodnie z naszymi <a href="/refund.html">Polityka zwrotów</a>, regulamin kanału zakupów oraz obowiązujące prawo konsumenckie. Zakupy w sklepie z aplikacjami są zwykle obsługiwane przez odpowiedni sklep z aplikacjami.</p>
+        <h2>Dopuszczalne użycie</h2>
+        <p>Nie możesz nadużywać Aliolo, ingerować w usługę, podejmować prób nieautoryzowanego dostępu, wycinać lub kopiować treści na dużą skalę, dokonywać inżynierii wstecznej chronionych części aplikacji, przesyłać materiałów niezgodnych z prawem ani korzystać z usługi w sposób szkodzący innym użytkownikom lub Aliolo.</p>
+        <h2>Treść i dostępność</h2>
+        <p>Aliolo może aktualizować, dodawać, usuwać lub reorganizować tematy, karty, funkcje i projekty. Naszym celem jest zapewnienie niezawodności usługi, ale na dostępność może wpływać konserwacja, dostawcy zewnętrzni, problemy z siecią lub zmiany produktu.</p>
+        <h2>Zastrzeżenie i odpowiedzialność</h2>
+        <p>Aliolo jest narzędziem edukacyjnym i wspierającym naukę. Nie gwarantujemy konkretnych wyników w nauce, egzaminach, zawodowych lub finansowych. W maksymalnym zakresie dozwolonym przez prawo Aliolo jest objęte gwarancją bez gwarancji wykraczających poza te wymagane przez obowiązujące prawo.</p>
+        <h2>Zmiany niniejszych Warunków</h2>
+        <p>Możemy aktualizować niniejsze warunki, aby odzwierciedlić zmiany produktowe, prawne, rozliczeniowe lub operacyjne. Aktualna wersja jest publikowana na tej stronie.</p>
+    refund_title Polityka zwrotów Aliolo
+    refund_subtitle Jak działają zwroty kosztów, anulowania, obciążenia zwrotne i obsługa płatności w Aliolo Premium.
     refund_body|
-        <h2>Overview</h2>
-        <p>Aliolo Premium is a digital subscription. Because premium access can be activated immediately, purchases are generally final once the subscription is active and used, except where this policy, the purchase channel, or applicable law provides otherwise.</p>
-        <h2>7-Day Refund Window</h2>
-        <p>If you accidentally purchased a web subscription or have a technical issue that prevents you from using premium features, you may request a refund within 7 days of the initial purchase. Include the account email, order details, and a short description of the issue.</p>
-        <h2>No Prorated Mid-Cycle Refunds</h2>
-        <p>We do not generally provide prorated refunds for cancellations after the initial refund window. If you cancel after that period, you will normally keep premium access until the end of the paid billing period.</p>
-        <h2>Purchase Channel Rules</h2>
-        <p>Refunds for purchases made through Google Play or Apple App Store must usually be requested through the relevant app store. Those platforms apply their own refund rules and review process.</p>
-        <div class="notice"><strong>Paddle notice:</strong> For web orders, Paddle.com may act as Merchant of Record. Paddle handles payment-related customer service, tax handling, and returns processing for those orders.</div>
-        <h2>How to Request a Refund</h2>
-        <p>For web orders, contact Paddle buyer support using the order information from your receipt, or contact Aliolo support at <a href="mailto:vitalii@nohainc.com">vitalii@nohainc.com</a>. We may direct payment-specific requests to Paddle when Paddle is the Merchant of Record.</p>
-        <h2>Chargebacks and Abuse</h2>
-        <p>If a payment is reversed, disputed, refunded, or identified as fraudulent, Aliolo may suspend or remove premium access associated with that transaction.</p>
-    pricing_title Aliolo Premium Pricing
-    pricing_subtitle Simple subscription options for unlocking the full Aliolo visual learning experience.
+        <h2>Przegląd</h2>
+        <p>Aliolo Premium to subskrypcja cyfrowa. Ponieważ dostęp premium można aktywować natychmiast, zakupy są zazwyczaj ostateczne po aktywowaniu i wykorzystaniu subskrypcji, chyba że niniejsza polityka, kanał zakupu lub obowiązujące prawo stanowią inaczej.</p>
+        <h2>7-dniowy okres zwrotu pieniędzy</h2>
+        <p>Jeśli przypadkowo kupiłeś subskrypcję internetową lub masz problem techniczny, który uniemożliwia korzystanie z funkcji premium, możesz poprosić o zwrot pieniędzy w ciągu 7 dni od pierwszego zakupu. Dołącz adres e-mail konta, szczegóły zamówienia i krótki opis problemu.</p>
+        <h2>Brak proporcjonalnych zwrotów w połowie cyklu</h2>
+        <p>Generalnie nie zapewniamy proporcjonalnych zwrotów kosztów w przypadku anulowania rezerwacji po upływie początkowego okna zwrotu. Jeśli anulujesz subskrypcję po tym okresie, zazwyczaj zachowasz dostęp premium do końca opłaconego okresu rozliczeniowego.</p>
+        <h2>Zasady kanału zakupów</h2>
+        <p>O zwrot środków za zakupy dokonane w Google Play lub Apple App Store należy zazwyczaj ubiegać się w odpowiednim sklepie z aplikacjami. Platformy te stosują własne zasady zwrotów i proces przeglądu.</p>
+        <div class="notice"><strong>Uwaga dotycząca wiosła:</strong> W przypadku zamówień internetowych Paddle.com może działać jako zarejestrowany sprzedawca. Paddle zajmuje się obsługą klienta związaną z płatnościami, obsługą podatkową i przetwarzaniem zwrotów dla tych zamówień.</div>
+        <h2>Jak poprosić o zwrot pieniędzy</h2>
+        <p>W przypadku zamówień internetowych skontaktuj się z obsługą kupujących Paddle, korzystając z informacji o zamówieniu z paragonu, lub skontaktuj się z obsługą Aliolo pod adresem <a href="mailto:vitalii@nohainc.com">Vitalii@nohainc.com</a>. Możemy kierować żądania dotyczące płatności do firmy Paddle, jeśli Paddle jest zarejestrowanym sprzedawcą.</p>
+        <h2>Obciążenia zwrotne i nadużycia</h2>
+        <p>Jeśli płatność zostanie cofnięta, zakwestionowana, zwrócona lub uznana za fałszywą, Aliolo może zawiesić lub usunąć dostęp premium powiązany z tą transakcją.</p>
+    pricing_title Ceny premium Aliolo
+    pricing_subtitle Proste opcje subskrypcji umożliwiające odblokowanie pełnego wizualnego doświadczenia edukacyjnego Aliolo.
     pricing_body|
         <div class="plans">
         <section class="plan">
-        <span class="tag">Flexible</span>
-        <h2>Weekly</h2>
+        <span class="tag">Elastyczny</span>
+        <h2>Tygodnik</h2>
         <div class="price">$2.99</div>
-        <p>Per week. Useful for short-term studying, review, or exam preparation.</p>
+        <p>Za tydzień. Przydatne do krótkotrwałej nauki, powtórek lub przygotowań do egzaminu.</p>
         </section>
         <section class="plan">
-        <span class="tag">Popular</span>
-        <h2>Monthly</h2>
+        <span class="tag">Popularny</span>
+        <h2>Miesięczny</h2>
         <div class="price">$8.99</div>
-        <p>Per month. Best for consistent learning without a long commitment.</p>
+        <p>Na miesiąc. Najlepsze do konsekwentnej nauki bez długiego zaangażowania.</p>
         </section>
         <section class="plan">
-        <span class="tag">Best value</span>
-        <h2>Yearly</h2>
+        <span class="tag">Najlepsza wartość</span>
+        <h2>Rocznie</h2>
         <div class="price">$80.99</div>
-        <p>Per year. Lower effective monthly cost for long-term learners.</p>
+        <p>Na rok. Niższy efektywny miesięczny koszt dla osób uczących się długoterminowo.</p>
         </section>
         </div>
-        <h2>What Premium Includes</h2>
+        <h2>Co obejmuje Premium</h2>
         <ul>
-        <li>Full access to premium curated subjects and learning libraries.</li>
-        <li>Advanced spaced repetition and progress tracking features.</li>
-        <li>Custom flashcard, subject, folder, and collection creation where available.</li>
-        <li>Interactive learn and test modes, including autoplay settings.</li>
-        <li>Private learning organization features for personal study workflows.</li>
+        <li>Pełny dostęp do wybranych przedmiotów i bibliotek edukacyjnych.</li>
+        <li>Zaawansowane funkcje powtarzania w odstępach i śledzenia postępu.</li>
+        <li>Tworzenie niestandardowych fiszek, tematów, folderów i kolekcji, jeśli są dostępne.</li>
+        <li>Interaktywne tryby nauki i testowania, w tym ustawienia autoodtwarzania.</li>
+        <li>Funkcje organizacji nauki prywatnej umożliwiające przepływ pracy podczas nauki osobistej.</li>
         </ul>
-        <h2>Billing Details</h2>
-        <p>Prices are listed in USD for this public pricing page. Checkout may show local currency, taxes, and final billing details depending on your location, payment method, and purchase channel.</p>
-        <p>Subscriptions renew automatically until canceled. You can cancel according to the rules of the channel where you purchased. Access normally continues until the end of the paid billing period.</p>
-        <div class="notice"><strong>Paddle notice:</strong> Web orders may be processed by Paddle.com, our online reseller and Merchant of Record. Paddle may calculate and collect applicable taxes and provide payment-related buyer support.</div>
+        <h2>Szczegóły płatności</h2>
+        <p>Ceny na tej publicznej stronie z cenami podane są w USD. W przypadku płatności może zostać wyświetlona waluta lokalna, podatki i ostateczne szczegóły rozliczenia w zależności od Twojej lokalizacji, metody płatności i kanału zakupu.</p>
+        <p>Subskrypcje odnawiają się automatycznie do momentu anulowania. Możesz anulować zgodnie z zasadami kanału, na którym dokonałeś zakupu. Dostęp zwykle trwa do końca opłaconego okresu rozliczeniowego.</p>
+        <div class="notice"><strong>Uwaga dotycząca wiosła:</strong> Zamówienia internetowe mogą być przetwarzane przez Paddle.com, naszego sprzedawcę internetowego i zarejestrowanego sprzedawcę. Paddle może obliczać i pobierać obowiązujące podatki oraz zapewniać obsługę kupujących związaną z płatnościami.</div>
         <div class="comparison-card">
-        <h2>Free vs Premium Comparison</h2>
-        <p>This table matches the current app experience and makes the premium upgrade easier to evaluate at a glance.</p>
+        <h2>Porównanie bezpłatne i premium</h2>
+        <p>Ta tabela odpowiada bieżącemu doświadczeniu aplikacji i ułatwia ocenę aktualizacji premium na pierwszy rzut oka.</p>
         <table class="comparison-table" aria-label="Aliolo free and premium feature comparison">
         <thead>
         <tr>
-        <th>Feature</th>
-        <th>Free</th>
-        <th>Premium</th>
+        <th>Funkcja</th>
+        <th>Bezpłatny</th>
+        <th>Premia</th>
         </tr>
         </thead>
         <tbody>
         <tr>
-        <td>Full library</td>
+        <td>Pełna biblioteka</td>
         <td><span class="comparison-check">✓</span></td>
         <td><span class="comparison-check pro">✓</span></td>
         </tr>
         <tr>
-        <td>Spaced repetition</td>
+        <td>Powtarzanie w odstępach</td>
         <td><span class="comparison-cross">✕</span></td>
         <td><span class="comparison-check pro">✓</span></td>
         </tr>
         <tr>
-        <td>Creation</td>
+        <td>Tworzenie</td>
         <td><span class="comparison-cross">✕</span></td>
         <td><span class="comparison-check pro">✓</span></td>
         </tr>
         <tr>
-        <td>Testing</td>
+        <td>Testowanie</td>
         <td><span class="comparison-cross">✕</span></td>
         <td><span class="comparison-check pro">✓</span></td>
         </tr>
         <tr>
-        <td>Autoplay</td>
+        <td>Autoodtwarzanie</td>
         <td><span class="comparison-cross">✕</span></td>
         <td><span class="comparison-check pro">✓</span></td>
         </tr>
         <tr>
-        <td>Private mode</td>
+        <td>Tryb prywatny</td>
         <td><span class="comparison-cross">✕</span></td>
         <td><span class="comparison-check pro">✓</span></td>
         </tr>
         <tr>
-        <td>Customize</td>
+        <td>Dostosuj</td>
         <td><span class="comparison-cross">✕</span></td>
         <td><span class="comparison-check pro">✓</span></td>
         </tr>
         </tbody>
         </table>
-        <div class="comparison-note">Premium unlocks the full study workflow: adaptive review, creation tools, advanced testing, autoplay controls, private organization, and deeper personalization.</div>
+        <div class="comparison-note">Premium odblokowuje pełny przebieg badania: recenzję adaptacyjną, narzędzia do tworzenia, zaawansowane testowanie, kontrolę autoodtwarzania, organizację prywatną i głębszą personalizację.</div>
         </div>
-        <h2>Platform Price Differences</h2>
-        <p>Prices and offers may vary between web checkout, Google Play, Apple App Store, countries, currencies, and limited-time promotions. The final checkout screen controls the actual price and renewal terms for your purchase.</p>
-        <h2>Related Policies</h2>
-        <p>Before subscribing, review the <a href="/terms.html">Subscription Terms</a>, <a href="/refund.html">Refund Policy</a>, and <a href="/privacy.html">Privacy Policy</a>.</p>
-    checkout_title Aliolo Checkout
-    checkout_subtitle Secure checkout for Aliolo Premium subscriptions.
-    checkout_eyebrow Secure checkout
-    checkout_h1 Complete your Aliolo Premium purchase.
-    checkout_status_title Waiting for checkout
-    checkout_status_desc If you opened this page from Aliolo billing, the payment form should appear automatically.
-    checkout_payment_support_title Payment support
-    checkout_payment_support_desc Web payments are processed by Paddle.com as Merchant of Record.
-    checkout_billing_title Subscription billing
-    checkout_billing_desc Aliolo Premium renews automatically until canceled. You can cancel later through Paddle or your Aliolo account.
-    checkout_policy_title Need policy details?
-    checkout_policy_desc Review pricing, subscription terms, privacy, and refund information before completing your purchase.
-    landing_meta_title Aliolo | Visual Flashcards, Spaced Repetition, and Smarter Study Workflows
-    landing_meta_desc Aliolo helps learners master languages, science, anatomy, exam prep, and curated subjects with visual flashcards, spaced repetition, and interactive test modes.
-    landing_nav_features Features
-    landing_nav_how_it_works How it works
-    landing_nav_pricing Pricing
-    landing_nav_login Log in
-    landing_nav_cta Sign up
-    landing_hero_eyebrow Visual learning platform
-    landing_hero_h1 Learn visually. Master permanently.
-    landing_hero_p Turn images, audio, video, and text into structured flashcards. Learn with context, review at the right time, and test what you can truly recall.
-    landing_hero_btn_primary Create free account
-    landing_hero_btn_secondary Log in
-    landing_hero_proof_1_title Visual
-    landing_hero_proof_1_desc Image, audio, and video friendly flashcards for recognition-heavy learning.
-    landing_hero_proof_2_title Adaptive
-    landing_hero_proof_2_desc Spaced repetition and progress tracking to revisit material at the right time.
-    landing_hero_proof_3_title Structured
-    landing_hero_proof_3_desc Pillars, folders, subjects, and collections that scale beyond a simple deck.
-    landing_hero_preview_title Recognition before recall
-    landing_hero_preview_desc A real Aliolo lesson using image, text, audio, and guided navigation.
-    landing_hero_preview_chip Learn mode
-    landing_features_h2 Everything you need to turn exposure into recall.
-    landing_features_p Build recognition with rich media, keep larger libraries organized, and revisit material before it fades.
-    landing_feature_1_title Learn with more than text
-    landing_feature_1_desc Use images, audio, video, and flexible prompts when the subject depends on recognition and context.
-    landing_feature_2_title Review before it fades
-    landing_feature_2_desc Spaced repetition and progress tracking bring important material back at a useful time.
-    landing_feature_3_title Grow beyond one deck
-    landing_feature_3_desc Organize curated or custom material into pillars, folders, subjects, and collections that stay usable.
-    landing_workflow_h2 A clear path from "I should study" to "I know this."
-    landing_workflow_p One focused workflow keeps the next step obvious without flattening every subject into the same kind of card.
-    landing_step_1_title Choose the right material
-    landing_step_1_desc Start with a curated subject or build a focused library for an exam, language, profession, or personal goal.
-    landing_step_2_title Learn with context
-    landing_step_2_desc Build recognition through guided cards and available media before asking your memory to work unaided.
-    landing_step_3_title Test real recall
-    landing_step_3_desc Move into focused testing to expose weak spots, reinforce retrieval, and make progress measurable.
-    landing_pricing_h2 Start free. Upgrade when you need the full workflow.
-    landing_pricing_p Create an account without payment. Premium adds spaced repetition, creation, testing, autoplay, private organization, and deeper customization.
-    plan_weekly_title Weekly Access
-    plan_weekly_tagline Best for quick goals
-    landing_plan_weekly_desc Good for short-term pushes, quick reviews, or exam-week prep.
-    landing_plan_weekly_item_1 Short commitment window
-    landing_plan_weekly_item_2 Fast way to try the premium workflow
-    landing_plan_weekly_item_3 Renews automatically until canceled
-    landing_plan_weekly_btn View plan details
-    plan_monthly_title Monthly Access
-    plan_monthly_tagline Most popular choice
-    landing_plan_monthly_desc Balanced access for students building a steady learning habit.
-    landing_plan_monthly_item_1 Best for regular weekly study
-    landing_plan_monthly_item_2 Enough time to organize larger subject libraries
-    landing_plan_monthly_item_3 Renews automatically until canceled
-    landing_plan_monthly_btn View plan details
-    plan_yearly_title Yearly Access
-    plan_yearly_tagline Save 33% per month
-    landing_plan_yearly_desc Lowest effective monthly cost for learners who want a durable study system.
-    landing_plan_yearly_item_1 Ideal for long-term language and professional study
-    landing_plan_yearly_item_2 Lower cost over time
-    landing_plan_yearly_item_3 Renews automatically until canceled
-    landing_plan_yearly_btn View plan details
-    landing_trust_h2 Study with clarity. Subscribe with confidence.
-    landing_trust_p Know what is free, what Premium adds, and where to get help before you commit.
-    landing_trust_item_1_title Free entry:
-    landing_trust_item_1_desc Create an account and explore available learning material without entering payment details.
-    landing_trust_item_2_title Transparent terms:
-    landing_trust_item_2_desc Pricing, renewal, cancellation, privacy, and refund information are available before checkout.
-    landing_trust_item_3_title Human support:
-    landing_trust_item_3_desc Contact vitalii@nohainc.com when you need help.
-    landing_faq_1_q Do I need to create every card myself?
-    landing_faq_1_a No. Start with available curated subjects, then create your own material when your goal becomes more specific.
-    landing_faq_2_q Can I use Aliolo for free?
-    landing_faq_2_a Yes. A free account provides an entry point to the library; the pricing page explains which advanced workflows require Premium.
-    landing_faq_3_q Can I cancel a subscription?
-    landing_faq_3_a Yes. Subscriptions can be canceled through the channel where they were purchased, with access normally continuing through the paid period.
-    landing_final_h2 Ready to make your next study session count?
-    landing_final_p Create a free account, choose a subject, and start learning visually.
-    landing_final_btn Create free account
-    landing_footer_desc Visual flashcards, spaced repetition, flexible subject organization, and focused testing workflows for learners who want structure without friction.
-    landing_footer_mor Merchant of Record:
-    landing_footer_mor_desc Our order process may be conducted by Paddle.com, our online reseller and Merchant of Record for web orders. Paddle handles payment processing, payment-related customer service, and returns for those orders.
+        <h2>Różnice cen platform</h2>
+        <p>Ceny i oferty mogą się różnić w zależności od płatności internetowej, Google Play, Apple App Store, krajów, walut i promocji ograniczonych czasowo. Ostatni ekran kasy kontroluje rzeczywistą cenę i warunki odnowienia Twojego zakupu.</p>
+        <h2>Powiązane zasady</h2>
+        <p>Zanim zasubskrybujesz, przejrzyj <a href="/terms.html">Warunki subskrypcji</a>, <a href="/refund.html">Polityka zwrotów</a>, I <a href="/privacy.html">Polityka prywatności</a>.</p>
+    checkout_title Kasa Aliolo
+    checkout_subtitle Bezpieczna płatność za subskrypcje Aliolo Premium.
+    checkout_eyebrow Bezpieczna płatność
+    checkout_h1 Dokończ zakup Aliolo Premium.
+    checkout_status_title Czekam na kasę
+    checkout_status_desc Jeśli otworzyłeś tę stronę z rozliczeń Aliolo, formularz płatności powinien pojawić się automatycznie.
+    checkout_payment_support_title Wsparcie płatności
+    checkout_payment_support_desc Płatności internetowe są przetwarzane przez Paddle.com jako zarejestrowanego sprzedawcę.
+    checkout_billing_title Rozliczanie subskrypcji
+    checkout_billing_desc Aliolo Premium odnawia się automatycznie do momentu anulowania. Możesz anulować później za pośrednictwem Paddle lub swojego konta Aliolo.
+    checkout_policy_title Potrzebujesz szczegółów zasad?
+    checkout_policy_desc Przed sfinalizowaniem zakupu przejrzyj ceny, warunki subskrypcji, prywatność i informacje dotyczące zwrotów.
+    landing_meta_title Aliolo | Wizualne fiszki, powtarzanie w odstępach czasu i inteligentniejszy tok pracy
+    landing_meta_desc Aliolo pomaga uczniom opanować języki, przedmioty ścisłe, anatomię, przygotowania do egzaminów i wybrane przedmioty dzięki wizualnym fiszkom, powtórkom w odstępach i interaktywnym trybom testów.
+    landing_nav_features Cechy
+    landing_nav_how_it_works Jak to działa
+    landing_nav_learning Nauka
+    landing_nav_pricing Wycena
+    landing_nav_login Zaloguj się
+    landing_nav_cta Utwórz darmowe konto
+    landing_hero_eyebrow Platforma do nauki wizualnej
+    landing_hero_h1 Ucz się wizualnie. Mistrz na stałe.
+    landing_hero_p Zamień obrazy, dźwięk, wideo i tekst w uporządkowane fiszki. Ucz się z kontekstem, przeglądaj we właściwym czasie i testuj to, co naprawdę pamiętasz.
+    landing_hero_btn_primary Utwórz darmowe konto
+    landing_hero_btn_secondary Zaloguj się
+    landing_hero_proof_1_title Wizualny
+    landing_hero_proof_1_desc Fiszki przyjazne obrazom, dźwiękom i wideo do nauki wymagającej rozpoznawania.
+    landing_hero_proof_2_title Adaptacyjny
+    landing_hero_proof_2_desc Rozłożone powtórzenia i śledzenie postępów, aby ponownie przeglądać materiał we właściwym czasie.
+    landing_hero_proof_3_title Zbudowany
+    landing_hero_proof_3_desc Filary, foldery, tematy i kolekcje, które wykraczają poza zwykłą talię.
+    landing_hero_preview_title Rozpoznanie przed przypomnieniem
+    landing_hero_preview_desc Prawdziwa lekcja Aliolo z wykorzystaniem obrazu, tekstu, dźwięku i nawigacji z przewodnikiem.
+    landing_hero_preview_chip Tryb nauki
+    landing_float_see_title Zobacz to
+    landing_float_see_desc Zacznij od karty bogatej w obrazy.
+    landing_float_hear_title Usłysz to
+    landing_float_hear_desc Dźwięk pomaga zapamiętać nazwy i wymowę.
+    landing_float_recall_title Przypomnij sobie to
+    landing_float_recall_desc Gdy będziesz gotowy, przetestuj bez podpowiedzi.
+    landing_float_review_title Przejrzyj to
+    landing_float_review_desc Przynieś karty z powrotem w odpowiednim momencie.
+    landing_mock_question Jaka rasa jest pokazana?
+    landing_mock_answer Akita Inu
+    landing_mock_context Rasa psów japońskich · rozpoznawanie wizualne
+    landing_mock_audio_label Próbka dźwięku
+    landing_features_h2 Wszystko, czego potrzebujesz, aby zamienić ekspozycję w przypomnienie.
+    landing_features_p Buduj rozpoznawalność dzięki bogatym mediom, organizuj większe biblioteki i wracaj do materiałów, zanim znikną.
+    landing_feature_1_title Ucz się nie tylko tekstem
+    landing_feature_1_desc Jeśli temat zależy od rozpoznania i kontekstu, należy używać obrazów, plików audio, wideo i elastycznych podpowiedzi.
+    landing_feature_2_title Przejrzyj, zanim zniknie
+    landing_feature_2_desc Powtarzanie w odstępach czasu i śledzenie postępów przywracają ważny materiał w przydatnym momencie.
+    landing_feature_3_title Rośnij poza jedną talią
+    landing_feature_3_desc Organizuj wybrane lub niestandardowe materiały w filary, foldery, tematy i kolekcje, które pozostają użyteczne.
+    landing_workflow_h2 Jasna ścieżka od „powinienem się uczyć” do „wiem to”.
+    landing_workflow_p Dzięki skoncentrowanemu przepływowi pracy następny krok jest oczywisty, bez spłaszczania każdego tematu w tym samym rodzaju karty.
+    landing_step_1_title Wybierz odpowiedni materiał
+    landing_step_1_desc Zacznij od wybranego przedmiotu lub zbuduj bibliotekę ukierunkowaną na egzamin, język, zawód lub cel osobisty.
+    landing_step_2_title Ucz się z kontekstem
+    landing_step_2_desc Zbuduj rozpoznawalność za pomocą kart z przewodnikiem i dostępnych mediów, zanim poprosisz swoją pamięć o samodzielną pracę.
+    landing_step_3_title Przetestuj prawdziwą pamięć
+    landing_step_3_desc Przejdź do ukierunkowanych testów, aby ujawnić słabe punkty, usprawnić wyszukiwanie i sprawić, że postęp będzie mierzalny.
+    landing_flow_see_title Widzieć
+    landing_flow_see_desc Zacznij od karty wizualnej, która daje mózgowi mocny haczyk.
+    landing_flow_understand_title Zrozumieć
+    landing_flow_understand_desc Dodaj kontekst, etykiety, wymowę, przykłady i znaczenie.
+    landing_flow_recall_title Przypomnienie sobie czegoś
+    landing_flow_recall_desc Przejdź od rozpoznawania do aktywnego testowania i prawdziwej pamięci.
+    landing_flow_review_title Recenzja
+    landing_flow_review_desc Wróć do właściwych kart, zanim wiedza zniknie.
+    landing_demo_media_h3 Obrazy, dźwięk, wideo i tekst współdziałają ze sobą.
+    landing_media_image Monit o obraz
+    landing_media_audio Wymowa dźwiękowa
+    landing_media_video Kontekst wideo
+    landing_media_text Wyjaśnienie tekstu
+    landing_demo_library_h3 Więcej niż jeden pokład.
+    landing_library_subject Przedmiot anatomii
+    landing_library_cards Karty mięśni
+    landing_library_collection Kolekcja egzaminacyjna
+    landing_pillars_h2 Poznaj naukę wizualną w każdym filarze.
+    landing_pillars_p Prawdziwe filary edukacyjne Aliolo pokazują odwiedzającym, co aplikacja może organizować i uczyć.
+    landing_pillar_education_title Edukacja
+    landing_pillar_education_desc Alfabety, liczby, kształty i podstawy egzaminów.
+    landing_pillar_nature_title Zwierzęta i przyroda
+    landing_pillar_nature_desc Zwierzęta, owady, rośliny i naturalne wzory.
+    landing_pillar_health_title Ludzkie ciało i zdrowie
+    landing_pillar_health_desc Anatomia, narządy, układy ciała i dobre samopoczucie.
+    landing_pillar_world_title Świat i geografia
+    landing_pillar_world_desc Kraje, flagi, punkty orientacyjne, mapy i miejsca.
+    landing_pillar_culture_title Sztuka i kultura
+    landing_pillar_culture_desc Malarstwo, muzyka, architektura, jedzenie i historia.
+    landing_pillar_sports_title Sport i rekreacja
+    landing_pillar_sports_desc Tematyka gier, sportu, ruchu i rekreacji.
+    landing_pillar_engineering_title Inżynieria i transport
+    landing_pillar_engineering_desc Pojazdy, maszyny, narzędzia i systemy inżynieryjne.
+    landing_pillar_more_title I więcej
+    landing_pillar_more_desc Elastyczne tematy, które nie pasują gdzie indziej.
+    landing_pricing_h2 Zacznij bezpłatnie. Uaktualnij, gdy potrzebujesz pełnego przepływu pracy.
+    landing_pricing_p Utwórz konto bez płatności. Premium dodaje powtarzanie w odstępach czasu, tworzenie, testowanie, autoodtwarzanie, prywatną organizację i głębsze dostosowywanie.
+    plan_weekly_title Dostęp tygodniowy
+    plan_weekly_tagline Najlepszy do szybkich bramek
+    plan_monthly_title Dostęp miesięczny
+    plan_monthly_tagline Najpopularniejszy wybór
+    plan_yearly_title Dostęp roczny
+    plan_yearly_tagline Oszczędzaj 33% miesięcznie
+    landing_plan_weekly_desc Dobre do krótkotrwałych pobudek, szybkich powtórek lub przygotowań do tygodnia egzaminacyjnego.
+    landing_plan_weekly_item_1 Krótkie okno zobowiązań
+    landing_plan_weekly_item_2 Szybki sposób na wypróbowanie przepływu pracy premium
+    landing_plan_weekly_item_3 Odnawia się automatycznie do momentu anulowania
+    landing_plan_weekly_btn Zobacz szczegóły planu
+    landing_plan_monthly_desc Zrównoważony dostęp dla uczniów budujących stały nawyk uczenia się.
+    landing_plan_monthly_item_1 Najlepsze do regularnej cotygodniowej nauki
+    landing_plan_monthly_item_2 Wystarczająco dużo czasu na zorganizowanie większych bibliotek przedmiotowych
+    landing_plan_monthly_item_3 Odnawia się automatycznie do momentu anulowania
+    landing_plan_monthly_btn Zobacz szczegóły planu
+    landing_plan_yearly_desc Najniższy efektywny miesięczny koszt dla uczniów, którzy chcą trwałego systemu nauki.
+    landing_plan_yearly_item_1 Idealny do długoterminowej nauki języka i pracy zawodowej
+    landing_plan_yearly_item_2 Niższy koszt w czasie
+    landing_plan_yearly_item_3 Odnawia się automatycznie do momentu anulowania
+    landing_plan_yearly_btn Zobacz szczegóły planu
+    landing_trust_h2 Studiuj z jasnością. Subskrybuj bez obaw.
+    landing_trust_p Zanim podejmiesz decyzję, dowiedz się, co jest bezpłatne, co dodaje Premium i gdzie uzyskać pomoc.
+    landing_trust_item_1_title Wstęp bezpłatny:
+    landing_trust_item_1_desc Utwórz konto i przeglądaj dostępne materiały edukacyjne bez podawania szczegółów płatności.
+    landing_trust_item_2_title Przejrzyste warunki:
+    landing_trust_item_2_desc Informacje o cenach, odnowieniu, anulowaniu, prywatności i zwrotach pieniędzy są dostępne przed realizacją transakcji.
+    landing_trust_item_3_title Wsparcie ludzkie:
+    landing_trust_item_3_desc Jeśli potrzebujesz pomocy, skontaktuj się z Vitalii@nohainc.com.
+    landing_faq_1_q Czy muszę samodzielnie tworzyć każdą kartę?
+    landing_faq_1_a Nie. Zacznij od dostępnych wybranych tematów, a następnie utwórz własny materiał, gdy Twój cel stanie się bardziej szczegółowy.
+    landing_faq_2_q Czy mogę korzystać z Aliolo za darmo?
+    landing_faq_2_a Tak. Darmowe konto zapewnia punkt dostępu do biblioteki; strona z cenami wyjaśnia, które zaawansowane przepływy pracy wymagają wersji Premium.
+    landing_faq_3_q Czy mogę anulować subskrypcję?
+    landing_faq_3_a Tak. Subskrypcje można anulować za pośrednictwem kanału, w którym zostały zakupione, przy czym dostęp zwykle trwa przez cały płatny okres.
+    landing_final_h2 Gotowy, aby Twoja następna sesja studyjna się liczyła?
+    landing_final_p Utwórz bezpłatne konto, wybierz przedmiot i rozpocznij naukę wizualnie.
+    landing_final_btn Utwórz darmowe konto
+    landing_footer_desc Wizualne fiszki, powtarzanie w odstępach czasu, elastyczna organizacja przedmiotów i ukierunkowane przepływy pracy podczas testowania dla uczniów, którzy chcą struktury bez tarć.
+    landing_footer_mor Rekordowy sprzedawca:
+    landing_footer_mor_desc Nasz proces składania zamówień może być prowadzony przez Paddle.com, naszego sprzedawcę internetowego i zarejestrowanego sprzedawcę w przypadku zamówień internetowych. Paddle obsługuje przetwarzanie płatności, obsługę klienta związaną z płatnościami i zwroty tych zamówień.

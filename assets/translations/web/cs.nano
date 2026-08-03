@@ -175,6 +175,7 @@
     landing_meta_desc Aliolo pomáhá studentům zvládnout jazyky, vědu, anatomii, přípravu na zkoušky a vybrané předměty pomocí vizuálních karet, opakování s mezerami a interaktivních testovacích režimů.
     landing_nav_features Vlastnosti
     landing_nav_how_it_works Jak to funguje
+    landing_nav_learning Učení
     landing_nav_pricing Ceny
     landing_nav_login Přihlaste se
     landing_nav_cta Vytvořte si bezplatný účet
@@ -192,6 +193,18 @@
     landing_hero_preview_title Rozpoznání před odvoláním
     landing_hero_preview_desc Skutečná lekce Aliolo využívající obrázky, text, zvuk a navigaci s průvodcem.
     landing_hero_preview_chip Režim učení
+    landing_float_see_title Podívejte se
+    landing_float_see_desc Začněte s kartou bohatou na obrázky.
+    landing_float_hear_title Slyšte to
+    landing_float_hear_desc Zvuk pomáhá při držení jmen a výslovnosti.
+    landing_float_recall_title Připomeň si to
+    landing_float_recall_desc Až budete připraveni, vyzkoušejte bez nápověd.
+    landing_float_review_title Zkontrolujte to
+    landing_float_review_desc Vraťte karty ve správnou chvíli.
+    landing_mock_question Jaké plemeno je zobrazeno?
+    landing_mock_answer Akita Inu
+    landing_mock_context Japonské plemeno psa · vizuální rozpoznávání
+    landing_mock_audio_label Zvuková ukázka
     landing_features_h2 Vše, co potřebujete k přeměně expozice na vyvolání.
     landing_features_p Vytvářejte rozpoznávání pomocí multimédií, udržujte pořádek větších knihoven a znovu si prohlédněte materiál, než zmizí.
     landing_feature_1_title Učte se více než jen textem
@@ -208,6 +221,41 @@
     landing_step_2_desc Vybudujte rozpoznávání pomocí naváděných karet a dostupných médií, než požádáte svou paměť, aby pracovala bez pomoci.
     landing_step_3_title Otestujte skutečnou paměť
     landing_step_3_desc Přejděte do cíleného testování, abyste odhalili slabá místa, posílili vyhledávání a zajistili měřitelný pokrok.
+    landing_flow_see_title Vidět
+    landing_flow_see_desc Začněte s vizuální kartou, která dává mozku silný háček.
+    landing_flow_understand_title Pochopit
+    landing_flow_understand_desc Přidejte kontext, popisky, výslovnost, příklady a význam.
+    landing_flow_recall_title Odvolání
+    landing_flow_recall_desc Přejděte od rozpoznávání k aktivnímu testování a skutečné paměti.
+    landing_flow_review_title Recenze
+    landing_flow_review_desc Vraťte se ke správným kartám, než znalosti zmizí.
+    landing_demo_media_h3 Obrázky, zvuk, video a text spolupracují.
+    landing_media_image Obrazová výzva
+    landing_media_audio Zvuková výslovnost
+    landing_media_video Kontext videa
+    landing_media_text Vysvětlení textu
+    landing_demo_library_h3 Více než jedna paluba.
+    landing_library_subject Předmět anatomie
+    landing_library_cards Svalové karty
+    landing_library_collection Sbírka zkoušek
+    landing_pillars_h2 Prozkoumejte vizuální učení napříč všemi pilíři.
+    landing_pillars_p Skutečné pilíře učení Aliolo návštěvníkům ukazují, co může aplikace organizovat a učit.
+    landing_pillar_education_title Školství
+    landing_pillar_education_desc Abecedy, čísla, tvary a základy zkoušek.
+    landing_pillar_nature_title Zvířata a příroda
+    landing_pillar_nature_desc Zvířata, hmyz, rostliny a přírodní vzory.
+    landing_pillar_health_title Lidské tělo a zdraví
+    landing_pillar_health_desc Anatomie, orgány, tělesné systémy a pohoda.
+    landing_pillar_world_title Svět a geografie
+    landing_pillar_world_desc Země, vlajky, orientační body, mapy a místa.
+    landing_pillar_culture_title Umění a kultura
+    landing_pillar_culture_desc Obrazy, hudba, architektura, jídlo a historie.
+    landing_pillar_sports_title Sport a rekreace
+    landing_pillar_sports_desc Témata her, sportů, pohybu a rekreace.
+    landing_pillar_engineering_title Strojírenství a doprava
+    landing_pillar_engineering_desc Vozidla, stroje, nástroje a technické systémy.
+    landing_pillar_more_title A další
+    landing_pillar_more_desc Flexibilní témata, která se jinde nevejdou.
     landing_pricing_h2 Začněte zdarma. Upgradujte, když potřebujete úplný pracovní postup.
     landing_pricing_p Vytvořte si účet bez platby. Premium přidává opakované opakování, vytváření, testování, automatické přehrávání, soukromou organizaci a hlubší přizpůsobení.
     plan_weekly_title Týdenní přístup

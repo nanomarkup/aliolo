@@ -175,6 +175,7 @@
     landing_meta_desc Tinutulungan ng Aliolo ang mga mag-aaral na makabisado ang mga wika, agham, anatomy, paghahanda sa pagsusulit, at mga na-curate na paksa gamit ang mga visual flashcard, spaced repetition, at interactive na mga mode ng pagsubok.
     landing_nav_features Mga tampok
     landing_nav_how_it_works Paano ito gumagana
+    landing_nav_learning Pag-aaral
     landing_nav_pricing Pagpepresyo
     landing_nav_login Mag-log in
     landing_nav_cta Lumikha ng libreng account
@@ -192,6 +193,18 @@
     landing_hero_preview_title Pagkilala bago recall
     landing_hero_preview_desc Isang tunay na aralin sa Aliolo gamit ang imahe, text, audio, at guided navigation.
     landing_hero_preview_chip Learn mode
+    landing_float_see_title Tingnan mo
+    landing_float_see_desc Magsimula sa isang card na mayaman sa imahe.
+    landing_float_hear_title Pakinggan mo
+    landing_float_hear_desc Audio helps names and pronunciation stick.
+    landing_float_recall_title Alalahanin ito
+    landing_float_recall_desc Subukan nang walang pahiwatig kapag handa na.
+    landing_float_review_title Suriin ito
+    landing_float_review_desc Ibalik ang mga card sa tamang sandali.
+    landing_mock_question Anong lahi ang ipinapakita?
+    landing_mock_answer Akita Inu
+    landing_mock_context Japanese dog breed · visual recognition
+    landing_mock_audio_label Sampol ng audio
     landing_features_h2 Lahat ng kailangan mo para gawing recall ang exposure.
     landing_features_p Bumuo ng pagkilala gamit ang rich media, panatilihing maayos ang mas malalaking library, at muling bisitahin ang materyal bago ito maglaho.
     landing_feature_1_title Matuto nang higit pa sa text
@@ -208,6 +221,41 @@
     landing_step_2_desc Bumuo ng pagkilala sa pamamagitan ng mga guided card at available na media bago hilingin sa iyong memorya na gumana nang walang tulong.
     landing_step_3_title Subukan ang totoong recall
     landing_step_3_desc Lumipat sa nakatutok na pagsubok upang ilantad ang mga mahihinang lugar, palakasin ang pagkuha, at gawing nasusukat ang pag-unlad.
+    landing_flow_see_title Tingnan mo
+    landing_flow_see_desc Magsimula sa isang visual card na nagbibigay sa utak ng isang malakas na kawit.
+    landing_flow_understand_title Intindihin
+    landing_flow_understand_desc Magdagdag ng konteksto, mga label, pagbigkas, mga halimbawa, at kahulugan.
+    landing_flow_recall_title Alalahanin
+    landing_flow_recall_desc Lumipat mula sa pagkilala sa aktibong pagsubok at tunay na memorya.
+    landing_flow_review_title Balik-aral
+    landing_flow_review_desc Bumalik sa mga tamang card bago mawala ang kaalaman.
+    landing_demo_media_h3 Gumagana ang mga larawan, audio, video, at teksto.
+    landing_media_image Prompt ng larawan
+    landing_media_audio Audio na pagbigkas
+    landing_media_video Konteksto ng video
+    landing_media_text Pagpapaliwanag ng teksto
+    landing_demo_library_h3 Higit sa isang deck.
+    landing_library_subject Paksa ng anatomya
+    landing_library_cards Mga card ng kalamnan
+    landing_library_collection Koleksyon ng pagsusulit
+    landing_pillars_h2 Galugarin ang visual na pag-aaral sa bawat haligi.
+    landing_pillars_p Ang tunay na mga haligi ng pag-aaral ni Aliolo ay nagpapakita sa mga bisita kung ano ang maaaring ayusin at ituro ng app.
+    landing_pillar_education_title Edukasyon
+    landing_pillar_education_desc Mga alpabeto, numero, hugis, at pundasyon ng pagsusulit.
+    landing_pillar_nature_title Mga Hayop at Kalikasan
+    landing_pillar_nature_desc Mga hayop, insekto, halaman, at natural na pattern.
+    landing_pillar_health_title Katawan at Kalusugan ng Tao
+    landing_pillar_health_desc Anatomy, mga organo, mga sistema ng katawan, at kagalingan.
+    landing_pillar_world_title World & Geography
+    landing_pillar_world_desc Mga bansa, watawat, palatandaan, mapa, at lugar.
+    landing_pillar_culture_title Sining at Kultura
+    landing_pillar_culture_desc Mga pintura, musika, arkitektura, pagkain, at kasaysayan.
+    landing_pillar_sports_title Palakasan at Libangan
+    landing_pillar_sports_desc Mga paksa ng laro, palakasan, paggalaw, at libangan.
+    landing_pillar_engineering_title Engineering at Transportasyon
+    landing_pillar_engineering_desc Mga sasakyan, makina, kasangkapan, at engineered system.
+    landing_pillar_more_title At higit pa
+    landing_pillar_more_desc Mga flexible na paksa na hindi akma nang maayos sa ibang lugar.
     landing_pricing_h2 Magsimula nang libre. Mag-upgrade kapag kailangan mo ang buong daloy ng trabaho.
     landing_pricing_p Gumawa ng account nang walang bayad. Ang Premium ay nagdaragdag ng spaced repetition, paggawa, pagsubok, autoplay, pribadong organisasyon, at mas malalim na pag-customize.
     plan_weekly_title Lingguhang Access
