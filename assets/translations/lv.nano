@@ -91,6 +91,7 @@
     audio_playing Audio Playing
     author Author
     autoplay Automātiska atskaņošana
+    available_cards Pieejamās kartītes
     back Atpakaļ
     back_to_login Back to Login
     back_to_plans Back to plans
@@ -117,6 +118,8 @@
     cards_label cards
     cards_per_day cards per day
     cards_per_session cards per session
+    cards_to_learn Apgūstamās kartītes
+    cards_to_test Testējamās kartītes
     change_avatar Change Avatar
     change_password Mainīt paroli
     check_your_email_for_code Pārbaudiet kodu, lai atrastu savu e-pastu
@@ -444,6 +447,7 @@
     learn_session_size Learn Session Size
     learn_session_size_desc Vienā mācību sesijā ieviešamo jauno karšu skaits.
     learning_session_complete_description Lielisks darbs! Jūs pabeidzāt šo mācību sesiju. Jūsu progress ir saglabāts.
+    learning_session_setup Mācību sesijas iestatīšana
     left_arrow Left Arrow
     level Level
     level_range Must be between 1 and 20
@@ -487,6 +491,7 @@
     most_popular_choice Populārākā izvēle
     multi_lang_answers Multi-language Answers
     multi_lang_prompts Multi-language Prompts
+    multiple_choice_answers Atbilžu varianti
     my_position My Position
     name Name
     names_descriptions Names & Descriptions
@@ -673,15 +678,22 @@
     show_documentation_btn Rādīt dokumentācijas pogu
     show_documentation_btn_desc Programmu joslā parādiet dokumentācijas pogu.
     show_fake_users Rādīt viltus lietotājus
+    show_learn_setup Rādīt mācību iestatīšanas ekrānu
+    show_learn_setup_desc Konfigurēt iespējas pirms mācīšanās
     show_less_languages Show less languages
+    show_test_setup Rādīt testa iestatīšanas ekrānu
+    show_test_setup_desc Konfigurēt iespējas pirms testa
     sidebar_left Sidebar on the left
     sidebar_left_desc Move testing controls to the left side of the screen.
     silver SILVER
+    skip_setup_next_time Nākamreiz izlaist iestatīšanu
     social Social
     sort_by Sort by
     sound_effects Sound Effects
     sound_effects_desc Enable audio feedback for correct and wrong answers.
     source Avots
+    start_learning Sākt mācīšanos
+    start_test Sākt testu
     status Statuss
     status_closed Slēgts
     status_open Atvērts
@@ -705,6 +717,7 @@
     system System
     tap_to_replay Tap to Replay
     technical_context TEHNISKAIS KONTEKSTS
+    test_mode Testa režīms
     test_mode_desc Challenge yourself with a quiz
     test_mode_label Test Mode
     test_mode_title Test
@@ -713,6 +726,7 @@
     testing Testing
     testing_mode Pārbaudes režīms
     testing_section Testing Settings
+    testing_session_setup Testa sesijas iestatīšana
     text Teksts
     the_science THE SCIENCE
     theme_color App Theme Color

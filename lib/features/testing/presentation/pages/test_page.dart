@@ -23,6 +23,7 @@ import 'package:aliolo/core/widgets/window_controls.dart';
 import 'package:aliolo/core/di/service_locator.dart';
 import 'package:aliolo/data/services/math_service.dart';
 import 'package:aliolo/features/settings/presentation/pages/premium_upgrade_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:aliolo/features/testing/domain/test_mode.dart';
 import 'package:aliolo/features/testing/presentation/widgets/session_completion_window.dart';
 
@@ -54,6 +55,11 @@ class _TestPageState extends State<TestPage> {
   final _progressService = getIt<ProgressService>();
   final _subjectUsageService = getIt<SubjectUsageService>();
   final _soundService = getIt<SoundService>();
+
+  bool _hasStarted = false;
+  int _chosenSessionSize = 10;
+  int _chosenOptionsCount = 4;
+  bool _skipSetupNextTime = false;
 
   late List<SubjectCard> _sessionQueue;
   late SubjectCard _currentSubjectCard;
@@ -119,6 +125,14 @@ class _TestPageState extends State<TestPage> {
         _authService.currentUser?.testAutoplayDelaySeconds ?? 1;
     _selectedMode = parseTestModeChoice(_authService.currentUser?.testMode);
 
+    final defaultSize = _authService.currentUser?.testSessionSize ?? 10;
+    _chosenSessionSize = defaultSize.clamp(1, widget.sessionCards.length);
+
+    final defaultOptionsCount = _authService.currentUser?.optionsCount ?? 4;
+    _chosenOptionsCount = defaultOptionsCount.clamp(2, 6);
+
+    _subject = widget.sessionCards.first.subject;
+
     _audioPlayer.onPlayerComplete.listen((_) {
       if (_optionAudioAutoplayGeneration == _optionAutoplayGeneration) {
         _optionAudioAutoplayGeneration = -1;
@@ -126,9 +140,53 @@ class _TestPageState extends State<TestPage> {
       }
     });
 
-    _sessionQueue = List.from(widget.sessionCards)..shuffle();
+    _loadShowLobbyPreference();
+  }
+
+  Future<void> _loadShowLobbyPreference() async {
+    final prefs = await SharedPreferences.getInstance();
+    final showLobby = prefs.getBool('show_test_lobby') ?? true;
+    if (!showLobby) {
+      _startSession();
+    }
+  }
+
+  void _startSession() {
+    final shuffled = List<SubjectCard>.from(widget.sessionCards)..shuffle();
+    _sessionQueue = shuffled.take(_chosenSessionSize).toList();
     _totalInSession = _sessionQueue.length;
+    _completedInSession = 0;
+    _sessionCorrect = 0;
+    _isSessionFinished = false;
+    _hasStarted = true;
+
+    // Save choices to profile to persist selections
+    final user = _authService.currentUser;
+    if (user != null) {
+      bool needUpdate = false;
+      if (user.testSessionSize != _chosenSessionSize) {
+        user.testSessionSize = _chosenSessionSize;
+        needUpdate = true;
+      }
+      if (user.optionsCount != _chosenOptionsCount) {
+        user.optionsCount = _chosenOptionsCount;
+        needUpdate = true;
+      }
+      if (user.testMode != _selectedMode.storageValue) {
+        user.testMode = _selectedMode.storageValue;
+        needUpdate = true;
+      }
+      if (needUpdate) {
+        _authService.updateUser(user);
+      }
+    }
+
+    if (_skipSetupNextTime) {
+      unawaited(SharedPreferences.getInstance().then((prefs) => prefs.setBool('show_test_lobby', false)));
+    }
+
     _setupNextCard();
+    setState(() {});
   }
 
   void _setupNextCard() {
@@ -432,7 +490,7 @@ class _TestPageState extends State<TestPage> {
       final sourceCards =
           allInSubject.where((c) => c.id != _currentCard.id).toList();
       sourceCards.shuffle();
-      final optCount = user?.optionsCount ?? 6;
+      final optCount = _chosenOptionsCount;
       final selectedCards = sourceCards.take(optCount - 1).toList();
 
       options =
@@ -467,14 +525,14 @@ class _TestPageState extends State<TestPage> {
 
         if (otherAnswers.isNotEmpty) {
           otherAnswers.shuffle();
-          final optCount = user?.optionsCount ?? 6;
+          final optCount = _chosenOptionsCount;
           final selected = otherAnswers.take(optCount - 1).toList();
           selected.add(_correctAnswerId);
           selected.shuffle();
           mathOpts = selected;
         } else {
           // Purely dynamic (no cards in subject yet), fallback to generated
-          final optCount = user?.optionsCount ?? 6;
+          final optCount = _chosenOptionsCount;
           mathOpts = MathService().generateDistractors(
             _currentCard.numericalAnswer,
             optCount,
@@ -496,7 +554,7 @@ class _TestPageState extends State<TestPage> {
           }).toList();
       distractors.shuffle();
 
-      final optCount = user?.optionsCount ?? 6;
+      final optCount = _chosenOptionsCount;
       final selectedDistractors = distractors.take(optCount - 1).toList();
 
       options =
@@ -1163,6 +1221,10 @@ class _TestPageState extends State<TestPage> {
       return _buildResultsView(headerColor);
     }
 
+    if (!_hasStarted) {
+      return _buildLobby(context, headerColor);
+    }
+
     return ListenableBuilder(
       listenable: TranslationService(),
       builder: (context, _) {
@@ -1779,6 +1841,248 @@ class _TestPageState extends State<TestPage> {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLobby(BuildContext context, Color headerColor) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
+    return Scaffold(
+      backgroundColor: theme.scaffoldBackgroundColor,
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: Text(
+          _subject.getName(_languageCode),
+          style: const TextStyle(fontSize: 18),
+        ),
+        backgroundColor: headerColor,
+        foregroundColor: Colors.white,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () => Navigator.pop(context),
+          ),
+          if (!kIsWeb) const WindowControls(color: Colors.white),
+        ],
+      ),
+      body: Center(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(24.0),
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 450),
+            child: Card(
+              elevation: 4,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(24),
+              ),
+              color: isDark ? theme.cardColor : Colors.white,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 36, horizontal: 24),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: headerColor.withValues(alpha: 0.1),
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(
+                        Icons.quiz_outlined,
+                        size: 48,
+                        color: headerColor,
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+                    Text(
+                      context.t('testing_session_setup') ?? 'Testing Session Setup',
+                      style: const TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      '${context.t('available_cards') ?? 'Available cards'}: ${widget.sessionCards.length}',
+                      style: const TextStyle(
+                        color: Colors.grey,
+                        fontSize: 14,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 24),
+                    
+                    // Card Count Row
+                    Text(
+                      context.t('cards_to_test') ?? 'Cards to Test',
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        IconButton(
+                          onPressed: _chosenSessionSize > 1
+                              ? () => setState(() => _chosenSessionSize--)
+                              : null,
+                          icon: const Icon(Icons.remove_circle_outline),
+                          iconSize: 36,
+                          color: headerColor,
+                        ),
+                        SizedBox(
+                          width: 60,
+                          child: Center(
+                            child: Text(
+                              '$_chosenSessionSize',
+                              style: const TextStyle(
+                                fontSize: 28,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: _chosenSessionSize < widget.sessionCards.length
+                              ? () => setState(() => _chosenSessionSize++)
+                              : null,
+                          icon: const Icon(Icons.add_circle_outline),
+                          iconSize: 36,
+                          color: headerColor,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 24),
+
+                    // Options Count Row
+                    Text(
+                      context.t('multiple_choice_answers') ?? 'Answer Choices',
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        IconButton(
+                          onPressed: _chosenOptionsCount > 2
+                              ? () => setState(() => _chosenOptionsCount--)
+                              : null,
+                          icon: const Icon(Icons.remove_circle_outline),
+                          iconSize: 36,
+                          color: headerColor,
+                        ),
+                        SizedBox(
+                          width: 60,
+                          child: Center(
+                            child: Text(
+                              '$_chosenOptionsCount',
+                              style: const TextStyle(
+                                fontSize: 28,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: _chosenOptionsCount < 6
+                              ? () => setState(() => _chosenOptionsCount++)
+                              : null,
+                          icon: const Icon(Icons.add_circle_outline),
+                          iconSize: 36,
+                          color: headerColor,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 24),
+
+                    // Test Mode Chips
+                    Text(
+                      context.t('test_mode') ?? 'Test Mode',
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    Wrap(
+                      spacing: 8,
+                      children: TestModeChoice.values.map((mode) {
+                        final isSelected = _selectedMode == mode;
+                        return ChoiceChip(
+                          label: Text(
+                            mode.label,
+                            style: TextStyle(
+                              color: isSelected ? Colors.white : (isDark ? Colors.white : Colors.black),
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          selected: isSelected,
+                          selectedColor: headerColor,
+                          backgroundColor: isDark ? Colors.grey.shade800 : Colors.grey.shade200,
+                          onSelected: (selected) {
+                            if (selected) {
+                              setState(() => _selectedMode = mode);
+                            }
+                          },
+                        );
+                      }).toList(),
+                    ),
+                    const SizedBox(height: 24),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Checkbox(
+                          value: _skipSetupNextTime,
+                          activeColor: headerColor,
+                          onChanged: (val) {
+                            if (val != null) {
+                              setState(() => _skipSetupNextTime = val);
+                            }
+                          },
+                        ),
+                        Text(
+                          context.t('skip_setup_next_time') ?? 'Skip setup next time',
+                          style: const TextStyle(fontSize: 14),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 24),
+                    SizedBox(
+                      width: double.infinity,
+                      height: 52,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: headerColor,
+                          foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          elevation: 2,
+                        ),
+                        onPressed: _startSession,
+                        child: Text(
+                          context.t('start_test') ?? 'Start Test',
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
         ),
       ),
     );

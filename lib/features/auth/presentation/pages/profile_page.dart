@@ -24,6 +24,7 @@ import 'package:aliolo/data/services/feedback_service.dart';
 import 'package:aliolo/core/widgets/user_avatar.dart';
 import 'package:aliolo/core/widgets/premium_badge.dart';
 import 'package:aliolo/core/utils/api_error.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -36,6 +37,39 @@ class _ProfilePageState extends State<ProfilePage> {
   static const String _adminUserId = 'usyeo7d2yzf2773';
 
   final _authService = getIt<AuthService>();
+
+  bool _showLearnLobby = true;
+  bool _showTestLobby = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadLobbyPreferences();
+  }
+
+  Future<void> _loadLobbyPreferences() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _showLearnLobby = prefs.getBool('show_learn_lobby') ?? true;
+      _showTestLobby = prefs.getBool('show_test_lobby') ?? true;
+    });
+  }
+
+  Future<void> _setLearnLobbyPreference(bool val) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('show_learn_lobby', val);
+    setState(() {
+      _showLearnLobby = val;
+    });
+  }
+
+  Future<void> _setTestLobbyPreference(bool val) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('show_test_lobby', val);
+    setState(() {
+      _showTestLobby = val;
+    });
+  }
 
   Future<void> _pickAndUploadAvatar() async {
     final picker = ImagePicker();
@@ -1287,6 +1321,24 @@ class _ProfilePageState extends State<ProfilePage> {
                 );
               }
             },
+          ),
+          const Divider(height: 1, indent: 16, endIndent: 16),
+          SwitchListTile(
+            secondary: Icon(Icons.co_present, color: color),
+            title: Text(context.t('show_learn_setup') ?? 'Show Learn Setup Lobby'),
+            subtitle: Text(context.t('show_learn_setup_desc') ?? 'Configure options before learning'),
+            value: _showLearnLobby,
+            activeColor: color,
+            onChanged: _setLearnLobbyPreference,
+          ),
+          const Divider(height: 1, indent: 16, endIndent: 16),
+          SwitchListTile(
+            secondary: Icon(Icons.quiz_outlined, color: color),
+            title: Text(context.t('show_test_setup') ?? 'Show Test Setup Lobby'),
+            subtitle: Text(context.t('show_test_setup_desc') ?? 'Configure options before testing'),
+            value: _showTestLobby,
+            activeColor: color,
+            onChanged: _setTestLobbyPreference,
           ),
         ],
       ),

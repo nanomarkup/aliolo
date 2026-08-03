@@ -91,6 +91,7 @@
     audio_playing Audio Playing
     author Author
     autoplay Automatikus lejátszás
+    available_cards Elérhető kártyák
     back Vissza
     back_to_login Back to Login
     back_to_plans Back to plans
@@ -117,6 +118,8 @@
     cards_label cards
     cards_per_day cards per day
     cards_per_session cards per session
+    cards_to_learn Tanulandó kártyák
+    cards_to_test Tesztelendő kártyák
     change_avatar Change Avatar
     change_password Jelszó megváltoztatása
     check_your_email_for_code Ellenőrizze az e-mailben a kódot
@@ -444,6 +447,7 @@
     learn_session_size Learn Session Size
     learn_session_size_desc Egyetlen tanulási szakaszban bevezetendő új kártyák száma.
     learning_session_complete_description Remek munka! Befejezte ezt a tanulási folyamatot. Az előrehaladást elmentettük.
+    learning_session_setup Tanulási szakasz beállítása
     left_arrow Left Arrow
     level Level
     level_range Must be between 1 and 20
@@ -487,6 +491,7 @@
     most_popular_choice A legnépszerűbb választás
     multi_lang_answers Multi-language Answers
     multi_lang_prompts Multi-language Prompts
+    multiple_choice_answers Válaszlehetőségek
     my_position My Position
     name Name
     names_descriptions Names & Descriptions
@@ -673,15 +678,22 @@
     show_documentation_btn Dokumentáció megjelenítése gomb
     show_documentation_btn_desc Jelenítse meg a dokumentáció gombot az alkalmazássávban.
     show_fake_users Hamis felhasználók megjelenítése
+    show_learn_setup Tanulási beállítások megjelenítése
+    show_learn_setup_desc Beállítások konfigurálása tanulás előtt
     show_less_languages Show less languages
+    show_test_setup Tesztelési beállítások megjelenítése
+    show_test_setup_desc Beállítások konfigurálása tesztelés előtt
     sidebar_left Sidebar on the left
     sidebar_left_desc Move testing controls to the left side of the screen.
     silver SILVER
+    skip_setup_next_time Beállítás kihagyása legközelebb
     social Social
     sort_by Sort by
     sound_effects Sound Effects
     sound_effects_desc Enable audio feedback for correct and wrong answers.
     source Forrás
+    start_learning Tanulás indítása
+    start_test Teszt indítása
     status Állapot
     status_closed Lezárt
     status_open Nyitott
@@ -705,6 +717,7 @@
     system System
     tap_to_replay Tap to Replay
     technical_context MŰSZAKI KÖRNYEZET
+    test_mode Teszt mód
     test_mode_desc Challenge yourself with a quiz
     test_mode_label Test Mode
     test_mode_title Test
@@ -713,6 +726,7 @@
     testing Testing
     testing_mode Tesztelési mód
     testing_section Testing Settings
+    testing_session_setup Tesztelési szakasz beállítása
     text Szöveg
     the_science THE SCIENCE
     theme_color App Theme Color

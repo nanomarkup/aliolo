@@ -91,6 +91,7 @@
     audio_playing Ses Çalınıyor
     author Author
     autoplay Otomatik oynatma
+    available_cards Mevcut kartlar
     back Geri
     back_to_login Back to Login
     back_to_plans Back to plans
@@ -117,6 +118,8 @@
     cards_label cards
     cards_per_day cards per day
     cards_per_session cards per session
+    cards_to_learn Öğrenilecek Kartlar
+    cards_to_test Test Edilecek Kartlar
     change_avatar Change Avatar
     change_password Şifreyi Değiştir
     check_your_email_for_code Kod için e-postanızı kontrol edin
@@ -444,6 +447,7 @@
     learn_session_size Öğrenme oturumu boyutu
     learn_session_size_desc Tek bir öğrenme oturumunda tanıtılacak yeni kart sayısı.
     learning_session_complete_description Harika iş! Bu öğrenme oturumunu tamamladınız. İlerlemeniz kaydedildi.
+    learning_session_setup Öğrenme Oturumu Kurulumu
     left_arrow Left Arrow
     level Level
     level_range Must be between 1 and 20
@@ -487,6 +491,7 @@
     most_popular_choice En popüler seçim
     multi_lang_answers Multi-language Answers
     multi_lang_prompts Multi-language Prompts
+    multiple_choice_answers Cevap Seçenekleri
     my_position My Position
     name Name
     names_descriptions Names & Descriptions
@@ -673,15 +678,22 @@
     show_documentation_btn Belgeleri göster düğmesi
     show_documentation_btn_desc Uygulama çubuğunda dokümantasyon düğmesini görüntüleyin.
     show_fake_users Sahte Kullanıcıları Göster
+    show_learn_setup Öğrenme Kurulum Lobisini Göster
+    show_learn_setup_desc Öğrenmeden önce seçenekleri yapılandır
     show_less_languages Show less languages
+    show_test_setup Test Kurulum Lobisini Göster
+    show_test_setup_desc Testten önce seçenekleri yapılandır
     sidebar_left Sidebar on the left
     sidebar_left_desc Move testing controls to the left side of the screen.
     silver SILVER
+    skip_setup_next_time Bir dahaki sefere kurulumu atla
     social Social
     sort_by Sırala
     sound_effects Sound Effects
     sound_effects_desc Enable audio feedback for correct and wrong answers.
     source Kaynak
+    start_learning Öğrenmeye Başla
+    start_test Testi Başlat
     status Durum
     status_closed Kapalı
     status_open Açık
@@ -705,6 +717,7 @@
     system System
     tap_to_replay Tekrar oynatmak için dokunun
     technical_context TEKNİK BAĞLAM
+    test_mode Test Modu
     test_mode_desc Challenge yourself with a quiz
     test_mode_label Test Mode
     test_mode_title Test
@@ -713,6 +726,7 @@
     testing Testing
     testing_mode Test modu
     testing_section Testing Settings
+    testing_session_setup Test Oturumu Kurulumu
     text Metin
     the_science THE SCIENCE
     theme_color App Theme Color

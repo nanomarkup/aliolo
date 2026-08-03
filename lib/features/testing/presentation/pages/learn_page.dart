@@ -21,6 +21,7 @@ import 'package:aliolo/core/widgets/card_media_content.dart';
 import 'package:aliolo/core/widgets/window_controls.dart';
 import 'package:aliolo/features/settings/presentation/pages/premium_upgrade_page.dart';
 import 'package:aliolo/features/testing/presentation/widgets/session_completion_window.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LearnPage extends StatefulWidget {
   final List<SubjectCard> sessionCards;
@@ -39,11 +40,18 @@ class LearnPage extends StatefulWidget {
 class _LearnPageState extends State<LearnPage> {
   static const List<int> _autoPlayDelayOptions = <int>[1, 2, 3, 4, 5];
 
+  bool _hasStarted = false;
+  int _chosenSessionSize = 10;
+
   late PageController _pageController;
   int _currentIndex = 0;
 
-  CardModel get _currentCard => _sessionQueue[_currentIndex].card;
-  SubjectModel get _subject => _sessionQueue[_currentIndex].subject;
+  CardModel get _currentCard => _sessionQueue.isNotEmpty
+      ? _sessionQueue[_currentIndex].card
+      : widget.sessionCards.first.card;
+  SubjectModel get _subject => _sessionQueue.isNotEmpty
+      ? _sessionQueue[_currentIndex].subject
+      : widget.sessionCards.first.subject;
 
   // Media State
   bool _hasVideo = false;
@@ -81,6 +89,8 @@ class _LearnPageState extends State<LearnPage> {
 
   late String _languageCode;
 
+  bool _skipSetupNextTime = false;
+
   @override
   void initState() {
     super.initState();
@@ -95,8 +105,9 @@ class _LearnPageState extends State<LearnPage> {
     _learnAutoplayDelaySeconds =
         _authService.currentUser?.learnAutoplayDelaySeconds ?? 3;
 
-    _sessionQueue = List.from(widget.sessionCards)..shuffle();
-    _totalInSession = _sessionQueue.length;
+    final defaultSize = _authService.currentUser?.learnSessionSize ?? 10;
+    _chosenSessionSize = defaultSize.clamp(1, widget.sessionCards.length);
+
     _pageController = PageController(initialPage: 0);
 
     _audioPlayer.onPlayerComplete.listen((_) {
@@ -106,12 +117,42 @@ class _LearnPageState extends State<LearnPage> {
       }
     });
 
+    _loadShowLobbyPreference();
+  }
+
+  Future<void> _loadShowLobbyPreference() async {
+    final prefs = await SharedPreferences.getInstance();
+    final showLobby = prefs.getBool('show_learn_lobby') ?? true;
+    if (!showLobby) {
+      _startSession();
+    }
+  }
+
+  void _startSession() {
+    final shuffled = List<SubjectCard>.from(widget.sessionCards)..shuffle();
+    _sessionQueue = shuffled.take(_chosenSessionSize).toList();
+    _totalInSession = _sessionQueue.length;
+    _currentIndex = 0;
+    _hasStarted = true;
+
+    // Save choice to profile to persist selection
+    final user = _authService.currentUser;
+    if (user != null && user.learnSessionSize != _chosenSessionSize) {
+      user.learnSessionSize = _chosenSessionSize;
+      _authService.updateUser(user);
+    }
+
+    if (_skipSetupNextTime) {
+      unawaited(SharedPreferences.getInstance().then((prefs) => prefs.setBool('show_learn_lobby', false)));
+    }
+
     if (_totalInSession > 0) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         _setupMedia();
         _recordCurrentCardProgress();
       });
     }
+    setState(() {});
   }
 
   void _onKeyEvent(KeyEvent event) {
@@ -572,6 +613,10 @@ class _LearnPageState extends State<LearnPage> {
     return ListenableBuilder(
       listenable: TranslationService(),
       builder: (context, _) {
+        if (!_hasStarted) {
+          return _buildLobby(context, headerColor);
+        }
+
         double progressValue =
             _totalInSession > 0 ? _completedInSession / _totalInSession : 0.0;
 
@@ -775,6 +820,168 @@ class _LearnPageState extends State<LearnPage> {
           ),
         );
       },
+    );
+  }
+
+  Widget _buildLobby(BuildContext context, Color headerColor) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
+    return Scaffold(
+      backgroundColor: theme.scaffoldBackgroundColor,
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: Text(
+          _subject.getName(_languageCode),
+          style: const TextStyle(fontSize: 18),
+        ),
+        backgroundColor: headerColor,
+        foregroundColor: Colors.white,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () => Navigator.pop(context),
+          ),
+          if (!kIsWeb) const WindowControls(color: Colors.white),
+        ],
+      ),
+      body: Center(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(24.0),
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 450),
+            child: Card(
+              elevation: 4,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(24),
+              ),
+              color: isDark ? theme.cardColor : Colors.white,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 36, horizontal: 24),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: headerColor.withValues(alpha: 0.1),
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(
+                        Icons.school_outlined,
+                        size: 48,
+                        color: headerColor,
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+                    Text(
+                      context.t('learning_session_setup') ?? 'Learning Session Setup',
+                      style: const TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      '${context.t('available_cards') ?? 'Available cards'}: ${widget.sessionCards.length}',
+                      style: const TextStyle(
+                        color: Colors.grey,
+                        fontSize: 14,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 32),
+                    Text(
+                      context.t('cards_to_learn') ?? 'Cards to Learn',
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        IconButton(
+                          onPressed: _chosenSessionSize > 1
+                              ? () => setState(() => _chosenSessionSize--)
+                              : null,
+                          icon: const Icon(Icons.remove_circle_outline),
+                          iconSize: 40,
+                          color: headerColor,
+                        ),
+                        SizedBox(
+                          width: 80,
+                          child: Center(
+                            child: Text(
+                              '$_chosenSessionSize',
+                              style: const TextStyle(
+                                fontSize: 36,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: _chosenSessionSize < widget.sessionCards.length
+                              ? () => setState(() => _chosenSessionSize++)
+                              : null,
+                          icon: const Icon(Icons.add_circle_outline),
+                          iconSize: 40,
+                          color: headerColor,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 24),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Checkbox(
+                          value: _skipSetupNextTime,
+                          activeColor: headerColor,
+                          onChanged: (val) {
+                            if (val != null) {
+                              setState(() => _skipSetupNextTime = val);
+                            }
+                          },
+                        ),
+                        Text(
+                          context.t('skip_setup_next_time') ?? 'Skip setup next time',
+                          style: const TextStyle(fontSize: 14),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 24),
+                    SizedBox(
+                      width: double.infinity,
+                      height: 52,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: headerColor,
+                          foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          elevation: 2,
+                        ),
+                        onPressed: _startSession,
+                        child: Text(
+                          context.t('start_learning') ?? 'Start Learning',
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 

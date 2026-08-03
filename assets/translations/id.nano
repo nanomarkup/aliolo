@@ -91,6 +91,7 @@
     audio_playing Audio Sedang Diputar
     author Author
     autoplay Putar otomatis
+    available_cards Kartu yang tersedia
     back Kembali
     back_to_login Back to Login
     back_to_plans Back to plans
@@ -117,6 +118,8 @@
     cards_label cards
     cards_per_day cards per day
     cards_per_session cards per session
+    cards_to_learn Kartu untuk Dipelajari
+    cards_to_test Kartu untuk Dites
     change_avatar Change Avatar
     change_password Ubah Kata Sandi
     check_your_email_for_code Periksa email Anda untuk kode
@@ -444,6 +447,7 @@
     learn_session_size Ukuran sesi belajar
     learn_session_size_desc Jumlah kartu baru yang diperkenalkan dalam satu sesi belajar.
     learning_session_complete_description Kerja bagus! Anda telah menyelesaikan sesi pembelajaran ini. Kemajuan Anda telah disimpan.
+    learning_session_setup Pengaturan Sesi Belajar
     left_arrow Left Arrow
     level Level
     level_range Must be between 1 and 20
@@ -487,6 +491,7 @@
     most_popular_choice Pilihan paling populer
     multi_lang_answers Multi-language Answers
     multi_lang_prompts Multi-language Prompts
+    multiple_choice_answers Pilihan Jawaban
     my_position My Position
     name Name
     names_descriptions Names & Descriptions
@@ -673,15 +678,22 @@
     show_documentation_btn Tampilkan tombol dokumentasi
     show_documentation_btn_desc Tampilkan tombol dokumentasi di bilah aplikasi.
     show_fake_users Tampilkan Pengguna Palsu
+    show_learn_setup Tampilkan Lobi Pengaturan Belajar
+    show_learn_setup_desc Konfigurasikan opsi sebelum belajar
     show_less_languages Show less languages
+    show_test_setup Tampilkan Lobi Pengaturan Tes
+    show_test_setup_desc Konfigurasikan opsi sebelum tes
     sidebar_left Sidebar on the left
     sidebar_left_desc Move testing controls to the left side of the screen.
     silver SILVER
+    skip_setup_next_time Lewati pengaturan lain kali
     social Social
     sort_by Urutkan berdasarkan
     sound_effects Sound Effects
     sound_effects_desc Enable audio feedback for correct and wrong answers.
     source Sumber
+    start_learning Mulai Belajar
+    start_test Mulai Tes
     status Status
     status_closed Tertutup
     status_open Terbuka
@@ -705,6 +717,7 @@
     system System
     tap_to_replay Ketuk untuk Memutar Ulang
     technical_context KONTEKS TEKNIS
+    test_mode Mode Tes
     test_mode_desc Challenge yourself with a quiz
     test_mode_label Test Mode
     test_mode_title Test
@@ -713,6 +726,7 @@
     testing Testing
     testing_mode Modus pengujian
     testing_section Testing Settings
+    testing_session_setup Pengaturan Sesi Tes
     text Teks
     the_science THE SCIENCE
     theme_color App Theme Color

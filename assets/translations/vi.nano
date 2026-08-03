@@ -91,6 +91,7 @@
     audio_playing Đang phát âm thanh
     author Author
     autoplay Tự động phát
+    available_cards Thẻ có sẵn
     back Mặt sau
     back_to_login Back to Login
     back_to_plans Back to plans
@@ -117,6 +118,8 @@
     cards_label cards
     cards_per_day cards per day
     cards_per_session cards per session
+    cards_to_learn Thẻ cần học
+    cards_to_test Thẻ cần kiểm tra
     change_avatar Change Avatar
     change_password Đổi mật khẩu
     check_your_email_for_code Kiểm tra email của bạn để lấy mã
@@ -444,6 +447,7 @@
     learn_session_size Kích thước phiên học
     learn_session_size_desc Số lượng thẻ mới cần giới thiệu trong một phiên học.
     learning_session_complete_description Làm tốt lắm! Bạn đã hoàn thành buổi học này. Tiến trình của bạn đã được lưu.
+    learning_session_setup Thiết lập phiên học
     left_arrow Left Arrow
     level Level
     level_range Must be between 1 and 20
@@ -487,6 +491,7 @@
     most_popular_choice Sự lựa chọn phổ biến nhất
     multi_lang_answers Multi-language Answers
     multi_lang_prompts Multi-language Prompts
+    multiple_choice_answers Lựa chọn câu trả lời
     my_position My Position
     name Name
     names_descriptions Names & Descriptions
@@ -673,15 +678,22 @@
     show_documentation_btn Nút hiển thị tài liệu
     show_documentation_btn_desc Hiển thị nút tài liệu trên thanh ứng dụng.
     show_fake_users Hiển thị người dùng giả mạo
+    show_learn_setup Hiển thị sảnh thiết lập học
+    show_learn_setup_desc Cấu hình các tùy chọn trước khi học
     show_less_languages Show less languages
+    show_test_setup Hiển thị sảnh thiết lập kiểm tra
+    show_test_setup_desc Cấu hình các tùy chọn trước khi kiểm tra
     sidebar_left Sidebar on the left
     sidebar_left_desc Move testing controls to the left side of the screen.
     silver SILVER
+    skip_setup_next_time Bỏ qua thiết lập lần sau
     social Social
     sort_by Sắp xếp theo
     sound_effects Sound Effects
     sound_effects_desc Enable audio feedback for correct and wrong answers.
     source Nguồn
+    start_learning Bắt đầu học
+    start_test Bắt đầu kiểm tra
     status Trạng thái
     status_closed Đã đóng
     status_open Mở
@@ -705,6 +717,7 @@
     system System
     tap_to_replay Nhấn để phát lại
     technical_context BỐI CẢNH KỸ THUẬT
+    test_mode Chế độ kiểm tra
     test_mode_desc Challenge yourself with a quiz
     test_mode_label Test Mode
     test_mode_title Test
@@ -713,6 +726,7 @@
     testing Testing
     testing_mode Chế độ kiểm tra
     testing_section Testing Settings
+    testing_session_setup Thiết lập phiên kiểm tra
     text Chữ
     the_science THE SCIENCE
     theme_color App Theme Color

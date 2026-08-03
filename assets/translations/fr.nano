@@ -91,6 +91,7 @@
     audio_playing Lecture audio en cours
     author Auteur
     autoplay Lecture automatique
+    available_cards Cartes disponibles
     back Dos
     back_to_login Retour à la connexion
     back_to_plans Back to plans
@@ -117,6 +118,8 @@
     cards_label cartes
     cards_per_day cartes par jour
     cards_per_session cartes par session
+    cards_to_learn Cartes à apprendre
+    cards_to_test Cartes à tester
     change_avatar Changer d'avatar
     change_password Changer le mot de passe
     check_your_email_for_code Vérifiez votre courrier électronique pour le code
@@ -444,6 +447,7 @@
     learn_session_size Taille de session d'apprentissage
     learn_session_size_desc Nombre de nouvelles cartes à introduire dans une seule session d'apprentissage.
     learning_session_complete_description Super travail ! Vous avez terminé cette session d'apprentissage. Votre progression a été enregistrée.
+    learning_session_setup Configuration de la session d'apprentissage
     left_arrow Flèche gauche
     level Niveau
     level_range Doit être entre 1 et 20
@@ -487,6 +491,7 @@
     most_popular_choice Choix le plus populaire
     multi_lang_answers Réponses multilingues
     multi_lang_prompts Invites multilingues
+    multiple_choice_answers Choix de réponses
     my_position Ma position
     name Nom
     names_descriptions Noms et descriptions
@@ -673,15 +678,22 @@
     show_documentation_btn Afficher le bouton de documentation
     show_documentation_btn_desc Affichez le bouton de documentation dans la barre d'application.
     show_fake_users Afficher les faux utilisateurs
+    show_learn_setup Afficher le salon de configuration d'apprentissage
+    show_learn_setup_desc Configurer les options avant l'apprentissage
     show_less_languages Afficher moins de langues
+    show_test_setup Afficher le salon de configuration de test
+    show_test_setup_desc Configurer les options avant du test
     sidebar_left Barre latérale à gauche
     sidebar_left_desc Déplacer les commandes à gauche de l'écran.
     silver ARGENT
+    skip_setup_next_time Passer la configuration la prochaine fois
     social Social
     sort_by Trier par
     sound_effects Effets sonores
     sound_effects_desc Activer le retour audio pour les réponses.
     source Source
+    start_learning Commencer à apprendre
+    start_test Commencer le test
     status Statut
     status_closed Fermé
     status_open Ouvert
@@ -705,6 +717,7 @@
     system Système
     tap_to_replay Appuyez pour rejouer
     technical_context CONTEXTE TECHNIQUE
+    test_mode Mode de test
     test_mode_desc Challenge yourself with a quiz
     test_mode_label Test Mode
     test_mode_title Test
@@ -713,6 +726,7 @@
     testing Testing
     testing_mode Mode test
     testing_section Paramètres d'apprentissage
+    testing_session_setup Configuration de la session de test
     text Texte
     the_science LA SCIENCE
     theme_color App Theme Color

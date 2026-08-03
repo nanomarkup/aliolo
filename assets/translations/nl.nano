@@ -91,6 +91,7 @@
     audio_playing Audio wordt afgespeeld
     author Author
     autoplay Automatisch afspelen
+    available_cards Beschikbare kaarten
     back Rug
     back_to_login Back to Login
     back_to_plans Back to plans
@@ -117,6 +118,8 @@
     cards_label cards
     cards_per_day cards per day
     cards_per_session cards per session
+    cards_to_learn Kaarten om te leren
+    cards_to_test Kaarten om te testen
     change_avatar Change Avatar
     change_password Wachtwoord wijzigen
     check_your_email_for_code Controleer uw e-mail op code
@@ -444,6 +447,7 @@
     learn_session_size Grootte van leersessie
     learn_session_size_desc Aantal nieuwe kaarten dat in één leersessie wordt geïntroduceerd.
     learning_session_complete_description Geweldig werk! Je hebt deze leersessie afgerond. Je voortgang is opgeslagen.
+    learning_session_setup Opzet van leersessie
     left_arrow Left Arrow
     level Level
     level_range Must be between 1 and 20
@@ -487,6 +491,7 @@
     most_popular_choice Meest populaire keuze
     multi_lang_answers Multi-language Answers
     multi_lang_prompts Multi-language Prompts
+    multiple_choice_answers Antwoordopties
     my_position My Position
     name Name
     names_descriptions Names & Descriptions
@@ -673,15 +678,22 @@
     show_documentation_btn Documentatieknop weergeven
     show_documentation_btn_desc Geef de documentatieknop weer in de app-balk.
     show_fake_users Toon valse gebruikers
+    show_learn_setup Toon leer-setup lobby
+    show_learn_setup_desc Configureer opties voor het leren
     show_less_languages Show less languages
+    show_test_setup Toon test-setup lobby
+    show_test_setup_desc Configureer opties voor het testen
     sidebar_left Sidebar on the left
     sidebar_left_desc Move testing controls to the left side of the screen.
     silver SILVER
+    skip_setup_next_time Sla opzet volgende keer over
     social Social
     sort_by Sorteren op
     sound_effects Sound Effects
     sound_effects_desc Enable audio feedback for correct and wrong answers.
     source Bron
+    start_learning Start met leren
+    start_test Start test
     status Status
     status_closed Gesloten
     status_open Open
@@ -705,6 +717,7 @@
     system System
     tap_to_replay Tik om opnieuw af te spelen
     technical_context TECHNISCHE CONTEXT
+    test_mode Testmodus
     test_mode_desc Challenge yourself with a quiz
     test_mode_label Test Mode
     test_mode_title Test
@@ -713,6 +726,7 @@
     testing Testing
     testing_mode Testmodus
     testing_section Testing Settings
+    testing_session_setup Opzet van testsessie
     text Tekst
     the_science THE SCIENCE
     theme_color App Theme Color

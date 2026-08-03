@@ -66,7 +66,8 @@ class _WindowControlsState extends State<WindowControls> with WindowListener {
   Widget build(BuildContext context) {
     if (kIsWeb ||
         defaultTargetPlatform == TargetPlatform.android ||
-        defaultTargetPlatform == TargetPlatform.iOS) {
+        defaultTargetPlatform == TargetPlatform.iOS ||
+        defaultTargetPlatform == TargetPlatform.macOS) {
       return const SizedBox.shrink();
     }
 

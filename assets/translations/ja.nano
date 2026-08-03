@@ -91,6 +91,7 @@
     audio_playing オーディオ再生中
     author 著者
     autoplay 自動再生
+    available_cards 利用可能なカード
     back 戻る
     back_to_login ログインに戻る
     back_to_plans Back to plans
@@ -117,6 +118,8 @@
     cards_label カード
     cards_per_day 枚/日
     cards_per_session 枚/セッション
+    cards_to_learn 学習するカード
+    cards_to_test テストするカード
     change_avatar アバターを変更
     change_password パスワードを変更
     check_your_email_for_code メールでコードを確認してください
@@ -444,6 +447,7 @@
     learn_session_size 学習セッションのサイズ
     learn_session_size_desc 1回の学習セッションで導入する新しいカードの枚数。
     learning_session_complete_description 素晴らしい仕事だ！この学習セッションは終了しました。進行状況が保存されました。
+    learning_session_setup 学習セッション設定
     left_arrow 左矢印
     level レベル
     level_range 1から20の間で指定してください
@@ -487,6 +491,7 @@
     most_popular_choice 最も人気のある選択肢
     multi_lang_answers 多言語回答
     multi_lang_prompts 多言語問い
+    multiple_choice_answers 回答の選択肢
     my_position 自分の順位
     name 名前
     names_descriptions 名前と説明
@@ -673,15 +678,22 @@
     show_documentation_btn 「ドキュメントを表示」ボタン
     show_documentation_btn_desc アプリバーにドキュメントボタンを表示します。
     show_fake_users 偽のユーザーを表示する
+    show_learn_setup 学習設定ロビーを表示
+    show_learn_setup_desc 学習前にオプションを設定
     show_less_languages 表示する言語を減らす
+    show_test_setup テスト設定ロビーを表示
+    show_test_setup_desc テスト前にオプションを設定
     sidebar_left サイドバーを左に表示
     sidebar_left_desc 操作パネルを画面の左側に移動します。
     silver シルバー
+    skip_setup_next_time 次回から設定をスキップ
     social ソーシャル
     sort_by 並べ替え
     sound_effects 効果音
     sound_effects_desc 正解・不正解時の音声を有効にします。
     source ソース
+    start_learning 学習を開始
+    start_test テストを開始
     status ステータス
     status_closed 終了
     status_open オープン
@@ -705,6 +717,7 @@
     system システム設定に従う
     tap_to_replay タップしてもう一度再生
     technical_context 技術的背景
+    test_mode テストモード
     test_mode_desc Challenge yourself with a quiz
     test_mode_label Test Mode
     test_mode_title Test
@@ -713,6 +726,7 @@
     testing Testing
     testing_mode テストモード
     testing_section 学習設定
+    testing_session_setup テストセッション設定
     text 文章
     the_science THE SCIENCE
     theme_color App Theme Color

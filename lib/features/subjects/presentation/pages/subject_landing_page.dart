@@ -579,7 +579,6 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
             }).toList();
       }
 
-      final size = isTest ? user.testSessionSize : user.learnSessionSize;
       var emptySessionMessage = 'No cards available for this session.';
       var userCanceledEarlyRetest = false;
       if (isTest && !(_currentSubject?.isMath ?? false)) {
@@ -589,7 +588,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
           final selection = await _progressService
               .getReviewSessionCardSelection(
                 cardIds: cardsById.keys.toList(),
-                limit: size,
+                limit: 100,
               );
 
           if (selection.succeeded) {
@@ -601,23 +600,26 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
             if (sessionCards.isEmpty) {
               final shouldRetest = await _canStartEarlyRetest();
               if (shouldRetest) {
-                sessionCards = SessionBucketSampler.sampleBucket(
-                  candidateCards,
-                  size,
-                );
+                sessionCards = List<SubjectCard>.from(candidateCards)..shuffle();
+                if (sessionCards.length > 100) {
+                  sessionCards = sessionCards.take(100).toList();
+                }
               } else {
                 userCanceledEarlyRetest = true;
               }
             }
           } else {
-            sessionCards = SessionBucketSampler.sampleBucket(
-              candidateCards,
-              size,
-            );
+            sessionCards = List<SubjectCard>.from(candidateCards)..shuffle();
+            if (sessionCards.length > 100) {
+              sessionCards = sessionCards.take(100).toList();
+            }
           }
         }
       } else {
-        sessionCards = SessionBucketSampler.sampleBucket(sessionCards, size);
+        sessionCards = List<SubjectCard>.from(sessionCards)..shuffle();
+        if (sessionCards.length > 100) {
+          sessionCards = sessionCards.take(100).toList();
+        }
       }
 
       if (sessionCards.isEmpty) {
@@ -1075,7 +1077,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                     ? [
                       IconButton(
                         tooltip: context.t('home'),
-                        icon: Icon(Icons.school, color: appBarColor, size: 24),
+                        icon: Icon(Icons.home, color: appBarColor, size: 24),
                         onPressed:
                             () => Navigator.of(
                               context,
@@ -1087,7 +1089,7 @@ class _SubjectLandingPageState extends State<SubjectLandingPage> {
                     : [
                       IconButton(
                         tooltip: context.t('home'),
-                        icon: Icon(Icons.school, color: appBarColor, size: 24),
+                        icon: Icon(Icons.home, color: appBarColor, size: 24),
                         onPressed:
                             () => Navigator.of(
                               context,

@@ -91,6 +91,7 @@
     audio_playing Nagpe-play ang Audio
     author Author
     autoplay Awtomatikong pag-play
+    available_cards Magagamit na mga kard
     back Bumalik
     back_to_login Back to Login
     back_to_plans Back to plans
@@ -117,6 +118,8 @@
     cards_label cards
     cards_per_day cards per day
     cards_per_session cards per session
+    cards_to_learn Mga Kard na Aaralin
+    cards_to_test Mga Kard na Susubukin
     change_avatar Change Avatar
     change_password Baguhin ang Password
     check_your_email_for_code Tingnan ang iyong email para sa code
@@ -444,6 +447,7 @@
     learn_session_size Laki ng session sa pag-aaral
     learn_session_size_desc Bilang ng mga bagong card na ipakikilala sa isang learning session.
     learning_session_complete_description Mahusay na trabaho! Natapos mo ang sesyon ng pag-aaral na ito. Ang iyong pag-unlad ay nai-save.
+    learning_session_setup Pagsasaayos ng Sesyon sa Pag-aaral
     left_arrow Left Arrow
     level Level
     level_range Must be between 1 and 20
@@ -487,6 +491,7 @@
     most_popular_choice Pinakatanyag na pagpipilian
     multi_lang_answers Multi-language Answers
     multi_lang_prompts Multi-language Prompts
+    multiple_choice_answers Mga Pagpipiliang Sagot
     my_position My Position
     name Name
     names_descriptions Names & Descriptions
@@ -673,15 +678,22 @@
     show_documentation_btn Ipakita ang pindutan ng dokumentasyon
     show_documentation_btn_desc Ipakita ang button ng dokumentasyon sa app bar.
     show_fake_users Ipakita ang Mga Pekeng Gumagamit
+    show_learn_setup Ipakita ang Setup Lobby ng Pag-aaral
+    show_learn_setup_desc I-configure ang mga opsyon bago mag-aral
     show_less_languages Show less languages
+    show_test_setup Ipakita ang Setup Lobby ng Pagsusulit
+    show_test_setup_desc I-configure ang mga opsyon bago mag-test
     sidebar_left Sidebar on the left
     sidebar_left_desc Move testing controls to the left side of the screen.
     silver SILVER
+    skip_setup_next_time Laktawan ang pagsasaayos sa susunod
     social Social
     sort_by I-sort ayon sa
     sound_effects Sound Effects
     sound_effects_desc Enable audio feedback for correct and wrong answers.
     source Pinagmulan
+    start_learning Simulan ang Pag-aaral
+    start_test Simulan ang Pagsusulit
     status Status
     status_closed Nakasara
     status_open Bukas
@@ -705,6 +717,7 @@
     system System
     tap_to_replay I-tap para i-replay
     technical_context TEKNIKAL NA KONTEKSTO
+    test_mode Uri ng Pagsusulit
     test_mode_desc Challenge yourself with a quiz
     test_mode_label Test Mode
     test_mode_title Test
@@ -713,6 +726,7 @@
     testing Testing
     testing_mode Mode ng pagsubok
     testing_section Testing Settings
+    testing_session_setup Pagsasaayos ng Sesyon sa Pagsusulit
     text Text
     the_science THE SCIENCE
     theme_color App Theme Color

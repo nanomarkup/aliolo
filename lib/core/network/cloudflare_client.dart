@@ -4,7 +4,11 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class CloudflareHttpClient {
   late Dio _dio;
-  final _storage = const FlutterSecureStorage();
+  final _storage = const FlutterSecureStorage(
+    mOptions: MacOsOptions(
+      usesDataProtectionKeychain: false,
+    ),
+  );
   
   static const String productionUrl = 'https://aliolo.com';
   // Use 10.0.2.2 for Android Emulator, localhost for Web/Linux

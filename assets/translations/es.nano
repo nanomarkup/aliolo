@@ -91,6 +91,7 @@
     audio_playing Reproduciendo audio
     author Autor
     autoplay Reproducción automática
+    available_cards Tarjetas disponibles
     back Atrás
     back_to_login Volver al inicio
     back_to_plans Back to plans
@@ -117,6 +118,8 @@
     cards_label tarjetas
     cards_per_day tarjetas por día
     cards_per_session tarjetas por sesión
+    cards_to_learn Tarjetas para aprender
+    cards_to_test Tarjetas para probar
     change_avatar Cambiar avatar
     change_password Cambiar contraseña
     check_your_email_for_code Revisa tu correo electrónico para obtener el código
@@ -444,6 +447,7 @@
     learn_session_size Tamaño de sesión de aprendizaje
     learn_session_size_desc Número de tarjetas nuevas a introducir en una sola sesión de aprendizaje.
     learning_session_complete_description ¡Buen trabajo! Terminaste esta sesión de aprendizaje. Tu progreso ha sido guardado.
+    learning_session_setup Configuración de sesión de aprendizaje
     left_arrow Flecha izquierda
     level Nivel
     level_range Debe estar entre 1 y 20
@@ -487,6 +491,7 @@
     most_popular_choice Elección más popular
     multi_lang_answers Respuestas multilingües
     multi_lang_prompts Indicaciones multilingües
+    multiple_choice_answers Opciones de respuesta
     my_position Mi posición
     name Nombre
     names_descriptions Nombres y descripciones
@@ -673,15 +678,22 @@
     show_documentation_btn Botón mostrar documentación
     show_documentation_btn_desc Muestra el botón de documentación en la barra de aplicaciones.
     show_fake_users Mostrar usuarios falsos
+    show_learn_setup Mostrar sala de configuración de aprendizaje
+    show_learn_setup_desc Configurar opciones antes de aprender
     show_less_languages Mostrar menos idiomas
+    show_test_setup Mostrar sala de configuración de prueba
+    show_test_setup_desc Configurar opciones antes de la prueba
     sidebar_left Barra lateral a la izquierda
     sidebar_left_desc Mover controles a la izquierda de la pantalla.
     silver PLATA
+    skip_setup_next_time Omitir configuração la próxima vez
     social Social
     sort_by Ordenar por
     sound_effects Efectos de sonido
     sound_effects_desc Habilitar audio para respuestas.
     source Fuente
+    start_learning Comenzar a aprender
+    start_test Comenzar prueba
     status Estado
     status_closed Cerrado
     status_open Abierto
@@ -705,6 +717,7 @@
     system Sistema
     tap_to_replay Toca para repetir
     technical_context CONTEXTO TÉCNICO
+    test_mode Modo de prueba
     test_mode_desc Challenge yourself with a quiz
     test_mode_label Test Mode
     test_mode_title Test
@@ -713,6 +726,7 @@
     testing Testing
     testing_mode Modo de prueba
     testing_section Ajustes de aprendizaje
+    testing_session_setup Configuración de sesión de prueba
     text Texto
     the_science LA CIENCIA
     theme_color App Theme Color

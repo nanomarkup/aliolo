@@ -91,6 +91,7 @@
     audio_playing Грає аудіо
     author Автор
     autoplay Автовідтворення
+    available_cards Доступні картки
     back Назад
     back_to_login Назад до входу
     back_to_plans Back to plans
@@ -117,6 +118,8 @@
     cards_label карток
     cards_per_day карток на день
     cards_per_session карток на сесію
+    cards_to_learn Картки для вивчення
+    cards_to_test Картки для тесту
     change_avatar Змінити аватар
     change_password Змінити пароль
     check_your_email_for_code Перевірте свою електронну пошту на наявність коду
@@ -444,6 +447,7 @@
     learn_session_size Розмір сесії навчання
     learn_session_size_desc Кількість нових карток для введення в одному навчальному занятті.
     learning_session_complete_description Чудова робота! Ви закінчили цей навчальний сеанс. Ваш прогрес збережено.
+    learning_session_setup Налаштування сесії навчання
     left_arrow Стрілка вліво
     level Рівень
     level_range Має бути від 1 до 20
@@ -487,6 +491,7 @@
     most_popular_choice Найпопулярніший вибір
     multi_lang_answers Мультимовні відповіді
     multi_lang_prompts Мультимовні підказки
+    multiple_choice_answers Варіанти відповідей
     my_position Моя позиція
     name Назва
     names_descriptions Назви та описи
@@ -673,15 +678,22 @@
     show_documentation_btn Кнопка «Показати документацію».
     show_documentation_btn_desc Відобразити кнопку документації на панелі програми.
     show_fake_users Показати підроблених користувачів
+    show_learn_setup Показувати лобі налаштування навчання
+    show_learn_setup_desc Налаштовувати параметри перед навчанням
     show_less_languages Приховати додаткові мови
+    show_test_setup Показувати лобі налаштування тестування
+    show_test_setup_desc Налаштовувати параметри перед тестуванням
     sidebar_left Бічна панель зліва
     sidebar_left_desc Перемістити елементи керування вліво.
     silver СРІБЛО
+    skip_setup_next_time Пропустити налаштування наступного разу
     social Соціальні мережі
     sort_by Сортувати за
     sound_effects Звукові ефекти
     sound_effects_desc Увімкнути звуковий супровід відповідей.
     source Джерело
+    start_learning Почати навчання
+    start_test Почати тест
     status Статус
     status_closed Закритий
     status_open Відкритий
@@ -705,6 +717,7 @@
     system Системна
     tap_to_replay Натисніть для повтору
     technical_context ТЕХНІЧНИЙ КОНТЕКСТ
+    test_mode Режим тесту
     test_mode_desc Challenge yourself with a quiz
     test_mode_label Test Mode
     test_mode_title Тест
@@ -713,6 +726,7 @@
     testing Testing
     testing_mode Режим тестування
     testing_section Налаштування навчання
+    testing_session_setup Налаштування сесії тестування
     text Текст
     the_science НАУКА
     theme_color Колір теми додатка

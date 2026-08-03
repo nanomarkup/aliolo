@@ -91,6 +91,7 @@
     audio_playing Audio wird abgespielt
     author Autor
     autoplay Automatische Wiedergabe
+    available_cards Verfügbare Karten
     back Zurück
     back_to_login Zurück zum Login
     back_to_plans Back to plans
@@ -117,6 +118,8 @@
     cards_label Karten
     cards_per_day Karten pro Tag
     cards_per_session Karten pro Sitzung
+    cards_to_learn Karten zum Lernen
+    cards_to_test Karten zum Testen
     change_avatar Avatar ändern
     change_password Passwort ändern
     check_your_email_for_code Überprüfen Sie Ihre E-Mails auf Code
@@ -444,6 +447,7 @@
     learn_session_size Größe der Lerneinheit
     learn_session_size_desc Anzahl der neuen Karten, die in einer einzelnen Lernsitzung eingeführt werden.
     learning_session_complete_description Tolle Arbeit! Sie haben diese Lernsitzung abgeschlossen. Ihr Fortschritt wurde gespeichert.
+    learning_session_setup Lernsitzung einrichten
     left_arrow Left Arrow
     level Ebene
     level_range Muss zwischen 1 und 20 liegen
@@ -487,6 +491,7 @@
     most_popular_choice Beliebteste Wahl
     multi_lang_answers Mehrsprachige Antworten
     multi_lang_prompts Mehrsprachige Fragen
+    multiple_choice_answers Antwortmöglichkeiten
     my_position Meine Position
     name Name
     names_descriptions Namen & Beschreibungen
@@ -673,15 +678,22 @@
     show_documentation_btn Schaltfläche „Dokumentation anzeigen“.
     show_documentation_btn_desc Zeigen Sie die Dokumentationsschaltfläche in der App-Leiste an.
     show_fake_users Fake-Benutzer anzeigen
+    show_learn_setup Lern-Setup-Lobby anzeigen
+    show_learn_setup_desc Optionen vor dem Lernen konfigurieren
     show_less_languages Weniger Sprachen anzeigen
+    show_test_setup Test-Setup-Lobby anzeigen
+    show_test_setup_desc Optionen vor dem Testen konfigurieren
     sidebar_left Seitenleiste links
     sidebar_left_desc Lernsteuerelemente nach links verschieben.
     silver SILBER
+    skip_setup_next_time Einrichtung nächstes Mal überspringen
     social Soziale Medien
     sort_by Sortieren nach
     sound_effects Soundeffekte
     sound_effects_desc Audio-Feedback für Antworten aktivieren.
     source Quelle
+    start_learning Lernen starten
+    start_test Test starten
     status Status
     status_closed Geschlossen
     status_open Offen
@@ -705,6 +717,7 @@
     system System
     tap_to_replay Zum Wiederholen tippen
     technical_context TECHNISCHER KONTEXT
+    test_mode Testmodus
     test_mode_desc Challenge yourself with a quiz
     test_mode_label Test Mode
     test_mode_title Test
@@ -713,6 +726,7 @@
     testing Testing
     testing_mode Testmodus
     testing_section Lerneinstellungen
+    testing_session_setup Testsitzung einrichten
     text Text
     the_science DIE WISSENSCHAFT
     theme_color App Theme Color

@@ -91,6 +91,7 @@
     audio_playing Odtwarzanie dźwięku
     author Autor
     autoplay Automatyczne odtwarzanie
+    available_cards Dostępne karty
     back Z powrotem
     back_to_login Powrót do logowania
     back_to_plans Back to plans
@@ -117,6 +118,8 @@
     cards_label kart
     cards_per_day kart na dzień
     cards_per_session kart na sesję
+    cards_to_learn Karty do nauki
+    cards_to_test Karty do testowania
     change_avatar Zmień awatar
     change_password Zmień hasło
     check_your_email_for_code Sprawdź swój e-mail, aby uzyskać kod
@@ -444,6 +447,7 @@
     learn_session_size Wielkość sesji nauki
     learn_session_size_desc Liczba nowych kart do wprowadzenia w jednej sesji nauki.
     learning_session_complete_description Świetna robota! Zakończyłeś tę sesję szkoleniową. Twoje postępy zostały zapisane.
+    learning_session_setup Konfiguracja sesji nauki
     left_arrow Left Arrow
     level Poziom
     level_range Musi być między 1 a 20
@@ -487,6 +491,7 @@
     most_popular_choice Najpopularniejszy wybór
     multi_lang_answers Odpowiedzi wielojęzyczne
     multi_lang_prompts Podpowiedzi wielojęzyczne
+    multiple_choice_answers Opcje odpowiedzi
     my_position Moja pozycja
     name Nazwa
     names_descriptions Nazwy i Opisy
@@ -673,15 +678,22 @@
     show_documentation_btn Pokaż przycisk dokumentacji
     show_documentation_btn_desc Wyświetl przycisk dokumentacji na pasku aplikacji.
     show_fake_users Pokaż fałszywych użytkowników
+    show_learn_setup Pokaż lobby konfiguracji nauki
+    show_learn_setup_desc Skonfiguruj opcje przed nauką
     show_less_languages Pokaż mniej języków
+    show_test_setup Pokaż lobby konfiguracji testu
+    show_test_setup_desc Skonfiguruj opcje przed testem
     sidebar_left Pasek boczny po lewej
     sidebar_left_desc Przenieś panel sterowania na lewą stronę ekranu.
     silver SREBRO
+    skip_setup_next_time Pomiń konfigurację następnym razem
     social Społecznościowe
     sort_by Sortuj według
     sound_effects Efekty dźwiękowe
     sound_effects_desc Włącz dźwięki przy odpowiedziach.
     source Źródło
+    start_learning Rozpocznij naukę
+    start_test Rozpocznij test
     status Status
     status_closed Zamknięty
     status_open Otwarty
@@ -705,6 +717,7 @@
     system Systemowy
     tap_to_replay Dotknij, aby odtworzyć ponownie
     technical_context KONTEKST TECHNICZNY
+    test_mode Tryb testu
     test_mode_desc Challenge yourself with a quiz
     test_mode_label Test Mode
     test_mode_title Test
@@ -713,6 +726,7 @@
     testing Testing
     testing_mode Tryb testowy
     testing_section Ustawienia nauki
+    testing_session_setup Konfiguracja sesji testu
     text Tekst
     the_science THE SCIENCE
     theme_color App Theme Color

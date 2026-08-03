@@ -91,6 +91,7 @@
     audio_playing Αναπαραγωγή ήχου
     author Author
     autoplay Αυτόματη αναπαραγωγή
+    available_cards Διαθέσιμες κάρτες
     back Πίσω
     back_to_login Back to Login
     back_to_plans Back to plans
@@ -117,6 +118,8 @@
     cards_label cards
     cards_per_day cards per day
     cards_per_session cards per session
+    cards_to_learn Κάρτες για εκμάθηση
+    cards_to_test Κάρτες για δοκιμασία
     change_avatar Change Avatar
     change_password Αλλαγή κωδικού πρόσβασης
     check_your_email_for_code Ελέγξτε το email σας για κωδικό
@@ -444,6 +447,7 @@
     learn_session_size Μέγεθος συνεδрії εκμάθησης
     learn_session_size_desc Αριθμός νέων καρτών προς εισαγωγή σε μία μόνο συνεδρία εκμάθησης.
     learning_session_complete_description Μεγάλη δουλειά! Ολοκληρώσατε αυτήν τη συνεδρία εκμάθησης. Η πρόοδός σας έχει αποθηκευτεί.
+    learning_session_setup Ρύθμιση συνεδρίας εκμάθησης
     left_arrow Left Arrow
     level Level
     level_range Must be between 1 and 20
@@ -487,6 +491,7 @@
     most_popular_choice Η πιο δημοφιλής επιλογή
     multi_lang_answers Multi-language Answers
     multi_lang_prompts Multi-language Prompts
+    multiple_choice_answers Επιλογές απάντησης
     my_position My Position
     name Name
     names_descriptions Names & Descriptions
@@ -673,15 +678,22 @@
     show_documentation_btn Εμφάνιση κουμπιού τεκμηρίωσης
     show_documentation_btn_desc Εμφανίστε το κουμπί τεκμηρίωσης στη γραμμή εφαρμογών.
     show_fake_users Εμφάνιση ψεύτικων χρηστών
+    show_learn_setup Εμφάνιση λόμπι ρύθμισης εκμάθησης
+    show_learn_setup_desc Διαμόρφωση επιλογών πριν από την εκμάθηση
     show_less_languages Show less languages
+    show_test_setup Εμφάνιση λόμπι ρύθμισης δοκιμασίας
+    show_test_setup_desc Διαμόρφωση επιλογών πριν από τη δοκιμασία
     sidebar_left Sidebar on the left
     sidebar_left_desc Move testing controls to the left side of the screen.
     silver SILVER
+    skip_setup_next_time Παράκαμψη ρύθμισης την επόμενη φορά
     social Social
     sort_by Ταξινόμηση κατά
     sound_effects Sound Effects
     sound_effects_desc Enable audio feedback for correct and wrong answers.
     source Πηγή
+    start_learning Έναρξη εκμάθησης
+    start_test Έναρξη δοκιμασίας
     status Κατάσταση
     status_closed Κλειστό
     status_open Ανοιχτό
@@ -705,6 +717,7 @@
     system System
     tap_to_replay Πατήστε για επανάληψη
     technical_context ΤΕΧΝΙΚΟ ΠΛΑΙΣΙΟ
+    test_mode Λειτουργία δοκιμασίας
     test_mode_desc Challenge yourself with a quiz
     test_mode_label Test Mode
     test_mode_title Test
@@ -713,6 +726,7 @@
     testing Testing
     testing_mode Λειτουργία δοκιμής
     testing_section Testing Settings
+    testing_session_setup Ρύθμιση συνεδρίας δοκιμασίας
     text Κείμενο
     the_science THE SCIENCE
     theme_color App Theme Color

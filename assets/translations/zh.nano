@@ -91,6 +91,7 @@
     audio_playing 正在播放音频
     author 作者
     autoplay 自动播放
+    available_cards 可用卡片
     back 后退
     back_to_login 返回登录
     back_to_plans Back to plans
@@ -117,6 +118,8 @@
     cards_label 卡片
     cards_per_day 张卡片/天
     cards_per_session 张卡片/次
+    cards_to_learn 待学习卡片
+    cards_to_test 待测试卡片
     change_avatar 更换头像
     change_password 更改密码
     check_your_email_for_code 检查您的电子邮件中是否有代码
@@ -444,6 +447,7 @@
     learn_session_size 单次学习量
     learn_session_size_desc 单个学习环节中引入的新卡片数量。
     learning_session_complete_description 干得好！您已完成本次学习课程。您的进度已保存。
+    learning_session_setup 学习设置
     left_arrow 左箭头
     level 等级
     level_range 必须在 1 到 20 之间
@@ -487,6 +491,7 @@
     most_popular_choice 最受欢迎的选择
     multi_lang_answers 多语言答案
     multi_lang_prompts 多语言提示
+    multiple_choice_answers 备选答案数
     my_position 我的排名
     name 名称
     names_descriptions 名称和描述
@@ -673,15 +678,22 @@
     show_documentation_btn 显示文档按钮
     show_documentation_btn_desc 在应用栏中显示文档按钮。
     show_fake_users 显示虚假用户
+    show_learn_setup 显示学习设置大厅
+    show_learn_setup_desc 在学习前配置选项
     show_less_languages 显示较少语言
+    show_test_setup 显示测试设置大厅
+    show_test_setup_desc 在测试前配置选项
     sidebar_left 侧边栏居左
     sidebar_left_desc 将控制栏移至屏幕左侧。
     silver 白银
+    skip_setup_next_time 下次跳过设置
     social 社交
     sort_by 排序方式
     sound_effects 音效
     sound_effects_desc 开启回答音效反馈。
     source 来源
+    start_learning 开始学习
+    start_test 开始测试
     status 状态
     status_closed 已关闭
     status_open 开启
@@ -705,6 +717,7 @@
     system 跟随系统
     tap_to_replay 点击重新播放
     technical_context 技术背景
+    test_mode 测试模式
     test_mode_desc Challenge yourself with a quiz
     test_mode_label Test Mode
     test_mode_title Test
@@ -713,6 +726,7 @@
     testing Testing
     testing_mode 测试方式
     testing_section 学习设置
+    testing_session_setup 测试设置
     text 文本
     the_science THE SCIENCE
     theme_color App Theme Color

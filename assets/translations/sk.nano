@@ -91,6 +91,7 @@
     audio_playing Audio Playing
     author Author
     autoplay Automatické prehrávanie
+    available_cards Dostupné karty
     back Späť
     back_to_login Back to Login
     back_to_plans Back to plans
@@ -117,6 +118,8 @@
     cards_label cards
     cards_per_day cards per day
     cards_per_session cards per session
+    cards_to_learn Karty na učenie
+    cards_to_test Karty na testovanie
     change_avatar Change Avatar
     change_password Zmeniť heslo
     check_your_email_for_code Skontrolujte svoj e-mail pre kód
@@ -444,6 +447,7 @@
     learn_session_size Learn Session Size
     learn_session_size_desc Počet nových kariet, ktoré sa majú zaviesť v jednej lekcii učenia.
     learning_session_complete_description Skvelá práca! Dokončili ste túto vzdelávaciu reláciu. Váš postup bol uložený.
+    learning_session_setup Nastavenie výukovej lekcie
     left_arrow Left Arrow
     level Level
     level_range Must be between 1 and 20
@@ -487,6 +491,7 @@
     most_popular_choice Najobľúbenejšia voľba
     multi_lang_answers Multi-language Answers
     multi_lang_prompts Multi-language Prompts
+    multiple_choice_answers Možnosti odpovedí
     my_position My Position
     name Name
     names_descriptions Names & Descriptions
@@ -673,15 +678,22 @@
     show_documentation_btn Tlačidlo Zobraziť dokumentáciu
     show_documentation_btn_desc Zobrazte tlačidlo dokumentácie na paneli aplikácií.
     show_fake_users Zobraziť falošných používateľov
+    show_learn_setup Zobraziť nastavenie výučby
+    show_learn_setup_desc Nakonfigurovať možnosti pred učením
     show_less_languages Show less languages
+    show_test_setup Zobraziť nastavenie testu
+    show_test_setup_desc Nakonfigurovať možnosti pred testom
     sidebar_left Sidebar on the left
     sidebar_left_desc Move testing controls to the left side of the screen.
     silver SILVER
+    skip_setup_next_time Nabudúce preskoчить nastavenie
     social Social
     sort_by Sort by
     sound_effects Sound Effects
     sound_effects_desc Enable audio feedback for correct and wrong answers.
     source Zdroj
+    start_learning Začať sa učiť
+    start_test Spustiť test
     status Stav
     status_closed Uzavreté
     status_open Otvorené
@@ -705,6 +717,7 @@
     system System
     tap_to_replay Tap to Replay
     technical_context TECHNICKÝ KONTEXT
+    test_mode Režim testu
     test_mode_desc Challenge yourself with a quiz
     test_mode_label Test Mode
     test_mode_title Test
@@ -713,6 +726,7 @@
     testing Testing
     testing_mode Testovací režim
     testing_section Testing Settings
+    testing_session_setup Nastavenie testovacej lekcie
     text Text
     the_science THE SCIENCE
     theme_color App Theme Color

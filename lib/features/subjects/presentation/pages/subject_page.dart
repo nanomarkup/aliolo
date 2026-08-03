@@ -339,7 +339,7 @@ class _SubjectPageState extends State<SubjectPage> {
 
               final homeAction = IconButton(
                 tooltip: context.t('home') ?? 'Home',
-                icon: const Icon(Icons.school),
+                icon: const Icon(Icons.home),
                 onPressed: () {
                   if (isSearching) {
                     _searchController.clear();
@@ -1264,7 +1264,7 @@ class _PillarSubjectsPageState extends State<PillarSubjectsPage> {
 
         final homeAction = IconButton(
           tooltip: context.t('home') ?? 'Home',
-          icon: const Icon(Icons.school),
+          icon: const Icon(Icons.home),
           onPressed:
               () => Navigator.of(context).popUntil((route) => route.isFirst),
         );
@@ -2111,7 +2111,7 @@ class _FolderPageState extends State<FolderPage> {
 
         final homeAction = IconButton(
           tooltip: context.t('home') ?? 'Home',
-          icon: const Icon(Icons.school),
+          icon: const Icon(Icons.home),
           onPressed:
               () => Navigator.of(context).popUntil((route) => route.isFirst),
         );

@@ -91,6 +91,7 @@
     audio_playing ऑडियो चल रहा है
     author Author
     autoplay ऑटोप्ले
+    available_cards उपलब्ध कार्ड
     back पीछे
     back_to_login Back to Login
     back_to_plans Back to plans
@@ -117,6 +118,8 @@
     cards_label cards
     cards_per_day cards per day
     cards_per_session cards per session
+    cards_to_learn सीखने के लिए कार्ड
+    cards_to_test परीक्षण के लिए कार्ड
     change_avatar Change Avatar
     change_password पासवर्ड बदलें
     check_your_email_for_code कोड के लिए अपना ईमेल जांचें
@@ -444,6 +447,7 @@
     learn_session_size सीखने के सत्र का आकार
     learn_session_size_desc एकल शिक्षण सत्र में पेश किए जाने वाले नए कार्डों की संख्या।
     learning_session_complete_description अच्छा काम! आपने यह शिक्षण सत्र समाप्त कर दिया। आपकी प्रगति सहेज ली गई है.
+    learning_session_setup सीखने के सत्र का सेटअप
     left_arrow Left Arrow
     level Level
     level_range Must be between 1 and 20
@@ -487,6 +491,7 @@
     most_popular_choice सबसे लोकप्रिय विकल्प
     multi_lang_answers Multi-language Answers
     multi_lang_prompts Multi-language Prompts
+    multiple_choice_answers उत्तर विकल्प
     my_position My Position
     name Name
     names_descriptions Names & Descriptions
@@ -673,15 +678,22 @@
     show_documentation_btn दस्तावेज़ीकरण बटन दिखाएँ
     show_documentation_btn_desc ऐप बार में दस्तावेज़ीकरण बटन प्रदर्शित करें।
     show_fake_users नकली उपयोगकर्ता दिखाएँ
+    show_learn_setup सीखने का सेटअप लॉबी दिखाएं
+    show_learn_setup_desc सीखने से पहले विकल्पों को कॉन्फ़िगर करें
     show_less_languages Show less languages
+    show_test_setup परीक्षण का सेटअप लॉबी दिखाएं
+    show_test_setup_desc परीक्षण से पहले विकल्पों को कॉन्फ़िगर करें
     sidebar_left Sidebar on the left
     sidebar_left_desc Move testing controls to the left side of the screen.
     silver SILVER
+    skip_setup_next_time अगली बार सेटअप छोड़ें
     social Social
     sort_by इसके अनुसार क्रमबद्ध करें
     sound_effects Sound Effects
     sound_effects_desc Enable audio feedback for correct and wrong answers.
     source स्रोत
+    start_learning सीखना शुरू करें
+    start_test परीक्षण शुरू करें
     status स्थिति
     status_closed बंद
     status_open खुला
@@ -705,6 +717,7 @@
     system System
     tap_to_replay दोबारा चलाने के लिए टैप करें
     technical_context तकनीकी संदर्भ
+    test_mode परीक्षण मोड
     test_mode_desc Challenge yourself with a quiz
     test_mode_label Test Mode
     test_mode_title Test
@@ -713,6 +726,7 @@
     testing Testing
     testing_mode परीक्षण मोड
     testing_section Testing Settings
+    testing_session_setup परीक्षण सत्र का सेटअप
     text मूलपाठ
     the_science THE SCIENCE
     theme_color App Theme Color

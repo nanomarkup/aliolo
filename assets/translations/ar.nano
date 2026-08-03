@@ -91,6 +91,7 @@
     audio_playing جاري تشغيل الصوت
     author Author
     autoplay تشغيل تلقائي
+    available_cards البطاقات المتاحة
     back خلف
     back_to_login Back to Login
     back_to_plans Back to plans
@@ -117,6 +118,8 @@
     cards_label cards
     cards_per_day cards per day
     cards_per_session cards per session
+    cards_to_learn بطاقات للتعلم
+    cards_to_test بطاقات للاختبار
     change_avatar Change Avatar
     change_password تغيير كلمة المرور
     check_your_email_for_code تحقق من بريدك الإلكتروني للحصول على الرمز
@@ -444,6 +447,7 @@
     learn_session_size حجم جلسة التعلم
     learn_session_size_desc عدد البطاقات الجديدة التي سيتم تقديمها في جلسة تعلم واحدة.
     learning_session_complete_description عمل عظيم! لقد أنهيت هذه الجلسة التعليمية. لقد تم حفظ تقدمك.
+    learning_session_setup إعداد جلسة التعلم
     left_arrow Left Arrow
     level Level
     level_range Must be between 1 and 20
@@ -487,6 +491,7 @@
     most_popular_choice الاختيار الأكثر شعبية
     multi_lang_answers Multi-language Answers
     multi_lang_prompts Multi-language Prompts
+    multiple_choice_answers خيارات الإجابة
     my_position My Position
     name Name
     names_descriptions Names & Descriptions
@@ -673,15 +678,22 @@
     show_documentation_btn إظهار زر التوثيق
     show_documentation_btn_desc اعرض زر التوثيق في شريط التطبيقات.
     show_fake_users إظهار المستخدمين المزيفين
+    show_learn_setup عرض شاشة إعداد التعلم
+    show_learn_setup_desc تكوين الخيارات قبل التعلم
     show_less_languages Show less languages
+    show_test_setup عرض شاشة إعداد الاختبار
+    show_test_setup_desc تكوين الخيارات قبل الاختبار
     sidebar_left Sidebar on the left
     sidebar_left_desc Move testing controls to the left side of the screen.
     silver SILVER
+    skip_setup_next_time تخطي الإعداد في المرة القادمة
     social Social
     sort_by فرز حسب
     sound_effects Sound Effects
     sound_effects_desc Enable audio feedback for correct and wrong answers.
     source المصدر
+    start_learning بدء التعلم
+    start_test بدء الاختبار
     status الحالة
     status_closed مغلق
     status_open مفتوح
@@ -705,6 +717,7 @@
     system System
     tap_to_replay اضغط لإعادة التشغيل
     technical_context السياق الفني
+    test_mode وضع الاختبار
     test_mode_desc Challenge yourself with a quiz
     test_mode_label Test Mode
     test_mode_title Test
@@ -713,6 +726,7 @@
     testing Testing
     testing_mode وضع الاختبار
     testing_section Testing Settings
+    testing_session_setup إعداد جلسة الاختبار
     text نص
     the_science العلم
     theme_color App Theme Color

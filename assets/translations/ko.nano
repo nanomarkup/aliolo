@@ -91,6 +91,7 @@
     audio_playing 오디오 재생 중
     author 저자
     autoplay 자동 재생
+    available_cards 사용 가능한 카드
     back 뒤쪽에
     back_to_login 로그인으로 돌아가기
     back_to_plans Back to plans
@@ -117,6 +118,8 @@
     cards_label 카드
     cards_per_day 장/일
     cards_per_session 장/세션
+    cards_to_learn 학습할 카드
+    cards_to_test 테스트할 카드
     change_avatar 아바타 변경
     change_password 비밀번호 변경
     check_your_email_for_code 이메일에서 코드를 확인하세요.
@@ -444,6 +447,7 @@
     learn_session_size 학습 세션 크기
     learn_session_size_desc 단일 학습 세션에서 도입할 새 카드의 수입니다.
     learning_session_complete_description 정말 잘했어요! 이 학습 세션을 마쳤습니다. 진행 상황이 저장되었습니다.
+    learning_session_setup 학습 세션 설정
     left_arrow 왼쪽 화살표
     level 레벨
     level_range 1에서 20 사이여야 합니다
@@ -487,6 +491,7 @@
     most_popular_choice 가장 인기있는 선택
     multi_lang_answers 다국어 답변
     multi_lang_prompts 다국어 질문
+    multiple_choice_answers 답안 선택지
     my_position 내 순위
     name 이름
     names_descriptions 이름 및 설명
@@ -673,15 +678,22 @@
     show_documentation_btn 문서 버튼 표시
     show_documentation_btn_desc 앱 바에 문서 버튼을 표시합니다.
     show_fake_users 가짜 사용자 표시
+    show_learn_setup 학습 설정 로비 표시
+    show_learn_setup_desc 학습 시작 전 옵션 설정
     show_less_languages 일부 언어만 표시
+    show_test_setup 테스트 설정 로비 표시
+    show_test_setup_desc 테스트 시작 전 옵션 설정
     sidebar_left 사이드바 왼쪽
     sidebar_left_desc 컨트롤을 화면 왼쪽에 표시합니다.
     silver 실버
+    skip_setup_next_time 다음부터 설정 건너뛰기
     social 소셜
     sort_by 정렬 기준
     sound_effects 음향 효과
     sound_effects_desc 정답/오답 소리를 활성화합니다.
     source 출처
+    start_learning 학습 시작
+    start_test 테스트 시작
     status 상태
     status_closed 종료됨
     status_open 열림
@@ -705,6 +717,7 @@
     system 시스템 설정
     tap_to_replay 다시 재생하려면 탭하세요
     technical_context 기술적인 맥락
+    test_mode 테스트 모드
     test_mode_desc Challenge yourself with a quiz
     test_mode_label Test Mode
     test_mode_title Test
@@ -713,6 +726,7 @@
     testing Testing
     testing_mode 테스트 모드
     testing_section 학습 설정
+    testing_session_setup 테스트 세션 설정
     text 텍스트
     the_science THE SCIENCE
     theme_color App Theme Color

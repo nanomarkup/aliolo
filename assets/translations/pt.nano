@@ -91,6 +91,7 @@
     audio_playing Reproduzindo áudio
     author Autor
     autoplay Reprodução automática
+    available_cards Cartões disponíveis
     back Voltar
     back_to_login Voltar ao login
     back_to_plans Back to plans
@@ -117,6 +118,8 @@
     cards_label cartões
     cards_per_day cartões/dia
     cards_per_session cartões/sessão
+    cards_to_learn Cartões para aprender
+    cards_to_test Cartões para testar
     change_avatar Alterar avatar
     change_password Alterar palavra-passe
     check_your_email_for_code Verifique seu e-mail para obter o código
@@ -444,6 +447,7 @@
     learn_session_size Tamanho da sessão de aprendizado
     learn_session_size_desc Número de novos cartões a introduzir numa única sessão de aprendizagem.
     learning_session_complete_description Ótimo trabalho! Você terminou esta sessão de aprendizagem. Seu progresso foi salvo.
+    learning_session_setup Configuração da sessão de aprendizagem
     left_arrow Seta para esquerda
     level Nível
     level_range Entre 1 e 20
@@ -487,6 +491,7 @@
     most_popular_choice Escolha mais popular
     multi_lang_answers Respostas multilíngues
     multi_lang_prompts Sugestões multilíngues
+    multiple_choice_answers Opções de resposta
     my_position Minha posição
     name Nome
     names_descriptions Nomes e Descrições
@@ -673,15 +678,22 @@
     show_documentation_btn Botão Mostrar documentação
     show_documentation_btn_desc Exiba o botão de documentação na barra de aplicativos.
     show_fake_users Mostrar usuários falsos
+    show_learn_setup Mostrar tela de configuração de aprendizado
+    show_learn_setup_desc Configurar opções antes de aprender
     show_less_languages Mostrar menos idiomas
+    show_test_setup Mostrar tela de configuração de teste
+    show_test_setup_desc Configurar opções antes do teste
     sidebar_left Barra lateral à esquerda
     sidebar_left_desc Mover controles para a esquerda.
     silver PRATA
+    skip_setup_next_time Ignorar configuração da próxima vez
     social Social
     sort_by Ordenar por
     sound_effects Efeitos sonoros
     sound_effects_desc Ativar áudio nas respostas.
     source Fonte
+    start_learning Iniciar aprendizado
+    start_test Iniciar teste
     status Status
     status_closed Fechado
     status_open Aberto
@@ -705,6 +717,7 @@
     system Sistema
     tap_to_replay Toque para repetir
     technical_context CONTEXTO TÉCNICO
+    test_mode Modo de teste
     test_mode_desc Challenge yourself with a quiz
     test_mode_label Test Mode
     test_mode_title Test
@@ -713,6 +726,7 @@
     testing Testing
     testing_mode Modo de teste
     testing_section Configurações de aprendizado
+    testing_session_setup Configuração da sessão de teste
     text Texto
     the_science THE SCIENCE
     theme_color App Theme Color
