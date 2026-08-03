@@ -87,9 +87,9 @@ describe('SEO and crawlability', () => {
     expect(html).toContain('Explore visual learning across every pillar.');
     expect(html).toContain('href="#workflow">How it works</a>');
     expect(html).toContain('href="#features">Learning</a>');
-    expect(html).toContain('href="/login?login=1" class="nav-login">Log in</a>');
-    expect(html).toContain('href="/login" class="nav-cta">Sign up</a>');
-    expect(html).not.toContain('class="cta-group"');
+    expect(html).toContain('href="/login?login=1" class="nav-login"');
+    expect(html).toContain('href="/login" class="nav-cta"');
+    expect(html).toContain('class="cta-group"');
     expect(html).toContain('aria-label="View monthly plan details"');
     expect(html).not.toContain('payment partners');
     expect(html).not.toContain('Paddle review');

@@ -207,7 +207,7 @@ ENGLISH_CONTENT = {
     "landing_nav_how_it_works": "How it works",
     "landing_nav_pricing": "Pricing",
     "landing_nav_login": "Log in",
-    "landing_nav_cta": "Create free account",
+    "landing_nav_cta": "Sign up",
 
     # Landing Hero Section
     "landing_hero_eyebrow": "Visual learning platform",

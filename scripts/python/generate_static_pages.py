@@ -65,11 +65,34 @@ def render_lang_switcher(lang: str, page: str) -> str:
             
         selected = " selected" if l == lang else ""
         disp_name = LANGUAGE_DISPLAY_NAMES.get(l, l.upper())
-        lang_options.append(f'<option value="{url}" data-lang="{l}"{selected}>{disp_name}</option>')
+        lang_options.append(f'<option value="{url}" data-lang="{l}" data-name="{disp_name}"{selected}>{l.upper()}</option>')
         
     return f"""<select class="lang-select" onchange="document.cookie='aliolo_lang=' + this.options[this.selectedIndex].getAttribute('data-lang') + '; path=/; max-age=31536000; SameSite=Lax; Secure'; window.location.href=this.value" aria-label="Change language">
       {"".join(lang_options)}
-    </select>"""
+    </select>
+    <script>
+      (() => {{
+        const select = document.querySelector('.lang-select');
+        if (!select) return;
+        
+        function showFullNames() {{
+          Array.from(select.options).forEach(opt => {{
+            opt.textContent = opt.getAttribute('data-name');
+          }});
+        }}
+        
+        function showShortCodes() {{
+          Array.from(select.options).forEach(opt => {{
+            opt.textContent = opt.getAttribute('data-lang').toUpperCase();
+          }});
+        }}
+        
+        select.addEventListener('mousedown', showFullNames);
+        select.addEventListener('focus', showFullNames);
+        select.addEventListener('change', showShortCodes);
+        select.addEventListener('blur', showShortCodes);
+      }})();
+    </script>"""
 
 def static_page_href(lang: str, page: str) -> str:
     prefix = "" if lang == "en" else f"/{lang}"
@@ -176,7 +199,7 @@ LEGAL_STYLES = """
   .page-tabs a {
     flex: 0 0 auto;
     color: var(--ink);
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 600;
     padding: 10px 14px;
     border: 1px solid transparent;
@@ -199,52 +222,33 @@ LEGAL_STYLES = """
     font-family: inherit;
     font-size: 14px;
     font-weight: 600;
-    min-height: 44px;
-    padding: 6px 32px 6px 12px;
-    border: 1px solid var(--line);
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.84) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23175f90' stroke-width='2.5'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5'/%3E%3C/svg%3E") no-repeat right 10px center;
-    background-size: 14px;
-    color: var(--ink);
+    min-height: 40px;
+    padding: 0 16px 0 0;
+    border: none;
+    background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23175f90' stroke-width='2.5'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5'/%3E%3C/svg%3E") no-repeat right center;
+    background-size: 10px;
+    color: var(--muted);
     cursor: pointer;
     outline: none;
-    transition: border-color 0.18s ease, background-color 0.18s ease;
     appearance: none;
     -webkit-appearance: none;
+    transition: color 0.18s ease;
   }
   .lang-select:hover {
-    border-color: var(--brand);
-    background-color: rgba(255, 255, 255, 0.96);
+    color: var(--brand);
   }
   @media (max-width: 760px) {
-    header { padding: 12px 0 10px; }
     .shell { width: min(100% - 28px, 1100px); }
-    .brand {
-      flex-wrap: wrap;
-      justify-content: space-between;
+    .brand-text {
+      display: none;
     }
-    .brand-name { order: 1; }
-    .brand-name { font-size: 24px; }
-    .brand-name img { width: 40px; height: 40px; }
-    .header-controls { margin-left: auto; }
-    .lang-select {
-      max-width: min(58vw, 220px);
-    }
+
     .page-tabs {
-      order: 3;
-      flex: 1 0 100%;
-      flex-wrap: nowrap;
-      justify-content: center;
-      overflow-x: auto;
-      overflow-y: hidden;
-      margin-inline: 0;
-      padding-inline: 0;
-      gap: 4px;
-      scroll-padding-inline: 0;
+      gap: 6px;
     }
     .page-tabs a {
-      padding: 9px 8px;
-      font-size: 13px;
+      padding: 10px 12px;
+      font-size: 14px;
     }
   }
   main { padding: 34px 0 78px; }
@@ -530,7 +534,7 @@ PAY_STYLES = """
     .page-tabs a {
       flex: 0 0 auto;
       color: var(--ink);
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 600;
       padding: 10px 14px;
       border-radius: 999px;
@@ -650,52 +654,33 @@ PAY_STYLES = """
       font-family: inherit;
       font-size: 14px;
       font-weight: 600;
-      min-height: 44px;
-      padding: 6px 32px 6px 12px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.84) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23175f90' stroke-width='2.5'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5'/%3E%3C/svg%3E") no-repeat right 10px center;
-      background-size: 14px;
-      color: var(--ink);
+      min-height: 40px;
+      padding: 0 16px 0 0;
+      border: none;
+      background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23175f90' stroke-width='2.5'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5'/%3E%3C/svg%3E") no-repeat right center;
+      background-size: 10px;
+      color: var(--muted);
       cursor: pointer;
       outline: none;
-      transition: border-color 0.18s ease, background-color 0.18s ease;
       appearance: none;
       -webkit-appearance: none;
+      transition: color 0.18s ease;
     }
     .lang-select:hover {
-      border-color: var(--brand);
-      background-color: rgba(255, 255, 255, 0.96);
+      color: var(--brand);
     }
     @media (max-width: 760px) {
-      header { padding: 12px 0 10px; }
       .shell { width: min(100% - 28px, 1120px); }
-      .brand {
-        flex-wrap: wrap;
-        justify-content: space-between;
+      .brand-text {
+        display: none;
       }
-      .brand-name { order: 1; }
-      .brand-name { font-size: 24px; }
-      .brand-name img { width: 40px; height: 40px; }
-      .header-controls { margin-left: auto; }
-      .lang-select {
-        max-width: min(58vw, 220px);
-      }
+
       .page-tabs {
-        order: 3;
-        flex: 1 0 100%;
-        flex-wrap: nowrap;
-        justify-content: center;
-        overflow-x: auto;
-        overflow-y: hidden;
-        margin-inline: 0;
-        padding-inline: 0;
-        gap: 4px;
-        scroll-padding-inline: 0;
+        gap: 6px;
       }
       .page-tabs a {
-        padding: 9px 8px;
-        font-size: 13px;
+        padding: 10px 12px;
+        font-size: 14px;
       }
     }
     @media (max-width: 920px) {
@@ -809,7 +794,7 @@ LANDING_STYLES = """
     justify-content: center;
     margin-top: 0;
   }
-  nav a {
+  nav a, .header-actions a {
     color: var(--ink);
     font-size: 14px;
     font-weight: 500;
@@ -817,39 +802,52 @@ LANDING_STYLES = """
     border-radius: 999px;
     border: 1px solid transparent;
     transition: all 0.18s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
   }
-  nav a:hover {
+  nav a:hover, .header-actions a:hover {
     text-decoration: none;
     border-color: var(--line);
     background: rgba(255, 255, 255, 0.84);
   }
-  .lang-select {
+  .header-actions {
+    grid-column: 3;
     justify-self: end;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .nav-icon {
+    display: none;
+    width: 20px;
+    height: 20px;
+  }
+  .lang-select {
     font-family: inherit;
     font-size: 14px;
     font-weight: 600;
-    min-height: 44px;
-    padding: 6px 32px 6px 12px;
-    border: 1px solid var(--line);
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.84) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23175f90' stroke-width='2.5'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5'/%3E%3C/svg%3E") no-repeat right 10px center;
-    background-size: 14px;
-    color: var(--ink);
+    min-height: 40px;
+    padding: 0 16px 0 0;
+    border: none;
+    background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23175f90' stroke-width='2.5'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5'/%3E%3C/svg%3E") no-repeat right center;
+    background-size: 10px;
+    color: var(--muted);
     cursor: pointer;
     outline: none;
-    transition: border-color 0.18s ease, background-color 0.18s ease;
     appearance: none;
     -webkit-appearance: none;
+    transition: color 0.18s ease;
   }
   .lang-select:hover {
-    border-color: var(--brand);
-    background-color: rgba(255, 255, 255, 0.96);
+    color: var(--brand);
   }
-  .nav-cta {
+  .header-actions .nav-cta {
     color: var(--accent);
     font-weight: 800;
   }
-  .nav-login { color: var(--brand); font-weight: 700; }
+  .header-actions .nav-login { color: var(--brand); font-weight: 700; }
   h1, h2, h3, p, li, .btn, .eyebrow, .price-amount, .preview-caption, .final-cta {
     overflow-wrap: anywhere;
     word-break: normal;
@@ -1786,142 +1784,63 @@ LANDING_STYLES = """
   @media (max-width: 860px) {
     .section[id] { scroll-margin-top: 144px; }
     .brand {
-      display: grid;
-      grid-template-columns: auto minmax(0, 1fr);
-      align-items: center;
-      gap: 12px;
+      grid-template-columns: auto 1fr auto;
+      gap: 10px;
     }
-    .brand-name {
-      grid-column: 1;
-      grid-row: 1;
+    .brand-text {
+      display: none;
     }
     .landing-tabs {
-      grid-column: 1 / -1;
-      grid-row: 2;
-      order: 3;
-      justify-self: center;
-      justify-content: center;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-top: 0;
-    }
-    .lang-select {
       grid-column: 2;
-      grid-row: 1;
+      justify-self: center;
+    }
+    .landing-tabs a {
+      padding: 8px 10px;
+    }
+    .header-actions {
+      grid-column: 3;
       justify-self: end;
-      order: 2;
-      margin-left: auto;
-      flex: 0 0 180px;
-      width: 180px;
-      min-width: 0;
-      max-width: 180px;
-      min-height: 44px;
     }
-    .nav-login {
-      min-height: 44px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
+    .header-actions .nav-text {
+      display: none;
     }
-    .nav-cta {
-      min-height: 44px;
+    .header-actions .nav-icon {
       display: inline-flex;
-      align-items: center;
-      justify-content: center;
+    }
+    .header-actions a {
+      padding: 8px;
+      border-radius: 50%;
     }
   }
   @media (max-width: 720px) {
     .section[id] { scroll-margin-top: 136px; }
-    header { padding: 10px 0; }
-    .brand {
-      display: grid;
-      grid-template-columns: auto minmax(0, 1fr);
-      gap: 8px 12px;
-      align-items: center;
-    }
-    .brand-name {
-      grid-column: 1;
-      grid-row: 1;
-    }
-    .lang-select {
-      grid-column: 2;
-      grid-row: 1;
-      justify-self: end;
-    }
-    .landing-tabs {
-      grid-column: 1 / -1;
-      grid-row: 2;
-      justify-self: center;
-      width: auto;
-      flex: 0 1 auto;
-      display: flex;
-      flex-wrap: nowrap;
-    }
   }
   @media (max-width: 520px) {
     .section[id] { scroll-margin-top: 128px; }
     .shell { width: min(100% - 20px, 1160px); }
     .brand {
-      gap: 8px;
-    }
-    .brand-name {
-      font-size: 22px;
-      gap: 8px;
-    }
-    .brand-name img {
-      width: 36px;
-      height: 36px;
-      border-radius: 10px;
+      grid-template-columns: auto 1fr auto;
+      gap: 12px;
     }
     .landing-tabs {
-      width: 100%;
-      display: flex;
-      flex-wrap: nowrap;
-      gap: 3px;
-      justify-content: center;
-      justify-self: stretch;
+      gap: 6px;
     }
     .landing-tabs a {
-      display: inline-flex;
-      align-items: center;
-      min-height: 40px;
-      justify-content: center;
-      padding: 8px 3px;
-      font-size: 12px;
-      line-height: 1.1;
+      padding: 10px 10px;
+      font-size: 14px;
       white-space: nowrap;
+    }
+    .header-actions {
+      gap: 6px;
+    }
+    .header-actions a {
+      padding: 8px;
     }
     .lang-select {
-      flex: 0 0 136px;
-      width: 136px;
-      min-width: 72px;
-      max-width: 136px;
-      min-height: 40px;
-      padding: 5px 24px 5px 10px;
-      background-position: right 8px center;
-      font-size: 13px;
-    }
-    .nav-login {
-      flex: 0 0 auto;
-      width: auto;
-      max-width: none;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      text-align: center;
-      min-height: 40px;
-      padding: 8px 3px;
-    }
-    .nav-cta {
-      flex: 0 0 auto;
-      width: auto;
-      max-width: none;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      text-align: center;
-      min-height: 40px;
-      padding: 8px 3px;
+      font-size: 14px;
+      padding: 0 12px 0 0;
+      background-size: 9px;
+      min-height: 36px;
     }
     main { padding-top: 20px; }
     .hero-copy { padding-top: 18px; }
@@ -1994,7 +1913,7 @@ LEGAL_LAYOUT = """<!DOCTYPE html>
     <div class="shell brand">
       <a class="brand-name" href="{{HOME_URL}}" aria-label="Aliolo home">
         <img src="/app_icon.webp" alt="Aliolo Logo" />
-        aliolo
+        <span class="brand-text">aliolo</span>
       </a>
       <nav class="page-tabs" aria-label="Legal page navigation">
         {{NAV_LINKS}}
@@ -2002,8 +1921,6 @@ LEGAL_LAYOUT = """<!DOCTYPE html>
       <div class="header-controls">
         {{LANG_SWITCHER}}
       </div>
-    </div>
-  </header>
     </div>
   </header>
   <main class="shell">
@@ -2047,7 +1964,7 @@ PAY_LAYOUT = """<!DOCTYPE html>
     <div class="shell brand">
       <a class="brand-name" href="{{HOME_URL}}" aria-label="Aliolo home">
         <img src="/app_icon.webp" alt="Aliolo logo" />
-        aliolo
+        <span class="brand-text">aliolo</span>
       </a>
       <nav class="page-tabs" aria-label="Checkout page navigation">
         <a href="{{PRICING_HREF}}">{{PRICING_LABEL}}</a>
@@ -2221,16 +2138,33 @@ LANDING_LAYOUT = """<!DOCTYPE html>
     <div class="shell brand">
       <a class="brand-name" href="{{HOME_URL}}" aria-label="Aliolo home">
         <img src="/app_icon.webp" alt="Aliolo logo">
-        aliolo
+        <span class="brand-text">aliolo</span>
       </a>
       <nav class="landing-tabs" aria-label="Landing page navigation">
         <a class="desktop-link" href="#workflow">{{T_landing_nav_how_it_works}}</a>
         <a class="desktop-link" href="#features">{{T_landing_nav_learning}}</a>
         <a class="desktop-link" href="#pricing">{{T_landing_nav_pricing}}</a>
-        <a href="{{LOGIN_URL}}?login=1" class="nav-login">{{T_landing_nav_login}}</a>
-        <a href="{{PREFIX}}/login" class="nav-cta">{{T_landing_nav_cta}}</a>
       </nav>
-      {{LANG_SWITCHER}}
+      <div class="header-actions">
+        <a href="{{LOGIN_URL}}?login=1" class="nav-login" aria-label="{{T_landing_nav_login}}">
+          <span class="nav-text">{{T_landing_nav_login}}</span>
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+            <polyline points="10 17 15 12 10 7" />
+            <line x1="15" y1="12" x2="3" y2="12" />
+          </svg>
+        </a>
+        <a href="{{PREFIX}}/login" class="nav-cta" aria-label="{{T_landing_nav_cta}}">
+          <span class="nav-text">{{T_landing_nav_cta}}</span>
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+            <circle cx="9" cy="7" r="4" />
+            <line x1="19" y1="8" x2="19" y2="14" />
+            <line x1="16" y1="11" x2="22" y2="11" />
+          </svg>
+        </a>
+        {{LANG_SWITCHER}}
+      </div>
     </div>
   </header>
 
@@ -2240,6 +2174,10 @@ LANDING_LAYOUT = """<!DOCTYPE html>
         <div class="eyebrow">{{T_landing_hero_eyebrow}}</div>
         <h1>{{T_landing_hero_h1}}</h1>
         <p>{{T_landing_hero_p}}</p>
+        <div class="cta-group">
+          <a href="{{PREFIX}}/login" class="btn btn-primary">{{T_landing_hero_btn_primary}}</a>
+          <a href="{{LOGIN_URL}}?login=1" class="btn btn-secondary">{{T_landing_hero_btn_secondary}}</a>
+        </div>
       </div>
       <aside class="visual-stage" aria-label="Aliolo visual learning card preview">
         <div class="floating-card float-one">

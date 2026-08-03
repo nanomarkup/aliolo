@@ -97,7 +97,7 @@
     .page-tabs a {
       flex: 0 0 auto;
       color: var(--ink);
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 600;
       padding: 10px 14px;
       border-radius: 999px;
@@ -217,52 +217,33 @@
       font-family: inherit;
       font-size: 14px;
       font-weight: 600;
-      min-height: 44px;
-      padding: 6px 32px 6px 12px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.84) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23175f90' stroke-width='2.5'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5'/%3E%3C/svg%3E") no-repeat right 10px center;
-      background-size: 14px;
-      color: var(--ink);
+      min-height: 40px;
+      padding: 0 16px 0 0;
+      border: none;
+      background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23175f90' stroke-width='2.5'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5'/%3E%3C/svg%3E") no-repeat right center;
+      background-size: 10px;
+      color: var(--muted);
       cursor: pointer;
       outline: none;
-      transition: border-color 0.18s ease, background-color 0.18s ease;
       appearance: none;
       -webkit-appearance: none;
+      transition: color 0.18s ease;
     }
     .lang-select:hover {
-      border-color: var(--brand);
-      background-color: rgba(255, 255, 255, 0.96);
+      color: var(--brand);
     }
     @media (max-width: 760px) {
-      header { padding: 12px 0 10px; }
       .shell { width: min(100% - 28px, 1120px); }
-      .brand {
-        flex-wrap: wrap;
-        justify-content: space-between;
+      .brand-text {
+        display: none;
       }
-      .brand-name { order: 1; }
-      .brand-name { font-size: 24px; }
-      .brand-name img { width: 40px; height: 40px; }
-      .header-controls { margin-left: auto; }
-      .lang-select {
-        max-width: min(58vw, 220px);
-      }
+
       .page-tabs {
-        order: 3;
-        flex: 1 0 100%;
-        flex-wrap: nowrap;
-        justify-content: center;
-        overflow-x: auto;
-        overflow-y: hidden;
-        margin-inline: 0;
-        padding-inline: 0;
-        gap: 4px;
-        scroll-padding-inline: 0;
+        gap: 6px;
       }
       .page-tabs a {
-        padding: 9px 8px;
-        font-size: 13px;
+        padding: 10px 12px;
+        font-size: 14px;
       }
     }
     @media (max-width: 920px) {
@@ -278,7 +259,7 @@
     <div class="shell brand">
       <a class="brand-name" href="/sl/landing.html" aria-label="Aliolo home">
         <img src="/app_icon.webp" alt="Aliolo logo" />
-        aliolo
+        <span class="brand-text">aliolo</span>
       </a>
       <nav class="page-tabs" aria-label="Checkout page navigation">
         <a href="/sl/pricing.html">Cene</a>
@@ -288,8 +269,31 @@
       </nav>
       <div class="header-controls">
         <select class="lang-select" onchange="document.cookie='aliolo_lang=' + this.options[this.selectedIndex].getAttribute('data-lang') + '; path=/; max-age=31536000; SameSite=Lax; Secure'; window.location.href=this.value" aria-label="Change language">
-      <option value="/pay.html" data-lang="en">English</option><option value="/id/pay.html" data-lang="id">Bahasa Indonesia</option><option value="/bg/pay.html" data-lang="bg">Български</option><option value="/cs/pay.html" data-lang="cs">Čeština</option><option value="/da/pay.html" data-lang="da">Dansk</option><option value="/de/pay.html" data-lang="de">Deutsch</option><option value="/et/pay.html" data-lang="et">Eesti</option><option value="/es/pay.html" data-lang="es">Español</option><option value="/fr/pay.html" data-lang="fr">Français</option><option value="/ga/pay.html" data-lang="ga">Gaeilge</option><option value="/hr/pay.html" data-lang="hr">Hrvatski</option><option value="/it/pay.html" data-lang="it">Italiano</option><option value="/lv/pay.html" data-lang="lv">Latviešu</option><option value="/lt/pay.html" data-lang="lt">Lietuvių</option><option value="/hu/pay.html" data-lang="hu">Magyar</option><option value="/mt/pay.html" data-lang="mt">Malti</option><option value="/nl/pay.html" data-lang="nl">Nederlands</option><option value="/pl/pay.html" data-lang="pl">Polski</option><option value="/pt/pay.html" data-lang="pt">Português</option><option value="/ro/pay.html" data-lang="ro">Română</option><option value="/sk/pay.html" data-lang="sk">Slovenčina</option><option value="/sl/pay.html" data-lang="sl" selected>Slovenščina</option><option value="/fi/pay.html" data-lang="fi">Suomi</option><option value="/sv/pay.html" data-lang="sv">Svenska</option><option value="/tl/pay.html" data-lang="tl">Tagalog</option><option value="/vi/pay.html" data-lang="vi">Tiếng Việt</option><option value="/tr/pay.html" data-lang="tr">Türkçe</option><option value="/el/pay.html" data-lang="el">Ελληνικά</option><option value="/uk/pay.html" data-lang="uk">Українська</option><option value="/ar/pay.html" data-lang="ar">العربية</option><option value="/hi/pay.html" data-lang="hi">हिन्दी</option><option value="/zh/pay.html" data-lang="zh">中文</option><option value="/ja/pay.html" data-lang="ja">日本語</option><option value="/ko/pay.html" data-lang="ko">한국어</option>
+      <option value="/pay.html" data-lang="en" data-name="English">EN</option><option value="/id/pay.html" data-lang="id" data-name="Bahasa Indonesia">ID</option><option value="/bg/pay.html" data-lang="bg" data-name="Български">BG</option><option value="/cs/pay.html" data-lang="cs" data-name="Čeština">CS</option><option value="/da/pay.html" data-lang="da" data-name="Dansk">DA</option><option value="/de/pay.html" data-lang="de" data-name="Deutsch">DE</option><option value="/et/pay.html" data-lang="et" data-name="Eesti">ET</option><option value="/es/pay.html" data-lang="es" data-name="Español">ES</option><option value="/fr/pay.html" data-lang="fr" data-name="Français">FR</option><option value="/ga/pay.html" data-lang="ga" data-name="Gaeilge">GA</option><option value="/hr/pay.html" data-lang="hr" data-name="Hrvatski">HR</option><option value="/it/pay.html" data-lang="it" data-name="Italiano">IT</option><option value="/lv/pay.html" data-lang="lv" data-name="Latviešu">LV</option><option value="/lt/pay.html" data-lang="lt" data-name="Lietuvių">LT</option><option value="/hu/pay.html" data-lang="hu" data-name="Magyar">HU</option><option value="/mt/pay.html" data-lang="mt" data-name="Malti">MT</option><option value="/nl/pay.html" data-lang="nl" data-name="Nederlands">NL</option><option value="/pl/pay.html" data-lang="pl" data-name="Polski">PL</option><option value="/pt/pay.html" data-lang="pt" data-name="Português">PT</option><option value="/ro/pay.html" data-lang="ro" data-name="Română">RO</option><option value="/sk/pay.html" data-lang="sk" data-name="Slovenčina">SK</option><option value="/sl/pay.html" data-lang="sl" data-name="Slovenščina" selected>SL</option><option value="/fi/pay.html" data-lang="fi" data-name="Suomi">FI</option><option value="/sv/pay.html" data-lang="sv" data-name="Svenska">SV</option><option value="/tl/pay.html" data-lang="tl" data-name="Tagalog">TL</option><option value="/vi/pay.html" data-lang="vi" data-name="Tiếng Việt">VI</option><option value="/tr/pay.html" data-lang="tr" data-name="Türkçe">TR</option><option value="/el/pay.html" data-lang="el" data-name="Ελληνικά">EL</option><option value="/uk/pay.html" data-lang="uk" data-name="Українська">UK</option><option value="/ar/pay.html" data-lang="ar" data-name="العربية">AR</option><option value="/hi/pay.html" data-lang="hi" data-name="हिन्दी">HI</option><option value="/zh/pay.html" data-lang="zh" data-name="中文">ZH</option><option value="/ja/pay.html" data-lang="ja" data-name="日本語">JA</option><option value="/ko/pay.html" data-lang="ko" data-name="한국어">KO</option>
     </select>
+    <script>
+      (() => {
+        const select = document.querySelector('.lang-select');
+        if (!select) return;
+        
+        function showFullNames() {
+          Array.from(select.options).forEach(opt => {
+            opt.textContent = opt.getAttribute('data-name');
+          });
+        }
+        
+        function showShortCodes() {
+          Array.from(select.options).forEach(opt => {
+            opt.textContent = opt.getAttribute('data-lang').toUpperCase();
+          });
+        }
+        
+        select.addEventListener('mousedown', showFullNames);
+        select.addEventListener('focus', showFullNames);
+        select.addEventListener('change', showShortCodes);
+        select.addEventListener('blur', showShortCodes);
+      })();
+    </script>
       </div>
     </div>
   </header>
