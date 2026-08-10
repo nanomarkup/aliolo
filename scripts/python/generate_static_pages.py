@@ -2326,6 +2326,30 @@ LANDING_LAYOUT = """<!DOCTYPE html>
   <link rel="icon" type="image/webp" href="/app_icon.webp">
   <link rel="manifest" href="/manifest.json">
 {{SEO_ALTERNATES}}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Aliolo",
+    "url": "https://aliolo.com"
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Aliolo",
+    "operatingSystem": "Web, iOS, Android",
+    "applicationCategory": "EducationalApplication",
+    "description": "{{T_landing_meta_desc}}",
+    "url": "https://aliolo.com",
+    "offers": {
+      "@type": "Offer",
+      "price": "0.00",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
   <script>
     (() => {
       const params = new URLSearchParams(window.location.search);
